@@ -118,3 +118,8 @@
 ### 용도별 추천
 - **Vrew**: 유튜브 자막 영상, 강의/발표 영상, 숏폼 콘텐츠
 - **Premiere**: 뮤직비디오, 광고/상업 영상, 복잡한 효과/합성
+
+### long form for youtube
+https://www.youtube.com/watch?v=aApH3ExQUZ8
+
+
