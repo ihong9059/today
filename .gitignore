@@ -3,3 +3,5 @@
 *.avi
 *.mov
 *.mkv
+*.egg
+.DS_Store
