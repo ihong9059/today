@@ -4,4 +4,6 @@
 *.mov
 *.mkv
 *.egg
+*.zip
 .DS_Store
+ffmpeg/
