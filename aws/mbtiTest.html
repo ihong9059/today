@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 성격 유형 검사</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', '맑은 고딕', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* UTTEC Lab 헤더 */
+        .uttec-header {
+            text-align: center;
+            padding: 15px;
+            color: white;
+            font-size: 0.95em;
+            max-width: 800px;
+            margin: 0 auto 15px auto;
+        }
+
+        .uttec-header .lab-name {
+            font-weight: bold;
+            font-size: 1.3em;
+            letter-spacing: 2px;
+        }
+
+        .uttec-header .lab-desc {
+            opacity: 0.8;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        /* UTTEC Lab 푸터 */
+        .uttec-footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 0.85em;
+            max-width: 800px;
+            margin: 15px auto 0 auto;
+            opacity: 0.8;
+        }
+
+        .uttec-footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .uttec-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        /* 시작 화면 */
+        .start-screen {
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .start-screen h1 {
+            font-size: 2.5em;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .start-screen .subtitle {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .start-screen .description {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .start-screen .description h3 {
+            color: #0f3460;
+            margin-bottom: 15px;
+        }
+
+        .start-screen .description ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .start-screen .description li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+
+        .start-screen .description li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #0f3460;
+            font-weight: bold;
+        }
+
+        .logo {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .type-preview {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .type-badge {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* 버튼 스타일 */
+        .btn {
+            display: inline-block;
+            padding: 15px 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(15, 52, 96, 0.4);
+        }
+
+        /* 질문 화면 */
+        .quiz-screen {
+            display: none;
+            padding: 40px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1a1a2e, #0f3460);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #e8f4f8;
+            color: #0f3460;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .question-box {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .question-number {
+            color: #0f3460;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .answer-btn {
+            padding: 20px 25px;
+            font-size: 1.05em;
+            text-align: left;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .answer-btn:hover {
+            border-color: #0f3460;
+            background: #e8f4f8;
+            transform: translateX(10px);
+        }
+
+        .answer-btn .letter {
+            width: 36px;
+            height: 36px;
+            background: #e9ecef;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #0f3460;
+            flex-shrink: 0;
+        }
+
+        .answer-btn:hover .letter {
+            background: #0f3460;
+            color: white;
+        }
+
+        /* 결과 화면 */
+        .result-screen {
+            display: none;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .result-type {
+            font-size: 4.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+        }
+
+        .result-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .result-english {
+            color: #888;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .result-description {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .result-description h3 {
+            color: #0f3460;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-description p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .result-description ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .result-description li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+
+        .result-description li::before {
+            content: "●";
+            position: absolute;
+            left: 0;
+            color: #0f3460;
+        }
+
+        .dimension-results {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .dimension-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .dimension-card h4 {
+            color: #0f3460;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .dimension-bar {
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .dimension-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+        .dimension-fill.left {
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+        }
+
+        .dimension-fill.right {
+            background: linear-gradient(90deg, #1a1a2e, #0f3460);
+        }
+
+        .dimension-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        /* MBTI 매칭 섹션 */
+        .mbti-section {
+            background: linear-gradient(135deg, #1a1a2e10 0%, #0f346010 100%);
+            border: 2px solid #0f346030;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .mbti-section h3 {
+            color: #0f3460;
+            margin-bottom: 15px;
+        }
+
+        .mbti-group {
+            display: inline-block;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            color: white;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* 직업 추천 섹션 */
+        .career-section {
+            background: #f0fff4;
+            border: 2px solid #38a169;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .career-section h3 {
+            color: #276749;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .career-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .career-tag {
+            background: linear-gradient(135deg, #38a169, #48bb78);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .career-examples {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .career-examples h4 {
+            color: #276749;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .career-examples p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.9em;
+        }
+
+        /* 유명인 섹션 */
+        .famous-section {
+            background: #fff5f5;
+            border: 2px solid #fc8181;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .famous-section h3 {
+            color: #c53030;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .famous-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .famous-person {
+            background: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #555;
+            border: 1px solid #fc818150;
+        }
+
+        /* 주의사항 섹션 */
+        .notice-section {
+            background: #fffbeb;
+            border: 2px solid #f6ad55;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .notice-section h3 {
+            color: #c05621;
+            margin-bottom: 15px;
+        }
+
+        .notice-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .notice-section li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+            border-bottom: 1px dashed #f6ad5550;
+        }
+
+        .notice-section li:last-child {
+            border-bottom: none;
+        }
+
+        .notice-section li::before {
+            content: "⚡";
+            position: absolute;
+            left: 0;
+        }
+
+        .restart-btn {
+            margin-top: 20px;
+        }
+
+        /* 반응형 */
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 15px;
+            }
+
+            .start-screen, .quiz-screen, .result-screen {
+                padding: 25px;
+            }
+
+            .start-screen h1 {
+                font-size: 1.8em;
+            }
+
+            .question-text {
+                font-size: 1.1em;
+            }
+
+            .dimension-results {
+                grid-template-columns: 1fr;
+            }
+
+            .result-type {
+                font-size: 3em;
+            }
+
+            .type-preview {
+                gap: 5px;
+            }
+
+            .type-badge {
+                padding: 5px 8px;
+                font-size: 0.75em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- UTTEC Lab 헤더 -->
+    <div class="uttec-header">
+        <div class="lab-name">UTTEC Lab</div>
+        <div class="lab-desc">Provided by UTTEC Lab</div>
+    </div>
+
+    <div class="container">
+        <!-- 시작 화면 -->
+        <div class="start-screen" id="startScreen">
+            <div class="logo">🧠</div>
+            <h1>MBTI 성격 유형 검사</h1>
+            <p class="subtitle">나를 이해하는 첫 번째 단계</p>
+
+            <div class="type-preview">
+                <span class="type-badge">INTJ</span>
+                <span class="type-badge">ENFP</span>
+                <span class="type-badge">ISTP</span>
+                <span class="type-badge">ESFJ</span>
+                <span class="type-badge">+12</span>
+            </div>
+
+            <div class="description">
+                <h3>📋 검사 안내</h3>
+                <ul>
+                    <li>총 40개의 질문으로 구성되어 있습니다</li>
+                    <li>정답은 없습니다. 평소의 자신을 떠올리며 솔직하게 응답해 주세요</li>
+                    <li>너무 오래 고민하지 마시고, 직관적으로 선택해 주세요</li>
+                    <li>약 10~15분 정도 소요됩니다</li>
+                    <li>16세 이상 성인에게 최적화된 검사입니다</li>
+                </ul>
+            </div>
+
+            <button class="btn" onclick="startQuiz()">검사 시작하기</button>
+        </div>
+
+        <!-- 질문 화면 -->
+        <div class="quiz-screen" id="quizScreen">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">1 / 40</div>
+
+            <div class="category-badge" id="categoryBadge">에너지 방향</div>
+
+            <div class="question-box">
+                <div class="question-number" id="questionNumber">질문 1</div>
+                <div class="question-text" id="questionText">질문 내용이 여기에 표시됩니다.</div>
+            </div>
+
+            <div class="answers" id="answersContainer">
+                <!-- 답변 버튼들이 여기에 동적으로 생성됩니다 -->
+            </div>
+        </div>
+
+        <!-- 결과 화면 -->
+        <div class="result-screen" id="resultScreen">
+            <div class="logo">🎯</div>
+            <h2>당신의 MBTI 유형은</h2>
+            <div class="result-type" id="resultType">ENFP</div>
+            <div class="result-title" id="resultTitle">재기발랄한 활동가</div>
+            <div class="result-english" id="resultEnglish">Campaigner</div>
+
+            <div class="dimension-results" id="dimensionResults">
+                <!-- 차원별 결과가 여기에 표시됩니다 -->
+            </div>
+
+            <div class="result-description" id="resultDescription">
+                <!-- 상세 설명이 여기에 표시됩니다 -->
+            </div>
+
+            <!-- 성격 그룹 섹션 -->
+            <div class="mbti-section" id="mbtiSection">
+                <!-- 성격 그룹 정보가 여기에 표시됩니다 -->
+            </div>
+
+            <!-- 직업 추천 섹션 -->
+            <div class="career-section" id="careerSection">
+                <!-- 직업 추천이 여기에 표시됩니다 -->
+            </div>
+
+            <!-- 유명인 섹션 -->
+            <div class="famous-section" id="famousSection">
+                <!-- 유명인 목록이 여기에 표시됩니다 -->
+            </div>
+
+            <!-- 주의사항 섹션 -->
+            <div class="notice-section">
+                <h3>📌 검사 결과 해석 시 유의사항</h3>
+                <ul>
+                    <li><strong>성격 유형은 고정되어 있지 않습니다.</strong> 환경, 경험, 성장에 따라 변화할 수 있으며, 같은 사람도 다른 시기에 다른 결과가 나올 수 있습니다.</li>
+                    <li><strong>MBTI는 성격의 '선호'를 나타냅니다.</strong> 능력이나 적성을 측정하는 것이 아니며, 어떤 유형이 더 우월하거나 열등한 것은 없습니다.</li>
+                    <li><strong>결과를 맹신하지 마세요.</strong> MBTI는 자기 이해를 위한 도구일 뿐, 당신의 모든 것을 설명하지 않습니다. 인간은 16가지 유형으로 단순화될 수 없습니다.</li>
+                    <li><strong>직업 추천은 참고용입니다.</strong> 실제 진로 결정은 다양한 요소를 종합적으로 고려해야 합니다.</li>
+                </ul>
+            </div>
+
+            <button class="btn restart-btn" onclick="restartQuiz()">다시 검사하기</button>
+        </div>
+    </div>
+
+    <!-- UTTEC Lab 푸터 -->
+    <div class="uttec-footer">
+        <p>© 2024 UTTEC Lab. All Rights Reserved.</p>
+        <p>본 검사는 교육 및 자기 이해 목적으로 제공됩니다.</p>
+    </div>
+
+    <script>
+        // ============================================
+        // 질문 데이터 (4개 지표 × 10문항 = 40문항)
+        // ============================================
+        const questions = [
+            // E-I (외향-내향) 질문 10개
+            {
+                category: "E-I",
+                categoryName: "에너지 방향 (E-I)",
+                text: "사람들이 많은 모임에 참석한 후 나는...",
+                answers: [
+                    { text: "에너지가 충전되어 더 활기차진다", value: "E" },
+                    { text: "에너지가 소모되어 혼자만의 시간이 필요하다", value: "I" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향 (E-I)",
+                text: "새로운 사람들을 만나는 상황에서 나는...",
+                answers: [
+                    { text: "먼저 다가가서 대화를 시작하는 편이다", value: "E" },
+                    { text: "상대방이 다가오기를 기다리는 편이다", value: "I" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향 (E-I)",
+                text: "주말에 시간이 생기면 나는...",
+                answers: [
+                    { text: "친구들과 만나서 활동하고 싶다", value: "E" },
+                    { text: "집에서 혼자 휴식하고 싶다", value: "I" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향 (E-I)",
+                text: "회의나 토론에서 나는...",
+                answers: [
+                    { text: "생각나는 대로 바로 의견을 말하는 편이다", value: "E" },
+                    { text: "충분히 생각한 후에 발언하는 편이다", value: "I" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향 (E-I)",
+                text: "나의 친구 관계는...",
+                answers: [
+                    { text: "넓고 다양한 인간관계를 유지한다", value: "E" },
+                    { text: "소수의 깊은 관계를 선호한다", value: "I" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향 (E-I)",
+                text: "문제가 생겼을 때 나는...",
+                answers: [
+                    { text: "다른 사람들과 이야기하며 해결책을 찾는다", value: "E" },
+                    { text: "혼자 조용히 생각하며 해결책을 찾는다", value: "I" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향 (E-I)",
+                text: "업무나 학습 환경으로 나는...",
+                answers: [
+                    { text: "사람들과 함께하는 활기찬 환경을 선호한다", value: "E" },
+                    { text: "조용하고 독립적인 환경을 선호한다", value: "I" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향 (E-I)",
+                text: "전화가 오면 나는...",
+                answers: [
+                    { text: "기꺼이 받고 통화를 즐긴다", value: "E" },
+                    { text: "가능하면 문자나 메시지를 선호한다", value: "I" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향 (E-I)",
+                text: "나의 생각이나 감정은...",
+                answers: [
+                    { text: "말로 표현하면서 정리되는 편이다", value: "E" },
+                    { text: "내면에서 정리한 후 표현하는 편이다", value: "I" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향 (E-I)",
+                text: "낯선 환경에 적응할 때 나는...",
+                answers: [
+                    { text: "적극적으로 사람들과 교류하며 적응한다", value: "E" },
+                    { text: "관찰하고 파악한 후 천천히 적응한다", value: "I" }
+                ]
+            },
+
+            // S-N (감각-직관) 질문 10개
+            {
+                category: "S-N",
+                categoryName: "인식 기능 (S-N)",
+                text: "정보를 받아들일 때 나는...",
+                answers: [
+                    { text: "구체적인 사실과 세부사항에 주목한다", value: "S" },
+                    { text: "전체적인 패턴과 가능성에 주목한다", value: "N" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "인식 기능 (S-N)",
+                text: "업무를 진행할 때 나는...",
+                answers: [
+                    { text: "검증된 방법을 따르는 것을 선호한다", value: "S" },
+                    { text: "새로운 방법을 시도해보고 싶다", value: "N" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "인식 기능 (S-N)",
+                text: "대화할 때 나는...",
+                answers: [
+                    { text: "실제 경험과 구체적인 예시를 들어 말한다", value: "S" },
+                    { text: "비유와 은유를 사용해 개념적으로 말한다", value: "N" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "인식 기능 (S-N)",
+                text: "미래에 대해 생각할 때 나는...",
+                answers: [
+                    { text: "현실적으로 예측 가능한 것에 집중한다", value: "S" },
+                    { text: "다양한 가능성과 잠재력을 상상한다", value: "N" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "인식 기능 (S-N)",
+                text: "책이나 영화를 볼 때 나는...",
+                answers: [
+                    { text: "현실적이고 실제적인 내용을 선호한다", value: "S" },
+                    { text: "상상력을 자극하는 창의적인 내용을 선호한다", value: "N" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "인식 기능 (S-N)",
+                text: "설명을 들을 때 나는...",
+                answers: [
+                    { text: "단계별로 구체적인 설명을 선호한다", value: "S" },
+                    { text: "전체 그림을 먼저 이해하고 싶다", value: "N" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "인식 기능 (S-N)",
+                text: "나는 주로...",
+                answers: [
+                    { text: "현재에 충실하며 실제적인 것을 중시한다", value: "S" },
+                    { text: "미래 지향적이며 가능성을 중시한다", value: "N" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "인식 기능 (S-N)",
+                text: "문제를 해결할 때 나는...",
+                answers: [
+                    { text: "과거의 경험과 사례를 참고한다", value: "S" },
+                    { text: "새로운 접근법과 아이디어를 모색한다", value: "N" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "인식 기능 (S-N)",
+                text: "나에게 더 매력적인 것은...",
+                answers: [
+                    { text: "실용적이고 즉시 활용 가능한 정보", value: "S" },
+                    { text: "이론적이고 개념적인 아이디어", value: "N" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "인식 기능 (S-N)",
+                text: "일상생활에서 나는...",
+                answers: [
+                    { text: "정해진 루틴을 따르는 것이 편하다", value: "S" },
+                    { text: "변화와 새로움을 추구하는 편이다", value: "N" }
+                ]
+            },
+
+            // T-F (사고-감정) 질문 10개
+            {
+                category: "T-F",
+                categoryName: "판단 기능 (T-F)",
+                text: "중요한 결정을 내릴 때 나는...",
+                answers: [
+                    { text: "논리와 객관적 분석을 기반으로 결정한다", value: "T" },
+                    { text: "가치관과 사람들에게 미치는 영향을 고려한다", value: "F" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 기능 (T-F)",
+                text: "갈등 상황에서 나는...",
+                answers: [
+                    { text: "공정하고 논리적인 해결을 추구한다", value: "T" },
+                    { text: "조화롭고 모두가 만족하는 해결을 추구한다", value: "F" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 기능 (T-F)",
+                text: "피드백을 줄 때 나는...",
+                answers: [
+                    { text: "솔직하고 직접적으로 전달한다", value: "T" },
+                    { text: "상대방의 감정을 고려하며 부드럽게 전달한다", value: "F" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 기능 (T-F)",
+                text: "친구가 고민을 이야기할 때 나는...",
+                answers: [
+                    { text: "문제 해결을 위한 조언을 해주고 싶다", value: "T" },
+                    { text: "먼저 공감하고 감정적으로 지지해주고 싶다", value: "F" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 기능 (T-F)",
+                text: "의견 충돌이 있을 때 나는...",
+                answers: [
+                    { text: "사실과 논리를 바탕으로 주장을 펼친다", value: "T" },
+                    { text: "관계 유지를 위해 양보하기도 한다", value: "F" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 기능 (T-F)",
+                text: "나에게 더 중요한 것은...",
+                answers: [
+                    { text: "진실과 정의", value: "T" },
+                    { text: "조화와 배려", value: "F" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 기능 (T-F)",
+                text: "비판을 받았을 때 나는...",
+                answers: [
+                    { text: "내용이 합리적인지 분석하고 수용 여부를 결정한다", value: "T" },
+                    { text: "감정적으로 상처받고 개인적으로 받아들이는 편이다", value: "F" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 기능 (T-F)",
+                text: "팀 프로젝트에서 나는...",
+                answers: [
+                    { text: "효율성과 목표 달성을 최우선으로 생각한다", value: "T" },
+                    { text: "팀원들의 화합과 분위기를 중요하게 생각한다", value: "F" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 기능 (T-F)",
+                text: "칭찬을 받을 때 더 기쁜 것은...",
+                answers: [
+                    { text: "능력과 성과에 대한 인정", value: "T" },
+                    { text: "인격과 배려에 대한 인정", value: "F" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 기능 (T-F)",
+                text: "규칙에 예외를 두어야 할 때 나는...",
+                answers: [
+                    { text: "원칙을 지키는 것이 중요하다고 생각한다", value: "T" },
+                    { text: "상황과 사람에 따라 유연해야 한다고 생각한다", value: "F" }
+                ]
+            },
+
+            // J-P (판단-인식) 질문 10개
+            {
+                category: "J-P",
+                categoryName: "생활 양식 (J-P)",
+                text: "일정 관리에 있어서 나는...",
+                answers: [
+                    { text: "미리 계획을 세우고 그에 따라 행동한다", value: "J" },
+                    { text: "상황에 따라 유연하게 대처하는 것을 선호한다", value: "P" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 양식 (J-P)",
+                text: "마감일이 있는 업무를 할 때 나는...",
+                answers: [
+                    { text: "미리 완료하여 여유를 갖고 싶다", value: "J" },
+                    { text: "마감에 임박해서 집중력이 높아진다", value: "P" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 양식 (J-P)",
+                text: "나의 책상이나 방은...",
+                answers: [
+                    { text: "정리정돈이 잘 되어 있다", value: "J" },
+                    { text: "다소 어수선하지만 나만의 질서가 있다", value: "P" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 양식 (J-P)",
+                text: "여행 계획을 세울 때 나는...",
+                answers: [
+                    { text: "상세한 일정과 예약을 미리 준비한다", value: "J" },
+                    { text: "대략적인 방향만 정하고 즉흥적으로 움직인다", value: "P" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 양식 (J-P)",
+                text: "계획이 갑자기 변경되면 나는...",
+                answers: [
+                    { text: "불편하고 스트레스를 받는다", value: "J" },
+                    { text: "새로운 가능성이 열린다고 생각한다", value: "P" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 양식 (J-P)",
+                text: "결정을 내릴 때 나는...",
+                answers: [
+                    { text: "빠르게 결정하고 진행하는 것을 선호한다", value: "J" },
+                    { text: "더 많은 정보를 수집하고 선택지를 열어두고 싶다", value: "P" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 양식 (J-P)",
+                text: "업무 스타일에 있어서 나는...",
+                answers: [
+                    { text: "체계적으로 순서대로 처리하는 것을 선호한다", value: "J" },
+                    { text: "동시에 여러 가지를 진행하는 것이 자연스럽다", value: "P" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 양식 (J-P)",
+                text: "나에게 '완료'란...",
+                answers: [
+                    { text: "일을 마무리 짓고 다음으로 넘어가는 것이 중요하다", value: "J" },
+                    { text: "더 좋은 방향이 있다면 계속 수정할 수 있다", value: "P" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 양식 (J-P)",
+                text: "약속 시간에 나는...",
+                answers: [
+                    { text: "항상 정시 또는 조금 일찍 도착한다", value: "J" },
+                    { text: "가끔 늦을 때도 있다", value: "P" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 양식 (J-P)",
+                text: "하루가 끝났을 때 나는...",
+                answers: [
+                    { text: "계획한 일을 완수했는지 점검한다", value: "J" },
+                    { text: "그날 있었던 일들을 자연스럽게 받아들인다", value: "P" }
+                ]
+            }
+        ];
+
+        // 16가지 성격 유형 설명
+        const typeDescriptions = {
+            "ISTJ": {
+                title: "청렴결백한 논리주의자",
+                english: "Logistician",
+                emoji: "📋",
+                group: "관리자형 (SJ)",
+                description: "신뢰할 수 있고 책임감이 강한 현실주의자입니다. 전통과 규칙을 중시하며, 맡은 일은 반드시 완수합니다. 체계적이고 조직적인 접근 방식을 선호하며, 세부사항에 주의를 기울입니다.",
+                strengths: ["뛰어난 책임감과 신뢰성", "꼼꼼하고 체계적인 업무 처리", "강한 집중력과 인내심", "현실적이고 논리적인 판단"],
+                weaknesses: ["변화에 대한 저항", "감정 표현의 어려움", "지나친 완고함", "융통성 부족"],
+                famous: ["조지 워싱턴", "앙겔라 메르켈", "워렌 버핏", "나탈리 포트만"]
+            },
+            "ISFJ": {
+                title: "용감한 수호자",
+                english: "Defender",
+                emoji: "🛡️",
+                group: "관리자형 (SJ)",
+                description: "헌신적이고 따뜻한 마음의 보호자입니다. 다른 사람을 돕는 것에서 큰 만족을 느끼며, 조용하지만 강한 책임감을 가지고 있습니다. 세심하게 타인의 필요를 챙깁니다.",
+                strengths: ["뛰어난 관찰력과 기억력", "헌신적이고 신뢰할 수 있음", "인내심 있고 배려심 깊음", "실용적이고 꼼꼼함"],
+                weaknesses: ["자신의 필요를 무시하는 경향", "비판에 민감함", "변화를 꺼림", "과도한 겸손"],
+                famous: ["마더 테레사", "케이트 미들턴", "비욘세", "앤 해서웨이"]
+            },
+            "INFJ": {
+                title: "선의의 옹호자",
+                english: "Advocate",
+                emoji: "🔮",
+                group: "외교관형 (NF)",
+                description: "이상주의적이고 통찰력 있는 조력자입니다. 강한 직관과 깊은 공감 능력을 가지고 있으며, 의미 있는 일을 추구합니다. 조용하지만 확고한 신념을 가지고 세상을 변화시키고자 합니다.",
+                strengths: ["뛰어난 통찰력과 직관", "강한 가치관과 원칙", "창의적이고 영감을 주는 능력", "깊은 공감 능력"],
+                weaknesses: ["지나친 이상주의", "완벽주의 성향", "비판에 민감함", "번아웃 위험"],
+                famous: ["마틴 루터 킹", "넬슨 만델라", "니콜 키드먼", "테일러 스위프트"]
+            },
+            "INTJ": {
+                title: "용의주도한 전략가",
+                english: "Architect",
+                emoji: "🧩",
+                group: "분석가형 (NT)",
+                description: "전략적이고 독립적인 사색가입니다. 복잡한 문제를 해결하는 것을 즐기며, 높은 기준과 효율성을 추구합니다. 장기적인 비전을 가지고 목표를 향해 체계적으로 나아갑니다.",
+                strengths: ["뛰어난 전략적 사고", "독립적이고 결단력 있음", "지식에 대한 끊임없는 추구", "높은 자기 확신"],
+                weaknesses: ["지나친 비판적 성향", "감정 표현의 어려움", "완고함", "사회적 상황에서의 어색함"],
+                famous: ["일론 머스크", "마크 저커버그", "크리스토퍼 놀란", "제이 지"]
+            },
+            "ISTP": {
+                title: "만능 재주꾼",
+                english: "Virtuoso",
+                emoji: "🔧",
+                group: "탐험가형 (SP)",
+                description: "실용적이고 분석적인 문제 해결사입니다. 손으로 직접 다루는 것을 좋아하며, 위기 상황에서도 침착함을 유지합니다. 논리적이면서도 유연한 사고를 가지고 있습니다.",
+                strengths: ["뛰어난 문제 해결 능력", "위기 대처 능력", "실용적이고 효율적", "적응력과 유연성"],
+                weaknesses: ["감정 표현의 어려움", "장기 계획 부족", "쉽게 지루해함", "위험 추구 성향"],
+                famous: ["클린트 이스트우드", "톰 크루즈", "마이클 조던", "올리비아 와일드"]
+            },
+            "ISFP": {
+                title: "호기심 많은 예술가",
+                english: "Adventurer",
+                emoji: "🎨",
+                group: "탐험가형 (SP)",
+                description: "온화하고 감수성이 풍부한 예술적 영혼입니다. 현재의 순간을 즐기며, 자신만의 방식으로 세상의 아름다움을 탐구합니다. 조용하지만 열정적인 내면을 가지고 있습니다.",
+                strengths: ["뛰어난 미적 감각", "유연하고 적응력 있음", "친절하고 배려심 깊음", "현재를 즐기는 능력"],
+                weaknesses: ["장기 계획의 어려움", "비판에 민감함", "자기 주장의 어려움", "스트레스에 취약"],
+                famous: ["마이클 잭슨", "라나 델 레이", "데이비드 보위", "오드리 헵번"]
+            },
+            "INFP": {
+                title: "열정적인 중재자",
+                english: "Mediator",
+                emoji: "🌷",
+                group: "외교관형 (NF)",
+                description: "이상주의적이고 공감 능력이 뛰어난 몽상가입니다. 자신의 가치관에 충실하며, 다른 사람의 잠재력을 발견하는 것을 좋아합니다. 창의적인 표현과 깊은 감정적 연결을 추구합니다.",
+                strengths: ["강한 가치관과 진정성", "뛰어난 공감 능력", "창의적이고 상상력 풍부", "헌신적이고 열정적"],
+                weaknesses: ["지나친 이상주의", "자기 비판적 성향", "현실적 문제 회피", "감정 기복"],
+                famous: ["윌리엄 셰익스피어", "J.R.R. 톨킨", "팀 버튼", "빈센트 반 고흐"]
+            },
+            "INTP": {
+                title: "논리적인 사색가",
+                english: "Logician",
+                emoji: "🔬",
+                group: "분석가형 (NT)",
+                description: "분석적이고 객관적인 사상가입니다. 논리적 일관성을 중시하며, 복잡한 이론과 아이디어를 탐구하는 것을 즐깁니다. 독창적인 사고로 혁신적인 해결책을 제시합니다.",
+                strengths: ["뛰어난 분석력과 논리력", "창의적이고 독창적", "객관적이고 공정함", "지식에 대한 열정"],
+                weaknesses: ["실행력 부족", "감정 표현의 어려움", "세부사항 무시", "사회적 상황의 어색함"],
+                famous: ["아인슈타인", "빌 게이츠", "래리 페이지", "크리스틴 스튜어트"]
+            },
+            "ESTP": {
+                title: "모험을 즐기는 사업가",
+                english: "Entrepreneur",
+                emoji: "🏄",
+                group: "탐험가형 (SP)",
+                description: "활동적이고 현실적인 모험가입니다. 즉각적인 결과를 추구하며, 위험을 감수하는 것을 두려워하지 않습니다. 뛰어난 관찰력과 빠른 판단력으로 기회를 포착합니다.",
+                strengths: ["뛰어난 관찰력", "대담하고 행동력 있음", "적응력과 융통성", "사교적이고 설득력 있음"],
+                weaknesses: ["충동적인 경향", "장기적 사고 부족", "규칙 무시", "감정적 민감성 부족"],
+                famous: ["도널드 트럼프", "마돈나", "어니스트 헤밍웨이", "잭 니콜슨"]
+            },
+            "ESFP": {
+                title: "자유로운 영혼의 연예인",
+                english: "Entertainer",
+                emoji: "🎭",
+                group: "탐험가형 (SP)",
+                description: "활기차고 사교적인 즐거움의 중심입니다. 사람들과 함께하는 것을 좋아하며, 현재의 순간을 최대한 즐깁니다. 타고난 엔터테이너로서 주변을 밝게 만듭니다.",
+                strengths: ["뛰어난 사교성", "낙관적이고 열정적", "현실적이고 실용적", "뛰어난 관찰력"],
+                weaknesses: ["장기 계획의 어려움", "쉽게 지루해함", "갈등 회피", "비판에 민감함"],
+                famous: ["마릴린 먼로", "엘튼 존", "제이미 폭스", "아델"]
+            },
+            "ENFP": {
+                title: "재기발랄한 활동가",
+                english: "Campaigner",
+                emoji: "🌈",
+                group: "외교관형 (NF)",
+                description: "열정적이고 창의적인 자유로운 영혼입니다. 새로운 가능성을 탐구하고, 다른 사람들에게 영감을 주는 것을 즐깁니다. 따뜻한 마음과 넘치는 에너지로 주변을 활기차게 만듭니다.",
+                strengths: ["뛰어난 의사소통 능력", "창의적이고 열정적", "긍정적이고 낙관적", "공감 능력과 친화력"],
+                weaknesses: ["집중력 부족", "실용성 부족", "지나친 감정적 반응", "일관성 부족"],
+                famous: ["로빈 윌리엄스", "월트 디즈니", "로버트 다우니 주니어", "제니퍼 애니스턴"]
+            },
+            "ENTP": {
+                title: "뜨거운 논쟁을 즐기는 변론가",
+                english: "Debater",
+                emoji: "💡",
+                group: "분석가형 (NT)",
+                description: "기발하고 전략적인 사상가입니다. 지적 도전을 즐기며, 기존의 관념에 도전하는 것을 좋아합니다. 빠른 위트와 논리로 어떤 주제든 토론할 준비가 되어 있습니다.",
+                strengths: ["뛰어난 언변과 논리력", "창의적이고 혁신적", "지적 호기심", "빠른 사고와 적응력"],
+                weaknesses: ["논쟁적인 성향", "세부사항 무시", "후속 조치 부족", "감정적 민감성 부족"],
+                famous: ["토마스 에디슨", "마크 트웨인", "톰 행크스", "세라 실버만"]
+            },
+            "ESTJ": {
+                title: "엄격한 관리자",
+                english: "Executive",
+                emoji: "👔",
+                group: "관리자형 (SJ)",
+                description: "조직적이고 실용적인 관리자입니다. 질서와 규칙을 중시하며, 책임감 있게 일을 추진합니다. 명확한 목표를 설정하고 효율적으로 달성하는 능력이 뛰어납니다.",
+                strengths: ["뛰어난 조직력과 관리 능력", "책임감 있고 신뢰할 수 있음", "결단력과 실행력", "현실적이고 논리적"],
+                weaknesses: ["융통성 부족", "감정 표현의 어려움", "지나친 통제 성향", "변화에 대한 저항"],
+                famous: ["헨리 포드", "존 D. 록펠러", "미셸 오바마", "에마 왓슨"]
+            },
+            "ESFJ": {
+                title: "사교적인 외교관",
+                english: "Consul",
+                emoji: "🤝",
+                group: "관리자형 (SJ)",
+                description: "따뜻하고 협조적인 돌봄이입니다. 다른 사람들의 필요에 민감하며, 조화로운 환경을 만드는 것을 중요시합니다. 사회적 책임감이 강하고 헌신적입니다.",
+                strengths: ["뛰어난 사교성", "배려심 깊고 협조적", "책임감 있고 충실함", "실용적이고 현실적"],
+                weaknesses: ["비판에 민감함", "타인의 시선에 신경 씀", "변화를 꺼림", "갈등 회피 성향"],
+                famous: ["테일러 스위프트", "빌 클린턴", "제니퍼 로페즈", "휴 잭맨"]
+            },
+            "ENFJ": {
+                title: "정의로운 사회운동가",
+                english: "Protagonist",
+                emoji: "👑",
+                group: "외교관형 (NF)",
+                description: "카리스마 있고 영감을 주는 리더입니다. 다른 사람들의 성장과 발전을 돕는 것에서 큰 기쁨을 느낍니다. 뛰어난 의사소통 능력과 공감 능력으로 사람들을 이끕니다.",
+                strengths: ["뛰어난 리더십", "공감 능력과 배려심", "의사소통 능력", "열정적이고 헌신적"],
+                weaknesses: ["지나친 이상주의", "자기 희생적 성향", "비판에 민감함", "과도한 책임감"],
+                famous: ["버락 오바마", "오프라 윈프리", "마틴 루터 킹", "벤 애플렉"]
+            },
+            "ENTJ": {
+                title: "대담한 통솔자",
+                english: "Commander",
+                emoji: "🦁",
+                group: "분석가형 (NT)",
+                description: "전략적이고 효율적인 리더입니다. 비전을 가지고 목표를 달성하기 위해 사람들을 이끕니다. 도전을 즐기며, 복잡한 문제를 해결하는 것에 탁월합니다.",
+                strengths: ["뛰어난 전략적 사고", "강한 리더십과 결단력", "효율성 추구", "자신감과 추진력"],
+                weaknesses: ["지나친 통제 성향", "감정적 민감성 부족", "참을성 부족", "완고함"],
+                famous: ["스티브 잡스", "마가렛 대처", "고든 램지", "해리슨 포드"]
+            }
+        };
+
+        // 직업 추천 정보
+        const careerInfo = {
+            "ISTJ": {
+                categories: ["행정·관리", "금융·회계", "법률·의료"],
+                examples: "회계사, 감사관, 변호사, 판사, 의사, 공무원, 은행원, 군인, 경찰관, 프로젝트 관리자, 데이터 분석가"
+            },
+            "ISFJ": {
+                categories: ["의료·보건", "교육·상담", "행정·서비스"],
+                examples: "간호사, 의사, 물리치료사, 초등교사, 사회복지사, 상담사, 도서관 사서, 행정 관리자, 인사 담당자"
+            },
+            "INFJ": {
+                categories: ["상담·심리", "예술·창작", "교육·연구"],
+                examples: "심리상담사, 심리학자, 작가, 예술가, 교수, 사회운동가, 인사 담당자, UX 디자이너, 종교인"
+            },
+            "INTJ": {
+                categories: ["과학·연구", "IT·기술", "전략·경영"],
+                examples: "과학자, 연구원, 프로그래머, 시스템 분석가, 전략 컨설턴트, 투자 분석가, 건축가, 변호사, 외과의사"
+            },
+            "ISTP": {
+                categories: ["기술·공학", "응급·구조", "제조·수리"],
+                examples: "엔지니어, 기술자, 정비사, 파일럿, 외과의사, 법의학자, 경찰관, 소방관, 운동선수, 목수"
+            },
+            "ISFP": {
+                categories: ["예술·디자인", "건강·웰빙", "자연·환경"],
+                examples: "그래픽 디자이너, 패션 디자이너, 인테리어 디자이너, 사진작가, 음악가, 수의사, 물리치료사, 요리사, 조경사"
+            },
+            "INFP": {
+                categories: ["예술·창작", "상담·치료", "사회·비영리"],
+                examples: "작가, 시인, 예술가, 심리상담사, 사회복지사, 그래픽 디자이너, 음악가, 교수, 비영리단체 활동가"
+            },
+            "INTP": {
+                categories: ["과학·연구", "IT·개발", "학술·분석"],
+                examples: "과학자, 연구원, 프로그래머, 소프트웨어 개발자, 수학자, 철학자, 대학교수, 게임 개발자, 데이터 과학자"
+            },
+            "ESTP": {
+                categories: ["비즈니스·영업", "응급·모험", "스포츠·엔터"],
+                examples: "기업가, 영업 관리자, 마케터, 부동산 중개인, 소방관, 경찰관, 운동선수, 응급구조사, 파일럿"
+            },
+            "ESFP": {
+                categories: ["엔터테인먼트", "서비스·접객", "건강·웰빙"],
+                examples: "배우, 가수, 연예인, 이벤트 기획자, 여행 가이드, 호텔리어, 미용사, 피트니스 트레이너, 요리사, 간호사"
+            },
+            "ENFP": {
+                categories: ["창작·기획", "상담·교육", "마케팅·홍보"],
+                examples: "작가, 저널리스트, 광고 기획자, 마케터, 상담사, 배우, 코치, 사회운동가, 기업가, UX 디자이너"
+            },
+            "ENTP": {
+                categories: ["창업·혁신", "컨설팅·법률", "미디어·기획"],
+                examples: "기업가, 벤처투자가, 변호사, 컨설턴트, 마케터, 프로듀서, 시스템 분석가, 정치인, 발명가"
+            },
+            "ESTJ": {
+                categories: ["경영·관리", "금융·보험", "공공·행정"],
+                examples: "경영자, CEO, 관리자, 은행 지점장, 군 장교, 판사, 경찰 간부, 학교 행정가, 보험 관리자, 부동산 관리자"
+            },
+            "ESFJ": {
+                categories: ["의료·보건", "교육·상담", "서비스·영업"],
+                examples: "간호사, 교사, 영업 관리자, 호텔리어, 이벤트 기획자, 사회복지사, 상담사, 인사 담당자, 홍보 담당자"
+            },
+            "ENFJ": {
+                categories: ["교육·리더십", "상담·코칭", "미디어·정치"],
+                examples: "교사, 교수, CEO, 인사 담당자, 상담사, 코치, 정치인, 종교 지도자, 방송인, 사회운동가"
+            },
+            "ENTJ": {
+                categories: ["경영·리더십", "법률·정치", "전략·금융"],
+                examples: "CEO, 기업 경영자, 변호사, 판사, 정치인, 투자은행가, 컨설턴트, 군 장교, 대학 총장, 벤처 투자가"
+            }
+        };
+
+        // ============================================
+        // 상태 변수
+        // ============================================
+        let currentQuestion = 0;
+        let scores = {
+            E: 0, I: 0,
+            S: 0, N: 0,
+            T: 0, F: 0,
+            J: 0, P: 0
+        };
+        let shuffledQuestions = [];
+
+        // ============================================
+        // 함수들
+        // ============================================
+
+        // 질문 섞기
+        function shuffleQuestions() {
+            const categories = {
+                "E-I": [],
+                "S-N": [],
+                "T-F": [],
+                "J-P": []
+            };
+
+            questions.forEach((q, index) => {
+                categories[q.category].push({...q, originalIndex: index});
+            });
+
+            Object.keys(categories).forEach(cat => {
+                categories[cat] = categories[cat].sort(() => Math.random() - 0.5);
+            });
+
+            shuffledQuestions = [];
+            for (let i = 0; i < 10; i++) {
+                shuffledQuestions.push(categories["E-I"][i]);
+                shuffledQuestions.push(categories["S-N"][i]);
+                shuffledQuestions.push(categories["T-F"][i]);
+                shuffledQuestions.push(categories["J-P"][i]);
+            }
+        }
+
+        // 퀴즈 시작
+        function startQuiz() {
+            shuffleQuestions();
+            currentQuestion = 0;
+            scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
+            document.getElementById('resultScreen').style.display = 'none';
+
+            showQuestion();
+        }
+
+        // 질문 표시
+        function showQuestion() {
+            const q = shuffledQuestions[currentQuestion];
+
+            const progress = ((currentQuestion) / shuffledQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `${currentQuestion + 1} / ${shuffledQuestions.length}`;
+
+            document.getElementById('categoryBadge').textContent = q.categoryName;
+            document.getElementById('questionNumber').textContent = `질문 ${currentQuestion + 1}`;
+            document.getElementById('questionText').textContent = q.text;
+
+            const container = document.getElementById('answersContainer');
+            container.innerHTML = '';
+
+            const shuffledAnswers = [...q.answers].sort(() => Math.random() - 0.5);
+            const letters = ['A', 'B'];
+
+            shuffledAnswers.forEach((answer, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.innerHTML = `<span class="letter">${letters[index]}</span> ${answer.text}`;
+                btn.onclick = () => selectAnswer(answer.value);
+                container.appendChild(btn);
+            });
+        }
+
+        // 답변 선택
+        function selectAnswer(value) {
+            scores[value]++;
+            currentQuestion++;
+
+            if (currentQuestion >= shuffledQuestions.length) {
+                showResult();
+            } else {
+                showQuestion();
+            }
+        }
+
+        // 결과 표시
+        function showResult() {
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+
+            const type =
+                (scores.E >= scores.I ? 'E' : 'I') +
+                (scores.S >= scores.N ? 'S' : 'N') +
+                (scores.T >= scores.F ? 'T' : 'F') +
+                (scores.J >= scores.P ? 'J' : 'P');
+
+            const typeInfo = typeDescriptions[type];
+
+            document.getElementById('resultType').textContent = type;
+            document.getElementById('resultTitle').textContent = typeInfo.title;
+            document.getElementById('resultEnglish').textContent = typeInfo.english;
+
+            // 차원별 결과
+            const dimensionResults = document.getElementById('dimensionResults');
+            dimensionResults.innerHTML = '';
+
+            const dimensions = [
+                { left: 'E', right: 'I', leftName: '외향', rightName: '내향', title: '에너지 방향' },
+                { left: 'S', right: 'N', leftName: '감각', rightName: '직관', title: '인식 기능' },
+                { left: 'T', right: 'F', leftName: '사고', rightName: '감정', title: '판단 기능' },
+                { left: 'J', right: 'P', leftName: '판단', rightName: '인식', title: '생활 양식' }
+            ];
+
+            dimensions.forEach(dim => {
+                const total = scores[dim.left] + scores[dim.right];
+                const leftPercent = Math.round((scores[dim.left] / total) * 100);
+                const rightPercent = 100 - leftPercent;
+                const isLeft = scores[dim.left] >= scores[dim.right];
+
+                const card = document.createElement('div');
+                card.className = 'dimension-card';
+                card.innerHTML = `
+                    <h4>${dim.title}</h4>
+                    <div class="dimension-bar">
+                        <div class="dimension-fill ${isLeft ? 'left' : 'right'}"
+                             style="width: ${isLeft ? leftPercent : rightPercent}%;
+                                    ${isLeft ? '' : 'margin-left: auto;'}"></div>
+                    </div>
+                    <div class="dimension-labels">
+                        <span>${dim.leftName}(${dim.left}) ${leftPercent}%</span>
+                        <span>${rightPercent}% ${dim.rightName}(${dim.right})</span>
+                    </div>
+                `;
+                dimensionResults.appendChild(card);
+            });
+
+            // 상세 설명
+            const resultDescription = document.getElementById('resultDescription');
+            resultDescription.innerHTML = `
+                <h3>${typeInfo.emoji} 성격 특성</h3>
+                <p>${typeInfo.description}</p>
+
+                <h3>● 강점</h3>
+                <ul>
+                    ${typeInfo.strengths.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+
+                <h3>● 약점</h3>
+                <ul>
+                    ${typeInfo.weaknesses.map(w => `<li>${w}</li>`).join('')}
+                </ul>
+            `;
+
+            // 성격 그룹 표시
+            const mbtiSection = document.getElementById('mbtiSection');
+            mbtiSection.innerHTML = `
+                <h3>🔖 성격 그룹</h3>
+                <div class="mbti-group">${typeInfo.group}</div>
+                <p style="color: #666; font-size: 0.9em; margin-top: 15px;">
+                    같은 그룹: ${getGroupMembers(typeInfo.group, type)}
+                </p>
+            `;
+
+            // 직업 추천 표시
+            const career = careerInfo[type];
+            const careerSection = document.getElementById('careerSection');
+            careerSection.innerHTML = `
+                <h3>💼 추천 직업 분야</h3>
+                <div class="career-categories">
+                    ${career.categories.map(cat => `<span class="career-tag">${cat}</span>`).join('')}
+                </div>
+                <div class="career-examples">
+                    <h4>관련 직업 예시:</h4>
+                    <p>${career.examples}</p>
+                </div>
+            `;
+
+            // 유명인 표시
+            const famousSection = document.getElementById('famousSection');
+            famousSection.innerHTML = `
+                <h3>⭐ 같은 유형의 유명인</h3>
+                <div class="famous-list">
+                    ${typeInfo.famous.map(person => `<span class="famous-person">${person}</span>`).join('')}
+                </div>
+            `;
+        }
+
+        // 같은 그룹 멤버 반환
+        function getGroupMembers(group, currentType) {
+            const groups = {
+                "관리자형 (SJ)": ["ISTJ", "ISFJ", "ESTJ", "ESFJ"],
+                "탐험가형 (SP)": ["ISTP", "ISFP", "ESTP", "ESFP"],
+                "외교관형 (NF)": ["INFJ", "INFP", "ENFJ", "ENFP"],
+                "분석가형 (NT)": ["INTJ", "INTP", "ENTJ", "ENTP"]
+            };
+
+            return groups[group].filter(t => t !== currentType).join(', ');
+        }
+
+        // 다시 시작
+        function restartQuiz() {
+            document.getElementById('startScreen').style.display = 'block';
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
