@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 성격 유형 알아보기 - 초등학생 MMTIC 검사</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', '맑은 고딕', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* UTTEC Lab 헤더 */
+        .uttec-header {
+            text-align: center;
+            padding: 15px;
+            color: white;
+            font-size: 0.95em;
+            max-width: 800px;
+            margin: 0 auto 15px auto;
+        }
+
+        .uttec-header .lab-name {
+            font-weight: bold;
+            font-size: 1.3em;
+            letter-spacing: 2px;
+        }
+
+        .uttec-header .lab-desc {
+            opacity: 0.9;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        /* UTTEC Lab 푸터 */
+        .uttec-footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 0.85em;
+            max-width: 800px;
+            margin: 15px auto 0 auto;
+            opacity: 0.9;
+        }
+
+        .uttec-footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .uttec-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* 시작 화면 */
+        .start-screen {
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .start-screen h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .start-screen .subtitle {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .start-screen .description {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .start-screen .description h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .start-screen .description ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .start-screen .description li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .start-screen .description li::before {
+            content: "✨";
+            position: absolute;
+            left: 0;
+        }
+
+        .character-img {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        /* 버튼 스타일 */
+        .btn {
+            display: inline-block;
+            padding: 15px 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        /* 질문 화면 */
+        .quiz-screen {
+            display: none;
+            padding: 40px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #f0f0ff;
+            color: #667eea;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .question-box {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.4em;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .answer-btn {
+            padding: 20px 25px;
+            font-size: 1.1em;
+            text-align: left;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .answer-btn:hover {
+            border-color: #667eea;
+            background: #f0f0ff;
+            transform: translateX(10px);
+        }
+
+        .answer-btn .emoji {
+            font-size: 1.5em;
+        }
+
+        .answer-btn.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        /* 결과 화면 */
+        .result-screen {
+            display: none;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .result-type {
+            font-size: 4em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+        }
+
+        .result-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .result-description {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .result-description h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-description p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .result-description ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .result-description li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+
+        .result-description li::before {
+            content: "⭐";
+            position: absolute;
+            left: 0;
+        }
+
+        .dimension-results {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .dimension-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .dimension-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .dimension-bar {
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .dimension-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+        .dimension-fill.left {
+            background: linear-gradient(90deg, #ff6b6b, #ffa500);
+        }
+
+        .dimension-fill.right {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .dimension-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .restart-btn {
+            margin-top: 20px;
+        }
+
+        /* MBTI 매칭 섹션 */
+        .mbti-section {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border: 2px solid #667eea30;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .mbti-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .mbti-type-display {
+            font-size: 2em;
+            font-weight: bold;
+            color: #764ba2;
+            margin: 10px 0;
+        }
+
+        .mbti-name {
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        /* 직업 추천 섹션 */
+        .career-section {
+            background: #fff9e6;
+            border: 2px solid #ffd700;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .career-section h3 {
+            color: #d4a000;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .career-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .career-tag {
+            background: linear-gradient(135deg, #ffd700, #ffb347);
+            color: #5a4000;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .career-examples {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .career-examples h4 {
+            color: #d4a000;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .career-examples p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.9em;
+        }
+
+        /* 주의사항 섹션 */
+        .notice-section {
+            background: #f0f8ff;
+            border: 2px solid #87ceeb;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .notice-section h3 {
+            color: #4682b4;
+            margin-bottom: 15px;
+        }
+
+        .notice-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .notice-section li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+            border-bottom: 1px dashed #87ceeb50;
+        }
+
+        .notice-section li:last-child {
+            border-bottom: none;
+        }
+
+        .notice-section li::before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+        }
+
+        /* 반응형 */
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 15px;
+            }
+
+            .start-screen, .quiz-screen, .result-screen {
+                padding: 25px;
+            }
+
+            .start-screen h1 {
+                font-size: 1.8em;
+            }
+
+            .question-text {
+                font-size: 1.2em;
+            }
+
+            .dimension-results {
+                grid-template-columns: 1fr;
+            }
+
+            .result-type {
+                font-size: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- UTTEC Lab 헤더 -->
+    <div class="uttec-header">
+        <div class="lab-name">UTTEC Lab</div>
+        <div class="lab-desc">Provided by UTTEC Lab</div>
+    </div>
+
+    <div class="container">
+        <!-- 시작 화면 -->
+        <div class="start-screen" id="startScreen">
+            <div class="character-img">🌟</div>
+            <h1>나의 성격 유형 알아보기</h1>
+            <p class="subtitle">초등학생을 위한 성격 유형 검사</p>
+
+            <div class="description">
+                <h3>🎯 검사 안내</h3>
+                <ul>
+                    <li>총 40개의 질문이 있어요</li>
+                    <li>정답은 없어요! 나의 평소 모습을 솔직하게 선택해 주세요</li>
+                    <li>너무 오래 고민하지 말고, 먼저 떠오르는 것을 선택하세요</li>
+                    <li>약 10~15분 정도 걸려요</li>
+                </ul>
+            </div>
+
+            <button class="btn" onclick="startQuiz()">검사 시작하기 🚀</button>
+        </div>
+
+        <!-- 질문 화면 -->
+        <div class="quiz-screen" id="quizScreen">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">1 / 40</div>
+
+            <div class="category-badge" id="categoryBadge">에너지 방향</div>
+
+            <div class="question-box">
+                <div class="question-number" id="questionNumber">질문 1</div>
+                <div class="question-text" id="questionText">질문 내용이 여기에 표시됩니다.</div>
+            </div>
+
+            <div class="answers" id="answersContainer">
+                <!-- 답변 버튼들이 여기에 동적으로 생성됩니다 -->
+            </div>
+        </div>
+
+        <!-- 결과 화면 -->
+        <div class="result-screen" id="resultScreen">
+            <div class="character-img">🎉</div>
+            <h2>나의 성격 유형은...</h2>
+            <div class="result-type" id="resultType">ENFP</div>
+            <div class="result-title" id="resultTitle">열정적인 활동가</div>
+
+            <div class="dimension-results" id="dimensionResults">
+                <!-- 차원별 결과가 여기에 표시됩니다 -->
+            </div>
+
+            <div class="result-description" id="resultDescription">
+                <!-- 상세 설명이 여기에 표시됩니다 -->
+            </div>
+
+            <!-- MBTI 매칭 섹션 -->
+            <div class="mbti-section" id="mbtiSection">
+                <!-- MBTI 정보가 여기에 표시됩니다 -->
+            </div>
+
+            <!-- 직업 추천 섹션 -->
+            <div class="career-section" id="careerSection">
+                <!-- 직업 추천이 여기에 표시됩니다 -->
+            </div>
+
+            <!-- 주의사항 섹션 -->
+            <div class="notice-section">
+                <h3>📌 검사 결과를 볼 때 알아두세요!</h3>
+                <ul>
+                    <li><strong>성격은 변할 수 있어요!</strong> 지금의 결과가 평생 가는 것이 아니에요. 성장하면서 달라질 수 있답니다.</li>
+                    <li><strong>정답이 아니에요!</strong> 이 검사는 나를 더 잘 이해하기 위한 도구일 뿐, 나의 모든 것을 설명하지는 않아요.</li>
+                    <li><strong>모든 유형은 소중해요!</strong> 어떤 유형이 더 좋거나 나쁜 것은 없어요. 각자 다른 강점이 있답니다.</li>
+                    <li><strong>직업은 참고만 하세요!</strong> 추천 직업은 참고용이에요. 꿈은 스스로 찾아가는 거예요!</li>
+                </ul>
+            </div>
+
+            <button class="btn restart-btn" onclick="restartQuiz()">다시 검사하기 🔄</button>
+        </div>
+    </div>
+
+    <!-- UTTEC Lab 푸터 -->
+    <div class="uttec-footer">
+        <p>© 2024 UTTEC Lab. All Rights Reserved.</p>
+        <p>본 검사는 교육 목적으로 제공됩니다.</p>
+    </div>
+
+    <script>
+        // ============================================
+        // 질문 데이터 (4개 지표 × 10문항 = 40문항)
+        // ============================================
+        const questions = [
+            // E-I (외향-내향) 질문 10개
+            {
+                category: "E-I",
+                categoryName: "에너지 방향",
+                text: "쉬는 시간에 나는 주로...",
+                answers: [
+                    { text: "친구들과 함께 이야기하거나 놀아요", value: "E", emoji: "👥" },
+                    { text: "혼자 조용히 책을 읽거나 생각해요", value: "I", emoji: "📚" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향",
+                text: "새 학기가 시작되면 나는...",
+                answers: [
+                    { text: "새로운 친구들에게 먼저 말을 걸어요", value: "E", emoji: "🙋" },
+                    { text: "누군가 말을 걸어주길 기다려요", value: "I", emoji: "😊" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향",
+                text: "모둠 활동을 할 때 나는...",
+                answers: [
+                    { text: "적극적으로 의견을 말하고 이끌어요", value: "E", emoji: "📢" },
+                    { text: "다른 친구들 의견을 듣고 조용히 생각해요", value: "I", emoji: "🤔" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향",
+                text: "주말에 친구들과 놀고 나면...",
+                answers: [
+                    { text: "기분이 좋고 더 놀고 싶어요", value: "E", emoji: "🎉" },
+                    { text: "재미있었지만 이제 혼자 쉬고 싶어요", value: "I", emoji: "🏠" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향",
+                text: "발표할 때 나는...",
+                answers: [
+                    { text: "많은 친구들 앞에서도 말하는 게 재미있어요", value: "E", emoji: "🎤" },
+                    { text: "작은 모둠에서 발표하는 게 더 편해요", value: "I", emoji: "👋" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향",
+                text: "새로운 것을 배울 때 나는...",
+                answers: [
+                    { text: "친구들과 함께 이야기하면서 배워요", value: "E", emoji: "💬" },
+                    { text: "혼자 집중해서 공부하는 게 좋아요", value: "I", emoji: "✏️" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향",
+                text: "학교 행사가 있을 때 나는...",
+                answers: [
+                    { text: "신나고 기대돼요!", value: "E", emoji: "🎊" },
+                    { text: "조금 부담스럽기도 해요", value: "I", emoji: "😅" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향",
+                text: "친구 관계에서 나는...",
+                answers: [
+                    { text: "여러 친구들과 다양하게 어울려요", value: "E", emoji: "👨‍👩‍👧‍👦" },
+                    { text: "소수의 친한 친구와 깊게 사귀어요", value: "I", emoji: "🤝" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향",
+                text: "모르는 것이 있을 때 나는...",
+                answers: [
+                    { text: "바로 선생님이나 친구에게 물어봐요", value: "E", emoji: "❓" },
+                    { text: "먼저 혼자 생각해보거나 찾아봐요", value: "I", emoji: "🔍" }
+                ]
+            },
+            {
+                category: "E-I",
+                categoryName: "에너지 방향",
+                text: "생각이나 아이디어가 떠오르면...",
+                answers: [
+                    { text: "바로 친구들에게 말하고 싶어요", value: "E", emoji: "💡" },
+                    { text: "먼저 충분히 생각한 후에 말해요", value: "I", emoji: "🧠" }
+                ]
+            },
+
+            // S-N (감각-직관) 질문 10개
+            {
+                category: "S-N",
+                categoryName: "정보 수집",
+                text: "이야기를 들을 때 나는...",
+                answers: [
+                    { text: "실제로 있었던 일인지가 중요해요", value: "S", emoji: "📋" },
+                    { text: "상상의 이야기도 재미있어요", value: "N", emoji: "🦄" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "정보 수집",
+                text: "그림을 그릴 때 나는...",
+                answers: [
+                    { text: "보이는 것을 자세하게 그려요", value: "S", emoji: "🖼️" },
+                    { text: "상상한 것을 자유롭게 그려요", value: "N", emoji: "🎨" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "정보 수집",
+                text: "선생님 설명을 들을 때 나는...",
+                answers: [
+                    { text: "구체적인 예시가 있으면 이해가 잘 돼요", value: "S", emoji: "📝" },
+                    { text: "전체적인 개념을 먼저 알고 싶어요", value: "N", emoji: "🌐" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "정보 수집",
+                text: "새로운 게임을 할 때 나는...",
+                answers: [
+                    { text: "규칙을 꼼꼼히 읽고 시작해요", value: "S", emoji: "📖" },
+                    { text: "일단 해보면서 알아가요", value: "N", emoji: "🎮" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "정보 수집",
+                text: "미래에 대해 생각할 때 나는...",
+                answers: [
+                    { text: "현실적으로 가능한 것을 생각해요", value: "S", emoji: "📊" },
+                    { text: "상상 속에서 여러 가능성을 그려봐요", value: "N", emoji: "🚀" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "정보 수집",
+                text: "문제를 풀 때 나는...",
+                answers: [
+                    { text: "배운 방법대로 차근차근 풀어요", value: "S", emoji: "📐" },
+                    { text: "새로운 방법을 찾아보고 싶어요", value: "N", emoji: "💫" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "정보 수집",
+                text: "여행을 갈 때 나는...",
+                answers: [
+                    { text: "계획을 세우고 준비물을 꼼꼼히 챙겨요", value: "S", emoji: "🧳" },
+                    { text: "새로운 경험을 할 생각에 설레요", value: "N", emoji: "✈️" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "정보 수집",
+                text: "책을 읽을 때 나는...",
+                answers: [
+                    { text: "실제 이야기나 정보가 담긴 책이 좋아요", value: "S", emoji: "📘" },
+                    { text: "판타지나 상상의 세계가 나오는 책이 좋아요", value: "N", emoji: "📗" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "정보 수집",
+                text: "과학 시간에 나는...",
+                answers: [
+                    { text: "실험을 직접 해보는 게 좋아요", value: "S", emoji: "🔬" },
+                    { text: "원리와 이론을 이해하는 게 좋아요", value: "N", emoji: "🧪" }
+                ]
+            },
+            {
+                category: "S-N",
+                categoryName: "정보 수집",
+                text: "무언가를 설명할 때 나는...",
+                answers: [
+                    { text: "자세하고 구체적으로 설명해요", value: "S", emoji: "📌" },
+                    { text: "전체적인 느낌과 의미를 말해요", value: "N", emoji: "🌈" }
+                ]
+            },
+
+            // T-F (사고-감정) 질문 10개
+            {
+                category: "T-F",
+                categoryName: "판단 방식",
+                text: "친구가 슬퍼하고 있을 때 나는...",
+                answers: [
+                    { text: "왜 슬픈지 이유를 알고 해결책을 찾아줘요", value: "T", emoji: "🔧" },
+                    { text: "먼저 친구의 마음을 이해하고 위로해요", value: "F", emoji: "🤗" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 방식",
+                text: "모둠에서 역할을 정할 때 나는...",
+                answers: [
+                    { text: "각자 잘하는 것을 생각해서 정해요", value: "T", emoji: "📊" },
+                    { text: "모두가 하고 싶은 것을 먼저 물어봐요", value: "F", emoji: "💬" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 방식",
+                text: "친구와 의견이 다를 때 나는...",
+                answers: [
+                    { text: "내 의견이 맞다면 분명하게 말해요", value: "T", emoji: "✊" },
+                    { text: "친구 기분이 상하지 않게 조심해요", value: "F", emoji: "💕" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 방식",
+                text: "결정을 내릴 때 나는...",
+                answers: [
+                    { text: "논리적으로 따져보고 결정해요", value: "T", emoji: "⚖️" },
+                    { text: "마음이 가는 대로 결정해요", value: "F", emoji: "❤️" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 방식",
+                text: "칭찬을 받을 때 더 기쁜 것은...",
+                answers: [
+                    { text: "\"정말 잘했어, 똑똑하다!\"", value: "T", emoji: "🏆" },
+                    { text: "\"정말 고마워, 넌 좋은 친구야!\"", value: "F", emoji: "🌸" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 방식",
+                text: "규칙이 불공평하다고 느낄 때 나는...",
+                answers: [
+                    { text: "왜 불공평한지 이유를 말해요", value: "T", emoji: "📢" },
+                    { text: "규칙 때문에 상처받은 친구가 더 신경 쓰여요", value: "F", emoji: "😢" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 방식",
+                text: "영화나 드라마를 볼 때 나는...",
+                answers: [
+                    { text: "이야기가 논리적인지 생각해봐요", value: "T", emoji: "🎬" },
+                    { text: "등장인물의 감정에 함께 빠져들어요", value: "F", emoji: "😭" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 방식",
+                text: "친구가 실수했을 때 나는...",
+                answers: [
+                    { text: "무엇이 잘못됐는지 알려줘요", value: "T", emoji: "👆" },
+                    { text: "괜찮다고 다독여줘요", value: "F", emoji: "🤝" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 방식",
+                text: "토론할 때 나는...",
+                answers: [
+                    { text: "옳고 그름을 따지는 게 중요해요", value: "T", emoji: "⚔️" },
+                    { text: "서로 기분 나쁘지 않게 하는 게 중요해요", value: "F", emoji: "🕊️" }
+                ]
+            },
+            {
+                category: "T-F",
+                categoryName: "판단 방식",
+                text: "선물을 고를 때 나는...",
+                answers: [
+                    { text: "실용적이고 필요한 것을 골라요", value: "T", emoji: "🎁" },
+                    { text: "그 사람이 좋아할 것 같은 것을 골라요", value: "F", emoji: "💝" }
+                ]
+            },
+
+            // J-P (판단-인식) 질문 10개
+            {
+                category: "J-P",
+                categoryName: "생활 방식",
+                text: "숙제를 할 때 나는...",
+                answers: [
+                    { text: "미리미리 해두는 편이에요", value: "J", emoji: "✅" },
+                    { text: "마감 직전에 하는 편이에요", value: "P", emoji: "⏰" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 방식",
+                text: "내 방과 책상은...",
+                answers: [
+                    { text: "정리정돈이 잘 되어 있어요", value: "J", emoji: "🗂️" },
+                    { text: "좀 어지러워도 내가 찾을 수 있어요", value: "P", emoji: "📚" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 방식",
+                text: "계획이 갑자기 바뀌면...",
+                answers: [
+                    { text: "조금 불편하고 힘들어요", value: "J", emoji: "😣" },
+                    { text: "오히려 새로운 게 재미있을 수 있어요", value: "P", emoji: "😄" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 방식",
+                text: "주말 계획을 세울 때 나는...",
+                answers: [
+                    { text: "미리 무엇을 할지 정해두는 게 좋아요", value: "J", emoji: "📅" },
+                    { text: "그때그때 하고 싶은 것을 해요", value: "P", emoji: "🎲" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 방식",
+                text: "과제를 할 때 나는...",
+                answers: [
+                    { text: "순서대로 하나씩 끝내요", value: "J", emoji: "📝" },
+                    { text: "여러 가지를 동시에 해요", value: "P", emoji: "🔄" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 방식",
+                text: "결정을 내릴 때 나는...",
+                answers: [
+                    { text: "빨리 결정하고 실행해요", value: "J", emoji: "⚡" },
+                    { text: "여러 가능성을 더 알아보고 싶어요", value: "P", emoji: "🤔" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 방식",
+                text: "시험 공부를 할 때 나는...",
+                answers: [
+                    { text: "계획표를 만들어서 공부해요", value: "J", emoji: "📊" },
+                    { text: "그날 기분에 따라 공부해요", value: "P", emoji: "📖" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 방식",
+                text: "약속 시간에 나는...",
+                answers: [
+                    { text: "미리 도착하거나 정시에 가요", value: "J", emoji: "⏱️" },
+                    { text: "가끔 늦을 때도 있어요", value: "P", emoji: "🏃" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 방식",
+                text: "새로운 일을 시작할 때 나는...",
+                answers: [
+                    { text: "먼저 계획을 세우고 준비해요", value: "J", emoji: "📋" },
+                    { text: "일단 시작하면서 알아가요", value: "P", emoji: "🚀" }
+                ]
+            },
+            {
+                category: "J-P",
+                categoryName: "생활 방식",
+                text: "하루가 끝나면 나는...",
+                answers: [
+                    { text: "계획한 것을 다 했는지 확인해요", value: "J", emoji: "✔️" },
+                    { text: "오늘 있었던 재미있는 일을 떠올려요", value: "P", emoji: "🌙" }
+                ]
+            }
+        ];
+
+        // 16가지 성격 유형 설명
+        const typeDescriptions = {
+            "ISTJ": {
+                title: "신중한 관리자",
+                emoji: "📋",
+                description: "너는 책임감이 강하고 약속을 잘 지키는 친구야! 규칙을 중요하게 생각하고, 맡은 일은 끝까지 해내는 끈기가 있어.",
+                strengths: ["약속을 잘 지켜요", "꼼꼼하고 정확해요", "책임감이 강해요", "차분하고 침착해요"],
+                growth: "가끔은 새로운 방법도 시도해 보고, 친구들의 다른 의견도 열린 마음으로 들어보면 좋겠어!"
+            },
+            "ISFJ": {
+                title: "따뜻한 수호자",
+                emoji: "🛡️",
+                description: "너는 다른 사람을 잘 돌봐주고 배려하는 따뜻한 친구야! 조용하지만 친구들에게 든든한 존재지.",
+                strengths: ["친구를 잘 도와줘요", "기억력이 좋아요", "성실하고 꾸준해요", "배려심이 깊어요"],
+                growth: "네 의견도 중요해! 가끔은 네가 원하는 것을 표현해도 괜찮아."
+            },
+            "INFJ": {
+                title: "통찰력 있는 조언자",
+                emoji: "🔮",
+                description: "너는 깊이 생각하고 다른 사람의 마음을 잘 이해하는 친구야! 상상력이 풍부하고 의미 있는 일을 좋아해.",
+                strengths: ["다른 사람 마음을 잘 알아요", "창의적이에요", "목표를 향해 노력해요", "진심으로 대해요"],
+                growth: "완벽하지 않아도 괜찮아. 가끔은 가볍게 즐기는 것도 좋아!"
+            },
+            "INTJ": {
+                title: "전략적인 사색가",
+                emoji: "🧩",
+                description: "너는 똑똑하고 미래를 잘 계획하는 친구야! 혼자 깊이 생각하는 것을 좋아하고, 목표를 향해 꾸준히 나아가.",
+                strengths: ["계획을 잘 세워요", "독립적이에요", "문제 해결을 잘해요", "새로운 아이디어가 많아요"],
+                growth: "친구들과 함께 하는 활동도 즐겨보고, 감정 표현도 연습해 보면 좋겠어!"
+            },
+            "ISTP": {
+                title: "만능 탐험가",
+                emoji: "🔧",
+                description: "너는 손재주가 좋고 문제를 잘 해결하는 친구야! 직접 해보면서 배우는 것을 좋아하고, 위기 상황에서도 침착해.",
+                strengths: ["손으로 만드는 것을 잘해요", "논리적이에요", "융통성이 있어요", "침착해요"],
+                growth: "네 생각과 감정을 친구들과 나눠보면 더 가까워질 수 있어!"
+            },
+            "ISFP": {
+                title: "호기심 많은 예술가",
+                emoji: "🎨",
+                description: "너는 예술적 감각이 뛰어나고 자유로운 영혼을 가진 친구야! 자연과 아름다운 것을 좋아하고, 마음이 따뜻해.",
+                strengths: ["예술적 감각이 있어요", "친절하고 다정해요", "지금 이 순간을 즐겨요", "융통성이 있어요"],
+                growth: "장기적인 계획도 세워보고, 네 생각을 더 적극적으로 말해보면 좋겠어!"
+            },
+            "INFP": {
+                title: "이상을 품은 중재자",
+                emoji: "🌷",
+                description: "너는 상상력이 풍부하고 마음이 따뜻한 친구야! 다른 사람의 감정을 잘 이해하고, 자신만의 가치관이 뚜렷해.",
+                strengths: ["창의적이에요", "공감 능력이 뛰어나요", "진실된 마음을 가졌어요", "글이나 예술로 표현을 잘해요"],
+                growth: "현실적인 계획도 세워보고, 작은 일부터 실천해 보면 좋겠어!"
+            },
+            "INTP": {
+                title: "논리적인 사색가",
+                emoji: "🔬",
+                description: "너는 호기심이 많고 분석적으로 생각하는 친구야! 왜?라는 질문을 좋아하고, 새로운 아이디어를 탐구해.",
+                strengths: ["분석력이 뛰어나요", "창의적으로 생각해요", "객관적이에요", "배우는 것을 좋아해요"],
+                growth: "생각을 행동으로 옮기는 연습을 하고, 친구들 감정에도 관심을 가져보면 좋겠어!"
+            },
+            "ESTP": {
+                title: "모험을 즐기는 활동가",
+                emoji: "🏄",
+                description: "너는 에너지가 넘치고 모험을 좋아하는 친구야! 지금 이 순간을 즐기고, 문제가 생기면 바로 해결해.",
+                strengths: ["행동력이 있어요", "위기 대처를 잘해요", "사교적이에요", "현실적이에요"],
+                growth: "미래를 위한 계획도 세워보고, 행동하기 전에 한 번 더 생각해 보면 좋겠어!"
+            },
+            "ESFP": {
+                title: "신나는 연예인",
+                emoji: "🎭",
+                description: "너는 밝고 활기찬 친구야! 사람들과 함께 하는 것을 좋아하고, 주변을 즐겁게 만드는 재주가 있어.",
+                strengths: ["분위기를 띄워요", "긍정적이에요", "친구가 많아요", "지금 이 순간을 즐겨요"],
+                growth: "장기적인 목표도 세워보고, 때로는 조용히 생각하는 시간도 가져보면 좋겠어!"
+            },
+            "ENFP": {
+                title: "열정적인 활동가",
+                emoji: "🌈",
+                description: "너는 상상력이 풍부하고 열정적인 친구야! 새로운 아이디어가 많고, 사람들에게 영감을 줘.",
+                strengths: ["창의적이에요", "열정이 넘쳐요", "사람들과 잘 어울려요", "가능성을 봐요"],
+                growth: "시작한 일을 끝까지 마무리하고, 현실적인 계획도 세워보면 좋겠어!"
+            },
+            "ENTP": {
+                title: "도전적인 발명가",
+                emoji: "💡",
+                description: "너는 아이디어가 넘치고 토론을 좋아하는 친구야! 새로운 가능성을 탐색하고, 문제를 창의적으로 해결해.",
+                strengths: ["창의적이에요", "빠르게 생각해요", "도전정신이 있어요", "다양한 관점을 봐요"],
+                growth: "하나에 집중하는 연습을 하고, 다른 사람 감정도 배려해 보면 좋겠어!"
+            },
+            "ESTJ": {
+                title: "엄격한 관리자",
+                emoji: "👔",
+                description: "너는 리더십이 있고 조직적인 친구야! 규칙을 중요하게 생각하고, 일을 효율적으로 처리해.",
+                strengths: ["리더십이 있어요", "책임감이 강해요", "체계적이에요", "결단력이 있어요"],
+                growth: "다른 사람의 감정도 배려하고, 융통성 있게 생각해 보면 좋겠어!"
+            },
+            "ESFJ": {
+                title: "사교적인 외교관",
+                emoji: "🤝",
+                description: "너는 친절하고 사람들을 잘 돌봐주는 친구야! 조화를 중요하게 생각하고, 다른 사람을 도울 때 행복해.",
+                strengths: ["배려심이 깊어요", "협동을 잘해요", "책임감이 있어요", "사교성이 좋아요"],
+                growth: "네 자신의 필요도 중요하게 생각하고, 새로운 방법도 시도해 보면 좋겠어!"
+            },
+            "ENFJ": {
+                title: "카리스마 있는 지도자",
+                emoji: "👑",
+                description: "너는 다른 사람들에게 영감을 주고 이끄는 능력이 있는 친구야! 따뜻하면서도 리더십이 있어.",
+                strengths: ["리더십이 있어요", "다른 사람을 잘 이해해요", "소통을 잘해요", "열정적이에요"],
+                growth: "네 자신을 위한 시간도 갖고, 완벽하지 않아도 괜찮다고 생각해 보면 좋겠어!"
+            },
+            "ENTJ": {
+                title: "대담한 통솔자",
+                emoji: "🦁",
+                description: "너는 목표를 세우고 달성하는 것을 좋아하는 리더형 친구야! 효율적이고 결단력이 있어.",
+                strengths: ["목표 지향적이에요", "리더십이 있어요", "전략적으로 생각해요", "자신감이 있어요"],
+                growth: "다른 사람의 감정과 속도도 존중하고, 과정도 즐겨보면 좋겠어!"
+            }
+        };
+
+        // MBTI 매칭 정보 (성인용 명칭)
+        const mbtiInfo = {
+            "ISTJ": { name: "청렴결백한 논리주의자", english: "Logistician" },
+            "ISFJ": { name: "용감한 수호자", english: "Defender" },
+            "INFJ": { name: "선의의 옹호자", english: "Advocate" },
+            "INTJ": { name: "용의주도한 전략가", english: "Architect" },
+            "ISTP": { name: "만능 재주꾼", english: "Virtuoso" },
+            "ISFP": { name: "호기심 많은 예술가", english: "Adventurer" },
+            "INFP": { name: "열정적인 중재자", english: "Mediator" },
+            "INTP": { name: "논리적인 사색가", english: "Logician" },
+            "ESTP": { name: "모험을 즐기는 사업가", english: "Entrepreneur" },
+            "ESFP": { name: "자유로운 영혼의 연예인", english: "Entertainer" },
+            "ENFP": { name: "재기발랄한 활동가", english: "Campaigner" },
+            "ENTP": { name: "뜨거운 논쟁을 즐기는 변론가", english: "Debater" },
+            "ESTJ": { name: "엄격한 관리자", english: "Executive" },
+            "ESFJ": { name: "사교적인 외교관", english: "Consul" },
+            "ENFJ": { name: "정의로운 사회운동가", english: "Protagonist" },
+            "ENTJ": { name: "대담한 통솔자", english: "Commander" }
+        };
+
+        // 직업 추천 정보
+        const careerInfo = {
+            "ISTJ": {
+                categories: ["행정·관리", "금융·회계", "법률·규정"],
+                examples: "회계사, 은행원, 판사, 경찰관, 공무원, 세무사, 감사관, 사서, 데이터 분석가"
+            },
+            "ISFJ": {
+                categories: ["의료·건강", "교육·보육", "사회복지"],
+                examples: "간호사, 의사, 초등교사, 유치원 교사, 사회복지사, 영양사, 상담사, 물리치료사"
+            },
+            "INFJ": {
+                categories: ["상담·심리", "예술·창작", "교육·연구"],
+                examples: "심리상담사, 작가, 예술가, 성직자, 사회운동가, 교수, 인사담당자, 심리학자"
+            },
+            "INTJ": {
+                categories: ["과학·연구", "IT·기술", "전략·기획"],
+                examples: "과학자, 프로그래머, 건축가, 투자분석가, 의사, 변호사, 엔지니어, 전략기획가"
+            },
+            "ISTP": {
+                categories: ["기술·공학", "스포츠·모험", "제작·수리"],
+                examples: "엔지니어, 정비사, 파일럿, 운동선수, 경찰관, 소방관, 외과의사, 컴퓨터 기술자"
+            },
+            "ISFP": {
+                categories: ["예술·디자인", "자연·환경", "건강·웰빙"],
+                examples: "화가, 음악가, 디자이너, 사진작가, 수의사, 물리치료사, 조경사, 요리사, 플로리스트"
+            },
+            "INFP": {
+                categories: ["예술·문학", "상담·치유", "사회공헌"],
+                examples: "작가, 시인, 심리상담사, 예술치료사, 사회복지사, 그래픽 디자이너, 음악가, 교사"
+            },
+            "INTP": {
+                categories: ["과학·연구", "IT·프로그래밍", "분석·전략"],
+                examples: "과학자, 프로그래머, 수학자, 철학자, 대학교수, 게임 개발자, 데이터 과학자"
+            },
+            "ESTP": {
+                categories: ["영업·마케팅", "스포츠·엔터", "응급·구조"],
+                examples: "영업사원, 운동선수, 소방관, 경찰관, 응급구조사, 기업가, 스턴트맨, 부동산 중개인"
+            },
+            "ESFP": {
+                categories: ["엔터테인먼트", "서비스·접객", "이벤트·행사"],
+                examples: "연예인, 배우, 가수, 이벤트 기획자, 여행 가이드, 스튜어디스, 미용사, 요리사"
+            },
+            "ENFP": {
+                categories: ["창작·기획", "상담·코칭", "마케팅·홍보"],
+                examples: "작가, 기자, 광고기획자, 상담사, 배우, 마케터, 코치, 사회운동가, 방송인"
+            },
+            "ENTP": {
+                categories: ["기업·창업", "컨설팅·기획", "미디어·법률"],
+                examples: "기업가, 변호사, 컨설턴트, 발명가, 마케터, 영화감독, 정치인, 벤처투자가"
+            },
+            "ESTJ": {
+                categories: ["경영·관리", "금융·보험", "군·경·공무원"],
+                examples: "경영자, 군인, 경찰관, 판사, 은행 지점장, 학교 교장, 프로젝트 관리자, 보험설계사"
+            },
+            "ESFJ": {
+                categories: ["교육·보육", "의료·간호", "서비스·영업"],
+                examples: "교사, 간호사, 영업사원, 호텔리어, 사회복지사, 상담사, 비서, 인사담당자"
+            },
+            "ENFJ": {
+                categories: ["교육·강연", "상담·코칭", "리더십·경영"],
+                examples: "교사, 교수, 상담사, CEO, 정치인, 성직자, 코치, HR 전문가, 방송인"
+            },
+            "ENTJ": {
+                categories: ["경영·리더십", "법률·정치", "전략·컨설팅"],
+                examples: "CEO, 경영자, 변호사, 정치인, 컨설턴트, 투자은행가, 판사, 군 장교"
+            }
+        };
+
+        // ============================================
+        // 상태 변수
+        // ============================================
+        let currentQuestion = 0;
+        let scores = {
+            E: 0, I: 0,
+            S: 0, N: 0,
+            T: 0, F: 0,
+            J: 0, P: 0
+        };
+        let shuffledQuestions = [];
+
+        // ============================================
+        // 함수들
+        // ============================================
+
+        // 질문 섞기
+        function shuffleQuestions() {
+            // 카테고리별로 질문 분리
+            const categories = {
+                "E-I": [],
+                "S-N": [],
+                "T-F": [],
+                "J-P": []
+            };
+
+            questions.forEach((q, index) => {
+                categories[q.category].push({...q, originalIndex: index});
+            });
+
+            // 각 카테고리 내에서 섞기
+            Object.keys(categories).forEach(cat => {
+                categories[cat] = categories[cat].sort(() => Math.random() - 0.5);
+            });
+
+            // 카테고리별로 번갈아 배치
+            shuffledQuestions = [];
+            for (let i = 0; i < 10; i++) {
+                shuffledQuestions.push(categories["E-I"][i]);
+                shuffledQuestions.push(categories["S-N"][i]);
+                shuffledQuestions.push(categories["T-F"][i]);
+                shuffledQuestions.push(categories["J-P"][i]);
+            }
+        }
+
+        // 퀴즈 시작
+        function startQuiz() {
+            shuffleQuestions();
+            currentQuestion = 0;
+            scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
+            document.getElementById('resultScreen').style.display = 'none';
+
+            showQuestion();
+        }
+
+        // 질문 표시
+        function showQuestion() {
+            const q = shuffledQuestions[currentQuestion];
+
+            // 진행 상황 업데이트
+            const progress = ((currentQuestion) / shuffledQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `${currentQuestion + 1} / ${shuffledQuestions.length}`;
+
+            // 카테고리 배지
+            document.getElementById('categoryBadge').textContent = q.categoryName;
+
+            // 질문 번호와 텍스트
+            document.getElementById('questionNumber').textContent = `질문 ${currentQuestion + 1}`;
+            document.getElementById('questionText').textContent = q.text;
+
+            // 답변 버튼 생성
+            const container = document.getElementById('answersContainer');
+            container.innerHTML = '';
+
+            // 답변 순서도 랜덤으로
+            const shuffledAnswers = [...q.answers].sort(() => Math.random() - 0.5);
+
+            shuffledAnswers.forEach((answer, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.innerHTML = `<span class="emoji">${answer.emoji}</span> ${answer.text}`;
+                btn.onclick = () => selectAnswer(answer.value);
+                container.appendChild(btn);
+            });
+        }
+
+        // 답변 선택
+        function selectAnswer(value) {
+            // 점수 추가
+            scores[value]++;
+
+            // 다음 질문으로
+            currentQuestion++;
+
+            if (currentQuestion >= shuffledQuestions.length) {
+                showResult();
+            } else {
+                showQuestion();
+            }
+        }
+
+        // 결과 표시
+        function showResult() {
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+
+            // 유형 계산
+            const type =
+                (scores.E >= scores.I ? 'E' : 'I') +
+                (scores.S >= scores.N ? 'S' : 'N') +
+                (scores.T >= scores.F ? 'T' : 'F') +
+                (scores.J >= scores.P ? 'J' : 'P');
+
+            const typeInfo = typeDescriptions[type];
+
+            // 결과 표시
+            document.getElementById('resultType').textContent = type;
+            document.getElementById('resultTitle').textContent = typeInfo.emoji + ' ' + typeInfo.title;
+
+            // 차원별 결과
+            const dimensionResults = document.getElementById('dimensionResults');
+            dimensionResults.innerHTML = '';
+
+            const dimensions = [
+                { left: 'E', right: 'I', leftName: '외향', rightName: '내향', title: '에너지 방향' },
+                { left: 'S', right: 'N', leftName: '감각', rightName: '직관', title: '정보 수집' },
+                { left: 'T', right: 'F', leftName: '사고', rightName: '감정', title: '판단 방식' },
+                { left: 'J', right: 'P', leftName: '판단', rightName: '인식', title: '생활 방식' }
+            ];
+
+            dimensions.forEach(dim => {
+                const total = scores[dim.left] + scores[dim.right];
+                const leftPercent = Math.round((scores[dim.left] / total) * 100);
+                const rightPercent = 100 - leftPercent;
+                const isLeft = scores[dim.left] >= scores[dim.right];
+
+                const card = document.createElement('div');
+                card.className = 'dimension-card';
+                card.innerHTML = `
+                    <h4>${dim.title}</h4>
+                    <div class="dimension-bar">
+                        <div class="dimension-fill ${isLeft ? 'left' : 'right'}"
+                             style="width: ${isLeft ? leftPercent : rightPercent}%;
+                                    ${isLeft ? '' : 'margin-left: auto;'}"></div>
+                    </div>
+                    <div class="dimension-labels">
+                        <span>${dim.leftName}(${dim.left}) ${leftPercent}%</span>
+                        <span>${rightPercent}% ${dim.rightName}(${dim.right})</span>
+                    </div>
+                `;
+                dimensionResults.appendChild(card);
+            });
+
+            // 상세 설명
+            const resultDescription = document.getElementById('resultDescription');
+            resultDescription.innerHTML = `
+                <h3>${typeInfo.emoji} 나는 이런 친구예요!</h3>
+                <p>${typeInfo.description}</p>
+
+                <h3>⭐ 나의 강점</h3>
+                <ul>
+                    ${typeInfo.strengths.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+
+                <h3>🌱 더 성장하려면?</h3>
+                <p>${typeInfo.growth}</p>
+            `;
+
+            // MBTI 매칭 표시
+            const mbti = mbtiInfo[type];
+            const mbtiSection = document.getElementById('mbtiSection');
+            mbtiSection.innerHTML = `
+                <h3>🔗 MBTI로 보면?</h3>
+                <p>내 MMTIC 유형은 어른들이 사용하는 MBTI와 같아요!</p>
+                <div class="mbti-type-display">${type}</div>
+                <div class="mbti-name">${mbti.name}</div>
+                <p style="color: #888; font-size: 0.9em; margin-top: 10px;">(${mbti.english})</p>
+            `;
+
+            // 직업 추천 표시
+            const career = careerInfo[type];
+            const careerSection = document.getElementById('careerSection');
+            careerSection.innerHTML = `
+                <h3>💼 나에게 어울리는 직업 분야</h3>
+                <div class="career-categories">
+                    ${career.categories.map(cat => `<span class="career-tag">${cat}</span>`).join('')}
+                </div>
+                <div class="career-examples">
+                    <h4>✨ 이런 직업들이 있어요:</h4>
+                    <p>${career.examples}</p>
+                </div>
+            `;
+        }
+
+        // 다시 시작
+        function restartQuiz() {
+            document.getElementById('startScreen').style.display = 'block';
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
