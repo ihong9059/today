@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import {
@@ -44,207 +44,613 @@ const aiServices = [
 ];
 
 // ============================================
-// Python Day별 레슨 데이터
+// Python Day별 레슨 데이터 (AI 학습법 적용)
 // ============================================
 const lessonDataByDay: Record<number, any> = {
   // ============================================
-  // Day 1: Python 소개와 개발환경 설정
+  // Day 1: 첫 프로그램 실행하기
   // ============================================
   1: {
     day: 1,
-    title: 'Python 소개와 첫 프로그램',
-    subtitle: 'Python의 특징을 이해하고 VS Code에서 첫 번째 프로그램을 실행합니다.',
-    videoId: 'YOUTUBE_VIDEO_ID_HERE',  // 진행방법 동영상 ID로 교체 필요
+    title: '첫 프로그램 실행하기',
+    subtitle: 'print() 함수로 화면에 글자를 출력하고, Python 파일을 실행해봅니다.',
+    videoId: 't5wbUqTCHLc',
     videoTitle: '진행방법',
     goals: [
       {
         id: 1,
-        title: 'Python의 특징과 활용 분야 이해하기',
-        description: 'Python이 왜 인기 있는 언어인지, 어디에 사용되는지 학습합니다.',
-        prompt: `Python을 처음 배우려고 합니다. 다음 질문에 대해 초보자도 이해할 수 있게 설명해주세요:
-
-1. Python은 언제, 누가 만들었나요?
-2. Python의 가장 큰 특징 3가지는 무엇인가요?
-3. Python이 사용되는 분야는 어디인가요? (예: AI, 웹, 데이터 분석 등)
-4. Python이 다른 언어(C, Java)에 비해 배우기 쉬운 이유는?
-
-간단한 예시와 함께 설명해주세요.`,
-        expectedKeywords: ['Guido van Rossum', '1991', '인터프리터', '들여쓰기'],
+        title: '화면에 글자 출력하기',
+        description: 'print() 함수를 사용해서 화면에 원하는 글자를 출력합니다.',
+        prompt: `"안녕하세요! Python 세계에 오신 것을 환영합니다"를 화면에 출력하는 Python 코드 만들어줘`,
+        expectedKeywords: ['print', '따옴표', '출력'],
         quiz: {
-          question: 'Python을 개발한 사람은 누구인가요?',
-          options: ['Dennis Ritchie', 'Guido van Rossum', 'James Gosling', 'Brendan Eich'],
-          correctAnswer: 1,
-        },
-      },
-      {
-        id: 2,
-        title: '첫 번째 Hello World 프로그램 실행하기',
-        description: 'VS Code에서 Python 파일을 만들고 실행해봅니다.',
-        prompt: `Python으로 첫 번째 프로그램을 작성하려고 합니다. 다음을 설명해주세요:
-
-1. VS Code에서 .py 파일을 만드는 방법
-2. "Hello, World!"를 출력하는 Python 코드를 보여주세요.
-3. print() 함수는 어떻게 사용하나요?
-4. VS Code에서 Python 파일을 실행하는 방법 (실행 버튼, 터미널)
-5. C언어와 비교했을 때 Python이 얼마나 간단한가요?
-
-코드 예시와 함께 설명해주세요.`,
-        expectedKeywords: ['print', '.py', '실행 버튼', 'python'],
-        quiz: {
-          question: 'Python에서 화면에 출력할 때 사용하는 함수는?',
+          question: 'Python에서 화면에 글자를 출력할 때 사용하는 함수는?',
           options: ['console.log()', 'printf()', 'print()', 'echo()'],
           correctAnswer: 2,
         },
       },
+      {
+        id: 2,
+        title: '여러 줄 출력하고 파일 실행하기',
+        description: 'Python 파일(.py)을 만들고 여러 줄을 출력합니다.',
+        prompt: `나의 자기소개를 3줄로 출력하는 Python 코드 만들어줘.
+이름, 나이, 취미를 각각 한 줄씩 출력해줘.`,
+        expectedKeywords: ['print', '.py', '여러 줄'],
+        quiz: {
+          question: 'Python 파일의 확장자는 무엇인가요?',
+          options: ['.python', '.py', '.pt', '.pyt'],
+          correctAnswer: 1,
+        },
+      },
     ],
-    nextLesson: { day: 2, title: '변수와 자료형' },
+    nextLesson: { day: 2, title: '데이터 저장하기 (변수)' },
   },
 
   // ============================================
-  // Day 2: 변수와 자료형 (기본 구조)
+  // Day 2: 데이터 저장하기 (변수)
   // ============================================
   2: {
     day: 2,
-    title: '변수와 자료형',
-    subtitle: 'Python의 변수 선언 방법과 기본 자료형을 학습합니다.',
-    videoId: 'kWiCuklohdY',
-    videoTitle: 'Python 입문 - Day 2: 변수와 자료형',
+    title: '데이터 저장하기 (변수)',
+    subtitle: '변수에 값을 저장하고 input()으로 사용자 입력을 받습니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
     goals: [
       {
         id: 1,
-        title: '변수의 개념과 선언 방법 이해하기',
-        description: 'Python에서 변수를 만들고 값을 저장하는 방법을 학습합니다.',
-        prompt: `Python의 변수에 대해 배우려고 합니다. 다음을 설명해주세요:
-
-1. 변수란 무엇인가요?
-2. Python에서 변수를 만드는 방법 (C언어처럼 자료형을 쓰지 않아도 되는 이유)
-3. 변수 이름 규칙 (시작 문자, 예약어 등)
-4. 예시 코드: name = "홍길동", age = 25, height = 175.5
-
-코드 예시와 함께 설명해주세요.`,
-        expectedKeywords: ['변수', '할당', '=', '동적 타이핑'],
+        title: '변수에 값 저장하기',
+        description: '변수를 사용해서 이름, 나이, 키 등의 데이터를 저장합니다.',
+        prompt: `이름, 나이, 키를 각각 변수에 저장하고 출력하는 Python 코드 만들어줘`,
+        expectedKeywords: ['변수', '=', 'print'],
         quiz: {
-          question: 'Python에서 변수를 만들 때 필요한 것은?',
-          options: ['int 키워드', '= 연산자만', 'var 키워드', 'let 키워드'],
-          correctAnswer: 1,
+          question: 'Python에서 변수에 값을 저장할 때 사용하는 기호는?',
+          options: [':', '==', '=', '->'],
+          correctAnswer: 2,
         },
       },
       {
         id: 2,
-        title: '기본 자료형 (숫자, 문자열, 불린)',
-        description: 'Python의 기본 자료형을 이해하고 사용합니다.',
-        prompt: `Python의 기본 자료형에 대해 배우려고 합니다:
-
-1. 정수(int)와 실수(float)의 차이점
-2. 문자열(str) 만드는 방법 (작은따옴표, 큰따옴표)
-3. 불린(bool) - True와 False
-4. type() 함수로 자료형 확인하는 방법
-5. 각 자료형의 예시 코드
-
-코드 예시와 함께 설명해주세요.`,
-        expectedKeywords: ['int', 'float', 'str', 'bool', 'type()'],
-        quiz: {
-          question: 'Python에서 3.14의 자료형은?',
-          options: ['int', 'float', 'str', 'double'],
-          correctAnswer: 1,
-        },
-      },
-      {
-        id: 3,
-        title: '사용자 입력 받기 (input 함수)',
-        description: 'input() 함수로 사용자로부터 데이터를 입력받습니다.',
-        prompt: `Python의 input() 함수에 대해 배우려고 합니다:
-
-1. input() 함수의 기본 사용법
-2. input()은 항상 문자열을 반환한다는 점
-3. 숫자를 입력받으려면 int()나 float()로 변환해야 하는 이유
-4. 예시: 이름과 나이를 입력받아 출력하는 프로그램
-
-코드 예시와 함께 설명해주세요.`,
-        expectedKeywords: ['input()', 'int()', 'float()', '형변환'],
+        title: '사용자 입력 받기',
+        description: 'input() 함수로 사용자에게 값을 입력받습니다.',
+        prompt: `사용자에게 이름을 물어보고, "안녕하세요, OOO님!"이라고 인사하는 Python 코드 만들어줘`,
+        expectedKeywords: ['input', '변수', 'print'],
         quiz: {
           question: 'input() 함수가 반환하는 자료형은?',
           options: ['int', 'float', 'str', 'bool'],
           correctAnswer: 2,
         },
       },
+      {
+        id: 3,
+        title: '숫자 입력받아 계산하기',
+        description: 'input()으로 받은 값을 숫자로 변환해서 계산합니다.',
+        prompt: `태어난 연도를 입력받아서 나이를 계산해 출력하는 Python 코드 만들어줘`,
+        expectedKeywords: ['input', 'int', '계산'],
+        quiz: {
+          question: 'input()으로 받은 "25"를 숫자로 바꾸려면?',
+          options: ['str("25")', 'int("25")', 'num("25")', 'float("25")만 가능'],
+          correctAnswer: 1,
+        },
+      },
     ],
-    nextLesson: { day: 3, title: '연산자와 표현식' },
+    nextLesson: { day: 3, title: '계산하기 (연산자)' },
   },
 
   // ============================================
-  // Day 3 ~ Day 15 기본 구조 (나중에 상세 내용 추가)
+  // Day 3: 계산하기 (연산자)
   // ============================================
-};
-
-// Day 3~15 기본 구조 생성
-const dayTopics: Record<number, { title: string; subtitle: string; nextTitle: string }> = {
-  3: { title: '연산자와 표현식', subtitle: '산술, 비교, 논리 연산자를 학습합니다.', nextTitle: '조건문 (if-else)' },
-  4: { title: '조건문 (if-else)', subtitle: 'if, elif, else를 사용한 조건 분기를 학습합니다.', nextTitle: '반복문 (for)' },
-  5: { title: '반복문 (for)', subtitle: 'for 루프와 range() 함수를 학습합니다.', nextTitle: '반복문 (while)' },
-  6: { title: '반복문 (while)', subtitle: 'while 루프와 break, continue를 학습합니다.', nextTitle: '함수 기초' },
-  7: { title: '함수 기초', subtitle: '함수 정의와 호출 방법을 학습합니다.', nextTitle: '함수 심화' },
-  8: { title: '함수 심화', subtitle: '매개변수, 반환값, 기본값을 학습합니다.', nextTitle: '리스트 (List)' },
-  9: { title: '리스트 (List)', subtitle: '리스트 생성, 인덱싱, 슬라이싱을 학습합니다.', nextTitle: '리스트 활용' },
-  10: { title: '리스트 활용', subtitle: '리스트 메서드와 리스트 컴프리헨션을 학습합니다.', nextTitle: '딕셔너리 (Dictionary)' },
-  11: { title: '딕셔너리 (Dictionary)', subtitle: '딕셔너리 생성과 활용 방법을 학습합니다.', nextTitle: '튜플과 세트' },
-  12: { title: '튜플과 세트', subtitle: '튜플과 세트 자료형을 학습합니다.', nextTitle: '문자열 처리' },
-  13: { title: '문자열 처리', subtitle: '문자열 메서드와 포맷팅을 학습합니다.', nextTitle: '파일 입출력' },
-  14: { title: '파일 입출력', subtitle: '파일 읽기/쓰기 방법을 학습합니다.', nextTitle: '미니 프로젝트' },
-  15: { title: '미니 프로젝트', subtitle: '배운 내용을 활용한 프로젝트를 완성합니다.', nextTitle: '' },
-};
-
-for (let day = 3; day <= 15; day++) {
-  if (!lessonDataByDay[day]) {
-    const topic = dayTopics[day];
-    lessonDataByDay[day] = {
-      day,
-      title: topic.title,
-      subtitle: topic.subtitle,
-      videoId: 'kWiCuklohdY',
-      videoTitle: `Python 입문 - Day ${day}: ${topic.title}`,
-      goals: [
-        {
-          id: 1,
-          title: `${topic.title} 개념 이해하기`,
-          description: '핵심 개념을 학습합니다.',
-          prompt: `Python의 ${topic.title}에 대해 초보자도 이해할 수 있게 설명해주세요.
-
-1. ${topic.title}이란 무엇인가요?
-2. 기본 문법과 사용 방법
-3. 간단한 예제 코드
-4. 주의할 점
-
-코드 예시와 함께 설명해주세요.`,
-          expectedKeywords: [],
-          quiz: { question: '퀴즈 문제 (준비 중)', options: ['보기1', '보기2', '보기3', '보기4'], correctAnswer: 0 },
+  3: {
+    day: 3,
+    title: '계산하기 (연산자)',
+    subtitle: '사칙연산과 비교 연산자를 사용해서 계산합니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '사칙연산 하기',
+        description: '더하기, 빼기, 곱하기, 나누기 연산을 수행합니다.',
+        prompt: `두 숫자를 입력받아서 더하기, 빼기, 곱하기, 나누기 결과를 모두 보여주는 Python 코드 만들어줘`,
+        expectedKeywords: ['+', '-', '*', '/'],
+        quiz: {
+          question: 'Python에서 나머지를 구하는 연산자는?',
+          options: ['/', '//', '%', '%%'],
+          correctAnswer: 2,
         },
-        {
-          id: 2,
-          title: `${topic.title} 실습하기`,
-          description: '직접 코드를 작성해봅니다.',
-          prompt: `Python ${topic.title} 실습 문제입니다:
-
-간단한 연습 문제와 풀이를 알려주세요.
-초보자가 따라할 수 있도록 단계별로 설명해주세요.`,
-          expectedKeywords: [],
-          quiz: { question: '퀴즈 문제 (준비 중)', options: ['보기1', '보기2', '보기3', '보기4'], correctAnswer: 0 },
+      },
+      {
+        id: 2,
+        title: '비교하기',
+        description: '두 값을 비교해서 True 또는 False 결과를 얻습니다.',
+        prompt: `두 숫자를 입력받아서 어느 쪽이 더 큰지, 같은지 비교해서 알려주는 Python 코드 만들어줘`,
+        expectedKeywords: ['>', '<', '==', 'True', 'False'],
+        quiz: {
+          question: 'Python에서 "같다"를 비교할 때 사용하는 기호는?',
+          options: ['=', '==', '===', 'equals'],
+          correctAnswer: 1,
         },
-        {
-          id: 3,
-          title: `${topic.title} 응용하기`,
-          description: '배운 내용을 응용해봅니다.',
-          prompt: `Python ${topic.title}를 응용한 프로그램을 만들어주세요:
+      },
+    ],
+    nextLesson: { day: 4, title: '조건에 따라 다르게 (if문)' },
+  },
 
-실생활에서 활용할 수 있는 간단한 프로그램 예시를 보여주세요.
-코드와 함께 설명해주세요.`,
-          expectedKeywords: [],
-          quiz: { question: '퀴즈 문제 (준비 중)', options: ['보기1', '보기2', '보기3', '보기4'], correctAnswer: 0 },
+  // ============================================
+  // Day 4: 조건에 따라 다르게 (if문)
+  // ============================================
+  4: {
+    day: 4,
+    title: '조건에 따라 다르게 (if문)',
+    subtitle: 'if, elif, else를 사용해서 조건에 따라 다른 코드를 실행합니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '조건 분기하기',
+        description: 'if와 else를 사용해서 조건에 따라 다른 결과를 출력합니다.',
+        prompt: `점수를 입력받아서 60점 이상이면 "합격", 미만이면 "불합격"을 출력하는 Python 코드 만들어줘`,
+        expectedKeywords: ['if', 'else', ':', '들여쓰기'],
+        quiz: {
+          question: 'Python if문에서 조건 뒤에 반드시 붙여야 하는 것은?',
+          options: ['세미콜론(;)', '콜론(:)', '괄호()', '중괄호{}'],
+          correctAnswer: 1,
         },
-      ],
-      nextLesson: day < 15 ? { day: day + 1, title: topic.nextTitle } : null,
-    };
-  }
+      },
+      {
+        id: 2,
+        title: '여러 조건 검사하기 (elif)',
+        description: 'elif를 사용해서 여러 조건을 순서대로 검사합니다.',
+        prompt: `점수를 입력받아서 90점 이상 A, 80점 이상 B, 70점 이상 C, 60점 이상 D, 그 외 F를 출력하는 Python 코드 만들어줘`,
+        expectedKeywords: ['if', 'elif', 'else'],
+        quiz: {
+          question: 'elif는 무엇의 줄임말인가요?',
+          options: ['else if', 'element if', 'elif만 있음', 'else elif'],
+          correctAnswer: 0,
+        },
+      },
+    ],
+    nextLesson: { day: 5, title: '반복하기 (for문)' },
+  },
+
+  // ============================================
+  // Day 5: 반복하기 (for문)
+  // ============================================
+  5: {
+    day: 5,
+    title: '반복하기 (for문)',
+    subtitle: 'for문과 range()를 사용해서 정해진 횟수만큼 반복합니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '정해진 횟수만큼 반복하기',
+        description: 'for문과 range()를 사용해서 원하는 만큼 반복합니다.',
+        prompt: `"화이팅!"을 5번 출력하는 Python 코드 만들어줘`,
+        expectedKeywords: ['for', 'in', 'range'],
+        quiz: {
+          question: 'range(5)가 만드는 숫자는?',
+          options: ['1, 2, 3, 4, 5', '0, 1, 2, 3, 4', '0, 1, 2, 3, 4, 5', '1, 2, 3, 4'],
+          correctAnswer: 1,
+        },
+      },
+      {
+        id: 2,
+        title: '1부터 N까지 합 구하기',
+        description: '반복문으로 누적 계산을 수행합니다.',
+        prompt: `1부터 100까지의 합을 구하는 Python 코드 만들어줘`,
+        expectedKeywords: ['for', 'range', 'sum', '+='],
+        quiz: {
+          question: 'range(1, 101)에서 101이 포함되나요?',
+          options: ['포함된다', '포함되지 않는다', '경우에 따라 다르다', '에러가 난다'],
+          correctAnswer: 1,
+        },
+      },
+    ],
+    nextLesson: { day: 6, title: '조건부 반복 (while문)' },
+  },
+
+  // ============================================
+  // Day 6: 조건부 반복 (while문)
+  // ============================================
+  6: {
+    day: 6,
+    title: '조건부 반복 (while문)',
+    subtitle: 'while문으로 조건이 참인 동안 반복하고, break로 탈출합니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '조건이 맞는 동안 반복하기',
+        description: 'while문을 사용해서 조건이 참인 동안 반복합니다.',
+        prompt: `사용자가 "종료"를 입력할 때까지 계속 메시지를 입력받아 출력하는 Python 코드 만들어줘`,
+        expectedKeywords: ['while', 'True', '조건'],
+        quiz: {
+          question: 'while True:는 어떤 상황을 만드나요?',
+          options: ['한 번만 실행', '조건부 실행', '무한 반복', '에러 발생'],
+          correctAnswer: 2,
+        },
+      },
+      {
+        id: 2,
+        title: '숫자 맞추기 게임 만들기',
+        description: 'break를 사용해서 반복문을 즉시 종료합니다.',
+        prompt: `1부터 10 사이의 숫자를 맞추는 게임을 만들어줘.
+정답을 맞출 때까지 계속 입력받고, 맞으면 "정답!"을 출력하고 끝나게 해줘.
+힌트로 "더 크게" 또는 "더 작게"를 알려줘.`,
+        expectedKeywords: ['while', 'break', 'if'],
+        quiz: {
+          question: 'break가 하는 일은?',
+          options: ['프로그램 종료', '반복문 즉시 종료', '다음 반복으로 넘어가기', '에러 발생'],
+          correctAnswer: 1,
+        },
+      },
+    ],
+    nextLesson: { day: 7, title: '글자 다루기 (문자열)' },
+  },
+
+  // ============================================
+  // Day 7: 글자 다루기 (문자열)
+  // ============================================
+  7: {
+    day: 7,
+    title: '글자 다루기 (문자열)',
+    subtitle: '문자열 슬라이싱과 메서드를 사용해서 글자를 다룹니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '문자열 자르고 붙이기',
+        description: '슬라이싱으로 문자열의 일부를 가져옵니다.',
+        prompt: `주민등록번호 앞 6자리를 입력받아서 생년월일을 "YYYY년 MM월 DD일" 형식으로 출력하는 Python 코드 만들어줘`,
+        expectedKeywords: ['슬라이싱', '[:]', '인덱스'],
+        quiz: {
+          question: 'text = "Hello"일 때, text[0]의 값은?',
+          options: ['H', 'e', 'Hello', '에러'],
+          correctAnswer: 0,
+        },
+      },
+      {
+        id: 2,
+        title: '문자열 변환하기',
+        description: '문자열을 대문자/소문자로 바꾸거나 공백을 제거합니다.',
+        prompt: `사용자가 입력한 문장을 대문자로 바꿔서 출력하고, 글자 수도 알려주는 Python 코드 만들어줘`,
+        expectedKeywords: ['upper', 'lower', 'len'],
+        quiz: {
+          question: '"hello".upper()의 결과는?',
+          options: ['hello', 'HELLO', 'Hello', 'hELLO'],
+          correctAnswer: 1,
+        },
+      },
+    ],
+    nextLesson: { day: 8, title: '여러 개 저장하기 (리스트)' },
+  },
+
+  // ============================================
+  // Day 8: 여러 개 저장하기 (리스트)
+  // ============================================
+  8: {
+    day: 8,
+    title: '여러 개 저장하기 (리스트)',
+    subtitle: '리스트를 만들고 항목을 추가/삭제합니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '리스트 만들고 사용하기',
+        description: '리스트에 여러 값을 저장하고 하나씩 출력합니다.',
+        prompt: `쇼핑 목록을 리스트로 만들고, 하나씩 출력하는 Python 코드 만들어줘.
+목록: 우유, 빵, 계란, 사과`,
+        expectedKeywords: ['리스트', '[]', 'for', 'in'],
+        quiz: {
+          question: '리스트를 만들 때 사용하는 괄호는?',
+          options: ['()', '{}', '[]', '<>'],
+          correctAnswer: 2,
+        },
+      },
+      {
+        id: 2,
+        title: '리스트에 추가하고 삭제하기',
+        description: 'append()와 remove()로 리스트를 수정합니다.',
+        prompt: `할일 목록 프로그램을 만들어줘.
+1. 할일 추가
+2. 할일 보기
+3. 할일 삭제
+4. 종료
+메뉴를 선택하면 해당 기능이 실행되도록 해줘.`,
+        expectedKeywords: ['append', 'remove', 'while'],
+        quiz: {
+          question: '리스트 끝에 항목을 추가하는 메서드는?',
+          options: ['add()', 'insert()', 'append()', 'push()'],
+          correctAnswer: 2,
+        },
+      },
+    ],
+    nextLesson: { day: 9, title: '리스트 활용하기' },
+  },
+
+  // ============================================
+  // Day 9: 리스트 활용하기
+  // ============================================
+  9: {
+    day: 9,
+    title: '리스트 활용하기',
+    subtitle: '리스트 함수와 리스트 컴프리헨션을 사용합니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '리스트에서 최대/최소 찾기',
+        description: 'max(), min(), sum() 함수로 리스트를 계산합니다.',
+        prompt: `5개의 점수를 입력받아서 최고점, 최저점, 평균을 구하는 Python 코드 만들어줘`,
+        expectedKeywords: ['max', 'min', 'sum', 'len'],
+        quiz: {
+          question: '[1, 2, 3]의 sum() 결과는?',
+          options: ['3', '6', '[1, 2, 3]', '에러'],
+          correctAnswer: 1,
+        },
+      },
+      {
+        id: 2,
+        title: '리스트 컴프리헨션',
+        description: '리스트 컴프리헨션으로 간결하게 리스트를 만듭니다.',
+        prompt: `1부터 10까지의 숫자 중에서 짝수만 모은 리스트를 만드는 Python 코드를 리스트 컴프리헨션으로 만들어줘`,
+        expectedKeywords: ['컴프리헨션', 'for', 'if', '[]'],
+        quiz: {
+          question: '[x for x in range(5)]의 결과는?',
+          options: ['[1, 2, 3, 4, 5]', '[0, 1, 2, 3, 4]', '[0, 1, 2, 3, 4, 5]', '에러'],
+          correctAnswer: 1,
+        },
+      },
+    ],
+    nextLesson: { day: 10, title: '키-값 저장하기 (딕셔너리)' },
+  },
+
+  // ============================================
+  // Day 10: 키-값 저장하기 (딕셔너리)
+  // ============================================
+  10: {
+    day: 10,
+    title: '키-값 저장하기 (딕셔너리)',
+    subtitle: '딕셔너리로 이름표와 값을 함께 저장합니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '딕셔너리 만들고 사용하기',
+        description: '딕셔너리로 구조화된 데이터를 저장합니다.',
+        prompt: `학생 정보(이름, 나이, 학년, 반)를 딕셔너리로 저장하고 출력하는 Python 코드 만들어줘`,
+        expectedKeywords: ['딕셔너리', '{}', ':', 'key'],
+        quiz: {
+          question: '딕셔너리를 만들 때 사용하는 괄호는?',
+          options: ['[]', '()', '{}', '<>'],
+          correctAnswer: 2,
+        },
+      },
+      {
+        id: 2,
+        title: '딕셔너리로 데이터 관리하기',
+        description: '딕셔너리에 데이터를 추가/수정/검색합니다.',
+        prompt: `간단한 전화번호부 프로그램을 만들어줘.
+이름을 입력하면 전화번호를 보여주고, 새 연락처도 추가할 수 있게 해줘.`,
+        expectedKeywords: ['딕셔너리', 'in', 'keys'],
+        quiz: {
+          question: '딕셔너리에서 값을 가져올 때 사용하는 것은?',
+          options: ['딕셔너리.값', '딕셔너리[키]', '딕셔너리(키)', '딕셔너리->키'],
+          correctAnswer: 1,
+        },
+      },
+    ],
+    nextLesson: { day: 11, title: '함수 만들기' },
+  },
+
+  // ============================================
+  // Day 11: 함수 만들기
+  // ============================================
+  11: {
+    day: 11,
+    title: '함수 만들기',
+    subtitle: 'def로 함수를 정의하고 호출합니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '함수 정의하고 호출하기',
+        description: 'def 키워드로 함수를 만들고 호출합니다.',
+        prompt: `인사 메시지를 출력하는 함수를 만들고, 3번 호출하는 Python 코드 만들어줘`,
+        expectedKeywords: ['def', '함수', '호출'],
+        quiz: {
+          question: '함수를 정의할 때 사용하는 키워드는?',
+          options: ['function', 'func', 'def', 'define'],
+          correctAnswer: 2,
+        },
+      },
+      {
+        id: 2,
+        title: '매개변수와 반환값',
+        description: '함수에 값을 전달하고 결과를 받습니다.',
+        prompt: `두 숫자를 받아서 합계를 반환하는 함수를 만들고, 여러 숫자로 테스트하는 Python 코드 만들어줘`,
+        expectedKeywords: ['매개변수', 'return', '반환'],
+        quiz: {
+          question: '함수에서 값을 돌려줄 때 사용하는 키워드는?',
+          options: ['give', 'send', 'return', 'output'],
+          correctAnswer: 2,
+        },
+      },
+    ],
+    nextLesson: { day: 12, title: '함수 활용하기' },
+  },
+
+  // ============================================
+  // Day 12: 함수 활용하기
+  // ============================================
+  12: {
+    day: 12,
+    title: '함수 활용하기',
+    subtitle: '기본값 매개변수와 실용적인 함수를 만듭니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '기본값 매개변수',
+        description: '매개변수에 기본값을 지정해서 생략 가능하게 합니다.',
+        prompt: `이름을 받아서 인사하는 함수를 만들어줘.
+이름을 안 주면 "손님"이라고 인사하도록 기본값을 설정해줘.`,
+        expectedKeywords: ['기본값', '=', '매개변수'],
+        quiz: {
+          question: 'def greet(name="손님")에서 greet()을 호출하면?',
+          options: ['에러 발생', '"손님"에게 인사', '아무 일도 안 함', 'None 반환'],
+          correctAnswer: 1,
+        },
+      },
+      {
+        id: 2,
+        title: '실용적인 함수 만들기',
+        description: '기능별로 함수를 나눠서 프로그램을 만듭니다.',
+        prompt: `간단한 계산기 프로그램을 만들어줘.
+덧셈, 뺄셈, 곱셈, 나눗셈 각각을 함수로 만들고,
+메뉴에서 선택하면 해당 함수를 호출하도록 해줘.`,
+        expectedKeywords: ['함수', 'def', '분리'],
+        quiz: {
+          question: '기능별로 함수를 나누는 이유는?',
+          options: ['필수라서', '관리와 수정이 쉬워서', '속도가 빨라서', '메모리 절약'],
+          correctAnswer: 1,
+        },
+      },
+    ],
+    nextLesson: { day: 13, title: '모듈 사용하기' },
+  },
+
+  // ============================================
+  // Day 13: 모듈 사용하기
+  // ============================================
+  13: {
+    day: 13,
+    title: '모듈 사용하기',
+    subtitle: 'import로 모듈을 가져와서 유용한 기능을 사용합니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '내장 모듈 활용하기',
+        description: 'random 모듈로 랜덤 숫자를 생성합니다.',
+        prompt: `random 모듈을 사용해서 로또 번호 6개를 생성하는 Python 코드 만들어줘.
+1~45 사이의 중복되지 않는 숫자 6개를 오름차순으로 출력해줘.`,
+        expectedKeywords: ['import', 'random', 'sample'],
+        quiz: {
+          question: '모듈을 가져올 때 사용하는 키워드는?',
+          options: ['include', 'require', 'import', 'using'],
+          correctAnswer: 2,
+        },
+      },
+      {
+        id: 2,
+        title: '날짜와 시간 다루기',
+        description: 'datetime 모듈로 날짜와 시간을 계산합니다.',
+        prompt: `생년월일을 입력받아서 만 나이와 태어난 요일을 알려주는 Python 코드 만들어줘`,
+        expectedKeywords: ['datetime', 'date', 'today'],
+        quiz: {
+          question: '오늘 날짜를 가져오는 방법은?',
+          options: ['date.now()', 'datetime.today()', 'datetime.date.today()', 'time.now()'],
+          correctAnswer: 2,
+        },
+      },
+    ],
+    nextLesson: { day: 14, title: '파일 다루기' },
+  },
+
+  // ============================================
+  // Day 14: 파일 다루기
+  // ============================================
+  14: {
+    day: 14,
+    title: '파일 다루기',
+    subtitle: '파일을 읽고 쓰는 방법을 배웁니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '파일 읽기',
+        description: '텍스트 파일의 내용을 읽어옵니다.',
+        prompt: `텍스트 파일을 읽어서 내용을 출력하고, 줄 수와 글자 수도 알려주는 Python 코드 만들어줘`,
+        expectedKeywords: ['open', 'read', 'with'],
+        quiz: {
+          question: '파일을 읽기 모드로 열 때 사용하는 옵션은?',
+          options: ["'w'", "'r'", "'a'", "'x'"],
+          correctAnswer: 1,
+        },
+      },
+      {
+        id: 2,
+        title: '파일 쓰기',
+        description: '텍스트 파일에 내용을 저장합니다.',
+        prompt: `일기장 프로그램을 만들어줘.
+오늘 날짜와 함께 일기를 입력받아서 파일에 저장하고,
+저장된 일기를 볼 수 있게 해줘.`,
+        expectedKeywords: ['open', 'write', 'w', 'a'],
+        quiz: {
+          question: '파일 끝에 내용을 추가할 때 사용하는 모드는?',
+          options: ["'w'", "'r'", "'a'", "'x'"],
+          correctAnswer: 2,
+        },
+      },
+    ],
+    nextLesson: { day: 15, title: '미니 프로젝트' },
+  },
+
+  // ============================================
+  // Day 15: 미니 프로젝트
+  // ============================================
+  15: {
+    day: 15,
+    title: '미니 프로젝트',
+    subtitle: '배운 모든 것을 조합해서 프로그램을 완성합니다.',
+    videoId: 't5wbUqTCHLc',
+    videoTitle: '진행방법',
+    goals: [
+      {
+        id: 1,
+        title: '프로젝트 선택하기',
+        description: '원하는 프로젝트를 선택해서 AI에게 요청합니다.',
+        prompt: `영어 단어와 뜻을 저장하고, 퀴즈를 푸는 프로그램을 만들어줘.
+- 단어 추가/삭제
+- 전체 단어 보기
+- 랜덤 퀴즈
+- 파일에 저장/불러오기`,
+        expectedKeywords: ['프로젝트', '함수', '파일'],
+        quiz: {
+          question: '프로젝트에서 사용된 개념이 아닌 것은?',
+          options: ['리스트', '딕셔너리', '함수', '웹 스크래핑'],
+          correctAnswer: 3,
+        },
+      },
+      {
+        id: 2,
+        title: '프로젝트 구현하기',
+        description: '프로젝트를 완성하고 기능을 추가합니다.',
+        prompt: `간단한 가계부 프로그램을 만들어줘.
+- 수입/지출 추가
+- 월별 합계 보기
+- 파일에 저장/불러오기`,
+        expectedKeywords: ['완성', '기능', '추가'],
+        quiz: {
+          question: '초급 과정을 완료했습니다! 다음 단계는?',
+          options: ['끝', '중급 과정', '처음부터 다시', '다른 언어 배우기'],
+          correctAnswer: 1,
+        },
+      },
+    ],
+    nextLesson: null,
+  },
 }
 
 // ============================================
@@ -329,6 +735,24 @@ function GoalSection({
   const [showQuizResult, setShowQuizResult] = useState(false);
   const [isQuizCorrect, setIsQuizCorrect] = useState(false);
   const [downloadedFileName, setDownloadedFileName] = useState<string | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // goal이 변경될 때 상태 초기화 및 스크롤
+  useEffect(() => {
+    setPrompt(goal.prompt);
+    setAiResult('');
+    setSelectedAnswer(null);
+    setShowQuizResult(false);
+    setIsQuizCorrect(false);
+    setDownloadedFileName(null);
+
+    // 활성화된 목표로 스크롤
+    if (isActive && sectionRef.current) {
+      setTimeout(() => {
+        sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [goal.id, isActive]);
 
   const handleCopyAndOpenAI = (aiUrl: string) => {
     const success = copyToClipboard(prompt);
@@ -435,7 +859,7 @@ function GoalSection({
 
   // 활성 상태 (현재 진행 중)
   return (
-    <div className="bg-white rounded-xl border-2 border-yellow-400 shadow-lg overflow-hidden">
+    <div ref={sectionRef} className="bg-white rounded-xl border-2 border-yellow-400 shadow-lg overflow-hidden">
       {/* 섹션 헤더 - Python 테마 (노란색) */}
       <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 p-4 text-white">
         <div className="flex items-center gap-3">
@@ -801,6 +1225,28 @@ export default function PythonPCLessonDayPage() {
           <span className="px-3 py-1.5 bg-gray-100 text-gray-600 rounded-full text-sm font-medium">{level}</span>
         </div>
 
+        {/* 진행방법 동영상 - 접을 수 있는 섹션 */}
+        <details className="bg-white rounded-xl shadow-sm">
+          <summary className="flex items-center gap-2 p-4 cursor-pointer hover:bg-gray-50 rounded-xl">
+            <Play className="w-5 h-5 text-red-600" />
+            <span className="font-bold text-gray-900">진행방법</span>
+            <span className="text-sm text-gray-500 ml-2">(처음이시라면 꼭 시청하세요)</span>
+          </summary>
+          <div className="px-4 pb-4">
+            <div className="aspect-video bg-black rounded-lg overflow-hidden">
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${lessonData.videoId}`}
+                title={lessonData.videoTitle}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </details>
+
         {/* 강의 제목 - Python 테마 */}
         <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-xl p-6 text-white">
           <div className="flex items-center gap-2 mb-2">
@@ -848,26 +1294,6 @@ export default function PythonPCLessonDayPage() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* 동영상 */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Play className="w-5 h-5 text-red-600" />
-            <h2 className="font-bold text-gray-900">진행방법</h2>
-          </div>
-          <div className="aspect-video bg-black rounded-lg overflow-hidden">
-            <iframe
-              width="100%"
-              height="100%"
-              src={`https://www.youtube.com/embed/${lessonData.videoId}`}
-              title={lessonData.videoTitle}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-          <p className="text-sm text-gray-500 mt-2 text-center">{lessonData.videoTitle}</p>
         </div>
 
         {/* 목표별 섹션들 */}

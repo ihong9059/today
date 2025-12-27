@@ -1,0 +1,6 @@
+• 메인 텍스트: "Python 강좌 진행방법"
+• 서브 텍스트: "AI와 함께 배우기"
+• 이미지: UTTEC Edu 화면 캡처 + Python 로고 + AI 아이콘
+• 색상: 파란색(VS Code) + 노란색(Python) 조합
+• 강조: "Step 1 → Step 2 → Step 3" 흐름 표시
+
