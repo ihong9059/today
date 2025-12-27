@@ -1,0 +1,19 @@
+초급: 
+ - ESP32_교육보드_포트설명서.md를 기준으로 기본 hardware동작및 상호 연결 동작으로 구성
+ - wifi 동작 확인
+ - html의 기본 동작 
+중급: 
+ - html과 wifi를 이용하여 smartphone과 연동하기
+ - smartphone으로 hardware제어및 data 받기
+고급:
+ - pc, smartphone, esp32 board의 연결 동작
+ - pc에서 db운영및 board 센서 및 event monitoring
+
+이상의 구성으로, 초급(15일), 중급(30일), 고급(45일)의 커리큘럼을 만들어 주세요.
+
+또한 이 강좌를 소개할 동영상을 만드는데 필요한 시나리오와 대본을 만들어 주세요.
+
+강좌소개_동영상_대본.txt를 보면, 순수하게 강좌 소개만 되어있는데, 
+이 강좌는 web site(uttec-edu.duckdns.org)에서 실시하고, UTTEC Lab에서 제작하였다는것과,
+
+ai영상/대본.md의 내용과 같은 생각으로 제작되었다는것을 추가 해주세요.
