@@ -229,9 +229,9 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* 대상별 트랙 안내 */}
+            {/* 대상별 코스 안내 */}
             <div className="mt-8 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl">
-              <h3 className="font-semibold text-gray-800 mb-3">🎯 교육 트랙</h3>
+              <h3 className="font-semibold text-gray-800 mb-3">🎯 교육 코스</h3>
               <div className="flex flex-wrap gap-2">
                 {['학부형', '사회초년생', '코딩전문가', '교사/교육자', '진로전환자'].map((track) => (
                   <span key={track} className="px-3 py-1 bg-white rounded-full text-sm text-gray-700 shadow-sm">

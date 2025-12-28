@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { ChevronRight, Brain, Briefcase, Users, GraduationCap, CheckCircle, Code, Cpu, Database, Server, Terminal, Menu, X } from 'lucide-react';
 
-// 교육 트랙 데이터
+// 교육 코스 데이터
 const trackData = [
   {
     id: 'parent',
-    name: '학부형 트랙',
+    name: '학부형 코스',
     icon: '👨‍👩‍👧',
     color: 'from-purple-500 to-indigo-600',
     description: '자녀와 함께 진로 탐색',
@@ -23,7 +23,7 @@ const trackData = [
   },
   {
     id: 'beginner',
-    name: '사회초년생 트랙',
+    name: '사회초년생 코스',
     icon: '💼',
     color: 'from-blue-500 to-cyan-600',
     description: '실무 역량 강화 + 포트폴리오',
@@ -92,12 +92,12 @@ const trackData = [
     courses: [
       { id: 'intro', name: 'AI 시대 진로교육 소개', icon: '👋' },
       { id: 'mbti-test', name: 'MBTI/MMTIC 검사', icon: '🧪' },
-      { id: 'track-preview', name: '트랙 미리보기', icon: '👀' },
+      { id: 'course-preview', name: '코스 미리보기', icon: '👀' },
     ],
   },
 ];
 
-// 트랙 카드 컴포넌트
+// 코스 카드 컴포넌트
 function TrackCard({ track, isSelected, onClick }: { track: typeof trackData[0]; isSelected: boolean; onClick: () => void }) {
   return (
     <button
@@ -356,14 +356,14 @@ export default function CoursesPage() {
         </div>
       </section>
 
-      {/* 메인 콘텐츠 - 트랙 탐색 */}
+      {/* 메인 콘텐츠 - 코스 탐색 */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">교육 트랙 선택</h2>
-          <p className="text-gray-600">나에게 맞는 트랙을 선택하고 학습을 시작하세요</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">교육 코스 선택</h2>
+          <p className="text-gray-600">나에게 맞는 코스를 선택하고 학습을 시작하세요</p>
         </div>
 
-        {/* 트랙 그리드 */}
+        {/* 코스 그리드 */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {trackData.map((track) => (
             <TrackCard
@@ -375,7 +375,7 @@ export default function CoursesPage() {
           ))}
         </div>
 
-        {/* 선택된 트랙의 수업 목록 */}
+        {/* 선택된 코스의 수업 목록 */}
         {selectedTrackData && (
           <CoursePanel track={selectedTrackData} />
         )}

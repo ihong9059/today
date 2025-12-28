@@ -218,7 +218,7 @@ export default function AboutPage() {
               </p>
               <div className="bg-purple-50 rounded-lg p-4">
                 <p className="text-sm text-purple-700 font-medium">
-                  추천 트랙: 학부형 트랙 (AI 기초 + 진로 탐색)
+                  추천 코스: 학부형 코스 (AI 기초 + 진로 탐색)
                 </p>
               </div>
             </div>
@@ -239,7 +239,7 @@ export default function AboutPage() {
               </p>
               <div className="bg-blue-50 rounded-lg p-4">
                 <p className="text-sm text-blue-700 font-medium">
-                  추천 트랙: 사회초년생 트랙 (AI 실무 + 포트폴리오)
+                  추천 코스: 사회초년생 코스 (AI 실무 + 포트폴리오)
                 </p>
               </div>
             </div>
@@ -260,7 +260,7 @@ export default function AboutPage() {
               </p>
               <div className="bg-rose-50 rounded-lg p-4">
                 <p className="text-sm text-rose-700 font-medium">
-                  추천 트랙: 진로전환자 트랙 (분야 탐색 + 전환 준비)
+                  추천 코스: 진로전환자 코스 (분야 탐색 + 전환 준비)
                 </p>
               </div>
             </div>
@@ -308,7 +308,7 @@ export default function AboutPage() {
               <div className="bg-white p-6 rounded-2xl shadow-lg border-2 border-rose-200 text-center">
                 <div className="w-12 h-12 bg-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold">5</div>
                 <h4 className="font-bold text-gray-900 mb-2">진로 결정</h4>
-                <p className="text-gray-600 text-sm">만족 시 → 중급/고급 진행 또는 다른 트랙 체험</p>
+                <p className="text-gray-600 text-sm">만족 시 → 중급/고급 진행 또는 다른 코스 체험</p>
               </div>
             </div>
           </div>
