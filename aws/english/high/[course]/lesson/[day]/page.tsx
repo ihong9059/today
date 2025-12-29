@@ -45,8 +45,8 @@ const allLessons: { [course: string]: { [day: number]: { title: string; desc: st
 - They mentioned that...
 
 대화 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 시제 일치에서 불변의 진리는 현재시제를 유지해요! "He said the earth is round."',
       challenge: '🎯 도전 과제: 친구가 한 말 5개를 간접화법으로 바꿔보세요!',
       youtubeKeyword: 'English reported speech indirect speech high school'
@@ -82,8 +82,8 @@ B: ...`,
 - So do I! / Neither can she.
 
 대화 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: "Never have I seen..."처럼 부정어가 앞에 오면 의문문 어순이 돼요!',
       challenge: '🎯 도전 과제: 부정어 도치 문장 5개를 만들어보세요!',
       youtubeKeyword: 'English inversion emphasis sentence structure grammar'
@@ -119,8 +119,8 @@ B: ...`,
 - I regret not studying harder.
 
 대화 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: "Having finished"는 먼저 끝낸 후라는 뜻으로, 완료의 의미를 가져요!',
       challenge: '🎯 도전 과제: 분사구문으로 문장 5개를 줄여보세요!',
       youtubeKeyword: 'English infinitive gerund participle advanced grammar'
@@ -156,8 +156,8 @@ B: ...`,
 - He talks as if he knew everything.
 
 대화 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: "Were I you"는 "If I were you"의 도치형이에요!',
       challenge: '🎯 도전 과제: 혼합 가정법 문장 5개를 만들어보세요!',
       youtubeKeyword: 'English subjunctive mood conditional sentences I wish'
@@ -193,8 +193,8 @@ B: ...`,
 - The fact that he passed the exam made everyone happy.
 
 대화 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 콤마 사이에 있는 내용은 부가 정보라서 먼저 빼고 읽으면 문장이 쉬워져요!',
       challenge: '🎯 도전 과제: 영자 신문에서 긴 문장 5개를 분석해보세요!',
       youtubeKeyword: 'English complex sentence analysis parsing structure'
@@ -232,8 +232,8 @@ B: ...`,
 - The key point seems to be...
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 주제문은 보통 첫 문장이나 마지막 문장에 있어요!',
       challenge: '🎯 도전 과제: 영어 기사 5개의 주제를 찾아보세요!',
       youtubeKeyword: 'English reading main idea topic sentence'
@@ -269,8 +269,8 @@ Student: ...`,
 - The main point the author wants to make is...
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: should, must, need to 같은 표현이 나오면 필자의 주장이에요!',
       challenge: '🎯 도전 과제: 사설 5개에서 필자의 주장을 찾아보세요!',
       youtubeKeyword: 'English reading comprehension author purpose claim'
@@ -306,8 +306,8 @@ Student: ...`,
 - Let me look at the sentences before and after the blank.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: however, therefore 같은 연결어가 빈칸의 힌트예요!',
       challenge: '🎯 도전 과제: 빈칸 문제 10개를 풀어보세요!',
       youtubeKeyword: 'English reading blanks inference context clues'
@@ -343,8 +343,8 @@ Student: ...`,
 - Notice how 'the' tells us this was already mentioned.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: This, Such, These로 시작하면 앞에 무언가가 있어야 해요!',
       challenge: '🎯 도전 과제: 문장 순서 배열 문제 10개를 풀어보세요!',
       youtubeKeyword: 'English reading paragraph order sentence insertion'
@@ -380,8 +380,8 @@ Student: ...`,
 - Let me scan for specific details mentioned in the question.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 장문도 단락별로 나누면 쉬워져요!',
       challenge: '🎯 도전 과제: 장문 독해 문제 5세트를 풀어보세요!',
       youtubeKeyword: 'English long passage reading strategies skimming scanning'
@@ -419,8 +419,8 @@ Student: ...`,
 - The preposition 'in' is used for months and years.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 좋은 영작의 시작은 정확한 문장이에요!',
       challenge: '🎯 도전 과제: 오늘 있었던 일을 10문장으로 써보세요!',
       youtubeKeyword: 'English writing basic sentences subject verb agreement'
@@ -456,8 +456,8 @@ Student: ...`,
 - You can combine these sentences using 'although'.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 연결어를 잘 쓰면 글이 자연스러워져요!',
       challenge: '🎯 도전 과제: 연결어를 사용해 5개 문장을 연결해보세요!',
       youtubeKeyword: 'English writing transitions connectors linking words'
@@ -493,8 +493,8 @@ Student: ...`,
 - End with a concluding sentence that wraps up the paragraph.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 좋은 문단은 주제문 + 뒷받침 + 마무리로 구성돼요!',
       challenge: '🎯 도전 과제: 하나의 주제로 완성된 문단을 써보세요!',
       youtubeKeyword: 'English paragraph writing topic sentence supporting details'
@@ -530,8 +530,8 @@ Student: ...`,
 - Each body paragraph should focus on one main argument.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 5단락 에세이가 기본 구조예요!',
       challenge: '🎯 도전 과제: 5단락 에세이를 완성해보세요!',
       youtubeKeyword: 'English five paragraph essay structure introduction body conclusion'
@@ -567,8 +567,8 @@ Student: ...`,
 - Problem-solution essays identify an issue and propose solutions.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 많이 쓸수록 영작 실력이 늘어요!',
       challenge: '🎯 도전 과제: 관심 있는 주제로 에세이를 써보세요!',
       youtubeKeyword: 'English essay types opinion compare contrast problem solution'
@@ -606,8 +606,8 @@ Student: ...`,
 - The relationship between speakers is often shown by how they address each other.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 듣기는 예측이 핵심이에요! 문제를 먼저 읽고 예측하세요.',
       challenge: '🎯 도전 과제: 수능 듣기 모의고사를 풀어보세요!',
       youtubeKeyword: 'Korean CSAT English listening test strategies 수능 영어 듣기'
@@ -643,8 +643,8 @@ Student: ...`,
 - Look at the context to guess the meaning of unknown words.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 어법은 출제 포인트가 정해져 있어요! 5가지 빈출 포인트를 외우세요.',
       challenge: '🎯 도전 과제: 어법 문제 30개를 풀어보세요!',
       youtubeKeyword: 'Korean CSAT English grammar vocabulary 수능 영어 어법 어휘'
@@ -680,8 +680,8 @@ Student: ...`,
 - Eliminate obviously wrong choices first.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 빈칸 문제가 수능에서 가장 어려워요! 빈칸 앞뒤가 핵심!',
       challenge: '🎯 도전 과제: 빈칸 추론 문제 20개를 풀어보세요!',
       youtubeKeyword: 'Korean CSAT English blank inference 수능 영어 빈칸 추론'
@@ -717,8 +717,8 @@ Student: ...`,
 - The given sentence often starts with a reference word.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: This, Such, These가 문장 앞에 있으면 앞에 선행사가 필요해요!',
       challenge: '🎯 도전 과제: 순서/삽입 문제 20개를 풀어보세요!',
       youtubeKeyword: 'Korean CSAT English order insertion 수능 영어 순서 삽입'
@@ -754,8 +754,8 @@ Student: ...`,
 - The summary captures the main idea and key supporting points.
 
 대화 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 장문도 단락별로 나누면 쉬워져요! 각 단락 첫 문장이 핵심!',
       challenge: '🎯 도전 과제: 장문 독해 문제 10세트를 풀어보세요!',
       youtubeKeyword: 'Korean CSAT English long passage summary 수능 영어 장문 요약'

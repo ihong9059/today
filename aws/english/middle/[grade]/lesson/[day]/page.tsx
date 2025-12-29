@@ -47,8 +47,8 @@ const allLessons: { [grade: string]: { [day: number]: { title: string; desc: str
 - 5형식: "We call him Tom."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 영어 문장은 딱 5가지 패턴으로 분류할 수 있어요!',
       challenge: '🎯 도전 과제: 오늘 본 문장 5개를 5형식으로 분류해보세요!',
       youtubeKeyword: 'English 5 sentence patterns grammar'
@@ -85,8 +85,8 @@ B: ...`,
 - "I will visit my grandma tomorrow."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 영어에서 미래시제는 will 외에도 be going to로 표현해요!',
       challenge: '🎯 도전 과제: 어제, 오늘, 내일 할 일을 각각 영어로 말해보세요!',
       youtubeKeyword: 'English tenses present past future for beginners'
@@ -123,8 +123,8 @@ B: ...`,
 - "May I use your phone?"
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 조동사 뒤에는 항상 동사원형이 와요!',
       challenge: '🎯 도전 과제: 할 수 있는 것 3가지, 해야 하는 것 3가지를 영어로 말해보세요!',
       youtubeKeyword: 'modal verbs can will may must should English'
@@ -161,8 +161,8 @@ B: ...`,
 - "The movie was really interesting."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 형용사는 명사를, 부사는 동사/형용사/다른 부사를 꾸며요!',
       challenge: '🎯 도전 과제: 친구를 형용사 5개로 묘사해보세요!',
       youtubeKeyword: 'adjectives adverbs English grammar'
@@ -199,8 +199,8 @@ B: ...`,
 - "I live in Seoul."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: in은 공간 안, on은 표면, at은 한 점을 나타내요!',
       challenge: '🎯 도전 과제: 방 안의 물건 위치를 전치사로 설명해보세요!',
       youtubeKeyword: 'prepositions in on at English grammar'
@@ -239,8 +239,8 @@ B: ...`,
 - "I study hard to pass the test." (부사적)
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: to부정사는 "to + 동사원형"으로 세 가지 역할을 해요!',
       challenge: '🎯 도전 과제: "I want to ~" 문장 5개를 만들어보세요!',
       youtubeKeyword: 'to infinitive English grammar uses'
@@ -277,8 +277,8 @@ B: ...`,
 - "Do you mind opening the window?"
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: enjoy, finish, mind 뒤에는 동명사만 와요!',
       challenge: '🎯 도전 과제: "I enjoy ~ing" 문장 5개를 만들어보세요!',
       youtubeKeyword: 'gerund ing form English grammar'
@@ -315,8 +315,8 @@ B: ...`,
 - "She has lived here for 10 years."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: "I have been to ~"는 "~에 가본 적 있다"는 경험 표현이에요!',
       challenge: '🎯 도전 과제: 가본 적 있는 곳 3곳을 영어로 말해보세요!',
       youtubeKeyword: 'present perfect tense have has English'
@@ -353,8 +353,8 @@ B: ...`,
 - "English is spoken in many countries."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 수동태는 "~되다, ~당하다"로 해석해요!',
       challenge: '🎯 도전 과제: 능동문 3개를 수동문으로 바꿔보세요!',
       youtubeKeyword: 'passive voice English grammar be past participle'
@@ -391,8 +391,8 @@ B: ...`,
 - "Math is more difficult than English."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: good-better-best는 완전히 다른 형태로 변해요!',
       challenge: '🎯 도전 과제: 친구와 자신을 3가지로 비교해보세요!',
       youtubeKeyword: 'comparative superlative adjectives English'
@@ -431,8 +431,8 @@ B: ...`,
 - "The car that he drives is very fast."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 관계대명사는 두 문장을 하나로 연결해요!',
       challenge: '🎯 도전 과제: "The man who ~" 문장 3개를 만들어보세요!',
       youtubeKeyword: 'relative pronouns who which that English'
@@ -469,8 +469,8 @@ B: ...`,
 - "She looks excited about the trip."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: interesting은 "흥미로운", interested는 "흥미를 느끼는"이에요!',
       challenge: '🎯 도전 과제: boring과 bored를 각각 사용한 문장을 만들어보세요!',
       youtubeKeyword: 'participles present past ing ed adjectives English'
@@ -507,8 +507,8 @@ B: ...`,
 - "If I had money, I would buy it."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: "If I were you"에서 I 뒤에 were가 와요!',
       challenge: '🎯 도전 과제: "If I were ~" 문장 3개를 만들어보세요!',
       youtubeKeyword: 'subjunctive mood if I were conditional English'
@@ -545,8 +545,8 @@ B: ...`,
 - "Although it was cold, we went outside."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: although는 "~에도 불구하고"라는 뜻이에요!',
       challenge: '🎯 도전 과제: because와 although를 사용한 문장을 각각 만들어보세요!',
       youtubeKeyword: 'conjunctions because when if although English'
@@ -583,8 +583,8 @@ B: ...`,
 - "He asked if I was okay."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
       funFact: '💡 재미있는 사실: 간접화법에서는 시제가 한 단계씩 과거로 바뀌어요!',
       challenge: '🎯 도전 과제: 친구가 한 말을 간접화법으로 전달해보세요!',
       youtubeKeyword: 'reported speech indirect speech English grammar'

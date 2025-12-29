@@ -47,8 +47,8 @@ const lessonData: { [key: number]: {
 - "We are friends."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
     funFact: '💡 재미있는 사실: be동사는 영어에서 가장 많이 쓰이는 동사예요! 하루에 수백 번 사용해요.',
     challenge: '🎯 도전 과제: "I am happy. You are smart. He is tall." 3번 말해보세요!',
     youtubeKeyword: 'be verb am is are for kids English grammar'
@@ -86,8 +86,8 @@ B: ...`,
 - "What do you do after school?"
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
     funFact: '💡 재미있는 사실: 영어에서 가장 많이 쓰이는 일반동사는 "have"예요!',
     challenge: '🎯 도전 과제: 오늘 한 일을 3가지 영어로 말해보세요!',
     youtubeKeyword: 'action verbs for kids English do does'
@@ -124,8 +124,8 @@ B: ...`,
 - "She is watching TV now."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
     funFact: '💡 재미있는 사실: "I am eating"처럼 -ing를 붙이면 "지금 ~하고 있다"는 뜻이에요!',
     challenge: '🎯 도전 과제: 지금 하고 있는 일을 영어로 말해보세요!',
     youtubeKeyword: 'present tense present continuous for kids'
@@ -163,8 +163,8 @@ B: ...`,
 - "She was at home last night."
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
     funFact: '💡 재미있는 사실: "go"의 과거형 "went"는 전혀 다른 단어에서 왔어요!',
     challenge: '🎯 도전 과제: 어제 한 일 3가지를 영어로 말해보세요!',
     youtubeKeyword: 'past tense for kids regular irregular verbs'
@@ -202,8 +202,8 @@ B: ...`,
 - "He gave me a book." (SVOO)
 
 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
     funFact: '💡 재미있는 사실: 영어는 어순이 중요해서 단어 순서를 바꾸면 뜻이 달라져요!',
     challenge: '🎯 도전 과제: "나는 사과를 먹는다"를 영어로 말해보세요!',
     youtubeKeyword: 'English sentence structure SVO for kids'

@@ -47,8 +47,8 @@ const lessonData: { [key: number]: {
 - 간단한 단어 읽기
 
 형식:
-Teacher: ...
-Student: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
     funFact: '💡 재미있는 사실: 영어 알파벳 26자 중 가장 많이 쓰이는 글자는 "E"예요!',
     challenge: '🎯 도전 과제: 알파벳 A부터 Z까지 10초 안에 말해보세요!',
     youtubeKeyword: 'ABC alphabet phonics song for kids'
@@ -86,8 +86,8 @@ Student: ...`,
 - 이름과 나이 소개하기
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
     funFact: '💡 재미있는 사실: "Hello"는 전화기가 발명된 후에 인사말로 쓰이기 시작했어요!',
     challenge: '🎯 도전 과제: 가족에게 영어로 인사해보세요!',
     youtubeKeyword: 'English greetings for kids hello how are you'
@@ -125,8 +125,8 @@ B: ...`,
 - 가격 묻기 (간단한 숫자)
 
 형식:
-Shopkeeper: ...
-Customer: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
     funFact: '💡 재미있는 사실: 무지개는 7가지 색이지만, 영어로는 보통 6가지로 말해요!',
     challenge: '🎯 도전 과제: 집에 있는 물건 5개의 색깔을 영어로 말해보세요!',
     youtubeKeyword: 'numbers and colors song for kids English'
@@ -164,8 +164,8 @@ Customer: ...`,
 - 가족의 특징 간단히 설명
 
 형식:
-A: ...
-B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
     funFact: '💡 재미있는 사실: 영어에서는 할아버지(grandpa)와 할머니(grandma)를 합쳐서 "grandparents"라고 해요!',
     challenge: '🎯 도전 과제: 가족 사진을 보며 영어로 소개해보세요!',
     youtubeKeyword: 'family members in English for kids'
@@ -203,8 +203,8 @@ B: ...`,
 - "Where is my book?"
 
 형식:
-Student A: ...
-Student B: ...`,
+- 화자 표시 없이 문장만 작성
+- 한 문장씩 줄바꿈으로 구분`,
     funFact: '💡 재미있는 사실: "School"이라는 단어는 그리스어로 "여가"라는 뜻이었어요!',
     challenge: '🎯 도전 과제: 필통 속 물건 5개를 영어로 말해보세요!',
     youtubeKeyword: 'school supplies vocabulary English for kids'
