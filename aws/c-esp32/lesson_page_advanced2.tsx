@@ -23,6 +23,16 @@ day56_https/
 5. JSON 응답 파싱
 6. 공개 API 호출 예시
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- #include <WiFiClientSecure.h>: TLS/SSL 지원 WiFi 클라이언트
+- WiFiClientSecure client: 보안 연결용 클라이언트 객체
+- client.setCACert(인증서문자열): 서버 인증용 루트 CA 인증서 설정
+- client.setInsecure(): 인증서 검증 생략 (테스트용, 비권장)
+- const char* root_ca = R"EOF(...)EOF": Raw 문자열 리터럴로 인증서 저장
+- HTTPS: HTTP + TLS/SSL, 포트 443 사용
+- TLS: Transport Layer Security, 데이터 암호화 프로토콜
+- client.connect(호스트, 443): HTTPS 포트로 연결
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -65,6 +75,16 @@ day57_https_post/
 4. 응답 코드 확인
 5. 에러 처리 및 재시도
 6. 타임아웃 설정
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- client.print("POST /api HTTP/1.1\\r\\n"): HTTP POST 요청 라인 전송
+- client.print("Content-Type: application/json\\r\\n"): 헤더 설정
+- client.print("Content-Length: " + String(길이) + "\\r\\n"): 본문 길이 명시
+- client.print("\\r\\n"): 헤더 종료 표시 (빈 줄)
+- client.print(jsonBody): POST 본문 전송
+- client.setTimeout(밀리초): 응답 대기 타임아웃 설정
+- HTTP 상태코드: 200(성공), 400(잘못된 요청), 500(서버 오류)
+- \\r\\n: HTTP에서 줄바꿈 표준 (Carriage Return + Line Feed)
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
@@ -115,6 +135,15 @@ day58_api_auth/
 5. API 키 vs Bearer Token 비교
 6. 보안 모범 사례
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- "Authorization: Bearer " + token: Bearer 토큰 인증 헤더 형식
+- Bearer Token: OAuth 2.0 표준 인증 방식
+- API Key: 요청에 포함하는 고정 비밀 키
+- NVS(Non-Volatile Storage): ESP32 내장 플래시에 키-값 저장
+- 토큰 만료(Expiry): 보안을 위해 일정 시간 후 토큰 무효화
+- 리프레시 토큰: 만료된 토큰을 갱신하는 별도 토큰
+- Authorization 헤더: HTTP 표준 인증 헤더
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -155,6 +184,18 @@ day59_ota_basic/
 4. OTA 비밀번호 설정
 5. 진행률 콜백
 6. Arduino IDE에서 네트워크 포트 선택
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- #include <ArduinoOTA.h>: Arduino OTA(Over-The-Air) 라이브러리
+- ArduinoOTA.setHostname("이름"): 네트워크에서 보이는 기기 이름 설정
+- ArduinoOTA.setPassword("비밀번호"): OTA 업데이트 비밀번호 설정
+- ArduinoOTA.onStart(콜백): 업데이트 시작 시 호출할 함수 등록
+- ArduinoOTA.onProgress(콜백): 진행률 업데이트 시 호출 (current, total)
+- ArduinoOTA.onEnd(콜백): 업데이트 완료 시 호출할 함수 등록
+- ArduinoOTA.onError(콜백): 오류 발생 시 호출 (에러 코드)
+- ArduinoOTA.begin(): OTA 서비스 시작
+- ArduinoOTA.handle(): loop()에서 OTA 요청 처리 (필수)
+- OTA: Over-The-Air, 무선 펌웨어 업데이트
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
@@ -197,6 +238,16 @@ day60_web_ota/
 5. 실패 시 롤백 (선택)
 6. 버전 체크 후 업데이트
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- #include <Update.h>: ESP32 펌웨어 업데이트 라이브러리
+- #include <ESPhttpUpdate.h>: HTTP 기반 OTA 업데이트
+- Update.begin(크기): 업데이트 시작 (플래시 공간 확보)
+- Update.write(데이터, 길이): 펌웨어 데이터 쓰기
+- Update.end(): 업데이트 완료 및 검증
+- Update.hasError(): 업데이트 오류 발생 여부
+- .bin 파일: 컴파일된 바이너리 펌웨어 파일
+- ESP.restart(): 업데이트 후 재부팅
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -238,6 +289,16 @@ day61_auto_ota/
 4. 부팅 시 업데이트 체크
 5. 실패 시 재시도 (최대 3회)
 6. 업데이트 로그 저장
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- httpUpdate.update(client, url): URL에서 펌웨어 다운로드 및 설치
+- t_httpUpdate_return ret: 업데이트 결과 타입
+- HTTP_UPDATE_FAILED: 업데이트 실패
+- HTTP_UPDATE_NO_UPDATES: 업데이트 불필요
+- HTTP_UPDATE_OK: 업데이트 성공 (재부팅됨)
+- httpUpdate.getLastError(): 마지막 오류 코드
+- httpUpdate.getLastErrorString(): 오류 메시지 문자열
+- 버전 비교: 서버 버전 > 현재 버전이면 업데이트 실행
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
@@ -285,6 +346,15 @@ day62_versioning/
 5. 버전 비교 함수
 6. 변경 로그 관리
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- #define VERSION_MAJOR 1: 메이저 버전 (호환성 깨는 변경)
+- #define VERSION_MINOR 2: 마이너 버전 (기능 추가)
+- #define VERSION_PATCH 3: 패치 버전 (버그 수정)
+- __DATE__: 컴파일 날짜 (예: "Jan 1 2025")
+- __TIME__: 컴파일 시간 (예: "12:00:00")
+- 시맨틱 버저닝: MAJOR.MINOR.PATCH 형식의 버전 관리 표준
+- 버전 비교: (major * 10000) + (minor * 100) + patch로 숫자 비교
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -330,6 +400,19 @@ day63_espnow/
 5. 수신 콜백 등록
 6. MAC 주소 확인 및 설정
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- #include <esp_now.h>: ESP-NOW 프로토콜 라이브러리
+- esp_now_init(): ESP-NOW 초기화 (WiFi 모드 설정 후)
+- WiFi.mode(WIFI_STA): Station 모드 설정 (ESP-NOW에 필요)
+- esp_now_peer_info_t peerInfo: 피어 정보 구조체
+- memcpy(peerInfo.peer_addr, mac, 6): MAC 주소 복사
+- esp_now_add_peer(&peerInfo): 피어 등록
+- esp_now_send(mac, 데이터, 길이): 데이터 전송
+- esp_now_register_recv_cb(콜백): 수신 콜백 등록
+- esp_now_register_send_cb(콜백): 전송 결과 콜백 등록
+- ESP-NOW: WiFi 기반 P2P 통신 (공유기 불필요)
+- MAC 주소: 6바이트 하드웨어 주소 (예: {0xAA,0xBB,0xCC,0xDD,0xEE,0xFF})
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -372,6 +455,15 @@ day64_espnow_sensor/
 4. 노드 ID로 식별
 5. 수신 데이터 OLED 표시
 6. 전송 성공/실패 콜백
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- typedef struct { ... } SensorData: 센서 데이터 구조체 정의
+- esp_now_send(nullptr, (uint8_t*)&data, sizeof(data)): 구조체 전송
+- ESP_NOW_MAX_PEER_NUM: 최대 피어 수 (약 20개)
+- 게이트웨이: 여러 노드 데이터를 수집하는 중앙 장치
+- 노드 ID: 각 센서 장치를 구분하는 고유 번호
+- 콜백 함수 시그니처: void OnDataRecv(const uint8_t* mac, const uint8_t* data, int len)
+- esp_read_mac(mac, ESP_MAC_WIFI_STA): 자신의 MAC 주소 읽기
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
@@ -423,6 +515,14 @@ day65_espnow_broadcast/
 4. 버튼으로 브로드캐스트 트리거
 5. 응답 집계 (선택)
 6. 타이밍 동기화
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- uint8_t broadcastAddr[] = {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF}: 브로드캐스트 MAC
+- 브로드캐스트: 모든 수신자에게 동시 전송 (1:N 통신)
+- 유니캐스트: 특정 대상에게만 전송 (1:1 통신)
+- esp_now_send(broadcastAddr, data, len): 모든 ESP-NOW 장치에 전송
+- 동기화: 여러 장치가 동시에 동작하도록 타이밍 맞춤
+- millis() 동기화: 기준 시간을 전파하여 노드 간 시간 일치
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 

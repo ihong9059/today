@@ -23,6 +23,14 @@ day36_eeprom/
 5. 부팅 횟수 카운터 예제
 6. 유효성 검사 (매직 넘버)
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- #include <EEPROM.h>: EEPROM 에뮬레이션 라이브러리
+- EEPROM.begin(크기): EEPROM 영역 초기화 (최대 4096바이트)
+- EEPROM.read(주소): 해당 주소의 1바이트 읽기
+- EEPROM.write(주소, 값): 해당 주소에 1바이트 쓰기
+- EEPROM.commit(): 변경사항을 플래시에 저장 (반드시 호출)
+- 매직 넘버: 데이터 유효성 확인용 고정값 (예: 0xAB)
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -63,6 +71,15 @@ day37_preferences/
 4. WiFi 설정 저장 및 로드
 5. 네임스페이스로 분류
 6. 초기화 기능
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- #include <Preferences.h>: ESP32 NVS(Non-Volatile Storage) 라이브러리
+- Preferences preferences: Preferences 객체 생성
+- preferences.begin("namespace", false): 네임스페이스 열기 (false=읽기/쓰기)
+- preferences.putInt("key", value): 정수 저장
+- preferences.getString("key", "기본값"): 문자열 읽기 (없으면 기본값)
+- preferences.end(): 네임스페이스 닫기
+- NVS: ESP32의 키-값 저장소 (EEPROM보다 편리)
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
@@ -106,6 +123,12 @@ day38_wifi_auto/
 4. 설정 저장 후 재부팅
 5. 연결 상태 OLED 표시
 6. 버튼으로 설정 초기화
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- ESP.restart(): ESP32 소프트웨어 재부팅
+- preferences.clear(): 네임스페이스의 모든 데이터 삭제
+- WiFi.waitForConnectResult(): 연결 완료까지 대기 후 결과 반환
+- 폴백(fallback): 주 동작 실패 시 대체 동작 (Station 실패 → AP 모드)
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
@@ -156,6 +179,15 @@ day39_sd_card/
 5. 디렉토리 생성 및 목록
 6. 카드 정보 출력 (용량, 타입)
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- #include <SD.h>: SD 카드 라이브러리
+- #include <SPI.h>: SPI 통신 라이브러리 (SD 카드용)
+- SD.begin(CS핀): SD 카드 초기화 (CS=Chip Select 핀)
+- SD.mkdir("/폴더명"): 디렉토리 생성
+- SD.open(경로, 모드): 파일 열기 (FILE_WRITE, FILE_READ)
+- SD.cardType(): SD/SDHC/SDXC 카드 타입 반환
+- SD.cardSize(): 카드 용량(바이트) 반환
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -198,6 +230,13 @@ day40_sd_logging/
 4. 파일명: datalog_YYYYMMDD.csv
 5. 로그 파일 로테이션 (일별)
 6. 시리얼로 마지막 10개 항목 출력
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- CSV: Comma Separated Values - 쉼표로 구분된 데이터 형식
+- file.print()/println(): 파일에 데이터 쓰기
+- 로그 로테이션: 일정 조건(날짜/크기)에서 새 파일로 전환
+- snprintf(버퍼, 크기, 포맷, ...): 안전한 문자열 포맷팅 (버퍼 오버플로 방지)
+- FILE_APPEND: 기존 파일 끝에 추가 모드
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
@@ -248,6 +287,15 @@ day41_ntp_time/
 5. OLED에 현재 시간 표시
 6. 시간 동기화 주기 설정
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- configTime(GMT오프셋초, DST오프셋초, NTP서버): NTP 시간 동기화 설정
+- GMT+9 = 9 * 3600초: 한국 표준시 오프셋
+- struct tm timeinfo: 시간 정보 구조체 (년,월,일,시,분,초)
+- getLocalTime(&timeinfo): 현재 시간 가져오기
+- strftime(버퍼, 크기, 포맷, &tm): 시간을 문자열로 포맷팅
+- %Y-%m-%d %H:%M:%S: 날짜/시간 포맷 (2025-01-01 12:00:00)
+- NTP: Network Time Protocol - 인터넷 시간 동기화 프로토콜
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -290,6 +338,13 @@ day42_timed_log/
 4. 로그 레벨 (INFO, WARN, ERROR)
 5. 버퍼링으로 쓰기 최적화
 6. 로그 파일 크기 제한
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- ISO 8601: 국제 표준 날짜/시간 형식 (2025-01-01T12:00:00+09:00)
+- 로그 레벨: 메시지 중요도 분류 (DEBUG < INFO < WARN < ERROR)
+- enum LogLevel { DEBUG, INFO, WARN, ERROR }: 열거형으로 레벨 정의
+- 버퍼링: 여러 로그를 모아서 한 번에 쓰기 (SD 카드 수명 연장)
+- file.size(): 파일 크기(바이트) 반환
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 

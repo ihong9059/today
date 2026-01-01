@@ -24,6 +24,16 @@ day76_ha_intro/
 5. state 토픽에 값 발행
 6. HA에서 자동 인식 확인
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- MQTT Discovery: Home Assistant가 자동으로 장치 인식하는 프로토콜
+- homeassistant/sensor/노드ID/config: 센서 등록용 config 토픽
+- homeassistant/sensor/노드ID/state: 센서 값 발행용 state 토픽
+- JSON config 필수 필드: name, state_topic, unique_id
+- device_class: temperature, humidity, battery 등 센서 종류
+- unit_of_measurement: °C, %, V 등 단위
+- client.publish(토픽, JSON, true): retain=true로 config 발행 (HA 재시작 후에도 유지)
+- Home Assistant: 오픈소스 스마트홈 플랫폼
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -70,6 +80,15 @@ day77_ha_sensors/
 4. 장치 정보 (device) 포함
 5. 가용성 (availability) 토픽
 6. HA 대시보드 카드 생성
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- unique_id: HA에서 엔티티를 식별하는 고유 문자열 (MAC 주소 조합 권장)
+- device 객체: identifiers, name, model, manufacturer 포함
+- availability_topic: 장치 온라인/오프라인 상태 발행 토픽
+- payload_available: "online", payload_not_available: "offline"
+- value_template: "{{ value_json.temperature }}" - JSON에서 값 추출
+- state_class: measurement(순간값), total_increasing(누적값)
+- 다중 센서: 각 센서마다 별도 config 토픽 필요
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
@@ -122,6 +141,15 @@ day78_ha_switch/
 5. HA에서 토글 제어
 6. 물리 버튼과 HA 동기화
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- homeassistant/switch/노드ID/config: 스위치 등록용 토픽
+- command_topic: HA에서 명령 수신용 토픽 (ON/OFF)
+- state_topic: 현재 상태 발행용 토픽
+- payload_on: "ON", payload_off: "OFF" - 명령 페이로드
+- optimistic: false - state_topic 값 기준으로 UI 표시
+- 동기화: 물리 버튼 변경 시 state_topic에 즉시 발행
+- client.subscribe(command_topic): HA 명령 구독
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -171,6 +199,15 @@ day79_ha_automation/
 5. 시간 기반 자동화
 6. 센서 기반 자동화
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- HA 자동화 YAML: trigger, condition, action 3단계
+- trigger - platform: mqtt, topic: 토픽명 - MQTT 트리거
+- trigger - platform: numeric_state, above: 30 - 수치 조건
+- action - service: switch.turn_on, target: entity_id - 액션
+- homeassistant/notify/esp32: 알림용 토픽 정의 (커스텀)
+- ESP32에서 알림 수신: client.subscribe로 알림 토픽 구독
+- 부저 알림: 특정 토픽 메시지 수신 시 부저 동작
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -211,6 +248,15 @@ day80_ha_dashboard/
 4. 히스토리 그래프
 5. 알림 카드
 6. 모바일 앱 연동
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- Lovelace: Home Assistant 대시보드 UI 시스템
+- type: gauge - 게이지 카드 (온도, 습도 표시)
+- type: button - 버튼 카드 (스위치 제어)
+- type: history-graph - 히스토리 그래프 카드
+- entity: sensor.esp32_temperature - 엔티티 ID 참조
+- HA 모바일 앱: iOS/Android에서 원격 제어
+- 통합 Discovery: 연결 시 모든 센서/스위치 한 번에 등록
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
@@ -260,6 +306,15 @@ day81_smart_hub_sensor/
 5. 센서 상태 모니터링
 6. 오프라인 데이터 버퍼링
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- std::vector<SensorData> buffer: 동적 배열로 데이터 버퍼링
+- struct SensorData { uint8_t nodeId; float temp; float humi; unsigned long timestamp; }
+- buffer.push_back(data): 버퍼에 데이터 추가
+- buffer.size(): 버퍼 크기 확인
+- buffer.clear(): 버퍼 비우기 (전송 후)
+- millis() 기반 타임스탬프: 상대 시간 기록
+- 오프라인 버퍼링: WiFi 끊김 시 데이터 저장, 복구 후 전송
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -298,6 +353,14 @@ day82_smart_hub_comm/
 4. 프로토콜 브릿지 구현
 5. 연결 상태 관리
 6. 자동 재연결
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- 프로토콜 브릿지: 한 프로토콜 데이터를 다른 프로토콜로 변환/전달
+- LoRa → MQTT: LoRa 수신 데이터를 MQTT로 발행
+- LoRa → WebSocket: 동시에 WebSocket 클라이언트에 전송
+- 연결 상태 플래그: bool mqttConnected, bool wsConnected
+- 자동 재연결 패턴: if(!connected) reconnect(); with millis() 타이밍
+- 게이트웨이 역할: 여러 프로토콜을 중계하는 중앙 장치
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
@@ -338,6 +401,15 @@ day83_smart_hub_ui/
 5. 설정 페이지
 6. 다크 모드 지원
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- SPIFFS/LittleFS: HTML/CSS/JS 파일을 플래시에 저장
+- server.serveStatic("/", SPIFFS, "/"): 정적 파일 서빙
+- Chart.js: JavaScript 차트 라이브러리 (CDN 또는 로컬)
+- WebSocket JSON: {type:"sensor", data:{temp:25.3, humi:45}}
+- 반응형 디자인: CSS @media 쿼리로 모바일 대응
+- 다크 모드: CSS 변수와 JavaScript로 테마 전환
+- localStorage: 브라우저에 설정 저장
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -377,6 +449,15 @@ day84_smart_hub_data/
 5. 웹에서 로그 다운로드
 6. 데이터 내보내기 (JSON)
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- 로그 로테이션: 파일 크기/개수 제한하여 오래된 로그 삭제
+- 파일명 패턴: log_20250101.csv - 날짜 기반 파일 분리
+- server.streamFile(file, "text/csv"): 웹에서 파일 다운로드
+- Content-Disposition: attachment; filename="log.csv" - 다운로드 헤더
+- JSON 내보내기: StaticJsonDocument로 데이터 직렬화
+- NVS 설정 저장: Preferences 라이브러리로 키-값 저장
+- 백업/복원: 설정을 JSON으로 저장하고 업로드로 복원
+
 각 파일의 전체 코드를 다음 형식으로 작성:
 
 ===== 파일: main.ino =====
@@ -412,6 +493,15 @@ day85_smart_hub_integration/
 4. 에러 처리 및 복구
 5. 시스템 상태 모니터링
 6. OTA 업데이트 지원
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- 모듈 통합: 각 .h/.cpp 파일을 include하여 조합
+- 태스크 분리: 센서, 통신, UI 각각 별도 태스크
+- Core 0: WiFi/MQTT/LoRa 통신 담당
+- Core 1: 센서 읽기, OLED 표시, 웹서버 담당
+- 에러 복구: try-catch 대신 상태 머신으로 복구 로직
+- 상태 모니터링: 힙, 스택, 연결 상태를 주기적 로깅
+- 통합 테스트: 모든 기능이 함께 동작하는지 검증
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
@@ -451,6 +541,15 @@ day85_smart_hub_integration/
 5. 주석 및 문서화
 6. 메모리 최적화
 
+📚 문법 설명 (코드 내 주석으로 포함):
+- #define PIN_LED 2: 매직 넘버(하드코딩된 숫자)를 상수로 정의
+- enum ErrorCode { ERR_OK=0, ERR_WIFI=1, ERR_SENSOR=2 }: 에러 코드 열거형
+- const int TIMEOUT_MS = 5000: 상수 정의 (매크로 대신 권장)
+- static 함수: 파일 내에서만 사용하는 private 함수
+- 함수 분리 원칙: 하나의 함수는 하나의 역할만
+- PROGMEM: 문자열을 플래시에 저장하여 RAM 절약
+- F("문자열"): 문자열 리터럴을 플래시에 저장
+
 작업 가이드:
 1. 기존 코드 검토
 2. 리팩토링 체크리스트
@@ -489,6 +588,15 @@ day87_testing/
 4. 센서 보정 확인
 5. 스트레스 테스트
 6. 테스트 결과 리포트
+
+📚 문법 설명 (코드 내 주석으로 포함):
+- bool testWiFiConnection(): 테스트 함수 패턴 (성공 시 true)
+- assert(조건): 조건이 false면 프로그램 중단 (디버그용)
+- Serial.printf("[PASS] %s\n", testName): 테스트 결과 출력
+- millis() 기반 시간 측정: 성능 테스트
+- 스트레스 테스트: 장시간 반복 실행하여 안정성 확인
+- 테스트 리포트: 통과/실패 개수, 시간, 메모리 상태 기록
+- 단위 테스트: 개별 함수/모듈을 독립적으로 테스트
 
 각 파일의 전체 코드를 다음 형식으로 작성:
 
