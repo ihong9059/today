@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)엘에이티 디스플레이 장비 예지정비 솔루션 - UTTEC 제안서</title>
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #004d99;
+            --secondary: #00a3cc;
+            --accent: #ff6b35;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: var(--light);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 50%, var(--primary-dark) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300a3cc' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 span {
+            color: var(--secondary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #ccc;
+            margin-bottom: 2rem;
+        }
+
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .hero-feature {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .hero-feature h3 {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-feature p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255,107,53,0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Company Analysis Section */
+        .company-section {
+            background: white;
+        }
+
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .company-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .company-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .company-card table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .company-card td {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .company-card td:first-child {
+            font-weight: bold;
+            color: var(--gray);
+            width: 40%;
+        }
+
+        /* Product Grid */
+        .product-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .product-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-body {
+            padding: 1.5rem;
+        }
+
+        .product-body p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .monitoring-points {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .monitoring-points h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .monitoring-points ul {
+            list-style: none;
+            font-size: 0.85rem;
+        }
+
+        .monitoring-points li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .monitoring-points li::before {
+            content: '◆';
+            color: var(--secondary);
+            font-size: 0.7rem;
+        }
+
+        /* Gap Analysis */
+        .gap-section {
+            background: var(--dark);
+            color: white;
+        }
+
+        .gap-section .section-title h2 {
+            color: white;
+        }
+
+        .gap-section .section-title p {
+            color: #aaa;
+        }
+
+        .gap-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .gap-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .gap-box h3 {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .gap-box ul {
+            list-style: none;
+        }
+
+        .gap-box li {
+            padding: 0.7rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .gap-box.current li::before {
+            content: '✓';
+            color: var(--success);
+        }
+
+        .gap-box.needed li::before {
+            content: '✗';
+            color: var(--danger);
+        }
+
+        .gap-arrow {
+            font-size: 3rem;
+            color: var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .gap-solution {
+            grid-column: 1 / -1;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .gap-solution h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Architecture Section */
+        .arch-section {
+            background: white;
+        }
+
+        .arch-diagram {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+        }
+
+        .arch-layer {
+            margin-bottom: 2rem;
+        }
+
+        .arch-layer-title {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .arch-layer-content {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .arch-node {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 120px;
+            transition: all 0.3s;
+        }
+
+        .arch-node:hover {
+            background: rgba(0,163,204,0.3);
+            border-color: var(--secondary);
+        }
+
+        .arch-node h4 {
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .arch-node p {
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        .arch-connector {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--secondary);
+            margin: 1rem 0;
+        }
+
+        /* Monitoring Points Section */
+        .monitoring-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .monitoring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .monitor-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--primary);
+        }
+
+        .monitor-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .monitor-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .monitor-item:last-child {
+            border-bottom: none;
+        }
+
+        .monitor-label {
+            font-size: 0.9rem;
+        }
+
+        .monitor-value {
+            font-size: 0.8rem;
+            color: var(--gray);
+            background: var(--light);
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+        }
+
+        /* AI Section */
+        .ai-section {
+            background: var(--dark);
+            color: white;
+        }
+
+        .ai-section .section-title h2 {
+            color: white;
+        }
+
+        .ai-section .section-title p {
+            color: #aaa;
+        }
+
+        .ai-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .ai-step {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .ai-step-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-step h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-step p {
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        .ai-arrow {
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .ai-result {
+            background: linear-gradient(135deg, rgba(0,163,204,0.2) 0%, rgba(0,102,204,0.2) 100%);
+            border: 1px solid var(--secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .ai-result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .ai-result-header h4 {
+            color: var(--secondary);
+        }
+
+        .health-score {
+            background: var(--warning);
+            color: var(--dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .ai-result-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .ai-result-item span:first-child {
+            color: var(--secondary);
+        }
+
+        /* Phase Timeline */
+        .phase-section {
+            background: white;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: auto;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content .period {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content .cost {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        /* Service Plans */
+        .service-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card.featured {
+            border: 3px solid var(--accent);
+        }
+
+        .service-card.featured::before {
+            content: '추천';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 2rem;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .service-header {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .service-card:nth-child(1) .service-header {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+        }
+
+        .service-card:nth-child(2) .service-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+
+        .service-card:nth-child(3) .service-header {
+            background: linear-gradient(135deg, var(--accent) 0%, #ff8c5a 100%);
+            color: white;
+        }
+
+        .service-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .service-price span {
+            font-size: 1rem;
+            font-weight: normal;
+        }
+
+        .service-body {
+            padding: 2rem;
+        }
+
+        .service-body ul {
+            list-style: none;
+        }
+
+        .service-body li {
+            padding: 0.7rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .service-body li:last-child {
+            border-bottom: none;
+        }
+
+        .service-body li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            background: var(--dark);
+            color: white;
+        }
+
+        .benefits-section .section-title h2 {
+            color: white;
+        }
+
+        .benefits-section .section-title p {
+            color: #aaa;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-5px);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .benefit-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ROI Section */
+        .roi-section {
+            background: white;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .roi-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .roi-card h3 {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .roi-card .value {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .roi-chart {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .roi-bar-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .roi-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .roi-bar {
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .roi-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 1rem;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        /* UTTEC Section */
+        .uttec-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .uttec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .uttec-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .uttec-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .uttec-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .uttec-stat:last-child {
+            border-bottom: none;
+        }
+
+        .uttec-stat-value {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-section .section-title h2 {
+            color: white;
+        }
+
+        .contact-section .section-title p {
+            color: #aaa;
+        }
+
+        .contact-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+        }
+
+        .contact-info h4 {
+            color: var(--secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        .motto {
+            margin-top: 3rem;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            background: #0d0d1a;
+            color: #aaa;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-features {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .gap-container {
+                grid-template-columns: 1fr;
+            }
+
+            .gap-arrow {
+                transform: rotate(90deg);
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+            }
+
+            .timeline-content {
+                width: 100%;
+                margin-left: 50px !important;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .ai-flow {
+                flex-direction: column;
+            }
+
+            .ai-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">UTTEC <span>x LAT</span></div>
+        <ul class="nav-links">
+            <li><a href="#company">기업분석</a></li>
+            <li><a href="#products">제품현황</a></li>
+            <li><a href="#architecture">시스템구조</a></li>
+            <li><a href="#phases">프로젝트</a></li>
+            <li><a href="#service">서비스</a></li>
+            <li><a href="#contact">연락처</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1><span>(주)엘에이티</span> 디스플레이 장비<br>예지정비(PdM) 솔루션</h1>
+            <p class="hero-subtitle">AI 기반 진공/플라즈마/레이저 장비 상태 예측 시스템</p>
+
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <h3>2.2억원</h3>
+                    <p>총 프로젝트 투자</p>
+                </div>
+                <div class="hero-feature">
+                    <h3>5억원+</h3>
+                    <p>예상 연간 효과</p>
+                </div>
+                <div class="hero-feature">
+                    <h3>350%+</h3>
+                    <p>2년 ROI</p>
+                </div>
+            </div>
+
+            <a href="#contact" class="cta-button">상담 문의하기</a>
+        </div>
+    </section>
+
+    <!-- Company Section -->
+    <section id="company" class="company-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>(주)엘에이티 기업 분석</h2>
+                <p>반도체/디스플레이/신재생에너지 장비 전문기업</p>
+            </div>
+
+            <div class="company-grid">
+                <div class="company-card">
+                    <h3>📋 기업 개요</h3>
+                    <table>
+                        <tr>
+                            <td>회사명</td>
+                            <td>(주)엘에이티 (LAT Plasma)</td>
+                        </tr>
+                        <tr>
+                            <td>설립</td>
+                            <td>2014년</td>
+                        </tr>
+                        <tr>
+                            <td>위치</td>
+                            <td>경기도 수원시 권선구</td>
+                        </tr>
+                        <tr>
+                            <td>전문 분야</td>
+                            <td>진공/플라즈마 장비</td>
+                        </tr>
+                        <tr>
+                            <td>비전</td>
+                            <td>Global Tech Equipment Leader</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="company-card">
+                    <h3>🎯 핵심 가치</h3>
+                    <table>
+                        <tr>
+                            <td>고객 Need</td>
+                            <td>맞춤형 장비 솔루션</td>
+                        </tr>
+                        <tr>
+                            <td>품질/서비스</td>
+                            <td>최상의 품질 추구</td>
+                        </tr>
+                        <tr>
+                            <td>혁신</td>
+                            <td>고부가가치 창출</td>
+                        </tr>
+                        <tr>
+                            <td>시장</td>
+                            <td>디스플레이/반도체</td>
+                        </tr>
+                        <tr>
+                            <td>강점</td>
+                            <td>Flexible OLED 전문</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="product-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>핵심 제품군 및 예지정비 포인트</h2>
+                <p>디스플레이 장비별 모니터링 필요 사항</p>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-header">
+                        <h3>3D 진공 합착기</h3>
+                        <p>Cover Glass + Flexible OLED 합착</p>
+                    </div>
+                    <div class="product-body">
+                        <p>Foldable 디스플레이 핵심 공정 장비로, 고진공 환경에서 정밀 합착을 수행합니다.</p>
+                        <div class="monitoring-points">
+                            <h4>예지정비 모니터링 포인트</h4>
+                            <ul>
+                                <li>진공 펌프 진동/온도</li>
+                                <li>챔버 진공도 도달 시간</li>
+                                <li>히터 수명 및 균일성</li>
+                                <li>압력 센서 드리프트</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-header">
+                        <h3>UTG Laser Cutter</h3>
+                        <p>Ultra Thin Glass 고정밀 커팅</p>
+                    </div>
+                    <div class="product-body">
+                        <p>30~100μm UTG를 고정밀로 커팅하는 장비로, 레이저 출력 안정성이 핵심입니다.</p>
+                        <div class="monitoring-points">
+                            <h4>예지정비 모니터링 포인트</h4>
+                            <ul>
+                                <li>레이저 출력 파워 추이</li>
+                                <li>빔 프로파일 변화</li>
+                                <li>광학계 오염도</li>
+                                <li>칠러 온도 안정성</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-header">
+                        <h3>플라즈마 처리 장비</h3>
+                        <p>표면 세정 및 활성화 처리</p>
+                    </div>
+                    <div class="product-body">
+                        <p>RF 플라즈마를 이용한 표면 처리로, 균일한 플라즈마 유지가 중요합니다.</p>
+                        <div class="monitoring-points">
+                            <h4>예지정비 모니터링 포인트</h4>
+                            <ul>
+                                <li>RF 매칭 상태 (Fwd/Ref)</li>
+                                <li>플라즈마 임피던스 변화</li>
+                                <li>가스 유량 안정성</li>
+                                <li>OES 스펙트럼 분석</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-header">
+                        <h3>Electro Forming</h3>
+                        <p>±1μm 정밀 부품 제작</p>
+                    </div>
+                    <div class="product-body">
+                        <p>전기 도금 방식의 초정밀 부품 제작으로, 전해액 관리가 핵심입니다.</p>
+                        <div class="monitoring-points">
+                            <h4>예지정비 모니터링 포인트</h4>
+                            <ul>
+                                <li>전해액 농도/온도</li>
+                                <li>전류밀도 균일성</li>
+                                <li>도금 두께 편차</li>
+                                <li>전극 상태</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gap Analysis Section -->
+    <section class="gap-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>기술 Gap 분석</h2>
+                <p>현재 보유 기술과 필요한 기술 비교</p>
+            </div>
+
+            <div class="gap-container">
+                <div class="gap-box current">
+                    <h3>✓ 현재 보유 기술</h3>
+                    <ul>
+                        <li>진공 장비 설계 및 제작</li>
+                        <li>레이저 가공 기술</li>
+                        <li>디스플레이 공정 노하우</li>
+                        <li>정밀 제어 시스템</li>
+                        <li>고객 맞춤 설계 역량</li>
+                    </ul>
+                </div>
+
+                <div class="gap-arrow">→</div>
+
+                <div class="gap-box needed">
+                    <h3>✗ 필요하지만 부족한 기술</h3>
+                    <ul>
+                        <li>실시간 상태 모니터링</li>
+                        <li>예지정비 AI 시스템</li>
+                        <li>IoT 데이터 플랫폼</li>
+                        <li>원격 진단 시스템</li>
+                        <li>클라우드 서비스 인프라</li>
+                    </ul>
+                </div>
+
+                <div class="gap-solution">
+                    <h3>UTTEC 솔루션으로 Gap 해소</h3>
+                    <p>디스플레이 장비 예지정비 통합 솔루션: 진공/플라즈마 AI 모니터링 + 원격 진단 + 서비스 플랫폼</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="arch-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>시스템 아키텍처</h2>
+                <p>디스플레이 장비 예지정비 5-Layer 구조</p>
+            </div>
+
+            <div class="arch-diagram">
+                <div class="arch-layer">
+                    <div class="arch-layer-title">[ Layer 1: 장비 Fleet ]</div>
+                    <div class="arch-layer-content">
+                        <div class="arch-node">
+                            <h4>3D 진공 합착기</h4>
+                            <p>Flexible OLED</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>UTG Laser Cut</h4>
+                            <p>Ultra Thin Glass</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>플라즈마 처리</h4>
+                            <p>표면 세정</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>CVD/PECVD</h4>
+                            <p>박막 증착</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>Electro Forming</h4>
+                            <p>정밀 부품</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">▼</div>
+
+                <div class="arch-layer">
+                    <div class="arch-layer-title">[ Layer 2: 센서 노드 ]</div>
+                    <div class="arch-layer-content">
+                        <div class="arch-node">
+                            <h4>진공 게이지</h4>
+                            <p>이온/피라니</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>RF 전력계</h4>
+                            <p>Fwd/Ref</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>온도 센서</h4>
+                            <p>RTD/열전대</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>가스 유량계</h4>
+                            <p>MFC</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>진동 센서</h4>
+                            <p>3축 가속도</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">▼</div>
+
+                <div class="arch-layer">
+                    <div class="arch-layer-title">[ Layer 3: Edge Gateway ]</div>
+                    <div class="arch-layer-content">
+                        <div class="arch-node">
+                            <h4>데이터 수집</h4>
+                            <p>Modbus/RS-485</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>Edge AI</h4>
+                            <p>TensorFlow Lite</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>통신/연동</h4>
+                            <p>MQTT/OPC-UA</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">▼</div>
+
+                <div class="arch-layer">
+                    <div class="arch-layer-title">[ Layer 4: LAT Equipment Cloud ]</div>
+                    <div class="arch-layer-content">
+                        <div class="arch-node">
+                            <h4>Equipment DB</h4>
+                            <p>InfluxDB</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>AI Engine</h4>
+                            <p>예측 모델</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>Alert System</h4>
+                            <p>알림 관리</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>Report</h4>
+                            <p>자동 생성</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">▼</div>
+
+                <div class="arch-layer">
+                    <div class="arch-layer-title">[ Layer 5: User Interface ]</div>
+                    <div class="arch-layer-content">
+                        <div class="arch-node">
+                            <h4>고객 대시보드</h4>
+                            <p>장비 현황</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>LAT 관제센터</h4>
+                            <p>Fleet 관리</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>Mobile App</h4>
+                            <p>iOS/Android</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>원격 진단</h4>
+                            <p>VPN 접속</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Monitoring Section -->
+    <section class="monitoring-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>실시간 모니터링 항목</h2>
+                <p>장비별 센서 수집 및 분석 상세</p>
+            </div>
+
+            <div class="monitoring-grid">
+                <div class="monitor-card">
+                    <h3>진공 시스템</h3>
+                    <div class="monitor-item">
+                        <span class="monitor-label">챔버 진공도</span>
+                        <span class="monitor-value">10Hz</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">펌프 진동</span>
+                        <span class="monitor-value">1kHz FFT</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">배기 속도</span>
+                        <span class="monitor-value">도달시간</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">누설률</span>
+                        <span class="monitor-value">He Leak</span>
+                    </div>
+                </div>
+
+                <div class="monitor-card">
+                    <h3>플라즈마 시스템</h3>
+                    <div class="monitor-item">
+                        <span class="monitor-label">RF 전력 (Fwd/Ref)</span>
+                        <span class="monitor-value">100Hz</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">플라즈마 임피던스</span>
+                        <span class="monitor-value">V/I Probe</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">가스 유량</span>
+                        <span class="monitor-value">MFC 10Hz</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">OES 스펙트럼</span>
+                        <span class="monitor-value">200-800nm</span>
+                    </div>
+                </div>
+
+                <div class="monitor-card">
+                    <h3>레이저 시스템</h3>
+                    <div class="monitor-item">
+                        <span class="monitor-label">출력 파워</span>
+                        <span class="monitor-value">10Hz</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">빔 프로파일</span>
+                        <span class="monitor-value">가우시안</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">광학계 오염도</span>
+                        <span class="monitor-value">투과율</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">칠러 온도</span>
+                        <span class="monitor-value">±0.1°C</span>
+                    </div>
+                </div>
+
+                <div class="monitor-card">
+                    <h3>온도 제어 시스템</h3>
+                    <div class="monitor-item">
+                        <span class="monitor-label">히터 저항값</span>
+                        <span class="monitor-value">열화 추적</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">온도 균일성</span>
+                        <span class="monitor-value">±1°C</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">쿨링 효율</span>
+                        <span class="monitor-value">COP</span>
+                    </div>
+                    <div class="monitor-item">
+                        <span class="monitor-label">PID 응답성</span>
+                        <span class="monitor-value">세틀링 타임</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Section -->
+    <section class="ai-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>AI 기반 고장 예측</h2>
+                <p>딥러닝 모델을 통한 잔여 수명(RUL) 예측</p>
+            </div>
+
+            <div class="ai-flow">
+                <div class="ai-step">
+                    <div class="ai-step-icon">📊</div>
+                    <h4>데이터 수집</h4>
+                    <p>진공도, 진동<br>RF 전력, 온도</p>
+                </div>
+                <div class="ai-arrow">→</div>
+                <div class="ai-step">
+                    <div class="ai-step-icon">🔍</div>
+                    <h4>특징 추출</h4>
+                    <p>FFT 분석<br>트렌드 패턴</p>
+                </div>
+                <div class="ai-arrow">→</div>
+                <div class="ai-step">
+                    <div class="ai-step-icon">🧠</div>
+                    <h4>모델 학습</h4>
+                    <p>LSTM, CNN<br>Random Forest</p>
+                </div>
+                <div class="ai-arrow">→</div>
+                <div class="ai-step">
+                    <div class="ai-step-icon">⚡</div>
+                    <h4>예측/알림</h4>
+                    <p>잔여 수명<br>정비 권고</p>
+                </div>
+            </div>
+
+            <div class="ai-result">
+                <div class="ai-result-header">
+                    <h4>[3D Laminator #01] 진공 펌프 (Dry Pump)</h4>
+                    <span class="health-score">Health: 68%</span>
+                </div>
+                <div class="ai-result-item">
+                    <span>📌</span>
+                    <span>현재 상태: 주의 (Yellow)</span>
+                </div>
+                <div class="ai-result-item">
+                    <span>⏱️</span>
+                    <span>예상 잔여 수명: 2,100시간 (약 88일)</span>
+                </div>
+                <div class="ai-result-item">
+                    <span>📈</span>
+                    <span>이상 패턴: 진동 RMS 15% 증가 추세</span>
+                </div>
+                <div class="ai-result-item">
+                    <span>🔧</span>
+                    <span>권장 조치: 60일 내 베어링/씰 점검 권장</span>
+                </div>
+                <div class="ai-result-item">
+                    <span>✓</span>
+                    <span>예측 신뢰도: 87%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase Section -->
+    <section id="phases" class="phase-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>프로젝트 추진 단계</h2>
+                <p>3단계 로드맵 (총 10개월)</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 1: 진공/플라즈마 장비 PdM</h3>
+                        <p class="period">5개월</p>
+                        <ul>
+                            <li>진공 펌프 진동/온도 모니터링</li>
+                            <li>RF 매칭 상태 분석</li>
+                            <li>Edge Gateway 개발</li>
+                            <li>AI 예측 모델 구축</li>
+                            <li>Cloud Platform 구축</li>
+                        </ul>
+                        <span class="cost">투자: 1.0억원</span>
+                    </div>
+                    <div class="timeline-dot">1</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 2: 레이저 장비 모니터링</h3>
+                        <p class="period">3개월</p>
+                        <ul>
+                            <li>레이저 출력 모니터링</li>
+                            <li>광학계 오염도 분석</li>
+                            <li>스테이지 정밀도 측정</li>
+                            <li>AI 모델 확장</li>
+                        </ul>
+                        <span class="cost">투자: 0.7억원</span>
+                    </div>
+                    <div class="timeline-dot">2</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 3: 원격 서비스 플랫폼</h3>
+                        <p class="period">2개월</p>
+                        <ul>
+                            <li>VPN/보안 인프라</li>
+                            <li>고객 서비스 포털</li>
+                            <li>원격 진단 도구</li>
+                            <li>구독 과금 시스템</li>
+                        </ul>
+                        <span class="cost">투자: 0.5억원</span>
+                    </div>
+                    <div class="timeline-dot">3</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Plans Section -->
+    <section id="service" class="service-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>장비 서비스 요금제</h2>
+                <p>구독 기반 서비스로 안정적 매출 확보</p>
+            </div>
+
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3>Basic</h3>
+                        <p>기본형</p>
+                        <div class="service-price">30만원<span>/월/장비</span></div>
+                    </div>
+                    <div class="service-body">
+                        <ul>
+                            <li>실시간 모니터링</li>
+                            <li>이메일 알림</li>
+                            <li>기본 리포트 (월간)</li>
+                            <li>대시보드 접근</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card featured">
+                    <div class="service-header">
+                        <h3>Standard</h3>
+                        <p>표준형</p>
+                        <div class="service-price">60만원<span>/월/장비</span></div>
+                    </div>
+                    <div class="service-body">
+                        <ul>
+                            <li>Basic 포함</li>
+                            <li>AI 예지정비 알림</li>
+                            <li>상세 분석 리포트</li>
+                            <li>원격 진단 (유료)</li>
+                            <li>기술 상담 지원</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3>Premium</h3>
+                        <p>프리미엄</p>
+                        <div class="service-price">100만원<span>/월/장비</span></div>
+                    </div>
+                    <div class="service-body">
+                        <ul>
+                            <li>Standard 포함</li>
+                            <li>24/7 원격 진단</li>
+                            <li>우선 A/S 지원</li>
+                            <li>부품 할인 (10%)</li>
+                            <li>전담 엔지니어 배정</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>기대 효과</h2>
+                <p>예지정비 시스템 도입으로 기대되는 효과</p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">⏱️</div>
+                    <h3>다운타임 감소</h3>
+                    <div class="benefit-value">70%↓</div>
+                    <p>비계획 정지 시간 감소</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>정비 비용 절감</h3>
+                    <div class="benefit-value">0.5억원</div>
+                    <p>과잉 정비 방지</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📈</div>
+                    <h3>서비스 매출</h3>
+                    <div class="benefit-value">2.7억원+</div>
+                    <p>연간 구독 수익</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏆</div>
+                    <h3>고객 만족도</h3>
+                    <div class="benefit-value">UP</div>
+                    <p>가동률 향상</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Section -->
+    <section class="roi-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>투자 대비 수익 분석</h2>
+                <p>명확한 ROI로 검증된 투자</p>
+            </div>
+
+            <div class="roi-grid">
+                <div class="roi-card">
+                    <h3>총 투자 비용</h3>
+                    <div class="value">2.2억원</div>
+                </div>
+                <div class="roi-card">
+                    <h3>연간 효과</h3>
+                    <div class="value">5억원+</div>
+                </div>
+                <div class="roi-card">
+                    <h3>손익분기점</h3>
+                    <div class="value">~6개월</div>
+                </div>
+                <div class="roi-card">
+                    <h3>2년 ROI</h3>
+                    <div class="value">350%+</div>
+                </div>
+            </div>
+
+            <div class="roi-chart">
+                <div class="roi-bar-container">
+                    <div class="roi-bar-label">
+                        <span>비계획 정지 감소</span>
+                        <span>1.5억원/년</span>
+                    </div>
+                    <div class="roi-bar">
+                        <div class="roi-bar-fill" style="width: 30%;">30%</div>
+                    </div>
+                </div>
+                <div class="roi-bar-container">
+                    <div class="roi-bar-label">
+                        <span>정비 비용 절감</span>
+                        <span>0.5억원/년</span>
+                    </div>
+                    <div class="roi-bar">
+                        <div class="roi-bar-fill" style="width: 10%;">10%</div>
+                    </div>
+                </div>
+                <div class="roi-bar-container">
+                    <div class="roi-bar-label">
+                        <span>서비스 구독 매출</span>
+                        <span>2.7억원+/년</span>
+                    </div>
+                    <div class="roi-bar">
+                        <div class="roi-bar-fill" style="width: 54%;">54%</div>
+                    </div>
+                </div>
+                <div class="roi-bar-container">
+                    <div class="roi-bar-label">
+                        <span><strong>총 연간 효과</strong></span>
+                        <span><strong>5억원+/년</strong></span>
+                    </div>
+                    <div class="roi-bar">
+                        <div class="roi-bar-fill" style="width: 100%;">100%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UTTEC Section -->
+    <section class="uttec-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>UTTEC 소개</h2>
+                <p>임베디드/IoT/AI 전문 기업</p>
+            </div>
+
+            <div class="uttec-grid">
+                <div class="uttec-card">
+                    <h3>회사 개요</h3>
+                    <div class="uttec-stat">
+                        <span>회사명</span>
+                        <span class="uttec-stat-value">UTTEC (유텍)</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>전문 분야</span>
+                        <span class="uttec-stat-value">임베디드/IoT/AI</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>총 경력</span>
+                        <span class="uttec-stat-value">78년+</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>완료 프로젝트</span>
+                        <span class="uttec-stat-value">60개+</span>
+                    </div>
+                </div>
+
+                <div class="uttec-card">
+                    <h3>핵심 기술</h3>
+                    <div class="uttec-stat">
+                        <span>MCU/CPU</span>
+                        <span class="uttec-stat-value">ARM Cortex, DSP</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>FPGA</span>
+                        <span class="uttec-stat-value">Xilinx, Altera</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>IoT 통신</span>
+                        <span class="uttec-stat-value">MQTT, OPC-UA</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>AI/ML</span>
+                        <span class="uttec-stat-value">TensorFlow Lite</span>
+                    </div>
+                </div>
+
+                <div class="uttec-card">
+                    <h3>관련 경험</h3>
+                    <div class="uttec-stat">
+                        <span>삼성전자/Panasonic</span>
+                        <span class="uttec-stat-value">16년+</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>SMD 라인 자동화</span>
+                        <span class="uttec-stat-value">진공/온도</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>산업용 IoT GW</span>
+                        <span class="uttec-stat-value">다중 센서</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>모터/온도 제어</span>
+                        <span class="uttec-stat-value">정밀 제어</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>연락처</h2>
+                <p>프로젝트 상담 및 문의</p>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-item">
+                    <span class="contact-icon">👤</span>
+                    <div class="contact-info">
+                        <h4>담당자</h4>
+                        <p>홍 광삼</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📧</span>
+                    <div class="contact-info">
+                        <h4>이메일</h4>
+                        <p>uttec@uttec.co.kr</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📱</span>
+                    <div class="contact-info">
+                        <h4>전화번호</h4>
+                        <p>010-3922-1809</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="motto">"뜻이 있으면 반드시 이룬다" (有志意成)</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 UTTEC. All rights reserved. | (주)엘에이티 디스플레이 장비 예지정비 솔루션 제안서</p>
+    </footer>
+</body>
+</html>

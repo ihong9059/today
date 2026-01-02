@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)동광계전 스마트 물류 & 품질관리 솔루션 - UTTEC 제안서</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-dark: #1e40af;
+            --secondary: #3b82f6;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background: var(--light);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary-dark) 50%, var(--primary) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+        }
+
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .hero-feature {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .hero-feature h3 {
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-feature p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(245,158,11,0.4);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Company Section */
+        .company-section {
+            background: white;
+        }
+
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .company-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 2rem;
+            border-left: 5px solid var(--primary);
+        }
+
+        .company-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .company-card table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .company-card td {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .company-card td:first-child {
+            font-weight: 600;
+            color: var(--gray);
+            width: 35%;
+        }
+
+        /* Products Section */
+        .products-section {
+            background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 1.2rem;
+            color: white;
+        }
+
+        .product-header h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .product-header p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .product-body {
+            padding: 1.2rem;
+        }
+
+        .product-body ul {
+            list-style: none;
+        }
+
+        .product-body li {
+            padding: 0.4rem 0;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray);
+        }
+
+        .product-body li::before {
+            content: '>';
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* Pain Points Section */
+        .pain-section {
+            background: var(--dark);
+            color: white;
+        }
+
+        .pain-section .section-title h2 {
+            color: white;
+        }
+
+        .pain-section .section-title p {
+            color: #94a3b8;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .pain-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .pain-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-5px);
+        }
+
+        .pain-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pain-card h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .pain-card p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Solution Section */
+        .solution-section {
+            background: white;
+        }
+
+        .solution-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .solution-step {
+            background: linear-gradient(135deg, var(--light) 0%, white 100%);
+            border: 2px solid var(--secondary);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            min-width: 160px;
+            transition: all 0.3s;
+        }
+
+        .solution-step:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(59,130,246,0.2);
+        }
+
+        .solution-step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .solution-step h4 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .solution-step p {
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        .solution-arrow {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+
+        /* Architecture Section */
+        .arch-section {
+            background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+        }
+
+        .arch-diagram {
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            color: white;
+        }
+
+        .arch-layer {
+            margin-bottom: 1.5rem;
+        }
+
+        .arch-layer-title {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+            font-weight: bold;
+        }
+
+        .arch-layer-content {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .arch-node {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 100px;
+            transition: all 0.3s;
+        }
+
+        .arch-node:hover {
+            background: rgba(59,130,246,0.3);
+            border-color: var(--secondary);
+        }
+
+        .arch-node h4 {
+            font-size: 0.8rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .arch-node p {
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+
+        .arch-connector {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin: 0.5rem 0;
+        }
+
+        /* Environment Section */
+        .env-section {
+            background: white;
+        }
+
+        .env-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .env-card {
+            background: var(--light);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .env-header {
+            background: linear-gradient(135deg, var(--danger) 0%, #f97316 100%);
+            padding: 1rem 1.5rem;
+            color: white;
+        }
+
+        .env-header h3 {
+            font-size: 1rem;
+        }
+
+        .env-body {
+            padding: 1.5rem;
+        }
+
+        .env-impact {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .env-impact h4 {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .env-impact ul {
+            list-style: none;
+            font-size: 0.85rem;
+        }
+
+        .env-impact li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .env-impact li::before {
+            content: '!';
+            background: var(--danger);
+            color: white;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* Test System Section */
+        .test-section {
+            background: var(--dark);
+            color: white;
+        }
+
+        .test-section .section-title h2 {
+            color: white;
+        }
+
+        .test-section .section-title p {
+            color: #94a3b8;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .test-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .test-card h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .test-item:last-child {
+            border-bottom: none;
+        }
+
+        .test-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .test-value {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Timeline Section */
+        .phase-section {
+            background: white;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: auto;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(30,58,138,0.3);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content .period {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .timeline-content ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content li {
+            padding: 0.3rem 0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timeline-content li::before {
+            content: '>';
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .timeline-content .cost {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+
+        .benefits-section .section-title h2 {
+            color: white;
+        }
+
+        .benefits-section .section-title p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .benefit-card {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .benefit-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+
+        .benefit-card p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* ROI Section */
+        .roi-section {
+            background: white;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .roi-card {
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .roi-card h3 {
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .roi-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .roi-breakdown {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .roi-breakdown h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .roi-bar-container {
+            margin-bottom: 1rem;
+        }
+
+        .roi-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .roi-bar {
+            height: 25px;
+            background: #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .roi-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0.8rem;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        /* Differentiation Section */
+        .diff-section {
+            background: var(--dark);
+            color: white;
+        }
+
+        .diff-section .section-title h2 {
+            color: white;
+        }
+
+        .diff-section .section-title p {
+            color: #94a3b8;
+        }
+
+        .diff-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2rem;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .diff-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .diff-box h3 {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            font-size: 1rem;
+        }
+
+        .diff-box ul {
+            list-style: none;
+        }
+
+        .diff-box li {
+            padding: 0.6rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .diff-box.old li::before {
+            content: 'x';
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .diff-box.new li::before {
+            content: 'v';
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .diff-arrow {
+            font-size: 3rem;
+            color: var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .diff-value {
+            grid-column: 1 / -1;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+        }
+
+        .diff-value h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .diff-value p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        /* UTTEC Section */
+        .uttec-section {
+            background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+        }
+
+        .uttec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .uttec-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .uttec-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            font-size: 1rem;
+        }
+
+        .uttec-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .uttec-stat:last-child {
+            border-bottom: none;
+        }
+
+        .uttec-stat-value {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-section .section-title h2 {
+            color: white;
+        }
+
+        .contact-section .section-title p {
+            color: #94a3b8;
+        }
+
+        .contact-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+        }
+
+        .contact-info h4 {
+            color: var(--accent);
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
+        }
+
+        .contact-info p {
+            font-size: 1rem;
+        }
+
+        .motto {
+            margin-top: 2.5rem;
+            font-size: 1.4rem;
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0f1a;
+            color: #64748b;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-features {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+            }
+
+            .timeline-content {
+                width: 100%;
+                margin-left: 50px !important;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .diff-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .diff-arrow {
+                transform: rotate(90deg);
+            }
+
+            .solution-flow {
+                flex-direction: column;
+            }
+
+            .solution-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">UTTEC <span>x</span> 동광계전</div>
+        <ul class="nav-links">
+            <li><a href="#company">기업분석</a></li>
+            <li><a href="#solution">솔루션</a></li>
+            <li><a href="#architecture">시스템</a></li>
+            <li><a href="#phases">프로젝트</a></li>
+            <li><a href="#benefits">기대효과</a></li>
+            <li><a href="#contact">연락처</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1><span>(주)동광계전</span><br>스마트 물류 & 품질관리 솔루션</h1>
+            <p class="hero-subtitle">IoT 재고관리 + 자동 품질테스트 + 환경 예지정비</p>
+
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <h3>1억원</h3>
+                    <p>총 프로젝트 투자</p>
+                </div>
+                <div class="hero-feature">
+                    <h3>3천만원+</h3>
+                    <p>연간 절감 효과</p>
+                </div>
+                <div class="hero-feature">
+                    <h3>99%+</h3>
+                    <p>재고 정확도</p>
+                </div>
+            </div>
+
+            <a href="#contact" class="cta-button">상담 문의하기</a>
+        </div>
+    </section>
+
+    <!-- Company Section -->
+    <section id="company" class="company-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>(주)동광계전 기업 분석</h2>
+                <p>전기제어기기 전문 유통업체</p>
+            </div>
+
+            <div class="company-grid">
+                <div class="company-card">
+                    <h3>기업 개요</h3>
+                    <table>
+                        <tr>
+                            <td>회사명</td>
+                            <td>(주)동광계전</td>
+                        </tr>
+                        <tr>
+                            <td>대표자</td>
+                            <td>윤성현</td>
+                        </tr>
+                        <tr>
+                            <td>위치</td>
+                            <td>경기 수원시 권선구</td>
+                        </tr>
+                        <tr>
+                            <td>업종</td>
+                            <td>전기제어기기 유통</td>
+                        </tr>
+                        <tr>
+                            <td>연락처</td>
+                            <td>031-278-3475</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="company-card">
+                    <h3>운영 현황</h3>
+                    <table>
+                        <tr>
+                            <td>운영시간</td>
+                            <td>09:00~17:30</td>
+                        </tr>
+                        <tr>
+                            <td>휴무</td>
+                            <td>주말/공휴일</td>
+                        </tr>
+                        <tr>
+                            <td>판매 채널</td>
+                            <td>온/오프라인</td>
+                        </tr>
+                        <tr>
+                            <td>배송</td>
+                            <td>로젠택배</td>
+                        </tr>
+                        <tr>
+                            <td>주요 고객</td>
+                            <td>전기공사/설비업체</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>취급 제품군</h2>
+                <p>주요 브랜드 및 예지정비 적용 포인트</p>
+            </div>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-header">
+                        <h3>DSI (디에스아이)</h3>
+                        <p>유니크 BOX / 스위치 BOX</p>
+                    </div>
+                    <div class="product-body">
+                        <ul>
+                            <li>BOX 내구성 테스트</li>
+                            <li>환경 저항 검증</li>
+                            <li>기밀성 확인</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-header">
+                        <h3>대륙</h3>
+                        <p>MCCB / ELCB</p>
+                    </div>
+                    <div class="product-body">
+                        <ul>
+                            <li>동작 특성 테스트</li>
+                            <li>트립 시간 측정</li>
+                            <li>절연저항 검사</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-header">
+                        <h3>서준전기</h3>
+                        <p>타임스위치 / 전기요금측정기</p>
+                    </div>
+                    <div class="product-body">
+                        <ul>
+                            <li>타이밍 정확도 검증</li>
+                            <li>계량 정밀도 확인</li>
+                            <li>동작 신뢰성 테스트</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-header">
+                        <h3>성호제어기기</h3>
+                        <p>릴레이 / 단자대 / 표시등</p>
+                    </div>
+                    <div class="product-body">
+                        <ul>
+                            <li>접점 저항 측정</li>
+                            <li>동작 수명 테스트</li>
+                            <li>LED 광도 확인</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-header">
+                        <h3>전오전기</h3>
+                        <p>터미널 / 단자류</p>
+                    </div>
+                    <div class="product-body">
+                        <ul>
+                            <li>체결력 테스트</li>
+                            <li>접촉 저항 측정</li>
+                            <li>재료 품질 확인</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-header">
+                        <h3>케이지오토 / 한국리레이</h3>
+                        <p>제어스위치 / 릴레이</p>
+                    </div>
+                    <div class="product-body">
+                        <ul>
+                            <li>스위치 내구성 테스트</li>
+                            <li>접점 성능 검증</li>
+                            <li>응답 시간 측정</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pain Points Section -->
+    <section class="pain-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>유통업 Pain Points</h2>
+                <p>전기제어기기 유통업이 직면한 도전</p>
+            </div>
+
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-icon">📦</div>
+                    <h3>다품종 재고관리</h3>
+                    <p>수백 가지 품목의 재고 파악에 많은 시간 소요</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">🔍</div>
+                    <h3>품질 검증 부재</h3>
+                    <p>입고 제품의 품질 확인 어려움, 클레임 리스크</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">🌡️</div>
+                    <h3>보관 환경 관리</h3>
+                    <p>온습도 변화로 인한 제품 열화 우려</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">🛒</div>
+                    <h3>온라인 경쟁 심화</h3>
+                    <p>가격 경쟁만으로는 차별화 어려움</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="solution-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>UTTEC 솔루션</h2>
+                <p>스마트 유통 플랫폼으로 경쟁력 확보</p>
+            </div>
+
+            <div class="solution-flow">
+                <div class="solution-step">
+                    <div class="solution-step-icon">📡</div>
+                    <h4>RFID 재고관리</h4>
+                    <p>실시간 재고 파악</p>
+                </div>
+                <div class="solution-arrow">→</div>
+                <div class="solution-step">
+                    <div class="solution-step-icon">🌡️</div>
+                    <h4>환경 모니터링</h4>
+                    <p>온습도 예지정비</p>
+                </div>
+                <div class="solution-arrow">→</div>
+                <div class="solution-step">
+                    <div class="solution-step-icon">⚡</div>
+                    <h4>품질 테스트</h4>
+                    <p>자동 성능 검증</p>
+                </div>
+                <div class="solution-arrow">→</div>
+                <div class="solution-step">
+                    <div class="solution-step-icon">📊</div>
+                    <h4>통합 플랫폼</h4>
+                    <p>데이터 분석</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="arch-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>시스템 아키텍처</h2>
+                <p>동광계전 스마트 물류 시스템 5-Layer 구조</p>
+            </div>
+
+            <div class="arch-diagram">
+                <div class="arch-layer">
+                    <div class="arch-layer-title">[ Layer 1: 창고 현장 ]</div>
+                    <div class="arch-layer-content">
+                        <div class="arch-node">
+                            <h4>선반 A</h4>
+                            <p>DSI BOX류</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>선반 B</h4>
+                            <p>대륙 차단기</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>선반 C</h4>
+                            <p>서준 타임SW</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>선반 D</h4>
+                            <p>성호/전오</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>입출고 게이트</h4>
+                            <p>RFID</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">▼</div>
+
+                <div class="arch-layer">
+                    <div class="arch-layer-title">[ Layer 2: 센서/태그 ]</div>
+                    <div class="arch-layer-content">
+                        <div class="arch-node">
+                            <h4>RFID 태그</h4>
+                            <p>UHF 패시브</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>온습도 센서</h4>
+                            <p>고정밀</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>재고 감지</h4>
+                            <p>무게/광학</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>대기질 센서</h4>
+                            <p>먼지/VOC</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">▼</div>
+
+                <div class="arch-layer">
+                    <div class="arch-layer-title">[ Layer 3: IoT Gateway ]</div>
+                    <div class="arch-layer-content">
+                        <div class="arch-node">
+                            <h4>RFID Reader</h4>
+                            <p>고정형 4ch</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>센서 허브</h4>
+                            <p>데이터 집계</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>통신 모듈</h4>
+                            <p>WiFi/LTE</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">▼</div>
+
+                <div class="arch-layer">
+                    <div class="arch-layer-title">[ Layer 4: DK Smart Inventory Cloud ]</div>
+                    <div class="arch-layer-content">
+                        <div class="arch-node">
+                            <h4>Inventory DB</h4>
+                            <p>재고 데이터</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>Order Mgt</h4>
+                            <p>주문 관리</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>Analytics</h4>
+                            <p>분석 엔진</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>Alert System</h4>
+                            <p>알림 관리</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">▼</div>
+
+                <div class="arch-layer">
+                    <div class="arch-layer-title">[ Layer 5: User Interface ]</div>
+                    <div class="arch-layer-content">
+                        <div class="arch-node">
+                            <h4>웹 대시보드</h4>
+                            <p>PC 관리</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>모바일 앱</h4>
+                            <p>입출고 처리</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>재고 알림</h4>
+                            <p>카카오/SMS</p>
+                        </div>
+                        <div class="arch-node">
+                            <h4>온라인몰 연동</h4>
+                            <p>실시간 동기화</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Environment Section -->
+    <section class="env-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>창고 환경 예지정비</h2>
+                <p>전기제어기기 보관 환경이 품질에 미치는 영향</p>
+            </div>
+
+            <div class="env-grid">
+                <div class="env-card">
+                    <div class="env-header">
+                        <h3>고온 환경 (>40°C)</h3>
+                    </div>
+                    <div class="env-body">
+                        <p>여름철 창고 온도 상승 시 발생하는 문제</p>
+                        <div class="env-impact">
+                            <h4>제품 영향</h4>
+                            <ul>
+                                <li>플라스틱 케이스 변형</li>
+                                <li>릴레이 코일 열화</li>
+                                <li>윤활유 증발</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="env-card">
+                    <div class="env-header">
+                        <h3>고습도 환경 (>80%RH)</h3>
+                    </div>
+                    <div class="env-body">
+                        <p>장마철/환기 부족 시 발생하는 문제</p>
+                        <div class="env-impact">
+                            <h4>제품 영향</h4>
+                            <ul>
+                                <li>접점 산화/부식</li>
+                                <li>절연 저항 저하</li>
+                                <li>단자대 부식</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="env-card">
+                    <div class="env-header">
+                        <h3>급격한 온도 변화</h3>
+                    </div>
+                    <div class="env-body">
+                        <p>일교차가 큰 계절에 발생하는 문제</p>
+                        <div class="env-impact">
+                            <h4>제품 영향</h4>
+                            <ul>
+                                <li>결로 발생</li>
+                                <li>열팽창 스트레스</li>
+                                <li>기밀 불량</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="env-card">
+                    <div class="env-header">
+                        <h3>먼지/오염 환경</h3>
+                    </div>
+                    <div class="env-body">
+                        <p>공구단지 특성상 발생하는 문제</p>
+                        <div class="env-impact">
+                            <h4>제품 영향</h4>
+                            <ul>
+                                <li>접점 오염</li>
+                                <li>방열 불량</li>
+                                <li>동작 불량</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Test System Section -->
+    <section class="test-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>자동 품질 테스트 시스템</h2>
+                <p>제품별 테스트 항목 및 판정 기준</p>
+            </div>
+
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>배선용차단기 (MCCB)</h3>
+                    <div class="test-item">
+                        <span class="test-label">정격전류 통전</span>
+                        <span class="test-value">발열 <65K</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-label">트립 시간</span>
+                        <span class="test-value">규격 범위 내</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-label">절연저항</span>
+                        <span class="test-value">>100MΩ</span>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <h3>누전차단기 (ELCB)</h3>
+                    <div class="test-item">
+                        <span class="test-label">누전 동작전류</span>
+                        <span class="test-value">정격 50~100%</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-label">동작시간</span>
+                        <span class="test-value"><0.1초</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-label">절연저항</span>
+                        <span class="test-value">>100MΩ</span>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <h3>릴레이</h3>
+                    <div class="test-item">
+                        <span class="test-label">접점저항</span>
+                        <span class="test-value"><100mΩ</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-label">동작전압</span>
+                        <span class="test-value">정격 70% 이하</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-label">복귀전압</span>
+                        <span class="test-value">정격 5% 이상</span>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <h3>터미널/단자</h3>
+                    <div class="test-item">
+                        <span class="test-label">체결토크</span>
+                        <span class="test-value">규격 범위</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-label">접촉저항</span>
+                        <span class="test-value"><10mΩ</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-label">내구성</span>
+                        <span class="test-value">삽입/인출 반복</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase Section -->
+    <section id="phases" class="phase-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>프로젝트 추진 단계</h2>
+                <p>3단계 로드맵 (총 6.5개월)</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 1: 스마트 재고관리</h3>
+                        <p class="period">3개월</p>
+                        <ul>
+                            <li>RFID 시스템 구축</li>
+                            <li>환경 모니터링 센서</li>
+                            <li>웹/모바일 대시보드</li>
+                            <li>온라인몰 연동 API</li>
+                            <li>알림 시스템 (카카오/SMS)</li>
+                        </ul>
+                        <span class="cost">투자: 4,000만원</span>
+                    </div>
+                    <div class="timeline-dot">1</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 2: 품질 테스트 시스템</h3>
+                        <p class="period">2개월</p>
+                        <ul>
+                            <li>차단기 테스터 개발</li>
+                            <li>릴레이 테스터 개발</li>
+                            <li>터미널 테스터 개발</li>
+                            <li>테스트 데이터 관리</li>
+                            <li>라벨/리포트 출력</li>
+                        </ul>
+                        <span class="cost">투자: 3,500만원</span>
+                    </div>
+                    <div class="timeline-dot">2</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Phase 3: 통합 플랫폼</h3>
+                        <p class="period">1.5개월</p>
+                        <ul>
+                            <li>데이터 통합 플랫폼</li>
+                            <li>분석 엔진 개발</li>
+                            <li>AI 수요 예측</li>
+                            <li>자동 리포트 생성</li>
+                        </ul>
+                        <span class="cost">투자: 2,500만원</span>
+                    </div>
+                    <div class="timeline-dot">3</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>기대 효과</h2>
+                <p>스마트 물류 시스템 도입 효과</p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">⏱️</div>
+                    <h3>재고 파악</h3>
+                    <div class="benefit-value">90%↓</div>
+                    <p>파악 시간 단축</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📦</div>
+                    <h3>재고 정확도</h3>
+                    <div class="benefit-value">99%+</div>
+                    <p>실시간 정확한 파악</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🛡️</div>
+                    <h3>클레임 감소</h3>
+                    <div class="benefit-value">800만원</div>
+                    <p>품질 사전 검증</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💎</div>
+                    <h3>프리미엄 서비스</h3>
+                    <div class="benefit-value">1,000만원+</div>
+                    <p>테스트 성적서 제공</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Section -->
+    <section class="roi-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>투자 대비 수익 분석</h2>
+                <p>ROI 상세 분석</p>
+            </div>
+
+            <div class="roi-grid">
+                <div class="roi-card">
+                    <h3>총 투자 비용</h3>
+                    <div class="value">1억원</div>
+                </div>
+                <div class="roi-card">
+                    <h3>연간 효과</h3>
+                    <div class="value">3천만원+</div>
+                </div>
+                <div class="roi-card">
+                    <h3>손익분기점</h3>
+                    <div class="value">~3.5년</div>
+                </div>
+                <div class="roi-card">
+                    <h3>프로젝트 기간</h3>
+                    <div class="value">6.5개월</div>
+                </div>
+            </div>
+
+            <div class="roi-breakdown">
+                <h3>연간 효과 상세 내역</h3>
+                <div class="roi-bar-container">
+                    <div class="roi-bar-label">
+                        <span>재고관리 효율화</span>
+                        <span>500만원</span>
+                    </div>
+                    <div class="roi-bar">
+                        <div class="roi-bar-fill" style="width: 17%;">17%</div>
+                    </div>
+                </div>
+                <div class="roi-bar-container">
+                    <div class="roi-bar-label">
+                        <span>품절/과잉 재고 감소</span>
+                        <span>300만원</span>
+                    </div>
+                    <div class="roi-bar">
+                        <div class="roi-bar-fill" style="width: 10%;">10%</div>
+                    </div>
+                </div>
+                <div class="roi-bar-container">
+                    <div class="roi-bar-label">
+                        <span>품질 클레임 감소</span>
+                        <span>800만원</span>
+                    </div>
+                    <div class="roi-bar">
+                        <div class="roi-bar-fill" style="width: 27%;">27%</div>
+                    </div>
+                </div>
+                <div class="roi-bar-container">
+                    <div class="roi-bar-label">
+                        <span>환경 보관 품질</span>
+                        <span>200만원</span>
+                    </div>
+                    <div class="roi-bar">
+                        <div class="roi-bar-fill" style="width: 7%;">7%</div>
+                    </div>
+                </div>
+                <div class="roi-bar-container">
+                    <div class="roi-bar-label">
+                        <span>프리미엄 서비스 매출</span>
+                        <span>1,000만원+</span>
+                    </div>
+                    <div class="roi-bar">
+                        <div class="roi-bar-fill" style="width: 33%;">33%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Differentiation Section -->
+    <section class="diff-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>경쟁 차별화</h2>
+                <p>스마트 동광계전으로 변신</p>
+            </div>
+
+            <div class="diff-comparison">
+                <div class="diff-box old">
+                    <h3>일반 유통업체</h3>
+                    <ul>
+                        <li>단순 재고 보유</li>
+                        <li>육안 품질 확인</li>
+                        <li>제품만 판매</li>
+                        <li>클레임 사후 대응</li>
+                        <li>가격 경쟁만</li>
+                    </ul>
+                </div>
+
+                <div class="diff-arrow">→</div>
+
+                <div class="diff-box new">
+                    <h3>스마트 동광계전</h3>
+                    <ul>
+                        <li>실시간 재고 확인</li>
+                        <li>자동 품질 테스트</li>
+                        <li>테스트 성적서 제공</li>
+                        <li>이력 추적 서비스</li>
+                        <li>환경 보관 보증</li>
+                    </ul>
+                </div>
+
+                <div class="diff-value">
+                    <h3>고객 가치 제안</h3>
+                    <p>"동광계전에서 구매하면 품질이 보증된다" - 테스트 성적서와 이력 추적으로 시공 현장 증빙 가능</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UTTEC Section -->
+    <section class="uttec-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>UTTEC 소개</h2>
+                <p>임베디드/IoT/AI 전문 기업</p>
+            </div>
+
+            <div class="uttec-grid">
+                <div class="uttec-card">
+                    <h3>회사 개요</h3>
+                    <div class="uttec-stat">
+                        <span>회사명</span>
+                        <span class="uttec-stat-value">UTTEC (유텍)</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>전문 분야</span>
+                        <span class="uttec-stat-value">임베디드/IoT/AI</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>총 경력</span>
+                        <span class="uttec-stat-value">78년+</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>완료 프로젝트</span>
+                        <span class="uttec-stat-value">60개+</span>
+                    </div>
+                </div>
+
+                <div class="uttec-card">
+                    <h3>핵심 기술</h3>
+                    <div class="uttec-stat">
+                        <span>MCU/CPU</span>
+                        <span class="uttec-stat-value">ARM Cortex, DSP</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>IoT 통신</span>
+                        <span class="uttec-stat-value">WiFi, BLE, LoRaWAN</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>센서</span>
+                        <span class="uttec-stat-value">온습도, 전류, 전압</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>클라우드</span>
+                        <span class="uttec-stat-value">AWS IoT, 자체 서버</span>
+                    </div>
+                </div>
+
+                <div class="uttec-card">
+                    <h3>관련 경험</h3>
+                    <div class="uttec-stat">
+                        <span>SMD 라인 자동화</span>
+                        <span class="uttec-stat-value">부품관리</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>스마트 팩토리</span>
+                        <span class="uttec-stat-value">재고/물류</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>산업용 IoT GW</span>
+                        <span class="uttec-stat-value">환경모니터링</span>
+                    </div>
+                    <div class="uttec-stat">
+                        <span>품질 검사 시스템</span>
+                        <span class="uttec-stat-value">자동 테스트</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>연락처</h2>
+                <p>프로젝트 상담 및 문의</p>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-item">
+                    <span class="contact-icon">👤</span>
+                    <div class="contact-info">
+                        <h4>담당자</h4>
+                        <p>홍 광삼</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📧</span>
+                    <div class="contact-info">
+                        <h4>이메일</h4>
+                        <p>uttec@uttec.co.kr</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📱</span>
+                    <div class="contact-info">
+                        <h4>전화번호</h4>
+                        <p>010-3922-1809</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="motto">"뜻이 있으면 반드시 이룬다" (有志意成)</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>2025 UTTEC. All rights reserved. | (주)동광계전 스마트 물류 & 품질관리 솔루션 제안서</p>
+    </footer>
+</body>
+</html>

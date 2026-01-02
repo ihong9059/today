@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>두산로보틱스 협동로봇 예지정비(PdM) 솔루션 제안서 | UTTEC</title>
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #004499;
+            --secondary: #ff6600;
+            --accent: #00cc66;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --doosan-blue: #003366;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 0.8rem 2rem;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--doosan-blue);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--doosan-blue) 0%, #004080 50%, #002244 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='50' cy='50' r='40'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 1000px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-target {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .hero-target h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .hero-target p {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+            color: var(--secondary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Robot Icon Animation */
+        .robot-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Company Section */
+        .company-section {
+            background: linear-gradient(180deg, #fff 0%, #f1f5f9 100%);
+        }
+
+        .company-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .company-info {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .company-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--doosan-blue);
+        }
+
+        .info-table {
+            width: 100%;
+        }
+
+        .info-table tr {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .info-table td {
+            padding: 1rem 0;
+        }
+
+        .info-table td:first-child {
+            font-weight: 600;
+            color: var(--gray);
+            width: 140px;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-series {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .product-payload {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-need {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Gap Analysis */
+        .gap-analysis {
+            background: var(--dark);
+            color: white;
+            border-radius: 24px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .gap-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .gap-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .gap-box h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .gap-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 0;
+            font-size: 1rem;
+        }
+
+        .gap-item.has::before {
+            content: '✓';
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .gap-item.need::before {
+            content: '✗';
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        .gap-arrow {
+            font-size: 3rem;
+            color: var(--secondary);
+        }
+
+        .gap-solution {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            grid-column: 1 / -1;
+            margin-top: 1rem;
+        }
+
+        /* Competitor Comparison */
+        .competitor-section {
+            background: #f8fafc;
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 3rem 0;
+        }
+
+        .competitor-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .competitor-table th {
+            background: var(--doosan-blue);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .competitor-table th:first-child {
+            text-align: left;
+        }
+
+        .competitor-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .competitor-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .competitor-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-missing {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        .status-has {
+            color: #22c55e;
+        }
+
+        /* Architecture Section */
+        .architecture-section {
+            background: white;
+        }
+
+        .architecture-diagram {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .arch-layer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .arch-layer-label {
+            background: var(--doosan-blue);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .arch-components {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .arch-component {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+
+        .arch-component:hover {
+            border-color: var(--primary);
+        }
+
+        .arch-arrow {
+            width: 100%;
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin: 0.5rem 0;
+        }
+
+        /* Robot Monitoring Points */
+        .monitoring-section {
+            background: var(--doosan-blue);
+            color: white;
+            border-radius: 24px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .robot-diagram {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .robot-visual {
+            text-align: center;
+            font-size: 8rem;
+        }
+
+        .joint-list {
+            list-style: none;
+        }
+
+        .joint-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .joint-number {
+            background: var(--secondary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .joint-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .joint-info p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        /* Phase Section */
+        .phase-section {
+            background: #f8fafc;
+        }
+
+        .phase-timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .phase-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            border-radius: 4px;
+        }
+
+        .phase-item {
+            position: relative;
+            margin-bottom: 4rem;
+            padding-left: 2rem;
+        }
+
+        .phase-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            transform: translateX(-10px);
+        }
+
+        .phase-item:nth-child(2)::before {
+            border-color: var(--secondary);
+        }
+
+        .phase-item:nth-child(3)::before {
+            border-color: var(--accent);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .phase-number {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .phase-item:nth-child(2) .phase-number {
+            background: var(--secondary);
+        }
+
+        .phase-item:nth-child(3) .phase-number {
+            background: var(--accent);
+        }
+
+        .phase-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .phase-subtitle {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .phase-meta {
+            display: flex;
+            gap: 2rem;
+            margin-left: auto;
+        }
+
+        .phase-meta-item {
+            text-align: center;
+        }
+
+        .phase-meta-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .phase-meta-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .phase-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .phase-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .step-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .step-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .step-duration {
+            margin-top: 0.8rem;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* RaaS Section */
+        .raas-section {
+            background: linear-gradient(135deg, #1e3a5f 0%, var(--doosan-blue) 100%);
+            color: white;
+            padding: 4rem 2rem;
+        }
+
+        .raas-section .section-title {
+            color: white;
+        }
+
+        .raas-section .section-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .raas-plans {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .plan-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .plan-card.featured {
+            background: white;
+            color: var(--dark);
+        }
+
+        .plan-card.featured::before {
+            content: 'RECOMMEND';
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .plan-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .plan-card.featured .plan-features li {
+            border-color: #e2e8f0;
+        }
+
+        .plan-features li::before {
+            content: '✓ ';
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            background: white;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: transform 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .benefit-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-desc {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* ROI Section */
+        .roi-section {
+            background: #f8fafc;
+        }
+
+        .roi-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .roi-card {
+            background: linear-gradient(135deg, var(--doosan-blue) 0%, var(--primary) 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .roi-card h4 {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .roi-card .value {
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        /* Fleet Dashboard Preview */
+        .dashboard-preview {
+            background: var(--dark);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .dashboard-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .dashboard-status {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .status-dot.green { background: #22c55e; }
+        .status-dot.yellow { background: #f59e0b; }
+        .status-dot.red { background: #ef4444; }
+
+        .dashboard-body {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .dashboard-card h5 {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .dashboard-card .unit {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Health Score Bars */
+        .health-bars {
+            margin-top: 2rem;
+        }
+
+        .health-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+            color: white;
+        }
+
+        .health-bar-label {
+            width: 60px;
+            font-size: 0.9rem;
+        }
+
+        .health-bar-track {
+            flex: 1;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .health-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s;
+        }
+
+        .health-bar-fill.high { background: #22c55e; }
+        .health-bar-fill.medium { background: #f59e0b; }
+        .health-bar-fill.low { background: #ef4444; }
+
+        .health-bar-value {
+            width: 50px;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--doosan-blue) 0%, #004080 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-section .section-title {
+            color: white;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-top: 3rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 102, 0, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .footer-motto {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .company-grid,
+            .gap-grid,
+            .robot-diagram {
+                grid-template-columns: 1fr;
+            }
+
+            .gap-arrow {
+                transform: rotate(90deg);
+                margin: 1rem auto;
+            }
+
+            .roi-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .raas-plans {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-body {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .roi-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .phase-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .phase-meta {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">UTTEC <span>×</span> 두산로보틱스</div>
+            <ul class="nav-links">
+                <li><a href="#company">기업분석</a></li>
+                <li><a href="#architecture">시스템</a></li>
+                <li><a href="#phases">프로젝트</a></li>
+                <li><a href="#raas">RaaS</a></li>
+                <li><a href="#contact">연락처</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="robot-icon">🤖</div>
+            <div class="hero-badge">UTTEC 예지정비(PdM) 솔루션</div>
+            <h1>협동로봇 예지정비<br>AI 플랫폼 제안</h1>
+            <p class="hero-subtitle">
+                글로벌 협동로봇 리더 두산로보틱스를 위한<br>
+                AI 기반 예지정비 + RaaS 수익 모델 솔루션
+            </p>
+
+            <div class="hero-target">
+                <h3>제안 대상</h3>
+                <p>두산로보틱스 | 국내 협동로봇 1위 | 글로벌 20kg+ 시장 72% 점유</p>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">78+</span>
+                    <span class="stat-label">년 통합 기술 경험</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">14종</span>
+                    <span class="stat-label">업계 최다 라인업</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">55억+</span>
+                    <span class="stat-label">예상 RaaS 연매출</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">글로벌 납품 국가</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Analysis -->
+    <section id="company" class="section company-section">
+        <div class="section-header">
+            <div class="section-label">Company Analysis</div>
+            <h2 class="section-title">기업 분석</h2>
+            <p class="section-subtitle">두산로보틱스의 강점과 예지정비 적용 포인트</p>
+        </div>
+
+        <div class="company-grid">
+            <div class="company-info">
+                <h3>두산로보틱스 현황</h3>
+                <table class="info-table">
+                    <tr>
+                        <td>회사명</td>
+                        <td>두산로보틱스 (Doosan Robotics)</td>
+                    </tr>
+                    <tr>
+                        <td>설립</td>
+                        <td>2015년 (두산그룹 자회사)</td>
+                    </tr>
+                    <tr>
+                        <td>상장</td>
+                        <td>2023년 10월 KOSPI</td>
+                    </tr>
+                    <tr>
+                        <td>글로벌 순위</td>
+                        <td>협동로봇 세계 5위</td>
+                    </tr>
+                    <tr>
+                        <td>국내 점유율</td>
+                        <td>협동로봇 시장 1위</td>
+                    </tr>
+                    <tr>
+                        <td>20kg+ 글로벌</td>
+                        <td>시장 점유율 72%</td>
+                    </tr>
+                    <tr>
+                        <td>주요 고객</td>
+                        <td>Continental, Hyundai, Toyota, Samsung, LG, Dior, Dyson</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-series">M-SERIES</div>
+                    <div class="product-name">Masterpiece</div>
+                    <div class="product-payload">6~15kg</div>
+                    <div class="product-desc">프리미엄 협동로봇, 6축 토크센서 탑재</div>
+                    <div class="product-need">토크센서 드리프트, 감속기 마모 예측</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-series">H-SERIES</div>
+                    <div class="product-name">High-Power</div>
+                    <div class="product-payload">20~25kg</div>
+                    <div class="product-desc">중량물 처리, 팔레타이징 특화</div>
+                    <div class="product-need">고부하 감속기 수명, 베어링 마모</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-series">A-SERIES</div>
+                    <div class="product-name">Agile</div>
+                    <div class="product-payload">5~12kg</div>
+                    <div class="product-desc">업계 최고 속도, 가격 경쟁력</div>
+                    <div class="product-need">고속 동작 관절 피로도, 진동 분석</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-series">P-SERIES</div>
+                    <div class="product-name">Prime</div>
+                    <div class="product-payload">30kg</div>
+                    <div class="product-desc">2024년 신규, 팔레타이징 최적화</div>
+                    <div class="product-need">대하중 축 수명, 벨트 장력 예측</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-series">E-SERIES</div>
+                    <div class="product-name">Edge</div>
+                    <div class="product-payload">5kg</div>
+                    <div class="product-desc">식음료(F&B) 산업 특화</div>
+                    <div class="product-need">위생환경 씰 마모, 그리스 상태</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gap Analysis -->
+        <div class="gap-analysis">
+            <div class="gap-grid">
+                <div class="gap-box">
+                    <h4>현재 보유 기술</h4>
+                    <div class="gap-item has">협동로봇 설계/제조</div>
+                    <div class="gap-item has">6축 토크센서 기술</div>
+                    <div class="gap-item has">안전 인증 (PLe, Cat4)</div>
+                    <div class="gap-item has">글로벌 판매망 (50개국+)</div>
+                    <div class="gap-item has">티칭 SW/UI (PolyScope)</div>
+                </div>
+
+                <div class="gap-arrow">➡️</div>
+
+                <div class="gap-box">
+                    <h4>필요하지만 부족한 기술</h4>
+                    <div class="gap-item need">예지정비 AI 시스템</div>
+                    <div class="gap-item need">실시간 원격 모니터링</div>
+                    <div class="gap-item need">IoT 데이터 플랫폼</div>
+                    <div class="gap-item need">RaaS 수익 모델</div>
+                    <div class="gap-item need">디지털 트윈</div>
+                </div>
+
+                <div class="gap-solution">
+                    <h4>UTTEC 솔루션으로 Gap 해소</h4>
+                    <p>AI 고장예측 + 원격진단 + RaaS 플랫폼 + 디지털 트윈</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Competitor Comparison -->
+        <div class="competitor-section">
+            <h3 style="text-align: center; margin-bottom: 2rem;">경쟁사 대비 분석</h3>
+            <table class="competitor-table">
+                <thead>
+                    <tr>
+                        <th>기능</th>
+                        <th>두산로보틱스</th>
+                        <th>Universal Robots</th>
+                        <th>FANUC</th>
+                        <th>ABB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>원격 모니터링</td>
+                        <td class="status-missing">제한적</td>
+                        <td class="status-has">UR+ Connect</td>
+                        <td class="status-has">ZDT</td>
+                        <td class="status-has">ABB Ability</td>
+                    </tr>
+                    <tr>
+                        <td>예지정비 AI</td>
+                        <td class="status-missing">미보유</td>
+                        <td>파트너 연동</td>
+                        <td class="status-has">자체 보유</td>
+                        <td class="status-has">자체 보유</td>
+                    </tr>
+                    <tr>
+                        <td>클라우드 플랫폼</td>
+                        <td class="status-missing">미보유</td>
+                        <td class="status-has">PolyScope X</td>
+                        <td class="status-has">FANUC Cloud</td>
+                        <td class="status-has">ABB Ability</td>
+                    </tr>
+                    <tr>
+                        <td>RaaS 모델</td>
+                        <td class="status-missing">미보유</td>
+                        <td>시범 운영</td>
+                        <td class="status-has">제공</td>
+                        <td class="status-has">제공</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="text-align: center; margin-top: 1.5rem; color: var(--gray);">
+                → 하드웨어 경쟁력은 세계 최고, <strong style="color: var(--secondary);">디지털 서비스 영역에서 경쟁사 대비 격차 존재</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- Robot Monitoring Points -->
+    <div class="section">
+        <div class="monitoring-section">
+            <h3 style="text-align: center; margin-bottom: 2rem; font-size: 1.5rem;">6축 관절 모니터링 포인트</h3>
+            <div class="robot-diagram">
+                <div class="robot-visual">🦾</div>
+                <ul class="joint-list">
+                    <li class="joint-item">
+                        <div class="joint-number">J1</div>
+                        <div class="joint-info">
+                            <h4>Base (어깨1)</h4>
+                            <p>진동, 전류, 감속기 마모 예측</p>
+                        </div>
+                    </li>
+                    <li class="joint-item">
+                        <div class="joint-number">J2</div>
+                        <div class="joint-info">
+                            <h4>Shoulder (어깨2)</h4>
+                            <p>최대 부하 축, 수명 예측 핵심</p>
+                        </div>
+                    </li>
+                    <li class="joint-item">
+                        <div class="joint-number">J3</div>
+                        <div class="joint-info">
+                            <h4>Elbow (팔꿈치)</h4>
+                            <p>모터 온도, 백래시 모니터링</p>
+                        </div>
+                    </li>
+                    <li class="joint-item">
+                        <div class="joint-number">J4-6</div>
+                        <div class="joint-info">
+                            <h4>Wrist (손목)</h4>
+                            <p>토크센서 드리프트, 정밀도 추적</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="section architecture-section">
+        <div class="section-header">
+            <div class="section-label">System Architecture</div>
+            <h2 class="section-title">시스템 아키텍처</h2>
+            <p class="section-subtitle">5계층 구조의 협동로봇 예지정비 플랫폼</p>
+        </div>
+
+        <div class="architecture-diagram">
+            <div class="arch-layer">
+                <div class="arch-layer-label">Layer 1: Robot Fleet</div>
+                <div class="arch-components">
+                    <div class="arch-component">M-Series (정밀)</div>
+                    <div class="arch-component">H-Series (중량)</div>
+                    <div class="arch-component">A-Series (고속)</div>
+                    <div class="arch-component">E-Series (F&B)</div>
+                    <div class="arch-component">P-Series (팔레트)</div>
+                </div>
+            </div>
+            <div class="arch-arrow">⬇️</div>
+
+            <div class="arch-layer">
+                <div class="arch-layer-label">Layer 2: Robot-Edge Module</div>
+                <div class="arch-components">
+                    <div class="arch-component">진동센서 (각 축)</div>
+                    <div class="arch-component">온도센서 (모터)</div>
+                    <div class="arch-component">전류센서 (드라이버)</div>
+                    <div class="arch-component">토크센서 (기존)</div>
+                    <div class="arch-component">엔코더 분석</div>
+                </div>
+            </div>
+            <div class="arch-arrow">⬇️</div>
+
+            <div class="arch-layer">
+                <div class="arch-layer-label">Layer 3: Edge Gateway</div>
+                <div class="arch-components">
+                    <div class="arch-component">데이터 수집 (CAN FD)</div>
+                    <div class="arch-component">Edge AI (TF Lite)</div>
+                    <div class="arch-component">통신 (MQTT/REST)</div>
+                </div>
+            </div>
+            <div class="arch-arrow">⬇️</div>
+
+            <div class="arch-layer">
+                <div class="arch-layer-label">Layer 4: Doosan Robot Cloud</div>
+                <div class="arch-components">
+                    <div class="arch-component">Fleet DB (시계열)</div>
+                    <div class="arch-component">AI Engine (예측 모델)</div>
+                    <div class="arch-component">Alert System</div>
+                    <div class="arch-component">Digital Twin</div>
+                </div>
+            </div>
+            <div class="arch-arrow">⬇️</div>
+
+            <div class="arch-layer">
+                <div class="arch-layer-label">Layer 5: User Interface</div>
+                <div class="arch-components">
+                    <div class="arch-component">고객 대시보드</div>
+                    <div class="arch-component">두산 관제센터</div>
+                    <div class="arch-component">Mobile App</div>
+                    <div class="arch-component">MES/ERP 연동</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Preview -->
+        <div class="dashboard-preview">
+            <div class="dashboard-header">
+                <div class="dashboard-title">Doosan Robot Fleet Management Dashboard</div>
+                <div class="dashboard-status">
+                    <span class="status-dot green"></span>
+                    <span class="status-dot green"></span>
+                    <span class="status-dot yellow"></span>
+                    <span class="status-dot red"></span>
+                </div>
+            </div>
+            <div class="dashboard-body">
+                <div class="dashboard-card">
+                    <h5>전체 로봇</h5>
+                    <div class="value">24<span class="unit"> 대</span></div>
+                </div>
+                <div class="dashboard-card">
+                    <h5>정상 가동</h5>
+                    <div class="value" style="color: #22c55e;">20<span class="unit"> 대</span></div>
+                </div>
+                <div class="dashboard-card">
+                    <h5>주의 필요</h5>
+                    <div class="value" style="color: #f59e0b;">3<span class="unit"> 대</span></div>
+                </div>
+                <div class="dashboard-card">
+                    <h5>경고</h5>
+                    <div class="value" style="color: #ef4444;">1<span class="unit"> 대</span></div>
+                </div>
+            </div>
+
+            <div class="health-bars">
+                <h5 style="color: white; margin-bottom: 1rem;">H2515-#07 관절 상태 (Health Score)</h5>
+                <div class="health-bar-item">
+                    <span class="health-bar-label">J1</span>
+                    <div class="health-bar-track">
+                        <div class="health-bar-fill high" style="width: 85%;"></div>
+                    </div>
+                    <span class="health-bar-value">85%</span>
+                </div>
+                <div class="health-bar-item">
+                    <span class="health-bar-label">J2</span>
+                    <div class="health-bar-track">
+                        <div class="health-bar-fill low" style="width: 42%;"></div>
+                    </div>
+                    <span class="health-bar-value">42% ⚠️</span>
+                </div>
+                <div class="health-bar-item">
+                    <span class="health-bar-label">J3</span>
+                    <div class="health-bar-track">
+                        <div class="health-bar-fill high" style="width: 91%;"></div>
+                    </div>
+                    <span class="health-bar-value">91%</span>
+                </div>
+                <div class="health-bar-item">
+                    <span class="health-bar-label">J4-6</span>
+                    <div class="health-bar-track">
+                        <div class="health-bar-fill high" style="width: 88%;"></div>
+                    </div>
+                    <span class="health-bar-value">88%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase Section -->
+    <section id="phases" class="section phase-section">
+        <div class="section-header">
+            <div class="section-label">Project Phases</div>
+            <h2 class="section-title">단계별 프로젝트 계획</h2>
+            <p class="section-subtitle">14개월에 걸친 3단계 구현 로드맵</p>
+        </div>
+
+        <div class="phase-timeline">
+            <!-- Phase 1 -->
+            <div class="phase-item">
+                <div class="phase-header">
+                    <div class="phase-number">1</div>
+                    <div>
+                        <div class="phase-title">Robot-Edge 예지정비 모듈</div>
+                        <div class="phase-subtitle">Doosan Robot Predictive Maintenance Module (DRPMM)</div>
+                    </div>
+                    <div class="phase-meta">
+                        <div class="phase-meta-item">
+                            <div class="phase-meta-value">7개월</div>
+                            <div class="phase-meta-label">기간</div>
+                        </div>
+                        <div class="phase-meta-item">
+                            <div class="phase-meta-value">1.5억원</div>
+                            <div class="phase-meta-label">투자</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="phase-content">
+                    <div class="phase-steps">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <div class="step-title">6축 센서 모듈</div>
+                            <div class="step-desc">MEMS 가속도계, 서미스터, 홀센서 통합 보드</div>
+                            <div class="step-duration">5주</div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Edge Gateway</div>
+                            <div class="step-desc">ARM Cortex-A53+M7, CAN FD, TensorFlow Lite</div>
+                            <div class="step-duration">6주</div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <div class="step-title">AI 모델 개발</div>
+                            <div class="step-desc">1D-CNN+LSTM, 감속기 RUL, Autoencoder 이상탐지</div>
+                            <div class="step-duration">7주</div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">4</div>
+                            <div class="step-title">Cloud Platform</div>
+                            <div class="step-desc">InfluxDB, FastAPI, Fleet 데이터베이스</div>
+                            <div class="step-duration">5주</div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">5</div>
+                            <div class="step-title">Dashboard</div>
+                            <div class="step-desc">Fleet Management, 알람, 리포트</div>
+                            <div class="step-duration">4주</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="phase-item">
+                <div class="phase-header">
+                    <div class="phase-number">2</div>
+                    <div>
+                        <div class="phase-title">Fleet Management 플랫폼</div>
+                        <div class="phase-subtitle">Doosan Robot Fleet Platform (DRFP)</div>
+                    </div>
+                    <div class="phase-meta">
+                        <div class="phase-meta-item">
+                            <div class="phase-meta-value">4개월</div>
+                            <div class="phase-meta-label">기간</div>
+                        </div>
+                        <div class="phase-meta-item">
+                            <div class="phase-meta-value">1.0억원</div>
+                            <div class="phase-meta-label">투자</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="phase-content">
+                    <div class="phase-steps">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <div class="step-title">Multi-Tenant Cloud</div>
+                            <div class="step-desc">글로벌 고객별 격리, 확장성 확보</div>
+                            <div class="step-duration">4주</div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Fleet Analytics</div>
+                            <div class="step-desc">동일 모델 벤치마킹, 글로벌 비교 분석</div>
+                            <div class="step-duration">3주</div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <div class="step-title">RaaS 과금 시스템</div>
+                            <div class="step-desc">구독 관리, 결제, CRM 연동</div>
+                            <div class="step-duration">3주</div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">4</div>
+                            <div class="step-title">관제센터</div>
+                            <div class="step-desc">두산 본사 글로벌 모니터링</div>
+                            <div class="step-duration">3주</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="phase-item">
+                <div class="phase-header">
+                    <div class="phase-number">3</div>
+                    <div>
+                        <div class="phase-title">디지털 트윈 & 시뮬레이션</div>
+                        <div class="phase-subtitle">Doosan Digital Twin Platform (DDTP)</div>
+                    </div>
+                    <div class="phase-meta">
+                        <div class="phase-meta-item">
+                            <div class="phase-meta-value">3개월</div>
+                            <div class="phase-meta-label">기간</div>
+                        </div>
+                        <div class="phase-meta-item">
+                            <div class="phase-meta-value">0.8억원</div>
+                            <div class="phase-meta-label">투자</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="phase-content">
+                    <div class="phase-steps">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <div class="step-title">3D 시각화</div>
+                            <div class="step-desc">WebGL/Unity 기반 실시간 로봇 모델</div>
+                            <div class="step-duration">4주</div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <div class="step-title">물리 시뮬레이션</div>
+                            <div class="step-desc">마모 모델링, 수명 예측 시뮬레이션</div>
+                            <div class="step-duration">3주</div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <div class="step-title">원격 티칭</div>
+                            <div class="step-desc">클라우드 연동 작업 프로그램 전송</div>
+                            <div class="step-duration">3주</div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">4</div>
+                            <div class="step-title">AR/VR 정비 가이드</div>
+                            <div class="step-desc">현장 정비 시각화 지원</div>
+                            <div class="step-duration">2주</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RaaS Section -->
+    <section id="raas" class="raas-section">
+        <div class="section-header">
+            <div class="section-label" style="color: rgba(255,255,255,0.7);">Robot-as-a-Service</div>
+            <h2 class="section-title">RaaS 구독 서비스 모델</h2>
+            <p class="section-subtitle">지속적인 서비스 수익 창출</p>
+        </div>
+
+        <div class="raas-plans">
+            <div class="plan-card">
+                <div class="plan-name">Monitor</div>
+                <div class="plan-price">30만원<span>/월/로봇</span></div>
+                <ul class="plan-features">
+                    <li>실시간 상태 조회</li>
+                    <li>기본 대시보드</li>
+                    <li>이메일 알림</li>
+                    <li>데이터 저장 (30일)</li>
+                </ul>
+            </div>
+            <div class="plan-card featured">
+                <div class="plan-name">Predict</div>
+                <div class="plan-price">60만원<span>/월/로봇</span></div>
+                <ul class="plan-features">
+                    <li>Monitor 모든 기능</li>
+                    <li>예지정비 AI 알림</li>
+                    <li>부품 수명 예측</li>
+                    <li>월간 상세 리포트</li>
+                    <li>데이터 저장 (1년)</li>
+                </ul>
+            </div>
+            <div class="plan-card">
+                <div class="plan-name">Optimize</div>
+                <div class="plan-price">100만원<span>/월/로봇</span></div>
+                <ul class="plan-features">
+                    <li>Predict 모든 기능</li>
+                    <li>사이클 최적화 분석</li>
+                    <li>디지털 트윈</li>
+                    <li>전담 기술 지원</li>
+                    <li>원격 티칭 서비스</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 16px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <h4 style="margin-bottom: 1rem;">예상 연간 RaaS 매출 (글로벌 1,000대 가입 가정)</h4>
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                <div>
+                    <div style="font-size: 0.9rem; opacity: 0.7;">Monitor 600대</div>
+                    <div style="font-size: 1.2rem; font-weight: 700;">1.8억/월</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.9rem; opacity: 0.7;">Predict 300대</div>
+                    <div style="font-size: 1.2rem; font-weight: 700;">1.8억/월</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.9rem; opacity: 0.7;">Optimize 100대</div>
+                    <div style="font-size: 1.2rem; font-weight: 700;">1.0억/월</div>
+                </div>
+            </div>
+            <div style="margin-top: 1.5rem; font-size: 2rem; font-weight: 800; color: var(--secondary);">
+                연 55.2억원+ 신규 매출
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="section benefits-section">
+        <div class="section-header">
+            <div class="section-label">Expected Benefits</div>
+            <h2 class="section-title">기대 효과</h2>
+            <p class="section-subtitle">하드웨어 + 소프트웨어 통합 경쟁력 확보</p>
+        </div>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">💰</div>
+                <div class="benefit-title">RaaS 서비스 수익</div>
+                <div class="benefit-value">55억+</div>
+                <div class="benefit-desc">글로벌 1,000대 가입 시 연간 구독 매출</div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🔧</div>
+                <div class="benefit-title">A/S 비용 절감</div>
+                <div class="benefit-value">3억원</div>
+                <div class="benefit-desc">예지정비로 긴급 출장 및 재고 비용 감소</div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">📈</div>
+                <div class="benefit-title">고객 만족도</div>
+                <div class="benefit-value">↑ 30%</div>
+                <div class="benefit-desc">다운타임 감소, 가동률 향상</div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🏆</div>
+                <div class="benefit-title">경쟁력 강화</div>
+                <div class="benefit-value">Top 3</div>
+                <div class="benefit-desc">UR, FANUC 대비 서비스 차별화</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Section -->
+    <section class="section roi-section">
+        <div class="section-header">
+            <div class="section-label">Return on Investment</div>
+            <h2 class="section-title">투자 대비 수익 분석</h2>
+        </div>
+
+        <div class="roi-summary">
+            <div class="roi-card">
+                <h4>총 투자 비용</h4>
+                <div class="value">3.3억원</div>
+            </div>
+            <div class="roi-card">
+                <h4>예상 연간 효과</h4>
+                <div class="value">60억원+</div>
+            </div>
+            <div class="roi-card">
+                <h4>손익분기점</h4>
+                <div class="value">3개월</div>
+            </div>
+            <div class="roi-card">
+                <h4>2년 ROI</h4>
+                <div class="value">3,500%+</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="section-header">
+            <div class="section-label" style="color: rgba(255,255,255,0.8);">Contact Us</div>
+            <h2 class="section-title">문의하기</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.7);">
+                두산로보틱스의 글로벌 협동로봇 리더십 강화를 위한<br>
+                최적의 파트너, UTTEC과 함께하세요
+            </p>
+        </div>
+
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="contact-icon">👤</div>
+                <div class="contact-label">담당자</div>
+                <div class="contact-value">홍 광삼</div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <div class="contact-label">이메일</div>
+                <div class="contact-value">uttec@uttec.co.kr</div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📱</div>
+                <div class="contact-label">전화번호</div>
+                <div class="contact-value">010-3922-1809</div>
+            </div>
+        </div>
+
+        <a href="mailto:uttec@uttec.co.kr" class="cta-button">상담 요청하기</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-motto">"뜻이 있으면 반드시 이룬다" (有志意成)</div>
+        <p>© 2025 UTTEC. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.product-card, .benefit-card, .step-card, .plan-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Health bar animation
+        const healthBars = document.querySelectorAll('.health-bar-fill');
+        const healthObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.style.width;
+                    entry.target.style.width = '0';
+                    setTimeout(() => {
+                        entry.target.style.width = width;
+                    }, 100);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        healthBars.forEach(bar => healthObserver.observe(bar));
+    </script>
+</body>
+</html>
