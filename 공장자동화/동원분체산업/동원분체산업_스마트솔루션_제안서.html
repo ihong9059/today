@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&#46041;&#50896;&#48516;&#52404;&#49328;&#50629; &#49828;&#47560;&#53944; &#49556;&#47336;&#49496; &#51228;&#50504;&#49436;</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.8;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0fdf4 100%);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 60px 50px;
+            text-align: center;
+            border-radius: 24px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(37, 99, 235, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .header .subtitle {
+            font-size: 1.4em;
+            opacity: 0.95;
+            position: relative;
+        }
+
+        .header .date {
+            margin-top: 20px;
+            font-size: 1em;
+            opacity: 0.8;
+            position: relative;
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 45px;
+            margin-bottom: 35px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.9em;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title .icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6em;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 18px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+        }
+
+        .card-title {
+            color: var(--primary);
+            font-size: 1.35em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Diagram Container */
+        .diagram-container {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 35px 0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .diagram-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.3em;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        /* SVG Styles */
+        svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Table */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .styled-table thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .styled-table th, .styled-table td {
+            padding: 16px 20px;
+            text-align: left;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #e2e8f0;
+            transition: background 0.2s;
+        }
+
+        .styled-table tbody tr:hover {
+            background: #f0f9ff;
+        }
+
+        .styled-table tbody tr:nth-child(even) {
+            background: #fafbfc;
+        }
+
+        /* Project Card */
+        .project-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--success));
+            border-radius: 20px 20px 0 0;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .project-title {
+            color: var(--primary);
+            font-size: 1.6em;
+            font-weight: 700;
+        }
+
+        .project-badge {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe, #e0f2fe);
+            border-left: 5px solid var(--primary);
+            padding: 25px;
+            border-radius: 0 16px 16px 0;
+            margin: 25px 0;
+        }
+
+        .info-box.warning {
+            background: linear-gradient(135deg, #fef3c7, #fef9c3);
+            border-left-color: var(--warning);
+        }
+
+        .info-box.success {
+            background: linear-gradient(135deg, #d1fae5, #dcfce7);
+            border-left-color: var(--success);
+        }
+
+        .info-box.danger {
+            background: linear-gradient(135deg, #fee2e2, #fef2f2);
+            border-left-color: var(--danger);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, #ffffff, #f1f5f9);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-value {
+            font-size: 2.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.95em;
+            margin-top: 8px;
+        }
+
+        /* Process Flow */
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 35px 0;
+            padding: 20px;
+        }
+
+        .process-step {
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            padding: 25px 15px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .process-step::after {
+            content: '&#8594;';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.8em;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 0.9em;
+            color: #64748b;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            gap: 20px;
+        }
+
+        .timeline-phase {
+            min-width: 150px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .timeline-bar {
+            flex: 1;
+            height: 40px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .timeline-progress {
+            height: 100%;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .phase-1 { background: linear-gradient(90deg, var(--primary), #3b82f6); }
+        .phase-2 { background: linear-gradient(90deg, var(--accent), #0891b2); }
+        .phase-3 { background: linear-gradient(90deg, var(--success), #059669); }
+        .phase-4 { background: linear-gradient(90deg, var(--secondary), #9333ea); }
+        .phase-5 { background: linear-gradient(90deg, var(--warning), #d97706); }
+
+        /* ROI Section */
+        .roi-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .roi-box {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .roi-box h4 {
+            color: var(--primary);
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .roi-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .roi-item:last-child {
+            border-bottom: none;
+        }
+
+        .roi-total {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 30px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 50px;
+            border-radius: 24px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .footer h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-top: 35px;
+        }
+
+        .contact-item {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item h4 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .contact-item p {
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        /* Skills Tags */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        /* Product Icons */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .product-item {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        .product-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .product-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2em;
+        }
+
+        .product-name {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .product-desc {
+            color: #64748b;
+            font-size: 0.95em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .process-step::after {
+                display: none;
+            }
+
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>&#46041;&#50896;&#48516;&#52404;&#49328;&#50629; &#49828;&#47560;&#53944; &#49556;&#47336;&#49496; &#51228;&#50504;&#49436;</h1>
+            <p class="subtitle">UTTEC &#215; &#46041;&#50896;&#48516;&#52404;&#49328;&#50629; &#50696;&#51648;&#51221;&#48708;(PdM) &#48143; &#49828;&#47560;&#53944;&#54057;&#53664;&#47532; &#44396;&#52629;</p>
+            <p class="date">2025&#45380; 1&#50900;</p>
+        </header>
+
+        <!-- 1. &#54924;&#49324; &#49548;&#44060; -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">&#127981;</span>
+                1. &#46041;&#50896;&#48516;&#52404;&#49328;&#50629; &#49548;&#44060;
+            </h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3 class="card-title">&#128205; &#54924;&#49324; &#44060;&#50836;</h3>
+                    <p><strong>&#54924;&#49324;&#47749;:</strong> &#46041;&#50896;&#48516;&#52404;&#49328;&#50629;</p>
+                    <p><strong>&#45824;&#54364;&#51088;:</strong> &#54632;&#52649;&#50896;</p>
+                    <p><strong>&#50948;&#52824;:</strong> &#44221;&#44592;&#46020; &#50857;&#51064;&#49884; &#52376;&#51064;&#44396; &#47784;&#54788;&#47732; &#51060;&#51068;&#47196; 38</p>
+                    <p><strong>&#51204;&#54868;:</strong> 031-334-6194</p>
+                    <p><strong>FAX:</strong> 031-335-6191</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">&#128736; &#51452;&#50836; &#49324;&#50629;</h3>
+                    <p>&#48516;&#49604;&#44592;, &#54028;&#49604;&#44592;, &#54844;&#54633;&#44592; &#51204;&#47928; &#51228;&#51312;&#50629;&#52404;</p>
+                    <ul style="margin-top: 15px; margin-left: 20px;">
+                        <li>Pin Mill (&#54592;&#48128;)</li>
+                        <li>Hammer Mill (&#54644;&#47672;&#48128;)</li>
+                        <li>Roll Mill (&#46028;&#47196;&#46972;)</li>
+                        <li>&#54028;&#49604;&#44592; (Crusher)</li>
+                        <li>&#54844;&#54633;&#44592; (Ribbon, V&#54805;, Double Cone)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- &#51228;&#54408; &#46972;&#51064;&#50629; -->
+            <div class="product-grid">
+                <div class="product-item">
+                    <div class="product-icon">&#9881;</div>
+                    <div class="product-name">&#48516;&#49604;&#44592; (Pulverizer)</div>
+                    <div class="product-desc">Pin Mill, Hammer Mill, Roll Mill<br>8&#51064;&#52824;~20&#51064;&#52824; &#45796;&#50577;&#54620; &#53356;&#44592;</div>
+                </div>
+                <div class="product-item">
+                    <div class="product-icon">&#128296;</div>
+                    <div class="product-name">&#54028;&#49604;&#44592; (Crusher)</div>
+                    <div class="product-desc">&#44256;&#45236;&#44396;&#49457; &#52860;&#45216;<br>&#50672;&#49549; &#49324;&#50857; &#49884; &#45230;&#51008; &#47560;&#47784;&#50984;</div>
+                </div>
+                <div class="product-item">
+                    <div class="product-icon">&#128260;</div>
+                    <div class="product-name">&#54844;&#54633;&#44592; (Mixer)</div>
+                    <div class="product-desc">Ribbon, V&#54805;, Double Cone<br>&#44512;&#51068;&#54620; &#48516;&#52404; &#54844;&#54633;</div>
+                </div>
+                <div class="product-item">
+                    <div class="product-icon">&#128200;</div>
+                    <div class="product-name">&#48512;&#49549; &#51109;&#48708;</div>
+                    <div class="product-desc">&#52404;&#53952;&#47581; (Sieve)<br>&#53080;&#48288;&#50612; &#49884;&#49828;&#53596;</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. &#49444;&#48708; &#52712;&#50557;&#51216; &#48516;&#49437; -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">&#128269;</span>
+                2. &#49444;&#48708;&#48324; &#52712;&#50557;&#51216; &#48516;&#49437;
+            </h2>
+
+            <div class="info-box warning">
+                <strong>&#9888;&#65039; &#48516;&#52404;&#49444;&#48708; &#53945;&#49457;:</strong> &#44256;&#49549; &#54924;&#51204;&#52404;&#50752; &#44256;&#54616;&#51473; &#48288;&#50612;&#47553;&#51012; &#49324;&#50857;&#54616;&#50668; &#51652;&#46041;/&#50676;&#54868;/&#47560;&#47784;&#44032; &#48520;&#44032;&#54588;&#54620; &#54872;&#44221;&#51077;&#45768;&#45796;.
+            </div>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>&#49444;&#48708; &#50976;&#54805;</th>
+                        <th>&#51452;&#50836; &#44396;&#49457;</th>
+                        <th>&#52712;&#50557; &#54252;&#51064;&#53944;</th>
+                        <th>&#44256;&#51109; &#50976;&#54805;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pin Mill</strong></td>
+                        <td>&#44256;&#49549;&#54924;&#51204; &#54592;, &#47700;&#51064; &#48288;&#50612;&#47553;</td>
+                        <td>&#54592; &#47560;&#47784;, &#48288;&#50612;&#47553; &#50676;&#54868;</td>
+                        <td>&#51652;&#46041; &#51613;&#44032;, &#44284;&#50676;, &#48516;&#49604; &#54952;&#50984; &#51200;&#54616;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hammer Mill</strong></td>
+                        <td>&#54644;&#47672;, &#49828;&#53356;&#47536;, &#48288;&#50612;&#47553;</td>
+                        <td>&#54644;&#47672; &#47560;&#47784;, &#49828;&#53356;&#47536; &#49552;&#49345;</td>
+                        <td>&#51077;&#46020; &#48520;&#44512;&#51068;, &#44284;&#48512;&#54616;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Roll Mill</strong></td>
+                        <td>&#47204;&#47084;, &#44081; &#51312;&#51221; &#44592;&#44396;, &#44048;&#49549;&#44592;</td>
+                        <td>&#47204;&#47084; &#47560;&#47784;, &#44081; &#48320;&#54868;</td>
+                        <td>&#48516;&#49604; &#54408;&#51656; &#51200;&#54616;, &#51060;&#47932;&#51656; &#54844;&#51077;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#54028;&#49604;&#44592;</strong></td>
+                        <td>&#52860;&#45216;, &#52629;, &#44048;&#49549;&#44592;</td>
+                        <td>&#52860;&#45216; &#47560;&#47784;, &#52629; &#54200;&#49900;</td>
+                        <td>&#54028;&#49604; &#48520;&#47049;, &#44284;&#48512;&#54616; &#51221;&#51648;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ribbon Mixer</strong></td>
+                        <td>&#47532;&#48376; &#49828;&#53356;&#47448;, &#48288;&#50612;&#47553;, &#50472;</td>
+                        <td>&#50472; &#47560;&#47784;, &#48288;&#50612;&#47553; &#51060;&#49345;</td>
+                        <td>&#48516;&#52404; &#45572;&#52636;, &#54844;&#54633; &#48520;&#44512;&#51068;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>V-Mixer</strong></td>
+                        <td>&#54924;&#51204;&#52404;, &#48288;&#50612;&#47553;, &#50472;</td>
+                        <td>&#50472; &#47560;&#47784;, &#51652;&#46041; &#51613;&#44032;</td>
+                        <td>&#51228;&#54408; &#50724;&#50684;, &#54844;&#54633; &#48520;&#47049;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 3. &#49884;&#49828;&#53596; &#50500;&#53412;&#53581;&#52376; -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">&#128421;</span>
+                3. PdM &#49884;&#49828;&#53596; &#50500;&#53412;&#53581;&#52376;
+            </h2>
+
+            <div class="diagram-container">
+                <h4 class="diagram-title">&#48516;&#52404;&#49444;&#48708; &#50696;&#51648;&#51221;&#48708;(PdM) 4&#44228;&#52789; &#50500;&#53412;&#53581;&#52376;</h4>
+                <svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Background gradients -->
+                    <defs>
+                        <linearGradient id="layer4" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:0.9"/>
+                            <stop offset="100%" style="stop-color:#2563eb;stop-opacity:0.9"/>
+                        </linearGradient>
+                        <linearGradient id="layer3" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#2563eb;stop-opacity:0.85"/>
+                            <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.85"/>
+                        </linearGradient>
+                        <linearGradient id="layer2" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8"/>
+                            <stop offset="100%" style="stop-color:#10b981;stop-opacity:0.8"/>
+                        </linearGradient>
+                        <linearGradient id="layer1" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.75"/>
+                            <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0.75"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Layer 4: Cloud -->
+                    <rect x="50" y="30" width="800" height="80" rx="15" fill="url(#layer4)" stroke="#7c3aed" stroke-width="2"/>
+                    <text x="450" y="55" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Layer 4: &#53364;&#46972;&#50864;&#46300; &#54540;&#47019;&#54268;</text>
+                    <text x="150" y="85" text-anchor="middle" fill="white" font-size="11">&#49444;&#48708;&#51060;&#47141; DB</text>
+                    <text x="300" y="85" text-anchor="middle" fill="white" font-size="11">AI &#48516;&#49437; &#50644;&#51652;</text>
+                    <text x="450" y="85" text-anchor="middle" fill="white" font-size="11">&#45824;&#49884;&#48372;&#46300;</text>
+                    <text x="600" y="85" text-anchor="middle" fill="white" font-size="11">&#50508;&#47548; &#49884;&#49828;&#53596;</text>
+                    <text x="750" y="85" text-anchor="middle" fill="white" font-size="11">&#47532;&#54252;&#53944;</text>
+
+                    <!-- Arrow -->
+                    <path d="M450 110 L450 140" stroke="#7c3aed" stroke-width="3" marker-end="url(#arrowhead)"/>
+                    <text x="480" y="130" fill="#7c3aed" font-size="10" font-weight="bold">MQTT/HTTPS</text>
+
+                    <!-- Layer 3: Edge Gateway -->
+                    <rect x="50" y="150" width="800" height="100" rx="15" fill="url(#layer3)" stroke="#2563eb" stroke-width="2"/>
+                    <text x="450" y="175" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Layer 3: Edge AI Gateway (ARM Cortex-M4 + DSP)</text>
+                    <text x="150" y="205" text-anchor="middle" fill="white" font-size="10">FFT &#51652;&#46041; &#48516;&#49437;</text>
+                    <text x="300" y="205" text-anchor="middle" fill="white" font-size="10">&#51204;&#47448; &#49828;&#54169;&#53944;&#47100;</text>
+                    <text x="450" y="205" text-anchor="middle" fill="white" font-size="10">&#50728;&#46020; &#52628;&#51060;</text>
+                    <text x="600" y="205" text-anchor="middle" fill="white" font-size="10">&#48516;&#51652; &#45453;&#46020;</text>
+                    <text x="750" y="205" text-anchor="middle" fill="white" font-size="10">AI &#47784;&#45944; &#52628;&#47200;</text>
+                    <text x="150" y="230" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">&#48288;&#50612;&#47553;/&#47196;&#53552; &#51060;&#49345;</text>
+                    <text x="300" y="230" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">&#47784;&#53552;/&#44048;&#49549;&#44592; &#48512;&#54616;</text>
+                    <text x="450" y="230" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">&#44284;&#50676; &#50696;&#52769;</text>
+                    <text x="600" y="230" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">&#54872;&#44221; &#44508;&#51228; &#45824;&#51025;</text>
+                    <text x="750" y="230" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">RUL &#50696;&#52769;</text>
+
+                    <!-- Arrow -->
+                    <path d="M450 250 L450 280" stroke="#06b6d4" stroke-width="3"/>
+                    <text x="520" y="270" fill="#06b6d4" font-size="10" font-weight="bold">RS-485 / Modbus / 4-20mA</text>
+
+                    <!-- Layer 2: Sensors -->
+                    <rect x="50" y="290" width="800" height="80" rx="15" fill="url(#layer2)" stroke="#06b6d4" stroke-width="2"/>
+                    <text x="450" y="315" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Layer 2: &#49468;&#49436; &#45348;&#53944;&#50892;&#53356;</text>
+
+                    <!-- Sensor boxes -->
+                    <rect x="80" y="330" width="100" height="30" rx="5" fill="rgba(255,255,255,0.2)" stroke="white"/>
+                    <text x="130" y="350" text-anchor="middle" fill="white" font-size="10">&#51652;&#46041;(3&#52629;)</text>
+
+                    <rect x="200" y="330" width="100" height="30" rx="5" fill="rgba(255,255,255,0.2)" stroke="white"/>
+                    <text x="250" y="350" text-anchor="middle" fill="white" font-size="10">&#50728;&#46020;(PT100)</text>
+
+                    <rect x="320" y="330" width="100" height="30" rx="5" fill="rgba(255,255,255,0.2)" stroke="white"/>
+                    <text x="370" y="350" text-anchor="middle" fill="white" font-size="10">&#51204;&#47448;(CT)</text>
+
+                    <rect x="440" y="330" width="100" height="30" rx="5" fill="rgba(255,255,255,0.2)" stroke="white"/>
+                    <text x="490" y="350" text-anchor="middle" fill="white" font-size="10">&#48516;&#51652;(PM2.5)</text>
+
+                    <rect x="560" y="330" width="100" height="30" rx="5" fill="rgba(255,255,255,0.2)" stroke="white"/>
+                    <text x="610" y="350" text-anchor="middle" fill="white" font-size="10">&#49548;&#51020;(dB)</text>
+
+                    <rect x="680" y="330" width="100" height="30" rx="5" fill="rgba(255,255,255,0.2)" stroke="white"/>
+                    <text x="730" y="350" text-anchor="middle" fill="white" font-size="10">&#50517;&#47141;(kPa)</text>
+
+                    <!-- Arrow -->
+                    <path d="M450 370 L450 400" stroke="#10b981" stroke-width="3"/>
+                    <text x="490" y="390" fill="#10b981" font-size="10" font-weight="bold">&#49468;&#49436; &#49444;&#52824;</text>
+
+                    <!-- Layer 1: Equipment -->
+                    <rect x="50" y="410" width="800" height="70" rx="15" fill="url(#layer1)" stroke="#10b981" stroke-width="2"/>
+                    <text x="450" y="435" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Layer 1: &#48516;&#52404; &#49444;&#48708;</text>
+
+                    <text x="130" y="460" text-anchor="middle" fill="white" font-size="11">Pin Mill</text>
+                    <text x="270" y="460" text-anchor="middle" fill="white" font-size="11">Hammer Mill</text>
+                    <text x="410" y="460" text-anchor="middle" fill="white" font-size="11">Roll Mill</text>
+                    <text x="550" y="460" text-anchor="middle" fill="white" font-size="11">&#54028;&#49604;&#44592;</text>
+                    <text x="690" y="460" text-anchor="middle" fill="white" font-size="11">&#54844;&#54633;&#44592;</text>
+                    <text x="810" y="460" text-anchor="middle" fill="white" font-size="11">&#52404;&#53952;&#47581;</text>
+                </svg>
+            </div>
+        </section>
+
+        <!-- 4. Project A: &#48516;&#49604;&#44592; PdM -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">&#9881;</span>
+                4. &#51228;&#50504; &#54532;&#47196;&#51229;&#53944;
+            </h2>
+
+            <!-- Project A -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Project A: &#48516;&#49604;&#44592; &#50696;&#51648;&#51221;&#48708;(PdM) &#49884;&#49828;&#53596;</h3>
+                    <span class="project-badge">2,410&#47564;&#50896;</span>
+                </div>
+
+                <div class="info-box">
+                    <strong>&#47785;&#51201;:</strong> Pin Mill, Hammer Mill, Roll Mill&#51032; &#49892;&#49884;&#44036; &#49345;&#53468; &#47784;&#45768;&#53552;&#47553; &#48143; &#44256;&#51109; &#50696;&#52769;
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>&#49444;&#48708;</th>
+                            <th>&#47784;&#45768;&#53552;&#47553; &#54252;&#51064;&#53944;</th>
+                            <th>&#49468;&#49436;</th>
+                            <th>&#48516;&#49437; &#48169;&#48277;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Pin Mill</strong></td>
+                            <td>&#47700;&#51064; &#48288;&#50612;&#47553;</td>
+                            <td>3&#52629; &#51652;&#46041; &#49468;&#49436;</td>
+                            <td>FFT &#49828;&#54169;&#53944;&#47100;, BPFO/BPFI &#48516;&#49437;</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>&#47784;&#53552;</td>
+                            <td>CT &#51204;&#47448;&#49468;&#49436;</td>
+                            <td>&#51204;&#47448;&#54028;&#54805; &#48516;&#49437;</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>&#54616;&#50864;&#51669;</td>
+                            <td>&#50728;&#46020;&#49468;&#49436; (PT100)</td>
+                            <td>&#50728;&#46020; &#52628;&#51060; &#48516;&#49437;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hammer Mill</strong></td>
+                            <td>&#47700;&#51064; &#48288;&#50612;&#47553;</td>
+                            <td>3&#52629; &#51652;&#46041; &#49468;&#49436;</td>
+                            <td>&#50644;&#48296;&#47217;&#54252; &#48516;&#49437;</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>&#54644;&#47672; &#49345;&#53468;</td>
+                            <td>&#51652;&#46041; + &#51204;&#47448;</td>
+                            <td>&#48520;&#44512;&#54805; &#44048;&#51648;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Roll Mill</strong></td>
+                            <td>&#47204;&#47084; &#48288;&#50612;&#47553;</td>
+                            <td>&#51652;&#46041; &#49468;&#49436;</td>
+                            <td>&#51452;&#54028;&#49688; &#48516;&#49437;</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>&#44048;&#49549;&#44592;</td>
+                            <td>&#51652;&#46041; + &#50728;&#46020;</td>
+                            <td>&#44592;&#50612; &#51060;&#49345; &#44048;&#51648;</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">70%</div>
+                        <div class="stat-label">&#48708;&#44228;&#54925; &#51221;&#51648; &#44048;&#49548;</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">30%</div>
+                        <div class="stat-label">&#48288;&#50612;&#47553;/&#54592; &#49688;&#47749; &#50672;&#51109;</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">40%</div>
+                        <div class="stat-label">&#50976;&#51648;&#48372;&#49688; &#48708;&#50857; &#51208;&#44048;</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2.5&#44060;&#50900;</div>
+                        <div class="stat-label">&#44396;&#52629; &#44592;&#44036;</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project B -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Project B: &#54844;&#54633;&#44592; &#47784;&#45768;&#53552;&#47553; &#49884;&#49828;&#53596;</h3>
+                    <span class="project-badge">1,535&#47564;&#50896;</span>
+                </div>
+
+                <div class="info-box">
+                    <strong>&#47785;&#51201;:</strong> Ribbon Mixer, V-Mixer, Double Cone Mixer&#51032; &#49345;&#53468; &#47784;&#45768;&#53552;&#47553; &#48143; &#54408;&#51656; &#44288;&#47532;
+                </div>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <h3 class="card-title">&#128202; &#47784;&#45768;&#53552;&#47553; &#54637;&#47785;</h3>
+                        <ul style="margin-left: 20px;">
+                            <li>&#44396;&#46041; &#47784;&#53552; &#51204;&#47448;/&#51652;&#46041;</li>
+                            <li>&#48288;&#50612;&#47553; &#51652;&#46041;/&#50728;&#46020;</li>
+                            <li>&#50472; &#48512;&#50948; &#48516;&#51652; &#44048;&#51648;</li>
+                            <li>&#54844;&#54633; &#50756;&#47308; &#49884;&#51216; &#51088;&#46041; &#44048;&#51648;</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title">&#10024; &#52628;&#44032; &#44592;&#45733;</h3>
+                        <ul style="margin-left: 20px;">
+                            <li><strong>&#51204;&#47448; &#54056;&#53556; &#48516;&#49437;:</strong> &#54844;&#54633; &#50756;&#47308; &#49884;&#51216; &#51088;&#46041; &#44048;&#51648;</li>
+                            <li><strong>&#51652;&#46041; &#48516;&#49437;:</strong> &#44512;&#51068; &#54844;&#54633; &#50668;&#48512; &#54032;&#51221;</li>
+                            <li><strong>&#49884;&#44036;-&#51204;&#47448; &#44257;&#49440;:</strong> &#52572;&#51201; &#54844;&#54633; &#49884;&#44036; &#46020;&#52636;</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">35&#44060;</div>
+                        <div class="stat-label">&#47784;&#45768;&#53552;&#47553; &#54252;&#51064;&#53944;</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2&#44060;&#50900;</div>
+                        <div class="stat-label">&#44396;&#52629; &#44592;&#44036;</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project C -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Project C: &#54872;&#44221; &#47784;&#45768;&#53552;&#47553; &#49884;&#49828;&#53596;</h3>
+                    <span class="project-badge">1,208&#47564;&#50896;</span>
+                </div>
+
+                <div class="info-box warning">
+                    <strong>&#9888;&#65039; &#54872;&#44221; &#44508;&#51228; &#45824;&#51025; &#54596;&#49688;:</strong><br>
+                    &#8226; &#49328;&#50629;&#50504;&#51204;&#48372;&#44148;&#48277;: &#51089;&#50629;&#51109; &#48516;&#51652; &#45453;&#46020; &#44592;&#51456; (TWA 10mg/m&#179; &#51060;&#54616;)<br>
+                    &#8226; &#49548;&#51020;&#51652;&#46041;&#44508;&#51228;&#48277;: &#51089;&#50629;&#51109; &#49548;&#51020; &#44592;&#51456; (90dB &#51060;&#54616;)<br>
+                    &#8226; &#45824;&#44592;&#54872;&#44221;&#48372;&#51204;&#48277;: &#48516;&#51652; &#48176;&#52636; &#54728;&#50857; &#44592;&#51456;
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>&#52769;&#51221; &#54637;&#47785;</th>
+                            <th>&#49468;&#49436;</th>
+                            <th>&#52769;&#51221; &#48276;&#50948;</th>
+                            <th>&#49444;&#52824; &#50948;&#52824;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>&#54840;&#55137;&#49457; &#48516;&#51652;</td>
+                            <td>PM2.5/10 &#49468;&#49436;</td>
+                            <td>0-1000 &#956;g/m&#179;</td>
+                            <td>&#51089;&#50629;&#51109; 4&#44060;&#49548;</td>
+                        </tr>
+                        <tr>
+                            <td>&#52509; &#48516;&#51652;</td>
+                            <td>&#47112;&#51060;&#51200; &#49328;&#46976;&#49885;</td>
+                            <td>0-10 mg/m&#179;</td>
+                            <td>&#48516;&#49604;&#44592; &#51452;&#48320;</td>
+                        </tr>
+                        <tr>
+                            <td>&#49548;&#51020;</td>
+                            <td>&#49548;&#51020;&#44228;</td>
+                            <td>30-130 dB</td>
+                            <td>&#51089;&#50629;&#51109; 3&#44060;&#49548;</td>
+                        </tr>
+                        <tr>
+                            <td>&#50728;&#49845;&#46020;</td>
+                            <td>&#48373;&#54633; &#49468;&#49436;</td>
+                            <td>-</td>
+                            <td>&#51089;&#50629;&#51109; &#51204;&#50669;</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box success">
+                    <strong>&#128200; &#45824;&#49884;&#48372;&#46300; &#44592;&#45733;:</strong><br>
+                    &#8226; &#49892;&#49884;&#44036; &#54872;&#44221; &#54788;&#54889; &#54364;&#49884;<br>
+                    &#8226; &#44592;&#51456;&#52824; &#52488;&#44284; &#49884; &#51593;&#49884; &#50508;&#47548;<br>
+                    &#8226; &#49884;&#44036;&#45824;&#48324;/&#51068;&#48324;/&#50900;&#48324; &#53944;&#47116;&#46300; &#48516;&#49437;<br>
+                    &#8226; &#54872;&#44221; &#48372;&#44256;&#49436; &#51088;&#46041; &#49373;&#49457;
+                </div>
+            </div>
+
+            <!-- Project D -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Project D: &#49373;&#49328;&#51060;&#47141; &#44288;&#47532; &#49884;&#49828;&#53596; (MES)</h3>
+                    <span class="project-badge">3,140&#47564;&#50896;</span>
+                </div>
+
+                <div class="info-box">
+                    <strong>&#47785;&#51201;:</strong> &#49373;&#49328; &#51060;&#47141; &#52628;&#51201; &#48143; &#54408;&#51656; &#44288;&#47532; &#49884;&#49828;&#53596; &#44396;&#52629;
+                </div>
+
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-title">&#51089;&#50629;&#51648;&#49884; &#44288;&#47532;</div>
+                        <div class="step-desc">&#51089;&#50629;&#51648;&#49884;&#49436; &#49373;&#49457;<br>&#47112;&#49884;&#54588; &#44288;&#47532;</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-title">&#44277;&#51221; &#45936;&#51060;&#53552; &#49688;&#51665;</div>
+                        <div class="step-desc">&#49444;&#48708; &#44032;&#46041; &#49884;&#44036;<br>&#52376;&#47532;&#47049;/&#50640;&#45320;&#51648;</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-title">&#54408;&#51656; &#52628;&#51201; &#44288;&#47532;</div>
+                        <div class="step-desc">LOT&#48324; &#49373;&#49328;&#51060;&#47141;<br>&#48520;&#47049; &#50896;&#51064; &#50669;&#52628;&#51201;</div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">&#52628;&#51201;&#49457;</div>
+                        <div class="stat-label">&#49885;&#54408;/&#51032;&#50557; &#44256;&#44061; &#45824;&#51025;&#47141; &#44053;&#54868;</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">&#54408;&#51656; &#44060;&#49440;</div>
+                        <div class="stat-label">&#44277;&#51221;&#51312;&#44148;-&#54408;&#51656; &#49345;&#44288;&#44288;&#44228; &#48516;&#49437;</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">OEE</div>
+                        <div class="stat-label">&#49444;&#48708; &#44032;&#46041;&#50984; &#44288;&#47532;</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project E -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Project E: &#50896;&#44201; A/S &#51648;&#50896; &#54540;&#47019;&#54268;</h3>
+                    <span class="project-badge">4,200&#47564;&#50896;</span>
+                </div>
+
+                <div class="info-box success">
+                    <strong>&#128161; &#49888;&#44508; &#49688;&#51061; &#52285;&#52636; &#47784;&#45944;:</strong> &#46041;&#50896;&#48516;&#52404;&#49328;&#50629;&#51060; &#45225;&#54408;&#54620; &#49444;&#48708;&#50640; &#45824;&#54620; &#50896;&#44201; &#47784;&#45768;&#53552;&#47553; &#48143; A/S SaaS &#49436;&#48708;&#49828;
+                </div>
+
+                <div class="diagram-container">
+                    <h4 class="diagram-title">&#50896;&#44201; A/S &#54540;&#47019;&#54268; &#48708;&#51592;&#45768;&#49828; &#47784;&#45944;</h4>
+                    <svg viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg">
+                        <!-- HQ -->
+                        <rect x="280" y="30" width="240" height="90" rx="15" fill="url(#layer4)" stroke="#7c3aed" stroke-width="2"/>
+                        <text x="400" y="60" text-anchor="middle" fill="white" font-size="14" font-weight="bold">&#46041;&#50896;&#48516;&#52404;&#49328;&#50629;</text>
+                        <text x="400" y="85" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="11">&#50896;&#44201; &#47784;&#45768;&#53552;&#47553; &#49468;&#53552; &#50868;&#50689;</text>
+                        <text x="400" y="105" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">&#51060;&#49345; &#44048;&#51648; &#8594; &#49440;&#51228;&#51201; A/S &#51228;&#50504;</text>
+
+                        <!-- Service Description -->
+                        <rect x="150" y="140" width="500" height="80" rx="10" fill="rgba(37,99,235,0.1)" stroke="#2563eb" stroke-width="1"/>
+                        <text x="400" y="165" text-anchor="middle" fill="#2563eb" font-size="12" font-weight="bold">SaaS &#49436;&#48708;&#49828; &#45236;&#50857;</text>
+                        <text x="400" y="185" text-anchor="middle" fill="#1e293b" font-size="10">&#49892;&#49884;&#44036; &#49444;&#48708; &#49345;&#53468; &#47784;&#45768;&#53552;&#47553; | &#51060;&#49345; &#51088;&#46041; &#50508;&#47548; | &#50896;&#44201; &#51652;&#45800; | &#50696;&#48708;&#48512;&#54408; &#50672;&#44228;</text>
+                        <text x="400" y="205" text-anchor="middle" fill="#1e293b" font-size="10">&#50900;&#44036;/&#48516;&#44592; &#49444;&#48708; &#49345;&#53468; &#48372;&#44256;&#49436; &#51088;&#46041; &#49373;&#49457;</text>
+
+                        <!-- Arrows -->
+                        <path d="M200 220 L200 260" stroke="#2563eb" stroke-width="2"/>
+                        <path d="M400 220 L400 260" stroke="#2563eb" stroke-width="2"/>
+                        <path d="M600 220 L600 260" stroke="#2563eb" stroke-width="2"/>
+
+                        <!-- Customer Sites -->
+                        <rect x="100" y="260" width="150" height="70" rx="10" fill="rgba(16,185,129,0.2)" stroke="#10b981" stroke-width="2"/>
+                        <text x="175" y="285" text-anchor="middle" fill="#1e293b" font-size="11" font-weight="bold">&#44256;&#44061;&#49324; A</text>
+                        <text x="175" y="305" text-anchor="middle" fill="#64748b" font-size="10">&#49885;&#54408;&#44277;&#51109;</text>
+                        <text x="175" y="320" text-anchor="middle" fill="#64748b" font-size="9">&#48516;&#49604;&#44592; 2&#45824; + &#54844;&#54633;&#44592; 1&#45824;</text>
+
+                        <rect x="300" y="260" width="150" height="70" rx="10" fill="rgba(6,182,212,0.2)" stroke="#06b6d4" stroke-width="2"/>
+                        <text x="375" y="285" text-anchor="middle" fill="#1e293b" font-size="11" font-weight="bold">&#44256;&#44061;&#49324; B</text>
+                        <text x="375" y="305" text-anchor="middle" fill="#64748b" font-size="10">&#51228;&#50557;&#44277;&#51109;</text>
+                        <text x="375" y="320" text-anchor="middle" fill="#64748b" font-size="9">&#54844;&#54633;&#44592; 3&#45824;</text>
+
+                        <rect x="500" y="260" width="150" height="70" rx="10" fill="rgba(245,158,11,0.2)" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="575" y="285" text-anchor="middle" fill="#1e293b" font-size="11" font-weight="bold">&#44256;&#44061;&#49324; C</text>
+                        <text x="575" y="305" text-anchor="middle" fill="#64748b" font-size="10">&#54868;&#54617;&#44277;&#51109;</text>
+                        <text x="575" y="320" text-anchor="middle" fill="#64748b" font-size="9">&#54028;&#49604;&#44592; 1&#45824;</text>
+                    </svg>
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>&#49688;&#51061; &#54637;&#47785;</th>
+                            <th>&#45236;&#50857;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>&#47784;&#45768;&#53552;&#47553; &#51109;&#48708; &#54032;&#47588;</strong></td>
+                            <td>&#49444;&#48708;&#45817; 300~500&#47564;&#50896; (&#51068;&#49884;&#48520;)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>&#50900;&#51221; &#44396;&#46021;&#47308;</strong></td>
+                            <td>&#49444;&#48708;&#45817; 15~25&#47564;&#50896;/&#50900;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>&#54532;&#47532;&#48120;&#50628; A/S</strong></td>
+                            <td>&#50672;&#44036; &#44228;&#50557; &#48324;&#46020;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 5. &#53804;&#51088; &#50836;&#50557; &#48143; ROI -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">&#128176;</span>
+                5. &#53804;&#51088; &#50836;&#50557; &#48143; ROI &#48516;&#49437;
+            </h2>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>&#54532;&#47196;&#51229;&#53944;</th>
+                        <th>&#53804;&#51088;&#48708;</th>
+                        <th>&#44396;&#54788;&#44592;&#44036;</th>
+                        <th>&#50864;&#49440;&#49692;&#50948;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>A. &#48516;&#49604;&#44592; &#50696;&#51648;&#51221;&#48708;</strong></td>
+                        <td>2,410&#47564;&#50896;</td>
+                        <td>2.5&#44060;&#50900;</td>
+                        <td>&#9733;&#9733;&#9733;&#9733;&#9733;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>B. &#54844;&#54633;&#44592; &#47784;&#45768;&#53552;&#47553;</strong></td>
+                        <td>1,535&#47564;&#50896;</td>
+                        <td>2&#44060;&#50900;</td>
+                        <td>&#9733;&#9733;&#9733;&#9733;&#9734;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>C. &#54872;&#44221; &#47784;&#45768;&#53552;&#47553;</strong></td>
+                        <td>1,208&#47564;&#50896;</td>
+                        <td>1.5&#44060;&#50900;</td>
+                        <td>&#9733;&#9733;&#9733;&#9733;&#9734;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>D. &#49373;&#49328;&#51060;&#47141;&#44288;&#47532;(MES)</strong></td>
+                        <td>3,140&#47564;&#50896;</td>
+                        <td>3&#44060;&#50900;</td>
+                        <td>&#9733;&#9733;&#9733;&#9734;&#9734;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>E. &#50896;&#44201; A/S &#54540;&#47019;&#54268;</strong></td>
+                        <td>4,200&#47564;&#50896;</td>
+                        <td>4&#44060;&#50900;</td>
+                        <td>&#9733;&#9733;&#9733;&#9733;&#9734;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="roi-total">
+                <span>&#52509; &#53804;&#51088;&#48708;</span>
+                <span style="font-size: 1.4em;">12,493&#47564;&#50896;</span>
+            </div>
+
+            <div class="roi-container">
+                <div class="roi-box">
+                    <h4>&#128181; &#48708;&#50857; &#51208;&#44048; &#54952;&#44284; (&#50672;&#44036;)</h4>
+                    <div class="roi-item">
+                        <span>&#48708;&#44228;&#54925; &#51221;&#51648; &#44048;&#49548; (70%)</span>
+                        <strong>3,000&#47564;&#50896;</strong>
+                    </div>
+                    <div class="roi-item">
+                        <span>&#50976;&#51648;&#48372;&#49688; &#48708;&#50857; &#51208;&#44048; (40%)</span>
+                        <strong>1,500&#47564;&#50896;</strong>
+                    </div>
+                    <div class="roi-item">
+                        <span>&#48512;&#54408; &#49688;&#47749; &#50672;&#51109; (30%)</span>
+                        <strong>800&#47564;&#50896;</strong>
+                    </div>
+                    <div class="roi-item">
+                        <span>&#50640;&#45320;&#51648; &#54952;&#50984; &#44060;&#49440; (10%)</span>
+                        <strong>500&#47564;&#50896;</strong>
+                    </div>
+                    <div class="roi-item">
+                        <span>&#54872;&#44221; &#44508;&#51228; &#45824;&#51025; (&#44284;&#53468;&#47308; &#48169;&#51648;)</span>
+                        <strong>200&#47564;&#50896;</strong>
+                    </div>
+                    <div class="roi-total" style="margin-top: 15px;">
+                        <span>&#49548;&#44228;</span>
+                        <span>6,000&#47564;&#50896;/&#45380;</span>
+                    </div>
+                </div>
+
+                <div class="roi-box">
+                    <h4>&#128200; &#49888;&#44508; &#49688;&#51061; &#52285;&#52636; (&#50672;&#44036;)</h4>
+                    <div class="roi-item">
+                        <span>&#50896;&#44201; A/S &#44396;&#46021;&#47308; (10&#45824; &#215; 20&#47564;&#50896; &#215; 12&#44060;&#50900;)</span>
+                        <strong>2,400&#47564;&#50896;</strong>
+                    </div>
+                    <div class="roi-item">
+                        <span>&#48512;&#44032; &#49436;&#48708;&#49828; (&#52968;&#49444;&#54021;, &#52572;&#51201;&#54868;)</span>
+                        <strong>500&#47564;&#50896;</strong>
+                    </div>
+                    <div class="roi-total" style="margin-top: 15px;">
+                        <span>&#49548;&#44228;</span>
+                        <span>2,900&#47564;&#50896;/&#45380;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">8,900&#47564;&#50896;</div>
+                    <div class="stat-label">&#50672;&#44036; &#52509; &#54952;&#44284;</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">71.2%</div>
+                    <div class="stat-label">ROI</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">17&#44060;&#50900;</div>
+                    <div class="stat-label">&#53804;&#51088; &#54924;&#49688; &#44592;&#44036;</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. &#52628;&#51652; &#51068;&#51221; -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">&#128197;</span>
+                6. &#52628;&#51652; &#51068;&#51221;
+            </h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-phase">1&#45800;&#44228; (1~3&#44060;&#50900;)</div>
+                    <div class="timeline-bar">
+                        <div class="timeline-progress phase-1" style="width: 100%;">Project A: &#48516;&#49604;&#44592; &#50696;&#51648;&#51221;&#48708;</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-phase">2&#45800;&#44228; (4~5&#44060;&#50900;)</div>
+                    <div class="timeline-bar">
+                        <div class="timeline-progress phase-2" style="width: 70%;">Project C: &#54872;&#44221; &#47784;&#45768;&#53552;&#47553;</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-phase">3&#45800;&#44228; (6~8&#44060;&#50900;)</div>
+                    <div class="timeline-bar">
+                        <div class="timeline-progress phase-3" style="width: 85%;">Project B: &#54844;&#54633;&#44592; &#47784;&#45768;&#53552;&#47553;</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-phase">4&#45800;&#44228; (9~12&#44060;&#50900;)</div>
+                    <div class="timeline-bar">
+                        <div class="timeline-progress phase-4" style="width: 100%;">Project D: &#49373;&#49328;&#51060;&#47141;&#44288;&#47532;(MES)</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-phase">5&#45800;&#44228; (13~16&#44060;&#50900;)</div>
+                    <div class="timeline-bar">
+                        <div class="timeline-progress phase-5" style="width: 100%;">Project E: &#50896;&#44201; A/S &#54540;&#47019;&#54268;</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. UTTEC &#49548;&#44060; -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">&#127969;</span>
+                7. UTTEC &#49548;&#44060;
+            </h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3 class="card-title">&#128205; &#54924;&#49324; &#44060;&#50836;</h3>
+                    <p><strong>&#54924;&#49324;&#47749;:</strong> UTTEC (&#50976;&#54000;&#53581;)</p>
+                    <p><strong>&#45824;&#54364;:</strong> &#54861; &#44305;&#49340;</p>
+                    <p><strong>&#49444;&#47549;:</strong> 2018&#45380;</p>
+                    <p><strong>&#51204;&#47928; &#48516;&#50556;:</strong> &#51076;&#48288;&#46356;&#46300; &#49884;&#49828;&#53596;, IoT, AI &#49556;&#47336;&#49496;, &#49828;&#47560;&#53944;&#54057;&#53664;&#47532;</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">&#128170; &#54645;&#49900; &#44221;&#51137;&#47141;</h3>
+                    <p><strong>40&#45380;+</strong> &#51076;&#48288;&#46356;&#46300; &#44221;&#54744;</p>
+                    <p><strong>ARM &#44592;&#48152;</strong> &#49884;&#49828;&#53596; &#51204;&#47928;</p>
+                    <p><strong>&#49892;&#47532;&#53080;&#48184;&#47532;</strong> &#44592;&#50629; &#44540;&#47924; &#44221;&#54744;</p>
+                    <p><strong>&#49340;&#49457;&#51204;&#51088;</strong> 16&#45380; &#44221;&#47141;</p>
+                </div>
+            </div>
+
+            <h3 style="color: var(--primary); margin: 30px 0 20px;">&#44592;&#49696; &#50669;&#47049;</h3>
+            <div class="skill-tags">
+                <span class="skill-tag">ARM Cortex</span>
+                <span class="skill-tag">DSP</span>
+                <span class="skill-tag">FPGA</span>
+                <span class="skill-tag">FFT &#48516;&#49437;</span>
+                <span class="skill-tag">&#50644;&#48296;&#47217;&#54252; &#48516;&#49437;</span>
+                <span class="skill-tag">RS-485</span>
+                <span class="skill-tag">Modbus</span>
+                <span class="skill-tag">CAN Bus</span>
+                <span class="skill-tag">MQTT</span>
+                <span class="skill-tag">WiFi</span>
+                <span class="skill-tag">BLE</span>
+                <span class="skill-tag">LTE</span>
+                <span class="skill-tag">AI/ML</span>
+                <span class="skill-tag">&#44256;&#51109; &#50696;&#52769;</span>
+                <span class="skill-tag">RUL &#50696;&#52769;</span>
+                <span class="skill-tag">&#49828;&#47560;&#53944;&#54057;&#53664;&#47532;</span>
+            </div>
+        </section>
+
+        <!-- 8. &#44208;&#47200; -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">&#127919;</span>
+                8. &#44208;&#47200;
+            </h2>
+
+            <div class="info-box success">
+                <p style="font-size: 1.1em; margin-bottom: 15px;">
+                    <strong>&#46041;&#50896;&#48516;&#52404;&#49328;&#50629;</strong>&#51008; &#48516;&#49604;&#44592;, &#54028;&#49604;&#44592;, &#54844;&#54633;&#44592; &#48516;&#50556;&#51032; &#51204;&#47928; &#44592;&#50629;&#51004;&#47196;&#49436;, &#49444;&#48708;&#51032; &#50504;&#51221;&#51201; &#50868;&#50689;&#44284; &#54408;&#51656; &#44288;&#47532;&#44032; &#54645;&#49900; &#44221;&#51137;&#47141;&#51077;&#45768;&#45796;.
+                </p>
+                <p><strong>UTTEC&#51008; &#45796;&#51020;&#44284; &#44057;&#51008; &#44032;&#52824;&#47484; &#51228;&#44277;&#54633;&#45768;&#45796;:</strong></p>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3 class="card-title">&#9881;&#65039; &#50696;&#51648;&#51221;&#48708;(PdM)</h3>
+                    <p>&#44256;&#51109; &#51204; &#51060;&#49345; &#44048;&#51648;&#47196; &#48708;&#44228;&#54925; &#51221;&#51648; &#52572;&#49548;&#54868;</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">&#127811; &#54872;&#44221; &#44508;&#51228; &#45824;&#51025;</h3>
+                    <p>&#48516;&#51652;/&#49548;&#51020; &#49892;&#49884;&#44036; &#47784;&#45768;&#53552;&#47553;&#51004;&#47196; &#44508;&#51221; &#51456;&#49688;</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">&#128200; &#54408;&#51656; &#52628;&#51201;&#49457;</h3>
+                    <p>&#49373;&#49328;&#51060;&#47141; &#44288;&#47532;&#47196; &#49885;&#54408;/&#51032;&#50557; &#44256;&#44061; &#45824;&#51025;&#47141; &#44053;&#54868;</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">&#128176; &#49888;&#44508; &#49688;&#51061; &#52285;&#52636;</h3>
+                    <p>&#50896;&#44201; A/S &#54540;&#47019;&#54268;&#51004;&#47196; SaaS &#48708;&#51592;&#45768;&#49828; &#47784;&#45944; &#44396;&#52629;</p>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 30px;">
+                <p style="text-align: center; font-size: 1.1em;">
+                    <strong>&#48376; &#51228;&#50504;&#49436;&#45716; &#46041;&#50896;&#48516;&#52404;&#49328;&#50629;&#51032; &#49324;&#50629; &#51060;&#54644;&#47484; &#48148;&#53461;&#51004;&#47196; UTTEC&#51060; &#51089;&#49457;&#54616;&#50688;&#49845;&#45768;&#45796;.</strong>
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <h2>&#47928;&#51032; &#48143; &#49345;&#45812;</h2>
+            <p>&#46041;&#50896;&#48516;&#52404;&#49328;&#50629;&#51032; &#49828;&#47560;&#53944; &#49556;&#47336;&#49496; &#44396;&#52629;&#50640; &#45824;&#54644; &#49345;&#45812;&#54644; &#46300;&#47549;&#45768;&#45796;.</p>
+
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <h4>&#128100; &#45812;&#45817;&#51088;</h4>
+                    <p>&#54861; &#44305;&#49340;</p>
+                </div>
+                <div class="contact-item">
+                    <h4>&#128231; &#51060;&#47700;&#51068;</h4>
+                    <p>uttec@uttec.co.kr</p>
+                </div>
+                <div class="contact-item">
+                    <h4>&#128222; &#50672;&#46973;&#52376;</h4>
+                    <p>010-3922-1809</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 40px; opacity: 0.8;">&copy; 2025 UTTEC. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

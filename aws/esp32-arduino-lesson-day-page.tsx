@@ -26,6 +26,13 @@ import {
   Cpu
 } from 'lucide-react';
 
+// 중급/고급 레슨 데이터 import
+import { intermediateDataPart1 } from './esp32-arduino-lesson-intermediate1';
+import { intermediateDataPart2 } from './esp32-arduino-lesson-intermediate2';
+import { advancedDataPart1 } from './esp32-arduino-lesson-advanced1';
+import { advancedDataPart2 } from './esp32-arduino-lesson-advanced2';
+import { advancedDataPart3 } from './esp32-arduino-lesson-advanced3';
+
 // 수강 신청 데이터
 const enrollmentData: Record<string, string[]> = {
   'test@test.com': ['esp32-arduino'],
@@ -1220,8 +1227,14 @@ LED 핀: 빨강(25), 노랑(26), 파랑(27)`,
         },
       },
     ],
-    nextLesson: null,  // 마지막 강의
+    nextLesson: { day: 16, title: 'WiFi Access Point 모드' },  // 중급으로 이어짐
   },
+  // Day 16-90: 중급/고급 과정 (별도 파일에서 import)
+  ...intermediateDataPart1,   // Day 16-30: 중급 Part 1
+  ...intermediateDataPart2,   // Day 31-45: 중급 Part 2
+  ...advancedDataPart1,       // Day 46-60: 고급 Part 1
+  ...advancedDataPart2,       // Day 61-75: 고급 Part 2
+  ...advancedDataPart3,       // Day 76-90: 고급 Part 3
 };
 
 // ============================================
@@ -1958,7 +1971,7 @@ export default function ESP32ArduinoLessonDayPage() {
           ) : (
             <div />
           )}
-          {day < 15 && (
+          {day < 90 && (
             <Link
               href={`/course/coding/c-esp32/${level}/lesson/${day + 1}`}
               className="flex items-center gap-1 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition"

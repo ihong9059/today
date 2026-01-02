@@ -3,54 +3,114 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Brain, Menu, X, ChevronRight, Users, BookOpen, Clock, Star, Play } from 'lucide-react';
+import { Brain, Menu, X, ChevronRight, Users, BookOpen, Clock, Star, Play, Sparkles, Target, Rocket, TrendingUp, Lightbulb, CheckCircle2 } from 'lucide-react';
 
-// 진로 전환자 코스 데이터
+// AI 시대 진로 전환자 코스 데이터 - 8개 코스로 확장
 const careerChangeCourses = [
   {
-    id: 'find-field',
-    title: '나에게 맞는 분야 찾기',
+    id: 'self-discovery',
+    title: '나를 다시 발견하기',
     icon: '🔍',
-    description: 'AI와 함께 나의 강점과 적성에 맞는 새로운 분야 탐색',
+    description: 'AI 분석으로 나의 숨겨진 강점, 가치관, 열정을 재발견하고 새로운 가능성 탐색',
     color: 'from-rose-500 to-pink-500',
-    duration: '5강',
-    students: 287,
+    duration: '5일',
+    students: 456,
     rating: 4.9,
-    topics: ['자기 분석', '분야 탐색', '적합도 평가'],
+    topics: ['강점 분석', '가치관 탐색', '숨겨진 재능 발견'],
+    highlight: '셀프 브랜딩 기초',
   },
   {
-    id: 'job-simulation',
-    title: '직업 체험 시뮬레이션',
-    icon: '🎮',
-    description: 'AI로 가상 직업 체험하고 실제 업무 맛보기',
+    id: 'ai-era-trends',
+    title: 'AI 시대 유망 분야',
+    icon: '🌟',
+    description: 'AI가 만드는 새로운 직업과 사라지는 직업, 미래 유망 분야 트렌드 분석',
     color: 'from-violet-500 to-purple-500',
-    duration: '5강',
-    students: 342,
+    duration: '5일',
+    students: 521,
     rating: 4.8,
-    topics: ['가상 체험', '업무 이해', '현실 점검'],
+    topics: ['미래 직업 트렌드', 'AI 대체 불가 영역', '신규 유망 분야'],
+    highlight: '2025 최신 트렌드',
   },
   {
-    id: 'new-skill',
-    title: '새 분야 기초 역량',
-    icon: '💪',
-    description: 'AI 시대 전환에 필요한 핵심 역량 빠르게 쌓기',
-    color: 'from-amber-500 to-orange-500',
-    duration: '5강',
-    students: 398,
+    id: 'ai-skills',
+    title: 'AI 활용 필수 역량',
+    icon: '🤖',
+    description: 'ChatGPT, Claude, 미드저니 등 AI 도구 마스터하고 생산성 10배 높이기',
+    color: 'from-blue-500 to-cyan-500',
+    duration: '5일',
+    students: 687,
     rating: 4.9,
-    topics: ['디지털 역량', 'AI 활용', '학습 전략'],
+    topics: ['AI 도구 실습', '프롬프트 엔지니어링', 'AI 협업 전략'],
+    highlight: '실전 활용 중심',
   },
   {
-    id: 'roadmap',
+    id: 'new-field-entry',
+    title: '새 분야 진입 전략',
+    icon: '🎯',
+    description: '경력 전환자를 위한 새 분야 진입 노하우, 이력서/포트폴리오 전략',
+    color: 'from-amber-500 to-orange-500',
+    duration: '5일',
+    students: 398,
+    rating: 4.8,
+    topics: ['스킬 갭 분석', '학습 로드맵', '네트워킹 전략'],
+    highlight: '실전 취업 전략',
+  },
+  {
+    id: 'digital-career',
+    title: '디지털 커리어 설계',
+    icon: '💻',
+    description: '원격근무, 디지털 노마드, 하이브리드 워크 등 새로운 일의 방식 탐색',
+    color: 'from-teal-500 to-emerald-500',
+    duration: '5일',
+    students: 342,
+    rating: 4.7,
+    topics: ['원격근무 준비', '디지털 도구 마스터', '온라인 협업'],
+    highlight: '유연한 근무 형태',
+  },
+  {
+    id: 'creator-economy',
+    title: '크리에이터 경제 입문',
+    icon: '🎨',
+    description: '유튜브, 블로그, 뉴스레터 등 1인 미디어로 수익 창출하는 방법',
+    color: 'from-pink-500 to-rose-500',
+    duration: '5일',
+    students: 476,
+    rating: 4.9,
+    topics: ['콘텐츠 전략', '수익화 모델', 'AI 콘텐츠 제작'],
+    highlight: 'AI 활용 콘텐츠 제작',
+  },
+  {
+    id: 'freelance-startup',
+    title: '프리랜서/창업 준비',
+    icon: '🚀',
+    description: 'AI 시대 1인 사업, 프리랜서, 소규모 창업을 위한 실전 가이드',
+    color: 'from-indigo-500 to-violet-500',
+    duration: '5일',
+    students: 289,
+    rating: 4.8,
+    topics: ['사업 모델 수립', '고객 확보', '비용 최소화 전략'],
+    highlight: 'AI로 비용 절감',
+  },
+  {
+    id: 'transition-roadmap',
     title: '전환 로드맵 수립',
     icon: '🗺️',
-    description: '현실적인 커리어 전환 계획 세우고 실행하기',
-    color: 'from-teal-500 to-cyan-500',
-    duration: '5강',
-    students: 265,
-    rating: 4.8,
-    topics: ['단계별 계획', '리스크 관리', '실행 전략'],
+    description: '3개월, 6개월, 1년 단계별 실행 계획 수립과 리스크 관리',
+    color: 'from-slate-600 to-gray-700',
+    duration: '5일',
+    students: 365,
+    rating: 4.9,
+    topics: ['단계별 목표', '리스크 관리', '실행 계획'],
+    highlight: '맞춤형 로드맵',
   },
+];
+
+// 학습 여정 단계
+const learningJourney = [
+  { phase: '탐색', courses: ['self-discovery', 'ai-era-trends'], description: '나와 시장 이해하기' },
+  { phase: '준비', courses: ['ai-skills', 'new-field-entry'], description: '역량과 전략 갖추기' },
+  { phase: '실행', courses: ['digital-career', 'creator-economy', 'freelance-startup'], description: '새로운 커리어 시작' },
+  { phase: '완성', courses: ['transition-roadmap'], description: '체계적인 실행' },
 ];
 
 export default function CareerChangeCoursePage() {
@@ -127,91 +187,171 @@ export default function CareerChangeCoursePage() {
       {/* 메인 콘텐츠 */}
       <main className="max-w-6xl mx-auto px-4 py-8">
         {/* 헤더 섹션 */}
-        <div className="bg-gradient-to-r from-rose-500 to-pink-600 rounded-2xl p-8 mb-8 text-white">
-          <div className="flex items-center gap-2 mb-4">
-            <Link href="/courses" className="text-rose-200 hover:text-white text-sm">강좌 목록</Link>
-            <ChevronRight className="w-4 h-4 text-rose-200" />
-            <span className="text-sm">진로 전환자 코스</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
-            🔄 진로 전환자 코스
-          </h1>
-          <p className="text-lg text-rose-100 mb-6">
-            새로운 분야로의 도전, AI와 함께라면 두렵지 않습니다!<br />
-            체계적인 탐색과 준비로 성공적인 커리어 전환을 시작하세요.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <div className="flex items-center gap-2 bg-white/20 rounded-lg px-4 py-2">
-              <BookOpen className="w-5 h-5" />
-              <span>4개 강좌</span>
+        <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 rounded-2xl p-8 mb-8 text-white relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+
+          <div className="relative z-10">
+            <div className="flex items-center gap-2 mb-4">
+              <Link href="/courses" className="text-purple-200 hover:text-white text-sm">강좌 목록</Link>
+              <ChevronRight className="w-4 h-4 text-purple-200" />
+              <span className="text-sm">진로 전환자 코스</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/20 rounded-lg px-4 py-2">
-              <Clock className="w-5 h-5" />
-              <span>강좌당 약 2-3시간</span>
+
+            <div className="flex items-center gap-3 mb-4">
+              <Sparkles className="w-8 h-8 text-yellow-300" />
+              <h1 className="text-3xl md:text-4xl font-bold">AI 시대 진로 전환 마스터</h1>
             </div>
-            <div className="flex items-center gap-2 bg-white/20 rounded-lg px-4 py-2">
-              <Users className="w-5 h-5" />
-              <span>1,200+ 수강생</span>
+
+            <p className="text-lg text-purple-100 mb-6 max-w-2xl">
+              AI가 바꾸는 세상, 두려움 대신 기회로!<br />
+              체계적인 8단계 과정으로 성공적인 커리어 전환을 완성하세요.
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              <div className="flex items-center gap-2 bg-white/20 rounded-lg px-4 py-2">
+                <BookOpen className="w-5 h-5" />
+                <span>8개 코스</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/20 rounded-lg px-4 py-2">
+                <Clock className="w-5 h-5" />
+                <span>총 40강 (코스당 5일)</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/20 rounded-lg px-4 py-2">
+                <Users className="w-5 h-5" />
+                <span>3,500+ 수강생</span>
+              </div>
+              <div className="flex items-center gap-2 bg-yellow-400 text-purple-900 rounded-lg px-4 py-2 font-semibold">
+                <Rocket className="w-5 h-5" />
+                <span>2025 신규 개편</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* 안내 메시지 */}
-        <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 mb-8">
-          <h3 className="font-semibold text-rose-900 mb-2">💡 진로 전환, 이렇게 시작하세요</h3>
-          <p className="text-rose-800 text-sm">
-            1단계: 나에게 맞는 분야 찾기 → 2단계: 직업 체험 시뮬레이션 → 3단계: 기초 역량 쌓기 → 4단계: 전환 로드맵 수립
-          </p>
+        {/* 이런 분께 추천합니다 */}
+        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-6 mb-8">
+          <h3 className="font-bold text-amber-900 mb-4 flex items-center gap-2">
+            <Target className="w-5 h-5" />
+            이런 분께 추천합니다
+          </h3>
+          <div className="grid md:grid-cols-2 gap-3">
+            {[
+              'AI 시대에 현재 직업의 미래가 불안한 분',
+              '새로운 분야로 이직/전직을 고민하는 분',
+              '경력 단절 후 새로운 시작을 준비하는 분',
+              '프리랜서/창업으로 독립을 꿈꾸는 분',
+              'AI를 활용한 새로운 커리어를 원하는 분',
+              '디지털 노마드 라이프를 꿈꾸는 분',
+            ].map((item, idx) => (
+              <div key={idx} className="flex items-center gap-2 text-amber-800">
+                <CheckCircle2 className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                <span className="text-sm">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 학습 여정 */}
+        <div className="bg-white rounded-2xl p-6 mb-8 shadow-sm">
+          <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+            <TrendingUp className="w-6 h-6 text-purple-600" />
+            학습 여정 가이드
+          </h2>
+          <div className="grid md:grid-cols-4 gap-4">
+            {learningJourney.map((journey, idx) => (
+              <div key={journey.phase} className="relative">
+                <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-4 border border-purple-100">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                      {idx + 1}
+                    </span>
+                    <h3 className="font-bold text-purple-900">{journey.phase}</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-3">{journey.description}</p>
+                  <div className="space-y-1">
+                    {journey.courses.map(courseId => {
+                      const course = careerChangeCourses.find(c => c.id === courseId);
+                      return course ? (
+                        <div key={courseId} className="text-xs text-purple-700 flex items-center gap-1">
+                          <span>{course.icon}</span>
+                          <span>{course.title}</span>
+                        </div>
+                      ) : null;
+                    })}
+                  </div>
+                </div>
+                {idx < learningJourney.length - 1 && (
+                  <div className="hidden md:block absolute top-1/2 -right-2 transform -translate-y-1/2 z-10">
+                    <ChevronRight className="w-4 h-4 text-purple-300" />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* 코스 목록 */}
-        <div className="grid gap-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+          <Lightbulb className="w-6 h-6 text-amber-500" />
+          전체 코스 목록
+        </h2>
+
+        <div className="grid gap-4">
           {careerChangeCourses.map((course, index) => (
-            <div key={course.id} className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition">
+            <div key={course.id} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition group">
               <div className="md:flex">
-                {/* 왼쪽: 아이콘 및 단계 */}
-                <div className={`md:w-48 p-6 bg-gradient-to-br ${course.color} flex flex-col items-center justify-center`}>
-                  <span className="text-5xl mb-2">{course.icon}</span>
-                  <span className="text-white/80 text-sm font-medium">STEP {index + 1}</span>
+                <div className={`md:w-40 p-4 bg-gradient-to-br ${course.color} flex flex-col items-center justify-center`}>
+                  <span className="text-4xl mb-1">{course.icon}</span>
+                  <span className="text-white/90 text-xs font-medium bg-white/20 px-2 py-1 rounded">DAY 1-5</span>
                 </div>
 
-                {/* 중앙: 정보 */}
-                <div className="flex-1 p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{course.title}</h3>
-                  <p className="text-gray-600 mb-4">{course.description}</p>
+                <div className="flex-1 p-5">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-0.5 rounded">STEP {index + 1}</span>
+                        {course.highlight && (
+                          <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded">{course.highlight}</span>
+                        )}
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-900">{course.title}</h3>
+                    </div>
+                  </div>
 
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <p className="text-gray-600 text-sm mb-3">{course.description}</p>
+
+                  <div className="flex flex-wrap gap-2 mb-3">
                     {course.topics.map((topic) => (
-                      <span key={topic} className="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">
+                      <span key={topic} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
                         {topic}
                       </span>
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-6 text-sm text-gray-500">
+                  <div className="flex items-center gap-4 text-xs text-gray-500">
                     <span className="flex items-center gap-1">
-                      <BookOpen className="w-4 h-4" />
+                      <BookOpen className="w-3 h-3" />
                       {course.duration}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Users className="w-4 h-4" />
-                      {course.students}명 수강
+                      <Users className="w-3 h-3" />
+                      {course.students}명
                     </span>
                     <span className="flex items-center gap-1">
-                      <Star className="w-4 h-4 text-yellow-500" />
+                      <Star className="w-3 h-3 text-yellow-500" />
                       {course.rating}
                     </span>
                   </div>
                 </div>
 
-                {/* 오른쪽: 시작 버튼 */}
-                <div className="p-6 bg-gray-50 md:w-64 flex flex-col justify-center">
+                <div className="p-4 bg-gray-50 md:w-48 flex flex-col justify-center">
                   <button
                     onClick={() => handleStartCourse(course.id)}
-                    className={`w-full py-3 bg-gradient-to-r ${course.color} text-white font-semibold rounded-lg hover:opacity-90 transition flex items-center justify-center gap-2`}
+                    className={`w-full py-2.5 bg-gradient-to-r ${course.color} text-white font-semibold rounded-lg hover:opacity-90 transition flex items-center justify-center gap-2 text-sm`}
                   >
-                    <Play className="w-5 h-5" />
-                    강의 시작하기
+                    <Play className="w-4 h-4" />
+                    시작하기
                   </button>
                 </div>
               </div>
@@ -219,27 +359,65 @@ export default function CareerChangeCoursePage() {
           ))}
         </div>
 
-        {/* 추천 학습 순서 */}
-        <div className="mt-12 bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">🚀 성공적인 전환을 위한 여정</h2>
-          <div className="grid md:grid-cols-4 gap-4">
-            {careerChangeCourses.map((course, idx) => (
-              <div key={course.id} className="text-center">
-                <div className={`w-12 h-12 bg-gradient-to-br ${course.color} rounded-full flex items-center justify-center mx-auto mb-3 text-white text-xl font-bold`}>
-                  {idx + 1}
-                </div>
-                <p className="text-2xl mb-1">{course.icon}</p>
-                <h3 className="font-semibold text-gray-900 text-sm">{course.title}</h3>
-                {idx < careerChangeCourses.length - 1 && (
-                  <div className="hidden md:block absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2">
-                    <ChevronRight className="w-6 h-6 text-gray-300" />
+        {/* 수강 후기 */}
+        <div className="mt-12 bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-8 text-white">
+          <h2 className="text-2xl font-bold mb-6 text-center">💬 수강생 후기</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                name: '김○○',
+                role: '전직 마케터 → AI 컨설턴트',
+                comment: 'AI 도구 활용법을 배우고 3개월 만에 새 분야로 이직했어요. 체계적인 로드맵이 큰 도움이 됐습니다.',
+              },
+              {
+                name: '이○○',
+                role: '경력단절 5년 → 콘텐츠 크리에이터',
+                comment: '막막했던 재취업 대신 1인 미디어 창업을 선택했어요. 이제 월 수익이 이전 직장보다 높아요!',
+              },
+              {
+                name: '박○○',
+                role: '회사원 → 프리랜서 개발자',
+                comment: 'AI 시대에 맞는 스킬셋을 쌓고 프리랜서로 독립했습니다. 시간적 자유가 생겼어요.',
+              },
+            ].map((review, idx) => (
+              <div key={idx} className="bg-white/10 rounded-xl p-5">
+                <p className="text-gray-200 text-sm mb-4">"{review.comment}"</p>
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold">
+                    {review.name[0]}
                   </div>
-                )}
+                  <div>
+                    <p className="font-semibold text-white text-sm">{review.name}</p>
+                    <p className="text-xs text-gray-400">{review.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* AI 시대 전환 체크리스트 */}
+        <div className="mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-4 text-center">✅ AI 시대 커리어 전환 체크리스트</h2>
+          <div className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+            {[
+              '나의 강점과 열정을 AI 관점에서 재분석했다',
+              'AI 대체 불가능한 나만의 역량을 파악했다',
+              'ChatGPT, Claude 등 AI 도구를 자유롭게 활용한다',
+              '새로운 분야 진입을 위한 구체적 로드맵이 있다',
+              '디지털 환경에서 일할 준비가 되어 있다',
+              '수익 창출 채널을 2개 이상 확보했다',
+              '프리랜서/창업 시 필요한 기초 지식이 있다',
+              '3개월, 6개월, 1년 단위 실행 계획이 있다',
+            ].map((item, idx) => (
+              <div key={idx} className="flex items-center gap-3 bg-white rounded-lg p-3 shadow-sm">
+                <div className="w-6 h-6 border-2 border-purple-300 rounded flex-shrink-0"></div>
+                <span className="text-sm text-gray-700">{item}</span>
               </div>
             ))}
           </div>
           <p className="text-center text-gray-500 mt-6 text-sm">
-            * 순서대로 학습하시면 더욱 효과적입니다. 자신의 상황에 맞게 선택하셔도 좋습니다!
+            이 코스를 완료하면 모든 항목에 체크할 수 있습니다!
           </p>
         </div>
       </main>

@@ -4,3 +4,70 @@ claude, 한국기계엔지니어링_협업_프로젝트_계획서.md와 같이 �
 회사 주 사업영역, web site, 주요 전화번호, 대표 이름, 연락처 로 해주세요.
 
 
+claude, 당신은 제안서를 만드는 전문가입니다. 
+https://동원분체산업.com/ 
+사이트의 회사 에 제안할 project안을 만들어 주세요.
+참고할것은, 이미 제안한 내용이 있는 파일: 한국기계엔지니어링_스마트솔루션_제안서.html, 
+그리고 우리회사의 능력(uttec스택.md)를 참고하여 만들어 주세요.
+가능하면, 예지정비(Predictive Maintenance) 시스템을 핵심으로하고,
+환경 monitoring 및 해당회사의 취약기술을 보충할수있는 시스템도 포함한 project를 만들어 주세요.
+
+담당인원은 제외하고, 전체를 uttec의 스택으로 간주하고 자료를 만들어 주세요.
+자료는 md file로 전체적인 제안서 내용을 확인할수있도록 해주시고,
+제안서를 쉽게 이해할수있고, 구조를 파악할수있도록 html로 상세하게 설명자료를 만들어 주세요.
+만든 자료는 해당회사의 folder를 만들어 주시고, 그 안에 추가해 주세요.
+uttec의 연락처: 담당자: 홍 광삼, 이메일: uttec@uttec.co.kr, 전화번호: 010-3922-1809
+
+
+https://robosys.co.kr : 1
+
+http://www.vessel21.com : 1
+
+https://www.doosanrobotics.com : 1
+
+http://www.latplasma.com : 1
+
+https://dk2783475.kr/ : 1
+
+
+https://동원분체산업.com/ : 1
+
+http://ywcrusher.co.kr : 1
+
+http://www.kpsmc.co.kr : 1
+
+http://sinhosp.com : 1
+
+http://www.hsmc.kr : 1
+
+http://www.mmco.co.kr/ : 1
+
+http://eco-solutions.kr/ : 1
+
+http://hwasungind.co.kr : 1
+
+http://www.polaris-sewon.com : 2
+
+http://www.kunil-eng.co.kr : 1
+
+https://dh-crusher.co.kr/ : 1
+
+http://www.sj-powertech.com : 1
+
+http://www.sookwang.co.kr/ :
+
+https://hankukelec.com :
+
+http://e-samwon.co.kr :
+
+http://swtc.co.kr : 
+
+http://www.hkps.kr :
+
+https://www.daemo.co.kr/ :
+
+https://www.kmim.co.kr :
+
+https://www.dmfurnace.com :
+
+
