@@ -5,7 +5,7 @@ claude, 한국기계엔지니어링_협업_프로젝트_계획서.md와 같이 �
 
 
 claude, 당신은 제안서를 만드는 전문가입니다. 
-https://동원분체산업.com/ 
+http://e-samwon.co.kr 
 사이트의 회사 에 제안할 project안을 만들어 주세요.
 참고할것은, 이미 제안한 내용이 있는 파일: 한국기계엔지니어링_스마트솔루션_제안서.html, 
 그리고 우리회사의 능력(uttec스택.md)를 참고하여 만들어 주세요.
@@ -54,20 +54,20 @@ https://dh-crusher.co.kr/ : 1
 
 http://www.sj-powertech.com : 1
 
-http://www.sookwang.co.kr/ :
+http://www.sookwang.co.kr/ : 1
 
-https://hankukelec.com :
+https://hankukelec.com : 1
 
-http://e-samwon.co.kr :
+http://e-samwon.co.kr : 1
 
-http://swtc.co.kr : 
+http://swtc.co.kr : 1
 
-http://www.hkps.kr :
+http://www.hkps.kr : 1
 
-https://www.daemo.co.kr/ :
+https://www.daemo.co.kr/ : 1
 
-https://www.kmim.co.kr :
+https://www.kmim.co.kr : 1
 
-https://www.dmfurnace.com :
+https://www.dmfurnace.com : 1
 
 

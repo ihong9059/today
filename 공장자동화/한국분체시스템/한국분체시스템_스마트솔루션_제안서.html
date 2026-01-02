@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&#54620;&#44397;&#48516;&#52404;&#49884;&#49828;&#53596;(HKPS) - &#49828;&#47560;&#53944; &#49556;&#47336;&#49496; &#51228;&#50504;&#49436;</title>
+    <style>
+        :root {
+            --primary: #2d3a8c;
+            --secondary: #5c6bc0;
+            --accent: #7986cb;
+            --warning: #ff9800;
+            --success: #4caf50;
+            --danger: #f44336;
+            --dark: #1a237e;
+            --light: #f5f5f5;
+            --gray: #757575;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8eaf6 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(45, 58, 140, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            position: relative;
+        }
+
+        .header .company-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 20px;
+            font-size: 0.95em;
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.6em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title .icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        /* Info Cards */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #f5f5f5, #e8eaf6);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .info-card h4 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .info-card p {
+            color: var(--gray);
+            font-size: 0.95em;
+        }
+
+        /* Project Cards */
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 10px 40px rgba(92, 107, 192, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .project-title {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+
+        .project-badge {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .project-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .detail-label {
+            font-size: 0.85em;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(45, 58, 140, 0.2);
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
+        /* Architecture Diagram */
+        .architecture-diagram {
+            background: linear-gradient(135deg, #f5f5f5, #e8eaf6);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 30px 0;
+        }
+
+        .arch-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.4em;
+            margin-bottom: 30px;
+        }
+
+        .arch-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .arch-layer {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .layer-label {
+            width: 120px;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .layer-content {
+            flex: 1;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .layer-item {
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            text-align: center;
+            min-width: 130px;
+        }
+
+        .layer-cloud { background: linear-gradient(135deg, #5c6bc0, #7986cb); }
+        .layer-edge { background: linear-gradient(135deg, #43a047, #66bb6a); }
+        .layer-sensor { background: linear-gradient(135deg, #ff9800, #ffb74d); color: #333; }
+        .layer-equipment { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+
+        .arch-arrow {
+            text-align: center;
+            font-size: 1.5em;
+            color: var(--gray);
+            margin: 10px 0;
+        }
+
+        /* Product Categories */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .product-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .product-desc {
+            font-size: 0.9em;
+            color: var(--gray);
+        }
+
+        /* Monitoring Points */
+        .monitoring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .monitoring-card {
+            background: #f5f5f5;
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .monitoring-card h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .monitoring-card ul {
+            list-style: none;
+            color: #555;
+        }
+
+        .monitoring-card li {
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .monitoring-card li::before {
+            content: '\25CF';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding: 20px 25px;
+            background: #f5f5f5;
+            border-radius: 12px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 25px;
+            width: 14px;
+            height: 14px;
+            background: var(--secondary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .timeline-phase {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .timeline-content {
+            color: var(--gray);
+        }
+
+        /* ROI Chart */
+        .roi-chart {
+            margin: 30px 0;
+        }
+
+        .roi-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .roi-label {
+            width: 200px;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .roi-bar-container {
+            flex: 1;
+            height: 28px;
+            background: #e0e0e0;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .roi-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85em;
+            transition: width 0.5s ease;
+        }
+
+        /* Benefits */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .benefit-card {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid var(--success);
+        }
+
+        .benefit-card h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .benefit-card ul {
+            list-style: none;
+            color: #2e7d32;
+        }
+
+        .benefit-card li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .benefit-card li::before {
+            content: '\2713';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Safety Box */
+        .safety-box {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid var(--warning);
+        }
+
+        .safety-box h4 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+
+        .safety-box p {
+            color: #bf360c;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .contact-section h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-label {
+            opacity: 0.8;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .contact-value {
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        /* HACCP/GMP Box */
+        .compliance-box {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid #1976d2;
+        }
+
+        .compliance-box h4 {
+            color: #0d47a1;
+            margin-bottom: 10px;
+        }
+
+        .compliance-box p {
+            color: #1565c0;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .section {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #e0e0e0;
+            }
+
+            .project-card {
+                break-inside: avoid;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 25px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .layer-label {
+                width: 80px;
+                font-size: 0.85em;
+            }
+
+            .stat-value {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>&#49828;&#47560;&#53944; &#49556;&#47336;&#49496; &#51228;&#50504;&#49436;</h1>
+            <p class="subtitle">&#48516;&#49604;/&#54028;&#49604;/&#54844;&#54633; &#49444;&#48708; &#50696;&#51648;&#51221;&#48708;(PdM) &#49884;&#49828;&#53596; &#44396;&#52629;</p>
+            <div class="company-badge">&#54620;&#44397;&#48516;&#52404;&#49884;&#49828;&#53596;(HKPS) | &#48516;&#52404; &#49328;&#50629; &#51204;&#47928; &#44592;&#50629;</div>
+        </div>
+
+        <!-- Company Overview -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">&#127970;</span>
+                &#54924;&#49324; &#44060;&#50836;
+            </h2>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>&#44592;&#48376; &#51221;&#48372;</h4>
+                    <p><strong>&#54924;&#49324;&#47749;:</strong> &#54620;&#44397;&#48516;&#52404;&#49884;&#49828;&#53596; (HKPS)</p>
+                    <p><strong>&#49324;&#50629;&#48516;&#50556;:</strong> &#48516;&#49604;&#44592;, &#54028;&#49604;&#44592;, &#54844;&#54633;&#44592;, &#49440;&#48324;&#44592;, &#51665;&#51652;&#44592; &#49444;&#44228;&#51228;&#51089;</p>
+                </div>
+                <div class="info-card">
+                    <h4>&#48376;&#49324; &#51452;&#49548;</h4>
+                    <p>&#49436;&#50872; &#44396;&#47196;&#44396; &#44396;&#47196;&#51473;&#50521;&#47196; 237</p>
+                    <p>(&#44396;&#47196;&#46041;) &#46972;&#51060;&#54532;B/D 536&#54840;</p>
+                </div>
+                <div class="info-card">
+                    <h4>&#44277;&#51109; &#51452;&#49548;</h4>
+                    <p>&#51064;&#52380;&#49884; &#49436;&#44396; &#44032;&#51116;&#50872;&#47196; 32&#48264;&#44600; 31</p>
+                </div>
+                <div class="info-card">
+                    <h4>&#50672;&#46973;&#52376;</h4>
+                    <p><strong>&#51204;&#54868;:</strong> 02-2672-8833</p>
+                    <p><strong>&#54057;&#49828;:</strong> 02-2677-5772</p>
+                    <p><strong>&#51060;&#47700;&#51068;:</strong> hkps@hkps.kr</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">&#128736;</span>
+                &#51452;&#50836; &#51228;&#54408; &#46972;&#51064;&#50629;
+            </h2>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-icon">&#9881;</div>
+                    <div class="product-name">&#50640;&#50612;-&#51228;&#53944; &#48128;</div>
+                    <div class="product-desc">&#52384;&#48516; &#48156;&#49373; &#28961;, HACCP/GMP &#51201;&#54633;, &#48120;&#48516;&#49604;</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">&#128296;</div>
+                    <div class="product-name">&#53552;&#48372; &#48128;</div>
+                    <div class="product-desc">&#52649;&#44201;&#47141;+&#51204;&#45800;&#47141;, &#50676;&#48124;&#44048; &#47932;&#51656; &#51201;&#54633;</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">&#128170;</div>
+                    <div class="product-name">&#49800;&#47112;&#45908;</div>
+                    <div class="product-desc">&#51200;&#49549; &#44053;&#47141; &#54028;&#49604;, &#51200;&#49548;&#51020;, &#48516;&#51652; &#28961;</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">&#128684;</div>
+                    <div class="product-name">&#51076;&#54169;&#53944; &#53356;&#47084;&#49492;</div>
+                    <div class="product-desc">&#44256;&#49549; &#52649;&#44201; &#54028;&#49604;, &#44305;&#47932;/&#44148;&#49444;</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">&#128260;</div>
+                    <div class="product-name">&#47532;&#48380; &#48121;&#49436;</div>
+                    <div class="product-desc">&#44512;&#51068; &#54844;&#54633;, &#49885;&#54408;/&#54868;&#54617;</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">&#127754;</div>
+                    <div class="product-name">&#51652;&#46041;&#49828;&#53356;&#47536;</div>
+                    <div class="product-desc">&#51077;&#46020;&#48324; &#48516;&#47448;, &#51204; &#49328;&#50629;</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">&#127788;</div>
+                    <div class="product-name">&#48177;&#54596;&#53552;</div>
+                    <div class="product-desc">&#48516;&#51652; &#54252;&#51665;, &#54872;&#44221; &#44288;&#47532;</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">&#129516;</div>
+                    <div class="product-name">&#47560;&#51060;&#53356;&#47196;-&#51228;&#53944; &#48128;</div>
+                    <div class="product-desc">&#52488;&#48120;&#48516; &#48516;&#49604;, &#44256;&#49692;&#46020;</div>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>&#51228;&#54408;&#44400;</th>
+                        <th>&#51228;&#54408;&#47749;</th>
+                        <th>&#53945;&#49457;</th>
+                        <th>&#51201;&#50857; &#48516;&#50556;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>&#48120;&#48516;&#49604;&#44592;</strong></td>
+                        <td>&#50640;&#50612;-&#51228;&#53944; &#48128;</td>
+                        <td>Screen &#50630;&#51020;, &#52384;&#48516; &#48156;&#49373; &#28961;, CIP &#50857;&#51060;</td>
+                        <td>&#49885;&#54408;, &#51228;&#50557; (HACCP/GMP)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#48120;&#48516;&#49604;&#44592;</strong></td>
+                        <td>&#53552;&#48372; &#48128;</td>
+                        <td>&#52649;&#44201;&#47141;+&#51204;&#45800;&#47141;, &#50676;&#48124;&#44048; &#47932;&#51656; &#51201;&#54633;</td>
+                        <td>&#54868;&#54617;, &#49885;&#54408;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#54028;&#49604;&#44592;</strong></td>
+                        <td>&#49800;&#47112;&#45908;</td>
+                        <td>&#51200;&#49549; &#44053;&#47141; &#54028;&#49604;, &#51200;&#49548;&#51020;, &#48516;&#51652; &#28961;</td>
+                        <td>&#51116;&#54876;&#50857;, &#54224;&#44592;&#47932;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#54028;&#49604;&#44592;</strong></td>
+                        <td>&#51076;&#54169;&#53944; &#53356;&#47084;&#49492;</td>
+                        <td>&#44256;&#49549; &#52649;&#44201; &#54028;&#49604;</td>
+                        <td>&#44305;&#47932;, &#44148;&#49444;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#54844;&#54633;&#44592;</strong></td>
+                        <td>&#47532;&#48376; &#48121;&#49436;</td>
+                        <td>&#44512;&#51068; &#54844;&#54633;</td>
+                        <td>&#49885;&#54408;, &#54868;&#54617;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#51665;&#51652;&#44592;</strong></td>
+                        <td>&#48177;&#54596;&#53552;</td>
+                        <td>&#48516;&#51652; &#54252;&#51665;</td>
+                        <td>&#51204; &#49328;&#50629;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Technical Challenges -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">&#9888;</span>
+                &#44592;&#49696;&#51201; &#52712;&#50557;&#51216; &#48143; &#44060;&#49440; &#44592;&#54924;
+            </h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>&#50689;&#50669;</th>
+                        <th>&#54788;&#51116; &#49345;&#53468;</th>
+                        <th>&#44060;&#49440; &#44592;&#54924;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>&#49444;&#48708;&#44288;&#47532;</strong></td>
+                        <td>&#49884;&#44036;&#44592;&#48152; &#50696;&#48169;&#51221;&#48708;</td>
+                        <td>&#49345;&#53468;&#44592;&#48152; &#50696;&#51648;&#51221;&#48708; &#51204;&#54872;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#54408;&#51656;&#44288;&#47532;</strong></td>
+                        <td>&#49368;&#54540;&#47553; &#54408;&#51656;&#44160;&#49324;</td>
+                        <td>&#49892;&#49884;&#44036; &#48516;&#49604;&#46020; &#47784;&#45768;&#53552;&#47553;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#48516;&#49604;&#45216; &#44288;&#47532;</strong></td>
+                        <td>&#51221;&#44592; &#44368;&#52404;</td>
+                        <td>&#47560;&#47784; &#49345;&#53468; &#44592;&#48152; &#50696;&#52769; &#44368;&#52404;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#50640;&#45320;&#51648;&#44288;&#47532;</strong></td>
+                        <td>&#44060;&#48324; &#49444;&#48708; &#44288;&#47532;</td>
+                        <td>&#53685;&#54633; &#50640;&#45320;&#51648; &#54952;&#50984; &#52572;&#51201;&#54868;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#51665;&#51652; &#44288;&#47532;</strong></td>
+                        <td>&#49688;&#46041; &#51216;&#44160;</td>
+                        <td>&#49892;&#49884;&#44036; &#52264;&#50517;/&#48516;&#51652; &#47784;&#45768;&#53552;&#47553;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="safety-box">
+                <h4>&#9888; &#48516;&#52404; &#49444;&#48708; &#53945;&#49688; &#50836;&#44396;&#49324;&#54637;</h4>
+                <p>&#9679; <strong>&#44256;&#49549; &#54924;&#51204;&#52404;:</strong> &#48516;&#49604;&#44592; &#47196;&#53552; &#44256;&#49549;&#54924;&#51204; (&#49688;&#52380;~&#49688;&#47564; RPM)<br>
+                &#9679; <strong>&#47560;&#47784; &#44288;&#47532;:</strong> &#48516;&#49604;&#45216;, &#46972;&#51060;&#45320;, &#49828;&#53356;&#47536; &#47560;&#47784; &#49900;&#54632;<br>
+                &#9679; <strong>&#48516;&#51652; &#54872;&#44221;:</strong> &#48516;&#51652; &#48156;&#49373; &#54872;&#44221;, &#54253;&#48156; &#50948;&#54744; (&#48516;&#51652;&#54253;&#48156;)<br>
+                &#9679; <strong>&#50948;&#49373; &#50836;&#44396;:</strong> &#49885;&#54408;/&#51228;&#50557; &#48516;&#50556; HACCP, GMP &#51456;&#49688;</p>
+            </div>
+
+            <div class="compliance-box">
+                <h4>&#127973; HACCP/GMP &#45824;&#51025; &#54596;&#50836;&#49324;&#54637;</h4>
+                <p>&#9679; <strong>&#49444;&#48708; &#49345;&#53468; &#45936;&#51060;&#53552; &#51088;&#46041; &#44592;&#47197;:</strong> &#51221;&#48708; &#51060;&#47141;, &#50868;&#51204; &#51312;&#44148; &#44592;&#47197;<br>
+                &#9679; <strong>&#51060;&#47141; &#52628;&#51201;:</strong> &#48176;&#52824;&#48324; &#48516;&#49604; &#51312;&#44148;, &#54408;&#51656; &#45936;&#51060;&#53552; &#50672;&#44208;<br>
+                &#9679; <strong>&#47928;&#49436;&#54868; &#51088;&#46041;&#54868;:</strong> &#51221;&#48708; &#48372;&#44256;&#49436;, &#54408;&#51656; &#48372;&#44256;&#49436; &#51088;&#46041; &#49373;&#49457;</p>
+            </div>
+        </div>
+
+        <!-- System Architecture -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">&#9881;</span>
+                &#49884;&#49828;&#53596; &#50500;&#53412;&#53581;&#52376;
+            </h2>
+
+            <div class="architecture-diagram">
+                <h3 class="arch-title">4&#44228;&#52789; &#50696;&#51648;&#51221;&#48708; &#49884;&#49828;&#53596; &#44396;&#51312;</h3>
+
+                <div class="arch-layers">
+                    <div class="arch-layer">
+                        <div class="layer-label">Cloud &#44228;&#52789;</div>
+                        <div class="layer-content">
+                            <div class="layer-item layer-cloud">AWS/Azure</div>
+                            <div class="layer-item layer-cloud">AI &#48516;&#49437; &#50644;&#51652;</div>
+                            <div class="layer-item layer-cloud">&#45824;&#49884;&#48372;&#46300;</div>
+                            <div class="layer-item layer-cloud">&#48516;&#49604;&#46020; &#48516;&#49437;</div>
+                        </div>
+                    </div>
+
+                    <div class="arch-arrow">&#8593; MQTT / HTTPS &#8593;</div>
+
+                    <div class="arch-layer">
+                        <div class="layer-label">Edge &#44228;&#52789;</div>
+                        <div class="layer-content">
+                            <div class="layer-item layer-edge">Edge AI Gateway</div>
+                            <div class="layer-item layer-edge">&#49892;&#49884;&#44036; FFT &#48516;&#49437;</div>
+                            <div class="layer-item layer-edge">&#51060;&#49345;&#53456;&#51648;</div>
+                            <div class="layer-item layer-edge">&#48169;&#54253; &#45824;&#51025;</div>
+                        </div>
+                    </div>
+
+                    <div class="arch-arrow">&#8593; RS-485 / Modbus / 4-20mA &#8593;</div>
+
+                    <div class="arch-layer">
+                        <div class="layer-label">&#49468;&#49436; &#44228;&#52789;</div>
+                        <div class="layer-content">
+                            <div class="layer-item layer-sensor">&#51652;&#46041;&#49468;&#49436;</div>
+                            <div class="layer-item layer-sensor">&#50728;&#46020;&#49468;&#49436;</div>
+                            <div class="layer-item layer-sensor">&#51204;&#47448;&#49468;&#49436;</div>
+                            <div class="layer-item layer-sensor">&#52264;&#50517;&#49468;&#49436;</div>
+                            <div class="layer-item layer-sensor">&#48516;&#51652;&#49468;&#49436;</div>
+                        </div>
+                    </div>
+
+                    <div class="arch-arrow">&#8593; &#47932;&#47532;&#51201; &#50672;&#44208; &#8593;</div>
+
+                    <div class="arch-layer">
+                        <div class="layer-label">&#49444;&#48708; &#44228;&#52789;</div>
+                        <div class="layer-content">
+                            <div class="layer-item layer-equipment">&#48120;&#48516;&#49604;&#44592;</div>
+                            <div class="layer-item layer-equipment">&#54028;&#49604;&#44592;</div>
+                            <div class="layer-item layer-equipment">&#54844;&#54633;&#44592;</div>
+                            <div class="layer-item layer-equipment">&#49440;&#48324;&#44592;</div>
+                            <div class="layer-item layer-equipment">&#51665;&#51652;&#44592;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitoring Points -->
+            <div class="monitoring-grid">
+                <div class="monitoring-card">
+                    <h4>&#9881; &#44256;&#49549; &#54924;&#51204;&#52404; &#47784;&#45768;&#53552;&#47553;</h4>
+                    <ul>
+                        <li>&#47196;&#53552; &#48288;&#50612;&#47553; &#51652;&#46041; &#48516;&#49437; (FFT, Envelope)</li>
+                        <li>&#48520;&#44512;&#54805; &#44160;&#52636; &#48143; &#50696;&#52769;</li>
+                        <li>&#50728;&#46020; &#49345;&#49849; &#53944;&#47116;&#46300; &#48516;&#49437;</li>
+                        <li>&#51092;&#50668;&#49688;&#47749;(RUL) &#50696;&#52769;</li>
+                    </ul>
+                </div>
+                <div class="monitoring-card">
+                    <h4>&#128296; &#48516;&#49604;&#45216;/&#46972;&#51060;&#45320; &#47560;&#47784; &#50696;&#52769;</h4>
+                    <ul>
+                        <li>&#48516;&#49604; &#51204;&#47448; &#54056;&#53556; &#48516;&#49437;</li>
+                        <li>&#52376;&#47532;&#47049; &#48320;&#54868; &#53944;&#47116;&#46300;</li>
+                        <li>&#48516;&#49604;&#46020;(&#51077;&#46020;) &#48320;&#54868; &#52628;&#51201;</li>
+                        <li>&#47560;&#47784; &#51652;&#54665;&#47456; &#50696;&#52769;</li>
+                    </ul>
+                </div>
+                <div class="monitoring-card">
+                    <h4>&#127788; &#51665;&#51652; &#49884;&#49828;&#53596; &#47784;&#45768;&#53552;&#47553;</h4>
+                    <ul>
+                        <li>&#48177;&#54596;&#53552; &#52264;&#50517; &#47784;&#45768;&#53552;&#47553;</li>
+                        <li>&#48516;&#51652;&#45453;&#46020; &#49892;&#49884;&#44036; &#52769;&#51221;</li>
+                        <li>&#54596;&#53552; &#44368;&#52404; &#49884;&#44592; &#50696;&#52769;</li>
+                        <li>&#54253;&#48156; &#50948;&#54744; &#51312;&#44592; &#44221;&#48372;</li>
+                    </ul>
+                </div>
+                <div class="monitoring-card">
+                    <h4>&#128168; &#44277;&#50517;/&#55137;&#51077; &#49884;&#49828;&#53596;</h4>
+                    <ul>
+                        <li>&#50517;&#52629;&#44277;&#44592; &#50517;&#47141; &#47784;&#45768;&#53552;&#47553;</li>
+                        <li>&#55137;&#51077; &#54060; &#49345;&#53468; &#48516;&#49437;</li>
+                        <li>&#45909;&#53944; &#47561;&#55192; &#44048;&#51648;</li>
+                        <li>&#50640;&#45320;&#51648; &#54952;&#50984; &#48516;&#49437;</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">&#128200;</span>
+                &#54532;&#47196;&#51229;&#53944; &#51228;&#50504;
+            </h2>
+
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">&#54532;&#47196;&#51229;&#53944; 1: &#48120;&#48516;&#49604;&#44592; &#50696;&#51648;&#51221;&#48708; &#49884;&#49828;&#53596;</div>
+                    <div class="project-badge">3,600&#47564;&#50896;</div>
+                </div>
+                <p><strong>&#45824;&#49345;&#49444;&#48708;:</strong> &#50640;&#50612;-&#51228;&#53944; &#48128; 3&#45824;, &#53552;&#48372; &#48128; 4&#45824;, &#47560;&#51060;&#53356;&#47196;-&#51228;&#53944; &#48128; 2&#45824;</p>
+                <p><strong>&#47784;&#45768;&#53552;&#47553;:</strong> &#47196;&#53552;&#51652;&#46041;, &#48288;&#50612;&#47553;&#50728;&#46020;, &#48516;&#49604;&#51204;&#47448;, &#50517;&#52629;&#44277;&#44592;&#50517;&#47141;, &#52376;&#47532;&#47049;</p>
+                <div class="project-details">
+                    <div class="detail-item">
+                        <div class="detail-label">&#49468;&#49436; &#44396;&#49457;</div>
+                        <div class="detail-value">&#51652;&#46041;18EA, &#50728;&#46020;18EA, &#51204;&#47448;9EA, &#50517;&#47141;6EA</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50696;&#49345; &#54952;&#44284;</div>
+                        <div class="detail-value">&#48288;&#50612;&#47553;&#49688;&#47749; 30%&#8593;, &#48708;&#44228;&#54925;&#51221;&#51648; 60%&#8595;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50672;&#44036; &#51208;&#44048;</div>
+                        <div class="detail-value">2,800&#47564;&#50896;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">ROI</div>
+                        <div class="detail-value">77.8%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">&#54532;&#47196;&#51229;&#53944; 2: &#54028;&#49604;&#44592; &#50696;&#51648;&#51221;&#48708; &#49884;&#49828;&#53596;</div>
+                    <div class="project-badge">3,200&#47564;&#50896;</div>
+                </div>
+                <p><strong>&#45824;&#49345;&#49444;&#48708;:</strong> &#49800;&#47112;&#45908; 5&#45824;, &#51076;&#54169;&#53944; &#53356;&#47084;&#49492; 3&#45824;</p>
+                <p><strong>&#47784;&#45768;&#53552;&#47553;:</strong> &#44396;&#46041;&#47784;&#53552;&#51652;&#46041;, &#52860;&#45216;&#47560;&#47784;, &#50976;&#50517;&#50517;&#47141;, &#51204;&#47448;&#54056;&#53556;</p>
+                <div class="project-details">
+                    <div class="detail-item">
+                        <div class="detail-label">&#49468;&#49436; &#44396;&#49457;</div>
+                        <div class="detail-value">&#51652;&#46041;16EA, &#50728;&#46020;16EA, &#51204;&#47448;8EA, &#50976;&#50517;5EA</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50696;&#49345; &#54952;&#44284;</div>
+                        <div class="detail-value">&#52860;&#45216;&#49688;&#47749; &#50696;&#52769;, &#48708;&#44228;&#54925;&#51221;&#51648; 50%&#8595;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50672;&#44036; &#51208;&#44048;</div>
+                        <div class="detail-value">2,500&#47564;&#50896;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">ROI</div>
+                        <div class="detail-value">78.1%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">&#54532;&#47196;&#51229;&#53944; 3: &#54844;&#54633;/&#49440;&#48324; &#49444;&#48708; &#47784;&#45768;&#53552;&#47553;</div>
+                    <div class="project-badge">2,800&#47564;&#50896;</div>
+                </div>
+                <p><strong>&#45824;&#49345;&#49444;&#48708;:</strong> &#47532;&#48376; &#48121;&#49436; 4&#45824;, &#51652;&#46041;&#49828;&#53356;&#47536; 6&#45824;, &#51088;&#47141;&#49440;&#48324;&#44592; 2&#45824;</p>
+                <p><strong>&#47784;&#45768;&#53552;&#47553;:</strong> &#47784;&#53552;&#51652;&#46041;, &#48288;&#50612;&#47553;&#50728;&#46020;, &#54844;&#54633;&#44512;&#51068;&#46020;, &#51652;&#46041;&#54056;&#53556;</p>
+                <div class="project-details">
+                    <div class="detail-item">
+                        <div class="detail-label">&#49468;&#49436; &#44396;&#49457;</div>
+                        <div class="detail-value">&#51652;&#46041;24EA, &#50728;&#46020;18EA, &#51204;&#47448;12EA</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50696;&#49345; &#54952;&#44284;</div>
+                        <div class="detail-value">&#54844;&#54633; &#54408;&#51656;&#8593;, &#49828;&#53356;&#47536; &#47561;&#55192; &#50696;&#52769;, &#49444;&#48708;&#49688;&#47749; 25%&#8593;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50672;&#44036; &#51208;&#44048;</div>
+                        <div class="detail-value">2,100&#47564;&#50896;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">ROI</div>
+                        <div class="detail-value">75.0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">&#54532;&#47196;&#51229;&#53944; 4: &#51665;&#51652;/&#54872;&#44221; &#49884;&#49828;&#53596; &#47784;&#45768;&#53552;&#47553;</div>
+                    <div class="project-badge">2,600&#47564;&#50896;</div>
+                </div>
+                <p><strong>&#45824;&#49345;&#49444;&#48708;:</strong> &#48177;&#54596;&#53552; 6&#45824;, &#49324;&#51060;&#53364;&#47200; 4&#45824;, &#55137;&#51077;&#54060; 10&#45824;</p>
+                <p><strong>&#47784;&#45768;&#53552;&#47553;:</strong> &#52264;&#50517;, &#48516;&#51652;&#45453;&#46020;, &#54060;&#51652;&#46041;, &#50728;&#46020;</p>
+                <div class="project-details">
+                    <div class="detail-item">
+                        <div class="detail-label">&#49468;&#49436; &#44396;&#49457;</div>
+                        <div class="detail-value">&#52264;&#50517;10EA, &#48516;&#51652;6EA, &#51652;&#46041;10EA, &#50728;&#46020;10EA</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50696;&#49345; &#54952;&#44284;</div>
+                        <div class="detail-value">&#54596;&#53552; &#44368;&#52404; &#52572;&#51201;&#54868;, &#48516;&#51652;&#54253;&#48156; &#51312;&#44592;&#44221;&#48372;, &#50640;&#45320;&#51648; 15%&#8593;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50672;&#44036; &#51208;&#44048;</div>
+                        <div class="detail-value">2,000&#47564;&#50896;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">ROI</div>
+                        <div class="detail-value">76.9%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">&#54532;&#47196;&#51229;&#53944; 5: &#48516;&#49604; &#54408;&#51656; &#49892;&#49884;&#44036; &#47784;&#45768;&#53552;&#47553;</div>
+                    <div class="project-badge">3,400&#47564;&#50896;</div>
+                </div>
+                <p><strong>&#45824;&#49345;&#48276;&#50948;:</strong> &#51452;&#50836; &#48516;&#49604;&#44592; &#52636;&#44396;&#52769; &#48516;&#49604;&#46020;(&#51077;&#46020;) &#49892;&#49884;&#44036; &#52769;&#51221;</p>
+                <p><strong>&#47784;&#45768;&#53552;&#47553;:</strong> &#51077;&#46020;&#48516;&#54252;, &#52376;&#47532;&#47049;, &#48516;&#49604; &#50640;&#45320;&#51648; &#54952;&#50984;</p>
+                <div class="project-details">
+                    <div class="detail-item">
+                        <div class="detail-label">&#49468;&#49436; &#44396;&#49457;</div>
+                        <div class="detail-value">&#51077;&#46020;&#48516;&#49437;&#49468;&#49436;5EA, &#50976;&#47049;&#44228;5EA, &#51204;&#47141;&#44228;5EA</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50696;&#49345; &#54952;&#44284;</div>
+                        <div class="detail-value">&#54408;&#51656; &#54200;&#52264; 50%&#8595;, &#44284;&#48516;&#49604; &#48169;&#51648;&#47196; &#50640;&#45320;&#51648; 20%&#8595;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50672;&#44036; &#51208;&#44048;</div>
+                        <div class="detail-value">2,800&#47564;&#50896;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">ROI</div>
+                        <div class="detail-value">82.4%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">&#54532;&#47196;&#51229;&#53944; 6: &#53685;&#54633; &#45824;&#49884;&#48372;&#46300; &#48143; &#50640;&#45320;&#51648; &#44288;&#47532;</div>
+                    <div class="project-badge">2,600&#47564;&#50896;</div>
+                </div>
+                <p><strong>&#45824;&#49345;&#48276;&#50948;:</strong> &#48376;&#49324; + &#51064;&#52380;&#44277;&#51109; &#53685;&#54633; &#47784;&#45768;&#53552;&#47553;</p>
+                <p><strong>&#44592;&#45733;:</strong> &#49892;&#49884;&#44036; &#47784;&#45768;&#53552;&#47553;, &#50696;&#51648;&#51221;&#48708; &#50508;&#47548;, &#50640;&#45320;&#51648; &#48516;&#49437;, &#47532;&#54252;&#53944; &#51088;&#46041;&#49373;&#49457;</p>
+                <div class="project-details">
+                    <div class="detail-item">
+                        <div class="detail-label">&#44396;&#49457;</div>
+                        <div class="detail-value">&#53685;&#54633;&#49436;&#48260;, &#45824;&#49884;&#48372;&#46300; SW, &#47784;&#48148;&#51068; &#50545;, &#50508;&#47548; &#49884;&#49828;&#53596;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50696;&#49345; &#54952;&#44284;</div>
+                        <div class="detail-value">2&#44060; &#49324;&#50629;&#51109; &#53685;&#54633;&#44288;&#47532;, &#51221;&#48708;&#54952;&#50984; 50%&#8593;, &#50640;&#45320;&#51648; 15%&#8595;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">&#50672;&#44036; &#51208;&#44048;</div>
+                        <div class="detail-value">2,000&#47564;&#50896;</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">ROI</div>
+                        <div class="detail-value">76.9%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investment Summary -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">&#128176;</span>
+                &#53804;&#51088; &#54952;&#44284; &#48516;&#49437;
+            </h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">18,200</div>
+                    <div class="stat-label">&#52509; &#53804;&#51088;&#48708;&#50857; (&#47564;&#50896;)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">14,200</div>
+                    <div class="stat-label">&#50672;&#44036; &#51208;&#44048;&#54952;&#44284; (&#47564;&#50896;)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">78.0%</div>
+                    <div class="stat-label">&#54217;&#44512; ROI</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">15.4</div>
+                    <div class="stat-label">&#53804;&#51088; &#54924;&#49688;&#44592;&#44036; (&#44060;&#50900;)</div>
+                </div>
+            </div>
+
+            <!-- ROI Chart -->
+            <div class="roi-chart">
+                <h4 style="color: var(--primary); margin-bottom: 20px;">&#54532;&#47196;&#51229;&#53944;&#48324; ROI &#48708;&#44368;</h4>
+
+                <div class="roi-item">
+                    <div class="roi-label">&#48120;&#48516;&#49604;&#44592; &#50696;&#51648;&#51221;&#48708;</div>
+                    <div class="roi-bar-container">
+                        <div class="roi-bar" style="width: 77.8%;">77.8%</div>
+                    </div>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-label">&#54028;&#49604;&#44592; &#50696;&#51648;&#51221;&#48708;</div>
+                    <div class="roi-bar-container">
+                        <div class="roi-bar" style="width: 78.1%;">78.1%</div>
+                    </div>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-label">&#54844;&#54633;/&#49440;&#48324; &#49444;&#48708;</div>
+                    <div class="roi-bar-container">
+                        <div class="roi-bar" style="width: 75.0%;">75.0%</div>
+                    </div>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-label">&#51665;&#51652;/&#54872;&#44221; &#49884;&#49828;&#53596;</div>
+                    <div class="roi-bar-container">
+                        <div class="roi-bar" style="width: 76.9%;">76.9%</div>
+                    </div>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-label">&#48516;&#49604; &#54408;&#51656; &#47784;&#45768;&#53552;&#47553;</div>
+                    <div class="roi-bar-container">
+                        <div class="roi-bar" style="width: 82.4%;">82.4%</div>
+                    </div>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-label">&#53685;&#54633; &#45824;&#49884;&#48372;&#46300;</div>
+                    <div class="roi-bar-container">
+                        <div class="roi-bar" style="width: 76.9%;">76.9%</div>
+                    </div>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>&#54532;&#47196;&#51229;&#53944;</th>
+                        <th>&#53804;&#51088;&#48708;&#50857;</th>
+                        <th>&#50672;&#44036;&#51208;&#44048;</th>
+                        <th>ROI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&#48120;&#48516;&#49604;&#44592; &#50696;&#51648;&#51221;&#48708; &#49884;&#49828;&#53596;</td>
+                        <td>3,600&#47564;&#50896;</td>
+                        <td>2,800&#47564;&#50896;</td>
+                        <td><strong>77.8%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>&#54028;&#49604;&#44592; &#50696;&#51648;&#51221;&#48708; &#49884;&#49828;&#53596;</td>
+                        <td>3,200&#47564;&#50896;</td>
+                        <td>2,500&#47564;&#50896;</td>
+                        <td><strong>78.1%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>&#54844;&#54633;/&#49440;&#48324; &#49444;&#48708; &#47784;&#45768;&#53552;&#47553;</td>
+                        <td>2,800&#47564;&#50896;</td>
+                        <td>2,100&#47564;&#50896;</td>
+                        <td><strong>75.0%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>&#51665;&#51652;/&#54872;&#44221; &#49884;&#49828;&#53596; &#47784;&#45768;&#53552;&#47553;</td>
+                        <td>2,600&#47564;&#50896;</td>
+                        <td>2,000&#47564;&#50896;</td>
+                        <td><strong>76.9%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>&#48516;&#49604; &#54408;&#51656; &#49892;&#49884;&#44036; &#47784;&#45768;&#53552;&#47553;</td>
+                        <td>3,400&#47564;&#50896;</td>
+                        <td>2,800&#47564;&#50896;</td>
+                        <td><strong>82.4%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>&#53685;&#54633; &#45824;&#49884;&#48372;&#46300; &#48143; &#50640;&#45320;&#51648; &#44288;&#47532;</td>
+                        <td>2,600&#47564;&#50896;</td>
+                        <td>2,000&#47564;&#50896;</td>
+                        <td><strong>76.9%</strong></td>
+                    </tr>
+                    <tr style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9); font-weight: bold;">
+                        <td>&#54633;&#44228;</td>
+                        <td>18,200&#47564;&#50896;</td>
+                        <td>14,200&#47564;&#50896;</td>
+                        <td>78.0%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Expected Benefits -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">&#127775;</span>
+                &#44592;&#45824; &#54952;&#44284;
+            </h2>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h4>&#128295; &#48516;&#52404; &#49444;&#48708; &#50504;&#51221;&#49457; &#54869;&#48372;</h4>
+                    <ul>
+                        <li>&#44256;&#49549; &#54924;&#51204;&#52404; &#49345;&#53468; &#49892;&#49884;&#44036; &#54028;&#50501;</li>
+                        <li>&#48708;&#44228;&#54925; &#51221;&#51648; &#45824;&#54253; &#44048;&#49548;</li>
+                        <li>&#48516;&#49604;&#45216;/&#46972;&#51060;&#45320; &#47560;&#47784; &#50696;&#52769; &#44288;&#47532;</li>
+                    </ul>
+                </div>
+                <div class="benefit-card">
+                    <h4>&#9889; &#48516;&#49604; &#54408;&#51656; &#44221;&#51137;&#47141; &#44053;&#54868;</h4>
+                    <ul>
+                        <li>&#48516;&#49604;&#46020; &#49892;&#49884;&#44036; &#47784;&#45768;&#53552;&#47553;</li>
+                        <li>&#54408;&#51656; &#54200;&#52264; &#52572;&#49548;&#54868;</li>
+                        <li>&#44284;&#48516;&#49604; &#48169;&#51648;&#47196; &#50640;&#45320;&#51648; &#54952;&#50984; &#54693;&#49345;</li>
+                    </ul>
+                </div>
+                <div class="benefit-card">
+                    <h4>&#127973; HACCP/GMP &#45824;&#51025; &#44053;&#54868;</h4>
+                    <ul>
+                        <li>&#49444;&#48708; &#49345;&#53468; &#45936;&#51060;&#53552; &#44592;&#47197;/&#48372;&#44288;</li>
+                        <li>&#51060;&#47141; &#52628;&#51201; &#44032;&#45733;</li>
+                        <li>&#54408;&#51656; &#44288;&#47532; &#47928;&#49436;&#54868; &#51088;&#46041;&#54868;</li>
+                    </ul>
+                </div>
+                <div class="benefit-card">
+                    <h4>&#9888; &#50504;&#51204; &#54872;&#44221; &#44053;&#54868;</h4>
+                    <ul>
+                        <li>&#51665;&#51652; &#49884;&#49828;&#53596; &#49892;&#49884;&#44036; &#47784;&#45768;&#53552;&#47553;</li>
+                        <li>&#48516;&#51652;&#54253;&#48156; &#50948;&#54744; &#51312;&#44592; &#44221;&#48372;</li>
+                        <li>&#51089;&#50629; &#54872;&#44221; &#44060;&#49440;</li>
+                    </ul>
+                </div>
+                <div class="benefit-card">
+                    <h4>&#128161; &#50640;&#45320;&#51648; &#54952;&#50984; &#52572;&#51201;&#54868;</h4>
+                    <ul>
+                        <li>&#48516;&#49604; &#50640;&#45320;&#51648; &#54952;&#50984; &#48516;&#49437;</li>
+                        <li>&#52572;&#51201; &#50868;&#51204; &#51312;&#44148; &#46020;&#52636;</li>
+                        <li>&#50640;&#45320;&#51648; &#48708;&#50857; 15~20% &#51208;&#44048;</li>
+                    </ul>
+                </div>
+                <div class="benefit-card">
+                    <h4>&#128200; &#44032;&#46041;&#47456; &#54693;&#49345;</h4>
+                    <ul>
+                        <li>&#49444;&#48708; &#44032;&#46041;&#47456; 75~80% &#8594; 90% &#51060;&#49345;</li>
+                        <li>&#48708;&#44228;&#54925; &#51221;&#51648; &#50900; 2~3&#54924; &#8594; 0.5&#54924; &#48120;&#47564;</li>
+                        <li>&#48516;&#49604; &#54408;&#51656; &#54200;&#52264; 10~15% &#8594; 5% &#48120;&#47564;</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">&#128197;</span>
+                &#52628;&#51652; &#51068;&#51221;
+            </h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-phase">1&#45800;&#44228;: 1~2&#44060;&#50900;</div>
+                    <div class="timeline-content">&#48120;&#48516;&#49604;&#44592; &#50696;&#51648;&#51221;&#48708; &#49884;&#49828;&#53596; &#44396;&#52629;</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-phase">2&#45800;&#44228;: 3~4&#44060;&#50900;</div>
+                    <div class="timeline-content">&#54028;&#49604;&#44592; &#50696;&#51648;&#51221;&#48708; &#49884;&#49828;&#53596; &#44396;&#52629;</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-phase">3&#45800;&#44228;: 5~6&#44060;&#50900;</div>
+                    <div class="timeline-content">&#54844;&#54633;/&#49440;&#48324; &#49444;&#48708; &#47784;&#45768;&#53552;&#47553; &#44396;&#52629;</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-phase">4&#45800;&#44228;: 7~8&#44060;&#50900;</div>
+                    <div class="timeline-content">&#51665;&#51652;/&#54872;&#44221; &#49884;&#49828;&#53596; &#47784;&#45768;&#53552;&#47553; &#44396;&#52629;</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-phase">5&#45800;&#44228;: 9~10&#44060;&#50900;</div>
+                    <div class="timeline-content">&#48516;&#49604; &#54408;&#51656; &#49892;&#49884;&#44036; &#47784;&#45768;&#53552;&#47553; &#44396;&#52629;</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-phase">6&#45800;&#44228;: 11~12&#44060;&#50900;</div>
+                    <div class="timeline-content">&#53685;&#54633; &#45824;&#49884;&#48372;&#46300; &#48143; &#49884;&#49828;&#53596; &#52572;&#51201;&#54868;</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UTTEC Introduction -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="icon">&#127970;</span>
+                UTTEC &#49548;&#44060;
+            </h2>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>&#54924;&#49324; &#44060;&#50836;</h4>
+                    <p>UTTEC&#51008; &#49328;&#50629;&#50857; IoT &#48143; &#50696;&#51648;&#51221;&#48708; &#49556;&#47336;&#49496; &#51204;&#47928; &#44592;&#50629;&#51004;&#47196;, 40&#45380; &#51060;&#49345;&#51032; &#51076;&#48288;&#46356;&#46300; &#49884;&#49828;&#53596; &#44060;&#48156; &#44221;&#54744;&#51012; &#48372;&#50976;&#54620; &#51204;&#47928;&#44032;&#46308;&#51060; &#47784;&#51064; &#44592;&#50629;&#51077;&#45768;&#45796;.</p>
+                </div>
+                <div class="info-card">
+                    <h4>&#54645;&#49900; &#50669;&#47049;</h4>
+                    <p><strong>Edge AI &#44592;&#49696;:</strong> &#54788;&#51109; &#49444;&#48708;&#50640;&#49436; &#49892;&#49884;&#44036; &#48516;&#49437;<br>
+                    <strong>&#44256;&#49549; &#54924;&#51204;&#52404; &#51204;&#47928;&#49457;:</strong> &#48516;&#49604;&#44592;, &#53552;&#48712;, &#54156;&#54532; &#46321; &#54924;&#51204;&#44592;&#44228; &#47784;&#45768;&#53552;&#47553; &#44221;&#54744;<br>
+                    <strong>&#48516;&#51652; &#54872;&#44221; &#45824;&#51025;:</strong> &#48169;&#54253; &#46321;&#44553; &#49468;&#49436; &#48143; &#44172;&#51060;&#53944;&#50920;&#51060; &#51201;&#50857;<br>
+                    <strong>&#49885;&#54408;/&#51228;&#50557; &#44221;&#54744;:</strong> HACCP, GMP &#54872;&#44221; &#45824;&#51025; &#44221;&#54744;</p>
+                </div>
+                <div class="info-card">
+                    <h4>&#51452;&#50836; &#49892;&#51201;</h4>
+                    <p>&#8226; &#48516;&#49604;/&#54028;&#49604; &#49444;&#48708; &#50696;&#51648;&#51221;&#48708; &#49884;&#49828;&#53596;<br>
+                    &#8226; &#49885;&#54408;&#44277;&#51109; HACCP &#45824;&#51025; &#47784;&#45768;&#53552;&#47553;<br>
+                    &#8226; &#51665;&#51652; &#49884;&#49828;&#53596; &#49892;&#49884;&#44036; &#47784;&#45768;&#53552;&#47553;</p>
+                </div>
+                <div class="info-card">
+                    <h4>&#44592;&#49696; &#49828;&#53469;</h4>
+                    <p><strong>MCU/CPU:</strong> ARM Cortex, AVR, DSP<br>
+                    <strong>&#53685;&#49888;:</strong> BLE, WiFi, LoRaWAN, Modbus, MQTT<br>
+                    <strong>AI:</strong> Edge AI, &#51060;&#49345;&#53456;&#51648;, RUL &#50696;&#52769;</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="contact-section">
+            <h3>&#47928;&#51032; &#48143; &#49345;&#45812;</h3>
+            <p>&#48516;&#52404; &#49444;&#48708;&#51032; &#49828;&#47560;&#53944;&#54868;&#50640; &#45824;&#54644; &#49345;&#45812;&#54644; &#46300;&#47549;&#45768;&#45796;</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-label">&#45812;&#45817;&#51088;</div>
+                    <div class="contact-value">&#54861; &#44305;&#49340;</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">&#51060;&#47700;&#51068;</div>
+                    <div class="contact-value">uttec@uttec.co.kr</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">&#50672;&#46973;&#52376;</div>
+                    <div class="contact-value">010-3922-1809</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; padding: 40px; color: var(--gray);">
+            <p><strong>UTTEC</strong> - &#49444;&#48708;&#51032; &#48120;&#47000;&#47484; &#50696;&#52769;&#54633;&#45768;&#45796;</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">&#169; 2026 UTTEC. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
