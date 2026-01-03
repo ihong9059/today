@@ -1,5 +1,11 @@
-한국분체기계_분체플랜트_예지정비_제안서.html 에서 '&#10003' 이라는 문자가 다른 문자열과 겹쳐서 보입니다.
-이러한 현상이 다른 html에도 전반적으로 있는것같은데, 공장자동화내의 전체 html file을 검토하여 수정해주세요.
-우선 최근 만든, 대명기업_스마트솔루션_제안서.html을 수정해 주세요.
+GLM 4.7, Kimi K2, Deepseek V3.2, MiniMax M2.1
+
+SKILLS
+https://www.youtube.com/watch?v=MDAfjhFC9E4
 
 
+marketPlace
+https://www.youtube.com/watch?v=TeR-MRKs7f8
+
+skill
+https://www.youtube.com/watch?v=wKIQbRMZ4Cs
