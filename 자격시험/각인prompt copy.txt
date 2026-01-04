@@ -1,0 +1,47 @@
+자격시험 가이드 웹사이트에 새로운 분야를 추가해주세요.
+
+## 프로젝트 정보
+- EC2: 3.36.91.83
+- SSH: ssh -i ~/.ssh/uttec-first-ec2.pem ec2-user@3.36.91.83
+- 경로: /home/ec2-user/cert-guide/
+- URL: https://uttec-cert.duckdns.org
+
+## 작업할 분야
+- 분야명: 교육
+- 카테고리 ID: educatioon
+
+## 작업 패턴
+기존 "화학·환경(chemistry)" 분야와 동일한 패턴으로 작업해주세요:
+- C:\todo\today\자격시험\{category-id}\ 폴더에 파일 생성
+- 각 자격증별 main-page.tsx, exam-page.tsx, study/*.tsx 생성
+- study 페이지는 "기계기사 패턴" 사용:
+  - expandedTopics 상태로 토픽 아코디언
+  - 정답 즉시 표시 (정답 보기 버튼 없음)
+  - Claude, ChatGPT, Gemini 3개 AI 버튼 항상 표시
+  - localStorage 기반 진행률 저장
+
+## 완료 후
+1. EC2에 파일 복사: scp -i ~/.ssh/uttec-first-ec2.pem -r /c/todo/today/자격시험/{category-id} ec2-user@3.36.91.83:/home/ec2-user/cert-guide/app/category/
+2. page.tsx 파일 생성 (Next.js 라우팅용)
+3. npm run build && pm2 restart cert-guide
+4. 홈페이지(app/page.tsx)에 해당 분야 활성화
+
+
+개선된 prompt 예시:
+
+  C:\todo\today\자격시험\education 폴더에 teacher-certificate 생성
+
+  필수 폴더 구조:
+  teacher-certificate/
+  ├── page.tsx              → export { default } from './main-page';
+  ├── main-page.tsx         → 메인 페이지
+  ├── exam/
+  │   └── page.tsx          → export { default } from '../exam-page';
+  ├── exam-page.tsx         → 시험정보 페이지
+  └── study/
+      ├── education-theory/
+      │   ├── page.tsx      → export { default } from './study-page';
+      │   └── study-page.tsx
+      └── (다른 과목들도 동일 구조)
+
+  참고 파일: C:\...\mechanical\mechanical-engineer\ 구조 그대로 따라할 것

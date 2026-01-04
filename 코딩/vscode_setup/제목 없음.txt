@@ -9,3 +9,13 @@ https://www.youtube.com/watch?v=TeR-MRKs7f8
 
 skill
 https://www.youtube.com/watch?v=wKIQbRMZ4Cs
+
+custom skill
+https://youtu.be/vqLONWXfMsI
+
+https://www.youtube.com/watch?v=1sKDSatKP58
+
+
+skill GitHub 
+
+https://github.com/anthropics/skills.git

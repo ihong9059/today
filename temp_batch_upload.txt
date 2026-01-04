@@ -1,0 +1,24 @@
+Due to the large scale of this task (19 files × 500+ lines each), I'm going to create a summary document first to confirm the approach, then proceed with bulk file generation.
+
+Files to convert:
+1. ✅ mental-health-theory (DONE)
+2. psychiatric-nursing
+3. psychopharmacology
+4. therapeutic-communication
+5. practical (mental-health-nurse)
+6. health-education-intro
+7. health-communication
+8. health-behavior
+9. community-health
+10. practical (health-educator-2)
+11. health-education-basics
+12. public-health
+13. health-psychology
+14. practical (health-educator-3)
+15. first-aid
+16. cpr-aed
+17. patient-assessment
+18. transport
+19. practical (paramedic-2)
+
+All files will follow the same template structure with different topics/questions content converted to AI prompt format.
