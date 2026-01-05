@@ -1,0 +1,210 @@
+# 정보처리기사 페이지 개선 작업 프롬프트
+
+## 작업 개요
+정보처리기사 페이지를 기계기사 패턴으로 개선하는 작업입니다.
+
+---
+
+## 참조 파일 (기계기사 - 목표 패턴)
+
+EC2 서버 위치:
+- 메인 페이지: ~/cert-guide/app/category/mechanical/mechanical-engineer/page.tsx (389줄)
+- 시험 상세: ~/cert-guide/app/category/mechanical/mechanical-engineer/exam/page.tsx (549줄)
+- 과목별 학습: ~/cert-guide/app/category/mechanical/mechanical-engineer/study/mechanics/page.tsx (446줄)
+
+웹 URL:
+- https://uttec-cert.duckdns.org/category/mechanical/mechanical-engineer
+- https://uttec-cert.duckdns.org/category/mechanical/mechanical-engineer/exam
+- https://uttec-cert.duckdns.org/category/mechanical/mechanical-engineer/study/mechanics
+
+---
+
+## 작업 1: 정보처리기사 메인 페이지 재작성
+
+### 프롬프트
+
+```
+정보처리기사 메인 페이지를 기계기사 패턴으로 재작성해주세요.
+
+참조 파일:
+- EC2: ~/cert-guide/app/category/mechanical/mechanical-engineer/page.tsx
+- URL: https://uttec-cert.duckdns.org/category/mechanical/mechanical-engineer
+
+대상 파일:
+- EC2: ~/cert-guide/app/category/it/information-processor/page.tsx
+- URL: https://uttec-cert.duckdns.org/category/it/information-processor
+
+필수 포함 섹션 (11개):
+1. 히어로 섹션 - 자격명, 난이도(★★★☆☆), 연간 응시자(약 15만명), 합격률(필기 40%, 실기 50%)
+2. 빠른 정보 카드 - 필기(객관식 100문항 2시간 30분), 실기(필답형 3시간), 응시료(필기 19,400원, 실기 22,600원), 주관(한국산업인력공단)
+3. 자격 개요 - 정의, 주요 업무, 취업 분야(SI, 금융IT, 공기업, 대기업 전산직)
+4. 필기시험 과목 상세:
+   - 1과목: 소프트웨어 설계 (20문항)
+   - 2과목: 소프트웨어 개발 (20문항)
+   - 3과목: 데이터베이스 구축 (20문항)
+   - 4과목: 프로그래밍 언어 활용 (20문항)
+   - 5과목: 정보시스템 구축관리 (20문항)
+5. 실기시험 구성 - 정보처리 실무 (필답형, 서술/약술/단답)
+6. 추천 공부 순서 - 비전공자 3개월 / 전공자 1.5개월 가이드
+7. AI 학습 도우미 - Claude AI 질문 예시
+8. 2026년 시험일정 (1~3회차, 정기기사)
+9. 과목별 목표점수 가이드
+10. 연계 자격증 - 정보보안기사, 빅데이터분석기사, 네트워크관리사
+11. 추천 교재/인강
+
+카테고리 경로: /category/it
+자격증 슬러그: information-processor
+아이콘: 💻
+색상 테마: from-indigo-600 to-purple-500
+```
+
+---
+
+## 작업 2: exam 페이지 상세화
+
+### 프롬프트
+
+```
+정보처리기사 exam 페이지를 기계기사 패턴으로 상세화해주세요.
+
+참조 파일:
+- EC2: ~/cert-guide/app/category/mechanical/mechanical-engineer/exam/page.tsx (549줄)
+
+대상 파일:
+- EC2: ~/cert-guide/app/category/it/information-processor/exam/page.tsx
+
+필수 구성:
+1. 필기/실기 탭 네비게이션
+2. 필기시험 섹션:
+   - 5과목별 상세 정보 (출제 비중, 핵심 토픽, 난이도, 합격률)
+   - 1과목: 소프트웨어 설계 - 요구사항분석, UML, UI설계, 소프트웨어 아키텍처
+   - 2과목: 소프트웨어 개발 - 자료구조, 알고리즘, 인터페이스 구현, 테스트
+   - 3과목: 데이터베이스 구축 - SQL, 정규화, 트랜잭션, 데이터모델링
+   - 4과목: 프로그래밍 언어 - C, Java, Python 문법, 라이브러리
+   - 5과목: 정보시스템 구축관리 - 네트워크, 보안, SW공학, 프로젝트관리
+3. 실기시험 섹션:
+   - 정보처리 실무 (필답형)
+   - 프로그래밍 언어 활용 (C, Java, Python 코드 실행 결과)
+   - SQL 작성
+   - 화면설계, 요구사항 분석
+4. 각 과목별 "학습하기" 버튼 → /study/[과목] 링크
+5. 출제 경향 분석 및 합격 전략
+```
+
+---
+
+## 작업 3: 과목별 문항 100개 확충
+
+### 프롬프트 (소프트웨어 설계 예시)
+
+```
+정보처리기사 소프트웨어 설계 과목의 문항을 100개로 확충해주세요.
+
+참조 파일:
+- EC2: ~/cert-guide/app/category/mechanical/mechanical-engineer/study/mechanics/page.tsx
+
+대상 파일:
+- EC2: ~/cert-guide/app/category/it/information-processor/study/software-design/page.tsx
+
+현재 문항: 10개
+목표 문항: 100개
+
+토픽별 문항 배분:
+1. 요구사항 분석 (15문항) - 요구공학, 기능/비기능 요구사항, 명세서
+2. UML (20문항) - 클래스, 시퀀스, 유스케이스, 상태, 활동 다이어그램
+3. UI 설계 (15문항) - UI 원칙, 와이어프레임, 프로토타입, 사용성
+4. 소프트웨어 아키텍처 (20문항) - MVC, 레이어드, 마이크로서비스, 디자인패턴
+5. 객체지향 설계 (15문항) - SOLID, 캡슐화, 상속, 다형성
+6. 인터페이스 설계 (15문항) - API, 데이터 인터페이스, 연계 방식
+
+문항 형식 (기계기사 패턴):
+{
+  id: 번호,
+  question: "문제 내용",
+  answer: "간단 답 (한 줄)",
+  prompt: `정보처리기사 소프트웨어 설계 문제입니다.
+
+문제: [문제 내용]
+
+다음 순서로 설명해주세요:
+1. 핵심 개념 정리
+2. 상세 설명
+3. 적용 예시
+4. 관련 개념 연결
+5. 연습문제 3개`
+}
+
+각 토픽은 expandable 섹션으로 구성하고, 진행률 표시 기능 포함해주세요.
+```
+
+### 나머지 과목 프롬프트
+
+동일한 형식으로 다음 과목 진행:
+- software-development (소프트웨어 개발) - 100문항
+- database (데이터베이스 구축) - 100문항
+- programming (프로그래밍 언어 활용) - 100문항
+- system-management (정보시스템 구축관리) - 100문항 [신규 생성]
+- practical (실기) - 40문항
+
+---
+
+## 작업 4: system-management 폴더 신규 생성
+
+### 프롬프트
+
+```
+정보처리기사 5과목 '정보시스템 구축관리' 학습 페이지를 새로 생성해주세요.
+
+생성 위치:
+- EC2: ~/cert-guide/app/category/it/information-processor/study/system-management/page.tsx
+
+참조 파일:
+- ~/cert-guide/app/category/mechanical/mechanical-engineer/study/mechanics/page.tsx
+
+토픽 구성 (100문항):
+1. 소프트웨어 개발 방법론 (20문항) - 애자일, 워터폴, 스크럼, XP, 데브옵스
+2. IT 프로젝트 관리 (20문항) - WBS, 간트차트, PERT/CPM, 위험관리
+3. 소프트웨어 품질 (15문항) - ISO 25010, 테스트 기법, 품질 측정
+4. 정보보안 (25문항) - 암호화, 접근제어, 네트워크 보안, 취약점
+5. 네트워크 기초 (20문항) - OSI 7계층, TCP/IP, 프로토콜, 장비
+
+페이지 구조:
+- 헤더 (브레드크럼 네비게이션)
+- 진행률 표시
+- 토픽별 아코디언
+- 각 문항에 AI 버튼 (Claude API 연동)
+- localStorage 진행상황 저장
+```
+
+---
+
+## EC2 배포 명령어
+
+```bash
+# SSH 접속
+ssh -i "C:/todo/today/uttec-first-ec2.pem" ec2-user@uttec-cert.duckdns.org
+
+# 파일 업로드 (SCP)
+scp -i "C:/todo/today/uttec-first-ec2.pem" [로컬파일] ec2-user@uttec-cert.duckdns.org:~/cert-guide/app/category/it/information-processor/
+
+# 빌드 및 배포
+cd ~/cert-guide && npm run build && pm2 restart cert-guide
+
+# 빌드 확인
+pm2 logs cert-guide --lines 50
+```
+
+---
+
+## 작업 완료 체크리스트
+
+- [ ] 메인 페이지 재작성 (page.tsx → 390줄)
+- [ ] exam 페이지 상세화 (exam/page.tsx → 549줄)
+- [ ] 소프트웨어 설계 100문항
+- [ ] 소프트웨어 개발 100문항
+- [ ] 데이터베이스 구축 100문항
+- [ ] 프로그래밍 언어 활용 100문항
+- [ ] 정보시스템 구축관리 100문항 (신규)
+- [ ] 실기 40문항
+- [ ] EC2 빌드 및 배포
+- [ ] 웹사이트 동작 확인

@@ -1,0 +1,465 @@
+# 전체 자격증 페이지 개선 작업 프롬프트
+
+## 작업 개요
+전체 177개 자격증 페이지를 기계기사 패턴으로 개선하는 작업입니다.
+현재 상세화 완료: 6개 (3.4%) → 목표: 177개 (100%)
+
+---
+
+## 목표 패턴 (기계기사)
+
+### 폴더 구조
+```
+[category]/[certificate-slug]/
+├── page.tsx (390줄) - 메인 페이지
+├── exam/
+│   └── page.tsx (549줄) - 시험 상세
+└── study/
+    ├── [subject1]/page.tsx (446줄, 100문항)
+    ├── [subject2]/page.tsx (446줄, 100문항)
+    ├── [subject3]/page.tsx (446줄, 100문항)
+    ├── [subject4]/page.tsx (446줄, 100문항)
+    ├── [subject5]/page.tsx (446줄, 100문항) - 있는 경우
+    └── practical/page.tsx (40문항) - 실기
+```
+
+### 문항 수 기준
+| 구분 | 최소 | 권장 |
+|------|------|------|
+| 필기 과목당 | 100문항 | 150문항 |
+| 실기 | 40문항 | 60문항 |
+
+### 참조 파일 (EC2)
+- 메인: ~/cert-guide/app/category/mechanical/mechanical-engineer/page.tsx
+- 시험: ~/cert-guide/app/category/mechanical/mechanical-engineer/exam/page.tsx
+- 학습: ~/cert-guide/app/category/mechanical/mechanical-engineer/study/mechanics/page.tsx
+
+---
+
+## 전체 자격증 현황 (21개 카테고리, 177개 자격증)
+
+### 1. IT·정보통신 (it) - 6개
+| 자격증 | 슬러그 | 상태 |
+|--------|--------|------|
+| 정보처리기사 | information-processor | 개선 필요 |
+| 정보보안기사 | information-security | 개선 필요 |
+| 전자계산기조직응용기사 | computer-organization | 개선 필요 |
+| 컴퓨터시스템응용기술사 | computer-system-pro | 개선 필요 |
+| 정보관리기술사 | information-management-pro | 개선 필요 |
+| 네트워크관리사 | network-admin | ✅ 완료 |
+
+### 2. 기계·제어 (mechanical) - 6개
+| 자격증 | 슬러그 | 상태 |
+|--------|--------|------|
+| 기계기사 | mechanical-engineer | ✅ 완료 (목표 패턴) |
+| 기계기능장 | mechanical-craftsman | ✅ 완료 |
+| 전기기사 | electric-engineer | ✅ 완료 |
+| 전기기능장 | electric-craftsman | ✅ 완료 |
+| 제어계측기사 | control-engineer | ✅ 완료 |
+| 용접기사 | welding-engineer | ✅ 완료 |
+
+### 3. 회계·세무 (accounting) - 11개
+| 자격증 | 슬러그 | 상태 |
+|--------|--------|------|
+| 공인회계사 | cpa | 개선 필요 |
+| 세무사 | tax-accountant | 개선 필요 |
+| 관세사 | customs-broker | 개선 필요 |
+| 전산회계 1급 | computerized-accounting-1 | 개선 필요 |
+| 전산회계 2급 | computerized-accounting-2 | 개선 필요 |
+| 전산세무 1급 | computerized-tax-1 | 개선 필요 |
+| 전산세무 2급 | computerized-tax-2 | 개선 필요 |
+| FAT 1급 | fat-1 | 개선 필요 |
+| FAT 2급 | fat-2 | 개선 필요 |
+| TAT 1급 | tat-1 | 개선 필요 |
+| TAT 2급 | tat-2 | 개선 필요 |
+
+### 4. 화학·환경 (chemistry) - 5개
+| 자격증 | 슬러그 | 상태 |
+|--------|--------|------|
+| 환경기사 | environmental-engineer | 개선 필요 |
+| 대기환경기사 | air-environment | 개선 필요 |
+| 수질환경기사 | water-environment | 개선 필요 |
+| 위험물산업기사 | hazardous-materials | 개선 필요 |
+| 화학분석기사 | chemical-analyst | 개선 필요 |
+
+### 5. 건설 (construction) - 5개
+| 자격증 | 슬러그 | 상태 |
+|--------|--------|------|
+| 건축기사 | architect-engineer | 개선 필요 |
+| 토목기사 | civil-engineer | 개선 필요 |
+| 건설안전기사 | construction-safety | 개선 필요 |
+| 실내건축기사 | interior-architect | 개선 필요 |
+| 측량및지형공간정보기사 | surveying-geo | 개선 필요 |
+
+### 6. 안전 (safety) - 8개
+| 자격증 | 슬러그 | 상태 |
+|--------|--------|------|
+| 산업안전기사 | industrial-safety | 개선 필요 |
+| 산업안전산업기사 | industrial-safety-technician | 개선 필요 |
+| 가스기사 | gas-engineer | 개선 필요 |
+| 가스산업기사 | gas-technician | 개선 필요 |
+| 위험물기능장 | hazardous-master | 개선 필요 |
+| 위험물산업기사 | hazardous-engineer | 개선 필요 |
+| 위험물기능사 | hazardous-technician | 개선 필요 |
+| 소방설비기사(기계) | fire-equipment-mechanical | 개선 필요 |
+
+### 7. 법률 (legal) - 4개
+| 자격증 | 슬러그 | 상태 |
+|--------|--------|------|
+| 감정평가사 | appraiser | 개선 필요 |
+| 법무사 | judicial-scrivener | 개선 필요 |
+| 공인노무사 | labor-attorney | 개선 필요 |
+| 변리사 | patent-attorney | 개선 필요 |
+
+### 8. 금융 (finance) - 7개
+| 자격증 | 슬러그 | 상태 |
+|--------|--------|------|
+| 공인재무설계사 | financial-planner | 개선 필요 |
+| 금융투자분석사 | securities-advisor | 개선 필요 |
+| 펀드투자권유대행인 | fund-advisor | 개선 필요 |
+| 파생상품투자권유자문인력 | derivatives-advisor | 개선 필요 |
+| 신용분석사 | credit-analyst | 개선 필요 |
+| 금융위험관리사 | financial-risk-manager | 개선 필요 |
+| 공인중개사 | real-estate-agent | 개선 필요 |
+
+### 9. 서비스 (service) - 17개
+| 자격증 | 슬러그 | 상태 |
+|--------|--------|------|
+| 한식조리기능사 | cook-korean | 개선 필요 |
+| 양식조리기능사 | cook-western | 개선 필요 |
+| 중식조리기능사 | cook-chinese | 개선 필요 |
+| 일식조리기능사 | cook-japanese | 개선 필요 |
+| 복어조리기능사 | cook-puffer | 개선 필요 |
+| 제과기능사 | pastry | 개선 필요 |
+| 제빵기능사 | bakery | 개선 필요 |
+| 미용사(일반) | beauty-general | 개선 필요 |
+| 미용사(피부) | beauty-skin | 개선 필요 |
+| 미용사(네일) | beauty-nail | 개선 필요 |
+| 미용사(메이크업) | beauty-makeup | 개선 필요 |
+| 이용사 | barber | 개선 필요 |
+| 호텔관리사 | hotel-manager | 개선 필요 |
+| 호텔서비스사 | hotel-service | 개선 필요 |
+| 관광통역안내사 | tour-guide | 개선 필요 |
+| 컨벤션기획사 1급 | convention-planner-1 | 개선 필요 |
+| 컨벤션기획사 2급 | convention-planner-2 | 개선 필요 |
+
+### 10. 기타 카테고리
+
+#### 복지 (welfare) - 13개
+- social-worker-1, social-worker-2
+- childcare-teacher-1, childcare-teacher-2
+- clinical-psychologist-1, clinical-psychologist-2
+- counseling-psychologist-1, counseling-psychologist-2
+- youth-counselor-1, youth-counselor-2, youth-counselor-3
+- career-counselor-1, career-counselor-2
+
+#### 디자인 (design) - 10개
+- visual-design-engineer, visual-design-technician
+- product-design-engineer, product-design-technician
+- colorist-engineer, colorist-technician
+- computer-graphics, web-design, gtq, gtqi
+
+#### 교육 (education) - 10개
+- teacher-certificate, kindergarten-teacher
+- librarian-teacher, social-worker
+- career-counselor, youth-counselor
+- youth-instructor-1, youth-instructor-2
+- lifelong-educator-1, lifelong-educator-2
+
+#### 농업 (agriculture) - 10개
+- seed-engineer, seed-technician
+- plant-protection-engineer, plant-protection-technician
+- livestock-engineer, livestock-technician
+- organic-farming-engineer, organic-farming-technician
+- agri-machine-engineer, agri-machine-technician
+
+#### 공무원 (civil) - 9개
+- civil-service-5, civil-service-7, civil-service-9
+- local-civil-7, local-civil-9
+- police-officer, firefighter
+- corrections-officer, military-civil
+
+#### 사무 (office) - 9개
+- office-automation
+- computer-skills-1, computer-skills-2
+- word-processor
+- secretary-1, secretary-2, secretary-3
+- ecommerce-1, ecommerce-2
+
+#### 무역 (trade) - 8개
+- international-trader, logistics-manager
+- distribution-manager-1, distribution-manager-2, distribution-manager-3
+- trade-english-1, trade-english-2, trade-english-3
+
+#### 의료 (medical) - 6개
+- paramedic-1, paramedic-2
+- health-educator-1, health-educator-2, health-educator-3
+- mental-health-nurse
+
+#### 보험 (insurance) - 5개
+- actuary, insurance-broker
+- loss-adjuster, damage-assessor
+- housing-manager
+
+#### 운전·물류 (driving) - 10개
+- driver-license-1-large, driver-license-1-normal, driver-license-1-special
+- driver-license-2-normal
+- forklift-license, crane-license, excavator-license
+- boat-license, yacht-license, pilot-license-private
+
+#### 전기 (electrical) - 0개 (카테고리만 존재)
+#### 전자 (electronic) - 0개 (카테고리만 존재)
+
+---
+
+## 우선순위 작업 순서
+
+### Phase 1: 핵심 IT 자격증 (5개)
+```
+1. 정보처리기사 (information-processor) - 가장 인기 있는 IT 자격증
+2. 정보보안기사 (information-security)
+3. 전자계산기조직응용기사 (computer-organization)
+4. 컴퓨터시스템응용기술사 (computer-system-pro)
+5. 정보관리기술사 (information-management-pro)
+```
+
+### Phase 2: 회계·세무 (11개)
+```
+1. 전산회계 1급/2급 - 응시자 많음
+2. 전산세무 1급/2급
+3. FAT/TAT 1급/2급
+4. 공인회계사, 세무사, 관세사
+```
+
+### Phase 3: 건설·안전 (13개)
+```
+건설 5개 + 안전 8개
+```
+
+### Phase 4: 서비스·조리 (17개)
+```
+조리 기능사 5종 + 제과제빵 + 미용 4종 + 기타
+```
+
+### Phase 5: 나머지 분야
+```
+법률, 금융, 복지, 디자인, 교육, 농업, 공무원, 사무, 무역, 의료, 보험, 운전
+```
+
+---
+
+## 통합 개선 프롬프트
+
+### 단일 자격증 개선 프롬프트
+
+```
+[자격증명] 페이지를 기계기사 패턴으로 개선해주세요.
+
+## 대상 정보
+- 카테고리: [category]
+- 슬러그: [slug]
+- 위치: ~/cert-guide/app/category/[category]/[slug]/
+
+## 참조 (기계기사 패턴)
+- 메인: ~/cert-guide/app/category/mechanical/mechanical-engineer/page.tsx (389줄)
+- 시험: ~/cert-guide/app/category/mechanical/mechanical-engineer/exam/page.tsx (549줄)
+- 학습: ~/cert-guide/app/category/mechanical/mechanical-engineer/study/mechanics/page.tsx (446줄)
+
+## 작업 내용
+
+### 1. 메인 페이지 재작성 (page.tsx → 390줄)
+필수 섹션:
+- 히어로 (자격명, 난이도, 응시자, 합격률)
+- 빠른 정보 카드 (시험형식, 응시료, 주관기관)
+- 자격 개요 (정의, 업무, 취업분야)
+- 필기시험 과목 상세
+- 실기시험 구성
+- 추천 공부 순서
+- AI 학습 도우미
+- 2026년 시험일정
+- 과목별 목표점수
+- 연계 자격증
+- 추천 교재/인강
+
+### 2. exam 페이지 상세화 (exam/page.tsx → 549줄)
+- 필기/실기 탭 구성
+- 과목별 출제 경향, 핵심 토픽
+- 학습하기 버튼 연결
+
+### 3. 과목별 학습 페이지 (study/[subject]/page.tsx)
+- 각 과목 100문항 이상
+- 실기 40문항 이상
+- AI 버튼 연동
+- 진행률 저장 (localStorage)
+
+## 시험 정보 (Q-Net 확인)
+- 필기: [과목수]과목, [문항수]문항, [시간]
+- 실기: [형식], [시간]
+- 응시료: 필기 [금액]원, 실기 [금액]원
+- 합격기준: [기준]
+```
+
+### 일괄 작업 프롬프트 (카테고리별)
+
+```
+[카테고리명] 분야의 모든 자격증을 기계기사 패턴으로 개선해주세요.
+
+## 대상 카테고리
+- 카테고리: [category]
+- 자격증 목록:
+  1. [자격증1] ([slug1])
+  2. [자격증2] ([slug2])
+  3. [자격증3] ([slug3])
+  ...
+
+## 참조 패턴
+~/cert-guide/app/category/mechanical/mechanical-engineer/
+
+## 작업 순서
+1. 각 자격증별 시험 정보 확인 (Q-Net)
+2. 메인 페이지 재작성 (390줄)
+3. exam 페이지 상세화 (549줄)
+4. 과목별 study 페이지 생성 (각 100문항)
+5. 실기 페이지 생성 (40문항)
+6. 배포 및 확인
+
+## 문항 기준
+- 필기 과목당: 100문항 이상
+- 실기: 40문항 이상
+```
+
+---
+
+## 배포 명령어
+
+```bash
+# SSH 접속
+ssh -i "C:/todo/today/uttec-first-ec2.pem" ec2-user@uttec-cert.duckdns.org
+
+# 파일 업로드 (SCP)
+scp -i "C:/todo/today/uttec-first-ec2.pem" -r [로컬폴더]/* ec2-user@uttec-cert.duckdns.org:~/cert-guide/app/category/[category]/[slug]/
+
+# 빌드 및 배포
+cd ~/cert-guide && npm run build && pm2 restart cert-guide
+
+# 확인
+curl -I https://uttec-cert.duckdns.org/category/[category]/[slug]
+```
+
+---
+
+## 진행 상황 체크리스트
+
+### IT·정보통신 (6개)
+- [x] network-admin (네트워크관리사)
+- [ ] information-processor (정보처리기사)
+- [ ] information-security (정보보안기사)
+- [ ] computer-organization (전자계산기조직응용기사)
+- [ ] computer-system-pro (컴퓨터시스템응용기술사)
+- [ ] information-management-pro (정보관리기술사)
+
+### 기계·제어 (6개)
+- [x] mechanical-engineer (기계기사) - 목표 패턴
+- [x] mechanical-craftsman (기계기능장)
+- [x] electric-engineer (전기기사)
+- [x] electric-craftsman (전기기능장)
+- [x] control-engineer (제어계측기사)
+- [x] welding-engineer (용접기사)
+
+### 회계·세무 (11개)
+- [ ] cpa (공인회계사)
+- [ ] tax-accountant (세무사)
+- [ ] customs-broker (관세사)
+- [ ] computerized-accounting-1 (전산회계 1급)
+- [ ] computerized-accounting-2 (전산회계 2급)
+- [ ] computerized-tax-1 (전산세무 1급)
+- [ ] computerized-tax-2 (전산세무 2급)
+- [ ] fat-1 (FAT 1급)
+- [ ] fat-2 (FAT 2급)
+- [ ] tat-1 (TAT 1급)
+- [ ] tat-2 (TAT 2급)
+
+### 화학·환경 (5개)
+- [ ] environmental-engineer (환경기사)
+- [ ] air-environment (대기환경기사)
+- [ ] water-environment (수질환경기사)
+- [ ] hazardous-materials (위험물산업기사)
+- [ ] chemical-analyst (화학분석기사)
+
+### 건설 (5개)
+- [ ] architect-engineer (건축기사)
+- [ ] civil-engineer (토목기사)
+- [ ] construction-safety (건설안전기사)
+- [ ] interior-architect (실내건축기사)
+- [ ] surveying-geo (측량및지형공간정보기사)
+
+### 안전 (8개)
+- [ ] industrial-safety (산업안전기사)
+- [ ] industrial-safety-technician (산업안전산업기사)
+- [ ] gas-engineer (가스기사)
+- [ ] gas-technician (가스산업기사)
+- [ ] hazardous-master (위험물기능장)
+- [ ] hazardous-engineer (위험물산업기사)
+- [ ] hazardous-technician (위험물기능사)
+- [ ] fire-equipment-mechanical (소방설비기사)
+
+### 법률 (4개)
+- [ ] appraiser (감정평가사)
+- [ ] judicial-scrivener (법무사)
+- [ ] labor-attorney (공인노무사)
+- [ ] patent-attorney (변리사)
+
+### 금융 (7개)
+- [ ] financial-planner (공인재무설계사)
+- [ ] securities-advisor (금융투자분석사)
+- [ ] fund-advisor (펀드투자권유대행인)
+- [ ] derivatives-advisor (파생상품투자권유자문인력)
+- [ ] credit-analyst (신용분석사)
+- [ ] financial-risk-manager (금융위험관리사)
+- [ ] real-estate-agent (공인중개사)
+
+### 서비스 (17개)
+- [ ] cook-korean, cook-western, cook-chinese, cook-japanese, cook-puffer
+- [ ] pastry, bakery
+- [ ] beauty-general, beauty-skin, beauty-nail, beauty-makeup
+- [ ] barber
+- [ ] hotel-manager, hotel-service
+- [ ] tour-guide
+- [ ] convention-planner-1, convention-planner-2
+
+### 기타 카테고리
+- [ ] welfare (13개)
+- [ ] design (10개)
+- [ ] education (10개)
+- [ ] agriculture (10개)
+- [ ] civil (9개)
+- [ ] office (9개)
+- [ ] trade (8개)
+- [ ] medical (6개)
+- [ ] insurance (5개)
+- [ ] driving (10개)
+
+---
+
+## 총 작업량 요약
+
+| 항목 | 수량 |
+|------|------|
+| 전체 자격증 | 177개 |
+| 상세화 완료 | 6개 (3.4%) |
+| 개선 필요 | 171개 (96.6%) |
+| 예상 생성 페이지 | ~1,000개 |
+| 예상 문항 수 | ~90,000문항 |
+
+---
+
+## 참고: EC2 서버 정보
+
+```
+인스턴스: t3.small (2코어, 1.9GB RAM)
+IP: 52.79.144.2
+도메인: uttec-cert.duckdns.org
+SSH: ssh -i ~/.ssh/uttec-first-ec2.pem ec2-user@52.79.144.2
+프로젝트: /home/ec2-user/cert-guide
+빌드시간: 약 7분 (791페이지 기준)
+```
