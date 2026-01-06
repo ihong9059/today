@@ -15,19 +15,19 @@
 ├── exam/
 │   └── page.tsx (549줄) - 시험 상세
 └── study/
-    ├── [subject1]/page.tsx (446줄, 100문항)
-    ├── [subject2]/page.tsx (446줄, 100문항)
-    ├── [subject3]/page.tsx (446줄, 100문항)
-    ├── [subject4]/page.tsx (446줄, 100문항)
-    ├── [subject5]/page.tsx (446줄, 100문항) - 있는 경우
-    └── practical/page.tsx (40문항) - 실기
+    ├── [subject1]/page.tsx (50문항)
+    ├── [subject2]/page.tsx (50문항)
+    ├── [subject3]/page.tsx (50문항)
+    ├── [subject4]/page.tsx (50문항)
+    ├── [subject5]/page.tsx (50문항) - 있는 경우
+    └── practical/page.tsx (25문항) - 실기
 ```
 
 ### 문항 수 기준
-| 구분 | 최소 | 권장 |
-|------|------|------|
-| 필기 과목당 | 100문항 | 150문항 |
-| 실기 | 40문항 | 60문항 |
+| 구분 | 기준 |
+|------|------|
+| 필기 과목당 | 50문항 |
+| 실기 | 25문항 |
 
 ### 참조 파일 (EC2)
 - 메인: ~/cert-guide/app/category/mechanical/mechanical-engineer/page.tsx
@@ -41,7 +41,7 @@
 ### 1. IT·정보통신 (it) - 6개
 | 자격증 | 슬러그 | 상태 |
 |--------|--------|------|
-| 정보처리기사 | information-processor | 개선 필요 |
+| 정보처리기사 | information-processor | ✅ 완료 (2026-01-06) |
 | 정보보안기사 | information-security | 개선 필요 |
 | 전자계산기조직응용기사 | computer-organization | 개선 필요 |
 | 컴퓨터시스템응용기술사 | computer-system-pro | 개선 필요 |
@@ -287,8 +287,8 @@
 - 학습하기 버튼 연결
 
 ### 3. 과목별 학습 페이지 (study/[subject]/page.tsx)
-- 각 과목 100문항 이상
-- 실기 40문항 이상
+- 각 과목 50문항
+- 실기 25문항
 - AI 버튼 연동
 - 진행률 저장 (localStorage)
 
@@ -319,13 +319,13 @@
 1. 각 자격증별 시험 정보 확인 (Q-Net)
 2. 메인 페이지 재작성 (390줄)
 3. exam 페이지 상세화 (549줄)
-4. 과목별 study 페이지 생성 (각 100문항)
-5. 실기 페이지 생성 (40문항)
+4. 과목별 study 페이지 생성 (각 50문항)
+5. 실기 페이지 생성 (25문항)
 6. 배포 및 확인
 
 ## 문항 기준
-- 필기 과목당: 100문항 이상
-- 실기: 40문항 이상
+- 필기 과목당: 50문항
+- 실기: 25문항
 ```
 
 ---
@@ -352,7 +352,7 @@ curl -I https://uttec-cert.duckdns.org/category/[category]/[slug]
 
 ### IT·정보통신 (6개)
 - [x] network-admin (네트워크관리사)
-- [ ] information-processor (정보처리기사)
+- [x] information-processor (정보처리기사) ✅ 2026-01-06 완료
 - [ ] information-security (정보보안기사)
 - [ ] computer-organization (전자계산기조직응용기사)
 - [ ] computer-system-pro (컴퓨터시스템응용기술사)
@@ -446,10 +446,10 @@ curl -I https://uttec-cert.duckdns.org/category/[category]/[slug]
 | 항목 | 수량 |
 |------|------|
 | 전체 자격증 | 177개 |
-| 상세화 완료 | 6개 (3.4%) |
-| 개선 필요 | 171개 (96.6%) |
+| 상세화 완료 | 7개 (4.0%) |
+| 개선 필요 | 170개 (96.0%) |
 | 예상 생성 페이지 | ~1,000개 |
-| 예상 문항 수 | ~90,000문항 |
+| 예상 문항 수 | ~50,000문항 (필기 50문항×5과목 + 실기 25문항) |
 
 ---
 
