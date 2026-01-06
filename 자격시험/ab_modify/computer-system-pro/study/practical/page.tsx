@@ -227,19 +227,7 @@ export default function PracticalPage() {
         </div>
       </div>
 
-      {showPrompt && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-6">
-            <div className="flex items-center justify-between mb-4"><h3 className="text-xl font-bold">🤖 AI 학습 도우미</h3><button onClick={() => setShowPrompt(false)} className="text-gray-400 hover:text-gray-600">✕</button></div>
-            <p className="text-gray-600 mb-4">아래 프롬프트를 복사하여 Claude에게 질문하세요.</p>
-            <div className="bg-gray-50 rounded-lg p-4 mb-4">
-              <code className="text-sm text-gray-800 whitespace-pre-wrap">컴퓨터시스템응용기술사 시험 대비로 다음 문제에 대한 모범 답안을 작성해주세요: {currentQ.q.substring(0, 200)}... 다음 형식으로 답안을 구성해주세요: 1. 서론 (개념 정의, 배경, 중요성) 2. 본론 (세부 내용, 비교 분석, 기술적 상세) 3. 결론 (요약, 발전 방향, 실무 적용) 도표나 다이어그램도 텍스트로 표현해주세요.</code>
-            </div>
-            <button onClick={() => { navigator.clipboard.writeText(`컴퓨터시스템응용기술사 시험 대비로 다음 문제에 대한 모범 답안을 작성해주세요:\n\n${currentQ.q}`); }}
-              className="w-full py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition">📋 프롬프트 복사</button>
-          </div>
-        </div>
-      )}
+      {showPrompt && (<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"><div className="bg-white rounded-xl max-w-md w-full"><div className="p-6"><div className="flex justify-between items-center mb-4"><h3 className="text-lg font-bold">🤖 AI 선택</h3><button onClick={() => setShowPrompt(false)} className="text-gray-500 hover:text-gray-700 text-xl">✕</button></div><p className="text-sm text-gray-500 mb-4">원하는 AI를 선택하세요:</p><div className="space-y-3"><a href={`https://claude.ai/new?q=${encodeURIComponent(`컴퓨터시스템응용기술사 시험 대비로 다음 문제에 대한 모범 답안을 작성해주세요:\n\n${currentQ.q}\n\n다음 형식으로 답안을 구성해주세요:\n1. 서론 (개념 정의, 배경, 중요성)\n2. 본론 (세부 내용, 비교 분석, 기술적 상세)\n3. 결론 (요약, 발전 방향, 실무 적용)`)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 w-full p-4 bg-orange-50 hover:bg-orange-100 rounded-xl transition border border-orange-200"><span className="text-2xl">🧡</span><div><p className="font-bold text-orange-700">Claude</p><p className="text-xs text-orange-600">Anthropic AI</p></div></a><a href={`https://chat.openai.com/?q=${encodeURIComponent(`컴퓨터시스템응용기술사 실전: ${currentQ.q.substring(0, 100)}`)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 w-full p-4 bg-green-50 hover:bg-green-100 rounded-xl transition border border-green-200"><span className="text-2xl">💚</span><div><p className="font-bold text-green-700">ChatGPT</p><p className="text-xs text-green-600">OpenAI</p></div></a><a href={`https://gemini.google.com/app?q=${encodeURIComponent(`컴퓨터시스템응용기술사 실전: ${currentQ.q.substring(0, 100)}`)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 w-full p-4 bg-blue-50 hover:bg-blue-100 rounded-xl transition border border-blue-200"><span className="text-2xl">💙</span><div><p className="font-bold text-blue-700">Gemini</p><p className="text-xs text-blue-600">Google AI</p></div></a></div><button onClick={() => { navigator.clipboard.writeText(`컴퓨터시스템응용기술사 실전: ${currentQ.q}`); alert('프롬프트가 복사되었습니다!'); }} className="w-full mt-4 py-2 text-gray-500 text-sm hover:text-gray-700 transition">📋 프롬프트 복사하기</button></div></div></div>)}
 
       <footer className="bg-gray-800 text-white py-8 mt-12"><div className="max-w-6xl mx-auto px-4 text-center"><p className="text-gray-400">© 2026 자격시험 가이드. UTTEC</p></div></footer>
     </div>
