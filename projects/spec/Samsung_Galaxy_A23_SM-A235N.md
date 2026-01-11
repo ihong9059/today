@@ -170,4 +170,102 @@ MemAvailable:     687868 kB
 
 ---
 
-*이 문서는 ADB를 통해 수집된 정보로 작성되었습니다.*
+## Termux 개발 환경
+
+### SSH 접속 설정
+
+**IP 주소**: 192.168.0.32
+**포트**: 8022
+**사용자**: u0_a314
+
+```bash
+# PC에서 SSH 접속
+ssh u0_a314@192.168.0.32 -p 8022
+```
+
+### Termux 초기 설정 (스마트폰에서)
+
+```bash
+# 패키지 업데이트
+pkg update && pkg upgrade -y
+
+# SSH 서버 설치 및 실행
+pkg install openssh -y
+passwd  # 비밀번호 설정
+sshd    # SSH 서버 시작
+```
+
+---
+
+## Claude Code CLI 설치 가이드
+
+**설치일**: 2026-01-12
+**Claude Code 버전**: 2.1.5
+
+### 설치 요구사항
+
+| 항목 | 필요 버전 | 설치된 버전 |
+|------|----------|------------|
+| Node.js | 18+ | v25.2.1 |
+| npm | 8+ | 11.6.2 |
+
+### 설치 과정
+
+#### 1. Node.js 설치
+
+```bash
+# Termux에서 Node.js 설치
+pkg update -y
+pkg install -y nodejs
+
+# 버전 확인
+node --version   # v25.2.1
+npm --version    # 11.6.2
+```
+
+#### 2. Claude Code CLI 설치
+
+```bash
+# Claude Code CLI 전역 설치
+npm install -g @anthropic-ai/claude-code
+
+# 설치 확인
+claude --version  # 2.1.5 (Claude Code)
+```
+
+#### 3. Claude 실행 및 인증
+
+```bash
+# Claude 실행 (최초 실행 시 인증 필요)
+claude
+
+# API 키로 인증하는 경우
+export ANTHROPIC_API_KEY="your-api-key"
+claude
+```
+
+### 주요 명령어
+
+```bash
+# Claude 대화 시작
+claude
+
+# 특정 프로젝트 디렉토리에서 시작
+claude /path/to/project
+
+# 도움말 보기
+claude --help
+```
+
+### 문제 해결
+
+| 문제 | 해결 방법 |
+|------|----------|
+| SSH 연결 거부 | Termux에서 `sshd` 실행 |
+| 권한 거부 | `passwd`로 비밀번호 설정 |
+| Node.js 없음 | `pkg install nodejs` |
+| npm 오류 | `pkg update && pkg upgrade` |
+
+---
+
+*이 문서는 ADB 및 SSH를 통해 수집된 정보로 작성되었습니다.*
