@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Background circle -->
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0" />
+
+    <!-- Sensor waves (3 arcs) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:pathData="M54,30 A24,24 0 0,1 78,54" />
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:pathData="M54,38 A16,16 0 0,1 70,54" />
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:pathData="M54,46 A8,8 0 0,1 62,54" />
+
+    <!-- Center dot -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,54m-5,0a5,5 0,1 1,10 0a5,5 0,1 1,-10 0" />
+
+    <!-- Graph lines (sensor data visualization) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:pathData="M30,70 L38,65 L46,72 L54,60 L62,68 L70,62 L78,70" />
+
+    <!-- X, Y, Z axis indicators -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,80 L32,76 L36,78 Z" />
+    <path
+        android:fillColor="#BBDEFB"
+        android:pathData="M44,80 L44,76 L48,78 Z" />
+    <path
+        android:fillColor="#90CAF9"
+        android:pathData="M56,80 L56,76 L60,78 Z" />
+
+</vector>

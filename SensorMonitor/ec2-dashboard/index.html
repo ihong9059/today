@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy M53 Sensor Monitor</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+        }
+        .header h1 { font-size: 24px; margin-bottom: 10px; }
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .status.connected { background: #00c853; }
+        .status.disconnected { background: #ff5252; }
+        .last-update { margin-top: 10px; color: #aaa; font-size: 12px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .card-title { font-size: 16px; font-weight: 600; }
+        .card-type { font-size: 11px; color: #888; }
+        .card-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4fc3f7;
+            font-family: monospace;
+        }
+        .wide-card { grid-column: span 2; }
+        .camera-card { grid-column: span 2; }
+        .camera-image {
+            width: 100%;
+            max-width: 640px;
+            border-radius: 8px;
+            margin-top: 10px;
+            background: #000;
+        }
+        .camera-placeholder {
+            width: 100%;
+            height: 240px;
+            background: #0a0a1a;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        .gps-map {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        .network-info {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+        .gps-links {
+            margin-top: 10px;
+            font-size: 12px;
+        }
+        .gps-links a {
+            color: #4fc3f7;
+            margin-right: 15px;
+        }
+        @media (max-width: 768px) {
+            .wide-card, .camera-card { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Galaxy M53 5G Sensor Monitor</h1>
+        <span id="status" class="status disconnected">Disconnected</span>
+        <div id="lastUpdate" class="last-update">Waiting for data...</div>
+        <div id="networkInfo" class="network-info">Network: --</div>
+        <div id="dbInfo" class="network-info" style="margin-top: 10px;">
+            <span id="dbStatus" style="color: #ff5252;">DB: OFF</span> |
+            Records: <span id="dbRecords">0</span> |
+            Last saved: <span id="dbLastSaved">--</span>
+        </div>
+    </div>
+    <div id="sensorGrid" class="grid">
+        <!-- Camera Card -->
+        <div class="card camera-card">
+            <div class="card-header">
+                <span class="card-title">Camera Stream</span>
+                <span class="card-type">Rear Camera</span>
+            </div>
+            <div id="cameraStatus" class="card-value" style="font-size:14px;">Waiting for image...</div>
+            <div id="cameraContainer">
+                <div class="camera-placeholder" id="cameraPlaceholder">No camera image</div>
+                <img id="cameraImage" class="camera-image" style="display:none;" alt="Camera Stream" />
+            </div>
+        </div>
+        <!-- GPS Card -->
+        <div class="card wide-card">
+            <div class="card-header">
+                <span class="card-title">GPS Location</span>
+                <span class="card-type">LocationManager</span>
+            </div>
+            <div id="gpsValue" class="card-value">Waiting...</div>
+            <div class="gps-links" id="gpsLinks"></div>
+            <div class="gps-map">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let ws;
+        let reconnectTimer;
+        const sensorCards = {};
+        let map;
+        let marker;
+        let mapInitialized = false;
+
+        function initMap(lat, lon) {
+            if (!mapInitialized) {
+                map = L.map('map').setView([lat, lon], 16);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
+                marker = L.marker([lat, lon]).addTo(map);
+                mapInitialized = true;
+            } else {
+                map.setView([lat, lon], 16);
+                marker.setLatLng([lat, lon]);
+            }
+        }
+
+        function connect() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            ws = new WebSocket(protocol + '//' + window.location.host);
+
+            ws.onopen = () => {
+                document.getElementById('status').className = 'status connected';
+                document.getElementById('status').textContent = 'Connected';
+                clearTimeout(reconnectTimer);
+            };
+
+            ws.onclose = () => {
+                document.getElementById('status').className = 'status disconnected';
+                document.getElementById('status').textContent = 'Disconnected';
+                reconnectTimer = setTimeout(connect, 3000);
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                updateDashboard(data);
+            };
+        }
+
+        function updateDashboard(data) {
+            const now = new Date(data.timestamp);
+            document.getElementById('lastUpdate').textContent =
+                'Last update: ' + now.toLocaleTimeString('ko-KR');
+
+            // Network info
+            if (data.network) {
+                document.getElementById('networkInfo').innerHTML =
+                    'Network: ' + data.network.type + ' | ' +
+                    'WiFi: ' + (data.network.wifi ? 'Connected' : 'Disconnected') + ' | ' +
+                    'Mobile: ' + (data.network.mobile ? 'Connected' : 'Disconnected');
+            }
+
+            // DB Status
+            if (data.dbStatus) {
+                const dbStatusEl = document.getElementById('dbStatus');
+                if (data.dbStatus.enabled) {
+                    dbStatusEl.textContent = 'DB: ON (Recording)';
+                    dbStatusEl.style.color = '#00c853';
+                } else {
+                    dbStatusEl.textContent = 'DB: OFF';
+                    dbStatusEl.style.color = '#ff5252';
+                }
+                document.getElementById('dbRecords').textContent = data.dbStatus.totalRecords || 0;
+                if (data.dbStatus.lastSaved) {
+                    const lastSaved = new Date(data.dbStatus.lastSaved);
+                    document.getElementById('dbLastSaved').textContent = lastSaved.toLocaleTimeString('ko-KR');
+                }
+            }
+
+            // Camera
+            if (data.camera) {
+                const img = document.getElementById('cameraImage');
+                const placeholder = document.getElementById('cameraPlaceholder');
+                img.src = 'data:image/jpeg;base64,' + data.camera;
+                img.style.display = 'block';
+                placeholder.style.display = 'none';
+                document.getElementById('cameraStatus').textContent = 'Live - ' + now.toLocaleTimeString('ko-KR');
+            }
+
+            // GPS
+            if (data.gps && data.gps.latitude) {
+                const lat = data.gps.latitude;
+                const lon = data.gps.longitude;
+
+                document.getElementById('gpsValue').innerHTML =
+                    'Lat: ' + lat.toFixed(6) + ' | Lon: ' + lon.toFixed(6) + '<br>' +
+                    'Alt: ' + (data.gps.altitude || 0).toFixed(1) + 'm | ' +
+                    'Acc: ' + (data.gps.accuracy || 0).toFixed(1) + 'm | ' +
+                    'Speed: ' + (data.gps.speed || 0).toFixed(1) + 'm/s';
+
+                document.getElementById('gpsLinks').innerHTML =
+                    '<a href="https://www.google.com/maps?q=' + lat + ',' + lon + '" target="_blank">Google Maps</a>' +
+                    '<a href="https://map.naver.com/?lng=' + lon + '&lat=' + lat + '&pinType=site" target="_blank">Naver Map</a>' +
+                    '<a href="https://map.kakao.com/link/map/' + lat + ',' + lon + '" target="_blank">Kakao Map</a>';
+
+                initMap(lat, lon);
+            }
+
+            // Sensors
+            if (data.sensors) {
+                const grid = document.getElementById('sensorGrid');
+
+                for (const [name, sensor] of Object.entries(data.sensors)) {
+                    if (!sensorCards[name]) {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+                        card.innerHTML =
+                            '<div class="card-header">' +
+                            '<span class="card-title">' + name + '</span>' +
+                            '<span class="card-type">' + (sensor.type || '') + '</span>' +
+                            '</div>' +
+                            '<div class="card-value" id="sensor-' + name.replace(/\s/g, '-') + '">--</div>';
+                        grid.appendChild(card);
+                        sensorCards[name] = true;
+                    }
+
+                    const valueEl = document.getElementById('sensor-' + name.replace(/\s/g, '-'));
+                    if (valueEl && sensor.values) {
+                        const vals = sensor.values;
+                        if (vals.length === 1) {
+                            valueEl.textContent = vals[0].toFixed(2);
+                        } else if (vals.length === 3) {
+                            valueEl.innerHTML = 'X: ' + vals[0].toFixed(2) + '<br>' +
+                                'Y: ' + vals[1].toFixed(2) + '<br>' +
+                                'Z: ' + vals[2].toFixed(2);
+                        } else {
+                            valueEl.textContent = vals.slice(0, 6).map(v => v.toFixed(2)).join(', ');
+                        }
+                    }
+                }
+            }
+        }
+
+        // Initial fetch
+        fetch('/api/sensor')
+            .then(r => r.json())
+            .then(data => {
+                if (data.timestamp) updateDashboard(data);
+            })
+            .catch(() => {});
+
+        connect();
+    </script>
+</body>
+</html>
