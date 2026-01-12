@@ -16,11 +16,28 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="UTTEC Lab Sensor Monitor"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"
+            android:text="UTTEC Lab Sensor Monitor" />
+
+        <TextView
+            android:id="@+id/deviceModelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Device: Loading..."
+            android:textSize="16sp"
+            android:textColor="#FFEB3B"
             android:textStyle="bold"
-            android:gravity="center" />
+            android:gravity="center"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/serverStatusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Server: Connecting..."
+            android:textSize="14sp"
+            android:textColor="#BBDEFB"
+            android:gravity="center"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/sensorCountText"

@@ -15,6 +15,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -47,6 +48,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, LocationListener 
     private lateinit var connectivityManager: ConnectivityManager
     private lateinit var sensorContainer: LinearLayout
     private lateinit var sensorCountText: TextView
+    private lateinit var deviceModelText: TextView
+    private lateinit var headerServerStatusText: TextView
 
     private val sensorViews = mutableMapOf<String, TextView>()
     private val registeredSensors = mutableListOf<Sensor>()
@@ -79,6 +82,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener, LocationListener 
     private var currentImageBase64: String? = null
     private var cameraEnabled = false
 
+    // Device name for server
+    private val deviceName: String by lazy {
+        "${Build.MANUFACTURER} ${Build.MODEL}"
+    }
+
     data class SensorInfo(
         val name: String,
         val type: String,
@@ -94,6 +102,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener, LocationListener 
         connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         sensorContainer = findViewById(R.id.sensorContainer)
         sensorCountText = findViewById(R.id.sensorCountText)
+
+        // Header TextViews
+        deviceModelText = findViewById(R.id.deviceModelText)
+        headerServerStatusText = findViewById(R.id.serverStatusText)
+
+        // Set device model name
+        deviceModelText.text = "Device: $deviceName"
+        headerServerStatusText.text = "Server: Connecting..."
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -430,18 +446,24 @@ class MainActivity : AppCompatActivity(), SensorEventListener, LocationListener 
                 val uBuffer = uPlane.buffer
                 val vBuffer = vPlane.buffer
 
-                val ySize = yBuffer.remaining()
-                val uSize = uBuffer.remaining()
-                val vSize = vBuffer.remaining()
-
                 val width = image.width
                 val height = image.height
+                val yRowStride = yPlane.rowStride
 
                 // NV21 format: YYYYYYYY VUVU
                 val nv21 = ByteArray(width * height * 3 / 2)
 
-                // Copy Y plane
-                yBuffer.get(nv21, 0, ySize)
+                // Copy Y plane row by row (handles row stride > width)
+                if (yRowStride == width) {
+                    // Fast path: no padding, copy all at once
+                    yBuffer.get(nv21, 0, width * height)
+                } else {
+                    // Slow path: copy row by row to skip padding
+                    for (row in 0 until height) {
+                        yBuffer.position(row * yRowStride)
+                        yBuffer.get(nv21, row * width, width)
+                    }
+                }
 
                 // Interleave V and U planes for NV21
                 val uvPixelStride = vPlane.pixelStride
@@ -742,7 +764,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, LocationListener 
             try {
                 val json = JSONObject()
                 json.put("timestamp", System.currentTimeMillis())
-                json.put("device", "Galaxy M53 5G")
+                json.put("device", deviceName)
                 json.put("saveToDb", dbSaveEnabled)
 
                 json.put("network", getNetworkInfo())
@@ -800,6 +822,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, LocationListener 
                     if (responseCode == 200) {
                         serverStatusText.text = "Status: Connected ($networkType$hasImage)$dbStatus\nLast sent: ${java.text.SimpleDateFormat("HH:mm:ss").format(java.util.Date())}"
                         serverStatusText.setTextColor(ContextCompat.getColor(this@MainActivity, android.R.color.holo_green_dark))
+                        headerServerStatusText.text = "Server: Connected"
+                        headerServerStatusText.setTextColor(ContextCompat.getColor(this@MainActivity, android.R.color.holo_green_light))
                     } else {
                         serverStatusText.text = "Status: Error $responseCode ($networkType)"
                         serverStatusText.setTextColor(ContextCompat.getColor(this@MainActivity, android.R.color.holo_red_dark))
