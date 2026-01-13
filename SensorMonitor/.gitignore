@@ -1,0 +1,17 @@
+# Gradle
+.gradle/
+build/
+local.properties
+
+# IDE
+.idea/
+*.iml
+
+# APK
+*.apk
+
+# Node
+node_modules/
+
+# Mac
+.DS_Store
