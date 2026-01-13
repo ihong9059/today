@@ -422,9 +422,23 @@
         let calRight90 = null;    // ② 오른쪽 90°
         let calBack90 = null;     // ③ 뒤로 90°
         let calibrationComplete = false;
+        let autoCalibrated = false;  // 자동 캘리브레이션 여부
 
         let lastGravity = { x: 0, y: 0, z: 9.8 };
         let lastOrientation = { azimuth: 0, pitch: 0, roll: 0 };
+
+        // 자동 캘리브레이션: 첫 데이터 수신 시 Home으로 설정
+        function autoCalibrate() {
+            if (autoCalibrated) return;
+
+            calHome = {
+                gravity: { ...lastGravity },
+                orientation: { ...lastOrientation }
+            };
+            autoCalibrated = true;
+            updateCalibrationUI();
+            console.log('Auto-calibrated with gravity:', lastGravity, 'orientation:', lastOrientation);
+        }
 
         function updateCalibrationUI() {
             const btnHome = document.getElementById('btnHome');
@@ -449,6 +463,8 @@
             // Status message
             if (!calHome) {
                 status.innerHTML = '<span class="step">① 똑바로 세우고 [원위치 설정] 클릭</span>';
+            } else if (autoCalibrated && !calRight90) {
+                status.innerHTML = '<span class="complete">✓ 자동 캘리브레이션 완료 (재설정: 원위치 버튼 클릭)</span>';
             } else if (!calRight90) {
                 status.innerHTML = '<span class="step">② 오른쪽으로 90° 돌리고 [오른쪽 90°] 클릭</span>';
             } else if (!calBack90) {
@@ -467,12 +483,14 @@
             calRight90 = null;
             calBack90 = null;
             calibrationComplete = false;
+            autoCalibrated = true;  // 수동 캘리브레이션도 auto로 취급
 
             // Reset 3D models to home position
             if (rotationCube) rotationCube.rotation.set(0, 0, 0);
             if (tiltDevice) tiltDevice.rotation.set(0, 0, 0);
 
             updateCalibrationUI();
+            console.log('Manual calibration - Home set:', calHome);
         }
 
         function calibrateRight90() {
@@ -609,27 +627,33 @@
         }
 
         // Update rotation using Orientation Sensor (azimuth, pitch, roll in degrees)
+        // Android Orientation 센서:
+        // azimuth: 0~360, 북쪽=0, 동쪽=90
+        // pitch: -180~180, 위로 기울이면 음수, 아래로 기울이면 양수
+        // roll: -90~90, 오른쪽 기울이면 양수
         function updateRotation(azimuth, pitch, roll) {
             // Store current values
             lastOrientation = { azimuth, pitch, roll };
 
-            if (!calHome || !calHome.orientation) {
-                document.getElementById('dbgModelY').textContent = 'no cal';
-                return;
-            }
-
             // 홈 위치 기준으로 delta 계산
-            let deltaYaw = azimuth - calHome.orientation.azimuth;
-            let deltaPitch = pitch - calHome.orientation.pitch;
-            let deltaRoll = roll - calHome.orientation.roll;
+            let deltaYaw = 0;
+            let deltaPitch = 0;
+            let deltaRoll = 0;
 
-            // -180 ~ 180 범위로 정규화
-            while (deltaYaw > 180) deltaYaw -= 360;
-            while (deltaYaw < -180) deltaYaw += 360;
-            while (deltaPitch > 180) deltaPitch -= 360;
-            while (deltaPitch < -180) deltaPitch += 360;
-            while (deltaRoll > 180) deltaRoll -= 360;
-            while (deltaRoll < -180) deltaRoll += 360;
+            if (calHome && calHome.orientation) {
+                deltaYaw = azimuth - calHome.orientation.azimuth;
+                deltaPitch = pitch - calHome.orientation.pitch;
+                deltaRoll = roll - calHome.orientation.roll;
+
+                // -180 ~ 180 범위로 정규화
+                while (deltaYaw > 180) deltaYaw -= 360;
+                while (deltaYaw < -180) deltaYaw += 360;
+            } else {
+                // 캘리브레이션 없으면 절대값 사용
+                deltaYaw = azimuth;
+                deltaPitch = pitch;
+                deltaRoll = roll;
+            }
 
             // 도 → 라디안
             const toRad = Math.PI / 180;
@@ -637,16 +661,12 @@
             const pitchRad = deltaPitch * toRad;
             const rollRad = deltaRoll * toRad;
 
-            // 3D 모델 업데이트 (Orientation 센서 기반)
-            if (tiltDevice) {
-                tiltDevice.rotation.y = -yawRad;
-                tiltDevice.rotation.x = pitchRad;
-                tiltDevice.rotation.z = rollRad;
-            }
+            // Rotation 3D 모델 업데이트 (Orientation 센서 기반 - Yaw 포함)
+            // rotationCube는 Yaw(방위각) 회전도 보여줌
             if (rotationCube) {
-                rotationCube.rotation.y = -yawRad;
-                rotationCube.rotation.x = pitchRad;
-                rotationCube.rotation.z = rollRad;
+                rotationCube.rotation.y = -yawRad;     // Yaw: 시계방향이 양수
+                rotationCube.rotation.x = -pitchRad;  // Pitch: 뒤로 눕히면 양수
+                rotationCube.rotation.z = rollRad;    // Roll: 오른쪽 기울이면 양수 (부호 수정)
             }
 
             // 디버그 표시
@@ -661,7 +681,7 @@
 
             tiltScene = new THREE.Scene();
             tiltCamera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
-            tiltCamera.position.set(0, 2, 3);
+            tiltCamera.position.set(2, 3, 3);  // 위에서 비스듬히 보기
             tiltCamera.lookAt(0, 0, 0);
 
             tiltRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -724,9 +744,44 @@
             // Store current gravity
             lastGravity = { x: gx, y: gy, z: gz };
 
-            // 라즈베리파이 방식: 단순 roll/pitch 계산
-            const roll = Math.atan2(gx, gz);
-            const pitch = Math.atan2(gy, Math.sqrt(gx*gx + gz*gz));
+            // 첫 데이터 수신 시 자동 캘리브레이션
+            if (!autoCalibrated && Math.abs(gz) > 0.1) {
+                autoCalibrate();
+            }
+
+            // Android 좌표계:
+            // X: 오른쪽 양수
+            // Y: 위쪽 양수
+            // Z: 화면 밖으로 양수
+            // 폰이 세로로 서있을 때: gx≈0, gy≈9.8, gz≈0 (이것이 원위치!)
+            // 폰이 뒤로 눕혔을 때: gx≈0, gy≈0, gz≈9.8
+
+            // Roll: 좌우 기울기 - 오른쪽으로 기울이면 gx 증가
+            // Pitch: 앞뒤 기울기 - 뒤로 눕히면 gz 증가, gy 감소
+            //
+            // 세로 기준 좌표계:
+            // - 원위치(세로): gy≈9.8, gx≈0, gz≈0 → Roll=0, Pitch=0
+            // - 오른쪽 90°: gx≈9.8, gy≈0 → Roll=90°
+            // - 뒤로 90°: gz≈9.8, gy≈0 → Pitch=90°
+
+            // Roll: gx와 (gy,gz) 평면의 각도
+            // 실제 측정: 오른쪽으로 눕히면 gx가 음수 → 부호 반전 필요
+            const roll = Math.atan2(-gx, Math.sqrt(gy*gy + gz*gz));
+
+            // Pitch: gz와 gy의 각도
+            // Roll이 90° 근처일 때 (옆으로 눕힘) → Pitch는 의미없음, 0으로 처리
+            // 뒤로 눕혔을 때 (gz가 큼) → Pitch 계산
+            let pitch;
+            const absRoll = Math.abs(roll);
+            if (absRoll > Math.PI / 4) {
+                // Roll이 45° 이상 → 옆으로 눕힌 상태, Pitch는 0
+                pitch = 0;
+            } else if (Math.abs(gy) < 0.5) {
+                // gy가 거의 0이고 Roll도 작음 → 뒤로 90° 눕힌 상태
+                pitch = gz > 0 ? Math.PI / 2 : -Math.PI / 2;
+            } else {
+                pitch = Math.atan2(gz, gy);
+            }
 
             // 디버그 패널 업데이트 - gravity
             document.getElementById('dbgGx').textContent = gx.toFixed(2);
@@ -738,14 +793,16 @@
             document.getElementById('dbgCalcRoll').textContent = (roll * toDeg).toFixed(1);
             document.getElementById('dbgCalcPitch').textContent = (pitch * toDeg).toFixed(1);
 
-            // 원위치 오프셋만 적용
+            // 원위치 오프셋 적용
             let finalRoll = roll;
             let finalPitch = pitch;
 
             if (calHome) {
-                const homeRoll = Math.atan2(calHome.gravity.x, calHome.gravity.z);
-                const homePitch = Math.atan2(calHome.gravity.y,
-                    Math.sqrt(calHome.gravity.x*calHome.gravity.x + calHome.gravity.z*calHome.gravity.z));
+                const hx = calHome.gravity.x, hy = calHome.gravity.y, hz = calHome.gravity.z;
+                const homeRoll = Math.atan2(-hx, Math.sqrt(hy*hy + hz*hz));  // 부호 반전
+                const homePitch = Math.abs(hy) < 0.5
+                    ? (hz > 0 ? Math.PI / 2 : -Math.PI / 2)
+                    : Math.atan2(hz, hy);
                 finalRoll = roll - homeRoll;
                 finalPitch = pitch - homePitch;
             }
@@ -754,8 +811,17 @@
             document.getElementById('dbgFinalRoll').textContent = (finalRoll * toDeg).toFixed(1);
             document.getElementById('dbgFinalPitch').textContent = (finalPitch * toDeg).toFixed(1);
 
-            // 3D 모델은 updateRotation (Orientation 센서)에서 업데이트
-            // 여기서는 calHome 상태만 표시
+            // Tilt 3D 모델 업데이트 (Gravity 기반)
+            // Three.js: X회전=pitch(앞뒤), Z회전=roll(좌우)
+            if (tiltDevice) {
+                tiltDevice.rotation.x = -finalPitch;  // 뒤로 눕히면 모델도 뒤로
+                tiltDevice.rotation.z = -finalRoll;   // 오른쪽 기울이면 모델도 오른쪽
+
+                // 디버그: 실제 적용된 rotation 값 표시
+                document.getElementById('dbgModelX').textContent = (tiltDevice.rotation.x * toDeg).toFixed(1) + '°';
+                document.getElementById('dbgModelZ').textContent = (tiltDevice.rotation.z * toDeg).toFixed(1) + '°';
+            }
+
             document.getElementById('dbgCalHome').textContent = calHome ? 'SET' : 'null';
         }
 
@@ -878,6 +944,13 @@
 
         function selectDevice(id) {
             selectedDeviceId = id;
+            // 디바이스 전환 시 캘리브레이션 리셋
+            calHome = null;
+            calRight90 = null;
+            calBack90 = null;
+            autoCalibrated = false;
+            updateCalibrationUI();
+
             updateDeviceTabs();
             if (devicesData[id]) updateDashboard(devicesData[id]);
         }
@@ -913,9 +986,16 @@
                     return null;
                 }
 
-                // Accelerometer -> Vibration
+                // Linear Acceleration -> Vibration (중력 제외된 순수 진동)
+                // Linear Acceleration이 없으면 Accelerometer 사용 (fallback)
+                const linearAccel = findSensor(['Linear Acceleration', 'Linear']);
                 const accel = findSensor(['Accelerometer']);
-                if (accel && accel.values) {
+
+                if (linearAccel && linearAccel.values) {
+                    // 중력 제외된 순수 진동
+                    updateVibration(linearAccel.values[0], linearAccel.values[1], linearAccel.values[2]);
+                } else if (accel && accel.values) {
+                    // Fallback: Accelerometer (중력 포함)
                     updateVibration(accel.values[0], accel.values[1], accel.values[2]);
                 }
 
