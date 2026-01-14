@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <title>시스템 구성 - 한국분체시스템 스마트팩토리</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -497,7 +498,7 @@
         <div class="summary-content">
             <div class="section-title">
                 <h2>센서 구성 요약</h2>
-                <p>총 10개 센서로 핵심 설비를 완벽하게 모니터링</p>
+                <p>총 12개 센서로 핵심 설비와 작업환경을 완벽하게 모니터링</p>
             </div>
             <div class="summary-grid">
                 <div class="summary-item">
@@ -517,7 +518,15 @@
                     <div class="summary-label">압력 센서</div>
                 </div>
                 <div class="summary-item">
-                    <div class="summary-number">10</div>
+                    <div class="summary-number">1</div>
+                    <div class="summary-label">분진 센서</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-number">1</div>
+                    <div class="summary-label">습도 센서</div>
+                </div>
+                <div class="summary-item highlight">
+                    <div class="summary-number">12</div>
                     <div class="summary-label">총 센서 수</div>
                 </div>
             </div>
@@ -678,6 +687,36 @@
                     <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±0.5%</span></div>
                     <div class="spec-item"><span class="spec-label">응답시간</span> <span class="spec-value">< 100ms</span></div>
                     <div class="spec-item"><span class="spec-label">출력</span> <span class="spec-value">4-20mA</span></div>
+                </div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">🌫️</div>
+                    <div>
+                        <div class="sensor-name">분진 센서 #1</div>
+                        <div class="sensor-type">작업장 환경</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">0~50 mg/m³</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±5%</span></div>
+                    <div class="spec-item"><span class="spec-label">응답시간</span> <span class="spec-value">< 10s</span></div>
+                    <div class="spec-item"><span class="spec-label">검출방식</span> <span class="spec-value">레이저 산란</span></div>
+                </div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">💧</div>
+                    <div>
+                        <div class="sensor-name">습도 센서 #1</div>
+                        <div class="sensor-type">분체 품질관리</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">0~100 %RH</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±2%RH</span></div>
+                    <div class="spec-item"><span class="spec-label">응답시간</span> <span class="spec-value">< 8s</span></div>
+                    <div class="spec-item"><span class="spec-label">동작온도</span> <span class="spec-value">-40~80°C</span></div>
                 </div>
             </div>
         </div>

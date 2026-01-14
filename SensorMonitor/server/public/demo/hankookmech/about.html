@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <title>UTTEC 소개 - 한국분체시스템 스마트팩토리</title>
+    <title>UTTEC 소개 - 한국기계엔지니어링 스마트팩토리</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,7 +36,7 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #2563eb;
+            color: #dc2626;
         }
         .logo span { color: #fff; }
         .nav-links {
@@ -66,7 +66,7 @@
             position: absolute;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.1) 0%, transparent 70%);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -78,7 +78,7 @@
         }
         .page-header .tagline {
             font-size: 1.5rem;
-            color: #2563eb;
+            color: #dc2626;
             margin-bottom: 10px;
         }
         .page-header p {
@@ -141,7 +141,7 @@
         .stat-number {
             font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(90deg, #2563eb, #00ff88);
+            background: linear-gradient(90deg, #dc2626, #00ff88);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -151,8 +151,8 @@
             margin-top: 5px;
         }
         .intro-visual {
-            background: linear-gradient(135deg, rgba(37,99,235,0.1) 0%, rgba(0,255,136,0.05) 100%);
-            border: 1px solid rgba(37,99,235,0.3);
+            background: linear-gradient(135deg, rgba(220,38,38,0.1) 0%, rgba(0,255,136,0.05) 100%);
+            border: 1px solid rgba(220,38,38,0.3);
             border-radius: 20px;
             padding: 40px;
             text-align: center;
@@ -160,7 +160,7 @@
         .company-logo {
             font-size: 4rem;
             font-weight: 700;
-            background: linear-gradient(90deg, #2563eb, #00ff88);
+            background: linear-gradient(90deg, #dc2626, #00ff88);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
@@ -189,7 +189,7 @@
         }
         .value-card:hover {
             transform: translateY(-5px);
-            border-color: #2563eb;
+            border-color: #dc2626;
         }
         .value-icon {
             font-size: 3rem;
@@ -221,7 +221,7 @@
             transition: all 0.3s;
         }
         .tech-card:hover {
-            border-color: #2563eb;
+            border-color: #dc2626;
         }
         .tech-header {
             display: flex;
@@ -232,7 +232,7 @@
         .tech-icon {
             width: 50px;
             height: 50px;
-            background: rgba(37,99,235,0.2);
+            background: rgba(220,38,38,0.2);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -263,56 +263,9 @@
             color: #00ff88;
         }
 
-        /* Experience */
-        .experience {
-            background: linear-gradient(180deg, #0f0f24 0%, #0a0a1a 100%);
-        }
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(180deg, #2563eb, #00ff88);
-        }
-        .timeline-item {
-            display: flex;
-            margin-bottom: 50px;
-        }
-        .timeline-item:nth-child(odd) {
-            flex-direction: row-reverse;
-        }
-        .timeline-content {
-            width: 45%;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 25px;
-        }
-        .timeline-year {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #2563eb;
-            margin-bottom: 10px;
-        }
-        .timeline-content h4 {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-        .timeline-content p {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
         /* Industries */
         .industries {
-            background: #0a0a1a;
+            background: linear-gradient(180deg, #0f0f24 0%, #0a0a1a 100%);
         }
         .industry-grid {
             display: grid;
@@ -328,8 +281,8 @@
             transition: all 0.3s;
         }
         .industry-card:hover {
-            background: rgba(37,99,235,0.1);
-            border-color: #2563eb;
+            background: rgba(220,38,38,0.1);
+            border-color: #dc2626;
         }
         .industry-icon {
             font-size: 2.5rem;
@@ -338,6 +291,36 @@
         .industry-name {
             font-size: 1.1rem;
             font-weight: 500;
+        }
+
+        /* Certifications */
+        .certifications {
+            background: #0f0f24;
+        }
+        .cert-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .cert-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        .cert-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .cert-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .cert-desc {
+            color: #888;
+            font-size: 0.85rem;
         }
 
         /* Contact */
@@ -374,7 +357,7 @@
             font-size: 1.1rem;
         }
         .contact-value a {
-            color: #2563eb;
+            color: #dc2626;
             text-decoration: none;
         }
         .cta-buttons {
@@ -392,12 +375,12 @@
             transition: all 0.3s;
         }
         .btn-primary {
-            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            background: linear-gradient(90deg, #dc2626, #b91c1c);
             color: #fff;
         }
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(37,99,235,0.4);
+            box-shadow: 0 10px 30px rgba(220,38,38,0.4);
         }
         .btn-secondary {
             background: transparent;
@@ -405,37 +388,7 @@
             color: #fff;
         }
         .btn-secondary:hover {
-            border-color: #2563eb;
-        }
-
-        /* Certifications */
-        .certifications {
-            background: #0f0f24;
-        }
-        .cert-grid {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .cert-item {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 30px 40px;
-            text-align: center;
-        }
-        .cert-icon {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        .cert-name {
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-        .cert-desc {
-            color: #888;
-            font-size: 0.85rem;
+            border-color: #dc2626;
         }
 
         /* Footer */
@@ -454,7 +407,7 @@
         .footer-brand h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
-            color: #2563eb;
+            color: #dc2626;
         }
         .footer-brand p {
             color: #666;
@@ -493,9 +446,6 @@
         @media (max-width: 768px) {
             .intro-content { grid-template-columns: 1fr; }
             .contact-cards { grid-template-columns: 1fr; }
-            .timeline::before { left: 20px; }
-            .timeline-item { flex-direction: column !important; }
-            .timeline-content { width: 100%; margin-left: 40px; }
             .footer-content { grid-template-columns: 1fr; gap: 30px; }
         }
     </style>
@@ -503,7 +453,7 @@
 <body>
     <nav>
         <div class="nav-container">
-            <div class="logo">HKPS <span>Smart Factory</span></div>
+            <div class="logo">HKME <span>Smart Factory</span></div>
             <ul class="nav-links">
                 <li><a href="index.html">홈</a></li>
                 <li><a href="system.html">시스템 구성</a></li>
@@ -514,7 +464,7 @@
     </nav>
 
     <header class="page-header">
-        <div class="tagline">설비의 미래를 예측합니다</div>
+        <div class="tagline">파쇄/분쇄 설비의 미래를 예측합니다</div>
         <h1>UTTEC</h1>
         <p>40년 이상의 임베디드 시스템 개발 경험을 바탕으로<br>산업용 IoT 및 예지정비 솔루션을 제공합니다</p>
     </header>
@@ -524,8 +474,8 @@
             <div class="intro-text">
                 <h3>믿을 수 있는 파트너</h3>
                 <p>UTTEC은 산업 현장의 설비 관리 혁신을 위해 설립된 스마트팩토리 솔루션 전문 기업입니다.</p>
-                <p>분쇄기, 터빈, 펌프 등 고속 회전체 모니터링에 특화된 기술력을 보유하고 있으며, HACCP/GMP 환경 대응 경험을 바탕으로 식품, 제약, 화학 산업에 최적화된 솔루션을 제공합니다.</p>
-                <p>Edge AI 기술을 활용하여 현장에서 실시간으로 설비 상태를 분석하고, 고장을 사전에 예측하여 비계획 정지를 최소화합니다.</p>
+                <p>파쇄기, 분쇄기, 핀밀 등 고부하 회전 설비 모니터링에 특화된 기술력을 보유하고 있으며, 재활용, 금속가공, 광물처리 산업에 최적화된 솔루션을 제공합니다.</p>
+                <p>Edge AI 기술을 활용하여 현장에서 실시간으로 커터/해머 마모 상태를 분석하고, 과부하 및 이물질을 조기 감지하여 돌발 고장을 최소화합니다.</p>
                 <div class="intro-stats">
                     <div class="stat-box">
                         <div class="stat-number">40+</div>
@@ -540,7 +490,7 @@
                         <div class="stat-label">고객 만족도</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-number">60%</div>
+                        <div class="stat-number">70%</div>
                         <div class="stat-label">비계획정지 감소</div>
                     </div>
                 </div>
@@ -566,17 +516,17 @@
             <div class="value-card">
                 <div class="value-icon">⚡</div>
                 <h3>실시간성</h3>
-                <p>Edge AI 기술로 지연 없이 실시간으로 이상 징후를 탐지하고 알립니다.</p>
+                <p>Edge AI 기술로 지연 없이 실시간으로 과부하 및 이상 징후를 탐지합니다.</p>
             </div>
             <div class="value-card">
                 <div class="value-icon">🔮</div>
                 <h3>예측성</h3>
-                <p>머신러닝 기반 예지정비로 고장 발생 전 최적의 정비 시점을 예측합니다.</p>
+                <p>머신러닝 기반으로 커터/해머 마모 시점과 교체 주기를 정확히 예측합니다.</p>
             </div>
             <div class="value-card">
                 <div class="value-icon">🛡️</div>
                 <h3>안전성</h3>
-                <p>분진 폭발 등 위험 요소를 실시간 모니터링하여 안전한 작업 환경을 보장합니다.</p>
+                <p>이물질 감지, 과부하 보호로 설비 손상과 안전사고를 예방합니다.</p>
             </div>
         </div>
     </section>
@@ -584,7 +534,7 @@
     <section class="technology">
         <div class="section-title">
             <h2>핵심 기술</h2>
-            <p>UTTEC만의 차별화된 기술력</p>
+            <p>파쇄/분쇄 설비에 특화된 기술력</p>
         </div>
         <div class="tech-grid">
             <div class="tech-card">
@@ -597,20 +547,20 @@
                     <li>ARM Cortex-M4 + DSP 기반 고성능 처리</li>
                     <li>실시간 FFT, Envelope, Cepstrum 분석</li>
                     <li>AI 기반 이상 탐지 및 RUL 예측</li>
-                    <li>IP65, 방폭 옵션 (Ex ia IIC T4)</li>
+                    <li>IP65 등급 방진/방수 설계</li>
                 </ul>
             </div>
             <div class="tech-card">
                 <div class="tech-header">
                     <div class="tech-icon">📊</div>
-                    <h3>진동 분석 기술</h3>
+                    <h3>부하 분석 기술</h3>
                 </div>
-                <p>고속 회전체 전문 진동 분석 알고리즘</p>
+                <p>파쇄/분쇄 설비 전문 부하 분석 알고리즘</p>
                 <ul class="tech-features">
-                    <li>FFT 스펙트럼 분석 (최대 25.6kHz 샘플링)</li>
-                    <li>Envelope 분석으로 베어링 결함 조기 검출</li>
-                    <li>Cepstrum 분석으로 기어박스 결함 검출</li>
-                    <li>자동 피크 검출 및 결함 주파수 매칭</li>
+                    <li>모터 전류 패턴 분석으로 과부하 감지</li>
+                    <li>진동 스펙트럼으로 불균형/느슨함 검출</li>
+                    <li>이물질 유입 시 특이 패턴 조기 탐지</li>
+                    <li>커터/해머 마모 진행률 추정</li>
                 </ul>
             </div>
             <div class="tech-card">
@@ -621,9 +571,9 @@
                 <p>머신러닝 기반 고장 예측 시스템</p>
                 <ul class="tech-features">
                     <li>이상 탐지 (Anomaly Detection)</li>
-                    <li>잔여수명 예측 (RUL Prediction)</li>
-                    <li>마모 진행률 추정</li>
-                    <li>자동 학습 및 모델 업데이트</li>
+                    <li>베어링 잔여수명 예측 (RUL)</li>
+                    <li>커터/해머 교체 시점 예측</li>
+                    <li>에너지 소비 최적화 분석</li>
                 </ul>
             </div>
             <div class="tech-card">
@@ -645,32 +595,32 @@
     <section class="industries">
         <div class="section-title">
             <h2>적용 분야</h2>
-            <p>다양한 산업 분야에서 활용되고 있습니다</p>
+            <p>파쇄/분쇄 설비가 활용되는 다양한 산업</p>
         </div>
         <div class="industry-grid">
             <div class="industry-card">
-                <div class="industry-icon">🏭</div>
-                <div class="industry-name">분체/파쇄</div>
+                <div class="industry-icon">♻️</div>
+                <div class="industry-name">재활용</div>
             </div>
             <div class="industry-card">
-                <div class="industry-icon">⚙️</div>
+                <div class="industry-icon">⛏️</div>
+                <div class="industry-name">광물/채광</div>
+            </div>
+            <div class="industry-card">
+                <div class="industry-icon">🔩</div>
                 <div class="industry-name">금속가공</div>
             </div>
             <div class="industry-card">
-                <div class="industry-icon">🍜</div>
-                <div class="industry-name">식품가공</div>
-            </div>
-            <div class="industry-card">
-                <div class="industry-icon">💊</div>
-                <div class="industry-name">제약</div>
+                <div class="industry-icon">🏗️</div>
+                <div class="industry-name">건설</div>
             </div>
             <div class="industry-card">
                 <div class="industry-icon">🧪</div>
                 <div class="industry-name">화학</div>
             </div>
             <div class="industry-card">
-                <div class="industry-icon">♻️</div>
-                <div class="industry-name">재활용</div>
+                <div class="industry-icon">🌾</div>
+                <div class="industry-name">바이오매스</div>
             </div>
         </div>
     </section>
@@ -692,19 +642,19 @@
                 <div class="cert-desc">유럽 안전 규격 적합</div>
             </div>
             <div class="cert-item">
-                <div class="cert-icon">🔒</div>
-                <div class="cert-name">방폭 인증</div>
-                <div class="cert-desc">Ex ia IIC T4 대응</div>
+                <div class="cert-icon">🛡️</div>
+                <div class="cert-name">IP65</div>
+                <div class="cert-desc">방진/방수 등급</div>
             </div>
             <div class="cert-item">
-                <div class="cert-icon">🍽️</div>
-                <div class="cert-name">HACCP 대응</div>
-                <div class="cert-desc">식품 안전관리 적합</div>
+                <div class="cert-icon">📐</div>
+                <div class="cert-name">ISO 10816</div>
+                <div class="cert-desc">기계 진동 평가 기준</div>
             </div>
             <div class="cert-item">
-                <div class="cert-icon">💉</div>
-                <div class="cert-name">GMP 대응</div>
-                <div class="cert-desc">의약품 제조 품질관리</div>
+                <div class="cert-icon">🔧</div>
+                <div class="cert-name">ISO 13373</div>
+                <div class="cert-desc">상태 모니터링 표준</div>
             </div>
         </div>
     </section>
@@ -743,7 +693,7 @@
         <div class="footer-content">
             <div class="footer-brand">
                 <h3>UTTEC</h3>
-                <p>설비의 미래를 예측합니다.<br>40년 이상의 임베디드 시스템 개발 경험을 바탕으로<br>산업용 IoT 및 예지정비 솔루션을 제공합니다.</p>
+                <p>파쇄/분쇄 설비의 미래를 예측합니다.<br>40년 이상의 임베디드 시스템 개발 경험을 바탕으로<br>산업용 IoT 및 예지정비 솔루션을 제공합니다.</p>
             </div>
             <div class="footer-links">
                 <h4>사이트맵</h4>
@@ -764,7 +714,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 UTTEC. All rights reserved. | 한국분체시스템 스마트팩토리 데모</p>
+            <p>&copy; 2026 UTTEC. All rights reserved. | 한국기계엔지니어링 스마트팩토리 데모</p>
         </div>
     </footer>
 </body>
