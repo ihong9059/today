@@ -576,7 +576,7 @@
 
             rotationScene = new THREE.Scene();
             rotationCamera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
-            rotationCamera.position.set(2, 2, 2);
+            rotationCamera.position.set(2.5, 2, 2.5);
             rotationCamera.lookAt(0, 0, 0);
 
             rotationRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -584,40 +584,69 @@
             rotationRenderer.setClearColor(0x000000, 0);
             container.appendChild(rotationRenderer.domElement);
 
-            // Phone shape (vertical: width 0.6, height 1.2, depth 0.1)
-            // 각 면에 다른 색상: [오른쪽, 왼쪽, 위, 아래, 앞, 뒤]
-            const cubeGeo = new THREE.BoxGeometry(0.6, 1.2, 0.1);
-            const cubeMats = [
-                new THREE.MeshBasicMaterial({ color: 0xff0000 }), // 오른쪽 - 빨강
-                new THREE.MeshBasicMaterial({ color: 0x00ff00 }), // 왼쪽 - 초록
-                new THREE.MeshBasicMaterial({ color: 0xffff00 }), // 위 - 노랑
-                new THREE.MeshBasicMaterial({ color: 0xff00ff }), // 아래 - 마젠타
-                new THREE.MeshBasicMaterial({ color: 0x4fc3f7 }), // 앞 - 파랑 (스크린)
-                new THREE.MeshBasicMaterial({ color: 0x333333 }), // 뒤 - 회색
-            ];
-            rotationCube = new THREE.Mesh(cubeGeo, cubeMats);
-            rotationCube.rotation.order = 'YXZ';  // Yaw → Pitch → Roll 순서
+            // 산업용 모터 형태 3D 모델
+            rotationCube = new THREE.Group();
+            rotationCube.rotation.order = 'YXZ';
+
+            // 모터 본체 (원통형)
+            const motorBodyGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.8, 32);
+            const motorBodyMat = new THREE.MeshBasicMaterial({ color: 0x3d5afe });
+            const motorBody = new THREE.Mesh(motorBodyGeo, motorBodyMat);
+            motorBody.rotation.z = Math.PI / 2; // 가로로 눕힘
+            rotationCube.add(motorBody);
+
+            // 모터 본체 외곽선
+            const motorEdges = new THREE.EdgesGeometry(motorBodyGeo);
+            const motorLine = new THREE.LineSegments(motorEdges, new THREE.LineBasicMaterial({ color: 0xffffff }));
+            motorLine.rotation.z = Math.PI / 2;
+            rotationCube.add(motorLine);
+
+            // 회전축 (작은 원통)
+            const shaftGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.6, 16);
+            const shaftMat = new THREE.MeshBasicMaterial({ color: 0xffeb3b });
+            const shaft = new THREE.Mesh(shaftGeo, shaftMat);
+            shaft.rotation.z = Math.PI / 2;
+            shaft.position.x = 0.7;
+            rotationCube.add(shaft);
+
+            // 냉각 핀들
+            for (let i = 0; i < 8; i++) {
+                const finGeo = new THREE.BoxGeometry(0.6, 0.05, 0.1);
+                const finMat = new THREE.MeshBasicMaterial({ color: 0x1a237e });
+                const fin = new THREE.Mesh(finGeo, finMat);
+                const angle = (i / 8) * Math.PI * 2;
+                fin.position.y = Math.cos(angle) * 0.45;
+                fin.position.z = Math.sin(angle) * 0.45;
+                fin.rotation.x = angle;
+                rotationCube.add(fin);
+            }
+
+            // 베이스 플레이트
+            const baseGeo = new THREE.BoxGeometry(1.2, 0.1, 0.6);
+            const baseMat = new THREE.MeshBasicMaterial({ color: 0x424242 });
+            const base = new THREE.Mesh(baseGeo, baseMat);
+            base.position.y = -0.5;
+            rotationCube.add(base);
+
+            // 마운팅 볼트
+            const boltPositions = [[-0.45, -0.45, 0.2], [0.45, -0.45, 0.2], [-0.45, -0.45, -0.2], [0.45, -0.45, -0.2]];
+            boltPositions.forEach(pos => {
+                const boltGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.15, 8);
+                const boltMat = new THREE.MeshBasicMaterial({ color: 0x9e9e9e });
+                const bolt = new THREE.Mesh(boltGeo, boltMat);
+                bolt.position.set(pos[0], pos[1], pos[2]);
+                rotationCube.add(bolt);
+            });
+
+            // 방향 표시 화살표 (앞쪽)
+            const arrowGeo = new THREE.ConeGeometry(0.08, 0.2, 8);
+            const arrowMat = new THREE.MeshBasicMaterial({ color: 0xff5252 });
+            const arrow = new THREE.Mesh(arrowGeo, arrowMat);
+            arrow.position.set(1.0, 0, 0);
+            arrow.rotation.z = -Math.PI / 2;
+            rotationCube.add(arrow);
+
             rotationScene.add(rotationCube);
-
-            const edges = new THREE.EdgesGeometry(cubeGeo);
-            const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xffffff }));
-            rotationCube.add(line);
-
-            // Light sensor indicator at top (yellow circle)
-            const sensorGeo = new THREE.CircleGeometry(0.06, 16);
-            const sensorMat = new THREE.MeshBasicMaterial({ color: 0xffeb3b });
-            const lightSensor = new THREE.Mesh(sensorGeo, sensorMat);
-            lightSensor.position.set(0, 0.5, 0.052);  // Top of phone
-            rotationCube.add(lightSensor);
-
-            // Label "TOP" indicator
-            const topIndicatorGeo = new THREE.ConeGeometry(0.05, 0.1, 4);
-            const topIndicatorMat = new THREE.MeshBasicMaterial({ color: 0xff5252 });
-            const topIndicator = new THREE.Mesh(topIndicatorGeo, topIndicatorMat);
-            topIndicator.position.set(0, 0.7, 0);
-            topIndicator.rotation.z = Math.PI;  // Point upward
-            rotationCube.add(topIndicator);
-
             animateRotation();
         }
 
@@ -681,7 +710,7 @@
 
             tiltScene = new THREE.Scene();
             tiltCamera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
-            tiltCamera.position.set(2, 3, 3);  // 위에서 비스듬히 보기
+            tiltCamera.position.set(2.5, 2.5, 3);
             tiltCamera.lookAt(0, 0, 0);
 
             tiltRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -689,47 +718,103 @@
             tiltRenderer.setClearColor(0x000000, 0);
             container.appendChild(tiltRenderer.domElement);
 
-            // Phone-like device (vertical: width 0.6, height 1.2, depth 0.08)
-            // 각 면에 다른 색상: [오른쪽, 왼쪽, 위, 아래, 앞, 뒤]
-            const phoneGeo = new THREE.BoxGeometry(0.6, 1.2, 0.08);
-            const phoneMats = [
-                new THREE.MeshBasicMaterial({ color: 0xff0000 }), // 오른쪽 - 빨강
-                new THREE.MeshBasicMaterial({ color: 0x00ff00 }), // 왼쪽 - 초록
-                new THREE.MeshBasicMaterial({ color: 0xffff00 }), // 위 - 노랑
-                new THREE.MeshBasicMaterial({ color: 0xff00ff }), // 아래 - 마젠타
-                new THREE.MeshBasicMaterial({ color: 0x4fc3f7 }), // 앞 - 파랑 (스크린)
-                new THREE.MeshBasicMaterial({ color: 0x333333 }), // 뒤 - 회색
-            ];
-            tiltDevice = new THREE.Mesh(phoneGeo, phoneMats);
-            tiltDevice.rotation.order = 'YXZ';  // Yaw → Pitch → Roll 순서
+            // 산업용 펌프/압축기 형태 3D 모델
+            tiltDevice = new THREE.Group();
+            tiltDevice.rotation.order = 'YXZ';
+
+            // 메인 펌프 하우징 (원통형 + 사각형 조합)
+            const housingGeo = new THREE.CylinderGeometry(0.35, 0.4, 0.7, 32);
+            const housingMat = new THREE.MeshBasicMaterial({ color: 0x00897b });
+            const housing = new THREE.Mesh(housingGeo, housingMat);
+            housing.position.y = 0.35;
+            tiltDevice.add(housing);
+
+            // 하우징 외곽선
+            const housingEdges = new THREE.EdgesGeometry(housingGeo);
+            const housingLine = new THREE.LineSegments(housingEdges, new THREE.LineBasicMaterial({ color: 0xffffff }));
+            housingLine.position.y = 0.35;
+            tiltDevice.add(housingLine);
+
+            // 상단 헤드 (돔형)
+            const headGeo = new THREE.SphereGeometry(0.35, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+            const headMat = new THREE.MeshBasicMaterial({ color: 0x26a69a });
+            const head = new THREE.Mesh(headGeo, headMat);
+            head.position.y = 0.7;
+            tiltDevice.add(head);
+
+            // 입구 파이프 (왼쪽)
+            const inletGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.4, 16);
+            const inletMat = new THREE.MeshBasicMaterial({ color: 0x42a5f5 });
+            const inlet = new THREE.Mesh(inletGeo, inletMat);
+            inlet.rotation.z = Math.PI / 2;
+            inlet.position.set(-0.55, 0.35, 0);
+            tiltDevice.add(inlet);
+
+            // 입구 플랜지
+            const inletFlangeGeo = new THREE.CylinderGeometry(0.15, 0.15, 0.05, 16);
+            const inletFlangeMat = new THREE.MeshBasicMaterial({ color: 0x1976d2 });
+            const inletFlange = new THREE.Mesh(inletFlangeGeo, inletFlangeMat);
+            inletFlange.rotation.z = Math.PI / 2;
+            inletFlange.position.set(-0.75, 0.35, 0);
+            tiltDevice.add(inletFlange);
+
+            // 출구 파이프 (오른쪽)
+            const outletGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.4, 16);
+            const outletMat = new THREE.MeshBasicMaterial({ color: 0xef5350 });
+            const outlet = new THREE.Mesh(outletGeo, outletMat);
+            outlet.rotation.z = Math.PI / 2;
+            outlet.position.set(0.55, 0.35, 0);
+            tiltDevice.add(outlet);
+
+            // 출구 플랜지
+            const outletFlangeGeo = new THREE.CylinderGeometry(0.15, 0.15, 0.05, 16);
+            const outletFlangeMat = new THREE.MeshBasicMaterial({ color: 0xc62828 });
+            const outletFlange = new THREE.Mesh(outletFlangeGeo, outletFlangeMat);
+            outletFlange.rotation.z = Math.PI / 2;
+            outletFlange.position.set(0.75, 0.35, 0);
+            tiltDevice.add(outletFlange);
+
+            // 베이스 플레이트
+            const baseGeo = new THREE.BoxGeometry(1.0, 0.08, 0.8);
+            const baseMat = new THREE.MeshBasicMaterial({ color: 0x37474f });
+            const base = new THREE.Mesh(baseGeo, baseMat);
+            base.position.y = -0.04;
+            tiltDevice.add(base);
+
+            // 베이스 외곽선
+            const baseEdges = new THREE.EdgesGeometry(baseGeo);
+            const baseLine = new THREE.LineSegments(baseEdges, new THREE.LineBasicMaterial({ color: 0xffffff }));
+            baseLine.position.y = -0.04;
+            tiltDevice.add(baseLine);
+
+            // 계기판 (압력 게이지)
+            const gaugeGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.03, 16);
+            const gaugeMat = new THREE.MeshBasicMaterial({ color: 0xffeb3b });
+            const gauge = new THREE.Mesh(gaugeGeo, gaugeMat);
+            gauge.rotation.x = Math.PI / 2;
+            gauge.position.set(0, 0.6, 0.38);
+            tiltDevice.add(gauge);
+
+            // 방향 표시 (상단 마커)
+            const markerGeo = new THREE.ConeGeometry(0.06, 0.15, 8);
+            const markerMat = new THREE.MeshBasicMaterial({ color: 0xff5252 });
+            const marker = new THREE.Mesh(markerGeo, markerMat);
+            marker.position.set(0, 1.1, 0);
+            tiltDevice.add(marker);
+
             tiltScene.add(tiltDevice);
-
-            // Light sensor indicator at top (yellow circle)
-            const sensorGeo = new THREE.CircleGeometry(0.06, 16);
-            const sensorMat = new THREE.MeshBasicMaterial({ color: 0xffeb3b });
-            const lightSensor = new THREE.Mesh(sensorGeo, sensorMat);
-            lightSensor.position.set(0, 0.5, 0.042);  // Top of phone
-            tiltDevice.add(lightSensor);
-
-            // TOP indicator (red triangle pointing up)
-            const topIndicatorGeo = new THREE.ConeGeometry(0.05, 0.1, 4);
-            const topIndicatorMat = new THREE.MeshBasicMaterial({ color: 0xff5252 });
-            const topIndicator = new THREE.Mesh(topIndicatorGeo, topIndicatorMat);
-            topIndicator.position.set(0, 0.7, 0);
-            topIndicator.rotation.z = Math.PI;
-            tiltDevice.add(topIndicator);
 
             // Ground plane for reference
             const groundGeo = new THREE.PlaneGeometry(3, 3);
             const groundMat = new THREE.MeshBasicMaterial({ color: 0x1a1a2e, side: THREE.DoubleSide, opacity: 0.5, transparent: true });
             const ground = new THREE.Mesh(groundGeo, groundMat);
             ground.rotation.x = -Math.PI / 2;
-            ground.position.y = -1;
+            ground.position.y = -0.5;
             tiltScene.add(ground);
 
             // Grid
             const grid = new THREE.GridHelper(3, 10, 0x333333, 0x222222);
-            grid.position.y = -0.99;
+            grid.position.y = -0.49;
             tiltScene.add(grid);
 
             animateTilt();
