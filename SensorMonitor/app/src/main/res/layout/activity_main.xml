@@ -83,6 +83,40 @@
 
         </LinearLayout>
 
+        <!-- Background Service Switch -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Background:"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/backgroundSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumbTint="#FF9800"
+                android:trackTint="#FFB74D" />
+
+            <TextView
+                android:id="@+id/backgroundStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OFF"
+                android:textSize="12sp"
+                android:textColor="#FFCDD2"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <!-- Sensor List -->

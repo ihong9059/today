@@ -2,6 +2,7 @@ package com.example.sensormonitor
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -65,6 +66,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener, LocationListener 
     private lateinit var dbStatusText: TextView
     private var dbSaveEnabled = false
 
+    private lateinit var backgroundSwitch: SwitchCompat
+    private lateinit var backgroundStatusText: TextView
+
     private val LOCATION_PERMISSION_REQUEST = 1001
     private val CAMERA_PERMISSION_REQUEST = 1002
 
@@ -114,6 +118,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, LocationListener 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         setupDbSwitch()
+        setupBackgroundSwitch()
         setupCameraSection()
         setupServerStatusSection()
         setupGpsSection()
@@ -136,6 +141,50 @@ class MainActivity : AppCompatActivity(), SensorEventListener, LocationListener 
                 dbStatusText.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_light))
             }
         }
+    }
+
+    private fun setupBackgroundSwitch() {
+        backgroundSwitch = findViewById(R.id.backgroundSwitch)
+        backgroundStatusText = findViewById(R.id.backgroundStatusText)
+
+        // Update switch state based on service status
+        backgroundSwitch.isChecked = SensorService.isRunning
+        updateBackgroundStatusText(SensorService.isRunning)
+
+        backgroundSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                startBackgroundService()
+            } else {
+                stopBackgroundService()
+            }
+            updateBackgroundStatusText(isChecked)
+        }
+    }
+
+    private fun updateBackgroundStatusText(isRunning: Boolean) {
+        if (isRunning) {
+            backgroundStatusText.text = "ON - Running in background"
+            backgroundStatusText.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_light))
+        } else {
+            backgroundStatusText.text = "OFF - Foreground only"
+            backgroundStatusText.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_light))
+        }
+    }
+
+    private fun startBackgroundService() {
+        val intent = Intent(this, SensorService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
+    }
+
+    private fun stopBackgroundService() {
+        val intent = Intent(this, SensorService::class.java).apply {
+            action = SensorService.ACTION_STOP
+        }
+        startService(intent)
     }
 
     private fun setupCameraSection() {
