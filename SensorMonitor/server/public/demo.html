@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTTEC 스마트팩토리 데모</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        header p {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        .industry-section {
+            margin-bottom: 40px;
+        }
+        .industry-title {
+            font-size: 1.3rem;
+            color: #00d4ff;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .company-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .company-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--company-color, #00d4ff);
+            box-shadow: 0 10px 40px rgba(0,212,255,0.2);
+        }
+        .company-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--company-color, #00d4ff);
+        }
+        .company-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        .company-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .company-industry {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        .equipment-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .equipment-tag {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+        }
+        .footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .real-monitor-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #00d4ff, #00ff88);
+            color: #000;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        .real-monitor-link:hover {
+            transform: scale(1.05);
+        }
+        .search-box {
+            max-width: 400px;
+            margin: 0 auto 40px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 25px;
+            border: 1px solid #333;
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+        .search-box input:focus {
+            border-color: #00d4ff;
+        }
+        .search-box input::placeholder {
+            color: #666;
+        }
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #00ff88;
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>UTTEC 스마트팩토리 솔루션</h1>
+            <p>업종별 맞춤 설비 모니터링 데모를 체험해 보세요</p>
+        </header>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="회사명 또는 업종으로 검색...">
+        </div>
+
+        <div id="companiesContainer"></div>
+
+        <div class="footer">
+            <p>실제 센서 데이터 모니터링</p>
+            <a href="/" class="real-monitor-link">실시간 모니터링 바로가기</a>
+        </div>
+    </div>
+
+    <script>
+        const industries = {
+            '분체/파쇄': { icon: '🏭', companies: [] },
+            '금속가공': { icon: '⚙️', companies: [] },
+            '식품가공': { icon: '🍜', companies: [] },
+            '화학/플라스틱': { icon: '🧪', companies: [] }
+        };
+
+        let allCompanies = [];
+
+        async function loadCompanies() {
+            try {
+                const response = await fetch('/api/demo/companies');
+                const data = await response.json();
+                allCompanies = data.companies;
+
+                // Group by industry
+                allCompanies.forEach(company => {
+                    if (industries[company.industry]) {
+                        industries[company.industry].companies.push(company);
+                    }
+                });
+
+                renderCompanies(allCompanies);
+            } catch (error) {
+                console.error('Failed to load companies:', error);
+            }
+        }
+
+        function renderCompanies(companies) {
+            const container = document.getElementById('companiesContainer');
+            container.innerHTML = '';
+
+            // Group filtered companies by industry
+            const grouped = {};
+            companies.forEach(company => {
+                if (!grouped[company.industry]) {
+                    grouped[company.industry] = [];
+                }
+                grouped[company.industry].push(company);
+            });
+
+            Object.keys(grouped).forEach(industry => {
+                const section = document.createElement('div');
+                section.className = 'industry-section';
+
+                const icon = industries[industry]?.icon || '🏢';
+                section.innerHTML = `
+                    <h2 class="industry-title">${icon} ${industry}</h2>
+                    <div class="company-grid">
+                        ${grouped[industry].map(company => `
+                            <div class="company-card"
+                                 style="--company-color: ${company.color}"
+                                 onclick="openDemo('${company.id}')">
+                                <span class="badge">DEMO</span>
+                                <div class="company-icon">${icon}</div>
+                                <div class="company-name">${company.name}</div>
+                                <div class="company-industry">${company.industry}</div>
+                                <div class="equipment-list">
+                                    ${company.equipment.map(eq => `
+                                        <span class="equipment-tag">${eq.name}</span>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(section);
+            });
+        }
+
+        function openDemo(companyId) {
+            window.location.href = `/demo-dashboard.html?company=${companyId}`;
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            if (!query) {
+                renderCompanies(allCompanies);
+                return;
+            }
+
+            const filtered = allCompanies.filter(company =>
+                company.name.toLowerCase().includes(query) ||
+                company.industry.toLowerCase().includes(query) ||
+                company.equipment.some(eq => eq.name.toLowerCase().includes(query))
+            );
+            renderCompanies(filtered);
+        });
+
+        loadCompanies();
+    </script>
+</body>
+</html>
