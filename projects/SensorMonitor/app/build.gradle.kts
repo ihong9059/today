@@ -52,6 +52,12 @@ dependencies {
     // Google Play Services Location (GPS)
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
+    // OkHttp for HTTP requests
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+    // Gson for JSON
+    implementation("com.google.code.gson:gson:2.10.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

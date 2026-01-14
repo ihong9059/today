@@ -8,3 +8,7 @@
 *.zip
 .DS_Store
 ffmpeg/
+downloads/
+*.apk
+*.exe
+.env

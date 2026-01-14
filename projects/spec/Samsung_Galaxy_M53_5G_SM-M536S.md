@@ -154,6 +154,204 @@ pkg install git vim nodejs
 
 ---
 
+## 센서 (총 26개)
+
+### 주요 센서
+
+| 센서 | 제조사 | 타입 | 최대 주파수 | 특징 |
+|------|--------|------|------------|------|
+| **LSM6DSL Accelerometer** | STM | 가속도계 | 500Hz | 연속, X/Y/Z |
+| **MMC5633 Magnetometer** | Memsic | 자기장 | 125Hz | 연속, X/Y/Z |
+| **LSM6DSL Gyroscope** | STM | 자이로스코프 | 500Hz | 연속, X/Y/Z |
+| **STK33910 Light** | Sitronix | 조도 | 5Hz | On-change |
+| **STK33910 Proximity** | Sitronix | 근접 | - | Wake-up |
+| **Palm Proximity Sensor v2** | Samsung | 근접 | - | Wake-up |
+
+### 복합 센서 (Samsung)
+
+| 센서 | 타입 | 최대 주파수 | 설명 |
+|------|------|------------|------|
+| **Samsung Gravity Sensor** | 중력 | 100Hz | 중력 벡터 (X/Y/Z) |
+| **Samsung Linear Acceleration** | 선형 가속 | 100Hz | 중력 제외 가속도 |
+| **Samsung Rotation Vector** | 회전 벡터 | 100Hz | 기기 방향 (쿼터니언) |
+| **Samsung Orientation Sensor** | 방향 | 100Hz | Azimuth/Pitch/Roll |
+| **Samsung Game Rotation Vector** | 게임 회전 | 100Hz | 게임용 회전 벡터 |
+
+### 동작 감지 센서
+
+| 센서 | 제조사 | 타입 | 설명 |
+|------|--------|------|------|
+| **Step Counter** | Samsung | 걸음 수 | 누적 걸음 수 카운트 |
+| **Step Detector** | Samsung | 걸음 감지 | 걸음 이벤트 트리거 |
+| **Significant Motion** | Samsung | 중요 움직임 | 이동 시작 감지 (Wake-up) |
+| **Tilt Detector** | Samsung | 기울기 | 기기 기울임 감지 |
+| **Pick Up Gesture** | Samsung | 픽업 | 기기 들어올림 감지 |
+| **Device Orientation** | Samsung | 기기 방향 | 세로/가로 모드 감지 |
+| **Wake Up Motion** | Samsung | 웨이크업 | 움직임으로 화면 켜기 |
+
+### 미보정 센서
+
+| 센서 | 제조사 | 최대 주파수 | 설명 |
+|------|--------|------------|------|
+| **Gyroscope Uncalibrated** | STM | 500Hz | 바이어스 포함 자이로 |
+| **Magnetometer Uncalibrated** | Memsic | 125Hz | 바이어스 포함 자기장 |
+
+### 특수 센서
+
+| 센서 | 제조사 | 설명 |
+|------|--------|------|
+| **ISG5320A Grip Sensor** | IMAGIS | 그립 감지 (Wake-up) |
+| **ISG5320A_SUB Grip Sensor** | IMAGIS | 서브 그립 센서 |
+| **STK33910 Light CCT** | Sitronix | 색온도 조도 센서 |
+| **STK33910 Auto Brightness** | Sitronix | 자동 밝기 센서 |
+| **Touch Proximity** | Samsung | 터치 근접 센서 |
+| **Camera Light Sensor** | Samsung | 카메라용 조도 센서 |
+| **VDIS Gyroscope** | Samsung | 비디오 손떨림 보정용 |
+| **Pocket Mode** | Samsung | 주머니 감지 |
+| **Call Gesture** | Samsung | 통화 제스처 |
+| **Motion Sensor** | Samsung | 모션 센서 |
+| **Interrupt Gyroscope** | Samsung | 인터럽트 자이로 |
+| **Scontext** | Samsung | 센서 컨텍스트 허브 |
+| **SBM** | Samsung | SAR 백오프 모션 |
+
+### GPS/위치 서비스
+
+| 항목 | 사양 |
+|------|------|
+| **GPS** | ✅ 지원 |
+| **A-GPS** | ✅ 지원 (Assisted GPS) |
+| **GNSS** | ✅ 지원 |
+| **Network Location** | ✅ 지원 (WiFi/Cell 기반) |
+| **Fused Location** | ✅ 지원 (Google FLP) |
+
+**GPS 상세:**
+- Vendor: MediaTek (MT6877)
+- GPS Version: 0x6877
+- LPP Protocol: 지원
+- 정확도: 약 8.4m (최근 측정)
+- 고도 측정: 지원
+
+### 센서 상세 스펙
+
+```
+LSM6DSL Accelerometer (STM)
+- Type: android.sensor.accelerometer
+- Range: ±78.45 m/s² (약 8G)
+- Resolution: 0.0024 m/s²
+- Min Rate: 6.25Hz, Max Rate: 500Hz
+- Power: 0.15mA
+
+MMC5633 Magnetometer (Memsic)
+- Type: android.sensor.magnetic_field
+- Range: ±3000 μT
+- Resolution: 0.0625 μT
+- Min Rate: 6.25Hz, Max Rate: 125Hz
+
+LSM6DSL Gyroscope (STM)
+- Type: android.sensor.gyroscope
+- Range: ±34.9 rad/s (약 2000°/s)
+- Resolution: 0.0011 rad/s
+- Min Rate: 6.25Hz, Max Rate: 500Hz
+
+STK33910 Light (Sitronix)
+- Type: android.sensor.light
+- Range: 0-65535 lux
+- Resolution: 1 lux
+- Rate: 5Hz
+
+STK33910 Proximity (Sitronix)
+- Type: android.sensor.proximity
+- Range: 0-5 cm
+- Wake-up sensor
+```
+
+---
+
+## Android System Services API
+
+앱 개발 시 활용 가능한 시스템 서비스 목록입니다.
+
+### 위치/센서 관련
+
+| 서비스 | API | 설명 | 권한 |
+|--------|-----|------|------|
+| **LocationManager** | `getSystemService(LOCATION_SERVICE)` | GPS, Network 위치 | `ACCESS_FINE_LOCATION` |
+| **SensorManager** | `getSystemService(SENSOR_SERVICE)` | 하드웨어 센서 (26개) | - |
+| **GnssStatus** | LocationManager 통해 | GPS 위성 상세 정보 | `ACCESS_FINE_LOCATION` |
+
+### 연결/통신
+
+| 서비스 | API | 설명 | 권한 |
+|--------|-----|------|------|
+| **WifiManager** | `getSystemService(WIFI_SERVICE)` | WiFi 상태, 스캔, 연결 | `ACCESS_WIFI_STATE` |
+| **BluetoothManager** | `getSystemService(BLUETOOTH_SERVICE)` | 블루투스 기기 | `BLUETOOTH` |
+| **TelephonyManager** | `getSystemService(TELEPHONY_SERVICE)` | 통화, 셀룰러, SIM 정보 | `READ_PHONE_STATE` |
+| **ConnectivityManager** | `getSystemService(CONNECTIVITY_SERVICE)` | 네트워크 상태 | `ACCESS_NETWORK_STATE` |
+| **NfcManager** | `getSystemService(NFC_SERVICE)` | NFC 태그 읽기/쓰기 | `NFC` |
+| **UsbManager** | `getSystemService(USB_SERVICE)` | USB 기기 연결 | - |
+
+### 전원/배터리
+
+| 서비스 | API | 설명 | 권한 |
+|--------|-----|------|------|
+| **BatteryManager** | `getSystemService(BATTERY_SERVICE)` | 배터리 상태, 충전량, 온도 | - |
+| **PowerManager** | `getSystemService(POWER_SERVICE)` | 전원 관리, Wake Lock | `WAKE_LOCK` |
+
+### 미디어/카메라
+
+| 서비스 | API | 설명 | 권한 |
+|--------|-----|------|------|
+| **CameraManager** | `getSystemService(CAMERA_SERVICE)` | 카메라 제어 | `CAMERA` |
+| **AudioManager** | `getSystemService(AUDIO_SERVICE)` | 오디오, 볼륨 | - |
+| **Vibrator** | `getSystemService(VIBRATOR_SERVICE)` | 진동 | `VIBRATE` |
+| **MediaRouter** | `getSystemService(MEDIA_ROUTER_SERVICE)` | 미디어 라우팅 | - |
+
+### 시스템 정보
+
+| 서비스 | API | 설명 | 권한 |
+|--------|-----|------|------|
+| **ActivityManager** | `getSystemService(ACTIVITY_SERVICE)` | 앱, 메모리 상태 | - |
+| **WindowManager** | `getSystemService(WINDOW_SERVICE)` | 화면 정보, 디스플레이 | - |
+| **InputMethodManager** | `getSystemService(INPUT_METHOD_SERVICE)` | 키보드 제어 | - |
+| **ClipboardManager** | `getSystemService(CLIPBOARD_SERVICE)` | 클립보드 | - |
+| **NotificationManager** | `getSystemService(NOTIFICATION_SERVICE)` | 알림 | `POST_NOTIFICATIONS` |
+| **AlarmManager** | `getSystemService(ALARM_SERVICE)` | 예약 작업 | - |
+| **DownloadManager** | `getSystemService(DOWNLOAD_SERVICE)` | 백그라운드 다운로드 | - |
+
+### 보안/생체인식
+
+| 서비스 | API | 설명 | 권한 |
+|--------|-----|------|------|
+| **BiometricManager** | `getSystemService(BIOMETRIC_SERVICE)` | 지문, 얼굴 인식 | `USE_BIOMETRIC` |
+| **KeyguardManager** | `getSystemService(KEYGUARD_SERVICE)` | 잠금화면 | - |
+
+### 사용 예시 (Kotlin)
+
+```kotlin
+// 위치 서비스
+val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 1f, listener)
+
+// 센서
+val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+sensorManager.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_UI)
+
+// WiFi
+val wifiManager = getSystemService(Context.WIFI_SERVICE) as WifiManager
+val wifiInfo = wifiManager.connectionInfo  // SSID, 신호강도 등
+
+// 배터리
+val batteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager
+val batteryLevel = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+
+// NFC
+val nfcManager = getSystemService(Context.NFC_SERVICE) as NfcManager
+val nfcAdapter = nfcManager.defaultAdapter
+```
+
+---
+
 ## 지원 ABI
 
 | 타입 | ABI |
@@ -215,6 +413,7 @@ Dimensity 900은 **APU 3.0**을 탑재하여 AI 연산 전용 하드웨어 가�
   - MediaTek APU 3.0 (AI 가속)
   - 5G 지원
   - 120Hz Super AMOLED 디스플레이
+  - 26개 센서 (500Hz 가속도계/자이로, 그립센서 등)
 
 - **단점**:
   - 특별한 단점 없음
