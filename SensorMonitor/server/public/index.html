@@ -489,6 +489,12 @@
             if (rotationCube) rotationCube.rotation.set(0, 0, 0);
             if (tiltDevice) tiltDevice.rotation.set(0, 0, 0);
 
+            // Send calibration reset to server (for demo pages)
+            if (ws && ws.readyState === 1) {
+                ws.send(JSON.stringify({ type: "calibrateReset" }));
+                console.log('Calibration reset sent to server');
+            }
+
             updateCalibrationUI();
             console.log('Manual calibration - Home set:', calHome);
         }
@@ -905,6 +911,15 @@
                 // 디버그: 실제 적용된 rotation 값 표시
                 document.getElementById('dbgModelX').textContent = (tiltDevice.rotation.x * toDeg).toFixed(1) + '°';
                 document.getElementById('dbgModelZ').textContent = (tiltDevice.rotation.z * toDeg).toFixed(1) + '°';
+
+                // 보정된 기울기를 서버로 전송 (데모 페이지용)
+                if (ws && ws.readyState === 1 && calHome) {
+                    ws.send(JSON.stringify({
+                        type: "calibratedOrientation",
+                        roll: finalRoll * toDeg,
+                        pitch: finalPitch * toDeg
+                    }));
+                }
             }
 
             document.getElementById('dbgCalHome').textContent = calHome ? 'SET' : 'null';

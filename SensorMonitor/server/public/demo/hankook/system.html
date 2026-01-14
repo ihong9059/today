@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시스템 구성 - 한국분체시스템 스마트팩토리</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,10,26,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .logo span { color: #fff; }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+        }
+
+        /* Header */
+        .page-header {
+            padding: 120px 30px 60px;
+            text-align: center;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 100%);
+        }
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+        .page-header p {
+            color: #888;
+            font-size: 1.2rem;
+        }
+
+        /* Section */
+        section {
+            padding: 80px 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-title h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .section-title p {
+            color: #888;
+        }
+
+        /* System Overview */
+        .system-overview {
+            background: #0f0f24;
+        }
+        .overview-diagram {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 40px;
+            align-items: center;
+            padding: 40px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .diagram-box {
+            background: rgba(37,99,235,0.1);
+            border: 1px solid rgba(37,99,235,0.3);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+        }
+        .diagram-box.sensors {
+            background: rgba(0,255,136,0.1);
+            border-color: rgba(0,255,136,0.3);
+        }
+        .diagram-box.cloud {
+            background: rgba(139,92,246,0.1);
+            border-color: rgba(139,92,246,0.3);
+        }
+        .diagram-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        .diagram-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .diagram-desc {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .diagram-center {
+            text-align: center;
+        }
+        .diagram-arrow {
+            color: #2563eb;
+            font-size: 2rem;
+            margin: 10px 0;
+        }
+        .gateway-box {
+            background: linear-gradient(135deg, rgba(37,99,235,0.2) 0%, rgba(0,255,136,0.1) 100%);
+            border: 2px solid #2563eb;
+            border-radius: 20px;
+            padding: 40px;
+        }
+        .gateway-box .diagram-icon {
+            font-size: 4rem;
+        }
+
+        /* Equipment Layout */
+        .equipment-layout {
+            background: #0a0a1a;
+        }
+        .factory-map {
+            position: relative;
+            height: 600px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+        #factory3d {
+            width: 100%;
+            height: 100%;
+        }
+        .equipment-legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        /* Sensor List */
+        .sensor-section {
+            background: #0f0f24;
+        }
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .sensor-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+        .sensor-card:hover {
+            border-color: #2563eb;
+            transform: translateY(-3px);
+        }
+        .sensor-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .sensor-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(37,99,235,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .sensor-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .sensor-type {
+            color: #888;
+            font-size: 0.85rem;
+        }
+        .sensor-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .spec-item {
+            font-size: 0.85rem;
+        }
+        .spec-label {
+            color: #666;
+        }
+        .spec-value {
+            color: #00ff88;
+            font-weight: 500;
+        }
+
+        /* Equipment Details */
+        .equipment-details {
+            background: #0a0a1a;
+        }
+        .equipment-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tab-btn:hover, .tab-btn.active {
+            background: rgba(37,99,235,0.2);
+            border-color: #2563eb;
+            color: #fff;
+        }
+        .equipment-content {
+            display: none;
+        }
+        .equipment-content.active {
+            display: block;
+        }
+        .equipment-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .info-section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .info-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #2563eb;
+        }
+        .info-table {
+            width: 100%;
+        }
+        .info-table tr {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .info-table td {
+            padding: 12px 0;
+        }
+        .info-table td:first-child {
+            color: #888;
+            width: 40%;
+        }
+
+        /* Sensor Summary */
+        .sensor-summary {
+            background: linear-gradient(135deg, #1a1a3e 0%, #0a0a1a 100%);
+            padding: 60px 30px;
+        }
+        .summary-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+        .summary-item {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 30px 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .summary-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #2563eb, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .summary-label {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Technical Specs */
+        .tech-specs {
+            background: #0a0a1a;
+        }
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+        .spec-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .spec-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .spec-card h3 span {
+            font-size: 1.5rem;
+        }
+        .spec-list {
+            list-style: none;
+        }
+        .spec-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .spec-list li:last-child {
+            border-bottom: none;
+        }
+        .spec-list .label {
+            color: #888;
+        }
+        .spec-list .value {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            padding: 80px 30px;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 100%);
+        }
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .cta p {
+            color: #888;
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            color: #fff;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(37,99,235,0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #050510;
+            padding: 40px 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        footer p {
+            color: #444;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .overview-diagram { grid-template-columns: 1fr; }
+            .equipment-info { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">HKPS <span>Smart Factory</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="system.html" class="active">시스템 구성</a></li>
+                <li><a href="monitor.html">실시간 모니터링</a></li>
+                <li><a href="about.html">UTTEC 소개</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>시스템 구성</h1>
+        <p>최소 10개 센서로 구성된 통합 모니터링 시스템</p>
+    </header>
+
+    <section class="system-overview">
+        <div class="section-title">
+            <h2>시스템 아키텍처</h2>
+            <p>Edge AI 기반 실시간 예지정비 시스템</p>
+        </div>
+        <div class="overview-diagram">
+            <div class="diagram-box sensors">
+                <div class="diagram-icon">📡</div>
+                <div class="diagram-title">센서 레이어</div>
+                <div class="diagram-desc">
+                    진동센서 4EA<br>
+                    온도센서 3EA<br>
+                    전류센서 2EA<br>
+                    압력센서 1EA
+                </div>
+            </div>
+            <div class="diagram-center">
+                <div class="diagram-arrow">→</div>
+                <div class="gateway-box">
+                    <div class="diagram-icon">🖥️</div>
+                    <div class="diagram-title">UTTEC Edge AI Gateway</div>
+                    <div class="diagram-desc">
+                        실시간 FFT 분석 | 이상 탐지 AI<br>
+                        잔여수명(RUL) 예측 | 알림 발송
+                    </div>
+                </div>
+                <div class="diagram-arrow">→</div>
+            </div>
+            <div class="diagram-box cloud">
+                <div class="diagram-icon">☁️</div>
+                <div class="diagram-title">클라우드 서버</div>
+                <div class="diagram-desc">
+                    데이터 저장<br>
+                    대시보드<br>
+                    리포트 생성
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sensor-summary">
+        <div class="summary-content">
+            <div class="section-title">
+                <h2>센서 구성 요약</h2>
+                <p>총 10개 센서로 핵심 설비를 완벽하게 모니터링</p>
+            </div>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-number">4</div>
+                    <div class="summary-label">진동 센서</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-number">3</div>
+                    <div class="summary-label">온도 센서</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-number">2</div>
+                    <div class="summary-label">전류 센서</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-number">1</div>
+                    <div class="summary-label">압력 센서</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-number">10</div>
+                    <div class="summary-label">총 센서 수</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sensor-section">
+        <div class="section-title">
+            <h2>센서 상세 사양</h2>
+            <p>산업용 고정밀 센서로 정확한 데이터 수집</p>
+        </div>
+        <div class="sensor-grid">
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">📳</div>
+                    <div>
+                        <div class="sensor-name">진동 센서 #1</div>
+                        <div class="sensor-type">분쇄기 모터 DE측</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">0~50 mm/s</span></div>
+                    <div class="spec-item"><span class="spec-label">주파수</span> <span class="spec-value">10~10kHz</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±2%</span></div>
+                    <div class="spec-item"><span class="spec-label">출력</span> <span class="spec-value">4-20mA</span></div>
+                </div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">📳</div>
+                    <div>
+                        <div class="sensor-name">진동 센서 #2</div>
+                        <div class="sensor-type">분쇄기 모터 NDE측</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">0~50 mm/s</span></div>
+                    <div class="spec-item"><span class="spec-label">주파수</span> <span class="spec-value">10~10kHz</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±2%</span></div>
+                    <div class="spec-item"><span class="spec-label">출력</span> <span class="spec-value">4-20mA</span></div>
+                </div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">📳</div>
+                    <div>
+                        <div class="sensor-name">진동 센서 #3</div>
+                        <div class="sensor-type">혼합기 감속기</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">0~30 mm/s</span></div>
+                    <div class="spec-item"><span class="spec-label">주파수</span> <span class="spec-value">10~5kHz</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±2%</span></div>
+                    <div class="spec-item"><span class="spec-label">출력</span> <span class="spec-value">4-20mA</span></div>
+                </div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">📳</div>
+                    <div>
+                        <div class="sensor-name">진동 센서 #4</div>
+                        <div class="sensor-type">집진기 팬 모터</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">0~50 mm/s</span></div>
+                    <div class="spec-item"><span class="spec-label">주파수</span> <span class="spec-value">10~10kHz</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±2%</span></div>
+                    <div class="spec-item"><span class="spec-label">출력</span> <span class="spec-value">4-20mA</span></div>
+                </div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">🌡️</div>
+                    <div>
+                        <div class="sensor-name">온도 센서 #1</div>
+                        <div class="sensor-type">분쇄기 베어링 DE측</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">-40~200°C</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±0.5°C</span></div>
+                    <div class="spec-item"><span class="spec-label">응답시간</span> <span class="spec-value">< 1초</span></div>
+                    <div class="spec-item"><span class="spec-label">타입</span> <span class="spec-value">PT100</span></div>
+                </div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">🌡️</div>
+                    <div>
+                        <div class="sensor-name">온도 센서 #2</div>
+                        <div class="sensor-type">분쇄기 베어링 NDE측</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">-40~200°C</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±0.5°C</span></div>
+                    <div class="spec-item"><span class="spec-label">응답시간</span> <span class="spec-value">< 1초</span></div>
+                    <div class="spec-item"><span class="spec-label">타입</span> <span class="spec-value">PT100</span></div>
+                </div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">🌡️</div>
+                    <div>
+                        <div class="sensor-name">온도 센서 #3</div>
+                        <div class="sensor-type">혼합기 모터</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">-40~200°C</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±0.5°C</span></div>
+                    <div class="spec-item"><span class="spec-label">응답시간</span> <span class="spec-value">< 1초</span></div>
+                    <div class="spec-item"><span class="spec-label">타입</span> <span class="spec-value">PT100</span></div>
+                </div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">⚡</div>
+                    <div>
+                        <div class="sensor-name">전류 센서 #1</div>
+                        <div class="sensor-type">분쇄기 메인 모터</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">0~100A</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±1%</span></div>
+                    <div class="spec-item"><span class="spec-label">대역폭</span> <span class="spec-value">DC~1kHz</span></div>
+                    <div class="spec-item"><span class="spec-label">타입</span> <span class="spec-value">CT</span></div>
+                </div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">⚡</div>
+                    <div>
+                        <div class="sensor-name">전류 센서 #2</div>
+                        <div class="sensor-type">혼합기 메인 모터</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">0~50A</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±1%</span></div>
+                    <div class="spec-item"><span class="spec-label">대역폭</span> <span class="spec-value">DC~1kHz</span></div>
+                    <div class="spec-item"><span class="spec-label">타입</span> <span class="spec-value">CT</span></div>
+                </div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-icon">💨</div>
+                    <div>
+                        <div class="sensor-name">차압 센서 #1</div>
+                        <div class="sensor-type">집진기 백필터</div>
+                    </div>
+                </div>
+                <div class="sensor-specs">
+                    <div class="spec-item"><span class="spec-label">측정범위</span> <span class="spec-value">0~3000 Pa</span></div>
+                    <div class="spec-item"><span class="spec-label">정확도</span> <span class="spec-value">±0.5%</span></div>
+                    <div class="spec-item"><span class="spec-label">응답시간</span> <span class="spec-value">< 100ms</span></div>
+                    <div class="spec-item"><span class="spec-label">출력</span> <span class="spec-value">4-20mA</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="equipment-details">
+        <div class="section-title">
+            <h2>대상 설비</h2>
+            <p>모니터링 대상 핵심 설비 상세</p>
+        </div>
+        <div class="equipment-tabs">
+            <button class="tab-btn active" onclick="showEquipment('crusher')">분쇄기</button>
+            <button class="tab-btn" onclick="showEquipment('mixer')">혼합기</button>
+            <button class="tab-btn" onclick="showEquipment('collector')">집진기</button>
+        </div>
+
+        <div id="crusher" class="equipment-content active">
+            <div class="equipment-info">
+                <div class="info-section">
+                    <h3>설비 정보</h3>
+                    <table class="info-table">
+                        <tr><td>설비명</td><td>에어-제트 밀 (Air-Jet Mill)</td></tr>
+                        <tr><td>모델</td><td>HK-AJM-500</td></tr>
+                        <tr><td>용량</td><td>500 kg/h</td></tr>
+                        <tr><td>모터 출력</td><td>55 kW</td></tr>
+                        <tr><td>회전수</td><td>3,600 RPM</td></tr>
+                        <tr><td>분쇄 입도</td><td>1~50 μm</td></tr>
+                    </table>
+                </div>
+                <div class="info-section">
+                    <h3>센서 배치</h3>
+                    <table class="info-table">
+                        <tr><td>진동 센서</td><td>2EA (DE/NDE 베어링)</td></tr>
+                        <tr><td>온도 센서</td><td>2EA (베어링 온도)</td></tr>
+                        <tr><td>전류 센서</td><td>1EA (모터 전류)</td></tr>
+                        <tr><td>모니터링 항목</td><td>진동, 온도, 전류, 회전수</td></tr>
+                        <tr><td>예측 기능</td><td>베어링 RUL, 분쇄날 마모</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="mixer" class="equipment-content">
+            <div class="equipment-info">
+                <div class="info-section">
+                    <h3>설비 정보</h3>
+                    <table class="info-table">
+                        <tr><td>설비명</td><td>리본 믹서 (Ribbon Mixer)</td></tr>
+                        <tr><td>모델</td><td>HK-RM-300</td></tr>
+                        <tr><td>용량</td><td>3,000 L</td></tr>
+                        <tr><td>모터 출력</td><td>22 kW</td></tr>
+                        <tr><td>회전수</td><td>30~100 RPM (가변)</td></tr>
+                        <tr><td>혼합 시간</td><td>5~30 분</td></tr>
+                    </table>
+                </div>
+                <div class="info-section">
+                    <h3>센서 배치</h3>
+                    <table class="info-table">
+                        <tr><td>진동 센서</td><td>1EA (감속기)</td></tr>
+                        <tr><td>온도 센서</td><td>1EA (모터)</td></tr>
+                        <tr><td>전류 센서</td><td>1EA (모터 전류)</td></tr>
+                        <tr><td>모니터링 항목</td><td>진동, 온도, 전류, 토크</td></tr>
+                        <tr><td>예측 기능</td><td>감속기 상태, 과부하 예측</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="collector" class="equipment-content">
+            <div class="equipment-info">
+                <div class="info-section">
+                    <h3>설비 정보</h3>
+                    <table class="info-table">
+                        <tr><td>설비명</td><td>백필터 집진기</td></tr>
+                        <tr><td>모델</td><td>HK-BF-200</td></tr>
+                        <tr><td>처리 풍량</td><td>200 m³/min</td></tr>
+                        <tr><td>팬 모터</td><td>37 kW</td></tr>
+                        <tr><td>필터 면적</td><td>150 m²</td></tr>
+                        <tr><td>필터 수량</td><td>120 EA</td></tr>
+                    </table>
+                </div>
+                <div class="info-section">
+                    <h3>센서 배치</h3>
+                    <table class="info-table">
+                        <tr><td>진동 센서</td><td>1EA (팬 모터)</td></tr>
+                        <tr><td>차압 센서</td><td>1EA (필터 차압)</td></tr>
+                        <tr><td>모니터링 항목</td><td>차압, 진동, 풍량</td></tr>
+                        <tr><td>예측 기능</td><td>필터 교체 시기, 팬 상태</td></tr>
+                        <tr><td>안전 기능</td><td>분진 폭발 위험 조기 경보</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-specs">
+        <div class="section-title">
+            <h2>Edge AI Gateway 사양</h2>
+            <p>현장에서 실시간 분석을 수행하는 핵심 장비</p>
+        </div>
+        <div class="specs-grid">
+            <div class="spec-card">
+                <h3><span>🖥️</span> 하드웨어 사양</h3>
+                <ul class="spec-list">
+                    <li><span class="label">MCU</span><span class="value">ARM Cortex-M4 + DSP</span></li>
+                    <li><span class="label">메모리</span><span class="value">512KB Flash, 256KB RAM</span></li>
+                    <li><span class="label">아날로그 입력</span><span class="value">8ch (4-20mA, 0-10V)</span></li>
+                    <li><span class="label">디지털 I/O</span><span class="value">8ch 입력, 4ch 출력</span></li>
+                    <li><span class="label">통신</span><span class="value">RS-485, Ethernet, WiFi</span></li>
+                    <li><span class="label">전원</span><span class="value">24VDC, 10W</span></li>
+                </ul>
+            </div>
+            <div class="spec-card">
+                <h3><span>📊</span> 분석 기능</h3>
+                <ul class="spec-list">
+                    <li><span class="label">FFT 분석</span><span class="value">실시간 주파수 분석</span></li>
+                    <li><span class="label">Envelope 분석</span><span class="value">베어링 결함 검출</span></li>
+                    <li><span class="label">Cepstrum 분석</span><span class="value">기어 결함 검출</span></li>
+                    <li><span class="label">이상 탐지</span><span class="value">AI 기반 자동 감지</span></li>
+                    <li><span class="label">RUL 예측</span><span class="value">잔여수명 예측</span></li>
+                    <li><span class="label">샘플링</span><span class="value">최대 25.6 kHz</span></li>
+                </ul>
+            </div>
+            <div class="spec-card">
+                <h3><span>🔌</span> 통신 프로토콜</h3>
+                <ul class="spec-list">
+                    <li><span class="label">Modbus RTU/TCP</span><span class="value">지원</span></li>
+                    <li><span class="label">MQTT</span><span class="value">AWS IoT, Azure</span></li>
+                    <li><span class="label">HTTP REST</span><span class="value">API 제공</span></li>
+                    <li><span class="label">OPC-UA</span><span class="value">옵션</span></li>
+                    <li><span class="label">데이터 저장</span><span class="value">로컬 24시간</span></li>
+                    <li><span class="label">보안</span><span class="value">TLS 1.3</span></li>
+                </ul>
+            </div>
+            <div class="spec-card">
+                <h3><span>🛡️</span> 환경 사양</h3>
+                <ul class="spec-list">
+                    <li><span class="label">동작 온도</span><span class="value">-20~60°C</span></li>
+                    <li><span class="label">보호 등급</span><span class="value">IP65</span></li>
+                    <li><span class="label">방폭</span><span class="value">Ex ia IIC T4 옵션</span></li>
+                    <li><span class="label">인증</span><span class="value">KC, CE, FCC</span></li>
+                    <li><span class="label">MTBF</span><span class="value">> 100,000 시간</span></li>
+                    <li><span class="label">보증</span><span class="value">2년</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>실시간 모니터링 체험</h2>
+        <p>실제 데이터 기반 모니터링 화면을 직접 확인해 보세요</p>
+        <a href="monitor.html" class="btn">모니터링 데모 시작</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 UTTEC. All rights reserved. | 한국분체시스템 스마트팩토리 데모</p>
+    </footer>
+
+    <script>
+        function showEquipment(id) {
+            document.querySelectorAll('.equipment-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
