@@ -45,7 +45,7 @@ class SensorService : Service(), SensorEventListener, LocationListener {
     private var currentGpsLocation: Location? = null
     private var currentNetworkLocation: Location? = null
 
-    private val SERVER_URL = "http://52.78.119.132:5000/api/sensor"
+    private val SERVER_URL = "http://3.36.86.100:5000/api/sensor"
     private val SEND_INTERVAL_MS = 3000L
 
     private val executor = Executors.newSingleThreadExecutor()

@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, LocationListener 
     private val LOCATION_PERMISSION_REQUEST = 1001
     private val CAMERA_PERMISSION_REQUEST = 1002
 
-    private val SERVER_URL = "http://52.78.119.132:5000/api/sensor"
+    private val SERVER_URL = "http://3.36.86.100:5000/api/sensor"
     private val SEND_INTERVAL_MS = 3000L
 
     private val executor = Executors.newSingleThreadExecutor()
