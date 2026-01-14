@@ -71,3 +71,18 @@ https://www.kmim.co.kr : 1
 https://www.dmfurnace.com : 1
 
 
+현재의 factory Sensor monitor의 web server를 
+여러회사의 monitoring server로 분리해서 제공할려고 합니다.
+
+우선 demo용으로 만들어서 관련회사에 적용할수있는 부분을 협의할려고 합니다.
+simulation용으로 적용 가능한 web server를 만들어 주세요.
+추가된 자료를 근거로 web site를 어떻게 구성하는것이 좋은지, 어떻게 demo site를 만들지에 대한
+계획서를 만들어 주세요.
+
+회사별로 별도의 사이트를 운영해야합니다.
+메인 page에는 제안회사에 이 monitoring 시스템을 적용하는 의미와 필요성등을 설명하고,
+전체 시스템의 구성(최소 sensor 수량: 10개)을 설명하는 page,
+실제 data에 따라 진행되는 상황을 보여주는 page
+(이상이 발생할때 대응하는 상황, 이상을 예측하는 예지기능 포함, 스마트폰의 기울기가 반영되도록함),
+제안하는 uttec의 소개 page
+로 구성해주세요.
