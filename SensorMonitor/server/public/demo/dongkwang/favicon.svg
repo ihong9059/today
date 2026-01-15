@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a5f7a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#159895;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="panelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="url(#bgGrad)" stroke="#159895" stroke-width="2"/>
+
+  <!-- Electric panel representation -->
+  <!-- Main cabinet -->
+  <rect x="25" y="20" width="50" height="60" rx="4" fill="url(#panelGrad)" stroke="#1a5f7a" stroke-width="1.5"/>
+
+  <!-- Panel face -->
+  <rect x="28" y="23" width="44" height="54" rx="2" fill="#e8f5e9"/>
+
+  <!-- MCCB slots (3x2) -->
+  <rect x="32" y="27" width="14" height="10" rx="2" fill="#1a5f7a"/>
+  <rect x="54" y="27" width="14" height="10" rx="2" fill="#1a5f7a"/>
+  <rect x="32" y="41" width="14" height="10" rx="2" fill="#1a5f7a"/>
+  <rect x="54" y="41" width="14" height="10" rx="2" fill="#1a5f7a"/>
+  <rect x="32" y="55" width="14" height="10" rx="2" fill="#1a5f7a"/>
+  <rect x="54" y="55" width="14" height="10" rx="2" fill="#1a5f7a"/>
+
+  <!-- LED indicators -->
+  <circle cx="39" cy="69" r="3" fill="#4caf50"/>
+  <circle cx="50" cy="69" r="3" fill="#4caf50"/>
+  <circle cx="61" cy="69" r="3" fill="#4caf50"/>
+
+  <!-- Sensor indicator (top right) -->
+  <circle cx="78" cy="25" r="8" fill="#57c5b6" opacity="0.9"/>
+  <circle cx="78" cy="25" r="4" fill="#ffffff"/>
+  <circle cx="78" cy="25" r="12" fill="none" stroke="#57c5b6" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="78" cy="25" r="16" fill="none" stroke="#57c5b6" stroke-width="1" opacity="0.3"/>
+</svg>
