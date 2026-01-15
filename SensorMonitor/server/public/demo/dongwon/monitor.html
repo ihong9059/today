@@ -585,6 +585,8 @@
         let targetRotation = { x: 0, y: 0, z: 0 };
         let currentRotation = { x: 0, y: 0, z: 0 };
         let useRealOrientation = false;
+        let remoteOrientation = { alpha: 0, beta: 0, gamma: 0 };
+        let calibratedOrientation = { roll: 0, pitch: 0 };
         let ws = null;
 
         function init() {
@@ -625,6 +627,9 @@
 
             window.addEventListener('resize', onWindowResize);
             animate();
+
+            // Initialize WebSocket connection
+            initWebSocket();
         }
 
         function createPinMill() {
@@ -852,63 +857,83 @@
             renderer.setSize(width, height);
         }
 
-        // Orientation handling
-        function toggleOrientationSource() {
-            useRealOrientation = document.getElementById('orientationToggle').checked;
-            if (useRealOrientation) {
-                connectWebSocket();
-                initOrientation();
-            } else {
-                if (ws) ws.close();
-                document.getElementById('wsStatus').classList.remove('connected');
-            }
-        }
+        // WebSocket connection for remote orientation
+        function initWebSocket() {
+            const wsUrl = `ws://${window.location.host}`;
+            ws = new WebSocket(wsUrl);
 
-        function connectWebSocket() {
-            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            ws = new WebSocket(`${protocol}//${window.location.host}`);
-
-            ws.onopen = () => {
+            ws.onopen = function() {
+                console.log('WebSocket connected');
                 document.getElementById('wsStatus').classList.add('connected');
             };
 
-            ws.onmessage = (event) => {
+            ws.onmessage = function(event) {
                 try {
                     const data = JSON.parse(event.data);
-                    if (data.type === 'orientation') {
-                        targetRotation.x = data.beta * Math.PI / 180;
-                        targetRotation.y = data.alpha * Math.PI / 180;
-                        targetRotation.z = data.gamma * Math.PI / 180;
-                        updateOrientationDisplay(data.alpha, data.beta, data.gamma);
-                    }
-                } catch (e) {}
-            };
 
-            ws.onclose = () => {
-                document.getElementById('wsStatus').classList.remove('connected');
-            };
-        }
-
-        function initOrientation() {
-            if (typeof DeviceOrientationEvent !== 'undefined' &&
-                typeof DeviceOrientationEvent.requestPermission === 'function') {
-                DeviceOrientationEvent.requestPermission()
-                    .then(response => {
-                        if (response === 'granted') {
-                            window.addEventListener('deviceorientation', handleOrientation);
+                    // Handle calibration reset from main dashboard
+                    if (data.type === 'calibrateReset') {
+                        console.log('Calibration reset received');
+                        targetRotation = { x: 0, y: 0, z: 0 };
+                        currentRotation = { x: 0, y: 0, z: 0 };
+                        calibratedOrientation = { roll: 0, pitch: 0 };
+                        if (equipment) {
+                            equipment.rotation.x = 0;
+                            equipment.rotation.y = 0;
+                            equipment.rotation.z = 0;
                         }
-                    });
-            } else {
-                window.addEventListener('deviceorientation', handleOrientation);
-            }
+                        updateOrientationDisplay(0, 0, 0);
+                        return;
+                    }
+
+                    // Handle calibrated orientation from main dashboard
+                    if (data.type === 'calibratedOrientation') {
+                        calibratedOrientation = {
+                            roll: data.roll || 0,
+                            pitch: data.pitch || 0
+                        };
+                        if (useRealOrientation) {
+                            updateOrientationDisplay(0, calibratedOrientation.pitch, calibratedOrientation.roll);
+                        }
+                        return;
+                    }
+
+                    // Handle raw orientation data
+                    if (data.orientation && data.orientation.timestamp) {
+                        remoteOrientation = {
+                            alpha: data.orientation.alpha || 0,
+                            beta: data.orientation.beta || 0,
+                            gamma: data.orientation.gamma || 0
+                        };
+                        if (useRealOrientation) {
+                            updateOrientationDisplay(remoteOrientation.alpha, remoteOrientation.beta, remoteOrientation.gamma);
+                        }
+                    }
+                } catch (e) {
+                    console.error('WebSocket message parse error:', e);
+                }
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket disconnected');
+                document.getElementById('wsStatus').classList.remove('connected');
+                // Reconnect after 3 seconds
+                setTimeout(initWebSocket, 3000);
+            };
+
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
         }
 
-        function handleOrientation(event) {
-            if (!useRealOrientation) return;
-            targetRotation.x = (event.beta || 0) * Math.PI / 180;
-            targetRotation.y = (event.alpha || 0) * Math.PI / 180;
-            targetRotation.z = (event.gamma || 0) * Math.PI / 180;
-            updateOrientationDisplay(event.alpha || 0, event.beta || 0, event.gamma || 0);
+        // Orientation handling
+        function toggleOrientationSource() {
+            useRealOrientation = document.getElementById('orientationToggle').checked;
+            if (!useRealOrientation) {
+                // Reset to default when turning off
+                targetRotation = { x: 0, y: 0, z: 0 };
+                currentRotation = { x: 0, y: 0, z: 0 };
+            }
         }
 
         function updateOrientationDisplay(alpha, beta, gamma) {
@@ -922,12 +947,18 @@
 
             if (equipment) {
                 if (useRealOrientation) {
+                    // Use calibrated orientation from main dashboard (degrees to radians)
+                    const toRad = Math.PI / 180;
+                    targetRotation.z = calibratedOrientation.roll * toRad;   // Roll -> Z axis rotation
+                    targetRotation.x = calibratedOrientation.pitch * toRad;  // Pitch -> X axis rotation
+
                     currentRotation.x += (targetRotation.x - currentRotation.x) * 0.1;
                     currentRotation.y += (targetRotation.y - currentRotation.y) * 0.1;
                     currentRotation.z += (targetRotation.z - currentRotation.z) * 0.1;
                     equipment.rotation.x = currentRotation.x;
-                    equipment.rotation.y = currentRotation.y;
                     equipment.rotation.z = currentRotation.z;
+                    // Small Y rotation for visual effect
+                    equipment.rotation.y = Math.sin(Date.now() * 0.001 * 0.5) * 0.05;
                 } else if (autoRotate) {
                     equipment.rotation.y += 0.005;
                 }
