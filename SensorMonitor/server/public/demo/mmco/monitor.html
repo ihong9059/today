@@ -58,6 +58,73 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
+        .header-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .orientation-status {
+            font-size: 0.8rem;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .orientation-status.active {
+            color: #00d4aa;
+        }
+        .orientation-status.remote {
+            color: #ff9500;
+        }
+        .source-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+        .source-toggle label {
+            color: #888;
+            cursor: pointer;
+        }
+        .source-toggle input[type="checkbox"] {
+            appearance: none;
+            width: 36px;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .source-toggle input[type="checkbox"]::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s;
+        }
+        .source-toggle input[type="checkbox"]:checked {
+            background: #ff9500;
+        }
+        .source-toggle input[type="checkbox"]:checked::after {
+            left: 18px;
+        }
+        .ws-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #666;
+        }
+        .ws-status.connected {
+            background: #00d4aa;
+        }
 
         /* Main Layout */
         .main-container {
@@ -90,6 +157,11 @@
             top: 20px;
             left: 20px;
             min-width: 200px;
+        }
+        .overlay-panel.top-right {
+            top: 20px;
+            right: 20px;
+            min-width: 250px;
         }
         .overlay-panel.bottom-left {
             bottom: 20px;
@@ -390,6 +462,29 @@
             flex-shrink: 0;
         }
 
+        /* Orientation Display */
+        .orientation-display {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 12px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+        .orient-item {
+            font-size: 0.75rem;
+        }
+        .orient-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+        .orient-label {
+            color: #666;
+            font-size: 0.7rem;
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
             .main-container {
@@ -420,6 +515,17 @@
             <span class="company-name">광산기공</span>
             <span class="live-badge">LIVE</span>
         </div>
+        <div class="header-right">
+            <div class="source-toggle">
+                <span class="ws-status" id="wsStatus"></span>
+                <label>실제 스마트폰</label>
+                <input type="checkbox" id="useRemoteOrientation" onchange="toggleOrientationSource()">
+            </div>
+            <div class="orientation-status" id="orientationStatus">
+                <span>📱</span>
+                <span id="orientText">기울기 센서 대기중...</span>
+            </div>
+        </div>
     </header>
 
     <div class="main-container">
@@ -430,6 +536,25 @@
             <div class="overlay-panel top-left">
                 <div class="panel-title">설비 현황</div>
                 <ul class="equipment-status-list" id="equipmentList"></ul>
+            </div>
+
+            <!-- Orientation Panel -->
+            <div class="overlay-panel top-right">
+                <div class="panel-title">설비 자세 (기울기)</div>
+                <div class="orientation-display">
+                    <div class="orient-item">
+                        <div class="orient-value" id="alphaVal">0°</div>
+                        <div class="orient-label">Alpha (Z)</div>
+                    </div>
+                    <div class="orient-item">
+                        <div class="orient-value" id="betaVal">0°</div>
+                        <div class="orient-label">Beta (X)</div>
+                    </div>
+                    <div class="orient-item">
+                        <div class="orient-value" id="gammaVal">0°</div>
+                        <div class="orient-label">Gamma (Y)</div>
+                    </div>
+                </div>
             </div>
 
             <!-- Prediction Panel -->
@@ -586,8 +711,20 @@
 
         // Three.js
         let scene, camera, renderer, equipmentMeshes = {};
+        let targetRotation = { x: 0, y: 0 };
+        let currentRotation = { x: 0, y: 0 };
         let selectionArrow = null;
         let selectionRing = null;
+
+        // Device Orientation
+        let orientationEnabled = false;
+        let deviceOrientation = { alpha: 0, beta: 0, gamma: 0 };
+
+        // Remote orientation (from real smartphone via WebSocket)
+        let useRemoteOrientation = false;
+        let remoteOrientation = { alpha: 0, beta: 0, gamma: 0 };
+        let calibratedOrientation = { roll: 0, pitch: 0 };
+        let ws = null;
 
         // Initialize
         function init() {
@@ -596,7 +733,152 @@
             renderSensorCards();
             init3D();
             initChart();
+            initOrientation();
+            initWebSocket();
             startSimulation();
+        }
+
+        // WebSocket connection for remote orientation
+        function initWebSocket() {
+            const wsUrl = `ws://${window.location.host}`;
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = function() {
+                console.log('WebSocket connected');
+                document.getElementById('wsStatus').classList.add('connected');
+            };
+
+            ws.onmessage = function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+
+                    // Handle calibration reset from main dashboard
+                    if (data.type === 'calibrateReset') {
+                        console.log('Calibration reset received');
+                        targetRotation = { x: 0, y: 0 };
+                        currentRotation = { x: 0, y: 0 };
+                        calibratedOrientation = { roll: 0, pitch: 0 };
+
+                        Object.keys(equipmentMeshes).forEach(eqId => {
+                            const mesh = equipmentMeshes[eqId];
+                            mesh.rotation.x = 0;
+                            mesh.rotation.y = 0;
+                            mesh.rotation.z = 0;
+                        });
+
+                        updateOrientationDisplay({ alpha: 0, beta: 0, gamma: 0 });
+                        return;
+                    }
+
+                    // Handle calibrated orientation from main dashboard
+                    if (data.type === 'calibratedOrientation') {
+                        calibratedOrientation = {
+                            roll: data.roll || 0,
+                            pitch: data.pitch || 0
+                        };
+
+                        if (useRemoteOrientation) {
+                            updateOrientationDisplay({
+                                alpha: 0,
+                                beta: calibratedOrientation.pitch,
+                                gamma: calibratedOrientation.roll
+                            });
+                        }
+                        return;
+                    }
+
+                    if (data.orientation && data.orientation.timestamp) {
+                        remoteOrientation = {
+                            alpha: data.orientation.alpha || 0,
+                            beta: data.orientation.beta || 0,
+                            gamma: data.orientation.gamma || 0
+                        };
+
+                        if (useRemoteOrientation) {
+                            updateOrientationDisplay(remoteOrientation);
+                        }
+                    }
+                } catch (e) {
+                    console.error('WebSocket message parse error:', e);
+                }
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket disconnected');
+                document.getElementById('wsStatus').classList.remove('connected');
+                setTimeout(initWebSocket, 3000);
+            };
+
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+        }
+
+        function toggleOrientationSource() {
+            useRemoteOrientation = document.getElementById('useRemoteOrientation').checked;
+            const statusEl = document.getElementById('orientationStatus');
+
+            if (useRemoteOrientation) {
+                statusEl.classList.remove('active');
+                statusEl.classList.add('remote');
+                document.getElementById('orientText').textContent = '실제 스마트폰 기울기 사용 중';
+            } else {
+                statusEl.classList.remove('remote');
+                if (orientationEnabled) {
+                    statusEl.classList.add('active');
+                    document.getElementById('orientText').textContent = '로컬 기울기 감지 중';
+                } else {
+                    document.getElementById('orientText').textContent = '기울기 센서 대기중...';
+                }
+            }
+        }
+
+        function updateOrientationDisplay(orient) {
+            document.getElementById('alphaVal').textContent = orient.alpha.toFixed(0) + '°';
+            document.getElementById('betaVal').textContent = orient.beta.toFixed(0) + '°';
+            document.getElementById('gammaVal').textContent = orient.gamma.toFixed(0) + '°';
+        }
+
+        // Device Orientation
+        function initOrientation() {
+            if (typeof DeviceOrientationEvent !== 'undefined') {
+                if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    document.body.addEventListener('click', requestOrientationPermission, { once: true });
+                    document.getElementById('orientText').textContent = '화면을 탭하여 기울기 활성화';
+                } else {
+                    window.addEventListener('deviceorientation', handleOrientation);
+                    document.getElementById('orientText').textContent = '기울기 감지 중...';
+                }
+            } else {
+                document.getElementById('orientText').textContent = '기울기 센서 미지원';
+            }
+        }
+
+        async function requestOrientationPermission() {
+            try {
+                const permission = await DeviceOrientationEvent.requestPermission();
+                if (permission === 'granted') {
+                    window.addEventListener('deviceorientation', handleOrientation);
+                    document.getElementById('orientText').textContent = '기울기 감지 중...';
+                }
+            } catch (error) {
+                console.error('Orientation permission error:', error);
+            }
+        }
+
+        function handleOrientation(event) {
+            orientationEnabled = true;
+            deviceOrientation = {
+                alpha: event.alpha || 0,
+                beta: event.beta || 0,
+                gamma: event.gamma || 0
+            };
+
+            if (!useRemoteOrientation) {
+                document.getElementById('orientationStatus').classList.add('active');
+                document.getElementById('orientText').textContent = '로컬 기울기 반영 중';
+                updateOrientationDisplay(deviceOrientation);
+            }
         }
 
         function initSensorData() {
@@ -955,6 +1237,21 @@
         function animate() {
             requestAnimationFrame(animate);
 
+            // Use calibrated orientation from main page if remote is enabled
+            if (useRemoteOrientation) {
+                const toRad = Math.PI / 180;
+                targetRotation.y = calibratedOrientation.roll * toRad;
+                targetRotation.x = calibratedOrientation.pitch * toRad;
+            } else if (orientationEnabled) {
+                const gamma = deviceOrientation.gamma || 0;
+                const beta = deviceOrientation.beta || 0;
+                targetRotation.y = gamma * 0.03;
+                targetRotation.x = beta * 0.03;
+            }
+
+            currentRotation.x += (targetRotation.x - currentRotation.x) * 0.1;
+            currentRotation.y += (targetRotation.y - currentRotation.y) * 0.1;
+
             const time = Date.now() * 0.001;
 
             // Arrow animation
@@ -967,12 +1264,25 @@
                 selectionRing.rotation.z = time * 0.5;
             }
 
-            // Equipment animation
+            // Equipment animation with orientation
             Object.keys(equipmentMeshes).forEach(eqId => {
                 const mesh = equipmentMeshes[eqId];
-                if (eqId === 'screen') {
+
+                if (eqId === selectedEquipment) {
+                    // Selected equipment follows device orientation
+                    mesh.rotation.x = currentRotation.x;
+                    mesh.rotation.z = currentRotation.y;
+                    mesh.rotation.y = Math.sin(time * 0.5) * 0.05;
+                } else if (eqId === 'screen') {
                     // Vibrating screen shaking
                     mesh.position.y = Math.sin(time * 15) * 0.02;
+                    mesh.rotation.x = 0;
+                    mesh.rotation.y = 0;
+                    mesh.rotation.z = 0;
+                } else {
+                    mesh.rotation.x = 0;
+                    mesh.rotation.y = 0;
+                    mesh.rotation.z = 0;
                 }
             });
 
