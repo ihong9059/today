@@ -967,11 +967,33 @@
             renderer.render(scene, camera);
         }
 
-        // Sensor simulation
+        // Sensor simulation with smooth transitions
         let currentScenario = 'normal';
+        let degradeCounter = 0;
+
+        // Current sensor values for smooth animation
+        let sensorValues = {
+            vibration: { current: 2.4, target: 2.4, unit: 'mm/s' },
+            temperature: { current: 45, target: 45, unit: '°C' },
+            current: { current: 32.5, target: 32.5, unit: 'A' },
+            dust: { current: 85, target: 85, unit: 'μg/m³' },
+            noise: { current: 72, target: 72, unit: 'dB' },
+            rpm: { current: 2850, target: 2850, unit: '' }
+        };
+
+        // Threshold configurations
+        const thresholds = {
+            vibration: { warning: 4.5, danger: 7.0, max: 10 },
+            temperature: { warning: 65, danger: 80, max: 100 },
+            current: { warning: 45, danger: 55, max: 70 },
+            dust: { warning: 150, danger: 300, max: 500 },
+            noise: { warning: 80, danger: 90, max: 100 },
+            rpm: { warning: 3200, danger: 3500, max: 4000 }
+        };
 
         function setScenario(scenario) {
             currentScenario = scenario;
+            degradeCounter = 0;
             document.querySelectorAll('.scenario-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
@@ -984,6 +1006,9 @@
                     break;
                 case 'dust':
                     addAlert('warning', '작업장 분진 농도 기준치 초과');
+                    break;
+                case 'normal':
+                    addAlert('info', '정상 운전 모드로 전환');
                     break;
             }
         }
@@ -999,69 +1024,123 @@
             }
         }
 
-        function updateSensors() {
+        function generateTargetValues() {
+            // Base values with random noise
             const scenarios = {
                 normal: {
-                    vibration: { value: 2 + Math.random() * 0.8, unit: 'mm/s', percent: 30 },
-                    temperature: { value: 42 + Math.random() * 6, unit: '°C', percent: 45 },
-                    current: { value: 30 + Math.random() * 5, unit: 'A', percent: 40 },
-                    dust: { value: 70 + Math.random() * 30, unit: 'μg/m³', percent: 25 },
-                    noise: { value: 70 + Math.random() * 5, unit: 'dB', percent: 55 },
-                    rpm: { value: 2800 + Math.random() * 100, unit: '', percent: 70 }
+                    vibration: 2 + Math.random() * 1.5,
+                    temperature: 42 + Math.random() * 8,
+                    current: 28 + Math.random() * 8,
+                    dust: 60 + Math.random() * 50,
+                    noise: 68 + Math.random() * 8,
+                    rpm: 2800 + Math.random() * 150
                 },
                 bearing: {
-                    vibration: { value: 5 + Math.random() * 2, unit: 'mm/s', percent: 70 },
-                    temperature: { value: 55 + Math.random() * 8, unit: '°C', percent: 65 },
-                    current: { value: 35 + Math.random() * 5, unit: 'A', percent: 50 },
-                    dust: { value: 80 + Math.random() * 30, unit: 'μg/m³', percent: 28 },
-                    noise: { value: 78 + Math.random() * 5, unit: 'dB', percent: 65 },
-                    rpm: { value: 2750 + Math.random() * 50, unit: '', percent: 65 }
+                    vibration: 5 + Math.random() * 2.5 + degradeCounter * 0.1,
+                    temperature: 55 + Math.random() * 12 + degradeCounter * 0.5,
+                    current: 35 + Math.random() * 8,
+                    dust: 80 + Math.random() * 40,
+                    noise: 78 + Math.random() * 8 + degradeCounter * 0.2,
+                    rpm: 2750 + Math.random() * 100 - degradeCounter * 2
                 },
                 overload: {
-                    vibration: { value: 4 + Math.random() * 1.5, unit: 'mm/s', percent: 55 },
-                    temperature: { value: 70 + Math.random() * 10, unit: '°C', percent: 85 },
-                    current: { value: 55 + Math.random() * 10, unit: 'A', percent: 90 },
-                    dust: { value: 100 + Math.random() * 40, unit: 'μg/m³', percent: 35 },
-                    noise: { value: 85 + Math.random() * 5, unit: 'dB', percent: 80 },
-                    rpm: { value: 2600 + Math.random() * 100, unit: '', percent: 55 }
+                    vibration: 4.5 + Math.random() * 2,
+                    temperature: 72 + Math.random() * 12,
+                    current: 55 + Math.random() * 12,
+                    dust: 100 + Math.random() * 60,
+                    noise: 85 + Math.random() * 8,
+                    rpm: 2500 + Math.random() * 200
                 },
                 dust: {
-                    vibration: { value: 2.5 + Math.random() * 0.8, unit: 'mm/s', percent: 32 },
-                    temperature: { value: 45 + Math.random() * 5, unit: '°C', percent: 48 },
-                    current: { value: 32 + Math.random() * 4, unit: 'A', percent: 42 },
-                    dust: { value: 350 + Math.random() * 100, unit: 'μg/m³', percent: 85 },
-                    noise: { value: 75 + Math.random() * 5, unit: 'dB', percent: 60 },
-                    rpm: { value: 2820 + Math.random() * 80, unit: '', percent: 70 }
+                    vibration: 2.2 + Math.random() * 1.2,
+                    temperature: 44 + Math.random() * 8,
+                    current: 30 + Math.random() * 6,
+                    dust: 320 + Math.random() * 150,
+                    noise: 74 + Math.random() * 8,
+                    rpm: 2820 + Math.random() * 100
                 }
             };
 
-            const data = scenarios[currentScenario];
+            const targets = scenarios[currentScenario];
+            Object.keys(targets).forEach(key => {
+                sensorValues[key].target = targets[key];
+            });
 
-            Object.keys(data).forEach(key => {
-                const sensor = data[key];
+            // Increment degrade counter for bearing scenario
+            if (currentScenario === 'bearing') {
+                degradeCounter += 0.5;
+            }
+        }
+
+        function updateSensorDisplay() {
+            Object.keys(sensorValues).forEach(key => {
+                const sensor = sensorValues[key];
+                const threshold = thresholds[key];
+
+                // Smooth interpolation
+                sensor.current += (sensor.target - sensor.current) * 0.15;
+
                 const valueEl = document.getElementById(key);
                 const barEl = document.getElementById(key + 'Bar');
 
-                let status = 'normal';
-                if (sensor.percent > 80) status = 'danger';
-                else if (sensor.percent > 60) status = 'warning';
+                if (!valueEl || !barEl) return;
 
+                // Calculate percentage based on thresholds
+                let percent = (sensor.current / threshold.max) * 100;
+                percent = Math.min(100, Math.max(0, percent));
+
+                // Determine status
+                let status = 'normal';
+                if (sensor.current >= threshold.danger) {
+                    status = 'danger';
+                } else if (sensor.current >= threshold.warning) {
+                    status = 'warning';
+                }
+
+                // Update display
                 if (key === 'rpm') {
-                    valueEl.textContent = Math.round(sensor.value).toLocaleString();
+                    valueEl.textContent = Math.round(sensor.current).toLocaleString();
                 } else {
-                    valueEl.textContent = sensor.value.toFixed(1) + ' ' + sensor.unit;
+                    valueEl.textContent = sensor.current.toFixed(1) + ' ' + sensor.unit;
                 }
 
                 valueEl.className = 'sensor-value ' + status;
                 barEl.className = 'sensor-bar-fill ' + status;
-                barEl.style.width = sensor.percent + '%';
+                barEl.style.width = percent + '%';
+            });
+        }
+
+        function updateEquipmentStatusIndicators() {
+            // Update equipment list status dots based on current scenario
+            const statusDots = document.querySelectorAll('.equipment-item .status');
+            statusDots.forEach((dot, index) => {
+                if (currentScenario === 'normal') {
+                    dot.className = 'status normal';
+                } else if (currentScenario === 'bearing' && index === 0) {
+                    dot.className = 'status warning';
+                } else if (currentScenario === 'overload') {
+                    dot.className = 'status danger';
+                } else if (currentScenario === 'dust' && index === 0) {
+                    dot.className = 'status warning';
+                }
             });
         }
 
         // Initialize
         init();
-        setInterval(updateSensors, 2000);
-        updateSensors();
+
+        // Generate new target values every 2 seconds
+        setInterval(generateTargetValues, 2000);
+
+        // Update display smoothly every 100ms
+        setInterval(() => {
+            updateSensorDisplay();
+            updateEquipmentStatusIndicators();
+        }, 100);
+
+        // Initial values
+        generateTargetValues();
+        updateSensorDisplay();
     </script>
 </body>
 </html>
