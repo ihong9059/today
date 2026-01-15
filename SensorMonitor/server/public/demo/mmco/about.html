@@ -56,65 +56,84 @@
 
         /* Header */
         .page-header {
-            padding: 120px 30px 60px;
+            padding: 140px 30px 80px;
             text-align: center;
-            background: linear-gradient(135deg, #0a0a1a 0%, #0a2020 100%);
+            background: linear-gradient(135deg, #0a0a1a 0%, #0a2020 50%, #0a0a1a 100%);
+            position: relative;
+        }
+        .page-header::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(26,159,122,0.1) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         .page-header h1 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             margin-bottom: 15px;
+            position: relative;
+        }
+        .page-header .tagline {
+            font-size: 1.5rem;
+            color: #1a9f7a;
+            margin-bottom: 10px;
         }
         .page-header p {
             color: #888;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         /* Section */
         section {
-            padding: 80px 30px;
-            max-width: 1200px;
+            padding: 100px 30px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }
         .section-title h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
         }
         .section-title p {
             color: #888;
+            font-size: 1.1rem;
         }
 
-        /* About UTTEC */
-        .about-uttec {
-            background: #0f0f24;
+        /* About Intro */
+        .about-intro {
+            background: #0a0a1a;
         }
-        .about-content {
+        .intro-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: center;
         }
-        .about-text h3 {
+        .intro-text h3 {
             font-size: 1.8rem;
             margin-bottom: 20px;
-            color: #1a9f7a;
         }
-        .about-text p {
+        .intro-text p {
             color: #aaa;
             margin-bottom: 15px;
         }
-        .about-stats {
+        .intro-stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
             margin-top: 30px;
         }
         .stat-box {
-            background: rgba(26,159,122,0.1);
-            border: 1px solid rgba(26,159,122,0.3);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
             padding: 25px;
             text-align: center;
@@ -129,33 +148,69 @@
         .stat-label {
             color: #888;
             font-size: 0.9rem;
+            margin-top: 5px;
         }
-        .about-image {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
+        .intro-visual {
+            background: linear-gradient(135deg, rgba(26,159,122,0.1) 0%, rgba(0,212,170,0.05) 100%);
+            border: 1px solid rgba(26,159,122,0.3);
             border-radius: 20px;
             padding: 40px;
             text-align: center;
         }
-        .about-image .icon {
-            font-size: 8rem;
+        .company-logo {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #1a9f7a, #00d4aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
         }
-        .about-image h4 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        .about-image p {
-            color: #888;
+        .company-slogan {
+            font-size: 1.3rem;
+            color: #aaa;
         }
 
-        /* Core Technology */
-        .core-tech {
+        /* Core Values */
+        .core-values {
+            background: linear-gradient(180deg, #0a0a1a 0%, #0f0f24 100%);
+        }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .value-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: #1a9f7a;
+        }
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .value-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        .value-card p {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        /* Technology */
+        .technology {
             background: #0a0a1a;
         }
         .tech-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
         }
         .tech-card {
@@ -167,86 +222,104 @@
         }
         .tech-card:hover {
             border-color: #1a9f7a;
-            transform: translateY(-5px);
         }
-        .tech-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-        .tech-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
-        .tech-card p {
-            color: #888;
-            font-size: 0.95rem;
-        }
-
-        /* Customers */
-        .customers {
-            background: #0f0f24;
-        }
-        .customer-intro {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .customer-intro p {
-            color: #888;
-            font-size: 1.1rem;
-        }
-        .customer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .customer-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        .customer-card:hover {
-            border-color: #1a9f7a;
-        }
-        .customer-card h4 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-        .customer-card p {
-            color: #888;
-            font-size: 0.85rem;
-        }
-
-        /* Contact */
-        .contact {
-            background: #0a0a1a;
-        }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-        .contact-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 40px;
-        }
-        .contact-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            color: #1a9f7a;
-        }
-        .contact-item {
+        .tech-header {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 15px;
             margin-bottom: 20px;
         }
-        .contact-icon {
+        .tech-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(26,159,122,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.5rem;
+        }
+        .tech-card h3 {
+            font-size: 1.2rem;
+        }
+        .tech-card p {
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .tech-features {
+            list-style: none;
+        }
+        .tech-features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .tech-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00d4aa;
+        }
+
+        /* Industries */
+        .industries {
+            background: linear-gradient(180deg, #0f0f24 0%, #0a0a1a 100%);
+        }
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .industry-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .industry-card:hover {
+            background: rgba(26,159,122,0.1);
+            border-color: #1a9f7a;
+        }
+        .industry-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .industry-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Customer Section */
+        .customer-section {
+            background: #0a0a1a;
+        }
+        .customer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        .customer-info {
+            background: rgba(26,159,122,0.05);
+            border: 1px solid rgba(26,159,122,0.2);
+            border-radius: 16px;
+            padding: 40px;
+        }
+        .customer-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #1a9f7a;
+        }
+        .customer-detail {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .customer-detail-icon {
             width: 40px;
             height: 40px;
             background: rgba(26,159,122,0.2);
@@ -255,60 +328,200 @@
             align-items: center;
             justify-content: center;
         }
-        .contact-info h4 {
-            font-size: 1rem;
-            margin-bottom: 5px;
-        }
-        .contact-info p {
-            color: #888;
+        .customer-detail-content h4 {
             font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 3px;
+        }
+        .customer-detail-content p {
+            font-size: 1rem;
+        }
+        .customer-desc {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 40px;
+        }
+        .customer-desc h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .customer-desc p {
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+        .customer-features {
+            list-style: none;
+            margin-top: 20px;
+        }
+        .customer-features li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #aaa;
+        }
+        .customer-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #1a9f7a;
         }
 
-        /* CTA */
-        .cta {
-            text-align: center;
-            padding: 80px 30px;
-            background: linear-gradient(135deg, #0a2020 0%, #0a0a1a 100%);
+        /* Certifications */
+        .certifications {
+            background: #0f0f24;
         }
-        .cta h2 {
+        .cert-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .cert-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        .cert-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .cert-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .cert-desc {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        /* Contact */
+        .contact {
+            background: linear-gradient(135deg, #0a2020 0%, #0a0a1a 100%);
+            text-align: center;
+        }
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .contact-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .contact-icon {
             font-size: 2rem;
             margin-bottom: 15px;
         }
-        .cta p {
+        .contact-label {
             color: #888;
-            margin-bottom: 30px;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+        .contact-value {
+            font-size: 1.1rem;
+        }
+        .contact-value a {
+            color: #1a9f7a;
+            text-decoration: none;
+        }
+        .cta-buttons {
+            margin-top: 50px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
         }
         .btn {
-            display: inline-block;
             padding: 15px 40px;
             border-radius: 30px;
             font-size: 1rem;
             font-weight: 500;
             text-decoration: none;
-            background: linear-gradient(90deg, #1a9f7a, #0d7a5a);
-            color: #fff;
             transition: all 0.3s;
         }
-        .btn:hover {
+        .btn-primary {
+            background: linear-gradient(90deg, #1a9f7a, #0d7a5a);
+            color: #fff;
+        }
+        .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(26,159,122,0.4);
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #444;
+            color: #fff;
+        }
+        .btn-secondary:hover {
+            border-color: #1a9f7a;
         }
 
         /* Footer */
         footer {
             background: #050510;
-            padding: 40px 30px;
-            text-align: center;
+            padding: 60px 30px 30px;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
-        footer p {
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+        }
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #1a9f7a;
+        }
+        .footer-brand p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .footer-links h4 {
+            margin-bottom: 20px;
+            color: #888;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .footer-links ul {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: #fff;
+        }
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
             color: #444;
             font-size: 0.85rem;
         }
 
         @media (max-width: 768px) {
-            .about-content { grid-template-columns: 1fr; }
-            .contact-grid { grid-template-columns: 1fr; }
+            .intro-content { grid-template-columns: 1fr; }
+            .contact-cards { grid-template-columns: 1fr; }
+            .customer-content { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; gap: 30px; }
         }
     </style>
 </head>
@@ -326,183 +539,304 @@
     </nav>
 
     <header class="page-header">
-        <h1>UTTEC 소개</h1>
-        <p>설비의 미래를 예측하는 산업용 IoT 전문 기업</p>
+        <div class="tagline">설비의 미래를 예측합니다</div>
+        <h1>UTTEC</h1>
+        <p>40년 이상의 임베디드 시스템 개발 경험을 바탕으로<br>산업용 IoT 및 예지정비 솔루션을 제공합니다</p>
     </header>
 
-    <section class="about-uttec">
-        <div class="about-content">
-            <div class="about-text">
-                <h3>40년 임베디드 기술의 결정체</h3>
-                <p>UTTEC은 40년 이상의 임베디드 시스템 개발 경험을 바탕으로 산업용 IoT 및 예지정비(PdM) 솔루션을 제공하는 전문 기업입니다.</p>
-                <p>국내 다양한 산업 현장에서 축적한 노하우를 바탕으로, 각 산업 분야에 최적화된 AI 기반 설비 모니터링 솔루션을 개발하고 있습니다.</p>
-                <p>분체/분쇄, 골재 생산, 전기/배전반, 수처리, 로봇/자동화 등 다양한 산업 분야에서 고객사의 설비 효율화와 비용 절감을 실현하고 있습니다.</p>
-                <div class="about-stats">
+    <section class="about-intro">
+        <div class="intro-content">
+            <div class="intro-text">
+                <h3>믿을 수 있는 파트너</h3>
+                <p>UTTEC은 산업 현장의 설비 관리 혁신을 위해 설립된 스마트팩토리 솔루션 전문 기업입니다.</p>
+                <p>크러셔, 스크린, 컨베이어 등 골재 생산 설비 모니터링에 특화된 기술력을 보유하고 있으며, 가혹한 현장 환경에서도 안정적으로 운영되는 솔루션을 제공합니다.</p>
+                <p>Edge AI 기술을 활용하여 현장에서 실시간으로 설비 상태를 분석하고, 고장을 사전에 예측하여 비계획 정지를 최소화합니다.</p>
+                <div class="intro-stats">
                     <div class="stat-box">
                         <div class="stat-number">40+</div>
-                        <div class="stat-label">년 기술 경험</div>
+                        <div class="stat-label">년 업력</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-number">100+</div>
-                        <div class="stat-label">프로젝트 수행</div>
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">구축 설비</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-number">92%</div>
-                        <div class="stat-label">예측 정확도</div>
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">고객 만족도</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-number">60%</div>
-                        <div class="stat-label">정지 시간 감소</div>
+                        <div class="stat-label">비계획정지 감소</div>
                     </div>
                 </div>
             </div>
-            <div class="about-image">
-                <div class="icon">🏭</div>
-                <h4>Smart Factory Solution</h4>
-                <p>AI 기반 예지정비로<br>설비 효율 극대화</p>
+            <div class="intro-visual">
+                <div class="company-logo">UTTEC</div>
+                <div class="company-slogan">"예측 가능한 미래,<br>안정적인 운영"</div>
             </div>
         </div>
     </section>
 
-    <section class="core-tech">
+    <section class="core-values">
+        <div class="section-title">
+            <h2>핵심 가치</h2>
+            <p>UTTEC이 추구하는 가치</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🎯</div>
+                <h3>정확성</h3>
+                <p>고정밀 센서와 검증된 알고리즘으로 정확한 설비 상태 진단을 제공합니다.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">⚡</div>
+                <h3>실시간성</h3>
+                <p>Edge AI 기술로 지연 없이 실시간으로 이상 징후를 탐지하고 알립니다.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🔮</div>
+                <h3>예측성</h3>
+                <p>머신러닝 기반 예지정비로 고장 발생 전 최적의 정비 시점을 예측합니다.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🛡️</div>
+                <h3>안전성</h3>
+                <p>분진 폭발 등 위험 요소를 실시간 모니터링하여 안전한 작업 환경을 보장합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="technology">
         <div class="section-title">
             <h2>핵심 기술</h2>
             <p>UTTEC만의 차별화된 기술력</p>
         </div>
         <div class="tech-grid">
             <div class="tech-card">
-                <div class="tech-icon">📊</div>
-                <h3>FFT 진동 분석</h3>
-                <p>고속 푸리에 변환을 통한 주파수 영역 분석으로 베어링, 기어, 모터 결함을 조기에 감지합니다.</p>
+                <div class="tech-header">
+                    <div class="tech-icon">🖥️</div>
+                    <h3>Edge AI Gateway</h3>
+                </div>
+                <p>현장에서 실시간으로 데이터를 분석하는 엣지 컴퓨팅 솔루션</p>
+                <ul class="tech-features">
+                    <li>ARM Cortex-M4 + DSP 기반 고성능 처리</li>
+                    <li>실시간 FFT, Envelope, Cepstrum 분석</li>
+                    <li>AI 기반 이상 탐지 및 RUL 예측</li>
+                    <li>IP65, 방진/방수 대응</li>
+                </ul>
             </div>
             <div class="tech-card">
-                <div class="tech-icon">🤖</div>
-                <h3>AI 이상 탐지</h3>
-                <p>Autoencoder, LSTM 등 딥러닝 모델을 활용하여 정상 패턴을 학습하고 이상을 자동으로 감지합니다.</p>
+                <div class="tech-header">
+                    <div class="tech-icon">📊</div>
+                    <h3>진동 분석 기술</h3>
+                </div>
+                <p>중장비 및 회전체 전문 진동 분석 알고리즘</p>
+                <ul class="tech-features">
+                    <li>FFT 스펙트럼 분석 (최대 25.6kHz 샘플링)</li>
+                    <li>Envelope 분석으로 베어링 결함 조기 검출</li>
+                    <li>Cepstrum 분석으로 기어박스 결함 검출</li>
+                    <li>자동 피크 검출 및 결함 주파수 매칭</li>
+                </ul>
             </div>
             <div class="tech-card">
-                <div class="tech-icon">⏱️</div>
-                <h3>RUL 예측</h3>
-                <p>잔여수명(Remaining Useful Life) 예측 모델로 최적의 부품 교체 시기를 예측합니다.</p>
+                <div class="tech-header">
+                    <div class="tech-icon">🤖</div>
+                    <h3>AI 예지정비</h3>
+                </div>
+                <p>머신러닝 기반 고장 예측 시스템</p>
+                <ul class="tech-features">
+                    <li>이상 탐지 (Anomaly Detection)</li>
+                    <li>잔여수명 예측 (RUL Prediction)</li>
+                    <li>마모 진행률 추정</li>
+                    <li>자동 학습 및 모델 업데이트</li>
+                </ul>
             </div>
             <div class="tech-card">
-                <div class="tech-icon">🖥️</div>
-                <h3>Edge AI</h3>
-                <p>현장에서 실시간으로 AI 분석을 수행하는 Edge Computing 기술로 즉각적인 대응이 가능합니다.</p>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">📱</div>
-                <h3>IoT 플랫폼</h3>
-                <p>클라우드 기반 IoT 플랫폼으로 언제 어디서나 설비 상태를 모니터링할 수 있습니다.</p>
-            </div>
-            <div class="tech-card">
-                <div class="tech-icon">🔧</div>
-                <h3>맞춤형 개발</h3>
-                <p>각 산업 분야와 고객사 환경에 최적화된 맞춤형 솔루션을 개발하여 제공합니다.</p>
+                <div class="tech-header">
+                    <div class="tech-icon">☁️</div>
+                    <h3>클라우드 플랫폼</h3>
+                </div>
+                <p>통합 모니터링 및 분석 대시보드</p>
+                <ul class="tech-features">
+                    <li>실시간 대시보드 및 3D 시각화</li>
+                    <li>다중 사업장 통합 관리</li>
+                    <li>자동 리포트 생성</li>
+                    <li>모바일 앱 알림</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <section class="customers">
+    <section class="industries">
         <div class="section-title">
-            <h2>고객사</h2>
-            <p>다양한 산업 분야의 고객사와 함께합니다</p>
+            <h2>적용 분야</h2>
+            <p>다양한 산업 분야에서 활용되고 있습니다</p>
         </div>
-        <div class="customer-intro">
-            <p>UTTEC은 분체/분쇄, 골재 생산, 전기/배전반, 수처리, 도장, 포장 등<br>다양한 산업 분야의 고객사에 예지정비 솔루션을 제공하고 있습니다.</p>
-        </div>
-        <div class="customer-grid">
-            <div class="customer-card">
-                <h4>한국분체시스템</h4>
-                <p>분쇄/혼합 설비 예지정비</p>
+        <div class="industry-grid">
+            <div class="industry-card">
+                <div class="industry-icon">🏔️</div>
+                <div class="industry-name">골재 생산</div>
             </div>
-            <div class="customer-card">
-                <h4>광산기공</h4>
-                <p>골재 생산 플랜트 AI 솔루션</p>
+            <div class="industry-card">
+                <div class="industry-icon">⛏️</div>
+                <div class="industry-name">채석/광산</div>
             </div>
-            <div class="customer-card">
-                <h4>한국기계엔지니어링</h4>
-                <p>분체/분쇄 설비 모니터링</p>
+            <div class="industry-card">
+                <div class="industry-icon">🏭</div>
+                <div class="industry-name">분쇄/파쇄</div>
             </div>
-            <div class="customer-card">
-                <h4>건일이엔지</h4>
-                <p>배전반 설비 예지정비</p>
+            <div class="industry-card">
+                <div class="industry-icon">🏖️</div>
+                <div class="industry-name">모래 생산</div>
+            </div>
+            <div class="industry-card">
+                <div class="industry-icon">💧</div>
+                <div class="industry-name">세척/탈수</div>
+            </div>
+            <div class="industry-card">
+                <div class="industry-icon">🚛</div>
+                <div class="industry-name">운반/적재</div>
             </div>
         </div>
     </section>
 
-    <section class="contact">
+    <section class="customer-section">
         <div class="section-title">
-            <h2>연락처</h2>
-            <p>UTTEC 솔루션에 대해 문의하세요</p>
+            <h2>고객사 소개</h2>
+            <p>함께 스마트 플랜트를 구현합니다</p>
         </div>
-        <div class="contact-grid">
-            <div class="contact-card">
-                <h3>UTTEC</h3>
-                <div class="contact-item">
-                    <div class="contact-icon">👤</div>
-                    <div class="contact-info">
-                        <h4>담당자</h4>
-                        <p>홍 광삼</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">📧</div>
-                    <div class="contact-info">
-                        <h4>이메일</h4>
-                        <p>uttec@uttec.co.kr</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">📱</div>
-                    <div class="contact-info">
-                        <h4>연락처</h4>
-                        <p>010-3922-1809</p>
-                    </div>
-                </div>
-            </div>
-            <div class="contact-card">
-                <h3>광산기공</h3>
-                <div class="contact-item">
-                    <div class="contact-icon">🏢</div>
-                    <div class="contact-info">
+        <div class="customer-content">
+            <div class="customer-info">
+                <h3>(주)광산기공</h3>
+                <div class="customer-detail">
+                    <div class="customer-detail-icon">🏢</div>
+                    <div class="customer-detail-content">
                         <h4>회사명</h4>
                         <p>(주)광산기공 (MMCO)</p>
                     </div>
                 </div>
-                <div class="contact-item">
-                    <div class="contact-icon">📍</div>
-                    <div class="contact-info">
+                <div class="customer-detail">
+                    <div class="customer-detail-icon">📍</div>
+                    <div class="customer-detail-content">
                         <h4>주소</h4>
                         <p>경기도 화성시 양감면 초록로 868-15</p>
                     </div>
                 </div>
-                <div class="contact-item">
-                    <div class="contact-icon">📞</div>
-                    <div class="contact-info">
+                <div class="customer-detail">
+                    <div class="customer-detail-icon">📞</div>
+                    <div class="customer-detail-content">
                         <h4>전화</h4>
                         <p>031-353-5170</p>
                     </div>
                 </div>
-                <div class="contact-item">
-                    <div class="contact-icon">🌐</div>
-                    <div class="contact-info">
+                <div class="customer-detail">
+                    <div class="customer-detail-icon">🌐</div>
+                    <div class="customer-detail-content">
                         <h4>웹사이트</h4>
                         <p>www.mmco.co.kr</p>
                     </div>
                 </div>
             </div>
+            <div class="customer-desc">
+                <h3>골재 생산 플랜트 전문 기업</h3>
+                <p>(주)광산기공은 골재 생산 플랜트 설계, 제작, 시공 분야에서 풍부한 경험을 보유한 전문 기업입니다.</p>
+                <p>크러셔, 스크린, 컨베이어, 세척기 등 다양한 설비를 통합 관리하며, AI 기반 예지정비 솔루션 도입으로 설비 가동률과 품질 향상을 추진하고 있습니다.</p>
+                <ul class="customer-features">
+                    <li>골재 생산 플랜트 설계 및 시공</li>
+                    <li>크러셔, 스크린, 컨베이어 제작</li>
+                    <li>설비 유지보수 및 기술 지원</li>
+                    <li>AI 스마트 플랜트 구축 추진</li>
+                </ul>
+            </div>
         </div>
     </section>
 
-    <section class="cta">
-        <h2>AI 스마트 플랜트 솔루션을 체험해 보세요</h2>
-        <p>실시간 모니터링 데모로 예지정비의 효과를 직접 확인하세요</p>
-        <a href="monitor.html" class="btn">모니터링 데모 시작</a>
+    <section class="certifications">
+        <div class="section-title">
+            <h2>인증 및 표준</h2>
+            <p>국제 표준을 준수합니다</p>
+        </div>
+        <div class="cert-grid">
+            <div class="cert-item">
+                <div class="cert-icon">🏆</div>
+                <div class="cert-name">KC 인증</div>
+                <div class="cert-desc">국내 전기용품 안전인증</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-icon">🇪🇺</div>
+                <div class="cert-name">CE 마킹</div>
+                <div class="cert-desc">유럽 안전 규격 적합</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-icon">🛡️</div>
+                <div class="cert-name">IP65</div>
+                <div class="cert-desc">방진/방수 등급</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-icon">📋</div>
+                <div class="cert-name">ISO 9001</div>
+                <div class="cert-desc">품질경영시스템</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="contact-content">
+            <div class="section-title">
+                <h2>문의하기</h2>
+                <p>UTTEC과 함께 스마트 플랜트를 시작하세요</p>
+            </div>
+            <div class="contact-cards">
+                <div class="contact-card">
+                    <div class="contact-icon">👤</div>
+                    <div class="contact-label">담당자</div>
+                    <div class="contact-value">홍 광삼</div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-label">이메일</div>
+                    <div class="contact-value"><a href="mailto:uttec@uttec.co.kr">uttec@uttec.co.kr</a></div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-label">연락처</div>
+                    <div class="contact-value"><a href="tel:010-3922-1809">010-3922-1809</a></div>
+                </div>
+            </div>
+            <div class="cta-buttons">
+                <a href="monitor.html" class="btn btn-primary">실시간 데모 체험</a>
+                <a href="index.html" class="btn btn-secondary">솔루션 자세히 보기</a>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 UTTEC. All rights reserved. | 광산기공 AI 스마트 플랜트 데모</p>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>UTTEC</h3>
+                <p>설비의 미래를 예측합니다.<br>40년 이상의 임베디드 시스템 개발 경험을 바탕으로<br>산업용 IoT 및 예지정비 솔루션을 제공합니다.</p>
+            </div>
+            <div class="footer-links">
+                <h4>사이트맵</h4>
+                <ul>
+                    <li><a href="index.html">홈</a></li>
+                    <li><a href="system.html">시스템 구성</a></li>
+                    <li><a href="monitor.html">실시간 모니터링</a></li>
+                    <li><a href="about.html">UTTEC 소개</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>연락처</h4>
+                <ul>
+                    <li>담당: 홍 광삼</li>
+                    <li>uttec@uttec.co.kr</li>
+                    <li>010-3922-1809</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 UTTEC. All rights reserved. | 광산기공 AI 스마트 플랜트 데모</p>
+        </div>
     </footer>
 </body>
 </html>
