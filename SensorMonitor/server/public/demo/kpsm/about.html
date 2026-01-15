@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>UTTEC 소개 - 한국분체기계 스마트팩토리</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(92, 107, 192, 0.3);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #5c6bc0, #7986cb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            color: #9fa8da;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #5c6bc0;
+        }
+
+        .page-header {
+            padding: 140px 40px 80px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(26, 35, 126, 0.3) 0%, transparent 100%);
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .page-header p {
+            color: #9fa8da;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* About Stats */
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        .about-stat {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(92, 107, 192, 0.2);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+        }
+        .about-stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #5c6bc0;
+            margin-bottom: 10px;
+        }
+        .about-stat-label {
+            color: #9fa8da;
+        }
+
+        /* Core Values */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        .value-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(92, 107, 192, 0.2);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .value-card:hover {
+            border-color: #5c6bc0;
+            transform: translateY(-5px);
+        }
+        .value-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #1a237e, #303f9f);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+        }
+        .value-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        .value-card p {
+            color: #9fa8da;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Technology */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .tech-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(92, 107, 192, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+        }
+        .tech-card h4 {
+            color: #5c6bc0;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .tech-list {
+            list-style: none;
+        }
+        .tech-list li {
+            padding: 8px 0;
+            color: #9fa8da;
+            border-bottom: 1px solid rgba(92, 107, 192, 0.1);
+            font-size: 0.95rem;
+        }
+        .tech-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Industries */
+        .industry-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .industry-badge {
+            background: rgba(92, 107, 192, 0.15);
+            border: 1px solid rgba(92, 107, 192, 0.3);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            color: #fff;
+            transition: all 0.3s;
+        }
+        .industry-badge:hover {
+            background: rgba(92, 107, 192, 0.3);
+            border-color: #5c6bc0;
+        }
+
+        /* Customer Info */
+        .customer-section {
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.4), rgba(48, 63, 159, 0.4));
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+        }
+        .customer-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+        .customer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .customer-item {
+            text-align: center;
+        }
+        .customer-label {
+            color: #9fa8da;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        .customer-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Certifications */
+        .cert-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .cert-badge {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(92, 107, 192, 0.2);
+            padding: 20px 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .cert-badge .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .cert-badge .name {
+            font-size: 0.9rem;
+            color: #9fa8da;
+        }
+
+        /* Contact */
+        .contact-section {
+            background: linear-gradient(135deg, #1a237e, #303f9f);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+        }
+        .contact-section h2 {
+            margin-bottom: 30px;
+        }
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+        .contact-item {
+            text-align: center;
+        }
+        .contact-label {
+            color: #9fa8da;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        .contact-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        footer {
+            background: rgba(10, 10, 26, 0.9);
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid rgba(92, 107, 192, 0.2);
+            margin-top: 60px;
+        }
+        footer p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .customer-section, .contact-section { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">KPSM Smart Factory</div>
+        <div class="nav-links">
+            <a href="index.html">홈</a>
+            <a href="system.html">시스템 구성</a>
+            <a href="monitor.html">실시간 모니터링</a>
+            <a href="about.html" class="active">UTTEC 소개</a>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>UTTEC 소개</h1>
+        <p>"뜻이 있으면 반드시 이룬다" (有志意成)<br>40년 이상의 임베디드 시스템 개발 경험을 보유한 전문가 집단</p>
+    </div>
+
+    <div class="content">
+        <div class="about-stats">
+            <div class="about-stat">
+                <div class="about-stat-value">78+</div>
+                <div class="about-stat-label">임베디드 경력 (년)</div>
+            </div>
+            <div class="about-stat">
+                <div class="about-stat-value">2018</div>
+                <div class="about-stat-label">설립 연도</div>
+            </div>
+            <div class="about-stat">
+                <div class="about-stat-value">50+</div>
+                <div class="about-stat-label">프로젝트 수행</div>
+            </div>
+            <div class="about-stat">
+                <div class="about-stat-value">24/7</div>
+                <div class="about-stat-label">기술 지원</div>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2 class="section-title">핵심 가치</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🔬</div>
+                    <h3>기술 전문성</h3>
+                    <p>40년 이상의 임베디드 시스템 개발 경험으로 신뢰할 수 있는 기술력을 제공합니다.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>맞춤형 솔루션</h3>
+                    <p>분체플랜트 특화 분석 알고리즘으로 고객 니즈에 최적화된 솔루션을 제공합니다.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>파트너십</h3>
+                    <p>한국분체기계와의 협력을 통해 분체 산업 전문 솔루션을 공동 개발합니다.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🚀</div>
+                    <h3>지속적 혁신</h3>
+                    <p>AI/ML 기술과 IoT를 결합하여 스마트 팩토리의 미래를 선도합니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">핵심 기술</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h4>임베디드 시스템</h4>
+                    <ul class="tech-list">
+                        <li>ARM Cortex-M4 / DSP</li>
+                        <li>FPGA 기반 실시간 처리</li>
+                        <li>FreeRTOS 실시간 OS</li>
+                        <li>저전력 설계</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h4>진동 분석</h4>
+                    <ul class="tech-list">
+                        <li>FFT 스펙트럼 분석</li>
+                        <li>엔벨로프 분석</li>
+                        <li>베어링 결함 주파수 (BPFO/BPFI)</li>
+                        <li>로터 불균형 검출</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h4>통신 프로토콜</h4>
+                    <ul class="tech-list">
+                        <li>RS-485 / Modbus RTU</li>
+                        <li>CAN Bus</li>
+                        <li>WiFi / BLE / 4G LTE</li>
+                        <li>MQTT / HTTPS</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h4>AI/ML 분석</h4>
+                    <ul class="tech-list">
+                        <li>이상 탐지 (Anomaly Detection)</li>
+                        <li>마모 예측 모델</li>
+                        <li>RUL (잔여수명) 예측</li>
+                        <li>입도-설비 상관 분석</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">적용 산업</h2>
+            <div class="industry-grid">
+                <span class="industry-badge">분체/분쇄 설비</span>
+                <span class="industry-badge">정밀화학</span>
+                <span class="industry-badge">석유화학</span>
+                <span class="industry-badge">의약품</span>
+                <span class="industry-badge">화장품</span>
+                <span class="industry-badge">식품</span>
+                <span class="industry-badge">금속</span>
+                <span class="industry-badge">2차전지</span>
+                <span class="industry-badge">사료/비료</span>
+                <span class="industry-badge">미네랄</span>
+                <span class="industry-badge">리사이클링</span>
+            </div>
+        </section>
+
+        <section class="section customer-section">
+            <h2>한국분체기계(주) 정보</h2>
+            <div class="customer-info">
+                <div class="customer-item">
+                    <div class="customer-label">회사명</div>
+                    <div class="customer-value">한국분체기계(주)</div>
+                </div>
+                <div class="customer-item">
+                    <div class="customer-label">대표이사</div>
+                    <div class="customer-value">안태철</div>
+                </div>
+                <div class="customer-item">
+                    <div class="customer-label">설립</div>
+                    <div class="customer-value">1982년 (40년+)</div>
+                </div>
+                <div class="customer-item">
+                    <div class="customer-label">소재지</div>
+                    <div class="customer-value">인천광역시 서구</div>
+                </div>
+                <div class="customer-item">
+                    <div class="customer-label">연락처</div>
+                    <div class="customer-value">032-505-5580</div>
+                </div>
+                <div class="customer-item">
+                    <div class="customer-label">이메일</div>
+                    <div class="customer-value">hkc@kpsmc.co.kr</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">인증 및 특허</h2>
+            <div class="cert-grid">
+                <div class="cert-badge">
+                    <div class="icon">🏆</div>
+                    <div class="name">세계 최초<br>ACM Rotor 특허</div>
+                </div>
+                <div class="cert-badge">
+                    <div class="icon">🌍</div>
+                    <div class="name">일본/중국/대만<br>역수출 실적</div>
+                </div>
+                <div class="cert-badge">
+                    <div class="icon">🔬</div>
+                    <div class="name">NANO 건식<br>쌍분쇄기 특허</div>
+                </div>
+                <div class="cert-badge">
+                    <div class="icon">⚡</div>
+                    <div class="name">초미분 기술<br>0.5~45 Micron</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section contact-section">
+            <h2>문의하기</h2>
+            <p style="color: #9fa8da; margin-bottom: 30px;">분체플랜트 예지정비 솔루션에 대한 상담을 원하시면 연락해 주세요.</p>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="contact-label">담당자</div>
+                    <div class="contact-value">홍 광선</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">이메일</div>
+                    <div class="contact-value">uttec@uttec.co.kr</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">연락처</div>
+                    <div class="contact-value">010-3922-1809</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>한국분체기계(주) × UTTEC 스마트팩토리 솔루션</p>
+        <p style="margin-top: 10px;">&copy; 2025 UTTEC. All rights reserved.</p>
+    </footer>
+</body>
+</html>

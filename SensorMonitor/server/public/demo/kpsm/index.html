@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>한국분체기계 스마트팩토리 - UTTEC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(92, 107, 192, 0.3);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #5c6bc0, #7986cb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            color: #9fa8da;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #5c6bc0;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 40px 80px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(26, 35, 126, 0.3) 0%, transparent 100%);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(92, 107, 192, 0.2);
+            border: 1px solid rgba(92, 107, 192, 0.5);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #9fa8da;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #9fa8da);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #9fa8da;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #5c6bc0;
+        }
+        .stat-label {
+            color: #9fa8da;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+        .section-title h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .section-title p {
+            color: #9fa8da;
+        }
+
+        /* AI Cards */
+        .ai-section {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+        .ai-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(92, 107, 192, 0.2);
+            border-radius: 20px;
+            padding: 35px;
+            transition: all 0.3s;
+        }
+        .ai-card:hover {
+            border-color: #5c6bc0;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(92, 107, 192, 0.2);
+        }
+        .ai-card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a237e, #303f9f);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        .ai-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .ai-card p {
+            color: #9fa8da;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .ai-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .ai-feature {
+            background: rgba(92, 107, 192, 0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #9fa8da;
+        }
+
+        /* Tech Stack */
+        .tech-section {
+            padding: 60px 40px;
+            background: rgba(26, 35, 126, 0.1);
+        }
+        .tech-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .tech-badge {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(92, 107, 192, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #9fa8da;
+        }
+
+        /* ROI Section */
+        .roi-section {
+            padding: 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .roi-card {
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.4), rgba(48, 63, 159, 0.4));
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+        }
+        .roi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #7986cb;
+            margin-bottom: 10px;
+        }
+        .roi-label {
+            color: #9fa8da;
+        }
+
+        /* Equipment Section */
+        .equipment-section {
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .equipment-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(92, 107, 192, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .equipment-card:hover {
+            border-color: #5c6bc0;
+            background: rgba(92, 107, 192, 0.1);
+        }
+        .equipment-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .equipment-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .equipment-type {
+            font-size: 0.85rem;
+            color: #9fa8da;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 80px 40px;
+            text-align: center;
+            background: linear-gradient(180deg, transparent 0%, rgba(26, 35, 126, 0.3) 100%);
+        }
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a237e, #303f9f);
+            color: #fff;
+            padding: 18px 50px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            margin: 10px;
+        }
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(26, 35, 126, 0.4);
+        }
+        .cta-btn.secondary {
+            background: transparent;
+            border: 2px solid #5c6bc0;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 10, 26, 0.9);
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid rgba(92, 107, 192, 0.2);
+        }
+        footer p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .stats { gap: 30px; }
+            .ai-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">KPSM Smart Factory</div>
+        <div class="nav-links">
+            <a href="index.html" class="active">홈</a>
+            <a href="system.html">시스템 구성</a>
+            <a href="monitor.html">실시간 모니터링</a>
+            <a href="about.html">UTTEC 소개</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-badge">40년+ 분체플랜트 기술력 × AI 예지정비</div>
+        <h1>한국분체기계(주)<br>스마트 분체플랜트</h1>
+        <p>
+            세계 최초 ACM Rotor 개발 기술력과 AI 예지정비 솔루션의 결합으로
+            0.5~45 마이크론 초미분 분체 생산 설비의 가동률 극대화와 품질 안정화를 실현합니다.
+        </p>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value">80%</div>
+                <div class="stat-label">비계획 정지 감소</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">15%</div>
+                <div class="stat-label">분쇄 효율 향상</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">8개월</div>
+                <div class="stat-label">투자 회수 기간</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">158%</div>
+                <div class="stat-label">ROI</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-title">
+        <h2>AI 기반 분체플랜트 솔루션</h2>
+        <p>한국분체기계의 설비 전문성과 UTTEC의 AI 기술이 만나 차별화된 솔루션을 제공합니다</p>
+    </section>
+
+    <section class="ai-section">
+        <div class="ai-grid">
+            <div class="ai-card">
+                <div class="ai-card-icon">🔬</div>
+                <h3>Project A: 핵심 분쇄설비 예지정비</h3>
+                <p>
+                    Air Jet Mill, ACM, Turbo Mill 등 핵심 분쇄 설비의 실시간 상태 모니터링 및 고장 예측.
+                    FFT 스펙트럼 분석으로 로터 불균형, 베어링 결함을 조기 감지합니다.
+                </p>
+                <div class="ai-features">
+                    <span class="ai-feature">FFT 분석</span>
+                    <span class="ai-feature">베어링 결함 감지</span>
+                    <span class="ai-feature">공압 효율 분석</span>
+                    <span class="ai-feature">입도-설비 상관분석</span>
+                </div>
+            </div>
+
+            <div class="ai-card">
+                <div class="ai-card-icon">🏭</div>
+                <h3>Project B: 분체플랜트 통합 모니터링</h3>
+                <p>
+                    파쇄기, 혼합기, 집진기, 이송 시스템 등 보조 설비 포함 전체 플랜트 통합 모니터링.
+                    에너지 최적화와 전체 설비 상태를 한눈에 파악합니다.
+                </p>
+                <div class="ai-features">
+                    <span class="ai-feature">파쇄기 토크 분석</span>
+                    <span class="ai-feature">혼합 균일도</span>
+                    <span class="ai-feature">필터 수명 예측</span>
+                    <span class="ai-feature">에너지 최적화</span>
+                </div>
+            </div>
+
+            <div class="ai-card">
+                <div class="ai-card-icon">🌐</div>
+                <h3>Project C: 고객사 원격지원 플랫폼</h3>
+                <p>
+                    한국분체기계가 납품한 Turnkey 플랜트를 원격 모니터링하는 SaaS 플랫폼.
+                    고객사 설비 상태를 실시간으로 파악하고 예방 정비 및 원격 진단을 제공합니다.
+                </p>
+                <div class="ai-features">
+                    <span class="ai-feature">멀티테넌트</span>
+                    <span class="ai-feature">원격 진단</span>
+                    <span class="ai-feature">부품 자동 발주</span>
+                    <span class="ai-feature">품질 리포트</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-title">
+        <h2>모니터링 대상 설비</h2>
+        <p>분체플랜트 전 공정을 커버하는 종합 모니터링</p>
+    </section>
+
+    <section class="equipment-section">
+        <div class="equipment-grid">
+            <div class="equipment-card">
+                <div class="equipment-icon">💨</div>
+                <div class="equipment-name">Air Jet Mill</div>
+                <div class="equipment-type">초미분 분쇄</div>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon">🌀</div>
+                <div class="equipment-name">ACM System</div>
+                <div class="equipment-type">분급밀 (세계최초 특허)</div>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon">⚡</div>
+                <div class="equipment-name">Turbo Mill</div>
+                <div class="equipment-type">고속 분쇄</div>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon">🔨</div>
+                <div class="equipment-name">파쇄기</div>
+                <div class="equipment-type">Pre/Power Shredder</div>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon">🔄</div>
+                <div class="equipment-name">혼합기</div>
+                <div class="equipment-type">Ribbon/V-type Mixer</div>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon">🌫️</div>
+                <div class="equipment-name">집진기</div>
+                <div class="equipment-type">Bag Filter/Cyclone</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-section">
+        <div class="section-title">
+            <h2>핵심 기술</h2>
+            <p>분체플랜트 특화 분석 알고리즘</p>
+        </div>
+        <div class="tech-grid">
+            <span class="tech-badge">FFT 스펙트럼 분석</span>
+            <span class="tech-badge">로터 불균형 감지</span>
+            <span class="tech-badge">베어링 결함 분석</span>
+            <span class="tech-badge">입도-설비 상관분석</span>
+            <span class="tech-badge">공압 효율 분석</span>
+            <span class="tech-badge">필터 차압 분석</span>
+            <span class="tech-badge">혼합 균일도 분석</span>
+            <span class="tech-badge">RUL 예측</span>
+            <span class="tech-badge">ARM Cortex-M4</span>
+            <span class="tech-badge">AWS IoT</span>
+        </div>
+    </section>
+
+    <section class="roi-section">
+        <div class="section-title">
+            <h2>투자 대비 효과</h2>
+            <p>총 투자비 1.1억원 / 연간 효과 1.74억원</p>
+        </div>
+        <div class="roi-grid">
+            <div class="roi-card">
+                <div class="roi-value">1.1억</div>
+                <div class="roi-label">총 투자비</div>
+            </div>
+            <div class="roi-card">
+                <div class="roi-value">1.15억</div>
+                <div class="roi-label">연간 비용 절감</div>
+            </div>
+            <div class="roi-card">
+                <div class="roi-value">5,900만</div>
+                <div class="roi-label">SaaS 신규 수익</div>
+            </div>
+            <div class="roi-card">
+                <div class="roi-value">158%</div>
+                <div class="roi-label">ROI</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>분체플랜트 스마트화를 시작하세요</h2>
+        <p style="color: #9fa8da; margin: 20px 0 30px;">40년 분체 기술력과 AI가 만나 새로운 가치를 창출합니다</p>
+        <a href="monitor.html" class="cta-btn">실시간 모니터링 체험</a>
+        <a href="system.html" class="cta-btn secondary">시스템 구성 보기</a>
+    </section>
+
+    <footer>
+        <p>한국분체기계(주) × UTTEC 스마트팩토리 솔루션</p>
+        <p style="margin-top: 10px;">&copy; 2025 UTTEC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
