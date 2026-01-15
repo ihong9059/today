@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>UTTEC 소개 - 대흥크러셔</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,10,26,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #bf360c;
+        }
+        .logo span { color: #fff; }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #e64a19; }
+
+        .page-header {
+            padding: 120px 30px 60px;
+            text-align: center;
+            background: linear-gradient(180deg, #0f0f1a 0%, #0a0a1a 100%);
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .page-header p {
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 30px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #e64a19;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .about-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 15px;
+            padding: 30px;
+        }
+        .about-card h3 {
+            color: #e64a19;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        .about-card p {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        .company-info {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .company-header {
+            background: linear-gradient(90deg, rgba(191,54,12,0.2), rgba(230,74,25,0.1));
+            padding: 25px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .company-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        .company-header p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .company-body {
+            padding: 30px;
+        }
+        .info-row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label {
+            width: 120px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .info-value {
+            flex: 1;
+            color: #fff;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #bf360c, #d84315);
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        .contact-section h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .contact-section p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 30px;
+        }
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+        .contact-item {
+            text-align: center;
+        }
+        .contact-item .label {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        .contact-item .value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .contact-grid { gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">DH<span>Crusher</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="system.html">시스템</a></li>
+                <li><a href="monitor.html">모니터링</a></li>
+                <li><a href="about.html" class="active">UTTEC</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>UTTEC 소개</h1>
+        <p>설비의 미래를 예측합니다</p>
+    </div>
+
+    <div class="content">
+        <section class="section">
+            <h2 class="section-title">UTTEC이 하는 일</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>AI 기반 예지정비</h3>
+                    <p>진동, 온도, 전류 등 센서 데이터를 AI로 분석하여 설비 고장을 사전에 예측합니다. FFT 분석, Autoencoder, RUL 예측 등 첨단 기술을 적용합니다.</p>
+                </div>
+                <div class="about-card">
+                    <h3>Edge AI 솔루션</h3>
+                    <p>현장 설치형 Edge AI Gateway를 통해 실시간 데이터 처리와 이상 탐지를 수행합니다. 클라우드 의존도를 낮추고 빠른 응답을 보장합니다.</p>
+                </div>
+                <div class="about-card">
+                    <h3>맞춤형 대시보드</h3>
+                    <p>고객사 설비 특성에 맞는 실시간 모니터링 대시보드를 제공합니다. 웹과 모바일에서 언제 어디서나 설비 상태를 확인할 수 있습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">대흥크러셔 소개</h2>
+            <div class="company-info">
+                <div class="company-header">
+                    <h3>(주)대흥크러셔</h3>
+                    <p>DH Crusher Co., Ltd. | 플라스틱 분쇄/파쇄/재생설비 전문 제조</p>
+                </div>
+                <div class="company-body">
+                    <div class="info-row">
+                        <span class="info-label">대표이사</span>
+                        <span class="info-value">이현수</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">설립연도</span>
+                        <span class="info-value">2005년 (법인전환)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">본사 주소</span>
+                        <span class="info-value">대구 달성군 논공읍 노이2길 48-17</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">연락처</span>
+                        <span class="info-value">053-639-7332 / FAX: 053-615-6332</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">사업분야</span>
+                        <span class="info-value">플라스틱 분쇄기, 파쇄기, 재생압출기, 용융기 제조</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">인증현황</span>
+                        <span class="info-value">ISO 9001:2000 (2010년 획득)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">홈페이지</span>
+                        <span class="info-value">www.dh-crusher.co.kr</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="contact-section">
+            <h2>문의하기</h2>
+            <p>AI 기반 예지정비 시스템 도입에 관심이 있으시면 연락 주세요</p>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="label">UTTEC 담당자</div>
+                    <div class="value">홍 광삼</div>
+                </div>
+                <div class="contact-item">
+                    <div class="label">연락처</div>
+                    <div class="value">010-3922-1809</div>
+                </div>
+                <div class="contact-item">
+                    <div class="label">이메일</div>
+                    <div class="value">uttec@uttec.co.kr</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
