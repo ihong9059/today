@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <title>UTTEC 소개 - 대흥크러셔</title>
+    <title>UTTEC 소개 - 대흥크러셔 스마트팩토리</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,6 +15,7 @@
             line-height: 1.8;
         }
 
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -49,133 +50,449 @@
             font-size: 0.95rem;
             transition: color 0.3s;
         }
-        .nav-links a:hover, .nav-links a.active { color: #e64a19; }
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+        }
 
+        /* Header */
         .page-header {
-            padding: 120px 30px 60px;
+            padding: 140px 30px 80px;
             text-align: center;
-            background: linear-gradient(180deg, #0f0f1a 0%, #0a0a1a 100%);
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1018 50%, #0a0a1a 100%);
+            position: relative;
+        }
+        .page-header::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(191,54,12,0.1) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         .page-header h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 15px;
+            position: relative;
+        }
+        .page-header .tagline {
+            font-size: 1.5rem;
+            color: #e64a19;
+            margin-bottom: 10px;
         }
         .page-header p {
             color: #888;
             font-size: 1.1rem;
-        }
-
-        .content {
-            max-width: 1200px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 60px 30px;
         }
 
-        .section {
-            margin-bottom: 60px;
+        /* Section */
+        section {
+            padding: 100px 30px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
         .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            color: #e64a19;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        .section-title p {
+            color: #888;
+            font-size: 1.1rem;
         }
 
-        .about-grid {
+        /* About Intro */
+        .about-intro {
+            background: #0a0a1a;
+        }
+        .intro-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .intro-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        .intro-text p {
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+        .intro-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #bf360c, #ff6d00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        .intro-visual {
+            background: linear-gradient(135deg, rgba(191,54,12,0.1) 0%, rgba(255,109,0,0.05) 100%);
+            border: 1px solid rgba(191,54,12,0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+        .company-logo {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #bf360c, #ff6d00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .company-slogan {
+            font-size: 1.3rem;
+            color: #aaa;
+        }
+
+        /* Core Values */
+        .core-values {
+            background: linear-gradient(180deg, #0a0a1a 0%, #0f0f1a 100%);
+        }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
-        .about-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 15px;
-            padding: 30px;
+        .value-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.3s;
         }
-        .about-card h3 {
-            color: #e64a19;
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: #bf360c;
+        }
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .value-card h3 {
+            font-size: 1.3rem;
             margin-bottom: 15px;
-            font-size: 1.2rem;
         }
-        .about-card p {
+        .value-card p {
             color: #888;
             font-size: 0.95rem;
         }
 
-        .company-info {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 15px;
-            overflow: hidden;
+        /* Technology */
+        .technology {
+            background: #0a0a1a;
         }
-        .company-header {
-            background: linear-gradient(90deg, rgba(191,54,12,0.2), rgba(230,74,25,0.1));
-            padding: 25px 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
         }
-        .company-header h3 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
+        .tech-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 35px;
+            transition: all 0.3s;
         }
-        .company-header p {
-            color: #888;
-            font-size: 0.9rem;
+        .tech-card:hover {
+            border-color: #bf360c;
         }
-        .company-body {
-            padding: 30px;
-        }
-        .info-row {
+        .tech-header {
             display: flex;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
         }
-        .info-row:last-child { border-bottom: none; }
-        .info-label {
-            width: 120px;
+        .tech-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(191,54,12,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .tech-card h3 {
+            font-size: 1.2rem;
+        }
+        .tech-card p {
             color: #888;
+            margin-bottom: 20px;
+        }
+        .tech-features {
+            list-style: none;
+        }
+        .tech-features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #aaa;
             font-size: 0.9rem;
         }
-        .info-value {
-            flex: 1;
-            color: #fff;
+        .tech-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #ff6d00;
         }
 
-        .contact-section {
-            background: linear-gradient(135deg, #bf360c, #d84315);
-            border-radius: 20px;
-            padding: 50px;
-            text-align: center;
-            margin-top: 60px;
+        /* Industries */
+        .industries {
+            background: linear-gradient(180deg, #0f0f1a 0%, #0a0a1a 100%);
         }
-        .contact-section h2 {
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .industry-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .industry-card:hover {
+            background: rgba(191,54,12,0.1);
+            border-color: #bf360c;
+        }
+        .industry-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .industry-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Customer */
+        .customer {
+            background: #0a0a1a;
+        }
+        .customer-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .customer-header {
+            background: linear-gradient(90deg, rgba(191,54,12,0.2), rgba(230,74,25,0.1));
+            padding: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .customer-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        .customer-header p {
+            color: #888;
+        }
+        .customer-body {
+            padding: 30px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .info-item {
+            padding: 15px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+        }
+        .info-label {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+        .info-value {
+            font-size: 1rem;
+        }
+
+        /* Certifications */
+        .certifications {
+            background: linear-gradient(180deg, #0a0a1a 0%, #0f0f1a 100%);
+        }
+        .cert-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .cert-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        .cert-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .cert-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .cert-desc {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        /* Contact */
+        .contact {
+            background: linear-gradient(135deg, #1a1018 0%, #0a0a1a 100%);
+            text-align: center;
+        }
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .contact-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .contact-icon {
             font-size: 2rem;
             margin-bottom: 15px;
         }
-        .contact-section p {
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 30px;
-        }
-        .contact-grid {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            flex-wrap: wrap;
-        }
-        .contact-item {
-            text-align: center;
-        }
-        .contact-item .label {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
+        .contact-label {
+            color: #888;
+            font-size: 0.85rem;
             margin-bottom: 5px;
         }
-        .contact-item .value {
-            font-size: 1.2rem;
-            font-weight: 600;
+        .contact-value {
+            font-size: 1.1rem;
+        }
+        .contact-value a {
+            color: #e64a19;
+            text-decoration: none;
+        }
+        .cta-buttons {
+            margin-top: 50px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .btn {
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #bf360c, #d84315);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(191,54,12,0.4);
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #444;
+            color: #fff;
+        }
+        .btn-secondary:hover {
+            border-color: #bf360c;
+        }
+
+        /* Footer */
+        footer {
+            background: #050510;
+            padding: 60px 30px 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+        }
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #bf360c;
+        }
+        .footer-brand p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .footer-links h4 {
+            margin-bottom: 20px;
+            color: #888;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .footer-links ul {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: #fff;
+        }
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: #444;
+            font-size: 0.85rem;
         }
 
         @media (max-width: 768px) {
+            .intro-content { grid-template-columns: 1fr; }
+            .contact-cards { grid-template-columns: 1fr; }
+            .info-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; gap: 30px; }
             .nav-links { display: none; }
-            .contact-grid { gap: 30px; }
         }
     </style>
 </head>
@@ -185,95 +502,302 @@
             <div class="logo">DH<span>Crusher</span></div>
             <ul class="nav-links">
                 <li><a href="index.html">홈</a></li>
-                <li><a href="system.html">시스템</a></li>
-                <li><a href="monitor.html">모니터링</a></li>
-                <li><a href="about.html" class="active">UTTEC</a></li>
+                <li><a href="system.html">시스템 구성</a></li>
+                <li><a href="monitor.html">실시간 모니터링</a></li>
+                <li><a href="about.html" class="active">UTTEC 소개</a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="page-header">
-        <h1>UTTEC 소개</h1>
-        <p>설비의 미래를 예측합니다</p>
-    </div>
+    <header class="page-header">
+        <div class="tagline">설비의 미래를 예측합니다</div>
+        <h1>UTTEC</h1>
+        <p>40년 이상의 임베디드 시스템 개발 경험을 바탕으로<br>산업용 IoT 및 예지정비 솔루션을 제공합니다</p>
+    </header>
 
-    <div class="content">
-        <section class="section">
-            <h2 class="section-title">UTTEC이 하는 일</h2>
-            <div class="about-grid">
-                <div class="about-card">
-                    <h3>AI 기반 예지정비</h3>
-                    <p>진동, 온도, 전류 등 센서 데이터를 AI로 분석하여 설비 고장을 사전에 예측합니다. FFT 분석, Autoencoder, RUL 예측 등 첨단 기술을 적용합니다.</p>
-                </div>
-                <div class="about-card">
-                    <h3>Edge AI 솔루션</h3>
-                    <p>현장 설치형 Edge AI Gateway를 통해 실시간 데이터 처리와 이상 탐지를 수행합니다. 클라우드 의존도를 낮추고 빠른 응답을 보장합니다.</p>
-                </div>
-                <div class="about-card">
-                    <h3>맞춤형 대시보드</h3>
-                    <p>고객사 설비 특성에 맞는 실시간 모니터링 대시보드를 제공합니다. 웹과 모바일에서 언제 어디서나 설비 상태를 확인할 수 있습니다.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">대흥크러셔 소개</h2>
-            <div class="company-info">
-                <div class="company-header">
-                    <h3>(주)대흥크러셔</h3>
-                    <p>DH Crusher Co., Ltd. | 플라스틱 분쇄/파쇄/재생설비 전문 제조</p>
-                </div>
-                <div class="company-body">
-                    <div class="info-row">
-                        <span class="info-label">대표이사</span>
-                        <span class="info-value">이현수</span>
+    <section class="about-intro">
+        <div class="intro-content">
+            <div class="intro-text">
+                <h3>믿을 수 있는 파트너</h3>
+                <p>UTTEC은 산업 현장의 설비 관리 혁신을 위해 설립된 스마트팩토리 솔루션 전문 기업입니다.</p>
+                <p>분쇄기, 파쇄기, 압출기 등 플라스틱 재생설비 모니터링에 특화된 기술력을 보유하고 있으며, 폐기물 처리/재활용 산업에 최적화된 솔루션을 제공합니다.</p>
+                <p>Edge AI 기술을 활용하여 현장에서 실시간으로 설비 상태를 분석하고, 고장을 사전에 예측하여 비계획 정지를 최소화합니다.</p>
+                <div class="intro-stats">
+                    <div class="stat-box">
+                        <div class="stat-number">40+</div>
+                        <div class="stat-label">년 업력</div>
                     </div>
-                    <div class="info-row">
-                        <span class="info-label">설립연도</span>
-                        <span class="info-value">2005년 (법인전환)</span>
+                    <div class="stat-box">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">구축 설비</div>
                     </div>
-                    <div class="info-row">
-                        <span class="info-label">본사 주소</span>
-                        <span class="info-value">대구 달성군 논공읍 노이2길 48-17</span>
+                    <div class="stat-box">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">고객 만족도</div>
                     </div>
-                    <div class="info-row">
-                        <span class="info-label">연락처</span>
-                        <span class="info-value">053-639-7332 / FAX: 053-615-6332</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">사업분야</span>
-                        <span class="info-value">플라스틱 분쇄기, 파쇄기, 재생압출기, 용융기 제조</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">인증현황</span>
-                        <span class="info-value">ISO 9001:2000 (2010년 획득)</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">홈페이지</span>
-                        <span class="info-value">www.dh-crusher.co.kr</span>
+                    <div class="stat-box">
+                        <div class="stat-number">60%</div>
+                        <div class="stat-label">비계획정지 감소</div>
                     </div>
                 </div>
             </div>
-        </section>
+            <div class="intro-visual">
+                <div class="company-logo">UTTEC</div>
+                <div class="company-slogan">"예측 가능한 미래,<br>안정적인 운영"</div>
+            </div>
+        </div>
+    </section>
 
-        <div class="contact-section">
-            <h2>문의하기</h2>
-            <p>AI 기반 예지정비 시스템 도입에 관심이 있으시면 연락 주세요</p>
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <div class="label">UTTEC 담당자</div>
-                    <div class="value">홍 광삼</div>
+    <section class="core-values">
+        <div class="section-title">
+            <h2>핵심 가치</h2>
+            <p>UTTEC이 추구하는 가치</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🎯</div>
+                <h3>정확성</h3>
+                <p>고정밀 센서와 검증된 알고리즘으로 정확한 설비 상태 진단을 제공합니다.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">⚡</div>
+                <h3>실시간성</h3>
+                <p>Edge AI 기술로 지연 없이 실시간으로 이상 징후를 탐지하고 알립니다.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🔮</div>
+                <h3>예측성</h3>
+                <p>머신러닝 기반 예지정비로 고장 발생 전 최적의 정비 시점을 예측합니다.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🛡️</div>
+                <h3>안전성</h3>
+                <p>과부하 및 이상상황을 실시간 모니터링하여 안전한 작업 환경을 보장합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="technology">
+        <div class="section-title">
+            <h2>핵심 기술</h2>
+            <p>UTTEC만의 차별화된 기술력</p>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-header">
+                    <div class="tech-icon">🖥️</div>
+                    <h3>Edge AI Gateway</h3>
                 </div>
-                <div class="contact-item">
-                    <div class="label">연락처</div>
-                    <div class="value">010-3922-1809</div>
+                <p>현장에서 실시간으로 데이터를 분석하는 엣지 컴퓨팅 솔루션</p>
+                <ul class="tech-features">
+                    <li>ARM Cortex-M4 + DSP 기반 고성능 처리</li>
+                    <li>실시간 FFT, Envelope, Cepstrum 분석</li>
+                    <li>AI 기반 이상 탐지 및 RUL 예측</li>
+                    <li>RS-485/Modbus/MQTT 산업용 프로토콜</li>
+                </ul>
+            </div>
+            <div class="tech-card">
+                <div class="tech-header">
+                    <div class="tech-icon">📊</div>
+                    <h3>진동 분석 기술</h3>
                 </div>
-                <div class="contact-item">
-                    <div class="label">이메일</div>
-                    <div class="value">uttec@uttec.co.kr</div>
+                <p>분쇄기/파쇄기 전문 진동 분석 알고리즘</p>
+                <ul class="tech-features">
+                    <li>FFT 스펙트럼 분석 (최대 25.6kHz 샘플링)</li>
+                    <li>Envelope 분석으로 베어링 결함 조기 검출</li>
+                    <li>분쇄날/파쇄날 마모도 예측</li>
+                    <li>자동 피크 검출 및 결함 주파수 매칭</li>
+                </ul>
+            </div>
+            <div class="tech-card">
+                <div class="tech-header">
+                    <div class="tech-icon">🤖</div>
+                    <h3>AI 예지정비</h3>
+                </div>
+                <p>머신러닝 기반 고장 예측 시스템</p>
+                <ul class="tech-features">
+                    <li>이상 탐지 (Anomaly Detection)</li>
+                    <li>잔여수명 예측 (RUL Prediction)</li>
+                    <li>날/스크류 마모 진행률 추정</li>
+                    <li>자동 학습 및 모델 업데이트</li>
+                </ul>
+            </div>
+            <div class="tech-card">
+                <div class="tech-header">
+                    <div class="tech-icon">☁️</div>
+                    <h3>클라우드 플랫폼</h3>
+                </div>
+                <p>통합 모니터링 및 분석 대시보드</p>
+                <ul class="tech-features">
+                    <li>실시간 대시보드 및 3D 시각화</li>
+                    <li>다중 사업장 통합 관리</li>
+                    <li>자동 리포트 생성</li>
+                    <li>모바일 앱 알림</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="industries">
+        <div class="section-title">
+            <h2>적용 분야</h2>
+            <p>다양한 산업 분야에서 활용되고 있습니다</p>
+        </div>
+        <div class="industry-grid">
+            <div class="industry-card">
+                <div class="industry-icon">♻️</div>
+                <div class="industry-name">플라스틱 재활용</div>
+            </div>
+            <div class="industry-card">
+                <div class="industry-icon">🏭</div>
+                <div class="industry-name">폐기물 처리</div>
+            </div>
+            <div class="industry-card">
+                <div class="industry-icon">🔧</div>
+                <div class="industry-name">분쇄/파쇄</div>
+            </div>
+            <div class="industry-card">
+                <div class="industry-icon">🔥</div>
+                <div class="industry-name">압출/펠릿화</div>
+            </div>
+            <div class="industry-card">
+                <div class="industry-icon">🏗️</div>
+                <div class="industry-name">건설폐기물</div>
+            </div>
+            <div class="industry-card">
+                <div class="industry-icon">🚗</div>
+                <div class="industry-name">폐타이어</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="customer">
+        <div class="section-title">
+            <h2>고객사 소개</h2>
+            <p>대흥크러셔 - 플라스틱 재생설비 전문 기업</p>
+        </div>
+        <div class="customer-card">
+            <div class="customer-header">
+                <h3>(주)대흥크러셔</h3>
+                <p>DH Crusher Co., Ltd. | 플라스틱 분쇄/파쇄/재생설비 전문 제조</p>
+            </div>
+            <div class="customer-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">대표이사</div>
+                        <div class="info-value">이현수</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">설립연도</div>
+                        <div class="info-value">2005년 (법인전환)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">본사 주소</div>
+                        <div class="info-value">대구 달성군 논공읍 노이2길 48-17</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">연락처</div>
+                        <div class="info-value">053-639-7332</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">사업분야</div>
+                        <div class="info-value">분쇄기, 파쇄기, 재생압출기, 용융기 제조</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">인증현황</div>
+                        <div class="info-value">ISO 9001:2000 (2010년 획득)</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section class="certifications">
+        <div class="section-title">
+            <h2>인증 및 표준</h2>
+            <p>국제 표준을 준수합니다</p>
+        </div>
+        <div class="cert-grid">
+            <div class="cert-item">
+                <div class="cert-icon">🏆</div>
+                <div class="cert-name">KC 인증</div>
+                <div class="cert-desc">국내 전기용품 안전인증</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-icon">🇪🇺</div>
+                <div class="cert-name">CE 마킹</div>
+                <div class="cert-desc">유럽 안전 규격 적합</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-icon">🏭</div>
+                <div class="cert-name">ISO 9001</div>
+                <div class="cert-desc">품질경영시스템</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-icon">♻️</div>
+                <div class="cert-name">환경인증</div>
+                <div class="cert-desc">폐기물처리업 등록</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="contact-content">
+            <div class="section-title">
+                <h2>문의하기</h2>
+                <p>UTTEC과 함께 스마트팩토리를 시작하세요</p>
+            </div>
+            <div class="contact-cards">
+                <div class="contact-card">
+                    <div class="contact-icon">👤</div>
+                    <div class="contact-label">담당자</div>
+                    <div class="contact-value">홍 광삼</div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-label">이메일</div>
+                    <div class="contact-value"><a href="mailto:uttec@uttec.co.kr">uttec@uttec.co.kr</a></div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-label">연락처</div>
+                    <div class="contact-value"><a href="tel:010-3922-1809">010-3922-1809</a></div>
+                </div>
+            </div>
+            <div class="cta-buttons">
+                <a href="monitor.html" class="btn btn-primary">실시간 데모 체험</a>
+                <a href="index.html" class="btn btn-secondary">솔루션 자세히 보기</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>UTTEC</h3>
+                <p>설비의 미래를 예측합니다.<br>40년 이상의 임베디드 시스템 개발 경험을 바탕으로<br>산업용 IoT 및 예지정비 솔루션을 제공합니다.</p>
+            </div>
+            <div class="footer-links">
+                <h4>사이트맵</h4>
+                <ul>
+                    <li><a href="index.html">홈</a></li>
+                    <li><a href="system.html">시스템 구성</a></li>
+                    <li><a href="monitor.html">실시간 모니터링</a></li>
+                    <li><a href="about.html">UTTEC 소개</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>연락처</h4>
+                <ul>
+                    <li>담당: 홍 광삼</li>
+                    <li>uttec@uttec.co.kr</li>
+                    <li>010-3922-1809</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 UTTEC. All rights reserved. | 대흥크러셔 스마트팩토리 데모</p>
+        </div>
+    </footer>
 </body>
 </html>
