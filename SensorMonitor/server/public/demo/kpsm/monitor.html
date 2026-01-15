@@ -30,6 +30,11 @@
             z-index: 1000;
             border-bottom: 1px solid rgba(92, 107, 192, 0.3);
         }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
@@ -49,6 +54,83 @@
         }
         .nav-links a:hover, .nav-links a.active {
             color: #5c6bc0;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .live-badge {
+            background: #f44336;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .phone-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+        }
+        .phone-control label {
+            color: #9fa8da;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .phone-toggle {
+            appearance: none;
+            width: 44px;
+            height: 24px;
+            background: #333;
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .phone-toggle::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s;
+        }
+        .phone-toggle:checked {
+            background: linear-gradient(135deg, #1a237e, #5c6bc0);
+        }
+        .phone-toggle:checked::after {
+            left: 22px;
+        }
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .connection-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #666;
+            transition: background 0.3s;
+        }
+        .connection-dot.connected {
+            background: #4caf50;
+            box-shadow: 0 0 8px #4caf50;
         }
 
         .main-content {
@@ -343,12 +425,25 @@
 </head>
 <body>
     <nav>
-        <div class="logo">KPSM Smart Factory</div>
-        <div class="nav-links">
-            <a href="index.html">홈</a>
-            <a href="system.html">시스템 구성</a>
-            <a href="monitor.html" class="active">실시간 모니터링</a>
-            <a href="about.html">UTTEC 소개</a>
+        <div class="nav-left">
+            <div class="logo">KPSM Smart Factory</div>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="system.html">시스템 구성</a>
+                <a href="monitor.html" class="active">실시간 모니터링</a>
+                <a href="about.html">UTTEC 소개</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <span class="live-badge">LIVE</span>
+            <div class="phone-control">
+                <label for="phoneToggle">스마트폰 연동</label>
+                <input type="checkbox" id="phoneToggle" class="phone-toggle" onchange="togglePhoneConnection()">
+            </div>
+            <div class="connection-status">
+                <div class="connection-dot" id="connectionDot"></div>
+                <span id="connectionText">연결 대기</span>
+            </div>
         </div>
     </nav>
 
@@ -844,7 +939,7 @@
             ws = new WebSocket(wsUrl);
 
             ws.onopen = function() {
-                document.getElementById('wsStatus').classList.add('connected');
+                updateConnectionStatus(true);
             };
 
             ws.onmessage = function(event) {
@@ -883,13 +978,40 @@
             };
 
             ws.onclose = function() {
-                document.getElementById('wsStatus').classList.remove('connected');
+                updateConnectionStatus(false);
                 setTimeout(initWebSocket, 3000);
             };
         }
 
+        function updateConnectionStatus(connected) {
+            const dot = document.getElementById('connectionDot');
+            const text = document.getElementById('connectionText');
+            if (connected) {
+                dot.classList.add('connected');
+                text.textContent = '연결됨';
+            } else {
+                dot.classList.remove('connected');
+                text.textContent = '연결 대기';
+            }
+        }
+
+        function togglePhoneConnection() {
+            useRealOrientation = document.getElementById('phoneToggle').checked;
+            if (!useRealOrientation) {
+                targetRotation = { x: 0, y: 0, z: 0 };
+                currentRotation = { x: 0, y: 0, z: 0 };
+                calibratedOrientation = { roll: 0, pitch: 0 };
+                if (equipment) {
+                    equipment.rotation.x = 0;
+                    equipment.rotation.y = 0;
+                    equipment.rotation.z = 0;
+                }
+                updateOrientationDisplay(0, 0, 0);
+            }
+        }
+
         function toggleOrientationSource() {
-            useRealOrientation = document.getElementById('orientationToggle').checked;
+            useRealOrientation = document.getElementById('orientationToggle')?.checked || document.getElementById('phoneToggle')?.checked || false;
             if (!useRealOrientation) {
                 targetRotation = { x: 0, y: 0, z: 0 };
                 currentRotation = { x: 0, y: 0, z: 0 };
@@ -897,9 +1019,12 @@
         }
 
         function updateOrientationDisplay(alpha, beta, gamma) {
-            document.getElementById('alphaValue').textContent = Math.round(alpha) + '°';
-            document.getElementById('betaValue').textContent = Math.round(beta) + '°';
-            document.getElementById('gammaValue').textContent = Math.round(gamma) + '°';
+            const alphaEl = document.getElementById('alphaValue');
+            const betaEl = document.getElementById('betaValue');
+            const gammaEl = document.getElementById('gammaValue');
+            if (alphaEl) alphaEl.textContent = Math.round(alpha) + '°';
+            if (betaEl) betaEl.textContent = Math.round(beta) + '°';
+            if (gammaEl) gammaEl.textContent = Math.round(gamma) + '°';
         }
 
         function animate() {
