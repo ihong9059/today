@@ -7,6 +7,7 @@
     <title>실시간 모니터링 - 동원분체산업 스마트팩토리</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -397,6 +398,39 @@
             background: rgba(124,58,237,0.2);
         }
 
+        /* Trend Chart */
+        .chart-panel {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 25px;
+        }
+        .chart-panel h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        .chart-container {
+            position: relative;
+            height: 180px;
+        }
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 0.75rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
         @media (max-width: 1200px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -540,6 +574,31 @@
                         <div class="sensor-bar">
                             <div class="sensor-bar-fill normal" id="rpmBar" style="width: 70%"></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-panel">
+                <h3>📈 트렌드 (최근 60초)</h3>
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: #10b981"></span>
+                        <span>진동</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: #f59e0b"></span>
+                        <span>온도</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: #3b82f6"></span>
+                        <span>전류</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: #ef4444"></span>
+                        <span>분진</span>
                     </div>
                 </div>
             </div>
@@ -991,6 +1050,165 @@
             rpm: { warning: 3200, danger: 3500, max: 4000 }
         };
 
+        // Trend chart
+        let trendChart = null;
+        let trendData = {
+            labels: [],
+            vibration: [],
+            temperature: [],
+            current: [],
+            dust: []
+        };
+        const maxDataPoints = 60;
+
+        function initTrendChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: trendData.labels,
+                    datasets: [
+                        {
+                            label: '진동',
+                            data: trendData.vibration,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            fill: true
+                        },
+                        {
+                            label: '온도',
+                            data: trendData.temperature,
+                            borderColor: '#f59e0b',
+                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            fill: true,
+                            yAxisID: 'y1'
+                        },
+                        {
+                            label: '전류',
+                            data: trendData.current,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            fill: true,
+                            yAxisID: 'y1'
+                        },
+                        {
+                            label: '분진',
+                            data: trendData.dust,
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            fill: true,
+                            yAxisID: 'y2'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(10, 10, 26, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#aaa',
+                            borderColor: 'rgba(255,255,255,0.1)',
+                            borderWidth: 1
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: false
+                        },
+                        y: {
+                            position: 'left',
+                            min: 0,
+                            max: 10,
+                            ticks: {
+                                color: '#666',
+                                font: { size: 10 }
+                            },
+                            grid: {
+                                color: 'rgba(255,255,255,0.05)'
+                            },
+                            title: {
+                                display: true,
+                                text: 'mm/s',
+                                color: '#10b981',
+                                font: { size: 9 }
+                            }
+                        },
+                        y1: {
+                            position: 'right',
+                            min: 0,
+                            max: 100,
+                            ticks: {
+                                color: '#666',
+                                font: { size: 10 }
+                            },
+                            grid: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: '°C / A',
+                                color: '#f59e0b',
+                                font: { size: 9 }
+                            }
+                        },
+                        y2: {
+                            display: false,
+                            min: 0,
+                            max: 500
+                        }
+                    },
+                    animation: {
+                        duration: 300
+                    }
+                }
+            });
+        }
+
+        function updateTrendChart() {
+            const now = new Date();
+            const timeLabel = now.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+            trendData.labels.push(timeLabel);
+            trendData.vibration.push(sensorValues.vibration.current);
+            trendData.temperature.push(sensorValues.temperature.current);
+            trendData.current.push(sensorValues.current.current);
+            trendData.dust.push(sensorValues.dust.current);
+
+            // Keep only last maxDataPoints
+            if (trendData.labels.length > maxDataPoints) {
+                trendData.labels.shift();
+                trendData.vibration.shift();
+                trendData.temperature.shift();
+                trendData.current.shift();
+                trendData.dust.shift();
+            }
+
+            if (trendChart) {
+                trendChart.update('none');
+            }
+        }
+
         function setScenario(scenario) {
             currentScenario = scenario;
             degradeCounter = 0;
@@ -1128,9 +1346,13 @@
 
         // Initialize
         init();
+        initTrendChart();
 
         // Generate new target values every 2 seconds
         setInterval(generateTargetValues, 2000);
+
+        // Update trend chart every 1 second
+        setInterval(updateTrendChart, 1000);
 
         // Update display smoothly every 100ms
         setInterval(() => {
@@ -1141,6 +1363,7 @@
         // Initial values
         generateTargetValues();
         updateSensorDisplay();
+        updateTrendChart();
     </script>
 </body>
 </html>
