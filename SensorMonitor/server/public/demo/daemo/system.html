@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대모엔지니어링 - 시스템 구성</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        :root {
+            --primary: #d32f2f;
+            --secondary: #f44336;
+            --accent: #ff5722;
+            --dark: #b71c1c;
+            --success: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d1117 0%, #1a1a2e 50%, #0d1117 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.3);
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--secondary);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 120px 50px 50px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5em;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: #888;
+            font-size: 1.1em;
+        }
+
+        /* Architecture Section */
+        .architecture-section {
+            padding: 0 50px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .architecture-container {
+            background: linear-gradient(180deg, rgba(50, 30, 30, 0.6), rgba(30, 20, 20, 0.8));
+            border: 1px solid rgba(211, 47, 47, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .arch-title {
+            text-align: center;
+            font-size: 1.4em;
+            color: var(--secondary);
+            margin-bottom: 30px;
+        }
+
+        /* Layer Styles */
+        .layer {
+            margin-bottom: 20px;
+        }
+
+        .layer-content {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .cloud-box {
+            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
+            border-radius: 15px;
+            padding: 20px 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .cloud-box h3 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .cloud-box p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .edge-box {
+            background: linear-gradient(135deg, #1976d2, #2196f3);
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-align: center;
+            color: white;
+            min-width: 150px;
+        }
+
+        .edge-box h4 {
+            font-size: 0.95em;
+            margin-bottom: 3px;
+        }
+
+        .edge-box p {
+            font-size: 0.75em;
+            opacity: 0.8;
+        }
+
+        .equip-box {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            min-width: 130px;
+        }
+
+        .equip-box h4 {
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .equip-box p {
+            font-size: 0.7em;
+            opacity: 0.85;
+        }
+
+        .sensor-box {
+            background: linear-gradient(135deg, #388e3c, #4caf50);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-align: center;
+            color: white;
+            font-size: 0.85em;
+            min-width: 130px;
+        }
+
+        .connection {
+            text-align: center;
+            padding: 10px 0;
+            color: var(--secondary);
+        }
+
+        .connection-line {
+            width: 2px;
+            height: 20px;
+            background: var(--secondary);
+            margin: 0 auto;
+        }
+
+        .connection-text {
+            font-size: 0.75em;
+            color: #888;
+        }
+
+        /* Tabs Section */
+        .tabs-section {
+            padding: 0 50px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 1.8em;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #888;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(50, 30, 30, 0.6);
+            border: 1px solid rgba(211, 47, 47, 0.3);
+            color: #888;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            border-color: var(--secondary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Sensor Table */
+        .sensor-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(50, 30, 30, 0.6);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .sensor-table th {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .sensor-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.2);
+            color: #ccc;
+        }
+
+        .sensor-table tr:hover {
+            background: rgba(211, 47, 47, 0.1);
+        }
+
+        .sensor-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 0 50px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .project-card {
+            background: linear-gradient(145deg, rgba(50, 30, 30, 0.8), rgba(30, 20, 20, 0.9));
+            border: 1px solid rgba(211, 47, 47, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-header h3 {
+            color: white;
+            font-size: 0.95em;
+        }
+
+        .project-cost {
+            background: var(--accent);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .project-body {
+            padding: 20px;
+        }
+
+        .project-body h4 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .project-body ul {
+            list-style: none;
+            color: #999;
+            font-size: 0.85em;
+        }
+
+        .project-body ul li {
+            padding: 4px 0;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .project-body ul li::before {
+            content: '•';
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 30px 50px;
+            text-align: center;
+            border-top: 1px solid rgba(211, 47, 47, 0.2);
+        }
+
+        .footer p {
+            color: #666;
+        }
+
+        @media (max-width: 1024px) {
+            .project-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .page-header {
+                padding: 100px 20px 40px;
+            }
+            .architecture-section, .tabs-section, .projects-section {
+                padding: 0 20px 40px;
+            }
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            .layer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">DAEMO<span>ENG</span></div>
+        <div class="nav-links">
+            <a href="index.html">홈</a>
+            <a href="system.html" class="active">시스템</a>
+            <a href="monitor.html">모니터링</a>
+            <a href="about.html">소개</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>시스템 구성</h1>
+        <p>유압브레이커/어태치먼트 제조 설비 예지정비 시스템 아키텍처</p>
+    </section>
+
+    <!-- Architecture Diagram -->
+    <section class="architecture-section">
+        <div class="architecture-container">
+            <div class="arch-title">4계층 예지정비 시스템 구조</div>
+
+            <!-- Cloud Layer -->
+            <div class="layer">
+                <div class="layer-content">
+                    <div class="cloud-box">
+                        <h3>☁️ 글로벌 클라우드</h3>
+                        <p>AI 분석 엔진 / 통합 대시보드 / 원격 모니터링</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connection">
+                <div class="connection-line"></div>
+                <div class="connection-text">MQTT / HTTPS / 5G</div>
+            </div>
+
+            <!-- Edge Layer -->
+            <div class="layer">
+                <div class="layer-content">
+                    <div class="edge-box">
+                        <h4>Edge AI Gateway</h4>
+                        <p>실시간 분석</p>
+                    </div>
+                    <div class="edge-box">
+                        <h4>용접모니터</h4>
+                        <p>품질 분석</p>
+                    </div>
+                    <div class="edge-box">
+                        <h4>열처리모니터</h4>
+                        <p>온도 제어</p>
+                    </div>
+                    <div class="edge-box">
+                        <h4>스마트브레이커</h4>
+                        <p>원격 모니터링</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connection">
+                <div class="connection-line"></div>
+                <div class="connection-text">RS-485 / Modbus / 4-20mA</div>
+            </div>
+
+            <!-- Equipment Layer -->
+            <div class="layer">
+                <div class="layer-content">
+                    <div class="equip-box">
+                        <h4>CNC 가공</h4>
+                        <p>MCT, 선반, 보링</p>
+                    </div>
+                    <div class="equip-box">
+                        <h4>로봇 용접</h4>
+                        <p>용접로봇 12대</p>
+                    </div>
+                    <div class="equip-box">
+                        <h4>열처리</h4>
+                        <p>고주파, 침탄로</p>
+                    </div>
+                    <div class="equip-box">
+                        <h4>유압 시험</h4>
+                        <p>브레이커 시험기</p>
+                    </div>
+                    <div class="equip-box">
+                        <h4>스마트브레이커</h4>
+                        <p>출하 제품</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connection">
+                <div class="connection-line"></div>
+            </div>
+
+            <!-- Sensor Layer -->
+            <div class="layer">
+                <div class="layer-content">
+                    <div class="sensor-box">진동/온도/전류</div>
+                    <div class="sensor-box">용접전류/전압</div>
+                    <div class="sensor-box">다점온도/가스</div>
+                    <div class="sensor-box">압력/유량/진동</div>
+                    <div class="sensor-box">타격/압력/온도</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sensor Details by Equipment -->
+    <section class="tabs-section">
+        <div class="section-title">
+            <h2>공정별 센서 구성</h2>
+            <p>설비별 모니터링 포인트 상세</p>
+        </div>
+
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="showTab('cnc')">CNC 가공</button>
+            <button class="tab-btn" onclick="showTab('welding')">로봇 용접</button>
+            <button class="tab-btn" onclick="showTab('heat')">열처리</button>
+            <button class="tab-btn" onclick="showTab('hydraulic')">유압 시험</button>
+            <button class="tab-btn" onclick="showTab('smart')">스마트브레이커</button>
+        </div>
+
+        <!-- CNC Tab -->
+        <div id="cnc" class="tab-content active">
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>대상 설비</th>
+                        <th>센서 종류</th>
+                        <th>모니터링 항목</th>
+                        <th>수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CNC MCT (8대)</td>
+                        <td>진동+온도+전류</td>
+                        <td>스핀들 진동, 베어링 온도, 이송부하</td>
+                        <td>48</td>
+                    </tr>
+                    <tr>
+                        <td>CNC 선반 (6대)</td>
+                        <td>진동+온도+전류</td>
+                        <td>스핀들 상태, 가공정밀도</td>
+                        <td>36</td>
+                    </tr>
+                    <tr>
+                        <td>보링기 (4대)</td>
+                        <td>진동+전류</td>
+                        <td>스핀들 진동, 부하 분석</td>
+                        <td>8</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Welding Tab -->
+        <div id="welding" class="tab-content">
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>대상 설비</th>
+                        <th>센서 종류</th>
+                        <th>모니터링 항목</th>
+                        <th>수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>용접 로봇 (12대)</td>
+                        <td>용접모니터</td>
+                        <td>용접전류/전압, 와이어송급</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>용접 스테이션 (8개)</td>
+                        <td>전류+온도</td>
+                        <td>아크안정성, 용접이음 품질</td>
+                        <td>16</td>
+                    </tr>
+                    <tr>
+                        <td>전체 용접</td>
+                        <td>온도센서</td>
+                        <td>입열량, 냉각 관리</td>
+                        <td>20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Heat Treatment Tab -->
+        <div id="heat" class="tab-content">
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>대상 설비</th>
+                        <th>센서 종류</th>
+                        <th>모니터링 항목</th>
+                        <th>수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>고주파 열처리기 (4대)</td>
+                        <td>다점온도</td>
+                        <td>로 온도분포</td>
+                        <td>16</td>
+                    </tr>
+                    <tr>
+                        <td>침탄로 (2대)</td>
+                        <td>온도+가스분석</td>
+                        <td>분위기가스, 침탄농도</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>소입/소려로 (3대)</td>
+                        <td>다점온도+냉각수</td>
+                        <td>냉각곡선, 처리시간</td>
+                        <td>18</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Hydraulic Test Tab -->
+        <div id="hydraulic" class="tab-content">
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>대상 설비</th>
+                        <th>센서 종류</th>
+                        <th>모니터링 항목</th>
+                        <th>수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>브레이커 시험기 (4대)</td>
+                        <td>압력+유량+진동+온도</td>
+                        <td>유압압력, 타격주파수</td>
+                        <td>32</td>
+                    </tr>
+                    <tr>
+                        <td>크러셔 시험기 (2대)</td>
+                        <td>압력+유량+온도</td>
+                        <td>파쇄력, 유압 효율</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>퀵커플러 시험기 (2대)</td>
+                        <td>압력+유량+온도</td>
+                        <td>체결력, 누설량</td>
+                        <td>12</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Smart Breaker Tab -->
+        <div id="smart" class="tab-content">
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>모니터링 항목</th>
+                        <th>센서 구성</th>
+                        <th>분석 내용</th>
+                        <th>통신</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>타격횟수</td>
+                        <td>내장 카운터</td>
+                        <td>누적 타격, 잔여수명 예측</td>
+                        <td>LTE/5G</td>
+                    </tr>
+                    <tr>
+                        <td>유압압력</td>
+                        <td>압력센서</td>
+                        <td>작동 압력, 이상 감지</td>
+                        <td>LTE/5G</td>
+                    </tr>
+                    <tr>
+                        <td>작동온도</td>
+                        <td>온도센서</td>
+                        <td>과열 방지, 윤활 상태</td>
+                        <td>LTE/5G</td>
+                    </tr>
+                    <tr>
+                        <td>이상진동</td>
+                        <td>진동센서</td>
+                        <td>내부 마모, 고장 예측</td>
+                        <td>LTE/5G</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Projects Detail -->
+    <section class="projects-section">
+        <div class="section-title">
+            <h2>프로젝트별 투자 상세</h2>
+            <p>총 6개 프로젝트, 2.27억원 투자</p>
+        </div>
+
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>대형 가공설비 예지정비</h3>
+                    <span class="project-cost">4,200만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>대상 설비</h4>
+                    <ul>
+                        <li>CNC MCT 8대</li>
+                        <li>CNC 선반 6대</li>
+                        <li>보링기 4대</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>로봇 용접 품질 모니터링</h3>
+                    <span class="project-cost">3,800만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>대상 설비</h4>
+                    <ul>
+                        <li>용접 로봇 12대</li>
+                        <li>수동 용접 스테이션 8개</li>
+                        <li>실시간 품질 추적</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>열처리 품질 모니터링</h3>
+                    <span class="project-cost">3,200만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>대상 설비</h4>
+                    <ul>
+                        <li>고주파 열처리기 4대</li>
+                        <li>침탄로 2대</li>
+                        <li>소입/소려로 3대</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>유압 시스템 성능시험</h3>
+                    <span class="project-cost">3,600만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>대상 설비</h4>
+                    <ul>
+                        <li>브레이커 시험기 4대</li>
+                        <li>크러셔 시험기 2대</li>
+                        <li>퀵커플러 시험기 2대</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>스마트 브레이커 원격</h3>
+                    <span class="project-cost">4,500만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>대상 범위</h4>
+                    <ul>
+                        <li>출하 스마트브레이커</li>
+                        <li>연간 500대 기준</li>
+                        <li>LTE/5G 원격 모니터링</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>글로벌 통합 대시보드</h3>
+                    <span class="project-cost">3,400만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>대상 범위</h4>
+                    <ul>
+                        <li>시흥본사</li>
+                        <li>울산사업장</li>
+                        <li>중국공장</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 UTTEC. Smart Factory Solution for DAEMO Engineering.</p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

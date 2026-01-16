@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 모니터링 - 수광산업 SK-PdM</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #00695c;
+            --primary-light: #00897b;
+            --primary-dark: #004d40;
+            --accent: #26a69a;
+            --bg-dark: #00332e;
+            --text-light: #ffffff;
+            --text-dark: #1a1a2e;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary) 100%);
+            min-height: 100vh;
+            color: var(--text-light);
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(0, 51, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo span {
+            color: var(--text-light);
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+
+        /* Main Layout */
+        .main-content {
+            padding-top: 70px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            min-height: 100vh;
+        }
+
+        /* 3D Viewer */
+        .viewer-section {
+            padding: 1rem;
+        }
+
+        .viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .viewer-header h2 {
+            font-size: 1.3rem;
+        }
+
+        .site-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .site-tab {
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .site-tab.active {
+            background: var(--accent);
+        }
+
+        .site-tab:hover {
+            background: rgba(38, 166, 154, 0.5);
+        }
+
+        #viewer-container {
+            background: linear-gradient(180deg, #001a17 0%, #003330 100%);
+            border-radius: 15px;
+            height: calc(100vh - 200px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .viewer-legend {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background: rgba(0,0,0,0.7);
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .legend-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+
+        /* Status Panel */
+        .status-panel {
+            background: rgba(0, 51, 46, 0.9);
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: calc(100vh - 70px);
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        /* Equipment Cards */
+        .equipment-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .equipment-card.warning {
+            border-left-color: var(--warning);
+        }
+
+        .equipment-card.danger {
+            border-left-color: var(--danger);
+        }
+
+        .eq-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .eq-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .eq-status {
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .eq-status.normal {
+            background: var(--success);
+        }
+
+        .eq-status.warning {
+            background: var(--warning);
+            color: #000;
+        }
+
+        .eq-status.danger {
+            background: var(--danger);
+        }
+
+        .eq-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .metric {
+            background: rgba(0,0,0,0.2);
+            padding: 0.5rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        /* Condition Indicator */
+        .condition-section {
+            margin-top: 0.8rem;
+        }
+
+        .condition-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 0.3rem;
+        }
+
+        .condition-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s;
+        }
+
+        .condition-fill.good {
+            background: linear-gradient(90deg, var(--success) 0%, #8bc34a 100%);
+        }
+
+        .condition-fill.fair {
+            background: linear-gradient(90deg, #ffc107 0%, var(--warning) 100%);
+        }
+
+        .condition-fill.poor {
+            background: linear-gradient(90deg, var(--warning) 0%, var(--danger) 100%);
+        }
+
+        .condition-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        /* Chart Section */
+        .chart-section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .chart-container {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            height: 180px;
+        }
+
+        /* Site Summary */
+        .site-summary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            text-align: center;
+        }
+
+        .summary-item .value {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .summary-item .label {
+            font-size: 0.7rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .status-panel {
+                max-height: none;
+            }
+
+            #viewer-container {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .site-tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">SK<span>-PdM</span></div>
+        <div class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="system.html">SYSTEM</a>
+            <a href="monitor.html" class="active">MONITOR</a>
+            <a href="about.html">ABOUT</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <!-- 3D Viewer Section -->
+        <div class="viewer-section">
+            <div class="viewer-header">
+                <h2>3개 사업장 설비 현황</h2>
+                <div class="site-tabs">
+                    <button class="site-tab active" onclick="switchSite('all')">전체</button>
+                    <button class="site-tab" onclick="switchSite('hq')">본사(시화)</button>
+                    <button class="site-tab" onclick="switchSite('giheung')">기흥</button>
+                    <button class="site-tab" onclick="switchSite('cheonan')">천안/아산</button>
+                </div>
+            </div>
+            <div id="viewer-container">
+                <div class="viewer-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #4caf50;"></div>
+                        <span>정상 운전</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ff9800;"></div>
+                        <span>주의 필요</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #f44336;"></div>
+                        <span>점검 필요</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #9e9e9e;"></div>
+                        <span>정지</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Panel -->
+        <div class="status-panel">
+            <h3 class="panel-title">실시간 설비 상태</h3>
+
+            <!-- Site Summary -->
+            <div class="site-summary">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="value" id="total-equipment">104</div>
+                        <div class="label">총 설비</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="value" id="running-count">98</div>
+                        <div class="label">가동중</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="value" id="alert-count">3</div>
+                        <div class="label">주의</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equipment Cards -->
+            <div id="equipment-list">
+                <!-- Pump 1 -->
+                <div class="equipment-card">
+                    <div class="eq-header">
+                        <span class="eq-name">내산펌프 #1 (기흥)</span>
+                        <span class="eq-status normal">정상</span>
+                    </div>
+                    <div class="eq-metrics">
+                        <div class="metric">
+                            <div class="metric-value" id="pump1-vib">2.4</div>
+                            <div class="metric-label">진동 (mm/s)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="pump1-temp">45.2</div>
+                            <div class="metric-label">온도 (°C)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="pump1-current">12.5</div>
+                            <div class="metric-label">전류 (A)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="pump1-flow">85</div>
+                            <div class="metric-label">유량 (%)</div>
+                        </div>
+                    </div>
+                    <div class="condition-section">
+                        <div class="condition-label">
+                            <span>베어링 상태</span>
+                            <span id="pump1-cond">92%</span>
+                        </div>
+                        <div class="condition-bar">
+                            <div class="condition-fill good" style="width: 92%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agitator 1 -->
+                <div class="equipment-card warning">
+                    <div class="eq-header">
+                        <span class="eq-name">교반기 #3 (천안)</span>
+                        <span class="eq-status warning">주의</span>
+                    </div>
+                    <div class="eq-metrics">
+                        <div class="metric">
+                            <div class="metric-value" id="agit1-vib">5.8</div>
+                            <div class="metric-label">진동 (mm/s)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="agit1-temp">58.4</div>
+                            <div class="metric-label">온도 (°C)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="agit1-current">18.2</div>
+                            <div class="metric-label">전류 (A)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="agit1-rpm">120</div>
+                            <div class="metric-label">RPM</div>
+                        </div>
+                    </div>
+                    <div class="condition-section">
+                        <div class="condition-label">
+                            <span>임펠러 밸런스</span>
+                            <span id="agit1-cond">68%</span>
+                        </div>
+                        <div class="condition-bar">
+                            <div class="condition-fill fair" style="width: 68%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reducer 1 -->
+                <div class="equipment-card">
+                    <div class="eq-header">
+                        <span class="eq-name">감속기 #2 (기흥)</span>
+                        <span class="eq-status normal">정상</span>
+                    </div>
+                    <div class="eq-metrics">
+                        <div class="metric">
+                            <div class="metric-value" id="red1-vib">1.8</div>
+                            <div class="metric-label">진동 (mm/s)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="red1-temp">52.1</div>
+                            <div class="metric-label">온도 (°C)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="red1-torque">85</div>
+                            <div class="metric-label">토크 (%)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="red1-oil">정상</div>
+                            <div class="metric-label">오일상태</div>
+                        </div>
+                    </div>
+                    <div class="condition-section">
+                        <div class="condition-label">
+                            <span>기어 상태</span>
+                            <span id="red1-cond">88%</span>
+                        </div>
+                        <div class="condition-bar">
+                            <div class="condition-fill good" style="width: 88%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CNC 1 -->
+                <div class="equipment-card">
+                    <div class="eq-header">
+                        <span class="eq-name">CNC 선반 #1 (본사)</span>
+                        <span class="eq-status normal">정상</span>
+                    </div>
+                    <div class="eq-metrics">
+                        <div class="metric">
+                            <div class="metric-value" id="cnc1-vib">1.2</div>
+                            <div class="metric-label">진동 (mm/s)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="cnc1-temp">38.5</div>
+                            <div class="metric-label">온도 (°C)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="cnc1-load">65</div>
+                            <div class="metric-label">부하 (%)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="cnc1-rpm">3200</div>
+                            <div class="metric-label">RPM</div>
+                        </div>
+                    </div>
+                    <div class="condition-section">
+                        <div class="condition-label">
+                            <span>스핀들 상태</span>
+                            <span id="cnc1-cond">95%</span>
+                        </div>
+                        <div class="condition-bar">
+                            <div class="condition-fill good" style="width: 95%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Equipment -->
+                <div class="equipment-card">
+                    <div class="eq-header">
+                        <span class="eq-name">펌프 성능시험기 (본사)</span>
+                        <span class="eq-status normal">정상</span>
+                    </div>
+                    <div class="eq-metrics">
+                        <div class="metric">
+                            <div class="metric-value" id="test1-flow">125</div>
+                            <div class="metric-label">유량 (L/min)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="test1-head">28.5</div>
+                            <div class="metric-label">양정 (m)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="test1-eff">78</div>
+                            <div class="metric-label">효율 (%)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="test1-noise">62</div>
+                            <div class="metric-label">소음 (dB)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trend Chart -->
+            <div class="chart-section">
+                <h4 style="margin-bottom: 0.8rem; font-size: 0.95rem;">진동 트렌드 (24시간)</h4>
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Three.js Scene Setup
+        let scene, camera, renderer;
+        let equipmentMeshes = [];
+        let autoRotate = true;
+        let rotationAngle = 0;
+        let currentSite = 'all';
+
+        function init() {
+            const container = document.getElementById('viewer-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x001a17);
+            scene.fog = new THREE.Fog(0x001a17, 20, 50);
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+            camera.position.set(15, 12, 15);
+            camera.lookAt(0, 0, 0);
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(width, height);
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 15, 10);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+
+            const pointLight = new THREE.PointLight(0x26a69a, 0.5, 30);
+            pointLight.position.set(0, 10, 0);
+            scene.add(pointLight);
+
+            // Floor - 3 Sites
+            createFloorLayout();
+
+            // Equipment
+            createEquipment();
+
+            // Grid
+            const gridHelper = new THREE.GridHelper(30, 30, 0x26a69a, 0x004d40);
+            gridHelper.position.y = 0.01;
+            scene.add(gridHelper);
+
+            // Mouse controls
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+
+            container.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                autoRotate = false;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const deltaX = e.clientX - previousMousePosition.x;
+                rotationAngle += deltaX * 0.01;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            container.addEventListener('mouseup', () => {
+                isDragging = false;
+                setTimeout(() => { autoRotate = true; }, 3000);
+            });
+
+            container.addEventListener('mouseleave', () => {
+                isDragging = false;
+            });
+
+            window.addEventListener('resize', onWindowResize);
+
+            animate();
+        }
+
+        function createFloorLayout() {
+            // Site 1: HQ (시화) - Left
+            const floor1 = new THREE.Mesh(
+                new THREE.PlaneGeometry(8, 10),
+                new THREE.MeshStandardMaterial({ color: 0x004d40, transparent: true, opacity: 0.7 })
+            );
+            floor1.rotation.x = -Math.PI / 2;
+            floor1.position.set(-9, 0, 0);
+            floor1.receiveShadow = true;
+            floor1.userData = { site: 'hq', name: '본사(시화)' };
+            scene.add(floor1);
+
+            // Site 2: Giheung - Center
+            const floor2 = new THREE.Mesh(
+                new THREE.PlaneGeometry(10, 10),
+                new THREE.MeshStandardMaterial({ color: 0x00695c, transparent: true, opacity: 0.7 })
+            );
+            floor2.rotation.x = -Math.PI / 2;
+            floor2.position.set(0, 0, 0);
+            floor2.receiveShadow = true;
+            floor2.userData = { site: 'giheung', name: '기흥' };
+            scene.add(floor2);
+
+            // Site 3: Cheonan - Right
+            const floor3 = new THREE.Mesh(
+                new THREE.PlaneGeometry(8, 10),
+                new THREE.MeshStandardMaterial({ color: 0x00897b, transparent: true, opacity: 0.7 })
+            );
+            floor3.rotation.x = -Math.PI / 2;
+            floor3.position.set(9, 0, 0);
+            floor3.receiveShadow = true;
+            floor3.userData = { site: 'cheonan', name: '천안/아산' };
+            scene.add(floor3);
+
+            // Site Labels
+            addSiteLabel('본사(시화)', -9, 0.1, 5.5);
+            addSiteLabel('기흥', 0, 0.1, 5.5);
+            addSiteLabel('천안/아산', 9, 0.1, 5.5);
+        }
+
+        function addSiteLabel(text, x, y, z) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 256;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#26a69a';
+            ctx.font = 'bold 28px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(text, 128, 40);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
+            const sprite = new THREE.Sprite(material);
+            sprite.position.set(x, y, z);
+            sprite.scale.set(4, 1, 1);
+            scene.add(sprite);
+        }
+
+        function createEquipment() {
+            // HQ Equipment (CNC, MCT, Test)
+            createPump(-10, 0.5, -2, 'hq', 0x4caf50);
+            createPump(-8, 0.5, -2, 'hq', 0x4caf50);
+            createCNC(-10, 0.5, 1, 'hq', 0x4caf50);
+            createCNC(-8, 0.5, 1, 'hq', 0x4caf50);
+            createTestBench(-9, 0.5, 3, 'hq', 0x4caf50);
+
+            // Giheung Equipment (Pumps, Agitators, Reducers)
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 3; j++) {
+                    const type = (i + j) % 3;
+                    const status = Math.random() > 0.95 ? 0xff9800 : 0x4caf50;
+                    if (type === 0) {
+                        createPump(-3 + i * 2, 0.5, -3 + j * 2.5, 'giheung', status);
+                    } else if (type === 1) {
+                        createAgitator(-3 + i * 2, 0.5, -3 + j * 2.5, 'giheung', status);
+                    } else {
+                        createReducer(-3 + i * 2, 0.5, -3 + j * 2.5, 'giheung', status);
+                    }
+                }
+            }
+
+            // Cheonan Equipment
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    const type = (i + j) % 3;
+                    const status = (i === 1 && j === 1) ? 0xff9800 : 0x4caf50;
+                    if (type === 0) {
+                        createPump(7 + i * 2, 0.5, -3 + j * 2.5, 'cheonan', status);
+                    } else if (type === 1) {
+                        createAgitator(7 + i * 2, 0.5, -3 + j * 2.5, 'cheonan', status);
+                    } else {
+                        createReducer(7 + i * 2, 0.5, -3 + j * 2.5, 'cheonan', status);
+                    }
+                }
+            }
+        }
+
+        function createPump(x, y, z, site, statusColor) {
+            const group = new THREE.Group();
+
+            // Pump body (cylinder)
+            const body = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.4, 0.5, 0.8, 16),
+                new THREE.MeshStandardMaterial({ color: 0x37474f, metalness: 0.6, roughness: 0.4 })
+            );
+            body.position.y = 0.4;
+            group.add(body);
+
+            // Motor
+            const motor = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.25, 0.25, 0.5, 12),
+                new THREE.MeshStandardMaterial({ color: 0x455a64, metalness: 0.5, roughness: 0.5 })
+            );
+            motor.position.set(0.5, 0.6, 0);
+            motor.rotation.z = Math.PI / 2;
+            group.add(motor);
+
+            // Status indicator
+            const status = new THREE.Mesh(
+                new THREE.SphereGeometry(0.1, 8, 8),
+                new THREE.MeshStandardMaterial({ color: statusColor, emissive: statusColor, emissiveIntensity: 0.5 })
+            );
+            status.position.y = 1;
+            group.add(status);
+
+            // Pipes
+            const pipe1 = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.08, 0.08, 0.6, 8),
+                new THREE.MeshStandardMaterial({ color: 0x607d8b })
+            );
+            pipe1.position.set(0, 0.4, 0.5);
+            pipe1.rotation.x = Math.PI / 2;
+            group.add(pipe1);
+
+            group.position.set(x, y, z);
+            group.userData = { type: 'pump', site: site };
+            scene.add(group);
+            equipmentMeshes.push(group);
+        }
+
+        function createAgitator(x, y, z, site, statusColor) {
+            const group = new THREE.Group();
+
+            // Tank
+            const tank = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.5, 0.5, 1, 16),
+                new THREE.MeshStandardMaterial({ color: 0x546e7a, metalness: 0.4, roughness: 0.6, transparent: true, opacity: 0.8 })
+            );
+            tank.position.y = 0.5;
+            group.add(tank);
+
+            // Shaft
+            const shaft = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.05, 0.05, 1.2, 8),
+                new THREE.MeshStandardMaterial({ color: 0x78909c, metalness: 0.7, roughness: 0.3 })
+            );
+            shaft.position.y = 0.6;
+            group.add(shaft);
+
+            // Impeller
+            const impeller = new THREE.Mesh(
+                new THREE.BoxGeometry(0.6, 0.05, 0.1),
+                new THREE.MeshStandardMaterial({ color: 0x90a4ae, metalness: 0.6, roughness: 0.4 })
+            );
+            impeller.position.y = 0.3;
+            group.add(impeller);
+
+            // Motor on top
+            const motor = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.2, 0.2, 0.3, 12),
+                new THREE.MeshStandardMaterial({ color: 0x455a64, metalness: 0.5, roughness: 0.5 })
+            );
+            motor.position.y = 1.2;
+            group.add(motor);
+
+            // Status indicator
+            const status = new THREE.Mesh(
+                new THREE.SphereGeometry(0.1, 8, 8),
+                new THREE.MeshStandardMaterial({ color: statusColor, emissive: statusColor, emissiveIntensity: 0.5 })
+            );
+            status.position.y = 1.5;
+            group.add(status);
+
+            group.position.set(x, y, z);
+            group.userData = { type: 'agitator', site: site };
+            scene.add(group);
+            equipmentMeshes.push(group);
+        }
+
+        function createReducer(x, y, z, site, statusColor) {
+            const group = new THREE.Group();
+
+            // Gearbox housing
+            const housing = new THREE.Mesh(
+                new THREE.BoxGeometry(0.7, 0.5, 0.5),
+                new THREE.MeshStandardMaterial({ color: 0x37474f, metalness: 0.6, roughness: 0.4 })
+            );
+            housing.position.y = 0.35;
+            group.add(housing);
+
+            // Input shaft
+            const inputShaft = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.08, 0.08, 0.4, 8),
+                new THREE.MeshStandardMaterial({ color: 0x78909c, metalness: 0.7, roughness: 0.3 })
+            );
+            inputShaft.rotation.z = Math.PI / 2;
+            inputShaft.position.set(-0.5, 0.4, 0);
+            group.add(inputShaft);
+
+            // Output shaft
+            const outputShaft = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.1, 0.1, 0.4, 8),
+                new THREE.MeshStandardMaterial({ color: 0x78909c, metalness: 0.7, roughness: 0.3 })
+            );
+            outputShaft.rotation.z = Math.PI / 2;
+            outputShaft.position.set(0.5, 0.3, 0);
+            group.add(outputShaft);
+
+            // Status indicator
+            const status = new THREE.Mesh(
+                new THREE.SphereGeometry(0.1, 8, 8),
+                new THREE.MeshStandardMaterial({ color: statusColor, emissive: statusColor, emissiveIntensity: 0.5 })
+            );
+            status.position.y = 0.8;
+            group.add(status);
+
+            group.position.set(x, y, z);
+            group.userData = { type: 'reducer', site: site };
+            scene.add(group);
+            equipmentMeshes.push(group);
+        }
+
+        function createCNC(x, y, z, site, statusColor) {
+            const group = new THREE.Group();
+
+            // Machine base
+            const base = new THREE.Mesh(
+                new THREE.BoxGeometry(1.2, 0.3, 0.8),
+                new THREE.MeshStandardMaterial({ color: 0x37474f, metalness: 0.5, roughness: 0.5 })
+            );
+            base.position.y = 0.15;
+            group.add(base);
+
+            // Column
+            const column = new THREE.Mesh(
+                new THREE.BoxGeometry(0.3, 1, 0.3),
+                new THREE.MeshStandardMaterial({ color: 0x455a64, metalness: 0.5, roughness: 0.5 })
+            );
+            column.position.set(-0.3, 0.8, 0);
+            group.add(column);
+
+            // Spindle head
+            const head = new THREE.Mesh(
+                new THREE.BoxGeometry(0.4, 0.3, 0.3),
+                new THREE.MeshStandardMaterial({ color: 0x546e7a, metalness: 0.6, roughness: 0.4 })
+            );
+            head.position.set(0, 0.9, 0);
+            group.add(head);
+
+            // Status indicator
+            const status = new THREE.Mesh(
+                new THREE.SphereGeometry(0.1, 8, 8),
+                new THREE.MeshStandardMaterial({ color: statusColor, emissive: statusColor, emissiveIntensity: 0.5 })
+            );
+            status.position.set(-0.3, 1.4, 0);
+            group.add(status);
+
+            group.position.set(x, y, z);
+            group.userData = { type: 'cnc', site: site };
+            scene.add(group);
+            equipmentMeshes.push(group);
+        }
+
+        function createTestBench(x, y, z, site, statusColor) {
+            const group = new THREE.Group();
+
+            // Test bench base
+            const base = new THREE.Mesh(
+                new THREE.BoxGeometry(1.5, 0.2, 1),
+                new THREE.MeshStandardMaterial({ color: 0x455a64, metalness: 0.4, roughness: 0.6 })
+            );
+            base.position.y = 0.1;
+            group.add(base);
+
+            // Test pump mount
+            const mount = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.3, 0.35, 0.5, 12),
+                new THREE.MeshStandardMaterial({ color: 0x37474f, metalness: 0.5, roughness: 0.5 })
+            );
+            mount.position.set(0, 0.45, 0);
+            group.add(mount);
+
+            // Pressure gauge
+            const gauge = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.15, 0.15, 0.05, 12),
+                new THREE.MeshStandardMaterial({ color: 0xffffff })
+            );
+            gauge.rotation.x = Math.PI / 2;
+            gauge.position.set(0.5, 0.5, 0.4);
+            group.add(gauge);
+
+            // Status indicator
+            const status = new THREE.Mesh(
+                new THREE.SphereGeometry(0.1, 8, 8),
+                new THREE.MeshStandardMaterial({ color: statusColor, emissive: statusColor, emissiveIntensity: 0.5 })
+            );
+            status.position.y = 0.9;
+            group.add(status);
+
+            group.position.set(x, y, z);
+            group.userData = { type: 'test', site: site };
+            scene.add(group);
+            equipmentMeshes.push(group);
+        }
+
+        function switchSite(site) {
+            currentSite = site;
+            document.querySelectorAll('.site-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            equipmentMeshes.forEach(mesh => {
+                if (site === 'all' || mesh.userData.site === site) {
+                    mesh.visible = true;
+                } else {
+                    mesh.visible = false;
+                }
+            });
+
+            // Update camera focus
+            if (site === 'hq') {
+                camera.position.set(-5, 10, 15);
+            } else if (site === 'giheung') {
+                camera.position.set(5, 10, 15);
+            } else if (site === 'cheonan') {
+                camera.position.set(15, 10, 15);
+            } else {
+                camera.position.set(15, 12, 15);
+            }
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('viewer-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (autoRotate) {
+                rotationAngle += 0.003;
+            }
+
+            const radius = 18;
+            camera.position.x = Math.sin(rotationAngle) * radius;
+            camera.position.z = Math.cos(rotationAngle) * radius;
+            camera.lookAt(0, 0, 0);
+
+            // Rotate agitator impellers
+            equipmentMeshes.forEach(mesh => {
+                if (mesh.userData.type === 'agitator' && mesh.visible) {
+                    mesh.children.forEach(child => {
+                        if (child.geometry && child.geometry.type === 'BoxGeometry') {
+                            child.rotation.y += 0.05;
+                        }
+                    });
+                }
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        // Chart.js Setup
+        function initChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            const labels = [];
+            const data1 = [];
+            const data2 = [];
+            const data3 = [];
+
+            for (let i = 24; i >= 0; i--) {
+                labels.push(i + 'h');
+                data1.push(2 + Math.random() * 1.5);
+                data2.push(5 + Math.random() * 2);
+                data3.push(1.5 + Math.random() * 1);
+            }
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '펌프 #1',
+                            data: data1,
+                            borderColor: '#4caf50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: '교반기 #3',
+                            data: data2,
+                            borderColor: '#ff9800',
+                            backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: '감속기 #2',
+                            data: data3,
+                            borderColor: '#26a69a',
+                            backgroundColor: 'rgba(38, 166, 154, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: '#ffffff',
+                                font: { size: 10 },
+                                boxWidth: 12
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#ffffff', font: { size: 9 } },
+                            grid: { color: 'rgba(255,255,255,0.1)' }
+                        },
+                        y: {
+                            ticks: { color: '#ffffff', font: { size: 9 } },
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            title: {
+                                display: true,
+                                text: 'mm/s',
+                                color: '#ffffff',
+                                font: { size: 10 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Real-time data simulation
+        function updateSensorData() {
+            // Pump 1
+            document.getElementById('pump1-vib').textContent = (2 + Math.random() * 0.8).toFixed(1);
+            document.getElementById('pump1-temp').textContent = (44 + Math.random() * 3).toFixed(1);
+            document.getElementById('pump1-current').textContent = (12 + Math.random() * 1).toFixed(1);
+            document.getElementById('pump1-flow').textContent = Math.floor(82 + Math.random() * 8);
+
+            // Agitator 1
+            document.getElementById('agit1-vib').textContent = (5.2 + Math.random() * 1.2).toFixed(1);
+            document.getElementById('agit1-temp').textContent = (56 + Math.random() * 5).toFixed(1);
+            document.getElementById('agit1-current').textContent = (17 + Math.random() * 2).toFixed(1);
+            document.getElementById('agit1-rpm').textContent = Math.floor(115 + Math.random() * 10);
+
+            // Reducer 1
+            document.getElementById('red1-vib').textContent = (1.5 + Math.random() * 0.6).toFixed(1);
+            document.getElementById('red1-temp').textContent = (50 + Math.random() * 4).toFixed(1);
+            document.getElementById('red1-torque').textContent = Math.floor(82 + Math.random() * 8);
+
+            // CNC 1
+            document.getElementById('cnc1-vib').textContent = (1 + Math.random() * 0.4).toFixed(1);
+            document.getElementById('cnc1-temp').textContent = (36 + Math.random() * 5).toFixed(1);
+            document.getElementById('cnc1-load').textContent = Math.floor(60 + Math.random() * 15);
+            document.getElementById('cnc1-rpm').textContent = Math.floor(3000 + Math.random() * 400);
+
+            // Test equipment
+            document.getElementById('test1-flow').textContent = Math.floor(120 + Math.random() * 15);
+            document.getElementById('test1-head').textContent = (27 + Math.random() * 3).toFixed(1);
+            document.getElementById('test1-eff').textContent = Math.floor(75 + Math.random() * 8);
+            document.getElementById('test1-noise').textContent = Math.floor(60 + Math.random() * 5);
+        }
+
+        // Initialize
+        init();
+        initChart();
+        setInterval(updateSensorData, 2000);
+    </script>
+</body>
+</html>

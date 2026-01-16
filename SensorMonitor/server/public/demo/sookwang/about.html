@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT - 수광산업 SK-PdM</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        :root {
+            --primary: #00695c;
+            --primary-light: #00897b;
+            --primary-dark: #004d40;
+            --accent: #26a69a;
+            --bg-dark: #00332e;
+            --text-light: #ffffff;
+            --text-dark: #1a1a2e;
+            --card-bg: rgba(255,255,255,0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+            min-height: 100vh;
+            color: var(--text-light);
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(0, 51, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo span {
+            color: var(--text-light);
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 80px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+            background: radial-gradient(ellipse at center, rgba(38, 166, 154, 0.2) 0%, transparent 70%);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Sections */
+        .section {
+            padding: 4rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Company Cards */
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .company-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            color: var(--text-dark);
+        }
+
+        .company-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .company-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .company-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .company-body {
+            padding: 2rem;
+        }
+
+        .info-row {
+            display: flex;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            width: 100px;
+            font-weight: 600;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .info-value {
+            color: #333;
+        }
+
+        /* Sites Section */
+        .sites-section {
+            background: rgba(0, 51, 46, 0.9);
+            padding: 4rem 2rem;
+        }
+
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .site-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .site-card h3 {
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .site-card .icon {
+            font-size: 1.5rem;
+        }
+
+        .site-info {
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .site-info strong {
+            color: var(--accent);
+        }
+
+        /* Certifications */
+        .cert-section {
+            padding: 4rem 2rem;
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cert-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-dark);
+            transition: transform 0.3s;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .cert-card .cert-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .cert-card h4 {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-card p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Products Section */
+        .products-section {
+            background: rgba(0, 51, 46, 0.9);
+            padding: 4rem 2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            color: var(--text-dark);
+            border-left: 4px solid var(--accent);
+        }
+
+        .product-card h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .product-card .icon {
+            font-size: 1.5rem;
+        }
+
+        .product-card p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-card .features {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .product-card .feature-item {
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+
+        /* UTTEC Section */
+        .uttec-section {
+            padding: 4rem 2rem;
+        }
+
+        .uttec-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            color: var(--text-dark);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .uttec-header {
+            background: linear-gradient(135deg, #1a5f7a 0%, #159895 100%);
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .uttec-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .uttec-body {
+            padding: 2rem;
+        }
+
+        .uttec-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .uttec-feature {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+            border-radius: 12px;
+        }
+
+        .uttec-feature .icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .uttec-feature h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .uttec-feature p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Benefits */
+        .benefits-section {
+            background: rgba(0, 51, 46, 0.9);
+            padding: 4rem 2rem;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .benefit-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .benefit-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: var(--accent);
+        }
+
+        .benefit-card p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Contact */
+        .contact-section {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-card h2 {
+            margin-bottom: 1rem;
+        }
+
+        .contact-card p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-item .label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-item .value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-dark);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .company-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">SK<span>-PdM</span></div>
+        <div class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="system.html">SYSTEM</a>
+            <a href="monitor.html">MONITOR</a>
+            <a href="about.html" class="active">ABOUT</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>ABOUT US</h1>
+            <p>수광산업(주) & UTTEC 협력 소개</p>
+        </div>
+
+        <!-- Company Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">회사 소개</h2>
+                <div class="company-grid">
+                    <div class="company-card">
+                        <div class="company-header">
+                            <h2>수광산업(주)</h2>
+                            <p>SOOKWANG Industrial Co., Ltd.</p>
+                        </div>
+                        <div class="company-body">
+                            <div class="info-row">
+                                <span class="info-label">대표이사</span>
+                                <span class="info-value">이준기</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">설립</span>
+                                <span class="info-value">2003년 5월 (2005년 법인전환)</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">사업분야</span>
+                                <span class="info-value">내산펌프, 교반기, 감속기 제조 / 반도체 유지보수</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">본사</span>
+                                <span class="info-value">경기도 안산시 단원구 정왕천동로 170 (시화공단)</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">연락처</span>
+                                <span class="info-value">031-437-1095 / FAX: 031-437-1093</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">인증</span>
+                                <span class="info-value">ISO 9001, ISO 14001, INNO-BIZ, MAIN-BIZ, 벤처기업</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-header" style="background: linear-gradient(135deg, #1a5f7a 0%, #159895 100%);">
+                            <h2>UTTEC</h2>
+                            <p>설비의 미래를 예측합니다</p>
+                        </div>
+                        <div class="company-body">
+                            <div class="info-row">
+                                <span class="info-label">전문분야</span>
+                                <span class="info-value">산업설비 예지정비(PdM) 솔루션</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">핵심기술</span>
+                                <span class="info-value">Edge AI, FFT 분석, RUL 예측</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">적용분야</span>
+                                <span class="info-value">펌프, 교반기, 감속기, 반도체 장비</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">특화역량</span>
+                                <span class="info-value">회전기계 진동분석, 다사업장 통합관리</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">이메일</span>
+                                <span class="info-value">uttec@uttec.co.kr</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">연락처</span>
+                                <span class="info-value">010-3922-1809 (홍 광삼)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sites Section -->
+        <section class="sites-section">
+            <div class="container">
+                <h2 class="section-title">3개 사업장</h2>
+                <div class="sites-grid">
+                    <div class="site-card">
+                        <h3><span class="icon">&#127981;</span> 본사 (시화공단)</h3>
+                        <div class="site-info">
+                            <p><strong>주소:</strong> 경기도 안산시 단원구 정왕천동로 170</p>
+                            <p><strong>시설:</strong> 제조공장, 시험설비, R&D센터</p>
+                            <p><strong>주요설비:</strong> CNC 선반, MCT, 조립라인, 성능시험기</p>
+                            <p><strong>역할:</strong> 펌프/교반기/감속기 제조 본부</p>
+                        </div>
+                    </div>
+                    <div class="site-card">
+                        <h3><span class="icon">&#128187;</span> 기흥 영업소</h3>
+                        <div class="site-info">
+                            <p><strong>주소:</strong> 경기도 용인시 기흥구 삼성로 1 (삼성전자 K1)</p>
+                            <p><strong>고객:</strong> 삼성전자 기흥사업장</p>
+                            <p><strong>관리설비:</strong> 펌프/교반기/감속기 50대</p>
+                            <p><strong>역할:</strong> 반도체 설비 유지보수 서비스</p>
+                        </div>
+                    </div>
+                    <div class="site-card">
+                        <h3><span class="icon">&#128225;</span> 천안/아산 영업소</h3>
+                        <div class="site-info">
+                            <p><strong>주소:</strong> 충청남도 아산시 음봉면 월암로 24</p>
+                            <p><strong>고객:</strong> 삼성전자 천안/아산사업장</p>
+                            <p><strong>관리설비:</strong> 펌프/교반기/감속기 40대</p>
+                            <p><strong>역할:</strong> 반도체 설비 유지보수 서비스</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications -->
+        <section class="cert-section">
+            <div class="container">
+                <h2 class="section-title">인증 현황</h2>
+                <div class="cert-grid">
+                    <div class="cert-card">
+                        <div class="cert-icon">&#9989;</div>
+                        <h4>ISO 9001</h4>
+                        <p>품질경영시스템</p>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon">&#127793;</div>
+                        <h4>ISO 14001</h4>
+                        <p>환경경영시스템</p>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon">&#128161;</div>
+                        <h4>INNO-BIZ</h4>
+                        <p>기술혁신형 중소기업</p>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon">&#128200;</div>
+                        <h4>MAIN-BIZ</h4>
+                        <p>경영혁신형 중소기업</p>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon">&#127942;</div>
+                        <h4>벤처기업</h4>
+                        <p>기술혁신 벤처기업</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products-section">
+            <div class="container">
+                <h2 class="section-title">주요 제품</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <h3><span class="icon">&#128167;</span> 내산펌프</h3>
+                        <p>반도체/화학 공정용 고내식성 펌프</p>
+                        <p>PVDF, PTFE 소재 적용</p>
+                        <div class="features">
+                            <div class="feature-item">+ 반도체 Fab 환경 최적화</div>
+                            <div class="feature-item">+ 고순도 화학액 이송</div>
+                            <div class="feature-item">+ 마그네틱 드라이브 옵션</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <h3><span class="icon">&#128260;</span> 교반기</h3>
+                        <p>반도체/화학 공정용 교반기</p>
+                        <p>정밀 동적밸런싱 적용</p>
+                        <div class="features">
+                            <div class="feature-item">+ 다양한 임펠러 타입</div>
+                            <div class="feature-item">+ 메카니컬 씰 적용</div>
+                            <div class="feature-item">+ 고정밀 축 정렬</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <h3><span class="icon">&#9881;</span> 감속기</h3>
+                        <p>산업용 정밀 감속기</p>
+                        <p>헬리컬/웜 기어 타입</p>
+                        <div class="features">
+                            <div class="feature-item">+ 고효율 동력전달</div>
+                            <div class="feature-item">+ 저소음 설계</div>
+                            <div class="feature-item">+ 다양한 감속비</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <h3><span class="icon">&#128736;</span> 유지보수 서비스</h3>
+                        <p>삼성전자 반도체 Fab 설비 관리</p>
+                        <p>24시간 긴급 대응 체계</p>
+                        <div class="features">
+                            <div class="feature-item">+ 예방정비 스케줄 관리</div>
+                            <div class="feature-item">+ 긴급 고장 대응</div>
+                            <div class="feature-item">+ 부품 수명 관리</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UTTEC Section -->
+        <section class="uttec-section">
+            <div class="container">
+                <h2 class="section-title">UTTEC 솔루션</h2>
+                <div class="uttec-card">
+                    <div class="uttec-header">
+                        <h2>SK-PdM 시스템</h2>
+                        <p>수광산업 맞춤형 예지정비 솔루션</p>
+                    </div>
+                    <div class="uttec-body">
+                        <p style="text-align: center; color: #666; margin-bottom: 1rem;">
+                            UTTEC은 수광산업의 펌프/교반기/감속기 제조 및 반도체 유지보수 사업에 최적화된<br>
+                            AI 기반 예지정비 시스템을 제공합니다.
+                        </p>
+                        <div class="uttec-features">
+                            <div class="uttec-feature">
+                                <div class="icon">&#128167;</div>
+                                <h4>펌프 전문 분석</h4>
+                                <p>베어링/임펠러/씰 상태 모니터링, 캐비테이션 조기 감지</p>
+                            </div>
+                            <div class="uttec-feature">
+                                <div class="icon">&#128260;</div>
+                                <h4>교반기 분석</h4>
+                                <p>동적밸런스 분석, 축 정렬 모니터링, 임펠러 마모 예측</p>
+                            </div>
+                            <div class="uttec-feature">
+                                <div class="icon">&#9881;</div>
+                                <h4>감속기 분석</h4>
+                                <p>기어 치형 마모 분석, 오일 상태 모니터링, 베어링 예측</p>
+                            </div>
+                            <div class="uttec-feature">
+                                <div class="icon">&#127760;</div>
+                                <h4>3사업장 통합</h4>
+                                <p>본사+기흥+천안 실시간 통합 모니터링, 원격 관리</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits -->
+        <section class="benefits-section">
+            <div class="container">
+                <h2 class="section-title">협력 기대효과</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="icon">&#127942;</div>
+                        <h4>제조 품질 향상</h4>
+                        <p>펌프/교반기/감속기 제조 공정 모니터링으로 품질 안정화, 출하 전 성능시험 자동화</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="icon">&#128736;</div>
+                        <h4>유지보수 혁신</h4>
+                        <p>예방정비에서 예지정비로 전환, 삼성전자 고객 만족도 향상, 긴급고장 50% 감소</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="icon">&#127760;</div>
+                        <h4>통합 관리 효율화</h4>
+                        <p>3개 사업장(본사+기흥+천안) 실시간 통합 모니터링, 정비 인력 효율화</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="icon">&#128161;</div>
+                        <h4>신규 사업 기회</h4>
+                        <p>예지정비 서비스 상품화, 타 반도체 고객사 확대, 데이터 기반 컨설팅</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-card">
+                    <h2>문의하기</h2>
+                    <p>펌프/교반기/감속기 예지정비에 대해 상담해 드립니다</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="label">담당자</div>
+                            <div class="value">홍 광삼</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="label">이메일</div>
+                            <div class="value">uttec@uttec.co.kr</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="label">연락처</div>
+                            <div class="value">010-3922-1809</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 수광산업(주) x UTTEC. 펌프/교반기/감속기 스마트 솔루션</p>
+    </footer>
+</body>
+</html>

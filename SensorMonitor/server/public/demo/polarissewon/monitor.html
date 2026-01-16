@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 모니터링 - (주)폴라리스세원</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(26, 35, 126, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 100px 2rem 3rem;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .status-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status-title h1 {
+            color: #1a237e;
+            font-size: 1.5rem;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: #4caf50;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .status-info {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .status-item {
+            text-align: center;
+        }
+
+        .status-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a237e;
+        }
+
+        .status-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Monitor Grid */
+        .monitor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* 3D Viewer */
+        .viewer-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .viewer-card h2 {
+            color: #1a237e;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #0a0a1a, #1a1a2e);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .model-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .model-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .model-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.4);
+        }
+
+        .model-btn.active {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+        }
+
+        /* Sensor Cards */
+        .sensors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .sensor-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .sensor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .sensor-name {
+            font-weight: 600;
+            color: #1a237e;
+        }
+
+        .sensor-status {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-normal {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-warning {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .status-critical {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .sensor-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .sensor-range {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .sensor-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-top: 0.8rem;
+            overflow: hidden;
+        }
+
+        .sensor-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+
+        .bar-normal {
+            background: linear-gradient(90deg, #4caf50, #66bb6a);
+        }
+
+        .bar-warning {
+            background: linear-gradient(90deg, #ff9800, #ffc107);
+        }
+
+        .bar-critical {
+            background: linear-gradient(90deg, #f44336, #ff5722);
+        }
+
+        /* Chart Section */
+        .chart-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .chart-section h2 {
+            color: #1a237e;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+
+        /* Equipment Status */
+        .equipment-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .equipment-section h2 {
+            color: #1a237e;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .equipment-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border-left: 4px solid #4caf50;
+        }
+
+        .equipment-card.warning {
+            border-left-color: #ff9800;
+        }
+
+        .equipment-card.critical {
+            border-left-color: #f44336;
+        }
+
+        .equipment-name {
+            font-weight: 600;
+            color: #1a237e;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .equipment-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }
+
+        .equipment-stat {
+            text-align: center;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.3);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1024px) {
+            .monitor-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sensors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .status-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .status-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="favicon.svg" alt="폴라리스세원 로고">
+                <div class="logo-text">
+                    <span class="logo-main">(주)폴라리스세원</span>
+                    <span class="logo-sub">Polaris Sewon Co., Ltd.</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="system.html">시스템</a>
+                <a href="monitor.html" class="active">모니터링</a>
+                <a href="about.html">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-title">
+                <h1>🏭 실시간 모니터링</h1>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span style="color: #2e7d32; font-weight: 500;">LIVE</span>
+                </div>
+            </div>
+            <div class="status-info">
+                <div class="status-item">
+                    <div class="status-value" id="running-equipment">4</div>
+                    <div class="status-label">가동 설비</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-value" id="sensor-count">156</div>
+                    <div class="status-label">센서 수</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-value" id="oee-value">94.2%</div>
+                    <div class="status-label">OEE</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-value" id="current-time">--:--:--</div>
+                    <div class="status-label">현재시간</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monitor Grid -->
+        <div class="monitor-grid">
+            <!-- 3D Viewer -->
+            <div class="viewer-card">
+                <h2>🔧 3D 설비 모델</h2>
+                <div id="canvas-container"></div>
+                <div class="model-controls">
+                    <button class="model-btn active" onclick="showModel('press')">프레스</button>
+                    <button class="model-btn" onclick="showModel('brazing')">브레이징로</button>
+                    <button class="model-btn" onclick="showModel('assembly')">조립라인</button>
+                </div>
+            </div>
+
+            <!-- Sensors -->
+            <div class="viewer-card">
+                <h2>📊 실시간 센서 데이터</h2>
+                <div class="sensors-grid">
+                    <div class="sensor-card">
+                        <div class="sensor-header">
+                            <span class="sensor-name">프레스 진동</span>
+                            <span class="sensor-status status-normal">정상</span>
+                        </div>
+                        <div class="sensor-value" id="vibration-value">2.4 mm/s</div>
+                        <div class="sensor-range">정상 범위: 0-4.5 mm/s</div>
+                        <div class="sensor-bar">
+                            <div class="sensor-bar-fill bar-normal" id="vibration-bar" style="width: 53%"></div>
+                        </div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-header">
+                            <span class="sensor-name">브레이징로 온도</span>
+                            <span class="sensor-status status-normal">정상</span>
+                        </div>
+                        <div class="sensor-value" id="temp-value">605°C</div>
+                        <div class="sensor-range">설정 범위: 580-620°C</div>
+                        <div class="sensor-bar">
+                            <div class="sensor-bar-fill bar-normal" id="temp-bar" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-header">
+                            <span class="sensor-name">유압 압력</span>
+                            <span class="sensor-status status-normal">정상</span>
+                        </div>
+                        <div class="sensor-value" id="pressure-value">185 bar</div>
+                        <div class="sensor-range">정상 범위: 150-200 bar</div>
+                        <div class="sensor-bar">
+                            <div class="sensor-bar-fill bar-normal" id="pressure-bar" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-header">
+                            <span class="sensor-name">조립 토크</span>
+                            <span class="sensor-status status-normal">정상</span>
+                        </div>
+                        <div class="sensor-value" id="torque-value">12.5 Nm</div>
+                        <div class="sensor-range">설정 범위: 10-15 Nm</div>
+                        <div class="sensor-bar">
+                            <div class="sensor-bar-fill bar-normal" id="torque-bar" style="width: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-section">
+            <h2>📈 진동 트렌드 분석</h2>
+            <div class="chart-container">
+                <canvas id="trendChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Equipment Status -->
+        <div class="equipment-section">
+            <h2>🏭 설비별 상태 현황</h2>
+            <div class="equipment-grid">
+                <div class="equipment-card">
+                    <div class="equipment-name">프레스 #1</div>
+                    <div class="equipment-stats">
+                        <div class="equipment-stat">
+                            <div class="stat-value">96.5%</div>
+                            <div class="stat-label">가동률</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">2,450</div>
+                            <div class="stat-label">생산량</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">0.12%</div>
+                            <div class="stat-label">불량률</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">45일</div>
+                            <div class="stat-label">예상수명</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="equipment-card">
+                    <div class="equipment-name">브레이징로 #1</div>
+                    <div class="equipment-stats">
+                        <div class="equipment-stat">
+                            <div class="stat-value">98.2%</div>
+                            <div class="stat-label">가동률</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">1,280</div>
+                            <div class="stat-label">생산량</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">0.08%</div>
+                            <div class="stat-label">불량률</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">62일</div>
+                            <div class="stat-label">예상수명</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="equipment-card warning">
+                    <div class="equipment-name">조립라인 #1</div>
+                    <div class="equipment-stats">
+                        <div class="equipment-stat">
+                            <div class="stat-value">91.8%</div>
+                            <div class="stat-label">가동률</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">3,120</div>
+                            <div class="stat-label">생산량</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">0.15%</div>
+                            <div class="stat-label">불량률</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">28일</div>
+                            <div class="stat-label">예상수명</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="equipment-card">
+                    <div class="equipment-name">검사설비 #1</div>
+                    <div class="equipment-stats">
+                        <div class="equipment-stat">
+                            <div class="stat-value">99.1%</div>
+                            <div class="stat-label">가동률</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">4,560</div>
+                            <div class="stat-label">검사량</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">99.5%</div>
+                            <div class="stat-label">정확도</div>
+                        </div>
+                        <div class="equipment-stat">
+                            <div class="stat-value">78일</div>
+                            <div class="stat-label">예상수명</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 (주)폴라리스세원. All Rights Reserved. | 스마트 제조 혁신 파트너</p>
+    </footer>
+
+    <script>
+        // Three.js Setup
+        let scene, camera, renderer, currentModel;
+        let autoRotate = true;
+
+        function init3D() {
+            const container = document.getElementById('canvas-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a1a);
+
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(15, 10, 15);
+            camera.lookAt(0, 0, 0);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 15, 10);
+            scene.add(directionalLight);
+
+            const pointLight = new THREE.PointLight(0x3949ab, 0.5);
+            pointLight.position.set(-10, 10, -10);
+            scene.add(pointLight);
+
+            // Grid
+            const gridHelper = new THREE.GridHelper(20, 20, 0x3949ab, 0x1a237e);
+            scene.add(gridHelper);
+
+            // Initial Model
+            createPressModel();
+
+            animate();
+
+            // Mouse interaction
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+
+            container.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                autoRotate = false;
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                if (isDragging && currentModel) {
+                    const deltaX = e.clientX - previousMousePosition.x;
+                    const deltaY = e.clientY - previousMousePosition.y;
+                    currentModel.rotation.y += deltaX * 0.01;
+                    currentModel.rotation.x += deltaY * 0.01;
+                }
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            container.addEventListener('mouseup', () => {
+                isDragging = false;
+                setTimeout(() => { autoRotate = true; }, 2000);
+            });
+
+            container.addEventListener('mouseleave', () => {
+                isDragging = false;
+            });
+
+            window.addEventListener('resize', () => {
+                const w = container.clientWidth;
+                const h = container.clientHeight;
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+                renderer.setSize(w, h);
+            });
+        }
+
+        function clearModel() {
+            if (currentModel) {
+                scene.remove(currentModel);
+            }
+        }
+
+        function createPressModel() {
+            clearModel();
+            currentModel = new THREE.Group();
+
+            // Base
+            const baseGeometry = new THREE.BoxGeometry(8, 1, 6);
+            const baseMaterial = new THREE.MeshPhongMaterial({ color: 0x3949ab });
+            const base = new THREE.Mesh(baseGeometry, baseMaterial);
+            base.position.y = 0.5;
+            currentModel.add(base);
+
+            // Frame Pillars
+            const pillarGeometry = new THREE.BoxGeometry(0.8, 8, 0.8);
+            const pillarMaterial = new THREE.MeshPhongMaterial({ color: 0x1a237e });
+
+            const positions = [[-3, 4.5, -2], [3, 4.5, -2], [-3, 4.5, 2], [3, 4.5, 2]];
+            positions.forEach(pos => {
+                const pillar = new THREE.Mesh(pillarGeometry, pillarMaterial);
+                pillar.position.set(...pos);
+                currentModel.add(pillar);
+            });
+
+            // Top Frame
+            const topFrameGeometry = new THREE.BoxGeometry(8, 1.2, 6);
+            const topFrame = new THREE.Mesh(topFrameGeometry, pillarMaterial);
+            topFrame.position.y = 9;
+            currentModel.add(topFrame);
+
+            // Ram (Slider)
+            const ramGeometry = new THREE.BoxGeometry(5, 2, 4);
+            const ramMaterial = new THREE.MeshPhongMaterial({ color: 0x5c6bc0 });
+            const ram = new THREE.Mesh(ramGeometry, ramMaterial);
+            ram.position.y = 5;
+            currentModel.add(ram);
+
+            // Hydraulic Cylinder
+            const cylinderGeometry = new THREE.CylinderGeometry(0.6, 0.6, 3, 16);
+            const cylinderMaterial = new THREE.MeshPhongMaterial({ color: 0x7986cb });
+            const cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+            cylinder.position.y = 7.5;
+            currentModel.add(cylinder);
+
+            // Die (Tool)
+            const dieGeometry = new THREE.BoxGeometry(4, 0.8, 3);
+            const dieMaterial = new THREE.MeshPhongMaterial({ color: 0x9fa8da });
+            const die = new THREE.Mesh(dieGeometry, dieMaterial);
+            die.position.y = 1.4;
+            currentModel.add(die);
+
+            // Sensors (Green dots)
+            const sensorGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+            const sensorMaterial = new THREE.MeshPhongMaterial({ color: 0x4caf50, emissive: 0x4caf50, emissiveIntensity: 0.5 });
+
+            const sensorPositions = [[2, 5, 2.2], [-2, 5, 2.2], [0, 9.5, 0], [3.5, 1.5, 0], [-3.5, 1.5, 0]];
+            sensorPositions.forEach(pos => {
+                const sensor = new THREE.Mesh(sensorGeometry, sensorMaterial);
+                sensor.position.set(...pos);
+                currentModel.add(sensor);
+            });
+
+            scene.add(currentModel);
+        }
+
+        function createBrazingModel() {
+            clearModel();
+            currentModel = new THREE.Group();
+
+            // Furnace Body
+            const bodyGeometry = new THREE.BoxGeometry(12, 4, 5);
+            const bodyMaterial = new THREE.MeshPhongMaterial({ color: 0x1a237e });
+            const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+            body.position.y = 2;
+            currentModel.add(body);
+
+            // Heating Zones (Inner glow)
+            const zoneGeometry = new THREE.BoxGeometry(3, 2.5, 3.5);
+            const zoneMaterial = new THREE.MeshPhongMaterial({
+                color: 0xff5722,
+                emissive: 0xff5722,
+                emissiveIntensity: 0.3
+            });
+
+            for (let i = 0; i < 3; i++) {
+                const zone = new THREE.Mesh(zoneGeometry, zoneMaterial);
+                zone.position.set(-4 + i * 4, 2, 0);
+                currentModel.add(zone);
+            }
+
+            // Conveyor Belt
+            const beltGeometry = new THREE.BoxGeometry(14, 0.3, 2);
+            const beltMaterial = new THREE.MeshPhongMaterial({ color: 0x5c6bc0 });
+            const belt = new THREE.Mesh(beltGeometry, beltMaterial);
+            belt.position.y = 0.5;
+            currentModel.add(belt);
+
+            // Conveyor Rollers
+            const rollerGeometry = new THREE.CylinderGeometry(0.3, 0.3, 2.5, 16);
+            const rollerMaterial = new THREE.MeshPhongMaterial({ color: 0x7986cb });
+
+            for (let i = -6; i <= 6; i += 2) {
+                const roller = new THREE.Mesh(rollerGeometry, rollerMaterial);
+                roller.rotation.x = Math.PI / 2;
+                roller.position.set(i, 0.15, 0);
+                currentModel.add(roller);
+            }
+
+            // Chimney
+            const chimneyGeometry = new THREE.CylinderGeometry(0.5, 0.6, 3, 16);
+            const chimney = new THREE.Mesh(chimneyGeometry, bodyMaterial);
+            chimney.position.set(0, 5.5, 0);
+            currentModel.add(chimney);
+
+            // Control Panel
+            const panelGeometry = new THREE.BoxGeometry(2, 3, 0.5);
+            const panelMaterial = new THREE.MeshPhongMaterial({ color: 0x3949ab });
+            const panel = new THREE.Mesh(panelGeometry, panelMaterial);
+            panel.position.set(-7, 1.5, 0);
+            currentModel.add(panel);
+
+            // Sensors
+            const sensorGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+            const sensorMaterial = new THREE.MeshPhongMaterial({ color: 0x4caf50, emissive: 0x4caf50, emissiveIntensity: 0.5 });
+
+            const sensorPositions = [[-4, 4.2, 2], [0, 4.2, 2], [4, 4.2, 2], [6, 0.5, 1], [-6, 0.5, 1]];
+            sensorPositions.forEach(pos => {
+                const sensor = new THREE.Mesh(sensorGeometry, sensorMaterial);
+                sensor.position.set(...pos);
+                currentModel.add(sensor);
+            });
+
+            scene.add(currentModel);
+        }
+
+        function createAssemblyModel() {
+            clearModel();
+            currentModel = new THREE.Group();
+
+            // Conveyor Base
+            const baseGeometry = new THREE.BoxGeometry(16, 0.5, 4);
+            const baseMaterial = new THREE.MeshPhongMaterial({ color: 0x5c6bc0 });
+            const base = new THREE.Mesh(baseGeometry, baseMaterial);
+            base.position.y = 0.25;
+            currentModel.add(base);
+
+            // Assembly Stations
+            const stationGeometry = new THREE.BoxGeometry(2, 3, 2);
+            const stationMaterial = new THREE.MeshPhongMaterial({ color: 0x1a237e });
+
+            for (let i = 0; i < 4; i++) {
+                const station = new THREE.Mesh(stationGeometry, stationMaterial);
+                station.position.set(-6 + i * 4, 1.5, -3);
+                currentModel.add(station);
+
+                // Robot Arm Base
+                const armBaseGeometry = new THREE.CylinderGeometry(0.4, 0.5, 0.5, 16);
+                const armBase = new THREE.Mesh(armBaseGeometry, new THREE.MeshPhongMaterial({ color: 0x3949ab }));
+                armBase.position.set(-6 + i * 4, 3.25, -3);
+                currentModel.add(armBase);
+
+                // Robot Arm
+                const armGeometry = new THREE.BoxGeometry(0.2, 2, 0.2);
+                const arm = new THREE.Mesh(armGeometry, new THREE.MeshPhongMaterial({ color: 0x7986cb }));
+                arm.position.set(-6 + i * 4, 4.5, -2.5);
+                arm.rotation.x = 0.3;
+                currentModel.add(arm);
+            }
+
+            // Products on Conveyor
+            const productGeometry = new THREE.BoxGeometry(1, 0.5, 1);
+            const productMaterial = new THREE.MeshPhongMaterial({ color: 0x9fa8da });
+
+            for (let i = 0; i < 5; i++) {
+                const product = new THREE.Mesh(productGeometry, productMaterial);
+                product.position.set(-7 + i * 3.5, 0.75, 0);
+                currentModel.add(product);
+            }
+
+            // Side Rails
+            const railGeometry = new THREE.BoxGeometry(16, 0.3, 0.2);
+            const railMaterial = new THREE.MeshPhongMaterial({ color: 0x3949ab });
+
+            const rail1 = new THREE.Mesh(railGeometry, railMaterial);
+            rail1.position.set(0, 0.65, 2);
+            currentModel.add(rail1);
+
+            const rail2 = new THREE.Mesh(railGeometry, railMaterial);
+            rail2.position.set(0, 0.65, -2);
+            currentModel.add(rail2);
+
+            // Sensors
+            const sensorGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+            const sensorMaterial = new THREE.MeshPhongMaterial({ color: 0x4caf50, emissive: 0x4caf50, emissiveIntensity: 0.5 });
+
+            const sensorPositions = [[-6, 3.2, -3], [-2, 3.2, -3], [2, 3.2, -3], [6, 3.2, -3], [0, 0.8, 2.2]];
+            sensorPositions.forEach(pos => {
+                const sensor = new THREE.Mesh(sensorGeometry, sensorMaterial);
+                sensor.position.set(...pos);
+                currentModel.add(sensor);
+            });
+
+            scene.add(currentModel);
+        }
+
+        function showModel(type) {
+            document.querySelectorAll('.model-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            switch(type) {
+                case 'press': createPressModel(); break;
+                case 'brazing': createBrazingModel(); break;
+                case 'assembly': createAssemblyModel(); break;
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (autoRotate && currentModel) {
+                currentModel.rotation.y += 0.005;
+            }
+            renderer.render(scene, camera);
+        }
+
+        // Chart.js Setup
+        function initChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            const labels = [];
+            const data1 = [];
+            const data2 = [];
+
+            for (let i = 60; i >= 0; i--) {
+                labels.push(i + '초 전');
+                data1.push(2 + Math.random() * 1.5);
+                data2.push(1.5 + Math.random() * 1);
+            }
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '프레스 진동',
+                            data: data1,
+                            borderColor: '#3949ab',
+                            backgroundColor: 'rgba(57, 73, 171, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: '조립라인 진동',
+                            data: data2,
+                            borderColor: '#7986cb',
+                            backgroundColor: 'rgba(121, 134, 203, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'mm/s'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update Functions
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent =
+                now.toLocaleTimeString('ko-KR', { hour12: false });
+        }
+
+        function updateSensorData() {
+            // Vibration
+            const vibration = (2 + Math.random() * 1.5).toFixed(1);
+            document.getElementById('vibration-value').textContent = vibration + ' mm/s';
+            const vibPct = (vibration / 4.5) * 100;
+            document.getElementById('vibration-bar').style.width = vibPct + '%';
+
+            // Temperature
+            const temp = Math.floor(590 + Math.random() * 25);
+            document.getElementById('temp-value').textContent = temp + '°C';
+            const tempPct = ((temp - 580) / 40) * 100;
+            document.getElementById('temp-bar').style.width = tempPct + '%';
+
+            // Pressure
+            const pressure = Math.floor(170 + Math.random() * 25);
+            document.getElementById('pressure-value').textContent = pressure + ' bar';
+            const presPct = ((pressure - 150) / 50) * 100;
+            document.getElementById('pressure-bar').style.width = presPct + '%';
+
+            // Torque
+            const torque = (11 + Math.random() * 3).toFixed(1);
+            document.getElementById('torque-value').textContent = torque + ' Nm';
+            const torqPct = ((torque - 10) / 5) * 100;
+            document.getElementById('torque-bar').style.width = torqPct + '%';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            init3D();
+            initChart();
+            updateTime();
+            setInterval(updateTime, 1000);
+            setInterval(updateSensorData, 2000);
+        });
+    </script>
+</body>
+</html>

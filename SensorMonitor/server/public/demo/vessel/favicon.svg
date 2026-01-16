@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6a1b9a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#9c27b0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ce93d8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="ovenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff5722;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff9800;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e1bee7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ce93d8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="url(#bgGrad)" stroke="#ce93d8" stroke-width="2"/>
+
+  <!-- Oven body -->
+  <rect x="20" y="30" width="40" height="35" rx="4" fill="#4a148c" stroke="#ce93d8" stroke-width="1.5"/>
+
+  <!-- Oven door/window -->
+  <rect x="24" y="35" width="32" height="20" rx="2" fill="#1a0a2e"/>
+  <rect x="26" y="37" width="28" height="16" rx="1" fill="url(#ovenGrad)" opacity="0.6"/>
+
+  <!-- Heat waves inside oven -->
+  <path d="M 32 48 Q 35 45 38 48 Q 41 51 44 48" fill="none" stroke="#ffeb3b" stroke-width="1.5" opacity="0.8"/>
+  <path d="M 34 52 Q 37 49 40 52 Q 43 55 46 52" fill="none" stroke="#ff9800" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Control panel -->
+  <rect x="24" y="57" width="32" height="6" rx="1" fill="#7b1fa2"/>
+  <circle cx="30" cy="60" r="1.5" fill="#4caf50"/>
+  <circle cx="36" cy="60" r="1.5" fill="#ffeb3b"/>
+  <circle cx="42" cy="60" r="1.5" fill="#ce93d8"/>
+  <rect x="47" y="58" width="6" height="4" rx="0.5" fill="#1a0a2e"/>
+
+  <!-- Dispenser nozzle (right side) -->
+  <rect x="65" y="35" width="12" height="20" rx="2" fill="#7b1fa2" stroke="#ce93d8" stroke-width="1"/>
+  <rect x="68" y="38" width="6" height="8" rx="1" fill="#4a148c"/>
+  <path d="M 71 46 L 71 58" stroke="url(#metalGrad)" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="71" cy="60" r="3" fill="#ce93d8"/>
+
+  <!-- Dispenser drop -->
+  <ellipse cx="71" cy="65" rx="2" ry="3" fill="#9c27b0" opacity="0.7"/>
+
+  <!-- AI sensor indicator (top left) -->
+  <circle cx="25" cy="22" r="8" fill="rgba(206, 147, 216, 0.3)"/>
+  <circle cx="25" cy="22" r="5" fill="rgba(156, 39, 176, 0.5)"/>
+  <circle cx="25" cy="22" r="2.5" fill="#ce93d8"/>
+
+  <!-- Signal waves -->
+  <path d="M 25 14 Q 32 12 37 15" fill="none" stroke="#ce93d8" stroke-width="1.5" opacity="0.7"/>
+  <path d="M 25 10 Q 35 7 42 11" fill="none" stroke="#ce93d8" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- China flag indicator (bottom right) -->
+  <rect x="72" y="72" width="14" height="10" rx="1" fill="#de2910"/>
+  <polygon points="76,74 77,76 79,76 77.5,77.5 78,79.5 76,78 74,79.5 74.5,77.5 73,76 75,76" fill="#ffde00" transform="scale(0.6) translate(48, 47)"/>
+
+  <!-- VS text -->
+  <text x="78" y="88" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#ce93d8">VS</text>
+</svg>

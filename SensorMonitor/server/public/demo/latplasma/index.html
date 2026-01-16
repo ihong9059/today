@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)엘에이티 - 플라즈마 장비 스마트 솔루션</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        :root {
+            --primary: #6b21a8;
+            --primary-light: #7c3aed;
+            --primary-dark: #581c87;
+            --accent: #a855f7;
+            --bg-dark: #3b0764;
+            --text-light: #ffffff;
+            --text-dark: #1a1a2e;
+            --card-bg: rgba(255,255,255,0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+            min-height: 100vh;
+            color: var(--text-light);
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(59, 7, 100, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo span {
+            color: var(--text-light);
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 .highlight {
+            color: var(--accent);
+        }
+
+        .hero .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero .company-name {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        .hero .tagline {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Business Areas */
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .business-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            color: var(--text-dark);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--accent);
+        }
+
+        .business-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .business-card .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .business-card h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .business-card p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .business-card .tech {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        /* Plasma Diagram Section */
+        .plasma-section {
+            background: rgba(59, 7, 100, 0.9);
+            padding: 5rem 2rem;
+        }
+
+        .plasma-diagram {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--accent) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .plasma-components {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .plasma-component {
+            background: rgba(255,255,255,0.95);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        .plasma-component .comp-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .plasma-component h4 {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .plasma-component p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 5rem 2rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            color: var(--text-dark);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            padding: 1.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        .project-letter {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-header h3 {
+            font-size: 1.1rem;
+        }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .project-body p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-features {
+            margin-top: 1rem;
+        }
+
+        .project-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .project-footer {
+            background: #f8f4ff;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-cost {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .project-period {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            background: rgba(59, 7, 100, 0.9);
+            padding: 5rem 2rem;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .benefit-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .benefit-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h4 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-card p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* ROI Section */
+        .roi-section {
+            padding: 5rem 2rem;
+            background: rgba(107, 33, 168, 0.95);
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .roi-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .roi-card.highlight {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary-light) 100%);
+        }
+
+        .roi-card .value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .roi-card .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-dark);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .stats-row {
+                gap: 1.5rem;
+            }
+
+            .stat-value {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">LAT<span>-PdM</span></div>
+        <div class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="system.html">SYSTEM</a>
+            <a href="monitor.html">MONITOR</a>
+            <a href="about.html">ABOUT</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1><span class="highlight">플라즈마 장비</span> 스마트 솔루션</h1>
+            <p class="subtitle">AI 기반 예지정비 및 원격 관리 시스템</p>
+            <p class="company-name">(주)엘에이티 | LAT Plasma</p>
+            <p class="tagline">Leader of Advanced Technology</p>
+
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">프로젝트</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">80%</div>
+                    <div class="stat-label">비계획 정지 감소</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">50%</div>
+                    <div class="stat-label">클리닝 비용 절감</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">67%</div>
+                    <div class="stat-label">불량률 감소</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Areas -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">플라즈마 장비 핵심 기술</h2>
+            <div class="business-grid">
+                <div class="business-card">
+                    <div class="icon">&#9889;</div>
+                    <h3>RF 전원 시스템</h3>
+                    <p>13.56MHz 고주파 전력 공급</p>
+                    <p class="tech">매칭 네트워크, 임피던스 정합</p>
+                </div>
+                <div class="business-card">
+                    <div class="icon">&#128300;</div>
+                    <h3>플라즈마 챔버</h3>
+                    <p>진공 상태에서 공정 진행</p>
+                    <p class="tech">증착, 식각, 표면처리</p>
+                </div>
+                <div class="business-card">
+                    <div class="icon">&#128296;</div>
+                    <h3>진공 시스템</h3>
+                    <p>10^-6 Torr 고진공 환경</p>
+                    <p class="tech">터보 + 드라이 펌프</p>
+                </div>
+                <div class="business-card">
+                    <div class="icon">&#128202;</div>
+                    <h3>PLC 제어</h3>
+                    <p>시퀀스 및 인터록 제어</p>
+                    <p class="tech">MFC 가스 유량 정밀 제어</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plasma Diagram Section -->
+    <section class="plasma-section">
+        <div class="container">
+            <h2 class="section-title">플라즈마 장비 구성요소</h2>
+            <div class="plasma-diagram">
+                <div style="text-align: center; color: white; margin-bottom: 1.5rem;">
+                    <h3>RF 전력 -> 가스 이온화 -> 플라즈마 생성 -> 기판 가공</h3>
+                </div>
+                <div class="plasma-components">
+                    <div class="plasma-component">
+                        <div class="comp-icon">&#9889;</div>
+                        <h4>RF 전원</h4>
+                        <p>13.56MHz 고주파 전력</p>
+                    </div>
+                    <div class="plasma-component">
+                        <div class="comp-icon">&#128260;</div>
+                        <h4>매칭 네트워크</h4>
+                        <p>임피던스 정합</p>
+                    </div>
+                    <div class="plasma-component">
+                        <div class="comp-icon">&#128167;</div>
+                        <h4>가스 공급</h4>
+                        <p>MFC 정밀 제어</p>
+                    </div>
+                    <div class="plasma-component">
+                        <div class="comp-icon">&#127981;</div>
+                        <h4>플라즈마 챔버</h4>
+                        <p>전극 / 척 / 히터</p>
+                    </div>
+                    <div class="plasma-component">
+                        <div class="comp-icon">&#128296;</div>
+                        <h4>진공 펌프</h4>
+                        <p>터보 + 드라이</p>
+                    </div>
+                    <div class="plasma-component">
+                        <div class="comp-icon">&#128187;</div>
+                        <h4>PLC 제어</h4>
+                        <p>시퀀스 / 인터록</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects-section">
+        <div class="container">
+            <h2 class="section-title">3대 스마트화 프로젝트</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-letter">A</div>
+                        <h3>스마트 플라즈마 제어 시스템</h3>
+                    </div>
+                    <div class="project-body">
+                        <p>지능형 제어 시스템을 탑재하여 자동화된 최적 운전, 이상 감지, 자동 보호 기능 구현</p>
+                        <div class="project-features">
+                            <div class="project-feature">&#10003; ARM Cortex-M4 + DSP 실시간 제어</div>
+                            <div class="project-feature">&#10003; RF 분석 및 FFT 처리</div>
+                            <div class="project-feature">&#10003; 아킹 보호 (50us 이내 차단)</div>
+                            <div class="project-feature">&#10003; OES 플라즈마 상태 모니터링</div>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-cost">5,500만원</span>
+                        <span class="project-period">4~5개월</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-letter">B</div>
+                        <h3>IoT 원격 관리 플랫폼</h3>
+                    </div>
+                    <div class="project-body">
+                        <p>고객사에 납품된 플라즈마 장비를 중앙에서 실시간 모니터링하고, 원격 기술 지원 서비스 제공</p>
+                        <div class="project-features">
+                            <div class="project-feature">&#10003; IoT Gateway + VPN 보안</div>
+                            <div class="project-feature">&#10003; 클라우드 대시보드</div>
+                            <div class="project-feature">&#10003; 화상 통화 원격 진단</div>
+                            <div class="project-feature">&#10003; SMS/카카오톡 알림</div>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-cost">5,500만원</span>
+                        <span class="project-period">4~5개월</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-letter">C</div>
+                        <h3>AI 기반 예지정비 시스템</h3>
+                    </div>
+                    <div class="project-body">
+                        <p>센서 데이터를 AI로 분석하여 고장을 사전에 예측하고, 최적의 정비 시점을 자동으로 권고</p>
+                        <div class="project-features">
+                            <div class="project-feature">&#10003; Edge AI 실시간 분석</div>
+                            <div class="project-feature">&#10003; LSTM/GRU 이상 탐지</div>
+                            <div class="project-feature">&#10003; 잔여수명(RUL) 예측</div>
+                            <div class="project-feature">&#10003; RF/진공/챔버 고장 예측</div>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-cost">6,000만원</span>
+                        <span class="project-period">5~6개월</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="section-title">스마트화 기대효과</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="icon">&#128200;</div>
+                    <h4>비계획 정지 80% 감소</h4>
+                    <p>예지정비로 갑작스런 고장 방지</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon">&#128176;</div>
+                    <h4>클리닝 비용 50% 절감</h4>
+                    <p>최적 시기 클리닝으로 효율화</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon">&#9889;</div>
+                    <h4>RF 부품 수명 30% 연장</h4>
+                    <p>매칭 최적화로 스트레스 감소</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon">&#127919;</div>
+                    <h4>공정 불량률 67% 감소</h4>
+                    <p>파라미터 드리프트 조기 감지</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Section -->
+    <section class="roi-section">
+        <div class="container">
+            <h2 class="section-title">투자 개요</h2>
+            <div class="roi-grid">
+                <div class="roi-card">
+                    <div class="value">5,500만</div>
+                    <div class="label">프로젝트 A</div>
+                </div>
+                <div class="roi-card">
+                    <div class="value">5,500만</div>
+                    <div class="label">프로젝트 B</div>
+                </div>
+                <div class="roi-card">
+                    <div class="value">6,000만</div>
+                    <div class="label">프로젝트 C</div>
+                </div>
+                <div class="roi-card highlight">
+                    <div class="value">1.7억</div>
+                    <div class="label">전체 투자비</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>플라즈마 장비의 미래를 예측합니다</h2>
+        <p>스마트 제어, 원격 관리, AI 예지정비로 고객 가치 극대화</p>
+        <div class="cta-buttons">
+            <a href="system.html" class="btn btn-primary">시스템 구성 보기</a>
+            <a href="monitor.html" class="btn btn-outline">실시간 모니터링</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 (주)엘에이티 x UTTEC. 플라즈마 장비 스마트 솔루션</p>
+    </footer>
+</body>
+</html>

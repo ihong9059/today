@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회사 소개 | 신호산기(주)</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        :root {
+            --primary: #00d4ff;
+            --secondary: #7b2cbf;
+            --accent: #4ecdc4;
+            --danger: #ff6b6b;
+            --dark: #1a1a2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+        }
+
+        .logo h1 {
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .logo span {
+            font-size: 0.85em;
+            color: rgba(255,255,255,0.8);
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(123, 44, 191, 0.2), rgba(0, 212, 255, 0.1));
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .hero-section h2 {
+            font-size: 2.5em;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .hero-section .tagline {
+            font-size: 1.3em;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .hero-section .established {
+            font-size: 1em;
+            color: #888;
+        }
+
+        /* Company Info */
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6em;
+        }
+
+        .info-card-header h3 {
+            color: var(--primary);
+            font-size: 1.3em;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            gap: 15px;
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        .info-list .label {
+            color: #888;
+            min-width: 100px;
+        }
+
+        .info-list .value {
+            color: #e0e0e0;
+        }
+
+        /* Products Section */
+        .products-section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .section-header h3 {
+            font-size: 1.5em;
+            color: var(--primary);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .product-item {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .product-item .icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .product-item h4 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .product-item p {
+            color: #888;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        /* Customers Section */
+        .customers-section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .customer-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            color: white;
+        }
+
+        .badge.export {
+            background: linear-gradient(135deg, var(--accent), #44a08d);
+        }
+
+        /* Team Section */
+        .team-section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .team-card {
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            gap: 25px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            flex-shrink: 0;
+        }
+
+        .team-info h4 {
+            color: white;
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .team-info .role {
+            color: var(--primary);
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .team-info .experience {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .contact-section h3 {
+            color: white;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-item .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .contact-item .label {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .contact-item .value {
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0,0,0,0.5);
+            padding: 30px 40px;
+            text-align: center;
+            color: #666;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .info-section,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .team-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🎨</div>
+            <div>
+                <h1>신호산기(주)</h1>
+                <span>도장 / 쇼트 / 환경설비 전문</span>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html">홈</a>
+            <a href="system.html">시스템</a>
+            <a href="monitor.html">모니터링</a>
+            <a href="about.html" class="active">소개</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h2>신호산기주식회사</h2>
+            <p class="tagline">도장 / 쇼트(블라스트) / 환경설비 전문</p>
+            <p class="established">Since 2005</p>
+        </section>
+
+        <!-- Company Info -->
+        <section class="info-section">
+            <div class="info-card">
+                <div class="info-card-header">
+                    <div class="info-icon">🏢</div>
+                    <h3>회사 정보</h3>
+                </div>
+                <ul class="info-list">
+                    <li>
+                        <span class="label">회사명</span>
+                        <span class="value">신호산기주식회사</span>
+                    </li>
+                    <li>
+                        <span class="label">설립</span>
+                        <span class="value">2005년</span>
+                    </li>
+                    <li>
+                        <span class="label">사업분야</span>
+                        <span class="value">쇼트설비, 도장설비, 환경설비</span>
+                    </li>
+                    <li>
+                        <span class="label">웹사이트</span>
+                        <span class="value">www.sinhosp.com</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-header">
+                    <div class="info-icon">🎯</div>
+                    <h3>핵심 역량</h3>
+                </div>
+                <ul class="info-list">
+                    <li>
+                        <span class="label">쇼트설비</span>
+                        <span class="value">임펠러/압축공기 블라스트, 진공회수</span>
+                    </li>
+                    <li>
+                        <span class="label">도장설비</span>
+                        <span class="value">에어스프레이, 분체도장, 건조부스</span>
+                    </li>
+                    <li>
+                        <span class="label">환경설비</span>
+                        <span class="value">집진기, 습식세정, VOC 제거</span>
+                    </li>
+                    <li>
+                        <span class="label">자동화</span>
+                        <span class="value">컨베이어, 이송설비, 로봇 연동</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products-section">
+            <div class="section-header">
+                <div class="section-icon">🏭</div>
+                <h3>제품 라인업</h3>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-item">
+                    <div class="icon">💨</div>
+                    <h4>쇼트(Shot) 설비</h4>
+                    <p>Air Shot Blasting<br>Impeller Shot Blasting<br>Vacuum Recovery System</p>
+                </div>
+                <div class="product-item">
+                    <div class="icon">🎨</div>
+                    <h4>도장 & 건조</h4>
+                    <p>Air Spray Booth<br>Powder Coating Booth<br>Drying Booth</p>
+                </div>
+                <div class="product-item">
+                    <div class="icon">🌿</div>
+                    <h4>환경설비</h4>
+                    <p>집진기 (Pulse Air Jet)<br>습식 에어세정기<br>VOC 제거장치</p>
+                </div>
+                <div class="product-item">
+                    <div class="icon">🤖</div>
+                    <h4>자동화설비</h4>
+                    <p>컨베이어 시스템<br>이송대차 설비<br>로보트용 설비</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customers Section -->
+        <section class="customers-section">
+            <div class="section-header">
+                <div class="section-icon">🏢</div>
+                <h3>주요 고객사 및 수출실적</h3>
+            </div>
+
+            <h4 style="color: var(--primary); margin-top: 20px;">주요 고객사</h4>
+            <div class="customer-badges">
+                <span class="badge">대우조선</span>
+                <span class="badge">현대삼호조선</span>
+                <span class="badge">성동조선</span>
+                <span class="badge">현대중공업</span>
+            </div>
+
+            <h4 style="color: var(--primary); margin-top: 30px;">해외 수출</h4>
+            <div class="customer-badges">
+                <span class="badge export">북유럽</span>
+                <span class="badge export">슬로바키아</span>
+                <span class="badge export">오만</span>
+                <span class="badge export">중국</span>
+                <span class="badge export">베트남</span>
+                <span class="badge export">말레이시아</span>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="team-section">
+            <div class="section-header">
+                <div class="section-icon">👥</div>
+                <h3>UTTEC 협력 전문가</h3>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💻</div>
+                    <div class="team-info">
+                        <h4>홍광선</h4>
+                        <p class="role">UTTEC 대표 / IoT & AI Expert</p>
+                        <p class="experience">경력 40년+ | 삼성전자, 마쓰시타 코리아</p>
+                        <div class="skill-tags">
+                            <span class="skill-tag">LoRaWAN</span>
+                            <span class="skill-tag">BLE Mesh</span>
+                            <span class="skill-tag">AI/ML</span>
+                            <span class="skill-tag">Smart Factory</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">👨‍🔧</div>
+                    <div class="team-info">
+                        <h4>임호균</h4>
+                        <p class="role">Senior H/W & F/W Engineer</p>
+                        <p class="experience">경력 38년+ | 삼성전자, Panasonic, QuickLogic</p>
+                        <div class="skill-tags">
+                            <span class="skill-tag">ARM Cortex</span>
+                            <span class="skill-tag">DSP</span>
+                            <span class="skill-tag">FFT 분석</span>
+                            <span class="skill-tag">Motor Control</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <h3>📞 문의하기</h3>
+            <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">도장/쇼트설비 예지정비 솔루션에 대해 문의해 주세요</p>
+
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="icon">👤</div>
+                    <div class="label">담당자</div>
+                    <div class="value">홍 광삼</div>
+                </div>
+                <div class="contact-item">
+                    <div class="icon">📧</div>
+                    <div class="label">이메일</div>
+                    <div class="value">uttec@uttec.co.kr</div>
+                </div>
+                <div class="contact-item">
+                    <div class="icon">📱</div>
+                    <div class="label">연락처</div>
+                    <div class="value">010-3922-1809</div>
+                </div>
+                <div class="contact-item">
+                    <div class="icon">🏢</div>
+                    <div class="label">회사</div>
+                    <div class="value">UTTEC</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 신호산기(주) x UTTEC. 도장/쇼트설비 예지정비 시스템.</p>
+    </footer>
+</body>
+</html>

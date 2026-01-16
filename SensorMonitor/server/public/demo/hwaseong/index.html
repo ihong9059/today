@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>화성기계(HSMC) - 스마트 솔루션</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0891b2 50%, #06b6d4 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(15, 118, 110, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 2rem 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+        }
+
+        /* Company Overview Card */
+        .overview-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .overview-card h2 {
+            color: #0f766e;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .company-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0f766e, #0891b2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .info-content h4 {
+            color: #0f766e;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .info-content p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Machines Section */
+        .section-title {
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .machines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .machine-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .machine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .machine-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #0f766e, #06b6d4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.8rem;
+        }
+
+        .machine-card h3 {
+            color: #0f766e;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .machine-card p {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .projects-section h2 {
+            color: #0f766e;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
+            border-radius: 15px;
+            padding: 1.8rem;
+            border-left: 4px solid #0f766e;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            color: #0f766e;
+            font-size: 1.1rem;
+            flex: 1;
+        }
+
+        .project-cost {
+            background: #0f766e;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .project-card p {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .feature-tag {
+            background: rgba(15, 118, 110, 0.15);
+            color: #0f766e;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background: linear-gradient(135deg, #0f766e, #0891b2);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .summary-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .summary-item {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .summary-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-label {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        /* Service Features */
+        .features-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .features-section h2 {
+            color: #0f766e;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f0fdfa, #e0f2fe);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .feature-card h4 {
+            color: #0f766e;
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.3);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .overview-card, .projects-section, .summary-section, .features-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="favicon.svg" alt="화성기계 로고">
+                <div class="logo-text">
+                    <span class="logo-main">화성기계(HSMC)</span>
+                    <span class="logo-sub">공작기계 전문 매매</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="active">홈</a>
+                <a href="system.html">시스템</a>
+                <a href="monitor.html">모니터링</a>
+                <a href="about.html">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>공작기계 스마트 서비스</h1>
+        <p>중고기계 정밀 진단부터 원격 모니터링 서비스까지, 공작기계 매매의 새로운 패러다임</p>
+        <div class="hero-badge">AI 기반 기계 가치 평가 시스템</div>
+    </section>
+
+    <div class="main-content">
+        <!-- Company Overview -->
+        <div class="overview-card">
+            <h2>🏭 기업 개요</h2>
+            <div class="company-info">
+                <div class="info-item">
+                    <div class="info-icon">🏢</div>
+                    <div class="info-content">
+                        <h4>회사명</h4>
+                        <p>화성기계 (HSMC)</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">👤</div>
+                    <div class="info-content">
+                        <h4>대표자</h4>
+                        <p>김길환</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div class="info-content">
+                        <h4>위치</h4>
+                        <p>경기도 화성시 장안면 장안로 520<br>화성기계매매단지 9동</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📞</div>
+                    <div class="info-content">
+                        <h4>연락처</h4>
+                        <p>TEL: 031-351-9815<br>FAX: 031-351-9816</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">⚙️</div>
+                    <div class="info-content">
+                        <h4>사업분야</h4>
+                        <p>공작기계 및 산업기계 매매 전문</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">✉️</div>
+                    <div class="info-content">
+                        <h4>이메일</h4>
+                        <p>hsmc@hsmc.kr</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Machines -->
+        <h2 class="section-title">취급 기계</h2>
+        <div class="machines-grid">
+            <div class="machine-card">
+                <div class="machine-icon">⚙️</div>
+                <h3>CNC 선반</h3>
+                <p>수평형/수직형<br>복합가공기</p>
+            </div>
+            <div class="machine-card">
+                <div class="machine-icon">🔧</div>
+                <h3>머시닝센터</h3>
+                <p>수직/수평/5축<br>MCT</p>
+            </div>
+            <div class="machine-card">
+                <div class="machine-icon">🔩</div>
+                <h3>밀링머신</h3>
+                <p>수직/수평<br>범용 밀링</p>
+            </div>
+            <div class="machine-card">
+                <div class="machine-icon">💎</div>
+                <h3>연삭기</h3>
+                <p>평면/원통<br>내면 연삭기</p>
+            </div>
+            <div class="machine-card">
+                <div class="machine-icon">🔨</div>
+                <h3>프레스</h3>
+                <p>유압/기계<br>서보 프레스</p>
+            </div>
+            <div class="machine-card">
+                <div class="machine-icon">🔄</div>
+                <h3>기타 설비</h3>
+                <p>드릴링/보링<br>와이어컷</p>
+            </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="projects-section">
+            <h2>📋 스마트 서비스 프로젝트 (총 4개)</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>중고기계 정밀 진단 시스템</h3>
+                        <span class="project-cost">3,230만원</span>
+                    </div>
+                    <p>매입/판매 기계의 객관적 상태 진단 및 등급 산정. 스핀들 런아웃, 볼스크류 백래시, 서보모터 상태 등 정밀 측정</p>
+                    <div class="project-features">
+                        <span class="feature-tag">스핀들 진단</span>
+                        <span class="feature-tag">볼스크류 백래시</span>
+                        <span class="feature-tag">A/B/C 등급</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>판매 기계 원격 모니터링</h3>
+                        <span class="project-cost">7,000만원</span>
+                    </div>
+                    <p>판매 후 고객 기계에 대한 원격 모니터링 및 A/S 지원 SaaS 서비스. 신규 수익 창출 모델</p>
+                    <div class="project-features">
+                        <span class="feature-tag">실시간 모니터링</span>
+                        <span class="feature-tag">이상 알림</span>
+                        <span class="feature-tag">월정 구독</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>AI 기계 가치 평가 시스템</h3>
+                        <span class="project-cost">3,700만원</span>
+                    </div>
+                    <p>중고기계 잔존가치 자동 평가 및 시세 예측. 진단 데이터, 가동시간, 시장 거래 데이터 기반 AI 분석</p>
+                    <div class="project-features">
+                        <span class="feature-tag">잔존가치 예측</span>
+                        <span class="feature-tag">시세 전망</span>
+                        <span class="feature-tag">수리 ROI</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>창고/전시장 환경 모니터링</h3>
+                        <span class="project-cost">1,144만원</span>
+                    </div>
+                    <p>기계 보관 환경 관리. 온습도, 분진, 침수 모니터링으로 녹 발생 및 정밀도 저하 방지</p>
+                    <div class="project-features">
+                        <span class="feature-tag">온습도 관리</span>
+                        <span class="feature-tag">분진 감지</span>
+                        <span class="feature-tag">침수 경보</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-section">
+            <h2>💰 투자 효과 요약</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-value">1.51억원</div>
+                    <div class="summary-label">총 투자금액</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">126%</div>
+                    <div class="summary-label">예상 ROI</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">9.5개월</div>
+                    <div class="summary-label">투자회수기간</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">1.9억원</div>
+                    <div class="summary-label">연간 효과</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="features-section">
+            <h2>🔍 핵심 서비스 특징</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>🎯 정확한 기계 가치 산정</h4>
+                    <p>μm 단위 정밀 측정으로 객관적인 기계 상태 진단 및 등급화</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📋 진단보고서 자동 발급</h4>
+                    <p>항목별 측정값, 등급, 예상 잔존가치가 포함된 전문 진단보고서 제공</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📱 원격 A/S 지원</h4>
+                    <p>판매 기계에 대한 실시간 모니터링 및 선제적 A/S 제안</p>
+                </div>
+                <div class="feature-card">
+                    <h4>💵 신규 수익 창출</h4>
+                    <p>모니터링 장비 판매 + 월정 구독료로 안정적인 부가 수익</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🛡️ 클레임 50% 감소</h4>
+                    <p>정확한 사전 진단으로 판매 후 분쟁 최소화</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🌡️ 재고 품질 유지</h4>
+                    <p>창고 환경 모니터링으로 기계 가치 하락 방지</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 화성기계(HSMC). All Rights Reserved. | 공작기계 스마트 서비스 파트너</p>
+    </footer>
+</body>
+</html>

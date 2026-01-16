@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회사소개 - (주)폴라리스세원</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(26, 35, 126, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 2rem 60px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .section-card h2 {
+            color: #1a237e;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Company Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border-left: 4px solid #3949ab;
+        }
+
+        .info-box h4 {
+            color: #1a237e;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .info-box p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #1a237e, #3949ab, #5c6bc0);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            background: #3949ab;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: #1a237e;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-event {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-item {
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-item h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-item p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* Certification Badges */
+        .cert-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .cert-item {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 180px;
+            transition: transform 0.3s;
+        }
+
+        .cert-item:hover {
+            transform: scale(1.05);
+        }
+
+        .cert-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cert-item h4 {
+            color: #1a237e;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-item p {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Location */
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .location-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .location-card h3 {
+            color: #1a237e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .location-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .location-info p {
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .location-info span {
+            font-weight: 500;
+            color: #1a237e;
+            min-width: 60px;
+        }
+
+        /* Clients Grid */
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .client-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .client-card:hover {
+            border-color: #3949ab;
+            box-shadow: 0 5px 20px rgba(57, 73, 171, 0.2);
+        }
+
+        .client-card h4 {
+            color: #1a237e;
+            margin-bottom: 0.5rem;
+        }
+
+        .client-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Statistics */
+        .stats-section {
+            background: linear-gradient(135deg, #1a237e, #283593);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .stats-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.3);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="favicon.svg" alt="폴라리스세원 로고">
+                <div class="logo-text">
+                    <span class="logo-main">(주)폴라리스세원</span>
+                    <span class="logo-sub">Polaris Sewon Co., Ltd.</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="system.html">시스템</a>
+                <a href="monitor.html">모니터링</a>
+                <a href="about.html" class="active">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>회사소개</h1>
+        <p>자동차 공조부품 전문 제조 54년, 글로벌 자동차 산업의 파트너</p>
+    </section>
+
+    <div class="main-content">
+        <!-- Company Overview -->
+        <div class="section-card">
+            <h2>🏢 기업 개요</h2>
+            <div class="info-grid">
+                <div class="info-box">
+                    <h4>회사명</h4>
+                    <p>(주)폴라리스세원<br>Polaris Sewon Co., Ltd.</p>
+                </div>
+                <div class="info-box">
+                    <h4>대표이사</h4>
+                    <p>염승섭</p>
+                </div>
+                <div class="info-box">
+                    <h4>설립연도</h4>
+                    <p>1971년 (54년 역사)</p>
+                </div>
+                <div class="info-box">
+                    <h4>상장현황</h4>
+                    <p>코스닥 상장 (A234100)</p>
+                </div>
+                <div class="info-box">
+                    <h4>사업분야</h4>
+                    <p>자동차 공조부품 전문 제조</p>
+                </div>
+                <div class="info-box">
+                    <h4>본사 위치</h4>
+                    <p>경기도 평택시 산단로64번길 56</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-section">
+            <h2>📊 기업 현황</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">54년</div>
+                    <div class="stat-label">기업 역사</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">KOSDAQ</div>
+                    <div class="stat-label">상장시장</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">3개</div>
+                    <div class="stat-label">제조 공장</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">SQ인증</div>
+                    <div class="stat-label">현대/기아 공급사</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History -->
+        <div class="section-card">
+            <h2>📜 주요 연혁</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">1971년</div>
+                    <div class="timeline-event">세원공업사 설립, 자동차 부품 제조 시작</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1985년</div>
+                    <div class="timeline-event">현대자동차 협력사 등록</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1995년</div>
+                    <div class="timeline-event">법인 전환 (주)세원으로 출범</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2005년</div>
+                    <div class="timeline-event">ISO/TS 16949 품질경영시스템 인증</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2010년</div>
+                    <div class="timeline-event">폴라리스세원으로 사명 변경, 코스닥 상장</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2018년</div>
+                    <div class="timeline-event">SQ(협력사 품질인증) 획득 (현대/기아)</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2022년</div>
+                    <div class="timeline-event">루시드모터스 글로벌 공급계약 체결</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2024년</div>
+                    <div class="timeline-event">헤더컨덴서 신규 사업 진출, 제3공장 건설</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <div class="section-card">
+            <h2>🔧 주요 제품</h2>
+            <div class="products-grid">
+                <div class="product-item">
+                    <div class="product-icon">🔧</div>
+                    <h4>라디에이터 CAP ASS'Y</h4>
+                    <p>냉각 시스템 핵심 부품</p>
+                </div>
+                <div class="product-item">
+                    <div class="product-icon">❄️</div>
+                    <h4>에어컨 컨덴서</h4>
+                    <p>냉매 응축 장치</p>
+                </div>
+                <div class="product-item">
+                    <div class="product-icon">🔄</div>
+                    <h4>컴프레서</h4>
+                    <p>냉매 압축 펌프</p>
+                </div>
+                <div class="product-item">
+                    <div class="product-icon">🔩</div>
+                    <h4>MOTOR BRACKET</h4>
+                    <p>전동 모터 고정 브라켓</p>
+                </div>
+                <div class="product-item">
+                    <div class="product-icon">🌡️</div>
+                    <h4>헤더컨덴서</h4>
+                    <p>차세대 열교환 시스템</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="section-card">
+            <h2>🏆 인증 현황</h2>
+            <div class="cert-grid">
+                <div class="cert-item">
+                    <div class="cert-icon">🏅</div>
+                    <h4>SQ 인증</h4>
+                    <p>현대/기아자동차<br>협력사 품질인증</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon">📋</div>
+                    <h4>ISO/TS 16949</h4>
+                    <p>자동차 부품<br>품질경영시스템</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon">🌿</div>
+                    <h4>ISO 14001</h4>
+                    <p>환경경영시스템<br>국제 인증</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon">⭐</div>
+                    <h4>IATF 16949</h4>
+                    <p>글로벌 자동차<br>품질경영시스템</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clients -->
+        <div class="section-card">
+            <h2>🚗 주요 거래처</h2>
+            <div class="clients-grid">
+                <div class="client-card">
+                    <h4>현대자동차</h4>
+                    <p>1군 협력사<br>SQ 인증 공급</p>
+                </div>
+                <div class="client-card">
+                    <h4>기아자동차</h4>
+                    <p>1군 협력사<br>SQ 인증 공급</p>
+                </div>
+                <div class="client-card">
+                    <h4>루시드모터스</h4>
+                    <p>글로벌 EV<br>공조부품 공급</p>
+                </div>
+                <div class="client-card">
+                    <h4>현대모비스</h4>
+                    <p>모듈 부품<br>협력 공급</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Locations -->
+        <div class="section-card">
+            <h2>📍 사업장 안내</h2>
+            <div class="location-grid">
+                <div class="location-card">
+                    <h3>🏭 본사 / 제1공장</h3>
+                    <div class="location-info">
+                        <p><span>주소</span> 경기도 평택시 산단로64번길 56</p>
+                        <p><span>전화</span> 031-665-XXXX</p>
+                        <p><span>팩스</span> 031-665-XXXX</p>
+                        <p><span>주요</span> 본사 사무실, 프레스 공정, 품질관리</p>
+                    </div>
+                </div>
+                <div class="location-card">
+                    <h3>🏭 제2공장</h3>
+                    <div class="location-info">
+                        <p><span>주소</span> 경기도 평택시 산단로64번길 (인근)</p>
+                        <p><span>전화</span> 031-665-XXXX</p>
+                        <p><span>주요</span> 브레이징로, 조립라인, 검사설비</p>
+                    </div>
+                </div>
+                <div class="location-card">
+                    <h3>🏭 제3공장 (신규)</h3>
+                    <div class="location-info">
+                        <p><span>주소</span> 경기도 평택시 산단로 (건설중)</p>
+                        <p><span>착공</span> 2024년</p>
+                        <p><span>주요</span> 헤더컨덴서 전용 라인, 스마트팩토리</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vision -->
+        <div class="section-card">
+            <h2>🎯 비전 및 목표</h2>
+            <div class="info-grid">
+                <div class="info-box">
+                    <h4>비전</h4>
+                    <p>글로벌 자동차 공조부품 선도 기업으로서 혁신적인 기술력과 품질로 미래 모빌리티 시대를 선도합니다.</p>
+                </div>
+                <div class="info-box">
+                    <h4>핵심 가치</h4>
+                    <p>품질 최우선 / 고객 만족 / 기술 혁신 / 환경 경영 / 상생 협력</p>
+                </div>
+                <div class="info-box">
+                    <h4>스마트 제조</h4>
+                    <p>AI 기반 예지정비와 품질 예측 시스템을 도입하여 Industry 4.0 시대를 선도하는 스마트 팩토리를 구현합니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 (주)폴라리스세원. All Rights Reserved. | 경기도 평택시 산단로64번길 56</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시스템 구성 - 광명산업(주) 스마트 팩토리</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #2980b9;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: #f5f6fa;
+        }
+
+        /* Navigation */
+        .nav {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 1.6em;
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        /* 4-Layer Architecture */
+        .architecture {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .arch-layer {
+            display: flex;
+            align-items: stretch;
+            gap: 20px;
+        }
+
+        .layer-label {
+            min-width: 180px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .layer-label h4 {
+            margin-bottom: 5px;
+        }
+
+        .layer-label span {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+
+        .layer-content {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .layer-item {
+            padding: 15px 25px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .layer-item:hover {
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .arch-arrow {
+            text-align: center;
+            color: var(--secondary);
+            font-size: 1.5em;
+            padding: 10px 0;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--secondary);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Sensor Table */
+        .sensor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .sensor-table th,
+        .sensor-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .sensor-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .sensor-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .sensor-table .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .badge-blue {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-green {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .badge-orange {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .badge-red {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .badge-purple {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        /* Project Detail Cards */
+        .project-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .detail-card {
+            background: #f8f9fa;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+        }
+
+        .detail-header {
+            padding: 20px;
+            color: white;
+        }
+
+        .detail-header.blue {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .detail-header.green {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        .detail-header.red {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .detail-header.purple {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+        }
+
+        .detail-header.orange {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+
+        .detail-header.teal {
+            background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);
+        }
+
+        .detail-header h4 {
+            margin-bottom: 5px;
+        }
+
+        .detail-header p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .detail-body {
+            padding: 20px;
+            background: white;
+        }
+
+        .detail-body ul {
+            list-style: none;
+        }
+
+        .detail-body li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-body li:last-child {
+            border-bottom: none;
+        }
+
+        .detail-body li::before {
+            content: '✓';
+            color: var(--success);
+            margin-right: 10px;
+        }
+
+        /* CNC Architecture Diagram */
+        .cnc-diagram {
+            background: linear-gradient(135deg, #f0f4f8 0%, #fff 100%);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .cnc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .cnc-component {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .cnc-component .comp-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3em;
+        }
+
+        .cnc-component h5 {
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .cnc-component p {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .gateway-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .gateway-box h4 {
+            margin-bottom: 10px;
+        }
+
+        .gateway-features {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .gateway-feature {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        /* Furnace Zones */
+        .furnace-zones {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .zone {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .zone h5 {
+            margin-bottom: 8px;
+        }
+
+        .zone .temp {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+            .project-details {
+                grid-template-columns: 1fr;
+            }
+            .cnc-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .furnace-zones {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .arch-layer {
+                flex-direction: column;
+            }
+            .layer-label {
+                min-width: auto;
+            }
+            .tabs {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">광명산업 Smart Factory</a>
+        <div class="nav-links">
+            <a href="index.html">홈</a>
+            <a href="system.html" class="active">시스템</a>
+            <a href="monitor.html">모니터링</a>
+            <a href="about.html">회사소개</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>시스템 구성</h1>
+            <p>PIPE 가공 & 캠 제조 전문기업 맞춤형 예지정비 시스템 아키텍처</p>
+        </div>
+
+        <!-- 4-Layer Architecture -->
+        <div class="section">
+            <h2 class="section-title">4-Layer 시스템 아키텍처</h2>
+            <div class="architecture">
+                <div class="arch-layer">
+                    <div class="layer-label">
+                        <h4>Cloud Layer</h4>
+                        <span>클라우드 플랫폼</span>
+                    </div>
+                    <div class="layer-content">
+                        <div class="layer-item">AI 분석 엔진</div>
+                        <div class="layer-item">RUL 예측</div>
+                        <div class="layer-item">대시보드</div>
+                        <div class="layer-item">알림 서비스</div>
+                        <div class="layer-item">데이터 레이크</div>
+                    </div>
+                </div>
+
+                <div class="arch-arrow">↑↓</div>
+
+                <div class="arch-layer">
+                    <div class="layer-label">
+                        <h4>Edge Layer</h4>
+                        <span>엣지 게이트웨이</span>
+                    </div>
+                    <div class="layer-content">
+                        <div class="layer-item">FFT 분석</div>
+                        <div class="layer-item">Envelope</div>
+                        <div class="layer-item">Cepstrum</div>
+                        <div class="layer-item">실시간 처리</div>
+                        <div class="layer-item">MQTT 통신</div>
+                    </div>
+                </div>
+
+                <div class="arch-arrow">↑↓</div>
+
+                <div class="arch-layer">
+                    <div class="layer-label">
+                        <h4>Sensor Layer</h4>
+                        <span>센서 네트워크</span>
+                    </div>
+                    <div class="layer-content">
+                        <div class="layer-item">진동센서(3축)</div>
+                        <div class="layer-item">온도센서</div>
+                        <div class="layer-item">전류센서</div>
+                        <div class="layer-item">압력센서</div>
+                        <div class="layer-item">AE센서</div>
+                        <div class="layer-item">토크센서</div>
+                    </div>
+                </div>
+
+                <div class="arch-arrow">↑↓</div>
+
+                <div class="arch-layer">
+                    <div class="layer-label">
+                        <h4>Equipment Layer</h4>
+                        <span>설비 계층</span>
+                    </div>
+                    <div class="layer-content">
+                        <div class="layer-item">CNC 가공기</div>
+                        <div class="layer-item">열처리로</div>
+                        <div class="layer-item">PIPE 절단기</div>
+                        <div class="layer-item">면취기</div>
+                        <div class="layer-item">널링기</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sensor Configuration -->
+        <div class="section">
+            <h2 class="section-title">프로젝트별 센서 구성</h2>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('cnc')">CNC 예지정비</button>
+                <button class="tab-btn" onclick="showTab('cam')">캠 정밀도</button>
+                <button class="tab-btn" onclick="showTab('heat')">열처리</button>
+                <button class="tab-btn" onclick="showTab('pipe')">PIPE 라인</button>
+                <button class="tab-btn" onclick="showTab('tool')">공구 관리</button>
+                <button class="tab-btn" onclick="showTab('energy')">에너지</button>
+            </div>
+
+            <!-- CNC Tab -->
+            <div id="cnc" class="tab-content active">
+                <div class="cnc-diagram">
+                    <h4 style="color: var(--primary); margin-bottom: 20px;">CNC 가공기 모니터링 구성도</h4>
+                    <div class="cnc-grid">
+                        <div class="cnc-component">
+                            <div class="comp-icon">🔧</div>
+                            <h5>주축</h5>
+                            <p>진동센서 (3축)<br>FFT 분석</p>
+                        </div>
+                        <div class="cnc-component">
+                            <div class="comp-icon">↔</div>
+                            <h5>이송축</h5>
+                            <p>진동 + 토크<br>마모도 분석</p>
+                        </div>
+                        <div class="cnc-component">
+                            <div class="comp-icon">⚙</div>
+                            <h5>공구대</h5>
+                            <p>온도센서<br>과열 감지</p>
+                        </div>
+                        <div class="cnc-component">
+                            <div class="comp-icon">💧</div>
+                            <h5>유압장치</h5>
+                            <p>압력센서<br>누유 감지</p>
+                        </div>
+                    </div>
+                    <div class="gateway-box">
+                        <h4>Edge AI Gateway</h4>
+                        <p>ARM Cortex-M4 + DSP 기반 실시간 분석</p>
+                        <div class="gateway-features">
+                            <span class="gateway-feature">FFT 분석</span>
+                            <span class="gateway-feature">Envelope</span>
+                            <span class="gateway-feature">Cepstrum</span>
+                            <span class="gateway-feature">MQTT 통신</span>
+                        </div>
+                    </div>
+                </div>
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>모니터링 대상</th>
+                            <th>센서 종류</th>
+                            <th>분석 항목</th>
+                            <th>수량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>주축 베어링</td>
+                            <td><span class="badge badge-blue">진동(3축)</span></td>
+                            <td>FFT, 베어링 결함 주파수</td>
+                            <td>5대 × 1</td>
+                        </tr>
+                        <tr>
+                            <td>볼스크류</td>
+                            <td><span class="badge badge-blue">진동</span> <span class="badge badge-orange">토크</span></td>
+                            <td>마모도, 백래시</td>
+                            <td>5대 × 3축</td>
+                        </tr>
+                        <tr>
+                            <td>스핀들 모터</td>
+                            <td><span class="badge badge-green">전류</span> <span class="badge badge-red">온도</span></td>
+                            <td>부하율, 과열</td>
+                            <td>5대 × 1</td>
+                        </tr>
+                        <tr>
+                            <td>유압 펌프</td>
+                            <td><span class="badge badge-purple">압력</span> <span class="badge badge-blue">진동</span></td>
+                            <td>펌프 효율, 누유</td>
+                            <td>5대 × 1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cam Tab -->
+            <div id="cam" class="tab-content">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>모니터링 항목</th>
+                            <th>센서 종류</th>
+                            <th>목적</th>
+                            <th>정밀도</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>가공 진동 측정</td>
+                            <td><span class="badge badge-blue">진동(3축)</span></td>
+                            <td>표면 조도 예측</td>
+                            <td>μm 단위</td>
+                        </tr>
+                        <tr>
+                            <td>공구 마모 음향</td>
+                            <td><span class="badge badge-purple">AE센서</span></td>
+                            <td>마모 진행 감지</td>
+                            <td>실시간</td>
+                        </tr>
+                        <tr>
+                            <td>열변위 보정</td>
+                            <td><span class="badge badge-red">온도(다점)</span></td>
+                            <td>CNC 오프셋 자동 조정</td>
+                            <td>±0.5°C</td>
+                        </tr>
+                        <tr>
+                            <td>형상 오차</td>
+                            <td><span class="badge badge-green">레이저 변위</span></td>
+                            <td>가공 중 형상 검증</td>
+                            <td>±1μm</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Heat Treatment Tab -->
+            <div id="heat" class="tab-content">
+                <div class="furnace-zones">
+                    <div class="zone">
+                        <h5>Zone 1</h5>
+                        <div class="temp">850°C</div>
+                        <p>예열 구간</p>
+                    </div>
+                    <div class="zone">
+                        <h5>Zone 2</h5>
+                        <div class="temp">920°C</div>
+                        <p>가열 구간</p>
+                    </div>
+                    <div class="zone">
+                        <h5>Zone 3</h5>
+                        <div class="temp">920°C</div>
+                        <p>유지 구간</p>
+                    </div>
+                    <div class="zone">
+                        <h5>Zone 4</h5>
+                        <div class="temp">냉각</div>
+                        <p>담금/뜨임</p>
+                    </div>
+                </div>
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>모니터링 항목</th>
+                            <th>측정 방법</th>
+                            <th>관리 목표</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>가열 온도</td>
+                            <td>다점 측정 (8ch)</td>
+                            <td>±5°C 이내</td>
+                        </tr>
+                        <tr>
+                            <td>유지 시간</td>
+                            <td>자동 기록</td>
+                            <td>공정별 최적화</td>
+                        </tr>
+                        <tr>
+                            <td>냉각 속도</td>
+                            <td>실시간 계산</td>
+                            <td>경도 예측</td>
+                        </tr>
+                        <tr>
+                            <td>분위기 가스</td>
+                            <td>산소 농도</td>
+                            <td>탈탄 방지</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PIPE Tab -->
+            <div id="pipe" class="tab-content">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>설비</th>
+                            <th>수집 항목</th>
+                            <th>센서</th>
+                            <th>목적</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>절단기</td>
+                            <td>절단 횟수, 사이클 타임</td>
+                            <td><span class="badge badge-blue">진동</span> <span class="badge badge-green">전류</span></td>
+                            <td>생산성 분석</td>
+                        </tr>
+                        <tr>
+                            <td>면취기</td>
+                            <td>공구 부하, 가공 품질</td>
+                            <td><span class="badge badge-blue">진동</span> <span class="badge badge-red">온도</span></td>
+                            <td>품질 관리</td>
+                        </tr>
+                        <tr>
+                            <td>널링기</td>
+                            <td>패턴 깊이, 균일도</td>
+                            <td><span class="badge badge-orange">토크</span> <span class="badge badge-green">전류</span></td>
+                            <td>품질 보증</td>
+                        </tr>
+                        <tr>
+                            <td>컨베이어</td>
+                            <td>이송 속도, 정체</td>
+                            <td><span class="badge badge-purple">근접</span></td>
+                            <td>병목 분석</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tool Tab -->
+            <div id="tool" class="tab-content">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>모니터링 항목</th>
+                            <th>센서</th>
+                            <th>분석 방법</th>
+                            <th>출력</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>절삭력</td>
+                            <td><span class="badge badge-green">전류센서</span></td>
+                            <td>부하 패턴 분석</td>
+                            <td>마모량 추정</td>
+                        </tr>
+                        <tr>
+                            <td>진동 특성</td>
+                            <td><span class="badge badge-blue">가속도센서</span></td>
+                            <td>주파수 분석</td>
+                            <td>치핑 감지</td>
+                        </tr>
+                        <tr>
+                            <td>음향 방출</td>
+                            <td><span class="badge badge-purple">AE센서</span></td>
+                            <td>고주파 분석</td>
+                            <td>파손 예측</td>
+                        </tr>
+                        <tr>
+                            <td>AI 종합 분석</td>
+                            <td>복합</td>
+                            <td>머신러닝</td>
+                            <td>잔여수명(RUL)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Energy Tab -->
+            <div id="energy" class="tab-content">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>측정 대상</th>
+                            <th>센서</th>
+                            <th>분석 항목</th>
+                            <th>관리 목표</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CNC 설비군</td>
+                            <td><span class="badge badge-green">전력계</span></td>
+                            <td>가공별 에너지 소비</td>
+                            <td>원단위 분석</td>
+                        </tr>
+                        <tr>
+                            <td>열처리 설비</td>
+                            <td><span class="badge badge-green">전력계</span></td>
+                            <td>로 가동 효율</td>
+                            <td>15% 절감</td>
+                        </tr>
+                        <tr>
+                            <td>컴프레서</td>
+                            <td><span class="badge badge-green">전력계</span></td>
+                            <td>압축공기 효율</td>
+                            <td>누설 감지</td>
+                        </tr>
+                        <tr>
+                            <td>조명/공조</td>
+                            <td><span class="badge badge-green">전력계</span></td>
+                            <td>피크 관리</td>
+                            <td>기본요금 절감</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Project Details -->
+        <div class="section">
+            <h2 class="section-title">프로젝트 상세</h2>
+            <div class="project-details">
+                <div class="detail-card">
+                    <div class="detail-header blue">
+                        <h4>Project 1: CNC 가공기 예지정비</h4>
+                        <p>투자: 3,200만원 | ROI: 87.5%</p>
+                    </div>
+                    <div class="detail-body">
+                        <ul>
+                            <li>주축 베어링 FFT 분석</li>
+                            <li>볼스크류 마모도 모니터링</li>
+                            <li>스핀들 모터 과열 감지</li>
+                            <li>유압 시스템 누유 감지</li>
+                            <li>RUL(잔여수명) 예측</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-header green">
+                        <h4>Project 2: 캠 프로파일 정밀도 관리</h4>
+                        <p>투자: 2,800만원 | ROI: 78.6%</p>
+                    </div>
+                    <div class="detail-body">
+                        <ul>
+                            <li>가공 진동-정밀도 상관관계 학습</li>
+                            <li>공구 마모 음향 분석</li>
+                            <li>열변위 실시간 보정</li>
+                            <li>μm 단위 정밀도 관리</li>
+                            <li>1차 검사 합격률 95%+</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-header red">
+                        <h4>Project 3: 열처리 공정 품질 관리</h4>
+                        <p>투자: 2,200만원 | ROI: 72.7%</p>
+                    </div>
+                    <div class="detail-body">
+                        <ul>
+                            <li>4Zone 온도 프로파일 관리</li>
+                            <li>경도 예측 AI 모델</li>
+                            <li>이상 패턴 자동 감지</li>
+                            <li>100% 이력 추적</li>
+                            <li>에너지 15% 절감</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-header purple">
+                        <h4>Project 4: PIPE 가공 라인 모니터링</h4>
+                        <p>투자: 2,400만원 | ROI: 79.2%</p>
+                    </div>
+                    <div class="detail-body">
+                        <ul>
+                            <li>절단-면취-널링 통합 모니터링</li>
+                            <li>OEE 실시간 표시</li>
+                            <li>병목 공정 분석</li>
+                            <li>품질 이력 100% 추적</li>
+                            <li>가동률 20% 향상</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-header orange">
+                        <h4>Project 5: 스마트 공구 관리</h4>
+                        <p>투자: 2,600만원 | ROI: 80.8%</p>
+                    </div>
+                    <div class="detail-body">
+                        <ul>
+                            <li>절삭력 기반 마모량 추정</li>
+                            <li>AI 잔여수명 예측</li>
+                            <li>최적 교체 시점 알림</li>
+                            <li>공구 재고 자동 관리</li>
+                            <li>공구 비용 30% 절감</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-header teal">
+                        <h4>Project 6: 에너지 모니터링</h4>
+                        <p>투자: 2,000만원 | ROI: 70.0%</p>
+                    </div>
+                    <div class="detail-body">
+                        <ul>
+                            <li>설비별 에너지 사용량 측정</li>
+                            <li>원단위 분석</li>
+                            <li>피크 관리로 기본요금 절감</li>
+                            <li>탄소 배출량 정량화</li>
+                            <li>에너지 비용 15% 절감</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 광명산업(주) Smart Factory System. Powered by UTTEC</p>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
