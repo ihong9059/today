@@ -19,58 +19,6 @@ http://e-samwon.co.kr
 uttec의 연락처: 담당자: 홍 광삼, 이메일: uttec@uttec.co.kr, 전화번호: 010-3922-1809
 
 
-https://robosys.co.kr : 1
-
-http://www.vessel21.com : 1
-
-https://www.doosanrobotics.com : 1
-
-http://www.latplasma.com : 1
-
-https://dk2783475.kr/ : 1
-
-
-https://동원분체산업.com/ : 1
-
-http://ywcrusher.co.kr : 1
-
-http://www.kpsmc.co.kr : 1
-
-http://sinhosp.com : 1
-
-http://www.hsmc.kr : 1
-
-http://www.mmco.co.kr/ : 1
-
-http://eco-solutions.kr/ : 1
-
-http://hwasungind.co.kr : 1
-
-http://www.polaris-sewon.com : 2
-
-http://www.kunil-eng.co.kr : 1
-
-https://dh-crusher.co.kr/ : 1
-
-http://www.sj-powertech.com : 1
-
-http://www.sookwang.co.kr/ : 1
-
-https://hankukelec.com : 1
-
-http://e-samwon.co.kr : 1
-
-http://swtc.co.kr : 1
-
-http://www.hkps.kr : 1
-
-https://www.daemo.co.kr/ : 1
-
-https://www.kmim.co.kr : 1
-
-https://www.dmfurnace.com : 1
-
-
 현재의 factory Sensor monitor의 web server를 
 여러회사의 monitoring server로 분리해서 제공할려고 합니다.
 
@@ -86,3 +34,10 @@ simulation용으로 적용 가능한 web server를 만들어 주세요.
 (이상이 발생할때 대응하는 상황, 이상을 예측하는 예지기능 포함, 스마트폰의 기울기가 반영되도록함),
 제안하는 uttec의 소개 page
 로 구성해주세요.
+
+
+ claude, 공장 자동화에 예지 시스템을 도입하기위해서는 수많은 sensor와
+  설비등이 상호 연결되어 이루어지게 되는데, 이것을 도식화 하기 좋응 방법이
+  어떤것이 있을까요?
+그리고 claude의 도움을 받아 도식화 시킬수 있을까요?
+
