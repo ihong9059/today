@@ -12,3 +12,4 @@ downloads/
 *.apk
 *.exe
 .env
+nul
