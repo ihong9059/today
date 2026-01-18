@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대모엔지니어링 - 스마트 팩토리 솔루션</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        :root {
+            --primary: #d32f2f;
+            --secondary: #f44336;
+            --accent: #ff5722;
+            --dark: #b71c1c;
+            --success: #4caf50;
+            --warning: #ff9800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d1117 0%, #1a1a2e 50%, #0d1117 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.3);
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 50px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(211, 47, 47, 0.15) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .company-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent), #ff8a65);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3em;
+            color: #a0a0a0;
+            margin-bottom: 10px;
+        }
+
+        .hero .company-name {
+            font-size: 1.1em;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .hero .slogan {
+            font-size: 1.1em;
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 0 50px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, rgba(50, 30, 30, 0.8), rgba(30, 20, 20, 0.9));
+            border: 1px solid rgba(211, 47, 47, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(211, 47, 47, 0.2);
+        }
+
+        .stat-value {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .stat-card:nth-child(3) .stat-value,
+        .stat-card:nth-child(4) .stat-value {
+            color: var(--accent);
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.95em;
+        }
+
+        /* Products Section */
+        .section-title {
+            text-align: center;
+            padding: 60px 50px 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2em;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #888;
+        }
+
+        .products-section {
+            padding: 0 50px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: linear-gradient(145deg, rgba(50, 30, 30, 0.8), rgba(30, 20, 20, 0.9));
+            border: 1px solid rgba(211, 47, 47, 0.3);
+            border-radius: 15px;
+            padding: 25px 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 30px rgba(211, 47, 47, 0.2);
+        }
+
+        .product-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            color: var(--secondary);
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .product-card p {
+            color: #888;
+            font-size: 0.85em;
+        }
+
+        /* Global Network */
+        .global-section {
+            padding: 60px 50px;
+            background: linear-gradient(180deg, rgba(211, 47, 47, 0.1), transparent);
+        }
+
+        .global-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .global-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+        }
+
+        .global-card {
+            background: linear-gradient(145deg, rgba(50, 30, 30, 0.8), rgba(30, 20, 20, 0.9));
+            border: 1px solid rgba(211, 47, 47, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .global-card:hover {
+            border-color: var(--secondary);
+        }
+
+        .global-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .global-card h4 {
+            color: var(--secondary);
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+
+        .global-card p {
+            color: #888;
+            font-size: 0.8em;
+        }
+
+        /* Projects */
+        .projects-section {
+            padding: 0 50px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .project-card {
+            background: linear-gradient(145deg, rgba(50, 30, 30, 0.8), rgba(30, 20, 20, 0.9));
+            border: 1px solid rgba(211, 47, 47, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 30px rgba(211, 47, 47, 0.2);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-header h3 {
+            color: white;
+            font-size: 1.05em;
+        }
+
+        .project-cost {
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .project-body {
+            padding: 20px;
+        }
+
+        .project-body p {
+            color: #999;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .project-tag {
+            background: rgba(211, 47, 47, 0.2);
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+
+        /* ROI Summary */
+        .roi-section {
+            padding: 60px 50px;
+            background: linear-gradient(180deg, transparent, rgba(211, 47, 47, 0.1));
+        }
+
+        .roi-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .roi-title {
+            font-size: 2em;
+            color: var(--secondary);
+            margin-bottom: 40px;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .roi-card {
+            background: linear-gradient(145deg, rgba(50, 30, 30, 0.9), rgba(30, 20, 20, 0.95));
+            border: 1px solid rgba(211, 47, 47, 0.3);
+            border-radius: 15px;
+            padding: 30px 20px;
+        }
+
+        .roi-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .roi-card:nth-child(3) .roi-value,
+        .roi-card:nth-child(4) .roi-value {
+            color: var(--accent);
+        }
+
+        .roi-label {
+            color: #888;
+            font-size: 0.95em;
+        }
+
+        .roi-sub {
+            color: #666;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 40px 50px;
+            text-align: center;
+            border-top: 1px solid rgba(211, 47, 47, 0.2);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .footer-info {
+            color: #888;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .footer-slogan {
+            color: var(--accent);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .footer-copyright {
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 1200px) {
+            .product-grid, .global-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid, .roi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero {
+                padding: 120px 20px 60px;
+            }
+            .hero h1 {
+                font-size: 2em;
+            }
+            .product-grid, .global-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-grid, .roi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">DAEMO<span>ENG</span></div>
+        <div class="nav-links">
+            <a href="index.html" class="active">홈</a>
+            <a href="system.html">시스템</a>
+            <a href="monitor.html">모니터링</a>
+            <a href="about.html">소개</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="company-badge">코스닥 상장 | 세계 3대 Attachment 제조사</div>
+            <h1>스마트 팩토리 솔루션</h1>
+            <p class="subtitle">유압브레이커/어태치먼트 제조 설비 예지정비(PdM) 시스템 구축</p>
+            <p class="company-name">대모엔지니어링(주) | DAEMO Engineering Co., Ltd.</p>
+            <p class="slogan">"Smart DAEMO, Smart BREAKING"</p>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">6</div>
+            <div class="stat-label">프로젝트</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">291</div>
+            <div class="stat-label">모니터링 포인트</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">79.7%</div>
+            <div class="stat-label">평균 ROI</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">15개월</div>
+            <div class="stat-label">투자회수</div>
+        </div>
+    </div>
+
+    <!-- Products -->
+    <div class="section-title">
+        <h2>주요 제품 라인업</h2>
+        <p>건설중장비 어태치먼트 전문 제조</p>
+    </div>
+
+    <section class="products-section">
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-icon">🔨</div>
+                <h3>유압브레이커</h3>
+                <p>강력한 타격력, 내구성</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">💪</div>
+                <h3>콘크리트 크러셔</h3>
+                <p>콘크리트 파쇄</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">✂️</div>
+                <h3>고철절단 쉬어</h3>
+                <p>고철 절단</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🔧</div>
+                <h3>멀티프로세서</h3>
+                <p>다목적 해체</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🤝</div>
+                <h3>그래플</h3>
+                <p>자재 핸들링</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🔄</div>
+                <h3>퀵커플러</h3>
+                <p>어태치먼트 교환</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Network -->
+    <section class="global-section">
+        <div class="global-container">
+            <div class="section-title" style="padding: 0 0 40px;">
+                <h2>글로벌 네트워크</h2>
+                <p>전 세계 6개 거점 운영</p>
+            </div>
+
+            <div class="global-grid">
+                <div class="global-card">
+                    <div class="global-icon">🇰🇷</div>
+                    <h4>한국 본사</h4>
+                    <p>시흥시 시화공단</p>
+                </div>
+                <div class="global-card">
+                    <div class="global-icon">🇰🇷</div>
+                    <h4>울산사업장</h4>
+                    <p>생산 거점</p>
+                </div>
+                <div class="global-card">
+                    <div class="global-icon">🇨🇳</div>
+                    <h4>중국법인</h4>
+                    <p>2003년 설립</p>
+                </div>
+                <div class="global-card">
+                    <div class="global-icon">🇪🇺</div>
+                    <h4>유럽법인</h4>
+                    <p>2005년 설립</p>
+                </div>
+                <div class="global-card">
+                    <div class="global-icon">🇺🇸</div>
+                    <h4>미국법인</h4>
+                    <p>Riverside, CA</p>
+                </div>
+                <div class="global-card">
+                    <div class="global-icon">🇮🇳</div>
+                    <h4>인도법인</h4>
+                    <p>해외 시장 확대</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <div class="section-title">
+        <h2>스마트 솔루션 프로젝트</h2>
+        <p>제조 설비 예지정비 및 스마트 팩토리 구축</p>
+    </div>
+
+    <section class="projects-section">
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project 1</h3>
+                    <span class="project-cost">4,200만원</span>
+                </div>
+                <div class="project-body">
+                    <p><strong>대형 가공설비 예지정비</strong><br>CNC MCT 8대, CNC선반 6대, 보링기 4대</p>
+                    <div class="project-tags">
+                        <span class="project-tag">진동센서</span>
+                        <span class="project-tag">온도센서</span>
+                        <span class="project-tag">전류센서</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project 2</h3>
+                    <span class="project-cost">3,800만원</span>
+                </div>
+                <div class="project-body">
+                    <p><strong>로봇 용접 품질 모니터링</strong><br>용접 로봇 12대, 수동 용접 스테이션 8개</p>
+                    <div class="project-tags">
+                        <span class="project-tag">용접모니터</span>
+                        <span class="project-tag">전류센서</span>
+                        <span class="project-tag">아크분석</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project 3</h3>
+                    <span class="project-cost">3,200만원</span>
+                </div>
+                <div class="project-body">
+                    <p><strong>열처리 품질 모니터링</strong><br>고주파 열처리기 4대, 침탄로 2대, 소입/소려로 3대</p>
+                    <div class="project-tags">
+                        <span class="project-tag">다점온도</span>
+                        <span class="project-tag">가스분석</span>
+                        <span class="project-tag">냉각수</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project 4</h3>
+                    <span class="project-cost">3,600만원</span>
+                </div>
+                <div class="project-body">
+                    <p><strong>유압 시스템 성능시험</strong><br>브레이커 시험기 4대, 크러셔/퀵커플러 시험기 각 2대</p>
+                    <div class="project-tags">
+                        <span class="project-tag">압력센서</span>
+                        <span class="project-tag">유량센서</span>
+                        <span class="project-tag">진동센서</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project 5</h3>
+                    <span class="project-cost">4,500만원</span>
+                </div>
+                <div class="project-body">
+                    <p><strong>스마트 브레이커 원격 모니터링</strong><br>출하 스마트브레이커 (연간 500대) 원격 모니터링</p>
+                    <div class="project-tags">
+                        <span class="project-tag">타격횟수</span>
+                        <span class="project-tag">유압압력</span>
+                        <span class="project-tag">LTE/5G</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project 6</h3>
+                    <span class="project-cost">3,400만원</span>
+                </div>
+                <div class="project-body">
+                    <p><strong>글로벌 통합 대시보드</strong><br>시흥본사 + 울산사업장 + 중국공장 통합 모니터링</p>
+                    <div class="project-tags">
+                        <span class="project-tag">클라우드</span>
+                        <span class="project-tag">다국어</span>
+                        <span class="project-tag">모바일앱</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Summary -->
+    <section class="roi-section">
+        <div class="roi-container">
+            <h2 class="roi-title">투자 효과 분석</h2>
+            <div class="roi-grid">
+                <div class="roi-card">
+                    <div class="roi-value">2.27억</div>
+                    <div class="roi-label">총 투자비</div>
+                    <div class="roi-sub">22,700만원</div>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-value">1.81억</div>
+                    <div class="roi-label">연간 절감액</div>
+                    <div class="roi-sub">18,100만원</div>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-value">79.7%</div>
+                    <div class="roi-label">평균 ROI</div>
+                    <div class="roi-sub">투자수익률</div>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-value">15개월</div>
+                    <div class="roi-label">투자회수</div>
+                    <div class="roi-sub">회수기간</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">DAEMO Engineering</div>
+            <div class="footer-info">
+                대모엔지니어링(주) | 설립 1989년 | 코스닥 상장 (2019년)<br>
+                경기도 시흥시 엠티브이26로58번길 56 (정왕동, 시화공단)<br>
+                031-488-6000 | intel24@daemo.co.kr
+            </div>
+            <div class="footer-slogan">"Smart DAEMO, Smart BREAKING"</div>
+            <div class="footer-copyright">© 2026 UTTEC. Smart Factory Solution for DAEMO Engineering.</div>
+        </div>
+    </footer>
+</body>
+</html>

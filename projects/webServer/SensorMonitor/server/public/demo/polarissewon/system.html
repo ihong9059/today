@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시스템 구성 - (주)폴라리스세원</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(26, 35, 126, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 2rem 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+        }
+
+        /* Architecture Section */
+        .architecture-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .architecture-section h2 {
+            color: #1a237e;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        /* 4-Layer Architecture */
+        .architecture-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .layer {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .layer:hover {
+            transform: translateX(10px);
+        }
+
+        .layer-1 {
+            background: linear-gradient(135deg, #1a237e, #283593);
+            color: white;
+        }
+
+        .layer-2 {
+            background: linear-gradient(135deg, #303f9f, #3949ab);
+            color: white;
+        }
+
+        .layer-3 {
+            background: linear-gradient(135deg, #5c6bc0, #7986cb);
+            color: white;
+        }
+
+        .layer-4 {
+            background: linear-gradient(135deg, #9fa8da, #c5cae9);
+            color: #1a237e;
+        }
+
+        .layer-number {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .layer-4 .layer-number {
+            background: rgba(26, 35, 126, 0.2);
+        }
+
+        .layer-content {
+            flex: 1;
+        }
+
+        .layer-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .layer-content p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .layer-components {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 0.8rem;
+        }
+
+        .component-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+
+        .layer-4 .component-tag {
+            background: rgba(26, 35, 126, 0.15);
+        }
+
+        .layer-arrow {
+            text-align: center;
+            color: #3949ab;
+            font-size: 1.5rem;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 1rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: #f5f5f5;
+            color: #666;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Sensor Tables */
+        .sensor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .sensor-table th {
+            background: linear-gradient(135deg, #1a237e, #283593);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .sensor-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .sensor-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .sensor-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .type-vibration {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .type-temperature {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .type-pressure {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .type-flow {
+            background: #e8eaf6;
+            color: #3949ab;
+        }
+
+        .type-vision {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .type-torque {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .type-power {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        /* Data Flow */
+        .data-flow-section {
+            background: linear-gradient(135deg, #1a237e, #283593);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .data-flow-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .data-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 180px;
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .flow-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .flow-step h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .flow-step p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.3);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .layer {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .sensor-table {
+                font-size: 0.85rem;
+            }
+
+            .data-flow {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="favicon.svg" alt="폴라리스세원 로고">
+                <div class="logo-text">
+                    <span class="logo-main">(주)폴라리스세원</span>
+                    <span class="logo-sub">Polaris Sewon Co., Ltd.</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="system.html" class="active">시스템</a>
+                <a href="monitor.html">모니터링</a>
+                <a href="about.html">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>시스템 구성</h1>
+        <p>자동차 공조부품 스마트 제조를 위한 4계층 아키텍처</p>
+    </section>
+
+    <div class="main-content">
+        <!-- Architecture -->
+        <div class="architecture-section">
+            <h2>🏗️ 4계층 시스템 아키텍처</h2>
+            <div class="architecture-layers">
+                <div class="layer layer-1">
+                    <div class="layer-number">1</div>
+                    <div class="layer-content">
+                        <h3>클라우드 플랫폼 (Cloud Layer)</h3>
+                        <p>빅데이터 분석, AI/ML 모델 학습, OEM 대시보드 연동</p>
+                        <div class="layer-components">
+                            <span class="component-tag">AWS IoT Core</span>
+                            <span class="component-tag">Time Series DB</span>
+                            <span class="component-tag">AI/ML Engine</span>
+                            <span class="component-tag">OEM Dashboard</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layer-arrow">↑↓</div>
+                <div class="layer layer-2">
+                    <div class="layer-number">2</div>
+                    <div class="layer-content">
+                        <h3>엣지 AI 게이트웨이 (Edge Layer)</h3>
+                        <p>실시간 데이터 처리, 로컬 AI 추론, 설비 제어 인터페이스</p>
+                        <div class="layer-components">
+                            <span class="component-tag">Edge AI Server</span>
+                            <span class="component-tag">PLC 연동</span>
+                            <span class="component-tag">실시간 분석</span>
+                            <span class="component-tag">SCADA 인터페이스</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layer-arrow">↑↓</div>
+                <div class="layer layer-3">
+                    <div class="layer-number">3</div>
+                    <div class="layer-content">
+                        <h3>센서 네트워크 (Sensor Layer)</h3>
+                        <p>진동, 온도, 압력, 토크, 비전 등 다양한 센서 데이터 수집</p>
+                        <div class="layer-components">
+                            <span class="component-tag">진동 센서</span>
+                            <span class="component-tag">열전대</span>
+                            <span class="component-tag">압력 센서</span>
+                            <span class="component-tag">비전 카메라</span>
+                            <span class="component-tag">토크 센서</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layer-arrow">↑↓</div>
+                <div class="layer layer-4">
+                    <div class="layer-number">4</div>
+                    <div class="layer-content">
+                        <h3>생산 설비 (Equipment Layer)</h3>
+                        <p>프레스, 브레이징로, 조립라인, 검사설비 등 핵심 생산 장비</p>
+                        <div class="layer-components">
+                            <span class="component-tag">프레스 설비</span>
+                            <span class="component-tag">브레이징로</span>
+                            <span class="component-tag">조립라인</span>
+                            <span class="component-tag">검사설비</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sensor Details Tabs -->
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('press')">프레스 설비</button>
+                <button class="tab-btn" onclick="openTab('brazing')">브레이징로</button>
+                <button class="tab-btn" onclick="openTab('assembly')">조립라인</button>
+                <button class="tab-btn" onclick="openTab('inspection')">검사설비</button>
+            </div>
+
+            <div id="press" class="tab-content active">
+                <h3 style="color: #1a237e; margin-bottom: 1rem;">프레스 설비 센서 구성</h3>
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>센서 유형</th>
+                            <th>측정 항목</th>
+                            <th>설치 위치</th>
+                            <th>측정 주기</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="sensor-type type-vibration">진동 센서</span></td>
+                            <td>금형 진동, 베어링 상태</td>
+                            <td>프레스 헤드, 슬라이더</td>
+                            <td>1kHz</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-pressure">압력 센서</span></td>
+                            <td>유압 압력, 성형 압력</td>
+                            <td>유압 라인, 금형</td>
+                            <td>100Hz</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-temperature">온도 센서</span></td>
+                            <td>오일 온도, 금형 온도</td>
+                            <td>유압탱크, 금형</td>
+                            <td>1Hz</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-torque">토크 센서</span></td>
+                            <td>모터 토크, 부하</td>
+                            <td>구동 모터</td>
+                            <td>100Hz</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="brazing" class="tab-content">
+                <h3 style="color: #1a237e; margin-bottom: 1rem;">브레이징로 센서 구성</h3>
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>센서 유형</th>
+                            <th>측정 항목</th>
+                            <th>설치 위치</th>
+                            <th>측정 주기</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="sensor-type type-temperature">열전대 센서</span></td>
+                            <td>존별 온도 프로파일</td>
+                            <td>가열존, 냉각존</td>
+                            <td>10Hz</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-flow">분위기 센서</span></td>
+                            <td>질소 농도, 산소 농도</td>
+                            <td>로내 분위기</td>
+                            <td>1Hz</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-flow">플럭스 센서</span></td>
+                            <td>플럭스 농도, 유량</td>
+                            <td>플럭스 공급라인</td>
+                            <td>1Hz</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-vibration">컨베이어 센서</span></td>
+                            <td>이송 속도, 진동</td>
+                            <td>컨베이어 벨트</td>
+                            <td>10Hz</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="assembly" class="tab-content">
+                <h3 style="color: #1a237e; margin-bottom: 1rem;">조립라인 센서 구성</h3>
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>센서 유형</th>
+                            <th>측정 항목</th>
+                            <th>설치 위치</th>
+                            <th>측정 주기</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="sensor-type type-torque">토크 센서</span></td>
+                            <td>체결 토크, 조립 토크</td>
+                            <td>조립 스테이션</td>
+                            <td>100Hz</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-vision">위치 센서</span></td>
+                            <td>부품 위치, 정렬 상태</td>
+                            <td>로봇 암, 지그</td>
+                            <td>100Hz</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-vision">비전 센서</span></td>
+                            <td>조립 상태 확인</td>
+                            <td>검사 스테이션</td>
+                            <td>30fps</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-power">사이클 센서</span></td>
+                            <td>사이클 타임, 대기 시간</td>
+                            <td>각 스테이션</td>
+                            <td>이벤트</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="inspection" class="tab-content">
+                <h3 style="color: #1a237e; margin-bottom: 1rem;">검사설비 센서 구성</h3>
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>센서 유형</th>
+                            <th>측정 항목</th>
+                            <th>설치 위치</th>
+                            <th>측정 주기</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="sensor-type type-pressure">압력 센서</span></td>
+                            <td>기밀 압력, 누설 검출</td>
+                            <td>기밀 검사기</td>
+                            <td>100Hz</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-flow">유량 센서</span></td>
+                            <td>누설량, 유량 확인</td>
+                            <td>기밀 검사기</td>
+                            <td>10Hz</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-vision">비전 카메라</span></td>
+                            <td>외관 검사, 치수 측정</td>
+                            <td>AOI 스테이션</td>
+                            <td>30fps</td>
+                        </tr>
+                        <tr>
+                            <td><span class="sensor-type type-power">전력 센서</span></td>
+                            <td>전력 소비량</td>
+                            <td>검사설비 전원</td>
+                            <td>1Hz</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Data Flow -->
+        <div class="data-flow-section">
+            <h2>📊 데이터 처리 흐름</h2>
+            <div class="data-flow">
+                <div class="flow-step">
+                    <div class="flow-icon">📡</div>
+                    <h4>데이터 수집</h4>
+                    <p>센서 데이터 실시간 수집<br>1,000+ 측정점</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-icon">⚡</div>
+                    <h4>엣지 처리</h4>
+                    <p>실시간 전처리<br>이상 탐지</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-icon">🧠</div>
+                    <h4>AI 분석</h4>
+                    <p>예지정비 예측<br>품질 예측</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-icon">📋</div>
+                    <h4>대시보드</h4>
+                    <p>실시간 모니터링<br>OEM 연동</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 (주)폴라리스세원. All Rights Reserved. | 스마트 제조 혁신 파트너</p>
+    </footer>
+
+    <script>
+        function openTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

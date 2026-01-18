@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대명기업 - 스마트 팩토리 예지정비</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(192, 57, 43, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(192, 57, 43, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #c0392b;
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 2rem 60px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(192, 57, 43, 0.2) 0%, rgba(231, 76, 60, 0.1) 100%);
+            border-bottom: 1px solid rgba(192, 57, 43, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #e74c3c 0%, #f39c12 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #aaa;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(192, 57, 43, 0.3);
+            border: 1px solid rgba(231, 76, 60, 0.5);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            color: #e74c3c;
+            font-weight: 500;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 3rem 2rem;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(192, 57, 43, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #e74c3c;
+            box-shadow: 0 10px 30px rgba(192, 57, 43, 0.2);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #e74c3c 0%, #f39c12 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #aaa;
+            margin-top: 0.5rem;
+        }
+
+        /* Products Section */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #e74c3c;
+            text-align: center;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(192, 57, 43, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #e74c3c;
+            box-shadow: 0 10px 30px rgba(192, 57, 43, 0.2);
+        }
+
+        .product-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+        }
+
+        .product-card h3 {
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-card p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            background: rgba(0,0,0,0.2);
+            padding: 4rem 2rem;
+        }
+
+        .projects-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(192, 57, 43, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #e74c3c;
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .project-header.orange {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .project-header.green {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+
+        .project-header.purple {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        }
+
+        .project-header.teal {
+            background: linear-gradient(135deg, #16a085, #1abc9c);
+        }
+
+        .project-header h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .project-body ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .project-body li {
+            padding: 0.3rem 0;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        .project-body li::before {
+            content: '✓';
+            color: #27ae60;
+            margin-right: 0.5rem;
+        }
+
+        .project-cost {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cost-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        .roi-badge {
+            background: rgba(39, 174, 96, 0.2);
+            color: #27ae60;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(192, 57, 43, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        .feature-card h4 {
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .feature-card p {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(192, 57, 43, 0.2) 0%, rgba(231, 76, 60, 0.1) 100%);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: #aaa;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(192, 57, 43, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(192, 57, 43, 0.3);
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+        }
+
+        footer a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .stats-container,
+            .products-grid,
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stats-container,
+            .products-grid,
+            .projects-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">DM</div>
+                대명기업 Smart Factory
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="active">홈</a>
+                <a href="system.html">시스템</a>
+                <a href="monitor.html">모니터링</a>
+                <a href="about.html">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>대명기업</h1>
+        <p>30년+ 전기로(Electric Furnace) 전문 제조기업</p>
+        <div class="hero-badge">
+            <span>🔥</span>
+            전기로 예지정비 & 원격 모니터링 서비스
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value">6</div>
+                <div class="stat-label">프로젝트</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">1.4억</div>
+                <div class="stat-label">총 투자금액</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">76.4%</div>
+                <div class="stat-label">예상 ROI</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">30+</div>
+                <div class="stat-label">년 업력</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section">
+        <h2 class="section-title">주요 제품군</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-icon">📦</div>
+                <h3>Box Type</h3>
+                <p>상자형 전기로<br>열처리/소성/건조</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">⚪</div>
+                <h3>Tube Type</h3>
+                <p>관형 전기로<br>분위기 제어 가능</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🥘</div>
+                <h3>Crucible Type</h3>
+                <p>도가니형 전기로<br>금속 용해용</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">📦</div>
+                <h3>Batch Type</h3>
+                <p>배치 처리용 대형<br>대량 열처리</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">➡️</div>
+                <h3>Continuous Type</h3>
+                <p>연속 처리용 터널로<br>연속 생산 라인</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">⚙️</div>
+                <h3>특수 전기로</h3>
+                <p>맞춤형 설계 제작<br>특수 공정용</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects-section">
+        <h2 class="section-title" style="color: #e74c3c; margin-bottom: 2rem;">스마트 솔루션 프로젝트</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project 1: 발열체 예지정비</h3>
+                    <p>SiC, MoSi2, Kanthal 열화 모니터링</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>저항값 변화율 분석</li>
+                        <li>열화 패턴 감지</li>
+                        <li>RUL 예측</li>
+                        <li>교체 알림</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">2,800만원</span>
+                        <span class="roi-badge">ROI 85.7%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header orange">
+                    <h3>Project 2: 성능 검증 자동화</h3>
+                    <p>납품 전 전기로 성능 테스트</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>온도 정확도 검증</li>
+                        <li>온도 균일도 검증</li>
+                        <li>승온 속도 측정</li>
+                        <li>인증서 자동 발행</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">2,400만원</span>
+                        <span class="roi-badge">ROI 75.0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header green">
+                    <h3>Project 3: 원격 모니터링 서비스</h3>
+                    <p>납품된 전기로 원격 상태 감시</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>실시간 온도 현황</li>
+                        <li>발열체 상태</li>
+                        <li>이상 알림</li>
+                        <li>A/S 이력 관리</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">3,200만원</span>
+                        <span class="roi-badge">ROI 81.3%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header purple">
+                    <h3>Project 4: 스마트 생산 관리</h3>
+                    <p>전기로 제조 공정 디지털화</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>QR코드 기반 이력</li>
+                        <li>사용 부품 정보</li>
+                        <li>품질 검사 결과</li>
+                        <li>납품/A/S 이력</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">2,200만원</span>
+                        <span class="roi-badge">ROI 72.7%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project 5: 단열 성능 모니터링</h3>
+                    <p>단열재 성능 및 에너지 효율</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>단열층별 온도 분석</li>
+                        <li>열손실량 계산</li>
+                        <li>단열 열화 감지</li>
+                        <li>에너지 최적화</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">1,800만원</span>
+                        <span class="roi-badge">ROI 66.7%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header teal">
+                    <h3>Project 6: 에너지 통합 관리</h3>
+                    <p>공장 전체 에너지 사용 현황</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>실시간 전력 모니터링</li>
+                        <li>피크 부하 관리</li>
+                        <li>원단위 분석</li>
+                        <li>비용 예측</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">1,600만원</span>
+                        <span class="roi-badge">ROI 68.8%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <h2 class="section-title">발열체 유형별 모니터링</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h4>SiC 발열체</h4>
+                <p>저항값, 전류<br>저항 증가율 분석</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔥</div>
+                <h4>MoSi2 발열체</h4>
+                <p>저항값, 표면온도<br>저항 변화 패턴</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌡️</div>
+                <h4>Kanthal 발열체</h4>
+                <p>저항값, 전력소비<br>효율 저하 감지</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h4>Super Kanthal</h4>
+                <p>저항값, 온도균일성<br>국부 열화 감지</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>"전기로의 가치는 안정적인 성능에서 시작됩니다"</h2>
+        <p>대명기업의 30년 전기로 제조 노하우와 UTTEC의 스마트 기술이 만나<br>전기로 산업의 새로운 서비스 모델을 제시합니다.</p>
+        <div class="cta-buttons">
+            <a href="monitor.html" class="btn btn-primary">실시간 모니터링</a>
+            <a href="system.html" class="btn btn-secondary">시스템 구성</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 대명기업. Smart Factory Predictive Maintenance Demo</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="https://www.dmfurnace.com" target="_blank">www.dmfurnace.com</a>
+        </p>
+    </footer>
+</body>
+</html>

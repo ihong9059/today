@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삼원기계 - 스마트 팩토리 예지정비</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(26, 95, 122, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(26, 95, 122, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1a5f7a;
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 2rem 60px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(26, 95, 122, 0.2) 0%, rgba(21, 152, 149, 0.1) 100%);
+            border-bottom: 1px solid rgba(26, 95, 122, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #159895 0%, #57c5b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #aaa;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(26, 95, 122, 0.3);
+            border: 1px solid rgba(21, 152, 149, 0.5);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            color: #57c5b6;
+            font-weight: 500;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 3rem 2rem;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(26, 95, 122, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #159895;
+            box-shadow: 0 10px 30px rgba(21, 152, 149, 0.2);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #159895 0%, #57c5b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #aaa;
+            margin-top: 0.5rem;
+        }
+
+        /* Products Section */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #159895;
+            text-align: center;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(26, 95, 122, 0.3);
+            border-radius: 15px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #159895;
+            box-shadow: 0 10px 30px rgba(21, 152, 149, 0.2);
+        }
+
+        .product-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a5f7a, #159895);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 1rem;
+        }
+
+        .product-card h3 {
+            color: #57c5b6;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .product-card p {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        /* Flow Section */
+        .flow-section {
+            background: rgba(0,0,0,0.2);
+            padding: 3rem 2rem;
+        }
+
+        .flow-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .flow-item {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .flow-box {
+            background: linear-gradient(135deg, #1a5f7a, #159895);
+            color: white;
+            padding: 1.2rem 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-desc {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .flow-arrow {
+            color: #57c5b6;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            background: rgba(0,0,0,0.2);
+            padding: 4rem 2rem;
+        }
+
+        .projects-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(26, 95, 122, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #159895;
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #1a5f7a, #159895);
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .project-header.orange {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        }
+
+        .project-header.green {
+            background: linear-gradient(135deg, #059669, #10b981);
+        }
+
+        .project-header.purple {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        .project-header h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .project-body ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .project-body li {
+            padding: 0.3rem 0;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        .project-body li::before {
+            content: '✓';
+            color: #10b981;
+            margin-right: 0.5rem;
+        }
+
+        .project-cost {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cost-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #f59e0b;
+        }
+
+        .roi-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        /* Global Section */
+        .global-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .global-card {
+            background: linear-gradient(135deg, rgba(26, 95, 122, 0.3) 0%, rgba(21, 152, 149, 0.2) 100%);
+            border: 1px solid rgba(21, 152, 149, 0.4);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .global-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .global-stat {
+            text-align: center;
+        }
+
+        .global-stat-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #57c5b6;
+        }
+
+        .global-stat-label {
+            color: #aaa;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(26, 95, 122, 0.2) 0%, rgba(21, 152, 149, 0.1) 100%);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            color: #57c5b6;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: #aaa;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1a5f7a, #159895);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(21, 152, 149, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #57c5b6;
+            border: 1px solid #57c5b6;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(87, 197, 182, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(26, 95, 122, 0.3);
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+        }
+
+        footer a {
+            color: #57c5b6;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .stats-container,
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stats-container,
+            .products-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-container {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .global-stats {
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">SW</div>
+                삼원기계 Smart Factory
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="active">홈</a>
+                <a href="system.html">시스템</a>
+                <a href="monitor.html">모니터링</a>
+                <a href="about.html">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>주식회사 삼원기계</h1>
+        <p>30년+ 자동화 포장기계 전문 제조기업</p>
+        <div class="hero-badge">
+            <span>📦</span>
+            글로벌 31개국 수출 | 포장산업 발전의 선두주자
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value">6</div>
+                <div class="stat-label">프로젝트</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">1.86억</div>
+                <div class="stat-label">총 투자금액</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">80.1%</div>
+                <div class="stat-label">예상 ROI</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">31+</div>
+                <div class="stat-label">수출국</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section">
+        <h2 class="section-title">주요 제품 라인업</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-icon">📋</div>
+                <h3>자동테이핑기</h3>
+                <p>랜덤 테이핑기<br>고속 테이핑기</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">📦</div>
+                <h3>자동제함기</h3>
+                <p>박스 성형 제함기<br>자동 폴딩/테이핑</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🔗</div>
+                <h3>밴딩기</h3>
+                <p>PP 밴딩기<br>파렛트 결속기</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🔄</div>
+                <h3>랩핑기</h3>
+                <p>파렛트 랩핑기<br>스트레치 필름 포장</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">➡️</div>
+                <h3>컨베이어</h3>
+                <p>롤러/벨트 컨베이어<br>물류 자동화 라인</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flow Section -->
+    <section class="flow-section">
+        <h2 class="section-title" style="color: #57c5b6; margin-bottom: 2rem;">포장 자동화 라인 구성</h2>
+        <div class="flow-container">
+            <div class="flow-item">
+                <div class="flow-box">제함기</div>
+                <div class="flow-desc">박스 성형</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-item">
+                <div class="flow-box">컨베이어</div>
+                <div class="flow-desc">이송</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-item">
+                <div class="flow-box">테이핑기</div>
+                <div class="flow-desc">봉함</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-item">
+                <div class="flow-box">밴딩기</div>
+                <div class="flow-desc">결속</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-item">
+                <div class="flow-box">랩핑기</div>
+                <div class="flow-desc">파렛트 포장</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects-section">
+        <h2 class="section-title" style="color: #57c5b6; margin-bottom: 2rem;">스마트 솔루션 프로젝트</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project 1: 제조설비 예지정비</h3>
+                    <p>CNC MCT, 레이저절단기, 벤딩기, 용접설비</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>스핀들 진동 분석</li>
+                        <li>베어링 온도 모니터링</li>
+                        <li>레이저 파워 분석</li>
+                        <li>용접 품질 분석</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">3,400만원</span>
+                        <span class="roi-badge">ROI 76.5%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header orange">
+                    <h3>Project 2: 조립라인 품질자동화</h3>
+                    <p>조립라인 3개, 전장조립 2개 라인</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>조립 토크 분석</li>
+                        <li>전장 접속상태 검사</li>
+                        <li>공압 동작 분석</li>
+                        <li>센서 동작 검증</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">2,800만원</span>
+                        <span class="roi-badge">ROI 78.6%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header green">
+                    <h3>Project 3: 성능시험 자동화</h3>
+                    <p>테이핑기/제함기/밴딩기 시험대</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>동작속도 측정</li>
+                        <li>테이핑/밴딩 품질</li>
+                        <li>진동/소음 분석</li>
+                        <li>전력소비 측정</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">2,600만원</span>
+                        <span class="roi-badge">ROI 76.9%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header purple">
+                    <h3>Project 4: 서보모터 예지정비 특화</h3>
+                    <p>출하 테이핑기 서보모터 100대분</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>진동 패턴 분석</li>
+                        <li>온도/전류/토크 분석</li>
+                        <li>RUL 예측</li>
+                        <li>옵션 판매용 모듈</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">3,200만원</span>
+                        <span class="roi-badge">ROI 87.5%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project 5: 글로벌 원격 모니터링</h3>
+                    <p>연간 13개국 수출 장비 원격 관리</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>실시간 상태 모니터링</li>
+                        <li>원격 진단 시스템</li>
+                        <li>예지정비 알림</li>
+                        <li>글로벌 대시보드</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">4,200만원</span>
+                        <span class="roi-badge">ROI 83.3%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header orange">
+                    <h3>Project 6: 에너지/탄소절감</h3>
+                    <p>공장 전체 에너지 모니터링</p>
+                </div>
+                <div class="project-body">
+                    <ul>
+                        <li>실시간 전력 모니터링</li>
+                        <li>압축공기/가스 사용량</li>
+                        <li>탄소배출 관리</li>
+                        <li>ESG 경영 기반</li>
+                    </ul>
+                    <div class="project-cost">
+                        <span class="cost-value">2,400만원</span>
+                        <span class="roi-badge">ROI 75.0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Section -->
+    <section class="global-section">
+        <div class="global-card">
+            <h2 class="section-title" style="margin-bottom: 1rem;">글로벌 수출 실적</h2>
+            <p style="color: #aaa;">포장산업 발전의 선두주자로서 세계 시장을 선도합니다</p>
+            <div class="global-stats">
+                <div class="global-stat">
+                    <div class="global-stat-value">31+</div>
+                    <div class="global-stat-label">총 수출국</div>
+                </div>
+                <div class="global-stat">
+                    <div class="global-stat-value">13</div>
+                    <div class="global-stat-label">연평균 수출국</div>
+                </div>
+                <div class="global-stat">
+                    <div class="global-stat-value">30+</div>
+                    <div class="global-stat-label">년 업력</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>"포장산업 발전의 선두주자"</h2>
+        <p>삼원기계의 30년 포장기계 제조 노하우와 UTTEC의 스마트 기술이 만나<br>글로벌 포장 자동화의 미래를 열어갑니다.</p>
+        <div class="cta-buttons">
+            <a href="monitor.html" class="btn btn-primary">실시간 모니터링</a>
+            <a href="system.html" class="btn btn-secondary">시스템 구성</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 (주)삼원기계. Smart Factory Predictive Maintenance Demo</p>
+        <p style="margin-top: 0.5rem;">
+            경상남도 김해시 주촌면 골든루트로130번길 12-5
+        </p>
+    </footer>
+</body>
+</html>

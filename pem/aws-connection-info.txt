@@ -1,0 +1,29 @@
+AWS EC2 접속 정보
+==================
+
+서버 이름: uttecServer
+IP 주소: 54.196.196.42
+사용자: ec2-user
+키 파일: uttec.pem
+
+접속 명령어:
+ssh -i "C:\todo\today\pem\uttec.pem" ec2-user@54.196.196.42
+
+서버 사양:
+- 인스턴스 타입: t3.micro
+- OS: Amazon Linux 2023
+- vCPU: 2 (1코어 x 2스레드)
+- 프로세서: Intel Xeon Platinum 8259CL @ 2.50GHz
+- 메모리: 917 MiB (~1GB)
+- SSD: 8 GB (NVMe SSD, 사용가능 6.5GB)
+- Python: 3.9.25
+- GPU: 없음
+
+t3.micro 특징:
+- 기준 CPU 사용률: 10%
+- 네트워크: 최대 5 Gbps
+- 월 비용: 약 $8~9 (On-Demand)
+
+참고:
+- 현재 가벼운 웹서버/테스트 용도에 적합
+- AI 학습을 위해서는 GPU 인스턴스(g4dn.xlarge) 권장

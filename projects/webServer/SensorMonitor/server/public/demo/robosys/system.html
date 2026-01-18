@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시스템 구성 | (주)로봇시스템 예지정비</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --secondary: #159895;
+            --accent: #57c5b6;
+            --purple: #6f42c1;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --warning: #ffc107;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #0f3d4a 0%, #1a5f7a 30%, #6f42c1 70%, #159895 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .logo h1 {
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--accent);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 120px 40px 60px;
+            text-align: center;
+        }
+
+        .page-header h2 {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            font-size: 1.2em;
+            opacity: 0.8;
+        }
+
+        /* Section */
+        .section {
+            padding: 60px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h3 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+
+        /* Architecture */
+        .architecture-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+
+        .architecture-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .layer {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 25px 30px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s;
+        }
+
+        .layer:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(10px);
+        }
+
+        .layer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .layer-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .layer-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .layer-title h4 {
+            font-size: 1.3em;
+        }
+
+        .layer-tech {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tech-badge {
+            background: rgba(111, 66, 193, 0.3);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            border: 1px solid var(--purple);
+        }
+
+        .layer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .layer-item {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .layer-item-icon {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .arrow-down {
+            text-align: center;
+            padding: 10px;
+            font-size: 2em;
+            color: var(--purple);
+        }
+
+        /* Robot Types Monitoring */
+        .robot-monitoring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .robot-type-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .robot-type-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--purple);
+        }
+
+        .robot-type-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .robot-type-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+        }
+
+        .robot-type-card h4 {
+            font-size: 1.3em;
+        }
+
+        .robot-type-card p {
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
+
+        .monitoring-items {
+            list-style: none;
+        }
+
+        .monitoring-items li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .monitoring-items li:last-child {
+            border-bottom: none;
+        }
+
+        .monitoring-items .label {
+            opacity: 0.8;
+        }
+
+        .monitoring-items .value {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        /* Protocols */
+        .protocol-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+
+        .protocol-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .protocol-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .protocol-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px);
+        }
+
+        .protocol-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            margin: 0 auto 15px;
+        }
+
+        .protocol-card h4 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .protocol-card p {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
+        /* Specs Table */
+        .specs-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 24px;
+            padding: 40px;
+            overflow-x: auto;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table th {
+            background: rgba(111, 66, 193, 0.3);
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .specs-table th:first-child {
+            border-radius: 10px 0 0 10px;
+        }
+
+        .specs-table th:last-child {
+            border-radius: 0 10px 10px 0;
+        }
+
+        .specs-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .specs-table tr:hover td {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .prediction-badge {
+            background: var(--success);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+
+        /* Gateway Specs */
+        .gateway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .gateway-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .gateway-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--purple), var(--secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            margin: 0 auto 20px;
+        }
+
+        .gateway-card h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .gateway-value {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .gateway-card p {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        .copyright {
+            opacity: 0.5;
+            font-size: 0.9em;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .page-header h2 {
+                font-size: 2em;
+            }
+
+            .section {
+                padding: 40px 20px;
+            }
+
+            .layer:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="logo">
+            <div class="logo-icon">🤖</div>
+            <h1>로봇<span>시스템</span></h1>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">홈</a>
+            <a href="system.html" class="active">시스템 구성</a>
+            <a href="monitor.html">실시간 모니터링</a>
+            <a href="about.html">UTTEC 소개</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h2>시스템 구성</h2>
+        <p>4-Layer Robot PdM 아키텍처 및 로봇별 모니터링 포인트</p>
+    </header>
+
+    <!-- Architecture Section -->
+    <section class="section">
+        <div class="section-header">
+            <h3>4-Layer Robot PdM 아키텍처</h3>
+            <p>센서부터 사용자 인터페이스까지 완벽한 수직 통합 구조</p>
+        </div>
+
+        <div class="architecture-container">
+            <div class="architecture-layers">
+                <!-- Layer 1 -->
+                <div class="layer">
+                    <div class="layer-header">
+                        <div class="layer-title">
+                            <div class="layer-number">1</div>
+                            <h4>Sensor & Data Collection</h4>
+                        </div>
+                        <div class="layer-tech">
+                            <span class="tech-badge">Vibration</span>
+                            <span class="tech-badge">Current</span>
+                            <span class="tech-badge">Temperature</span>
+                        </div>
+                    </div>
+                    <div class="layer-content">
+                        <div class="layer-item">
+                            <div class="layer-item-icon">📳</div>
+                            <span>Vibration Sensor</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">⚡</div>
+                            <span>Current Sensor</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">🌡️</div>
+                            <span>Temperature Sensor</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">🔄</div>
+                            <span>Torque Sensor</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">📐</div>
+                            <span>Encoder</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow-down">↓</div>
+
+                <!-- Layer 2 -->
+                <div class="layer" style="border-left-color: var(--purple);">
+                    <div class="layer-header">
+                        <div class="layer-title">
+                            <div class="layer-number" style="background: linear-gradient(135deg, var(--purple), #9c27b0);">2</div>
+                            <h4>UTTEC Robot PdM Gateway</h4>
+                        </div>
+                        <div class="layer-tech">
+                            <span class="tech-badge" style="border-color: var(--purple);">ARM Cortex-M4</span>
+                            <span class="tech-badge" style="border-color: var(--purple);">DSP</span>
+                            <span class="tech-badge" style="border-color: var(--purple);">EtherCAT</span>
+                        </div>
+                    </div>
+                    <div class="layer-content">
+                        <div class="layer-item">
+                            <div class="layer-item-icon">📥</div>
+                            <span>High-Speed Data Collection</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">📊</div>
+                            <span>FFT Analysis</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">🧠</div>
+                            <span>Edge AI (Anomaly Detection)</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">💾</div>
+                            <span>Local DB Buffer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow-down">↓</div>
+
+                <!-- Layer 3 -->
+                <div class="layer" style="border-left-color: var(--secondary);">
+                    <div class="layer-header">
+                        <div class="layer-title">
+                            <div class="layer-number" style="background: linear-gradient(135deg, var(--secondary), #20c997);">3</div>
+                            <h4>RoboSys-PdM Cloud</h4>
+                        </div>
+                        <div class="layer-tech">
+                            <span class="tech-badge" style="border-color: var(--secondary);">InfluxDB</span>
+                            <span class="tech-badge" style="border-color: var(--secondary);">TensorFlow</span>
+                            <span class="tech-badge" style="border-color: var(--secondary);">React</span>
+                        </div>
+                    </div>
+                    <div class="layer-content">
+                        <div class="layer-item">
+                            <div class="layer-item-icon">🗄️</div>
+                            <span>Time Series DB</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">🤖</div>
+                            <span>ML Model</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">⏱️</div>
+                            <span>RUL Prediction</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">📋</div>
+                            <span>Report Generation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow-down">↓</div>
+
+                <!-- Layer 4 -->
+                <div class="layer" style="border-left-color: var(--warning);">
+                    <div class="layer-header">
+                        <div class="layer-title">
+                            <div class="layer-number" style="background: linear-gradient(135deg, var(--warning), #fd7e14);">4</div>
+                            <h4>User Interface</h4>
+                        </div>
+                        <div class="layer-tech">
+                            <span class="tech-badge" style="border-color: var(--warning);">Web</span>
+                            <span class="tech-badge" style="border-color: var(--warning);">Mobile</span>
+                            <span class="tech-badge" style="border-color: var(--warning);">Alert</span>
+                        </div>
+                    </div>
+                    <div class="layer-content">
+                        <div class="layer-item">
+                            <div class="layer-item-icon">💻</div>
+                            <span>Web Dashboard</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">📱</div>
+                            <span>Mobile App</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">🔔</div>
+                            <span>Alert System</span>
+                        </div>
+                        <div class="layer-item">
+                            <div class="layer-item-icon">📅</div>
+                            <span>Maintenance Scheduler</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robot Types Monitoring -->
+    <section class="section">
+        <div class="section-header">
+            <h3>로봇 유형별 모니터링 포인트</h3>
+            <p>각 로봇 유형에 최적화된 예지정비 모니터링 항목</p>
+        </div>
+
+        <div class="robot-monitoring-grid">
+            <div class="robot-type-card">
+                <div class="robot-type-header">
+                    <div class="robot-type-icon">🤖</div>
+                    <div>
+                        <h4>EFEM / WTR</h4>
+                        <p>반도체 이송 로봇</p>
+                    </div>
+                </div>
+                <ul class="monitoring-items">
+                    <li>
+                        <span class="label">진동</span>
+                        <span class="value">3축 가속도</span>
+                    </li>
+                    <li>
+                        <span class="label">위치 정밀도</span>
+                        <span class="value">±0.01mm</span>
+                    </li>
+                    <li>
+                        <span class="label">진공 누설</span>
+                        <span class="value">압력 센서</span>
+                    </li>
+                    <li>
+                        <span class="label">예측 지표</span>
+                        <span class="value">핸들링 정밀도, RUL</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="robot-type-card">
+                <div class="robot-type-header">
+                    <div class="robot-type-icon">🔄</div>
+                    <div>
+                        <h4>SCARA</h4>
+                        <p>4축 수평다관절</p>
+                    </div>
+                </div>
+                <ul class="monitoring-items">
+                    <li>
+                        <span class="label">관절 토크</span>
+                        <span class="value">토크 센서</span>
+                    </li>
+                    <li>
+                        <span class="label">모터 전류</span>
+                        <span class="value">전류 센서</span>
+                    </li>
+                    <li>
+                        <span class="label">백래시</span>
+                        <span class="value">위치 피드백</span>
+                    </li>
+                    <li>
+                        <span class="label">예측 지표</span>
+                        <span class="value">반복 정밀도, 고장 확률</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="robot-type-card">
+                <div class="robot-type-header">
+                    <div class="robot-type-icon">🦾</div>
+                    <div>
+                        <h4>6축 다관절</h4>
+                        <p>Articulated Robot</p>
+                    </div>
+                </div>
+                <ul class="monitoring-items">
+                    <li>
+                        <span class="label">축별 진동</span>
+                        <span class="value">6축 독립 분석</span>
+                    </li>
+                    <li>
+                        <span class="label">감속기 온도</span>
+                        <span class="value">열화상 분석</span>
+                    </li>
+                    <li>
+                        <span class="label">브레이크</span>
+                        <span class="value">토크 변화</span>
+                    </li>
+                    <li>
+                        <span class="label">예측 지표</span>
+                        <span class="value">축별 RUL, 마모 상태</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="robot-type-card">
+                <div class="robot-type-header">
+                    <div class="robot-type-icon">🤝</div>
+                    <div>
+                        <h4>협동 로봇</h4>
+                        <p>Cobot</p>
+                    </div>
+                </div>
+                <ul class="monitoring-items">
+                    <li>
+                        <span class="label">토크 센서</span>
+                        <span class="value">6축 토크</span>
+                    </li>
+                    <li>
+                        <span class="label">충돌 감지</span>
+                        <span class="value">힘 피드백</span>
+                    </li>
+                    <li>
+                        <span class="label">관절 온도</span>
+                        <span class="value">열화상</span>
+                    </li>
+                    <li>
+                        <span class="label">예측 지표</span>
+                        <span class="value">안전 성능, 협업 정밀도</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="robot-type-card">
+                <div class="robot-type-header">
+                    <div class="robot-type-icon">📐</div>
+                    <div>
+                        <h4>리니어 로봇</h4>
+                        <p>Cartesian Robot</p>
+                    </div>
+                </div>
+                <ul class="monitoring-items">
+                    <li>
+                        <span class="label">가이드 마모</span>
+                        <span class="value">진동 분석</span>
+                    </li>
+                    <li>
+                        <span class="label">벨트 장력</span>
+                        <span class="value">장력 센서</span>
+                    </li>
+                    <li>
+                        <span class="label">위치 오차</span>
+                        <span class="value">엔코더</span>
+                    </li>
+                    <li>
+                        <span class="label">예측 지표</span>
+                        <span class="value">직진도, 교체 시점</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Communication Protocols -->
+    <section class="section">
+        <div class="section-header">
+            <h3>다중 프로토콜 지원</h3>
+            <p>다양한 로봇 제어기와의 원활한 통신</p>
+        </div>
+
+        <div class="protocol-container">
+            <div class="protocol-grid">
+                <div class="protocol-card">
+                    <div class="protocol-icon">🔗</div>
+                    <h4>EtherCAT</h4>
+                    <p>100Mbps 실시간 산업용 이더넷</p>
+                </div>
+                <div class="protocol-card">
+                    <div class="protocol-icon">📡</div>
+                    <h4>Modbus</h4>
+                    <p>TCP/RTU 범용 산업 프로토콜</p>
+                </div>
+                <div class="protocol-card">
+                    <div class="protocol-icon">🚗</div>
+                    <h4>CAN Bus</h4>
+                    <p>2.0B 실시간 제어 네트워크</p>
+                </div>
+                <div class="protocol-card">
+                    <div class="protocol-icon">🌐</div>
+                    <h4>TCP/IP</h4>
+                    <p>범용 이더넷 통신</p>
+                </div>
+                <div class="protocol-card">
+                    <div class="protocol-icon">🔌</div>
+                    <h4>RS-485</h4>
+                    <p>다중 드롭 시리얼 통신</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hardware Specs -->
+    <section class="section">
+        <div class="section-header">
+            <h3>Edge AI Gateway 사양</h3>
+            <p>ARM Cortex-M4 기반 고성능 예지정비 게이트웨이</p>
+        </div>
+
+        <div class="gateway-grid">
+            <div class="gateway-card">
+                <div class="gateway-icon">💻</div>
+                <h4>MCU</h4>
+                <div class="gateway-value">Cortex-M4</div>
+                <p>180MHz + FPU + DSP</p>
+            </div>
+            <div class="gateway-card">
+                <div class="gateway-icon">💾</div>
+                <h4>Memory</h4>
+                <div class="gateway-value">2MB / 512KB</div>
+                <p>Flash / RAM</p>
+            </div>
+            <div class="gateway-card">
+                <div class="gateway-icon">📡</div>
+                <h4>ADC</h4>
+                <div class="gateway-value">16bit 8ch</div>
+                <p>100kHz 고속 샘플링</p>
+            </div>
+            <div class="gateway-card">
+                <div class="gateway-icon">🔌</div>
+                <h4>Industrial I/F</h4>
+                <div class="gateway-value">Multi-Protocol</div>
+                <p>EtherCAT, CAN, RS-485</p>
+            </div>
+            <div class="gateway-card">
+                <div class="gateway-icon">⚡</div>
+                <h4>OS</h4>
+                <div class="gateway-value">FreeRTOS</div>
+                <p>실시간 처리</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prediction Table -->
+    <section class="section">
+        <div class="section-header">
+            <h3>예지정비 대상 부품 및 예측 지표</h3>
+            <p>로봇 유형별 모니터링 항목 및 AI 예측 지표</p>
+        </div>
+
+        <div class="specs-container">
+            <table class="specs-table">
+                <thead>
+                    <tr>
+                        <th>로봇 유형</th>
+                        <th>모니터링 항목</th>
+                        <th>예측 지표</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>EFEM/WTR</strong></td>
+                        <td>진동, 위치 정밀도, 진공 누설</td>
+                        <td><span class="prediction-badge">웨이퍼 핸들링 정밀도, RUL</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>SCARA</strong></td>
+                        <td>관절 토크, 모터 전류, 백래시</td>
+                        <td><span class="prediction-badge">반복 정밀도, 고장 확률</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>6축 다관절</strong></td>
+                        <td>축별 진동, 감속기 온도, 브레이크</td>
+                        <td><span class="prediction-badge">축별 RUL, 마모 상태</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>협동 로봇</strong></td>
+                        <td>토크 센서, 충돌 감지, 관절 온도</td>
+                        <td><span class="prediction-badge">안전 성능, 협업 정밀도</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>리니어 로봇</strong></td>
+                        <td>가이드 마모, 벨트 장력, 위치 오차</td>
+                        <td><span class="prediction-badge">직진도, 교체 시점</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>로봇시스템 × UTTEC</h3>
+            <p>국내 유일의 로봇 + AI 예지정비 통합 솔루션</p>
+            <div class="footer-links">
+                <a href="index.html">홈</a>
+                <a href="system.html">시스템 구성</a>
+                <a href="monitor.html">실시간 모니터링</a>
+                <a href="about.html">UTTEC 소개</a>
+            </div>
+            <p class="copyright">© 2026 UTTEC Smart Factory Solution. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

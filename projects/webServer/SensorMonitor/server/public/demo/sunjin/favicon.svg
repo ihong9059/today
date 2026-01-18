@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1565c0"/>
+      <stop offset="100%" style="stop-color:#2196f3"/>
+    </linearGradient>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e0e0"/>
+      <stop offset="50%" style="stop-color:#bdbdbd"/>
+      <stop offset="100%" style="stop-color:#9e9e9e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="url(#blueGrad)"/>
+
+  <!-- CNC spindle representation -->
+  <g transform="translate(32, 32)">
+    <!-- Chuck body -->
+    <circle cx="0" cy="0" r="16" fill="url(#metalGrad)" stroke="#757575" stroke-width="1"/>
+
+    <!-- Chuck jaws (3-jaw) -->
+    <g fill="#616161">
+      <rect x="-3" y="-18" width="6" height="8" rx="1"/>
+      <rect x="-3" y="10" width="6" height="8" rx="1" transform="rotate(180 0 14)"/>
+      <rect x="-3" y="-18" width="6" height="8" rx="1" transform="rotate(120 0 0)"/>
+      <rect x="-3" y="-18" width="6" height="8" rx="1" transform="rotate(240 0 0)"/>
+    </g>
+
+    <!-- Center hole -->
+    <circle cx="0" cy="0" r="4" fill="#424242"/>
+
+    <!-- Tool piece in center -->
+    <circle cx="0" cy="0" r="2" fill="#1565c0"/>
+  </g>
+
+  <!-- Precision indicator arcs -->
+  <g fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5">
+    <path d="M 12 32 A 20 20 0 0 1 32 12" stroke-dasharray="3 2"/>
+    <path d="M 52 32 A 20 20 0 0 1 32 52" stroke-dasharray="3 2"/>
+  </g>
+
+  <!-- S letter hint -->
+  <text x="32" cy="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white" opacity="0.9">SP</text>
+</svg>

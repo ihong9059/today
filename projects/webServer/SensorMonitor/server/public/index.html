@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factory Sensor Monitor</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 15px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+        }
+        .header h1 { font-size: 20px; margin-bottom: 10px; color: #4fc3f7; }
+        .device-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .device-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            background: rgba(255,255,255,0.1);
+            color: #aaa;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+        .device-tab:hover { background: rgba(255,255,255,0.2); color: #fff; }
+        .device-tab.active { background: linear-gradient(135deg, #4fc3f7, #29b6f6); color: #fff; }
+        .device-tab .status-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: #ff5252;
+        }
+        .device-tab .status-dot.connected { background: #00c853; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .status-bar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+        .status-bar span { color: #4fc3f7; }
+        .calibration-btns {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .cal-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .cal-btn:hover { transform: scale(1.05); }
+        .cal-btn:active { transform: scale(0.95); }
+        .cal-btn.home { background: linear-gradient(135deg, #ff9800, #f57c00); }
+        .cal-btn.home:hover { box-shadow: 0 4px 15px rgba(255,152,0,0.4); }
+        .cal-btn.back { background: linear-gradient(135deg, #00bcd4, #0097a7); }
+        .cal-btn.back:hover { box-shadow: 0 4px 15px rgba(0,188,212,0.4); }
+        .cal-btn.right { background: linear-gradient(135deg, #9c27b0, #7b1fa2); }
+        .cal-btn.right:hover { box-shadow: 0 4px 15px rgba(156,39,176,0.4); }
+        .cal-btn:disabled { background: #555; cursor: not-allowed; opacity: 0.5; }
+        .cal-btn.done { background: linear-gradient(135deg, #4caf50, #388e3c) !important; }
+        .cal-divider {
+            width: 2px;
+            height: 30px;
+            background: #444;
+            margin: 0 5px;
+        }
+        .calibration-status {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #888;
+        }
+        .calibration-status .step { color: #ff9800; }
+        .calibration-status .complete { color: #00c853; font-weight: bold; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-title {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .span-2 { grid-column: span 2; }
+        .span-3 { grid-column: span 3; }
+        .span-4 { grid-column: span 4; }
+
+        /* 3D Canvas containers */
+        .sensor-3d {
+            width: 100%;
+            height: 200px;
+            position: relative;
+        }
+        .sensor-3d canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Vibration indicator */
+        .vibration-container { height: 220px; }
+        .vibration-label {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: #4fc3f7;
+        }
+
+        /* Light meter */
+        .light-meter {
+            height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .light-bar-container {
+            width: 60px;
+            height: 140px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .light-bar {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to top, #ff9800, #ffeb3b);
+            transition: height 0.5s, background 0.5s;
+            border-radius: 0 0 8px 8px;
+        }
+        .light-value {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #888;
+        }
+        .light-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            opacity: 0.3;
+        }
+
+        /* Proximity indicator */
+        .proximity-container {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .proximity-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            border: 3px solid #333;
+        }
+        .proximity-circle.near {
+            background: rgba(255, 82, 82, 0.3);
+            border-color: #ff5252;
+            box-shadow: 0 0 30px rgba(255, 82, 82, 0.5);
+        }
+        .proximity-circle.near::after {
+            content: "DETECTED";
+            color: #ff5252;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .proximity-circle.far::after {
+            content: "CLEAR";
+            color: #00c853;
+            font-size: 10px;
+        }
+
+        /* Weather card */
+        .weather-card { background: linear-gradient(135deg, rgba(79, 195, 247, 0.2), rgba(41, 182, 246, 0.1)); }
+        .weather-main {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0;
+        }
+        .weather-temp { font-size: 36px; font-weight: bold; }
+        .weather-temp .unit { font-size: 18px; color: #aaa; }
+        .weather-desc { font-size: 14px; color: #4fc3f7; }
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            font-size: 11px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .weather-details .label { color: #666; }
+        .weather-details .value { color: #fff; text-align: right; }
+
+        /* Camera */
+        .camera-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #000;
+        }
+        .camera-placeholder {
+            width: 100%;
+            height: 200px;
+            background: #0a0a1a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444;
+        }
+        .camera-status {
+            font-size: 11px;
+            color: #00c853;
+            margin-top: 5px;
+        }
+
+        /* GPS Map */
+        .gps-map { height: 250px; border-radius: 8px; overflow: hidden; }
+        #map { width: 100%; height: 100%; }
+        .gps-links { margin-top: 8px; font-size: 11px; }
+        .gps-links a { color: #4fc3f7; margin-right: 12px; text-decoration: none; }
+
+        @media (max-width: 1200px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .span-3 { grid-column: span 2; }
+            .span-4 { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .span-2, .span-3, .span-4 { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏭 Factory Sensor Monitor</h1>
+        <div class="device-tabs" id="deviceTabs">
+            <div class="device-tab"><span>No devices</span></div>
+        </div>
+        <div class="status-bar">
+            <div>Status: <span id="connStatus">Disconnected</span></div>
+            <div>Last: <span id="lastUpdate">--</span></div>
+        </div>
+        <div class="calibration-btns">
+            <button class="cal-btn home" id="btnHome" onclick="calibrateHome()">① 원위치 설정</button>
+            <div class="cal-divider"></div>
+            <button class="cal-btn right" id="btnRight90" onclick="calibrateRight90()" disabled>② 오른쪽 90°</button>
+            <div class="cal-divider"></div>
+            <button class="cal-btn back" id="btnBack90" onclick="calibrateBack90()" disabled>③ 뒤로 90°</button>
+        </div>
+        <div class="calibration-status" id="calibrationStatus">
+            <span class="step">캘리브레이션: 원위치 설정부터 시작하세요</span>
+        </div>
+        <div class="debug-panel" style="background:#1a1a2e; padding:10px; border-radius:8px; margin-top:10px; font-family:monospace; font-size:12px;">
+            <div style="color:#4fc3f7; margin-bottom:5px;">[ 센서 디버그 ]</div>
+            <div style="color:#888; margin-bottom:5px;">수신 센서: <span id="dbgSensors" style="color:#fff;">--</span></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+                <div>
+                    <div style="color:#888;">Gravity:</div>
+                    <div>gx: <span id="dbgGx" style="color:#ff5252;">--</span></div>
+                    <div>gy: <span id="dbgGy" style="color:#4caf50;">--</span></div>
+                    <div>gz: <span id="dbgGz" style="color:#ffeb3b;">--</span></div>
+                </div>
+                <div>
+                    <div style="color:#888;">계산된 Roll/Pitch:</div>
+                    <div>Roll: <span id="dbgCalcRoll" style="color:#ff5252;">--</span>°</div>
+                    <div>Pitch: <span id="dbgCalcPitch" style="color:#4caf50;">--</span>°</div>
+                </div>
+                <div>
+                    <div style="color:#888;">보정 후:</div>
+                    <div>Roll: <span id="dbgFinalRoll" style="color:#ff5252;">--</span>°</div>
+                    <div>Pitch: <span id="dbgFinalPitch" style="color:#4caf50;">--</span>°</div>
+                </div>
+                <div>
+                    <div style="color:#888;">3D 모델:</div>
+                    <div>rotX: <span id="dbgModelX" style="color:#ff5252;">--</span></div>
+                    <div>rotZ: <span id="dbgModelZ" style="color:#4caf50;">--</span></div>
+                    <div>rotY: <span id="dbgModelY" style="color:#4fc3f7;">--</span></div>
+                    <div>calHome: <span id="dbgCalHome" style="color:#ffeb3b;">--</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <!-- Vibration 3D (Accelerometer) -->
+        <div class="card span-2">
+            <div class="card-title">Vibration Vector (3D)</div>
+            <div class="sensor-3d vibration-container" id="vibrationCanvas"></div>
+            <div class="vibration-label" id="vibrationMag">Magnitude: --</div>
+        </div>
+
+        <!-- Rotation 3D (Gyroscope) -->
+        <div class="card">
+            <div class="card-title">Rotation</div>
+            <div class="sensor-3d" id="rotationCanvas"></div>
+        </div>
+
+        <!-- Tilt 3D (Gravity) -->
+        <div class="card">
+            <div class="card-title">Tilt / Orientation</div>
+            <div class="sensor-3d" id="tiltCanvas"></div>
+        </div>
+
+        <!-- Light Sensor -->
+        <div class="card">
+            <div class="card-title">Light Level</div>
+            <div class="light-meter">
+                <div class="light-bar-container">
+                    <div class="light-bar" id="lightBar" style="height: 10%;"></div>
+                    <div class="light-icon">☀</div>
+                </div>
+                <div class="light-value" id="lightValue">-- lux</div>
+            </div>
+        </div>
+
+        <!-- Proximity Sensor -->
+        <div class="card">
+            <div class="card-title">Proximity</div>
+            <div class="proximity-container">
+                <div class="proximity-circle far" id="proximityCircle"></div>
+            </div>
+        </div>
+
+        <!-- Weather -->
+        <div class="card weather-card">
+            <div class="card-title">Weather</div>
+            <div class="weather-main">
+                <div class="weather-temp"><span id="weatherTemp">--</span><span class="unit">°C</span></div>
+                <div>
+                    <div class="weather-desc" id="weatherDesc">Loading...</div>
+                    <div style="color:#666;font-size:11px;">체감 <span id="weatherFeels">--</span>°C</div>
+                </div>
+            </div>
+            <div class="weather-details">
+                <div class="label">습도</div><div class="value" id="weatherHumid">--%</div>
+                <div class="label">풍속</div><div class="value" id="weatherWind">--</div>
+                <div class="label">기압</div><div class="value" id="weatherPress">--</div>
+                <div class="label">위치</div><div class="value" id="weatherLoc">--</div>
+            </div>
+        </div>
+
+        <!-- Camera -->
+        <div class="card span-2">
+            <div class="card-title">Camera</div>
+            <div class="camera-placeholder" id="cameraPlaceholder">No camera image</div>
+            <img id="cameraImage" class="camera-image" style="display:none;" />
+            <div class="camera-status" id="cameraStatus">Waiting...</div>
+        </div>
+
+        <!-- GPS Map -->
+        <div class="card span-2">
+            <div class="card-title">GPS Location</div>
+            <div class="gps-map"><div id="map"></div></div>
+            <div class="gps-links" id="gpsLinks"></div>
+        </div>
+    </div>
+
+    <script>
+        // ========== Three.js 3D Visualizations ==========
+        let vibrationScene, vibrationCamera, vibrationRenderer, vibrationArrow, vibrationSphere;
+        let rotationScene, rotationCamera, rotationRenderer, rotationCube;
+        let tiltScene, tiltCamera, tiltRenderer, tiltDevice;
+
+        // Max values for 3-second interval
+        let maxAccel = { x: 0, y: 0, z: 0, mag: 0 };
+        let currentGyro = { x: 0, y: 0, z: 0 };
+        let accumulatedRotation = { x: 0, y: 0, z: 0 };
+
+        // 3-point calibration data
+        let calHome = null;       // ① 원위치 (똑바로 서있는 상태)
+        let calRight90 = null;    // ② 오른쪽 90°
+        let calBack90 = null;     // ③ 뒤로 90°
+        let calibrationComplete = false;
+        let autoCalibrated = false;  // 자동 캘리브레이션 여부
+
+        let lastGravity = { x: 0, y: 0, z: 9.8 };
+        let lastOrientation = { azimuth: 0, pitch: 0, roll: 0 };
+
+        // 자동 캘리브레이션: 첫 데이터 수신 시 Home으로 설정
+        function autoCalibrate() {
+            if (autoCalibrated) return;
+
+            calHome = {
+                gravity: { ...lastGravity },
+                orientation: { ...lastOrientation }
+            };
+            autoCalibrated = true;
+            updateCalibrationUI();
+            console.log('Auto-calibrated with gravity:', lastGravity, 'orientation:', lastOrientation);
+        }
+
+        function updateCalibrationUI() {
+            const btnHome = document.getElementById('btnHome');
+            const btnRight90 = document.getElementById('btnRight90');
+            const btnBack90 = document.getElementById('btnBack90');
+            const status = document.getElementById('calibrationStatus');
+
+            // Home button
+            btnHome.className = calHome ? 'cal-btn home done' : 'cal-btn home';
+
+            // Enable/disable based on previous step
+            btnRight90.disabled = !calHome;
+            btnBack90.disabled = !calRight90;
+
+            // Update done status
+            if (calRight90) btnRight90.className = 'cal-btn right done';
+            else btnRight90.className = 'cal-btn right';
+
+            if (calBack90) btnBack90.className = 'cal-btn back done';
+            else btnBack90.className = 'cal-btn back';
+
+            // Status message
+            if (!calHome) {
+                status.innerHTML = '<span class="step">① 똑바로 세우고 [원위치 설정] 클릭</span>';
+            } else if (autoCalibrated && !calRight90) {
+                status.innerHTML = '<span class="complete">✓ 자동 캘리브레이션 완료 (재설정: 원위치 버튼 클릭)</span>';
+            } else if (!calRight90) {
+                status.innerHTML = '<span class="step">② 오른쪽으로 90° 돌리고 [오른쪽 90°] 클릭</span>';
+            } else if (!calBack90) {
+                status.innerHTML = '<span class="step">③ 다시 똑바로 세운 후 뒤로 90° 눕히고 [뒤로 90°] 클릭</span>';
+            } else {
+                status.innerHTML = '<span class="complete">✓ 캘리브레이션 완료!</span>';
+            }
+        }
+
+        function calibrateHome() {
+            calHome = {
+                gravity: { ...lastGravity },
+                orientation: { ...lastOrientation }
+            };
+            // Reset others
+            calRight90 = null;
+            calBack90 = null;
+            calibrationComplete = false;
+            autoCalibrated = true;  // 수동 캘리브레이션도 auto로 취급
+
+            // Reset 3D models to home position
+            if (rotationCube) rotationCube.rotation.set(0, 0, 0);
+            if (tiltDevice) tiltDevice.rotation.set(0, 0, 0);
+
+            // Send calibration reset to server (for demo pages)
+            if (ws && ws.readyState === 1) {
+                ws.send(JSON.stringify({ type: "calibrateReset" }));
+                console.log('Calibration reset sent to server');
+            }
+
+            updateCalibrationUI();
+            console.log('Manual calibration - Home set:', calHome);
+        }
+
+        function calibrateRight90() {
+            if (!calHome) return;
+            calRight90 = {
+                gravity: { ...lastGravity },
+                orientation: { ...lastOrientation }
+            };
+            updateCalibrationUI();
+        }
+
+        function calibrateBack90() {
+            if (!calRight90) return;
+            calBack90 = {
+                gravity: { ...lastGravity },
+                orientation: { ...lastOrientation }
+            };
+            calibrationComplete = true;
+            updateCalibrationUI();
+        }
+
+        function initVibration3D() {
+            const container = document.getElementById('vibrationCanvas');
+            const w = container.clientWidth, h = container.clientHeight;
+
+            vibrationScene = new THREE.Scene();
+            vibrationCamera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
+            vibrationCamera.position.set(3, 3, 3);
+            vibrationCamera.lookAt(0, 0, 0);
+
+            vibrationRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            vibrationRenderer.setSize(w, h);
+            vibrationRenderer.setClearColor(0x000000, 0);
+            container.appendChild(vibrationRenderer.domElement);
+
+            // Wireframe sphere
+            const sphereGeo = new THREE.SphereGeometry(1.5, 16, 16);
+            const sphereMat = new THREE.MeshBasicMaterial({ color: 0x4fc3f7, wireframe: true, opacity: 0.3, transparent: true });
+            vibrationSphere = new THREE.Mesh(sphereGeo, sphereMat);
+            vibrationScene.add(vibrationSphere);
+
+            // Axes helper
+            const axes = new THREE.AxesHelper(1.8);
+            vibrationScene.add(axes);
+
+            // Arrow (vector)
+            const dir = new THREE.Vector3(0, 1, 0);
+            vibrationArrow = new THREE.ArrowHelper(dir, new THREE.Vector3(0, 0, 0), 1, 0xff5252, 0.2, 0.1);
+            vibrationScene.add(vibrationArrow);
+
+            animateVibration();
+        }
+
+        function animateVibration() {
+            requestAnimationFrame(animateVibration);
+            vibrationSphere.rotation.y += 0.002;
+            vibrationRenderer.render(vibrationScene, vibrationCamera);
+        }
+
+        function updateVibration(x, y, z) {
+            const mag = Math.sqrt(x*x + y*y + z*z);
+            if (mag > maxAccel.mag) {
+                maxAccel = { x, y, z, mag };
+            }
+
+            // Normalize and set arrow direction
+            const len = Math.min(mag / 15, 1.5); // Scale to sphere
+            const dir = new THREE.Vector3(x, z, -y).normalize(); // Remap axes
+            vibrationArrow.setDirection(dir);
+            vibrationArrow.setLength(len, 0.2, 0.1);
+
+            // Color based on magnitude
+            const intensity = Math.min(mag / 20, 1);
+            const color = new THREE.Color().setHSL(0.3 - intensity * 0.3, 1, 0.5);
+            vibrationArrow.setColor(color);
+
+            document.getElementById('vibrationMag').textContent = 'Magnitude: ' + mag.toFixed(2) + ' m/s²';
+        }
+
+        function initRotation3D() {
+            const container = document.getElementById('rotationCanvas');
+            const w = container.clientWidth, h = container.clientHeight;
+
+            rotationScene = new THREE.Scene();
+            rotationCamera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
+            rotationCamera.position.set(2.5, 2, 2.5);
+            rotationCamera.lookAt(0, 0, 0);
+
+            rotationRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            rotationRenderer.setSize(w, h);
+            rotationRenderer.setClearColor(0x000000, 0);
+            container.appendChild(rotationRenderer.domElement);
+
+            // 산업용 모터 형태 3D 모델
+            rotationCube = new THREE.Group();
+            rotationCube.rotation.order = 'YXZ';
+
+            // 모터 본체 (원통형)
+            const motorBodyGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.8, 32);
+            const motorBodyMat = new THREE.MeshBasicMaterial({ color: 0x3d5afe });
+            const motorBody = new THREE.Mesh(motorBodyGeo, motorBodyMat);
+            motorBody.rotation.z = Math.PI / 2; // 가로로 눕힘
+            rotationCube.add(motorBody);
+
+            // 모터 본체 외곽선
+            const motorEdges = new THREE.EdgesGeometry(motorBodyGeo);
+            const motorLine = new THREE.LineSegments(motorEdges, new THREE.LineBasicMaterial({ color: 0xffffff }));
+            motorLine.rotation.z = Math.PI / 2;
+            rotationCube.add(motorLine);
+
+            // 회전축 (작은 원통)
+            const shaftGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.6, 16);
+            const shaftMat = new THREE.MeshBasicMaterial({ color: 0xffeb3b });
+            const shaft = new THREE.Mesh(shaftGeo, shaftMat);
+            shaft.rotation.z = Math.PI / 2;
+            shaft.position.x = 0.7;
+            rotationCube.add(shaft);
+
+            // 냉각 핀들
+            for (let i = 0; i < 8; i++) {
+                const finGeo = new THREE.BoxGeometry(0.6, 0.05, 0.1);
+                const finMat = new THREE.MeshBasicMaterial({ color: 0x1a237e });
+                const fin = new THREE.Mesh(finGeo, finMat);
+                const angle = (i / 8) * Math.PI * 2;
+                fin.position.y = Math.cos(angle) * 0.45;
+                fin.position.z = Math.sin(angle) * 0.45;
+                fin.rotation.x = angle;
+                rotationCube.add(fin);
+            }
+
+            // 베이스 플레이트
+            const baseGeo = new THREE.BoxGeometry(1.2, 0.1, 0.6);
+            const baseMat = new THREE.MeshBasicMaterial({ color: 0x424242 });
+            const base = new THREE.Mesh(baseGeo, baseMat);
+            base.position.y = -0.5;
+            rotationCube.add(base);
+
+            // 마운팅 볼트
+            const boltPositions = [[-0.45, -0.45, 0.2], [0.45, -0.45, 0.2], [-0.45, -0.45, -0.2], [0.45, -0.45, -0.2]];
+            boltPositions.forEach(pos => {
+                const boltGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.15, 8);
+                const boltMat = new THREE.MeshBasicMaterial({ color: 0x9e9e9e });
+                const bolt = new THREE.Mesh(boltGeo, boltMat);
+                bolt.position.set(pos[0], pos[1], pos[2]);
+                rotationCube.add(bolt);
+            });
+
+            // 방향 표시 화살표 (앞쪽)
+            const arrowGeo = new THREE.ConeGeometry(0.08, 0.2, 8);
+            const arrowMat = new THREE.MeshBasicMaterial({ color: 0xff5252 });
+            const arrow = new THREE.Mesh(arrowGeo, arrowMat);
+            arrow.position.set(1.0, 0, 0);
+            arrow.rotation.z = -Math.PI / 2;
+            rotationCube.add(arrow);
+
+            rotationScene.add(rotationCube);
+            animateRotation();
+        }
+
+        function animateRotation() {
+            requestAnimationFrame(animateRotation);
+            rotationRenderer.render(rotationScene, rotationCamera);
+        }
+
+        // Update rotation using Orientation Sensor (azimuth, pitch, roll in degrees)
+        // Android Orientation 센서:
+        // azimuth: 0~360, 북쪽=0, 동쪽=90
+        // pitch: -180~180, 위로 기울이면 음수, 아래로 기울이면 양수
+        // roll: -90~90, 오른쪽 기울이면 양수
+        function updateRotation(azimuth, pitch, roll) {
+            // Store current values
+            lastOrientation = { azimuth, pitch, roll };
+
+            // 홈 위치 기준으로 delta 계산
+            let deltaYaw = 0;
+            let deltaPitch = 0;
+            let deltaRoll = 0;
+
+            if (calHome && calHome.orientation) {
+                deltaYaw = azimuth - calHome.orientation.azimuth;
+                deltaPitch = pitch - calHome.orientation.pitch;
+                deltaRoll = roll - calHome.orientation.roll;
+
+                // -180 ~ 180 범위로 정규화
+                while (deltaYaw > 180) deltaYaw -= 360;
+                while (deltaYaw < -180) deltaYaw += 360;
+            } else {
+                // 캘리브레이션 없으면 절대값 사용
+                deltaYaw = azimuth;
+                deltaPitch = pitch;
+                deltaRoll = roll;
+            }
+
+            // 도 → 라디안
+            const toRad = Math.PI / 180;
+            const yawRad = deltaYaw * toRad;
+            const pitchRad = deltaPitch * toRad;
+            const rollRad = deltaRoll * toRad;
+
+            // Rotation 3D 모델 업데이트 (Orientation 센서 기반 - Yaw 포함)
+            // rotationCube는 Yaw(방위각) 회전도 보여줌
+            if (rotationCube) {
+                rotationCube.rotation.y = -yawRad;     // Yaw: 시계방향이 양수
+                rotationCube.rotation.x = -pitchRad;  // Pitch: 뒤로 눕히면 양수
+                rotationCube.rotation.z = rollRad;    // Roll: 오른쪽 기울이면 양수 (부호 수정)
+            }
+
+            // 디버그 표시
+            document.getElementById('dbgModelY').textContent = deltaYaw.toFixed(1) + '°';
+            document.getElementById('dbgModelX').textContent = deltaPitch.toFixed(1) + '°';
+            document.getElementById('dbgModelZ').textContent = deltaRoll.toFixed(1) + '°';
+        }
+
+        function initTilt3D() {
+            const container = document.getElementById('tiltCanvas');
+            const w = container.clientWidth, h = container.clientHeight;
+
+            tiltScene = new THREE.Scene();
+            tiltCamera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
+            tiltCamera.position.set(2.5, 2.5, 3);
+            tiltCamera.lookAt(0, 0, 0);
+
+            tiltRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            tiltRenderer.setSize(w, h);
+            tiltRenderer.setClearColor(0x000000, 0);
+            container.appendChild(tiltRenderer.domElement);
+
+            // 산업용 펌프/압축기 형태 3D 모델
+            tiltDevice = new THREE.Group();
+            tiltDevice.rotation.order = 'YXZ';
+
+            // 메인 펌프 하우징 (원통형 + 사각형 조합)
+            const housingGeo = new THREE.CylinderGeometry(0.35, 0.4, 0.7, 32);
+            const housingMat = new THREE.MeshBasicMaterial({ color: 0x00897b });
+            const housing = new THREE.Mesh(housingGeo, housingMat);
+            housing.position.y = 0.35;
+            tiltDevice.add(housing);
+
+            // 하우징 외곽선
+            const housingEdges = new THREE.EdgesGeometry(housingGeo);
+            const housingLine = new THREE.LineSegments(housingEdges, new THREE.LineBasicMaterial({ color: 0xffffff }));
+            housingLine.position.y = 0.35;
+            tiltDevice.add(housingLine);
+
+            // 상단 헤드 (돔형)
+            const headGeo = new THREE.SphereGeometry(0.35, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+            const headMat = new THREE.MeshBasicMaterial({ color: 0x26a69a });
+            const head = new THREE.Mesh(headGeo, headMat);
+            head.position.y = 0.7;
+            tiltDevice.add(head);
+
+            // 입구 파이프 (왼쪽)
+            const inletGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.4, 16);
+            const inletMat = new THREE.MeshBasicMaterial({ color: 0x42a5f5 });
+            const inlet = new THREE.Mesh(inletGeo, inletMat);
+            inlet.rotation.z = Math.PI / 2;
+            inlet.position.set(-0.55, 0.35, 0);
+            tiltDevice.add(inlet);
+
+            // 입구 플랜지
+            const inletFlangeGeo = new THREE.CylinderGeometry(0.15, 0.15, 0.05, 16);
+            const inletFlangeMat = new THREE.MeshBasicMaterial({ color: 0x1976d2 });
+            const inletFlange = new THREE.Mesh(inletFlangeGeo, inletFlangeMat);
+            inletFlange.rotation.z = Math.PI / 2;
+            inletFlange.position.set(-0.75, 0.35, 0);
+            tiltDevice.add(inletFlange);
+
+            // 출구 파이프 (오른쪽)
+            const outletGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.4, 16);
+            const outletMat = new THREE.MeshBasicMaterial({ color: 0xef5350 });
+            const outlet = new THREE.Mesh(outletGeo, outletMat);
+            outlet.rotation.z = Math.PI / 2;
+            outlet.position.set(0.55, 0.35, 0);
+            tiltDevice.add(outlet);
+
+            // 출구 플랜지
+            const outletFlangeGeo = new THREE.CylinderGeometry(0.15, 0.15, 0.05, 16);
+            const outletFlangeMat = new THREE.MeshBasicMaterial({ color: 0xc62828 });
+            const outletFlange = new THREE.Mesh(outletFlangeGeo, outletFlangeMat);
+            outletFlange.rotation.z = Math.PI / 2;
+            outletFlange.position.set(0.75, 0.35, 0);
+            tiltDevice.add(outletFlange);
+
+            // 베이스 플레이트
+            const baseGeo = new THREE.BoxGeometry(1.0, 0.08, 0.8);
+            const baseMat = new THREE.MeshBasicMaterial({ color: 0x37474f });
+            const base = new THREE.Mesh(baseGeo, baseMat);
+            base.position.y = -0.04;
+            tiltDevice.add(base);
+
+            // 베이스 외곽선
+            const baseEdges = new THREE.EdgesGeometry(baseGeo);
+            const baseLine = new THREE.LineSegments(baseEdges, new THREE.LineBasicMaterial({ color: 0xffffff }));
+            baseLine.position.y = -0.04;
+            tiltDevice.add(baseLine);
+
+            // 계기판 (압력 게이지)
+            const gaugeGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.03, 16);
+            const gaugeMat = new THREE.MeshBasicMaterial({ color: 0xffeb3b });
+            const gauge = new THREE.Mesh(gaugeGeo, gaugeMat);
+            gauge.rotation.x = Math.PI / 2;
+            gauge.position.set(0, 0.6, 0.38);
+            tiltDevice.add(gauge);
+
+            // 방향 표시 (상단 마커)
+            const markerGeo = new THREE.ConeGeometry(0.06, 0.15, 8);
+            const markerMat = new THREE.MeshBasicMaterial({ color: 0xff5252 });
+            const marker = new THREE.Mesh(markerGeo, markerMat);
+            marker.position.set(0, 1.1, 0);
+            tiltDevice.add(marker);
+
+            tiltScene.add(tiltDevice);
+
+            // Ground plane for reference
+            const groundGeo = new THREE.PlaneGeometry(3, 3);
+            const groundMat = new THREE.MeshBasicMaterial({ color: 0x1a1a2e, side: THREE.DoubleSide, opacity: 0.5, transparent: true });
+            const ground = new THREE.Mesh(groundGeo, groundMat);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -0.5;
+            tiltScene.add(ground);
+
+            // Grid
+            const grid = new THREE.GridHelper(3, 10, 0x333333, 0x222222);
+            grid.position.y = -0.49;
+            tiltScene.add(grid);
+
+            animateTilt();
+        }
+
+        function animateTilt() {
+            requestAnimationFrame(animateTilt);
+            tiltRenderer.render(tiltScene, tiltCamera);
+        }
+
+        function updateTilt(gx, gy, gz) {
+            // Store current gravity
+            lastGravity = { x: gx, y: gy, z: gz };
+
+            // 첫 데이터 수신 시 자동 캘리브레이션
+            if (!autoCalibrated && Math.abs(gz) > 0.1) {
+                autoCalibrate();
+            }
+
+            // Android 좌표계:
+            // X: 오른쪽 양수
+            // Y: 위쪽 양수
+            // Z: 화면 밖으로 양수
+            // 폰이 세로로 서있을 때: gx≈0, gy≈9.8, gz≈0 (이것이 원위치!)
+            // 폰이 뒤로 눕혔을 때: gx≈0, gy≈0, gz≈9.8
+
+            // Roll: 좌우 기울기 - 오른쪽으로 기울이면 gx 증가
+            // Pitch: 앞뒤 기울기 - 뒤로 눕히면 gz 증가, gy 감소
+            //
+            // 세로 기준 좌표계:
+            // - 원위치(세로): gy≈9.8, gx≈0, gz≈0 → Roll=0, Pitch=0
+            // - 오른쪽 90°: gx≈9.8, gy≈0 → Roll=90°
+            // - 뒤로 90°: gz≈9.8, gy≈0 → Pitch=90°
+
+            // Roll: gx와 (gy,gz) 평면의 각도
+            // 실제 측정: 오른쪽으로 눕히면 gx가 음수 → 부호 반전 필요
+            const roll = Math.atan2(-gx, Math.sqrt(gy*gy + gz*gz));
+
+            // Pitch: gz와 gy의 각도
+            // Roll이 90° 근처일 때 (옆으로 눕힘) → Pitch는 의미없음, 0으로 처리
+            // 뒤로 눕혔을 때 (gz가 큼) → Pitch 계산
+            let pitch;
+            const absRoll = Math.abs(roll);
+            if (absRoll > Math.PI / 4) {
+                // Roll이 45° 이상 → 옆으로 눕힌 상태, Pitch는 0
+                pitch = 0;
+            } else if (Math.abs(gy) < 0.5) {
+                // gy가 거의 0이고 Roll도 작음 → 뒤로 90° 눕힌 상태
+                pitch = gz > 0 ? Math.PI / 2 : -Math.PI / 2;
+            } else {
+                pitch = Math.atan2(gz, gy);
+            }
+
+            // 디버그 패널 업데이트 - gravity
+            document.getElementById('dbgGx').textContent = gx.toFixed(2);
+            document.getElementById('dbgGy').textContent = gy.toFixed(2);
+            document.getElementById('dbgGz').textContent = gz.toFixed(2);
+
+            // 디버그 패널 업데이트 - 계산된 roll/pitch (도 단위)
+            const toDeg = 180 / Math.PI;
+            document.getElementById('dbgCalcRoll').textContent = (roll * toDeg).toFixed(1);
+            document.getElementById('dbgCalcPitch').textContent = (pitch * toDeg).toFixed(1);
+
+            // 원위치 오프셋 적용
+            let finalRoll = roll;
+            let finalPitch = pitch;
+
+            if (calHome) {
+                const hx = calHome.gravity.x, hy = calHome.gravity.y, hz = calHome.gravity.z;
+                const homeRoll = Math.atan2(-hx, Math.sqrt(hy*hy + hz*hz));  // 부호 반전
+                const homePitch = Math.abs(hy) < 0.5
+                    ? (hz > 0 ? Math.PI / 2 : -Math.PI / 2)
+                    : Math.atan2(hz, hy);
+                finalRoll = roll - homeRoll;
+                finalPitch = pitch - homePitch;
+            }
+
+            // 디버그 패널 업데이트 - 보정 후 (도 단위)
+            document.getElementById('dbgFinalRoll').textContent = (finalRoll * toDeg).toFixed(1);
+            document.getElementById('dbgFinalPitch').textContent = (finalPitch * toDeg).toFixed(1);
+
+            // Tilt 3D 모델 업데이트 (Gravity 기반)
+            // Three.js: X회전=pitch(앞뒤), Z회전=roll(좌우)
+            if (tiltDevice) {
+                tiltDevice.rotation.x = -finalPitch;  // 뒤로 눕히면 모델도 뒤로
+                tiltDevice.rotation.z = -finalRoll;   // 오른쪽 기울이면 모델도 오른쪽
+
+                // 디버그: 실제 적용된 rotation 값 표시
+                document.getElementById('dbgModelX').textContent = (tiltDevice.rotation.x * toDeg).toFixed(1) + '°';
+                document.getElementById('dbgModelZ').textContent = (tiltDevice.rotation.z * toDeg).toFixed(1) + '°';
+
+                // 보정된 기울기를 서버로 전송 (데모 페이지용)
+                if (ws && ws.readyState === 1 && calHome) {
+                    ws.send(JSON.stringify({
+                        type: "calibratedOrientation",
+                        roll: finalRoll * toDeg,
+                        pitch: finalPitch * toDeg
+                    }));
+                }
+            }
+
+            document.getElementById('dbgCalHome').textContent = calHome ? 'SET' : 'null';
+        }
+
+        // ========== Light Sensor ==========
+        function updateLight(lux) {
+            const maxLux = 10000;
+            const percent = Math.min(lux / maxLux * 100, 100);
+            const bar = document.getElementById('lightBar');
+            bar.style.height = percent + '%';
+
+            // Color gradient based on brightness
+            if (lux < 100) {
+                bar.style.background = 'linear-gradient(to top, #333, #555)';
+            } else if (lux < 1000) {
+                bar.style.background = 'linear-gradient(to top, #ff9800, #ffc107)';
+            } else {
+                bar.style.background = 'linear-gradient(to top, #ffeb3b, #fff9c4)';
+            }
+
+            document.getElementById('lightValue').textContent = lux.toFixed(0) + ' lux';
+        }
+
+        // ========== Proximity Sensor ==========
+        function updateProximity(value) {
+            const circle = document.getElementById('proximityCircle');
+            if (value < 5) {
+                circle.className = 'proximity-circle near';
+            } else {
+                circle.className = 'proximity-circle far';
+            }
+        }
+
+        // ========== Weather ==========
+        let lastWeatherUpdate = 0;
+        function fetchWeather(lat, lon) {
+            if (Date.now() - lastWeatherUpdate < 300000) return;
+
+            fetch('/api/weather?lat=' + lat + '&lon=' + lon)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.error) return;
+                    document.getElementById('weatherTemp').textContent = data.temperature;
+                    document.getElementById('weatherFeels').textContent = data.feelsLike;
+                    document.getElementById('weatherDesc').textContent = data.description;
+                    document.getElementById('weatherHumid').textContent = data.humidity + '%';
+                    document.getElementById('weatherWind').textContent = data.windSpeed + ' km/h';
+                    document.getElementById('weatherPress').textContent = data.pressure + ' hPa';
+                    document.getElementById('weatherLoc').textContent = data.location;
+                    lastWeatherUpdate = Date.now();
+                }).catch(() => {});
+        }
+
+        // ========== Map ==========
+        let map, marker, mapInitialized = false;
+        function initMap(lat, lon) {
+            if (!mapInitialized) {
+                map = L.map('map').setView([lat, lon], 16);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap'
+                }).addTo(map);
+                marker = L.marker([lat, lon]).addTo(map);
+                mapInitialized = true;
+            } else {
+                map.setView([lat, lon], 16);
+                marker.setLatLng([lat, lon]);
+            }
+        }
+
+        // ========== WebSocket ==========
+        let ws, devices = [], devicesData = {}, selectedDeviceId = null;
+
+        function connect() {
+            const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            ws = new WebSocket(protocol + '//' + location.host);
+
+            ws.onopen = () => {
+                document.getElementById('connStatus').textContent = 'Connected';
+                document.getElementById('connStatus').style.color = '#00c853';
+            };
+
+            ws.onclose = () => {
+                document.getElementById('connStatus').textContent = 'Disconnected';
+                document.getElementById('connStatus').style.color = '#ff5252';
+                setTimeout(connect, 3000);
+            };
+
+            ws.onmessage = (event) => {
+                const msg = JSON.parse(event.data);
+                if (msg.type === 'init') {
+                    devices = msg.devices || [];
+                    devicesData = msg.devicesData || {};
+                    if (!selectedDeviceId && devices.length > 0) selectDevice(devices[0].id);
+                    else updateDeviceTabs();
+                } else if (msg.type === 'deviceUpdate') {
+                    devices = msg.devices || devices;
+                    devicesData[msg.deviceId] = msg.data;
+                    updateDeviceTabs();
+                    if (msg.deviceId === selectedDeviceId) updateDashboard(msg.data);
+                    if (!selectedDeviceId && devices.length > 0) selectDevice(devices[0].id);
+                }
+            };
+        }
+
+        function updateDeviceTabs() {
+            const container = document.getElementById('deviceTabs');
+            if (devices.length === 0) {
+                container.innerHTML = '<div class="device-tab"><span>No devices</span></div>';
+                return;
+            }
+            let html = '';
+            devices.forEach(d => {
+                const active = d.id === selectedDeviceId ? 'active' : '';
+                const conn = d.connected ? 'connected' : '';
+                const name = d.id.includes('M53') ? 'M53' : d.id.includes('A23') ? 'A23' : d.id.substring(0, 10);
+                html += `<div class="device-tab ${active}" onclick="selectDevice('${d.id.replace(/'/g, "\\'")}')">
+                    <span class="status-dot ${conn}"></span><span>${name}</span></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function selectDevice(id) {
+            selectedDeviceId = id;
+            // 디바이스 전환 시 캘리브레이션 리셋
+            calHome = null;
+            calRight90 = null;
+            calBack90 = null;
+            autoCalibrated = false;
+            updateCalibrationUI();
+
+            updateDeviceTabs();
+            if (devicesData[id]) updateDashboard(devicesData[id]);
+        }
+
+        function updateDashboard(data) {
+            if (!data || !data.timestamp) return;
+
+            const time = new Date(data.timestamp);
+            document.getElementById('lastUpdate').textContent = time.toLocaleTimeString('ko-KR');
+
+            // Sensors - find by partial name match
+            if (data.sensors) {
+                const sensors = data.sensors;
+
+                // 디버그: Samsung Gravity Sensor 직접 확인
+                const gravSensor = sensors['Samsung Gravity Sensor'];
+                let debugMsg = '';
+                if (gravSensor) {
+                    debugMsg = 'Gravity OK, values=' + JSON.stringify(gravSensor.values);
+                } else {
+                    debugMsg = 'Gravity NOT FOUND in: ' + Object.keys(sensors).slice(0, 5).join(', ') + '...';
+                }
+                document.getElementById('dbgSensors').textContent = debugMsg;
+
+                // Helper function to find sensor by partial name
+                function findSensor(keywords) {
+                    for (const name in sensors) {
+                        const lower = name.toLowerCase();
+                        if (keywords.some(k => lower.includes(k.toLowerCase()))) {
+                            return sensors[name];
+                        }
+                    }
+                    return null;
+                }
+
+                // Linear Acceleration -> Vibration (중력 제외된 순수 진동)
+                // Linear Acceleration이 없으면 Accelerometer 사용 (fallback)
+                const linearAccel = findSensor(['Linear Acceleration', 'Linear']);
+                const accel = findSensor(['Accelerometer']);
+
+                if (linearAccel && linearAccel.values) {
+                    // 중력 제외된 순수 진동
+                    updateVibration(linearAccel.values[0], linearAccel.values[1], linearAccel.values[2]);
+                } else if (accel && accel.values) {
+                    // Fallback: Accelerometer (중력 포함)
+                    updateVibration(accel.values[0], accel.values[1], accel.values[2]);
+                }
+
+                // Orientation Sensor -> Rotation (uses sensor fusion, no drift)
+                let orientation = null;
+                for (const name in sensors) {
+                    if (name.includes('Orientation') && !name.includes('Device')) {
+                        orientation = sensors[name];
+                        break;
+                    }
+                }
+                if (orientation && orientation.values) {
+                    // values: [azimuth, pitch, roll] in degrees
+                    updateRotation(orientation.values[0], orientation.values[1], orientation.values[2]);
+                }
+
+                // Gravity -> Tilt (roll/pitch) - 직접 이름으로 접근
+                const gravityData = sensors['Samsung Gravity Sensor'] || findSensor(['Gravity', 'Accelerometer']);
+                if (gravityData && gravityData.values) {
+                    updateTilt(gravityData.values[0], gravityData.values[1], gravityData.values[2]);
+                }
+
+                // Light (exclude CCT)
+                let light = null;
+                for (const name in sensors) {
+                    if (name.includes('Light') && !name.includes('CCT')) {
+                        light = sensors[name];
+                        break;
+                    }
+                }
+                if (light && light.values) {
+                    updateLight(light.values[0]);
+                }
+
+                // Proximity
+                const prox = findSensor(['Proximity']);
+                if (prox && prox.values) {
+                    updateProximity(prox.values[0]);
+                }
+            }
+
+            // Camera
+            if (data.camera) {
+                const img = document.getElementById('cameraImage');
+                const placeholder = document.getElementById('cameraPlaceholder');
+                img.src = 'data:image/jpeg;base64,' + data.camera;
+                img.style.display = 'block';
+                placeholder.style.display = 'none';
+                document.getElementById('cameraStatus').textContent = 'Live - ' + time.toLocaleTimeString('ko-KR');
+            }
+
+            // GPS
+            if (data.gps && data.gps.latitude) {
+                const lat = data.gps.latitude, lon = data.gps.longitude;
+                initMap(lat, lon);
+                fetchWeather(lat, lon);
+                document.getElementById('gpsLinks').innerHTML =
+                    `<a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank">Google</a>
+                     <a href="https://map.naver.com/?lng=${lon}&lat=${lat}" target="_blank">Naver</a>
+                     <a href="https://map.kakao.com/link/map/${lat},${lon}" target="_blank">Kakao</a>`;
+            }
+        }
+
+        // ========== Initialize ==========
+        window.onload = function() {
+            initVibration3D();
+            initRotation3D();
+            initTilt3D();
+            connect();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                const containers = [
+                    { el: 'vibrationCanvas', renderer: vibrationRenderer, camera: vibrationCamera },
+                    { el: 'rotationCanvas', renderer: rotationRenderer, camera: rotationCamera },
+                    { el: 'tiltCanvas', renderer: tiltRenderer, camera: tiltCamera }
+                ];
+                containers.forEach(c => {
+                    const container = document.getElementById(c.el);
+                    if (container && c.renderer) {
+                        const w = container.clientWidth, h = container.clientHeight;
+                        c.camera.aspect = w / h;
+                        c.camera.updateProjectionMatrix();
+                        c.renderer.setSize(w, h);
+                    }
+                });
+            });
+        };
+    </script>
+</body>
+</html>

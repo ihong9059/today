@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>에코솔루션 - 시스템 구성</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --secondary: #1b5e20;
+            --accent: #ff9800;
+            --bio: #8bc34a;
+            --success: #43a047;
+            --dark: #1a1a2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d1117 0%, #1a2f1a 50%, #0d1117 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(139, 195, 74, 0.3);
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--bio);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--bio);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 120px 50px 50px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5em;
+            color: var(--bio);
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: #888;
+            font-size: 1.1em;
+        }
+
+        /* Architecture Diagram */
+        .architecture-section {
+            padding: 0 50px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .architecture-container {
+            background: linear-gradient(180deg, rgba(30, 50, 30, 0.6), rgba(20, 40, 20, 0.8));
+            border: 1px solid rgba(139, 195, 74, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .arch-title {
+            text-align: center;
+            font-size: 1.4em;
+            color: var(--bio);
+            margin-bottom: 30px;
+        }
+
+        /* Layer Styles */
+        .layer {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .layer-label {
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-90deg);
+            color: #666;
+            font-size: 0.8em;
+            white-space: nowrap;
+        }
+
+        .layer-content {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Cloud Layer */
+        .cloud-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            padding: 20px 60px;
+            text-align: center;
+            color: white;
+        }
+
+        .cloud-box h3 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .cloud-box p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Gateway Boxes */
+        .master-gw {
+            background: linear-gradient(135deg, #558b2f, #33691e);
+            border-radius: 12px;
+            padding: 15px 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .edge-gw {
+            background: linear-gradient(145deg, #689f38, #558b2f);
+            border-radius: 10px;
+            padding: 12px 20px;
+            text-align: center;
+            color: white;
+            min-width: 140px;
+        }
+
+        .edge-gw h4 {
+            font-size: 0.9em;
+            margin-bottom: 3px;
+        }
+
+        .edge-gw p {
+            font-size: 0.75em;
+            opacity: 0.8;
+        }
+
+        /* Equipment Boxes */
+        .equip-box {
+            background: linear-gradient(145deg, var(--accent), #f57c00);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            min-width: 140px;
+        }
+
+        .equip-box h4 {
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .equip-box ul {
+            list-style: none;
+            font-size: 0.75em;
+            opacity: 0.9;
+        }
+
+        /* Sensor Boxes */
+        .sensor-box {
+            background: linear-gradient(145deg, var(--bio), #7cb342);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-align: center;
+            color: white;
+            min-width: 140px;
+            font-size: 0.8em;
+        }
+
+        /* Connection Lines */
+        .connection {
+            text-align: center;
+            padding: 10px 0;
+            color: var(--bio);
+        }
+
+        .connection-line {
+            width: 2px;
+            height: 20px;
+            background: var(--bio);
+            margin: 0 auto;
+        }
+
+        .connection-text {
+            font-size: 0.75em;
+            color: #888;
+        }
+
+        /* Tabs */
+        .tabs-section {
+            padding: 0 50px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 1.8em;
+            color: var(--bio);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #888;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(30, 50, 30, 0.6);
+            border: 1px solid rgba(139, 195, 74, 0.3);
+            color: #888;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--bio);
+            color: var(--bio);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: var(--bio);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Sensor Table */
+        .sensor-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(30, 50, 30, 0.6);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .sensor-table th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .sensor-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(139, 195, 74, 0.2);
+            color: #ccc;
+        }
+
+        .sensor-table tr:hover {
+            background: rgba(139, 195, 74, 0.1);
+        }
+
+        .sensor-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 0 50px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .project-card {
+            background: linear-gradient(145deg, rgba(30, 50, 30, 0.8), rgba(20, 40, 20, 0.9));
+            border: 1px solid rgba(139, 195, 74, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: var(--bio);
+            transform: translateY(-3px);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-header h3 {
+            color: white;
+            font-size: 1em;
+        }
+
+        .project-cost {
+            background: var(--accent);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .project-body {
+            padding: 20px;
+        }
+
+        .project-body h4 {
+            color: var(--bio);
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .project-body ul {
+            list-style: none;
+            color: #999;
+            font-size: 0.85em;
+        }
+
+        .project-body ul li {
+            padding: 4px 0;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .project-body ul li::before {
+            content: '•';
+            color: var(--bio);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(20, 30, 20, 0.95);
+            padding: 30px 50px;
+            text-align: center;
+            border-top: 1px solid rgba(139, 195, 74, 0.2);
+        }
+
+        .footer p {
+            color: #666;
+        }
+
+        @media (max-width: 1024px) {
+            .project-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .page-header {
+                padding: 100px 20px 40px;
+            }
+            .architecture-section, .tabs-section, .projects-section {
+                padding: 0 20px 40px;
+            }
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            .layer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">ECO<span>Solution</span></div>
+        <div class="nav-links">
+            <a href="index.html">홈</a>
+            <a href="system.html" class="active">시스템</a>
+            <a href="monitor.html">모니터링</a>
+            <a href="about.html">소개</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>시스템 구성</h1>
+        <p>바이오디젤 생산 플랜트 예지정비 시스템 아키텍처</p>
+    </section>
+
+    <!-- Architecture Diagram -->
+    <section class="architecture-section">
+        <div class="architecture-container">
+            <div class="arch-title">4계층 스마트 팩토리 아키텍처</div>
+
+            <!-- Cloud Layer -->
+            <div class="layer">
+                <div class="layer-content">
+                    <div class="cloud-box">
+                        <h3>☁️ Cloud Platform</h3>
+                        <p>데이터 저장 / AI 분석 / ISCC 리포트 / 환경보고</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connection">
+                <div class="connection-line"></div>
+                <div class="connection-text">MQTT / HTTPS</div>
+            </div>
+
+            <!-- Master Gateway -->
+            <div class="layer">
+                <div class="layer-content">
+                    <div class="master-gw">
+                        <h3>Master Gateway</h3>
+                        <p>데이터 통합 / 로컬 분석</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connection">
+                <div class="connection-line"></div>
+            </div>
+
+            <!-- Edge Gateways -->
+            <div class="layer">
+                <div class="layer-content">
+                    <div class="edge-gw">
+                        <h4>반응공정 GW</h4>
+                        <p>Edge AI</p>
+                    </div>
+                    <div class="edge-gw">
+                        <h4>증류/정제 GW</h4>
+                        <p>Edge AI</p>
+                    </div>
+                    <div class="edge-gw">
+                        <h4>유틸리티 GW</h4>
+                        <p>Edge AI</p>
+                    </div>
+                    <div class="edge-gw">
+                        <h4>품질연계 GW</h4>
+                        <p>Edge AI</p>
+                    </div>
+                    <div class="edge-gw">
+                        <h4>환경안전 GW</h4>
+                        <p>Edge AI</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connection">
+                <div class="connection-line"></div>
+            </div>
+
+            <!-- Equipment Layer -->
+            <div class="layer">
+                <div class="layer-content">
+                    <div class="equip-box">
+                        <h4>반응공정</h4>
+                        <ul>
+                            <li>CSTR 반응기</li>
+                            <li>충진형 반응기</li>
+                            <li>교반기/펌프</li>
+                        </ul>
+                    </div>
+                    <div class="equip-box">
+                        <h4>증류/정제</h4>
+                        <ul>
+                            <li>증류탑</li>
+                            <li>진공펌프</li>
+                            <li>열교환기</li>
+                        </ul>
+                    </div>
+                    <div class="equip-box">
+                        <h4>유틸리티</h4>
+                        <ul>
+                            <li>스팀보일러</li>
+                            <li>냉각탑</li>
+                            <li>공기압축기</li>
+                        </ul>
+                    </div>
+                    <div class="equip-box">
+                        <h4>품질관리</h4>
+                        <ul>
+                            <li>원료 탱크</li>
+                            <li>제품 탱크</li>
+                            <li>배관 라인</li>
+                        </ul>
+                    </div>
+                    <div class="equip-box">
+                        <h4>환경안전</h4>
+                        <ul>
+                            <li>가스감지</li>
+                            <li>수질모니터링</li>
+                            <li>화재감지</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connection">
+                <div class="connection-line"></div>
+            </div>
+
+            <!-- Sensor Layer -->
+            <div class="layer">
+                <div class="layer-content">
+                    <div class="sensor-box">진동/온도/전류/압력</div>
+                    <div class="sensor-box">진동/진공/온도/레벨</div>
+                    <div class="sensor-box">진동/온도/압력/전류</div>
+                    <div class="sensor-box">레벨/밀도/유량/산가</div>
+                    <div class="sensor-box">가스/VOC/수질/화재</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sensor Details by Equipment -->
+    <section class="tabs-section">
+        <div class="section-title">
+            <h2>설비별 센서 구성</h2>
+            <p>공정별 모니터링 포인트 상세</p>
+        </div>
+
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="showTab('reaction')">반응공정</button>
+            <button class="tab-btn" onclick="showTab('distill')">증류/정제</button>
+            <button class="tab-btn" onclick="showTab('utility')">유틸리티</button>
+            <button class="tab-btn" onclick="showTab('quality')">품질연계</button>
+            <button class="tab-btn" onclick="showTab('safety')">환경안전</button>
+        </div>
+
+        <!-- Reaction Tab -->
+        <div id="reaction" class="tab-content active">
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>측정 포인트</th>
+                        <th>센서 종류</th>
+                        <th>분석 내용</th>
+                        <th>수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>교반기 베어링</td>
+                        <td>진동+온도</td>
+                        <td>베어링 마모, 불균형</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>교반기 모터</td>
+                        <td>전류+온도</td>
+                        <td>과부하, 권선 열화</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>반응기 온도</td>
+                        <td>다점 온도</td>
+                        <td>온도 분포, 이상 반응</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>이송펌프</td>
+                        <td>진동+압력</td>
+                        <td>임펠러 마모, 캐비테이션</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>메탄올 공급</td>
+                        <td>유량+압력</td>
+                        <td>배관 막힘, 누설</td>
+                        <td>3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Distillation Tab -->
+        <div id="distill" class="tab-content">
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>측정 포인트</th>
+                        <th>센서 종류</th>
+                        <th>분석 내용</th>
+                        <th>수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>진공펌프</td>
+                        <td>진동+진공도</td>
+                        <td>베어링 상태, 씰링 마모</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>증류탑 온도</td>
+                        <td>다점 온도</td>
+                        <td>온도 프로파일 이상</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>열교환기</td>
+                        <td>온도차+유량</td>
+                        <td>오염도, 효율 저하</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>층분리기</td>
+                        <td>레벨+계면</td>
+                        <td>분리 효율</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>정제펌프</td>
+                        <td>진동+압력</td>
+                        <td>마모, 막힘</td>
+                        <td>2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Utility Tab -->
+        <div id="utility" class="tab-content">
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>측정 포인트</th>
+                        <th>센서 종류</th>
+                        <th>분석 내용</th>
+                        <th>수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>스팀보일러</td>
+                        <td>진동+온도+압력</td>
+                        <td>연소 상태, 압력 이상</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>냉각탑</td>
+                        <td>진동+온도</td>
+                        <td>팬 밸런스, 효율</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>냉각수 펌프</td>
+                        <td>진동+전류</td>
+                        <td>베어링, 모터 상태</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>공기압축기</td>
+                        <td>진동+압력+온도</td>
+                        <td>베어링, 밸브 상태</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>보일러 화염</td>
+                        <td>화염감지기</td>
+                        <td>연소 안전</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Quality Tab -->
+        <div id="quality" class="tab-content">
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>측정 포인트</th>
+                        <th>센서 종류</th>
+                        <th>분석 내용</th>
+                        <th>수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>원료 탱크</td>
+                        <td>레벨+온도</td>
+                        <td>재고 관리, 응고 방지</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>원료 품질</td>
+                        <td>산가 측정</td>
+                        <td>원료 품질 관리</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>제품 탱크</td>
+                        <td>레벨+밀도</td>
+                        <td>생산량, 품질 추적</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>글리세린 탱크</td>
+                        <td>레벨+온도</td>
+                        <td>부산물 관리</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>배관 라인</td>
+                        <td>유량+온도</td>
+                        <td>물질수지 관리</td>
+                        <td>4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Safety Tab -->
+        <div id="safety" class="tab-content">
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>측정 항목</th>
+                        <th>센서 종류</th>
+                        <th>관리 기준</th>
+                        <th>수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>메탄올 누출</td>
+                        <td>가스감지기</td>
+                        <td>LEL 25% 이하</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>VOC</td>
+                        <td>VOC 센서</td>
+                        <td>배출허용기준</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>폐수 수질</td>
+                        <td>pH/COD</td>
+                        <td>방류수 수질기준</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>악취</td>
+                        <td>복합악취</td>
+                        <td>악취방지법 기준</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>화재감지</td>
+                        <td>화재감지기</td>
+                        <td>조기 경보</td>
+                        <td>4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Projects Detail -->
+    <section class="projects-section">
+        <div class="section-title">
+            <h2>프로젝트별 투자 상세</h2>
+            <p>총 6개 프로젝트, 1.38억원 투자</p>
+        </div>
+
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project A: 반응공정 예지정비</h3>
+                    <span class="project-cost">2,050만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>대상 설비</h4>
+                    <ul>
+                        <li>CSTR 반응기</li>
+                        <li>충진형 반응기 (효소촉매)</li>
+                        <li>원료 이송펌프</li>
+                        <li>교반기 시스템</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project B: 증류/정제 모니터링</h3>
+                    <span class="project-cost">1,940만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>대상 설비</h4>
+                    <ul>
+                        <li>증류탑 (바이오디젤 정제)</li>
+                        <li>진공펌프 시스템</li>
+                        <li>열교환기</li>
+                        <li>층분리기</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project C: 유틸리티 상태감시</h3>
+                    <span class="project-cost">1,870만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>대상 설비</h4>
+                    <ul>
+                        <li>스팀보일러</li>
+                        <li>냉각탑/냉각수 펌프</li>
+                        <li>공기압축기</li>
+                        <li>질소발생기</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project D: 품질연계 모니터링</h3>
+                    <span class="project-cost">2,050만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>대상 설비</h4>
+                    <ul>
+                        <li>원료 저장탱크 (폐식용유, 팜유)</li>
+                        <li>메탄올 저장탱크</li>
+                        <li>제품 저장탱크</li>
+                        <li>글리세린 저장탱크</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project E: 환경안전 모니터링</h3>
+                    <span class="project-cost">2,150만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>모니터링 항목</h4>
+                    <ul>
+                        <li>메탄올 누출 감지</li>
+                        <li>VOC 배출 모니터링</li>
+                        <li>폐수 수질 관리</li>
+                        <li>악취/화재 감지</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Project F: 통합 플랜트 관제</h3>
+                    <span class="project-cost">3,750만원</span>
+                </div>
+                <div class="project-body">
+                    <h4>주요 기능</h4>
+                    <ul>
+                        <li>통합 대시보드</li>
+                        <li>AI 예측 분석</li>
+                        <li>ISCC 리포트 자동 생성</li>
+                        <li>환경보고 데이터 연계</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 UTTEC. Smart Factory Solution for ECO Solutions.</p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

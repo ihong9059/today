@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 모니터링 - 삼원기계 스마트 팩토리</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(26, 95, 122, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(26, 95, 122, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1a5f7a;
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 80px;
+        }
+
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, rgba(26, 95, 122, 0.3) 0%, rgba(21, 152, 149, 0.2) 100%);
+            padding: 2rem;
+            border-bottom: 1px solid rgba(26, 95, 122, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            color: #57c5b6;
+            margin-bottom: 0.3rem;
+        }
+
+        .header-title p {
+            color: #888;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: #10b981;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Dashboard Grid */
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* 3D Viewer */
+        .viewer-section {
+            grid-column: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(26, 95, 122, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            color: #57c5b6;
+        }
+
+        #taping-viewer {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a15 0%, #1a1a2e 100%);
+        }
+
+        /* Sensor Cards */
+        .sensors-section {
+            grid-column: 2;
+        }
+
+        .sensors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .sensor-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(26, 95, 122, 0.3);
+            border-radius: 12px;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .sensor-card:hover {
+            border-color: #159895;
+            transform: translateY(-2px);
+        }
+
+        .sensor-card.warning {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .sensor-card.critical {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            animation: alertPulse 2s infinite;
+        }
+
+        @keyframes alertPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            50% { box-shadow: 0 0 20px 5px rgba(239, 68, 68, 0.2); }
+        }
+
+        .sensor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .sensor-name {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .sensor-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .sensor-status.warning { background: #f59e0b; }
+        .sensor-status.critical { background: #ef4444; }
+
+        .sensor-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #57c5b6;
+        }
+
+        .sensor-unit {
+            font-size: 0.9rem;
+            color: #888;
+            margin-left: 0.3rem;
+        }
+
+        .sensor-range {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* Chart Section */
+        .chart-section {
+            grid-column: 1 / -1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(26, 95, 122, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .chart-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .chart-tab {
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(26, 95, 122, 0.3);
+            border-radius: 8px;
+            color: #aaa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chart-tab:hover, .chart-tab.active {
+            background: rgba(26, 95, 122, 0.3);
+            border-color: #159895;
+            color: white;
+        }
+
+        .chart-container {
+            height: 300px;
+        }
+
+        /* Alert Section */
+        .alert-section {
+            grid-column: 1 / -1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(26, 95, 122, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .alert-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+
+        .alert-item.warning {
+            border-left-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .alert-item.critical {
+            border-left-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .alert-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .alert-item.warning .alert-icon {
+            background: rgba(245, 158, 11, 0.2);
+        }
+
+        .alert-item.critical .alert-icon {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            color: #e0e0e0;
+            margin-bottom: 0.2rem;
+        }
+
+        .alert-desc {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .alert-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(26, 95, 122, 0.3);
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+        }
+
+        footer a {
+            color: #57c5b6;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .viewer-section,
+            .sensors-section {
+                grid-column: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .sensors-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">SW</div>
+                삼원기계 Smart Factory
+            </a>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="system.html">시스템</a>
+                <a href="monitor.html" class="active">모니터링</a>
+                <a href="about.html">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>실시간 포장기계 모니터링</h1>
+                    <p>고속 테이핑기 #1 - 서보모터 예지정비</p>
+                </div>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>실시간 모니터링</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <!-- 3D Viewer -->
+            <div class="viewer-section">
+                <div class="section-header">
+                    <span class="section-title">📦 3D 테이핑기 모델</span>
+                </div>
+                <div id="taping-viewer"></div>
+            </div>
+
+            <!-- Sensor Cards -->
+            <div class="sensors-section">
+                <div class="section-header">
+                    <span class="section-title">📊 센서 데이터</span>
+                </div>
+                <div class="sensors-grid">
+                    <div class="sensor-card">
+                        <div class="sensor-header">
+                            <span class="sensor-name">테이핑 속도</span>
+                            <div class="sensor-status"></div>
+                        </div>
+                        <div class="sensor-value">42<span class="sensor-unit">박스/분</span></div>
+                        <div class="sensor-range">정격: 20~60 박스/분</div>
+                    </div>
+
+                    <div class="sensor-card warning">
+                        <div class="sensor-header">
+                            <span class="sensor-name">서보모터 진동</span>
+                            <div class="sensor-status warning"></div>
+                        </div>
+                        <div class="sensor-value">4.8<span class="sensor-unit">mm/s</span></div>
+                        <div class="sensor-range">경고: 5.0mm/s 초과 시</div>
+                    </div>
+
+                    <div class="sensor-card">
+                        <div class="sensor-header">
+                            <span class="sensor-name">모터 온도</span>
+                            <div class="sensor-status"></div>
+                        </div>
+                        <div class="sensor-value">58.2<span class="sensor-unit">°C</span></div>
+                        <div class="sensor-range">허용: ~75°C</div>
+                    </div>
+
+                    <div class="sensor-card">
+                        <div class="sensor-header">
+                            <span class="sensor-name">모터 전류</span>
+                            <div class="sensor-status"></div>
+                        </div>
+                        <div class="sensor-value">12.5<span class="sensor-unit">A</span></div>
+                        <div class="sensor-range">정격: 15A</div>
+                    </div>
+
+                    <div class="sensor-card">
+                        <div class="sensor-header">
+                            <span class="sensor-name">테이프 장력</span>
+                            <div class="sensor-status"></div>
+                        </div>
+                        <div class="sensor-value">8.2<span class="sensor-unit">N</span></div>
+                        <div class="sensor-range">설정: 6~12N</div>
+                    </div>
+
+                    <div class="sensor-card">
+                        <div class="sensor-header">
+                            <span class="sensor-name">잔여 수명 (RUL)</span>
+                            <div class="sensor-status"></div>
+                        </div>
+                        <div class="sensor-value">1,250<span class="sensor-unit">시간</span></div>
+                        <div class="sensor-range">교체 권장: 500시간 전</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart Section -->
+            <div class="chart-section">
+                <div class="section-header">
+                    <span class="section-title">📈 트렌드 분석</span>
+                </div>
+                <div class="chart-tabs">
+                    <div class="chart-tab active" onclick="changeChart('vibration')">진동</div>
+                    <div class="chart-tab" onclick="changeChart('temp')">온도</div>
+                    <div class="chart-tab" onclick="changeChart('current')">전류</div>
+                    <div class="chart-tab" onclick="changeChart('speed')">속도</div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Alert Section -->
+            <div class="alert-section">
+                <div class="section-header">
+                    <span class="section-title">🔔 알림 및 이벤트</span>
+                </div>
+                <div class="alert-list">
+                    <div class="alert-item warning">
+                        <div class="alert-icon">⚠️</div>
+                        <div class="alert-content">
+                            <div class="alert-title">서보모터 진동 상승 감지</div>
+                            <div class="alert-desc">진동 레벨이 4.8mm/s로 경고 기준(5.0mm/s)에 근접하고 있습니다.</div>
+                        </div>
+                        <div class="alert-time">8분 전</div>
+                    </div>
+
+                    <div class="alert-item">
+                        <div class="alert-icon">✅</div>
+                        <div class="alert-content">
+                            <div class="alert-title">테이핑 품질 양호</div>
+                            <div class="alert-desc">테이프 접착 품질이 기준치 이내로 유지되고 있습니다.</div>
+                        </div>
+                        <div class="alert-time">15분 전</div>
+                    </div>
+
+                    <div class="alert-item">
+                        <div class="alert-icon">📊</div>
+                        <div class="alert-content">
+                            <div class="alert-title">생산량 분석 완료</div>
+                            <div class="alert-desc">금일 생산량: 2,540박스, 목표 대비 102% 달성</div>
+                        </div>
+                        <div class="alert-time">1시간 전</div>
+                    </div>
+
+                    <div class="alert-item">
+                        <div class="alert-icon">🔧</div>
+                        <div class="alert-content">
+                            <div class="alert-title">예방정비 스케줄 알림</div>
+                            <div class="alert-desc">베어링 교체 예정일: 약 52일 후 (1,250시간 가동 후)</div>
+                        </div>
+                        <div class="alert-time">2시간 전</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 (주)삼원기계. Smart Factory Predictive Maintenance Demo</p>
+        <p style="margin-top: 0.5rem;">
+            경상남도 김해시 주촌면 골든루트로130번길 12-5
+        </p>
+    </footer>
+
+    <script>
+        // Three.js 테이핑기 3D 모델
+        let scene, camera, renderer, tapingMachine;
+        let autoRotate = true;
+        let rotationSpeed = 0.005;
+
+        function init() {
+            const container = document.getElementById('taping-viewer');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a15);
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(10, 8, 12);
+            camera.lookAt(0, 0, 0);
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 15, 10);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+
+            const pointLight = new THREE.PointLight(0x57c5b6, 0.5, 20);
+            pointLight.position.set(0, 3, 0);
+            scene.add(pointLight);
+
+            // Create Taping Machine
+            createTapingMachine();
+
+            // Grid
+            const gridHelper = new THREE.GridHelper(20, 20, 0x333333, 0x222222);
+            scene.add(gridHelper);
+
+            // Mouse interaction
+            container.addEventListener('mousedown', () => autoRotate = false);
+            container.addEventListener('mouseup', () => autoRotate = true);
+
+            // Resize handler
+            window.addEventListener('resize', onWindowResize);
+
+            animate();
+        }
+
+        function createTapingMachine() {
+            tapingMachine = new THREE.Group();
+
+            const tealMaterial = new THREE.MeshStandardMaterial({
+                color: 0x1a5f7a,
+                metalness: 0.6,
+                roughness: 0.3
+            });
+
+            const darkMaterial = new THREE.MeshStandardMaterial({
+                color: 0x333333,
+                metalness: 0.5,
+                roughness: 0.4
+            });
+
+            const accentMaterial = new THREE.MeshStandardMaterial({
+                color: 0x57c5b6,
+                metalness: 0.7,
+                roughness: 0.2
+            });
+
+            // Main Frame
+            const frameGeometry = new THREE.BoxGeometry(6, 3, 3);
+            const frame = new THREE.Mesh(frameGeometry, tealMaterial);
+            frame.position.y = 1.5;
+            frame.castShadow = true;
+            tapingMachine.add(frame);
+
+            // Conveyor Rollers
+            const rollerGeometry = new THREE.CylinderGeometry(0.2, 0.2, 3.5, 16);
+            for (let i = 0; i < 6; i++) {
+                const roller = new THREE.Mesh(rollerGeometry, darkMaterial);
+                roller.rotation.x = Math.PI / 2;
+                roller.position.set(-2.5 + i, 0.3, 0);
+                tapingMachine.add(roller);
+            }
+
+            // Conveyor Belt (simplified)
+            const beltGeometry = new THREE.BoxGeometry(6, 0.1, 2.5);
+            const beltMaterial = new THREE.MeshStandardMaterial({
+                color: 0x222222,
+                metalness: 0.3,
+                roughness: 0.8
+            });
+            const belt = new THREE.Mesh(beltGeometry, beltMaterial);
+            belt.position.set(0, 0.5, 0);
+            tapingMachine.add(belt);
+
+            // Tape Head Unit (Top)
+            const tapeHeadGeometry = new THREE.BoxGeometry(1.5, 0.8, 2);
+            const tapeHead = new THREE.Mesh(tapeHeadGeometry, accentMaterial);
+            tapeHead.position.set(0, 3.5, 0);
+            tapingMachine.add(tapeHead);
+
+            // Tape Rolls
+            const tapeRollGeometry = new THREE.CylinderGeometry(0.4, 0.4, 0.3, 32);
+            const tapeMaterial = new THREE.MeshStandardMaterial({
+                color: 0xc4a35a,
+                metalness: 0.3,
+                roughness: 0.6
+            });
+
+            const tapeRoll1 = new THREE.Mesh(tapeRollGeometry, tapeMaterial);
+            tapeRoll1.rotation.x = Math.PI / 2;
+            tapeRoll1.position.set(-0.5, 3.5, 1.3);
+            tapingMachine.add(tapeRoll1);
+
+            const tapeRoll2 = new THREE.Mesh(tapeRollGeometry, tapeMaterial);
+            tapeRoll2.rotation.x = Math.PI / 2;
+            tapeRoll2.position.set(0.5, 3.5, 1.3);
+            tapingMachine.add(tapeRoll2);
+
+            // Tape Head Unit (Bottom)
+            const tapeHeadBottom = new THREE.Mesh(tapeHeadGeometry, accentMaterial);
+            tapeHeadBottom.position.set(0, -0.3, 0);
+            tapingMachine.add(tapeHeadBottom);
+
+            // Side Guides
+            const guideGeometry = new THREE.BoxGeometry(0.1, 2, 3);
+            const guideMaterial = new THREE.MeshStandardMaterial({
+                color: 0x888888,
+                metalness: 0.6,
+                roughness: 0.3
+            });
+
+            const guideLeft = new THREE.Mesh(guideGeometry, guideMaterial);
+            guideLeft.position.set(-1.5, 1.5, 0);
+            tapingMachine.add(guideLeft);
+
+            const guideRight = new THREE.Mesh(guideGeometry, guideMaterial);
+            guideRight.position.set(1.5, 1.5, 0);
+            tapingMachine.add(guideRight);
+
+            // Control Panel
+            const panelGeometry = new THREE.BoxGeometry(1.2, 0.8, 0.2);
+            const panelMaterial = new THREE.MeshStandardMaterial({
+                color: 0x333333,
+                metalness: 0.5,
+                roughness: 0.5
+            });
+            const panel = new THREE.Mesh(panelGeometry, panelMaterial);
+            panel.position.set(3.5, 2, 0);
+            tapingMachine.add(panel);
+
+            // Display Screen
+            const displayGeometry = new THREE.PlaneGeometry(0.8, 0.5);
+            const displayMaterial = new THREE.MeshBasicMaterial({ color: 0x57c5b6 });
+            const display = new THREE.Mesh(displayGeometry, displayMaterial);
+            display.position.set(3.6, 2.1, 0);
+            tapingMachine.add(display);
+
+            // Box (being taped)
+            const boxGeometry = new THREE.BoxGeometry(1.2, 0.8, 1);
+            const boxMaterial = new THREE.MeshStandardMaterial({
+                color: 0x8b7355,
+                metalness: 0.1,
+                roughness: 0.9
+            });
+            const box = new THREE.Mesh(boxGeometry, boxMaterial);
+            box.position.set(0, 0.9, 0);
+            tapingMachine.add(box);
+
+            // Servo Motor
+            const motorGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.8, 16);
+            const motorMaterial = new THREE.MeshStandardMaterial({
+                color: 0x444444,
+                metalness: 0.7,
+                roughness: 0.3
+            });
+            const motor = new THREE.Mesh(motorGeometry, motorMaterial);
+            motor.rotation.z = Math.PI / 2;
+            motor.position.set(-3.5, 1.5, 1);
+            tapingMachine.add(motor);
+
+            // Base
+            const baseGeometry = new THREE.BoxGeometry(7, 0.3, 4);
+            const baseMaterial = new THREE.MeshStandardMaterial({
+                color: 0x222222,
+                metalness: 0.6,
+                roughness: 0.4
+            });
+            const base = new THREE.Mesh(baseGeometry, baseMaterial);
+            base.position.y = -0.65;
+            base.receiveShadow = true;
+            tapingMachine.add(base);
+
+            scene.add(tapingMachine);
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('taping-viewer');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (autoRotate && tapingMachine) {
+                tapingMachine.rotation.y += rotationSpeed;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        // Chart.js
+        let trendChart;
+
+        function initChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+
+            const labels = [];
+            const now = new Date();
+            for (let i = 23; i >= 0; i--) {
+                const time = new Date(now - i * 3600000);
+                labels.push(time.getHours() + ':00');
+            }
+
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '진동 (mm/s)',
+                        data: generateVibrationData(),
+                        borderColor: '#57c5b6',
+                        backgroundColor: 'rgba(87, 197, 182, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#aaa' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            ticks: { color: '#888' }
+                        },
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            ticks: { color: '#888' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function generateVibrationData() {
+            const data = [];
+            for (let i = 0; i < 24; i++) {
+                data.push(3.5 + Math.random() * 2);
+            }
+            return data;
+        }
+
+        function generateTempData() {
+            const data = [];
+            for (let i = 0; i < 24; i++) {
+                data.push(50 + Math.random() * 15);
+            }
+            return data;
+        }
+
+        function generateCurrentData() {
+            const data = [];
+            for (let i = 0; i < 24; i++) {
+                data.push(10 + Math.random() * 5);
+            }
+            return data;
+        }
+
+        function generateSpeedData() {
+            const data = [];
+            for (let i = 0; i < 24; i++) {
+                data.push(35 + Math.random() * 15);
+            }
+            return data;
+        }
+
+        function changeChart(type) {
+            document.querySelectorAll('.chart-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            let newData, label, color;
+
+            switch(type) {
+                case 'vibration':
+                    newData = generateVibrationData();
+                    label = '진동 (mm/s)';
+                    color = '#57c5b6';
+                    break;
+                case 'temp':
+                    newData = generateTempData();
+                    label = '온도 (°C)';
+                    color = '#ef4444';
+                    break;
+                case 'current':
+                    newData = generateCurrentData();
+                    label = '전류 (A)';
+                    color = '#f59e0b';
+                    break;
+                case 'speed':
+                    newData = generateSpeedData();
+                    label = '속도 (박스/분)';
+                    color = '#6366f1';
+                    break;
+            }
+
+            trendChart.data.datasets[0].data = newData;
+            trendChart.data.datasets[0].label = label;
+            trendChart.data.datasets[0].borderColor = color;
+            trendChart.data.datasets[0].backgroundColor = color.replace(')', ', 0.1)').replace('rgb', 'rgba');
+            trendChart.update();
+        }
+
+        // Initialize
+        window.onload = function() {
+            init();
+            initChart();
+        };
+    </script>
+</body>
+</html>

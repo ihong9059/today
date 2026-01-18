@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>동원분체산업 AI 스마트팩토리</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,10,26,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #7c3aed;
+        }
+        .logo span { color: #fff; }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 30px;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .hero-content {
+            position: relative;
+            max-width: 900px;
+        }
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(124,58,237,0.2);
+            border: 1px solid rgba(124,58,237,0.3);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #a78bfa;
+            margin-bottom: 25px;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 40px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .btn {
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #7c3aed, #6d28d9);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(124,58,237,0.4);
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #444;
+            color: #fff;
+        }
+        .btn-secondary:hover {
+            border-color: #7c3aed;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Section */
+        section {
+            padding: 100px 30px;
+        }
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .section-header p {
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        /* AI Applications */
+        .ai-section {
+            background: linear-gradient(180deg, #0a0a1a 0%, #0f0f24 100%);
+        }
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .ai-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .ai-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #7c3aed, #a78bfa);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .ai-card:hover {
+            border-color: rgba(124,58,237,0.5);
+            transform: translateY(-5px);
+        }
+        .ai-card:hover::before {
+            opacity: 1;
+        }
+        .ai-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(167,139,250,0.1));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+        .ai-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        .ai-card p {
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .ai-features {
+            list-style: none;
+        }
+        .ai-features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+        .ai-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #a78bfa;
+        }
+        .ai-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(124,58,237,0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #a78bfa;
+            margin-top: 15px;
+        }
+
+        /* Why Section */
+        .why-section {
+            background: #0a0a1a;
+        }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .why-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        .why-card:hover {
+            background: rgba(124,58,237,0.05);
+            border-color: rgba(124,58,237,0.2);
+        }
+        .why-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .why-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .why-card p {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        /* ROI Section */
+        .roi-section {
+            background: linear-gradient(180deg, #0f0f24 0%, #0a0a1a 100%);
+        }
+        .roi-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .roi-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        .roi-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #a78bfa;
+        }
+        .roi-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .roi-item:last-child {
+            border-bottom: none;
+        }
+        .roi-item span:first-child {
+            color: #aaa;
+        }
+        .roi-item span:last-child {
+            font-weight: 600;
+            color: #fff;
+        }
+        .roi-total {
+            background: linear-gradient(90deg, #7c3aed, #6d28d9);
+            border-radius: 15px;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .roi-total span:first-child {
+            font-size: 1.1rem;
+        }
+        .roi-total span:last-child {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 100px 30px;
+            background: linear-gradient(135deg, #1a0a2e 0%, #0a0a1a 100%);
+        }
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .cta-section p {
+            color: #888;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            background: #050510;
+            padding: 50px 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        footer p {
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .stats { flex-direction: column; gap: 30px; }
+            .ai-grid { grid-template-columns: 1fr; }
+            .roi-container { grid-template-columns: 1fr; }
+            .hero-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">동원분체 <span>Smart Factory</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">홈</a></li>
+                <li><a href="system.html">시스템 구성</a></li>
+                <li><a href="monitor.html">실시간 모니터링</a></li>
+                <li><a href="about.html">UTTEC 소개</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">AI 기반 예지정비 솔루션</span>
+            <h1>
+                <span class="highlight">동원분체산업</span><br>
+                스마트팩토리
+            </h1>
+            <p>
+                분쇄기, 파쇄기, 혼합기 전문 제조기업을 위한<br>
+                AI 기반 설비 예지정비 및 품질관리 솔루션
+            </p>
+            <div class="hero-buttons">
+                <a href="monitor.html" class="btn btn-primary">실시간 모니터링</a>
+                <a href="system.html" class="btn btn-secondary">시스템 구성 보기</a>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value">70%</div>
+                    <div class="stat-label">비계획 정지 감소</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">40%</div>
+                    <div class="stat-label">유지보수 비용 절감</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">17개월</div>
+                    <div class="stat-label">투자 회수 기간</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ai-section">
+        <div class="section-header">
+            <h2>AI 적용 분야</h2>
+            <p>동원분체산업의 분쇄/혼합 설비에 최적화된 5가지 AI 솔루션</p>
+        </div>
+        <div class="ai-grid">
+            <div class="ai-card">
+                <div class="ai-icon">⚙️</div>
+                <h3>분쇄기 예지정비 (PdM)</h3>
+                <p>Pin Mill, Hammer Mill, Roll Mill의 실시간 상태 모니터링 및 고장 예측으로 비계획 정지 최소화</p>
+                <ul class="ai-features">
+                    <li>FFT 스펙트럼 분석으로 베어링 결함 조기 감지</li>
+                    <li>BPFO/BPFI 분석으로 내륜/외륜 결함 진단</li>
+                    <li>전류 파형 분석으로 모터 부하 이상 감지</li>
+                    <li>온도 추이 분석으로 과열 예측</li>
+                </ul>
+                <span class="ai-badge">70% 정지시간 감소</span>
+            </div>
+            <div class="ai-card">
+                <div class="ai-icon">🔄</div>
+                <h3>혼합기 모니터링</h3>
+                <p>Ribbon Mixer, V-Mixer, Double Cone Mixer의 혼합 품질 및 설비 상태 실시간 감시</p>
+                <ul class="ai-features">
+                    <li>전류 패턴 분석으로 혼합 완료 시점 자동 감지</li>
+                    <li>진동 분석으로 균일 혼합 여부 판정</li>
+                    <li>시간-전류 곡선으로 최적 혼합 시간 도출</li>
+                    <li>씰 부위 분진 누출 조기 감지</li>
+                </ul>
+                <span class="ai-badge">품질 균일성 향상</span>
+            </div>
+            <div class="ai-card">
+                <div class="ai-icon">🌿</div>
+                <h3>환경 모니터링</h3>
+                <p>작업장 분진/소음 실시간 감시로 산업안전보건법 및 환경 규제 준수</p>
+                <ul class="ai-features">
+                    <li>PM2.5/10 분진 농도 실시간 모니터링</li>
+                    <li>작업장 소음 레벨 연속 측정 (90dB 기준)</li>
+                    <li>기준치 초과 시 즉시 알림 발송</li>
+                    <li>환경 보고서 자동 생성</li>
+                </ul>
+                <span class="ai-badge">규제 대응 완벽</span>
+            </div>
+            <div class="ai-card">
+                <div class="ai-icon">📊</div>
+                <h3>생산이력 관리 (MES)</h3>
+                <p>LOT별 생산이력 추적 및 품질관리로 식품/의약 고객 대응력 강화</p>
+                <ul class="ai-features">
+                    <li>작업지시서 생성 및 레시피 관리</li>
+                    <li>공정 데이터 자동 수집 (가동시간, 처리량)</li>
+                    <li>LOT별 생산이력으로 불량 원인 역추적</li>
+                    <li>OEE(설비종합효율) 실시간 관리</li>
+                </ul>
+                <span class="ai-badge">완벽한 추적성</span>
+            </div>
+            <div class="ai-card">
+                <div class="ai-icon">🌐</div>
+                <h3>원격 A/S 플랫폼</h3>
+                <p>납품 설비에 대한 원격 모니터링 및 A/S SaaS 서비스로 신규 수익 창출</p>
+                <ul class="ai-features">
+                    <li>실시간 설비 상태 원격 모니터링</li>
+                    <li>이상 감지 시 선제적 A/S 제안</li>
+                    <li>월간/분기 설비 상태 보고서 자동 생성</li>
+                    <li>예비부품 연계 서비스</li>
+                </ul>
+                <span class="ai-badge">SaaS 수익 모델</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-section">
+        <div class="section-header">
+            <h2>왜 스마트팩토리가 필요한가?</h2>
+            <p>분체설비 특성상 고속 회전체와 고하중 베어링을 사용하여 진동/열화/마모가 불가피합니다</p>
+        </div>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-icon">⚠️</div>
+                <h3>Pin Mill 취약점</h3>
+                <p>핀 마모, 베어링 열화로 분쇄 효율 저하 및 돌발 정지 발생</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">🔨</div>
+                <h3>Hammer Mill 리스크</h3>
+                <p>해머 마모, 스크린 손상으로 입도 불균일 및 과부하 발생</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">🔧</div>
+                <h3>Roll Mill 관리</h3>
+                <p>롤러 마모, 갭 변화로 분쇄 품질 저하 및 이물질 혼입 위험</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">🌀</div>
+                <h3>혼합기 품질</h3>
+                <p>씰 마모로 분체 누출, 혼합 불균일로 제품 품질 저하</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="roi-section">
+        <div class="section-header">
+            <h2>투자 대비 효과 (ROI)</h2>
+            <p>전체 프로젝트 도입 시 연간 8,900만원의 효과 창출</p>
+        </div>
+        <div class="roi-container">
+            <div class="roi-box">
+                <h3>💰 투자 비용</h3>
+                <div class="roi-item">
+                    <span>A. 분쇄기 예지정비</span>
+                    <span>2,410만원</span>
+                </div>
+                <div class="roi-item">
+                    <span>B. 혼합기 모니터링</span>
+                    <span>1,535만원</span>
+                </div>
+                <div class="roi-item">
+                    <span>C. 환경 모니터링</span>
+                    <span>1,208만원</span>
+                </div>
+                <div class="roi-item">
+                    <span>D. 생산이력관리(MES)</span>
+                    <span>3,140만원</span>
+                </div>
+                <div class="roi-item">
+                    <span>E. 원격 A/S 플랫폼</span>
+                    <span>4,200만원</span>
+                </div>
+                <div class="roi-total">
+                    <span>총 투자비</span>
+                    <span>1.25억원</span>
+                </div>
+            </div>
+            <div class="roi-box">
+                <h3>📈 연간 효과</h3>
+                <div class="roi-item">
+                    <span>비계획 정지 감소 (70%)</span>
+                    <span>3,000만원</span>
+                </div>
+                <div class="roi-item">
+                    <span>유지보수 비용 절감 (40%)</span>
+                    <span>1,500만원</span>
+                </div>
+                <div class="roi-item">
+                    <span>부품 수명 연장 (30%)</span>
+                    <span>800만원</span>
+                </div>
+                <div class="roi-item">
+                    <span>에너지 효율 개선 (10%)</span>
+                    <span>500만원</span>
+                </div>
+                <div class="roi-item">
+                    <span>원격 A/S 구독료 (10대)</span>
+                    <span>2,400만원</span>
+                </div>
+                <div class="roi-total">
+                    <span>연간 총 효과</span>
+                    <span>8,900만원</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>스마트팩토리를 시작하세요</h2>
+        <p>실시간 모니터링 데모를 통해 예지정비의 효과를 직접 확인해 보세요</p>
+        <a href="monitor.html" class="btn btn-primary">실시간 데모 체험하기</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 UTTEC. All rights reserved. | 동원분체산업 AI 스마트팩토리 데모</p>
+    </footer>
+</body>
+</html>

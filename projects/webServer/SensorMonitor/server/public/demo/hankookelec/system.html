@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>시스템 구성 - 한국전기산업 스마트팩토리</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2a1515 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: rgba(26, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.3);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #d32f2f, #ff5722);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            color: #ffcdd2;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #d32f2f;
+        }
+
+        .page-header {
+            padding: 120px 40px 60px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(211, 47, 47, 0.2) 0%, transparent 100%);
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .page-header p {
+            color: #ffcdd2;
+            font-size: 1.1rem;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Overview Stats */
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        .overview-stat {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(211, 47, 47, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+        .overview-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d32f2f;
+        }
+        .overview-stat-label {
+            color: #ffcdd2;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Architecture */
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(211, 47, 47, 0.3);
+        }
+
+        .architecture {
+            margin-bottom: 60px;
+        }
+        .arch-layer {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(211, 47, 47, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 15px;
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+        .arch-layer:hover {
+            border-color: #d32f2f;
+        }
+        .layer-info h3 {
+            font-size: 1.1rem;
+            color: #d32f2f;
+            margin-bottom: 5px;
+        }
+        .layer-info p {
+            color: #ffcdd2;
+            font-size: 0.9rem;
+        }
+        .layer-components {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .layer-component {
+            background: rgba(211, 47, 47, 0.15);
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        /* Equipment Tabs */
+        .equipment-section {
+            margin-bottom: 60px;
+        }
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .tab-btn {
+            padding: 12px 25px;
+            border: 1px solid rgba(211, 47, 47, 0.3);
+            border-radius: 25px;
+            background: transparent;
+            color: #ffcdd2;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        .tab-btn:hover {
+            border-color: #d32f2f;
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #b71c1c, #d32f2f);
+            border-color: #d32f2f;
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        .equipment-detail {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(211, 47, 47, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+        }
+        .equipment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .equipment-header h3 {
+            font-size: 1.3rem;
+        }
+        .equipment-specs {
+            display: flex;
+            gap: 20px;
+        }
+        .spec-badge {
+            background: rgba(211, 47, 47, 0.2);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .vulnerability-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .vulnerability-table th,
+        .vulnerability-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.1);
+        }
+        .vulnerability-table th {
+            background: rgba(183, 28, 28, 0.3);
+            color: #ffcdd2;
+            font-weight: 500;
+        }
+        .vulnerability-table tr:hover {
+            background: rgba(211, 47, 47, 0.05);
+        }
+
+        /* Sensor Section */
+        .sensor-section {
+            margin-bottom: 60px;
+        }
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .sensor-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(211, 47, 47, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+        }
+        .sensor-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .sensor-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #b71c1c, #d32f2f);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sensor-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sensor-spec {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.1);
+            font-size: 0.9rem;
+        }
+        .sensor-spec-label {
+            color: #ffcdd2;
+        }
+        .sensor-spec-value {
+            color: #fff;
+        }
+
+        footer {
+            background: rgba(26, 10, 10, 0.9);
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid rgba(211, 47, 47, 0.2);
+        }
+        footer p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .arch-layer {
+                grid-template-columns: 1fr;
+            }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">한국전기산업 Smart Factory</div>
+        <div class="nav-links">
+            <a href="index.html">홈</a>
+            <a href="system.html" class="active">시스템 구성</a>
+            <a href="monitor.html">실시간 모니터링</a>
+            <a href="about.html">UTTEC 소개</a>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>시스템 구성</h1>
+        <p>방폭기기 제조 전용 4계층 PdM 아키텍처</p>
+    </div>
+
+    <div class="content">
+        <div class="overview-stats">
+            <div class="overview-stat">
+                <div class="overview-stat-value">121</div>
+                <div class="overview-stat-label">총 센서 포인트</div>
+            </div>
+            <div class="overview-stat">
+                <div class="overview-stat-value">45</div>
+                <div class="overview-stat-label">모니터링 설비</div>
+            </div>
+            <div class="overview-stat">
+                <div class="overview-stat-value">4</div>
+                <div class="overview-stat-label">계층 아키텍처</div>
+            </div>
+            <div class="overview-stat">
+                <div class="overview-stat-value">10</div>
+                <div class="overview-stat-label">센서 종류</div>
+            </div>
+        </div>
+
+        <div class="architecture">
+            <h2 class="section-title">4계층 방폭기기 제조 PdM 아키텍처</h2>
+
+            <div class="arch-layer">
+                <div class="layer-info">
+                    <h3>Layer 4</h3>
+                    <p>클라우드 분석</p>
+                </div>
+                <div class="layer-components">
+                    <span class="layer-component">설비 자산 DB</span>
+                    <span class="layer-component">AI/ML 분석 (품질-설비 상관)</span>
+                    <span class="layer-component">품질이력 Dashboard</span>
+                    <span class="layer-component">인증심사 대응</span>
+                </div>
+            </div>
+
+            <div class="arch-layer">
+                <div class="layer-info">
+                    <h3>Layer 3</h3>
+                    <p>Edge Gateway</p>
+                </div>
+                <div class="layer-components">
+                    <span class="layer-component">ARM Cortex-M4 + DSP</span>
+                    <span class="layer-component">실시간 FFT 연산</span>
+                    <span class="layer-component">용접품질 분석</span>
+                    <span class="layer-component">도장두께 분석</span>
+                    <span class="layer-component">시험데이터 수집</span>
+                    <span class="layer-component">스핀들 이상 검출</span>
+                </div>
+            </div>
+
+            <div class="arch-layer">
+                <div class="layer-info">
+                    <h3>Layer 2</h3>
+                    <p>센서 네트워크</p>
+                </div>
+                <div class="layer-components">
+                    <span class="layer-component">3축 진동 센서</span>
+                    <span class="layer-component">PT100 온도</span>
+                    <span class="layer-component">CT 전류 센서</span>
+                    <span class="layer-component">압력 센서</span>
+                    <span class="layer-component">용접 모니터</span>
+                    <span class="layer-component">두께 센서</span>
+                    <span class="layer-component">비전 센서</span>
+                    <span class="layer-component">절연저항계</span>
+                </div>
+            </div>
+
+            <div class="arch-layer">
+                <div class="layer-info">
+                    <h3>Layer 1</h3>
+                    <p>제조설비</p>
+                </div>
+                <div class="layer-components">
+                    <span class="layer-component">CNC 가공기</span>
+                    <span class="layer-component">프레스/절곡기</span>
+                    <span class="layer-component">용접설비</span>
+                    <span class="layer-component">분체도장라인</span>
+                    <span class="layer-component">SMT 조립라인</span>
+                    <span class="layer-component">방폭시험설비</span>
+                    <span class="layer-component">품질검사설비</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="equipment-section">
+            <h2 class="section-title">설비별 모니터링 상세</h2>
+
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="showTab('cnc')">CNC 가공설비</button>
+                <button class="tab-btn" onclick="showTab('press')">프레스/절곡기</button>
+                <button class="tab-btn" onclick="showTab('welding')">용접설비</button>
+                <button class="tab-btn" onclick="showTab('coating')">분체도장라인</button>
+                <button class="tab-btn" onclick="showTab('smt')">SMT 조립라인</button>
+                <button class="tab-btn" onclick="showTab('test')">방폭시험설비</button>
+            </div>
+
+            <div id="cnc" class="tab-content active">
+                <div class="equipment-detail">
+                    <div class="equipment-header">
+                        <div>
+                            <h3>CNC 가공설비</h3>
+                            <p style="color: #ffcdd2; margin-top: 5px;">CNC 선반 4대, 머시닝센터 3대</p>
+                        </div>
+                        <div class="equipment-specs">
+                            <span class="spec-badge">7대 운영</span>
+                            <span class="spec-badge">센서 35개</span>
+                        </div>
+                    </div>
+                    <table class="vulnerability-table">
+                        <tr>
+                            <th>취약 부위</th>
+                            <th>고장 유형</th>
+                            <th>센서</th>
+                            <th>분석 방법</th>
+                        </tr>
+                        <tr>
+                            <td>스핀들</td>
+                            <td>진동 증가, 과열</td>
+                            <td>3축 진동 + 온도</td>
+                            <td>FFT 스펙트럼, 1X/2X 분석</td>
+                        </tr>
+                        <tr>
+                            <td>베어링</td>
+                            <td>마모, 손상</td>
+                            <td>진동 + 온도</td>
+                            <td>엔벨로프, BPFO/BPFI</td>
+                        </tr>
+                        <tr>
+                            <td>공구</td>
+                            <td>마모, 파손</td>
+                            <td>전류 센서</td>
+                            <td>전류 패턴 분석</td>
+                        </tr>
+                        <tr>
+                            <td>서보모터</td>
+                            <td>과부하</td>
+                            <td>전류 센서</td>
+                            <td>부하율 트렌드</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="press" class="tab-content">
+                <div class="equipment-detail">
+                    <div class="equipment-header">
+                        <div>
+                            <h3>프레스/절곡기</h3>
+                            <p style="color: #ffcdd2; margin-top: 5px;">프레스 5대, 절곡기 3대, 전단기 2대</p>
+                        </div>
+                        <div class="equipment-specs">
+                            <span class="spec-badge">10대 운영</span>
+                            <span class="spec-badge">센서 30개</span>
+                        </div>
+                    </div>
+                    <table class="vulnerability-table">
+                        <tr>
+                            <th>취약 부위</th>
+                            <th>고장 유형</th>
+                            <th>센서</th>
+                            <th>분석 방법</th>
+                        </tr>
+                        <tr>
+                            <td>슬라이드</td>
+                            <td>진동 이상</td>
+                            <td>3축 진동</td>
+                            <td>FFT 분석, 이상 감지</td>
+                        </tr>
+                        <tr>
+                            <td>유압 시스템</td>
+                            <td>압력 저하, 누유</td>
+                            <td>압력 센서</td>
+                            <td>압력 패턴 분석</td>
+                        </tr>
+                        <tr>
+                            <td>금형</td>
+                            <td>마모</td>
+                            <td>AE 센서</td>
+                            <td>소음 패턴 분석</td>
+                        </tr>
+                        <tr>
+                            <td>베어링</td>
+                            <td>과열, 마모</td>
+                            <td>온도 센서</td>
+                            <td>온도 트렌드</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="welding" class="tab-content">
+                <div class="equipment-detail">
+                    <div class="equipment-header">
+                        <div>
+                            <h3>용접설비</h3>
+                            <p style="color: #ffcdd2; margin-top: 5px;">MIG 6대, TIG 4대, 스팟용접기 3대</p>
+                        </div>
+                        <div class="equipment-specs">
+                            <span class="spec-badge">13대 운영</span>
+                            <span class="spec-badge">센서 36개</span>
+                        </div>
+                    </div>
+                    <table class="vulnerability-table">
+                        <tr>
+                            <th>취약 부위</th>
+                            <th>고장 유형</th>
+                            <th>센서</th>
+                            <th>분석 방법</th>
+                        </tr>
+                        <tr>
+                            <td>용접 토치</td>
+                            <td>전류/전압 이상</td>
+                            <td>전류/전압 센서</td>
+                            <td>용접품질 실시간 분석</td>
+                        </tr>
+                        <tr>
+                            <td>와이어 피더</td>
+                            <td>공급 이상</td>
+                            <td>속도 센서</td>
+                            <td>공급속도 패턴</td>
+                        </tr>
+                        <tr>
+                            <td>가스 공급</td>
+                            <td>유량 부족</td>
+                            <td>유량 센서</td>
+                            <td>유량 모니터링</td>
+                        </tr>
+                        <tr>
+                            <td>용접 품질</td>
+                            <td>불량 발생</td>
+                            <td>복합 센서</td>
+                            <td>품질이력 추적</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="coating" class="tab-content">
+                <div class="equipment-detail">
+                    <div class="equipment-header">
+                        <div>
+                            <h3>분체도장라인</h3>
+                            <p style="color: #ffcdd2; margin-top: 5px;">전처리-분체도장-건조로 라인 1식</p>
+                        </div>
+                        <div class="equipment-specs">
+                            <span class="spec-badge">1라인 운영</span>
+                            <span class="spec-badge">센서 24개</span>
+                        </div>
+                    </div>
+                    <table class="vulnerability-table">
+                        <tr>
+                            <th>취약 부위</th>
+                            <th>고장 유형</th>
+                            <th>센서</th>
+                            <th>분석 방법</th>
+                        </tr>
+                        <tr>
+                            <td>도장 건</td>
+                            <td>두께 불균일</td>
+                            <td>두께 센서</td>
+                            <td>두께 편차 분석</td>
+                        </tr>
+                        <tr>
+                            <td>분체 공급</td>
+                            <td>공급량 이상</td>
+                            <td>유량 센서</td>
+                            <td>공급량 모니터링</td>
+                        </tr>
+                        <tr>
+                            <td>건조로</td>
+                            <td>온도 이상</td>
+                            <td>온도 센서</td>
+                            <td>온도 프로파일</td>
+                        </tr>
+                        <tr>
+                            <td>컨베이어</td>
+                            <td>속도 변동</td>
+                            <td>속도 센서</td>
+                            <td>속도 일정성 분석</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="smt" class="tab-content">
+                <div class="equipment-detail">
+                    <div class="equipment-header">
+                        <div>
+                            <h3>SMT 조립라인</h3>
+                            <p style="color: #ffcdd2; margin-top: 5px;">SMT 1라인, 수동조립 2라인, 납땜설비</p>
+                        </div>
+                        <div class="equipment-specs">
+                            <span class="spec-badge">3라인 운영</span>
+                            <span class="spec-badge">센서 24개</span>
+                        </div>
+                    </div>
+                    <table class="vulnerability-table">
+                        <tr>
+                            <th>취약 부위</th>
+                            <th>고장 유형</th>
+                            <th>센서</th>
+                            <th>분석 방법</th>
+                        </tr>
+                        <tr>
+                            <td>리플로우</td>
+                            <td>온도 이상</td>
+                            <td>온도 센서</td>
+                            <td>온도 프로파일 분석</td>
+                        </tr>
+                        <tr>
+                            <td>픽앤플레이스</td>
+                            <td>배치 오류</td>
+                            <td>비전 센서</td>
+                            <td>정확도 분석</td>
+                        </tr>
+                        <tr>
+                            <td>납땜 품질</td>
+                            <td>불량 발생</td>
+                            <td>온도 + 비전</td>
+                            <td>품질 검사</td>
+                        </tr>
+                        <tr>
+                            <td>사이클 타임</td>
+                            <td>효율 저하</td>
+                            <td>사이클 센서</td>
+                            <td>생산성 분석</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="test" class="tab-content">
+                <div class="equipment-detail">
+                    <div class="equipment-header">
+                        <div>
+                            <h3>방폭시험설비</h3>
+                            <p style="color: #ffcdd2; margin-top: 5px;">내압시험기, 절연시험기, 방수시험기, 작동시험설비</p>
+                        </div>
+                        <div class="equipment-specs">
+                            <span class="spec-badge">4종 운영</span>
+                            <span class="spec-badge">센서 14개</span>
+                        </div>
+                    </div>
+                    <table class="vulnerability-table">
+                        <tr>
+                            <th>취약 부위</th>
+                            <th>고장 유형</th>
+                            <th>센서</th>
+                            <th>분석 방법</th>
+                        </tr>
+                        <tr>
+                            <td>내압시험기</td>
+                            <td>압력 측정 오류</td>
+                            <td>압력 센서</td>
+                            <td>시험압력 모니터링</td>
+                        </tr>
+                        <tr>
+                            <td>절연시험기</td>
+                            <td>측정 오류</td>
+                            <td>절연저항계</td>
+                            <td>절연저항 기록</td>
+                        </tr>
+                        <tr>
+                            <td>방수시험기</td>
+                            <td>등급 판정</td>
+                            <td>압력 센서</td>
+                            <td>방수등급 자동판정</td>
+                        </tr>
+                        <tr>
+                            <td>작동시험</td>
+                            <td>기능 이상</td>
+                            <td>데이터로거</td>
+                            <td>작동상태 기록</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="sensor-section">
+            <h2 class="section-title">센서 사양</h2>
+            <div class="sensor-grid">
+                <div class="sensor-card">
+                    <h4>
+                        <span class="sensor-icon">📊</span>
+                        3축 진동 센서
+                    </h4>
+                    <div class="sensor-specs">
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">타입</span>
+                            <span class="sensor-spec-value">MEMS 가속도계</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">범위</span>
+                            <span class="sensor-spec-value">±16g</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">대역폭</span>
+                            <span class="sensor-spec-value">0~5kHz</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">수량</span>
+                            <span class="sensor-spec-value">24개</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sensor-card">
+                    <h4>
+                        <span class="sensor-icon">🌡️</span>
+                        온도 센서
+                    </h4>
+                    <div class="sensor-specs">
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">타입</span>
+                            <span class="sensor-spec-value">PT100 RTD</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">범위</span>
+                            <span class="sensor-spec-value">-50~300°C</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">정확도</span>
+                            <span class="sensor-spec-value">±0.3°C</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">수량</span>
+                            <span class="sensor-spec-value">28개</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sensor-card">
+                    <h4>
+                        <span class="sensor-icon">⚡</span>
+                        전류/전압 센서
+                    </h4>
+                    <div class="sensor-specs">
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">타입</span>
+                            <span class="sensor-spec-value">CT 클램프 / 전압 프로브</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">전류 범위</span>
+                            <span class="sensor-spec-value">0~500A</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">정확도</span>
+                            <span class="sensor-spec-value">±1%</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">수량</span>
+                            <span class="sensor-spec-value">33개</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sensor-card">
+                    <h4>
+                        <span class="sensor-icon">🔵</span>
+                        압력 센서
+                    </h4>
+                    <div class="sensor-specs">
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">타입</span>
+                            <span class="sensor-spec-value">Piezoresistive</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">범위</span>
+                            <span class="sensor-spec-value">0~100 bar</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">용도</span>
+                            <span class="sensor-spec-value">유압/시험압력</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">수량</span>
+                            <span class="sensor-spec-value">16개</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sensor-card">
+                    <h4>
+                        <span class="sensor-icon">📏</span>
+                        두께 센서
+                    </h4>
+                    <div class="sensor-specs">
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">타입</span>
+                            <span class="sensor-spec-value">도막 두께계</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">범위</span>
+                            <span class="sensor-spec-value">0~2000 μm</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">용도</span>
+                            <span class="sensor-spec-value">도장두께 측정</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">수량</span>
+                            <span class="sensor-spec-value">4개</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sensor-card">
+                    <h4>
+                        <span class="sensor-icon">🔬</span>
+                        절연저항계
+                    </h4>
+                    <div class="sensor-specs">
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">타입</span>
+                            <span class="sensor-spec-value">메거 테스터</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">범위</span>
+                            <span class="sensor-spec-value">0~1000 MΩ</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">용도</span>
+                            <span class="sensor-spec-value">절연시험/인증</span>
+                        </div>
+                        <div class="sensor-spec">
+                            <span class="sensor-spec-label">수량</span>
+                            <span class="sensor-spec-value">4개</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>한국전기산업(주) × UTTEC 스마트팩토리 솔루션</p>
+        <p style="margin-top: 10px;">&copy; 2025 UTTEC. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

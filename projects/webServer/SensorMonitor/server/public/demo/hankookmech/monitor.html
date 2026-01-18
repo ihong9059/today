@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>실시간 모니터링 - 한국기계엔지니어링</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: rgba(10,10,26,0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .back-btn {
+            color: #888;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        .company-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #dc2626;
+        }
+        .live-badge {
+            background: #ff4444;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .header-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .orientation-status {
+            font-size: 0.8rem;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .orientation-status.active {
+            color: #00ff88;
+        }
+        .orientation-status.remote {
+            color: #ff9500;
+        }
+        .source-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+        .source-toggle label {
+            color: #888;
+            cursor: pointer;
+        }
+        .source-toggle input[type="checkbox"] {
+            appearance: none;
+            width: 36px;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .source-toggle input[type="checkbox"]::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s;
+        }
+        .source-toggle input[type="checkbox"]:checked {
+            background: #ff9500;
+        }
+        .source-toggle input[type="checkbox"]:checked::after {
+            left: 18px;
+        }
+        .ws-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #666;
+        }
+        .ws-status.connected {
+            background: #00ff88;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            height: 100vh;
+            padding-top: 60px;
+        }
+
+        /* 3D View */
+        .view-3d {
+            position: relative;
+            background: #0a0a1a;
+        }
+        #canvas3d {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Overlay Panels */
+        .overlay-panel {
+            position: absolute;
+            background: rgba(10,10,26,0.9);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .overlay-panel.top-left {
+            top: 20px;
+            left: 20px;
+            min-width: 200px;
+        }
+        .overlay-panel.top-right {
+            top: 20px;
+            right: 20px;
+            min-width: 250px;
+        }
+        .overlay-panel.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            min-width: 300px;
+        }
+
+        .panel-title {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .equipment-status-list {
+            list-style: none;
+        }
+        .equipment-status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            cursor: pointer;
+            transition: background 0.3s;
+            border-radius: 6px;
+            padding: 8px 10px;
+            margin: 0 -10px;
+        }
+        .equipment-status-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .equipment-status-item.selected {
+            background: rgba(220,38,38,0.2);
+        }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .status-dot.normal { background: #00ff88; }
+        .status-dot.warning { background: #ffaa00; }
+        .status-dot.critical { background: #ff4444; animation: blink 0.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* Sidebar */
+        .sidebar {
+            background: rgba(15,15,35,0.98);
+            border-left: 1px solid rgba(255,255,255,0.1);
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 25px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .section-title {
+            font-size: 0.9rem;
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        /* Sensor Cards */
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .sensor-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 12px;
+            transition: all 0.3s;
+        }
+        .sensor-card.warning {
+            border-color: #ffaa00;
+            background: rgba(255,170,0,0.1);
+        }
+        .sensor-card.critical {
+            border-color: #ff4444;
+            background: rgba(255,68,68,0.1);
+            animation: alertPulse 1s infinite;
+        }
+        @keyframes alertPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,68,68,0.4); }
+            50% { box-shadow: 0 0 20px 5px rgba(255,68,68,0.2); }
+        }
+        .sensor-label {
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .sensor-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        .sensor-unit {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .sensor-bar {
+            height: 4px;
+            background: #222;
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .sensor-bar-fill {
+            height: 100%;
+            background: #00ff88;
+            transition: width 0.5s, background 0.3s;
+        }
+        .sensor-bar-fill.warning { background: #ffaa00; }
+        .sensor-bar-fill.critical { background: #ff4444; }
+
+        /* Prediction Panel */
+        .prediction-panel {
+            background: linear-gradient(135deg, rgba(220,38,38,0.1) 0%, rgba(0,255,136,0.05) 100%);
+            border: 1px solid rgba(220,38,38,0.3);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        .rul-display {
+            text-align: center;
+            padding: 15px 0;
+        }
+        .rul-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #dc2626, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .rul-label {
+            color: #888;
+            font-size: 0.85rem;
+        }
+        .prediction-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .pred-item {
+            text-align: center;
+        }
+        .pred-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .pred-label {
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        /* Alert Panel */
+        .alert-panel {
+            background: rgba(255,68,68,0.1);
+            border: 1px solid rgba(255,68,68,0.3);
+            border-radius: 12px;
+            padding: 15px;
+            display: none;
+        }
+        .alert-panel.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .alert-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .alert-icon {
+            font-size: 1.5rem;
+        }
+        .alert-title {
+            font-weight: 600;
+            color: #ff6b6b;
+        }
+        .alert-message {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+        .alert-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .alert-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .alert-btn.primary {
+            background: #ff4444;
+            color: #fff;
+        }
+        .alert-btn.secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        /* Chart */
+        .chart-container {
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        .chart-container canvas {
+            max-height: 180px;
+        }
+
+        /* Scenario Control */
+        .scenario-control {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        .scenario-select {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a2e;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .scenario-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #dc2626, #b91c1c);
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .scenario-btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* Action Guide */
+        .action-guide {
+            background: rgba(0,255,136,0.1);
+            border: 1px solid rgba(0,255,136,0.3);
+            border-radius: 12px;
+            padding: 15px;
+            display: none;
+        }
+        .action-guide.active {
+            display: block;
+        }
+        .action-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #00ff88;
+        }
+        .action-steps {
+            list-style: none;
+        }
+        .action-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        .step-number {
+            width: 20px;
+            height: 20px;
+            background: rgba(0,255,136,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: #00ff88;
+            flex-shrink: 0;
+        }
+
+        /* Orientation Display */
+        .orientation-display {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 12px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+        .orient-item {
+            font-size: 0.75rem;
+        }
+        .orient-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+        .orient-label {
+            color: #666;
+            font-size: 0.7rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 50vh;
+                border-top: 1px solid rgba(255,255,255,0.1);
+                border-left: none;
+            }
+            .view-3d {
+                height: 50vh;
+            }
+            .overlay-panel {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <a href="index.html" class="back-btn">←</a>
+            <span class="company-name">한국기계엔지니어링</span>
+            <span class="live-badge">LIVE</span>
+        </div>
+        <div class="header-right">
+            <div class="source-toggle">
+                <span class="ws-status" id="wsStatus"></span>
+                <label>실제 스마트폰</label>
+                <input type="checkbox" id="useRemoteOrientation" onchange="toggleOrientationSource()">
+            </div>
+            <div class="orientation-status" id="orientationStatus">
+                <span>📱</span>
+                <span id="orientText">기울기 센서 대기중...</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="view-3d">
+            <div id="canvas3d"></div>
+
+            <!-- Equipment Status Panel -->
+            <div class="overlay-panel top-left">
+                <div class="panel-title">설비 현황</div>
+                <ul class="equipment-status-list" id="equipmentList"></ul>
+            </div>
+
+            <!-- Orientation Panel -->
+            <div class="overlay-panel top-right">
+                <div class="panel-title">설비 자세 (기울기)</div>
+                <div class="orientation-display">
+                    <div class="orient-item">
+                        <div class="orient-value" id="alphaVal">0°</div>
+                        <div class="orient-label">Alpha (Z)</div>
+                    </div>
+                    <div class="orient-item">
+                        <div class="orient-value" id="betaVal">0°</div>
+                        <div class="orient-label">Beta (X)</div>
+                    </div>
+                    <div class="orient-item">
+                        <div class="orient-value" id="gammaVal">0°</div>
+                        <div class="orient-label">Gamma (Y)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction Panel -->
+            <div class="overlay-panel bottom-left">
+                <div class="panel-title">AI 예지정비</div>
+                <div class="rul-display">
+                    <div class="rul-value" id="rulValue">127일</div>
+                    <div class="rul-label">베어링 잔여수명 (RUL)</div>
+                </div>
+                <div class="prediction-details">
+                    <div class="pred-item">
+                        <div class="pred-value" id="healthScore">92%</div>
+                        <div class="pred-label">설비 건강도</div>
+                    </div>
+                    <div class="pred-item">
+                        <div class="pred-value" id="anomalyProb">3%</div>
+                        <div class="pred-label">이상 확률</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <!-- Alert Panel -->
+            <div class="section">
+                <div class="alert-panel" id="alertPanel">
+                    <div class="alert-header">
+                        <span class="alert-icon">⚠️</span>
+                        <span class="alert-title" id="alertTitle">이상 감지</span>
+                    </div>
+                    <div class="alert-message" id="alertMessage">
+                        파쇄기 #1 베어링 진동이 임계치를 초과했습니다.
+                    </div>
+                    <div class="alert-actions">
+                        <button class="alert-btn primary" onclick="acknowledgeAlert()">확인</button>
+                        <button class="alert-btn secondary" onclick="showActionGuide()">조치 가이드</button>
+                    </div>
+                </div>
+
+                <div class="action-guide" id="actionGuide">
+                    <div class="action-header">
+                        <span>📋</span>
+                        <span>권장 조치 가이드</span>
+                    </div>
+                    <ul class="action-steps">
+                        <li class="action-step">
+                            <span class="step-number">1</span>
+                            <span>설비 가동을 일시 중지하고 안전 조치</span>
+                        </li>
+                        <li class="action-step">
+                            <span class="step-number">2</span>
+                            <span>커터/해머 마모 상태 및 이물질 점검</span>
+                        </li>
+                        <li class="action-step">
+                            <span class="step-number">3</span>
+                            <span>베어링 온도 및 윤활 상태 확인</span>
+                        </li>
+                        <li class="action-step">
+                            <span class="step-number">4</span>
+                            <span>필요시 부품 교체 또는 윤활유 보충</span>
+                        </li>
+                        <li class="action-step">
+                            <span class="step-number">5</span>
+                            <span>재가동 후 진동/전류 수치 모니터링</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sensor Data -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">실시간 센서 데이터</span>
+                </div>
+                <div class="sensor-grid" id="sensorGrid"></div>
+            </div>
+
+            <!-- Trend Chart -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">트렌드 (최근 5분)</span>
+                </div>
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Prediction -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">예지 분석</span>
+                </div>
+                <div class="prediction-panel">
+                    <div class="rul-display">
+                        <div class="rul-value" id="rulValueSidebar">127일</div>
+                        <div class="rul-label">베어링 잔여수명 예측</div>
+                    </div>
+                    <div class="prediction-details">
+                        <div class="pred-item">
+                            <div class="pred-value" id="wearRate">0.8%</div>
+                            <div class="pred-label">일일 마모율</div>
+                        </div>
+                        <div class="pred-item">
+                            <div class="pred-value" id="nextMaint">32일</div>
+                            <div class="pred-label">다음 정비까지</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario Control -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">데모 시나리오</span>
+                </div>
+                <div class="scenario-control">
+                    <select class="scenario-select" id="scenarioSelect">
+                        <option value="normal">정상 운전</option>
+                        <option value="degrading">점진적 이상 (베어링 마모)</option>
+                        <option value="anomaly">급격한 이상 (과부하)</option>
+                        <option value="predictive">예지 알림 (정비 필요)</option>
+                    </select>
+                    <button class="scenario-btn" onclick="applyScenario()">시나리오 적용</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - 파쇄기/분쇄기/핀밀 설비
+        const equipment = [
+            { id: 'shredder', name: '이축 파쇄기 #1', type: 'shredder', position: [-7, 0, 0] },
+            { id: 'crusher', name: '해머 분쇄기 #1', type: 'crusher', position: [0, 0, 0] },
+            { id: 'pinmill', name: '핀밀 #1', type: 'pinmill', position: [7, 0, 0] }
+        ];
+
+        const sensors = [
+            { id: 'vib1', name: '진동 DE', unit: 'mm/s', normal: [0, 4.5], warning: [4.5, 7.1], critical: [7.1, 20] },
+            { id: 'vib2', name: '진동 NDE', unit: 'mm/s', normal: [0, 4.5], warning: [4.5, 7.1], critical: [7.1, 20] },
+            { id: 'temp1', name: '온도 DE', unit: '°C', normal: [30, 70], warning: [70, 85], critical: [85, 120] },
+            { id: 'temp2', name: '온도 NDE', unit: '°C', normal: [30, 70], warning: [70, 85], critical: [85, 120] },
+            { id: 'current', name: '모터 전류', unit: 'A', normal: [15, 50], warning: [50, 70], critical: [70, 100] },
+            { id: 'speed', name: '회전속도', unit: 'RPM', normal: [800, 1200], warning: [600, 800], critical: [0, 600] },
+            { id: 'proximity', name: '근접 센서', unit: 'mm', normal: [0.5, 2.0], warning: [2.0, 3.0], critical: [3.0, 5.0] },
+            { id: 'dust', name: '분진 농도', unit: 'mg/m³', normal: [0, 5], warning: [5, 10], critical: [10, 50] }
+        ];
+
+        let sensorData = {};
+        let selectedEquipment = 'shredder';
+        let currentScenario = 'normal';
+        let degradeCounter = 0;
+        let trendChart = null;
+        let trendData = { labels: [], datasets: [] };
+
+        // Three.js
+        let scene, camera, renderer, equipmentMeshes = {};
+        let targetRotation = { x: 0, y: 0 };
+        let currentRotation = { x: 0, y: 0 };
+        let selectionArrow = null;
+        let selectionRing = null;
+
+        // Device Orientation
+        let orientationEnabled = false;
+        let deviceOrientation = { alpha: 0, beta: 0, gamma: 0 };
+
+        // Remote orientation (from real smartphone via WebSocket)
+        let useRemoteOrientation = false;
+        let remoteOrientation = { alpha: 0, beta: 0, gamma: 0 };
+        let calibratedOrientation = { roll: 0, pitch: 0 };  // 메인 페이지에서 보정된 값
+        let ws = null;
+
+        // Initialize
+        function init() {
+            initSensorData();
+            renderEquipmentList();
+            renderSensorCards();
+            init3D();
+            initChart();
+            initOrientation();
+            initWebSocket();
+            startSimulation();
+        }
+
+        // WebSocket connection for remote orientation
+        function initWebSocket() {
+            const wsUrl = `ws://${window.location.host}`;
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = function() {
+                console.log('WebSocket connected');
+                document.getElementById('wsStatus').classList.add('connected');
+            };
+
+            ws.onmessage = function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+
+                    // Handle calibration reset from main dashboard
+                    if (data.type === 'calibrateReset') {
+                        console.log('Calibration reset received - resetting equipment to home position');
+                        // Reset orientation to home position
+                        targetRotation = { x: 0, y: 0 };
+                        currentRotation = { x: 0, y: 0 };
+                        calibratedOrientation = { roll: 0, pitch: 0 };
+
+                        // Reset all equipment rotations
+                        Object.keys(equipmentMeshes).forEach(eqId => {
+                            const mesh = equipmentMeshes[eqId];
+                            mesh.rotation.x = 0;
+                            mesh.rotation.y = 0;
+                            mesh.rotation.z = 0;
+                        });
+
+                        // Update display
+                        updateOrientationDisplay({ alpha: 0, beta: 0, gamma: 0 });
+                        return;
+                    }
+
+                    // Handle calibrated orientation from main dashboard (보정된 기울기)
+                    if (data.type === 'calibratedOrientation') {
+                        calibratedOrientation = {
+                            roll: data.roll || 0,
+                            pitch: data.pitch || 0
+                        };
+
+                        if (useRemoteOrientation) {
+                            // 보정된 roll/pitch를 beta/gamma로 변환하여 표시
+                            updateOrientationDisplay({
+                                alpha: 0,
+                                beta: calibratedOrientation.pitch,
+                                gamma: calibratedOrientation.roll
+                            });
+                        }
+                        return;
+                    }
+
+                    if (data.orientation && data.orientation.timestamp) {
+                        remoteOrientation = {
+                            alpha: data.orientation.alpha || 0,
+                            beta: data.orientation.beta || 0,
+                            gamma: data.orientation.gamma || 0
+                        };
+
+                        if (useRemoteOrientation) {
+                            updateOrientationDisplay(remoteOrientation);
+                        }
+                    }
+                } catch (e) {
+                    console.error('WebSocket message parse error:', e);
+                }
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket disconnected');
+                document.getElementById('wsStatus').classList.remove('connected');
+                // Reconnect after 3 seconds
+                setTimeout(initWebSocket, 3000);
+            };
+
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+        }
+
+        function toggleOrientationSource() {
+            useRemoteOrientation = document.getElementById('useRemoteOrientation').checked;
+            const statusEl = document.getElementById('orientationStatus');
+
+            if (useRemoteOrientation) {
+                statusEl.classList.remove('active');
+                statusEl.classList.add('remote');
+                document.getElementById('orientText').textContent = '실제 스마트폰 기울기 사용 중';
+            } else {
+                statusEl.classList.remove('remote');
+                if (orientationEnabled) {
+                    statusEl.classList.add('active');
+                    document.getElementById('orientText').textContent = '로컬 기울기 감지 중';
+                } else {
+                    document.getElementById('orientText').textContent = '기울기 센서 대기중...';
+                }
+            }
+        }
+
+        function updateOrientationDisplay(orient) {
+            document.getElementById('alphaVal').textContent = orient.alpha.toFixed(0) + '°';
+            document.getElementById('betaVal').textContent = orient.beta.toFixed(0) + '°';
+            document.getElementById('gammaVal').textContent = orient.gamma.toFixed(0) + '°';
+        }
+
+        function initSensorData() {
+            sensors.forEach(sensor => {
+                const [min, max] = sensor.normal;
+                sensorData[sensor.id] = {
+                    value: min + (max - min) * 0.5,
+                    base: min + (max - min) * 0.5,
+                    trend: 0,
+                    variance: (max - min) * 0.1
+                };
+            });
+        }
+
+        function renderEquipmentList() {
+            const container = document.getElementById('equipmentList');
+            container.innerHTML = equipment.map(eq => `
+                <li class="equipment-status-item ${eq.id === selectedEquipment ? 'selected' : ''}"
+                    onclick="selectEquipment('${eq.id}')">
+                    <span class="status-dot normal" id="status-${eq.id}"></span>
+                    <span>${eq.name}</span>
+                </li>
+            `).join('');
+        }
+
+        function selectEquipment(id) {
+            selectedEquipment = id;
+            renderEquipmentList();
+            highlightEquipment(id);
+        }
+
+        function renderSensorCards() {
+            const container = document.getElementById('sensorGrid');
+            container.innerHTML = sensors.map(sensor => {
+                const data = sensorData[sensor.id];
+                const status = getSensorStatus(data.value, sensor);
+                const percentage = calculatePercentage(data.value, sensor);
+
+                return `
+                    <div class="sensor-card ${status}" id="card-${sensor.id}">
+                        <div class="sensor-label">${sensor.name}</div>
+                        <div class="sensor-value">
+                            <span id="value-${sensor.id}">${data.value.toFixed(1)}</span>
+                            <span class="sensor-unit">${sensor.unit}</span>
+                        </div>
+                        <div class="sensor-bar">
+                            <div class="sensor-bar-fill ${status}" id="bar-${sensor.id}" style="width: ${percentage}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getSensorStatus(value, sensor) {
+            const [critMin, critMax] = sensor.critical;
+            const [warnMin, warnMax] = sensor.warning;
+            if (value >= critMin && value <= critMax) return 'critical';
+            if (value >= warnMin && value <= warnMax) return 'warning';
+            return '';
+        }
+
+        function calculatePercentage(value, sensor) {
+            const allRanges = [...sensor.normal, ...sensor.warning, ...sensor.critical];
+            const min = Math.min(...allRanges);
+            const max = Math.max(...allRanges);
+            return Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100));
+        }
+
+        // 3D Visualization
+        function init3D() {
+            const container = document.getElementById('canvas3d');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a1a);
+
+            camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+            camera.position.set(0, 12, 25);
+            camera.lookAt(0, 0, 0);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+
+            // Lights - 더 밝게
+            const ambientLight = new THREE.AmbientLight(0x606060, 1.0);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            directionalLight.position.set(10, 20, 10);
+            scene.add(directionalLight);
+
+            const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.6);
+            directionalLight2.position.set(-10, 15, -10);
+            scene.add(directionalLight2);
+
+            const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
+            fillLight.position.set(0, 5, 20);
+            scene.add(fillLight);
+
+            // Floor
+            const floorGeometry = new THREE.PlaneGeometry(40, 25);
+            const floorMaterial = new THREE.MeshStandardMaterial({
+                color: 0x1a1a2e,
+                metalness: 0.5,
+                roughness: 0.8
+            });
+            const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+            floor.rotation.x = -Math.PI / 2;
+            floor.position.y = -4;
+            scene.add(floor);
+
+            // Grid
+            const gridHelper = new THREE.GridHelper(40, 40, 0x333333, 0x222222);
+            gridHelper.position.y = -4;
+            scene.add(gridHelper);
+
+            // Equipment
+            equipment.forEach(eq => {
+                const mesh = createEquipmentMesh(eq.type);
+                mesh.position.set(eq.position[0], 0, eq.position[2]);
+                mesh.userData = { id: eq.id };
+                equipmentMeshes[eq.id] = mesh;
+                scene.add(mesh);
+            });
+
+            // Selection indicator - Arrow
+            const arrowGroup = new THREE.Group();
+
+            // Arrow body (cylinder)
+            const arrowBody = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.15, 0.15, 2, 16),
+                new THREE.MeshBasicMaterial({ color: 0x00ff88 })
+            );
+            arrowBody.position.y = 1;
+            arrowGroup.add(arrowBody);
+
+            // Arrow head (cone)
+            const arrowHead = new THREE.Mesh(
+                new THREE.ConeGeometry(0.4, 0.8, 16),
+                new THREE.MeshBasicMaterial({ color: 0x00ff88 })
+            );
+            arrowHead.rotation.x = Math.PI;
+            arrowHead.position.y = -0.4;
+            arrowGroup.add(arrowHead);
+
+            selectionArrow = arrowGroup;
+            selectionArrow.visible = false;
+            scene.add(selectionArrow);
+
+            // Selection indicator - Ring
+            const ringGeometry = new THREE.TorusGeometry(3, 0.1, 8, 48);
+            const ringMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff88 });
+            selectionRing = new THREE.Mesh(ringGeometry, ringMaterial);
+            selectionRing.rotation.x = -Math.PI / 2;
+            selectionRing.visible = false;
+            scene.add(selectionRing);
+
+            animate();
+            window.addEventListener('resize', onWindowResize);
+        }
+
+        function createEquipmentMesh(type) {
+            const group = new THREE.Group();
+
+            // Common materials - 밝은 색상
+            const steelMat = new THREE.MeshStandardMaterial({ color: 0xc0c0c0, metalness: 0.6, roughness: 0.3 });
+            const redMat = new THREE.MeshStandardMaterial({ color: 0xdc2626, metalness: 0.4, roughness: 0.4 });
+            const orangeMat = new THREE.MeshStandardMaterial({ color: 0xff9944, metalness: 0.3, roughness: 0.5 });
+            const darkMat = new THREE.MeshStandardMaterial({ color: 0x606060, metalness: 0.5, roughness: 0.4 });
+            const yellowMat = new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 0.4, roughness: 0.4 });
+
+            switch (type) {
+                case 'shredder':
+                    // 이축 파쇄기 (Twin-shaft Shredder)
+                    // 메인 하우징 (큰 사각형)
+                    const shredderBody = new THREE.Mesh(
+                        new THREE.BoxGeometry(4, 2.5, 2.5),
+                        redMat
+                    );
+                    shredderBody.position.y = 0;
+                    group.add(shredderBody);
+
+                    // 상단 투입 호퍼
+                    const shredderHopper = new THREE.Mesh(
+                        new THREE.BoxGeometry(3.5, 1.5, 2.2),
+                        steelMat
+                    );
+                    shredderHopper.position.y = 2;
+                    group.add(shredderHopper);
+
+                    // 호퍼 상단 (넓어지는 부분)
+                    const hopperTop = new THREE.Mesh(
+                        new THREE.BoxGeometry(4, 0.8, 2.8),
+                        steelMat
+                    );
+                    hopperTop.position.y = 3.15;
+                    group.add(hopperTop);
+
+                    // 양쪽 구동부 (모터+감속기)
+                    for (let side = -1; side <= 1; side += 2) {
+                        // 감속기
+                        const gearbox = new THREE.Mesh(
+                            new THREE.BoxGeometry(1.2, 1.2, 1.2),
+                            orangeMat
+                        );
+                        gearbox.position.set(side * 2.8, 0, 0);
+                        group.add(gearbox);
+
+                        // 모터
+                        const motor = new THREE.Mesh(
+                            new THREE.CylinderGeometry(0.5, 0.5, 1.5, 16),
+                            darkMat
+                        );
+                        motor.rotation.z = Math.PI / 2;
+                        motor.position.set(side * 4.2, 0, 0);
+                        group.add(motor);
+                    }
+
+                    // 회전축 (2개의 축)
+                    for (let i = -1; i <= 1; i += 2) {
+                        const shaft = new THREE.Mesh(
+                            new THREE.CylinderGeometry(0.3, 0.3, 3.5, 16),
+                            darkMat
+                        );
+                        shaft.rotation.z = Math.PI / 2;
+                        shaft.position.set(0, 0, i * 0.6);
+                        group.add(shaft);
+
+                        // 커터 디스크들
+                        for (let j = -1.2; j <= 1.2; j += 0.4) {
+                            const cutter = new THREE.Mesh(
+                                new THREE.CylinderGeometry(0.6, 0.6, 0.15, 6),
+                                yellowMat
+                            );
+                            cutter.rotation.z = Math.PI / 2;
+                            cutter.position.set(j, 0, i * 0.6);
+                            group.add(cutter);
+                        }
+                    }
+
+                    // 하단 배출구
+                    const shredderDischarge = new THREE.Mesh(
+                        new THREE.BoxGeometry(2.5, 0.8, 1.5),
+                        steelMat
+                    );
+                    shredderDischarge.position.y = -1.9;
+                    group.add(shredderDischarge);
+
+                    // 다리 (4개)
+                    for (let i = 0; i < 4; i++) {
+                        const xPos = i < 2 ? -1.5 : 1.5;
+                        const zPos = i % 2 === 0 ? 1 : -1;
+                        const leg = new THREE.Mesh(
+                            new THREE.BoxGeometry(0.2, 1.5, 0.2),
+                            darkMat
+                        );
+                        leg.position.set(xPos, -3, zPos);
+                        group.add(leg);
+                    }
+
+                    // 베이스
+                    const shredderBase = new THREE.Mesh(
+                        new THREE.BoxGeometry(4.5, 0.15, 3),
+                        darkMat
+                    );
+                    shredderBase.position.y = -3.75;
+                    group.add(shredderBase);
+                    break;
+
+                case 'crusher':
+                    // 해머 분쇄기 (Hammer Crusher)
+                    // 메인 바디 (원통형)
+                    const crusherBody = new THREE.Mesh(
+                        new THREE.CylinderGeometry(1.5, 1.5, 2.5, 24),
+                        redMat
+                    );
+                    crusherBody.position.y = 0;
+                    group.add(crusherBody);
+
+                    // 상단 투입구 (사각)
+                    const crusherInlet = new THREE.Mesh(
+                        new THREE.BoxGeometry(1.2, 1, 1.2),
+                        steelMat
+                    );
+                    crusherInlet.position.y = 1.75;
+                    group.add(crusherInlet);
+
+                    // 투입 호퍼 (역피라미드)
+                    const crusherHopperGeom = new THREE.CylinderGeometry(0.8, 0.4, 1, 4);
+                    const crusherHopper = new THREE.Mesh(crusherHopperGeom, steelMat);
+                    crusherHopper.position.y = 2.75;
+                    crusherHopper.rotation.y = Math.PI / 4;
+                    group.add(crusherHopper);
+
+                    // 내부 로터 (보이는 부분)
+                    const rotor = new THREE.Mesh(
+                        new THREE.CylinderGeometry(1, 1, 2, 16),
+                        darkMat
+                    );
+                    rotor.position.y = 0;
+                    group.add(rotor);
+
+                    // 해머들 (8개)
+                    for (let i = 0; i < 8; i++) {
+                        const angle = (i / 8) * Math.PI * 2;
+                        const hammer = new THREE.Mesh(
+                            new THREE.BoxGeometry(0.15, 0.6, 0.3),
+                            yellowMat
+                        );
+                        hammer.position.set(
+                            Math.cos(angle) * 1.2,
+                            0,
+                            Math.sin(angle) * 1.2
+                        );
+                        hammer.rotation.y = -angle;
+                        group.add(hammer);
+                    }
+
+                    // 측면 구동부
+                    const crusherGearbox = new THREE.Mesh(
+                        new THREE.BoxGeometry(0.8, 0.8, 0.8),
+                        orangeMat
+                    );
+                    crusherGearbox.position.set(2, 0, 0);
+                    group.add(crusherGearbox);
+
+                    const crusherMotor = new THREE.Mesh(
+                        new THREE.CylinderGeometry(0.4, 0.4, 1.2, 16),
+                        darkMat
+                    );
+                    crusherMotor.rotation.z = Math.PI / 2;
+                    crusherMotor.position.set(3, 0, 0);
+                    group.add(crusherMotor);
+
+                    // 하단 배출구
+                    const crusherDischarge = new THREE.Mesh(
+                        new THREE.ConeGeometry(1.5, 1.5, 24),
+                        steelMat
+                    );
+                    crusherDischarge.position.y = -2;
+                    crusherDischarge.rotation.x = Math.PI;
+                    group.add(crusherDischarge);
+
+                    // 다리
+                    for (let i = 0; i < 4; i++) {
+                        const angle = (i / 4) * Math.PI * 2 + Math.PI / 4;
+                        const crusherLeg = new THREE.Mesh(
+                            new THREE.BoxGeometry(0.2, 1.5, 0.2),
+                            darkMat
+                        );
+                        crusherLeg.position.set(
+                            Math.cos(angle) * 1.2,
+                            -3.5,
+                            Math.sin(angle) * 1.2
+                        );
+                        group.add(crusherLeg);
+                    }
+
+                    // 베이스
+                    const crusherBase = new THREE.Mesh(
+                        new THREE.CylinderGeometry(1.8, 1.8, 0.15, 24),
+                        darkMat
+                    );
+                    crusherBase.position.y = -4.25;
+                    group.add(crusherBase);
+                    break;
+
+                case 'pinmill':
+                    // 핀밀 (Pin Mill)
+                    // 메인 디스크 하우징
+                    const pinmillBody = new THREE.Mesh(
+                        new THREE.CylinderGeometry(1.8, 1.8, 0.8, 32),
+                        redMat
+                    );
+                    pinmillBody.position.y = 0;
+                    group.add(pinmillBody);
+
+                    // 전면 커버
+                    const frontCover = new THREE.Mesh(
+                        new THREE.CylinderGeometry(1.6, 1.6, 0.2, 32),
+                        steelMat
+                    );
+                    frontCover.position.set(0, 0, 0.5);
+                    frontCover.rotation.x = Math.PI / 2;
+                    group.add(frontCover);
+
+                    // 투입구 (측면)
+                    const pinmillInlet = new THREE.Mesh(
+                        new THREE.CylinderGeometry(0.3, 0.3, 0.8, 16),
+                        steelMat
+                    );
+                    pinmillInlet.rotation.z = Math.PI / 2;
+                    pinmillInlet.position.set(-2.2, 0, 0);
+                    group.add(pinmillInlet);
+
+                    // 핀 디스크 (고정측)
+                    const statorDisc = new THREE.Mesh(
+                        new THREE.CylinderGeometry(1.4, 1.4, 0.1, 32),
+                        darkMat
+                    );
+                    statorDisc.position.y = -0.35;
+                    group.add(statorDisc);
+
+                    // 핀 디스크 (회전측)
+                    const rotorDisc = new THREE.Mesh(
+                        new THREE.CylinderGeometry(1.4, 1.4, 0.1, 32),
+                        darkMat
+                    );
+                    rotorDisc.position.y = 0.35;
+                    group.add(rotorDisc);
+
+                    // 핀들 (여러 개의 원)
+                    for (let ring = 0; ring < 3; ring++) {
+                        const radius = 0.5 + ring * 0.4;
+                        const pinCount = 8 + ring * 4;
+                        for (let i = 0; i < pinCount; i++) {
+                            const angle = (i / pinCount) * Math.PI * 2;
+                            // 상부 핀
+                            const pinUp = new THREE.Mesh(
+                                new THREE.CylinderGeometry(0.05, 0.05, 0.3, 8),
+                                yellowMat
+                            );
+                            pinUp.position.set(
+                                Math.cos(angle) * radius,
+                                0.2,
+                                Math.sin(angle) * radius
+                            );
+                            group.add(pinUp);
+                            // 하부 핀
+                            const pinDown = new THREE.Mesh(
+                                new THREE.CylinderGeometry(0.05, 0.05, 0.3, 8),
+                                yellowMat
+                            );
+                            pinDown.position.set(
+                                Math.cos(angle + Math.PI / pinCount) * radius,
+                                -0.2,
+                                Math.sin(angle + Math.PI / pinCount) * radius
+                            );
+                            group.add(pinDown);
+                        }
+                    }
+
+                    // 후면 구동축 연결부
+                    const shaftHousing = new THREE.Mesh(
+                        new THREE.CylinderGeometry(0.5, 0.5, 1, 16),
+                        steelMat
+                    );
+                    shaftHousing.rotation.x = Math.PI / 2;
+                    shaftHousing.position.set(0, 0, -0.9);
+                    group.add(shaftHousing);
+
+                    // 감속기
+                    const pinmillGearbox = new THREE.Mesh(
+                        new THREE.BoxGeometry(1, 1, 1),
+                        orangeMat
+                    );
+                    pinmillGearbox.position.set(0, 0, -1.9);
+                    group.add(pinmillGearbox);
+
+                    // 모터
+                    const pinmillMotor = new THREE.Mesh(
+                        new THREE.CylinderGeometry(0.4, 0.4, 1.5, 16),
+                        darkMat
+                    );
+                    pinmillMotor.rotation.x = Math.PI / 2;
+                    pinmillMotor.position.set(0, 0, -3.15);
+                    group.add(pinmillMotor);
+
+                    // 하단 배출구
+                    const pinmillDischarge = new THREE.Mesh(
+                        new THREE.CylinderGeometry(0.3, 0.3, 0.6, 16),
+                        steelMat
+                    );
+                    pinmillDischarge.position.y = -0.7;
+                    group.add(pinmillDischarge);
+
+                    // 지지 프레임
+                    const pinmillFrame = new THREE.Mesh(
+                        new THREE.BoxGeometry(3, 0.15, 4),
+                        darkMat
+                    );
+                    pinmillFrame.position.set(0, -1.5, -1);
+                    group.add(pinmillFrame);
+
+                    // 다리
+                    for (let i = 0; i < 4; i++) {
+                        const xPos = i < 2 ? -1.2 : 1.2;
+                        const zPos = i % 2 === 0 ? 0.5 : -2.5;
+                        const pinmillLeg = new THREE.Mesh(
+                            new THREE.BoxGeometry(0.15, 2, 0.15),
+                            darkMat
+                        );
+                        pinmillLeg.position.set(xPos, -2.5, zPos);
+                        group.add(pinmillLeg);
+                    }
+
+                    // 베이스
+                    const pinmillBase = new THREE.Mesh(
+                        new THREE.BoxGeometry(3.2, 0.1, 4.2),
+                        darkMat
+                    );
+                    pinmillBase.position.set(0, -3.5, -1);
+                    group.add(pinmillBase);
+                    break;
+            }
+
+            return group;
+        }
+
+        function highlightEquipment(id) {
+            Object.keys(equipmentMeshes).forEach(eqId => {
+                const mesh = equipmentMeshes[eqId];
+                const isSelected = eqId === id;
+
+                // 선택된 설비에 발광 효과
+                mesh.traverse(child => {
+                    if (child.isMesh && child.material.emissive) {
+                        child.material.emissive = new THREE.Color(isSelected ? 0x440000 : 0x000000);
+                        child.material.emissiveIntensity = isSelected ? 0.3 : 0;
+                    }
+                });
+
+                // 선택 표시 위치 업데이트
+                if (isSelected) {
+                    const pos = mesh.position;
+
+                    // 화살표 위치 (설비 위)
+                    if (selectionArrow) {
+                        selectionArrow.position.set(pos.x, 7, pos.z);
+                        selectionArrow.visible = true;
+                    }
+
+                    // 링 위치 (설비 아래 바닥)
+                    if (selectionRing) {
+                        selectionRing.position.set(pos.x, -3.9, pos.z);
+                        selectionRing.visible = true;
+                    }
+                }
+            });
+        }
+
+        function updateEquipmentStatus() {
+            let worstStatus = 'normal';
+            sensors.forEach(sensor => {
+                const status = getSensorStatus(sensorData[sensor.id].value, sensor);
+                if (status === 'critical') worstStatus = 'critical';
+                else if (status === 'warning' && worstStatus !== 'critical') worstStatus = 'warning';
+            });
+
+            const statusDot = document.getElementById('status-shredder');
+            if (statusDot) {
+                statusDot.className = `status-dot ${worstStatus}`;
+            }
+
+            // Update 3D colors
+            Object.keys(equipmentMeshes).forEach(id => {
+                const mesh = equipmentMeshes[id];
+                let color;
+                switch (worstStatus) {
+                    case 'critical': color = 0xff0000; break;
+                    case 'warning': color = 0xffaa00; break;
+                    default: color = null;
+                }
+
+                if (color && id !== selectedEquipment) {
+                    mesh.traverse(child => {
+                        if (child.isMesh) {
+                            child.material.emissive = new THREE.Color(color);
+                            child.material.emissiveIntensity = 0.2;
+                        }
+                    });
+                }
+            });
+
+            return worstStatus;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Use calibrated orientation from main page if remote is enabled
+            if (useRemoteOrientation) {
+                // 메인 페이지에서 보정된 roll/pitch 사용 (도 단위를 라디안으로 변환)
+                const toRad = Math.PI / 180;
+                targetRotation.y = calibratedOrientation.roll * toRad;   // Roll → Z축 회전 (좌우)
+                targetRotation.x = calibratedOrientation.pitch * toRad;  // Pitch → X축 회전 (앞뒤)
+            } else if (orientationEnabled) {
+                // 로컬 기울기 사용
+                const gamma = deviceOrientation.gamma || 0;
+                const beta = deviceOrientation.beta || 0;
+
+                targetRotation.y = gamma * 0.03;  // Y축 회전 (좌우 기울기)
+                targetRotation.x = beta * 0.03;   // X축 회전 (앞뒤 기울기)
+            }
+
+            currentRotation.x += (targetRotation.x - currentRotation.x) * 0.1;
+            currentRotation.y += (targetRotation.y - currentRotation.y) * 0.1;
+
+            // Camera stays fixed
+            camera.position.set(0, 12, 25);
+            camera.lookAt(0, 0, 0);
+
+            // Only rotate the SELECTED equipment based on orientation
+            const time = Date.now() * 0.001;
+            Object.keys(equipmentMeshes).forEach(eqId => {
+                const mesh = equipmentMeshes[eqId];
+
+                if (eqId === selectedEquipment) {
+                    // Selected equipment follows device orientation
+                    mesh.rotation.x = currentRotation.x;
+                    mesh.rotation.z = currentRotation.y;
+                    // Small Y rotation for visual effect
+                    mesh.rotation.y = Math.sin(time * 0.5) * 0.05;
+                } else {
+                    // Other equipment stays still
+                    mesh.rotation.x = 0;
+                    mesh.rotation.y = 0;
+                    mesh.rotation.z = 0;
+                }
+            });
+
+            // 화살표 위아래 움직임 애니메이션
+            if (selectionArrow && selectionArrow.visible) {
+                selectionArrow.position.y = 7 + Math.sin(time * 3) * 0.5;
+            }
+
+            // 링 회전 애니메이션
+            if (selectionRing && selectionRing.visible) {
+                selectionRing.rotation.z = time * 0.5;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('canvas3d');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        // Device Orientation
+        function initOrientation() {
+            if (typeof DeviceOrientationEvent !== 'undefined') {
+                if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    // iOS 13+
+                    document.body.addEventListener('click', requestOrientationPermission, { once: true });
+                    document.getElementById('orientText').textContent = '화면을 탭하여 기울기 활성화';
+                } else {
+                    // Android / Desktop
+                    window.addEventListener('deviceorientation', handleOrientation);
+                    document.getElementById('orientText').textContent = '기울기 감지 중...';
+                }
+            } else {
+                document.getElementById('orientText').textContent = '기울기 센서 미지원';
+            }
+        }
+
+        async function requestOrientationPermission() {
+            try {
+                const permission = await DeviceOrientationEvent.requestPermission();
+                if (permission === 'granted') {
+                    window.addEventListener('deviceorientation', handleOrientation);
+                    document.getElementById('orientText').textContent = '기울기 감지 중...';
+                }
+            } catch (error) {
+                console.error('Orientation permission error:', error);
+            }
+        }
+
+        function handleOrientation(event) {
+            orientationEnabled = true;
+            deviceOrientation = {
+                alpha: event.alpha || 0,
+                beta: event.beta || 0,
+                gamma: event.gamma || 0
+            };
+
+            if (!useRemoteOrientation) {
+                document.getElementById('orientationStatus').classList.add('active');
+                document.getElementById('orientText').textContent = '로컬 기울기 반영 중';
+                updateOrientationDisplay(deviceOrientation);
+            }
+        }
+
+        // Chart
+        function initChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            trendData = {
+                labels: [],
+                datasets: [
+                    { label: '진동 DE', data: [], borderColor: '#00d4ff', backgroundColor: 'transparent', tension: 0.4, pointRadius: 0 },
+                    { label: '온도 DE', data: [], borderColor: '#00ff88', backgroundColor: 'transparent', tension: 0.4, pointRadius: 0 },
+                    { label: '전류', data: [], borderColor: '#ffaa00', backgroundColor: 'transparent', tension: 0.4, pointRadius: 0 }
+                ]
+            };
+
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: trendData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#888', boxWidth: 12 } }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: { ticks: { color: '#666' }, grid: { color: '#222' } }
+                    }
+                }
+            });
+        }
+
+        function updateChart() {
+            const now = new Date().toLocaleTimeString('ko-KR', { hour12: false });
+            trendData.labels.push(now);
+            if (trendData.labels.length > 60) trendData.labels.shift();
+
+            trendData.datasets[0].data.push(sensorData['vib1'].value);
+            trendData.datasets[1].data.push(sensorData['temp1'].value);
+            trendData.datasets[2].data.push(sensorData['current'].value);
+
+            trendData.datasets.forEach(ds => {
+                if (ds.data.length > 60) ds.data.shift();
+            });
+
+            trendChart.update('none');
+        }
+
+        // Simulation
+        function startSimulation() {
+            setInterval(updateSimulation, 1000);
+        }
+
+        function updateSimulation() {
+            sensors.forEach(sensor => {
+                const data = sensorData[sensor.id];
+                let value = data.base;
+
+                // Random noise
+                value += (Math.random() - 0.5) * data.variance * 2;
+
+                // Scenario effects
+                if (currentScenario === 'degrading') {
+                    if (sensor.id === 'vib1' || sensor.id === 'vib2') {
+                        degradeCounter += 0.05;
+                        value += degradeCounter * 0.5;
+                    }
+                } else if (currentScenario === 'anomaly') {
+                    if (Math.random() < 0.15) {
+                        value += data.variance * 8;
+                    }
+                } else if (currentScenario === 'predictive') {
+                    if (sensor.id === 'vib1') {
+                        value = sensor.warning[0] + (sensor.warning[1] - sensor.warning[0]) * 0.7;
+                    }
+                }
+
+                data.value = value;
+            });
+
+            updateSensorDisplay();
+            updateChart();
+            const status = updateEquipmentStatus();
+
+            // Update predictions
+            updatePredictions();
+
+            // Show alerts
+            if (status === 'critical') {
+                showAlert('critical', '긴급: 이상 감지', '파쇄기 #1 베어링 진동이 임계치를 초과했습니다. 즉시 점검이 필요합니다.');
+            } else if (status === 'warning') {
+                showAlert('warning', '주의: 이상 징후', '파쇄기 #1 베어링 진동이 주의 범위에 도달했습니다. 모니터링 강화 필요.');
+            } else {
+                hideAlert();
+            }
+        }
+
+        function updateSensorDisplay() {
+            sensors.forEach(sensor => {
+                const data = sensorData[sensor.id];
+                const status = getSensorStatus(data.value, sensor);
+                const percentage = calculatePercentage(data.value, sensor);
+
+                const card = document.getElementById(`card-${sensor.id}`);
+                const valueEl = document.getElementById(`value-${sensor.id}`);
+                const barEl = document.getElementById(`bar-${sensor.id}`);
+
+                if (card) card.className = `sensor-card ${status}`;
+                if (valueEl) valueEl.textContent = data.value.toFixed(1);
+                if (barEl) {
+                    barEl.style.width = `${percentage}%`;
+                    barEl.className = `sensor-bar-fill ${status}`;
+                }
+            });
+        }
+
+        function updatePredictions() {
+            const vibValue = sensorData['vib1'].value;
+            const normalMax = 4.5;
+
+            // Calculate RUL based on vibration
+            let rul = Math.max(1, Math.floor(200 - (vibValue / normalMax) * 100));
+            if (currentScenario === 'degrading') rul = Math.max(1, rul - degradeCounter * 2);
+
+            const healthScore = Math.max(0, Math.min(100, 100 - (vibValue / 7.1) * 50));
+            const anomalyProb = Math.min(100, Math.max(0, (vibValue - normalMax) / 3 * 50));
+
+            document.getElementById('rulValue').textContent = rul + '일';
+            document.getElementById('rulValueSidebar').textContent = rul + '일';
+            document.getElementById('healthScore').textContent = healthScore.toFixed(0) + '%';
+            document.getElementById('anomalyProb').textContent = anomalyProb.toFixed(0) + '%';
+            document.getElementById('wearRate').textContent = (100 / rul).toFixed(1) + '%';
+            document.getElementById('nextMaint').textContent = Math.floor(rul * 0.25) + '일';
+        }
+
+        function showAlert(type, title, message) {
+            const panel = document.getElementById('alertPanel');
+            const titleEl = document.getElementById('alertTitle');
+            const messageEl = document.getElementById('alertMessage');
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            panel.classList.add('active');
+        }
+
+        function hideAlert() {
+            document.getElementById('alertPanel').classList.remove('active');
+            document.getElementById('actionGuide').classList.remove('active');
+        }
+
+        function acknowledgeAlert() {
+            document.getElementById('alertPanel').classList.remove('active');
+        }
+
+        function showActionGuide() {
+            document.getElementById('actionGuide').classList.add('active');
+        }
+
+        function applyScenario() {
+            currentScenario = document.getElementById('scenarioSelect').value;
+            degradeCounter = 0;
+
+            // Reset sensor data
+            initSensorData();
+            hideAlert();
+        }
+
+        // Init
+        init();
+    </script>
+</body>
+</html>

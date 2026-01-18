@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>한국기계엔지니어링 - 스마트 파쇄기 모니터링</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,10,26,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a5f7a;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #57c5b6;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a2a3a 50%, #0a0a1a 100%);
+            text-align: center;
+            padding: 100px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(26,95,122,0.3) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(87,197,182,0.2) 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #1a5f7a, #57c5b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 40px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .btn {
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #1a5f7a, #159895);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(26,95,122,0.4);
+        }
+        .btn-secondary {
+            border: 2px solid #57c5b6;
+            color: #57c5b6;
+        }
+        .btn-secondary:hover {
+            background: rgba(87,197,182,0.1);
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding: 80px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #57c5b6;
+        }
+        .stat-label {
+            color: #888;
+            margin-top: 10px;
+        }
+
+        /* Section */
+        section {
+            padding: 100px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .section-title p {
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        /* Problems */
+        .problems {
+            background: linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 100%);
+        }
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        .problem-card {
+            padding: 35px;
+            background: rgba(255,68,68,0.05);
+            border: 1px solid rgba(255,68,68,0.2);
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+        .problem-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,68,68,0.4);
+        }
+        .problem-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .problem-card h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+        .problem-card p {
+            color: #aaa;
+        }
+
+        /* Solutions */
+        .solutions {
+            background: #0f0f1f;
+        }
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        .solution-card {
+            padding: 35px;
+            background: rgba(87,197,182,0.05);
+            border: 1px solid rgba(87,197,182,0.2);
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+        .solution-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(87,197,182,0.4);
+        }
+        .solution-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .solution-card h3 {
+            color: #57c5b6;
+            margin-bottom: 15px;
+        }
+        .solution-card p {
+            color: #aaa;
+        }
+
+        /* Equipment */
+        .equipment {
+            background: linear-gradient(180deg, #0f0f1f 0%, #0a0a1a 100%);
+        }
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        .equipment-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .equipment-card:hover {
+            transform: translateY(-5px);
+            border-color: #1a5f7a;
+        }
+        .equipment-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .equipment-card h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .equipment-card p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* ROI */
+        .roi {
+            background: #0a0a1a;
+        }
+        .roi-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .roi-chart {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .roi-bar {
+            margin-bottom: 20px;
+        }
+        .roi-bar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .roi-bar-label {
+            color: #aaa;
+        }
+        .roi-bar-value {
+            color: #57c5b6;
+            font-weight: 600;
+        }
+        .roi-bar-track {
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .roi-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1a5f7a, #57c5b6);
+            border-radius: 6px;
+        }
+        .roi-summary {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(26,95,122,0.2) 0%, rgba(87,197,182,0.1) 100%);
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        .roi-summary .big-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #57c5b6;
+        }
+        .roi-text h3 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .roi-text p {
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+        .roi-highlight {
+            background: rgba(26,95,122,0.1);
+            border-left: 4px solid #1a5f7a;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .roi-highlight strong {
+            color: #1a5f7a;
+        }
+        .savings-breakdown {
+            background: rgba(87,197,182,0.05);
+            border: 1px solid rgba(87,197,182,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .savings-breakdown strong {
+            color: #57c5b6;
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .savings-breakdown ul {
+            list-style: none;
+        }
+        .savings-breakdown li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: #aaa;
+        }
+        .savings-breakdown li:last-child {
+            border-bottom: none;
+        }
+        .savings-breakdown li.total {
+            border-top: 2px solid rgba(87,197,182,0.3);
+            margin-top: 10px;
+            padding-top: 15px;
+            font-weight: 700;
+            color: #57c5b6;
+            font-size: 1.1rem;
+        }
+        .savings-breakdown li span:last-child {
+            font-weight: 600;
+            color: #fff;
+        }
+        .savings-breakdown li.total span:last-child {
+            color: #57c5b6;
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            padding: 100px 30px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0a0a1a 100%);
+        }
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .cta p {
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            background: #050510;
+            padding: 60px 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer-brand h3 {
+            color: #1a5f7a;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .footer-brand p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .footer-links h4 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .footer-links a {
+            display: block;
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: #57c5b6;
+        }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: #444;
+        }
+
+        @media (max-width: 900px) {
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .problem-grid, .solution-grid, .roi-content { grid-template-columns: 1fr; }
+            .equipment-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">한국기계엔지니어링</div>
+        <div class="nav-links">
+            <a href="index.html" class="active">홈</a>
+            <a href="system.html">시스템 구성</a>
+            <a href="diagram.html">구성도</a>
+            <a href="monitor.html">실시간 모니터링</a>
+            <a href="about.html">UTTEC 소개</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>스마트 파쇄기 모니터링 시스템</h1>
+            <p>AI 기반 실시간 모니터링으로 과부하를 예방하고,<br>설비 수명을 연장하며, 다운타임을 최소화합니다.</p>
+            <div class="hero-buttons">
+                <a href="monitor.html" class="btn btn-primary">실시간 모니터링 체험</a>
+                <a href="system.html" class="btn btn-secondary">시스템 구성 보기</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number">70%</div>
+            <div class="stat-label">다운타임 감소</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">30%</div>
+            <div class="stat-label">정비비용 절감</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">20%</div>
+            <div class="stat-label">에너지 효율 향상</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">20%</div>
+            <div class="stat-label">장비 수명 연장</div>
+        </div>
+    </div>
+
+    <section class="problems">
+        <div class="section-title">
+            <h2>현재의 문제점</h2>
+            <p>기존 파쇄기 운영의 한계</p>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-icon">⚠️</div>
+                <h3>과부하 수동 대응</h3>
+                <p>과부하 발생 시 수동으로 정지해야 하며, 이물질 걸림 시 즉각적인 대응이 어렵습니다. 모터 및 감속기 손상 위험이 높습니다.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">🔧</div>
+                <h3>예측 불가능한 고장</h3>
+                <p>베어링 마모, 블레이드 손상 등을 사전에 감지할 수 없어 갑작스러운 다운타임이 발생합니다.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">📊</div>
+                <h3>운전 데이터 부재</h3>
+                <p>과거 운전 이력과 부하 패턴 데이터가 없어 최적 운전 조건 설정이 어렵습니다.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">🔌</div>
+                <h3>원격 관리 불가</h3>
+                <p>현장에 있어야만 설비 상태를 확인할 수 있어, 야간/휴일 대응이 지연됩니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="solutions">
+        <div class="section-title">
+            <h2>UTTEC 솔루션</h2>
+            <p>스마트 파쇄기가 제공하는 가치</p>
+        </div>
+        <div class="solution-grid">
+            <div class="solution-card">
+                <div class="solution-icon">🛡️</div>
+                <h3>자동 과부하 보호</h3>
+                <p>전류/토크 실시간 감시로 과부하 감지 시 자동 감속 또는 역회전 후 재시도. 3회 실패 시 비상정지 및 알람.</p>
+            </div>
+            <div class="solution-card">
+                <div class="solution-icon">🤖</div>
+                <h3>AI 예지정비</h3>
+                <p>진동/온도 패턴 분석으로 베어링 및 블레이드 마모를 사전 예측. 계획된 정비로 갑작스러운 다운타임 방지.</p>
+            </div>
+            <div class="solution-card">
+                <div class="solution-icon">📈</div>
+                <h3>데이터 기반 최적화</h3>
+                <p>재료별 최적 운전 조건 자동 학습. 에너지 효율과 처리량 균형 최적화.</p>
+            </div>
+            <div class="solution-card">
+                <div class="solution-icon">📱</div>
+                <h3>원격 모니터링</h3>
+                <p>스마트폰/PC로 어디서나 실시간 상태 확인. 이상 발생 시 즉시 알림.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="equipment">
+        <div class="section-title">
+            <h2>모니터링 대상 설비</h2>
+            <p>한국기계엔지니어링 핵심 제품군</p>
+        </div>
+        <div class="equipment-grid">
+            <div class="equipment-card">
+                <div class="equipment-icon">⚙️</div>
+                <h3>이축 파쇄기 (SHREDDER)</h3>
+                <p>두 개의 축이 교차 회전하며 재료를 파쇄. 고토크 설계로 강력한 파쇄력 확보.</p>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon">🔩</div>
+                <h3>분쇄기 (CRUSHER)</h3>
+                <p>해머/임팩트 방식의 고속 분쇄. 다양한 입도 조절 가능.</p>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon">🌀</div>
+                <h3>핀밀 (PIN MILL)</h3>
+                <p>충격식 미분쇄기. 고속 회전 핀에 의한 충돌로 미세 분쇄.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="roi">
+        <div class="section-title">
+            <h2>투자 효과 분석</h2>
+            <p>확실한 ROI를 보장합니다</p>
+        </div>
+        <div class="roi-content">
+            <div class="roi-chart">
+                <div class="roi-bar">
+                    <div class="roi-bar-header">
+                        <span class="roi-bar-label">파쇄기 예지정비</span>
+                        <span class="roi-bar-value">ROI 142%</span>
+                    </div>
+                    <div class="roi-bar-track">
+                        <div class="roi-bar-fill" style="width: 95%"></div>
+                    </div>
+                </div>
+                <div class="roi-bar">
+                    <div class="roi-bar-header">
+                        <span class="roi-bar-label">분쇄기 예지정비</span>
+                        <span class="roi-bar-value">ROI 138%</span>
+                    </div>
+                    <div class="roi-bar-track">
+                        <div class="roi-bar-fill" style="width: 92%"></div>
+                    </div>
+                </div>
+                <div class="roi-bar">
+                    <div class="roi-bar-header">
+                        <span class="roi-bar-label">과부하 보호 시스템</span>
+                        <span class="roi-bar-value">ROI 156%</span>
+                    </div>
+                    <div class="roi-bar-track">
+                        <div class="roi-bar-fill" style="width: 98%"></div>
+                    </div>
+                </div>
+                <div class="roi-bar">
+                    <div class="roi-bar-header">
+                        <span class="roi-bar-label">원격 모니터링</span>
+                        <span class="roi-bar-value">ROI 125%</span>
+                    </div>
+                    <div class="roi-bar-track">
+                        <div class="roi-bar-fill" style="width: 83%"></div>
+                    </div>
+                </div>
+                <div class="roi-summary">
+                    <div class="big-number">4.9개월</div>
+                    <div class="label">투자 회수 기간</div>
+                </div>
+            </div>
+            <div class="roi-text">
+                <h3>확실한 투자 가치</h3>
+                <p>총 투자비용 5,500만원으로 연간 1억 3,500만원의 비용 절감 효과를 얻을 수 있습니다.</p>
+                <p>평균 ROI 145%로 약 4.9개월 만에 투자비를 회수하고, 이후에는 순수 이익이 발생합니다.</p>
+
+                <div class="savings-breakdown">
+                    <strong>연간 절감 내역</strong>
+                    <ul>
+                        <li><span>비계획 정지 감소</span><span>5,500만원</span></li>
+                        <li><span>베어링/블레이드 수명 연장</span><span>3,500만원</span></li>
+                        <li><span>에너지 효율 개선</span><span>2,500만원</span></li>
+                        <li><span>과부하 손상 방지</span><span>1,500만원</span></li>
+                        <li><span>원격 관리 인력 절감</span><span>500만원</span></li>
+                        <li class="total"><span>연간 총 절감액</span><span>1억 3,500만원</span></li>
+                    </ul>
+                </div>
+
+                <div class="roi-highlight">
+                    <strong>투자 대비 효과</strong><br>
+                    • 총 투자: 5,500만원<br>
+                    • 연간 절감: 1억 3,500만원<br>
+                    • 3년 누적 절감: 4억 500만원
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>지금 바로 체험해 보세요</h2>
+        <p>실시간 모니터링 데모를 통해 UTTEC 솔루션의 효과를 직접 확인하세요</p>
+        <div class="hero-buttons">
+            <a href="monitor.html" class="btn btn-primary">실시간 모니터링 데모</a>
+            <a href="about.html" class="btn btn-secondary">UTTEC 자세히 보기</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>UTTEC</h3>
+                <p>설비의 미래를 예측합니다.<br>40년 이상의 임베디드 시스템 개발 경험을 바탕으로<br>산업용 IoT 및 예지정비 솔루션을 제공합니다.</p>
+            </div>
+            <div class="footer-links">
+                <h4>사이트맵</h4>
+                <a href="index.html">홈</a>
+                <a href="system.html">시스템 구성</a>
+                <a href="monitor.html">실시간 모니터링</a>
+                <a href="about.html">UTTEC 소개</a>
+            </div>
+            <div class="footer-links">
+                <h4>한국기계엔지니어링</h4>
+                <a href="http://topcrusher.co.kr" target="_blank">공식 웹사이트</a>
+                <a href="#">제품 카탈로그</a>
+                <a href="#">기술 지원</a>
+            </div>
+            <div class="footer-links">
+                <h4>연락처</h4>
+                <a href="#">경기도 군포시 공단로 140번 안길30</a>
+                <a href="tel:031-427-7783">031-427-7783~5</a>
+                <a href="#">topcrusher.co.kr</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 UTTEC x 한국기계엔지니어링. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

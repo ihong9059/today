@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시스템 구성 - 화성기계(HSMC)</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0891b2 50%, #06b6d4 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(15, 118, 110, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 2rem 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+        }
+
+        /* Architecture Section */
+        .architecture-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .architecture-section h2 {
+            color: #0f766e;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        /* 4-Layer Architecture */
+        .architecture-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .layer {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .layer:hover {
+            transform: translateX(10px);
+        }
+
+        .layer-1 {
+            background: linear-gradient(135deg, #0f766e, #0891b2);
+            color: white;
+        }
+
+        .layer-2 {
+            background: linear-gradient(135deg, #0891b2, #06b6d4);
+            color: white;
+        }
+
+        .layer-3 {
+            background: linear-gradient(135deg, #06b6d4, #10b981);
+            color: white;
+        }
+
+        .layer-4 {
+            background: linear-gradient(135deg, #10b981, #f59e0b);
+            color: white;
+        }
+
+        .layer-number {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .layer-content {
+            flex: 1;
+        }
+
+        .layer-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .layer-content p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .layer-components {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 0.8rem;
+        }
+
+        .component-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+
+        .layer-arrow {
+            text-align: center;
+            color: #0f766e;
+            font-size: 1.5rem;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: #f5f5f5;
+            color: #666;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #0f766e, #0891b2);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Diagnosis Table */
+        .diagnosis-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .diagnosis-table th {
+            background: linear-gradient(135deg, #0f766e, #0891b2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .diagnosis-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .diagnosis-table tr:hover {
+            background: #f0fdfa;
+        }
+
+        .grade-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .grade-a {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .grade-b {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .grade-c {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* Sensor Types */
+        .sensor-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .type-vibration {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .type-displacement {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .type-current {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .type-temperature {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .type-oil {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        /* Service Flow */
+        .service-flow-section {
+            background: linear-gradient(135deg, #0f766e, #0891b2);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .service-flow-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .service-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .flow-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .flow-step h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .flow-step p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Report Preview */
+        .report-preview {
+            background: #1e293b;
+            border-radius: 15px;
+            padding: 2rem;
+            color: #94a3b8;
+            font-family: 'Consolas', monospace;
+            margin-top: 2rem;
+            overflow-x: auto;
+        }
+
+        .report-preview .title {
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .report-preview .highlight {
+            color: #22d3ee;
+        }
+
+        .report-preview .grade-good {
+            color: #4ade80;
+        }
+
+        .report-preview .grade-warn {
+            color: #facc15;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.3);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .layer {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .diagnosis-table {
+                font-size: 0.85rem;
+            }
+
+            .service-flow {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="favicon.svg" alt="화성기계 로고">
+                <div class="logo-text">
+                    <span class="logo-main">화성기계(HSMC)</span>
+                    <span class="logo-sub">공작기계 전문 매매</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="system.html" class="active">시스템</a>
+                <a href="monitor.html">모니터링</a>
+                <a href="about.html">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>시스템 구성</h1>
+        <p>공작기계 정밀 진단 및 원격 모니터링을 위한 4계층 아키텍처</p>
+    </section>
+
+    <div class="main-content">
+        <!-- Architecture -->
+        <div class="architecture-section">
+            <h2>🏗️ 스마트 서비스 4계층 아키텍처</h2>
+            <div class="architecture-layers">
+                <div class="layer layer-1">
+                    <div class="layer-number">1</div>
+                    <div class="layer-content">
+                        <h3>클라우드 플랫폼 (Cloud Layer)</h3>
+                        <p>기계이력 DB, AI 진단 엔진, 가치평가 시스템, 원격 A/S 대시보드</p>
+                        <div class="layer-components">
+                            <span class="component-tag">기계이력 DB</span>
+                            <span class="component-tag">AI 진단 엔진</span>
+                            <span class="component-tag">가치평가 시스템</span>
+                            <span class="component-tag">진단보고서 발급</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layer-arrow">↑↓</div>
+                <div class="layer layer-2">
+                    <div class="layer-number">2</div>
+                    <div class="layer-content">
+                        <h3>진단 게이트웨이 (Edge Layer)</h3>
+                        <p>ARM Cortex-M4 + DSP 기반 실시간 분석, 스핀들/볼스크류/서보 상태 분석</p>
+                        <div class="layer-components">
+                            <span class="component-tag">스핀들 런아웃 분석</span>
+                            <span class="component-tag">볼스크류 백래시</span>
+                            <span class="component-tag">서보모터 전류</span>
+                            <span class="component-tag">AI 종합등급</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layer-arrow">↑↓</div>
+                <div class="layer layer-3">
+                    <div class="layer-number">3</div>
+                    <div class="layer-content">
+                        <h3>센서 / CNC 연동 (Sensor Layer)</h3>
+                        <p>진동(3축), 변위(μm급), 온도, 전류, 윤활유 상태 센서</p>
+                        <div class="layer-components">
+                            <span class="component-tag">진동(3축)</span>
+                            <span class="component-tag">변위(μm급)</span>
+                            <span class="component-tag">온도(PT100)</span>
+                            <span class="component-tag">전류(CT)</span>
+                            <span class="component-tag">CNC 데이터</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="layer-arrow">↑↓</div>
+                <div class="layer layer-4">
+                    <div class="layer-number">4</div>
+                    <div class="layer-content">
+                        <h3>공작기계 (Equipment Layer)</h3>
+                        <p>CNC 선반, 머시닝센터, 밀링머신, 연삭기, 프레스 등</p>
+                        <div class="layer-components">
+                            <span class="component-tag">CNC 선반</span>
+                            <span class="component-tag">머시닝센터</span>
+                            <span class="component-tag">밀링머신</span>
+                            <span class="component-tag">연삭기</span>
+                            <span class="component-tag">프레스</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diagnosis Details Tabs -->
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('spindle')">스핀들 진단</button>
+                <button class="tab-btn" onclick="openTab('ballscrew')">볼스크류 진단</button>
+                <button class="tab-btn" onclick="openTab('servo')">서보모터 진단</button>
+                <button class="tab-btn" onclick="openTab('hydraulic')">유압장치 진단</button>
+            </div>
+
+            <div id="spindle" class="tab-content active">
+                <h3 style="color: #0f766e; margin-bottom: 1rem;">스핀들 정밀 진단</h3>
+                <table class="diagnosis-table">
+                    <thead>
+                        <tr>
+                            <th>진단 항목</th>
+                            <th>측정 방법</th>
+                            <th>판정 기준</th>
+                            <th>장비</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>런아웃 (Runout)</td>
+                            <td><span class="sensor-type type-displacement">변위센서 (비접촉)</span></td>
+                            <td><span class="grade-badge grade-a">A: &lt;5μm</span> <span class="grade-badge grade-b">B: &lt;10μm</span> <span class="grade-badge grade-c">C: &lt;20μm</span></td>
+                            <td>레이저 변위센서</td>
+                        </tr>
+                        <tr>
+                            <td>베어링 상태</td>
+                            <td><span class="sensor-type type-vibration">진동 FFT 분석</span></td>
+                            <td>BPFO/BPFI 주파수 분석</td>
+                            <td>3축 가속도계</td>
+                        </tr>
+                        <tr>
+                            <td>열팽창</td>
+                            <td><span class="sensor-type type-temperature">온도 센서</span></td>
+                            <td>열팽창에 의한 정밀도 변화</td>
+                            <td>PT100 온도센서</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="ballscrew" class="tab-content">
+                <h3 style="color: #0f766e; margin-bottom: 1rem;">볼스크류 진단</h3>
+                <table class="diagnosis-table">
+                    <thead>
+                        <tr>
+                            <th>진단 항목</th>
+                            <th>측정 방법</th>
+                            <th>판정 기준</th>
+                            <th>장비</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>백래시 (Backlash)</td>
+                            <td><span class="sensor-type type-displacement">레이저 간섭계</span></td>
+                            <td><span class="grade-badge grade-a">A: &lt;5μm</span> <span class="grade-badge grade-b">B: &lt;15μm</span> <span class="grade-badge grade-c">C: &lt;30μm</span></td>
+                            <td>레이저 측정기</td>
+                        </tr>
+                        <tr>
+                            <td>X축 백래시</td>
+                            <td><span class="sensor-type type-displacement">변위 측정</span></td>
+                            <td>이송 정밀도 영향 분석</td>
+                            <td>레이저 간섭계</td>
+                        </tr>
+                        <tr>
+                            <td>Y축 백래시</td>
+                            <td><span class="sensor-type type-displacement">변위 측정</span></td>
+                            <td>이송 정밀도 영향 분석</td>
+                            <td>레이저 간섭계</td>
+                        </tr>
+                        <tr>
+                            <td>Z축 백래시</td>
+                            <td><span class="sensor-type type-displacement">변위 측정</span></td>
+                            <td>이송 정밀도 영향 분석</td>
+                            <td>레이저 간섭계</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="servo" class="tab-content">
+                <h3 style="color: #0f766e; margin-bottom: 1rem;">서보모터 진단</h3>
+                <table class="diagnosis-table">
+                    <thead>
+                        <tr>
+                            <th>진단 항목</th>
+                            <th>측정 방법</th>
+                            <th>판정 기준</th>
+                            <th>장비</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>전류 파형</td>
+                            <td><span class="sensor-type type-current">CT 센서</span></td>
+                            <td>정격 대비 편차율</td>
+                            <td>CT 센서</td>
+                        </tr>
+                        <tr>
+                            <td>엔코더 상태</td>
+                            <td><span class="sensor-type type-current">신호 분석</span></td>
+                            <td>위치 오차 패턴</td>
+                            <td>오실로스코프</td>
+                        </tr>
+                        <tr>
+                            <td>과열 상태</td>
+                            <td><span class="sensor-type type-temperature">온도 측정</span></td>
+                            <td>정상 운전 온도 범위</td>
+                            <td>열화상 카메라</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="hydraulic" class="tab-content">
+                <h3 style="color: #0f766e; margin-bottom: 1rem;">유압장치 진단</h3>
+                <table class="diagnosis-table">
+                    <thead>
+                        <tr>
+                            <th>진단 항목</th>
+                            <th>측정 방법</th>
+                            <th>판정 기준</th>
+                            <th>장비</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>펌프 마모</td>
+                            <td><span class="sensor-type type-vibration">진동 분석</span></td>
+                            <td>진동 레벨 증가율</td>
+                            <td>진동 센서</td>
+                        </tr>
+                        <tr>
+                            <td>유압유 상태</td>
+                            <td><span class="sensor-type type-oil">오일 분석</span></td>
+                            <td>입자수, 수분, 점도</td>
+                            <td>오일 상태 센서</td>
+                        </tr>
+                        <tr>
+                            <td>유압 압력</td>
+                            <td><span class="sensor-type type-current">압력 센서</span></td>
+                            <td>설정압력 유지 여부</td>
+                            <td>압력 트랜스미터</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Report Preview -->
+            <div class="report-preview">
+                <div class="title">▶ 기계 상태 진단 보고서 (예시)</div>
+                <pre>
+┌───────────────────────────────────────────────────────────────┐
+│  <span class="highlight">기종:</span> 수직 머시닝센터 (VMC-850)                            │
+│  <span class="highlight">제조사:</span> 두산공작기계                                      │
+│  <span class="highlight">제조년월:</span> 2018년 3월  |  <span class="highlight">가동시간:</span> 12,500시간            │
+│  <span class="highlight">진단일자:</span> 2025년 1월 15일                                 │
+├───────────────────────────────────────────────────────────────┤
+│                                                               │
+│  ■ 종합 등급: [ <span class="grade-good">A</span> ] (우수)                                  │
+│                                                               │
+├───────────────────────────────────────────────────────────────┤
+│  항목            측정값     등급   상태                       │
+├───────────────────────────────────────────────────────────────┤
+│  스핀들 런아웃   4.2 μm    <span class="grade-good">A</span>     양호                       │
+│  스핀들 베어링   0.8 g     <span class="grade-good">A</span>     정상                       │
+│  X축 백래시      8.5 μm    <span class="grade-warn">B</span>     경미한 마모                │
+│  Y축 백래시      6.2 μm    <span class="grade-good">A</span>     양호                       │
+│  Z축 백래시      12.3 μm   <span class="grade-warn">B</span>     조정 권장                  │
+│  LM 가이드       4.8 μm/m  <span class="grade-good">A</span>     양호                       │
+│  서보모터        정상      <span class="grade-good">A</span>     정상                       │
+│  유압 시스템     98%       <span class="grade-good">A</span>     양호                       │
+├───────────────────────────────────────────────────────────────┤
+│  <span class="highlight">예상 잔존가치:</span> 시장가 대비 92%                              │
+└───────────────────────────────────────────────────────────────┘
+                </pre>
+            </div>
+        </div>
+
+        <!-- Service Flow -->
+        <div class="service-flow-section">
+            <h2>📊 진단 서비스 프로세스</h2>
+            <div class="service-flow">
+                <div class="flow-step">
+                    <div class="flow-icon">🔍</div>
+                    <h4>기계 접수</h4>
+                    <p>매입 또는 판매<br>기계 등록</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-icon">📡</div>
+                    <h4>센서 설치</h4>
+                    <p>진단 장비 연결<br>데이터 수집</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-icon">🧠</div>
+                    <h4>AI 분석</h4>
+                    <p>상태 진단<br>등급 산정</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-icon">📋</div>
+                    <h4>보고서 발급</h4>
+                    <p>진단보고서<br>가치평가서</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 화성기계(HSMC). All Rights Reserved. | 공작기계 스마트 서비스 파트너</p>
+    </footer>
+
+    <script>
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)폴라리스세원 - 스마트 솔루션</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(26, 35, 126, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 2rem 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .kosdaq-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+        }
+
+        /* Company Overview Card */
+        .overview-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .overview-card h2 {
+            color: #1a237e;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .company-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3949ab, #5c6bc0);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .info-content h4 {
+            color: #1a237e;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .info-content p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Certifications */
+        .certifications {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .cert-badge {
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Products Section */
+        .section-title {
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .product-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3949ab, #5c6bc0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+
+        .product-card h3 {
+            color: #1a237e;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .product-card p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .projects-section h2 {
+            color: #1a237e;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 1.8rem;
+            border-left: 4px solid #3949ab;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            color: #1a237e;
+            font-size: 1.1rem;
+            flex: 1;
+        }
+
+        .project-cost {
+            background: #1a237e;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .project-card p {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-sensors {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .sensor-tag {
+            background: rgba(57, 73, 171, 0.15);
+            color: #1a237e;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background: linear-gradient(135deg, #1a237e, #283593);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .summary-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .summary-item {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .summary-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-label {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        /* Clients Section */
+        .clients-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .clients-section h2 {
+            color: #1a237e;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .clients-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .client-item {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 1.5rem 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .client-item h4 {
+            color: #1a237e;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .client-item p {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.3);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .overview-card, .projects-section, .summary-section, .clients-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="favicon.svg" alt="폴라리스세원 로고">
+                <div class="logo-text">
+                    <span class="logo-main">(주)폴라리스세원</span>
+                    <span class="logo-sub">Polaris Sewon Co., Ltd.</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="active">홈</a>
+                <a href="system.html">시스템</a>
+                <a href="monitor.html">모니터링</a>
+                <a href="about.html">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>스마트 제조 솔루션</h1>
+        <p>자동차 공조부품 전문 제조 54년 기술력과 AI 기반 예지정비 시스템의 결합</p>
+        <div class="kosdaq-badge">KOSDAQ A234100 상장기업</div>
+    </section>
+
+    <div class="main-content">
+        <!-- Company Overview -->
+        <div class="overview-card">
+            <h2>🏭 기업 개요</h2>
+            <div class="company-info">
+                <div class="info-item">
+                    <div class="info-icon">🏢</div>
+                    <div class="info-content">
+                        <h4>회사명</h4>
+                        <p>(주)폴라리스세원<br>Polaris Sewon Co., Ltd.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">👤</div>
+                    <div class="info-content">
+                        <h4>대표이사</h4>
+                        <p>염승섭</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📅</div>
+                    <div class="info-content">
+                        <h4>설립연도</h4>
+                        <p>1971년 (54년 역사)</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div class="info-content">
+                        <h4>본사 위치</h4>
+                        <p>경기도 평택시 산단로64번길 56</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">⚙️</div>
+                    <div class="info-content">
+                        <h4>사업분야</h4>
+                        <p>자동차 공조부품 전문 제조</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📊</div>
+                    <div class="info-content">
+                        <h4>상장현황</h4>
+                        <p>코스닥 상장 (A234100)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="certifications">
+                <span class="cert-badge">SQ 인증 (현대/기아)</span>
+                <span class="cert-badge">ISO/TS 16949</span>
+                <span class="cert-badge">ISO 14001</span>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <h2 class="section-title">주요 제품</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-icon">🔧</div>
+                <h3>라디에이터 CAP ASS'Y</h3>
+                <p>자동차 냉각 시스템의 핵심 부품으로 압력 조절 및 냉각수 보충 기능 담당</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">❄️</div>
+                <h3>에어컨 컨덴서</h3>
+                <p>차량 에어컨 시스템의 냉매 응축 장치로 열교환 효율 극대화</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🔄</div>
+                <h3>컴프레서</h3>
+                <p>냉매 압축 펌프로 에어컨 시스템의 핵심 구동부품</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🔩</div>
+                <h3>MOTOR BRACKET</h3>
+                <p>전동 모터 고정 브라켓으로 진동 흡수 및 정밀 장착 지원</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon">🌡️</div>
+                <h3>헤더컨덴서 (신규)</h3>
+                <p>고효율 열교환 시스템으로 차세대 전기차 시장 대응</p>
+            </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="projects-section">
+            <h2>📋 스마트 제조 프로젝트 (총 6개)</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>프레스 설비 예지정비</h3>
+                        <span class="project-cost">4,500만원</span>
+                    </div>
+                    <p>프레스 금형 및 유압 시스템 상태 모니터링으로 돌발 고장 예방 및 생산성 향상</p>
+                    <div class="project-sensors">
+                        <span class="sensor-tag">진동 센서</span>
+                        <span class="sensor-tag">압력 센서</span>
+                        <span class="sensor-tag">온도 센서</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>브레이징로 스마트 관리</h3>
+                        <span class="project-cost">5,200만원</span>
+                    </div>
+                    <p>알루미늄 브레이징 공정의 온도 프로파일 최적화 및 품질 예측 시스템</p>
+                    <div class="project-sensors">
+                        <span class="sensor-tag">열전대 센서</span>
+                        <span class="sensor-tag">분위기 센서</span>
+                        <span class="sensor-tag">플럭스 센서</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>조립라인 효율화</h3>
+                        <span class="project-cost">3,800만원</span>
+                    </div>
+                    <p>조립 공정 사이클 타임 분석 및 병목 구간 실시간 모니터링</p>
+                    <div class="project-sensors">
+                        <span class="sensor-tag">토크 센서</span>
+                        <span class="sensor-tag">위치 센서</span>
+                        <span class="sensor-tag">비전 센서</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>검사설비 품질관리</h3>
+                        <span class="project-cost">3,200만원</span>
+                    </div>
+                    <p>기밀 검사 및 외관 검사 데이터 연계로 불량 원인 추적 시스템</p>
+                    <div class="project-sensors">
+                        <span class="sensor-tag">압력 센서</span>
+                        <span class="sensor-tag">비전 카메라</span>
+                        <span class="sensor-tag">유량 센서</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>제3공장 통합관리</h3>
+                        <span class="project-cost">4,800만원</span>
+                    </div>
+                    <p>신규 공장 전체 설비 통합 모니터링 및 에너지 최적화 시스템</p>
+                    <div class="project-sensors">
+                        <span class="sensor-tag">전력 센서</span>
+                        <span class="sensor-tag">환경 센서</span>
+                        <span class="sensor-tag">설비 센서</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>OEM 대시보드</h3>
+                        <span class="project-cost">2,800만원</span>
+                    </div>
+                    <p>현대/기아향 품질 KPI 실시간 공유 대시보드 및 SQ 인증 대응</p>
+                    <div class="project-sensors">
+                        <span class="sensor-tag">품질 데이터</span>
+                        <span class="sensor-tag">생산 데이터</span>
+                        <span class="sensor-tag">물류 데이터</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-section">
+            <h2>💰 투자 효과 요약</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-value">2.43억원</div>
+                    <div class="summary-label">총 투자금액</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">74.1%</div>
+                    <div class="summary-label">예상 ROI</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">16.2개월</div>
+                    <div class="summary-label">투자회수기간</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">6개</div>
+                    <div class="summary-label">프로젝트 수</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clients -->
+        <div class="clients-section">
+            <h2>🚗 주요 거래처</h2>
+            <div class="clients-grid">
+                <div class="client-item">
+                    <h4>현대자동차</h4>
+                    <p>SQ 인증 공급사</p>
+                </div>
+                <div class="client-item">
+                    <h4>기아자동차</h4>
+                    <p>SQ 인증 공급사</p>
+                </div>
+                <div class="client-item">
+                    <h4>루시드모터스</h4>
+                    <p>글로벌 EV 공급</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 (주)폴라리스세원. All Rights Reserved. | 스마트 제조 혁신 파트너</p>
+    </footer>
+</body>
+</html>

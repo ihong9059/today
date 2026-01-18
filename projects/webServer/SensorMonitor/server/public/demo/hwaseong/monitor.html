@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 모니터링 - 화성기계(HSMC)</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0891b2 50%, #06b6d4 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(15, 118, 110, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 100px 2rem 3rem;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .status-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status-title h1 {
+            color: #0f766e;
+            font-size: 1.5rem;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #d1fae5;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .status-info {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .status-item {
+            text-align: center;
+        }
+
+        .status-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f766e;
+        }
+
+        .status-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Monitor Grid */
+        .monitor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* 3D Viewer */
+        .viewer-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .viewer-card h2 {
+            color: #0f766e;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #0a0a1a, #1a1a2e);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .model-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .model-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            background: linear-gradient(135deg, #0f766e, #0891b2);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .model-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(15, 118, 110, 0.4);
+        }
+
+        .model-btn.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        /* Diagnosis Cards */
+        .diagnosis-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .diagnosis-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .diagnosis-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .diagnosis-name {
+            font-weight: 600;
+            color: #0f766e;
+        }
+
+        .diagnosis-grade {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .grade-a {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .grade-b {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .grade-c {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .diagnosis-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .diagnosis-range {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .diagnosis-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-top: 0.8rem;
+            overflow: hidden;
+        }
+
+        .diagnosis-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+
+        .bar-good {
+            background: linear-gradient(90deg, #10b981, #34d399);
+        }
+
+        .bar-warning {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+        }
+
+        .bar-danger {
+            background: linear-gradient(90deg, #ef4444, #f87171);
+        }
+
+        /* Chart Section */
+        .chart-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .chart-section h2 {
+            color: #0f766e;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+
+        /* Machine List */
+        .machines-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .machines-section h2 {
+            color: #0f766e;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .machines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .machine-card {
+            background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border-left: 4px solid #10b981;
+        }
+
+        .machine-card.grade-b {
+            border-left-color: #f59e0b;
+        }
+
+        .machine-card.grade-c {
+            border-left-color: #ef4444;
+        }
+
+        .machine-name {
+            font-weight: 600;
+            color: #0f766e;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .machine-info {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .machine-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }
+
+        .machine-stat {
+            text-align: center;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.3);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1024px) {
+            .monitor-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .diagnosis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .status-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .status-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="favicon.svg" alt="화성기계 로고">
+                <div class="logo-text">
+                    <span class="logo-main">화성기계(HSMC)</span>
+                    <span class="logo-sub">공작기계 전문 매매</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="system.html">시스템</a>
+                <a href="monitor.html" class="active">모니터링</a>
+                <a href="about.html">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-title">
+                <h1>🔧 기계 진단 모니터링</h1>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span style="color: #059669; font-weight: 500;">LIVE</span>
+                </div>
+            </div>
+            <div class="status-info">
+                <div class="status-item">
+                    <div class="status-value" id="machine-count">12</div>
+                    <div class="status-label">진단 기계</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-value" id="grade-a-count">8</div>
+                    <div class="status-label">A등급</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-value" id="grade-b-count">3</div>
+                    <div class="status-label">B등급</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-value" id="current-time">--:--:--</div>
+                    <div class="status-label">현재시간</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monitor Grid -->
+        <div class="monitor-grid">
+            <!-- 3D Viewer -->
+            <div class="viewer-card">
+                <h2>🔧 3D 기계 모델</h2>
+                <div id="canvas-container"></div>
+                <div class="model-controls">
+                    <button class="model-btn active" onclick="showModel('mct')">머시닝센터</button>
+                    <button class="model-btn" onclick="showModel('lathe')">CNC 선반</button>
+                    <button class="model-btn" onclick="showModel('grinder')">연삭기</button>
+                </div>
+            </div>
+
+            <!-- Diagnosis Data -->
+            <div class="viewer-card">
+                <h2>📊 실시간 진단 데이터</h2>
+                <div class="diagnosis-grid">
+                    <div class="diagnosis-card">
+                        <div class="diagnosis-header">
+                            <span class="diagnosis-name">스핀들 런아웃</span>
+                            <span class="diagnosis-grade grade-a">A등급</span>
+                        </div>
+                        <div class="diagnosis-value" id="runout-value">4.2 μm</div>
+                        <div class="diagnosis-range">기준: A(&lt;5μm) B(&lt;10μm) C(&lt;20μm)</div>
+                        <div class="diagnosis-bar">
+                            <div class="diagnosis-bar-fill bar-good" id="runout-bar" style="width: 21%"></div>
+                        </div>
+                    </div>
+                    <div class="diagnosis-card">
+                        <div class="diagnosis-header">
+                            <span class="diagnosis-name">X축 백래시</span>
+                            <span class="diagnosis-grade grade-b">B등급</span>
+                        </div>
+                        <div class="diagnosis-value" id="backlash-x">8.5 μm</div>
+                        <div class="diagnosis-range">기준: A(&lt;5μm) B(&lt;15μm) C(&lt;30μm)</div>
+                        <div class="diagnosis-bar">
+                            <div class="diagnosis-bar-fill bar-warning" id="backlash-x-bar" style="width: 28%"></div>
+                        </div>
+                    </div>
+                    <div class="diagnosis-card">
+                        <div class="diagnosis-header">
+                            <span class="diagnosis-name">스핀들 베어링</span>
+                            <span class="diagnosis-grade grade-a">A등급</span>
+                        </div>
+                        <div class="diagnosis-value" id="bearing-value">0.8 g</div>
+                        <div class="diagnosis-range">진동 레벨 (정상: &lt;2.5g)</div>
+                        <div class="diagnosis-bar">
+                            <div class="diagnosis-bar-fill bar-good" id="bearing-bar" style="width: 32%"></div>
+                        </div>
+                    </div>
+                    <div class="diagnosis-card">
+                        <div class="diagnosis-header">
+                            <span class="diagnosis-name">서보모터 전류</span>
+                            <span class="diagnosis-grade grade-a">A등급</span>
+                        </div>
+                        <div class="diagnosis-value" id="servo-value">정상</div>
+                        <div class="diagnosis-range">정격 대비 편차율 확인</div>
+                        <div class="diagnosis-bar">
+                            <div class="diagnosis-bar-fill bar-good" id="servo-bar" style="width: 45%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-section">
+            <h2>📈 스핀들 진동 트렌드</h2>
+            <div class="chart-container">
+                <canvas id="trendChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Machine List -->
+        <div class="machines-section">
+            <h2>🏭 진단 대상 기계 현황</h2>
+            <div class="machines-grid">
+                <div class="machine-card">
+                    <div class="machine-name">VMC-850 머시닝센터</div>
+                    <div class="machine-info">두산공작기계 | 2018년 | 12,500시간</div>
+                    <div class="machine-stats">
+                        <div class="machine-stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">종합등급</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">잔존가치</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">4.2μm</div>
+                            <div class="stat-label">런아웃</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">양호</div>
+                            <div class="stat-label">상태</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="machine-card grade-b">
+                    <div class="machine-name">CNC 선반 L400</div>
+                    <div class="machine-info">화천기계 | 2016년 | 18,200시간</div>
+                    <div class="machine-stats">
+                        <div class="machine-stat">
+                            <div class="stat-value">B</div>
+                            <div class="stat-label">종합등급</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">78%</div>
+                            <div class="stat-label">잔존가치</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">8.5μm</div>
+                            <div class="stat-label">런아웃</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">조정필요</div>
+                            <div class="stat-label">상태</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="machine-card">
+                    <div class="machine-name">5축 MCT VM76</div>
+                    <div class="machine-info">현대위아 | 2020년 | 6,800시간</div>
+                    <div class="machine-stats">
+                        <div class="machine-stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">종합등급</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">95%</div>
+                            <div class="stat-label">잔존가치</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">3.1μm</div>
+                            <div class="stat-label">런아웃</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">우수</div>
+                            <div class="stat-label">상태</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="machine-card">
+                    <div class="machine-name">평면연삭기 PSG-63</div>
+                    <div class="machine-info">오쿠마 | 2017년 | 9,500시간</div>
+                    <div class="machine-stats">
+                        <div class="machine-stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">종합등급</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">88%</div>
+                            <div class="stat-label">잔존가치</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">2.8μm</div>
+                            <div class="stat-label">진직도</div>
+                        </div>
+                        <div class="machine-stat">
+                            <div class="stat-value">양호</div>
+                            <div class="stat-label">상태</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 화성기계(HSMC). All Rights Reserved. | 공작기계 스마트 서비스 파트너</p>
+    </footer>
+
+    <script>
+        // Three.js Setup
+        let scene, camera, renderer, currentModel;
+        let autoRotate = true;
+
+        function init3D() {
+            const container = document.getElementById('canvas-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a1a);
+
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(12, 10, 12);
+            camera.lookAt(0, 0, 0);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 15, 10);
+            scene.add(directionalLight);
+
+            const pointLight = new THREE.PointLight(0x06b6d4, 0.5);
+            pointLight.position.set(-10, 10, -10);
+            scene.add(pointLight);
+
+            // Grid
+            const gridHelper = new THREE.GridHelper(20, 20, 0x0891b2, 0x0f766e);
+            scene.add(gridHelper);
+
+            // Initial Model
+            createMCTModel();
+
+            animate();
+
+            // Mouse interaction
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+
+            container.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                autoRotate = false;
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                if (isDragging && currentModel) {
+                    const deltaX = e.clientX - previousMousePosition.x;
+                    const deltaY = e.clientY - previousMousePosition.y;
+                    currentModel.rotation.y += deltaX * 0.01;
+                    currentModel.rotation.x += deltaY * 0.01;
+                }
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            container.addEventListener('mouseup', () => {
+                isDragging = false;
+                setTimeout(() => { autoRotate = true; }, 2000);
+            });
+
+            container.addEventListener('mouseleave', () => {
+                isDragging = false;
+            });
+
+            window.addEventListener('resize', () => {
+                const w = container.clientWidth;
+                const h = container.clientHeight;
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+                renderer.setSize(w, h);
+            });
+        }
+
+        function clearModel() {
+            if (currentModel) {
+                scene.remove(currentModel);
+            }
+        }
+
+        function createMCTModel() {
+            clearModel();
+            currentModel = new THREE.Group();
+
+            // Base
+            const baseGeometry = new THREE.BoxGeometry(8, 1, 6);
+            const baseMaterial = new THREE.MeshPhongMaterial({ color: 0x0f766e });
+            const base = new THREE.Mesh(baseGeometry, baseMaterial);
+            base.position.y = 0.5;
+            currentModel.add(base);
+
+            // Column
+            const columnGeometry = new THREE.BoxGeometry(2, 8, 2);
+            const columnMaterial = new THREE.MeshPhongMaterial({ color: 0x0891b2 });
+            const column = new THREE.Mesh(columnGeometry, columnMaterial);
+            column.position.set(-2, 4.5, 0);
+            currentModel.add(column);
+
+            // Spindle Head
+            const headGeometry = new THREE.BoxGeometry(3, 2.5, 2.5);
+            const headMaterial = new THREE.MeshPhongMaterial({ color: 0x06b6d4 });
+            const head = new THREE.Mesh(headGeometry, headMaterial);
+            head.position.set(0, 6, 0);
+            currentModel.add(head);
+
+            // Spindle
+            const spindleGeometry = new THREE.CylinderGeometry(0.4, 0.4, 2, 16);
+            const spindleMaterial = new THREE.MeshPhongMaterial({ color: 0x10b981 });
+            const spindle = new THREE.Mesh(spindleGeometry, spindleMaterial);
+            spindle.position.set(0, 3.8, 0);
+            currentModel.add(spindle);
+
+            // Tool Holder
+            const toolGeometry = new THREE.ConeGeometry(0.3, 1, 16);
+            const tool = new THREE.Mesh(toolGeometry, new THREE.MeshPhongMaterial({ color: 0xf59e0b }));
+            tool.position.set(0, 2.3, 0);
+            tool.rotation.x = Math.PI;
+            currentModel.add(tool);
+
+            // Table
+            const tableGeometry = new THREE.BoxGeometry(5, 0.5, 4);
+            const tableMaterial = new THREE.MeshPhongMaterial({ color: 0x14b8a6 });
+            const table = new THREE.Mesh(tableGeometry, tableMaterial);
+            table.position.set(1.5, 1.25, 0);
+            currentModel.add(table);
+
+            // Sensors
+            const sensorGeometry = new THREE.SphereGeometry(0.15, 16, 16);
+            const sensorMaterial = new THREE.MeshPhongMaterial({ color: 0x10b981, emissive: 0x10b981, emissiveIntensity: 0.5 });
+
+            const sensorPositions = [[0, 4.5, 1.3], [0, 6.8, 0], [-2, 8.5, 0], [1.5, 1.6, 2], [-3.5, 0.5, 0]];
+            sensorPositions.forEach(pos => {
+                const sensor = new THREE.Mesh(sensorGeometry, sensorMaterial);
+                sensor.position.set(...pos);
+                currentModel.add(sensor);
+            });
+
+            scene.add(currentModel);
+        }
+
+        function createLatheModel() {
+            clearModel();
+            currentModel = new THREE.Group();
+
+            // Bed
+            const bedGeometry = new THREE.BoxGeometry(12, 1, 3);
+            const bedMaterial = new THREE.MeshPhongMaterial({ color: 0x0f766e });
+            const bed = new THREE.Mesh(bedGeometry, bedMaterial);
+            bed.position.y = 0.5;
+            currentModel.add(bed);
+
+            // Headstock
+            const headstockGeometry = new THREE.BoxGeometry(2.5, 3, 2.5);
+            const headstockMaterial = new THREE.MeshPhongMaterial({ color: 0x0891b2 });
+            const headstock = new THREE.Mesh(headstockGeometry, headstockMaterial);
+            headstock.position.set(-4, 2.5, 0);
+            currentModel.add(headstock);
+
+            // Chuck
+            const chuckGeometry = new THREE.CylinderGeometry(1.2, 1.2, 0.8, 6);
+            const chuckMaterial = new THREE.MeshPhongMaterial({ color: 0x06b6d4 });
+            const chuck = new THREE.Mesh(chuckGeometry, chuckMaterial);
+            chuck.rotation.z = Math.PI / 2;
+            chuck.position.set(-2.2, 2.5, 0);
+            currentModel.add(chuck);
+
+            // Tailstock
+            const tailstockGeometry = new THREE.BoxGeometry(1.5, 2, 2);
+            const tailstock = new THREE.Mesh(tailstockGeometry, headstockMaterial);
+            tailstock.position.set(4, 2, 0);
+            currentModel.add(tailstock);
+
+            // Carriage
+            const carriageGeometry = new THREE.BoxGeometry(2, 1.5, 2.5);
+            const carriageMaterial = new THREE.MeshPhongMaterial({ color: 0x14b8a6 });
+            const carriage = new THREE.Mesh(carriageGeometry, carriageMaterial);
+            carriage.position.set(0, 1.75, 0);
+            currentModel.add(carriage);
+
+            // Tool Post
+            const toolPostGeometry = new THREE.BoxGeometry(1, 1, 1);
+            const toolPost = new THREE.Mesh(toolPostGeometry, new THREE.MeshPhongMaterial({ color: 0x10b981 }));
+            toolPost.position.set(0, 2.75, 0);
+            currentModel.add(toolPost);
+
+            // Sensors
+            const sensorGeometry = new THREE.SphereGeometry(0.15, 16, 16);
+            const sensorMaterial = new THREE.MeshPhongMaterial({ color: 0x10b981, emissive: 0x10b981, emissiveIntensity: 0.5 });
+
+            const sensorPositions = [[-4, 4.2, 0], [-2.2, 2.5, 1.3], [0, 3.5, 0], [4, 3.2, 0]];
+            sensorPositions.forEach(pos => {
+                const sensor = new THREE.Mesh(sensorGeometry, sensorMaterial);
+                sensor.position.set(...pos);
+                currentModel.add(sensor);
+            });
+
+            scene.add(currentModel);
+        }
+
+        function createGrinderModel() {
+            clearModel();
+            currentModel = new THREE.Group();
+
+            // Base
+            const baseGeometry = new THREE.BoxGeometry(8, 1, 5);
+            const baseMaterial = new THREE.MeshPhongMaterial({ color: 0x0f766e });
+            const base = new THREE.Mesh(baseGeometry, baseMaterial);
+            base.position.y = 0.5;
+            currentModel.add(base);
+
+            // Column
+            const columnGeometry = new THREE.BoxGeometry(2, 6, 2);
+            const columnMaterial = new THREE.MeshPhongMaterial({ color: 0x0891b2 });
+            const column = new THREE.Mesh(columnGeometry, columnMaterial);
+            column.position.set(-2, 3.5, 0);
+            currentModel.add(column);
+
+            // Wheel Head
+            const wheelHeadGeometry = new THREE.BoxGeometry(2.5, 2, 2);
+            const wheelHeadMaterial = new THREE.MeshPhongMaterial({ color: 0x06b6d4 });
+            const wheelHead = new THREE.Mesh(wheelHeadGeometry, wheelHeadMaterial);
+            wheelHead.position.set(0, 5, 0);
+            currentModel.add(wheelHead);
+
+            // Grinding Wheel
+            const wheelGeometry = new THREE.CylinderGeometry(1.5, 1.5, 0.5, 32);
+            const wheelMaterial = new THREE.MeshPhongMaterial({ color: 0xf59e0b });
+            const wheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+            wheel.rotation.x = Math.PI / 2;
+            wheel.position.set(0, 3.5, 0);
+            currentModel.add(wheel);
+
+            // Table
+            const tableGeometry = new THREE.BoxGeometry(6, 0.5, 3);
+            const tableMaterial = new THREE.MeshPhongMaterial({ color: 0x14b8a6 });
+            const table = new THREE.Mesh(tableGeometry, tableMaterial);
+            table.position.set(1, 1.25, 0);
+            currentModel.add(table);
+
+            // Sensors
+            const sensorGeometry = new THREE.SphereGeometry(0.15, 16, 16);
+            const sensorMaterial = new THREE.MeshPhongMaterial({ color: 0x10b981, emissive: 0x10b981, emissiveIntensity: 0.5 });
+
+            const sensorPositions = [[0, 5.5, 1], [0, 3.5, 1.5], [-2, 6.7, 0], [1, 1.6, 1.6]];
+            sensorPositions.forEach(pos => {
+                const sensor = new THREE.Mesh(sensorGeometry, sensorMaterial);
+                sensor.position.set(...pos);
+                currentModel.add(sensor);
+            });
+
+            scene.add(currentModel);
+        }
+
+        function showModel(type) {
+            document.querySelectorAll('.model-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            switch(type) {
+                case 'mct': createMCTModel(); break;
+                case 'lathe': createLatheModel(); break;
+                case 'grinder': createGrinderModel(); break;
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (autoRotate && currentModel) {
+                currentModel.rotation.y += 0.005;
+            }
+            renderer.render(scene, camera);
+        }
+
+        // Chart.js Setup
+        function initChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            const labels = [];
+            const data1 = [];
+            const data2 = [];
+
+            for (let i = 60; i >= 0; i--) {
+                labels.push(i + '초 전');
+                data1.push(0.5 + Math.random() * 0.8);
+                data2.push(0.3 + Math.random() * 0.5);
+            }
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '스핀들 베어링 진동 (g)',
+                            data: data1,
+                            borderColor: '#0f766e',
+                            backgroundColor: 'rgba(15, 118, 110, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: '서보모터 진동 (g)',
+                            data: data2,
+                            borderColor: '#06b6d4',
+                            backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'g (가속도)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update Functions
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent =
+                now.toLocaleTimeString('ko-KR', { hour12: false });
+        }
+
+        function updateDiagnosisData() {
+            // Runout
+            const runout = (3 + Math.random() * 3).toFixed(1);
+            document.getElementById('runout-value').textContent = runout + ' μm';
+            const runoutPct = (runout / 20) * 100;
+            document.getElementById('runout-bar').style.width = runoutPct + '%';
+
+            // Backlash X
+            const backlashX = (6 + Math.random() * 6).toFixed(1);
+            document.getElementById('backlash-x').textContent = backlashX + ' μm';
+            const backlashPct = (backlashX / 30) * 100;
+            document.getElementById('backlash-x-bar').style.width = backlashPct + '%';
+
+            // Bearing
+            const bearing = (0.5 + Math.random() * 0.8).toFixed(1);
+            document.getElementById('bearing-value').textContent = bearing + ' g';
+            const bearingPct = (bearing / 2.5) * 100;
+            document.getElementById('bearing-bar').style.width = bearingPct + '%';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            init3D();
+            initChart();
+            updateTime();
+            setInterval(updateTime, 1000);
+            setInterval(updateDiagnosisData, 3000);
+        });
+    </script>
+</body>
+</html>

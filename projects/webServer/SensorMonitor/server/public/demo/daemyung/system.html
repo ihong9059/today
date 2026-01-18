@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시스템 구성 - 대명기업 스마트 팩토리</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(192, 57, 43, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(192, 57, 43, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #c0392b;
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 80px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(192, 57, 43, 0.3) 0%, rgba(231, 76, 60, 0.2) 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(192, 57, 43, 0.3);
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #e74c3c 0%, #f39c12 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-section p {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+
+        /* Section */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #e74c3c;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(180deg, #c0392b, #f39c12);
+            border-radius: 2px;
+        }
+
+        /* Architecture */
+        .architecture {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .arch-layer {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(192, 57, 43, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .arch-layer:hover {
+            border-color: #e74c3c;
+            box-shadow: 0 5px 20px rgba(192, 57, 43, 0.2);
+        }
+
+        .layer-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .layer-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .layer-icon.cloud { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .layer-icon.edge { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .layer-icon.sensor { background: linear-gradient(135deg, #27ae60, #1e8449); }
+        .layer-icon.equipment { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+
+        .layer-title {
+            font-size: 1.2rem;
+            color: #e74c3c;
+        }
+
+        .layer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .layer-item {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        .arch-arrow {
+            text-align: center;
+            color: #e74c3c;
+            font-size: 1.5rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(192, 57, 43, 0.3);
+            border-radius: 10px;
+            color: #aaa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover, .tab.active {
+            background: rgba(192, 57, 43, 0.3);
+            border-color: #e74c3c;
+            color: white;
+        }
+
+        /* Sensor Table */
+        .sensor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        .sensor-table th,
+        .sensor-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(192, 57, 43, 0.2);
+        }
+
+        .sensor-table th {
+            background: rgba(192, 57, 43, 0.3);
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        .sensor-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .sensor-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .sensor-badge.temp { background: rgba(231, 76, 60, 0.3); color: #e74c3c; }
+        .sensor-badge.resistance { background: rgba(243, 156, 18, 0.3); color: #f39c12; }
+        .sensor-badge.current { background: rgba(155, 89, 182, 0.3); color: #9b59b6; }
+        .sensor-badge.power { background: rgba(52, 152, 219, 0.3); color: #3498db; }
+        .sensor-badge.infrared { background: rgba(231, 76, 60, 0.3); color: #e74c3c; }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .project-detail {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(192, 57, 43, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .project-detail-header {
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .project-detail-header.red { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+        .project-detail-header.orange { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .project-detail-header.green { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+        .project-detail-header.purple { background: linear-gradient(135deg, #8e44ad, #9b59b6); }
+        .project-detail-header.teal { background: linear-gradient(135deg, #16a085, #1abc9c); }
+
+        .project-detail-header h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .project-detail-body {
+            padding: 1.5rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #888;
+        }
+
+        .detail-value {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        /* Furnace Types */
+        .furnace-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .furnace-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(192, 57, 43, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .furnace-card:hover {
+            border-color: #e74c3c;
+            transform: translateY(-5px);
+        }
+
+        .furnace-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 1rem;
+        }
+
+        .furnace-card h4 {
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+        }
+
+        .furnace-card p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(192, 57, 43, 0.3);
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+        }
+
+        footer a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .furnace-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .furnace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">DM</div>
+                대명기업 Smart Factory
+            </a>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="system.html" class="active">시스템</a>
+                <a href="monitor.html">모니터링</a>
+                <a href="about.html">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1>시스템 구성</h1>
+            <p>전기로 예지정비 4계층 아키텍처</p>
+        </section>
+
+        <!-- Architecture Section -->
+        <section class="section">
+            <h2 class="section-title">시스템 아키텍처</h2>
+
+            <div class="architecture">
+                <div class="arch-layer">
+                    <div class="layer-header">
+                        <div class="layer-icon cloud">☁️</div>
+                        <span class="layer-title">Cloud Layer - 클라우드 플랫폼</span>
+                    </div>
+                    <div class="layer-content">
+                        <span class="layer-item">AWS IoT Core</span>
+                        <span class="layer-item">실시간 대시보드</span>
+                        <span class="layer-item">원격 모니터링 서비스</span>
+                        <span class="layer-item">고객 관제 포털</span>
+                        <span class="layer-item">에너지 분석</span>
+                        <span class="layer-item">성능인증서 자동발행</span>
+                    </div>
+                </div>
+
+                <div class="arch-arrow">▼</div>
+
+                <div class="arch-layer">
+                    <div class="layer-header">
+                        <div class="layer-icon edge">🔧</div>
+                        <span class="layer-title">Edge Layer - Edge AI Gateway</span>
+                    </div>
+                    <div class="layer-content">
+                        <span class="layer-item">ARM Cortex-M4 + DSP</span>
+                        <span class="layer-item">저항 변화율 분석</span>
+                        <span class="layer-item">열화 패턴 감지</span>
+                        <span class="layer-item">RUL 예측</span>
+                        <span class="layer-item">열손실 계산</span>
+                        <span class="layer-item">LTE/WiFi 통신</span>
+                    </div>
+                </div>
+
+                <div class="arch-arrow">▼</div>
+
+                <div class="arch-layer">
+                    <div class="layer-header">
+                        <div class="layer-icon sensor">📡</div>
+                        <span class="layer-title">Sensor Layer - 센서 네트워크</span>
+                    </div>
+                    <div class="layer-content">
+                        <span class="layer-item">열전대 (K/S/B Type)</span>
+                        <span class="layer-item">저항 측정 센서</span>
+                        <span class="layer-item">전류 센서</span>
+                        <span class="layer-item">전력 분석기</span>
+                        <span class="layer-item">적외선 온도계</span>
+                        <span class="layer-item">외피 온도 센서</span>
+                    </div>
+                </div>
+
+                <div class="arch-arrow">▼</div>
+
+                <div class="arch-layer">
+                    <div class="layer-header">
+                        <div class="layer-icon equipment">🔥</div>
+                        <span class="layer-title">Equipment Layer - 전기로 설비</span>
+                    </div>
+                    <div class="layer-content">
+                        <span class="layer-item">Box Type 전기로</span>
+                        <span class="layer-item">Tube Type 전기로</span>
+                        <span class="layer-item">Crucible Type 전기로</span>
+                        <span class="layer-item">Batch Type 전기로</span>
+                        <span class="layer-item">Continuous Type 전기로</span>
+                        <span class="layer-item">특수 전기로</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Furnace Types -->
+        <section class="section" style="background: rgba(0,0,0,0.2);">
+            <h2 class="section-title">전기로 유형</h2>
+            <div class="furnace-grid">
+                <div class="furnace-card">
+                    <div class="furnace-icon">📦</div>
+                    <h4>Box Type</h4>
+                    <p>상자형 전기로<br>열처리/소성/건조</p>
+                </div>
+                <div class="furnace-card">
+                    <div class="furnace-icon">⚪</div>
+                    <h4>Tube Type</h4>
+                    <p>관형 전기로<br>분위기 제어 가능</p>
+                </div>
+                <div class="furnace-card">
+                    <div class="furnace-icon">🥘</div>
+                    <h4>Crucible Type</h4>
+                    <p>도가니형 전기로<br>금속 용해용</p>
+                </div>
+                <div class="furnace-card">
+                    <div class="furnace-icon">📦</div>
+                    <h4>Batch Type</h4>
+                    <p>배치 처리용 대형<br>대량 열처리</p>
+                </div>
+                <div class="furnace-card">
+                    <div class="furnace-icon">➡️</div>
+                    <h4>Continuous Type</h4>
+                    <p>연속 처리용 터널로<br>연속 생산 라인</p>
+                </div>
+                <div class="furnace-card">
+                    <div class="furnace-icon">⚙️</div>
+                    <h4>특수 전기로</h4>
+                    <p>맞춤형 설계 제작<br>특수 공정용</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sensor Details -->
+        <section class="section">
+            <h2 class="section-title">발열체 유형별 센서 구성</h2>
+
+            <div class="tabs">
+                <div class="tab active" onclick="showTab('sic')">SiC 발열체</div>
+                <div class="tab" onclick="showTab('mosi2')">MoSi2 발열체</div>
+                <div class="tab" onclick="showTab('kanthal')">Kanthal 발열체</div>
+                <div class="tab" onclick="showTab('superkanthal')">Super Kanthal</div>
+                <div class="tab" onclick="showTab('insulation')">단열 모니터링</div>
+            </div>
+
+            <div id="sic" class="tab-content active">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>측정 항목</th>
+                            <th>센서 유형</th>
+                            <th>측정 범위</th>
+                            <th>분석 내용</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>저항값</td>
+                            <td><span class="sensor-badge resistance">저항 측정</span></td>
+                            <td>0.1~100Ω</td>
+                            <td>저항 증가율 분석</td>
+                        </tr>
+                        <tr>
+                            <td>전류</td>
+                            <td><span class="sensor-badge current">전류 센서</span></td>
+                            <td>0~200A</td>
+                            <td>발열체별 전류 분포</td>
+                        </tr>
+                        <tr>
+                            <td>온도</td>
+                            <td><span class="sensor-badge temp">열전대 S Type</span></td>
+                            <td>0~1600°C</td>
+                            <td>작업 온도 모니터링</td>
+                        </tr>
+                        <tr>
+                            <td>전력</td>
+                            <td><span class="sensor-badge power">전력 분석기</span></td>
+                            <td>0~50kW</td>
+                            <td>에너지 효율 분석</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="mosi2" class="tab-content">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>측정 항목</th>
+                            <th>센서 유형</th>
+                            <th>측정 범위</th>
+                            <th>분석 내용</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>저항값</td>
+                            <td><span class="sensor-badge resistance">저항 측정</span></td>
+                            <td>0.01~50Ω</td>
+                            <td>저항 변화 패턴</td>
+                        </tr>
+                        <tr>
+                            <td>표면온도</td>
+                            <td><span class="sensor-badge infrared">적외선 센서</span></td>
+                            <td>0~1800°C</td>
+                            <td>국부 과열 감지</td>
+                        </tr>
+                        <tr>
+                            <td>전류</td>
+                            <td><span class="sensor-badge current">전류 센서</span></td>
+                            <td>0~300A</td>
+                            <td>발열체 상태 분석</td>
+                        </tr>
+                        <tr>
+                            <td>작업온도</td>
+                            <td><span class="sensor-badge temp">열전대 B Type</span></td>
+                            <td>0~1800°C</td>
+                            <td>온도 균일성 분석</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="kanthal" class="tab-content">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>측정 항목</th>
+                            <th>센서 유형</th>
+                            <th>측정 범위</th>
+                            <th>분석 내용</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>저항값</td>
+                            <td><span class="sensor-badge resistance">저항 측정</span></td>
+                            <td>0.1~200Ω</td>
+                            <td>효율 저하 감지</td>
+                        </tr>
+                        <tr>
+                            <td>전력소비</td>
+                            <td><span class="sensor-badge power">전력 분석기</span></td>
+                            <td>0~100kW</td>
+                            <td>에너지 효율 분석</td>
+                        </tr>
+                        <tr>
+                            <td>전류</td>
+                            <td><span class="sensor-badge current">전류 센서</span></td>
+                            <td>0~150A</td>
+                            <td>부하 밸런스 분석</td>
+                        </tr>
+                        <tr>
+                            <td>온도</td>
+                            <td><span class="sensor-badge temp">열전대 K Type</span></td>
+                            <td>0~1300°C</td>
+                            <td>작업 온도 모니터링</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="superkanthal" class="tab-content">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>측정 항목</th>
+                            <th>센서 유형</th>
+                            <th>측정 범위</th>
+                            <th>분석 내용</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>저항값</td>
+                            <td><span class="sensor-badge resistance">저항 측정</span></td>
+                            <td>0.05~100Ω</td>
+                            <td>국부 열화 감지</td>
+                        </tr>
+                        <tr>
+                            <td>온도균일성</td>
+                            <td><span class="sensor-badge temp">다점 열전대</span></td>
+                            <td>0~1600°C</td>
+                            <td>온도 편차 분석</td>
+                        </tr>
+                        <tr>
+                            <td>전류</td>
+                            <td><span class="sensor-badge current">전류 센서</span></td>
+                            <td>0~200A</td>
+                            <td>발열체별 상태</td>
+                        </tr>
+                        <tr>
+                            <td>전력</td>
+                            <td><span class="sensor-badge power">전력 분석기</span></td>
+                            <td>0~80kW</td>
+                            <td>효율 트렌드 분석</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="insulation" class="tab-content">
+                <table class="sensor-table">
+                    <thead>
+                        <tr>
+                            <th>측정 위치</th>
+                            <th>센서 유형</th>
+                            <th>측정 범위</th>
+                            <th>분석 내용</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>내부 작업 영역</td>
+                            <td><span class="sensor-badge temp">열전대</span></td>
+                            <td>0~1800°C</td>
+                            <td>설정 온도 정확도</td>
+                        </tr>
+                        <tr>
+                            <td>단열층 다점</td>
+                            <td><span class="sensor-badge temp">열전대</span></td>
+                            <td>0~1000°C</td>
+                            <td>단열층 온도 구배</td>
+                        </tr>
+                        <tr>
+                            <td>외피 표면</td>
+                            <td><span class="sensor-badge infrared">적외선 센서</span></td>
+                            <td>0~200°C</td>
+                            <td>열손실 모니터링</td>
+                        </tr>
+                        <tr>
+                            <td>에너지 소비</td>
+                            <td><span class="sensor-badge power">전력 분석기</span></td>
+                            <td>0~100kW</td>
+                            <td>에너지 효율 분석</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Project Details -->
+        <section class="section" style="background: rgba(0,0,0,0.2);">
+            <h2 class="section-title">프로젝트 상세</h2>
+            <div class="projects-grid">
+                <div class="project-detail">
+                    <div class="project-detail-header red">
+                        <h3>Project 1: 발열체 예지정비</h3>
+                        <p>SiC, MoSi2, Kanthal 열화 모니터링</p>
+                    </div>
+                    <div class="project-detail-body">
+                        <div class="detail-row">
+                            <span class="detail-label">투자비용</span>
+                            <span class="detail-value">2,800만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">연간 절감</span>
+                            <span class="detail-value">2,400만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">ROI</span>
+                            <span class="detail-value">85.7%</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">핵심 기능</span>
+                            <span class="detail-value">저항 변화율, RUL 예측</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-detail">
+                    <div class="project-detail-header orange">
+                        <h3>Project 2: 성능 검증 자동화</h3>
+                        <p>납품 전 전기로 성능 테스트</p>
+                    </div>
+                    <div class="project-detail-body">
+                        <div class="detail-row">
+                            <span class="detail-label">투자비용</span>
+                            <span class="detail-value">2,400만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">연간 절감</span>
+                            <span class="detail-value">1,800만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">ROI</span>
+                            <span class="detail-value">75.0%</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">핵심 기능</span>
+                            <span class="detail-value">인증서 자동발행</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-detail">
+                    <div class="project-detail-header green">
+                        <h3>Project 3: 원격 모니터링 서비스</h3>
+                        <p>납품된 전기로 원격 상태 감시</p>
+                    </div>
+                    <div class="project-detail-body">
+                        <div class="detail-row">
+                            <span class="detail-label">투자비용</span>
+                            <span class="detail-value">3,200만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">연간 수익</span>
+                            <span class="detail-value">2,600만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">ROI</span>
+                            <span class="detail-value">81.3%</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">핵심 기능</span>
+                            <span class="detail-value">Basic/Standard/Premium</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-detail">
+                    <div class="project-detail-header purple">
+                        <h3>Project 4: 스마트 생산 관리</h3>
+                        <p>전기로 제조 공정 디지털화</p>
+                    </div>
+                    <div class="project-detail-body">
+                        <div class="detail-row">
+                            <span class="detail-label">투자비용</span>
+                            <span class="detail-value">2,200만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">연간 절감</span>
+                            <span class="detail-value">1,600만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">ROI</span>
+                            <span class="detail-value">72.7%</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">핵심 기능</span>
+                            <span class="detail-value">QR코드 기반 이력</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-detail">
+                    <div class="project-detail-header red">
+                        <h3>Project 5: 단열 성능 모니터링</h3>
+                        <p>단열재 성능 및 에너지 효율</p>
+                    </div>
+                    <div class="project-detail-body">
+                        <div class="detail-row">
+                            <span class="detail-label">투자비용</span>
+                            <span class="detail-value">1,800만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">연간 절감</span>
+                            <span class="detail-value">1,200만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">ROI</span>
+                            <span class="detail-value">66.7%</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">핵심 기능</span>
+                            <span class="detail-value">열손실 계산, 열화 감지</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-detail">
+                    <div class="project-detail-header teal">
+                        <h3>Project 6: 에너지 통합 관리</h3>
+                        <p>공장 전체 에너지 사용 현황</p>
+                    </div>
+                    <div class="project-detail-body">
+                        <div class="detail-row">
+                            <span class="detail-label">투자비용</span>
+                            <span class="detail-value">1,600만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">연간 절감</span>
+                            <span class="detail-value">1,100만원</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">ROI</span>
+                            <span class="detail-value">68.8%</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">핵심 기능</span>
+                            <span class="detail-value">피크 관리, 원단위 분석</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 대명기업. Smart Factory Predictive Maintenance Demo</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="https://www.dmfurnace.com" target="_blank">www.dmfurnace.com</a>
+        </p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

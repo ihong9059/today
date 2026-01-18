@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>두산로보틱스 협동로봇 예지정비 | UTTEC Smart Factory</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --secondary: #159895;
+            --accent: #57c5b6;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --warning: #ffc107;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #0f3d4a 0%, #1a5f7a 50%, #159895 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .logo h1 {
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 40px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(87, 197, 182, 0.1) 0%, transparent 50%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(87, 197, 182, 0.2);
+            border: 1px solid var(--accent);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .hero h2 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero h2 span {
+            background: linear-gradient(90deg, var(--accent), #4dd0e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-tags {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .hero-tag {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 0.95em;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 30px rgba(87, 197, 182, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(87, 197, 182, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--accent);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 60px 40px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 3em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), #4dd0e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* Section */
+        .section {
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h3 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            font-size: 1.2em;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Product Series */
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .series-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .series-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--accent);
+        }
+
+        .series-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .series-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .series-card h4 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .series-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .series-specs {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .series-specs span {
+            display: block;
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
+        /* AI Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(87, 197, 182, 0.3);
+        }
+
+        .feature-card h4 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+            opacity: 0.9;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Robot Visual */
+        .robot-visual {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .robot-canvas {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 24px;
+            padding: 40px;
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Joint Monitoring */
+        .joint-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .joint-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .joint-item:hover {
+            border-color: var(--accent);
+            background: rgba(87, 197, 182, 0.2);
+        }
+
+        .joint-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto 10px;
+        }
+
+        .joint-item h5 {
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        .joint-item span {
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+
+        /* Monitoring Preview */
+        .monitoring-preview {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 24px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .preview-header h4 {
+            font-size: 1.5em;
+        }
+
+        .live-badge {
+            background: var(--success);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .sensor-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .sensor-preview-item {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .sensor-preview-item label {
+            font-size: 0.9em;
+            opacity: 0.7;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .sensor-preview-item .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .sensor-preview-item .unit {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        .copyright {
+            opacity: 0.5;
+            font-size: 0.9em;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h2 {
+                font-size: 2.2em;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .joint-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="logo">
+            <div class="logo-icon">🤖</div>
+            <h1>두산<span>로보틱스</span></h1>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">홈</a>
+            <a href="system.html">시스템 구성</a>
+            <a href="monitor.html">실시간 모니터링</a>
+            <a href="about.html">UTTEC 소개</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">KOSPI A454910 | Global Cobot Leader</div>
+            <h2>협동로봇 <span>AI 예지정비</span><br>통합 솔루션</h2>
+            <p>Edge AI 기반 6축 토크센서 실시간 분석으로 고장 예측 및 원격 진단 서비스 제공</p>
+            <div class="hero-tags">
+                <span class="hero-tag">6축 토크센서 FFT 분석</span>
+                <span class="hero-tag">Edge AI</span>
+                <span class="hero-tag">예지정비(PdM)</span>
+                <span class="hero-tag">글로벌 원격진단</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="monitor.html" class="btn-primary">실시간 모니터링</a>
+                <a href="system.html" class="btn-secondary">시스템 구성</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-value">13</div>
+                <div class="stat-label">제품 모델</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">6축</div>
+                <div class="stat-label">토크센서</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">364%</div>
+                <div class="stat-label">ROI</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">3.3개월</div>
+                <div class="stat-label">손익분기점</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">4억+</div>
+                <div class="stat-label">연간 절감</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Series -->
+    <section class="section">
+        <div class="section-header">
+            <h3>협동로봇 제품 라인업</h3>
+            <p>P/H/M/A/E 시리즈 - 다양한 산업 환경에 최적화된 협동로봇</p>
+        </div>
+
+        <div class="series-grid">
+            <div class="series-card">
+                <span class="series-badge">팔레타이징</span>
+                <div class="series-icon">📦</div>
+                <h4>P-SERIES</h4>
+                <p>업계 최고 사양의 팔레타이징 전용 협동로봇</p>
+                <div class="series-specs">
+                    <span>P3020: 30kg / 2030mm</span>
+                    <span>최대 적재량 / 작업반경</span>
+                </div>
+            </div>
+
+            <div class="series-card">
+                <span class="series-badge">중량물</span>
+                <div class="series-icon">🏋️</div>
+                <h4>H-SERIES</h4>
+                <p>중량물 핸들링 특화 고출력 협동로봇</p>
+                <div class="series-specs">
+                    <span>H2515: 25kg / 1500mm</span>
+                    <span>H2017: 20kg / 1700mm</span>
+                </div>
+            </div>
+
+            <div class="series-card">
+                <span class="series-badge">플래그십</span>
+                <div class="series-icon">⭐</div>
+                <h4>M-SERIES</h4>
+                <p>6축 고성능 토크센서 탑재 플래그십 모델</p>
+                <div class="series-specs">
+                    <span>M1509: 15kg / ±0.03mm</span>
+                    <span>M1013: 10kg / ±0.05mm</span>
+                </div>
+            </div>
+
+            <div class="series-card">
+                <span class="series-badge">경제성</span>
+                <div class="series-icon">💰</div>
+                <h4>A-SERIES</h4>
+                <p>우수한 속도와 경제성의 범용 협동로봇</p>
+                <div class="series-specs">
+                    <span>A0912: 9kg / 1200mm</span>
+                    <span>A0509: 5kg / 900mm</span>
+                </div>
+            </div>
+
+            <div class="series-card">
+                <span class="series-badge">F&B</span>
+                <div class="series-icon">🍽️</div>
+                <h4>E-SERIES</h4>
+                <p>식음료 산업 특화 위생등급 협동로봇</p>
+                <div class="series-specs">
+                    <span>E0509: 5kg / IP66</span>
+                    <span>NSF 인증 완료</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6-Axis Joint Monitoring -->
+    <section class="section">
+        <div class="section-header">
+            <h3>6축 관절 실시간 모니터링</h3>
+            <p>각 관절의 토크센서, 모터, 감속기, 베어링 상태를 실시간으로 분석합니다</p>
+        </div>
+
+        <div class="joint-grid">
+            <div class="joint-item">
+                <div class="joint-number">J1</div>
+                <h5>Base</h5>
+                <span>회전축</span>
+            </div>
+            <div class="joint-item">
+                <div class="joint-number">J2</div>
+                <h5>Shoulder</h5>
+                <span>어깨 관절</span>
+            </div>
+            <div class="joint-item">
+                <div class="joint-number">J3</div>
+                <h5>Elbow</h5>
+                <span>팔꿈치</span>
+            </div>
+            <div class="joint-item">
+                <div class="joint-number">J4</div>
+                <h5>Wrist 1</h5>
+                <span>손목 1</span>
+            </div>
+            <div class="joint-item">
+                <div class="joint-number">J5</div>
+                <h5>Wrist 2</h5>
+                <span>손목 2</span>
+            </div>
+            <div class="joint-item">
+                <div class="joint-number">J6</div>
+                <h5>Wrist 3</h5>
+                <span>말단부</span>
+            </div>
+        </div>
+
+        <div class="monitoring-preview">
+            <div class="preview-header">
+                <h4>실시간 센서 데이터</h4>
+                <div class="live-badge">
+                    <span class="live-dot"></span>
+                    LIVE
+                </div>
+            </div>
+            <div class="sensor-preview-grid">
+                <div class="sensor-preview-item">
+                    <label>J1 토크</label>
+                    <span class="value" id="j1-torque">24.5</span>
+                    <span class="unit">Nm</span>
+                </div>
+                <div class="sensor-preview-item">
+                    <label>J2 온도</label>
+                    <span class="value" id="j2-temp">42.3</span>
+                    <span class="unit">°C</span>
+                </div>
+                <div class="sensor-preview-item">
+                    <label>J3 진동</label>
+                    <span class="value" id="j3-vib">0.12</span>
+                    <span class="unit">mm/s</span>
+                </div>
+                <div class="sensor-preview-item">
+                    <label>J4 전류</label>
+                    <span class="value" id="j4-current">3.8</span>
+                    <span class="unit">A</span>
+                </div>
+                <div class="sensor-preview-item">
+                    <label>J5 RUL</label>
+                    <span class="value" id="j5-rul">89</span>
+                    <span class="unit">일</span>
+                </div>
+                <div class="sensor-preview-item">
+                    <label>시스템 상태</label>
+                    <span class="value" style="color: #28a745;">정상</span>
+                    <span class="unit">OK</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Features -->
+    <section class="section">
+        <div class="section-header">
+            <h3>AI 예지정비 핵심 기능</h3>
+            <p>UTTEC의 Edge AI 기술로 협동로봇 고장을 사전에 예측합니다</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h4>실시간 FFT 분석</h4>
+                <p>토크센서 및 진동 데이터를 주파수 영역으로 변환하여 이상 패턴을 실시간으로 탐지합니다.</p>
+                <ul class="feature-list">
+                    <li>감속기(하모닉 드라이브) 마모 감지</li>
+                    <li>베어링 BPFO/BPFI/BSF 분석</li>
+                    <li>모터 전류 THD 분석</li>
+                    <li>토크 리플 패턴 분석</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h4>Edge AI 처리</h4>
+                <p>ARM Cortex-M4 + DSP 기반 온디바이스 AI로 지연 없는 실시간 분석을 수행합니다.</p>
+                <ul class="feature-list">
+                    <li>180MHz 고속 처리</li>
+                    <li>8채널 동시 ADC 샘플링</li>
+                    <li>CAN/EtherCAT 실시간 연동</li>
+                    <li>FreeRTOS 실시간 OS</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⏱️</div>
+                <h4>RUL 예측</h4>
+                <p>LSTM 딥러닝 모델로 각 부품의 잔여수명(Remaining Useful Life)을 예측합니다.</p>
+                <ul class="feature-list">
+                    <li>감속기: 잔여 수명(일) 예측</li>
+                    <li>베어링: 교체 권장 시점</li>
+                    <li>모터: 이상 확률(%)</li>
+                    <li>케이블: 열화 상태 분석</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h4>글로벌 원격진단</h4>
+                <p>클라우드 플랫폼을 통해 전 세계 어디서나 로봇 상태를 모니터링하고 진단합니다.</p>
+                <ul class="feature-list">
+                    <li>DR-PdM 클라우드 플랫폼</li>
+                    <li>실시간 대시보드</li>
+                    <li>다국어 지원</li>
+                    <li>OTA 펌웨어 업데이트</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>두산로보틱스 × UTTEC</h3>
+            <p>글로벌 협동로봇 시장의 새로운 기준, AI 예지정비 솔루션</p>
+            <div class="footer-links">
+                <a href="index.html">홈</a>
+                <a href="system.html">시스템 구성</a>
+                <a href="monitor.html">실시간 모니터링</a>
+                <a href="about.html">UTTEC 소개</a>
+            </div>
+            <p class="copyright">© 2026 UTTEC Smart Factory Solution. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Real-time sensor value simulation
+        function updateSensorValues() {
+            const j1Torque = document.getElementById('j1-torque');
+            const j2Temp = document.getElementById('j2-temp');
+            const j3Vib = document.getElementById('j3-vib');
+            const j4Current = document.getElementById('j4-current');
+            const j5Rul = document.getElementById('j5-rul');
+
+            if (j1Torque) j1Torque.textContent = (24 + Math.random() * 2).toFixed(1);
+            if (j2Temp) j2Temp.textContent = (42 + Math.random() * 1.5).toFixed(1);
+            if (j3Vib) j3Vib.textContent = (0.1 + Math.random() * 0.05).toFixed(2);
+            if (j4Current) j4Current.textContent = (3.5 + Math.random() * 0.8).toFixed(1);
+        }
+
+        setInterval(updateSensorValues, 2000);
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

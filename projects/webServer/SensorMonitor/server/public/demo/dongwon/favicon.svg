@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5b21b6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="millGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="url(#bgGrad)" stroke="#5b21b6" stroke-width="2"/>
+
+  <!-- Mill body (cylinder) -->
+  <ellipse cx="50" cy="30" rx="25" ry="8" fill="url(#millGrad)" stroke="#a78bfa" stroke-width="1.5"/>
+  <rect x="25" y="30" width="50" height="35" fill="url(#millGrad)" stroke="none"/>
+  <ellipse cx="50" cy="65" rx="25" ry="8" fill="url(#millGrad)" stroke="#a78bfa" stroke-width="1.5"/>
+  <line x1="25" y1="30" x2="25" y2="65" stroke="#a78bfa" stroke-width="1.5"/>
+  <line x1="75" y1="30" x2="75" y2="65" stroke="#a78bfa" stroke-width="1.5"/>
+
+  <!-- Rotating pins inside mill -->
+  <circle cx="50" cy="47" r="12" fill="none" stroke="#7c3aed" stroke-width="2" stroke-dasharray="4,3"/>
+  <circle cx="50" cy="47" r="5" fill="#7c3aed"/>
+
+  <!-- Pin indicators -->
+  <line x1="50" y1="35" x2="50" y2="40" stroke="#5b21b6" stroke-width="2" stroke-linecap="round"/>
+  <line x1="62" y1="47" x2="57" y2="47" stroke="#5b21b6" stroke-width="2" stroke-linecap="round"/>
+  <line x1="50" y1="59" x2="50" y2="54" stroke="#5b21b6" stroke-width="2" stroke-linecap="round"/>
+  <line x1="38" y1="47" x2="43" y2="47" stroke="#5b21b6" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Output funnel -->
+  <polygon points="42,65 58,65 54,78 46,78" fill="#c4b5fd" stroke="#a78bfa" stroke-width="1"/>
+  <rect x="46" y="78" width="8" height="6" fill="#c4b5fd" stroke="#a78bfa" stroke-width="1"/>
+
+  <!-- Sensor indicator (small circle with signal) -->
+  <circle cx="78" cy="25" r="8" fill="#10b981" opacity="0.9"/>
+  <circle cx="78" cy="25" r="4" fill="#ffffff"/>
+  <circle cx="78" cy="25" r="12" fill="none" stroke="#10b981" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="78" cy="25" r="16" fill="none" stroke="#10b981" stroke-width="1" opacity="0.3"/>
+</svg>

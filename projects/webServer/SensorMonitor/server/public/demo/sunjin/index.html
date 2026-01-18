@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)선진파워텍 - SP-PdM 스마트 예지정비</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d1b2a 0%, #1b3a5a 50%, #0d1b2a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(21, 101, 192, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo img {
+            height: 36px;
+        }
+
+        .nav-logo span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #90caf9, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #bbdefb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #fff;
+            background: rgba(144, 202, 249, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 2rem 80px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(21, 101, 192, 0.3), rgba(33, 150, 243, 0.1));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%2390caf9" opacity="0.1"/></svg>') repeat;
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #1565c0, #2196f3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #90caf9, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #90caf9;
+            margin-bottom: 2rem;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: #b0bec5;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .factory-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .factory-badge {
+            background: rgba(33, 150, 243, 0.2);
+            border: 1px solid rgba(144, 202, 249, 0.3);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #90caf9;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #2196f3, #90caf9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #78909c;
+        }
+
+        /* Section */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #90caf9, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            color: #78909c;
+        }
+
+        /* Business Areas */
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .business-card {
+            background: rgba(27, 58, 90, 0.6);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(144, 202, 249, 0.2);
+            transition: all 0.3s;
+        }
+
+        .business-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(144, 202, 249, 0.4);
+            box-shadow: 0 10px 40px rgba(33, 150, 243, 0.2);
+        }
+
+        .business-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1565c0, #2196f3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .business-card h3 {
+            color: #90caf9;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .business-card p {
+            color: #b0bec5;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .business-card .equipment {
+            color: #64b5f6;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        /* Materials Section */
+        .materials-section {
+            background: rgba(27, 58, 90, 0.4);
+            padding: 4rem 2rem;
+        }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .material-card {
+            background: rgba(13, 27, 42, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(144, 202, 249, 0.15);
+            transition: all 0.3s;
+        }
+
+        .material-card:hover {
+            border-color: rgba(144, 202, 249, 0.4);
+        }
+
+        .material-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #64b5f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .material-feature {
+            color: #90caf9;
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .material-use {
+            color: #78909c;
+            font-size: 0.8rem;
+        }
+
+        /* Equipment Section */
+        .equipment-section {
+            padding: 4rem 2rem;
+        }
+
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .equipment-card {
+            background: linear-gradient(135deg, rgba(21, 101, 192, 0.3), rgba(27, 58, 90, 0.6));
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(144, 202, 249, 0.2);
+            transition: all 0.3s;
+        }
+
+        .equipment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(33, 150, 243, 0.2);
+        }
+
+        .equipment-header {
+            background: linear-gradient(135deg, #1565c0, #1976d2);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .equipment-header-icon {
+            font-size: 2rem;
+        }
+
+        .equipment-header h3 {
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        .equipment-body {
+            padding: 1.5rem;
+        }
+
+        .equipment-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(144, 202, 249, 0.1);
+        }
+
+        .equipment-item:last-child {
+            border-bottom: none;
+        }
+
+        .equipment-label {
+            color: #78909c;
+            font-size: 0.9rem;
+        }
+
+        .equipment-value {
+            color: #90caf9;
+            font-weight: 600;
+        }
+
+        /* AI Features */
+        .ai-section {
+            background: rgba(27, 58, 90, 0.4);
+            padding: 4rem 2rem;
+        }
+
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .ai-card {
+            background: rgba(13, 27, 42, 0.6);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(144, 202, 249, 0.15);
+            transition: all 0.3s;
+        }
+
+        .ai-card:hover {
+            border-color: rgba(144, 202, 249, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .ai-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .ai-card h4 {
+            color: #90caf9;
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-card p {
+            color: #78909c;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Two Factory Section */
+        .factory-section {
+            padding: 4rem 2rem;
+        }
+
+        .factory-compare {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .factory-card {
+            background: linear-gradient(135deg, rgba(21, 101, 192, 0.4), rgba(27, 58, 90, 0.6));
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid rgba(144, 202, 249, 0.2);
+            transition: all 0.3s;
+        }
+
+        .factory-card:hover {
+            border-color: rgba(144, 202, 249, 0.5);
+        }
+
+        .factory-card h3 {
+            color: #90caf9;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .factory-card .location {
+            color: #64b5f6;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .factory-list {
+            text-align: left;
+        }
+
+        .factory-list-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            color: #b0bec5;
+            font-size: 0.9rem;
+        }
+
+        .factory-list-item::before {
+            content: '✓';
+            color: #4caf50;
+        }
+
+        .integration-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            grid-column: span 2;
+            padding: 2rem 0;
+        }
+
+        .integration-box {
+            background: linear-gradient(135deg, #1565c0, #2196f3);
+            padding: 1.5rem 3rem;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .integration-box h4 {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .integration-box p {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+
+        /* ROI Section */
+        .roi-section {
+            background: linear-gradient(135deg, rgba(21, 101, 192, 0.4), rgba(27, 58, 90, 0.6));
+            padding: 4rem 2rem;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .roi-card {
+            background: rgba(13, 27, 42, 0.6);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(144, 202, 249, 0.2);
+        }
+
+        .roi-card.highlight {
+            background: linear-gradient(135deg, #1565c0, #2196f3);
+            border: none;
+        }
+
+        .roi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #90caf9;
+            margin-bottom: 0.5rem;
+        }
+
+        .roi-card.highlight .roi-value {
+            color: #fff;
+        }
+
+        .roi-label {
+            color: #78909c;
+            font-size: 0.9rem;
+        }
+
+        .roi-card.highlight .roi-label {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .cta-btn.primary {
+            background: linear-gradient(135deg, #1565c0, #2196f3);
+            color: #fff;
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            border: 2px solid #2196f3;
+            color: #90caf9;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(33, 150, 243, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(13, 27, 42, 0.9);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(144, 202, 249, 0.2);
+        }
+
+        .footer p {
+            color: #78909c;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .factory-compare {
+                grid-template-columns: 1fr;
+            }
+
+            .integration-arrow {
+                grid-column: span 1;
+            }
+
+            .roi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .roi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="favicon.svg" alt="선진파워텍 로고">
+                <span>SP-PdM</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="active">홈</a>
+                <a href="system.html">시스템</a>
+                <a href="monitor.html">모니터링</a>
+                <a href="about.html">회사소개</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">반도체 정밀가공 전문기업</div>
+            <h1>(주)선진파워텍</h1>
+            <p class="hero-subtitle">SP-PdM: 반도체 부품 정밀가공 예지정비 솔루션</p>
+            <p class="hero-desc">
+                PEEK, PTFE, PPS 등 엔지니어링 플라스틱 및 금속 정밀가공 설비에
+                AI 예지정비 기술을 적용하여 가공 정밀도 향상과 품질 경쟁력을 확보합니다.
+            </p>
+            <div class="factory-badges">
+                <span class="factory-badge">📍 평택공장 (본점)</span>
+                <span class="factory-badge">📍 안성공장</span>
+                <span class="factory-badge">🏭 2개 공장 통합 관리</span>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-value">1.9억</div>
+                    <div class="stat-label">총 투자비용</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">1.45억</div>
+                    <div class="stat-label">연간 절감효과</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">15.7개월</div>
+                    <div class="stat-label">투자 회수기간</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">76.3%</div>
+                    <div class="stat-label">평균 ROI</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Areas -->
+    <section class="section">
+        <div class="section-title">
+            <h2>주요 사업 분야</h2>
+            <p>반도체 제조공정 기능성 소재 부품 가공</p>
+        </div>
+        <div class="business-grid">
+            <div class="business-card">
+                <div class="business-icon">⚙️</div>
+                <h3>엔지니어링 플라스틱 가공</h3>
+                <p>PEEK, PPS, PTFE, PI 등 고기능성 소재 가공</p>
+                <p class="equipment">CNC 선반, 머시닝센터</p>
+            </div>
+            <div class="business-card">
+                <div class="business-icon">🔧</div>
+                <h3>테플론 부품 가공</h3>
+                <p>반도체 장비용 테플론 부품 정밀가공</p>
+                <p class="equipment">CNC 선반, 밀링머신</p>
+            </div>
+            <div class="business-card">
+                <div class="business-icon">💎</div>
+                <h3>실리콘/고무 부품</h3>
+                <p>반도체용 실링, 가스켓 등</p>
+                <p class="equipment">사출기, 프레스</p>
+            </div>
+            <div class="business-card">
+                <div class="business-icon">🔩</div>
+                <h3>금속 정밀가공</h3>
+                <p>알루미늄, SUS 부품 가공</p>
+                <p class="equipment">CNC 복합가공기, 와이어컷</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Materials Section -->
+    <section class="materials-section">
+        <div class="section-title">
+            <h2>주요 소재별 특성</h2>
+            <p>반도체 공정에 최적화된 기능성 소재</p>
+        </div>
+        <div class="materials-grid">
+            <div class="material-card">
+                <div class="material-name">PEEK</div>
+                <div class="material-feature">내열성, 내화학성, 고강도</div>
+                <div class="material-use">웨이퍼 캐리어, 척 부품</div>
+            </div>
+            <div class="material-card">
+                <div class="material-name">PTFE</div>
+                <div class="material-feature">초저마찰, 내화학성</div>
+                <div class="material-use">씰, 가스켓, 밸브시트</div>
+            </div>
+            <div class="material-card">
+                <div class="material-name">PPS</div>
+                <div class="material-feature">내열성, 치수안정성</div>
+                <div class="material-use">구조부품, 커넥터</div>
+            </div>
+            <div class="material-card">
+                <div class="material-name">PI</div>
+                <div class="material-feature">극한내열, 절연성</div>
+                <div class="material-use">고온공정 부품</div>
+            </div>
+            <div class="material-card">
+                <div class="material-name">실리콘고무</div>
+                <div class="material-feature">내열성, 탄성</div>
+                <div class="material-use">씰링, 쿠션부품</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipment Section -->
+    <section class="equipment-section">
+        <div class="section-title">
+            <h2>생산 설비 현황</h2>
+            <p>평택/안성 2개 공장 총 35대+ 설비 운영</p>
+        </div>
+        <div class="equipment-grid">
+            <div class="equipment-card">
+                <div class="equipment-header">
+                    <span class="equipment-header-icon">🔄</span>
+                    <h3>CNC 선반</h3>
+                </div>
+                <div class="equipment-body">
+                    <div class="equipment-item">
+                        <span class="equipment-label">보유대수</span>
+                        <span class="equipment-value">8대</span>
+                    </div>
+                    <div class="equipment-item">
+                        <span class="equipment-label">모니터링 센서</span>
+                        <span class="equipment-value">진동, 온도, 전류</span>
+                    </div>
+                    <div class="equipment-item">
+                        <span class="equipment-label">예지정비 대상</span>
+                        <span class="equipment-value">스핀들, 베어링</span>
+                    </div>
+                </div>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-header">
+                    <span class="equipment-header-icon">🏭</span>
+                    <h3>머시닝센터 (MCT)</h3>
+                </div>
+                <div class="equipment-body">
+                    <div class="equipment-item">
+                        <span class="equipment-label">보유대수</span>
+                        <span class="equipment-value">10대 (5축 6, 3축 4)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <span class="equipment-label">모니터링 센서</span>
+                        <span class="equipment-value">진동, 온도, 위치</span>
+                    </div>
+                    <div class="equipment-item">
+                        <span class="equipment-label">예지정비 대상</span>
+                        <span class="equipment-value">주축, 이송축, 볼스크류</span>
+                    </div>
+                </div>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-header">
+                    <span class="equipment-header-icon">💉</span>
+                    <h3>사출/프레스</h3>
+                </div>
+                <div class="equipment-body">
+                    <div class="equipment-item">
+                        <span class="equipment-label">보유대수</span>
+                        <span class="equipment-value">7대 (사출 4, 프레스 3)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <span class="equipment-label">모니터링 센서</span>
+                        <span class="equipment-value">온도, 압력, 전류</span>
+                    </div>
+                    <div class="equipment-item">
+                        <span class="equipment-label">예지정비 대상</span>
+                        <span class="equipment-value">금형, 스크류, 실린더</span>
+                    </div>
+                </div>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-header">
+                    <span class="equipment-header-icon">📏</span>
+                    <h3>측정/클린룸</h3>
+                </div>
+                <div class="equipment-body">
+                    <div class="equipment-item">
+                        <span class="equipment-label">CMM</span>
+                        <span class="equipment-value">2대</span>
+                    </div>
+                    <div class="equipment-item">
+                        <span class="equipment-label">클린룸</span>
+                        <span class="equipment-value">2개소</span>
+                    </div>
+                    <div class="equipment-item">
+                        <span class="equipment-label">모니터링</span>
+                        <span class="equipment-value">파티클, 온습도, 진동</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Features -->
+    <section class="ai-section">
+        <div class="section-title">
+            <h2>AI 예지정비 핵심 기능</h2>
+            <p>반도체급 정밀가공에 특화된 AI 솔루션</p>
+        </div>
+        <div class="ai-grid">
+            <div class="ai-card">
+                <div class="ai-icon">🔧</div>
+                <h4>CNC 스핀들 상태 모니터링</h4>
+                <p>베어링 진동 패턴 분석, 열변위 모니터링 및 보정, 스핀들 수명 예측</p>
+            </div>
+            <div class="ai-card">
+                <div class="ai-icon">🛠️</div>
+                <h4>공구 마모 예측</h4>
+                <p>가공 중 진동/전류 패턴 분석, 공구별 마모 곡선 학습, 최적 교체시기 예측</p>
+            </div>
+            <div class="ai-card">
+                <div class="ai-icon">📊</div>
+                <h4>가공 품질 예측</h4>
+                <p>가공조건-품질 상관관계 분석, 치수 편차 사전 예측, 불량 사전 방지</p>
+            </div>
+            <div class="ai-card">
+                <div class="ai-icon">🧪</div>
+                <h4>반도체급 클린 환경 관리</h4>
+                <p>파티클 모니터링, 온습도 관리, 청정도 유지 상태 감시</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Two Factory Section -->
+    <section class="factory-section">
+        <div class="section-title">
+            <h2>2개 공장 통합 관리</h2>
+            <p>평택/안성 공장 실시간 통합 모니터링</p>
+        </div>
+        <div class="factory-compare">
+            <div class="factory-card">
+                <h3>📍 평택공장 (본점)</h3>
+                <p class="location">경기도 평택시 진위면</p>
+                <div class="factory-list">
+                    <div class="factory-list-item">CNC 선반 5대</div>
+                    <div class="factory-list-item">머시닝센터 6대</div>
+                    <div class="factory-list-item">CMM 1대</div>
+                    <div class="factory-list-item">클린룸 1개소</div>
+                </div>
+            </div>
+            <div class="factory-card">
+                <h3>📍 안성공장</h3>
+                <p class="location">경기도 안성시 원곡면</p>
+                <div class="factory-list">
+                    <div class="factory-list-item">CNC 선반 3대</div>
+                    <div class="factory-list-item">머시닝센터 4대</div>
+                    <div class="factory-list-item">사출/프레스 7대</div>
+                    <div class="factory-list-item">CMM 1대, 클린룸 1개소</div>
+                </div>
+            </div>
+            <div class="integration-arrow">
+                <div class="integration-box">
+                    <h4>🌐 클라우드 통합 대시보드</h4>
+                    <p>실시간 모니터링 | 설비 OEE | 예지정비 알림 | 원격 관리</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Section -->
+    <section class="roi-section">
+        <div class="section-title">
+            <h2>투자 효과 분석</h2>
+            <p>6개 프로젝트 통합 ROI</p>
+        </div>
+        <div class="roi-grid">
+            <div class="roi-card">
+                <div class="roi-value">1.9억</div>
+                <div class="roi-label">총 투자비용</div>
+            </div>
+            <div class="roi-card">
+                <div class="roi-value">1.45억</div>
+                <div class="roi-label">연간 절감효과</div>
+            </div>
+            <div class="roi-card highlight">
+                <div class="roi-value">15.7개월</div>
+                <div class="roi-label">투자 회수기간</div>
+            </div>
+            <div class="roi-card">
+                <div class="roi-value">76.3%</div>
+                <div class="roi-label">평균 ROI</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="section-title">
+            <h2>SP-PdM 시스템 구축</h2>
+            <p>반도체 정밀가공 품질 경쟁력 확보</p>
+        </div>
+        <div class="cta-buttons">
+            <a href="system.html" class="cta-btn primary">시스템 구성 보기</a>
+            <a href="monitor.html" class="cta-btn secondary">실시간 모니터링</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 (주)선진파워텍 × UTTEC. SP-PdM 스마트 예지정비 솔루션.</p>
+    </footer>
+</body>
+</html>
