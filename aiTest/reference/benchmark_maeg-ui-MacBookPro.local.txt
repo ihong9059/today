@@ -1,0 +1,11 @@
+플랫폼: maeg-ui-MacBookPro.local
+OS: Darwin 21.6.0
+Python: 3.12.12
+PyTorch: 2.2.2
+CUDA: False
+GPU 모드: False
+---
+모델 로딩: 2.90초
+첫 추론 (웜업): 3.20초
+순수 추론 평균: 3.21초
+개별 추론: ['3.18', '3.15', '3.15', '3.72', '2.84']
