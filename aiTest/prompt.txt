@@ -5,3 +5,11 @@ claude, 너는 ai simulation 전문가야,
 aiTest folder안에 만들어 주세요.
 
 
+claude, aiTest folder에서 windows와 raspberry pi에서 번호판 인식에 대한 실험을 진행했는데,
+mac에서 동일한 실험을 하고, 결과 비교 data를 추가해주세요.
+
+jetson이 uttec@192.168.1.11, pw: uttec에 연결되어있읍니다. 
+aiTest folder에 번호판 인식하는 시스템의 성능을 test하고있읍니다.
+이 aiTest와 동일한 test를 jetson에 필요한것을 copy하여, 
+test를 진행해 주시고, 결과를 취합해 주세요.
+진

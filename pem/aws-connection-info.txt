@@ -40,3 +40,6 @@ pw: #uttec3232 for gmail
 암호: hongks@6063
 
 IAM
+user: uttec32
+pw: hongks@6063
+
