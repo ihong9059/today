@@ -1,0 +1,42 @@
+{
+  "platform": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "python": "3.10.12",
+    "torch": "2.10.0+cu128",
+    "device": "Ubuntu PC (i5-6200U)"
+  },
+  "gpu_mode": false,
+  "settings": {
+    "model": "MobileNetV3-Small",
+    "img_size": 224,
+    "batch_size": 16,
+    "epochs": 10,
+    "learning_rate": 0.001
+  },
+  "data": {
+    "train": 264,
+    "val": 66,
+    "test": 66
+  },
+  "training": {
+    "load_time": 4.088696479797363,
+    "train_time": 173.0581247806549,
+    "best_val_acc": 92.42424242424242,
+    "best_val_recall": 97.22222222222223,
+    "final_train_acc": 94.6969696969697
+  },
+  "test": {
+    "accuracy": 90.9090909090909,
+    "recall": 94.44444444444444,
+    "precision": 89.47368421052632
+  },
+  "inference": {
+    "total_samples": 66,
+    "avg_time": 2.4750497341156006,
+    "fps": 26.66613082164327,
+    "ms_per_sample": 37.50075354720607
+  },
+  "timestamp": "2026-01-24 13:15:34"
+}

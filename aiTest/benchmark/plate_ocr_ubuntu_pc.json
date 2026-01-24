@@ -1,0 +1,232 @@
+{
+  "platform": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "python": "3.10.12",
+    "device": "Ubuntu PC (i5-6200U)"
+  },
+  "gpu_mode": false,
+  "cuda_version": null,
+  "load_time": 17.984976530075073,
+  "warmup_time": 0.5580422878265381,
+  "total_images": 30,
+  "valid_count": 25,
+  "recognition_rate": 83.33333333333334,
+  "total_time": 48.982489824295044,
+  "avg_time": 1.6327496608098349,
+  "fps": 0.6124637622059008,
+  "results": [
+    {
+      "file": "plate_01.png",
+      "plate": "23오14587",
+      "confidence": 0.09051537911392868,
+      "valid": true,
+      "time": 0.37030911445617676
+    },
+    {
+      "file": "plate_02.png",
+      "plate": "45하9283",
+      "confidence": 0.9873980889494969,
+      "valid": true,
+      "time": 2.168250799179077
+    },
+    {
+      "file": "plate_03.png",
+      "plate": "89되7531",
+      "confidence": 0.6866221064148286,
+      "valid": true,
+      "time": 2.019486904144287
+    },
+    {
+      "file": "plate_04.png",
+      "plate": "(없음)",
+      "confidence": 0,
+      "valid": false,
+      "time": 2.0611510276794434
+    },
+    {
+      "file": "plate_05.png",
+      "plate": "77수5678",
+      "confidence": 0.9457591888535656,
+      "valid": true,
+      "time": 1.9442555904388428
+    },
+    {
+      "file": "plate_06.png",
+      "plate": "68모9132",
+      "confidence": 0.8516667876202593,
+      "valid": true,
+      "time": 1.916074275970459
+    },
+    {
+      "file": "plate_07.png",
+      "plate": "99오7890",
+      "confidence": 0.21408242689752852,
+      "valid": true,
+      "time": 1.9316332340240479
+    },
+    {
+      "file": "plate_08.png",
+      "plate": "99오7890",
+      "confidence": 0.6394156123129189,
+      "valid": true,
+      "time": 0.38646817207336426
+    },
+    {
+      "file": "plate_09.png",
+      "plate": "64아3817",
+      "confidence": 0.951788251753627,
+      "valid": true,
+      "time": 0.3808159828186035
+    },
+    {
+      "file": "plate_10.png",
+      "plate": "91모7392",
+      "confidence": 0.9989299493556787,
+      "valid": true,
+      "time": 2.114274263381958
+    },
+    {
+      "file": "plate_11.png",
+      "plate": "123과4567",
+      "confidence": 0.9435760241843003,
+      "valid": true,
+      "time": 2.0343551635742188
+    },
+    {
+      "file": "plate_12.png",
+      "plate": "234오45678",
+      "confidence": 0.7996094340997739,
+      "valid": true,
+      "time": 2.0635666847229004
+    },
+    {
+      "file": "plate_13.png",
+      "plate": "345다6789",
+      "confidence": 0.666874182732703,
+      "valid": true,
+      "time": 1.7454719543457031
+    },
+    {
+      "file": "plate_14.png",
+      "plate": "456라7890",
+      "confidence": 0.7425763439418086,
+      "valid": true,
+      "time": 0.41981029510498047
+    },
+    {
+      "file": "plate_15.png",
+      "plate": "567마1234",
+      "confidence": 0.7220407142445052,
+      "valid": true,
+      "time": 1.8706014156341553
+    },
+    {
+      "file": "plate_16.png",
+      "plate": "678겨2345",
+      "confidence": 0.356694712109098,
+      "valid": true,
+      "time": 2.0212268829345703
+    },
+    {
+      "file": "plate_17.png",
+      "plate": "(없음)",
+      "confidence": 0,
+      "valid": false,
+      "time": 2.0753629207611084
+    },
+    {
+      "file": "plate_18.png",
+      "plate": "(없음)",
+      "confidence": 0,
+      "valid": false,
+      "time": 2.0063352584838867
+    },
+    {
+      "file": "plate_19.png",
+      "plate": "(없음)",
+      "confidence": 0,
+      "valid": false,
+      "time": 2.0709104537963867
+    },
+    {
+      "file": "plate_20.png",
+      "plate": "(없음)",
+      "confidence": 0,
+      "valid": false,
+      "time": 2.1130127906799316
+    },
+    {
+      "file": "plate_21.png",
+      "plate": "123터7037",
+      "confidence": 0.13811480215149902,
+      "valid": true,
+      "time": 0.38402652740478516
+    },
+    {
+      "file": "plate_22.png",
+      "plate": "634오21234",
+      "confidence": 0.6472500512502349,
+      "valid": true,
+      "time": 1.9569239616394043
+    },
+    {
+      "file": "plate_23.png",
+      "plate": "145여2345",
+      "confidence": 0.9968201586232458,
+      "valid": true,
+      "time": 2.0957248210906982
+    },
+    {
+      "file": "plate_24.png",
+      "plate": "256적3456",
+      "confidence": 0.6553754913055271,
+      "valid": true,
+      "time": 0.38175368309020996
+    },
+    {
+      "file": "plate_25.png",
+      "plate": "367코4567",
+      "confidence": 0.4570453830618138,
+      "valid": true,
+      "time": 0.44824886322021484
+    },
+    {
+      "file": "plate_26.png",
+      "plate": "478오55678",
+      "confidence": 0.5993911336696098,
+      "valid": true,
+      "time": 1.978048324584961
+    },
+    {
+      "file": "plate_27.png",
+      "plate": "589도6789",
+      "confidence": 0.9994716314292563,
+      "valid": true,
+      "time": 2.0467097759246826
+    },
+    {
+      "file": "plate_28.png",
+      "plate": "690로7890",
+      "confidence": 0.8487460735887701,
+      "valid": true,
+      "time": 1.935976505279541
+    },
+    {
+      "file": "plate_29.png",
+      "plate": "101모1234",
+      "confidence": 0.9135229900277256,
+      "valid": true,
+      "time": 1.979767084121704
+    },
+    {
+      "file": "plate_30.png",
+      "plate": "212보2345",
+      "confidence": 0.999126011162958,
+      "valid": true,
+      "time": 2.061937093734741
+    }
+  ],
+  "timestamp": "2026-01-24 13:11:41"
+}
