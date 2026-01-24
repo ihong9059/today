@@ -28,6 +28,8 @@ t3.micro 특징:
 - 현재 가벼운 웹서버/테스트 용도에 적합
 - AI 학습을 위해서는 GPU 인스턴스(g4dn.xlarge) 권장
 
+715428148226이
+
 위 계정 clear
 
 new 계정
@@ -40,6 +42,3 @@ pw: #uttec3232 for gmail
 암호: hongks@6063
 
 IAM
-user: uttec32
-pw: hongks@6063
-

@@ -4,6 +4,9 @@ claude, 너는 ai simulation 전문가야,
 한국 번호판 시스템을 참고하여, 번호판 list(100개)를 만들어 주세요.
 aiTest folder안에 만들어 주세요.
 
+그래도 현실과 유사하게 simulation을 하기위해서, 
+자동차의 모습이 들어가는 image가 현실적이지 않을까요?
+그렇게해서 image를 만들 방법이 있을까요?
 
 claude, aiTest folder에서 windows와 raspberry pi에서 번호판 인식에 대한 실험을 진행했는데,
 mac에서 동일한 실험을 하고, 결과 비교 data를 추가해주세요.

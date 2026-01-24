@@ -1,0 +1,42 @@
+{
+  "platform": {
+    "system": "Windows",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "python": "3.14.2",
+    "torch": "2.9.1+cpu",
+    "device": "Windows PC"
+  },
+  "gpu_mode": false,
+  "settings": {
+    "model": "MobileNetV3-Small",
+    "img_size": 224,
+    "batch_size": 16,
+    "epochs": 10,
+    "learning_rate": 0.001
+  },
+  "data": {
+    "train": 264,
+    "val": 66,
+    "test": 66
+  },
+  "training": {
+    "load_time": 1.0999696254730225,
+    "train_time": 146.93117094039917,
+    "best_val_acc": 77.27272727272727,
+    "best_val_recall": 97.22222222222223,
+    "final_train_acc": 95.07575757575758
+  },
+  "test": {
+    "accuracy": 92.42424242424242,
+    "recall": 86.11111111111111,
+    "precision": 100.0
+  },
+  "inference": {
+    "total_samples": 66,
+    "avg_time": 2.1157158851623534,
+    "fps": 31.195114836950506,
+    "ms_per_sample": 32.05630129033869
+  },
+  "timestamp": "2026-01-24 09:22:53"
+}
