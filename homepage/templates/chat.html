@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}대화방 - 홍가네{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">가족 대화방</h1>
+
+    <div class="coming-soon-card">
+        <div class="coming-soon-icon">💬</div>
+        <h2>대화방 기능 준비중</h2>
+        <p>가족과 실시간으로 대화할 수 있는 공간입니다.</p>
+        <p class="coming-soon-features">
+            예정 기능:<br>
+            • 실시간 채팅<br>
+            • 이미지/파일 공유<br>
+            • 이모티콘<br>
+            • 읽음 표시
+        </p>
+    </div>
+
+    <!-- 샘플 채팅 UI -->
+    <div class="chat-preview">
+        <h3>대화 미리보기</h3>
+        <div class="chat-messages">
+            <div class="chat-message received">
+                <span class="chat-avatar">👨</span>
+                <div class="chat-bubble">
+                    <span class="chat-sender">아빠</span>
+                    <span class="chat-text">오늘 저녁 뭐 먹을까?</span>
+                </div>
+            </div>
+            <div class="chat-message received">
+                <span class="chat-avatar">👩</span>
+                <div class="chat-bubble">
+                    <span class="chat-sender">엄마</span>
+                    <span class="chat-text">삼겹살 어때요?</span>
+                </div>
+            </div>
+            <div class="chat-message received">
+                <span class="chat-avatar">👦</span>
+                <div class="chat-bubble">
+                    <span class="chat-sender">아들</span>
+                    <span class="chat-text">좋아요! 👍</span>
+                </div>
+            </div>
+            <div class="chat-message received">
+                <span class="chat-avatar">👧</span>
+                <div class="chat-bubble">
+                    <span class="chat-sender">딸</span>
+                    <span class="chat-text">저도 찬성!</span>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-area disabled">
+            <input type="text" placeholder="메시지를 입력하세요..." disabled>
+            <button disabled>전송</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
