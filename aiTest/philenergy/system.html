@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>시스템 구성 - 필에너지 스마트 모니터링</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,10,26,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #0e3a9d, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #00d4ff;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 140px 30px 80px;
+            text-align: center;
+            background: linear-gradient(180deg, #0e1a2e 0%, #0a0a1a 100%);
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #0e3a9d, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .page-header p {
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        /* Architecture Section */
+        .architecture {
+            padding: 80px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .section-title p {
+            color: #888;
+        }
+
+        /* Layer Diagram */
+        .layer-diagram {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+        .layer {
+            display: flex;
+            align-items: center;
+            padding: 25px;
+            margin: 15px 0;
+            border-radius: 12px;
+            position: relative;
+        }
+        .layer::after {
+            content: '↓';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #00d4ff;
+            font-size: 1.5rem;
+        }
+        .layer:last-child::after {
+            display: none;
+        }
+        .layer-cloud {
+            background: linear-gradient(90deg, rgba(14,58,157,0.3), rgba(0,160,212,0.3));
+            border: 1px solid #0e3a9d;
+        }
+        .layer-edge {
+            background: linear-gradient(90deg, rgba(0,212,255,0.2), rgba(0,180,200,0.2));
+            border: 1px solid #00d4ff;
+        }
+        .layer-equipment {
+            background: linear-gradient(90deg, rgba(100,200,100,0.2), rgba(80,180,80,0.2));
+            border: 1px solid #4caf50;
+        }
+        .layer-sensor {
+            background: linear-gradient(90deg, rgba(255,193,7,0.2), rgba(255,160,0,0.2));
+            border: 1px solid #ffc107;
+        }
+        .layer-icon {
+            font-size: 2.5rem;
+            margin-right: 25px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .layer-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        .layer-content p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .layer-items {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;
+        }
+        .layer-item {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Sensor Grid */
+        .sensor-section {
+            background: linear-gradient(180deg, #0a0a1a 0%, #0e1a2e 100%);
+            padding: 80px 30px;
+        }
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .sensor-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .sensor-card:hover {
+            transform: translateY(-5px);
+            border-color: #00d4ff;
+        }
+        .sensor-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .sensor-card h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #00d4ff;
+        }
+        .sensor-card p {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+        .sensor-spec {
+            background: rgba(0,212,255,0.1);
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #00d4ff;
+        }
+
+        /* AI Features */
+        .ai-section {
+            padding: 80px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        .ai-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 35px;
+            transition: all 0.3s;
+        }
+        .ai-card:hover {
+            border-color: #0e3a9d;
+            transform: translateY(-3px);
+        }
+        .ai-card h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .ai-card h3 span {
+            font-size: 1.5rem;
+        }
+        .ai-card p {
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .ai-features {
+            list-style: none;
+        }
+        .ai-features li {
+            padding: 8px 0;
+            color: #aaa;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .ai-features li::before {
+            content: '✓';
+            color: #4caf50;
+        }
+
+        /* Tech Stack */
+        .tech-section {
+            background: linear-gradient(180deg, #0e1a2e 0%, #0a0a1a 100%);
+            padding: 80px 30px;
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .tech-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .tech-card h3 {
+            color: #0e3a9d;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .tech-list {
+            list-style: none;
+        }
+        .tech-list li {
+            padding: 10px 0;
+            color: #aaa;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .tech-list li:last-child {
+            border-bottom: none;
+        }
+        .tech-list li span {
+            color: #00d4ff;
+        }
+
+        /* Footer */
+        footer {
+            background: #050510;
+            padding: 40px 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: #00d4ff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sensor-grid { grid-template-columns: repeat(2, 1fr); }
+            .ai-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: 1fr; }
+            .layer { flex-direction: column; text-align: center; }
+            .layer-items { margin-left: 0; margin-top: 15px; justify-content: center; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">PHILENERGY</div>
+        <div class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="system.html" class="active">SYSTEM</a>
+            <a href="monitor.html">MONITOR</a>
+            <a href="diagram.html">DIAGRAM</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>시스템 구성</h1>
+        <p>4계층 IoT 아키텍처 기반의 스마트 모니터링 시스템</p>
+    </header>
+
+    <!-- Architecture Section -->
+    <section class="architecture">
+        <div class="section-title">
+            <h2>시스템 아키텍처</h2>
+            <p>클라우드부터 센서까지 통합 모니터링 체계</p>
+        </div>
+        <div class="layer-diagram">
+            <div class="layer layer-cloud">
+                <div class="layer-icon">☁️</div>
+                <div class="layer-content">
+                    <h3>Cloud/Server Layer</h3>
+                    <p>대시보드, AI 엔진, 데이터 분석, 알림 시스템</p>
+                </div>
+                <div class="layer-items">
+                    <span class="layer-item">Dashboard</span>
+                    <span class="layer-item">AI/ML Engine</span>
+                    <span class="layer-item">InfluxDB</span>
+                    <span class="layer-item">Alert System</span>
+                </div>
+            </div>
+            <div class="layer layer-edge">
+                <div class="layer-icon">🖥️</div>
+                <div class="layer-content">
+                    <h3>Edge Gateway Layer</h3>
+                    <p>실시간 제어, 엣지 AI 추론, 데이터 전처리</p>
+                </div>
+                <div class="layer-items">
+                    <span class="layer-item">ARM MCU</span>
+                    <span class="layer-item">Edge AI</span>
+                    <span class="layer-item">PLC 연동</span>
+                    <span class="layer-item">MQTT</span>
+                </div>
+            </div>
+            <div class="layer layer-equipment">
+                <div class="layer-icon">🏭</div>
+                <div class="layer-content">
+                    <h3>Equipment Layer</h3>
+                    <p>Stacking, Notching, Winder 설비 제어</p>
+                </div>
+                <div class="layer-items">
+                    <span class="layer-item">Stacking</span>
+                    <span class="layer-item">Notching</span>
+                    <span class="layer-item">Winder</span>
+                    <span class="layer-item">전극공정</span>
+                </div>
+            </div>
+            <div class="layer layer-sensor">
+                <div class="layer-icon">📡</div>
+                <div class="layer-content">
+                    <h3>Sensor Layer</h3>
+                    <p>진동, 온도, 장력, 레이저, 비전 센서 (16개)</p>
+                </div>
+                <div class="layer-items">
+                    <span class="layer-item">진동 4개</span>
+                    <span class="layer-item">온도 4개</span>
+                    <span class="layer-item">장력 3개</span>
+                    <span class="layer-item">레이저 2개</span>
+                    <span class="layer-item">비전 3개</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sensor Section -->
+    <section class="sensor-section">
+        <div class="section-title">
+            <h2>센서 구성</h2>
+            <p>이차전지 설비에 최적화된 센서 시스템</p>
+        </div>
+        <div class="sensor-grid">
+            <div class="sensor-card">
+                <div class="sensor-icon">📳</div>
+                <h3>진동 센서</h3>
+                <p>서보모터, 베어링 진동 감지</p>
+                <div class="sensor-spec">0~50mm/s RMS</div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-icon">🌡️</div>
+                <h3>온도 센서</h3>
+                <p>레이저 광학계, 모터 온도 감시</p>
+                <div class="sensor-spec">-40~200°C</div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-icon">⚖️</div>
+                <h3>장력 센서</h3>
+                <p>전극 장력 정밀 측정</p>
+                <div class="sensor-spec">0~500N ±0.1%</div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-icon">🔆</div>
+                <h3>레이저 파워미터</h3>
+                <p>레이저 출력 모니터링</p>
+                <div class="sensor-spec">0~500W ±1%</div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-icon">📸</div>
+                <h3>비전 센서</h3>
+                <p>정렬도, 노칭 품질 검사</p>
+                <div class="sensor-spec">5MP, 120fps</div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-icon">⚡</div>
+                <h3>전류 센서</h3>
+                <p>서보모터 전류 모니터링</p>
+                <div class="sensor-spec">0~100A ±0.5%</div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-icon">💨</div>
+                <h3>진공 센서</h3>
+                <p>흡착 패드 진공도 측정</p>
+                <div class="sensor-spec">-100~0kPa</div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-icon">📏</div>
+                <h3>변위 센서</h3>
+                <p>정밀 위치 측정</p>
+                <div class="sensor-spec">0.1μm 분해능</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Section -->
+    <section class="ai-section">
+        <div class="section-title">
+            <h2>AI 분석 기능</h2>
+            <p>이차전지 설비 특화 AI 모델</p>
+        </div>
+        <div class="ai-grid">
+            <div class="ai-card">
+                <h3><span>🔍</span> 이상 탐지 (Anomaly Detection)</h3>
+                <p>정상 패턴 학습을 통한 미세 이상 조기 감지</p>
+                <ul class="ai-features">
+                    <li>Autoencoder 기반 다변량 이상 탐지</li>
+                    <li>레이저 광학계 열화 조기 감지</li>
+                    <li>서보모터 진동 패턴 분석</li>
+                    <li>정렬 오차 트렌드 분석</li>
+                </ul>
+            </div>
+            <div class="ai-card">
+                <h3><span>📊</span> 수명 예측 (RUL Prediction)</h3>
+                <p>핵심 부품 잔여 수명 예측으로 계획 정비</p>
+                <ul class="ai-features">
+                    <li>LSTM 기반 시계열 예측</li>
+                    <li>레이저 광원 수명 예측</li>
+                    <li>베어링 마모도 추정</li>
+                    <li>서보모터 수명 관리</li>
+                </ul>
+            </div>
+            <div class="ai-card">
+                <h3><span>⚙️</span> 공정 최적화</h3>
+                <p>배터리 타입별 최적 공정 조건 자동 학습</p>
+                <ul class="ai-features">
+                    <li>Stacking 속도 최적화</li>
+                    <li>레이저 파라미터 자동 조정</li>
+                    <li>장력 제어 최적화</li>
+                    <li>에너지 효율 향상</li>
+                </ul>
+            </div>
+            <div class="ai-card">
+                <h3><span>🎯</span> 품질 예측</h3>
+                <p>공정 데이터 기반 품질 사전 예측</p>
+                <ul class="ai-features">
+                    <li>노칭 품질 예측</li>
+                    <li>정렬도 불량 예측</li>
+                    <li>용접 품질 예측</li>
+                    <li>실시간 SPC 연동</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="tech-section">
+        <div class="section-title">
+            <h2>기술 스택</h2>
+            <p>검증된 산업용 기술 기반</p>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h3>Edge Computing</h3>
+                <ul class="tech-list">
+                    <li>MCU <span>STM32F4/H7</span></li>
+                    <li>RTOS <span>FreeRTOS</span></li>
+                    <li>Edge AI <span>TensorFlow Lite</span></li>
+                    <li>통신 <span>Modbus TCP/RTU</span></li>
+                </ul>
+            </div>
+            <div class="tech-card">
+                <h3>Backend</h3>
+                <ul class="tech-list">
+                    <li>API Server <span>Node.js</span></li>
+                    <li>AI Server <span>Python Flask</span></li>
+                    <li>Message Queue <span>MQTT</span></li>
+                    <li>Real-time <span>WebSocket</span></li>
+                </ul>
+            </div>
+            <div class="tech-card">
+                <h3>Database</h3>
+                <ul class="tech-list">
+                    <li>Time Series <span>InfluxDB</span></li>
+                    <li>Relational <span>PostgreSQL</span></li>
+                    <li>Cache <span>Redis</span></li>
+                    <li>Storage <span>MinIO</span></li>
+                </ul>
+            </div>
+            <div class="tech-card">
+                <h3>Frontend</h3>
+                <ul class="tech-list">
+                    <li>Framework <span>React</span></li>
+                    <li>3D View <span>Three.js</span></li>
+                    <li>Charts <span>Chart.js</span></li>
+                    <li>State <span>Zustand</span></li>
+                </ul>
+            </div>
+            <div class="tech-card">
+                <h3>AI/ML</h3>
+                <ul class="tech-list">
+                    <li>Framework <span>TensorFlow</span></li>
+                    <li>Anomaly <span>Autoencoder</span></li>
+                    <li>RUL <span>LSTM</span></li>
+                    <li>Vision <span>OpenCV</span></li>
+                </ul>
+            </div>
+            <div class="tech-card">
+                <h3>DevOps</h3>
+                <ul class="tech-list">
+                    <li>Container <span>Docker</span></li>
+                    <li>Cloud <span>AWS</span></li>
+                    <li>CI/CD <span>GitHub Actions</span></li>
+                    <li>Monitoring <span>Grafana</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">HOME</a>
+            <a href="system.html">SYSTEM</a>
+            <a href="monitor.html">MONITOR</a>
+            <a href="diagram.html">DIAGRAM</a>
+        </div>
+        <p style="color:#666; margin-top:20px; font-size:0.8rem;">
+            PHILENERGY Smart Monitoring System | Developed by UTTEC
+        </p>
+    </footer>
+</body>
+</html>
