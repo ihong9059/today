@@ -1,0 +1,12 @@
+# Jetson Nano 환경 모니터 프로젝트 의존성
+# 설치: pip3 install -r requirements.txt
+
+# Adafruit CircuitPython 라이브러리
+adafruit-circuitpython-ahtx0
+adafruit-circuitpython-neopixel
+
+# WS2812 LED 제어
+rpi_ws281x
+
+# Jetson GPIO (시스템에 따라 이미 설치되어 있을 수 있음)
+Jetson.GPIO

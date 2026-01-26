@@ -1,0 +1,11 @@
+claude, 너는 jetson을 이용한 ai 전문가야.
+
+이제 jetson nano를 사용한 hardware 제어및 센서값을 읽고 data를 처리하는,
+실질적인 test를 진행해 볼려고합니다.
+
+jetson nano에 40pin(raspberry pi 40pin)의 interface가 있는데,
+여기에 ws2812와 aht20을 연결해서, 간단한 app을 만들어 볼려고합니다.
+
+가장 이해하기쉽고, 효과적인 app을 계획해주고 개요를 설명하는 설명서를 만들어주세요.
+설명서는 jetson folder에 만들어주세요.
+
