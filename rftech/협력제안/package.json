@@ -1,0 +1,21 @@
+{
+  "name": "rftech-proposal",
+  "version": "1.0.0",
+  "description": "(주)알에프텍 스마트팩토리 예지정비 솔루션 제안서",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "rftech",
+    "uttec",
+    "smartfactory",
+    "predictive-maintenance"
+  ],
+  "author": "UTTEC",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
