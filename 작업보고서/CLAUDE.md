@@ -98,8 +98,34 @@ cd ~/cert-guide && git pull && npm run build && pm2 restart all
 - [ ] 링크 정상 작동 확인
 - [ ] EC2 배포 후 웹에서 확인
 
-### 커밋 시
-- [ ] 변경 파일 목록 확인
+### Git 커밋 시 (필수 절차)
+
+**중요: 절대 확인 없이 commit하지 말 것!**
+
+1. **`git status`** 실행 → 변경/추가 파일 목록 확인
+2. **`git diff`** 실행 → 변경 내용 상세 확인
+3. **`git log --oneline -3`** 실행 → 최근 커밋 메시지 스타일 확인
+4. **사용자에게 확인 요청** → 커밋할 내용을 보여주고 승인받기
+5. 승인 후 `git add` → `git commit` → `git push` 순서로 진행
+
+```bash
+# 1단계: 상태 확인
+git status
+
+# 2단계: 변경 내용 확인
+git diff --stat
+
+# 3단계: 최근 커밋 스타일 확인
+git log --oneline -3
+
+# 4단계: 사용자 확인 후 커밋
+git add <파일>
+git commit -m "메시지"
+git push
+```
+
+- [ ] 변경 파일 목록을 사용자에게 보여줬는가?
+- [ ] 사용자 승인을 받았는가?
 - [ ] 커밋 메시지 한글로 작성
 - [ ] 작업보고서 업데이트
 
@@ -113,10 +139,17 @@ cd ~/cert-guide && git pull && npm run build && pm2 restart all
 | 문항 수 다르게 작성 | 항상 50문항 확인 |
 | 링크 경로 오류 | `/category/...` 형식 확인 |
 | 스타일 불일치 | 기존 페이지 복사 후 수정 |
+| **확인 없이 git commit** | **반드시 git status/diff 먼저 실행하고 사용자 확인 받기** |
+| **한 번에 add+commit+push** | **각 단계 분리하여 실행, 사용자에게 내용 보여주기** |
 
 ---
 
 ## 메모
+
+### 2026-01-28
+- **Git 커밋 규칙 강화**: 확인 없이 commit 금지, 반드시 사용자 승인 후 진행
+- PC 모니터 웹 서버 추가 (pc_monitor/app.py)
+- Tailscale SSH 가이드 추가
 
 ### 2026-01-09
 - Linux PC에 XFCE + 한글 입력 설정 중
