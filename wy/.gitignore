@@ -1,0 +1,19 @@
+# Gradle
+.gradle/
+build/
+*.apk
+!app/build/outputs/apk/debug/app-debug.apk
+
+# Node
+node_modules/
+
+# Database
+*.db
+
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
