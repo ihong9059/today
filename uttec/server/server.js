@@ -8,6 +8,10 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 91;
 
+// Demo 모드 설정 - 최대 보관 데이터 수
+const MAX_DEMO_VISITS = 20;
+const MAX_DEMO_GPS_LOGS = 100;
+
 // 미들웨어 설정
 app.use(cors());
 app.use(express.json());
@@ -91,6 +95,60 @@ function initDatabase() {
     console.log('Database tables initialized');
 }
 
+// Demo 모드: 오래된 데이터 자동 삭제 함수
+function cleanupOldVisits() {
+    db.get('SELECT COUNT(*) as count FROM visits', [], (err, row) => {
+        if (err || !row) return;
+
+        const totalCount = row.count;
+        if (totalCount > MAX_DEMO_VISITS) {
+            const deleteCount = totalCount - MAX_DEMO_VISITS;
+
+            // 삭제할 레코드의 사진 파일 경로 조회
+            db.all(`SELECT id, photo FROM visits ORDER BY timestamp ASC LIMIT ?`, [deleteCount], (err, rows) => {
+                if (err) return;
+
+                // 사진 파일 삭제
+                rows.forEach(row => {
+                    if (row.photo) {
+                        const photoPath = path.join(__dirname, row.photo);
+                        if (fs.existsSync(photoPath)) {
+                            fs.unlinkSync(photoPath);
+                            console.log(`[Demo] 사진 파일 삭제: ${row.photo}`);
+                        }
+                    }
+                });
+
+                // 오래된 레코드 삭제
+                const ids = rows.map(r => r.id);
+                db.run(`DELETE FROM visits WHERE id IN (${ids.join(',')})`, [], (err) => {
+                    if (!err) {
+                        console.log(`[Demo] 오래된 방문 기록 ${deleteCount}건 삭제 (최대 ${MAX_DEMO_VISITS}건 유지)`);
+                    }
+                });
+            });
+        }
+    });
+}
+
+function cleanupOldGpsLogs() {
+    db.get('SELECT COUNT(*) as count FROM gps_logs', [], (err, row) => {
+        if (err || !row) return;
+
+        const totalCount = row.count;
+        if (totalCount > MAX_DEMO_GPS_LOGS) {
+            const deleteCount = totalCount - MAX_DEMO_GPS_LOGS;
+
+            db.run(`DELETE FROM gps_logs WHERE id IN (SELECT id FROM gps_logs ORDER BY timestamp ASC LIMIT ?)`,
+                [deleteCount], (err) => {
+                if (!err) {
+                    console.log(`[Demo] 오래된 GPS 로그 ${deleteCount}건 삭제 (최대 ${MAX_DEMO_GPS_LOGS}건 유지)`);
+                }
+            });
+        }
+    });
+}
+
 // ==================== API 엔드포인트 ====================
 
 // 방문 기록 저장
@@ -125,6 +183,8 @@ app.post('/api/visit', upload.single('photo'), (req, res) => {
                         VALUES (?, ?, ?, CURRENT_TIMESTAMP)`,
                         [customer_name, contact_person, contact_phone]);
                 }
+                // Demo 모드: 오래된 데이터 정리
+                cleanupOldVisits();
                 res.json({ id: this.lastID, message: '방문 기록이 저장되었습니다' });
             }
         }
@@ -181,6 +241,8 @@ app.post('/api/gps', (req, res) => {
             if (err) {
                 res.status(500).json({ error: err.message });
             } else {
+                // Demo 모드: 오래된 데이터 정리
+                cleanupOldGpsLogs();
                 res.json({ id: this.lastID });
             }
         }
