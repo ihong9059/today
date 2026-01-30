@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTTEC 영업관리 시스템 제안서</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .slide {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(5, 150, 105, 0.15);
+        }
+        h1 {
+            color: #059669;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #047857;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #10b981;
+        }
+        h3 {
+            color: #059669;
+            font-size: 1.3em;
+            margin: 20px 0 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .logo-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin: 20px auto;
+            display: block;
+            width: fit-content;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #d1fae5;
+        }
+        th {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f0fdf4;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-left: 4px solid #059669;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .feature-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #a7f3d0;
+        }
+        .feature-card .icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .feature-card h4 {
+            color: #059669;
+            margin-bottom: 8px;
+        }
+        .url-box {
+            background: #065f46;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1.1em;
+            margin: 15px 0;
+            text-align: center;
+        }
+        .architecture {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        ul {
+            margin: 15px 0 15px 25px;
+        }
+        li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            margin-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            padding: 10px 10px 10px 50px;
+            position: relative;
+            background: #f0fdf4;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #059669;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            .slide {
+                padding: 25px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        .badge-green {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .badge-blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 표지 -->
+        <div class="slide">
+            <h1>UTTEC 영업관리 시스템</h1>
+            <p class="subtitle">제안서 및 사용 설명서</p>
+            <div class="logo-badge">UTTEC Demo</div>
+            <table style="max-width: 400px; margin: 30px auto;">
+                <tr><td><strong>문서 버전</strong></td><td>v1.0</td></tr>
+                <tr><td><strong>작성일</strong></td><td>2026년 01월 30일</td></tr>
+                <tr><td><strong>대상</strong></td><td>UTTEC 영업사원 및 관리자</td></tr>
+            </table>
+        </div>
+
+        <!-- 도입 배경 -->
+        <div class="slide">
+            <h2>1. 도입 배경</h2>
+            <div class="highlight-box">
+                <h3>현재 문제점</h3>
+                <ul>
+                    <li>방문 기록이 개인별로 관리되어 공유가 어려움</li>
+                    <li>거래처 방문 이력 추적이 체계적이지 않음</li>
+                    <li>GPS 기반 위치 정보가 없어 방문 현황 파악 어려움</li>
+                    <li>현장 사진 등 시각적 자료가 기록되지 않음</li>
+                    <li>영업사원 활동 현황 실시간 모니터링 불가</li>
+                </ul>
+            </div>
+            <h3>시스템 도입 효과</h3>
+            <table>
+                <tr><th>목적</th><th>기대 효과</th></tr>
+                <tr><td>방문 기록 체계화</td><td>모든 현장 활동이 GPS 위치, 사진, 텍스트로 기록됨</td></tr>
+                <tr><td>거래처 관리 강화</td><td>거래처별 방문 이력 및 담당자 정보 통합 관리</td></tr>
+                <tr><td>영업 활동 모니터링</td><td>영업사원별 방문 현황 실시간 파악</td></tr>
+                <tr><td>데이터 기반 의사결정</td><td>축적된 데이터를 기반으로 영업 전략 수립</td></tr>
+            </table>
+        </div>
+
+        <!-- 시스템 구성 -->
+        <div class="slide">
+            <h2>2. 시스템 구성</h2>
+            <div class="architecture">
+┌─────────────────────────────────────────────────────────────┐
+│                  UTTEC 영업관리 시스템 구성도                   │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   [모바일 웹/앱]                   [웹 대시보드]              │
+│   ┌─────────────┐                ┌─────────────┐           │
+│   │ GPS 자동 수집 │                │ 통계 현황    │           │
+│   │ 방문 유형 선택│                │ 지도 표시    │           │
+│   │ 거래처 정보   │───────────────▶│ 검색 기능    │           │
+│   │ 현장 사진    │                │ 방문 이력    │           │
+│   └─────────────┘                └─────────────┘           │
+│          │                              │                   │
+│          ▼                              ▼                   │
+│   ┌─────────────────────────────────────────────┐          │
+│   │         UTTEC Server (Node.js)              │          │
+│   │   - REST API / 이미지 업로드 / SQLite DB    │          │
+│   └─────────────────────────────────────────────┘          │
+└─────────────────────────────────────────────────────────────┘
+            </div>
+            <h3>시스템 사양</h3>
+            <table>
+                <tr><th>구분</th><th>상세</th></tr>
+                <tr><td>서버</td><td>DigitalOcean VPS (178.128.90.37:91)</td></tr>
+                <tr><td>백엔드</td><td>Node.js + Express</td></tr>
+                <tr><td>데이터베이스</td><td>SQLite</td></tr>
+                <tr><td>프론트엔드</td><td>HTML5 + JavaScript + Leaflet 지도</td></tr>
+                <tr><td>모바일</td><td>반응형 모바일 웹 (PWA 지원)</td></tr>
+            </table>
+        </div>
+
+        <!-- 주요 기능 -->
+        <div class="slide">
+            <h2>3. 주요 기능</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">📍</div>
+                    <h4>GPS 자동 수집</h4>
+                    <p>방문 위치 자동 기록</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📋</div>
+                    <h4>방문 유형 분류</h4>
+                    <p>영업/납품/AS/수금/미팅/기타</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📷</div>
+                    <h4>현장 사진</h4>
+                    <p>카메라 촬영 및 업로드</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔍</div>
+                    <h4>검색 기능</h4>
+                    <p>거래처명, 내용 검색</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🗺️</div>
+                    <h4>지도 표시</h4>
+                    <p>방문 위치 지도 시각화</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📊</div>
+                    <h4>통계 대시보드</h4>
+                    <p>방문 현황 실시간 파악</p>
+                </div>
+            </div>
+            <h3>방문 유형 분류</h3>
+            <table>
+                <tr><th>유형</th><th>설명</th><th>활용 예시</th></tr>
+                <tr><td><span class="badge badge-green">영업</span></td><td>일반 영업 방문</td><td>신규 고객 발굴, 계약 상담</td></tr>
+                <tr><td><span class="badge badge-green">납품</span></td><td>제품 납품</td><td>제품 인도, 검수</td></tr>
+                <tr><td><span class="badge badge-green">AS</span></td><td>사후 서비스</td><td>장비 수리, 점검</td></tr>
+                <tr><td><span class="badge badge-green">수금</span></td><td>대금 수금</td><td>미수금 회수</td></tr>
+                <tr><td><span class="badge badge-green">미팅</span></td><td>회의/상담</td><td>기술 미팅, 협의</td></tr>
+                <tr><td><span class="badge badge-green">기타</span></td><td>기타 방문</td><td>전시회, 교육 등</td></tr>
+            </table>
+        </div>
+
+        <!-- 사용 방법 -->
+        <div class="slide">
+            <h2>4. 사용 방법</h2>
+            <h3>접속 URL</h3>
+            <div class="url-box">
+                관리자 대시보드: http://178.128.90.37:91
+            </div>
+            <div class="url-box">
+                모바일 웹 (영업사원용): http://178.128.90.37:91/mobile/
+            </div>
+
+            <h3>모바일 웹 접속 방법</h3>
+            <ol class="step-list">
+                <li>스마트폰 브라우저(Chrome, Safari) 실행</li>
+                <li>주소창에 http://178.128.90.37:91/mobile/ 입력</li>
+                <li>위치 권한 허용</li>
+                <li>설정 탭에서 영업사원명 입력</li>
+                <li>방문등록 탭에서 방문 기록 입력</li>
+            </ol>
+
+            <h3>홈 화면에 앱처럼 추가</h3>
+            <div class="two-column">
+                <div class="highlight-box">
+                    <h4>iPhone (Safari)</h4>
+                    <ol>
+                        <li>공유 버튼(□↑) 탭</li>
+                        <li>"홈 화면에 추가" 선택</li>
+                        <li>"추가" 탭</li>
+                    </ol>
+                </div>
+                <div class="highlight-box">
+                    <h4>Android (Chrome)</h4>
+                    <ol>
+                        <li>메뉴(⋮) 탭</li>
+                        <li>"홈 화면에 추가" 선택</li>
+                        <li>"추가" 탭</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- 방문 기록 입력 -->
+        <div class="slide">
+            <h2>5. 방문 기록 입력 절차</h2>
+            <ol class="step-list">
+                <li><strong>앱/웹 실행</strong> - GPS 정보가 자동으로 수집되어 화면 상단에 표시됩니다</li>
+                <li><strong>설정 탭에서 영업사원 이름 입력</strong> - 본인 이름 입력 (예: 홍길동)</li>
+                <li><strong>방문등록 탭으로 이동</strong></li>
+                <li><strong>방문 유형 선택</strong> - 영업/납품/AS/수금/미팅/기타 중 선택</li>
+                <li><strong>거래처 정보 입력</strong> - 거래처명, 담당자, 연락처</li>
+                <li><strong>방문 내용 입력</strong> - 상담 내용, 후속 조치 등</li>
+                <li><strong>다음 방문 예정일 선택</strong> (선택사항)</li>
+                <li><strong>사진 촬영</strong> (선택사항) - 현장 사진 촬영 또는 선택</li>
+                <li><strong>"방문 기록 저장" 버튼 클릭</strong> - 서버로 데이터 전송</li>
+            </ol>
+        </div>
+
+        <!-- 데이터 활용 -->
+        <div class="slide">
+            <h2>6. 데이터 활용 방안</h2>
+            <div class="two-column">
+                <div>
+                    <h3>영업 활동 분석</h3>
+                    <ul>
+                        <li>영업사원별 방문 실적</li>
+                        <li>일별/주별/월별 방문 건수</li>
+                        <li>방문 유형별 분포 분석</li>
+                        <li>지역별 영업 현황</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>거래처 관리</h3>
+                    <ul>
+                        <li>거래처별 방문 이력</li>
+                        <li>담당자, 연락처 통합 관리</li>
+                        <li>방문 주기 분석</li>
+                        <li>재방문 필요 거래처 도출</li>
+                    </ul>
+                </div>
+            </div>
+            <h3>성과 지표 (KPI)</h3>
+            <table>
+                <tr><th>지표</th><th>설명</th></tr>
+                <tr><td>방문 효율성</td><td>일/주/월별 방문 건수, 영업사원별 비교</td></tr>
+                <tr><td>거래처 확보율</td><td>신규 거래처 방문 대비 계약 건수</td></tr>
+                <tr><td>서비스 대응</td><td>AS 요청 대비 완료 건수, 평균 대응 시간</td></tr>
+            </table>
+        </div>
+
+        <!-- 서버 정보 -->
+        <div class="slide">
+            <h2>7. 서버 정보</h2>
+            <table>
+                <tr><th>항목</th><th>값</th></tr>
+                <tr><td>IP 주소</td><td>178.128.90.37</td></tr>
+                <tr><td>포트</td><td>91</td></tr>
+                <tr><td>대시보드 URL</td><td>http://178.128.90.37:91</td></tr>
+                <tr><td>모바일 웹 URL</td><td>http://178.128.90.37:91/mobile/</td></tr>
+                <tr><td>프로젝트 경로</td><td>/root/uttec/</td></tr>
+                <tr><td>프로세스 관리</td><td>PM2 (uttec)</td></tr>
+            </table>
+
+            <h3>향후 확장 계획</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">📄</div>
+                    <h4>리포트 생성</h4>
+                    <p>영업 리포트 PDF 자동 생성</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔔</div>
+                    <h4>알림 기능</h4>
+                    <p>방문 예정일, 미수금 알림</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📶</div>
+                    <h4>오프라인 모드</h4>
+                    <p>네트워크 없이 저장 후 동기화</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔗</div>
+                    <h4>ERP/CRM 연동</h4>
+                    <p>기존 시스템과 통합</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 마무리 -->
+        <div class="slide">
+            <h2>감사합니다</h2>
+            <div style="text-align: center; padding: 40px 0;">
+                <div class="logo-badge" style="font-size: 1.5em; padding: 15px 40px;">UTTEC 영업관리 시스템</div>
+
+                <div style="margin-top: 40px; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 16px; padding: 30px; max-width: 450px; margin-left: auto; margin-right: auto; border: 2px solid #059669;">
+                    <h3 style="color: #059669; margin-bottom: 20px; font-size: 1.3em;">📞 시스템 문의</h3>
+                    <table style="width: 100%; border: none; background: transparent;">
+                        <tr style="background: transparent;">
+                            <td style="border: none; padding: 10px; text-align: right; width: 100px; color: #666; font-weight: 500;">담당자</td>
+                            <td style="border: none; padding: 10px; text-align: left; font-size: 1.2em; font-weight: bold; color: #065f46;">홍 광삼</td>
+                        </tr>
+                        <tr style="background: transparent;">
+                            <td style="border: none; padding: 10px; text-align: right; color: #666; font-weight: 500;">전화</td>
+                            <td style="border: none; padding: 10px; text-align: left; font-size: 1.2em; font-weight: bold; color: #065f46;">010-3922-1809</td>
+                        </tr>
+                        <tr style="background: transparent;">
+                            <td style="border: none; padding: 10px; text-align: right; color: #666; font-weight: 500;">이메일</td>
+                            <td style="border: none; padding: 10px; text-align: left; font-size: 1.2em; font-weight: bold; color: #065f46;">uttec@uttec.co.kr</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <div class="url-box" style="display: inline-block;">
+                        http://178.128.90.37:91
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>UTTEC Sales Management System - Proposal & User Guide</p>
+            <p>Document Version: v1.0 | Created: 2026-01-30</p>
+        </div>
+    </div>
+</body>
+</html>
