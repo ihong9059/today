@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 학습 스타일은? - Sam English</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        * { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
+                radial-gradient(2px 2px at 50px 160px, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 90px 40px, rgba(255,255,255,0.2), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 5s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .main-container { max-width: 600px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+
+        .logo-header { text-align: center; padding: 15px 0; margin-bottom: 10px; }
+        .logo-header img { height: 60px; background: white; padding: 8px 15px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: transform 0.3s; }
+        .logo-header img:hover { transform: scale(1.05); }
+
+        .card {
+            border: none; border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            position: relative;
+        }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c); }
+        .card-body { padding: 35px; }
+
+        .start-screen h1 {
+            font-size: 2.2rem; font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        .feature-badges { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 20px 0; }
+        .feature-badge { background: linear-gradient(135deg, #667eea20, #764ba220); border: 1px solid #667eea40; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; color: #667eea; font-weight: 600; }
+
+        .progress { height: 10px; border-radius: 10px; background: #e9ecef; overflow: hidden; }
+        .progress-bar { background: linear-gradient(90deg, #667eea, #764ba2, #f093fb); border-radius: 10px; transition: width 0.5s; position: relative; }
+        .progress-bar::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: shimmer 2s infinite; }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+        .question-counter { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; }
+        .area-badge { background: #f8f9ff; border: 2px solid #667eea; color: #667eea; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; }
+
+        .question-container { background: linear-gradient(135deg, #f8f9ff 0%, #fff5f5 100%); border-radius: 20px; padding: 30px; margin: 25px 0; position: relative; }
+        .question-container::before { content: '"'; position: absolute; top: 10px; left: 20px; font-size: 4rem; color: #667eea20; font-family: Georgia, serif; }
+        .question-text { font-size: 1.35rem; font-weight: 700; line-height: 1.6; color: #333; }
+        .question-emoji { font-size: 3.5rem; margin-bottom: 15px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+
+        .choice-btn {
+            display: flex; align-items: center; width: 100%; padding: 18px 24px; margin: 12px 0;
+            border: 2px solid #e9ecef; border-radius: 16px; background: #fff;
+            text-align: left; font-size: 1.05rem; font-weight: 600; cursor: pointer;
+            transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .choice-btn::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, #667eea, #764ba2); opacity: 0; transition: opacity 0.3s; }
+        .choice-btn:hover { border-color: #667eea; background: #f8f9ff; transform: translateX(8px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2); }
+        .choice-btn:hover::before { opacity: 1; }
+        .choice-btn.selected { border-color: transparent; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; transform: translateX(8px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4); }
+        .choice-icon { width: 28px; height: 28px; border: 2px solid #ddd; border-radius: 50%; margin-right: 15px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .choice-btn:hover .choice-icon { border-color: #667eea; }
+        .choice-btn.selected .choice-icon { border-color: white; background: white; }
+        .choice-btn.selected .choice-icon::after { content: '✓'; color: #667eea; font-weight: bold; }
+
+        .result-header { background: linear-gradient(135deg, #667eea, #764ba2); margin: -35px -35px 30px -35px; padding: 40px 35px; text-align: center; color: white; position: relative; overflow: hidden; }
+        .result-header::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: pulse 3s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.8; } }
+
+        .result-emoji { font-size: 5rem; filter: drop-shadow(0 4px 15px rgba(0,0,0,0.2)); animation: bounce 2s ease-in-out infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        .result-type { font-size: 2rem; font-weight: 900; margin: 15px 0 10px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .score-badge { display: inline-block; padding: 12px 30px; border-radius: 30px; font-weight: 800; font-size: 1.8rem; background: white; color: #667eea; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+        .area-item { padding: 16px 0; border-bottom: 1px solid #eee; }
+        .area-item:last-child { border-bottom: none; }
+        .area-name { font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .area-bar { height: 12px; border-radius: 6px; background: #e9ecef; margin-top: 8px; overflow: hidden; }
+        .area-fill { height: 100%; border-radius: 6px; transition: width 1.5s; position: relative; }
+
+        .advice-box { background: linear-gradient(135deg, #fff9e6 0%, #fff5f5 100%); border: none; border-radius: 16px; padding: 20px; position: relative; overflow: hidden; }
+        .advice-box::before { content: '💡'; position: absolute; top: -10px; right: -10px; font-size: 4rem; opacity: 0.15; }
+
+        .btn-gradient { background: linear-gradient(135deg, #667eea, #764ba2); border: none; color: white; font-weight: 700; padding: 16px 32px; border-radius: 16px; transition: all 0.3s; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); }
+        .btn-gradient:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4); color: white; }
+
+        .btn-outline-gradient { background: white; border: 2px solid #667eea; color: #667eea; font-weight: 600; padding: 14px 28px; border-radius: 16px; transition: all 0.3s; }
+        .btn-outline-gradient:hover { background: linear-gradient(135deg, #667eea, #764ba2); border-color: transparent; color: white; }
+
+        .hidden { display: none !important; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeInUp 0.5s ease-out; }
+
+        .form-control-custom { border: 2px solid #e9ecef; border-radius: 16px; padding: 16px 20px; font-size: 1.1rem; transition: all 0.3s; }
+        .form-control-custom:focus { border-color: #667eea; box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1); }
+
+        .analysis-content { font-size: 0.95rem; line-height: 1.8; color: #333; }
+        .analysis-content h1 { font-size: 1.5rem; color: #667eea; border-bottom: 3px solid #667eea; padding-bottom: 10px; margin: 25px 0 15px 0; }
+        .analysis-content h2 { font-size: 1.25rem; color: #764ba2; margin: 20px 0 12px 0; padding-left: 10px; border-left: 4px solid #764ba2; }
+        .analysis-content strong { color: #667eea; }
+        .analysis-content blockquote { background: linear-gradient(135deg, #f8f9ff 0%, #fff5f5 100%); border-left: 4px solid #667eea; padding: 15px 20px; margin: 15px 0; border-radius: 0 12px 12px 0; }
+
+        @media (max-width: 576px) {
+            .question-text { font-size: 1.15rem; }
+            .choice-btn { padding: 14px 18px; font-size: 0.95rem; }
+            .result-type { font-size: 1.6rem; }
+            .card-body { padding: 25px; }
+            .result-header { margin: -25px -25px 25px -25px; padding: 30px 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container py-3">
+        <div class="logo-header">
+            <img src="/static/images/sam_english_logo.svg" alt="Sam English">
+        </div>
+
+        <div id="startScreen" class="card fade-in">
+            <div class="card-body text-center">
+                <h1 class="mb-3">나의 학습 스타일은?</h1>
+                <p class="text-muted mb-3">25개 질문으로 알아보는 나만의 학습 패턴</p>
+
+                <div class="feature-badges">
+                    <span class="feature-badge"><i class="bi bi-clock"></i> 약 5분</span>
+                    <span class="feature-badge"><i class="bi bi-graph-up"></i> 5개 영역</span>
+                    <span class="feature-badge"><i class="bi bi-robot"></i> AI 분석</span>
+                </div>
+
+                <div class="mb-3">
+                    <input type="text" id="userName" class="form-control form-control-custom text-center" placeholder="이름 또는 닉네임">
+                </div>
+                <div class="mb-4">
+                    <select id="userGrade" class="form-select form-control-custom text-center">
+                        <option value="">학년 선택</option>
+                        <option value="중1">중학교 1학년</option>
+                        <option value="중2">중학교 2학년</option>
+                        <option value="중3">중학교 3학년</option>
+                        <option value="고1">고등학교 1학년</option>
+                        <option value="고2">고등학교 2학년</option>
+                        <option value="고3">고등학교 3학년</option>
+                        <option value="기타">기타</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-gradient btn-lg w-100" onclick="startTest()">
+                    <i class="bi bi-play-fill"></i> 테스트 시작하기
+                </button>
+
+                <div class="mt-4">
+                    <small class="text-muted"><i class="bi bi-shield-check"></i> 개인정보는 저장되지 않습니다</small>
+                </div>
+            </div>
+        </div>
+
+        <div id="testScreen" class="card hidden">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="question-counter" id="questionNum"><i class="bi bi-question-circle"></i> 1 / 25</span>
+                    <span class="area-badge" id="areaName">계획력</span>
+                </div>
+                <div class="progress mb-4">
+                    <div class="progress-bar" id="progressBar" style="width: 4%"></div>
+                </div>
+
+                <div class="question-container text-center">
+                    <div class="question-emoji" id="questionEmoji">📋</div>
+                    <div class="question-text" id="questionText">질문이 여기에 표시됩니다</div>
+                </div>
+
+                <div id="choices">
+                    <button class="choice-btn" onclick="selectAnswer(4)"><span class="choice-icon"></span>매우 그렇다</button>
+                    <button class="choice-btn" onclick="selectAnswer(3)"><span class="choice-icon"></span>그런 편이다</button>
+                    <button class="choice-btn" onclick="selectAnswer(2)"><span class="choice-icon"></span>아닌 편이다</button>
+                    <button class="choice-btn" onclick="selectAnswer(1)"><span class="choice-icon"></span>전혀 아니다</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultScreen" class="card hidden">
+            <div class="card-body" style="padding: 0;">
+                <div class="result-header">
+                    <div class="result-emoji" id="resultEmoji">🌟</div>
+                    <div class="result-type" id="resultType">분석중...</div>
+                    <p class="mb-3 opacity-75" id="resultDesc">설명</p>
+                    <span class="score-badge" id="totalScoreBadge">0점</span>
+                </div>
+
+                <div style="padding: 0 35px 35px 35px;">
+                    <div style="height: 280px; margin: 20px 0;"><canvas id="radarChart"></canvas></div>
+
+                    <div class="mt-4">
+                        <h6 class="mb-3 fw-bold"><i class="bi bi-bar-chart-fill text-primary"></i> 영역별 상세 점수</h6>
+                        <div id="areaScores"></div>
+                    </div>
+
+                    <div class="advice-box mt-4">
+                        <strong><i class="bi bi-lightbulb-fill text-warning"></i> 맞춤 조언</strong>
+                        <p class="mb-0 mt-2" id="adviceText"></p>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button class="btn btn-gradient btn-lg" id="analyzeBtn" onclick="analyzeWithAI()"><i class="bi bi-robot"></i> AI에게 자세한 분석 받기</button>
+                        <button class="btn btn-outline-gradient" onclick="showAIPrompt()"><i class="bi bi-file-text"></i> 프롬프트 보기</button>
+                        <button class="btn btn-outline-gradient" onclick="restartTest()"><i class="bi bi-arrow-clockwise"></i> 다시 테스트하기</button>
+                    </div>
+
+                    <div id="loadingBox" class="mt-4 hidden text-center">
+                        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
+                        <p class="text-primary mt-3 fw-bold">AI가 분석 중입니다...</p>
+                        <p class="text-muted small">약 1~2분 소요됩니다</p>
+                    </div>
+
+                    <div id="analysisResultBox" class="mt-4 hidden">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-success p-2"><i class="bi bi-check-circle"></i> AI 분석 완료</span>
+                            <button class="btn btn-sm btn-outline-primary" onclick="copyAnalysis()"><i class="bi bi-clipboard"></i> 복사</button>
+                        </div>
+                        <div id="analysisResult" class="analysis-content border rounded-4 p-4 bg-white shadow-sm" style="max-height: 500px; overflow-y: auto;"></div>
+                    </div>
+
+                    <div id="errorBox" class="mt-4 hidden">
+                        <div class="alert alert-danger rounded-4" id="errorMessage"></div>
+                    </div>
+
+                    <div id="aiPromptBox" class="mt-4 hidden">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong>AI 분석 프롬프트</strong>
+                            <button class="btn btn-sm btn-outline-primary" onclick="copyPrompt()"><i class="bi bi-clipboard"></i> 복사</button>
+                        </div>
+                        <textarea id="aiPrompt" class="form-control" rows="8" readonly style="font-size: 0.85rem; border-radius: 12px;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <small class="text-white-50">© 2024 Sam English. All rights reserved.</small>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { area: 'planning', emoji: '📋', text: '나는 공부하기 전에 뭘 할지 미리 생각해두는 편이다' },
+            { area: 'planning', emoji: '📅', text: '시험 기간에 계획표를 만들어 본 적이 있다' },
+            { area: 'planning', emoji: '🎯', text: '오늘 할 일을 아침에 대충이라도 정해두는 편이다' },
+            { area: 'planning', emoji: '⏰', text: '약속 시간에 늦지 않으려고 미리 준비하는 편이다' },
+            { area: 'planning', emoji: '📝', text: '해야 할 일이 많으면 우선순위를 정한다' },
+            { area: 'focus', emoji: '🧘', text: '공부할 때 30분 이상 집중할 수 있다' },
+            { area: 'focus', emoji: '📵', text: '공부 중에 스마트폰 알림이 와도 바로 확인하지 않는다' },
+            { area: 'focus', emoji: '🎧', text: '주변이 시끄러워도 어느 정도 집중할 수 있다' },
+            { area: 'focus', emoji: '💭', text: '공부 중에 딴생각이 잘 안 나는 편이다' },
+            { area: 'focus', emoji: '📚', text: '한 과목을 끝내고 다른 과목으로 넘어가는 편이다' },
+            { area: 'execution', emoji: '🚀', text: '해야 할 일이 있으면 미루지 않고 바로 시작한다' },
+            { area: 'execution', emoji: '✅', text: '계획을 세우면 실제로 실천하는 편이다' },
+            { area: 'execution', emoji: '💪', text: '귀찮아도 해야 할 건 일단 한다' },
+            { area: 'execution', emoji: '🏃', text: '아침에 알람 울리면 바로 일어나는 편이다' },
+            { area: 'execution', emoji: '📖', text: '숙제는 마감 전에 미리 끝내는 편이다' },
+            { area: 'persistence', emoji: '🔥', text: '어려운 문제도 포기하지 않고 끝까지 풀어본다' },
+            { area: 'persistence', emoji: '🏔️', text: '목표를 정하면 쉽게 포기하지 않는다' },
+            { area: 'persistence', emoji: '😤', text: '안 되는 게 있으면 될 때까지 해보는 편이다' },
+            { area: 'persistence', emoji: '📈', text: '성적이 안 올라도 계속 노력할 수 있다' },
+            { area: 'persistence', emoji: '🎮', text: '게임에서 어려운 스테이지도 클리어할 때까지 한다' },
+            { area: 'selfcontrol', emoji: '🍫', text: '좋아하는 것도 참고 해야 할 것부터 하는 편이다' },
+            { area: 'selfcontrol', emoji: '📱', text: '유튜브나 SNS 시간을 스스로 조절할 수 있다' },
+            { area: 'selfcontrol', emoji: '🛏️', text: '자고 싶어도 할 일이 남으면 안 자는 편이다' },
+            { area: 'selfcontrol', emoji: '🍕', text: '시험 기간에는 노는 것을 줄일 수 있다' },
+            { area: 'selfcontrol', emoji: '😴', text: '늦게 자도 다음 날 일찍 일어날 수 있다' }
+        ];
+
+        const areaNames = { planning: '계획력', focus: '집중력', execution: '실행력', persistence: '끈기', selfcontrol: '자기조절' };
+        const areaIcons = { planning: 'bi-calendar-check', focus: 'bi-eye', execution: 'bi-lightning', persistence: 'bi-fire', selfcontrol: 'bi-sliders' };
+        const areaColors = { planning: '#667eea', focus: '#28a745', execution: '#fd7e14', persistence: '#dc3545', selfcontrol: '#6f42c1' };
+
+        let currentQuestion = 0, answers = [], userName = '', userGrade = '';
+
+        function startTest() {
+            userName = document.getElementById('userName').value.trim() || '익명';
+            userGrade = document.getElementById('userGrade').value || '미선택';
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('testScreen').classList.remove('hidden');
+            document.getElementById('testScreen').classList.add('fade-in');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('questionNum').innerHTML = '<i class="bi bi-question-circle"></i> ' + (currentQuestion + 1) + ' / ' + questions.length;
+            document.getElementById('progressBar').style.width = ((currentQuestion + 1) / questions.length * 100) + '%';
+            document.getElementById('areaName').textContent = areaNames[q.area];
+            document.getElementById('questionEmoji').textContent = q.emoji;
+            document.getElementById('questionText').textContent = q.text;
+            document.querySelectorAll('.choice-btn').forEach(btn => btn.classList.remove('selected'));
+        }
+
+        function selectAnswer(value) {
+            answers.push({ question: currentQuestion, area: questions[currentQuestion].area, value: value });
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                document.getElementById('testScreen').classList.remove('fade-in');
+                setTimeout(() => { document.getElementById('testScreen').classList.add('fade-in'); showQuestion(); }, 100);
+            } else { showResult(); }
+        }
+
+        function calculateScores() {
+            const scores = { planning: 0, focus: 0, execution: 0, persistence: 0, selfcontrol: 0 };
+            const counts = { planning: 0, focus: 0, execution: 0, persistence: 0, selfcontrol: 0 };
+            answers.forEach(a => { scores[a.area] += a.value; counts[a.area]++; });
+            for (let area in scores) { scores[area] = Math.round((scores[area] / (counts[area] * 4)) * 100); }
+            return scores;
+        }
+
+        function showResult() {
+            document.getElementById('testScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+            document.getElementById('resultScreen').classList.add('fade-in');
+            const scores = calculateScores();
+            const total = Math.round((scores.planning + scores.focus + scores.execution + scores.persistence + scores.selfcontrol) / 5);
+            const { type, emoji, desc } = determineType(scores, total);
+            document.getElementById('resultEmoji').textContent = emoji;
+            document.getElementById('resultType').textContent = type;
+            document.getElementById('resultDesc').textContent = desc;
+            document.getElementById('totalScoreBadge').textContent = total + '점';
+
+            const areaScoresDiv = document.getElementById('areaScores');
+            areaScoresDiv.innerHTML = '';
+            for (let area in scores) {
+                areaScoresDiv.innerHTML += '<div class="area-item"><div class="d-flex justify-content-between"><span class="area-name"><i class="bi ' + areaIcons[area] + '" style="color:' + areaColors[area] + '"></i> ' + areaNames[area] + '</span><span class="fw-bold">' + scores[area] + '점</span></div><div class="area-bar"><div class="area-fill" style="width: ' + scores[area] + '%; background: linear-gradient(90deg, ' + areaColors[area] + ', ' + areaColors[area] + '99);"></div></div></div>';
+            }
+            document.getElementById('adviceText').textContent = getAdvice(scores);
+            createRadarChart(scores);
+            saveResult(scores, total, type);
+        }
+
+        function determineType(scores, total) {
+            if (total >= 80) return { type: '🏆 자기주도 학습자', emoji: '🏆', desc: '스스로 계획하고 실천하는 능력이 뛰어나요!' };
+            if (total >= 65) return { type: '🌱 성장형 학습자', emoji: '🌱', desc: '기본기가 좋아요. 조금만 더 노력하면 급성장!' };
+            if (scores.planning >= 70 && scores.execution < 50) return { type: '💭 계획형 몽상가', emoji: '💭', desc: '계획은 잘 세우는데 실천이 아쉬워요' };
+            if (scores.execution >= 70 && scores.planning < 50) return { type: '⚡ 즉흥적 실행가', emoji: '⚡', desc: '일단 하고 보는 스타일!' };
+            if (scores.persistence >= 70) return { type: '🔥 끈기의 달인', emoji: '🔥', desc: '포기를 모르는 당신!' };
+            if (scores.focus >= 70) return { type: '🎯 집중력 마스터', emoji: '🎯', desc: '몰입력이 대단해요!' };
+            if (total < 40) return { type: '💎 잠재력 보유자', emoji: '💎', desc: '가능성은 무한해요!' };
+            return { type: '⚖️ 균형잡힌 학습자', emoji: '⚖️', desc: '고르게 발전 중!' };
+        }
+
+        function getAdvice(scores) {
+            const weakest = Object.keys(scores).reduce((a, b) => scores[a] < scores[b] ? a : b);
+            const advices = { planning: '하루 3가지만 할 일을 정해보세요!', focus: '25분 집중 + 5분 휴식 해보세요!', execution: '5초 안에 시작하기!', persistence: '작은 성공 경험을 쌓아보세요!', selfcontrol: '스마트폰 타이머를 설정해보세요!' };
+            return areaNames[weakest] + '이(가) 조금 아쉬워요. ' + advices[weakest];
+        }
+
+        function createRadarChart(scores) {
+            new Chart(document.getElementById('radarChart').getContext('2d'), {
+                type: 'radar',
+                data: { labels: ['계획력', '집중력', '실행력', '끈기', '자기조절'], datasets: [{ label: '나의 점수', data: [scores.planning, scores.focus, scores.execution, scores.persistence, scores.selfcontrol], backgroundColor: 'rgba(102, 126, 234, 0.3)', borderColor: 'rgba(102, 126, 234, 1)', borderWidth: 3, pointBackgroundColor: 'rgba(102, 126, 234, 1)', pointRadius: 6 }] },
+                options: { responsive: true, maintainAspectRatio: false, scales: { r: { beginAtZero: true, max: 100, ticks: { stepSize: 20, display: false }, pointLabels: { font: { size: 13, weight: 'bold' } } } }, plugins: { legend: { display: false } } }
+            });
+        }
+
+        function saveResult(scores, total, type) { fetch('/save_result', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: userName, grade: userGrade, ...scores, total: total, type: type }) }); }
+
+        function showAIPrompt() {
+            const scores = calculateScores();
+            const total = Math.round((scores.planning + scores.focus + scores.execution + scores.persistence + scores.selfcontrol) / 5);
+            fetch('/generate_prompt', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: userName, grade: userGrade, ...scores, total: total, type: determineType(scores, total).type }) })
+            .then(res => res.json()).then(data => { document.getElementById('aiPrompt').value = data.prompt; document.getElementById('aiPromptBox').classList.remove('hidden'); });
+        }
+
+        function copyPrompt() { document.getElementById('aiPrompt').select(); document.execCommand('copy'); alert('복사 완료!'); }
+
+        function analyzeWithAI() {
+            const scores = calculateScores();
+            const total = Math.round((scores.planning + scores.focus + scores.execution + scores.persistence + scores.selfcontrol) / 5);
+            document.getElementById('analyzeBtn').disabled = true;
+            document.getElementById('loadingBox').classList.remove('hidden');
+            document.getElementById('analysisResultBox').classList.add('hidden');
+            document.getElementById('errorBox').classList.add('hidden');
+            fetch('/analyze_with_ai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: userName, grade: userGrade, ...scores, total: total, type: determineType(scores, total).type }) })
+            .then(res => res.json()).then(data => {
+                document.getElementById('loadingBox').classList.add('hidden');
+                document.getElementById('analyzeBtn').disabled = false;
+                if (data.status === 'success') { document.getElementById('analysisResult').innerHTML = marked.parse(data.analysis); document.getElementById('analysisResultBox').classList.remove('hidden'); }
+                else { document.getElementById('errorMessage').textContent = data.message; document.getElementById('errorBox').classList.remove('hidden'); }
+            }).catch(error => { document.getElementById('loadingBox').classList.add('hidden'); document.getElementById('analyzeBtn').disabled = false; document.getElementById('errorMessage').textContent = '서버 오류: ' + error.message; document.getElementById('errorBox').classList.remove('hidden'); });
+        }
+
+        function copyAnalysis() { navigator.clipboard.writeText(document.getElementById('analysisResult').innerText).then(() => alert('복사 완료!')); }
+
+        function restartTest() { currentQuestion = 0; answers = []; document.getElementById('resultScreen').classList.add('hidden'); document.getElementById('aiPromptBox').classList.add('hidden'); document.getElementById('analysisResultBox').classList.add('hidden'); document.getElementById('startScreen').classList.remove('hidden'); }
+    </script>
+</body>
+</html>
