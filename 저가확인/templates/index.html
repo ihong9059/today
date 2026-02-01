@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서울우유 저가 품목 검색</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .upload-box {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .upload-box h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .steps {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .steps h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .steps ol {
+            padding-left: 25px;
+            color: #555;
+        }
+        .steps li {
+            padding: 8px 0;
+            line-height: 1.6;
+        }
+        .steps a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .steps a:hover {
+            text-decoration: underline;
+        }
+        .steps code {
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .file-upload {
+            border: 3px dashed #ccc;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .file-upload:hover, .file-upload.dragover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        .file-upload input[type="file"] {
+            display: none;
+        }
+        .file-upload-label {
+            display: block;
+            cursor: pointer;
+        }
+        .file-upload-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .file-upload-text {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .file-name {
+            margin-top: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+        .analyze-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .analyze-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
+        }
+        .analyze-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .results {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+        }
+        .results.show {
+            display: block;
+        }
+        .results h2 {
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #667eea;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .product-list {
+            list-style: none;
+        }
+        .product-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #e74c3c;
+            transition: transform 0.2s;
+        }
+        .product-item:hover {
+            transform: translateX(5px);
+        }
+        .product-name {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .product-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: #666;
+        }
+        .product-details span {
+            background: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .price-warning {
+            background: #e74c3c !important;
+            color: white !important;
+            font-weight: bold;
+        }
+        .product-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #667eea;
+            text-decoration: none;
+        }
+        .product-link:hover {
+            text-decoration: underline;
+        }
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #27ae60;
+            font-size: 1.2rem;
+        }
+        .count-badge {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-left: 10px;
+        }
+        .info-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            color: white;
+        }
+        .info-box h3 {
+            margin-bottom: 10px;
+        }
+        .info-box ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        .info-box li {
+            padding: 5px 0;
+        }
+        .info-box li::before {
+            content: "* ";
+            color: #90EE90;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>서울우유 저가 품목 모니터링</h1>
+            <p>쿠팡에서 100ml당 300원 이하 제품을 검색합니다</p>
+        </div>
+
+        <div class="upload-box">
+            <h2>쿠팡 페이지 분석</h2>
+
+            <div class="steps">
+                <h3>사용 방법</h3>
+                <ol>
+                    <li>
+                        <a href="https://www.coupang.com/np/search?component=&q=서울우유" target="_blank">
+                            쿠팡에서 '서울우유' 검색하기 (클릭)
+                        </a>
+                    </li>
+                    <li>검색 결과 페이지에서 <code>Ctrl + S</code> (Mac: <code>Cmd + S</code>) 눌러 페이지 저장</li>
+                    <li>"웹페이지, HTML만" 형식으로 저장</li>
+                    <li>저장한 HTML 파일을 아래에 업로드</li>
+                </ol>
+            </div>
+
+            <div class="file-upload" id="dropZone">
+                <label class="file-upload-label">
+                    <input type="file" id="fileInput" accept=".html,.htm">
+                    <div class="file-upload-icon">📁</div>
+                    <div class="file-upload-text">
+                        HTML 파일을 여기에 드래그하거나 클릭하여 선택
+                    </div>
+                    <div class="file-name" id="fileName"></div>
+                </label>
+            </div>
+
+            <button class="analyze-btn" id="analyzeBtn" disabled>분석 시작</button>
+        </div>
+
+        <div class="info-box">
+            <h3>검색 기준</h3>
+            <ul>
+                <li>검색 대상: 쿠팡 검색 결과 HTML</li>
+                <li>필터 키워드: 서울우유</li>
+                <li>가격 기준: 100ml당 300원 이하</li>
+                <li>위반 제품은 빨간색으로 표시됩니다</li>
+            </ul>
+        </div>
+
+        <div class="results" id="results">
+            <h2>검색 결과 <span class="count-badge" id="count">0</span></h2>
+            <div id="results-content"></div>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const dropZone = document.getElementById('dropZone');
+        const fileName = document.getElementById('fileName');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const results = document.getElementById('results');
+        const resultsContent = document.getElementById('results-content');
+        const countBadge = document.getElementById('count');
+
+        let selectedFile = null;
+
+        // 파일 선택
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                selectedFile = e.target.files[0];
+                fileName.textContent = selectedFile.name;
+                analyzeBtn.disabled = false;
+            }
+        });
+
+        // 드래그 앤 드롭
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+
+            if (e.dataTransfer.files.length > 0) {
+                selectedFile = e.dataTransfer.files[0];
+                fileName.textContent = selectedFile.name;
+                analyzeBtn.disabled = false;
+            }
+        });
+
+        // 분석 시작
+        analyzeBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            analyzeBtn.disabled = true;
+            analyzeBtn.textContent = '분석 중...';
+            results.classList.add('show');
+            resultsContent.innerHTML = '<div class="loading">HTML 분석 중</div>';
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            try {
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    countBadge.textContent = data.count;
+
+                    if (data.count === 0) {
+                        resultsContent.innerHTML = '<div class="no-results">위반 품목이 없습니다! 모든 서울우유 제품이 정가 이상으로 판매되고 있습니다.</div>';
+                    } else {
+                        let html = '<ul class="product-list">';
+                        data.products.forEach(product => {
+                            html += `
+                                <li class="product-item">
+                                    <div class="product-name">${product.name}</div>
+                                    <div class="product-details">
+                                        <span>가격: ${product.price.toLocaleString()}원</span>
+                                        <span>용량: ${product.volume_ml.toLocaleString()}ml</span>
+                                        <span class="price-warning">100ml당: ${product.price_per_100ml}원</span>
+                                    </div>
+                                    ${product.link ? `<a href="${product.link}" target="_blank" class="product-link">상품 페이지 보기</a>` : ''}
+                                </li>
+                            `;
+                        });
+                        html += '</ul>';
+                        resultsContent.innerHTML = html;
+                    }
+                } else {
+                    resultsContent.innerHTML = `<div class="no-results" style="color: #e74c3c;">오류: ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultsContent.innerHTML = `<div class="no-results" style="color: #e74c3c;">서버 연결 오류: ${error.message}</div>`;
+            }
+
+            analyzeBtn.disabled = false;
+            analyzeBtn.textContent = '다시 분석';
+        });
+    </script>
+</body>
+</html>
