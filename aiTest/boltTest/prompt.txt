@@ -1,9 +1,0 @@
-claude, bolt를 생산하는 업체입니다. 생산되는 bolt를 이미지로 capture하여, 
-양품과 불량을 선별하는 system을 적용할려고 합니다.
-어떻게 진행해야하는지 계획서를 만들어 주세요.
-계획서는 aiTest/boltTest folder안에 추가해 주세요.
-
-
-sample 제작 prompt:
-bolt를 생산하는 업체에서, 불량 bolt를 ai test를 위해 선별할려고 합니다.
-동일한 간단한 bolt image(양품)를 100개 만들어 주세요.
