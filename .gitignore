@@ -22,3 +22,6 @@ aiTest/boltTest_jetson.tar.gz
 **/.next/
 *.dylib
 *.so
+
+# Separate git repositories
+projects/
