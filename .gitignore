@@ -6,6 +6,7 @@
 *.mkv
 *.egg
 *.zip
+*.tar.gz
 .DS_Store
 ffmpeg/
 downloads/
@@ -13,3 +14,11 @@ downloads/
 *.exe
 .env
 nul
+
+# Large files / folders
+aiTest/venv/
+aiTest/boltTest_jetson.tar.gz
+**/node_modules/
+**/.next/
+*.dylib
+*.so
