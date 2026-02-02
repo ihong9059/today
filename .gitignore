@@ -25,3 +25,4 @@ aiTest/boltTest_jetson.tar.gz
 
 # Separate git repositories
 projects/
+pem/
