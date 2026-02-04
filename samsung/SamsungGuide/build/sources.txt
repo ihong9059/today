@@ -1,0 +1,2 @@
+/Users/maeg/todo/today/samsung/SamsungGuide/app/src/main/java/com/uttec/samsungguide/MainActivity.java
+/Users/maeg/todo/today/samsung/SamsungGuide/build/gen/com/uttec/samsungguide/R.java

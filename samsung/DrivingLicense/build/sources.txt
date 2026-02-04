@@ -1,0 +1,2 @@
+/Users/maeg/todo/today/samsung/DrivingLicense/app/src/main/java/com/uttec/drivinglicense/MainActivity.java
+/Users/maeg/todo/today/samsung/DrivingLicense/build/gen/com/uttec/drivinglicense/R.java
