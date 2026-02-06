@@ -377,11 +377,9 @@
                     </div>
                 </div>
 
-                <!-- 소리 활성화 버튼 -->
-                <div id="soundEnable" class="mt-3 p-3 bg-warning bg-opacity-25 rounded-3 text-center">
-                    <button class="btn btn-warning" onclick="enableSound()">
-                        <i class="bi bi-volume-up-fill"></i> 소리 켜기 (먼저 클릭!)
-                    </button>
+                <!-- 소리 상태 표시 -->
+                <div id="soundEnable" class="mt-3 p-3 bg-success bg-opacity-25 rounded-3 text-center">
+                    <span class="text-success"><i class="bi bi-volume-up-fill"></i> 소리 자동 활성화됨 (첫 클릭 시 재생)</span>
                 </div>
 
                 <!-- 오늘의 목표 -->
@@ -796,6 +794,9 @@
             // 진행률
             const progress = ((fcState.currentIndex + 1) / fcState.words.length) * 100;
             document.getElementById('fcProgress').style.width = progress + '%';
+
+            // 자동 발음 (카드 표시 시)
+            setTimeout(() => speak(word.word), 300);
         }
 
         function flipCard() {
@@ -921,6 +922,9 @@
             // 진행률
             const progress = ((quizState.currentIndex + 1) / quizState.words.length) * 100;
             document.getElementById('qProgress').style.width = progress + '%';
+
+            // 자동 발음 (퀴즈 표시 시)
+            setTimeout(() => speak(word.word), 300);
         }
 
         function generateOptions(correctWord) {
@@ -1132,8 +1136,9 @@
             }
         }
 
-        let soundEnabled = false;
+        let soundEnabled = true;  // 기본 활성화
         let audioContext = null;
+        let audioInitialized = false;  // 오디오 초기화 여부
 
         // 축하 효과
         function celebrate() {
@@ -1177,37 +1182,23 @@
             });
         }
 
-        function enableSound() {
-            // 모바일에서 오디오 활성화
-            soundEnabled = true;
+        // 페이지의 첫 번째 클릭 시 오디오 자동 초기화
+        document.addEventListener('click', function initOnFirstClick() {
+            initAudio();
+            // 이벤트 리스너 제거 (한 번만 실행)
+            document.removeEventListener('click', initOnFirstClick);
+        }, { once: true });
 
-            // ResponsiveVoice 활성화
-            if (typeof responsiveVoice !== 'undefined') {
-                responsiveVoice.speak("Sound enabled", "US English Female", {
-                    volume: 1,
-                    onend: function() {
-                        document.getElementById('soundEnable').innerHTML =
-                            '<span class="text-success"><i class="bi bi-check-circle-fill"></i> 소리가 활성화되었습니다!</span>';
-                    }
-                });
-            } else {
-                // Web Speech API 활성화
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance("Sound enabled");
-                    utterance.lang = 'en-US';
-                    utterance.onend = function() {
-                        document.getElementById('soundEnable').innerHTML =
-                            '<span class="text-success"><i class="bi bi-check-circle-fill"></i> 소리가 활성화되었습니다!</span>';
-                    };
-                    speechSynthesis.speak(utterance);
-                }
-            }
-        }
+        // 페이지의 첫 번째 터치 시 오디오 자동 초기화 (모바일)
+        document.addEventListener('touchstart', function initOnFirstTouch() {
+            initAudio();
+            document.removeEventListener('touchstart', initOnFirstTouch);
+        }, { once: true });
 
         function speak(text) {
-            if (!soundEnabled) {
-                alert('먼저 메인 화면에서 "소리 켜기" 버튼을 눌러주세요!');
-                return;
+            // 오디오 컨텍스트 초기화 (첫 사용 시)
+            if (!audioInitialized) {
+                initAudio();
             }
 
             // ResponsiveVoice 사용 (모바일 호환)
@@ -1228,6 +1219,24 @@
                     speechSynthesis.speak(utterance);
                 }
             }
+        }
+
+        // 오디오 초기화 함수
+        function initAudio() {
+            if (audioInitialized) return;
+
+            // AudioContext 초기화
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // AudioContext가 suspended 상태면 resume
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+
+            audioInitialized = true;
+            console.log('Audio initialized');
         }
 
         // 초기화 실행
