@@ -10,7 +10,7 @@
 |:-------|:-------------|:---|:-------|:---------|:----:|
 | **myhome-rpi5** | 100.79.180.64 | Linux | uttec | uttec | 온라인 |
 | **office-rpi4** | 100.73.114.75 | Linux | uttec | uttec | 온라인 |
-| **lenovo-tab-m9** | 100.112.196.53 | Android | - | - | 온라인 |
+| **lenovo-tab-m9** | 100.112.196.53:8022 | Android | u0_a286 | uttec | 온라인 |
 | **samsung-sm-a516n** | 100.117.189.72 | Android | - | - | 온라인 |
 | **office-dell** | 100.89.156.126 | Windows | - | - | 온라인 |
 | **macbookpro** | 100.124.44.55 | macOS | maeg | - | 온라인 |
@@ -40,9 +40,10 @@ ssh uttec@100.73.114.75
 
 ### Lenovo Tablet (Termux SSH)
 ```bash
-ssh -p 8022 100.112.196.53
+ssh -p 8022 u0_a286@100.112.196.53
 ```
 - 포트: 8022 (Termux 기본)
+- 비밀번호: `uttec`
 
 ---
 
@@ -66,6 +67,7 @@ Host office-rpi4
 # Lenovo Tablet (Termux)
 Host lenovo-tab
     HostName 100.112.196.53
+    User u0_a286
     Port 8022
     StrictHostKeyChecking no
 ```

@@ -1,0 +1,13 @@
+claude, https://www.wishket.com/project/152421/의 내용을 위시켓의
+  지원서 작성 가이드를 참고하여, 본 project의 지원서를 기존의
+  지원내용.txt의 형태로 만들어 주세요. 단 신청자의 회사이름이나,
+  전화번호같은것은 들어가지 않도록 해주세요.
+  
+
+claude, https://www.wishket.com/project/에서, 최근 추천프로젝트 list이후,
+추가된 project중, 임호균, 홍광선.pdf의 이력을 기준으로 참가할 project가 있으면, 
+list를 오늘날짜로, 가능project.md로 만들어 주세요.
+마지막 검토한 id를 명기해주세요. 다음 검색할때 참고할수있도록 해야합니다.
+
+
+claude, 최근 가능프로젝트를 참고하여, 다음을 진행해 주세요.
