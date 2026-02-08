@@ -771,6 +771,81 @@
           }
         }
       ]
+    },
+    "tokyo": {
+      "city": "도쿄",
+      "airport": "나리타 국제공항",
+      "layoverHours": 3,
+      "scenes": [
+        {
+          "id": "TR_TYO_001",
+          "category": "transfer",
+          "day": 1,
+          "location": "도쿄 나리타 공항 도착",
+          "situation": "일본 도쿄 나리타 공항에 도착했다. 깨끗하고 정돈된 일본 공항.",
+          "npcDialog": "Irasshaimase! Welcome to Narita Airport. Transfer gate is in Terminal 1. You have 3 hours - try Japanese food in the basement!",
+          "npcDialogKo": "이랏샤이마세! 나리타 공항에 오신 것을 환영합니다. 환승 게이트는 터미널 1에 있어요. 3시간 있어요 - 지하에서 일본 음식 드세요!",
+          "playerResponse": {
+            "choices": [
+              {"text": "Arigatou! What Japanese food do you recommend?", "correct": true, "feedback": "일본어로 감사하며 음식 추천을 요청합니다."},
+              {"text": "Thank you! I've always wanted to try real Japanese ramen.", "correct": true, "feedback": "일본 음식에 대한 관심을 표현합니다."},
+              {"text": "Airport food is always bad.", "correct": false, "feedback": "일본 공항 음식은 품질이 좋기로 유명합니다."},
+              {"text": "I'll just wait at the gate.", "correct": false, "feedback": "일본 문화를 경험할 기회를 놓치게 됩니다."}
+            ]
+          }
+        },
+        {
+          "id": "TR_TYO_002",
+          "category": "transfer",
+          "day": 1,
+          "location": "나리타 공항 라멘 가게",
+          "situation": "공항에서 정통 일본 라멘을 주문한다. 자동판매기로 주문하는 시스템이다.",
+          "npcDialog": "Ticket machine here. Choose ramen - tonkotsu, shoyu, miso. Push button, give ticket to me. Oishii - delicious!",
+          "npcDialogKo": "티켓 기계 여기 있어요. 라멘 선택 - 돈코츠, 쇼유, 미소. 버튼 누르고, 티켓 저한테 주세요. 오이시이 - 맛있어요!",
+          "playerResponse": {
+            "choices": [
+              {"text": "Tonkotsu please! Is that the pork bone broth one?", "correct": true, "feedback": "돈코츠에 대해 확인하며 주문합니다."},
+              {"text": "What's the most popular choice? I want the authentic experience!", "correct": true, "feedback": "현지인 추천을 물어봅니다."},
+              {"text": "This machine is confusing.", "correct": false, "feedback": "새로운 시스템에 불평하기보다 배워보세요."},
+              {"text": "I don't like noodle soups.", "correct": false, "feedback": "시도해보지 않고 거부하지 마세요."}
+            ]
+          }
+        },
+        {
+          "id": "TR_TYO_003",
+          "category": "transfer",
+          "day": 1,
+          "location": "나리타 공항 편의점",
+          "situation": "일본 편의점의 다양한 상품에 놀란다. 간식과 음료를 고른다.",
+          "npcDialog": "Japanese konbini - convenience store! Onigiri, bento, matcha sweets, Kit Kat flavors only in Japan! Very popular with tourists!",
+          "npcDialogKo": "일본 콘비니 - 편의점이에요! 오니기리, 벤토, 말차 과자, 일본에만 있는 킷캣 맛! 관광객들에게 아주 인기있어요!",
+          "playerResponse": {
+            "choices": [
+              {"text": "So many unique Kit Kat flavors! I need to try the matcha one.", "correct": true, "feedback": "일본 한정 상품에 관심을 보입니다."},
+              {"text": "What's the best onigiri flavor for a first-timer?", "correct": true, "feedback": "현지인 추천을 요청합니다."},
+              {"text": "Convenience store food isn't real food.", "correct": false, "feedback": "일본 편의점 음식은 품질이 높습니다."},
+              {"text": "This is too expensive.", "correct": false, "feedback": "가격보다 경험에 집중하세요."}
+            ]
+          }
+        },
+        {
+          "id": "TR_TYO_004",
+          "category": "transfer",
+          "day": 1,
+          "location": "나리타 공항 게이트",
+          "situation": "다음 비행기 탑승 시간이다. 짧지만 일본을 맛볼 수 있었다.",
+          "npcDialog": "Now boarding for your connecting flight. Thank you for visiting Japan! Sayonara - come back and explore Tokyo properly!",
+          "npcDialogKo": "연결편 탑승을 시작합니다. 일본에 들러주셔서 감사합니다! 사요나라 - 다시 와서 도쿄를 제대로 탐험하세요!",
+          "playerResponse": {
+            "choices": [
+              {"text": "Arigatou gozaimasu! The ramen was amazing - I definitely need to come back!", "correct": true, "feedback": "정중하게 감사하며 재방문 의사를 표현합니다."},
+              {"text": "Sayonara! Even the airport food was incredible. Japan is on my bucket list!", "correct": true, "feedback": "일본에 대한 긍정적 인상을 표현합니다."},
+              {"text": "Finally boarding.", "correct": false, "feedback": "부정적인 뉘앙스가 있습니다."},
+              {"text": "The layover was too short.", "correct": false, "feedback": "경험에 감사하는 것이 좋습니다."}
+            ]
+          }
+        }
+      ]
     }
   }
 }

@@ -22,6 +22,9 @@
         }
         header h1 { font-size: 2em; color: #e94560; }
         header p { color: #aaa; margin-top: 5px; }
+        .header-nav { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
+        .header-nav a { color: #4ecca3; text-decoration: none; padding: 10px 25px; border: 2px solid #4ecca3; border-radius: 25px; font-weight: bold; transition: all 0.2s; }
+        .header-nav a:hover { background: #4ecca3; color: #000; }
 
         .stats-bar {
             background: rgba(78, 204, 163, 0.15);
@@ -208,6 +211,10 @@
         <header>
             <h1>✈️ Travel English</h1>
             <p>여행 상황별 영어 회화 학습</p>
+            <div class="header-nav">
+                <a href="/words.html">📚 단어 학습</a>
+                <a href="/stats.html">📊 통계</a>
+            </div>
         </header>
 
         <div class="stats-bar">
@@ -320,17 +327,31 @@
         const state = { destination: null, budget: 'normal', purpose: null };
 
         const cities = [
+            // 유럽
             { id: 'amsterdam', name: '암스테르담', country: '네덜란드', flag: '🇳🇱', region: 'europe', ready: true },
             { id: 'paris', name: '파리', country: '프랑스', flag: '🇫🇷', region: 'europe', ready: true },
             { id: 'london', name: '런던', country: '영국', flag: '🇬🇧', region: 'europe', ready: true },
             { id: 'rome', name: '로마', country: '이탈리아', flag: '🇮🇹', region: 'europe', ready: true },
             { id: 'barcelona', name: '바르셀로나', country: '스페인', flag: '🇪🇸', region: 'europe', ready: true },
+            { id: 'berlin', name: '베를린', country: '독일', flag: '🇩🇪', region: 'europe', ready: true },
+            { id: 'prague', name: '프라하', country: '체코', flag: '🇨🇿', region: 'europe', ready: true },
+            { id: 'vienna', name: '비엔나', country: '오스트리아', flag: '🇦🇹', region: 'europe', ready: true },
+            // 아시아
             { id: 'tokyo', name: '도쿄', country: '일본', flag: '🇯🇵', region: 'asia', ready: true },
+            { id: 'osaka', name: '오사카', country: '일본', flag: '🇯🇵', region: 'asia', ready: true },
             { id: 'bangkok', name: '방콕', country: '태국', flag: '🇹🇭', region: 'asia', ready: true },
             { id: 'singapore', name: '싱가포르', country: '싱가포르', flag: '🇸🇬', region: 'asia', ready: true },
+            { id: 'hongkong', name: '홍콩', country: '중국', flag: '🇭🇰', region: 'asia', ready: true },
+            { id: 'taipei', name: '타이페이', country: '대만', flag: '🇹🇼', region: 'asia', ready: true },
             { id: 'dubai', name: '두바이', country: 'UAE', flag: '🇦🇪', region: 'asia', ready: true },
+            // 미주
             { id: 'newyork', name: '뉴욕', country: '미국', flag: '🇺🇸', region: 'america', ready: true },
             { id: 'losangeles', name: 'LA', country: '미국', flag: '🇺🇸', region: 'america', ready: true },
+            { id: 'miami', name: '마이애미', country: '미국', flag: '🇺🇸', region: 'america', ready: true },
+            { id: 'chicago', name: '시카고', country: '미국', flag: '🇺🇸', region: 'america', ready: true },
+            { id: 'vancouver', name: '밴쿠버', country: '캐나다', flag: '🇨🇦', region: 'america', ready: true },
+            { id: 'toronto', name: '토론토', country: '캐나다', flag: '🇨🇦', region: 'america', ready: true },
+            // 오세아니아
             { id: 'sydney', name: '시드니', country: '호주', flag: '🇦🇺', region: 'oceania', ready: true }
         ];
 
@@ -355,17 +376,35 @@
         };
 
         const budgetInfoByCity = {
+            // 유럽 도시 (budget: 베이징+모스크바, economy: 이스탄불)
             amsterdam: { budget: { scenes: 117, route: ['서울', '베이징', '모스크바'], routeType: '2회 경유', transfers: 2 }, economy: { scenes: 113, route: ['서울', '이스탄불'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
             paris: { budget: { scenes: 117, route: ['서울', '베이징', '모스크바'], routeType: '2회 경유', transfers: 2 }, economy: { scenes: 113, route: ['서울', '이스탄불'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
             london: { budget: { scenes: 117, route: ['서울', '베이징', '모스크바'], routeType: '2회 경유', transfers: 2 }, economy: { scenes: 113, route: ['서울', '이스탄불'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
             rome: { budget: { scenes: 117, route: ['서울', '베이징', '모스크바'], routeType: '2회 경유', transfers: 2 }, economy: { scenes: 113, route: ['서울', '이스탄불'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
             barcelona: { budget: { scenes: 117, route: ['서울', '베이징', '모스크바'], routeType: '2회 경유', transfers: 2 }, economy: { scenes: 113, route: ['서울', '이스탄불'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            berlin: { budget: { scenes: 117, route: ['서울', '베이징', '모스크바'], routeType: '2회 경유', transfers: 2 }, economy: { scenes: 113, route: ['서울', '이스탄불'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            prague: { budget: { scenes: 117, route: ['서울', '베이징', '모스크바'], routeType: '2회 경유', transfers: 2 }, economy: { scenes: 113, route: ['서울', '이스탄불'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            vienna: { budget: { scenes: 117, route: ['서울', '베이징', '모스크바'], routeType: '2회 경유', transfers: 2 }, economy: { scenes: 113, route: ['서울', '이스탄불'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            // 일본 (가까워서 직항)
             tokyo: { budget: { scenes: 105, route: ['서울'], routeType: '직항(LCC)', transfers: 0 }, economy: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            osaka: { budget: { scenes: 105, route: ['서울'], routeType: '직항(LCC)', transfers: 0 }, economy: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            // 동남아 (budget만 경유)
             bangkok: { budget: { scenes: 109, route: ['서울', '홍콩'], routeType: '1회 경유', transfers: 1 }, economy: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
             singapore: { budget: { scenes: 109, route: ['서울', '홍콩'], routeType: '1회 경유', transfers: 1 }, economy: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            // 홍콩/대만 (가까워서 직항)
+            hongkong: { budget: { scenes: 105, route: ['서울'], routeType: '직항(LCC)', transfers: 0 }, economy: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            taipei: { budget: { scenes: 105, route: ['서울'], routeType: '직항(LCC)', transfers: 0 }, economy: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            // 중동
             dubai: { budget: { scenes: 109, route: ['서울', '홍콩'], routeType: '1회 경유', transfers: 1 }, economy: { scenes: 109, route: ['서울', '타이페이'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            // 미국 (budget: 프랑크푸르트, economy: 두바이)
             newyork: { budget: { scenes: 108, route: ['서울', '프랑크푸르트'], routeType: '1회 경유', transfers: 1 }, economy: { scenes: 111, route: ['서울', '두바이'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
             losangeles: { budget: { scenes: 108, route: ['서울', '프랑크푸르트'], routeType: '1회 경유', transfers: 1 }, economy: { scenes: 111, route: ['서울', '두바이'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            miami: { budget: { scenes: 108, route: ['서울', '프랑크푸르트'], routeType: '1회 경유', transfers: 1 }, economy: { scenes: 111, route: ['서울', '두바이'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            chicago: { budget: { scenes: 108, route: ['서울', '프랑크푸르트'], routeType: '1회 경유', transfers: 1 }, economy: { scenes: 111, route: ['서울', '두바이'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            // 캐나다 (budget: 프랑크푸르트, economy: 도쿄)
+            vancouver: { budget: { scenes: 108, route: ['서울', '프랑크푸르트'], routeType: '1회 경유', transfers: 1 }, economy: { scenes: 109, route: ['서울', '도쿄'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            toronto: { budget: { scenes: 108, route: ['서울', '프랑크푸르트'], routeType: '1회 경유', transfers: 1 }, economy: { scenes: 109, route: ['서울', '도쿄'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } },
+            // 호주
             sydney: { budget: { scenes: 109, route: ['서울', '홍콩'], routeType: '1회 경유', transfers: 1 }, economy: { scenes: 110, route: ['서울', '싱가포르'], routeType: '1회 경유', transfers: 1 }, normal: { scenes: 105, route: ['서울'], routeType: '직항', transfers: 0 } }
         };
 
@@ -521,7 +560,7 @@
             if (saved) {
                 const progress = JSON.parse(saved);
                 const parts = progress.scenarioFile.replace('.json', '').split('_');
-                const cityNames = { amsterdam: '암스테르담', paris: '파리', london: '런던', rome: '로마', barcelona: '바르셀로나', tokyo: '도쿄', bangkok: '방콕', singapore: '싱가포르', newyork: '뉴욕', losangeles: 'LA', sydney: '시드니', dubai: '두바이' };
+                const cityNames = { amsterdam: '암스테르담', paris: '파리', london: '런던', rome: '로마', barcelona: '바르셀로나', berlin: '베를린', prague: '프라하', vienna: '비엔나', tokyo: '도쿄', osaka: '오사카', bangkok: '방콕', singapore: '싱가포르', hongkong: '홍콩', taipei: '타이페이', newyork: '뉴욕', losangeles: 'LA', miami: '마이애미', chicago: '시카고', vancouver: '밴쿠버', toronto: '토론토', sydney: '시드니', dubai: '두바이' };
                 const budgetNames = { budget: '최저가', economy: '절감형', normal: '일반' };
                 const purposeNames = { tourism: '관광', backpacking: '배낭여행', business: '출장', study: '어학연수', working_holiday: '워홀', honeymoon: '신혼여행', family: '가족여행', adventure: '모험' };
                 const cityName = cityNames[parts[0]] || parts[0];

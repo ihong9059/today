@@ -160,9 +160,34 @@ def get_transfer_config(city_id, budget_type):
             # 일반/절감형: 직항
             return {'scenes': [], 'route': []}
 
-    # 일본행 (도쿄) - 가까우므로 경유 없음
-    elif city_id == 'tokyo':
+    # 일본행 (도쿄, 오사카) - 가까우므로 경유 없음
+    elif city_id in ['tokyo', 'osaka']:
         return {'scenes': [], 'route': []}
+
+    # 홍콩/타이페이 - 가까우므로 직항 or 저가는 경유
+    elif city_id in ['hongkong', 'taipei']:
+        if budget_type == 'budget':
+            # 최저가: 경유 노선이지만 가까우므로 직항 LCC
+            return {'scenes': [], 'route': []}
+        else:
+            return {'scenes': [], 'route': []}
+
+    # 캐나다행 (밴쿠버, 토론토)
+    elif city_id in ['vancouver', 'toronto']:
+        if budget_type == 'budget':
+            # 최저가: 프랑크푸르트 경유
+            return {
+                'scenes': transfers['transfers']['frankfurt']['scenes'],
+                'route': ['frankfurt']
+            }
+        elif budget_type == 'economy':
+            # 절감형: 도쿄 경유
+            return {
+                'scenes': transfers['transfers']['tokyo']['scenes'] if 'tokyo' in transfers['transfers'] else [],
+                'route': ['tokyo_stopover']
+            }
+        else:
+            return {'scenes': [], 'route': []}
 
     else:
         return {'scenes': [], 'route': []}
@@ -359,7 +384,11 @@ def generate_all_cities():
     """모든 도시의 모든 조합 생성"""
     cities = ['amsterdam', 'paris', 'tokyo', 'newyork',
               'london', 'rome', 'barcelona', 'bangkok',
-              'singapore', 'sydney', 'dubai', 'losangeles']
+              'singapore', 'sydney', 'dubai', 'losangeles',
+              # 새 도시
+              'berlin', 'prague', 'vienna', 'osaka',
+              'hongkong', 'taipei', 'miami', 'chicago',
+              'vancouver', 'toronto']
     total = 0
 
     for city_id in cities:
@@ -381,7 +410,10 @@ if __name__ == '__main__':
         print("  python scenario_generator.py amsterdam --all  # 한 도시 모든 조합")
         print("  python scenario_generator.py --all-cities     # 모든 도시 모든 조합")
         print()
-        print("지원 도시: amsterdam, paris, tokyo, newyork")
+        print("지원 도시: amsterdam, paris, tokyo, newyork, london, rome, barcelona,")
+        print("          bangkok, singapore, sydney, dubai, losangeles,")
+        print("          berlin, prague, vienna, osaka, hongkong, taipei,")
+        print("          miami, chicago, vancouver, toronto")
         print("지원 예산: budget, economy, normal")
         print("지원 목적: tourism, backpacking, business, study,")
         print("          working_holiday, honeymoon, family, adventure")
