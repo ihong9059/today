@@ -299,8 +299,8 @@
 
         <div id="main-screen" class="screen active">
             <!-- 알림 -->
-            <div class="notice">
-                <p>🚧 현재 <strong>암스테르담 관광</strong> 시나리오만 이용 가능합니다. 다른 도시는 준비 중입니다.</p>
+            <div class="notice" style="background: rgba(78, 204, 163, 0.2); border-left: 4px solid #4ecca3;">
+                <p>🎉 <strong>4개 도시</strong> 시나리오 이용 가능! 암스테르담, 파리, 도쿄, 뉴욕 (각 24개 조합, 총 96개 시나리오)</p>
             </div>
 
             <!-- 선택 요약 -->
@@ -391,6 +391,20 @@
                 <div class="route-preview" id="route-preview"></div>
             </div>
 
+            <!-- 이어하기 알림 -->
+            <div class="resume-notice" id="resume-notice" style="display: none;">
+                <div style="background: rgba(78, 204, 163, 0.2); border: 1px solid #4ecca3; border-radius: 10px; padding: 15px; margin-bottom: 20px; text-align: center;">
+                    <p style="margin-bottom: 10px;">📚 <strong>이전 학습 기록이 있습니다</strong></p>
+                    <p id="resume-info" style="font-size: 0.9em; color: #aaa; margin-bottom: 15px;"></p>
+                    <button class="btn btn-primary" onclick="resumeLearning()" style="margin-right: 10px;">
+                        ▶️ 이어하기
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearSavedProgress()">
+                        🔄 처음부터
+                    </button>
+                </div>
+            </div>
+
             <!-- 시작 버튼 -->
             <div class="action-area">
                 <button class="btn btn-primary" id="start-btn" onclick="startLearning()" disabled>
@@ -410,17 +424,17 @@
 
         // 도시 데이터
         const cities = [
-            // 유럽
+            // 유럽 (암스테르담, 파리 이용 가능)
             { id: 'amsterdam', name: '암스테르담', country: '네덜란드', flag: '🇳🇱', region: 'europe', ready: true },
-            { id: 'paris', name: '파리', country: '프랑스', flag: '🇫🇷', region: 'europe', ready: false },
+            { id: 'paris', name: '파리', country: '프랑스', flag: '🇫🇷', region: 'europe', ready: true },
             { id: 'london', name: '런던', country: '영국', flag: '🇬🇧', region: 'europe', ready: false },
             { id: 'rome', name: '로마', country: '이탈리아', flag: '🇮🇹', region: 'europe', ready: false },
             { id: 'barcelona', name: '바르셀로나', country: '스페인', flag: '🇪🇸', region: 'europe', ready: false },
             { id: 'prague', name: '프라하', country: '체코', flag: '🇨🇿', region: 'europe', ready: false },
             { id: 'vienna', name: '비엔나', country: '오스트리아', flag: '🇦🇹', region: 'europe', ready: false },
             { id: 'istanbul', name: '이스탄불', country: '터키', flag: '🇹🇷', region: 'europe', ready: false },
-            // 아시아
-            { id: 'tokyo', name: '도쿄', country: '일본', flag: '🇯🇵', region: 'asia', ready: false },
+            // 아시아 (도쿄 이용 가능)
+            { id: 'tokyo', name: '도쿄', country: '일본', flag: '🇯🇵', region: 'asia', ready: true },
             { id: 'osaka', name: '오사카', country: '일본', flag: '🇯🇵', region: 'asia', ready: false },
             { id: 'bangkok', name: '방콕', country: '태국', flag: '🇹🇭', region: 'asia', ready: false },
             { id: 'singapore', name: '싱가포르', country: '싱가포르', flag: '🇸🇬', region: 'asia', ready: false },
@@ -430,8 +444,8 @@
             { id: 'bali', name: '발리', country: '인도네시아', flag: '🇮🇩', region: 'asia', ready: false },
             { id: 'beijing', name: '베이징', country: '중국', flag: '🇨🇳', region: 'asia', ready: false },
             { id: 'shanghai', name: '상하이', country: '중국', flag: '🇨🇳', region: 'asia', ready: false },
-            // 미주
-            { id: 'newyork', name: '뉴욕', country: '미국', flag: '🇺🇸', region: 'america', ready: false },
+            // 미주 (뉴욕 이용 가능)
+            { id: 'newyork', name: '뉴욕', country: '미국', flag: '🇺🇸', region: 'america', ready: true },
             { id: 'losangeles', name: 'LA', country: '미국', flag: '🇺🇸', region: 'america', ready: false },
             { id: 'sanfrancisco', name: '샌프란시스코', country: '미국', flag: '🇺🇸', region: 'america', ready: false },
             { id: 'lasvegas', name: '라스베이거스', country: '미국', flag: '🇺🇸', region: 'america', ready: false },
@@ -536,6 +550,33 @@
             updateStartButton();
         }
 
+        // 도시별/예산별 시나리오 정보
+        const budgetInfoByCity = {
+            amsterdam: {
+                budget: { scenes: 117, route: ['서울', '베이징', '모스크바'], routeType: '2회 경유' },
+                economy: { scenes: 113, route: ['서울', '이스탄불'], routeType: '1회 경유' },
+                normal: { scenes: 105, route: ['서울'], routeType: '직항' }
+            },
+            paris: {
+                budget: { scenes: 117, route: ['서울', '베이징', '모스크바'], routeType: '2회 경유' },
+                economy: { scenes: 113, route: ['서울', '이스탄불'], routeType: '1회 경유' },
+                normal: { scenes: 105, route: ['서울'], routeType: '직항' }
+            },
+            tokyo: {
+                budget: { scenes: 105, route: ['서울'], routeType: '직항 (LCC)' },
+                economy: { scenes: 105, route: ['서울'], routeType: '직항 (일반)' },
+                normal: { scenes: 105, route: ['서울'], routeType: '직항 (FSC)' }
+            },
+            newyork: {
+                budget: { scenes: 108, route: ['서울', '프랑크푸르트'], routeType: '1회 경유' },
+                economy: { scenes: 111, route: ['서울', '두바이'], routeType: '1회 경유' },
+                normal: { scenes: 105, route: ['서울'], routeType: '직항' }
+            }
+        };
+
+        // 기본 예산 정보 (암스테르담 기준)
+        const budgetInfo = budgetInfoByCity.amsterdam;
+
         // 시작 버튼 업데이트
         function updateStartButton() {
             const btn = document.getElementById('start-btn');
@@ -545,9 +586,31 @@
             if (ready) {
                 const city = cities.find(c => c.id === state.destination);
                 btn.textContent = `🎬 ${city.name} 학습 시작`;
+                updateScenarioInfo(city);
             } else {
                 btn.textContent = '🎬 학습 시작';
+                document.getElementById('scenario-info').classList.remove('show');
             }
+        }
+
+        // 시나리오 정보 업데이트
+        function updateScenarioInfo(city) {
+            const info = budgetInfo[state.budget];
+            const scenarioInfo = document.getElementById('scenario-info');
+
+            document.getElementById('info-scenes').textContent = `${info.scenes}개`;
+            document.getElementById('info-time').textContent = `약 ${Math.round(info.scenes * 0.5)}분`;
+            document.getElementById('info-route').textContent = info.routeType;
+
+            // 경로 미리보기
+            const routePreview = document.getElementById('route-preview');
+            const fullRoute = [...info.route, city.name];
+            routePreview.innerHTML = fullRoute.map((c, i) => {
+                const isLast = i === fullRoute.length - 1;
+                return `<span class="route-city">${c}</span>${!isLast ? '<span class="route-arrow">→</span>' : ''}`;
+            }).join('');
+
+            scenarioInfo.classList.add('show');
         }
 
         // 학습 시작
@@ -565,8 +628,52 @@
             window.location.href = `/learn.html?scenario=${filename}`;
         }
 
+        // 저장된 진행 상황 확인
+        function checkSavedProgress() {
+            const saved = localStorage.getItem('travel_english_progress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                const resumeNotice = document.getElementById('resume-notice');
+                const resumeInfo = document.getElementById('resume-info');
+
+                // 시나리오 파일명에서 정보 추출
+                const parts = progress.scenarioFile.replace('.json', '').split('_');
+                const cityName = parts[0] === 'amsterdam' ? '암스테르담' : parts[0];
+                const budgetName = { budget: '최저가', economy: '절감형', normal: '일반' }[parts[1]] || parts[1];
+                const purposeName = {
+                    tourism: '관광', backpacking: '배낭여행', business: '출장',
+                    study: '어학연수', working_holiday: '워홀', honeymoon: '신혼여행',
+                    family: '가족여행', adventure: '모험'
+                }[parts[2]] || parts[2];
+
+                resumeInfo.innerHTML = `
+                    ${cityName} / ${budgetName} / ${purposeName}<br>
+                    진행: ${progress.sceneIndex}씬 완료 | 정답: ${progress.correctCount}/${progress.totalAnswered}
+                `;
+                resumeNotice.style.display = 'block';
+
+                // 저장된 시나리오 정보 전역 저장
+                window.savedProgress = progress;
+            }
+        }
+
+        // 이어하기
+        function resumeLearning() {
+            if (window.savedProgress) {
+                window.location.href = `/learn.html?scenario=${window.savedProgress.scenarioFile}`;
+            }
+        }
+
+        // 저장된 진행 상황 삭제
+        function clearSavedProgress() {
+            localStorage.removeItem('travel_english_progress');
+            document.getElementById('resume-notice').style.display = 'none';
+            window.savedProgress = null;
+        }
+
         // 초기화 실행
         init();
+        checkSavedProgress();
 
         // 기본값 설정
         selectBudget('normal');

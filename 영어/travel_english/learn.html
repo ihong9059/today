@@ -462,6 +462,7 @@
         <header>
             <h1>✈️ Travel English</h1>
             <p>여행하며 배우는 실전 영어 회화</p>
+            <div style="margin-top: 10px;"><a href="/" style="color: #4ecca3; text-decoration: none; font-size: 0.9em;">🏠 메인으로 돌아가기</a></div>
         </header>
 
         <!-- Input Screen -->
@@ -607,9 +608,65 @@
         let travelMap = null;
         let correctCount = 0;
         let totalAnswered = 0;
+        let currentScenarioFile = null;
 
         // TTS 지원 여부
         const speechSupported = 'speechSynthesis' in window;
+
+        // 진행 상황 저장
+        function saveProgress() {
+            if (!currentScenarioFile || !scenarioData) return;
+
+            const progress = {
+                scenarioFile: currentScenarioFile,
+                sceneIndex: currentSceneIndex,
+                correctCount: correctCount,
+                totalAnswered: totalAnswered,
+                savedAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('travel_english_progress', JSON.stringify(progress));
+            console.log('Progress saved:', progress);
+        }
+
+        // 진행 상황 불러오기
+        function loadProgress() {
+            const saved = localStorage.getItem('travel_english_progress');
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            return null;
+        }
+
+        // 진행 상황 삭제
+        function clearProgress() {
+            localStorage.removeItem('travel_english_progress');
+        }
+
+        // 저장된 진행 상황 확인 및 이어하기 제안
+        function checkSavedProgress(scenarioFile) {
+            const progress = loadProgress();
+
+            if (progress && progress.scenarioFile === scenarioFile && progress.sceneIndex > 0) {
+                const percent = Math.round((progress.sceneIndex / scenarioData.scenes.length) * 100);
+                const resume = confirm(
+                    `이전 학습 기록이 있습니다.\n\n` +
+                    `진행률: ${progress.sceneIndex}/${scenarioData.scenes.length} (${percent}%)\n` +
+                    `정답률: ${progress.correctCount}/${progress.totalAnswered}\n\n` +
+                    `이어서 하시겠습니까?\n(취소를 누르면 처음부터 시작합니다)`
+                );
+
+                if (resume) {
+                    currentSceneIndex = progress.sceneIndex;
+                    correctCount = progress.correctCount;
+                    totalAnswered = progress.totalAnswered;
+                    return true;
+                } else {
+                    clearProgress();
+                }
+            }
+            return false;
+        }
 
         // 화면 전환
         function showScreen(screenId) {
@@ -667,7 +724,8 @@
         async function loadScenarioFromServer(filename) {
             try {
                 console.log('Loading scenario:', filename);
-                const url = `${API_SERVER}/scenario/${filename}`;
+                currentScenarioFile = filename;
+                const url = `${API_SERVER}/scenarios/generated/${filename}`;
                 console.log('Fetching from:', url);
 
                 const response = await fetch(url);
@@ -677,7 +735,10 @@
                     scenarioData = await response.json();
                     console.log('Scenario loaded:', scenarioData.info);
                     console.log('Scene count:', scenarioData.scenes.length);
-                    startLearning();
+
+                    // 저장된 진행 상황 확인 후, 이어하기 여부에 따라 시작
+                    const isResume = checkSavedProgress(filename);
+                    startLearning(isResume);
                 } else {
                     throw new Error('시나리오 로드 실패: ' + response.status);
                 }
@@ -692,7 +753,7 @@
 // 암스테르담 시나리오 바로 로드
         async function loadAmsterdamScenario() {
             try {
-                const response = await fetch(API_SERVER + '/scenario/amsterdam_tourism.json');
+                const response = await fetch(API_SERVER + '/scenarios/generated/amsterdam_tourism.json');
                 if (response.ok) {
                     scenarioData = await response.json();
                     startLearning();
@@ -726,7 +787,7 @@
         // 시나리오 로드 (로컬용 - 사용안함)
         async function loadScenario(filename) {
             try {
-                const response = await fetch(`${API_SERVER}/scenario/${filename}`);
+                const response = await fetch(`${API_SERVER}/scenarios/generated/${filename}`);
                 if (response.ok) {
                     scenarioData = await response.json();
                     startLearning();
@@ -864,10 +925,15 @@
         }
 
         // 학습 시작
-        function startLearning() {
-            currentSceneIndex = 0;
-            correctCount = 0;
-            totalAnswered = 0;
+        function startLearning(isResume = false) {
+            // 이어하기가 아닌 경우에만 초기화
+            if (!isResume) {
+                currentSceneIndex = 0;
+                correctCount = 0;
+                totalAnswered = 0;
+            }
+
+            console.log('Starting learning - isResume:', isResume, 'sceneIndex:', currentSceneIndex);
 
             showScreen('learning-screen');
             initMap();
@@ -1134,6 +1200,7 @@
         // 다음 장면
         function nextScene() {
             currentSceneIndex++;
+            saveProgress();  // 진행 상황 저장
             showScene();
         }
 
@@ -1144,6 +1211,9 @@
             document.getElementById('stat-accuracy').textContent = Math.round((correctCount / totalAnswered) * 100) + '%';
             document.getElementById('result-message').textContent =
                 `${scenarioData.info.destination}에 무사히 도착했습니다!`;
+
+            // 학습 완료 시 진행 상황 삭제
+            clearProgress();
 
             showScreen('result-screen');
         }
