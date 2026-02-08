@@ -1094,6 +1094,7 @@
         <div id="start-screen" class="screen setup-screen">
             <div class="setup-section">
                 <h3>3. 지도에서 출발 도시를 클릭하세요</h3>
+                <p style="color: #e94560; font-size: 0.9em; margin-bottom: 10px;">✈️ 빨간색 마커: 국제공항이 있는 도시 (출발 가능)</p>
                 <div id="start-point-map"></div>
                 <div class="selected-city-display" id="selected-city-display" style="display: none;">
                     출발 도시: <span id="selected-city-name">-</span>
@@ -1265,6 +1266,46 @@
     <script>
         // 전 세계 도시 (외부 파일에서 로드)
         const worldCities = [...cities1, ...cities2, ...cities3, ...cities4];
+
+        // 국제공항이 있는 주요 도시 목록
+        const internationalAirportCities = [
+            // 한국
+            "서울", "인천", "부산", "제주", "대구", "광주", "청주", "무안",
+            // 일본 (국제공항/국제선 운항 공항 보유 도시)
+            "도쿄", "오사카", "나고야", "삿포로", "후쿠오카", "센다이", "히로시마", "오키나와",
+            "고베", "니가타", "구마모토", "오카야마", "시즈오카", "가고시마", "나가사키",
+            "마츠야마", "다카마츠", "오이타", "미야자키", "아오모리", "아키타", "고치",
+            // 중국
+            "베이징", "상하이", "광저우", "선전", "청두", "충칭", "시안", "항저우", "난징", "쿤밍", "하얼빈", "다롄", "칭다오", "우한",
+            // 동남아시아
+            "방콕", "싱가포르", "쿠알라룸푸르", "자카르타", "마닐라", "호치민", "하노이", "양곤", "프놈펜", "발리", "세부", "푸켓", "치앙마이", "다낭",
+            // 남아시아
+            "뉴델리", "뭄바이", "방갈로르", "첸나이", "콜카타", "하이데라바드", "다카", "콜롬보", "카트만두", "카라치", "라호르", "이슬라마바드",
+            // 중동
+            "두바이", "아부다비", "도하", "리야드", "제다", "쿠웨이트시티", "마나마", "무스카트", "암만", "베이루트", "텔아비브", "테헤란",
+            // 중앙아시아
+            "알마티", "아스타나", "타슈켄트", "바쿠",
+            // 터키
+            "이스탄불", "앙카라", "이즈미르", "안탈리아",
+            // 유럽 - 서유럽
+            "런던", "파리", "프랑크푸르트", "암스테르담", "브뤼셀", "취리히", "뮌헨", "베를린", "마드리드", "바르셀로나", "로마", "밀라노", "리스본", "더블린", "비엔나", "함부르크", "니스", "제네바",
+            // 북유럽
+            "스톡홀름", "코펜하겐", "오슬로", "헬싱키", "레이캬비크",
+            // 동유럽
+            "모스크바", "상트페테르부르크", "바르샤바", "프라하", "부다페스트", "부쿠레슈티", "소피아", "베오그라드", "자그레브", "아테네", "키예프", "빌뉴스", "리가", "탈린",
+            // 아프리카
+            "카이로", "요하네스버그", "케이프타운", "카사블랑카", "나이로비", "아디스아바바", "라고스", "아크라", "다르에스살람", "알제", "튀니스",
+            // 북미
+            "뉴욕", "로스앤젤레스", "시카고", "샌프란시스코", "마이애미", "애틀랜타", "시애틀", "워싱턴 D.C.", "보스턴", "라스베이거스", "댈러스", "휴스턴", "덴버", "피닉스", "호놀룰루",
+            // 캐나다
+            "토론토", "밴쿠버", "몬트리올", "캘거리", "오타와",
+            // 멕시코
+            "멕시코시티", "칸쿤", "과달라하라", "몬테레이",
+            // 남미
+            "상파울루", "리우데자네이루", "부에노스아이레스", "산티아고", "리마", "보고타", "카라카스", "키토",
+            // 오세아니아
+            "시드니", "멜버른", "브리즈번", "퍼스", "오클랜드", "웰링턴", "피지"
+        ];
 
         // 난이도별 단어 목록 (외부 파일에서 로드)
         const vocabularyData = {
@@ -1684,20 +1725,30 @@
 
             const route = routeSets[gameState.selectedRoute];
 
-            // 선택한 경로의 도시만 표시
-            route.cities.forEach(city => {
+            // 전체 도시 중 국제공항이 있는 도시만 필터링 (경로와 관계없이)
+            const airportCities = worldCities.filter(city =>
+                internationalAirportCities.includes(city.name)
+            );
+
+            // 디버그 로그
+            console.log("선택된 경로:", gameState.selectedRoute);
+            console.log("경로 전체 도시 수:", route.cities.length);
+            console.log("전체 국제공항 도시 수:", airportCities.length);
+
+            // 국제공항 도시만 표시 (선택 가능)
+            airportCities.forEach(city => {
                 const marker = L.circleMarker([city.lat, city.lng], {
-                    radius: 8,  // 모바일에서 터치하기 쉽게 크기 증가
-                    fillColor: route.color,
+                    radius: 10,
+                    fillColor: '#e94560',
                     color: '#fff',
-                    weight: 1,
+                    weight: 2,
                     opacity: 1,
-                    fillOpacity: 0.8
+                    fillOpacity: 0.9
                 }).addTo(startPointMap);
 
                 marker.bindPopup(`
                     <div class="city-popup">
-                        <h4>${city.name}</h4>
+                        <h4>✈️ ${city.name}</h4>
                         <p>${city.country}</p>
                         <button onclick="selectStartCity('${city.name}')">출발지로 선택</button>
                     </div>
@@ -1718,9 +1769,37 @@
 
         // 출발 도시 선택
         function selectStartCity(cityName) {
-            gameState.startCity = cityName;
+            const route = routeSets[gameState.selectedRoute];
+
+            // 선택한 도시가 현재 경로에 있는지 확인
+            const cityInRoute = route.cities.find(c => c.name === cityName);
+
+            if (cityInRoute) {
+                // 경로에 있으면 그대로 사용
+                gameState.startCity = cityName;
+                document.getElementById('selected-city-name').textContent = cityName;
+            } else {
+                // 경로에 없으면 가장 가까운 도시 찾기
+                const selectedCity = worldCities.find(c => c.name === cityName);
+                if (selectedCity) {
+                    let nearestCity = route.cities[0];
+                    let minDistance = Infinity;
+
+                    route.cities.forEach(city => {
+                        const dist = calculateDistance(selectedCity.lat, selectedCity.lng, city.lat, city.lng);
+                        if (dist < minDistance) {
+                            minDistance = dist;
+                            nearestCity = city;
+                        }
+                    });
+
+                    gameState.startCity = nearestCity.name;
+                    document.getElementById('selected-city-name').textContent =
+                        `${cityName} → ${nearestCity.name} (가장 가까운 경로 도시)`;
+                }
+            }
+
             document.getElementById('selected-city-display').style.display = 'block';
-            document.getElementById('selected-city-name').textContent = cityName;
             document.getElementById('confirm-start-btn').disabled = false;
 
             if (startPointMap) {

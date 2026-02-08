@@ -1,0 +1,160 @@
+{
+  "templateType": "transfer",
+  "description": "경유지 환승 씬 - 예산에 따라 삽입",
+  "transfers": {
+    "beijing": {
+      "city": "베이징",
+      "airport": "베이징 수도국제공항",
+      "scenes": [
+        {
+          "id": "TR_BEI_001",
+          "category": "transfer",
+          "day": 1,
+          "location": "베이징 수도국제공항",
+          "situation": "베이징에서 환승 - 게이트 찾기",
+          "npcDialog": "Connecting flight? Your gate is in Terminal 3. Follow the signs for international transfers.",
+          "npcDialogKo": "환승이세요? 게이트는 터미널 3에 있어요. 국제선 환승 표지판을 따라가세요.",
+          "playerResponse": {
+            "choices": [
+              {"text": "Thank you! How much time do I have?", "correct": true},
+              {"text": "Which way is Terminal 3?", "correct": true},
+              {"text": "I don't want to transfer.", "correct": false},
+              {"text": "This is too complicated.", "correct": false}
+            ]
+          }
+        },
+        {
+          "id": "TR_BEI_002",
+          "category": "transfer",
+          "day": 1,
+          "location": "베이징 수도국제공항 환승구역",
+          "situation": "환승 보안검색을 통과한다",
+          "npcDialog": "Please have your boarding pass and passport ready for the security check.",
+          "npcDialogKo": "보안검색을 위해 탑승권과 여권을 준비해 주세요.",
+          "playerResponse": {
+            "choices": [
+              {"text": "Here they are.", "correct": true},
+              {"text": "Do I need to take out my laptop again?", "correct": true},
+              {"text": "I already did security in Seoul.", "correct": false},
+              {"text": "Skip the line for me.", "correct": false}
+            ]
+          }
+        },
+        {
+          "id": "TR_BEI_003",
+          "category": "transfer",
+          "day": 1,
+          "location": "베이징 수도국제공항 라운지",
+          "situation": "대기 시간에 식사를 하려고 한다",
+          "npcDialog": "Would you like some Chinese food while you wait? We have noodles and dumplings.",
+          "npcDialogKo": "기다리시는 동안 중국 음식 드시겠어요? 면과 만두가 있어요.",
+          "playerResponse": {
+            "choices": [
+              {"text": "I'll try the dumplings, please.", "correct": true},
+              {"text": "How long until my next flight?", "correct": true},
+              {"text": "Chinese food is bad.", "correct": false},
+              {"text": "Give me free food.", "correct": false}
+            ]
+          }
+        }
+      ]
+    },
+    "moscow": {
+      "city": "모스크바",
+      "airport": "셰레메티예보 국제공항",
+      "scenes": [
+        {
+          "id": "TR_MOS_001",
+          "category": "transfer",
+          "day": 1,
+          "location": "모스크바 셰레메티예보 공항",
+          "situation": "모스크바에서 두 번째 환승",
+          "npcDialog": "Welcome to Moscow. Your connecting flight to Amsterdam departs from Gate B12.",
+          "npcDialogKo": "모스크바에 오신 것을 환영합니다. 암스테르담행 연결편은 B12 게이트에서 출발해요.",
+          "playerResponse": {
+            "choices": [
+              {"text": "Thank you! Is there a place to rest nearby?", "correct": true},
+              {"text": "How do I get to Gate B12?", "correct": true},
+              {"text": "I'm tired of transferring.", "correct": false},
+              {"text": "Why so many stops?", "correct": false}
+            ]
+          }
+        },
+        {
+          "id": "TR_MOS_002",
+          "category": "transfer",
+          "day": 1,
+          "location": "모스크바 셰레메티예보 공항",
+          "situation": "환승 대기 중 면세점 구경",
+          "npcDialog": "Would you like to see some Russian souvenirs? Matryoshka dolls are very popular.",
+          "npcDialogKo": "러시아 기념품 보시겠어요? 마트료시카 인형이 인기예요.",
+          "playerResponse": {
+            "choices": [
+              {"text": "They look interesting! How much are they?", "correct": true},
+              {"text": "Just browsing, thank you.", "correct": true},
+              {"text": "Russian dolls are ugly.", "correct": false},
+              {"text": "I hate shopping.", "correct": false}
+            ]
+          }
+        }
+      ]
+    },
+    "istanbul": {
+      "city": "이스탄불",
+      "airport": "이스탄불 공항",
+      "scenes": [
+        {
+          "id": "TR_IST_001",
+          "category": "transfer",
+          "day": 1,
+          "location": "이스탄불 공항",
+          "situation": "이스탄불에서 환승 - 게이트 이동",
+          "npcDialog": "Transfer to Amsterdam? Please proceed to the international departures area. Gate F7.",
+          "npcDialogKo": "암스테르담 환승이세요? 국제선 출발 구역으로 가세요. F7 게이트예요.",
+          "playerResponse": {
+            "choices": [
+              {"text": "Thank you! How far is it?", "correct": true},
+              {"text": "Is there a shuttle to the gate?", "correct": true},
+              {"text": "I don't want to walk.", "correct": false},
+              {"text": "Carry me there.", "correct": false}
+            ]
+          }
+        },
+        {
+          "id": "TR_IST_002",
+          "category": "transfer",
+          "day": 1,
+          "location": "이스탄불 공항 카페",
+          "situation": "터키 커피를 마시며 대기",
+          "npcDialog": "Would you like to try Turkish coffee? It's our specialty.",
+          "npcDialogKo": "터키 커피 드셔보시겠어요? 저희 특선이에요.",
+          "playerResponse": {
+            "choices": [
+              {"text": "Yes, I'd love to try it!", "correct": true},
+              {"text": "Is it very strong?", "correct": true},
+              {"text": "I only drink American coffee.", "correct": false},
+              {"text": "Coffee is overpriced here.", "correct": false}
+            ]
+          }
+        },
+        {
+          "id": "TR_IST_003",
+          "category": "transfer",
+          "day": 1,
+          "location": "이스탄불 공항 면세점",
+          "situation": "터키 기념품 구경",
+          "npcDialog": "Turkish delight and spices make great souvenirs. Would you like a sample?",
+          "npcDialogKo": "터키쉬 딜라이트와 향신료가 좋은 기념품이에요. 시식해 보시겠어요?",
+          "playerResponse": {
+            "choices": [
+              {"text": "Yes, please! What flavors do you have?", "correct": true},
+              {"text": "How much is a box of Turkish delight?", "correct": true},
+              {"text": "I don't eat sweets.", "correct": false},
+              {"text": "These look old.", "correct": false}
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

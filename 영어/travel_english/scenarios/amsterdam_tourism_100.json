@@ -1,0 +1,2015 @@
+{
+  "info": {
+    "departure": "서울",
+    "destination": "암스테르담",
+    "country": "네덜란드",
+    "budget": "normal",
+    "duration": 10,
+    "purpose": "tourism",
+    "level": "intermediate",
+    "totalScenes": 105,
+    "categories": ["airport_departure", "inflight", "arrival", "hotel", "restaurant", "tourist", "shopping", "directions", "emergency", "airport_return"]
+  },
+  "route": [
+    { "city": "서울", "country": "대한민국", "lat": 37.5665, "lng": 126.9780 },
+    { "city": "암스테르담", "country": "네덜란드", "lat": 52.3676, "lng": 4.9041 }
+  ],
+  "scenes": [
+    {
+      "day": 1,
+      "location": "인천공항 체크인 카운터",
+      "city": "서울",
+      "category": "airport_departure",
+      "situation": "KLM 항공편 체크인을 위해 카운터에 도착",
+      "dialogues": [
+        { "speaker": "staff", "english": "Good morning! May I see your passport and booking confirmation?", "korean": "좋은 아침입니다! 여권과 예약 확인서를 보여주시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "여권과 예약 확인서를 건네며 응답하세요",
+        "choices": [
+          { "text": "Here you go. I have a flight to Amsterdam.", "correct": true, "feedback": "완벽해요! 목적지를 명확히 말했습니다." },
+          { "text": "Yes, here's my passport.", "correct": true, "feedback": "좋아요! 간단하고 정중한 표현입니다." },
+          { "text": "I don't have it.", "correct": false, "feedback": "여권 없이는 탑승할 수 없어요!" },
+          { "text": "What do you need?", "correct": false, "feedback": "이미 요청한 것을 다시 물어보면 혼란스러워요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "인천공항 체크인 카운터",
+      "city": "서울",
+      "category": "airport_departure",
+      "situation": "좌석 선호도를 묻는 상황",
+      "dialogues": [
+        { "speaker": "staff", "english": "Would you prefer a window seat or an aisle seat?", "korean": "창가 좌석과 복도 좌석 중 어느 것을 선호하시나요?" }
+      ],
+      "playerResponse": {
+        "prompt": "좌석 선호도를 말하세요",
+        "choices": [
+          { "text": "A window seat, please. I'd like to see the view.", "correct": true, "feedback": "좋아요! 이유까지 말하면 더 자연스럽습니다." },
+          { "text": "Aisle seat, please.", "correct": true, "feedback": "간단하고 명확한 표현입니다." },
+          { "text": "Any seat is fine.", "correct": true, "feedback": "괜찮아요! 유연한 태도를 보여줍니다." },
+          { "text": "I want the best seat.", "correct": false, "feedback": "'Best seat'은 모호해요. 구체적으로 말하는 것이 좋습니다." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "인천공항 체크인 카운터",
+      "city": "서울",
+      "category": "airport_departure",
+      "situation": "수하물을 부치는 상황",
+      "dialogues": [
+        { "speaker": "staff", "english": "Please place your luggage on the scale. Do you have any fragile items?", "korean": "짐을 저울 위에 올려주세요. 깨지기 쉬운 물건이 있나요?" }
+      ],
+      "playerResponse": {
+        "prompt": "수하물에 대해 응답하세요",
+        "choices": [
+          { "text": "No, there's nothing fragile.", "correct": true, "feedback": "좋아요! 명확한 대답입니다." },
+          { "text": "Yes, I have a camera. Can you put a fragile sticker?", "correct": true, "feedback": "훌륭해요! 적극적으로 요청했습니다." },
+          { "text": "I don't know.", "correct": false, "feedback": "본인 짐 내용은 알고 있어야 해요." },
+          { "text": "Be careful with my bag.", "correct": false, "feedback": "다소 무례하게 들릴 수 있어요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "인천공항 체크인 카운터",
+      "city": "서울",
+      "category": "airport_departure",
+      "situation": "수하물 무게 초과 상황",
+      "dialogues": [
+        { "speaker": "staff", "english": "Your luggage is 3 kilograms over the limit. There's an excess baggage fee of 50 dollars.", "korean": "수하물이 3킬로그램 초과입니다. 50달러의 초과 수하물 요금이 있습니다." }
+      ],
+      "playerResponse": {
+        "prompt": "초과 요금에 대해 응답하세요",
+        "choices": [
+          { "text": "I see. I'll pay the fee.", "correct": true, "feedback": "수용하는 자연스러운 표현입니다." },
+          { "text": "Can I take some items out and put them in my carry-on?", "correct": true, "feedback": "좋은 대안을 제시했어요!" },
+          { "text": "That's too expensive!", "correct": false, "feedback": "불만을 표현해도 요금은 바뀌지 않아요." },
+          { "text": "I won't pay.", "correct": false, "feedback": "요금을 내지 않으면 짐을 부칠 수 없어요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "인천공항 보안검색대",
+      "city": "서울",
+      "category": "airport_departure",
+      "situation": "보안검색을 받는 상황",
+      "dialogues": [
+        { "speaker": "security", "english": "Please remove your laptop and liquids from your bag and place them in a separate tray.", "korean": "가방에서 노트북과 액체류를 꺼내서 별도의 트레이에 놓아주세요." }
+      ],
+      "playerResponse": {
+        "prompt": "보안요원의 지시에 응답하세요",
+        "choices": [
+          { "text": "Sure, just a moment.", "correct": true, "feedback": "좋아요! 협조적인 태도입니다." },
+          { "text": "Okay, here they are.", "correct": true, "feedback": "간단하고 명확한 응답입니다." },
+          { "text": "Why do I need to do that?", "correct": false, "feedback": "보안검색은 필수예요." },
+          { "text": "I don't have any.", "correct": false, "feedback": "있다면 정직하게 꺼내야 해요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "인천공항 보안검색대",
+      "city": "서울",
+      "category": "airport_departure",
+      "situation": "물병을 가져온 상황",
+      "dialogues": [
+        { "speaker": "security", "english": "You can't bring this water bottle through security. You'll need to dispose of it or drink it.", "korean": "이 물병은 보안검색대를 통과할 수 없습니다. 버리시거나 마셔야 합니다." }
+      ],
+      "playerResponse": {
+        "prompt": "물병에 대해 응답하세요",
+        "choices": [
+          { "text": "I'll drink it now. Thank you for letting me know.", "correct": true, "feedback": "정중하게 수용했어요." },
+          { "text": "Can I empty it and keep the bottle?", "correct": true, "feedback": "좋은 질문이에요!" },
+          { "text": "I'll just throw it away.", "correct": true, "feedback": "간단한 해결책입니다." },
+          { "text": "That's a stupid rule.", "correct": false, "feedback": "보안 규정에 불만을 표현하면 안 돼요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "인천공항 탑승구",
+      "city": "서울",
+      "category": "airport_departure",
+      "situation": "탑승 안내 방송을 듣고 탑승하는 상황",
+      "dialogues": [
+        { "speaker": "announcement", "english": "Attention passengers on KLM flight 856 to Amsterdam. We are now boarding rows 30 to 40.", "korean": "암스테르담행 KLM 856편 승객 여러분께 안내드립니다. 현재 30열부터 40열까지 탑승 중입니다." },
+        { "speaker": "staff", "english": "May I see your boarding pass?", "korean": "탑승권을 보여주시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "탑승권을 보여주며 응답하세요",
+        "choices": [
+          { "text": "Here's my boarding pass. I'm in row 35.", "correct": true, "feedback": "완벽해요! 좌석 정보까지 말했습니다." },
+          { "text": "Yes, here you go.", "correct": true, "feedback": "간단하고 적절한 응답입니다." },
+          { "text": "Is this the right gate?", "correct": false, "feedback": "이미 탑승 중이면 게이트 확인은 늦었어요." },
+          { "text": "Where's my seat?", "correct": false, "feedback": "탑승권에 좌석 정보가 있어요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "인천공항 탑승구",
+      "city": "서울",
+      "category": "airport_departure",
+      "situation": "탑승 지연 안내",
+      "dialogues": [
+        { "speaker": "staff", "english": "Ladies and gentlemen, due to a technical issue, boarding will be delayed by approximately 30 minutes.", "korean": "승객 여러분, 기술적 문제로 탑승이 약 30분 지연됩니다." }
+      ],
+      "playerResponse": {
+        "prompt": "직원에게 질문하세요",
+        "choices": [
+          { "text": "Will we still arrive on time?", "correct": true, "feedback": "도착 시간을 확인하는 좋은 질문이에요." },
+          { "text": "Is there a lounge I can wait in?", "correct": true, "feedback": "대기 장소를 물어보는 것도 좋아요." },
+          { "text": "What's the problem?", "correct": true, "feedback": "상황을 물어볼 수 있어요." },
+          { "text": "This is unacceptable!", "correct": false, "feedback": "기술적 문제는 안전을 위한 것이에요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "KLM 비행기 기내",
+      "city": "비행 중",
+      "category": "inflight",
+      "situation": "좌석을 찾는 상황",
+      "dialogues": [
+        { "speaker": "flight_attendant", "english": "Welcome aboard! May I help you find your seat?", "korean": "탑승을 환영합니다! 좌석을 찾는 것을 도와드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "도움을 요청하거나 응답하세요",
+        "choices": [
+          { "text": "Yes, please. I'm looking for seat 35A.", "correct": true, "feedback": "정확하게 좌석 번호를 말했어요." },
+          { "text": "I found it, thank you.", "correct": true, "feedback": "찾았다면 이렇게 말해도 좋아요." },
+          { "text": "Where is 35A?", "correct": true, "feedback": "직접적으로 물어봐도 괜찮아요." },
+          { "text": "Move please.", "correct": false, "feedback": "너무 무례해요. 정중하게 물어보세요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "KLM 비행기 기내",
+      "city": "비행 중",
+      "category": "inflight",
+      "situation": "짐을 수납하는 상황",
+      "dialogues": [
+        { "speaker": "flight_attendant", "english": "Would you like me to help you put your bag in the overhead bin?", "korean": "가방을 머리 위 수납함에 넣는 것을 도와드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "도움 제안에 응답하세요",
+        "choices": [
+          { "text": "Yes, please. It's a bit heavy.", "correct": true, "feedback": "도움을 받으면서 이유를 설명했어요." },
+          { "text": "No, thank you. I can manage.", "correct": true, "feedback": "정중하게 거절하는 표현이에요." },
+          { "text": "Thanks, that would be great.", "correct": true, "feedback": "감사하며 수락했어요." },
+          { "text": "Just do it.", "correct": false, "feedback": "명령조는 무례해요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "KLM 비행기 기내",
+      "city": "비행 중",
+      "category": "inflight",
+      "situation": "음료 서비스",
+      "dialogues": [
+        { "speaker": "flight_attendant", "english": "Would you like something to drink? We have water, juice, coffee, and tea.", "korean": "음료 드시겠어요? 물, 주스, 커피, 차가 있습니다." }
+      ],
+      "playerResponse": {
+        "prompt": "음료를 주문하세요",
+        "choices": [
+          { "text": "Orange juice, please.", "correct": true, "feedback": "간단하고 명확해요." },
+          { "text": "Could I have some water?", "correct": true, "feedback": "정중한 요청이에요." },
+          { "text": "Coffee with cream and sugar, please.", "correct": true, "feedback": "구체적으로 요청했어요." },
+          { "text": "Give me juice.", "correct": false, "feedback": "'please'를 붙이면 더 정중해요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "KLM 비행기 기내",
+      "city": "비행 중",
+      "category": "inflight",
+      "situation": "기내식 서비스",
+      "dialogues": [
+        { "speaker": "flight_attendant", "english": "For your meal, we have beef with rice or pasta with chicken. Which would you prefer?", "korean": "식사로 소고기 밥 또는 치킨 파스타가 있습니다. 어느 것을 원하시나요?" }
+      ],
+      "playerResponse": {
+        "prompt": "식사를 선택하세요",
+        "choices": [
+          { "text": "I'll have the beef, please.", "correct": true, "feedback": "명확하게 선택했어요." },
+          { "text": "The pasta sounds good.", "correct": true, "feedback": "자연스러운 표현이에요." },
+          { "text": "Is there a vegetarian option?", "correct": true, "feedback": "다른 옵션을 물어봐도 좋아요." },
+          { "text": "I don't care.", "correct": false, "feedback": "관심 없다는 표현은 무례해요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "KLM 비행기 기내",
+      "city": "비행 중",
+      "category": "inflight",
+      "situation": "담요 요청",
+      "dialogues": [
+        { "speaker": "you", "english": "(It's cold in the cabin)", "korean": "(기내가 춥습니다)" }
+      ],
+      "playerResponse": {
+        "prompt": "승무원에게 담요를 요청하세요",
+        "choices": [
+          { "text": "Excuse me, could I have a blanket, please?", "correct": true, "feedback": "완벽하게 정중한 요청이에요." },
+          { "text": "May I get an extra blanket?", "correct": true, "feedback": "좋은 표현이에요." },
+          { "text": "I'm cold. Blanket please.", "correct": true, "feedback": "괜찮지만 조금 더 정중할 수 있어요." },
+          { "text": "It's freezing here!", "correct": false, "feedback": "불평보다는 요청을 하세요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "KLM 비행기 기내",
+      "city": "비행 중",
+      "category": "inflight",
+      "situation": "헤드폰 요청",
+      "dialogues": [
+        { "speaker": "flight_attendant", "english": "Would you like headphones for the entertainment system?", "korean": "오락 시스템용 헤드폰을 드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "헤드폰에 대해 응답하세요",
+        "choices": [
+          { "text": "Yes, please. Thank you.", "correct": true, "feedback": "간단하고 감사를 표현했어요." },
+          { "text": "Sure, how do I use the screen?", "correct": true, "feedback": "추가 질문도 좋아요." },
+          { "text": "No thanks, I have my own.", "correct": true, "feedback": "정중하게 거절했어요." },
+          { "text": "Whatever.", "correct": false, "feedback": "무관심한 태도는 좋지 않아요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "KLM 비행기 기내",
+      "city": "비행 중",
+      "category": "inflight",
+      "situation": "화장실 사용",
+      "dialogues": [
+        { "speaker": "passenger", "english": "Excuse me, could you let me pass? I need to use the restroom.", "korean": "실례합니다, 지나가도 될까요? 화장실을 이용해야 해요." }
+      ],
+      "playerResponse": {
+        "prompt": "옆 승객의 요청에 응답하세요",
+        "choices": [
+          { "text": "Of course, let me move.", "correct": true, "feedback": "협조적인 태도예요." },
+          { "text": "Sure, no problem.", "correct": true, "feedback": "친절한 응답이에요." },
+          { "text": "Go ahead.", "correct": true, "feedback": "간단하지만 괜찮아요." },
+          { "text": "Wait a minute.", "correct": false, "feedback": "긴급한 상황일 수 있어요. 바로 비켜주세요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "KLM 비행기 기내",
+      "city": "비행 중",
+      "category": "inflight",
+      "situation": "난기류 안내",
+      "dialogues": [
+        { "speaker": "captain", "english": "Ladies and gentlemen, we're experiencing some turbulence. Please return to your seats and fasten your seatbelts.", "korean": "승객 여러분, 난기류가 있습니다. 좌석으로 돌아가 안전벨트를 매주세요." }
+      ],
+      "playerResponse": {
+        "prompt": "승무원에게 질문하세요",
+        "choices": [
+          { "text": "How long will the turbulence last?", "correct": true, "feedback": "상황을 확인하는 질문이에요." },
+          { "text": "Is it safe?", "correct": true, "feedback": "걱정된다면 물어봐도 괜찮아요." },
+          { "text": "I understand. I'll stay seated.", "correct": true, "feedback": "지시를 따르겠다는 표현이에요." },
+          { "text": "I need to stand up now.", "correct": false, "feedback": "난기류 중에는 앉아있어야 해요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "KLM 비행기 기내",
+      "city": "비행 중",
+      "category": "inflight",
+      "situation": "입국신고서 작성",
+      "dialogues": [
+        { "speaker": "flight_attendant", "english": "Here's the arrival card for the Netherlands. Please fill it out before landing.", "korean": "네덜란드 입국신고서입니다. 착륙 전에 작성해주세요." }
+      ],
+      "playerResponse": {
+        "prompt": "입국신고서에 대해 응답하세요",
+        "choices": [
+          { "text": "Thank you. Do you have a pen I can borrow?", "correct": true, "feedback": "필요한 것을 요청했어요." },
+          { "text": "Is this required for all passengers?", "correct": true, "feedback": "확인하는 질문이에요." },
+          { "text": "I'll fill it out now.", "correct": true, "feedback": "바로 하겠다는 표현이에요." },
+          { "text": "I don't want to.", "correct": false, "feedback": "입국신고서는 필수예요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "KLM 비행기 기내",
+      "city": "비행 중",
+      "category": "inflight",
+      "situation": "착륙 안내",
+      "dialogues": [
+        { "speaker": "captain", "english": "We will be landing at Amsterdam Schiphol Airport in approximately 20 minutes. The local time is 6 PM and the temperature is 12 degrees Celsius.", "korean": "약 20분 후 암스테르담 스키폴 공항에 착륙합니다. 현지 시간은 오후 6시이고 기온은 12도입니다." }
+      ],
+      "playerResponse": {
+        "prompt": "승무원에게 질문하세요",
+        "choices": [
+          { "text": "What's the weather like in Amsterdam?", "correct": true, "feedback": "날씨를 더 자세히 물어봐요." },
+          { "text": "Which terminal do we arrive at?", "correct": true, "feedback": "터미널 정보를 확인해요." },
+          { "text": "Thank you for the information.", "correct": true, "feedback": "감사를 표현했어요." },
+          { "text": "Finally!", "correct": false, "feedback": "조금 더 정중하게 표현하세요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "스키폴 공항 입국심사대",
+      "city": "암스테르담",
+      "category": "arrival",
+      "situation": "입국심사를 받는 상황",
+      "dialogues": [
+        { "speaker": "immigration_officer", "english": "Good evening. What is the purpose of your visit to the Netherlands?", "korean": "안녕하세요. 네덜란드 방문 목적이 무엇인가요?" }
+      ],
+      "playerResponse": {
+        "prompt": "방문 목적을 말하세요",
+        "choices": [
+          { "text": "I'm here for tourism. I'm visiting for about 10 days.", "correct": true, "feedback": "목적과 기간을 명확히 말했어요." },
+          { "text": "Sightseeing and vacation.", "correct": true, "feedback": "간단하지만 명확해요." },
+          { "text": "Just traveling.", "correct": true, "feedback": "괜찮은 답변이에요." },
+          { "text": "None of your business.", "correct": false, "feedback": "입국심사관에게 이렇게 말하면 안 돼요!" }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "스키폴 공항 입국심사대",
+      "city": "암스테르담",
+      "category": "arrival",
+      "situation": "숙소 확인",
+      "dialogues": [
+        { "speaker": "immigration_officer", "english": "Where will you be staying during your visit?", "korean": "방문 중 어디에 머무를 예정인가요?" }
+      ],
+      "playerResponse": {
+        "prompt": "숙소 정보를 말하세요",
+        "choices": [
+          { "text": "I'll be staying at a hotel near the city center.", "correct": true, "feedback": "숙소 정보를 잘 전달했어요." },
+          { "text": "At the NH Collection Amsterdam.", "correct": true, "feedback": "구체적인 호텔명을 말했어요." },
+          { "text": "I have a hotel reservation. Here's the confirmation.", "correct": true, "feedback": "서류를 보여주면 더 좋아요." },
+          { "text": "I don't know yet.", "correct": false, "feedback": "숙소 정보가 없으면 문제가 될 수 있어요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "스키폴 공항 입국심사대",
+      "city": "암스테르담",
+      "category": "arrival",
+      "situation": "귀국편 확인",
+      "dialogues": [
+        { "speaker": "immigration_officer", "english": "Do you have a return ticket?", "korean": "귀국 항공권이 있나요?" }
+      ],
+      "playerResponse": {
+        "prompt": "귀국편에 대해 응답하세요",
+        "choices": [
+          { "text": "Yes, I'm flying back on the 17th.", "correct": true, "feedback": "날짜를 명확히 말했어요." },
+          { "text": "Here's my return ticket confirmation.", "correct": true, "feedback": "서류를 보여주면 확실해요." },
+          { "text": "Yes, I have a round-trip ticket.", "correct": true, "feedback": "왕복 티켓이라고 말했어요." },
+          { "text": "No, I haven't booked it yet.", "correct": false, "feedback": "귀국편이 없으면 문제가 될 수 있어요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "스키폴 공항 수하물 찾는 곳",
+      "city": "암스테르담",
+      "category": "arrival",
+      "situation": "수하물을 찾는 상황",
+      "dialogues": [
+        { "speaker": "you", "english": "(Looking at the screens to find which carousel has your luggage)", "korean": "(어느 컨베이어에서 짐이 나오는지 화면을 확인 중)" }
+      ],
+      "playerResponse": {
+        "prompt": "직원에게 수하물 찾는 곳을 물어보세요",
+        "choices": [
+          { "text": "Excuse me, which carousel is for KLM flight 856?", "correct": true, "feedback": "정확하게 항공편을 말했어요." },
+          { "text": "Where can I find baggage from Seoul?", "correct": true, "feedback": "출발지로 물어봐도 좋아요." },
+          { "text": "Is this where I pick up my luggage?", "correct": true, "feedback": "확인하는 질문이에요." },
+          { "text": "My bag! Where?", "correct": false, "feedback": "너무 급해 보여요. 침착하게 물어보세요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "스키폴 공항 수하물 찾는 곳",
+      "city": "암스테르담",
+      "category": "arrival",
+      "situation": "수하물이 안 나오는 상황",
+      "dialogues": [
+        { "speaker": "you", "english": "(Your luggage hasn't appeared after 30 minutes)", "korean": "(30분이 지났는데 수하물이 나오지 않음)" }
+      ],
+      "playerResponse": {
+        "prompt": "Lost Baggage 데스크에서 상황을 설명하세요",
+        "choices": [
+          { "text": "My luggage hasn't arrived. I was on KLM 856 from Seoul.", "correct": true, "feedback": "항공편 정보와 함께 상황을 설명했어요." },
+          { "text": "I can't find my bag. Here's my baggage claim tag.", "correct": true, "feedback": "수하물표를 보여주면 좋아요." },
+          { "text": "I think my bag is lost. Can you help me?", "correct": true, "feedback": "도움을 요청했어요." },
+          { "text": "You lost my bag!", "correct": false, "feedback": "비난보다는 상황 설명이 먼저예요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "스키폴 공항 환전소",
+      "city": "암스테르담",
+      "category": "arrival",
+      "situation": "환전하는 상황",
+      "dialogues": [
+        { "speaker": "staff", "english": "Hello! How can I help you today?", "korean": "안녕하세요! 어떻게 도와드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "환전을 요청하세요",
+        "choices": [
+          { "text": "I'd like to exchange Korean won to euros.", "correct": true, "feedback": "환전을 명확히 요청했어요." },
+          { "text": "Can I exchange 500,000 won?", "correct": true, "feedback": "금액을 말하면 더 좋아요." },
+          { "text": "What's the exchange rate today?", "correct": true, "feedback": "환율을 먼저 확인하는 것도 좋아요." },
+          { "text": "Give me euros.", "correct": false, "feedback": "좀 더 정중하게 요청하세요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "스키폴 공항 환전소",
+      "city": "암스테르담",
+      "category": "arrival",
+      "situation": "환전 수수료 확인",
+      "dialogues": [
+        { "speaker": "staff", "english": "The exchange rate is 1 euro for 1,450 won. There's a 5 euro service fee.", "korean": "환율은 1유로당 1,450원입니다. 5유로 수수료가 있습니다." }
+      ],
+      "playerResponse": {
+        "prompt": "수수료에 대해 응답하세요",
+        "choices": [
+          { "text": "That's fine. Please go ahead.", "correct": true, "feedback": "수락하는 표현이에요." },
+          { "text": "Is that the best rate you can offer?", "correct": true, "feedback": "협상해 볼 수 있어요." },
+          { "text": "Can I pay the fee in won?", "correct": true, "feedback": "지불 방법을 확인해요." },
+          { "text": "That's too expensive. Never mind.", "correct": true, "feedback": "거절해도 괜찮아요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "스키폴 공항 교통 안내소",
+      "city": "암스테르담",
+      "category": "arrival",
+      "situation": "시내 가는 방법 문의",
+      "dialogues": [
+        { "speaker": "staff", "english": "Welcome to Amsterdam! Can I help you with transportation?", "korean": "암스테르담에 오신 것을 환영합니다! 교통편 안내해 드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "시내 가는 방법을 물어보세요",
+        "choices": [
+          { "text": "How can I get to the city center?", "correct": true, "feedback": "시내 가는 방법을 물었어요." },
+          { "text": "What's the best way to reach Amsterdam Centraal?", "correct": true, "feedback": "중앙역으로 가는 방법을 물었어요." },
+          { "text": "Is there a train to the city?", "correct": true, "feedback": "기차가 있는지 확인해요." },
+          { "text": "Take me to downtown.", "correct": false, "feedback": "명령조는 피하세요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "스키폴 공항 기차역",
+      "city": "암스테르담",
+      "category": "arrival",
+      "situation": "기차표 구매",
+      "dialogues": [
+        { "speaker": "staff", "english": "Where would you like to go?", "korean": "어디로 가시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "목적지를 말하고 표를 구매하세요",
+        "choices": [
+          { "text": "One ticket to Amsterdam Centraal, please.", "correct": true, "feedback": "목적지와 수량을 명확히 말했어요." },
+          { "text": "How much is a ticket to the city center?", "correct": true, "feedback": "가격을 먼저 확인해요." },
+          { "text": "Do I need to reserve a seat?", "correct": true, "feedback": "예약 필요 여부를 확인해요." },
+          { "text": "City.", "correct": false, "feedback": "좀 더 구체적으로 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "스키폴 공항 기차역",
+      "city": "암스테르담",
+      "category": "arrival",
+      "situation": "플랫폼 확인",
+      "dialogues": [
+        { "speaker": "staff", "english": "The train leaves from platform 3 in 10 minutes.", "korean": "기차는 10분 후 3번 플랫폼에서 출발합니다." }
+      ],
+      "playerResponse": {
+        "prompt": "플랫폼 위치를 확인하세요",
+        "choices": [
+          { "text": "Which way is platform 3?", "correct": true, "feedback": "방향을 물었어요." },
+          { "text": "Is it the same platform for all Amsterdam trains?", "correct": true, "feedback": "확인하는 좋은 질문이에요." },
+          { "text": "Thank you. I'll head there now.", "correct": true, "feedback": "감사하며 출발하겠다고 했어요." },
+          { "text": "10 minutes? That's too long.", "correct": false, "feedback": "불평보다는 시간을 활용하세요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "암스테르담 중앙역",
+      "city": "암스테르담",
+      "category": "directions",
+      "situation": "호텔 가는 길 문의",
+      "dialogues": [
+        { "speaker": "you", "english": "(Looking at a map near the station exit)", "korean": "(역 출구 근처에서 지도를 보고 있음)" }
+      ],
+      "playerResponse": {
+        "prompt": "지나가는 사람에게 길을 물어보세요",
+        "choices": [
+          { "text": "Excuse me, can you tell me how to get to Dam Square?", "correct": true, "feedback": "정중하게 길을 물었어요." },
+          { "text": "Is the NH Hotel near here?", "correct": true, "feedback": "호텔 위치를 물었어요." },
+          { "text": "Which way to the tram stop?", "correct": true, "feedback": "트램 정류장을 물었어요." },
+          { "text": "Hey, where's the hotel?", "correct": false, "feedback": "'Excuse me'로 시작하면 더 정중해요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "암스테르담 거리",
+      "city": "암스테르담",
+      "category": "directions",
+      "situation": "트램 이용 안내",
+      "dialogues": [
+        { "speaker": "local", "english": "Take tram number 4 or 9. It's about 3 stops from here.", "korean": "4번이나 9번 트램을 타세요. 여기서 3 정거장이에요." }
+      ],
+      "playerResponse": {
+        "prompt": "추가 정보를 물어보세요",
+        "choices": [
+          { "text": "Where can I buy a tram ticket?", "correct": true, "feedback": "표 구매처를 물었어요." },
+          { "text": "How often does the tram come?", "correct": true, "feedback": "배차 간격을 물었어요." },
+          { "text": "Can I pay with cash on the tram?", "correct": true, "feedback": "결제 방법을 확인해요." },
+          { "text": "Just 3 stops? I'll walk.", "correct": true, "feedback": "걷겠다고 해도 괜찮아요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "NH 호텔 로비",
+      "city": "암스테르담",
+      "category": "hotel",
+      "situation": "호텔 체크인",
+      "dialogues": [
+        { "speaker": "receptionist", "english": "Good evening! Welcome to NH Collection Amsterdam. Do you have a reservation?", "korean": "안녕하세요! NH 컬렉션 암스테르담에 오신 것을 환영합니다. 예약하셨나요?" }
+      ],
+      "playerResponse": {
+        "prompt": "예약 확인을 요청하세요",
+        "choices": [
+          { "text": "Yes, I have a reservation under Kim.", "correct": true, "feedback": "이름으로 예약을 확인했어요." },
+          { "text": "Here's my booking confirmation.", "correct": true, "feedback": "확인서를 보여주면 빨라요." },
+          { "text": "I booked through Booking.com.", "correct": true, "feedback": "예약 경로를 말했어요." },
+          { "text": "I want a room.", "correct": false, "feedback": "예약 여부를 먼저 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "NH 호텔 로비",
+      "city": "암스테르담",
+      "category": "hotel",
+      "situation": "신분증 확인",
+      "dialogues": [
+        { "speaker": "receptionist", "english": "May I see your passport, please? I'll just need to make a copy.", "korean": "여권을 보여주시겠어요? 사본만 만들면 됩니다." }
+      ],
+      "playerResponse": {
+        "prompt": "여권을 건네며 응답하세요",
+        "choices": [
+          { "text": "Here you go.", "correct": true, "feedback": "간단하고 자연스러워요." },
+          { "text": "Sure, here's my passport.", "correct": true, "feedback": "협조적인 태도예요." },
+          { "text": "How long will it take?", "correct": true, "feedback": "시간을 확인해도 괜찮아요." },
+          { "text": "Why do you need it?", "correct": false, "feedback": "호텔에서 신분 확인은 일반적이에요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "NH 호텔 로비",
+      "city": "암스테르담",
+      "category": "hotel",
+      "situation": "객실 키 수령",
+      "dialogues": [
+        { "speaker": "receptionist", "english": "You're in room 512 on the 5th floor. Here's your key card. The elevator is on your left.", "korean": "5층 512호입니다. 키 카드 여기 있습니다. 엘리베이터는 왼쪽에 있어요." }
+      ],
+      "playerResponse": {
+        "prompt": "추가 정보를 물어보세요",
+        "choices": [
+          { "text": "What time is breakfast?", "correct": true, "feedback": "조식 시간을 확인해요." },
+          { "text": "Is there Wi-Fi in the room?", "correct": true, "feedback": "와이파이를 확인해요." },
+          { "text": "What's the Wi-Fi password?", "correct": true, "feedback": "비밀번호를 물었어요." },
+          { "text": "Where's my room?", "correct": false, "feedback": "이미 알려줬어요. 잘 들으세요." }
+        ]
+      }
+    },
+    {
+      "day": 1,
+      "location": "NH 호텔 객실",
+      "city": "암스테르담",
+      "category": "hotel",
+      "situation": "에어컨이 안 되는 상황",
+      "dialogues": [
+        { "speaker": "you", "english": "(The air conditioning in your room isn't working)", "korean": "(객실 에어컨이 작동하지 않음)" }
+      ],
+      "playerResponse": {
+        "prompt": "프론트에 전화해서 문제를 알리세요",
+        "choices": [
+          { "text": "Hello, the air conditioning in my room doesn't seem to be working.", "correct": true, "feedback": "문제를 정중하게 알렸어요." },
+          { "text": "Can someone come and check the AC?", "correct": true, "feedback": "점검 요청을 했어요." },
+          { "text": "Is there a way to adjust the temperature?", "correct": true, "feedback": "해결책을 물었어요." },
+          { "text": "The AC is broken! Fix it now!", "correct": false, "feedback": "너무 공격적이에요. 정중하게 요청하세요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "NH 호텔 조식당",
+      "city": "암스테르담",
+      "category": "restaurant",
+      "situation": "조식 이용",
+      "dialogues": [
+        { "speaker": "staff", "english": "Good morning! May I see your room number?", "korean": "좋은 아침입니다! 객실 번호를 말씀해 주시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "객실 번호를 말하세요",
+        "choices": [
+          { "text": "Room 512.", "correct": true, "feedback": "간단명료해요." },
+          { "text": "I'm staying in room 512.", "correct": true, "feedback": "완전한 문장이에요." },
+          { "text": "Here's my key card.", "correct": true, "feedback": "카드를 보여줘도 좋아요." },
+          { "text": "Why?", "correct": false, "feedback": "조식 확인을 위한 것이에요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "NH 호텔 조식당",
+      "city": "암스테르담",
+      "category": "restaurant",
+      "situation": "커피 주문",
+      "dialogues": [
+        { "speaker": "staff", "english": "Would you like coffee or tea?", "korean": "커피나 차 드시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "음료를 주문하세요",
+        "choices": [
+          { "text": "Coffee, please. Black.", "correct": true, "feedback": "취향을 명확히 말했어요." },
+          { "text": "Tea with milk, please.", "correct": true, "feedback": "구체적으로 주문했어요." },
+          { "text": "Do you have cappuccino?", "correct": true, "feedback": "다른 옵션을 물었어요." },
+          { "text": "Both.", "correct": false, "feedback": "하나를 선택하세요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "암스테르담 거리",
+      "city": "암스테르담",
+      "category": "directions",
+      "situation": "반 고흐 박물관 가는 길",
+      "dialogues": [
+        { "speaker": "you", "english": "(Looking for the Van Gogh Museum)", "korean": "(반 고흐 박물관을 찾는 중)" }
+      ],
+      "playerResponse": {
+        "prompt": "지나가는 사람에게 길을 물어보세요",
+        "choices": [
+          { "text": "Excuse me, how do I get to the Van Gogh Museum?", "correct": true, "feedback": "정중하게 길을 물었어요." },
+          { "text": "Is the museum far from here?", "correct": true, "feedback": "거리를 확인해요." },
+          { "text": "Can I walk to the Van Gogh Museum?", "correct": true, "feedback": "도보 가능 여부를 물었어요." },
+          { "text": "Van Gogh?", "correct": false, "feedback": "완전한 질문으로 물어보세요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "반 고흐 박물관 입구",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "티켓 구매",
+      "dialogues": [
+        { "speaker": "staff", "english": "Hello! Do you have a reservation or would you like to buy tickets?", "korean": "안녕하세요! 예약하셨나요, 아니면 티켓을 구매하시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "티켓 구매를 요청하세요",
+        "choices": [
+          { "text": "I'd like to buy one adult ticket, please.", "correct": true, "feedback": "성인 1매를 요청했어요." },
+          { "text": "How much is the entrance fee?", "correct": true, "feedback": "가격을 먼저 확인해요." },
+          { "text": "I booked online. Here's my confirmation.", "correct": true, "feedback": "온라인 예약을 확인해요." },
+          { "text": "Let me in.", "correct": false, "feedback": "너무 무례해요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "반 고흐 박물관",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "오디오 가이드",
+      "dialogues": [
+        { "speaker": "staff", "english": "Would you like an audio guide? It's available in Korean.", "korean": "오디오 가이드 필요하세요? 한국어도 있습니다." }
+      ],
+      "playerResponse": {
+        "prompt": "오디오 가이드에 대해 응답하세요",
+        "choices": [
+          { "text": "Yes, the Korean one please.", "correct": true, "feedback": "한국어 가이드를 요청했어요." },
+          { "text": "How much is it?", "correct": true, "feedback": "가격을 확인해요." },
+          { "text": "No thanks, I'll just look around.", "correct": true, "feedback": "거절해도 괜찮아요." },
+          { "text": "Korean? You have Korean?", "correct": false, "feedback": "놀라기보다는 요청하세요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "반 고흐 박물관",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "사진 촬영 문의",
+      "dialogues": [
+        { "speaker": "you", "english": "(You want to take a photo of a painting)", "korean": "(그림 사진을 찍고 싶음)" }
+      ],
+      "playerResponse": {
+        "prompt": "직원에게 사진 촬영이 가능한지 물어보세요",
+        "choices": [
+          { "text": "Excuse me, is photography allowed here?", "correct": true, "feedback": "정중하게 물었어요." },
+          { "text": "Can I take pictures without flash?", "correct": true, "feedback": "플래시 없이 가능한지 물었어요." },
+          { "text": "Which areas can I take photos in?", "correct": true, "feedback": "촬영 가능 구역을 물었어요." },
+          { "text": "I'm just going to take a photo.", "correct": false, "feedback": "먼저 허락을 구하세요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "반 고흐 박물관 기념품점",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "기념품 구매",
+      "dialogues": [
+        { "speaker": "staff", "english": "Can I help you find something?", "korean": "찾으시는 것 도와드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "원하는 것을 말하세요",
+        "choices": [
+          { "text": "I'm looking for a postcard of Sunflowers.", "correct": true, "feedback": "구체적으로 원하는 것을 말했어요." },
+          { "text": "Do you have any posters?", "correct": true, "feedback": "포스터가 있는지 물었어요." },
+          { "text": "Just browsing, thank you.", "correct": true, "feedback": "둘러보겠다고 했어요." },
+          { "text": "Show me everything.", "correct": false, "feedback": "너무 막연해요. 구체적으로 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "암스테르담 카페",
+      "city": "암스테르담",
+      "category": "restaurant",
+      "situation": "카페에서 주문",
+      "dialogues": [
+        { "speaker": "barista", "english": "Hi there! What can I get for you?", "korean": "안녕하세요! 뭘 드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "음료를 주문하세요",
+        "choices": [
+          { "text": "Can I have a latte, please?", "correct": true, "feedback": "정중하게 주문했어요." },
+          { "text": "What do you recommend?", "correct": true, "feedback": "추천을 물었어요." },
+          { "text": "A cappuccino and a croissant, please.", "correct": true, "feedback": "음식도 함께 주문했어요." },
+          { "text": "Coffee.", "correct": false, "feedback": "어떤 종류인지 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "암스테르담 카페",
+      "city": "암스테르담",
+      "category": "restaurant",
+      "situation": "와이파이 비밀번호",
+      "dialogues": [
+        { "speaker": "you", "english": "(You need to connect to Wi-Fi)", "korean": "(와이파이에 연결해야 함)" }
+      ],
+      "playerResponse": {
+        "prompt": "와이파이 비밀번호를 물어보세요",
+        "choices": [
+          { "text": "Do you have Wi-Fi? What's the password?", "correct": true, "feedback": "직접적으로 물었어요." },
+          { "text": "Could you tell me the Wi-Fi password?", "correct": true, "feedback": "정중하게 물었어요." },
+          { "text": "Is the Wi-Fi free for customers?", "correct": true, "feedback": "무료인지 확인해요." },
+          { "text": "Internet!", "correct": false, "feedback": "완전한 질문으로 물어보세요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "안네 프랑크의 집",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "줄 서기",
+      "dialogues": [
+        { "speaker": "tourist", "english": "Excuse me, is this the line for the Anne Frank House?", "korean": "실례합니다, 안네 프랑크의 집 줄이 여기인가요?" }
+      ],
+      "playerResponse": {
+        "prompt": "다른 관광객에게 응답하세요",
+        "choices": [
+          { "text": "Yes, I think so. Are you in line too?", "correct": true, "feedback": "확인하며 대화를 이어갔어요." },
+          { "text": "I'm not sure. Let me ask someone.", "correct": true, "feedback": "모르면 솔직히 말해요." },
+          { "text": "Yes, it moves pretty slowly.", "correct": true, "feedback": "추가 정보를 알려줬어요." },
+          { "text": "Don't know.", "correct": false, "feedback": "조금 더 친절하게 대답하세요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "안네 프랑크의 집",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "대기 시간 문의",
+      "dialogues": [
+        { "speaker": "staff", "english": "The current wait time is about 45 minutes.", "korean": "현재 대기 시간은 약 45분입니다." }
+      ],
+      "playerResponse": {
+        "prompt": "대기 시간에 대해 응답하세요",
+        "choices": [
+          { "text": "That's okay. I'll wait.", "correct": true, "feedback": "기다리겠다고 했어요." },
+          { "text": "Is there a faster way with a reservation?", "correct": true, "feedback": "예약 우선 입장을 물었어요." },
+          { "text": "Can I come back later?", "correct": true, "feedback": "나중에 올 수 있는지 물었어요." },
+          { "text": "45 minutes? That's ridiculous!", "correct": false, "feedback": "인기 있는 곳은 줄이 길 수 있어요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "운하 크루즈 선착장",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "크루즈 티켓 구매",
+      "dialogues": [
+        { "speaker": "staff", "english": "Welcome! Would you like to join our canal cruise? We have one starting in 15 minutes.", "korean": "환영합니다! 운하 크루즈에 참여하시겠어요? 15분 후에 출발하는 배가 있습니다." }
+      ],
+      "playerResponse": {
+        "prompt": "크루즈에 대해 물어보세요",
+        "choices": [
+          { "text": "How long is the cruise?", "correct": true, "feedback": "소요 시간을 물었어요." },
+          { "text": "How much is a ticket?", "correct": true, "feedback": "가격을 물었어요." },
+          { "text": "Yes, one ticket please.", "correct": true, "feedback": "바로 구매했어요." },
+          { "text": "Boat ride?", "correct": false, "feedback": "완전한 문장으로 물어보세요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "운하 크루즈",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "좌석 문의",
+      "dialogues": [
+        { "speaker": "staff", "english": "Would you prefer to sit inside or outside?", "korean": "실내와 실외 중 어디에 앉으시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "좌석 선호도를 말하세요",
+        "choices": [
+          { "text": "Outside, please. I want to take photos.", "correct": true, "feedback": "이유와 함께 말했어요." },
+          { "text": "Inside is fine. It looks like it might rain.", "correct": true, "feedback": "날씨를 고려했어요." },
+          { "text": "Which has a better view?", "correct": true, "feedback": "의견을 물었어요." },
+          { "text": "Whatever.", "correct": false, "feedback": "관심 없는 태도는 좋지 않아요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "알버트 쿠입 시장",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "치즈 구매",
+      "dialogues": [
+        { "speaker": "vendor", "english": "Would you like to try some Dutch cheese? This is Gouda, aged 2 years.", "korean": "네덜란드 치즈 시식해 보시겠어요? 2년 숙성 고다 치즈입니다." }
+      ],
+      "playerResponse": {
+        "prompt": "치즈 시식에 응답하세요",
+        "choices": [
+          { "text": "Yes, I'd love to try it.", "correct": true, "feedback": "시식하겠다고 했어요." },
+          { "text": "How much is this per kilogram?", "correct": true, "feedback": "가격을 물었어요." },
+          { "text": "Do you have any milder options?", "correct": true, "feedback": "다른 종류를 물었어요." },
+          { "text": "It smells funny.", "correct": false, "feedback": "무례한 표현이에요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "알버트 쿠입 시장",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "흥정",
+      "dialogues": [
+        { "speaker": "vendor", "english": "This piece is 15 euros.", "korean": "이 조각은 15유로입니다." }
+      ],
+      "playerResponse": {
+        "prompt": "가격에 대해 응답하세요",
+        "choices": [
+          { "text": "Can you do 12 euros?", "correct": true, "feedback": "흥정을 시도했어요." },
+          { "text": "I'll take it.", "correct": true, "feedback": "그냥 구매해도 괜찮아요." },
+          { "text": "If I buy two, is there a discount?", "correct": true, "feedback": "할인을 물었어요." },
+          { "text": "Too expensive!", "correct": false, "feedback": "더 정중하게 흥정하세요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "알버트 쿠입 시장",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "스트룹와플 구매",
+      "dialogues": [
+        { "speaker": "vendor", "english": "Fresh stroopwafels! Just made, still warm!", "korean": "갓 만든 스트룹와플! 아직 따뜻해요!" }
+      ],
+      "playerResponse": {
+        "prompt": "스트룹와플을 구매하세요",
+        "choices": [
+          { "text": "Two please. They smell amazing!", "correct": true, "feedback": "칭찬하며 구매했어요." },
+          { "text": "How much for one?", "correct": true, "feedback": "가격을 물었어요." },
+          { "text": "What's in a stroopwafel?", "correct": true, "feedback": "재료를 물었어요." },
+          { "text": "Give me one.", "correct": false, "feedback": "'please'를 붙이세요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "네덜란드 레스토랑",
+      "city": "암스테르담",
+      "category": "restaurant",
+      "situation": "저녁 예약 문의",
+      "dialogues": [
+        { "speaker": "staff", "english": "Good evening. Do you have a reservation?", "korean": "안녕하세요. 예약하셨나요?" }
+      ],
+      "playerResponse": {
+        "prompt": "예약 여부를 말하세요",
+        "choices": [
+          { "text": "No, but do you have a table for one?", "correct": true, "feedback": "예약 없이 자리가 있는지 물었어요." },
+          { "text": "Yes, under Kim for 7 PM.", "correct": true, "feedback": "예약 정보를 말했어요." },
+          { "text": "How long is the wait without a reservation?", "correct": true, "feedback": "대기 시간을 물었어요." },
+          { "text": "Table.", "correct": false, "feedback": "완전한 문장으로 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "네덜란드 레스토랑",
+      "city": "암스테르담",
+      "category": "restaurant",
+      "situation": "메뉴 추천 요청",
+      "dialogues": [
+        { "speaker": "waiter", "english": "Are you ready to order, or would you like more time?", "korean": "주문하시겠어요, 아니면 시간이 더 필요하세요?" }
+      ],
+      "playerResponse": {
+        "prompt": "메뉴에 대해 물어보세요",
+        "choices": [
+          { "text": "What do you recommend?", "correct": true, "feedback": "추천을 물었어요." },
+          { "text": "What's the specialty of the house?", "correct": true, "feedback": "시그니처 메뉴를 물었어요." },
+          { "text": "I need a few more minutes, please.", "correct": true, "feedback": "시간이 더 필요하다고 했어요." },
+          { "text": "Read me the menu.", "correct": false, "feedback": "메뉴는 직접 보세요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "네덜란드 레스토랑",
+      "city": "암스테르담",
+      "category": "restaurant",
+      "situation": "음식 알레르기",
+      "dialogues": [
+        { "speaker": "waiter", "english": "Do you have any food allergies I should know about?", "korean": "알아야 할 음식 알레르기가 있으신가요?" }
+      ],
+      "playerResponse": {
+        "prompt": "알레르기에 대해 응답하세요",
+        "choices": [
+          { "text": "Yes, I'm allergic to shellfish.", "correct": true, "feedback": "알레르기를 명확히 알렸어요." },
+          { "text": "No allergies, but I'm vegetarian.", "correct": true, "feedback": "식이 제한을 알렸어요." },
+          { "text": "No, I can eat anything.", "correct": true, "feedback": "알레르기가 없다고 했어요." },
+          { "text": "I don't know.", "correct": false, "feedback": "본인 알레르기는 알고 있어야 해요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "네덜란드 레스토랑",
+      "city": "암스테르담",
+      "category": "restaurant",
+      "situation": "음식 주문",
+      "dialogues": [
+        { "speaker": "waiter", "english": "What would you like to order?", "korean": "무엇을 주문하시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "음식을 주문하세요",
+        "choices": [
+          { "text": "I'll have the stamppot, please.", "correct": true, "feedback": "네덜란드 전통 음식을 주문했어요." },
+          { "text": "Can I get the fish with a side salad?", "correct": true, "feedback": "사이드도 함께 주문했어요." },
+          { "text": "The salmon sounds good. Medium, please.", "correct": true, "feedback": "조리 정도도 말했어요." },
+          { "text": "Something good.", "correct": false, "feedback": "구체적으로 주문하세요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "네덜란드 레스토랑",
+      "city": "암스테르담",
+      "category": "restaurant",
+      "situation": "계산 요청",
+      "dialogues": [
+        { "speaker": "you", "english": "(You've finished your meal)", "korean": "(식사를 마침)" }
+      ],
+      "playerResponse": {
+        "prompt": "계산을 요청하세요",
+        "choices": [
+          { "text": "Could I have the bill, please?", "correct": true, "feedback": "정중하게 계산서를 요청했어요." },
+          { "text": "Check, please.", "correct": true, "feedback": "미국식 표현이지만 이해해요." },
+          { "text": "Can I pay by card?", "correct": true, "feedback": "결제 방법을 확인해요." },
+          { "text": "Money!", "correct": false, "feedback": "완전한 문장으로 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 4,
+      "location": "잔세스칸스 풍차마을",
+      "city": "암스테르담 근교",
+      "category": "tourist",
+      "situation": "버스 티켓 구매",
+      "dialogues": [
+        { "speaker": "driver", "english": "Good morning! Where are you headed?", "korean": "좋은 아침! 어디로 가세요?" }
+      ],
+      "playerResponse": {
+        "prompt": "목적지를 말하고 티켓을 구매하세요",
+        "choices": [
+          { "text": "Zaanse Schans, please. One ticket.", "correct": true, "feedback": "목적지와 수량을 말했어요." },
+          { "text": "How much to the windmill village?", "correct": true, "feedback": "가격을 먼저 확인해요." },
+          { "text": "Does this bus go to Zaanse Schans?", "correct": true, "feedback": "버스가 맞는지 확인해요." },
+          { "text": "Windmills.", "correct": false, "feedback": "완전한 문장으로 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 4,
+      "location": "잔세스칸스 풍차마을",
+      "city": "암스테르담 근교",
+      "category": "tourist",
+      "situation": "풍차 내부 관람",
+      "dialogues": [
+        { "speaker": "guide", "english": "Would you like to go inside the windmill? It's 5 euros.", "korean": "풍차 내부를 보시겠어요? 5유로입니다." }
+      ],
+      "playerResponse": {
+        "prompt": "풍차 관람에 응답하세요",
+        "choices": [
+          { "text": "Yes, I'd love to see inside.", "correct": true, "feedback": "관심을 표현했어요." },
+          { "text": "What can I see inside?", "correct": true, "feedback": "볼 것이 뭔지 물었어요." },
+          { "text": "Is it worth it?", "correct": true, "feedback": "가치가 있는지 물었어요." },
+          { "text": "5 euros? No way.", "correct": false, "feedback": "더 정중하게 거절하세요." }
+        ]
+      }
+    },
+    {
+      "day": 4,
+      "location": "잔세스칸스 나막신 공방",
+      "city": "암스테르담 근교",
+      "category": "tourist",
+      "situation": "나막신 체험",
+      "dialogues": [
+        { "speaker": "craftsman", "english": "Would you like to try on a pair of wooden shoes?", "korean": "나막신을 신어보시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "나막신 체험에 응답하세요",
+        "choices": [
+          { "text": "Sure! What size should I try?", "correct": true, "feedback": "사이즈를 물었어요." },
+          { "text": "Are these the traditional Dutch clogs?", "correct": true, "feedback": "전통에 대해 물었어요." },
+          { "text": "Can I take a photo wearing them?", "correct": true, "feedback": "사진 촬영을 물었어요." },
+          { "text": "They look uncomfortable.", "correct": false, "feedback": "부정적인 코멘트는 피하세요." }
+        ]
+      }
+    },
+    {
+      "day": 5,
+      "location": "자전거 대여점",
+      "city": "암스테르담",
+      "category": "directions",
+      "situation": "자전거 대여",
+      "dialogues": [
+        { "speaker": "staff", "english": "Hi! Would you like to rent a bike?", "korean": "안녕하세요! 자전거를 빌리시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "자전거 대여를 요청하세요",
+        "choices": [
+          { "text": "Yes, how much is it for a day?", "correct": true, "feedback": "일일 대여료를 물었어요." },
+          { "text": "What kinds of bikes do you have?", "correct": true, "feedback": "종류를 물었어요." },
+          { "text": "Do I need to leave a deposit?", "correct": true, "feedback": "보증금을 확인해요." },
+          { "text": "Bike.", "correct": false, "feedback": "완전한 문장으로 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 5,
+      "location": "자전거 대여점",
+      "city": "암스테르담",
+      "category": "directions",
+      "situation": "자전거 반납 시간",
+      "dialogues": [
+        { "speaker": "staff", "english": "When would you like to return the bike?", "korean": "언제 자전거를 반납하시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "반납 시간을 말하세요",
+        "choices": [
+          { "text": "I'll bring it back by 6 PM.", "correct": true, "feedback": "반납 시간을 명확히 말했어요." },
+          { "text": "Can I keep it until tomorrow?", "correct": true, "feedback": "연장 가능 여부를 물었어요." },
+          { "text": "What time do you close?", "correct": true, "feedback": "영업 시간을 확인해요." },
+          { "text": "Later.", "correct": false, "feedback": "구체적인 시간을 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 5,
+      "location": "본델파크",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "공원에서 휴식",
+      "dialogues": [
+        { "speaker": "local", "english": "Beautiful day, isn't it?", "korean": "날씨가 좋죠?" }
+      ],
+      "playerResponse": {
+        "prompt": "현지인과 대화를 나누세요",
+        "choices": [
+          { "text": "Yes, it's perfect for biking!", "correct": true, "feedback": "동의하며 대화를 이어갔어요." },
+          { "text": "It really is. Is this park always this busy?", "correct": true, "feedback": "질문으로 대화를 계속해요." },
+          { "text": "Indeed! I'm enjoying Amsterdam so much.", "correct": true, "feedback": "여행 감상을 공유했어요." },
+          { "text": "Yeah.", "correct": false, "feedback": "조금 더 대화를 이어가세요." }
+        ]
+      }
+    },
+    {
+      "day": 5,
+      "location": "하이네켄 익스피리언스",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "맥주 박물관 입장",
+      "dialogues": [
+        { "speaker": "staff", "english": "Welcome to the Heineken Experience! Would you like a guided tour or self-guided?", "korean": "하이네켄 익스피리언스에 오신 것을 환영합니다! 가이드 투어와 셀프 투어 중 어느 것을 원하세요?" }
+      ],
+      "playerResponse": {
+        "prompt": "투어 옵션을 선택하세요",
+        "choices": [
+          { "text": "What's the difference in price?", "correct": true, "feedback": "가격 차이를 물었어요." },
+          { "text": "Self-guided, please.", "correct": true, "feedback": "셀프 투어를 선택했어요." },
+          { "text": "How long does the guided tour take?", "correct": true, "feedback": "소요 시간을 물었어요." },
+          { "text": "Just beer.", "correct": false, "feedback": "투어에 대해 답하세요." }
+        ]
+      }
+    },
+    {
+      "day": 6,
+      "location": "암스테르담 약국",
+      "city": "암스테르담",
+      "category": "emergency",
+      "situation": "약 구매",
+      "dialogues": [
+        { "speaker": "pharmacist", "english": "Hello, how can I help you?", "korean": "안녕하세요, 어떻게 도와드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "필요한 약을 요청하세요",
+        "choices": [
+          { "text": "I have a headache. Do you have any painkillers?", "correct": true, "feedback": "증상과 필요한 약을 말했어요." },
+          { "text": "I need something for an upset stomach.", "correct": true, "feedback": "위장약을 요청했어요." },
+          { "text": "Can you recommend something for a cold?", "correct": true, "feedback": "감기약 추천을 요청했어요." },
+          { "text": "Medicine.", "correct": false, "feedback": "어떤 약이 필요한지 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 6,
+      "location": "암스테르담 약국",
+      "city": "암스테르담",
+      "category": "emergency",
+      "situation": "복용법 확인",
+      "dialogues": [
+        { "speaker": "pharmacist", "english": "Take two tablets every 6 hours with food.", "korean": "6시간마다 음식과 함께 2알씩 복용하세요." }
+      ],
+      "playerResponse": {
+        "prompt": "복용법에 대해 확인하세요",
+        "choices": [
+          { "text": "Can I take it on an empty stomach?", "correct": true, "feedback": "공복에 먹어도 되는지 물었어요." },
+          { "text": "Are there any side effects?", "correct": true, "feedback": "부작용을 확인해요." },
+          { "text": "I understand. Thank you.", "correct": true, "feedback": "이해했다고 했어요." },
+          { "text": "Whatever.", "correct": false, "feedback": "약 복용법은 중요해요. 잘 들으세요." }
+        ]
+      }
+    },
+    {
+      "day": 6,
+      "location": "레이크스 미술관",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "미술관 입장",
+      "dialogues": [
+        { "speaker": "staff", "english": "Welcome to the Rijksmuseum. Would you like a map of the museum?", "korean": "레이크스 미술관에 오신 것을 환영합니다. 미술관 지도를 드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "지도에 대해 응답하세요",
+        "choices": [
+          { "text": "Yes, please. Where is the Night Watch?", "correct": true, "feedback": "지도를 받으며 유명 작품 위치를 물었어요." },
+          { "text": "Is there a Korean guide available?", "correct": true, "feedback": "한국어 가이드를 물었어요." },
+          { "text": "Thank you. How big is the museum?", "correct": true, "feedback": "규모를 물었어요." },
+          { "text": "I'll figure it out.", "correct": false, "feedback": "지도가 도움이 될 수 있어요." }
+        ]
+      }
+    },
+    {
+      "day": 7,
+      "location": "담 광장",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "거리 공연 관람",
+      "dialogues": [
+        { "speaker": "performer", "english": "Thank you for watching! Tips are appreciated!", "korean": "시청해 주셔서 감사합니다! 팁을 환영해요!" }
+      ],
+      "playerResponse": {
+        "prompt": "공연자에게 응답하세요",
+        "choices": [
+          { "text": "That was amazing! Here's a tip for you.", "correct": true, "feedback": "칭찬하며 팁을 줬어요." },
+          { "text": "Great performance! Do you perform here every day?", "correct": true, "feedback": "질문으로 대화를 이어갔어요." },
+          { "text": "Can I take a photo with you?", "correct": true, "feedback": "사진을 요청했어요." },
+          { "text": "Not bad.", "correct": false, "feedback": "더 긍정적으로 반응하세요." }
+        ]
+      }
+    },
+    {
+      "day": 7,
+      "location": "꽃시장",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "튤립 구근 구매",
+      "dialogues": [
+        { "speaker": "vendor", "english": "These tulip bulbs are perfect for planting. Would you like to buy some?", "korean": "이 튤립 구근은 심기에 완벽해요. 구매하시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "튤립 구근에 대해 물어보세요",
+        "choices": [
+          { "text": "Can I take these back to Korea?", "correct": true, "feedback": "반입 가능 여부를 물었어요." },
+          { "text": "How many are in one pack?", "correct": true, "feedback": "수량을 확인해요." },
+          { "text": "When should I plant them?", "correct": true, "feedback": "심는 시기를 물었어요." },
+          { "text": "Flowers are boring.", "correct": false, "feedback": "부정적인 코멘트는 피하세요." }
+        ]
+      }
+    },
+    {
+      "day": 7,
+      "location": "마헤레 다리",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "사진 부탁",
+      "dialogues": [
+        { "speaker": "you", "english": "(You want a photo in front of the bridge)", "korean": "(다리 앞에서 사진을 찍고 싶음)" }
+      ],
+      "playerResponse": {
+        "prompt": "지나가는 사람에게 사진을 부탁하세요",
+        "choices": [
+          { "text": "Excuse me, could you take a photo of me?", "correct": true, "feedback": "정중하게 부탁했어요." },
+          { "text": "Would you mind taking my picture?", "correct": true, "feedback": "공손한 표현이에요." },
+          { "text": "Just press this button, please.", "correct": true, "feedback": "설명도 함께 했어요." },
+          { "text": "Photo!", "correct": false, "feedback": "완전한 문장으로 부탁하세요." }
+        ]
+      }
+    },
+    {
+      "day": 8,
+      "location": "홍등가 인근",
+      "city": "암스테르담",
+      "category": "directions",
+      "situation": "길 잃음",
+      "dialogues": [
+        { "speaker": "you", "english": "(You're lost and looking for your hotel)", "korean": "(길을 잃고 호텔을 찾고 있음)" }
+      ],
+      "playerResponse": {
+        "prompt": "지나가는 사람에게 도움을 요청하세요",
+        "choices": [
+          { "text": "Excuse me, I'm lost. Can you help me find my hotel?", "correct": true, "feedback": "도움을 요청했어요." },
+          { "text": "Do you know where Dam Square is?", "correct": true, "feedback": "랜드마크로 방향을 확인해요." },
+          { "text": "Which way to the Central Station?", "correct": true, "feedback": "중앙역 방향을 물었어요." },
+          { "text": "I'm lost!", "correct": false, "feedback": "도움을 요청하는 질문을 하세요." }
+        ]
+      }
+    },
+    {
+      "day": 8,
+      "location": "인도네시안 레스토랑",
+      "city": "암스테르담",
+      "category": "restaurant",
+      "situation": "라이스테이플 주문",
+      "dialogues": [
+        { "speaker": "waiter", "english": "Would you like to try our rijsttafel? It's a Dutch-Indonesian specialty with many small dishes.", "korean": "라이스테이플을 드셔보시겠어요? 여러 작은 요리가 나오는 네덜란드-인도네시아 특별 요리입니다." }
+      ],
+      "playerResponse": {
+        "prompt": "라이스테이플에 대해 응답하세요",
+        "choices": [
+          { "text": "That sounds interesting! How many dishes are included?", "correct": true, "feedback": "관심을 보이며 질문했어요." },
+          { "text": "Is it for one person or sharing?", "correct": true, "feedback": "인원수를 확인해요." },
+          { "text": "Yes, I'd love to try it!", "correct": true, "feedback": "주문하겠다고 했어요." },
+          { "text": "Too complicated.", "correct": false, "feedback": "새로운 음식에 열린 마음을 가지세요." }
+        ]
+      }
+    },
+    {
+      "day": 9,
+      "location": "NH 호텔 로비",
+      "city": "암스테르담",
+      "category": "hotel",
+      "situation": "체크아웃 연장 요청",
+      "dialogues": [
+        { "speaker": "receptionist", "english": "Good morning! How can I help you?", "korean": "좋은 아침입니다! 어떻게 도와드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "레이트 체크아웃을 요청하세요",
+        "choices": [
+          { "text": "Is it possible to have a late check-out? My flight is in the evening.", "correct": true, "feedback": "이유와 함께 요청했어요." },
+          { "text": "Can I extend my check-out to 2 PM?", "correct": true, "feedback": "구체적인 시간을 말했어요." },
+          { "text": "What time is check-out?", "correct": true, "feedback": "체크아웃 시간을 먼저 확인해요." },
+          { "text": "I'm leaving late.", "correct": false, "feedback": "요청 형식으로 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 9,
+      "location": "마지막 쇼핑",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "면세 서류 요청",
+      "dialogues": [
+        { "speaker": "staff", "english": "Would you like a tax refund form?", "korean": "세금 환급 서류를 원하시나요?" }
+      ],
+      "playerResponse": {
+        "prompt": "면세에 대해 응답하세요",
+        "choices": [
+          { "text": "Yes, please. How does the refund process work?", "correct": true, "feedback": "과정을 물었어요." },
+          { "text": "Where can I get the refund at the airport?", "correct": true, "feedback": "환급 장소를 물었어요." },
+          { "text": "What's the minimum purchase for tax free?", "correct": true, "feedback": "최소 금액을 확인해요." },
+          { "text": "I don't know what that is.", "correct": false, "feedback": "세금 환급에 대해 물어보세요." }
+        ]
+      }
+    },
+    {
+      "day": 10,
+      "location": "NH 호텔 로비",
+      "city": "암스테르담",
+      "category": "hotel",
+      "situation": "체크아웃",
+      "dialogues": [
+        { "speaker": "receptionist", "english": "Checking out? How was your stay?", "korean": "체크아웃하세요? 머무르시는 동안 어떠셨어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "숙박 소감을 말하세요",
+        "choices": [
+          { "text": "It was wonderful! I really enjoyed my stay.", "correct": true, "feedback": "긍정적인 피드백을 줬어요." },
+          { "text": "Great, thank you. Can I get a receipt?", "correct": true, "feedback": "영수증을 요청했어요." },
+          { "text": "Very comfortable. I'll definitely come back.", "correct": true, "feedback": "재방문 의사를 밝혔어요." },
+          { "text": "It was okay.", "correct": false, "feedback": "더 구체적인 피드백이 좋아요." }
+        ]
+      }
+    },
+    {
+      "day": 10,
+      "location": "NH 호텔 로비",
+      "city": "암스테르담",
+      "category": "hotel",
+      "situation": "짐 보관 요청",
+      "dialogues": [
+        { "speaker": "receptionist", "english": "Would you like to store your luggage? You can pick it up later before going to the airport.", "korean": "짐을 보관하시겠어요? 나중에 공항 가시기 전에 찾아가실 수 있어요." }
+      ],
+      "playerResponse": {
+        "prompt": "짐 보관에 대해 응답하세요",
+        "choices": [
+          { "text": "Yes, that would be great. I'll be back around 3 PM.", "correct": true, "feedback": "시간을 알려줬어요." },
+          { "text": "Is there a fee for luggage storage?", "correct": true, "feedback": "요금을 확인해요." },
+          { "text": "Perfect! I want to explore the city a bit more.", "correct": true, "feedback": "계획을 공유했어요." },
+          { "text": "No, I'll take everything.", "correct": true, "feedback": "거절해도 괜찮아요." }
+        ]
+      }
+    },
+    {
+      "day": 10,
+      "location": "스키폴 공항 체크인 카운터",
+      "city": "암스테르담",
+      "category": "airport_return",
+      "situation": "귀국편 체크인",
+      "dialogues": [
+        { "speaker": "staff", "english": "Good afternoon! Flying to Seoul today?", "korean": "안녕하세요! 오늘 서울로 가시나요?" }
+      ],
+      "playerResponse": {
+        "prompt": "체크인을 시작하세요",
+        "choices": [
+          { "text": "Yes, here's my passport and booking confirmation.", "correct": true, "feedback": "서류를 바로 제시했어요." },
+          { "text": "That's right. Can I request an aisle seat?", "correct": true, "feedback": "좌석 선호도를 말했어요." },
+          { "text": "Yes, I have one checked bag.", "correct": true, "feedback": "수하물 정보를 알려줬어요." },
+          { "text": "Seoul.", "correct": false, "feedback": "완전한 문장으로 응답하세요." }
+        ]
+      }
+    },
+    {
+      "day": 10,
+      "location": "스키폴 공항 면세점",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "마지막 쇼핑",
+      "dialogues": [
+        { "speaker": "staff", "english": "Can I help you find anything?", "korean": "찾으시는 것 도와드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "원하는 것을 말하세요",
+        "choices": [
+          { "text": "I'm looking for Dutch chocolate as a gift.", "correct": true, "feedback": "선물용 초콜릿을 찾아요." },
+          { "text": "Do you have any local souvenirs?", "correct": true, "feedback": "기념품을 물었어요." },
+          { "text": "Just browsing, thank you.", "correct": true, "feedback": "둘러보겠다고 했어요." },
+          { "text": "Give me something good.", "correct": false, "feedback": "더 구체적으로 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 10,
+      "location": "스키폴 공항 탑승구",
+      "city": "암스테르담",
+      "category": "airport_return",
+      "situation": "비행기 지연",
+      "dialogues": [
+        { "speaker": "announcement", "english": "Attention passengers. Flight KL855 to Seoul has been delayed by 2 hours due to weather conditions.", "korean": "승객 여러분께 안내드립니다. 서울행 KL855편이 기상 악화로 2시간 지연됩니다." }
+      ],
+      "playerResponse": {
+        "prompt": "직원에게 상황을 확인하세요",
+        "choices": [
+          { "text": "When is the new boarding time?", "correct": true, "feedback": "새 탑승 시간을 물었어요." },
+          { "text": "Will we receive meal vouchers?", "correct": true, "feedback": "보상을 물었어요." },
+          { "text": "Is there a lounge I can use while waiting?", "correct": true, "feedback": "라운지를 물었어요." },
+          { "text": "This is your fault!", "correct": false, "feedback": "날씨는 항공사 잘못이 아니에요." }
+        ]
+      }
+    },
+    {
+      "day": 10,
+      "location": "KLM 비행기 기내",
+      "city": "비행 중",
+      "category": "inflight",
+      "situation": "착륙 전 세관신고서",
+      "dialogues": [
+        { "speaker": "flight_attendant", "english": "We'll be landing in Seoul in about 1 hour. Would you like a customs declaration form?", "korean": "약 1시간 후 서울에 착륙합니다. 세관신고서를 드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "세관신고서에 대해 응답하세요",
+        "choices": [
+          { "text": "Yes, please. I have some items to declare.", "correct": true, "feedback": "신고할 물품이 있다고 했어요." },
+          { "text": "Do I need to fill one out if I only have personal items?", "correct": true, "feedback": "필요 여부를 확인해요." },
+          { "text": "Thank you. I'll fill it out now.", "correct": true, "feedback": "바로 작성하겠다고 했어요." },
+          { "text": "I don't want to.", "correct": false, "feedback": "세관신고는 필요할 수 있어요." }
+        ]
+      }
+    },
+    {
+      "day": 10,
+      "location": "인천공항 입국장",
+      "city": "서울",
+      "category": "arrival_home",
+      "situation": "세관 통과",
+      "dialogues": [
+        { "speaker": "customs", "english": "Welcome back. Do you have anything to declare?", "korean": "귀국을 환영합니다. 신고할 물품이 있으신가요?" }
+      ],
+      "playerResponse": {
+        "prompt": "세관 신고에 응답하세요",
+        "choices": [
+          { "text": "Yes, I have some cheese and chocolate over the limit.", "correct": true, "feedback": "솔직하게 신고했어요." },
+          { "text": "No, only personal items and some souvenirs.", "correct": true, "feedback": "신고할 것이 없다고 했어요." },
+          { "text": "Here's my declaration form.", "correct": true, "feedback": "서류를 제출했어요." },
+          { "text": "Nothing.", "correct": false, "feedback": "더 완전한 문장으로 응답하세요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "암스테르담 트램",
+      "city": "암스테르담",
+      "category": "directions",
+      "situation": "트램 승차",
+      "dialogues": [
+        { "speaker": "driver", "english": "Please tap your card on the reader.", "korean": "카드를 리더기에 태그해 주세요." }
+      ],
+      "playerResponse": {
+        "prompt": "트램 이용에 대해 응답하세요",
+        "choices": [
+          { "text": "Where can I buy a ticket?", "correct": true, "feedback": "티켓 구매 장소를 물었어요." },
+          { "text": "Can I pay with cash?", "correct": true, "feedback": "현금 결제 가능 여부를 물었어요." },
+          { "text": "I have a day pass. Is this okay?", "correct": true, "feedback": "일일권 사용 가능한지 확인해요." },
+          { "text": "I don't have a card.", "correct": false, "feedback": "해결책을 물어보세요." }
+        ]
+      }
+    },
+    {
+      "day": 2,
+      "location": "암스테르담 트램",
+      "city": "암스테르담",
+      "category": "directions",
+      "situation": "하차 확인",
+      "dialogues": [
+        { "speaker": "you", "english": "(You want to make sure you get off at the right stop)", "korean": "(올바른 정류장에서 내리고 싶음)" }
+      ],
+      "playerResponse": {
+        "prompt": "옆 승객에게 물어보세요",
+        "choices": [
+          { "text": "Excuse me, does this tram stop at the Van Gogh Museum?", "correct": true, "feedback": "정류장을 확인했어요." },
+          { "text": "Could you let me know when we reach the museum stop?", "correct": true, "feedback": "알려달라고 요청했어요." },
+          { "text": "How many more stops until the museum?", "correct": true, "feedback": "남은 정류장 수를 물었어요." },
+          { "text": "Museum?", "correct": false, "feedback": "완전한 질문으로 물어보세요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "암스테르담 은행",
+      "city": "암스테르담",
+      "category": "emergency",
+      "situation": "ATM 사용",
+      "dialogues": [
+        { "speaker": "screen", "english": "Please insert your card and enter your PIN.", "korean": "카드를 넣고 비밀번호를 입력하세요." }
+      ],
+      "playerResponse": {
+        "prompt": "근처 사람에게 도움을 요청하세요",
+        "choices": [
+          { "text": "Excuse me, does this ATM accept foreign cards?", "correct": true, "feedback": "외국 카드 사용 가능 여부를 물었어요." },
+          { "text": "Is there a fee for international withdrawals?", "correct": true, "feedback": "수수료를 확인해요." },
+          { "text": "Which option is for English?", "correct": true, "feedback": "언어 설정을 물었어요." },
+          { "text": "This machine is broken.", "correct": false, "feedback": "먼저 도움을 요청하세요." }
+        ]
+      }
+    },
+    {
+      "day": 4,
+      "location": "암스테르담 우체국",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "엽서 보내기",
+      "dialogues": [
+        { "speaker": "staff", "english": "How can I help you today?", "korean": "무엇을 도와드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "엽서 발송을 요청하세요",
+        "choices": [
+          { "text": "I'd like to send these postcards to Korea.", "correct": true, "feedback": "목적지를 말하며 요청했어요." },
+          { "text": "How much is a stamp for Asia?", "correct": true, "feedback": "우표 가격을 물었어요." },
+          { "text": "How long will it take to arrive?", "correct": true, "feedback": "배송 기간을 물었어요." },
+          { "text": "Stamps.", "correct": false, "feedback": "완전한 문장으로 요청하세요." }
+        ]
+      }
+    },
+    {
+      "day": 5,
+      "location": "암스테르담 영화관",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "영화 티켓 구매",
+      "dialogues": [
+        { "speaker": "staff", "english": "What movie would you like to see?", "korean": "어떤 영화를 보시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "영화에 대해 물어보세요",
+        "choices": [
+          { "text": "What's showing right now?", "correct": true, "feedback": "상영 중인 영화를 물었어요." },
+          { "text": "Do you have any movies in English?", "correct": true, "feedback": "영어 영화가 있는지 확인해요." },
+          { "text": "When is the next showing?", "correct": true, "feedback": "다음 상영 시간을 물었어요." },
+          { "text": "Something good.", "correct": false, "feedback": "더 구체적으로 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 5,
+      "location": "암스테르담 극장",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "공연 티켓 구매",
+      "dialogues": [
+        { "speaker": "box_office", "english": "We have tickets available for tonight's show at 8 PM.", "korean": "오늘 밤 8시 공연 티켓이 있습니다." }
+      ],
+      "playerResponse": {
+        "prompt": "공연에 대해 물어보세요",
+        "choices": [
+          { "text": "How much are the tickets?", "correct": true, "feedback": "가격을 물었어요." },
+          { "text": "Are there any discounts for students?", "correct": true, "feedback": "학생 할인을 확인해요." },
+          { "text": "Can I choose my seat?", "correct": true, "feedback": "좌석 선택 가능 여부를 물었어요." },
+          { "text": "Give me one.", "correct": false, "feedback": "더 정중하게 요청하세요." }
+        ]
+      }
+    },
+    {
+      "day": 6,
+      "location": "네모 과학관",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "과학관 방문",
+      "dialogues": [
+        { "speaker": "staff", "english": "Welcome to NEMO Science Museum! The rooftop has a great view of the city.", "korean": "네모 과학관에 오신 것을 환영합니다! 옥상에서 도시 전망이 좋아요." }
+      ],
+      "playerResponse": {
+        "prompt": "과학관에 대해 물어보세요",
+        "choices": [
+          { "text": "Is the rooftop free to access?", "correct": true, "feedback": "옥상 무료 입장 여부를 확인해요." },
+          { "text": "How long does it take to see everything?", "correct": true, "feedback": "관람 소요 시간을 물었어요." },
+          { "text": "Are there interactive exhibits?", "correct": true, "feedback": "체험 전시가 있는지 물었어요." },
+          { "text": "Boring.", "correct": false, "feedback": "부정적인 코멘트는 피하세요." }
+        ]
+      }
+    },
+    {
+      "day": 6,
+      "location": "암스테르담 수영장",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "수영장 이용",
+      "dialogues": [
+        { "speaker": "staff", "english": "Do you have your own swimsuit and towel?", "korean": "수영복과 수건을 가져오셨나요?" }
+      ],
+      "playerResponse": {
+        "prompt": "수영장 이용에 대해 응답하세요",
+        "choices": [
+          { "text": "Yes, I have them. How much is the entrance fee?", "correct": true, "feedback": "입장료를 물었어요." },
+          { "text": "Can I rent a towel here?", "correct": true, "feedback": "수건 대여가 되는지 물었어요." },
+          { "text": "Is a swimming cap required?", "correct": true, "feedback": "수모 착용 필수인지 확인해요." },
+          { "text": "Just let me in.", "correct": false, "feedback": "더 정중하게 요청하세요." }
+        ]
+      }
+    },
+    {
+      "day": 7,
+      "location": "암스테르담 사우나",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "스파 이용",
+      "dialogues": [
+        { "speaker": "receptionist", "english": "Would you like the full spa package or just the sauna?", "korean": "전체 스파 패키지와 사우나만 중 어떤 것을 원하세요?" }
+      ],
+      "playerResponse": {
+        "prompt": "스파 옵션에 대해 응답하세요",
+        "choices": [
+          { "text": "What's included in the full package?", "correct": true, "feedback": "패키지 내용을 물었어요." },
+          { "text": "Just the sauna, please.", "correct": true, "feedback": "사우나만 선택했어요." },
+          { "text": "How long can I stay?", "correct": true, "feedback": "이용 시간을 확인해요." },
+          { "text": "I want everything.", "correct": false, "feedback": "더 구체적으로 선택하세요." }
+        ]
+      }
+    },
+    {
+      "day": 7,
+      "location": "암스테르담 재래시장",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "청어 샌드위치 구매",
+      "dialogues": [
+        { "speaker": "vendor", "english": "Would you like to try our famous Dutch herring?", "korean": "유명한 네덜란드 청어를 드셔보시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "청어에 대해 응답하세요",
+        "choices": [
+          { "text": "Yes! How do I eat it?", "correct": true, "feedback": "먹는 방법을 물었어요." },
+          { "text": "Is it raw or cooked?", "correct": true, "feedback": "조리 방법을 확인해요." },
+          { "text": "Can I have it in a sandwich?", "correct": true, "feedback": "샌드위치로 요청했어요." },
+          { "text": "That's disgusting.", "correct": false, "feedback": "새로운 음식에 열린 마음을 가지세요." }
+        ]
+      }
+    },
+    {
+      "day": 8,
+      "location": "암스테르담 클럽",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "나이트라이프",
+      "dialogues": [
+        { "speaker": "doorman", "english": "ID please. There's a 10 euro cover charge tonight.", "korean": "신분증 주세요. 오늘 밤 입장료는 10유로입니다." }
+      ],
+      "playerResponse": {
+        "prompt": "입장에 대해 응답하세요",
+        "choices": [
+          { "text": "Here's my passport. Does the cover include a drink?", "correct": true, "feedback": "음료 포함 여부를 물었어요." },
+          { "text": "What kind of music do you play?", "correct": true, "feedback": "음악 장르를 물었어요." },
+          { "text": "Is there a dress code?", "correct": true, "feedback": "드레스 코드를 확인해요." },
+          { "text": "10 euros? That's robbery!", "correct": false, "feedback": "더 정중하게 반응하세요." }
+        ]
+      }
+    },
+    {
+      "day": 8,
+      "location": "암스테르담 바",
+      "city": "암스테르담",
+      "category": "restaurant",
+      "situation": "칵테일 주문",
+      "dialogues": [
+        { "speaker": "bartender", "english": "What can I get you?", "korean": "뭘 드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "음료를 주문하세요",
+        "choices": [
+          { "text": "What local beers do you have on tap?", "correct": true, "feedback": "로컬 맥주를 물었어요." },
+          { "text": "Can you make a mojito?", "correct": true, "feedback": "칵테일을 주문했어요." },
+          { "text": "What do you recommend?", "correct": true, "feedback": "추천을 요청했어요." },
+          { "text": "Alcohol.", "correct": false, "feedback": "더 구체적으로 주문하세요." }
+        ]
+      }
+    },
+    {
+      "day": 9,
+      "location": "암스테르담 서점",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "책 구매",
+      "dialogues": [
+        { "speaker": "staff", "english": "Are you looking for something specific?", "korean": "특별히 찾으시는 것이 있으신가요?" }
+      ],
+      "playerResponse": {
+        "prompt": "원하는 책에 대해 말하세요",
+        "choices": [
+          { "text": "Do you have any books about Dutch history in English?", "correct": true, "feedback": "영어로 된 네덜란드 역사책을 찾았어요." },
+          { "text": "Where is the travel section?", "correct": true, "feedback": "여행 서적 코너를 물었어요." },
+          { "text": "I'm just browsing, thank you.", "correct": true, "feedback": "둘러보겠다고 했어요." },
+          { "text": "Books.", "correct": false, "feedback": "더 구체적으로 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 9,
+      "location": "암스테르담 헤어살롱",
+      "city": "암스테르담",
+      "category": "emergency",
+      "situation": "미용실",
+      "dialogues": [
+        { "speaker": "stylist", "english": "What would you like today?", "korean": "오늘 뭘 원하세요?" }
+      ],
+      "playerResponse": {
+        "prompt": "원하는 스타일을 말하세요",
+        "choices": [
+          { "text": "Just a trim, please. About 2 centimeters.", "correct": true, "feedback": "구체적인 길이를 말했어요." },
+          { "text": "Can you show me some style options?", "correct": true, "feedback": "스타일 옵션을 요청했어요." },
+          { "text": "I want it shorter on the sides.", "correct": true, "feedback": "원하는 스타일을 설명했어요." },
+          { "text": "Make it nice.", "correct": false, "feedback": "더 구체적으로 설명하세요." }
+        ]
+      }
+    },
+    {
+      "day": 3,
+      "location": "암스테르담 거리",
+      "city": "암스테르담",
+      "category": "emergency",
+      "situation": "지갑 분실",
+      "dialogues": [
+        { "speaker": "you", "english": "(You realize your wallet is missing)", "korean": "(지갑이 없어진 것을 알아챔)" }
+      ],
+      "playerResponse": {
+        "prompt": "경찰에게 상황을 설명하세요",
+        "choices": [
+          { "text": "Excuse me, I think I lost my wallet. Where can I report it?", "correct": true, "feedback": "신고 장소를 물었어요." },
+          { "text": "Someone stole my wallet! Please help me.", "correct": true, "feedback": "도움을 요청했어요." },
+          { "text": "Is there a lost and found nearby?", "correct": true, "feedback": "분실물 센터를 물었어요." },
+          { "text": "My wallet!", "correct": false, "feedback": "상황을 설명하고 도움을 요청하세요." }
+        ]
+      }
+    },
+    {
+      "day": 4,
+      "location": "암스테르담 병원",
+      "city": "암스테르담",
+      "category": "emergency",
+      "situation": "의료 도움",
+      "dialogues": [
+        { "speaker": "nurse", "english": "What seems to be the problem?", "korean": "어디가 불편하신가요?" }
+      ],
+      "playerResponse": {
+        "prompt": "증상을 설명하세요",
+        "choices": [
+          { "text": "I have a bad stomachache since this morning.", "correct": true, "feedback": "증상과 시작 시간을 말했어요." },
+          { "text": "I twisted my ankle. It's very swollen.", "correct": true, "feedback": "부상 상태를 설명했어요." },
+          { "text": "I need to see a doctor. I have travel insurance.", "correct": true, "feedback": "보험이 있다고 알렸어요." },
+          { "text": "I feel bad.", "correct": false, "feedback": "더 구체적으로 증상을 설명하세요." }
+        ]
+      }
+    },
+    {
+      "day": 5,
+      "location": "호텔 객실",
+      "city": "암스테르담",
+      "category": "hotel",
+      "situation": "룸서비스 주문",
+      "dialogues": [
+        { "speaker": "room_service", "english": "Room service. What would you like to order?", "korean": "룸서비스입니다. 무엇을 주문하시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "음식을 주문하세요",
+        "choices": [
+          { "text": "I'd like a club sandwich and a bottle of water.", "correct": true, "feedback": "구체적으로 주문했어요." },
+          { "text": "What's on the late night menu?", "correct": true, "feedback": "메뉴를 확인해요." },
+          { "text": "How long will the delivery take?", "correct": true, "feedback": "배달 시간을 물었어요." },
+          { "text": "Food.", "correct": false, "feedback": "더 구체적으로 주문하세요." }
+        ]
+      }
+    },
+    {
+      "day": 6,
+      "location": "호텔 세탁실",
+      "city": "암스테르담",
+      "category": "hotel",
+      "situation": "세탁 서비스",
+      "dialogues": [
+        { "speaker": "staff", "english": "Would you like regular or express laundry service?", "korean": "일반 세탁과 빠른 세탁 중 어느 것을 원하세요?" }
+      ],
+      "playerResponse": {
+        "prompt": "세탁 서비스에 대해 응답하세요",
+        "choices": [
+          { "text": "What's the price difference?", "correct": true, "feedback": "가격 차이를 물었어요." },
+          { "text": "When will I get my clothes back with regular service?", "correct": true, "feedback": "반환 시간을 확인해요." },
+          { "text": "Express, please. I need them by tomorrow morning.", "correct": true, "feedback": "급한 상황을 설명했어요." },
+          { "text": "Just wash them.", "correct": false, "feedback": "옵션을 선택하세요." }
+        ]
+      }
+    },
+    {
+      "day": 8,
+      "location": "암스테르담 거리",
+      "city": "암스테르담",
+      "category": "directions",
+      "situation": "우버 호출",
+      "dialogues": [
+        { "speaker": "driver", "english": "Hi! Are you the one who ordered the Uber?", "korean": "안녕하세요! 우버 호출하신 분이세요?" }
+      ],
+      "playerResponse": {
+        "prompt": "기사에게 확인하세요",
+        "choices": [
+          { "text": "Yes, that's me. Are you John?", "correct": true, "feedback": "기사 이름을 확인했어요." },
+          { "text": "Can you confirm the destination is Central Station?", "correct": true, "feedback": "목적지를 확인했어요." },
+          { "text": "Yes! Can we make a quick stop on the way?", "correct": true, "feedback": "경유지를 요청했어요." },
+          { "text": "Yeah.", "correct": false, "feedback": "본인 확인을 해주세요." }
+        ]
+      }
+    },
+    {
+      "day": 9,
+      "location": "암스테르담 거리",
+      "city": "암스테르담",
+      "category": "directions",
+      "situation": "택시 이용",
+      "dialogues": [
+        { "speaker": "taxi_driver", "english": "Where to?", "korean": "어디로 가시죠?" }
+      ],
+      "playerResponse": {
+        "prompt": "목적지를 말하세요",
+        "choices": [
+          { "text": "To Schiphol Airport, please.", "correct": true, "feedback": "목적지를 명확히 말했어요." },
+          { "text": "How much will it cost to the airport?", "correct": true, "feedback": "요금을 먼저 확인해요." },
+          { "text": "Can we take the fastest route? I have a flight to catch.", "correct": true, "feedback": "빠른 경로를 요청했어요." },
+          { "text": "Airport.", "correct": false, "feedback": "'please'를 붙여 정중하게 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 4,
+      "location": "암스테르담 관광 안내소",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "관광 정보 요청",
+      "dialogues": [
+        { "speaker": "staff", "english": "Welcome! How can I help you explore Amsterdam?", "korean": "환영합니다! 암스테르담 관광을 어떻게 도와드릴까요?" }
+      ],
+      "playerResponse": {
+        "prompt": "관광 정보를 요청하세요",
+        "choices": [
+          { "text": "Do you have a free city map?", "correct": true, "feedback": "무료 지도를 요청했어요." },
+          { "text": "What are the must-see attractions?", "correct": true, "feedback": "필수 관광지를 물었어요." },
+          { "text": "Is the I amsterdam City Card worth it?", "correct": true, "feedback": "시티 카드 가치를 확인해요." },
+          { "text": "Tell me everything.", "correct": false, "feedback": "더 구체적으로 질문하세요." }
+        ]
+      }
+    },
+    {
+      "day": 5,
+      "location": "암스테르담 사진관",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "사진 인화",
+      "dialogues": [
+        { "speaker": "staff", "english": "Would you like to print photos from your phone?", "korean": "휴대폰에서 사진을 인화하시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "사진 인화에 대해 물어보세요",
+        "choices": [
+          { "text": "Yes, how can I transfer them?", "correct": true, "feedback": "전송 방법을 물었어요." },
+          { "text": "What sizes are available?", "correct": true, "feedback": "사이즈를 확인해요." },
+          { "text": "How long does it take?", "correct": true, "feedback": "소요 시간을 물었어요." },
+          { "text": "Print.", "correct": false, "feedback": "완전한 문장으로 말하세요." }
+        ]
+      }
+    },
+    {
+      "day": 6,
+      "location": "암스테르담 공원",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "피크닉",
+      "dialogues": [
+        { "speaker": "local", "english": "Excuse me, is this spot taken?", "korean": "실례합니다, 이 자리 사용 중인가요?" }
+      ],
+      "playerResponse": {
+        "prompt": "현지인에게 응답하세요",
+        "choices": [
+          { "text": "No, go ahead. There's plenty of room.", "correct": true, "feedback": "친절하게 자리를 양보했어요." },
+          { "text": "Actually, my friends are coming. Maybe the spot over there?", "correct": true, "feedback": "정중하게 거절하며 대안을 제시했어요." },
+          { "text": "Sure, join us! We have extra snacks.", "correct": true, "feedback": "함께하자고 초대했어요." },
+          { "text": "Go away.", "correct": false, "feedback": "너무 무례해요." }
+        ]
+      }
+    },
+    {
+      "day": 7,
+      "location": "암스테르담 보트 대여",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "페달 보트 대여",
+      "dialogues": [
+        { "speaker": "staff", "english": "Would you like to rent a pedal boat? It's 15 euros per hour.", "korean": "페달 보트를 빌리시겠어요? 시간당 15유로입니다." }
+      ],
+      "playerResponse": {
+        "prompt": "보트 대여에 대해 응답하세요",
+        "choices": [
+          { "text": "How many people can fit in one boat?", "correct": true, "feedback": "수용 인원을 물었어요." },
+          { "text": "Is there a map of the canals?", "correct": true, "feedback": "운하 지도를 요청했어요." },
+          { "text": "Yes, for two hours please.", "correct": true, "feedback": "시간을 명확히 말했어요." },
+          { "text": "Too expensive.", "correct": false, "feedback": "정중하게 거절하세요." }
+        ]
+      }
+    },
+    {
+      "day": 8,
+      "location": "암스테르담 음악 페스티벌",
+      "city": "암스테르담",
+      "category": "tourist",
+      "situation": "야외 공연",
+      "dialogues": [
+        { "speaker": "volunteer", "english": "Welcome to the festival! Can I see your ticket?", "korean": "페스티벌에 오신 것을 환영합니다! 티켓을 보여주시겠어요?" }
+      ],
+      "playerResponse": {
+        "prompt": "페스티벌 입장에 대해 응답하세요",
+        "choices": [
+          { "text": "Here's my e-ticket. Where's the main stage?", "correct": true, "feedback": "티켓을 보여주며 메인 스테이지 위치를 물었어요." },
+          { "text": "Is there a schedule of performances?", "correct": true, "feedback": "공연 일정을 물었어요." },
+          { "text": "Where can I get food and drinks?", "correct": true, "feedback": "음식 판매대를 물었어요." },
+          { "text": "I lost my ticket.", "correct": false, "feedback": "티켓이 없으면 입장이 어려워요." }
+        ]
+      }
+    },
+    {
+      "day": 9,
+      "location": "암스테르담 호프스테이지 거리",
+      "city": "암스테르담",
+      "category": "shopping",
+      "situation": "기념품 가격 흥정",
+      "dialogues": [
+        { "speaker": "vendor", "english": "This traditional Dutch souvenir is 25 euros.", "korean": "이 네덜란드 전통 기념품은 25유로입니다." }
+      ],
+      "playerResponse": {
+        "prompt": "가격에 대해 협상하세요",
+        "choices": [
+          { "text": "If I buy two, can you give me a discount?", "correct": true, "feedback": "수량 할인을 요청했어요." },
+          { "text": "That's a bit out of my budget. How about 18 euros?", "correct": true, "feedback": "정중하게 흥정했어요." },
+          { "text": "I'll think about it. Thank you.", "correct": true, "feedback": "생각해보겠다고 했어요." },
+          { "text": "That's a rip-off!", "correct": false, "feedback": "더 정중하게 흥정하세요." }
+        ]
+      }
+    }
+  ]
+}
