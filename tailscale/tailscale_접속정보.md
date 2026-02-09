@@ -14,7 +14,7 @@
 | **samsung-sm-a516n** | 100.117.189.72 | Android | - | - | 온라인 |
 | **office-dell** | 100.89.156.126 | Windows | USER | hongks@6063 | 온라인 |
 | **macbookpro** | 100.124.44.55 | macOS | maeg | - | 온라인 |
-| **myhome-lenovo** | 100.82.193.50 | Windows | - | - | 가변 |
+| **myhome-lenovo** | 100.82.193.50 | Windows | lenovo | hongks@6063 | 가변 |
 | **office-mac** | 100.108.139.43 | macOS | - | - | 가변 |
 | **home-linux** | 100.67.68.70 | Linux | - | - | 가변 |
 | **macbookpro-2** | 100.102.10.15 | macOS | maeg | 1111 | 온라인 |

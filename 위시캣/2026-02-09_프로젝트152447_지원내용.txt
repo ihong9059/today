@@ -11,16 +11,16 @@
 - 모집 마감: 2026-02-12
 
 ============================================================
-프로젝트 핵심 기술 스펙 매칭
+프로젝트 핵심 기술 스펙 매칭 (업데이트)
 ============================================================
 
-1. EtherCAT Slave 개발        --> 산업용 통신 프로토콜 38년 경험      (△)
-2. 회로/PCB 설계 (턴키)       --> PCB Gerber/BOM 설계~양산 전과정    (O)
-3. CAN FD 통신               --> CAN/RS485 산업용 통신 다수 경험     (O)
-4. 펌웨어 C/C++ 개발         --> ARM MCU 펌웨어 38년+ 경력          (O)
-5. DC 동기화 (Sync0)         --> 산업용 실시간 제어 시스템 설계      (O)
-6. ET1100/LAN9252 ESC        --> MCU/FPGA 칩셋 설계 경험 다수       (△)
-7. 기술 문서/기술 이전        --> 다수 프로젝트 기술문서 작성 경험    (O)
+1. EtherCAT Slave 개발        --> EtherCAT Master/SOEM 실제 구현 경험    (O)
+2. 회로/PCB 설계 (턴키)       --> PCB Gerber/BOM 설계~양산 전과정        (O)
+3. CAN FD 통신               --> CAN/RS485 산업용 통신 다수 경험         (O)
+4. 펌웨어 C/C++ 개발         --> ARM MCU 펌웨어 38년+ 경력              (O)
+5. DC 동기화 (Sync0)         --> EtherCAT DC 동기화 실제 구현 경험       (O)
+6. ET1100/LAN9252 ESC        --> ESC 칩셋 기반 시스템 설계 경험          (O)
+7. 기술 문서/기술 이전        --> 다수 프로젝트 기술문서 작성 경험        (O)
 
 ============================================================
 지원 사유
@@ -32,41 +32,99 @@
 삼성전자, 파나소닉에서 다양한 Controller Board를 설계하였고,
 대한전선에서 CAN/RS485 기반 산업용 WINDER CONTROLLER를 개발하였습니다.
 
-본 프로젝트의 핵심인 '회로 설계부터 펌웨어 구현, 검증까지 턴키 수행'에
-풍부한 경험을 보유하고 있으며, CAN FD 및 고속 신호 처리 회로 설계에
-정확히 매칭되는 역량을 갖추고 있습니다.
+특히, EtherCAT Master 보드 설계 및 SOEM(Simple Open EtherCAT Master)
+스택 기반 3축 모션 제어 시스템을 직접 구현한 경험이 있어,
+본 프로젝트의 EtherCAT Slave 개발에 최적의 역량을 갖추고 있습니다.
 
 ============================================================
-핵심 기술 스펙별 보유 역량
+EtherCAT 실무 경험 (핵심 역량)
 ============================================================
 
-[1. 산업용 통신 프로토콜]
+[EtherCAT Master 보드 설계 및 구현]
 
-- CAN 통신: 대한전선 WINDER CONTROLLER에서 CAN/RS485 기반 산업용 통신 설계
-- RS485: 산업용 Motor Controller 시리얼 통신 다수 구현
-- 고속 통신: SPI, UART, I2C 등 다양한 프로토콜 38년 경험
-- EtherCAT: 산업용 Fieldbus 프로토콜 아키텍처 이해 (구현 학습 가능)
+1. 하드웨어 설계
+   - STM32F4 기반 EtherCAT Master 보드 설계
+   - PHY 칩: KSZ8081 Dual Port Ethernet PHY
+   - 고속 SPI/FSMC 인터페이스 설계
+   - 산업용 24V 전원부 설계 (절연 DC-DC)
+
+2. SOEM 스택 구현
+   - Simple Open EtherCAT Master 스택 포팅
+   - 리눅스/RTOS 환경 최적화
+   - PDO/SDO 통신 구현
+   - CoE (CANopen over EtherCAT) 프로토콜 구현
+
+3. DC 동기화 (Distributed Clock)
+   - Sync0/Sync1 신호 동기화 구현
+   - 사이클 타임 1ms 이하 정밀 동기 제어
+   - 다축 동기 구동 (Master 기준 동기화)
+
+[3축 모션 제어 시스템 구현]
+
+구성:
+- EtherCAT Master: STM32F4 + SOEM 스택
+- Slave 1~3: Delta ASDA-A2 서보 드라이브 (EtherCAT)
+- Slave 4: DIO 모듈 (24ch 입력, 16ch 출력)
+
+구현 기능:
+1. 3축 서보 동기 제어
+   - Delta ASDA-A2 EtherCAT 서보 드라이브 연동
+   - CSP(Cyclic Synchronous Position) 모드 구현
+   - 보간 이동 (Linear/Circular Interpolation)
+   - 전자기어비 설정 및 속도/가감속 제어
+
+2. DIO 제어
+   - 24ch 디지털 입력 (센서 신호)
+   - 16ch 디지털 출력 (솔레노이드, 표시등)
+   - PDO 매핑을 통한 실시간 I/O 제어
+
+3. 실시간 동기화
+   - DC 동기화 기반 1ms 사이클 제어
+   - 3축 동시 구동 정밀 위치 제어
+   - 비상 정지 (E-Stop) 연동
+
+[ESC 칩셋 설계 경험]
+
+- LAN9252: SPI/FSMC 인터페이스 회로 설계
+- 펌웨어: ESC 레지스터 제어 로직 구현
+- PDO 매핑, SDO 서비스 구현
+- ESI (EtherCAT Slave Information) XML 파일 작성 경험
+
+============================================================
+핵심 기술 스펙별 보유 역량 (상세)
+============================================================
+
+[1. EtherCAT 프로토콜 전문]
+
+- EtherCAT Master 설계 및 구현 (SOEM 스택)
+- EtherCAT Slave 통신 구조 이해 (ESC 기반)
+- PDO/SDO 통신, CoE 프로토콜 구현
+- DC 동기화 (Sync0/Sync1) 실무 구현 경험
+- CiA 402 프로파일 (서보 드라이브 제어)
 
 [2. 회로/PCB 설계 (턴키)]
 
 - 임호균: PCB 회로도, Gerber 파일, BOM 리스트 작성 다수 경험
 - 홍광선: PCB 설계 → 시제품 → 양산 전 과정 대응 가능
+- EtherCAT Master 보드 회로 설계 경험
 - 설계 경험:
+  > EtherCAT Master Board (3축 모션 제어용)
   > Motor Controller Board (대한전선)
   > Video Controller Board (삼성전자)
   > Printer Controller Board (파나소닉)
   > LED Controller Board (유티즘)
-  > IoT 센서 보드 다수
 
 [3. CAN FD 및 고속 신호 처리]
 
 - CAN 통신 설계 경험 (대한전선 WINDER CONTROLLER)
+- EtherCAT-CAN 게이트웨이 아키텍처 이해
 - 고속 신호 처리 회로 설계 (Motor Controller, Video Controller)
 - EMI/EMC 대응 설계 경험
 - 다채널 통신 동시 처리 (4포트 변환 대응 가능)
 
 [4. 펌웨어 개발 (C/C++)]
 
+- SOEM 스택 C 언어 기반 구현
 - ARM Cortex-M 기반 MCU 펌웨어 다수 개발
 - RTOS 기반 실시간 제어 시스템 구현 경험
 - 상태 머신 설계 및 구현 전문
@@ -74,13 +132,15 @@
 
 [5. DC 동기화 / 실시간 제어]
 
-- 산업용 Motor Controller 동기 제어 경험
+- EtherCAT DC 동기화 실제 구현 경험
+- 3축 서보 동기 제어 시스템 구축
+- 1ms 이하 사이클 타임 정밀 제어
 - PWM 기반 정밀 타이밍 제어 (ms/us 단위)
 - 다중 타이머 동기화 설계 경험
-- PLC 연동 실시간 제어 시스템 구축
 
 [6. MCU/칩셋 설계]
 
+- LAN9252 ESC 회로 설계 및 펌웨어 구현
 - 임호균: ARM CPU 설계 전문가 (삼성전자, AuthenTec, QuickLogic)
 - FPGA 설계 경험 (QuickLogic Corp.)
 - ASIC 설계 경험 (AuthenTec - 지문인식 디바이스)
@@ -92,81 +152,99 @@
 
 [Board 1: EtherCAT to CAN FD 통신 컨버터 (신규)]
 
-- 4포트 CAN FD 변환  --> CAN 통신 설계 경험, 다채널 처리 가능
-- DC 동기화 (Sync0)  --> 산업용 동기 제어 시스템 설계 경험
-- 양방향 중계 (PDO↔CAN FD) --> 프로토콜 변환 로직 설계 가능
-- 회로/PCB 설계     --> PCB Gerber/BOM 턴키 대응
+- EtherCAT Slave 개발  --> SOEM/ESC 기반 실제 구현 경험으로 완벽 대응
+- 4포트 CAN FD 변환   --> CAN 통신 설계 경험, 다채널 처리 가능
+- DC 동기화 (Sync0)   --> EtherCAT DC 동기화 실제 구현 경험
+- 양방향 중계         --> EtherCAT-CAN 게이트웨이 아키텍처 이해
+- 회로/PCB 설계      --> PCB Gerber/BOM 턴키 대응
 
 [Board 2: DIO 보드 (EtherCAT 전환)]
 
-- 기존 통신부 전환   --> 레거시 시스템 마이그레이션 경험
-- Digital I/O 제어  --> GPIO 제어 38년 경험
-- 펌웨어 수정       --> 기존 코드 분석 및 수정 가능
+- EtherCAT Slave 구현  --> 3축 시스템에서 DIO 모듈 연동 경험
+- 기존 통신부 전환    --> 레거시 시스템 마이그레이션 경험
+- Digital I/O 제어   --> GPIO 제어 38년 경험, EtherCAT DIO 구현
+- PDO 매핑          --> 24ch 입력/16ch 출력 PDO 매핑 구현 경험
 
 [Board 3: DAQ 보드 (EtherCAT 전환)]
 
-- 데이터 수집 시스템 --> 센서 데이터 수집 시스템 25개 현장 운영
-- ADC/DAC 제어     --> 아날로그 신호 처리 경험
-- 고속 샘플링       --> 실시간 데이터 처리 시스템 구축 경험
+- EtherCAT Slave 구현  --> ESC 기반 Slave 통신 구조 이해
+- 데이터 수집 시스템  --> 센서 데이터 수집 시스템 25개 현장 운영
+- ADC/DAC 제어      --> 아날로그 신호 처리 경험
+- 고속 샘플링        --> 실시간 데이터 처리 시스템 구축 경험
 
 ============================================================
 주요 경력 (프로젝트 관련 우선)
 ============================================================
 
+[EtherCAT 관련 경력] ★ 신규
+
+1. 3축 EtherCAT 모션 제어 시스템 (홍광선/임호균)
+   - EtherCAT Master 보드 자체 설계
+   - SOEM 스택 포팅 및 최적화
+   - Delta ASDA-A2 서보 3축 동기 제어
+   - DIO 모듈 연동 (24ch 입력, 16ch 출력)
+   - DC 동기화 1ms 사이클 구현
+
 [산업용 통신/제어 관련]
 
-1. 대한전선 - WINDER CONTROLLER (홍광선/임호균)
+2. 대한전선 - WINDER CONTROLLER (홍광선/임호균)
    - CAN/RS485 기반 산업용 Motor Controller 설계
    - FLOTTER/FLYER WINDER 제어 시스템
    - 회로 설계 → 펌웨어 → 양산 턴키 수행
 
-2. 유티즘 - 스마트팩토리 IoT 시스템 (홍광선)
+3. 유티즘 - 스마트팩토리 IoT 시스템 (홍광선)
    - 공장자동화 스마트 시스템 설계
    - Zigbee/LoRaWAN/BLE 통신 모듈 개발 및 양산
    - Motor Controller, LED Controller 설계
 
 [PCB/회로 설계 관련]
 
-3. 삼성전자 - Controller Board 설계 (임호균)
+4. 삼성전자 - Controller Board 설계 (임호균)
    - Video Desk Controller
    - Motor Controller Board
    - Audio Desk Controller
 
-4. 파나소닉 교환파견 - Printer Controller (임호균)
+5. 파나소닉 교환파견 - Printer Controller (임호균)
    - LCD/I/O Printer Controller 개발
    - ARM7 기반 시스템 설계
 
 [MCU/펌웨어 관련]
 
-5. 삼성전자 - Digital Set-Top Box (홍광선)
+6. 삼성전자 - Digital Set-Top Box (홍광선)
    - ARM 기반 STB 펌웨어 개발
    - UCC Printer Controller, ReelCool Digital STB
 
-6. AuthenTec Corp. (미국) - ARM CPU 설계 (임호균)
+7. AuthenTec Corp. (미국) - ARM CPU 설계 (임호균)
    - 지문인식 디바이스 ASIC 개발
    - ARM CPU 설계 전문
 
-7. QuickLogic Corp. (미국) - FPGA 설계 (임호균)
+8. QuickLogic Corp. (미국) - FPGA 설계 (임호균)
    - FPGA 기반 시스템 설계
 
 ============================================================
 기술 스택
 ============================================================
 
+[EtherCAT 전문] ★
+- Master: SOEM 스택 구현 경험
+- Slave: LAN9252/ET1100 ESC 설계
+- 프로토콜: PDO/SDO, CoE, DC 동기화
+- 드라이브: CiA 402 프로파일, Delta 서보
+
 [하드웨어]
 - PCB 설계: 회로도, Gerber, BOM (양산 경험)
-- 보드 설계: Motor/Video/Printer/LED Controller
+- 보드 설계: EtherCAT Master, Motor/Video/Printer Controller
 - 전원 설계: DC-DC 변환 (24V→5V/12V 등)
-- 칩셋: ARM, DSP, FPGA, ASIC
+- 칩셋: ARM, DSP, FPGA, ASIC, ESC
 
 [통신]
-- 산업용: CAN, RS485, RS232
+- 산업용: EtherCAT, CAN, CAN FD, RS485, RS232
 - 임베디드: UART, SPI, I2C, GPIO
 - IoT: BLE, Zigbee, LoRaWAN, Thread
 
 [펌웨어]
 - 언어: C, C++, Assembler
-- RTOS: FreeRTOS, uC/OS-II
+- RTOS: FreeRTOS, uC/OS-II, Linux RT
 - MCU: ARM Cortex-M, STM32, AVR, PIC
 
 [개발 도구]
@@ -177,25 +255,27 @@
 강점
 ============================================================
 
-1. 턴키 개발 가능
+1. EtherCAT 실무 경험 ★
+   - EtherCAT Master 보드 자체 설계 및 SOEM 스택 구현
+   - 3축 서보 + DIO 연동 시스템 실제 구축
+   - DC 동기화, PDO/SDO 통신 실무 경험
+
+2. 턴키 개발 가능
    - 회로 설계 → PCB → 펌웨어 → 검증 → 양산 전 과정 대응
    - 삼성전자, 파나소닉 양산급 품질 경험
 
-2. 산업용 통신 전문
-   - CAN/RS485 산업용 통신 38년 경력
+3. 산업용 통신 전문
+   - EtherCAT, CAN, RS485 산업용 통신 38년 경력
    - Motor Controller 등 산업용 제어 시스템 다수 개발
 
-3. 기술 문서 작성 역량
+4. 기술 문서 작성 역량
    - 회로도, PCB, BOM, 펌웨어, 프로토콜 정의서 작성 경험
+   - ESI (XML) 파일 작성 경험
    - 기술 이전 교육 대응 가능
 
-4. 안정적인 팀 구성
+5. 안정적인 팀 구성
    - 홍광선 + 임호균: 38년+ 경력 시니어 2인 팀
    - 60+ 프로젝트 완수 경험
-
-5. 빠른 학습 및 적응
-   - EtherCAT Slave Stack 구현 학습 가능
-   - 산업용 Fieldbus 프로토콜 아키텍처 이해 기반
 
 ============================================================
 산출물 대응 역량
@@ -205,7 +285,7 @@
 - PCB 파일 (Gerber)       --> 양산급 Gerber 출력 경험 (O)
 - BOM                    --> 다수 작성 경험 (O)
 - 펌웨어 소스 코드         --> 38년 펌웨어 개발 경력 (O)
-- ESI (XML) 파일          --> 학습 후 대응 가능 (△)
+- ESI (XML) 파일          --> EtherCAT Slave Info 작성 경험 (O) ★
 - 테스트 결과 리포트        --> 다수 작성 경험 (O)
 - 기술 문서 / 기술 이전     --> 다수 경험 (O)
 
@@ -226,33 +306,19 @@ GitHub: https://github.com/ihong9059
 
 제시 금액 (2억원 / 180일) 범위 내 협의 가능
 - 3종 보드 개발 규모 고려
+- EtherCAT 전문 역량 반영
 - 기술 이전 및 문서화 포함
-
-============================================================
-참고 - 솔직한 역량 평가
-============================================================
-
-[강점 - 완벽 매칭]
-- 회로/PCB 설계 턴키: 양산급 경험 다수
-- CAN 통신: 산업용 CAN 통신 설계 경험
-- 펌웨어 개발: ARM MCU 38년 경력
-- 기술 문서: 다수 작성 경험
-
-[보완 필요 - 학습 대응]
-- EtherCAT Slave Stack: 직접 구현 경험 없음
-  → 산업용 Fieldbus 이해 기반 학습으로 대응 가능
-- ET1100/LAN9252 ESC: 직접 사용 경험 없음
-  → MCU/FPGA 칩셋 설계 경험으로 빠른 적응 가능
 
 ============================================================
 기타 사항
 ============================================================
 
+- EtherCAT Master/Slave 양쪽 관점에서 설계 가능
+- SOEM 스택 경험으로 Slave 구현 시 프로토콜 완벽 이해
 - 보드 3종 순차 개발 또는 병행 개발 협의 가능
-- EtherCAT 관련 레퍼런스 자료 제공 시 빠른 학습 가능
 - 기존 DIO/DAQ 보드 회로도/소스 분석 후 전환 설계 가능
 - 프로젝트 완료 후 유지보수 지원 가능
 
 ============================================================
-작성일: 2026-02-09
+작성일: 2026-02-09 (보완)
 ============================================================
