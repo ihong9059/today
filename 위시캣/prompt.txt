@@ -4,10 +4,21 @@ claude, https://www.wishket.com/project/152421/의 내용을 위시켓의
   전화번호같은것은 들어가지 않도록 해주세요.
   
 
-claude, https://www.wishket.com/project/에서, 최근 추천프로젝트 list이후,
-추가된 project중, 임호균, 홍광선.pdf의 이력을 기준으로 참가할 project가 있으면, 
+claude, 위시캣 folder에서 작업해야하는데,
+https://www.wishket.com/project/에서, project id: 152753 이후
+최근 추천프로젝트 list이후,
+추가된 project중, 임호균, 홍광선.pdf, 보유기술.pdf  이력을 기준으로 참가할 project가 있으면, 
 list를 오늘날짜로, 가능project.md로 만들어 주세요.
 마지막 검토한 id를 명기해주세요. 다음 검색할때 참고할수있도록 해야합니다.
 
+이 절차를 skill로 만들려고하는데, 적당한 skill명과 skill을 만들어 주세요.
+유의할점은 최근 검색해야할 id가 최근것으로 바뀌는데에 대한 대응 방법도 추가해서 만들어 주세요.
+검토후 등록하도록 하겠읍니다.
 
-claude, 최근 가능프로젝트를 참고하여, 다음을 진행해 주세요.
+이번에는 지원서 작성 skill을 만들려고 합니다.
+id: 152759의 project에 대해서, 지원서를 작성해야하는데,
+임호균, 홍광선.pdf, 보유기술.pdf 이력을 기준으로,
+https://www.wishket.com/project/id 의 지원 요청사항에 맞추어,
+지원서(txt file)를 만들어 주는 skill명과 skill을 만들어 주세요.
+
+
