@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회사소개 - UTTEC AI 모니터링 시스템</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a5f7a;
+            --primary-dark: #134b61;
+            --secondary: #57c5b6;
+            --accent: #ff6b6b;
+            --dark: #0a1628;
+            --darker: #050d1a;
+            --light: #e8f4f8;
+            --text: #ffffff;
+            --text-muted: #94a3b8;
+            --gradient-1: linear-gradient(135deg, #1a5f7a 0%, #57c5b6 100%);
+            --gradient-2: linear-gradient(135deg, #0a1628 0%, #1a3a5c 100%);
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(87, 197, 182, 0.2);
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 150px 2rem 100px;
+            background: var(--gradient-2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(87, 197, 182, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 2rem;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        /* Company Intro */
+        .intro-section {
+            background: var(--dark);
+        }
+
+        .intro-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .intro-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .intro-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .intro-image {
+            background: var(--gradient-2);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            border: 1px solid rgba(87, 197, 182, 0.3);
+        }
+
+        .intro-image .icon {
+            font-size: 8rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro-image p {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        /* Core Values */
+        .values-section {
+            background: var(--darker);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .value-card {
+            background: var(--gradient-2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(87, 197, 182, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px rgba(87, 197, 182, 0.2);
+        }
+
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .value-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Technology Section */
+        .tech-section {
+            background: var(--dark);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .tech-card {
+            background: rgba(26, 95, 122, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(87, 197, 182, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            border-color: var(--secondary);
+            background: rgba(26, 95, 122, 0.2);
+        }
+
+        .tech-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .tech-card h3 {
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+
+        .tech-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .tech-features {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-feature {
+            background: rgba(87, 197, 182, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+
+        /* Industries Section */
+        .industries-section {
+            background: var(--darker);
+        }
+
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .industry-card {
+            background: var(--gradient-2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(87, 197, 182, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .industry-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+        }
+
+        .industry-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .industry-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .industry-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Certifications */
+        .cert-section {
+            background: var(--dark);
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .cert-card {
+            background: rgba(26, 95, 122, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(87, 197, 182, 0.2);
+        }
+
+        .cert-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .cert-card h3 {
+            font-size: 1.3rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-card p {
+            color: var(--text-muted);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--gradient-2);
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(87, 197, 182, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item h3 {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+
+        .contact-item a {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            color: var(--secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(87, 197, 182, 0.2);
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        footer p {
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .values-grid,
+            .industries-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .intro-content {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .values-grid,
+            .tech-grid,
+            .industries-grid,
+            .cert-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">UTTEC AI Monitoring</div>
+            <ul class="nav-links">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="system.html">시스템</a></li>
+                <li><a href="monitor.html">모니터링</a></li>
+                <li><a href="diagram.html">아키텍처</a></li>
+                <li><a href="about.html" class="active">회사소개</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>회사소개</h1>
+            <p>산업 설비 AI 모니터링의 선두주자<br>UTTEC & 한국기계엔지니어링</p>
+        </div>
+    </section>
+
+    <!-- Company Intro -->
+    <section class="intro-section">
+        <div class="section-container">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2>UTTEC (유티텍)</h2>
+                    <p>
+                        UTTEC은 산업 설비의 AI 기반 예지정비 솔루션을 제공하는 기술 기업입니다.
+                        Edge AI 기술과 빅데이터 분석을 통해 산업 현장의 설비 고장을 사전에 예측하고,
+                        다운타임을 최소화하여 생산성을 극대화합니다.
+                    </p>
+                    <p>
+                        2020년 설립 이래, 자동차 부품, 2차전지, 화학, 식품 등 다양한 산업 분야에서
+                        AI 모니터링 시스템을 성공적으로 구축해왔습니다.
+                    </p>
+                    <p>
+                        <strong>한국기계엔지니어링</strong>과의 협력을 통해 파쇄기, 분쇄기, 핀밀 등
+                        산업용 분쇄설비에 특화된 AI 예지정비 솔루션을 제공합니다.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <div class="icon">🏭</div>
+                    <p>Smart Factory Solution</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="values-section">
+        <div class="section-container">
+            <h2 class="section-title">핵심 가치</h2>
+            <p class="section-subtitle">UTTEC이 추구하는 4가지 핵심 가치</p>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>정확성</h3>
+                    <p>AI 딥러닝 기반<br>99.2% 고장 예측 정확도</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">⚡</div>
+                    <h3>실시간성</h3>
+                    <p>Edge AI 처리<br>100ms 이내 즉각 분석</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🔮</div>
+                    <h3>예측성</h3>
+                    <p>30일 전 고장 예측<br>계획 정비 실현</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🛡️</div>
+                    <h3>안전성</h3>
+                    <p>설비 이상 조기 감지<br>안전사고 예방</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Technology -->
+    <section class="tech-section">
+        <div class="section-container">
+            <h2 class="section-title">핵심 기술</h2>
+            <p class="section-subtitle">UTTEC의 차별화된 기술력</p>
+
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-header">
+                        <div class="tech-icon">🧠</div>
+                        <h3>Edge AI Gateway</h3>
+                    </div>
+                    <p>
+                        현장에서 직접 AI 분석을 수행하는 Edge Computing 솔루션입니다.
+                        네트워크 지연 없이 실시간 이상 감지가 가능하며,
+                        데이터 보안이 필요한 산업 현장에 최적화되어 있습니다.
+                    </p>
+                    <div class="tech-features">
+                        <span class="tech-feature">실시간 처리</span>
+                        <span class="tech-feature">오프라인 운영</span>
+                        <span class="tech-feature">데이터 보안</span>
+                    </div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-header">
+                        <div class="tech-icon">📊</div>
+                        <h3>Load Analysis</h3>
+                    </div>
+                    <p>
+                        전력 데이터 기반 부하 분석 기술입니다.
+                        모터 전류, 전압, 전력량을 분석하여 설비의 부하 상태를
+                        실시간으로 모니터링하고 과부하를 방지합니다.
+                    </p>
+                    <div class="tech-features">
+                        <span class="tech-feature">전류 분석</span>
+                        <span class="tech-feature">부하 패턴</span>
+                        <span class="tech-feature">과부하 예방</span>
+                    </div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-header">
+                        <div class="tech-icon">🤖</div>
+                        <h3>AI PdM (예지정비)</h3>
+                    </div>
+                    <p>
+                        딥러닝 기반 예지정비 알고리즘입니다.
+                        진동, 온도, 전류 데이터를 학습하여 베어링 마모,
+                        날 손상 등 고장을 30일 전에 예측합니다.
+                    </p>
+                    <div class="tech-features">
+                        <span class="tech-feature">딥러닝</span>
+                        <span class="tech-feature">RUL 예측</span>
+                        <span class="tech-feature">이상 탐지</span>
+                    </div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-header">
+                        <div class="tech-icon">☁️</div>
+                        <h3>Cloud Platform</h3>
+                    </div>
+                    <p>
+                        AWS 기반 클라우드 플랫폼입니다.
+                        다수의 설비 데이터를 통합 관리하고,
+                        웹/모바일에서 언제 어디서나 모니터링이 가능합니다.
+                    </p>
+                    <div class="tech-features">
+                        <span class="tech-feature">AWS 기반</span>
+                        <span class="tech-feature">통합 대시보드</span>
+                        <span class="tech-feature">모바일 지원</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industries -->
+    <section class="industries-section">
+        <div class="section-container">
+            <h2 class="section-title">적용 산업</h2>
+            <p class="section-subtitle">다양한 산업 분야에 적용 가능한 솔루션</p>
+
+            <div class="industries-grid">
+                <div class="industry-card">
+                    <div class="industry-icon">🔋</div>
+                    <h3>2차전지</h3>
+                    <p>양극재/음극재 분쇄<br>배터리 리사이클링</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon">🚗</div>
+                    <h3>자동차</h3>
+                    <p>부품 가공<br>스크랩 처리</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon">⚗️</div>
+                    <h3>화학</h3>
+                    <p>원료 분쇄<br>화학물질 처리</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon">🍎</div>
+                    <h3>식품</h3>
+                    <p>곡물 분쇄<br>식품 가공</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon">♻️</div>
+                    <h3>환경/재활용</h3>
+                    <p>폐기물 파쇄<br>자원 회수</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon">🏗️</div>
+                    <h3>건설/광업</h3>
+                    <p>골재 파쇄<br>광물 분쇄</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon">💊</div>
+                    <h3>제약</h3>
+                    <p>원료 미분쇄<br>의약품 제조</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon">🧪</div>
+                    <h3>소재</h3>
+                    <p>세라믹<br>신소재 분쇄</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="cert-section">
+        <div class="section-container">
+            <h2 class="section-title">인증 및 특허</h2>
+            <p class="section-subtitle">검증된 기술력과 신뢰성</p>
+
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <div class="cert-icon">📜</div>
+                    <h3>기업부설연구소</h3>
+                    <p>한국산업기술진흥협회 인정</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🏅</div>
+                    <h3>벤처기업</h3>
+                    <p>기술보증기금 인증</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">💡</div>
+                    <h3>특허 보유</h3>
+                    <p>AI 예지정비 관련 특허 다수</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact-section">
+        <div class="section-container">
+            <h2 class="section-title">연락처</h2>
+            <p class="section-subtitle">AI 모니터링 도입 상담</p>
+
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <h3>주소</h3>
+                    <p>경기도 안양시 만안구 안양로 464<br>아이에스비즈타워 704호</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <h3>전화</h3>
+                    <p><a href="tel:031-427-7783">031-427-7783~5</a></p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <h3>이메일</h3>
+                    <p><a href="mailto:info@uttec.co.kr">info@uttec.co.kr</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">UTTEC AI Monitoring</div>
+        <p>© 2026 UTTEC & 한국기계엔지니어링. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.value-card, .tech-card, .industry-card, .cert-card, .contact-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
