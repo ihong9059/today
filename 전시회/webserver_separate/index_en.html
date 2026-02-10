@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>HKME - Smart Shredder Monitoring System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        /* Language Switch */
+        .lang-switch {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1001;
+            display: flex;
+            gap: 10px;
+        }
+        .lang-switch a {
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .lang-switch a.ko { background: transparent; color: #888; border: 1px solid #444; }
+        .lang-switch a.en { background: linear-gradient(90deg, #1a5f7a, #57c5b6); color: #fff; }
+        .lang-switch a:hover { opacity: 0.8; }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,10,26,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo { font-size: 1.3rem; font-weight: 700; color: #1a5f7a; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: #888; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: #57c5b6; }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a2a3a 50%, #0a0a1a 100%);
+            text-align: center;
+            padding: 100px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(26,95,122,0.3) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 900px; }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #1a5f7a, #57c5b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 1.2rem; color: #888; margin-bottom: 40px; }
+        .hero-buttons { display: flex; gap: 20px; justify-content: center; }
+        .btn {
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-primary { background: linear-gradient(90deg, #1a5f7a, #159895); color: #fff; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(26,95,122,0.4); }
+        .btn-secondary { border: 2px solid #57c5b6; color: #57c5b6; }
+        .btn-secondary:hover { background: rgba(87,197,182,0.1); }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding: 80px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .stat-number { font-size: 3rem; font-weight: 700; color: #57c5b6; }
+        .stat-label { color: #888; margin-top: 10px; }
+
+        section { padding: 100px 30px; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 60px; }
+        .section-title h2 { font-size: 2.5rem; margin-bottom: 15px; color: #fff; }
+        .section-title p { color: #888; font-size: 1.1rem; }
+
+        .problems { background: linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 100%); }
+        .problem-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+        .problem-card {
+            padding: 35px;
+            background: rgba(255,68,68,0.05);
+            border: 1px solid rgba(255,68,68,0.2);
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+        .problem-card:hover { transform: translateY(-5px); border-color: rgba(255,68,68,0.4); }
+        .problem-icon { font-size: 2.5rem; margin-bottom: 20px; }
+        .problem-card h3 { color: #ff6b6b; margin-bottom: 15px; }
+        .problem-card p { color: #aaa; }
+
+        .solutions { background: #0f0f1f; }
+        .solution-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+        .solution-card {
+            padding: 35px;
+            background: rgba(87,197,182,0.05);
+            border: 1px solid rgba(87,197,182,0.2);
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+        .solution-card:hover { transform: translateY(-5px); border-color: rgba(87,197,182,0.4); }
+        .solution-icon { font-size: 2.5rem; margin-bottom: 20px; }
+        .solution-card h3 { color: #57c5b6; margin-bottom: 15px; }
+        .solution-card p { color: #aaa; }
+
+        .cta {
+            text-align: center;
+            padding: 100px 30px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0a0a1a 100%);
+        }
+        .cta h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        .cta p { color: #888; margin-bottom: 40px; }
+
+        footer {
+            background: #050510;
+            padding: 60px 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer-brand h3 { color: #1a5f7a; font-size: 1.5rem; margin-bottom: 15px; }
+        .footer-brand p { color: #666; font-size: 0.9rem; }
+        .footer-links h4 { color: #fff; margin-bottom: 20px; }
+        .footer-links a { display: block; color: #666; text-decoration: none; margin-bottom: 10px; transition: color 0.3s; }
+        .footer-links a:hover { color: #57c5b6; }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: #444;
+        }
+
+        @media (max-width: 900px) {
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .problem-grid, .solution-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <a href="index.html" class="ko">한국어</a>
+        <a href="index_en.html" class="en">English</a>
+    </div>
+
+    <nav>
+        <div class="logo">HKME</div>
+        <div class="nav-links">
+            <a href="index_en.html" class="active">Home</a>
+            <a href="system_en.html">System</a>
+            <a href="diagram_en.html">Diagram</a>
+            <a href="monitor_en.html">Monitoring</a>
+            <a href="about_en.html">About</a>
+        </div>
+    </nav>
+
+    <section id="section-hero" class="hero">
+        <div class="hero-content">
+            <h1>Smart Shredder Monitoring System</h1>
+            <p>AI-based real-time monitoring prevents overload,<br>extends equipment life, and minimizes downtime.</p>
+            <div class="hero-buttons">
+                <a href="monitor_en.html" class="btn btn-primary">Live Monitoring Demo</a>
+                <a href="system_en.html" class="btn btn-secondary">View System Config</a>
+            </div>
+        </div>
+    </section>
+
+    <div id="section-stats" class="stats">
+        <div class="stat-item">
+            <div class="stat-number">70%</div>
+            <div class="stat-label">Downtime Reduction</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">30%</div>
+            <div class="stat-label">Maintenance Cost Savings</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">20%</div>
+            <div class="stat-label">Energy Efficiency Gain</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">20%</div>
+            <div class="stat-label">Equipment Life Extension</div>
+        </div>
+    </div>
+
+    <section id="section-problems" class="problems">
+        <div class="section-title">
+            <h2>Current Challenges</h2>
+            <p>Limitations of Traditional Shredder Operations</p>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-icon">⚠️</div>
+                <h3>Manual Overload Response</h3>
+                <p>Manual shutdown required during overload, making immediate response to foreign object jams difficult.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">🔧</div>
+                <h3>Unpredictable Failures</h3>
+                <p>Unable to detect bearing wear or blade damage in advance, causing sudden downtime.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">📊</div>
+                <h3>Lack of Operational Data</h3>
+                <p>Without historical operation and load pattern data, optimal operating conditions are hard to set.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">🔌</div>
+                <h3>No Remote Management</h3>
+                <p>Equipment status can only be checked on-site, delaying night/holiday responses.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-solutions" class="solutions">
+        <div class="section-title">
+            <h2>Smart Monitoring Solutions</h2>
+            <p>Value Provided by Smart Shredder</p>
+        </div>
+        <div class="solution-grid">
+            <div class="solution-card">
+                <div class="solution-icon">🛡️</div>
+                <h3>Auto Overload Protection</h3>
+                <p>Real-time current/torque monitoring with auto slow-down or reverse on overload detection.</p>
+            </div>
+            <div class="solution-card">
+                <div class="solution-icon">🤖</div>
+                <h3>AI Predictive Maintenance</h3>
+                <p>Vibration/temperature pattern analysis predicts bearing and blade wear in advance.</p>
+            </div>
+            <div class="solution-card">
+                <div class="solution-icon">📈</div>
+                <h3>Data-Driven Optimization</h3>
+                <p>Auto-learns optimal conditions per material. Balances energy efficiency and throughput.</p>
+            </div>
+            <div class="solution-card">
+                <div class="solution-icon">📱</div>
+                <h3>Remote Monitoring</h3>
+                <p>Check real-time status anywhere via smartphone/PC. Instant alerts on anomalies.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-cta" class="cta">
+        <h2>Experience It Now</h2>
+        <p>Experience the power of our smart monitoring solution through the live demo</p>
+        <div class="hero-buttons">
+            <a href="monitor_en.html" class="btn btn-primary">Live Monitoring Demo</a>
+            <a href="about_en.html" class="btn btn-secondary">About Company</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>HKME Co., Ltd.</h3>
+                <p>Specialists in Crushing, Classifying, Mixing, Screening & Conveying</p>
+            </div>
+            <div class="footer-links">
+                <h4>Sitemap</h4>
+                <a href="index_en.html">Home</a>
+                <a href="system_en.html">System</a>
+                <a href="monitor_en.html">Monitoring</a>
+                <a href="about_en.html">About</a>
+            </div>
+            <div class="footer-links">
+                <h4>HKME</h4>
+                <a href="http://topcrusher.co.kr" target="_blank">Official Website</a>
+                <a href="#">Product Catalog</a>
+                <a href="#">Tech Support</a>
+            </div>
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <a href="#">30, Gongdan-ro 140beon-an-gil, Gunpo-si, Gyeonggi-do</a>
+                <a href="tel:031-427-7783">031-427-7783~5</a>
+                <a href="#">topcrusher.co.kr</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 HKME Co., Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <audio id="audio-player" src="audio/home_en.mp3" preload="auto"></audio>
+    <div id="audio-control" style="position:fixed;bottom:30px;right:30px;z-index:9999;display:flex;gap:10px;align-items:center;">
+        <div id="progress-container" style="width:150px;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;cursor:pointer;display:none;">
+            <div id="progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#1a5f7a,#57c5b6);border-radius:3px;"></div>
+        </div>
+        <button id="play-btn" onclick="toggleAudio()" style="width:60px;height:60px;border-radius:50%;border:none;background:linear-gradient(135deg,#1a5f7a,#57c5b6);color:white;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(26,95,122,0.4);">🔊</button>
+        <button id="stop-btn" onclick="stopAudio()" style="width:60px;height:60px;border-radius:50%;border:none;background:#ff4444;color:white;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(255,68,68,0.4);display:none;">⏹</button>
+        <button id="auto-btn" onclick="toggleAutoMode()" style="width:60px;height:60px;border-radius:50%;border:none;background:#666;color:white;font-size:12px;font-weight:bold;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.3);">AUTO</button>
+    </div>
+
+    <script>
+        const audio = document.getElementById('audio-player');
+        const playBtn = document.getElementById('play-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const autoBtn = document.getElementById('auto-btn');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        let isPlaying = false;
+        let currentSection = '';
+        const nextPage = 'system_en.html';
+        let isAutoMode = localStorage.getItem('autoMode') === 'true';
+        updateAutoButton();
+
+        function toggleAutoMode() {
+            isAutoMode = !isAutoMode;
+            localStorage.setItem('autoMode', isAutoMode);
+            updateAutoButton();
+        }
+        function updateAutoButton() {
+            autoBtn.style.background = isAutoMode ? 'linear-gradient(135deg, #00c853, #00e676)' : '#666';
+            autoBtn.style.boxShadow = isAutoMode ? '0 4px 20px rgba(0,200,83,0.4)' : '0 4px 20px rgba(0,0,0,0.3)';
+        }
+
+        const sectionTimings = [
+            { time: 0, section: 'section-hero' },
+            { time: 20, section: 'section-stats' },
+            { time: 35, section: 'section-problems' },
+            { time: 80, section: 'section-solutions' },
+            { time: 115, section: 'section-cta' }
+        ];
+
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element && currentSection !== sectionId) {
+                currentSection = sectionId;
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function toggleAudio() {
+            if (isPlaying) { audio.pause(); isPlaying = false; playBtn.innerHTML = '▶'; }
+            else {
+                audio.play(); isPlaying = true; playBtn.innerHTML = '⏸';
+                stopBtn.style.display = 'block'; progressContainer.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        function stopAudio() {
+            audio.pause(); audio.currentTime = 0; isPlaying = false; currentSection = '';
+            playBtn.innerHTML = '🔊'; stopBtn.style.display = 'none';
+            progressContainer.style.display = 'none'; progressBar.style.width = '0%';
+        }
+        audio.addEventListener('timeupdate', function() {
+            progressBar.style.width = (audio.currentTime / audio.duration) * 100 + '%';
+            for (let i = sectionTimings.length - 1; i >= 0; i--) {
+                if (audio.currentTime >= sectionTimings[i].time) {
+                    scrollToSection(sectionTimings[i].section); break;
+                }
+            }
+        });
+        audio.addEventListener('ended', function() {
+            if (isAutoMode) setTimeout(() => { window.location.href = nextPage; }, 2000);
+            else stopAudio();
+        });
+        progressContainer.addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+        });
+        window.addEventListener('load', function() {
+            if (isAutoMode && localStorage.getItem('autoPlaying') === 'true') {
+                setTimeout(() => { toggleAudio(); }, 1000);
+            }
+        });
+        if (isAutoMode) localStorage.setItem('autoPlaying', 'true');
+    </script>
+</body>
+</html>

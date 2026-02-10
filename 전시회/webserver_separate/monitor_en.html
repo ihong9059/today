@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>Real-time Monitoring - HKME</title>
+    <script src="libs/three.min.js"></script>
+    <script src="libs/chart.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a1a; color: #fff; overflow-x: hidden; }
+        .lang-switch { position: fixed; bottom: 30px; right: 140px; z-index: 1001; display: flex; gap: 5px; }
+        .lang-switch a { padding: 6px 12px; border-radius: 12px; text-decoration: none; font-size: 0.75rem; font-weight: 600; }
+        .lang-switch a.ko { background: transparent; color: #888; border: 1px solid #444; }
+        .lang-switch a.en { background: linear-gradient(90deg, #1a5f7a, #57c5b6); color: #fff; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: rgba(10,10,26,0.95); border-bottom: 1px solid rgba(255,255,255,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .back-btn { color: #888; text-decoration: none; font-size: 1.2rem; }
+        .company-name { font-size: 1.2rem; font-weight: 600; color: #1a5f7a; }
+        .live-badge { background: #ff4444; color: #fff; padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .main-container { display: grid; grid-template-columns: 1fr 380px; height: 100vh; padding-top: 60px; }
+        .view-3d { position: relative; background: #0a0a1a; }
+        #canvas3d { width: 100%; height: 100%; }
+        .overlay-panel { position: absolute; background: rgba(10,10,26,0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 15px; backdrop-filter: blur(10px); }
+        .overlay-panel.top-left { top: 20px; left: 20px; min-width: 200px; }
+        .overlay-panel.bottom-left { bottom: 20px; left: 20px; min-width: 300px; }
+        .panel-title { font-size: 0.85rem; color: #888; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .equipment-status-list { list-style: none; }
+        .equipment-status-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; cursor: pointer; border-radius: 6px; margin: 0 -10px; }
+        .equipment-status-item:hover { background: rgba(255,255,255,0.05); }
+        .equipment-status-item.selected { background: rgba(26,95,122,0.3); }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .status-dot.normal { background: #00ff88; }
+        .status-dot.warning { background: #ffaa00; }
+        .status-dot.critical { background: #ff4444; animation: blink 0.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .sidebar { background: rgba(15,15,35,0.98); border-left: 1px solid rgba(255,255,255,0.1); overflow-y: auto; padding: 20px; }
+        .section { margin-bottom: 25px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .section-title { font-size: 0.9rem; color: #1a5f7a; font-weight: 600; }
+        .sensor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .sensor-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; }
+        .sensor-card.warning { border-color: #ffaa00; background: rgba(255,170,0,0.1); }
+        .sensor-card.critical { border-color: #ff4444; background: rgba(255,68,68,0.1); animation: alertPulse 1s infinite; }
+        @keyframes alertPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,68,68,0.4); } 50% { box-shadow: 0 0 20px 5px rgba(255,68,68,0.2); } }
+        .sensor-label { font-size: 0.75rem; color: #888; margin-bottom: 5px; }
+        .sensor-value { font-size: 1.4rem; font-weight: 600; }
+        .sensor-unit { font-size: 0.8rem; color: #666; }
+        .sensor-bar { height: 4px; background: #222; border-radius: 2px; margin-top: 8px; overflow: hidden; }
+        .sensor-bar-fill { height: 100%; background: #00ff88; }
+        .sensor-bar-fill.warning { background: #ffaa00; }
+        .sensor-bar-fill.critical { background: #ff4444; }
+        .prediction-panel { background: linear-gradient(135deg, rgba(26,95,122,0.2), rgba(87,197,182,0.1)); border: 1px solid rgba(87,197,182,0.3); border-radius: 12px; padding: 15px; }
+        .rul-display { text-align: center; padding: 15px 0; }
+        .rul-value { font-size: 2.5rem; font-weight: 700; background: linear-gradient(90deg, #1a5f7a, #57c5b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .rul-label { color: #888; font-size: 0.85rem; }
+        .prediction-details { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 30px; padding-bottom: 30px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .pred-item { text-align: center; }
+        .pred-value { font-size: 1.2rem; font-weight: 600; }
+        .pred-label { font-size: 0.75rem; color: #888; }
+        .alert-panel { background: rgba(255,68,68,0.1); border: 1px solid rgba(255,68,68,0.3); border-radius: 12px; padding: 15px; display: none; }
+        .alert-panel.active { display: block; }
+        .alert-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .alert-icon { font-size: 1.5rem; }
+        .alert-title { font-weight: 600; color: #ff6b6b; }
+        .alert-message { font-size: 0.9rem; color: #aaa; margin-bottom: 15px; }
+        .alert-actions { display: flex; gap: 10px; }
+        .alert-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-size: 0.85rem; cursor: pointer; }
+        .alert-btn.primary { background: #ff4444; color: #fff; }
+        .alert-btn.secondary { background: rgba(255,255,255,0.1); color: #fff; }
+        .chart-container { background: rgba(255,255,255,0.02); border-radius: 10px; padding: 15px; }
+        .chart-container canvas { max-height: 180px; }
+        .scenario-control { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 15px; }
+        .scenario-select { width: 100%; padding: 10px; background: #1a1a2e; border: 1px solid #333; color: #fff; border-radius: 8px; margin-bottom: 10px; }
+        .scenario-btn { width: 100%; padding: 12px; background: linear-gradient(90deg, #1a5f7a, #159895); border: none; color: #fff; font-weight: 600; border-radius: 8px; cursor: pointer; }
+        @media (max-width: 900px) { .main-container { grid-template-columns: 1fr; } .sidebar { position: fixed; bottom: 0; left: 0; right: 0; height: 50vh; } .view-3d { height: 50vh; } .overlay-panel { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="lang-switch"><a href="monitor.html" class="ko">KO</a><a href="monitor_en.html" class="en">EN</a></div>
+    <header class="header">
+        <div class="header-left">
+            <a href="index_en.html" class="back-btn">←</a>
+            <span class="company-name">HKME</span>
+            <span class="live-badge">LIVE</span>
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="view-3d">
+            <div id="canvas3d"></div>
+            <div class="overlay-panel top-left">
+                <div class="panel-title">Equipment Status</div>
+                <ul class="equipment-status-list" id="equipmentList"></ul>
+            </div>
+            <div class="overlay-panel bottom-left">
+                <div class="panel-title">AI Predictive Maintenance</div>
+                <div class="rul-display">
+                    <div class="rul-value" id="rulValue">127 days</div>
+                    <div class="rul-label">Bearing Remaining Life (RUL)</div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="section" id="section-alert">
+                <div class="alert-panel" id="alertPanel">
+                    <div class="alert-header"><span class="alert-icon">⚠️</span><span class="alert-title" id="alertTitle">Anomaly Detected</span></div>
+                    <div class="alert-message" id="alertMessage">Shredder #1 bearing vibration exceeded threshold.</div>
+                    <div class="alert-actions">
+                        <button class="alert-btn primary" onclick="acknowledgeAlert()">Acknowledge</button>
+                        <button class="alert-btn secondary" onclick="showActionGuide()">Action Guide</button>
+                    </div>
+                </div>
+            </div>
+            <div class="section" id="section-sensors">
+                <div class="section-header"><span class="section-title">Real-time Sensor Data</span></div>
+                <div class="sensor-grid" id="sensorGrid"></div>
+            </div>
+            <div class="section" id="section-trend">
+                <div class="section-header"><span class="section-title">Trend (Last 5 min)</span></div>
+                <div class="chart-container"><canvas id="trendChart"></canvas></div>
+            </div>
+            <div class="section" id="section-prediction">
+                <div class="section-header"><span class="section-title">Predictive Analysis</span></div>
+                <div class="prediction-panel">
+                    <div class="rul-display"><div class="rul-value" id="rulValueSidebar">127 days</div><div class="rul-label">Bearing Life Prediction</div></div>
+                    <div class="prediction-details">
+                        <div class="pred-item"><div class="pred-value" id="wearRate">0.8%</div><div class="pred-label">Daily Wear Rate</div></div>
+                        <div class="pred-item"><div class="pred-value" id="nextMaint">32 days</div><div class="pred-label">Until Next Maintenance</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section" id="section-scenario">
+                <div class="section-header"><span class="section-title">Demo Scenario</span></div>
+                <div class="scenario-control">
+                    <select class="scenario-select" id="scenarioSelect">
+                        <option value="normal">Normal Operation</option>
+                        <option value="degrading">Gradual Degradation (Bearing Wear)</option>
+                        <option value="anomaly">Sudden Anomaly (Overload)</option>
+                        <option value="predictive">Predictive Alert (Maintenance Required)</option>
+                    </select>
+                    <button class="scenario-btn" onclick="applyScenario()">Apply Scenario</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const equipment = [{ id: 'shredder', name: 'Twin-shaft Shredder #1' }, { id: 'crusher', name: 'Hammer Crusher #1' }, { id: 'pinmill', name: 'Pin Mill #1' }];
+        const sensors = [
+            { id: 'vib1', name: 'Vibration DE', unit: 'mm/s', normal: [0, 4.5], warning: [4.5, 7.1], critical: [7.1, 20] },
+            { id: 'vib2', name: 'Vibration NDE', unit: 'mm/s', normal: [0, 4.5], warning: [4.5, 7.1], critical: [7.1, 20] },
+            { id: 'temp1', name: 'Temp DE', unit: '°C', normal: [30, 70], warning: [70, 85], critical: [85, 120] },
+            { id: 'temp2', name: 'Temp NDE', unit: '°C', normal: [30, 70], warning: [70, 85], critical: [85, 120] },
+            { id: 'current', name: 'Motor Current', unit: 'A', normal: [15, 50], warning: [50, 70], critical: [70, 100] },
+            { id: 'speed', name: 'Speed', unit: 'RPM', normal: [800, 1200], warning: [600, 800], critical: [0, 600] },
+            { id: 'proximity', name: 'Proximity', unit: 'mm', normal: [0.5, 2.0], warning: [2.0, 3.0], critical: [3.0, 5.0] },
+            { id: 'dust', name: 'Dust Level', unit: 'mg/m³', normal: [0, 5], warning: [5, 10], critical: [10, 50] }
+        ];
+        let sensorData = {}, selectedEquipment = 'shredder', currentScenario = 'normal', degradeCounter = 0, trendChart = null;
+        let scene, camera, renderer, equipmentMeshes = {};
+
+        function init() { initSensorData(); renderEquipmentList(); renderSensorCards(); init3D(); initChart(); startSimulation(); }
+        function initSensorData() { sensors.forEach(s => { const [min, max] = s.normal; sensorData[s.id] = { value: min + (max - min) * 0.5, base: min + (max - min) * 0.5, variance: (max - min) * 0.1 }; }); }
+        function renderEquipmentList() {
+            document.getElementById('equipmentList').innerHTML = equipment.map(eq => `<li class="equipment-status-item ${eq.id === selectedEquipment ? 'selected' : ''}" onclick="selectEquipment('${eq.id}')"><span class="status-dot normal" id="status-${eq.id}"></span><span>${eq.name}</span></li>`).join('');
+        }
+        function selectEquipment(id) { selectedEquipment = id; renderEquipmentList(); }
+        function renderSensorCards() {
+            document.getElementById('sensorGrid').innerHTML = sensors.map(s => {
+                const data = sensorData[s.id], status = getSensorStatus(data.value, s), pct = calculatePercentage(data.value, s);
+                return `<div class="sensor-card ${status}" id="card-${s.id}"><div class="sensor-label">${s.name}</div><div class="sensor-value"><span id="value-${s.id}">${data.value.toFixed(1)}</span><span class="sensor-unit">${s.unit}</span></div><div class="sensor-bar"><div class="sensor-bar-fill ${status}" id="bar-${s.id}" style="width:${pct}%"></div></div></div>`;
+            }).join('');
+        }
+        function getSensorStatus(v, s) { if (v >= s.critical[0] && v <= s.critical[1]) return 'critical'; if (v >= s.warning[0] && v <= s.warning[1]) return 'warning'; return ''; }
+        function calculatePercentage(v, s) { const all = [...s.normal, ...s.warning, ...s.critical], min = Math.min(...all), max = Math.max(...all); return Math.min(100, Math.max(0, ((v - min) / (max - min)) * 100)); }
+        function init3D() {
+            const container = document.getElementById('canvas3d');
+            scene = new THREE.Scene(); scene.background = new THREE.Color(0x0a0a1a);
+            camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(0, 12, 25); camera.lookAt(0, 0, 0);
+            renderer = new THREE.WebGLRenderer({ antialias: true }); renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            scene.add(new THREE.AmbientLight(0x606060, 1.0));
+            const light = new THREE.DirectionalLight(0xffffff, 1.2); light.position.set(10, 20, 10); scene.add(light);
+            const grid = new THREE.GridHelper(40, 40, 0x333333, 0x222222); grid.position.y = -4; scene.add(grid);
+            [[-7, 0, 0], [0, 0, 0], [7, 0, 0]].forEach((pos, i) => {
+                const g = new THREE.Group(), b = new THREE.Mesh(new THREE.BoxGeometry(3, 2.5, 2), new THREE.MeshStandardMaterial({ color: 0x1a5f7a, metalness: 0.4, roughness: 0.4 }));
+                g.add(b); g.position.set(...pos); equipmentMeshes[['shredder', 'crusher', 'pinmill'][i]] = g; scene.add(g);
+            });
+            animate();
+            window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+        }
+        function animate() { requestAnimationFrame(animate); const t = Date.now() * 0.001; Object.values(equipmentMeshes).forEach(m => m.rotation.y = Math.sin(t * 0.5) * 0.05); renderer.render(scene, camera); }
+        function initChart() {
+            trendChart = new Chart(document.getElementById('trendChart').getContext('2d'), {
+                type: 'line', data: { labels: [], datasets: [{ label: 'Vibration DE', data: [], borderColor: '#00d4ff', backgroundColor: 'transparent', tension: 0.4, pointRadius: 0 }, { label: 'Temp DE', data: [], borderColor: '#00ff88', backgroundColor: 'transparent', tension: 0.4, pointRadius: 0 }, { label: 'Current', data: [], borderColor: '#ffaa00', backgroundColor: 'transparent', tension: 0.4, pointRadius: 0 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#888', boxWidth: 12 } } }, scales: { x: { display: false }, y: { ticks: { color: '#666' }, grid: { color: '#222' } } } }
+            });
+        }
+        function updateChart() {
+            const now = new Date().toLocaleTimeString('en-US', { hour12: false });
+            trendChart.data.labels.push(now); if (trendChart.data.labels.length > 60) trendChart.data.labels.shift();
+            trendChart.data.datasets[0].data.push(sensorData['vib1'].value);
+            trendChart.data.datasets[1].data.push(sensorData['temp1'].value);
+            trendChart.data.datasets[2].data.push(sensorData['current'].value);
+            trendChart.data.datasets.forEach(ds => { if (ds.data.length > 60) ds.data.shift(); });
+            trendChart.update('none');
+        }
+        function startSimulation() { setInterval(updateSimulation, 1000); }
+        function updateSimulation() {
+            sensors.forEach(s => {
+                const d = sensorData[s.id]; let v = d.base + (Math.random() - 0.5) * d.variance * 2;
+                if (currentScenario === 'degrading' && (s.id === 'vib1' || s.id === 'vib2')) { degradeCounter += 0.05; v += degradeCounter * 0.5; }
+                else if (currentScenario === 'anomaly' && Math.random() < 0.15) v += d.variance * 8;
+                else if (currentScenario === 'predictive' && s.id === 'vib1') v = s.warning[0] + (s.warning[1] - s.warning[0]) * 0.7;
+                d.value = v;
+            });
+            updateSensorDisplay(); updateChart(); updatePredictions();
+            const status = updateEquipmentStatus();
+            if (status === 'critical') showAlert('Critical: Anomaly Detected', 'Shredder #1 bearing vibration exceeded critical threshold. Immediate inspection required.');
+            else if (status === 'warning') showAlert('Warning: Anomaly Signs', 'Shredder #1 bearing vibration reached warning level.');
+            else hideAlert();
+        }
+        function updateSensorDisplay() {
+            sensors.forEach(s => {
+                const d = sensorData[s.id], status = getSensorStatus(d.value, s), pct = calculatePercentage(d.value, s);
+                const card = document.getElementById(`card-${s.id}`), val = document.getElementById(`value-${s.id}`), bar = document.getElementById(`bar-${s.id}`);
+                if (card) card.className = `sensor-card ${status}`; if (val) val.textContent = d.value.toFixed(1); if (bar) { bar.style.width = `${pct}%`; bar.className = `sensor-bar-fill ${status}`; }
+            });
+        }
+        function updateEquipmentStatus() {
+            let worst = 'normal';
+            sensors.forEach(s => { const st = getSensorStatus(sensorData[s.id].value, s); if (st === 'critical') worst = 'critical'; else if (st === 'warning' && worst !== 'critical') worst = 'warning'; });
+            const dot = document.getElementById('status-shredder'); if (dot) dot.className = `status-dot ${worst}`;
+            return worst;
+        }
+        function updatePredictions() {
+            const v = sensorData['vib1'].value; let rul = Math.max(1, Math.floor(200 - (v / 4.5) * 100));
+            if (currentScenario === 'degrading') rul = Math.max(1, rul - degradeCounter * 2);
+            document.getElementById('rulValue').textContent = rul + ' days';
+            document.getElementById('rulValueSidebar').textContent = rul + ' days';
+            document.getElementById('wearRate').textContent = (100 / rul).toFixed(1) + '%';
+            document.getElementById('nextMaint').textContent = Math.floor(rul * 0.25) + ' days';
+        }
+        function showAlert(title, message) { document.getElementById('alertTitle').textContent = title; document.getElementById('alertMessage').textContent = message; document.getElementById('alertPanel').classList.add('active'); }
+        function hideAlert() { document.getElementById('alertPanel').classList.remove('active'); }
+        function acknowledgeAlert() { document.getElementById('alertPanel').classList.remove('active'); }
+        function showActionGuide() { alert('Action Guide:\n1. Pause equipment\n2. Check cutter/hammer wear\n3. Check bearing temperature\n4. Replace parts if needed\n5. Monitor after restart'); }
+        function applyScenario() { currentScenario = document.getElementById('scenarioSelect').value; degradeCounter = 0; initSensorData(); hideAlert(); }
+        init();
+    </script>
+    <audio id="audio-player" src="audio/monitor_en.mp3" preload="auto"></audio>
+    <div id="audio-control" style="position:fixed;bottom:30px;right:30px;z-index:9999;display:flex;gap:10px;align-items:center;">
+        <div id="progress-container" style="width:150px;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;cursor:pointer;display:none;"><div id="progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#1a5f7a,#57c5b6);border-radius:3px;"></div></div>
+        <button id="play-btn" onclick="toggleAudio()" style="width:60px;height:60px;border-radius:50%;border:none;background:linear-gradient(135deg,#1a5f7a,#57c5b6);color:white;font-size:24px;cursor:pointer;">🔊</button>
+        <button id="stop-btn" onclick="stopAudio()" style="width:60px;height:60px;border-radius:50%;border:none;background:#ff4444;color:white;font-size:24px;cursor:pointer;display:none;">⏹</button>
+        <button id="auto-btn" onclick="toggleAutoMode()" style="width:60px;height:60px;border-radius:50%;border:none;background:#666;color:white;font-size:12px;font-weight:bold;cursor:pointer;">AUTO</button>
+    </div>
+    <script>
+        const audio = document.getElementById('audio-player'), playBtn = document.getElementById('play-btn'), stopBtn = document.getElementById('stop-btn'), autoBtn = document.getElementById('auto-btn'), progressContainer = document.getElementById('progress-container'), progressBar = document.getElementById('progress-bar');
+        let isPlaying = false, currentSection = '', nextPage = 'about_en.html', isAutoMode = localStorage.getItem('autoMode') === 'true';
+        updateAutoButton();
+        function toggleAutoMode() { isAutoMode = !isAutoMode; localStorage.setItem('autoMode', isAutoMode); updateAutoButton(); }
+        function updateAutoButton() { autoBtn.style.background = isAutoMode ? 'linear-gradient(135deg, #00c853, #00e676)' : '#666'; }
+        const sectionTimings = [{ time: 0, section: 'section-alert' }, { time: 15, section: 'section-sensors' }, { time: 35, section: 'section-trend' }, { time: 48, section: 'section-prediction' }, { time: 55, section: 'section-scenario' }];
+        function scrollToSection(sectionId) { const el = document.getElementById(sectionId); if (el && currentSection !== sectionId) { currentSection = sectionId; el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }
+        function toggleAudio() { if (isPlaying) { audio.pause(); isPlaying = false; playBtn.innerHTML = '▶'; } else { audio.play(); isPlaying = true; playBtn.innerHTML = '⏸'; stopBtn.style.display = 'block'; progressContainer.style.display = 'block'; } }
+        function stopAudio() { audio.pause(); audio.currentTime = 0; isPlaying = false; currentSection = ''; playBtn.innerHTML = '🔊'; stopBtn.style.display = 'none'; progressContainer.style.display = 'none'; progressBar.style.width = '0%'; }
+        audio.addEventListener('timeupdate', function() { progressBar.style.width = (audio.currentTime / audio.duration) * 100 + '%'; for (let i = sectionTimings.length - 1; i >= 0; i--) { if (audio.currentTime >= sectionTimings[i].time) { scrollToSection(sectionTimings[i].section); break; } } });
+        audio.addEventListener('ended', function() { if (isAutoMode) setTimeout(() => { window.location.href = nextPage; }, 2000); else stopAudio(); });
+        progressContainer.addEventListener('click', function(e) { const rect = this.getBoundingClientRect(); audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration; });
+        window.addEventListener('load', function() { if (isAutoMode && localStorage.getItem('autoPlaying') === 'true') setTimeout(() => { toggleAudio(); }, 1000); });
+        if (isAutoMode) localStorage.setItem('autoPlaying', 'true');
+    </script>
+</body>
+</html>

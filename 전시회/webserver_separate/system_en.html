@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>System Configuration - HKME</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a1a; color: #fff; line-height: 1.8; }
+        .lang-switch { position: fixed; bottom: 30px; left: 30px; z-index: 1001; display: flex; gap: 10px; }
+        .lang-switch a { padding: 8px 16px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+        .lang-switch a.ko { background: transparent; color: #888; border: 1px solid #444; }
+        .lang-switch a.en { background: linear-gradient(90deg, #1a5f7a, #57c5b6); color: #fff; }
+        nav { position: fixed; top: 0; width: 100%; background: rgba(10,10,26,0.95); backdrop-filter: blur(10px); z-index: 1000; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { font-size: 1.3rem; font-weight: 700; color: #1a5f7a; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: #888; text-decoration: none; font-size: 0.9rem; }
+        .nav-links a:hover, .nav-links a.active { color: #57c5b6; }
+        main { padding: 100px 30px 60px; max-width: 1200px; margin: 0 auto; }
+        .page-header { text-align: center; margin-bottom: 60px; padding-top: 20px; }
+        .page-header h1 { font-size: 2.5rem; background: linear-gradient(90deg, #1a5f7a, #57c5b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; }
+        .page-header p { color: #888; font-size: 1.1rem; }
+        .summary { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 40px; margin-bottom: 60px; }
+        .summary-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 20px; text-align: center; }
+        .summary-item { padding: 20px; background: rgba(255,255,255,0.03); border-radius: 12px; }
+        .summary-item.highlight { background: linear-gradient(135deg, rgba(26,95,122,0.2), rgba(87,197,182,0.1)); border: 1px solid rgba(87,197,182,0.3); }
+        .summary-number { font-size: 2rem; font-weight: 700; color: #57c5b6; }
+        .summary-label { color: #888; font-size: 0.85rem; margin-top: 5px; }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { font-size: 1.8rem; color: #fff; margin-bottom: 10px; }
+        .section-title p { color: #888; }
+        .sensor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin-bottom: 60px; }
+        .sensor-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px; transition: all 0.3s; }
+        .sensor-card:hover { border-color: #1a5f7a; transform: translateY(-3px); }
+        .sensor-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .sensor-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #1a5f7a, #159895); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .sensor-name { font-size: 1.1rem; font-weight: 600; color: #fff; }
+        .sensor-type { font-size: 0.85rem; color: #57c5b6; }
+        .sensor-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .spec-item { display: flex; justify-content: space-between; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; }
+        .spec-label { color: #888; font-size: 0.85rem; }
+        .spec-value { color: #fff; font-size: 0.85rem; font-weight: 500; }
+        .gateway-section { background: linear-gradient(135deg, rgba(26,95,122,0.1), rgba(87,197,182,0.05)); border: 1px solid rgba(87,197,182,0.2); border-radius: 16px; padding: 40px; margin-bottom: 60px; }
+        .gateway-header { text-align: center; margin-bottom: 30px; }
+        .gateway-header h2 { font-size: 1.8rem; color: #57c5b6; margin-bottom: 10px; }
+        .gateway-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .gateway-spec { background: rgba(255,255,255,0.03); border-radius: 12px; padding: 20px; }
+        .gateway-spec h4 { color: #1a5f7a; margin-bottom: 10px; font-size: 0.95rem; }
+        .gateway-spec ul { list-style: none; color: #aaa; font-size: 0.9rem; }
+        .gateway-spec li { padding: 5px 0; padding-left: 20px; position: relative; }
+        .gateway-spec li::before { content: '✓'; position: absolute; left: 0; color: #57c5b6; }
+        footer { background: #050510; padding: 40px 30px; text-align: center; color: #444; border-top: 1px solid rgba(255,255,255,0.1); }
+        @media (max-width: 900px) { .summary-grid { grid-template-columns: repeat(3, 1fr); } }
+    </style>
+</head>
+<body>
+    <div class="lang-switch"><a href="system.html" class="ko">한국어</a><a href="system_en.html" class="en">English</a></div>
+    <nav>
+        <div class="logo">HKME</div>
+        <div class="nav-links">
+            <a href="index_en.html">Home</a>
+            <a href="system_en.html" class="active">System</a>
+            <a href="diagram_en.html">Diagram</a>
+            <a href="monitor_en.html">Monitoring</a>
+            <a href="about_en.html">About</a>
+        </div>
+    </nav>
+    <main>
+        <div class="page-header" id="section-header">
+            <h1>System Configuration</h1>
+            <p>Detailed Configuration of Smart Shredder Monitoring System</p>
+        </div>
+        <div class="summary" id="section-summary">
+            <div class="section-title"><h2>Sensor Configuration Summary</h2><p>Complete monitoring of critical areas with 12 sensors</p></div>
+            <div class="summary-grid">
+                <div class="summary-item"><div class="summary-number">4</div><div class="summary-label">Vibration</div></div>
+                <div class="summary-item"><div class="summary-number">3</div><div class="summary-label">Temperature</div></div>
+                <div class="summary-item"><div class="summary-number">2</div><div class="summary-label">Current</div></div>
+                <div class="summary-item"><div class="summary-number">1</div><div class="summary-label">Speed</div></div>
+                <div class="summary-item"><div class="summary-number">1</div><div class="summary-label">Proximity</div></div>
+                <div class="summary-item"><div class="summary-number">1</div><div class="summary-label">Dust</div></div>
+                <div class="summary-item highlight"><div class="summary-number">12</div><div class="summary-label">Total Sensors</div></div>
+            </div>
+        </div>
+        <div class="section-title" id="section-sensors"><h2>Sensor Specifications</h2><p>Industrial high-precision sensors for accurate data collection</p></div>
+        <div class="sensor-grid">
+            <div class="sensor-card">
+                <div class="sensor-header"><div class="sensor-icon">📳</div><div><div class="sensor-name">Vibration Sensor #1-2</div><div class="sensor-type">Bearing Housing (Shaft 1/2)</div></div></div>
+                <div class="sensor-specs"><div class="spec-item"><span class="spec-label">Range</span><span class="spec-value">0~50 mm/s</span></div><div class="spec-item"><span class="spec-label">Frequency</span><span class="spec-value">10Hz~10kHz</span></div><div class="spec-item"><span class="spec-label">Sensitivity</span><span class="spec-value">100mV/g</span></div><div class="spec-item"><span class="spec-label">Protection</span><span class="spec-value">IP67</span></div></div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header"><div class="sensor-icon">🌡️</div><div><div class="sensor-name">Temperature Sensor #1-3</div><div class="sensor-type">Motor/Gearbox/Bearing</div></div></div>
+                <div class="sensor-specs"><div class="spec-item"><span class="spec-label">Range</span><span class="spec-value">-40~200°C</span></div><div class="spec-item"><span class="spec-label">Accuracy</span><span class="spec-value">±0.5°C</span></div><div class="spec-item"><span class="spec-label">Response</span><span class="spec-value">&lt; 500ms</span></div><div class="spec-item"><span class="spec-label">Type</span><span class="spec-value">PT100 RTD</span></div></div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header"><div class="sensor-icon">⚡</div><div><div class="sensor-name">Current Sensor #1-2</div><div class="sensor-type">Motor Power Line</div></div></div>
+                <div class="sensor-specs"><div class="spec-item"><span class="spec-label">Range</span><span class="spec-value">0~200A</span></div><div class="spec-item"><span class="spec-label">Accuracy</span><span class="spec-value">±1%</span></div><div class="spec-item"><span class="spec-label">Bandwidth</span><span class="spec-value">DC~1kHz</span></div><div class="spec-item"><span class="spec-label">Type</span><span class="spec-value">Hall CT</span></div></div>
+            </div>
+            <div class="sensor-card">
+                <div class="sensor-header"><div class="sensor-icon">🔄</div><div><div class="sensor-name">Speed Sensor</div><div class="sensor-type">Shaft RPM</div></div></div>
+                <div class="sensor-specs"><div class="spec-item"><span class="spec-label">Range</span><span class="spec-value">0~3000 RPM</span></div><div class="spec-item"><span class="spec-label">Accuracy</span><span class="spec-value">±0.1%</span></div><div class="spec-item"><span class="spec-label">Resolution</span><span class="spec-value">1 RPM</span></div><div class="spec-item"><span class="spec-label">Type</span><span class="spec-value">Encoder</span></div></div>
+            </div>
+        </div>
+        <div class="gateway-section" id="section-gateway">
+            <div class="gateway-header"><h2>Edge AI Gateway</h2><p>Edge computing device for real-time AI analysis on-site</p></div>
+            <div class="gateway-specs">
+                <div class="gateway-spec"><h4>Hardware Specs</h4><ul><li>ARM Cortex-M4 MCU</li><li>Industrial Grade (-40~85°C)</li><li>DIN Rail Mount</li><li>IP65 Protection</li></ul></div>
+                <div class="gateway-spec"><h4>Communication</h4><ul><li>RS485 / Modbus RTU</li><li>Ethernet / Modbus TCP</li><li>4G LTE Modem (Optional)</li><li>Wi-Fi 802.11 b/g/n</li></ul></div>
+                <div class="gateway-spec"><h4>AI Features</h4><ul><li>Vibration Pattern Analysis</li><li>Bearing RUL Prediction</li><li>Early Overload Detection</li><li>Anomaly Alerts</li></ul></div>
+                <div class="gateway-spec"><h4>Control Features</h4><ul><li>Auto Speed Control</li><li>Overload Protection</li><li>E-Stop Interlock</li><li>Inverter Communication</li></ul></div>
+            </div>
+        </div>
+    </main>
+    <footer><p>&copy; 2026 HKME Co., Ltd. All rights reserved.</p></footer>
+    <audio id="audio-player" src="audio/system_en.mp3" preload="auto"></audio>
+    <div id="audio-control" style="position:fixed;bottom:30px;right:30px;z-index:9999;display:flex;gap:10px;align-items:center;">
+        <div id="progress-container" style="width:150px;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;cursor:pointer;display:none;"><div id="progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#1a5f7a,#57c5b6);border-radius:3px;"></div></div>
+        <button id="play-btn" onclick="toggleAudio()" style="width:60px;height:60px;border-radius:50%;border:none;background:linear-gradient(135deg,#1a5f7a,#57c5b6);color:white;font-size:24px;cursor:pointer;">🔊</button>
+        <button id="stop-btn" onclick="stopAudio()" style="width:60px;height:60px;border-radius:50%;border:none;background:#ff4444;color:white;font-size:24px;cursor:pointer;display:none;">⏹</button>
+        <button id="auto-btn" onclick="toggleAutoMode()" style="width:60px;height:60px;border-radius:50%;border:none;background:#666;color:white;font-size:12px;font-weight:bold;cursor:pointer;">AUTO</button>
+    </div>
+    <script>
+        const audio = document.getElementById('audio-player'), playBtn = document.getElementById('play-btn'), stopBtn = document.getElementById('stop-btn'), autoBtn = document.getElementById('auto-btn'), progressContainer = document.getElementById('progress-container'), progressBar = document.getElementById('progress-bar');
+        let isPlaying = false, currentSection = '', nextPage = 'diagram_en.html', isAutoMode = localStorage.getItem('autoMode') === 'true';
+        updateAutoButton();
+        function toggleAutoMode() { isAutoMode = !isAutoMode; localStorage.setItem('autoMode', isAutoMode); updateAutoButton(); }
+        function updateAutoButton() { autoBtn.style.background = isAutoMode ? 'linear-gradient(135deg, #00c853, #00e676)' : '#666'; }
+        const sectionTimings = [{ time: 0, section: 'section-header' }, { time: 7, section: 'section-summary' }, { time: 20, section: 'section-sensors' }, { time: 45, section: 'section-gateway' }];
+        function scrollToSection(sectionId) { const el = document.getElementById(sectionId); if (el && currentSection !== sectionId) { currentSection = sectionId; el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }
+        function toggleAudio() { if (isPlaying) { audio.pause(); isPlaying = false; playBtn.innerHTML = '▶'; } else { audio.play(); isPlaying = true; playBtn.innerHTML = '⏸'; stopBtn.style.display = 'block'; progressContainer.style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' }); } }
+        function stopAudio() { audio.pause(); audio.currentTime = 0; isPlaying = false; currentSection = ''; playBtn.innerHTML = '🔊'; stopBtn.style.display = 'none'; progressContainer.style.display = 'none'; progressBar.style.width = '0%'; }
+        audio.addEventListener('timeupdate', function() { progressBar.style.width = (audio.currentTime / audio.duration) * 100 + '%'; for (let i = sectionTimings.length - 1; i >= 0; i--) { if (audio.currentTime >= sectionTimings[i].time) { scrollToSection(sectionTimings[i].section); break; } } });
+        audio.addEventListener('ended', function() { if (isAutoMode) setTimeout(() => { window.location.href = nextPage; }, 2000); else stopAudio(); });
+        progressContainer.addEventListener('click', function(e) { const rect = this.getBoundingClientRect(); audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration; });
+        window.addEventListener('load', function() { if (isAutoMode && localStorage.getItem('autoPlaying') === 'true') setTimeout(() => { toggleAudio(); }, 1000); });
+        if (isAutoMode) localStorage.setItem('autoPlaying', 'true');
+    </script>
+</body>
+</html>

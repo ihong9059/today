@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>회사 소개 - 한국기계엔지니어링</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        .lang-toggle {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1001;
+            display: flex;
+            gap: 5px;
+            background: rgba(0,0,0,0.7);
+            padding: 5px;
+            border-radius: 20px;
+        }
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            background: transparent;
+            color: #888;
+        }
+        .lang-btn.active {
+            background: linear-gradient(90deg, #1a5f7a, #57c5b6);
+            color: #fff;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,10,26,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+        .logo { font-size: 1.5rem; font-weight: 700; color: #1a5f7a; }
+        .logo span { color: #fff; }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a { color: #aaa; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: #fff; }
+
+        .page-header {
+            padding: 140px 30px 80px;
+            text-align: center;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0a0a1a 100%);
+            position: relative;
+        }
+        .page-header h1 { font-size: 3rem; margin-bottom: 15px; position: relative; }
+        .page-header .tagline { font-size: 1.5rem; color: #57c5b6; margin-bottom: 10px; }
+        .page-header p { color: #888; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        section { padding: 100px 30px; max-width: 1400px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 60px; }
+        .section-title h2 { font-size: 2.2rem; margin-bottom: 15px; }
+        .section-title p { color: #888; font-size: 1.1rem; }
+
+        .about-intro { background: #0a0a1a; }
+        .intro-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .intro-text h3 { font-size: 1.8rem; margin-bottom: 20px; }
+        .intro-text p { color: #aaa; margin-bottom: 15px; }
+        .intro-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px; }
+        .stat-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #1a5f7a, #57c5b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label { color: #888; font-size: 0.9rem; margin-top: 5px; }
+        .intro-visual {
+            background: linear-gradient(135deg, rgba(26,95,122,0.2) 0%, rgba(87,197,182,0.1) 100%);
+            border: 1px solid rgba(87,197,182,0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+        .company-logo {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #1a5f7a, #57c5b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .company-slogan { font-size: 1.3rem; color: #aaa; }
+
+        .core-values { background: linear-gradient(180deg, #0a0a1a 0%, #0f0f24 100%); }
+        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .value-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .value-card:hover { transform: translateY(-5px); border-color: #1a5f7a; }
+        .value-icon { font-size: 3rem; margin-bottom: 20px; }
+        .value-card h3 { font-size: 1.3rem; margin-bottom: 15px; }
+        .value-card p { color: #888; font-size: 0.95rem; }
+
+        .technology { background: #0a0a1a; }
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .tech-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 35px;
+            transition: all 0.3s;
+        }
+        .tech-card:hover { border-color: #1a5f7a; }
+        .tech-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .tech-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(26,95,122,0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .tech-card h3 { font-size: 1.2rem; }
+        .tech-card p { color: #888; margin-bottom: 20px; }
+        .tech-features { list-style: none; }
+        .tech-features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .tech-features li::before { content: '✓'; position: absolute; left: 0; color: #57c5b6; }
+
+        .contact { text-align: center; padding: 100px 30px; background: linear-gradient(135deg, #1a2a3a 0%, #0a0a1a 100%); }
+        .contact-content { max-width: 800px; margin: 0 auto; }
+        .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; }
+        .contact-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .contact-icon { font-size: 2rem; margin-bottom: 15px; }
+        .contact-label { color: #888; font-size: 0.85rem; margin-bottom: 5px; }
+        .contact-value { font-size: 1.1rem; }
+        .contact-value a { color: #57c5b6; text-decoration: none; }
+        .cta-buttons { margin-top: 50px; display: flex; gap: 20px; justify-content: center; }
+        .btn {
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-primary { background: linear-gradient(90deg, #1a5f7a, #159895); color: #fff; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(26,95,122,0.4); }
+        .btn-secondary { background: transparent; border: 1px solid #444; color: #fff; }
+        .btn-secondary:hover { border-color: #1a5f7a; }
+
+        footer {
+            background: #050510;
+            padding: 60px 30px 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+        }
+        .footer-brand h3 { font-size: 1.5rem; margin-bottom: 15px; color: #1a5f7a; }
+        .footer-brand p { color: #666; font-size: 0.9rem; }
+        .footer-links h4 { margin-bottom: 20px; color: #888; font-size: 0.9rem; text-transform: uppercase; }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: #666; text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: #fff; }
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: #444;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .intro-content { grid-template-columns: 1fr; }
+            .contact-cards { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('ko')" id="btn-ko">한국어</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en">English</button>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo" data-ko="HKME <span>Smart Factory</span>" data-en="HKME <span>Smart Factory</span>">HKME <span>Smart Factory</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html" data-ko="홈" data-en="Home">홈</a></li>
+                <li><a href="system.html" data-ko="시스템 구성" data-en="System">시스템 구성</a></li>
+                <li><a href="diagram.html" data-ko="구성도" data-en="Diagram">구성도</a></li>
+                <li><a href="monitor.html" data-ko="실시간 모니터링" data-en="Monitoring">실시간 모니터링</a></li>
+                <li><a href="about.html" class="active" data-ko="회사 소개" data-en="About">회사 소개</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header" id="section-header">
+        <div class="tagline" data-ko="분쇄, 분급, 혼합, 선별, 이송 전문기업" data-en="Specialists in Crushing, Classifying, Mixing, Screening & Conveying">분쇄, 분급, 혼합, 선별, 이송 전문기업</div>
+        <h1 data-ko="(주)한국기계엔지니어링" data-en="HKME Co., Ltd.">(주)한국기계엔지니어링</h1>
+        <p data-ko="산업용 분쇄기/혼합기 제조 전문 기업으로<br>스마트 모니터링 솔루션을 제공합니다" data-en="Industrial crusher/mixer manufacturer<br>providing smart monitoring solutions">산업용 분쇄기/혼합기 제조 전문 기업으로<br>스마트 모니터링 솔루션을 제공합니다</p>
+    </header>
+
+    <section class="about-intro" id="section-intro">
+        <div class="intro-content">
+            <div class="intro-text">
+                <h3 data-ko="믿을 수 있는 파트너" data-en="Your Trusted Partner">믿을 수 있는 파트너</h3>
+                <p data-ko="(주)한국기계엔지니어링은 산업 현장의 분쇄/혼합 설비 전문 제조 기업입니다." data-en="HKME Co., Ltd. is a specialized manufacturer of industrial crushing/mixing equipment.">(주)한국기계엔지니어링은 산업 현장의 분쇄/혼합 설비 전문 제조 기업입니다.</p>
+                <p data-ko="파쇄기, 분쇄기, 핀밀 등 고부하 회전 설비 모니터링에 특화된 기술력을 보유하고 있으며, 재활용, 금속가공, 광물처리 산업에 최적화된 솔루션을 제공합니다." data-en="We have specialized technology for monitoring high-load rotating equipment such as shredders, crushers, and pin mills, providing optimized solutions for recycling, metal processing, and mineral processing industries.">파쇄기, 분쇄기, 핀밀 등 고부하 회전 설비 모니터링에 특화된 기술력을 보유하고 있으며, 재활용, 금속가공, 광물처리 산업에 최적화된 솔루션을 제공합니다.</p>
+                <p data-ko="Edge AI 기술을 활용하여 현장에서 실시간으로 커터/해머 마모 상태를 분석하고, 과부하 및 이물질을 조기 감지하여 돌발 고장을 최소화합니다." data-en="Using Edge AI technology, we analyze cutter/hammer wear in real-time on-site, detect overload and foreign objects early, minimizing unexpected failures.">Edge AI 기술을 활용하여 현장에서 실시간으로 커터/해머 마모 상태를 분석하고, 과부하 및 이물질을 조기 감지하여 돌발 고장을 최소화합니다.</p>
+                <div class="intro-stats">
+                    <div class="stat-box">
+                        <div class="stat-number">40+</div>
+                        <div class="stat-label" data-ko="년 업력" data-en="Years Experience">년 업력</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label" data-ko="구축 설비" data-en="Installed Equipment">구축 설비</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label" data-ko="고객 만족도" data-en="Customer Satisfaction">고객 만족도</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">70%</div>
+                        <div class="stat-label" data-ko="비계획정지 감소" data-en="Unplanned Downtime Reduction">비계획정지 감소</div>
+                    </div>
+                </div>
+            </div>
+            <div class="intro-visual">
+                <div class="company-logo">HKME</div>
+                <div class="company-slogan" data-ko="\"예측 가능한 미래,<br>안정적인 운영\"" data-en="\"Predictable Future,<br>Stable Operations\"">"예측 가능한 미래,<br>안정적인 운영"</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="core-values" id="section-values">
+        <div class="section-title">
+            <h2 data-ko="핵심 가치" data-en="Core Values">핵심 가치</h2>
+            <p data-ko="한국기계엔지니어링이 추구하는 가치" data-en="Values We Pursue">한국기계엔지니어링이 추구하는 가치</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🎯</div>
+                <h3 data-ko="정확성" data-en="Accuracy">정확성</h3>
+                <p data-ko="고정밀 센서와 검증된 알고리즘으로 정확한 설비 상태 진단을 제공합니다." data-en="Accurate equipment status diagnosis with high-precision sensors and verified algorithms.">고정밀 센서와 검증된 알고리즘으로 정확한 설비 상태 진단을 제공합니다.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">⚡</div>
+                <h3 data-ko="실시간성" data-en="Real-time">실시간성</h3>
+                <p data-ko="Edge AI 기술로 지연 없이 실시간으로 과부하 및 이상 징후를 탐지합니다." data-en="Edge AI technology detects overload and anomalies in real-time without delay.">Edge AI 기술로 지연 없이 실시간으로 과부하 및 이상 징후를 탐지합니다.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🔮</div>
+                <h3 data-ko="예측성" data-en="Predictability">예측성</h3>
+                <p data-ko="머신러닝 기반으로 커터/해머 마모 시점과 교체 주기를 정확히 예측합니다." data-en="Machine learning accurately predicts cutter/hammer wear timing and replacement cycles.">머신러닝 기반으로 커터/해머 마모 시점과 교체 주기를 정확히 예측합니다.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🛡️</div>
+                <h3 data-ko="안전성" data-en="Safety">안전성</h3>
+                <p data-ko="이물질 감지, 과부하 보호로 설비 손상과 안전사고를 예방합니다." data-en="Foreign object detection and overload protection prevent equipment damage and accidents.">이물질 감지, 과부하 보호로 설비 손상과 안전사고를 예방합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="technology" id="section-tech">
+        <div class="section-title">
+            <h2 data-ko="핵심 기술" data-en="Core Technologies">핵심 기술</h2>
+            <p data-ko="파쇄/분쇄 설비에 특화된 기술력" data-en="Technology Specialized for Crushing Equipment">파쇄/분쇄 설비에 특화된 기술력</p>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-header">
+                    <div class="tech-icon">🖥️</div>
+                    <h3>Edge AI Gateway</h3>
+                </div>
+                <p data-ko="현장에서 실시간으로 데이터를 분석하는 엣지 컴퓨팅 솔루션" data-en="Edge computing solution for real-time on-site data analysis">현장에서 실시간으로 데이터를 분석하는 엣지 컴퓨팅 솔루션</p>
+                <ul class="tech-features">
+                    <li data-ko="ARM Cortex-M4 + DSP 기반 고성능 처리" data-en="ARM Cortex-M4 + DSP high-performance processing">ARM Cortex-M4 + DSP 기반 고성능 처리</li>
+                    <li data-ko="실시간 FFT, Envelope, Cepstrum 분석" data-en="Real-time FFT, Envelope, Cepstrum analysis">실시간 FFT, Envelope, Cepstrum 분석</li>
+                    <li data-ko="AI 기반 이상 탐지 및 RUL 예측" data-en="AI-based anomaly detection and RUL prediction">AI 기반 이상 탐지 및 RUL 예측</li>
+                    <li data-ko="IP65 등급 방진/방수 설계" data-en="IP65 rated dust/water protection design">IP65 등급 방진/방수 설계</li>
+                </ul>
+            </div>
+            <div class="tech-card">
+                <div class="tech-header">
+                    <div class="tech-icon">☁️</div>
+                    <h3 data-ko="클라우드 플랫폼" data-en="Cloud Platform">클라우드 플랫폼</h3>
+                </div>
+                <p data-ko="통합 모니터링 및 분석 대시보드" data-en="Integrated monitoring and analysis dashboard">통합 모니터링 및 분석 대시보드</p>
+                <ul class="tech-features">
+                    <li data-ko="실시간 대시보드 및 3D 시각화" data-en="Real-time dashboard and 3D visualization">실시간 대시보드 및 3D 시각화</li>
+                    <li data-ko="다중 사업장 통합 관리" data-en="Multi-site unified management">다중 사업장 통합 관리</li>
+                    <li data-ko="자동 리포트 생성" data-en="Automatic report generation">자동 리포트 생성</li>
+                    <li data-ko="모바일 앱 알림" data-en="Mobile app notifications">모바일 앱 알림</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="section-contact">
+        <div class="contact-content">
+            <div class="section-title">
+                <h2 data-ko="문의하기" data-en="Contact Us">문의하기</h2>
+                <p data-ko="한국기계엔지니어링과 함께 스마트팩토리를 시작하세요" data-en="Start your smart factory journey with HKME">한국기계엔지니어링과 함께 스마트팩토리를 시작하세요</p>
+            </div>
+            <div class="contact-cards">
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-label" data-ko="주소" data-en="Address">주소</div>
+                    <div class="contact-value" data-ko="경기도 군포시 공단로 140번 안길30" data-en="30, Gongdan-ro 140beon-an-gil, Gunpo-si, Gyeonggi-do, Korea">경기도 군포시 공단로 140번 안길30</div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-label" data-ko="이메일" data-en="Email">이메일</div>
+                    <div class="contact-value"><a href="mailto:topcrusher@naver.com">topcrusher@naver.com</a></div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-label" data-ko="연락처" data-en="Phone">연락처</div>
+                    <div class="contact-value"><a href="tel:031-427-7783">031-427-7783~5</a></div>
+                </div>
+            </div>
+            <div class="cta-buttons">
+                <a href="monitor.html" class="btn btn-primary" data-ko="실시간 데모 체험" data-en="Live Demo">실시간 데모 체험</a>
+                <a href="index.html" class="btn btn-secondary" data-ko="솔루션 자세히 보기" data-en="View Solutions">솔루션 자세히 보기</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3 data-ko="(주)한국기계엔지니어링" data-en="HKME Co., Ltd.">(주)한국기계엔지니어링</h3>
+                <p data-ko="분쇄, 분급, 혼합, 선별, 이송 전문기업<br>산업용 분쇄기/혼합기 제조 및<br>스마트 모니터링 솔루션을 제공합니다." data-en="Specialists in Crushing, Classifying, Mixing, Screening & Conveying<br>Industrial crusher/mixer manufacturer and<br>smart monitoring solutions provider.">분쇄, 분급, 혼합, 선별, 이송 전문기업<br>산업용 분쇄기/혼합기 제조 및<br>스마트 모니터링 솔루션을 제공합니다.</p>
+            </div>
+            <div class="footer-links">
+                <h4 data-ko="사이트맵" data-en="Sitemap">사이트맵</h4>
+                <ul>
+                    <li><a href="index.html" data-ko="홈" data-en="Home">홈</a></li>
+                    <li><a href="system.html" data-ko="시스템 구성" data-en="System">시스템 구성</a></li>
+                    <li><a href="monitor.html" data-ko="실시간 모니터링" data-en="Monitoring">실시간 모니터링</a></li>
+                    <li><a href="about.html" data-ko="회사 소개" data-en="About">회사 소개</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4 data-ko="연락처" data-en="Contact">연락처</h4>
+                <ul>
+                    <li data-ko="경기도 군포시 공단로 140번 안길30" data-en="30, Gongdan-ro 140beon-an-gil, Gunpo-si">경기도 군포시 공단로 140번 안길30</li>
+                    <li>TEL: 031-427-7783~5</li>
+                    <li>topcrusher@naver.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 (주)한국기계엔지니어링. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <audio id="audio-ko" src="audio/about.mp3" preload="auto"></audio>
+    <audio id="audio-en" src="audio/about_en.mp3" preload="auto"></audio>
+
+    <div id="audio-control" style="position:fixed;bottom:30px;right:30px;z-index:9999;display:flex;gap:10px;align-items:center;">
+        <div id="progress-container" style="width:150px;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;cursor:pointer;display:none;">
+            <div id="progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#1a5f7a,#57c5b6);border-radius:3px;"></div>
+        </div>
+        <button id="play-btn" onclick="toggleAudio()" style="width:60px;height:60px;border-radius:50%;border:none;background:linear-gradient(135deg,#1a5f7a,#57c5b6);color:white;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(26,95,122,0.4);">🔊</button>
+        <button id="stop-btn" onclick="stopAudio()" style="width:60px;height:60px;border-radius:50%;border:none;background:#ff4444;color:white;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(255,68,68,0.4);display:none;">⏹</button>
+        <button id="auto-btn" onclick="toggleAutoMode()" style="width:60px;height:60px;border-radius:50%;border:none;background:#666;color:white;font-size:12px;font-weight:bold;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.3);">AUTO</button>
+    </div>
+
+    <script>
+        let currentLang = localStorage.getItem('lang') || 'ko';
+
+        function setLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.querySelectorAll('[data-ko]').forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) el.innerHTML = text;
+            });
+            document.documentElement.lang = lang;
+            stopAudio();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => setLang(currentLang));
+
+        const audioKo = document.getElementById('audio-ko');
+        const audioEn = document.getElementById('audio-en');
+        const playBtn = document.getElementById('play-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const autoBtn = document.getElementById('auto-btn');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        let isPlaying = false;
+        let currentSection = '';
+        const nextPage = 'index.html';
+        let isAutoMode = localStorage.getItem('autoMode') === 'true';
+        updateAutoButton();
+
+        function getCurrentAudio() { return currentLang === 'en' ? audioEn : audioKo; }
+        function toggleAutoMode() {
+            isAutoMode = !isAutoMode;
+            localStorage.setItem('autoMode', isAutoMode);
+            updateAutoButton();
+        }
+        function updateAutoButton() {
+            autoBtn.style.background = isAutoMode ? 'linear-gradient(135deg, #00c853, #00e676)' : '#666';
+            autoBtn.style.boxShadow = isAutoMode ? '0 4px 20px rgba(0,200,83,0.4)' : '0 4px 20px rgba(0,0,0,0.3)';
+        }
+
+        const sectionTimings = [
+            { time: 0, section: 'section-header' },
+            { time: 8, section: 'section-intro' },
+            { time: 25, section: 'section-values' },
+            { time: 40, section: 'section-tech' },
+            { time: 55, section: 'section-contact' }
+        ];
+
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element && currentSection !== sectionId) {
+                currentSection = sectionId;
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function toggleAudio() {
+            const audio = getCurrentAudio();
+            if (isPlaying) {
+                audio.pause(); isPlaying = false; playBtn.innerHTML = '▶';
+            } else {
+                audioKo.pause(); audioEn.pause();
+                audioKo.currentTime = 0; audioEn.currentTime = 0;
+                audio.play(); isPlaying = true; playBtn.innerHTML = '⏸';
+                stopBtn.style.display = 'block'; progressContainer.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function stopAudio() {
+            audioKo.pause(); audioEn.pause();
+            audioKo.currentTime = 0; audioEn.currentTime = 0;
+            isPlaying = false; currentSection = '';
+            playBtn.innerHTML = '🔊'; stopBtn.style.display = 'none';
+            progressContainer.style.display = 'none'; progressBar.style.width = '0%';
+        }
+
+        [audioKo, audioEn].forEach(audio => {
+            audio.addEventListener('timeupdate', function() {
+                if (audio === getCurrentAudio()) {
+                    progressBar.style.width = (audio.currentTime / audio.duration) * 100 + '%';
+                    for (let i = sectionTimings.length - 1; i >= 0; i--) {
+                        if (audio.currentTime >= sectionTimings[i].time) {
+                            scrollToSection(sectionTimings[i].section); break;
+                        }
+                    }
+                }
+            });
+            audio.addEventListener('ended', function() {
+                if (isAutoMode) setTimeout(() => { window.location.href = nextPage; }, 2000);
+                else stopAudio();
+            });
+        });
+
+        progressContainer.addEventListener('click', function(e) {
+            const audio = getCurrentAudio();
+            const rect = this.getBoundingClientRect();
+            audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+        });
+
+        window.addEventListener('load', function() {
+            if (isAutoMode && localStorage.getItem('autoPlaying') === 'true') {
+                setTimeout(() => { toggleAudio(); }, 1000);
+            }
+        });
+        if (isAutoMode) localStorage.setItem('autoPlaying', 'true');
+    </script>
+</body>
+</html>

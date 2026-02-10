@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>시스템 구성도 - 한국기계엔지니어링 스마트 파쇄기 (시뮬레이터)</title>
+    <!-- 로컬 폰트 사용 -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        /* Language Switch */
+        .lang-switch { position: fixed; bottom: 30px; left: 30px; z-index: 1001; display: flex; gap: 10px; }
+        .lang-switch a { padding: 8px 16px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+        .lang-switch a.ko { background: linear-gradient(90deg, #1a5f7a, #57c5b6); color: #fff; }
+        .lang-switch a.en { background: transparent; color: #888; border: 1px solid #444; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,10,26,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo { font-size: 1.3rem; font-weight: 700; color: #1a5f7a; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #57c5b6; }
+
+        /* Main Content */
+        main {
+            padding: 80px 20px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .page-header h1 {
+            font-size: 2rem;
+            background: linear-gradient(90deg, #1a5f7a, #57c5b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .page-header p { color: #888; font-size: 1rem; }
+
+        /* Simulator Guide */
+        .simulator-guide {
+            background: linear-gradient(135deg, rgba(87, 197, 182, 0.15), rgba(26, 95, 122, 0.1));
+            border: 1px solid rgba(87, 197, 182, 0.3);
+            border-radius: 12px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .simulator-guide .icon { font-size: 2rem; }
+        .simulator-guide h3 { color: #57c5b6; font-size: 1rem; margin-bottom: 5px; }
+        .simulator-guide p { color: #aaa; font-size: 0.85rem; }
+
+        /* Diagram Container */
+        .diagram-container {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            overflow-x: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .diagram-svg {
+            width: 100%;
+            min-width: 1200px;
+            height: auto;
+        }
+
+        /* Layer styles */
+        .layer-cloud { fill: #e3f2fd; }
+        .layer-edge { fill: #fff8e1; }
+        .layer-equip { fill: #e8f5e9; }
+        .layer-sensor { fill: #fce4ec; }
+
+        .layer-label {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Node styles */
+        .node {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .node:hover {
+            filter: brightness(1.1);
+        }
+
+        .node-cloud { fill: #1a5f7a; }
+        .node-cloud-text { fill: #fff; font-size: 11px; pointer-events: none; }
+
+        .node-ai { fill: #57c5b6; }
+        .node-alert { fill: #ff6b6b; }
+        .node-mobile { fill: #9b59b6; }
+
+        .node-gateway { fill: #ff9800; }
+        .node-gateway-text { fill: #fff; font-size: 10px; pointer-events: none; }
+
+        .node-device { fill: #fff; stroke: #ff9800; stroke-width: 2; }
+        .node-device-text { fill: #333; font-size: 10px; pointer-events: none; }
+
+        .node-equipment { fill: #4caf50; }
+        .node-equipment-text { fill: #fff; font-size: 11px; pointer-events: none; }
+
+        .node-sensor { fill: #e91e63; }
+        .node-sensor-text { fill: #fff; font-size: 9px; pointer-events: none; }
+
+        /* Active state - glow effect */
+        .node.active .node-cloud { filter: drop-shadow(0 0 10px #1a5f7a); }
+        .node.active .node-ai { filter: drop-shadow(0 0 10px #57c5b6); }
+        .node.active .node-alert { filter: drop-shadow(0 0 10px #ff6b6b); }
+        .node.active .node-mobile { filter: drop-shadow(0 0 10px #9b59b6); }
+        .node.active .node-gateway { filter: drop-shadow(0 0 12px #ff9800); }
+        .node.active .node-device { filter: drop-shadow(0 0 8px #ff9800); }
+        .node.active .node-equipment { filter: drop-shadow(0 0 10px #4caf50); }
+        .node.active .node-sensor { filter: drop-shadow(0 0 8px #e91e63); }
+
+        /* Inactive state */
+        .node.inactive .node-cloud,
+        .node.inactive .node-ai,
+        .node.inactive .node-alert,
+        .node.inactive .node-mobile,
+        .node.inactive .node-gateway,
+        .node.inactive .node-equipment,
+        .node.inactive .node-sensor {
+            fill: #999 !important;
+            filter: none !important;
+        }
+        .node.inactive .node-device {
+            fill: #ddd !important;
+            stroke: #999 !important;
+            filter: none !important;
+        }
+        .node.inactive .node-cloud-text,
+        .node.inactive .node-gateway-text,
+        .node.inactive .node-equipment-text,
+        .node.inactive .node-sensor-text {
+            fill: #666 !important;
+        }
+        .node.inactive .node-device-text {
+            fill: #999 !important;
+        }
+
+        /* Warning state */
+        @keyframes warning-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .node.warning .node-cloud,
+        .node.warning .node-ai,
+        .node.warning .node-alert,
+        .node.warning .node-mobile,
+        .node.warning .node-gateway,
+        .node.warning .node-device,
+        .node.warning .node-equipment,
+        .node.warning .node-sensor {
+            fill: #f44336 !important;
+            animation: warning-blink 1s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px #f44336) !important;
+        }
+
+        /* Connection lines */
+        .conn-data { stroke: #1565c0; stroke-width: 2; fill: none; }
+        .conn-control { stroke: #ff8f00; stroke-width: 2; fill: none; }
+        .conn-sensor { stroke: #c2185b; stroke-width: 2; fill: none; stroke-dasharray: 5,3; }
+        .conn-equip { stroke: #2e7d32; stroke-width: 2; fill: none; }
+
+        /* Animation */
+        .data-flow {
+            stroke-dasharray: 10, 5;
+            animation: flow 1s linear infinite;
+        }
+        @keyframes flow {
+            to { stroke-dashoffset: -15; }
+        }
+
+        /* Stopped connection */
+        .conn-stopped {
+            stroke: #999 !important;
+            stroke-dasharray: 3, 6 !important;
+            animation: none !important;
+            opacity: 0.5;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.95);
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 100;
+            max-width: 280px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .tooltip.show { opacity: 1; }
+        .tooltip-title { color: #57c5b6; font-weight: bold; margin-bottom: 5px; }
+        .tooltip-status {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4caf50;
+        }
+        .status-dot.off { background: #f44336; }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+            font-size: 0.85rem;
+        }
+        .legend-line {
+            width: 30px;
+            height: 3px;
+            border-radius: 2px;
+        }
+        .legend-data { background: #1565c0; }
+        .legend-control { background: #ff8f00; }
+        .legend-sensor { background: #c2185b; background: repeating-linear-gradient(90deg, #c2185b 0, #c2185b 5px, transparent 5px, transparent 8px); }
+        .legend-equip { background: #2e7d32; }
+
+        /* Control Panel */
+        .control-panel {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .control-header h3 {
+            color: #57c5b6;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #57c5b6, #1a5f7a);
+            color: #fff;
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: #fff;
+        }
+        .btn-warning {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: #fff;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Status Monitor */
+        .status-monitor {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .status-card {
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        .status-card h4 {
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .status-log {
+            max-height: 150px;
+            overflow-y: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 11px;
+        }
+        .log-entry {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            gap: 10px;
+        }
+        .log-time { color: #555; min-width: 70px; }
+        .log-active { color: #4caf50; }
+        .log-inactive { color: #f44336; }
+        .log-info { color: #2196f3; }
+
+        .node-status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .node-status-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            color: #888;
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #d32f2f, #f44336);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(244, 67, 54, 0.4);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .alert-banner.show { display: flex; }
+        .alert-icon { font-size: 1.5rem; }
+        .alert-content h4 { font-size: 14px; margin-bottom: 3px; }
+        .alert-content p { font-size: 12px; opacity: 0.8; }
+        .alert-close {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.7;
+            margin-left: 10px;
+        }
+        .alert-close:hover { opacity: 1; }
+
+        /* Footer */
+        footer {
+            background: #050510;
+            padding: 30px;
+            text-align: center;
+            color: #444;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 40px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .diagram-container { padding: 10px; }
+            .legend { gap: 15px; }
+            .control-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switch"><a href="diagram.html" class="ko">한국어</a><a href="diagram_en.html" class="en">English</a></div>
+    <nav>
+        <div class="logo">한국기계엔지니어링</div>
+        <div class="nav-links">
+            <a href="index.html">홈</a>
+            <a href="system.html">시스템 구성</a>
+            <a href="diagram.html" class="active">구성도</a>
+            <a href="monitor.html">실시간 모니터링</a>
+            <a href="about.html">회사 소개</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-header" id="section-header">
+            <h1>스마트 파쇄기 시스템 구성도</h1>
+            <p>센서부터 클라우드까지 4계층 IoT 아키텍처 - 인터랙티브 시뮬레이터</p>
+        </div>
+
+        <div class="simulator-guide" id="section-guide">
+            <span class="icon">🎮</span>
+            <div>
+                <h3>시뮬레이터 모드</h3>
+                <p>각 노드를 클릭하여 신호 흐름을 ON/OFF 할 수 있습니다. 비활성화된 노드는 회색으로 표시되며, 연결된 신호 흐름이 중단됩니다.</p>
+            </div>
+        </div>
+
+        <div class="diagram-container" id="section-diagram">
+            <svg class="diagram-svg" viewBox="0 0 1400 850" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background Layers -->
+                <rect x="200" y="30" width="1180" height="160" rx="10" class="layer-cloud" stroke="#1565c0" stroke-width="2"/>
+                <text x="220" y="55" class="layer-label" fill="#0277bd">Cloud/Server Layer</text>
+
+                <rect x="200" y="210" width="1180" height="170" rx="10" class="layer-edge" stroke="#ff8f00" stroke-width="2"/>
+                <text x="220" y="235" class="layer-label" fill="#ef6c00">Edge Gateway Layer</text>
+
+                <rect x="200" y="400" width="1180" height="150" rx="10" class="layer-equip" stroke="#2e7d32" stroke-width="2"/>
+                <text x="220" y="425" class="layer-label" fill="#2e7d32">Equipment Layer</text>
+
+                <rect x="200" y="570" width="1180" height="180" rx="10" class="layer-sensor" stroke="#c2185b" stroke-width="2"/>
+                <text x="220" y="595" class="layer-label" fill="#c2185b">Sensor Layer (12 Sensors)</text>
+
+                <!-- Connection Lines (behind nodes) -->
+                <!-- Cloud to Router -->
+                <path id="conn-cloud-router" d="M1135,325 L1135,190 L440,190 L440,130" class="conn-data data-flow"/>
+                <text x="800" y="180" text-anchor="middle" font-size="9" fill="#1565c0">HTTPS / MQTT</text>
+
+                <!-- Router to Gateway -->
+                <line id="conn-router-gateway" x1="1080" y1="297" x2="740" y2="297" class="conn-control data-flow"/>
+
+                <!-- Gateway to PLC -->
+                <line id="conn-gateway-plc" x1="540" y1="297" x2="360" y2="297" class="conn-control data-flow"/>
+
+                <!-- Gateway to Inverters -->
+                <line id="conn-gateway-inv1" x1="740" y1="280" x2="800" y2="267" class="conn-control data-flow"/>
+                <line id="conn-gateway-inv2" x1="740" y1="320" x2="800" y2="322" class="conn-control data-flow"/>
+
+                <!-- Gateway to HMI -->
+                <path id="conn-gateway-hmi" d="M740,305 L770,305 L770,297 L940,297" class="conn-control data-flow"/>
+
+                <!-- Gateway to Equipment -->
+                <path id="conn-gateway-shredder" d="M640,360 L640,390 L340,390 L340,430" class="conn-equip data-flow"/>
+                <path id="conn-gateway-crusher" d="M640,360 L640,430" class="conn-equip data-flow"/>
+                <path id="conn-gateway-pinmill" d="M640,360 L640,390 L940,390 L940,430" class="conn-equip data-flow"/>
+
+                <!-- Equipment to Sensors -->
+                <path id="conn-shredder-vibration" d="M340,530 L340,560 L295,560 L295,615" class="conn-sensor data-flow"/>
+                <path id="conn-shredder-temp" d="M340,530 L340,560 L460,560 L460,615" class="conn-sensor data-flow"/>
+                <path id="conn-crusher-current" d="M640,530 L640,560 L625,560 L625,615" class="conn-sensor data-flow"/>
+                <path id="conn-crusher-speed" d="M640,530 L640,560 L790,560 L790,615" class="conn-sensor data-flow"/>
+                <path id="conn-pinmill-proximity" d="M940,530 L940,560 L955,560 L955,615" class="conn-sensor data-flow"/>
+                <path id="conn-pinmill-dust" d="M940,530 L940,560 L1120,560 L1120,615" class="conn-sensor data-flow"/>
+
+                <!-- Flow Labels -->
+                <text x="500" y="395" text-anchor="middle" font-size="9" fill="#2e7d32" font-style="italic">제어 신호</text>
+                <text x="400" y="575" text-anchor="middle" font-size="9" fill="#c2185b" font-style="italic">데이터 수집</text>
+                <text x="420" y="300" text-anchor="middle" font-size="9" fill="#666">Modbus RTU</text>
+                <text x="760" y="290" text-anchor="middle" font-size="9" fill="#666">RS485</text>
+
+                <!-- Cloud Layer Nodes -->
+                <!-- AWS Cloud -->
+                <g id="node-aws" class="node active" data-tooltip="AWS Cloud|클라우드 인프라|데이터 저장 및 처리">
+                    <ellipse cx="280" cy="110" rx="60" ry="40" fill="#fff" stroke="#ff9800" stroke-width="2" class="node-device"/>
+                    <text x="280" y="105" text-anchor="middle" font-size="11" fill="#333" class="node-device-text">AWS</text>
+                    <text x="280" y="120" text-anchor="middle" font-size="10" fill="#666" class="node-device-text">Cloud</text>
+                </g>
+
+                <!-- Dashboard -->
+                <g id="node-dashboard" class="node active" data-tooltip="웹 대시보드|실시간 모니터링|트렌드 분석, 보고서">
+                    <rect x="380" y="70" width="120" height="60" rx="8" class="node-cloud"/>
+                    <text x="440" y="95" text-anchor="middle" class="node-cloud-text">웹 대시보드</text>
+                    <text x="440" y="112" text-anchor="middle" class="node-cloud-text">(실시간 모니터링)</text>
+                </g>
+
+                <!-- AI Engine -->
+                <g id="node-ai" class="node active" data-tooltip="AI/ML 엔진|베어링 RUL 예측|이상 탐지, 패턴 분석">
+                    <rect x="530" y="70" width="120" height="60" rx="8" class="node-ai"/>
+                    <text x="590" y="95" text-anchor="middle" class="node-cloud-text">AI/ML 엔진</text>
+                    <text x="590" y="112" text-anchor="middle" class="node-cloud-text">(예지정비 모델)</text>
+                </g>
+
+                <!-- Database -->
+                <g id="node-db" class="node active" data-tooltip="InfluxDB|시계열 데이터베이스|센서 데이터 저장">
+                    <path d="M720,75 h60 a10,20 0 0,1 0,40 h-60 a10,20 0 0,1 0,-40 z" fill="#fff" stroke="#1a5f7a" stroke-width="2" class="node-device"/>
+                    <ellipse cx="750" cy="75" rx="30" ry="10" fill="#fff" stroke="#1a5f7a" stroke-width="2"/>
+                    <text x="750" y="100" text-anchor="middle" font-size="10" fill="#333" class="node-device-text">InfluxDB</text>
+                    <text x="750" y="112" text-anchor="middle" font-size="9" fill="#666" class="node-device-text">(시계열 DB)</text>
+                </g>
+
+                <!-- Alert System -->
+                <g id="node-alert" class="node active" data-tooltip="알림 시스템|SMS, Email, 카카오톡|알림 전송">
+                    <rect x="820" y="70" width="130" height="60" rx="8" class="node-alert"/>
+                    <text x="885" y="95" text-anchor="middle" class="node-cloud-text">알림 시스템</text>
+                    <text x="885" y="112" text-anchor="middle" class="node-cloud-text">(SMS/Email/카카오)</text>
+                </g>
+
+                <!-- Mobile App -->
+                <g id="node-mobile" class="node active" data-tooltip="모바일 앱|iOS/Android|원격 모니터링">
+                    <rect x="980" y="70" width="110" height="60" rx="8" class="node-mobile"/>
+                    <text x="1035" y="95" text-anchor="middle" class="node-cloud-text">모바일 앱</text>
+                    <text x="1035" y="112" text-anchor="middle" class="node-cloud-text">(원격 모니터링)</text>
+                </g>
+
+                <!-- Users (not clickable) -->
+                <circle cx="1150" cy="85" r="15" fill="#1a5f7a"/>
+                <circle cx="1150" cy="75" r="8" fill="#fff"/>
+                <text x="1150" y="120" text-anchor="middle" font-size="9" fill="#333">관리자</text>
+
+                <circle cx="1200" cy="85" r="15" fill="#57c5b6"/>
+                <circle cx="1200" cy="75" r="8" fill="#fff"/>
+                <text x="1200" y="120" text-anchor="middle" font-size="9" fill="#333">현장작업자</text>
+
+                <!-- Edge Layer Nodes -->
+                <!-- Edge Gateway -->
+                <g id="node-gateway" class="node active" data-tooltip="Edge AI Gateway|스마트 엣지 컨트롤러|ARM Cortex-M4, AI 추론">
+                    <rect x="540" y="250" width="200" height="110" rx="10" class="node-gateway"/>
+                    <text x="640" y="275" text-anchor="middle" class="node-gateway-text" font-weight="bold">Edge AI Gateway</text>
+                    <text x="640" y="295" text-anchor="middle" class="node-gateway-text">(스마트 엣지 컨트롤러)</text>
+                    <text x="640" y="315" text-anchor="middle" class="node-gateway-text" font-size="9">• ARM Cortex-M4 MCU</text>
+                    <text x="640" y="330" text-anchor="middle" class="node-gateway-text" font-size="9">• AI 추론 엔진</text>
+                    <text x="640" y="345" text-anchor="middle" class="node-gateway-text" font-size="9">• 실시간 데이터 처리</text>
+                </g>
+
+                <!-- PLC -->
+                <g id="node-plc" class="node active" data-tooltip="PLC|시퀀스 제어|인터록, 비상정지">
+                    <rect x="260" y="270" width="100" height="55" rx="6" class="node-device"/>
+                    <text x="310" y="295" text-anchor="middle" class="node-device-text">PLC</text>
+                    <text x="310" y="310" text-anchor="middle" class="node-device-text">(시퀀스 제어)</text>
+                </g>
+
+                <!-- Inverter 1 -->
+                <g id="node-inv1" class="node active" data-tooltip="인버터 #1|축1 모터 속도 제어|V/F 제어">
+                    <rect x="800" y="245" width="100" height="45" rx="6" class="node-device"/>
+                    <text x="850" y="265" text-anchor="middle" class="node-device-text">인버터 #1</text>
+                    <text x="850" y="280" text-anchor="middle" class="node-device-text">(축1 모터)</text>
+                </g>
+
+                <!-- Inverter 2 -->
+                <g id="node-inv2" class="node active" data-tooltip="인버터 #2|축2 모터 속도 제어|V/F 제어">
+                    <rect x="800" y="300" width="100" height="45" rx="6" class="node-device"/>
+                    <text x="850" y="320" text-anchor="middle" class="node-device-text">인버터 #2</text>
+                    <text x="850" y="335" text-anchor="middle" class="node-device-text">(축2 모터)</text>
+                </g>
+
+                <!-- HMI -->
+                <g id="node-hmi" class="node active" data-tooltip="HMI|현장 터치 모니터|운전 상태 표시">
+                    <rect x="940" y="270" width="100" height="55" rx="6" class="node-device"/>
+                    <text x="990" y="295" text-anchor="middle" class="node-device-text">HMI</text>
+                    <text x="990" y="310" text-anchor="middle" class="node-device-text">(현장 모니터)</text>
+                </g>
+
+                <!-- Router -->
+                <g id="node-router" class="node active" data-tooltip="산업용 라우터|4G LTE 통신|클라우드 연결">
+                    <rect x="1080" y="270" width="110" height="55" rx="6" class="node-device"/>
+                    <text x="1135" y="293" text-anchor="middle" class="node-device-text">산업용 라우터</text>
+                    <text x="1135" y="308" text-anchor="middle" class="node-device-text">(4G LTE)</text>
+                </g>
+
+                <!-- Equipment Layer Nodes -->
+                <!-- Shredder -->
+                <g id="node-shredder" class="node active" data-tooltip="이축 파쇄기|HK-TSS-800|75kW x 2, 2~5 ton/hr">
+                    <rect x="260" y="430" width="160" height="100" rx="10" class="node-equipment"/>
+                    <text x="340" y="460" text-anchor="middle" class="node-equipment-text" font-weight="bold">이축 파쇄기</text>
+                    <text x="340" y="480" text-anchor="middle" class="node-equipment-text">(SHREDDER)</text>
+                    <text x="340" y="500" text-anchor="middle" class="node-equipment-text" font-size="10">HK-TSS-800</text>
+                    <text x="340" y="518" text-anchor="middle" class="node-equipment-text" font-size="10">75kW x 2</text>
+                </g>
+
+                <!-- Crusher -->
+                <g id="node-crusher" class="node active" data-tooltip="분쇄기|HK-HC-500|55kW, 1~3 ton/hr">
+                    <rect x="560" y="430" width="160" height="100" rx="10" class="node-equipment"/>
+                    <text x="640" y="460" text-anchor="middle" class="node-equipment-text" font-weight="bold">분쇄기</text>
+                    <text x="640" y="480" text-anchor="middle" class="node-equipment-text">(CRUSHER)</text>
+                    <text x="640" y="500" text-anchor="middle" class="node-equipment-text" font-size="10">HK-HC-500</text>
+                    <text x="640" y="518" text-anchor="middle" class="node-equipment-text" font-size="10">55kW</text>
+                </g>
+
+                <!-- Pin Mill -->
+                <g id="node-pinmill" class="node active" data-tooltip="핀밀|HK-PM-300|37kW, 3000~6000 RPM">
+                    <rect x="860" y="430" width="160" height="100" rx="10" class="node-equipment"/>
+                    <text x="940" y="460" text-anchor="middle" class="node-equipment-text" font-weight="bold">핀밀</text>
+                    <text x="940" y="480" text-anchor="middle" class="node-equipment-text">(PIN MILL)</text>
+                    <text x="940" y="500" text-anchor="middle" class="node-equipment-text" font-size="10">HK-PM-300</text>
+                    <text x="940" y="518" text-anchor="middle" class="node-equipment-text" font-size="10">37kW</text>
+                </g>
+
+                <!-- Motor symbols -->
+                <circle cx="260" cy="490" r="18" fill="#81c784" stroke="#4caf50" stroke-width="2"/>
+                <text x="260" y="494" text-anchor="middle" font-size="8" fill="#fff">M1</text>
+                <circle cx="420" cy="490" r="18" fill="#81c784" stroke="#4caf50" stroke-width="2"/>
+                <text x="420" y="494" text-anchor="middle" font-size="8" fill="#fff">M2</text>
+
+                <!-- Sensor Layer Nodes -->
+                <!-- Vibration Sensors -->
+                <g id="node-vibration" class="node active" data-tooltip="진동 센서 4개|베어링 하우징, 모터/감속기|0~50 mm/s">
+                    <rect x="220" y="615" width="150" height="100" rx="8" class="node-sensor"/>
+                    <text x="295" y="640" text-anchor="middle" class="node-sensor-text" font-weight="bold">진동 센서 (4개)</text>
+                    <text x="295" y="658" text-anchor="middle" class="node-sensor-text">• 베어링 하우징 #1~2</text>
+                    <text x="295" y="673" text-anchor="middle" class="node-sensor-text">• 모터/감속기 #3~4</text>
+                    <text x="295" y="695" text-anchor="middle" class="node-sensor-text" font-style="italic">측정: 0~50 mm/s</text>
+                </g>
+
+                <!-- Temperature Sensors -->
+                <g id="node-temp" class="node active" data-tooltip="온도 센서 3개|메인 모터, 감속기, 베어링|PT100 RTD">
+                    <rect x="385" y="615" width="150" height="100" rx="8" class="node-sensor"/>
+                    <text x="460" y="640" text-anchor="middle" class="node-sensor-text" font-weight="bold">온도 센서 (3개)</text>
+                    <text x="460" y="658" text-anchor="middle" class="node-sensor-text">• 메인 모터</text>
+                    <text x="460" y="673" text-anchor="middle" class="node-sensor-text">• 감속기 / 베어링</text>
+                    <text x="460" y="695" text-anchor="middle" class="node-sensor-text" font-style="italic">측정: -40~200°C</text>
+                </g>
+
+                <!-- Current Sensors -->
+                <g id="node-current" class="node active" data-tooltip="전류 센서 2개|모터 전원선|홀 센서 CT, 0~200A">
+                    <rect x="550" y="615" width="150" height="100" rx="8" class="node-sensor"/>
+                    <text x="625" y="640" text-anchor="middle" class="node-sensor-text" font-weight="bold">전류 센서 (2개)</text>
+                    <text x="625" y="658" text-anchor="middle" class="node-sensor-text">• 모터 전원선 #1~2</text>
+                    <text x="625" y="673" text-anchor="middle" class="node-sensor-text">• 홀 센서 CT 타입</text>
+                    <text x="625" y="695" text-anchor="middle" class="node-sensor-text" font-style="italic">측정: 0~200A</text>
+                </g>
+
+                <!-- Speed Sensor -->
+                <g id="node-speed" class="node active" data-tooltip="속도 센서 1개|축 회전수|엔코더, 0~3000 RPM">
+                    <rect x="715" y="615" width="150" height="100" rx="8" class="node-sensor"/>
+                    <text x="790" y="640" text-anchor="middle" class="node-sensor-text" font-weight="bold">속도 센서 (1개)</text>
+                    <text x="790" y="658" text-anchor="middle" class="node-sensor-text">• 축 회전수</text>
+                    <text x="790" y="673" text-anchor="middle" class="node-sensor-text">• 엔코더 타입</text>
+                    <text x="790" y="695" text-anchor="middle" class="node-sensor-text" font-style="italic">측정: 0~3000 RPM</text>
+                </g>
+
+                <!-- Proximity Sensor -->
+                <g id="node-proximity" class="node active" data-tooltip="근접 센서 1개|투입구 이물질 감지|NPN/PNP, 0~500mm">
+                    <rect x="880" y="615" width="150" height="100" rx="8" class="node-sensor"/>
+                    <text x="955" y="640" text-anchor="middle" class="node-sensor-text" font-weight="bold">근접 센서 (1개)</text>
+                    <text x="955" y="658" text-anchor="middle" class="node-sensor-text">• 투입구 이물질 감지</text>
+                    <text x="955" y="673" text-anchor="middle" class="node-sensor-text">• NPN/PNP 출력</text>
+                    <text x="955" y="695" text-anchor="middle" class="node-sensor-text" font-style="italic">감지: 0~500mm</text>
+                </g>
+
+                <!-- Dust Sensor -->
+                <g id="node-dust" class="node active" data-tooltip="분진 센서 1개|작업장 환경|레이저 산란, 0~50 mg/m³">
+                    <rect x="1045" y="615" width="150" height="100" rx="8" class="node-sensor"/>
+                    <text x="1120" y="640" text-anchor="middle" class="node-sensor-text" font-weight="bold">분진 센서 (1개)</text>
+                    <text x="1120" y="658" text-anchor="middle" class="node-sensor-text">• 작업장 환경</text>
+                    <text x="1120" y="673" text-anchor="middle" class="node-sensor-text">• 레이저 산란 방식</text>
+                    <text x="1120" y="695" text-anchor="middle" class="node-sensor-text" font-style="italic">측정: 0~50 mg/m³</text>
+                </g>
+
+                <!-- Total Badge -->
+                <rect x="220" y="730" width="100" height="30" rx="15" fill="#c2185b"/>
+                <text x="270" y="750" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">총 12개 센서</text>
+
+                <!-- Company Logo -->
+                <text x="1320" y="800" text-anchor="end" font-size="16" font-weight="bold" fill="#1a5f7a">(주)한국기계엔지니어링</text>
+                <text x="1320" y="820" text-anchor="end" font-size="10" fill="#888">© 2026 스마트 파쇄기 모니터링 시스템</text>
+            </svg>
+        </div>
+
+        <div class="legend" id="section-legend">
+            <div class="legend-item">
+                <div class="legend-line legend-data"></div>
+                <span>데이터 흐름 (MQTT/HTTPS)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line legend-control"></div>
+                <span>제어 신호 (Modbus)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line legend-sensor"></div>
+                <span>센서 연결 (RS485)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line legend-equip"></div>
+                <span>설비 통신</span>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel" id="section-control">
+            <div class="control-header">
+                <h3>🎛️ 시뮬레이터 제어 패널</h3>
+                <div class="control-buttons">
+                    <button class="btn btn-primary" onclick="activateAll()">✅ 전체 활성화</button>
+                    <button class="btn btn-danger" onclick="deactivateAll()">❌ 전체 비활성화</button>
+                    <button class="btn btn-warning" onclick="randomFailure()">⚡ 랜덤 장애</button>
+                    <button class="btn btn-secondary" onclick="cascadeDemo()">🌊 연쇄 장애 데모</button>
+                    <button class="btn btn-secondary" onclick="clearLog()">🗑️ 로그 지우기</button>
+                </div>
+            </div>
+            <div class="status-monitor">
+                <div class="status-card">
+                    <h4>📋 이벤트 로그</h4>
+                    <div class="status-log" id="statusLog">
+                        <div class="log-entry">
+                            <span class="log-time">[시작]</span>
+                            <span class="log-info">시뮬레이터가 준비되었습니다</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="status-card">
+                    <h4>📊 노드 상태</h4>
+                    <div class="node-status-grid" id="nodeStatusGrid"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Alert Banner -->
+    <div class="alert-banner" id="alertBanner">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-content">
+            <h4 id="alertTitle">신호 중단 감지</h4>
+            <p id="alertMessage">노드 상태를 확인하세요</p>
+        </div>
+        <button class="alert-close" onclick="hideAlert()">×</button>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="tooltip"></div>
+
+    <footer>
+        <p>&copy; 2026 (주)한국기계엔지니어링. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Node-Edge mapping
+        const nodeEdgeMap = {
+            'node-aws': ['conn-cloud-router'],
+            'node-dashboard': ['conn-cloud-router'],
+            'node-ai': ['conn-cloud-router'],
+            'node-db': ['conn-cloud-router'],
+            'node-alert': ['conn-cloud-router'],
+            'node-mobile': ['conn-cloud-router'],
+            'node-router': ['conn-cloud-router', 'conn-router-gateway'],
+            'node-gateway': ['conn-router-gateway', 'conn-gateway-plc', 'conn-gateway-inv1', 'conn-gateway-inv2', 'conn-gateway-hmi', 'conn-gateway-shredder', 'conn-gateway-crusher', 'conn-gateway-pinmill'],
+            'node-plc': ['conn-gateway-plc'],
+            'node-inv1': ['conn-gateway-inv1'],
+            'node-inv2': ['conn-gateway-inv2'],
+            'node-hmi': ['conn-gateway-hmi'],
+            'node-shredder': ['conn-gateway-shredder', 'conn-shredder-vibration', 'conn-shredder-temp'],
+            'node-crusher': ['conn-gateway-crusher', 'conn-crusher-current', 'conn-crusher-speed'],
+            'node-pinmill': ['conn-gateway-pinmill', 'conn-pinmill-proximity', 'conn-pinmill-dust'],
+            'node-vibration': ['conn-shredder-vibration'],
+            'node-temp': ['conn-shredder-temp'],
+            'node-current': ['conn-crusher-current'],
+            'node-speed': ['conn-crusher-speed'],
+            'node-proximity': ['conn-pinmill-proximity'],
+            'node-dust': ['conn-pinmill-dust']
+        };
+
+        // Node names
+        const nodeNames = {
+            'node-aws': 'AWS Cloud',
+            'node-dashboard': '웹 대시보드',
+            'node-ai': 'AI/ML 엔진',
+            'node-db': 'InfluxDB',
+            'node-alert': '알림 시스템',
+            'node-mobile': '모바일 앱',
+            'node-router': '산업용 라우터',
+            'node-gateway': 'Edge Gateway',
+            'node-plc': 'PLC',
+            'node-inv1': '인버터 #1',
+            'node-inv2': '인버터 #2',
+            'node-hmi': 'HMI',
+            'node-shredder': '이축 파쇄기',
+            'node-crusher': '분쇄기',
+            'node-pinmill': '핀밀',
+            'node-vibration': '진동 센서',
+            'node-temp': '온도 센서',
+            'node-current': '전류 센서',
+            'node-speed': '속도 센서',
+            'node-proximity': '근접 센서',
+            'node-dust': '분진 센서'
+        };
+
+        // Cascade relationships
+        const cascadeMap = {
+            'node-router': ['node-gateway'],
+            'node-gateway': ['node-plc', 'node-inv1', 'node-inv2', 'node-hmi', 'node-shredder', 'node-crusher', 'node-pinmill'],
+            'node-shredder': ['node-vibration', 'node-temp'],
+            'node-crusher': ['node-current', 'node-speed'],
+            'node-pinmill': ['node-proximity', 'node-dust']
+        };
+
+        // Node states
+        const nodeStates = {};
+
+        // Initialize
+        function init() {
+            document.querySelectorAll('.node').forEach(node => {
+                nodeStates[node.id] = true;
+                node.addEventListener('click', () => toggleNode(node.id));
+            });
+            updateNodeStatusGrid();
+        }
+
+        // Toggle node
+        function toggleNode(nodeId, cascade = false) {
+            const node = document.getElementById(nodeId);
+            if (!node) return;
+
+            const isActive = nodeStates[nodeId];
+            nodeStates[nodeId] = !isActive;
+
+            if (isActive) {
+                node.classList.remove('active');
+                node.classList.add('inactive');
+                updateEdges(nodeId, false);
+                addLog(nodeNames[nodeId], false);
+                if (!cascade) {
+                    showAlert('신호 중단', `${nodeNames[nodeId]} 연결이 끊어졌습니다`);
+                }
+            } else {
+                node.classList.remove('inactive', 'warning');
+                node.classList.add('active');
+                updateEdges(nodeId, true);
+                addLog(nodeNames[nodeId], true);
+            }
+            updateNodeStatusGrid();
+        }
+
+        // Update edges
+        function updateEdges(nodeId, isActive) {
+            const edges = nodeEdgeMap[nodeId] || [];
+            edges.forEach(edgeId => {
+                const edge = document.getElementById(edgeId);
+                if (edge) {
+                    if (isActive) {
+                        edge.classList.remove('conn-stopped');
+                        edge.classList.add('data-flow');
+                    } else {
+                        edge.classList.remove('data-flow');
+                        edge.classList.add('conn-stopped');
+                    }
+                }
+            });
+        }
+
+        // Activate all
+        function activateAll() {
+            document.querySelectorAll('.node').forEach(node => {
+                nodeStates[node.id] = true;
+                node.classList.remove('inactive', 'warning');
+                node.classList.add('active');
+            });
+            document.querySelectorAll('[id^="conn-"]').forEach(edge => {
+                edge.classList.remove('conn-stopped');
+                edge.classList.add('data-flow');
+            });
+            addLog('전체 시스템', true);
+            hideAlert();
+            updateNodeStatusGrid();
+        }
+
+        // Deactivate all
+        function deactivateAll() {
+            document.querySelectorAll('.node').forEach(node => {
+                nodeStates[node.id] = false;
+                node.classList.remove('active');
+                node.classList.add('inactive');
+            });
+            document.querySelectorAll('[id^="conn-"]').forEach(edge => {
+                edge.classList.remove('data-flow');
+                edge.classList.add('conn-stopped');
+            });
+            addLog('전체 시스템', false);
+            showAlert('시스템 중단', '모든 노드가 비활성화되었습니다');
+            updateNodeStatusGrid();
+        }
+
+        // Random failure
+        function randomFailure() {
+            const activeNodes = Object.entries(nodeStates)
+                .filter(([id, state]) => state)
+                .map(([id]) => id);
+
+            if (activeNodes.length === 0) {
+                addLog('랜덤 장애', false, '활성화된 노드가 없습니다');
+                return;
+            }
+
+            const randomNode = activeNodes[Math.floor(Math.random() * activeNodes.length)];
+            toggleNode(randomNode);
+        }
+
+        // Cascade demo
+        function cascadeDemo() {
+            activateAll();
+            addLog('연쇄 장애 데모', false, '게이트웨이 장애 시뮬레이션 시작');
+
+            setTimeout(() => {
+                toggleNode('node-gateway');
+
+                const children = cascadeMap['node-gateway'] || [];
+                let delay = 400;
+
+                children.forEach(childId => {
+                    setTimeout(() => {
+                        if (nodeStates[childId]) {
+                            toggleNode(childId, true);
+
+                            const sensors = cascadeMap[childId] || [];
+                            let sensorDelay = 200;
+                            sensors.forEach(sensorId => {
+                                setTimeout(() => {
+                                    if (nodeStates[sensorId]) {
+                                        toggleNode(sensorId, true);
+                                    }
+                                }, sensorDelay);
+                                sensorDelay += 150;
+                            });
+                        }
+                    }, delay);
+                    delay += 300;
+                });
+
+                showAlert('연쇄 장애 발생', '게이트웨이 장애로 인한 연쇄 중단');
+            }, 1000);
+        }
+
+        // Add log
+        function addLog(nodeName, isActive, customMessage = null) {
+            const log = document.getElementById('statusLog');
+            const time = new Date().toLocaleTimeString('ko-KR');
+
+            let statusClass, statusText;
+            if (customMessage) {
+                statusClass = 'log-info';
+                statusText = customMessage;
+            } else {
+                statusClass = isActive ? 'log-active' : 'log-inactive';
+                statusText = `${nodeName} ${isActive ? '활성화' : '비활성화'}`;
+            }
+
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `<span class="log-time">[${time}]</span><span class="${statusClass}">${statusText}</span>`;
+            log.insertBefore(entry, log.firstChild);
+
+            while (log.children.length > 30) {
+                log.removeChild(log.lastChild);
+            }
+        }
+
+        // Clear log
+        function clearLog() {
+            const log = document.getElementById('statusLog');
+            log.innerHTML = `<div class="log-entry"><span class="log-time">[${new Date().toLocaleTimeString('ko-KR')}]</span><span class="log-info">로그가 초기화되었습니다</span></div>`;
+        }
+
+        // Update node status grid
+        function updateNodeStatusGrid() {
+            const grid = document.getElementById('nodeStatusGrid');
+            grid.innerHTML = '';
+            Object.entries(nodeNames).forEach(([id, name]) => {
+                const isActive = nodeStates[id];
+                const item = document.createElement('div');
+                item.className = 'node-status-item';
+                item.innerHTML = `<span class="status-dot ${isActive ? '' : 'off'}"></span><span>${name}</span>`;
+                grid.appendChild(item);
+            });
+        }
+
+        // Show alert
+        function showAlert(title, message) {
+            document.getElementById('alertTitle').textContent = title;
+            document.getElementById('alertMessage').textContent = message;
+            document.getElementById('alertBanner').classList.add('show');
+        }
+
+        // Hide alert
+        function hideAlert() {
+            document.getElementById('alertBanner').classList.remove('show');
+        }
+
+        // Tooltip
+        const tooltip = document.getElementById('tooltip');
+
+        document.querySelectorAll('[data-tooltip]').forEach(el => {
+            el.addEventListener('mouseenter', (e) => {
+                const data = el.getAttribute('data-tooltip').split('|');
+                const nodeId = el.closest('.node')?.id;
+                const isActive = nodeId ? nodeStates[nodeId] : true;
+
+                tooltip.innerHTML = `
+                    <div class="tooltip-title">${data[0]}</div>
+                    <div>${data[1] || ''}</div>
+                    <div>${data[2] || ''}</div>
+                    <div class="tooltip-status">
+                        <span class="status-dot ${isActive ? '' : 'off'}"></span>
+                        <span>${isActive ? '정상 작동 중' : '비활성화됨'}</span>
+                    </div>
+                `;
+                tooltip.classList.add('show');
+            });
+
+            el.addEventListener('mousemove', (e) => {
+                tooltip.style.left = (e.pageX + 15) + 'px';
+                tooltip.style.top = (e.pageY + 15) + 'px';
+            });
+
+            el.addEventListener('mouseleave', () => {
+                tooltip.classList.remove('show');
+            });
+        });
+
+        // Initialize
+        init();
+    </script>
+
+    <!-- 오디오 플레이어 -->
+    <audio id="audio-player" src="audio/diagram.mp3" preload="auto"></audio>
+    <div id="audio-control" style="position:fixed;bottom:30px;right:30px;z-index:9999;display:flex;gap:10px;align-items:center;">
+        <div id="progress-container" style="width:150px;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;cursor:pointer;display:none;">
+            <div id="progress-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#1a5f7a,#57c5b6);border-radius:3px;"></div>
+        </div>
+        <button id="play-btn" onclick="toggleAudio()" style="width:60px;height:60px;border-radius:50%;border:none;background:linear-gradient(135deg,#1a5f7a,#57c5b6);color:white;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(26,95,122,0.4);">🔊</button>
+        <button id="stop-btn" onclick="stopAudio()" style="width:60px;height:60px;border-radius:50%;border:none;background:#ff4444;color:white;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(255,68,68,0.4);display:none;">⏹</button>
+        <button id="auto-btn" onclick="toggleAutoMode()" style="width:60px;height:60px;border-radius:50%;border:none;background:#666;color:white;font-size:12px;font-weight:bold;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.3);">AUTO</button>
+    </div>
+    <script>
+        const audio = document.getElementById('audio-player');
+        const playBtn = document.getElementById('play-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const autoBtn = document.getElementById('auto-btn');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        let isPlaying = false;
+        let currentSection = '';
+
+        // 페이지 순서 (무한 반복)
+        const currentPage = 'diagram.html';
+        const nextPage = 'monitor.html';
+
+        // 자동 모드 상태 관리
+        let isAutoMode = localStorage.getItem('autoMode') === 'true';
+        updateAutoButton();
+
+        function toggleAutoMode() {
+            isAutoMode = !isAutoMode;
+            localStorage.setItem('autoMode', isAutoMode);
+            updateAutoButton();
+        }
+
+        function updateAutoButton() {
+            if (isAutoMode) {
+                autoBtn.style.background = 'linear-gradient(135deg, #00c853, #00e676)';
+                autoBtn.style.boxShadow = '0 4px 20px rgba(0,200,83,0.4)';
+            } else {
+                autoBtn.style.background = '#666';
+                autoBtn.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+            }
+        }
+
+        // 음성 타이밍에 맞춘 섹션 스크롤 (초 단위)
+        const sectionTimings = [
+            { time: 0, section: 'section-header' },
+            { time: 5, section: 'section-diagram' },
+            { time: 25, section: 'section-legend' },
+            { time: 40, section: 'section-control' }
+        ];
+
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element && currentSection !== sectionId) {
+                currentSection = sectionId;
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function toggleAudio() {
+            if (isPlaying) { audio.pause(); isPlaying = false; playBtn.innerHTML = '▶'; }
+            else { audio.play(); isPlaying = true; playBtn.innerHTML = '⏸'; stopBtn.style.display = 'block'; progressContainer.style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        }
+        function stopAudio() { audio.pause(); audio.currentTime = 0; isPlaying = false; playBtn.innerHTML = '🔊'; stopBtn.style.display = 'none'; progressContainer.style.display = 'none'; progressBar.style.width = '0%'; currentSection = ''; }
+        audio.addEventListener('timeupdate', function() {
+            progressBar.style.width = (audio.currentTime / audio.duration) * 100 + '%';
+            for (let i = sectionTimings.length - 1; i >= 0; i--) {
+                if (audio.currentTime >= sectionTimings[i].time) {
+                    scrollToSection(sectionTimings[i].section);
+                    break;
+                }
+            }
+        });
+        audio.addEventListener('ended', function() {
+            if (isAutoMode) {
+                setTimeout(() => { window.location.href = nextPage; }, 2000);
+            } else {
+                stopAudio();
+            }
+        });
+        progressContainer.addEventListener('click', function(e) { const rect = this.getBoundingClientRect(); audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration; });
+
+        // 페이지 로드 시 자동 모드면 자동 재생
+        window.addEventListener('load', function() {
+            if (isAutoMode && localStorage.getItem('autoPlaying') === 'true') {
+                setTimeout(() => { toggleAudio(); }, 1000);
+            }
+        });
+        if (isAutoMode) { localStorage.setItem('autoPlaying', 'true'); }
+    </script>
+</body>
+</html>
