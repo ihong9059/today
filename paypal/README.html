@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow 프로젝트 설명서</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --card: #1a1a26;
+            --border: rgba(255, 255, 255, 0.06);
+            --accent: #6C5CE7;
+            --accent-light: #a29bfe;
+            --text: #f0f0f5;
+            --text2: #9898b0;
+            --text3: #5e5e7a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        h1 span {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light), #74b9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text2);
+            font-size: 1.05rem;
+            margin-bottom: 48px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 40px 0 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 20px 0 8px;
+            color: var(--accent-light);
+        }
+
+        p,
+        li {
+            color: var(--text2);
+            font-size: 0.95rem;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(108, 92, 231, 0.12);
+            border: 1px solid rgba(108, 92, 231, 0.25);
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            margin-bottom: 8px;
+        }
+
+        code {
+            background: rgba(108, 92, 231, 0.1);
+            color: var(--accent-light);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.88rem;
+        }
+
+        pre {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 12px 0 20px;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text);
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .status-done {
+            background: rgba(0, 206, 201, 0.15);
+            color: #00cec9;
+        }
+
+        .status-ready {
+            background: rgba(253, 203, 110, 0.15);
+            color: #fdcb6e;
+        }
+
+        .status-pending {
+            background: rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0 20px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        th {
+            color: var(--text3);
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td {
+            color: var(--text2);
+        }
+
+        a {
+            color: var(--accent-light);
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text3);
+            font-size: 0.82rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <span class="badge">📄 프로젝트 설명서</span>
+        <h1>⚡ <span>FocusFlow</span></h1>
+        <p class="subtitle">AI Productivity Timer & Task Tracker — 수익형 Micro-SaaS 웹 애플리케이션</p>
+
+        <!-- 프로젝트 개요 -->
+        <h2>🎯 프로젝트 개요</h2>
+        <div class="card">
+            <p><strong>FocusFlow</strong>는 포모도로 타이머, 할 일 관리, 생산성 통계를 제공하는 <strong>수익형 Micro-SaaS</strong> 웹 애플리케이션입니다.
+            </p>
+            <ul>
+                <li><strong>수익 모델:</strong> Freemium (무료 기본 기능 + Pro 플랜 $4.99/월)</li>
+                <li><strong>타겟:</strong> 글로벌 프리랜서, 원격 근무자, 학생</li>
+                <li><strong>UI 언어:</strong> 영어 (글로벌 시장 타겟)</li>
+                <li><strong>디자인:</strong> Silicon Valley Quality — 다크 모드 퍼스트, 모던 UI</li>
+            </ul>
+        </div>
+
+        <!-- 파일 구조 -->
+        <h2>📁 파일 구조</h2>
+        <pre><code>c:\todo\test\
+├── .agent/
+│   └── skills/
+│       └── moneywebsite/
+│           └── SKILL.md          ← 스킬 정의 파일
+├── index.html                    ← 메인 HTML (랜딩 + 앱)
+├── style.css                     ← 디자인 시스템 & 스타일
+├── app.js                        ← 앱 로직 (타이머, 할 일, 인증, 결제)
+└── README.html                   ← 이 설명 파일</code></pre>
+
+        <!-- 기능 목록 -->
+        <h2>✨ 주요 기능</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>⏱️ 포모도로 타이머</h3>
+                <p>Focus (25분), Short Break (5분), Long Break (15분) 모드. 시작/일시정지/리셋. 진행률 원형 프로그레스 바.</p>
+            </div>
+            <div class="card">
+                <h3>📋 할 일 관리</h3>
+                <p>할 일 추가/완료/삭제. 예상 포모도로 수 설정. Free 플랜은 5개 제한.</p>
+            </div>
+            <div class="card">
+                <h3>📊 생산성 통계</h3>
+                <p>세션 수, 집중 시간(분), 완료 작업, 연속 사용일(스트릭) 실시간 표시.</p>
+            </div>
+            <div class="card">
+                <h3>💳 결제 시스템</h3>
+                <p>PayPal MCP 연동 준비 완료. Pro 업그레이드 모달 및 결제 플로우.</p>
+            </div>
+        </div>
+
+        <!-- 페이지 구성 -->
+        <h2>📑 페이지 구성</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>페이지</th>
+                    <th>설명</th>
+                    <th>위치</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>랜딩 페이지</td>
+                    <td>히어로 섹션 + 기능 소개 + 가격표 + 회원가입 CTA</td>
+                    <td><code>#landing-page</code></td>
+                </tr>
+                <tr>
+                    <td>인증 모달</td>
+                    <td>로그인/회원가입 폼 (Firebase Auth 연동 포인트)</td>
+                    <td><code>#auth-modal</code></td>
+                </tr>
+                <tr>
+                    <td>앱 대시보드</td>
+                    <td>포모도로 타이머 + 할 일 목록 + 오늘의 통계</td>
+                    <td><code>#app-page</code></td>
+                </tr>
+                <tr>
+                    <td>결제 모달</td>
+                    <td>Pro 플랜 업그레이드 + PayPal 결제 (PayPal MCP 연동 포인트)</td>
+                    <td><code>#payment-modal</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 스킬 Phase 진행 상태 -->
+        <h2>🔄 Skill Phase 진행 상태</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Phase</th>
+                    <th>설명</th>
+                    <th>상태</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Phase 1: Ideation</td>
+                    <td>Micro-SaaS 아이디어 선정 (FocusFlow — Productivity Timer)</td>
+                    <td><span class="status status-done">✅ 완료</span></td>
+                </tr>
+                <tr>
+                    <td>Phase 2: Frontend</td>
+                    <td>HTML/CSS/JS 프리미엄 랜딩 + 앱 UI 개발</td>
+                    <td><span class="status status-done">✅ 완료</span></td>
+                </tr>
+                <tr>
+                    <td>Phase 3: Firebase</td>
+                    <td>Firebase Auth + Firestore 연동 (API 활성화 필요)</td>
+                    <td><span class="status status-ready">⏳ 대기</span></td>
+                </tr>
+                <tr>
+                    <td>Phase 4: PayPal</td>
+                    <td>PayPal MCP로 결제 주문 생성 (연동 포인트 준비됨)</td>
+                    <td><span class="status status-ready">⏳ 대기</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Firebase 연동 방법 -->
+        <h2>🔥 Phase 3: Firebase 연동 안내</h2>
+        <div class="card">
+            <p>현재 Firebase Management API 활성화가 필요합니다. 다음 단계를 수행해주세요:</p>
+            <ol>
+                <li>Google Cloud Console에서 <strong>Firebase Management API</strong> 활성화</li>
+                <li>Firebase 프로젝트 생성 (또는 기존 프로젝트 사용)</li>
+                <li>Firestore 및 Auth 초기화</li>
+            </ol>
+            <p>활성화 후, <code>app.js</code>에 표시된 <strong>"Firebase Auth Integration Point"</strong> 및 <strong>"Firebase
+                    Firestore Integration Point"</strong> 주석 위치에서 실제 Firebase SDK 코드를 연결합니다.</p>
+        </div>
+
+        <!-- PayPal 연동 방법 -->
+        <h2>💰 Phase 4: PayPal 연동 안내</h2>
+        <div class="card">
+            <p><code>app.js</code>의 <code>handlePayPalCheckout()</code> 함수에 PayPal MCP 연동 포인트가 준비되어 있습니다.</p>
+            <p>PayPal MCP <code>create_order</code> 도구를 사용하여 실제 결제 주문을 생성할 수 있습니다:</p>
+            <pre><code>// PayPal MCP Order 생성 예시
+{
+  currencyCode: "USD",
+  items: [{
+    name: "FocusFlow Pro Monthly",
+    description: "Unlimited tasks, analytics, cloud sync",
+    itemCost: 4.99,
+    itemTotal: 4.99,
+    quantity: 1
+  }]
+}</code></pre>
+        </div>
+
+        <!-- 디자인 특징 -->
+        <h2>🎨 디자인 특징</h2>
+        <ul>
+            <li><strong>Dark Mode First:</strong> 눈의 피로를 줄이는 다크 테마 기본 적용</li>
+            <li><strong>Glassmorphism Navigation:</strong> 블러 배경 + 반투명 네비게이션 바</li>
+            <li><strong>Gradient Accents:</strong> 보라색 계열 그라데이션으로 브랜드 아이덴티티 강화</li>
+            <li><strong>Micro-animations:</strong> 호버 효과, 페이드인, 슬라이드업 애니메이션</li>
+            <li><strong>Inter Font:</strong> Google Fonts의 Inter 폰트로 모던한 타이포그래피</li>
+            <li><strong>Mobile-first Responsive:</strong> 768px, 480px 브레이크포인트 반응형 레이아웃</li>
+        </ul>
+
+        <!-- 키보드 단축키 -->
+        <h2>⌨️ 키보드 단축키</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>단축키</th>
+                    <th>기능</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>Space</code></td>
+                    <td>타이머 시작/일시정지 (앱 페이지에서)</td>
+                </tr>
+                <tr>
+                    <td><code>Escape</code></td>
+                    <td>모달 닫기</td>
+                </tr>
+                <tr>
+                    <td><code>Enter</code></td>
+                    <td>할 일 저장 (입력 중일 때)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 실행 방법 -->
+        <h2>🚀 실행 방법</h2>
+        <div class="card">
+            <p><code>index.html</code> 파일을 브라우저에서 직접 열면 됩니다:</p>
+            <pre><code>파일 위치: c:\todo\test\index.html
+더블클릭으로 실행하거나, VS Code의 Live Server 확장 사용</code></pre>
+        </div>
+
+        <div class="footer">
+            <p>Built with ⚡ Global Venture Builder Skill — FocusFlow v1.0</p>
+        </div>
+    </div>
+</body>
+
+</html>

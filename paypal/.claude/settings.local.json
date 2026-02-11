@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:docs.paypal.ai)",
+      "WebFetch(domain:github.com)",
+      "Bash(curl:*)",
+      "Bash(npx serve -l 3000)",
+      "Bash(ren \"C:\\todo\\test\" \"paypal\")",
+      "Bash(powershell -Command \"Rename-Item -Path ''C:\\todo\\test'' -NewName ''paypal''\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
