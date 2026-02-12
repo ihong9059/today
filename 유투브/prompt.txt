@@ -1,0 +1,11 @@
+https://www.youtube.com/watch?v=0A6KGCh3UAQ&si=zYigofXeCOrsk5K2
+
+claude, youtube 링크에서, 해당 youtube의 내용을 정리해줄수있나요?
+
+
+새로 만들려고하는 skill은 유투브 url을 입력하고, skill을 부르면,
+유투브 folder안에 md file로, 해당 유투브의 내용을 정리하여 만들어 주는것입니다.
+
+위의 내용을 custom skill로 만들고 실행하는 방법을 알려주세요.
+
+
