@@ -1,0 +1,5 @@
+claude, 중국의 llm ai의 list를 만들어서, api folder안에 만들어 주세요.
+list에 무료 api접근이 가능한지 표시해주세요.
+
+그리고 그 api를 이용하여, ai의 답변을 받도록하는 web server를 만들어 운영되게 해주세요.
+web에서 응답을 원하는 ai를 선택할수있도록 해주세요.

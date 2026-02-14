@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중국 LLM AI 챗봇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #e94560, #0f3460);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            height: calc(100vh - 200px);
+        }
+
+        /* 사이드바 - 모델 선택 */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #e94560;
+        }
+
+        .model-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .model-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .model-card.selected {
+            border-color: #e94560;
+            background: rgba(233, 69, 96, 0.1);
+        }
+
+        .model-card.unavailable {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .model-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .model-provider {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .model-desc {
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        .model-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            margin-top: 8px;
+        }
+
+        .badge-free {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge-unavailable {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* 채팅 영역 */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message-content {
+            display: inline-block;
+            max-width: 80%;
+            padding: 15px 20px;
+            border-radius: 15px;
+            line-height: 1.6;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #e94560, #0f3460);
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.assistant .message-content {
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom-left-radius: 5px;
+        }
+
+        .message-model {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        /* 입력 영역 */
+        .chat-input-container {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: background 0.3s ease;
+        }
+
+        #chat-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        #chat-input::placeholder {
+            color: #888;
+        }
+
+        #send-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #e94560, #0f3460);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        #send-btn:hover {
+            transform: scale(1.05);
+        }
+
+        #send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 로딩 애니메이션 */
+        .loading {
+            display: flex;
+            gap: 5px;
+            padding: 15px 20px;
+        }
+
+        .loading span {
+            width: 8px;
+            height: 8px;
+            background: #e94560;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .loading span:nth-child(1) { animation-delay: -0.32s; }
+        .loading span:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .sidebar {
+                max-height: 200px;
+            }
+
+            .chat-container {
+                height: 500px;
+            }
+        }
+
+        /* 스크롤바 스타일 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 마크다운 스타일 */
+        .message-content pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .message-content code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .message-content pre code {
+            background: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🇨🇳 중국 LLM AI 챗봇</h1>
+            <p>DeepSeek, Qwen, Kimi 등 다양한 중국 AI와 대화하세요</p>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <h2>🤖 AI 모델 선택</h2>
+                <div id="model-list">
+                    <!-- 모델 목록이 여기에 로드됩니다 -->
+                </div>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message assistant">
+                        <div class="message-content">
+                            안녕하세요! 중국 LLM AI 챗봇입니다. 🎉<br><br>
+                            왼쪽에서 사용할 AI 모델을 선택한 후 대화를 시작하세요.<br><br>
+                            <strong>💡 팁:</strong> DeepSeek은 무료 크레딧을 제공하며, 가장 저렴합니다!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <input type="text" id="chat-input" placeholder="메시지를 입력하세요..." autocomplete="off">
+                        <button id="send-btn">전송</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedModel = 'deepseek-chat';
+        let messages = [];
+        let isLoading = false;
+
+        // 모델 목록 로드
+        async function loadModels() {
+            try {
+                const response = await fetch('/api/models');
+                const models = await response.json();
+
+                const modelList = document.getElementById('model-list');
+                modelList.innerHTML = '';
+
+                models.forEach(model => {
+                    const card = document.createElement('div');
+                    card.className = `model-card ${model.id === selectedModel ? 'selected' : ''} ${!model.available ? 'unavailable' : ''}`;
+                    card.dataset.modelId = model.id;
+
+                    card.innerHTML = `
+                        <div class="model-name">${model.name}</div>
+                        <div class="model-provider">${model.provider}</div>
+                        <div class="model-desc">${model.description}</div>
+                        <span class="model-badge ${model.available ? 'badge-free' : 'badge-unavailable'}">
+                            ${model.available ? '✓ 사용 가능' : '⚠ API 키 필요'}
+                        </span>
+                    `;
+
+                    if (model.available) {
+                        card.addEventListener('click', () => selectModel(model.id));
+                    }
+
+                    modelList.appendChild(card);
+                });
+            } catch (error) {
+                console.error('모델 로드 실패:', error);
+            }
+        }
+
+        // 모델 선택
+        function selectModel(modelId) {
+            selectedModel = modelId;
+            document.querySelectorAll('.model-card').forEach(card => {
+                card.classList.toggle('selected', card.dataset.modelId === modelId);
+            });
+        }
+
+        // 메시지 전송
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+
+            if (!message || isLoading) return;
+
+            isLoading = true;
+            document.getElementById('send-btn').disabled = true;
+            input.value = '';
+
+            // 사용자 메시지 추가
+            messages.push({ role: 'user', content: message });
+            appendMessage('user', message);
+
+            // 로딩 표시
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message assistant';
+            loadingDiv.id = 'loading';
+            loadingDiv.innerHTML = `
+                <div class="loading">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+            document.getElementById('chat-messages').appendChild(loadingDiv);
+            scrollToBottom();
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: selectedModel,
+                        messages: messages,
+                        stream: false
+                    })
+                });
+
+                const data = await response.json();
+
+                // 로딩 제거
+                document.getElementById('loading')?.remove();
+
+                if (data.error) {
+                    appendMessage('assistant', `⚠️ 오류: ${data.error}`, '시스템');
+                } else {
+                    messages.push({ role: 'assistant', content: data.content });
+                    appendMessage('assistant', data.content, data.model);
+                }
+            } catch (error) {
+                document.getElementById('loading')?.remove();
+                appendMessage('assistant', `⚠️ 네트워크 오류: ${error.message}`, '시스템');
+            }
+
+            isLoading = false;
+            document.getElementById('send-btn').disabled = false;
+            input.focus();
+        }
+
+        // 메시지 표시
+        function appendMessage(role, content, model = null) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+
+            // 간단한 마크다운 변환
+            let formattedContent = content
+                .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>');
+
+            messageDiv.innerHTML = `
+                <div class="message-content">${formattedContent}</div>
+                ${model ? `<div class="message-model">${model}</div>` : ''}
+            `;
+
+            messagesDiv.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        // 스크롤 하단으로
+        function scrollToBottom() {
+            const messagesDiv = document.getElementById('chat-messages');
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // 이벤트 리스너
+        document.getElementById('send-btn').addEventListener('click', sendMessage);
+        document.getElementById('chat-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // 초기화
+        loadModels();
+    </script>
+</body>
+</html>
