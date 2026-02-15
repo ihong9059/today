@@ -17,6 +17,8 @@ canFD도 마찬가지로 설명해 주세요.
 master를 test하기위한 절차및 적합한 slave를 aliexpress에서 찾아주고
 실험계획서를 만들어 주세요.
 
+TwinCAT으로 slave simulation을 구성하고, 이 pc에 master를 구성해서,
+나타낼수있는 구현 시나리오와 설명서를 만들어 주세요.
 
 
 
