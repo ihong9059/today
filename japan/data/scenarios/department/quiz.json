@@ -1,0 +1,64 @@
+{
+  "title": "백화점 퀴즈",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「売り場」의 뜻은?", "options": ["창고", "매장", "입구", "출구"], "answer": 1},
+        {"question": "「免税」의 뜻은?", "options": ["세금", "면세", "할인", "정가"], "answer": 1},
+        {"question": "「試着」의 뜻은?", "options": ["구매", "피팅", "반품", "교환"], "answer": 1},
+        {"question": "「割引」의 뜻은?", "options": ["정가", "세금", "할인", "배송"], "answer": 2},
+        {"question": "「包装」의 뜻은?", "options": ["배송", "포장", "반품", "교환"], "answer": 1},
+        {"question": "「在庫」의 뜻은?", "options": ["주문", "재고", "배송", "반품"], "answer": 1},
+        {"question": "「化粧品」의 뜻은?", "options": ["의류", "신발", "화장품", "가방"], "answer": 2},
+        {"question": "「お土産」의 뜻은?", "options": ["음식", "선물/기념품", "옷", "가구"], "answer": 1},
+        {"question": "「人気」의 뜻은?", "options": ["비인기", "인기", "신상품", "할인"], "answer": 1},
+        {"question": "「返品」의 뜻은?", "options": ["구매", "교환", "반품", "포장"], "answer": 2}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「___売り場はどこですか？」(화장품 매장이 어디예요?)", "context": "매장 찾기", "options": ["服", "靴", "化粧品", "食品", "家具"], "answer": 2},
+        {"question": "「___で買えますか？」(면세로 살 수 있나요?)", "context": "면세 문의", "options": ["割引", "免税", "現金", "カード", "ポイント"], "answer": 1},
+        {"question": "「___できますか？」(피팅할 수 있나요?)", "context": "옷 구매", "options": ["返品", "交換", "試着", "包装", "配送"], "answer": 2},
+        {"question": "「他の___はありますか？」(다른 색 있나요?)", "context": "상품 문의", "options": ["サイズ", "色", "デザイン", "ブランド", "値段"], "answer": 1},
+        {"question": "「プレゼント___をお願いします」(선물 포장 부탁합니다)", "context": "포장 요청", "options": ["配送", "交換", "包装", "返品", "割引"], "answer": 2}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "売り場", "korean": "매장"},
+        {"japanese": "免税", "korean": "면세"},
+        {"japanese": "試着", "korean": "피팅"},
+        {"japanese": "割引", "korean": "할인"},
+        {"japanese": "包装", "korean": "포장"},
+        {"japanese": "在庫", "korean": "재고"},
+        {"japanese": "化粧品", "korean": "화장품"},
+        {"japanese": "お土産", "korean": "기념품"},
+        {"japanese": "人気", "korean": "인기"},
+        {"japanese": "返品", "korean": "반품"},
+        {"japanese": "サイズ", "korean": "사이즈"},
+        {"japanese": "色", "korean": "색"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "화장품 매장을 찾을 때", "options": [{"text": "化粧品売り場はどこですか？", "correct": true}, {"text": "化粧品どこ？", "correct": false}, {"text": "化粧品！", "correct": false}]},
+        {"situation": "피팅을 요청할 때", "options": [{"text": "試着できますか？", "correct": true}, {"text": "試着！", "correct": false}, {"text": "着てみたい。", "correct": false}]},
+        {"situation": "면세 구매가 가능한지 물을 때", "options": [{"text": "免税で買えますか？", "correct": true}, {"text": "免税？", "correct": false}, {"text": "税金なし？", "correct": false}]},
+        {"situation": "인기 상품을 물을 때", "options": [{"text": "人気の商品は何ですか？", "correct": true}, {"text": "人気何？", "correct": false}, {"text": "一番！", "correct": false}]},
+        {"situation": "선물 포장을 요청할 때", "options": [{"text": "プレゼント包装をお願いします。", "correct": true}, {"text": "包装して。", "correct": false}, {"text": "ラッピング！", "correct": false}]}
+      ]
+    }
+  ]
+}

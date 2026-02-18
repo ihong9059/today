@@ -1,0 +1,58 @@
+{
+  "title": "택시 회화",
+  "scenes": [
+    {
+      "id": 1,
+      "title": "택시 탑승",
+      "location": "택시 승강장",
+      "dialogues": [
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "すみません、東京駅までお願いします。", "korean": "저기요, 도쿄역까지 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "driver", "speakerName": "운전기사", "japanese": "はい、かしこまりました。荷物はトランクに入れますか？", "korean": "네, 알겠습니다. 짐은 트렁크에 넣으시겠어요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、お願いします。", "korean": "네, 부탁합니다.", "correct": true},
+          {"japanese": "いいえ、大丈夫です。", "korean": "아니요, 괜찮습니다.", "correct": true}
+        ]}
+      ]
+    },
+    {
+      "id": 2,
+      "title": "이동 중",
+      "location": "택시 안",
+      "dialogues": [
+        {"speaker": "driver", "speakerName": "운전기사", "japanese": "この道でよろしいですか？", "korean": "이 길로 가면 될까요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、大丈夫です。", "korean": "네, 괜찮습니다.", "correct": true},
+          {"japanese": "一番早い道でお願いします。", "korean": "가장 빠른 길로 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "driver", "speakerName": "운전기사", "japanese": "少し渋滞していますが、大丈夫ですか？", "korean": "좀 막히는데, 괜찮으세요?", "tip": "渋滞(じゅうたい)는 교통체증을 의미합니다"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、問題ありません。", "korean": "네, 문제없습니다.", "correct": true},
+          {"japanese": "他の道はありますか？", "korean": "다른 길은 있나요?", "correct": true}
+        ]},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "すみません、エアコンをつけてもらえますか？", "korean": "저기요, 에어컨 켜주실 수 있나요?", "correct": true}
+        ]},
+        {"speaker": "driver", "speakerName": "운전기사", "japanese": "はい、もちろんです。", "korean": "네, 물론이죠."}
+      ]
+    },
+    {
+      "id": 3,
+      "title": "하차 및 결제",
+      "location": "목적지",
+      "dialogues": [
+        {"speaker": "driver", "speakerName": "운전기사", "japanese": "着きました。料金は1,500円です。", "korean": "도착했습니다. 요금은 1,500엔입니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "カードで払えますか？", "korean": "카드로 결제할 수 있나요?", "correct": true},
+          {"japanese": "現金で払います。", "korean": "현금으로 낼게요.", "correct": true}
+        ]},
+        {"speaker": "driver", "speakerName": "운전기사", "japanese": "はい、大丈夫です。ありがとうございます。", "korean": "네, 됩니다. 감사합니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "領収書をください。", "korean": "영수증 주세요.", "correct": true}
+        ]},
+        {"speaker": "driver", "speakerName": "운전기사", "japanese": "はい、こちらです。ありがとうございました。", "korean": "네, 여기요. 감사합니다."}
+      ]
+    }
+  ]
+}

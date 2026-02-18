@@ -1,0 +1,39 @@
+{
+  "title": "백화점",
+  "description": "백화점 쇼핑, 면세, 선물 구매",
+  "estimatedTime": "7-10분",
+  "categories": [
+    {"name": "기본", "words": [
+      {"japanese": "デパート", "reading": "デパート", "korean": "백화점", "example": "デパートで買い物します。"},
+      {"japanese": "売り場", "reading": "うりば", "korean": "매장", "example": "化粧品売り場はどこですか？"},
+      {"japanese": "階", "reading": "かい", "korean": "층", "example": "3階に行きます。"},
+      {"japanese": "エレベーター", "reading": "エレベーター", "korean": "엘리베이터", "example": "エレベーターはどこですか？"},
+      {"japanese": "エスカレーター", "reading": "エスカレーター", "korean": "에스컬레이터", "example": "エスカレーターで上がります。"},
+      {"japanese": "案内所", "reading": "あんないじょ", "korean": "안내소", "example": "案内所で聞きます。"}
+    ]},
+    {"name": "쇼핑", "words": [
+      {"japanese": "服", "reading": "ふく", "korean": "옷", "example": "服を探しています。"},
+      {"japanese": "靴", "reading": "くつ", "korean": "신발", "example": "靴のサイズを教えてください。"},
+      {"japanese": "かばん", "reading": "かばん", "korean": "가방", "example": "かばんを見せてください。"},
+      {"japanese": "化粧品", "reading": "けしょうひん", "korean": "화장품", "example": "化粧品売り場はどこですか？"},
+      {"japanese": "サイズ", "reading": "サイズ", "korean": "사이즈", "example": "サイズはMです。"},
+      {"japanese": "色", "reading": "いろ", "korean": "색", "example": "他の色はありますか？"}
+    ]},
+    {"name": "결제", "words": [
+      {"japanese": "値段", "reading": "ねだん", "korean": "가격", "example": "値段はいくらですか？"},
+      {"japanese": "割引", "reading": "わりびき", "korean": "할인", "example": "割引はありますか？"},
+      {"japanese": "免税", "reading": "めんぜい", "korean": "면세", "example": "免税で買えますか？"},
+      {"japanese": "レジ", "reading": "レジ", "korean": "계산대", "example": "レジはどこですか？"},
+      {"japanese": "領収書", "reading": "りょうしゅうしょ", "korean": "영수증", "example": "領収書をください。"},
+      {"japanese": "包装", "reading": "ほうそう", "korean": "포장", "example": "プレゼント包装をお願いします。"}
+    ]},
+    {"name": "기타", "words": [
+      {"japanese": "試着", "reading": "しちゃく", "korean": "피팅", "example": "試着できますか？"},
+      {"japanese": "お土産", "reading": "おみやげ", "korean": "선물/기념품", "example": "お土産を探しています。"},
+      {"japanese": "人気", "reading": "にんき", "korean": "인기", "example": "人気の商品は何ですか？"},
+      {"japanese": "在庫", "reading": "ざいこ", "korean": "재고", "example": "在庫はありますか？"},
+      {"japanese": "返品", "reading": "へんぴん", "korean": "반품", "example": "返品できますか？"}
+    ]}
+  ],
+  "totalWords": 23
+}

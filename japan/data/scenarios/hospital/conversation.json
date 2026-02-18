@@ -1,0 +1,65 @@
+{
+  "title": "병원/약국 회화",
+  "scenes": [
+    {
+      "id": 1,
+      "title": "병원 접수",
+      "location": "병원 접수처",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "접수", "japanese": "こんにちは。初診ですか？", "korean": "안녕하세요. 초진이세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、初めてです。", "korean": "네, 처음입니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "접수", "japanese": "保険証はお持ちですか？", "korean": "보험증 가지고 계세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、これです。", "korean": "네, 이거요.", "correct": true},
+          {"japanese": "いいえ、持っていません。", "korean": "아니요, 없습니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "접수", "japanese": "今日はどうされましたか？", "korean": "오늘 어떻게 오셨어요?", "tip": "どうされましたか는 증상을 물을 때 사용"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "熱があって、頭も痛いです。", "korean": "열이 있고 머리도 아파요.", "correct": true},
+          {"japanese": "お腹が痛いです。", "korean": "배가 아파요.", "correct": true}
+        ]}
+      ]
+    },
+    {
+      "id": 2,
+      "title": "진찰",
+      "location": "진료실",
+      "dialogues": [
+        {"speaker": "doctor", "speakerName": "의사", "japanese": "いつから具合が悪いですか？", "korean": "언제부터 몸이 안 좋으세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "昨日の夜からです。", "korean": "어젯밤부터요.", "correct": true},
+          {"japanese": "3日前からです。", "korean": "3일 전부터요.", "correct": true}
+        ]},
+        {"speaker": "doctor", "speakerName": "의사", "japanese": "熱を測りましょう。口を開けてください。", "korean": "열을 재볼게요. 입을 벌려 주세요."},
+        {"speaker": "doctor", "speakerName": "의사", "japanese": "風邪ですね。薬を出しますので、薬局で受け取ってください。", "korean": "감기네요. 약을 처방할 테니 약국에서 받으세요."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "ありがとうございます。", "korean": "감사합니다.", "correct": true}
+        ]},
+        {"speaker": "doctor", "speakerName": "의사", "japanese": "お大事に。", "korean": "빨리 나으세요."}
+      ]
+    },
+    {
+      "id": 3,
+      "title": "약국",
+      "location": "약국",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "약사", "japanese": "処方箋をお持ちですか？", "korean": "처방전 가지고 계세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、これです。", "korean": "네, 이거요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "약사", "japanese": "少々お待ちください。薬のアレルギーはありますか？", "korean": "잠시만 기다려 주세요. 약 알레르기 있으세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "いいえ、ありません。", "korean": "아니요, 없습니다.", "correct": true},
+          {"japanese": "ペニシリンにアレルギーがあります。", "korean": "페니실린에 알레르기가 있어요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "약사", "japanese": "こちらの薬は食後に一日三回飲んでください。", "korean": "이 약은 식후에 하루 세 번 드세요.", "tip": "食後(しょくご)는 식후, 食前(しょくぜん)는 식전"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "わかりました。ありがとうございます。", "korean": "알겠습니다. 감사합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "약사", "japanese": "お大事に。", "korean": "빨리 나으세요."}
+      ]
+    }
+  ]
+}

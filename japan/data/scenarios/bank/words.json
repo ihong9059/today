@@ -1,0 +1,39 @@
+{
+  "title": "은행/환전",
+  "description": "은행 업무, 환전, ATM 이용",
+  "estimatedTime": "7-10분",
+  "categories": [
+    {"name": "기본", "words": [
+      {"japanese": "銀行", "reading": "ぎんこう", "korean": "은행", "example": "銀行に行きます。"},
+      {"japanese": "口座", "reading": "こうざ", "korean": "계좌", "example": "口座を開設したいです。"},
+      {"japanese": "ATM", "reading": "エーティーエム", "korean": "ATM", "example": "ATMはどこですか？"},
+      {"japanese": "窓口", "reading": "まどぐち", "korean": "창구", "example": "窓口で手続きします。"},
+      {"japanese": "番号札", "reading": "ばんごうふだ", "korean": "번호표", "example": "番号札を取ってください。"},
+      {"japanese": "営業時間", "reading": "えいぎょうじかん", "korean": "영업시간", "example": "営業時間は何時までですか？"}
+    ]},
+    {"name": "거래", "words": [
+      {"japanese": "預金", "reading": "よきん", "korean": "예금", "example": "預金をお願いします。"},
+      {"japanese": "引き出す", "reading": "ひきだす", "korean": "출금하다", "example": "お金を引き出したいです。"},
+      {"japanese": "振り込み", "reading": "ふりこみ", "korean": "송금", "example": "振り込みをお願いします。"},
+      {"japanese": "残高", "reading": "ざんだか", "korean": "잔액", "example": "残高照会をお願いします。"},
+      {"japanese": "通帳", "reading": "つうちょう", "korean": "통장", "example": "通帳を記帳してください。"},
+      {"japanese": "キャッシュカード", "reading": "キャッシュカード", "korean": "현금카드", "example": "キャッシュカードを作りたいです。"}
+    ]},
+    {"name": "환전", "words": [
+      {"japanese": "両替", "reading": "りょうがえ", "korean": "환전", "example": "両替をお願いします。"},
+      {"japanese": "為替レート", "reading": "かわせレート", "korean": "환율", "example": "今日の為替レートは？"},
+      {"japanese": "円", "reading": "えん", "korean": "엔", "example": "円に両替してください。"},
+      {"japanese": "ドル", "reading": "ドル", "korean": "달러", "example": "ドルを円に両替したいです。"},
+      {"japanese": "ウォン", "reading": "ウォン", "korean": "원", "example": "ウォンを両替できますか？"},
+      {"japanese": "手数料", "reading": "てすうりょう", "korean": "수수료", "example": "手数料はいくらですか？"}
+    ]},
+    {"name": "기타", "words": [
+      {"japanese": "暗証番号", "reading": "あんしょうばんごう", "korean": "비밀번호", "example": "暗証番号を入力してください。"},
+      {"japanese": "身分証明書", "reading": "みぶんしょうめいしょ", "korean": "신분증", "example": "身分証明書をお持ちですか？"},
+      {"japanese": "印鑑", "reading": "いんかん", "korean": "도장", "example": "印鑑が必要です。"},
+      {"japanese": "書類", "reading": "しょるい", "korean": "서류", "example": "書類に記入してください。"},
+      {"japanese": "手続き", "reading": "てつづき", "korean": "절차", "example": "手続きに時間がかかります。"}
+    ]}
+  ],
+  "totalWords": 23
+}

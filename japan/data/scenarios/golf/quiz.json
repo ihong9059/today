@@ -1,0 +1,220 @@
+{
+  "title": "골프장 & 식사 퀴즈",
+  "description": "학습한 내용을 게임으로 복습합니다",
+  "estimatedTime": "5-8분",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "description": "올바른 뜻을 선택하세요",
+      "timeLimit": 15,
+      "questions": [
+        {
+          "question": "「予約」의 뜻은?",
+          "options": ["예약", "주문", "계산", "접수"],
+          "answer": 0
+        },
+        {
+          "question": "「キャディー」의 뜻은?",
+          "options": ["카트", "캐디", "클럽", "코스"],
+          "answer": 1
+        },
+        {
+          "question": "「グリーン」의 뜻은?",
+          "options": ["초록색", "그린(퍼팅 구역)", "페어웨이", "러프"],
+          "answer": 1
+        },
+        {
+          "question": "「お会計」의 뜻은?",
+          "options": ["주문", "메뉴", "계산", "영수증"],
+          "answer": 2
+        },
+        {
+          "question": "「おすすめ」의 뜻은?",
+          "options": ["주문", "추천", "인기", "특별"],
+          "answer": 1
+        },
+        {
+          "question": "「生ビール」의 뜻은?",
+          "options": ["병맥주", "캔맥주", "생맥주", "수제맥주"],
+          "answer": 2
+        },
+        {
+          "question": "「バンカー」의 뜻은?",
+          "options": ["연못", "벙커", "숲", "OB"],
+          "answer": 1
+        },
+        {
+          "question": "「お疲れ様でした」의 뜻은?",
+          "options": ["안녕하세요", "감사합니다", "수고하셨습니다", "미안합니다"],
+          "answer": 2
+        },
+        {
+          "question": "「惜しい」의 뜻은?",
+          "options": ["좋다", "나쁘다", "아깝다", "어렵다"],
+          "answer": 2
+        },
+        {
+          "question": "「ロッカー」의 뜻은?",
+          "options": ["락커", "카운터", "로비", "출구"],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "description": "대화문의 빈칸에 들어갈 말을 선택하세요",
+      "timeLimit": 20,
+      "questions": [
+        {
+          "question": "「___をお願いします」(예약하신 성함을 말씀해 주세요)",
+          "context": "접수에서 이름을 물을 때",
+          "options": ["ご予約のお名前", "お会計", "メニュー", "ロッカー", "お水"],
+          "answer": 0
+        },
+        {
+          "question": "「グリーンまで___ですか？」(그린까지 몇 야드인가요?)",
+          "context": "캐디에게 거리를 물을 때",
+          "options": ["何時", "何名", "何ヤード", "何番", "いくら"],
+          "answer": 2
+        },
+        {
+          "question": "「___は何ですか？」(추천 메뉴는 뭔가요?)",
+          "context": "레스토랑에서 추천을 물을 때",
+          "options": ["お会計", "おすすめ", "お名前", "お時間", "お席"],
+          "answer": 1
+        },
+        {
+          "question": "「___でお願いします」(카드로 부탁합니다)",
+          "context": "계산할 때",
+          "options": ["現金", "カード", "ポイント", "クーポン", "チップ"],
+          "answer": 1
+        },
+        {
+          "question": "「今日は___」(오늘 즐거웠습니다)",
+          "context": "라운드 후 인사",
+          "options": ["疲れました", "難しかったです", "楽しかったです", "暑かったです", "遅かったです"],
+          "answer": 2
+        }
+      ]
+    },
+    {
+      "type": "ordering",
+      "title": "순서 맞추기",
+      "description": "대화 순서를 올바르게 배열하세요",
+      "questions": [
+        {
+          "title": "레스토랑 주문",
+          "sentences": [
+            {"text": "いらっしゃいませ。何名様ですか？", "order": 1},
+            {"text": "2人です。", "order": 2},
+            {"text": "メニューでございます。", "order": 3},
+            {"text": "おすすめは何ですか？", "order": 4},
+            {"text": "和牛ステーキランチです。", "order": 5}
+          ]
+        },
+        {
+          "title": "골프장 접수",
+          "sentences": [
+            {"text": "ご予約のお名前をお願いします。", "order": 1},
+            {"text": "予約した田中です。", "order": 2},
+            {"text": "お待ちしておりました。", "order": 3},
+            {"text": "ロッカーの鍵をどうぞ。", "order": 4},
+            {"text": "ありがとうございます。", "order": 5}
+          ]
+        },
+        {
+          "title": "라운딩 중",
+          "sentences": [
+            {"text": "グリーンまで150ヤードです。", "order": 1},
+            {"text": "7番アイアンをお願いします。", "order": 2},
+            {"text": "ナイスショット！", "order": 3},
+            {"text": "バーディーチャンスですね。", "order": 4},
+            {"text": "パターをください。", "order": 5}
+          ]
+        }
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "description": "일본어와 한국어를 연결하세요",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "ゴルフ場", "korean": "골프장"},
+        {"japanese": "キャディー", "korean": "캐디"},
+        {"japanese": "ナイスショット", "korean": "나이스샷"},
+        {"japanese": "お会計", "korean": "계산"},
+        {"japanese": "生ビール", "korean": "생맥주"},
+        {"japanese": "おすすめ", "korean": "추천"},
+        {"japanese": "予約", "korean": "예약"},
+        {"japanese": "ロッカー", "korean": "락커"},
+        {"japanese": "グリーン", "korean": "그린"},
+        {"japanese": "バンカー", "korean": "벙커"},
+        {"japanese": "お疲れ様", "korean": "수고하셨습니다"},
+        {"japanese": "楽しかった", "korean": "즐거웠다"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "description": "상황에 맞는 표현을 선택하세요",
+      "questions": [
+        {
+          "situation": "골프장에 도착해서 예약 확인을 할 때",
+          "options": [
+            {"text": "予約した田中です。", "correct": true},
+            {"text": "ゴルフしたいです。", "correct": false},
+            {"text": "お会計をお願いします。", "correct": false}
+          ]
+        },
+        {
+          "situation": "캐디에게 클럽을 요청할 때",
+          "options": [
+            {"text": "7番アイアンをお願いします。", "correct": true},
+            {"text": "7番アイアンをちょうだい。", "correct": false},
+            {"text": "クラブ！", "correct": false}
+          ]
+        },
+        {
+          "situation": "식사 후 계산하고 싶을 때",
+          "options": [
+            {"text": "お会計をお願いします。", "correct": true},
+            {"text": "金を払う。", "correct": false},
+            {"text": "いくら？", "correct": false}
+          ]
+        },
+        {
+          "situation": "라운드가 끝나고 캐디에게 인사할 때",
+          "options": [
+            {"text": "お世話になりました。", "correct": true},
+            {"text": "バイバイ。", "correct": false},
+            {"text": "じゃね。", "correct": false}
+          ]
+        },
+        {
+          "situation": "좋은 샷을 쳤을 때 상대방에게 하는 말",
+          "options": [
+            {"text": "ナイスショット！", "correct": true},
+            {"text": "すごい上手。", "correct": false},
+            {"text": "よかった。", "correct": false}
+          ]
+        }
+      ]
+    }
+  ],
+  "scoring": {
+    "multipleChoice": 10,
+    "fillBlank": 15,
+    "ordering": 20,
+    "matching": 2,
+    "situational": 15,
+    "totalPossible": 300,
+    "stars": {
+      "three": 270,
+      "two": 200,
+      "one": 100
+    }
+  }
+}

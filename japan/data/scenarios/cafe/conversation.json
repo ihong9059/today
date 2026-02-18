@@ -1,0 +1,59 @@
+{
+  "title": "카페 회화",
+  "scenes": [
+    {
+      "id": 1,
+      "title": "주문하기",
+      "location": "카페 카운터",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "점원", "japanese": "いらっしゃいませ。ご注文はお決まりですか？", "korean": "어서 오세요. 주문 정하셨나요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "カフェラテをお願いします。", "korean": "카페라테 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "ホットとアイス、どちらにしますか？", "korean": "핫과 아이스, 어느 쪽으로 하시겠어요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "アイスでお願いします。", "korean": "아이스로 부탁합니다.", "correct": true},
+          {"japanese": "ホットでお願いします。", "korean": "핫으로 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "サイズはいかがなさいますか？S、M、Lがございます。", "korean": "사이즈는 어떻게 하시겠어요? S, M, L이 있습니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "Mサイズでお願いします。", "korean": "M 사이즈로 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "店内でお召し上がりですか、お持ち帰りですか？", "korean": "매장에서 드시나요, 포장인가요?", "tip": "お召し上がり는 '드시다'의 존경어"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "店内でお願いします。", "korean": "매장에서 부탁합니다.", "correct": true},
+          {"japanese": "テイクアウトでお願いします。", "korean": "테이크아웃으로 부탁합니다.", "correct": true}
+        ]}
+      ]
+    },
+    {
+      "id": 2,
+      "title": "옵션 추가",
+      "location": "카페 카운터",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "점원", "japanese": "カスタマイズはございますか？", "korean": "커스터마이즈(옵션 변경) 있으세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "ミルクを豆乳に変更できますか？", "korean": "우유를 두유로 바꿀 수 있나요?", "correct": true},
+          {"japanese": "ホイップを追加してください。", "korean": "휘핑크림 추가해 주세요.", "correct": true},
+          {"japanese": "大丈夫です。", "korean": "괜찮습니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "かしこまりました。合計で550円です。", "korean": "알겠습니다. 합계 550엔입니다."}
+      ]
+    },
+    {
+      "id": 3,
+      "title": "자리/시설 문의",
+      "location": "카페 내",
+      "dialogues": [
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "すみません、Wi-Fiはありますか？", "korean": "저기요, 와이파이 있나요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "はい、パスワードはレシートに書いてあります。", "korean": "네, 비밀번호는 영수증에 적혀 있어요."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "コンセントのある席はありますか？", "korean": "콘센트 있는 자리 있나요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "窓際の席にコンセントがあります。", "korean": "창가 자리에 콘센트가 있어요."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "title": "은행/환전 퀴즈",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「両替」의 뜻은?", "options": ["송금", "환전", "출금", "입금"], "answer": 1},
+        {"question": "「引き出す」의 뜻은?", "options": ["입금하다", "출금하다", "송금하다", "환전하다"], "answer": 1},
+        {"question": "「残高」의 뜻은?", "options": ["수수료", "잔액", "이자", "원금"], "answer": 1},
+        {"question": "「暗証番号」의 뜻은?", "options": ["계좌번호", "비밀번호", "전화번호", "회원번호"], "answer": 1},
+        {"question": "「窓口」의 뜻은?", "options": ["ATM", "창구", "입구", "출구"], "answer": 1},
+        {"question": "「振り込み」의 뜻은?", "options": ["입금", "출금", "송금", "환전"], "answer": 2},
+        {"question": "「口座」의 뜻은?", "options": ["카드", "계좌", "통장", "도장"], "answer": 1},
+        {"question": "「手数料」의 뜻은?", "options": ["이자", "원금", "수수료", "잔액"], "answer": 2},
+        {"question": "「為替レート」의 뜻은?", "options": ["금리", "환율", "이율", "할인율"], "answer": 1},
+        {"question": "「通帳」의 뜻은?", "options": ["카드", "도장", "통장", "서류"], "answer": 2}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「ドルを円に___したいです」(환전하고 싶어요)", "context": "환전 요청", "options": ["預金", "引き出し", "両替", "振り込み", "送金"], "answer": 2},
+        {"question": "「___を開設したいです」(계좌를 개설하고 싶어요)", "context": "계좌 개설", "options": ["通帳", "口座", "カード", "印鑑", "暗証番号"], "answer": 1},
+        {"question": "「___はどこですか？」(ATM이 어디예요?)", "context": "ATM 찾기", "options": ["窓口", "ATM", "入口", "出口", "受付"], "answer": 1},
+        {"question": "「___を入力してください」(비밀번호를 입력해주세요)", "context": "ATM 이용", "options": ["金額", "暗証番号", "口座番号", "電話番号", "住所"], "answer": 1},
+        {"question": "「___はいくらですか？」(수수료는 얼마예요?)", "context": "비용 문의", "options": ["金額", "残高", "手数料", "利子", "元金"], "answer": 2}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "両替", "korean": "환전"},
+        {"japanese": "引き出す", "korean": "출금하다"},
+        {"japanese": "残高", "korean": "잔액"},
+        {"japanese": "暗証番号", "korean": "비밀번호"},
+        {"japanese": "窓口", "korean": "창구"},
+        {"japanese": "振り込み", "korean": "송금"},
+        {"japanese": "口座", "korean": "계좌"},
+        {"japanese": "手数料", "korean": "수수료"},
+        {"japanese": "為替レート", "korean": "환율"},
+        {"japanese": "通帳", "korean": "통장"},
+        {"japanese": "預金", "korean": "예금"},
+        {"japanese": "印鑑", "korean": "도장"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "환전을 요청할 때", "options": [{"text": "ドルを円に両替したいのですが。", "correct": true}, {"text": "両替！", "correct": false}, {"text": "円にして。", "correct": false}]},
+        {"situation": "계좌를 개설하고 싶을 때", "options": [{"text": "口座を開設したいのですが。", "correct": true}, {"text": "口座作りたい。", "correct": false}, {"text": "口座！", "correct": false}]},
+        {"situation": "ATM 위치를 물을 때", "options": [{"text": "ATMはどこですか？", "correct": true}, {"text": "ATMどこ？", "correct": false}, {"text": "ATM！", "correct": false}]},
+        {"situation": "잔액을 확인하고 싶을 때", "options": [{"text": "残高照会をお願いします。", "correct": true}, {"text": "残高見たい。", "correct": false}, {"text": "いくら？", "correct": false}]},
+        {"situation": "수수료를 물을 때", "options": [{"text": "手数料はいくらですか？", "correct": true}, {"text": "手数料いくら？", "correct": false}, {"text": "料金！", "correct": false}]}
+      ]
+    }
+  ]
+}

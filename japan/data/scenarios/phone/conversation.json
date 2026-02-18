@@ -1,0 +1,66 @@
+{
+  "title": "휴대폰 가게 회화",
+  "scenes": [
+    {
+      "id": 1,
+      "title": "SIM 카드 구매",
+      "location": "휴대폰 가게",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "점원", "japanese": "いらっしゃいませ。何をお探しですか？", "korean": "어서 오세요. 무엇을 찾으세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "プリペイドSIMカードを買いたいのですが。", "korean": "선불 SIM 카드를 사고 싶은데요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "滞在期間はどのくらいですか？", "korean": "체류 기간이 어느 정도예요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "2週間です。", "korean": "2주일입니다.", "correct": true},
+          {"japanese": "1ヶ月くらいです。", "korean": "한 달 정도입니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "データのみですか、通話もできるものですか？", "korean": "데이터만요, 아니면 통화도 되는 걸로요?", "tip": "データのみは 데이터 전용을 의미합니다"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "データのみで大丈夫です。", "korean": "데이터만으로 괜찮습니다.", "correct": true},
+          {"japanese": "通話もできるものがいいです。", "korean": "통화도 되는 게 좋습니다.", "correct": true}
+        ]}
+      ]
+    },
+    {
+      "id": 2,
+      "title": "요금제 선택",
+      "location": "휴대폰 가게",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "점원", "japanese": "こちらのプランはいかがですか？5ギガで2,000円です。", "korean": "이 요금제는 어떠세요? 5기가에 2,000엔입니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "それでお願いします。", "korean": "그걸로 부탁합니다.", "correct": true},
+          {"japanese": "もう少しデータが多いのはありますか？", "korean": "조금 더 데이터가 많은 건 있나요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "パスポートをお持ちですか？", "korean": "여권 가지고 계세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、こちらです。", "korean": "네, 여기요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "設定はこちらでやりますか？", "korean": "설정은 저희가 해드릴까요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、お願いします。", "korean": "네, 부탁합니다.", "correct": true}
+        ]}
+      ]
+    },
+    {
+      "id": 3,
+      "title": "추가 구매",
+      "location": "휴대폰 가게",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "점원", "japanese": "他に何かお探しですか？", "korean": "다른 건 뭐 찾으세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "充電器はありますか？", "korean": "충전기 있나요?", "correct": true},
+          {"japanese": "ケースも見せてください。", "korean": "케이스도 보여주세요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "はい、こちらにございます。", "korean": "네, 여기 있습니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "これもください。", "korean": "이것도 주세요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "合計で4,500円になります。", "korean": "합계 4,500엔입니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "カードで払えますか？", "korean": "카드로 결제할 수 있나요?", "correct": true}
+        ]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "title": "온천/료칸 퀴즈",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「温泉」의 뜻은?", "options": ["목욕탕", "온천", "수영장", "사우나"], "answer": 1},
+        {"question": "「露天風呂」의 뜻은?", "options": ["실내탕", "노천탕", "찜질방", "대욕장"], "answer": 1},
+        {"question": "「浴衣」의 뜻은?", "options": ["수영복", "유카타", "목욕가운", "잠옷"], "answer": 1},
+        {"question": "「和室」의 뜻은?", "options": ["침대방", "다다미방", "거실", "화장실"], "answer": 1},
+        {"question": "「男湯」의 뜻은?", "options": ["여탕", "남탕", "혼탕", "가족탕"], "answer": 1},
+        {"question": "「脱衣所」의 뜻은?", "options": ["목욕탕", "탈의실", "휴게실", "식당"], "answer": 1},
+        {"question": "「布団」의 뜻은?", "options": ["침대", "이불", "베개", "담요"], "answer": 1},
+        {"question": "「懐石料理」의 뜻은?", "options": ["패스트푸드", "가이세키요리", "라면", "스시"], "answer": 1},
+        {"question": "「貸切」의 뜻은?", "options": ["무료", "전세", "할인", "예약"], "answer": 1},
+        {"question": "「タオル」의 뜻은?", "options": ["비누", "샴푸", "수건", "빗"], "answer": 2}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「___に入りたいです」(온천에 들어가고 싶어요)", "context": "온천 이용", "options": ["温泉", "プール", "サウナ", "シャワー", "風呂"], "answer": 0},
+        {"question": "「___はどこですか？」(대욕장이 어디예요?)", "context": "장소 문의", "options": ["部屋", "大浴場", "食堂", "フロント", "トイレ"], "answer": 1},
+        {"question": "「___を着ます」(유카타를 입어요)", "context": "료칸 이용", "options": ["パジャマ", "浴衣", "スーツ", "着物", "水着"], "answer": 1},
+        {"question": "「___は何時までですか？」(입욕시간은 몇 시까지예요?)", "context": "시간 문의", "options": ["朝食時間", "夕食時間", "入浴時間", "チェックアウト", "営業時間"], "answer": 2},
+        {"question": "「___風呂はありますか？」(노천탕 있나요?)", "context": "시설 문의", "options": ["大", "露天", "家族", "個室", "貸切"], "answer": 1}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "温泉", "korean": "온천"},
+        {"japanese": "露天風呂", "korean": "노천탕"},
+        {"japanese": "旅館", "korean": "료칸"},
+        {"japanese": "浴衣", "korean": "유카타"},
+        {"japanese": "和室", "korean": "다다미방"},
+        {"japanese": "男湯", "korean": "남탕"},
+        {"japanese": "女湯", "korean": "여탕"},
+        {"japanese": "脱衣所", "korean": "탈의실"},
+        {"japanese": "布団", "korean": "이불"},
+        {"japanese": "タオル", "korean": "수건"},
+        {"japanese": "貸切", "korean": "전세"},
+        {"japanese": "懐石料理", "korean": "가이세키요리"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "대욕장 위치를 물을 때", "options": [{"text": "大浴場はどこですか？", "correct": true}, {"text": "風呂どこ？", "correct": false}, {"text": "お風呂！", "correct": false}]},
+        {"situation": "노천탕이 있는지 물을 때", "options": [{"text": "露天風呂はありますか？", "correct": true}, {"text": "外の風呂ある？", "correct": false}, {"text": "露天！", "correct": false}]},
+        {"situation": "입욕시간을 물을 때", "options": [{"text": "入浴時間は何時までですか？", "correct": true}, {"text": "何時まで？", "correct": false}, {"text": "時間！", "correct": false}]},
+        {"situation": "온천에 들어가고 싶다고 말할 때", "options": [{"text": "温泉に入りたいです。", "correct": true}, {"text": "温泉入りたい。", "correct": false}, {"text": "温泉！", "correct": false}]},
+        {"situation": "음식이 맛있다고 말할 때", "options": [{"text": "とてもおいしいです。", "correct": true}, {"text": "うまい！", "correct": false}, {"text": "おいしい！", "correct": false}]}
+      ]
+    }
+  ]
+}

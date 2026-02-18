@@ -1,0 +1,39 @@
+{
+  "title": "택시",
+  "description": "택시 이용, 목적지 안내, 요금 결제",
+  "estimatedTime": "7-10분",
+  "categories": [
+    {"name": "기본", "words": [
+      {"japanese": "タクシー", "reading": "タクシー", "korean": "택시", "example": "タクシーに乗ります。"},
+      {"japanese": "乗り場", "reading": "のりば", "korean": "승강장", "example": "タクシー乗り場はどこですか？"},
+      {"japanese": "運転手", "reading": "うんてんしゅ", "korean": "운전기사", "example": "運転手さんに伝えます。"},
+      {"japanese": "目的地", "reading": "もくてきち", "korean": "목적지", "example": "目的地はここです。"},
+      {"japanese": "住所", "reading": "じゅうしょ", "korean": "주소", "example": "住所を見せます。"},
+      {"japanese": "乗る", "reading": "のる", "korean": "타다", "example": "タクシーに乗ります。"}
+    ]},
+    {"name": "이동", "words": [
+      {"japanese": "まっすぐ", "reading": "まっすぐ", "korean": "직진", "example": "まっすぐ行ってください。"},
+      {"japanese": "右", "reading": "みぎ", "korean": "오른쪽", "example": "右に曲がってください。"},
+      {"japanese": "左", "reading": "ひだり", "korean": "왼쪽", "example": "左に曲がってください。"},
+      {"japanese": "曲がる", "reading": "まがる", "korean": "돌다", "example": "次を右に曲がってください。"},
+      {"japanese": "止まる", "reading": "とまる", "korean": "멈추다", "example": "ここで止まってください。"},
+      {"japanese": "降りる", "reading": "おりる", "korean": "내리다", "example": "ここで降ります。"}
+    ]},
+    {"name": "요금", "words": [
+      {"japanese": "料金", "reading": "りょうきん", "korean": "요금", "example": "料金はいくらですか？"},
+      {"japanese": "メーター", "reading": "メーター", "korean": "미터기", "example": "メーターを見てください。"},
+      {"japanese": "現金", "reading": "げんきん", "korean": "현금", "example": "現金で払います。"},
+      {"japanese": "カード", "reading": "カード", "korean": "카드", "example": "カードで払えますか？"},
+      {"japanese": "お釣り", "reading": "おつり", "korean": "거스름돈", "example": "お釣りはいりません。"},
+      {"japanese": "領収書", "reading": "りょうしゅうしょ", "korean": "영수증", "example": "領収書をください。"}
+    ]},
+    {"name": "기타", "words": [
+      {"japanese": "急いで", "reading": "いそいで", "korean": "급히", "example": "急いでください。"},
+      {"japanese": "近道", "reading": "ちかみち", "korean": "지름길", "example": "近道はありますか？"},
+      {"japanese": "渋滞", "reading": "じゅうたい", "korean": "정체", "example": "渋滞していますね。"},
+      {"japanese": "トランク", "reading": "トランク", "korean": "트렁크", "example": "トランクに荷物を入れます。"},
+      {"japanese": "エアコン", "reading": "エアコン", "korean": "에어컨", "example": "エアコンをつけてください。"}
+    ]}
+  ],
+  "totalWords": 23
+}

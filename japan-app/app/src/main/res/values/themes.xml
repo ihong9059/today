@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.JapanTravel" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#c41e3a</item>
+        <item name="colorPrimaryDark">#8b0000</item>
+        <item name="colorAccent">#ffb7c5</item>
+        <item name="android:statusBarColor">#c41e3a</item>
+    </style>
+</resources>

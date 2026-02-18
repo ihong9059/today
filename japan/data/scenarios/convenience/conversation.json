@@ -1,0 +1,62 @@
+{
+  "title": "편의점/슈퍼 회화",
+  "scenes": [
+    {
+      "id": 1,
+      "title": "상품 찾기",
+      "location": "편의점 내",
+      "dialogues": [
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "すみません、おにぎりはどこですか？", "korean": "저기요, 주먹밥은 어디에 있나요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "おにぎりは奥の冷蔵コーナーにあります。", "korean": "주먹밥은 안쪽 냉장 코너에 있습니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "ありがとうございます。", "korean": "감사합니다.", "correct": true}
+        ]}
+      ]
+    },
+    {
+      "id": 2,
+      "title": "계산",
+      "location": "계산대",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "점원", "japanese": "いらっしゃいませ。ポイントカードはお持ちですか？", "korean": "어서 오세요. 포인트카드 있으세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "いいえ、持っていません。", "korean": "아니요, 없습니다.", "correct": true},
+          {"japanese": "はい、これです。", "korean": "네, 이거요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "お弁当は温めますか？", "korean": "도시락 데워드릴까요?", "tip": "温めますか는 편의점에서 자주 듣는 표현"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、お願いします。", "korean": "네, 부탁합니다.", "correct": true},
+          {"japanese": "いいえ、大丈夫です。", "korean": "아니요, 괜찮습니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "袋はいりますか？", "korean": "봉투 필요하세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、一枚お願いします。", "korean": "네, 한 장 부탁합니다.", "correct": true},
+          {"japanese": "いいえ、大丈夫です。", "korean": "아니요, 괜찮습니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "全部で650円です。", "korean": "전부 650엔입니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "カードで払えますか？", "korean": "카드로 결제할 수 있나요?", "correct": true},
+          {"japanese": "現金でお願いします。", "korean": "현금으로 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "ありがとうございました。", "korean": "감사합니다."}
+      ]
+    },
+    {
+      "id": 3,
+      "title": "ATM 이용",
+      "location": "편의점 내",
+      "dialogues": [
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "すみません、ATMはありますか？", "korean": "저기요, ATM 있나요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "はい、入口の右側にあります。", "korean": "네, 입구 오른쪽에 있습니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "外国のカードも使えますか？", "korean": "외국 카드도 사용할 수 있나요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "はい、海外カードも使えますよ。", "korean": "네, 해외 카드도 사용할 수 있어요."}
+      ]
+    }
+  ]
+}

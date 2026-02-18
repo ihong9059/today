@@ -1,0 +1,77 @@
+{
+  "title": "골프장 & 식사",
+  "description": "골프 라운드와 클럽하우스 식사에서 사용하는 표현",
+  "estimatedTime": "7-10분",
+  "categories": [
+    {
+      "name": "골프장 기본",
+      "words": [
+        {"japanese": "ゴルフ場", "reading": "ゴルフじょう", "korean": "골프장", "example": "ゴルフ場に着きました。"},
+        {"japanese": "受付", "reading": "うけつけ", "korean": "접수, 프론트", "example": "受付はどこですか？"},
+        {"japanese": "予約", "reading": "よやく", "korean": "예약", "example": "予約した田中です。"},
+        {"japanese": "スタート時間", "reading": "スタートじかん", "korean": "시작 시간", "example": "スタート時間は何時ですか？"},
+        {"japanese": "ロッカー", "reading": "ロッカー", "korean": "락커", "example": "ロッカーの鍵をください。"},
+        {"japanese": "着替え", "reading": "きがえ", "korean": "옷 갈아입기", "example": "着替えはどこでできますか？"}
+      ]
+    },
+    {
+      "name": "캐디 & 라운딩",
+      "words": [
+        {"japanese": "キャディー", "reading": "キャディー", "korean": "캐디", "example": "キャディーさん、ありがとう。"},
+        {"japanese": "カート", "reading": "カート", "korean": "카트", "example": "カートに乗りましょう。"},
+        {"japanese": "ティーグラウンド", "reading": "ティーグラウンド", "korean": "티 그라운드", "example": "ティーグラウンドに行きましょう。"},
+        {"japanese": "フェアウェイ", "reading": "フェアウェイ", "korean": "페어웨이", "example": "フェアウェイの真ん中です。"},
+        {"japanese": "ラフ", "reading": "ラフ", "korean": "러프", "example": "ボールはラフに入りました。"},
+        {"japanese": "バンカー", "reading": "バンカー", "korean": "벙커", "example": "バンカーに入ってしまいました。"},
+        {"japanese": "グリーン", "reading": "グリーン", "korean": "그린", "example": "グリーンまで何ヤードですか？"},
+        {"japanese": "カップ", "reading": "カップ", "korean": "컵(홀)", "example": "カップまで3メートルです。"}
+      ]
+    },
+    {
+      "name": "클럽 & 샷",
+      "words": [
+        {"japanese": "ドライバー", "reading": "ドライバー", "korean": "드라이버", "example": "ドライバーをください。"},
+        {"japanese": "アイアン", "reading": "アイアン", "korean": "아이언", "example": "7番アイアンでお願いします。"},
+        {"japanese": "パター", "reading": "パター", "korean": "퍼터", "example": "パターを取ってください。"},
+        {"japanese": "ティーショット", "reading": "ティーショット", "korean": "티샷", "example": "ナイスティーショット！"},
+        {"japanese": "アプローチ", "reading": "アプローチ", "korean": "어프로치", "example": "アプローチが上手ですね。"},
+        {"japanese": "パット", "reading": "パット", "korean": "퍼팅", "example": "パットが入りました！"}
+      ]
+    },
+    {
+      "name": "점수 & 표현",
+      "words": [
+        {"japanese": "パー", "reading": "パー", "korean": "파", "example": "パーでした。"},
+        {"japanese": "バーディー", "reading": "バーディー", "korean": "버디", "example": "バーディーおめでとうございます！"},
+        {"japanese": "ボギー", "reading": "ボギー", "korean": "보기", "example": "ボギーでした。"},
+        {"japanese": "ナイスショット", "reading": "ナイスショット", "korean": "나이스샷", "example": "ナイスショット！"},
+        {"japanese": "惜しい", "reading": "おしい", "korean": "아깝다", "example": "惜しい！もう少しでした。"},
+        {"japanese": "ファー", "reading": "ファー", "korean": "포어(위험 알림)", "example": "ファー！危ない！"}
+      ]
+    },
+    {
+      "name": "클럽하우스 & 식사",
+      "words": [
+        {"japanese": "クラブハウス", "reading": "クラブハウス", "korean": "클럽하우스", "example": "クラブハウスで休みましょう。"},
+        {"japanese": "レストラン", "reading": "レストラン", "korean": "레스토랑", "example": "レストランは2階です。"},
+        {"japanese": "メニュー", "reading": "メニュー", "korean": "메뉴", "example": "メニューを見せてください。"},
+        {"japanese": "おすすめ", "reading": "おすすめ", "korean": "추천", "example": "おすすめは何ですか？"},
+        {"japanese": "ランチ", "reading": "ランチ", "korean": "점심", "example": "ランチセットをください。"},
+        {"japanese": "生ビール", "reading": "なまビール", "korean": "생맥주", "example": "生ビールを一つください。"},
+        {"japanese": "お会計", "reading": "おかいけい", "korean": "계산", "example": "お会計をお願いします。"},
+        {"japanese": "カード", "reading": "カード", "korean": "카드", "example": "カードで払えますか？"}
+      ]
+    },
+    {
+      "name": "인사 & 마무리",
+      "words": [
+        {"japanese": "お疲れ様でした", "reading": "おつかれさまでした", "korean": "수고하셨습니다", "example": "今日はお疲れ様でした。"},
+        {"japanese": "楽しかった", "reading": "たのしかった", "korean": "즐거웠다", "example": "今日は楽しかったです。"},
+        {"japanese": "また", "reading": "また", "korean": "또", "example": "また一緒にラウンドしましょう。"},
+        {"japanese": "ありがとうございました", "reading": "ありがとうございました", "korean": "감사합니다", "example": "今日はありがとうございました。"},
+        {"japanese": "お世話になりました", "reading": "おせわになりました", "korean": "신세 졌습니다", "example": "キャディーさん、お世話になりました。"}
+      ]
+    }
+  ],
+  "totalWords": 35
+}

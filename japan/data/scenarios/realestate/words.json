@@ -1,0 +1,39 @@
+{
+  "title": "부동산",
+  "description": "집 구하기, 임대 계약",
+  "estimatedTime": "7-10분",
+  "categories": [
+    {"name": "기본", "words": [
+      {"japanese": "不動産", "reading": "ふどうさん", "korean": "부동산", "example": "不動産屋に行きます。"},
+      {"japanese": "部屋", "reading": "へや", "korean": "방", "example": "部屋を探しています。"},
+      {"japanese": "アパート", "reading": "アパート", "korean": "아파트", "example": "アパートを借りたいです。"},
+      {"japanese": "マンション", "reading": "マンション", "korean": "맨션", "example": "マンションに住んでいます。"},
+      {"japanese": "一人暮らし", "reading": "ひとりぐらし", "korean": "자취", "example": "一人暮らしをしています。"},
+      {"japanese": "内見", "reading": "ないけん", "korean": "내부 견학", "example": "内見をしたいです。"}
+    ]},
+    {"name": "조건", "words": [
+      {"japanese": "家賃", "reading": "やちん", "korean": "월세", "example": "家賃はいくらですか？"},
+      {"japanese": "敷金", "reading": "しききん", "korean": "보증금", "example": "敷金は1ヶ月分です。"},
+      {"japanese": "礼金", "reading": "れいきん", "korean": "사례금", "example": "礼金なしの物件はありますか？"},
+      {"japanese": "共益費", "reading": "きょうえきひ", "korean": "관리비", "example": "共益費は5000円です。"},
+      {"japanese": "間取り", "reading": "まどり", "korean": "구조/평면도", "example": "間取りは1LDKです。"},
+      {"japanese": "駅近", "reading": "えきちか", "korean": "역세권", "example": "駅近の物件がいいです。"}
+    ]},
+    {"name": "설비", "words": [
+      {"japanese": "エアコン", "reading": "エアコン", "korean": "에어컨", "example": "エアコン付きですか？"},
+      {"japanese": "バス", "reading": "バス", "korean": "욕실", "example": "バストイレ別がいいです。"},
+      {"japanese": "トイレ", "reading": "トイレ", "korean": "화장실", "example": "トイレは新しいです。"},
+      {"japanese": "キッチン", "reading": "キッチン", "korean": "주방", "example": "キッチンは広いですか？"},
+      {"japanese": "洗濯機", "reading": "せんたくき", "korean": "세탁기", "example": "洗濯機置き場はありますか？"},
+      {"japanese": "収納", "reading": "しゅうのう", "korean": "수납공간", "example": "収納スペースは十分ですか？"}
+    ]},
+    {"name": "계약", "words": [
+      {"japanese": "契約", "reading": "けいやく", "korean": "계약", "example": "契約期間は2年です。"},
+      {"japanese": "保証人", "reading": "ほしょうにん", "korean": "보증인", "example": "保証人は必要ですか？"},
+      {"japanese": "入居", "reading": "にゅうきょ", "korean": "입주", "example": "入居日はいつですか？"},
+      {"japanese": "退去", "reading": "たいきょ", "korean": "퇴거", "example": "退去時の費用は？"},
+      {"japanese": "更新", "reading": "こうしん", "korean": "갱신", "example": "契約更新はできますか？"}
+    ]}
+  ],
+  "totalWords": 23
+}

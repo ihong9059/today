@@ -1,0 +1,62 @@
+{
+  "title": "미용실 회화",
+  "scenes": [
+    {
+      "id": 1,
+      "title": "예약 확인",
+      "location": "미용실 입구",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "미용사", "japanese": "いらっしゃいませ。ご予約はございますか？", "korean": "어서 오세요. 예약하셨나요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、3時に予約した田中です。", "korean": "네, 3시에 예약한 다나카입니다.", "correct": true},
+          {"japanese": "いいえ、予約していません。", "korean": "아니요, 예약 안 했습니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "미용사", "japanese": "かしこまりました。こちらへどうぞ。", "korean": "알겠습니다. 이쪽으로 오세요."}
+      ]
+    },
+    {
+      "id": 2,
+      "title": "스타일 상담",
+      "location": "미용실 좌석",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "미용사", "japanese": "今日はどうされますか？", "korean": "오늘 어떻게 하시겠어요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "カットをお願いします。", "korean": "커트 부탁합니다.", "correct": true},
+          {"japanese": "カットとカラーをお願いします。", "korean": "커트와 염색 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "미용사", "japanese": "長さはどのくらいにしますか？", "korean": "길이는 어느 정도로 할까요?", "tip": "このくらい라고 말하며 손으로 표시하면 좋습니다"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "3センチくらい切ってください。", "korean": "3센티 정도 잘라주세요.", "correct": true},
+          {"japanese": "この写真のようにお願いします。", "korean": "이 사진처럼 해주세요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "미용사", "japanese": "前髪はどうしますか？", "korean": "앞머리는 어떻게 할까요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "少し短くしてください。", "korean": "조금 짧게 해주세요.", "correct": true},
+          {"japanese": "前髪は切らないでください。", "korean": "앞머리는 자르지 마세요.", "correct": true}
+        ]}
+      ]
+    },
+    {
+      "id": 3,
+      "title": "마무리",
+      "location": "미용실 좌석",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "미용사", "japanese": "こんな感じでいかがですか？", "korean": "이런 느낌 어떠세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "いい感じです。ありがとうございます。", "korean": "좋아요. 감사합니다.", "correct": true},
+          {"japanese": "もう少し短くしてもらえますか？", "korean": "조금 더 짧게 해주실 수 있나요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "미용사", "japanese": "スタイリング剤はつけますか？", "korean": "스타일링제 바를까요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、お願いします。", "korean": "네, 부탁합니다.", "correct": true},
+          {"japanese": "いいえ、大丈夫です。", "korean": "아니요, 괜찮습니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "미용사", "japanese": "お会計は3500円になります。", "korean": "계산은 3500엔입니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "カードで払えますか？", "korean": "카드로 결제할 수 있나요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "미용사", "japanese": "はい、大丈夫です。ありがとうございました。", "korean": "네, 가능합니다. 감사합니다."}
+      ]
+    }
+  ]
+}

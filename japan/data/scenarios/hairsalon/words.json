@@ -1,0 +1,39 @@
+{
+  "title": "미용실",
+  "description": "헤어컷, 스타일링, 미용실 이용",
+  "estimatedTime": "7-10분",
+  "categories": [
+    {"name": "기본", "words": [
+      {"japanese": "美容院", "reading": "びよういん", "korean": "미용실", "example": "美容院を予約しました。"},
+      {"japanese": "髪", "reading": "かみ", "korean": "머리카락", "example": "髪を切りたいです。"},
+      {"japanese": "カット", "reading": "カット", "korean": "커트", "example": "カットをお願いします。"},
+      {"japanese": "シャンプー", "reading": "シャンプー", "korean": "샴푸", "example": "シャンプーもお願いします。"},
+      {"japanese": "予約", "reading": "よやく", "korean": "예약", "example": "予約はありますか？"},
+      {"japanese": "担当", "reading": "たんとう", "korean": "담당", "example": "担当は誰ですか？"}
+    ]},
+    {"name": "스타일", "words": [
+      {"japanese": "短く", "reading": "みじかく", "korean": "짧게", "example": "短くしてください。"},
+      {"japanese": "長さ", "reading": "ながさ", "korean": "길이", "example": "長さはこのくらいで。"},
+      {"japanese": "前髪", "reading": "まえがみ", "korean": "앞머리", "example": "前髪を切ってください。"},
+      {"japanese": "すく", "reading": "すく", "korean": "숱치다", "example": "少しすいてください。"},
+      {"japanese": "パーマ", "reading": "パーマ", "korean": "파마", "example": "パーマをかけたいです。"},
+      {"japanese": "カラー", "reading": "カラー", "korean": "염색", "example": "カラーもお願いします。"}
+    ]},
+    {"name": "색상", "words": [
+      {"japanese": "明るい", "reading": "あかるい", "korean": "밝은", "example": "明るい色にしてください。"},
+      {"japanese": "暗い", "reading": "くらい", "korean": "어두운", "example": "暗い色がいいです。"},
+      {"japanese": "茶色", "reading": "ちゃいろ", "korean": "갈색", "example": "茶色にしたいです。"},
+      {"japanese": "黒", "reading": "くろ", "korean": "검정", "example": "黒に戻したいです。"},
+      {"japanese": "アッシュ", "reading": "アッシュ", "korean": "애쉬", "example": "アッシュカラーでお願いします。"}
+    ]},
+    {"name": "기타", "words": [
+      {"japanese": "似合う", "reading": "にあう", "korean": "어울리다", "example": "どんな髪型が似合いますか？"},
+      {"japanese": "イメージ", "reading": "イメージ", "korean": "이미지", "example": "こんなイメージでお願いします。"},
+      {"japanese": "写真", "reading": "しゃしん", "korean": "사진", "example": "この写真のようにお願いします。"},
+      {"japanese": "仕上げ", "reading": "しあげ", "korean": "마무리", "example": "仕上げはワックスでいいですか？"},
+      {"japanese": "ドライヤー", "reading": "ドライヤー", "korean": "드라이어", "example": "ドライヤーで乾かします。"},
+      {"japanese": "鏡", "reading": "かがみ", "korean": "거울", "example": "鏡で確認してください。"}
+    ]}
+  ],
+  "totalWords": 23
+}

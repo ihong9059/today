@@ -1,0 +1,62 @@
+{
+  "title": "전철/지하철",
+  "description": "전철 이용, 티켓 구매, 환승하기",
+  "estimatedTime": "7-10분",
+  "categories": [
+    {
+      "name": "역/시설",
+      "words": [
+        {"japanese": "駅", "reading": "えき", "korean": "역", "example": "駅はどこですか？"},
+        {"japanese": "改札", "reading": "かいさつ", "korean": "개찰구", "example": "改札を通ってください。"},
+        {"japanese": "ホーム", "reading": "ホーム", "korean": "플랫폼", "example": "3番ホームです。"},
+        {"japanese": "出口", "reading": "でぐち", "korean": "출구", "example": "東出口はどこですか？"},
+        {"japanese": "入口", "reading": "いりぐち", "korean": "입구", "example": "入口はあちらです。"},
+        {"japanese": "階段", "reading": "かいだん", "korean": "계단", "example": "階段を降りてください。"}
+      ]
+    },
+    {
+      "name": "티켓/요금",
+      "words": [
+        {"japanese": "切符", "reading": "きっぷ", "korean": "표", "example": "切符を買います。"},
+        {"japanese": "券売機", "reading": "けんばいき", "korean": "자동발매기", "example": "券売機で買えます。"},
+        {"japanese": "運賃", "reading": "うんちん", "korean": "운임", "example": "運賃はいくらですか？"},
+        {"japanese": "片道", "reading": "かたみち", "korean": "편도", "example": "片道でお願いします。"},
+        {"japanese": "往復", "reading": "おうふく", "korean": "왕복", "example": "往復切符はありますか？"},
+        {"japanese": "ICカード", "reading": "アイシーカード", "korean": "교통카드", "example": "ICカードで乗れます。"}
+      ]
+    },
+    {
+      "name": "노선/방향",
+      "words": [
+        {"japanese": "路線", "reading": "ろせん", "korean": "노선", "example": "どの路線ですか？"},
+        {"japanese": "乗り換え", "reading": "のりかえ", "korean": "환승", "example": "乗り換えが必要です。"},
+        {"japanese": "方面", "reading": "ほうめん", "korean": "방면", "example": "新宿方面の電車です。"},
+        {"japanese": "行き", "reading": "いき/ゆき", "korean": "행", "example": "東京行きの電車はどれですか？"},
+        {"japanese": "各駅停車", "reading": "かくえきていしゃ", "korean": "완행", "example": "各駅停車に乗ります。"},
+        {"japanese": "急行", "reading": "きゅうこう", "korean": "급행", "example": "急行は止まりますか？"}
+      ]
+    },
+    {
+      "name": "이용",
+      "words": [
+        {"japanese": "乗る", "reading": "のる", "korean": "타다", "example": "電車に乗ります。"},
+        {"japanese": "降りる", "reading": "おりる", "korean": "내리다", "example": "次の駅で降ります。"},
+        {"japanese": "間に合う", "reading": "まにあう", "korean": "시간에 맞다", "example": "間に合いますか？"},
+        {"japanese": "遅れる", "reading": "おくれる", "korean": "늦다/지연되다", "example": "電車が遅れています。"},
+        {"japanese": "混んでいる", "reading": "こんでいる", "korean": "붐비다", "example": "とても混んでいます。"},
+        {"japanese": "空いている", "reading": "すいている", "korean": "한산하다", "example": "今は空いています。"}
+      ]
+    },
+    {
+      "name": "안내",
+      "words": [
+        {"japanese": "次", "reading": "つぎ", "korean": "다음", "example": "次は新宿です。"},
+        {"japanese": "終点", "reading": "しゅうてん", "korean": "종점", "example": "終点は渋谷です。"},
+        {"japanese": "時刻表", "reading": "じこくひょう", "korean": "시간표", "example": "時刻表を見てください。"},
+        {"japanese": "所要時間", "reading": "しょようじかん", "korean": "소요시간", "example": "所要時間は30分です。"},
+        {"japanese": "乗車", "reading": "じょうしゃ", "korean": "승차", "example": "乗車券をお持ちください。"}
+      ]
+    }
+  ],
+  "totalWords": 30
+}

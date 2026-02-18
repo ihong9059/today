@@ -1,0 +1,62 @@
+{
+  "title": "편의점/슈퍼",
+  "description": "편의점과 슈퍼마켓에서 쇼핑하기",
+  "estimatedTime": "7-10분",
+  "categories": [
+    {
+      "name": "기본",
+      "words": [
+        {"japanese": "コンビニ", "reading": "コンビニ", "korean": "편의점", "example": "コンビニはどこですか？"},
+        {"japanese": "スーパー", "reading": "スーパー", "korean": "슈퍼마켓", "example": "スーパーで買い物します。"},
+        {"japanese": "レジ", "reading": "レジ", "korean": "계산대", "example": "レジはあちらです。"},
+        {"japanese": "店員", "reading": "てんいん", "korean": "점원", "example": "店員さんに聞いてください。"},
+        {"japanese": "買い物", "reading": "かいもの", "korean": "쇼핑", "example": "買い物に行きます。"},
+        {"japanese": "商品", "reading": "しょうひん", "korean": "상품", "example": "この商品はいくらですか？"}
+      ]
+    },
+    {
+      "name": "상품",
+      "words": [
+        {"japanese": "お弁当", "reading": "おべんとう", "korean": "도시락", "example": "お弁当を温めますか？"},
+        {"japanese": "おにぎり", "reading": "おにぎり", "korean": "주먹밥", "example": "おにぎりを2つください。"},
+        {"japanese": "パン", "reading": "パン", "korean": "빵", "example": "パンコーナーはどこですか？"},
+        {"japanese": "飲み物", "reading": "のみもの", "korean": "음료", "example": "冷たい飲み物はありますか？"},
+        {"japanese": "お菓子", "reading": "おかし", "korean": "과자", "example": "お菓子を買いました。"},
+        {"japanese": "日用品", "reading": "にちようひん", "korean": "생활용품", "example": "日用品はどこですか？"}
+      ]
+    },
+    {
+      "name": "계산",
+      "words": [
+        {"japanese": "いくら", "reading": "いくら", "korean": "얼마", "example": "全部でいくらですか？"},
+        {"japanese": "現金", "reading": "げんきん", "korean": "현금", "example": "現金でお願いします。"},
+        {"japanese": "カード", "reading": "カード", "korean": "카드", "example": "カードで払えますか？"},
+        {"japanese": "電子マネー", "reading": "でんしマネー", "korean": "전자머니", "example": "電子マネーは使えますか？"},
+        {"japanese": "ポイントカード", "reading": "ポイントカード", "korean": "포인트카드", "example": "ポイントカードはお持ちですか？"},
+        {"japanese": "お釣り", "reading": "おつり", "korean": "거스름돈", "example": "お釣りは500円です。"}
+      ]
+    },
+    {
+      "name": "서비스",
+      "words": [
+        {"japanese": "袋", "reading": "ふくろ", "korean": "봉투", "example": "袋はいりますか？"},
+        {"japanese": "温める", "reading": "あたためる", "korean": "데우다", "example": "温めますか？"},
+        {"japanese": "箸", "reading": "はし", "korean": "젓가락", "example": "お箸をつけますか？"},
+        {"japanese": "スプーン", "reading": "スプーン", "korean": "숟가락", "example": "スプーンをください。"},
+        {"japanese": "ATM", "reading": "エーティーエム", "korean": "ATM", "example": "ATMはありますか？"},
+        {"japanese": "コピー機", "reading": "コピーき", "korean": "복사기", "example": "コピー機を使いたいです。"}
+      ]
+    },
+    {
+      "name": "표현",
+      "words": [
+        {"japanese": "これ", "reading": "これ", "korean": "이것", "example": "これをください。"},
+        {"japanese": "あれ", "reading": "あれ", "korean": "저것", "example": "あれを見せてください。"},
+        {"japanese": "もう一つ", "reading": "もうひとつ", "korean": "하나 더", "example": "もう一つください。"},
+        {"japanese": "全部", "reading": "ぜんぶ", "korean": "전부", "example": "全部でいくらですか？"},
+        {"japanese": "大丈夫", "reading": "だいじょうぶ", "korean": "괜찮아요", "example": "袋は大丈夫です。"}
+      ]
+    }
+  ],
+  "totalWords": 30
+}

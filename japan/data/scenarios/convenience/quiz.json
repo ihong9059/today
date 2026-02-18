@@ -1,0 +1,64 @@
+{
+  "title": "편의점/슈퍼 퀴즈",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「コンビニ」의 뜻은?", "options": ["슈퍼마켓", "편의점", "백화점", "마트"], "answer": 1},
+        {"question": "「レジ」의 뜻은?", "options": ["입구", "출구", "계산대", "선반"], "answer": 2},
+        {"question": "「温める」의 뜻은?", "options": ["식히다", "데우다", "얼리다", "녹이다"], "answer": 1},
+        {"question": "「袋」의 뜻은?", "options": ["상자", "봉투", "바구니", "카트"], "answer": 1},
+        {"question": "「お釣り」의 뜻은?", "options": ["영수증", "거스름돈", "포인트", "할인"], "answer": 1},
+        {"question": "「お弁当」의 뜻은?", "options": ["김밥", "도시락", "샌드위치", "과자"], "answer": 1},
+        {"question": "「いくら」의 뜻은?", "options": ["어디", "언제", "얼마", "무엇"], "answer": 2},
+        {"question": "「全部」의 뜻은?", "options": ["일부", "전부", "반", "조금"], "answer": 1},
+        {"question": "「ポイントカード」의 뜻은?", "options": ["신용카드", "포인트카드", "교통카드", "선불카드"], "answer": 1},
+        {"question": "「日用品」의 뜻은?", "options": ["식품", "의류", "생활용품", "가전제품"], "answer": 2}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「お弁当は___か？」(도시락 데워드릴까요?)", "context": "편의점 계산대", "options": ["冷やします", "温めます", "包みます", "切ります", "開けます"], "answer": 1},
+        {"question": "「___はいりますか？」(봉투 필요하세요?)", "context": "계산 시", "options": ["箸", "袋", "スプーン", "レシート", "ポイント"], "answer": 1},
+        {"question": "「___でいくらですか？」(전부 얼마인가요?)", "context": "총액 확인", "options": ["これ", "あれ", "全部", "一つ", "半分"], "answer": 2},
+        {"question": "「___はお持ちですか？」(포인트카드 있으세요?)", "context": "계산 시", "options": ["現金", "カード", "ポイントカード", "クーポン", "レシート"], "answer": 2},
+        {"question": "「___を使いたいです」(ATM을 이용하고 싶습니다)", "context": "ATM 문의", "options": ["レジ", "ATM", "コピー機", "トイレ", "電話"], "answer": 1}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "コンビニ", "korean": "편의점"},
+        {"japanese": "レジ", "korean": "계산대"},
+        {"japanese": "袋", "korean": "봉투"},
+        {"japanese": "お釣り", "korean": "거스름돈"},
+        {"japanese": "お弁当", "korean": "도시락"},
+        {"japanese": "おにぎり", "korean": "주먹밥"},
+        {"japanese": "温める", "korean": "데우다"},
+        {"japanese": "いくら", "korean": "얼마"},
+        {"japanese": "全部", "korean": "전부"},
+        {"japanese": "現金", "korean": "현금"},
+        {"japanese": "箸", "korean": "젓가락"},
+        {"japanese": "飲み物", "korean": "음료"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "도시락을 데워달라고 할 때", "options": [{"text": "温めてください。", "correct": true}, {"text": "温めて。", "correct": false}, {"text": "温める！", "correct": false}]},
+        {"situation": "봉투가 필요 없을 때", "options": [{"text": "袋は大丈夫です。", "correct": true}, {"text": "袋いらない。", "correct": false}, {"text": "袋だめ。", "correct": false}]},
+        {"situation": "총액을 물을 때", "options": [{"text": "全部でいくらですか？", "correct": true}, {"text": "いくら？", "correct": false}, {"text": "全部！", "correct": false}]},
+        {"situation": "카드 결제 가능 여부를 물을 때", "options": [{"text": "カードで払えますか？", "correct": true}, {"text": "カードOK？", "correct": false}, {"text": "カード！", "correct": false}]},
+        {"situation": "상품 위치를 물을 때", "options": [{"text": "おにぎりはどこですか？", "correct": true}, {"text": "おにぎりどこ？", "correct": false}, {"text": "おにぎり！", "correct": false}]}
+      ]
+    }
+  ]
+}

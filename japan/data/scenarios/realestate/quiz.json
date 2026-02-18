@@ -1,0 +1,64 @@
+{
+  "title": "부동산 퀴즈",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「家賃」의 뜻은?", "options": ["보증금", "월세", "사례금", "관리비"], "answer": 1},
+        {"question": "「敷金」의 뜻은?", "options": ["월세", "보증금", "사례금", "수수료"], "answer": 1},
+        {"question": "「内見」의 뜻은?", "options": ["계약", "내부견학", "퇴거", "입주"], "answer": 1},
+        {"question": "「駅近」의 뜻은?", "options": ["역앞", "역세권", "역안", "역뒤"], "answer": 1},
+        {"question": "「間取り」의 뜻은?", "options": ["면적", "구조/평면도", "층수", "방향"], "answer": 1},
+        {"question": "「一人暮らし」의 뜻은?", "options": ["가족생활", "자취", "동거", "하숙"], "answer": 1},
+        {"question": "「保証人」의 뜻은?", "options": ["집주인", "세입자", "보증인", "중개인"], "answer": 2},
+        {"question": "「共益費」의 뜻은?", "options": ["월세", "보증금", "관리비", "수도료"], "answer": 2},
+        {"question": "「入居」의 뜻은?", "options": ["퇴거", "입주", "계약", "해지"], "answer": 1},
+        {"question": "「退去」의 뜻은?", "options": ["입주", "퇴거", "이사", "계약"], "answer": 1}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「___を探しています」(방을 찾고 있어요)", "context": "물건 문의", "options": ["家", "部屋", "マンション", "アパート", "物件"], "answer": 1},
+        {"question": "「___はいくらですか？」(월세는 얼마예요?)", "context": "비용 문의", "options": ["敷金", "礼金", "家賃", "共益費", "更新料"], "answer": 2},
+        {"question": "「___をしたいです」(내부 견학을 하고 싶어요)", "context": "견학 요청", "options": ["契約", "入居", "内見", "相談", "予約"], "answer": 2},
+        {"question": "「___は必要ですか？」(보증인은 필요한가요?)", "context": "계약 조건", "options": ["契約書", "保証人", "印鑑", "身分証", "収入証明"], "answer": 1},
+        {"question": "「駅から___10分以内」(도보 10분 이내)", "context": "조건 설명", "options": ["電車", "バス", "徒歩", "車", "自転車"], "answer": 2}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "家賃", "korean": "월세"},
+        {"japanese": "敷金", "korean": "보증금"},
+        {"japanese": "礼金", "korean": "사례금"},
+        {"japanese": "共益費", "korean": "관리비"},
+        {"japanese": "内見", "korean": "내부견학"},
+        {"japanese": "間取り", "korean": "구조"},
+        {"japanese": "駅近", "korean": "역세권"},
+        {"japanese": "一人暮らし", "korean": "자취"},
+        {"japanese": "保証人", "korean": "보증인"},
+        {"japanese": "入居", "korean": "입주"},
+        {"japanese": "退去", "korean": "퇴거"},
+        {"japanese": "契約", "korean": "계약"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "방을 찾고 있다고 말할 때", "options": [{"text": "部屋を探しています。", "correct": true}, {"text": "部屋ある？", "correct": false}, {"text": "部屋！", "correct": false}]},
+        {"situation": "월세를 물을 때", "options": [{"text": "家賃はいくらですか？", "correct": true}, {"text": "家賃いくら？", "correct": false}, {"text": "お金！", "correct": false}]},
+        {"situation": "내부 견학을 원할 때", "options": [{"text": "内見をしたいのですが。", "correct": true}, {"text": "見たい。", "correct": false}, {"text": "内見！", "correct": false}]},
+        {"situation": "보증인이 필요한지 물을 때", "options": [{"text": "保証人は必要ですか？", "correct": true}, {"text": "保証人いる？", "correct": false}, {"text": "保証人！", "correct": false}]},
+        {"situation": "에어컨이 있는지 물을 때", "options": [{"text": "エアコンは付いていますか？", "correct": true}, {"text": "エアコンある？", "correct": false}, {"text": "エアコン！", "correct": false}]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "title": "미용실 퀴즈",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「カット」의 뜻은?", "options": ["파마", "커트", "염색", "샴푸"], "answer": 1},
+        {"question": "「前髪」의 뜻은?", "options": ["뒷머리", "앞머리", "옆머리", "정수리"], "answer": 1},
+        {"question": "「短く」의 뜻은?", "options": ["길게", "짧게", "얇게", "두껍게"], "answer": 1},
+        {"question": "「カラー」의 뜻은?", "options": ["커트", "파마", "염색", "트리트먼트"], "answer": 2},
+        {"question": "「似合う」의 뜻은?", "options": ["예쁘다", "어울리다", "자르다", "기르다"], "answer": 1},
+        {"question": "「シャンプー」의 뜻은?", "options": ["린스", "샴푸", "왁스", "무스"], "answer": 1},
+        {"question": "「明るい」의 뜻은?", "options": ["어두운", "밝은", "진한", "연한"], "answer": 1},
+        {"question": "「すく」의 뜻은?", "options": ["자르다", "숱치다", "말리다", "감다"], "answer": 1},
+        {"question": "「パーマ」의 뜻은?", "options": ["염색", "커트", "파마", "샴푸"], "answer": 2},
+        {"question": "「仕上げ」의 뜻은?", "options": ["시작", "마무리", "중간", "준비"], "answer": 1}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「___を切りたいです」(머리를 자르고 싶어요)", "context": "스타일 요청", "options": ["髪", "前髪", "長さ", "色", "パーマ"], "answer": 0},
+        {"question": "「___くしてください」(짧게 해주세요)", "context": "길이 요청", "options": ["長", "短", "明る", "暗", "軽"], "answer": 1},
+        {"question": "「この___のようにお願いします」(이 사진처럼 해주세요)", "context": "스타일 설명", "options": ["イメージ", "写真", "色", "長さ", "感じ"], "answer": 1},
+        {"question": "「___はありますか？」(예약 있으세요?)", "context": "예약 확인", "options": ["担当", "予約", "時間", "名前", "カード"], "answer": 1},
+        {"question": "「___色にしてください」(밝은 색으로 해주세요)", "context": "색상 요청", "options": ["暗い", "明るい", "茶", "黒", "白"], "answer": 1}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "カット", "korean": "커트"},
+        {"japanese": "パーマ", "korean": "파마"},
+        {"japanese": "カラー", "korean": "염색"},
+        {"japanese": "前髪", "korean": "앞머리"},
+        {"japanese": "短く", "korean": "짧게"},
+        {"japanese": "長さ", "korean": "길이"},
+        {"japanese": "似合う", "korean": "어울리다"},
+        {"japanese": "明るい", "korean": "밝은"},
+        {"japanese": "暗い", "korean": "어두운"},
+        {"japanese": "シャンプー", "korean": "샴푸"},
+        {"japanese": "予約", "korean": "예약"},
+        {"japanese": "仕上げ", "korean": "마무리"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "커트를 요청할 때", "options": [{"text": "カットをお願いします。", "correct": true}, {"text": "カット！", "correct": false}, {"text": "切って。", "correct": false}]},
+        {"situation": "길이를 말할 때", "options": [{"text": "3センチくらい切ってください。", "correct": true}, {"text": "ちょっと切って。", "correct": false}, {"text": "短く！", "correct": false}]},
+        {"situation": "사진을 보여주며 요청할 때", "options": [{"text": "この写真のようにお願いします。", "correct": true}, {"text": "これと同じ。", "correct": false}, {"text": "写真！", "correct": false}]},
+        {"situation": "앞머리를 자르지 말라고 할 때", "options": [{"text": "前髪は切らないでください。", "correct": true}, {"text": "前髪ダメ。", "correct": false}, {"text": "切らない！", "correct": false}]},
+        {"situation": "결과가 만족스러울 때", "options": [{"text": "いい感じです。ありがとうございます。", "correct": true}, {"text": "いいね。", "correct": false}, {"text": "OK！", "correct": false}]}
+      ]
+    }
+  ]
+}

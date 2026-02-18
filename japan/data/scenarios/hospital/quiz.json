@@ -1,0 +1,64 @@
+{
+  "title": "병원/약국 퀴즈",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「熱」의 뜻은?", "options": ["기침", "열", "두통", "콧물"], "answer": 1},
+        {"question": "「頭痛」의 뜻은?", "options": ["복통", "두통", "치통", "요통"], "answer": 1},
+        {"question": "「薬局」의 뜻은?", "options": ["병원", "약국", "편의점", "슈퍼"], "answer": 1},
+        {"question": "「処方箋」의 뜻은?", "options": ["영수증", "처방전", "진단서", "보험증"], "answer": 1},
+        {"question": "「食後」의 뜻은?", "options": ["식전", "식후", "취침전", "기상후"], "answer": 1},
+        {"question": "「風邪」의 뜻은?", "options": ["열", "감기", "독감", "두통"], "answer": 1},
+        {"question": "「保険証」의 뜻은?", "options": ["신분증", "보험증", "처방전", "진단서"], "answer": 1},
+        {"question": "「痛い」의 뜻은?", "options": ["괜찮다", "아프다", "힘들다", "졸리다"], "answer": 1},
+        {"question": "「お大事に」의 뜻은?", "options": ["안녕하세요", "감사합니다", "빨리 나으세요", "수고하세요"], "answer": 2},
+        {"question": "「診察」의 뜻은?", "options": ["검사", "진찰", "수술", "입원"], "answer": 1}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「___があります」(열이 있습니다)", "context": "증상 설명", "options": ["咳", "熱", "鼻水", "頭痛", "腹痛"], "answer": 1},
+        {"question": "「___をお持ちですか？」(처방전 가지고 계세요?)", "context": "약국에서", "options": ["保険証", "処方箋", "薬", "お金", "カード"], "answer": 1},
+        {"question": "「___に飲んでください」(식후에 드세요)", "context": "복용 안내", "options": ["食前", "食後", "寝る前", "朝", "夜"], "answer": 1},
+        {"question": "「___が痛いです」(머리가 아파요)", "context": "증상 설명", "options": ["お腹", "頭", "歯", "足", "手"], "answer": 1},
+        {"question": "「___ですか？」(초진이세요?)", "context": "병원 접수", "options": ["再診", "初診", "予約", "紹介", "急患"], "answer": 1}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "熱", "korean": "열"},
+        {"japanese": "頭痛", "korean": "두통"},
+        {"japanese": "腹痛", "korean": "복통"},
+        {"japanese": "咳", "korean": "기침"},
+        {"japanese": "薬", "korean": "약"},
+        {"japanese": "薬局", "korean": "약국"},
+        {"japanese": "病院", "korean": "병원"},
+        {"japanese": "医者", "korean": "의사"},
+        {"japanese": "処方箋", "korean": "처방전"},
+        {"japanese": "食後", "korean": "식후"},
+        {"japanese": "痛い", "korean": "아프다"},
+        {"japanese": "お大事に", "korean": "빨리 나으세요"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "열이 있다고 말할 때", "options": [{"text": "熱があります。", "correct": true}, {"text": "熱ある。", "correct": false}, {"text": "熱！", "correct": false}]},
+        {"situation": "어디가 아픈지 말할 때", "options": [{"text": "ここが痛いです。", "correct": true}, {"text": "ここ痛い。", "correct": false}, {"text": "痛い！", "correct": false}]},
+        {"situation": "처방전을 제출할 때", "options": [{"text": "処方箋です。", "correct": true}, {"text": "これ。", "correct": false}, {"text": "薬！", "correct": false}]},
+        {"situation": "증상이 언제부터 시작했는지 말할 때", "options": [{"text": "昨日からです。", "correct": true}, {"text": "昨日から。", "correct": false}, {"text": "昨日！", "correct": false}]},
+        {"situation": "약 알레르기가 없다고 말할 때", "options": [{"text": "アレルギーはありません。", "correct": true}, {"text": "アレルギーない。", "correct": false}, {"text": "大丈夫。", "correct": false}]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "title": "휴대폰 가게 퀴즈",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「SIMカード」의 뜻은?", "options": ["신용카드", "SIM카드", "교통카드", "포인트카드"], "answer": 1},
+        {"question": "「プリペイド」의 뜻은?", "options": ["후불", "선불", "정액제", "무제한"], "answer": 1},
+        {"question": "「データ」의 뜻은?", "options": ["통화", "문자", "데이터", "로밍"], "answer": 2},
+        {"question": "「充電」의 뜻은?", "options": ["방전", "충전", "교체", "설정"], "answer": 1},
+        {"question": "「故障」의 뜻은?", "options": ["정상", "고장", "수리", "교환"], "answer": 1},
+        {"question": "「画面」의 뜻은?", "options": ["키보드", "화면", "버튼", "카메라"], "answer": 1},
+        {"question": "「修理」의 뜻은?", "options": ["구매", "교환", "수리", "반품"], "answer": 2},
+        {"question": "「電池」의 뜻은?", "options": ["전선", "배터리", "충전기", "케이블"], "answer": 1},
+        {"question": "「設定」의 뜻은?", "options": ["설치", "설정", "삭제", "복구"], "answer": 1},
+        {"question": "「通話」의 뜻은?", "options": ["문자", "통화", "검색", "촬영"], "answer": 1}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「___SIMカードを買いたいです」(선불 SIM 카드를 사고 싶어요)", "context": "SIM 구매", "options": ["契約", "プリペイド", "後払い", "定額", "無制限"], "answer": 1},
+        {"question": "「___は何ギガですか？」(데이터는 몇 기가예요?)", "context": "요금제 문의", "options": ["通話", "データ", "速度", "電波", "料金"], "answer": 1},
+        {"question": "「___ができません」(충전이 안 돼요)", "context": "문제 설명", "options": ["通話", "設定", "充電", "接続", "起動"], "answer": 2},
+        {"question": "「___を手伝ってください」(설정을 도와주세요)", "context": "도움 요청", "options": ["修理", "設定", "充電", "購入", "交換"], "answer": 1},
+        {"question": "「___はありますか？」(충전기 있나요?)", "context": "액세서리 구매", "options": ["ケース", "フィルム", "充電器", "イヤホン", "ケーブル"], "answer": 2}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "SIMカード", "korean": "SIM카드"},
+        {"japanese": "プリペイド", "korean": "선불"},
+        {"japanese": "データ", "korean": "데이터"},
+        {"japanese": "通話", "korean": "통화"},
+        {"japanese": "充電", "korean": "충전"},
+        {"japanese": "電池", "korean": "배터리"},
+        {"japanese": "故障", "korean": "고장"},
+        {"japanese": "修理", "korean": "수리"},
+        {"japanese": "画面", "korean": "화면"},
+        {"japanese": "設定", "korean": "설정"},
+        {"japanese": "充電器", "korean": "충전기"},
+        {"japanese": "ケース", "korean": "케이스"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "선불 SIM 카드를 사고 싶을 때", "options": [{"text": "プリペイドSIMカードを買いたいです。", "correct": true}, {"text": "SIMちょうだい。", "correct": false}, {"text": "SIM！", "correct": false}]},
+        {"situation": "데이터 용량을 물을 때", "options": [{"text": "データは何ギガですか？", "correct": true}, {"text": "ギガいくつ？", "correct": false}, {"text": "データ？", "correct": false}]},
+        {"situation": "설정을 도와달라고 할 때", "options": [{"text": "設定を手伝ってください。", "correct": true}, {"text": "設定して。", "correct": false}, {"text": "やって！", "correct": false}]},
+        {"situation": "충전이 안 된다고 말할 때", "options": [{"text": "充電ができません。", "correct": true}, {"text": "充電できない。", "correct": false}, {"text": "充電！", "correct": false}]},
+        {"situation": "충전기가 있는지 물을 때", "options": [{"text": "充電器はありますか？", "correct": true}, {"text": "充電器ある？", "correct": false}, {"text": "充電器！", "correct": false}]}
+      ]
+    }
+  ]
+}

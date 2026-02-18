@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퀴즈 & 게임 - 이시우 일본 여행 회화</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=vHcrFHcr"></script>
+</head>
+<body class="quiz-page">
+    <!-- 벚꽃 애니메이션 -->
+    <div class="sakura-container" id="sakuraContainer"></div>
+    <div class="container">
+        <nav class="nav-bar">
+            <a href="#" class="back-btn" id="backBtn">← 돌아가기</a>
+            <span class="title">🎮 퀴즈 & 게임</span>
+        </nav>
+
+        <div class="quiz-container">
+            <!-- 게임 선택 메뉴 -->
+            <div id="gameMenu">
+                <h2 style="text-align: center; margin-bottom: 30px;">게임을 선택하세요</h2>
+                <div class="stage-selection">
+                    <div class="stage-card" onclick="startGame('multiple_choice')">
+                        <div class="icon">❓</div>
+                        <h3>4지선다 퀴즈</h3>
+                        <p>단어의 뜻을 맞춰보세요</p>
+                        <span>10문제 · 3분</span>
+                    </div>
+                    <div class="stage-card" onclick="startGame('fill_blank')">
+                        <div class="icon">✏️</div>
+                        <h3>빈칸 채우기</h3>
+                        <p>대화문을 완성하세요</p>
+                        <span>5문제 · 2분</span>
+                    </div>
+                    <div class="stage-card" onclick="startGame('matching')">
+                        <div class="icon">🔗</div>
+                        <h3>매칭 게임</h3>
+                        <p>일본어와 한국어를 연결하세요</p>
+                        <span>12쌍 · 1분</span>
+                    </div>
+                    <div class="stage-card" onclick="startGame('situational')">
+                        <div class="icon">🎭</div>
+                        <h3>상황별 표현</h3>
+                        <p>상황에 맞는 표현을 선택하세요</p>
+                        <span>5문제 · 2분</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4지선다 퀴즈 -->
+            <div id="multipleChoiceGame" style="display: none;">
+                <div class="quiz-header">
+                    <span id="mcQuestionNum">문제 1/10</span>
+                    <span class="timer" id="mcTimer">15</span>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question" id="mcQuestion"></div>
+                    <div class="quiz-options" id="mcOptions"></div>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-primary" id="mcNextBtn" onclick="nextMCQuestion()" style="display: none;">다음 →</button>
+                </div>
+            </div>
+
+            <!-- 빈칸 채우기 (5지선다) -->
+            <div id="fillBlankGame" style="display: none;">
+                <div class="quiz-header">
+                    <span id="fbQuestionNum">문제 1/5</span>
+                    <span class="timer" id="fbTimer">20</span>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question" id="fbQuestion"></div>
+                    <div id="fbContext" style="color: #666; margin-bottom: 15px;"></div>
+                    <div class="quiz-options" id="fbOptions"></div>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-primary" id="fbNextBtn" onclick="nextFBQuestion()" style="display: none;">다음 →</button>
+                </div>
+            </div>
+
+            <!-- 매칭 게임 -->
+            <div id="matchingGame" style="display: none;">
+                <div class="quiz-header">
+                    <span id="matchPairs">남은 쌍: 12</span>
+                    <span class="timer" id="matchTimer">60</span>
+                </div>
+                <div class="quiz-section">
+                    <div class="matching-container" id="matchingGrid"></div>
+                </div>
+            </div>
+
+            <!-- 상황별 표현 -->
+            <div id="situationalGame" style="display: none;">
+                <div class="quiz-header">
+                    <span id="sitQuestionNum">문제 1/5</span>
+                </div>
+                <div class="quiz-section">
+                    <h3>📍 상황</h3>
+                    <div class="quiz-question" id="sitSituation"></div>
+                    <h3 style="margin-top: 20px;">어떻게 말할까요?</h3>
+                    <div class="quiz-options" id="sitOptions"></div>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-primary" id="sitNextBtn" onclick="nextSitQuestion()" style="display: none;">다음 →</button>
+                </div>
+            </div>
+
+            <!-- 결과 화면 -->
+            <div id="resultScreen" style="display: none;">
+                <div class="score-display">
+                    <div class="stars" id="resultStars">⭐⭐⭐</div>
+                    <div class="score" id="resultScore">100점</div>
+                    <div class="message" id="resultMessage">완벽해요!</div>
+                    <div style="margin-top: 30px;">
+                        <button class="btn btn-secondary" onclick="backToMenu()">다른 게임</button>
+                        <button class="btn btn-primary" onclick="restartGame()">다시 하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/quiz.js"></script>
+    <script src="/js/sakura.js"></script>
+</body>
+</html>

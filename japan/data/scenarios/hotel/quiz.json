@@ -1,0 +1,66 @@
+{
+  "title": "호텔 체크인/아웃 퀴즈",
+  "description": "호텔 관련 표현을 게임으로 복습합니다",
+  "estimatedTime": "5-8분",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「チェックイン」의 뜻은?", "options": ["체크인", "체크아웃", "예약", "취소"], "answer": 0},
+        {"question": "「禁煙」의 뜻은?", "options": ["흡연", "금연", "화재", "안전"], "answer": 1},
+        {"question": "「朝食」의 뜻은?", "options": ["점심", "저녁", "조식", "야식"], "answer": 2},
+        {"question": "「荷物」의 뜻은?", "options": ["열쇠", "짐", "방", "수건"], "answer": 1},
+        {"question": "「鍵」의 뜻은?", "options": ["문", "열쇠", "창문", "벽"], "answer": 1},
+        {"question": "「領収書」의 뜻은?", "options": ["예약서", "영수증", "신분증", "계약서"], "answer": 1},
+        {"question": "「延泊」의 뜻은?", "options": ["조기퇴실", "연박", "예약변경", "취소"], "answer": 1},
+        {"question": "「大浴場」의 뜻은?", "options": ["수영장", "대욕장", "사우나", "헬스장"], "answer": 1},
+        {"question": "「シングル」의 뜻은?", "options": ["더블룸", "트윈룸", "싱글룸", "스위트룸"], "answer": 2},
+        {"question": "「精算」의 뜻은?", "options": ["예약", "정산", "문의", "변경"], "answer": 1}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「___をお願いします」(체크인 부탁합니다)", "context": "호텔 도착 시", "options": ["チェックイン", "チェックアウト", "予約", "キャンセル", "変更"], "answer": 0},
+        {"question": "「___は何時ですか？」(체크아웃은 몇 시인가요?)", "context": "퇴실 시간 확인", "options": ["朝食", "チェックアウト", "大浴場", "チェックイン", "夕食"], "answer": 1},
+        {"question": "「___をください」(영수증 주세요)", "context": "계산 시", "options": ["鍵", "タオル", "領収書", "カード", "水"], "answer": 2},
+        {"question": "「___ルームでお願いします」(금연룸으로 부탁합니다)", "context": "방 요청 시", "options": ["喫煙", "禁煙", "シングル", "ダブル", "ツイン"], "answer": 1},
+        {"question": "「___が動きません」(에어컨이 작동하지 않습니다)", "context": "문제 신고 시", "options": ["テレビ", "エアコン", "電気", "水道", "ドア"], "answer": 1}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "チェックイン", "korean": "체크인"},
+        {"japanese": "チェックアウト", "korean": "체크아웃"},
+        {"japanese": "朝食", "korean": "조식"},
+        {"japanese": "禁煙", "korean": "금연"},
+        {"japanese": "荷物", "korean": "짐"},
+        {"japanese": "鍵", "korean": "열쇠"},
+        {"japanese": "領収書", "korean": "영수증"},
+        {"japanese": "大浴場", "korean": "대욕장"},
+        {"japanese": "タオル", "korean": "수건"},
+        {"japanese": "部屋", "korean": "방"},
+        {"japanese": "予約", "korean": "예약"},
+        {"japanese": "精算", "korean": "정산"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "호텔에 도착해서 체크인할 때", "options": [{"text": "チェックインをお願いします。", "correct": true}, {"text": "チェックアウトをお願いします。", "correct": false}, {"text": "予約をキャンセルします。", "correct": false}]},
+        {"situation": "방에 수건이 더 필요할 때", "options": [{"text": "タオルをもう一枚ください。", "correct": true}, {"text": "タオルをちょうだい。", "correct": false}, {"text": "タオル！", "correct": false}]},
+        {"situation": "와이파이 비밀번호를 물을 때", "options": [{"text": "Wi-Fiのパスワードを教えてください。", "correct": true}, {"text": "Wi-Fi使いたい。", "correct": false}, {"text": "インターネット！", "correct": false}]},
+        {"situation": "체크아웃 후 짐을 맡기고 싶을 때", "options": [{"text": "荷物を預けたいのですが。", "correct": true}, {"text": "荷物を持って。", "correct": false}, {"text": "荷物！", "correct": false}]},
+        {"situation": "신용카드로 결제하고 싶을 때", "options": [{"text": "クレジットカードでお願いします。", "correct": true}, {"text": "カードで払う。", "correct": false}, {"text": "カード！", "correct": false}]}
+      ]
+    }
+  ]
+}

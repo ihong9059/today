@@ -1,0 +1,64 @@
+{
+  "title": "비즈니스 미팅 퀴즈",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「名刺」의 뜻은?", "options": ["이름표", "명함", "신분증", "카드"], "answer": 1},
+        {"question": "「お世話になっております」의 뜻은?", "options": ["처음 뵙겠습니다", "신세 지고 있습니다", "실례합니다", "감사합니다"], "answer": 1},
+        {"question": "「打ち合わせ」의 뜻은?", "options": ["회의", "미팅", "약속", "계약"], "answer": 1},
+        {"question": "「検討」의 뜻은?", "options": ["확인", "검토", "결정", "실행"], "answer": 1},
+        {"question": "「承知しました」의 뜻은?", "options": ["모르겠습니다", "알겠습니다", "죄송합니다", "감사합니다"], "answer": 1},
+        {"question": "「資料」의 뜻은?", "options": ["자료", "결과", "보고", "계획"], "answer": 0},
+        {"question": "「提案」의 뜻은?", "options": ["질문", "제안", "대답", "설명"], "answer": 1},
+        {"question": "「お疲れ様です」의 뜻은?", "options": ["힘드시죠", "수고하셨습니다", "피곤하세요", "쉬세요"], "answer": 1},
+        {"question": "「失礼します」의 뜻은?", "options": ["안녕히계세요", "실례합니다", "죄송합니다", "감사합니다"], "answer": 1},
+        {"question": "「頂戴します」의 뜻은?", "options": ["드리겠습니다", "받겠습니다", "보내겠습니다", "만들겠습니다"], "answer": 1}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「___を交換しましょう」(명함을 교환합시다)", "context": "명함 교환", "options": ["資料", "名刺", "カード", "電話番号", "メール"], "answer": 1},
+        {"question": "「___させてください」(검토하겠습니다)", "context": "회의 중", "options": ["確認", "検討", "提案", "説明", "報告"], "answer": 1},
+        {"question": "「ご連絡を___おります」(기다리고 있겠습니다)", "context": "마무리 인사", "options": ["お待ちして", "お願いして", "お送りして", "お伺いして", "お聞きして"], "answer": 0},
+        {"question": "「___中にご連絡します」(다음 주 중에 연락드립니다)", "context": "약속", "options": ["今週", "来週", "今月", "来月", "今日"], "answer": 1},
+        {"question": "「本日はお時間を___ありがとうございます」(시간 내주셔서)", "context": "감사 인사", "options": ["かけて", "使って", "いただき", "もらい", "くれて"], "answer": 2}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "初めまして", "korean": "처음 뵙겠습니다"},
+        {"japanese": "お世話になっております", "korean": "신세 지고 있습니다"},
+        {"japanese": "名刺", "korean": "명함"},
+        {"japanese": "打ち合わせ", "korean": "미팅"},
+        {"japanese": "検討", "korean": "검토"},
+        {"japanese": "承知しました", "korean": "알겠습니다"},
+        {"japanese": "資料", "korean": "자료"},
+        {"japanese": "提案", "korean": "제안"},
+        {"japanese": "失礼します", "korean": "실례합니다"},
+        {"japanese": "お疲れ様です", "korean": "수고하셨습니다"},
+        {"japanese": "確認", "korean": "확인"},
+        {"japanese": "よろしくお願いします", "korean": "잘 부탁드립니다"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "처음 만나는 사람에게 인사할 때", "options": [{"text": "初めまして、キムと申します。", "correct": true}, {"text": "こんにちは、キムです。", "correct": false}, {"text": "キムです。", "correct": false}]},
+        {"situation": "명함을 교환하고 싶을 때", "options": [{"text": "名刺を交換させてください。", "correct": true}, {"text": "名刺ください。", "correct": false}, {"text": "名刺！", "correct": false}]},
+        {"situation": "검토하겠다고 말할 때", "options": [{"text": "社内で検討させていただきます。", "correct": true}, {"text": "考えます。", "correct": false}, {"text": "検討する。", "correct": false}]},
+        {"situation": "알겠다고 대답할 때", "options": [{"text": "承知しました。", "correct": true}, {"text": "わかった。", "correct": false}, {"text": "OK。", "correct": false}]},
+        {"situation": "마무리 인사를 할 때", "options": [{"text": "今後ともよろしくお願いいたします。", "correct": true}, {"text": "じゃあね。", "correct": false}, {"text": "バイバイ。", "correct": false}]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "title": "우체국",
+  "description": "우편물 발송, 택배, 엽서 보내기",
+  "estimatedTime": "7-10분",
+  "categories": [
+    {"name": "기본", "words": [
+      {"japanese": "郵便局", "reading": "ゆうびんきょく", "korean": "우체국", "example": "郵便局はどこですか？"},
+      {"japanese": "切手", "reading": "きって", "korean": "우표", "example": "切手を5枚ください。"},
+      {"japanese": "はがき", "reading": "はがき", "korean": "엽서", "example": "はがきを送りたいです。"},
+      {"japanese": "封筒", "reading": "ふうとう", "korean": "봉투", "example": "封筒はありますか？"},
+      {"japanese": "手紙", "reading": "てがみ", "korean": "편지", "example": "手紙を送ります。"},
+      {"japanese": "宛先", "reading": "あてさき", "korean": "수신인", "example": "宛先を書いてください。"}
+    ]},
+    {"name": "발송", "words": [
+      {"japanese": "送る", "reading": "おくる", "korean": "보내다", "example": "韓国に送りたいです。"},
+      {"japanese": "届く", "reading": "とどく", "korean": "도착하다", "example": "いつ届きますか？"},
+      {"japanese": "航空便", "reading": "こうくうびん", "korean": "항공편", "example": "航空便でお願いします。"},
+      {"japanese": "船便", "reading": "ふなびん", "korean": "선편", "example": "船便は安いですか？"},
+      {"japanese": "速達", "reading": "そくたつ", "korean": "빠른우편", "example": "速達でお願いします。"},
+      {"japanese": "書留", "reading": "かきとめ", "korean": "등기", "example": "書留で送りたいです。"}
+    ]},
+    {"name": "택배", "words": [
+      {"japanese": "荷物", "reading": "にもつ", "korean": "짐/소포", "example": "荷物を送りたいです。"},
+      {"japanese": "小包", "reading": "こづつみ", "korean": "소포", "example": "小包を海外に送れますか？"},
+      {"japanese": "重さ", "reading": "おもさ", "korean": "무게", "example": "重さを測ります。"},
+      {"japanese": "送料", "reading": "そうりょう", "korean": "배송료", "example": "送料はいくらですか？"},
+      {"japanese": "保険", "reading": "ほけん", "korean": "보험", "example": "保険をつけますか？"},
+      {"japanese": "追跡番号", "reading": "ついせきばんごう", "korean": "추적번호", "example": "追跡番号をください。"}
+    ]},
+    {"name": "기타", "words": [
+      {"japanese": "国際郵便", "reading": "こくさいゆうびん", "korean": "국제우편", "example": "国際郵便をお願いします。"},
+      {"japanese": "EMS", "reading": "イーエムエス", "korean": "EMS", "example": "EMSで送りたいです。"},
+      {"japanese": "日数", "reading": "にっすう", "korean": "소요일수", "example": "届くまで何日ですか？"},
+      {"japanese": "伝票", "reading": "でんぴょう", "korean": "송장", "example": "伝票に記入してください。"},
+      {"japanese": "壊れ物", "reading": "こわれもの", "korean": "깨지기쉬운것", "example": "壊れ物が入っています。"}
+    ]}
+  ],
+  "totalWords": 23
+}

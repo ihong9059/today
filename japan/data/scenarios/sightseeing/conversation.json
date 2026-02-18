@@ -1,0 +1,58 @@
+{
+  "title": "관광지 회화",
+  "scenes": [
+    {
+      "id": 1,
+      "title": "입장권 구매",
+      "location": "관광지 입구",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "직원", "japanese": "いらっしゃいませ。何名様ですか？", "korean": "어서 오세요. 몇 분이세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "大人2枚お願いします。", "korean": "성인 2장 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "1,200円です。韓国語のパンフレットはいかがですか？", "korean": "1,200엔입니다. 한국어 팜플렛 필요하세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、ください。", "korean": "네, 주세요.", "correct": true},
+          {"japanese": "日本語のでお願いします。", "korean": "일본어로 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "どうぞ。閉館は5時です。", "korean": "여기요. 폐관은 5시입니다.", "tip": "閉館(へいかん)은 폐관을 의미합니다"}
+      ]
+    },
+    {
+      "id": 2,
+      "title": "안내소 문의",
+      "location": "안내소",
+      "dialogues": [
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "すみません、おすすめの見どころはどこですか？", "korean": "저기요, 추천 볼거리가 어디예요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "庭園が一番人気です。今の季節は紅葉がきれいですよ。", "korean": "정원이 가장 인기 있어요. 지금 계절에는 단풍이 예뻐요."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "ガイドツアーはありますか？", "korean": "가이드 투어 있나요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "はい、11時と2時に出発します。参加費は無料です。", "korean": "네, 11시와 2시에 출발해요. 참가비는 무료입니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "2時のツアーに参加したいです。", "korean": "2시 투어에 참가하고 싶어요.", "correct": true}
+        ]}
+      ]
+    },
+    {
+      "id": 3,
+      "title": "사진 촬영",
+      "location": "관광지 내부",
+      "dialogues": [
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "すみません、ここで写真を撮ってもいいですか？", "korean": "저기요, 여기서 사진 찍어도 되나요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "はい、大丈夫です。フラッシュは使わないでください。", "korean": "네, 괜찮습니다. 플래시는 사용하지 마세요."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "写真を撮っていただけますか？", "korean": "사진 찍어주시겠어요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "もちろんです。はい、チーズ！", "korean": "물론이죠. 자, 치즈!"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "ありがとうございます。景色がとてもきれいですね。", "korean": "감사합니다. 경치가 정말 예쁘네요.", "correct": true}
+        ]}
+      ]
+    }
+  ]
+}

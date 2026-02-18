@@ -1,0 +1,64 @@
+{
+  "title": "관광지 퀴즈",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「入場料」의 뜻은?", "options": ["주차료", "입장료", "관람료", "이용료"], "answer": 1},
+        {"question": "「神社」의 뜻은?", "options": ["절", "신사", "성", "궁전"], "answer": 1},
+        {"question": "「写真」의 뜻은?", "options": ["그림", "사진", "영상", "포스터"], "answer": 1},
+        {"question": "「お守り」의 뜻은?", "options": ["운세", "부적", "기념품", "엽서"], "answer": 1},
+        {"question": "「景色」의 뜻은?", "options": ["날씨", "경치", "계절", "시간"], "answer": 1},
+        {"question": "「庭園」의 뜻은?", "options": ["공원", "정원", "광장", "숲"], "answer": 1},
+        {"question": "「休館日」의 뜻은?", "options": ["개장일", "휴관일", "폐관일", "영업일"], "answer": 1},
+        {"question": "「混雑」의 뜻은?", "options": ["한산", "혼잡", "조용", "평화"], "answer": 1},
+        {"question": "「撮る」의 뜻은?", "options": ["보다", "찍다", "듣다", "만지다"], "answer": 1},
+        {"question": "「名所」의 뜻은?", "options": ["유명인", "명소", "맛집", "숙소"], "answer": 1}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「___はいくらですか？」(입장료가 얼마예요?)", "context": "입장권 구매", "options": ["料金", "入場料", "チケット代", "参加費", "利用料"], "answer": 1},
+        {"question": "「___を撮ってもいいですか？」(사진 찍어도 돼요?)", "context": "사진 촬영", "options": ["動画", "写真", "ビデオ", "映画", "絵"], "answer": 1},
+        {"question": "「___を2枚ください」(티켓 2장 주세요)", "context": "티켓 구매", "options": ["パンフレット", "地図", "チケット", "ガイド", "お守り"], "answer": 2},
+        {"question": "「___はどこですか？」(안내소가 어디예요?)", "context": "장소 문의", "options": ["トイレ", "出口", "入口", "案内所", "売店"], "answer": 3},
+        {"question": "「___がきれいですね」(경치가 예쁘네요)", "context": "감탄", "options": ["花", "景色", "建物", "庭", "空"], "answer": 1}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "入場料", "korean": "입장료"},
+        {"japanese": "神社", "korean": "신사"},
+        {"japanese": "お寺", "korean": "절"},
+        {"japanese": "城", "korean": "성"},
+        {"japanese": "写真", "korean": "사진"},
+        {"japanese": "撮る", "korean": "찍다"},
+        {"japanese": "お守り", "korean": "부적"},
+        {"japanese": "景色", "korean": "경치"},
+        {"japanese": "庭園", "korean": "정원"},
+        {"japanese": "名所", "korean": "명소"},
+        {"japanese": "ガイド", "korean": "가이드"},
+        {"japanese": "休館日", "korean": "휴관일"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "입장료를 물을 때", "options": [{"text": "入場料はいくらですか？", "correct": true}, {"text": "いくら？", "correct": false}, {"text": "料金！", "correct": false}]},
+        {"situation": "사진 촬영 허가를 구할 때", "options": [{"text": "写真を撮ってもいいですか？", "correct": true}, {"text": "写真OK？", "correct": false}, {"text": "撮る！", "correct": false}]},
+        {"situation": "사진을 찍어달라고 할 때", "options": [{"text": "写真を撮っていただけますか？", "correct": true}, {"text": "写真撮って！", "correct": false}, {"text": "撮って！", "correct": false}]},
+        {"situation": "경치가 예쁘다고 말할 때", "options": [{"text": "景色がとてもきれいですね。", "correct": true}, {"text": "きれい！", "correct": false}, {"text": "いい！", "correct": false}]},
+        {"situation": "가이드 투어가 있는지 물을 때", "options": [{"text": "ガイドツアーはありますか？", "correct": true}, {"text": "ガイドある？", "correct": false}, {"text": "ツアー！", "correct": false}]}
+      ]
+    }
+  ]
+}

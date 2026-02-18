@@ -1,0 +1,39 @@
+{
+  "title": "이자카야",
+  "description": "일본식 선술집, 음주 문화",
+  "estimatedTime": "7-10분",
+  "categories": [
+    {"name": "기본", "words": [
+      {"japanese": "居酒屋", "reading": "いざかや", "korean": "이자카야", "example": "居酒屋に行きましょう。"},
+      {"japanese": "乾杯", "reading": "かんぱい", "korean": "건배", "example": "乾杯！"},
+      {"japanese": "飲み放題", "reading": "のみほうだい", "korean": "음료무제한", "example": "飲み放題はありますか？"},
+      {"japanese": "食べ放題", "reading": "たべほうだい", "korean": "음식무제한", "example": "食べ放題コースをお願いします。"},
+      {"japanese": "お通し", "reading": "おとおし", "korean": "기본 안주", "example": "お通しは枝豆です。"},
+      {"japanese": "注文", "reading": "ちゅうもん", "korean": "주문", "example": "注文お願いします。"}
+    ]},
+    {"name": "음료", "words": [
+      {"japanese": "生ビール", "reading": "なまビール", "korean": "생맥주", "example": "生ビールをください。"},
+      {"japanese": "日本酒", "reading": "にほんしゅ", "korean": "사케", "example": "日本酒がおいしいですね。"},
+      {"japanese": "焼酎", "reading": "しょうちゅう", "korean": "소주", "example": "焼酎のロックをお願いします。"},
+      {"japanese": "ハイボール", "reading": "ハイボール", "korean": "하이볼", "example": "ハイボールをもう一杯。"},
+      {"japanese": "サワー", "reading": "サワー", "korean": "사와", "example": "レモンサワーをください。"},
+      {"japanese": "おかわり", "reading": "おかわり", "korean": "리필", "example": "おかわりお願いします。"}
+    ]},
+    {"name": "안주", "words": [
+      {"japanese": "枝豆", "reading": "えだまめ", "korean": "에다마메", "example": "枝豆を注文します。"},
+      {"japanese": "刺身", "reading": "さしみ", "korean": "회", "example": "刺身の盛り合わせをお願いします。"},
+      {"japanese": "焼き鳥", "reading": "やきとり", "korean": "야키토리", "example": "焼き鳥5本ください。"},
+      {"japanese": "唐揚げ", "reading": "からあげ", "korean": "가라아게", "example": "唐揚げをお願いします。"},
+      {"japanese": "おすすめ", "reading": "おすすめ", "korean": "추천", "example": "おすすめは何ですか？"},
+      {"japanese": "盛り合わせ", "reading": "もりあわせ", "korean": "모듬", "example": "刺身盛り合わせをください。"}
+    ]},
+    {"name": "기타", "words": [
+      {"japanese": "お会計", "reading": "おかいけい", "korean": "계산", "example": "お会計お願いします。"},
+      {"japanese": "別々", "reading": "べつべつ", "korean": "따로따로", "example": "お会計は別々でお願いします。"},
+      {"japanese": "割り勘", "reading": "わりかん", "korean": "더치페이", "example": "割り勘にしましょう。"},
+      {"japanese": "ラストオーダー", "reading": "ラストオーダー", "korean": "라스트오더", "example": "ラストオーダーです。"},
+      {"japanese": "締め", "reading": "しめ", "korean": "마무리 음식", "example": "締めはラーメンにしましょう。"}
+    ]}
+  ],
+  "totalWords": 23
+}

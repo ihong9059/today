@@ -1,0 +1,61 @@
+{
+  "title": "부동산 회화",
+  "scenes": [
+    {
+      "id": 1,
+      "title": "물건 문의",
+      "location": "부동산 사무소",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "직원", "japanese": "いらっしゃいませ。どのようなお部屋をお探しですか？", "korean": "어서 오세요. 어떤 방을 찾으세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "一人暮らし用のアパートを探しています。", "korean": "자취용 아파트를 찾고 있어요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "ご予算はどのくらいですか？", "korean": "예산은 어느 정도예요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "家賃は7万円以下で探しています。", "korean": "월세는 7만엔 이하로 찾고 있어요.", "correct": true},
+          {"japanese": "できれば5万円くらいがいいです。", "korean": "가능하면 5만엔 정도가 좋아요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "駅からの距離はどのくらいがいいですか？", "korean": "역에서 거리는 어느 정도가 좋으세요?", "tip": "徒歩○分는 도보 ○분을 의미합니다"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "駅から徒歩10分以内がいいです。", "korean": "역에서 도보 10분 이내가 좋아요.", "correct": true}
+        ]}
+      ]
+    },
+    {
+      "id": 2,
+      "title": "조건 확인",
+      "location": "부동산 사무소",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "직원", "japanese": "こちらの物件はいかがですか？1LDKで家賃6万5千円です。", "korean": "이 물건은 어떠세요? 1LDK에 월세 6만5천엔입니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "敷金と礼金はいくらですか？", "korean": "보증금과 사례금은 얼마예요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "敷金1ヶ月、礼金なしです。共益費は5000円です。", "korean": "보증금 1개월, 사례금 없습니다. 관리비는 5000엔이에요."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "エアコンは付いていますか？", "korean": "에어컨은 있나요?", "correct": true},
+          {"japanese": "バストイレ別ですか？", "korean": "욕실과 화장실 분리인가요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "はい、エアコン付きで、バストイレ別です。", "korean": "네, 에어컨 포함이고, 욕실 화장실 분리입니다."}
+      ]
+    },
+    {
+      "id": 3,
+      "title": "내부 견학",
+      "location": "물건 현장",
+      "dialogues": [
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "内見をしたいのですが。", "korean": "내부 견학을 하고 싶은데요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "もちろんです。いつがよろしいですか？", "korean": "물론이죠. 언제가 좋으세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "今週の土曜日は可能ですか？", "korean": "이번 주 토요일은 가능한가요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "はい、大丈夫です。10時でいかがですか？", "korean": "네, 괜찮습니다. 10시 어떠세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、お願いします。保証人は必要ですか？", "korean": "네, 부탁합니다. 보증인은 필요한가요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "직원", "japanese": "保証人の代わりに保証会社を利用できます。", "korean": "보증인 대신 보증회사를 이용할 수 있어요."}
+      ]
+    }
+  ]
+}

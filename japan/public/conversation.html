@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회화 연습 - 이시우 일본 여행 회화</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=vHcrFHcr"></script>
+</head>
+<body class="conversation-page">
+    <!-- 벚꽃 애니메이션 -->
+    <div class="sakura-container" id="sakuraContainer"></div>
+    <div class="container">
+        <nav class="nav-bar">
+            <a href="#" class="back-btn" id="backBtn">← 돌아가기</a>
+            <span class="title">💬 회화 연습</span>
+        </nav>
+
+        <div class="conversation-container">
+            <!-- 씬 헤더 -->
+            <div class="scene-header" id="sceneHeader">
+                <h2 id="sceneTitle">씬 1</h2>
+                <div class="location" id="sceneLocation">📍 위치</div>
+            </div>
+
+            <!-- 진행도 -->
+            <div class="progress-bar" style="margin-bottom: 20px;">
+                <div class="fill" id="progressFill" style="width: 0%"></div>
+            </div>
+
+            <!-- 대화 영역 -->
+            <div id="dialogueArea">
+                <!-- 대화가 동적으로 추가됨 -->
+            </div>
+
+            <!-- 선택지 영역 -->
+            <div id="choicesArea" style="display: none;">
+                <div class="dialogue-box player">
+                    <div class="speaker-name">🙋 당신의 차례</div>
+                    <div class="choices" id="choices">
+                        <!-- 선택지가 동적으로 추가됨 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 다음 버튼 -->
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" id="nextBtn" onclick="next()" style="display: none;">다음 →</button>
+            </div>
+
+            <!-- 완료 섹션 -->
+            <div id="completeSection" style="display: none;">
+                <div class="score-display">
+                    <div class="stars" id="stars">⭐⭐⭐</div>
+                    <div class="score">회화 연습 완료!</div>
+                    <div class="message" id="resultMessage">정답률: 100%</div>
+                    <div style="margin-top: 30px;">
+                        <button class="btn btn-secondary" onclick="restart()">다시 하기</button>
+                        <button class="btn btn-success" onclick="goToQuiz()">퀴즈 도전 →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/conversation.js"></script>
+    <script src="/js/sakura.js"></script>
+</body>
+</html>

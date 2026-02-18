@@ -1,0 +1,71 @@
+{
+  "title": "호텔 체크인/아웃",
+  "description": "호텔 예약, 체크인, 체크아웃에서 사용하는 표현",
+  "estimatedTime": "7-10분",
+  "categories": [
+    {
+      "name": "호텔 기본",
+      "words": [
+        {"japanese": "ホテル", "reading": "ホテル", "korean": "호텔", "example": "ホテルに着きました。"},
+        {"japanese": "フロント", "reading": "フロント", "korean": "프론트", "example": "フロントで聞いてください。"},
+        {"japanese": "チェックイン", "reading": "チェックイン", "korean": "체크인", "example": "チェックインをお願いします。"},
+        {"japanese": "チェックアウト", "reading": "チェックアウト", "korean": "체크아웃", "example": "チェックアウトは何時ですか？"},
+        {"japanese": "予約", "reading": "よやく", "korean": "예약", "example": "予約した山田です。"},
+        {"japanese": "宿泊", "reading": "しゅくはく", "korean": "숙박", "example": "2泊の宿泊です。"}
+      ]
+    },
+    {
+      "name": "객실",
+      "words": [
+        {"japanese": "部屋", "reading": "へや", "korean": "방", "example": "部屋は何階ですか？"},
+        {"japanese": "シングル", "reading": "シングル", "korean": "싱글룸", "example": "シングルルームを予約しました。"},
+        {"japanese": "ダブル", "reading": "ダブル", "korean": "더블룸", "example": "ダブルルームはありますか？"},
+        {"japanese": "ツイン", "reading": "ツイン", "korean": "트윈룸", "example": "ツインルームをお願いします。"},
+        {"japanese": "禁煙", "reading": "きんえん", "korean": "금연", "example": "禁煙ルームでお願いします。"},
+        {"japanese": "喫煙", "reading": "きつえん", "korean": "흡연", "example": "喫煙ルームはありますか？"}
+      ]
+    },
+    {
+      "name": "시설",
+      "words": [
+        {"japanese": "エレベーター", "reading": "エレベーター", "korean": "엘리베이터", "example": "エレベーターはどこですか？"},
+        {"japanese": "朝食", "reading": "ちょうしょく", "korean": "조식", "example": "朝食は何時からですか？"},
+        {"japanese": "大浴場", "reading": "だいよくじょう", "korean": "대욕장", "example": "大浴場はありますか？"},
+        {"japanese": "Wi-Fi", "reading": "ワイファイ", "korean": "와이파이", "example": "Wi-Fiのパスワードは何ですか？"},
+        {"japanese": "駐車場", "reading": "ちゅうしゃじょう", "korean": "주차장", "example": "駐車場はありますか？"},
+        {"japanese": "コンビニ", "reading": "コンビニ", "korean": "편의점", "example": "近くにコンビニはありますか？"}
+      ]
+    },
+    {
+      "name": "서비스",
+      "words": [
+        {"japanese": "荷物", "reading": "にもつ", "korean": "짐", "example": "荷物を預けたいです。"},
+        {"japanese": "鍵", "reading": "かぎ", "korean": "열쇠", "example": "鍵をください。"},
+        {"japanese": "カードキー", "reading": "カードキー", "korean": "카드키", "example": "カードキーをなくしました。"},
+        {"japanese": "モーニングコール", "reading": "モーニングコール", "korean": "모닝콜", "example": "モーニングコールをお願いします。"},
+        {"japanese": "ルームサービス", "reading": "ルームサービス", "korean": "룸서비스", "example": "ルームサービスはありますか？"},
+        {"japanese": "クリーニング", "reading": "クリーニング", "korean": "세탁", "example": "クリーニングをお願いします。"}
+      ]
+    },
+    {
+      "name": "문제/요청",
+      "words": [
+        {"japanese": "タオル", "reading": "タオル", "korean": "수건", "example": "タオルをもう一枚ください。"},
+        {"japanese": "アメニティ", "reading": "アメニティ", "korean": "어메니티", "example": "アメニティはどこですか？"},
+        {"japanese": "エアコン", "reading": "エアコン", "korean": "에어컨", "example": "エアコンが動きません。"},
+        {"japanese": "お湯", "reading": "おゆ", "korean": "온수", "example": "お湯が出ません。"},
+        {"japanese": "延泊", "reading": "えんぱく", "korean": "연박", "example": "延泊できますか？"}
+      ]
+    },
+    {
+      "name": "계산",
+      "words": [
+        {"japanese": "精算", "reading": "せいさん", "korean": "정산", "example": "精算をお願いします。"},
+        {"japanese": "領収書", "reading": "りょうしゅうしょ", "korean": "영수증", "example": "領収書をください。"},
+        {"japanese": "クレジットカード", "reading": "クレジットカード", "korean": "신용카드", "example": "クレジットカードで払えますか？"},
+        {"japanese": "現金", "reading": "げんきん", "korean": "현금", "example": "現金でお願いします。"}
+      ]
+    }
+  ],
+  "totalWords": 35
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이시우 일본 여행 회화 학습</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="main-page">
+    <!-- 버전 표시 -->
+    <div style="position: fixed; top: 5px; right: 10px; font-size: 0.85rem; color: #fff; background: #c41e3a; padding: 2px 8px; border-radius: 10px; z-index: 9999;">v1.0.7</div>
+
+    <!-- 벚꽃 애니메이션 -->
+    <div class="sakura-container" id="sakuraContainer"></div>
+
+    <!-- 후지산 배경 -->
+    <div class="fuji-bg"></div>
+
+    <div class="container">
+        <header class="main-header">
+            <div class="header-decoration">
+                <span class="torii">⛩️</span>
+            </div>
+            <h1>
+                <span class="title-jp">日本旅行会話学習</span>
+                <span class="title-kr">이시우 일본 여행 회화 학습</span>
+            </h1>
+            <div class="pilot-badge">
+                <div class="badge-icon">✈️</div>
+                <div class="badge-text">
+                    <span class="badge-title">파일럿 출신이 만든</span>
+                    <span class="badge-subtitle">실전 일본어 학습 프로그램</span>
+                </div>
+            </div>
+            <p class="subtitle">20개의 실생활 시나리오로 배우는 재미있는 일본어 여행 회화</p>
+            <div class="header-buttons">
+                <a href="/pages/help.html" class="btn btn-help">
+                    <span>📖</span> 사용법 안내
+                </a>
+            </div>
+        </header>
+
+        <main>
+            <!-- 통계 섹션 -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-value">20</div>
+                    <div class="stat-label">학습 시나리오</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-value">400+</div>
+                    <div class="stat-label">단어 & 표현</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎮</div>
+                    <div class="stat-value">60+</div>
+                    <div class="stat-label">퀴즈 & 게임</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-value">7~10</div>
+                    <div class="stat-label">시간 (시간/시나리오)</div>
+                </div>
+            </section>
+
+            <!-- 시나리오 목록 -->
+            <section class="scenario-list">
+                <div class="section-header">
+                    <h2><span class="section-icon">🗾</span> 시나리오 선택</h2>
+                    <p class="section-desc">원하는 상황을 선택하여 학습을 시작하세요</p>
+                </div>
+                <div class="scenarios" id="scenarios">
+                    <!-- 동적으로 로드됨 -->
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p class="footer-logo">🇯🇵 이시우 일본 여행 회화 학습 🇯🇵</p>
+                <p class="footer-desc">파일럿의 꼼꼼함으로 만든 실전 일본어 학습 프로그램</p>
+                <p class="footer-copy">Made with ❤️ for Japanese learners</p>
+                <p class="footer-version" style="margin-top: 10px; font-size: 0.8rem; color: #999;">v1.0.1</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script src="/js/sakura.js"></script>
+</body>
+</html>

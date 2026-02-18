@@ -1,0 +1,67 @@
+{
+  "title": "이자카야 회화",
+  "scenes": [
+    {
+      "id": 1,
+      "title": "입장 및 주문",
+      "location": "이자카야 입구",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "점원", "japanese": "いらっしゃいませ！何名様ですか？", "korean": "어서 오세요! 몇 분이세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "2名です。", "korean": "2명입니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "カウンターとテーブル、どちらがよろしいですか？", "korean": "카운터와 테이블, 어느 쪽이 좋으세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "テーブル席でお願いします。", "korean": "테이블 자리로 부탁합니다.", "correct": true},
+          {"japanese": "カウンターでお願いします。", "korean": "카운터로 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "こちらへどうぞ。まずお飲み物は？", "korean": "이쪽으로 오세요. 먼저 음료는?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "生ビールを2つください。", "korean": "생맥주 2개 주세요.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "かしこまりました。乾杯！", "korean": "알겠습니다. 건배!", "tip": "乾杯(かんぱい)는 건배를 의미합니다"}
+      ]
+    },
+    {
+      "id": 2,
+      "title": "음식 주문",
+      "location": "이자카야 테이블",
+      "dialogues": [
+        {"speaker": "staff", "speakerName": "점원", "japanese": "お通しは枝豆です。ご注文はお決まりですか？", "korean": "기본 안주는 에다마메입니다. 주문 정하셨나요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "おすすめは何ですか？", "korean": "추천은 뭐예요?", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "今日の刺身盛り合わせがおすすめです。", "korean": "오늘의 회 모듬을 추천합니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "じゃあ、それと焼き鳥5本ください。", "korean": "그럼, 그거랑 야키토리 5개 주세요.", "correct": true},
+          {"japanese": "刺身盛り合わせと唐揚げをお願いします。", "korean": "회 모듬과 가라아게 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "かしこまりました。少々お待ちください。", "korean": "알겠습니다. 잠시만 기다려주세요."}
+      ]
+    },
+    {
+      "id": 3,
+      "title": "추가 주문 및 계산",
+      "location": "이자카야 테이블",
+      "dialogues": [
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "すみません、おかわりお願いします。", "korean": "저기요, 리필 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "生ビールでよろしいですか？", "korean": "생맥주로 괜찮으세요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、同じもので。", "korean": "네, 같은 걸로요.", "correct": true},
+          {"japanese": "今度はハイボールをお願いします。", "korean": "이번엔 하이볼로 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "まもなくラストオーダーです。", "korean": "곧 라스트오더입니다."},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "お会計お願いします。", "korean": "계산 부탁합니다.", "correct": true}
+        ]},
+        {"speaker": "staff", "speakerName": "점원", "japanese": "ご一緒でよろしいですか？", "korean": "함께 계산하시겠어요?"},
+        {"speaker": "player", "speakerName": "학습자", "choices": [
+          {"japanese": "はい、一緒で。", "korean": "네, 함께요.", "correct": true},
+          {"japanese": "別々でお願いします。", "korean": "따로따로 부탁합니다.", "correct": true}
+        ]}
+      ]
+    }
+  ]
+}

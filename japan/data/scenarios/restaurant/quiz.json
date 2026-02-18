@@ -1,0 +1,64 @@
+{
+  "title": "레스토랑 퀴즈",
+  "sections": [
+    {
+      "type": "multiple_choice",
+      "title": "4지선다 퀴즈",
+      "timeLimit": 15,
+      "questions": [
+        {"question": "「注文」의 뜻은?", "options": ["예약", "주문", "계산", "취소"], "answer": 1},
+        {"question": "「おすすめ」의 뜻은?", "options": ["인기", "추천", "할인", "신메뉴"], "answer": 1},
+        {"question": "「お会計」의 뜻은?", "options": ["메뉴", "주문", "계산", "영수증"], "answer": 2},
+        {"question": "「おかわり」의 뜻은?", "options": ["주문", "리필", "취소", "변경"], "answer": 1},
+        {"question": "「定食」의 뜻은?", "options": ["단품", "정식", "세트", "코스"], "answer": 1},
+        {"question": "「別々」의 뜻은?", "options": ["함께", "따로따로", "나중에", "먼저"], "answer": 1},
+        {"question": "「窓側」의 뜻은?", "options": ["입구", "출구", "창가", "안쪽"], "answer": 2},
+        {"question": "「取り皿」의 뜻은?", "options": ["밥그릇", "국그릇", "앞접시", "큰접시"], "answer": 2},
+        {"question": "「刺身」의 뜻은?", "options": ["초밥", "회", "구이", "튀김"], "answer": 1},
+        {"question": "「飲み物」의 뜻은?", "options": ["음식", "음료", "디저트", "간식"], "answer": 1}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "빈칸 채우기",
+      "timeLimit": 20,
+      "questions": [
+        {"question": "「___は何ですか？」(추천은 뭔가요?)", "context": "메뉴 추천 요청", "options": ["注文", "おすすめ", "会計", "予約", "席"], "answer": 1},
+        {"question": "「___をお願いします」(계산 부탁합니다)", "context": "계산할 때", "options": ["メニュー", "注文", "お会計", "おかわり", "水"], "answer": 2},
+        {"question": "「___でお願いします」(금연석으로 부탁합니다)", "context": "자리 요청 시", "options": ["喫煙席", "禁煙席", "窓側", "カウンター", "奥"], "answer": 1},
+        {"question": "「___をください」(물 주세요)", "context": "음료 주문 시", "options": ["ビール", "お茶", "お水", "コーヒー", "ワイン"], "answer": 2},
+        {"question": "「___は使えますか？」(신용카드 사용할 수 있나요?)", "context": "결제 시", "options": ["現金", "クレジットカード", "ポイント", "クーポン", "電子マネー"], "answer": 1}
+      ]
+    },
+    {
+      "type": "matching",
+      "title": "매칭 게임",
+      "timeLimit": 60,
+      "pairs": [
+        {"japanese": "注文", "korean": "주문"},
+        {"japanese": "おすすめ", "korean": "추천"},
+        {"japanese": "お会計", "korean": "계산"},
+        {"japanese": "定食", "korean": "정식"},
+        {"japanese": "刺身", "korean": "회"},
+        {"japanese": "天ぷら", "korean": "튀김"},
+        {"japanese": "おかわり", "korean": "리필"},
+        {"japanese": "窓側", "korean": "창가"},
+        {"japanese": "飲み物", "korean": "음료"},
+        {"japanese": "お水", "korean": "물"},
+        {"japanese": "箸", "korean": "젓가락"},
+        {"japanese": "取り皿", "korean": "앞접시"}
+      ]
+    },
+    {
+      "type": "situational",
+      "title": "상황별 표현",
+      "questions": [
+        {"situation": "레스토랑에서 주문하고 싶을 때", "options": [{"text": "注文をお願いします。", "correct": true}, {"text": "会計をお願いします。", "correct": false}, {"text": "予約をお願いします。", "correct": false}]},
+        {"situation": "밥을 더 먹고 싶을 때", "options": [{"text": "ご飯のおかわりをください。", "correct": true}, {"text": "ご飯を持って。", "correct": false}, {"text": "ご飯！", "correct": false}]},
+        {"situation": "식사 후 인사할 때", "options": [{"text": "ごちそうさまでした。", "correct": true}, {"text": "いただきます。", "correct": false}, {"text": "さようなら。", "correct": false}]},
+        {"situation": "따로 계산하고 싶을 때", "options": [{"text": "別々に払えますか？", "correct": true}, {"text": "一緒に払います。", "correct": false}, {"text": "払いたくない。", "correct": false}]},
+        {"situation": "알레르기를 알릴 때", "options": [{"text": "エビアレルギーがあります。", "correct": true}, {"text": "エビが嫌い。", "correct": false}, {"text": "エビだめ。", "correct": false}]}
+      ]
+    }
+  ]
+}
