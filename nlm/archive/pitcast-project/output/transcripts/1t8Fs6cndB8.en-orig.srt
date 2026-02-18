@@ -1,0 +1,2935 @@
+1
+00:00:00,080 --> 00:00:02,790
+
+I've built hundreds of NAND workflows
+
+2
+00:00:02,790 --> 00:00:02,800
+I've built hundreds of NAND workflows
+ 
+
+3
+00:00:02,800 --> 00:00:05,190
+I've built hundreds of NAND workflows
+and I've taught thousands of people how
+
+4
+00:00:05,190 --> 00:00:05,200
+and I've taught thousands of people how
+ 
+
+5
+00:00:05,200 --> 00:00:07,829
+and I've taught thousands of people how
+to use it and for the first time I'm
+
+6
+00:00:07,829 --> 00:00:07,839
+to use it and for the first time I'm
+ 
+
+7
+00:00:07,839 --> 00:00:11,190
+to use it and for the first time I'm
+telling people to stop mostly and that's
+
+8
+00:00:11,190 --> 00:00:11,200
+telling people to stop mostly and that's
+ 
+
+9
+00:00:11,200 --> 00:00:13,830
+telling people to stop mostly and that's
+not because NAND is bad. It's definitely
+
+10
+00:00:13,830 --> 00:00:13,840
+not because NAND is bad. It's definitely
+ 
+
+11
+00:00:13,840 --> 00:00:15,829
+not because NAND is bad. It's definitely
+not. But something has changed over the
+
+12
+00:00:15,829 --> 00:00:15,839
+not. But something has changed over the
+ 
+
+13
+00:00:15,839 --> 00:00:17,910
+not. But something has changed over the
+last 6 months which has altered the
+
+14
+00:00:17,910 --> 00:00:17,920
+last 6 months which has altered the
+ 
+
+15
+00:00:17,920 --> 00:00:20,470
+last 6 months which has altered the
+calculus about when you should and
+
+16
+00:00:20,470 --> 00:00:20,480
+calculus about when you should and
+ 
+
+17
+00:00:20,480 --> 00:00:23,029
+calculus about when you should and
+should not use NADN to solve your
+
+18
+00:00:23,029 --> 00:00:23,039
+should not use NADN to solve your
+ 
+
+19
+00:00:23,039 --> 00:00:24,710
+should not use NADN to solve your
+problems. And if you're building AI
+
+20
+00:00:24,710 --> 00:00:24,720
+problems. And if you're building AI
+ 
+
+21
+00:00:24,720 --> 00:00:27,269
+problems. And if you're building AI
+systems for yourself or for a client, it
+
+22
+00:00:27,269 --> 00:00:27,279
+systems for yourself or for a client, it
+ 
+
+23
+00:00:27,279 --> 00:00:29,589
+systems for yourself or for a client, it
+is imperative that you understand where
+
+24
+00:00:29,589 --> 00:00:29,599
+is imperative that you understand where
+ 
+
+25
+00:00:29,599 --> 00:00:31,830
+is imperative that you understand where
+that line is because it's not in the
+
+26
+00:00:31,830 --> 00:00:31,840
+that line is because it's not in the
+ 
+
+27
+00:00:31,840 --> 00:00:34,229
+that line is because it's not in the
+same place it used to be. Up until about
+
+28
+00:00:34,229 --> 00:00:34,239
+same place it used to be. Up until about
+ 
+
+29
+00:00:34,239 --> 00:00:36,310
+same place it used to be. Up until about
+six months ago, if you wanted to create
+
+30
+00:00:36,310 --> 00:00:36,320
+six months ago, if you wanted to create
+ 
+
+31
+00:00:36,320 --> 00:00:39,670
+six months ago, if you wanted to create
+a complex AI automation or agent, the
+
+32
+00:00:39,670 --> 00:00:39,680
+a complex AI automation or agent, the
+ 
+
+33
+00:00:39,680 --> 00:00:41,990
+a complex AI automation or agent, the
+answer was pretty clear as for what tool
+
+34
+00:00:41,990 --> 00:00:42,000
+answer was pretty clear as for what tool
+ 
+
+35
+00:00:42,000 --> 00:00:44,869
+answer was pretty clear as for what tool
+you should use, especially if you were
+
+36
+00:00:44,869 --> 00:00:44,879
+you should use, especially if you were
+ 
+
+37
+00:00:44,879 --> 00:00:47,590
+you should use, especially if you were
+non-technical, and that was NADN because
+
+38
+00:00:47,590 --> 00:00:47,600
+non-technical, and that was NADN because
+ 
+
+39
+00:00:47,600 --> 00:00:49,430
+non-technical, and that was NADN because
+the alternatives at the time was either
+
+40
+00:00:49,430 --> 00:00:49,440
+the alternatives at the time was either
+ 
+
+41
+00:00:49,440 --> 00:00:52,869
+the alternatives at the time was either
+writing real code or using the earlier
+
+42
+00:00:52,869 --> 00:00:52,879
+writing real code or using the earlier
+ 
+
+43
+00:00:52,879 --> 00:00:54,709
+writing real code or using the earlier
+versions of these agent coding agents
+
+44
+00:00:54,709 --> 00:00:54,719
+versions of these agent coding agents
+ 
+
+45
+00:00:54,719 --> 00:00:56,549
+versions of these agent coding agents
+like claude code or cursor. And now
+
+46
+00:00:56,549 --> 00:00:56,559
+like claude code or cursor. And now
+ 
+
+47
+00:00:56,559 --> 00:00:58,389
+like claude code or cursor. And now
+those agentic coding agents were very
+
+48
+00:00:58,389 --> 00:00:58,399
+those agentic coding agents were very
+ 
+
+49
+00:00:58,399 --> 00:01:00,389
+those agentic coding agents were very
+strong. But the truth was to get the
+
+50
+00:01:00,389 --> 00:01:00,399
+strong. But the truth was to get the
+ 
+
+51
+00:01:00,399 --> 00:01:03,029
+strong. But the truth was to get the
+most out of them you did need to
+
+52
+00:01:03,029 --> 00:01:03,039
+most out of them you did need to
+ 
+
+53
+00:01:03,039 --> 00:01:05,109
+most out of them you did need to
+understand how to write code. You had to
+
+54
+00:01:05,109 --> 00:01:05,119
+understand how to write code. You had to
+ 
+
+55
+00:01:05,119 --> 00:01:08,630
+understand how to write code. You had to
+get your hands dirty very often. But now
+
+56
+00:01:08,630 --> 00:01:08,640
+get your hands dirty very often. But now
+ 
+
+57
+00:01:08,640 --> 00:01:10,710
+get your hands dirty very often. But now
+that's completely changed because tools
+
+58
+00:01:10,710 --> 00:01:10,720
+that's completely changed because tools
+ 
+
+59
+00:01:10,720 --> 00:01:13,190
+that's completely changed because tools
+like claw code, codeex, and anti-gravity
+
+60
+00:01:13,190 --> 00:01:13,200
+like claw code, codeex, and anti-gravity
+ 
+
+61
+00:01:13,200 --> 00:01:16,230
+like claw code, codeex, and anti-gravity
+have gotten so good and so userfriendly
+
+62
+00:01:16,230 --> 00:01:16,240
+have gotten so good and so userfriendly
+ 
+
+63
+00:01:16,240 --> 00:01:17,670
+have gotten so good and so userfriendly
+that you don't need to know how to code
+
+64
+00:01:17,670 --> 00:01:17,680
+that you don't need to know how to code
+ 
+
+65
+00:01:17,680 --> 00:01:19,670
+that you don't need to know how to code
+to get the most out of these. And if you
+
+66
+00:01:19,670 --> 00:01:19,680
+to get the most out of these. And if you
+ 
+
+67
+00:01:19,680 --> 00:01:21,910
+to get the most out of these. And if you
+are using those particular tools, the
+
+68
+00:01:21,910 --> 00:01:21,920
+are using those particular tools, the
+ 
+
+69
+00:01:21,920 --> 00:01:24,310
+are using those particular tools, the
+ceiling for what you can do with them
+
+70
+00:01:24,310 --> 00:01:24,320
+ceiling for what you can do with them
+ 
+
+71
+00:01:24,320 --> 00:01:27,749
+ceiling for what you can do with them
+has actually passed NADN. And because of
+
+72
+00:01:27,749 --> 00:01:27,759
+has actually passed NADN. And because of
+ 
+
+73
+00:01:27,759 --> 00:01:30,149
+has actually passed NADN. And because of
+that dynamic, NAND's limitations have
+
+74
+00:01:30,149 --> 00:01:30,159
+that dynamic, NAND's limitations have
+ 
+
+75
+00:01:30,159 --> 00:01:32,870
+that dynamic, NAND's limitations have
+become a lot harder to ignore. So in
+
+76
+00:01:32,870 --> 00:01:32,880
+become a lot harder to ignore. So in
+ 
+
+77
+00:01:32,880 --> 00:01:34,230
+become a lot harder to ignore. So in
+this video, we're going to dive deep
+
+78
+00:01:34,230 --> 00:01:34,240
+this video, we're going to dive deep
+ 
+
+79
+00:01:34,240 --> 00:01:36,469
+this video, we're going to dive deep
+into those limitations. So you can come
+
+80
+00:01:36,469 --> 00:01:36,479
+into those limitations. So you can come
+ 
+
+81
+00:01:36,479 --> 00:01:38,469
+into those limitations. So you can come
+out of here with a better sense of when
+
+82
+00:01:38,469 --> 00:01:38,479
+out of here with a better sense of when
+ 
+
+83
+00:01:38,479 --> 00:01:40,789
+out of here with a better sense of when
+NAND makes sense and when it doesn't
+
+84
+00:01:40,789 --> 00:01:40,799
+NAND makes sense and when it doesn't
+ 
+
+85
+00:01:40,799 --> 00:01:43,109
+NAND makes sense and when it doesn't
+because this is not by any means an NAN
+
+86
+00:01:43,109 --> 00:01:43,119
+because this is not by any means an NAN
+ 
+
+87
+00:01:43,119 --> 00:01:45,590
+because this is not by any means an NAN
+hit piece. Naden is simply a tool, but
+
+88
+00:01:45,590 --> 00:01:45,600
+hit piece. Naden is simply a tool, but
+ 
+
+89
+00:01:45,600 --> 00:01:47,749
+hit piece. Naden is simply a tool, but
+we need to be educated about when Naden
+
+90
+00:01:47,749 --> 00:01:47,759
+we need to be educated about when Naden
+ 
+
+91
+00:01:47,759 --> 00:01:49,670
+we need to be educated about when Naden
+is the best tool for the job and when we
+
+92
+00:01:49,670 --> 00:01:49,680
+is the best tool for the job and when we
+ 
+
+93
+00:01:49,680 --> 00:01:51,510
+is the best tool for the job and when we
+should start using coding agents like
+
+94
+00:01:51,510 --> 00:01:51,520
+should start using coding agents like
+ 
+
+95
+00:01:51,520 --> 00:01:53,590
+should start using coding agents like
+cloud code. So let's kick this off by
+
+96
+00:01:53,590 --> 00:01:53,600
+cloud code. So let's kick this off by
+ 
+
+97
+00:01:53,600 --> 00:01:55,270
+cloud code. So let's kick this off by
+talking about the three primary areas
+
+98
+00:01:55,270 --> 00:01:55,280
+talking about the three primary areas
+ 
+
+99
+00:01:55,280 --> 00:01:57,749
+talking about the three primary areas
+that NAD struggles when we compare it to
+
+100
+00:01:57,749 --> 00:01:57,759
+that NAD struggles when we compare it to
+ 
+
+101
+00:01:57,759 --> 00:01:59,830
+that NAD struggles when we compare it to
+agentic coding agents like cloud code.
+
+102
+00:01:59,830 --> 00:01:59,840
+agentic coding agents like cloud code.
+ 
+
+103
+00:01:59,840 --> 00:02:01,590
+agentic coding agents like cloud code.
+And remember it's not just cloud code.
+
+104
+00:02:01,590 --> 00:02:01,600
+And remember it's not just cloud code.
+ 
+
+105
+00:02:01,600 --> 00:02:03,670
+And remember it's not just cloud code.
+You could insert anti-gravity, codeex,
+
+106
+00:02:03,670 --> 00:02:03,680
+You could insert anti-gravity, codeex,
+ 
+
+107
+00:02:03,680 --> 00:02:05,749
+You could insert anti-gravity, codeex,
+open code, any of those, right? But I'll
+
+108
+00:02:05,749 --> 00:02:05,759
+open code, any of those, right? But I'll
+ 
+
+109
+00:02:05,759 --> 00:02:07,109
+open code, any of those, right? But I'll
+continue to reference cloud code
+
+110
+00:02:07,109 --> 00:02:07,119
+continue to reference cloud code
+ 
+
+111
+00:02:07,119 --> 00:02:08,869
+continue to reference cloud code
+throughout this video. Now those three
+
+112
+00:02:08,869 --> 00:02:08,879
+throughout this video. Now those three
+ 
+
+113
+00:02:08,879 --> 00:02:10,790
+throughout this video. Now those three
+areas where naden struggles are
+
+114
+00:02:10,790 --> 00:02:10,800
+areas where naden struggles are
+ 
+
+115
+00:02:10,800 --> 00:02:13,589
+areas where naden struggles are
+scalability, speed to deployment on
+
+116
+00:02:13,589 --> 00:02:13,599
+scalability, speed to deployment on
+ 
+
+117
+00:02:13,599 --> 00:02:16,630
+scalability, speed to deployment on
+complex projects, and commercial
+
+118
+00:02:16,630 --> 00:02:16,640
+complex projects, and commercial
+ 
+
+119
+00:02:16,640 --> 00:02:18,470
+complex projects, and commercial
+licensing. Now let's start with scaling.
+
+120
+00:02:18,470 --> 00:02:18,480
+licensing. Now let's start with scaling.
+ 
+
+121
+00:02:18,480 --> 00:02:20,229
+licensing. Now let's start with scaling.
+And there's two parts to scaling. First
+
+122
+00:02:20,229 --> 00:02:20,239
+And there's two parts to scaling. First
+ 
+
+123
+00:02:20,239 --> 00:02:23,990
+And there's two parts to scaling. First
+part is scaling of the project itself.
+
+124
+00:02:23,990 --> 00:02:24,000
+part is scaling of the project itself.
+ 
+
+125
+00:02:24,000 --> 00:02:26,550
+part is scaling of the project itself.
+So imagine I have some sort of project
+
+126
+00:02:26,550 --> 00:02:26,560
+So imagine I have some sort of project
+ 
+
+127
+00:02:26,560 --> 00:02:28,630
+So imagine I have some sort of project
+that's inside of NAND and it's now 50 or
+
+128
+00:02:28,630 --> 00:02:28,640
+that's inside of NAND and it's now 50 or
+ 
+
+129
+00:02:28,640 --> 00:02:31,350
+that's inside of NAND and it's now 50 or
+60 nodes. Might sound extreme, but there
+
+130
+00:02:31,350 --> 00:02:31,360
+60 nodes. Might sound extreme, but there
+ 
+
+131
+00:02:31,360 --> 00:02:33,910
+60 nodes. Might sound extreme, but there
+are use cases where we need this. And
+
+132
+00:02:33,910 --> 00:02:33,920
+are use cases where we need this. And
+ 
+
+133
+00:02:33,920 --> 00:02:36,309
+are use cases where we need this. And
+the issue with NAN is once we get to
+
+134
+00:02:36,309 --> 00:02:36,319
+the issue with NAN is once we get to
+ 
+
+135
+00:02:36,319 --> 00:02:39,190
+the issue with NAN is once we get to
+those wild levels of code nodes and just
+
+136
+00:02:39,190 --> 00:02:39,200
+those wild levels of code nodes and just
+ 
+
+137
+00:02:39,200 --> 00:02:41,430
+those wild levels of code nodes and just
+nodes in general, it starts to become
+
+138
+00:02:41,430 --> 00:02:41,440
+nodes in general, it starts to become
+ 
+
+139
+00:02:41,440 --> 00:02:43,670
+nodes in general, it starts to become
+rather brittle. And as it becomes more
+
+140
+00:02:43,670 --> 00:02:43,680
+rather brittle. And as it becomes more
+ 
+
+141
+00:02:43,680 --> 00:02:45,830
+rather brittle. And as it becomes more
+brittle and larger in general, chances
+
+142
+00:02:45,830 --> 00:02:45,840
+brittle and larger in general, chances
+ 
+
+143
+00:02:45,840 --> 00:02:47,750
+brittle and larger in general, chances
+are we're also tossing in a lot more
+
+144
+00:02:47,750 --> 00:02:47,760
+are we're also tossing in a lot more
+ 
+
+145
+00:02:47,760 --> 00:02:50,390
+are we're also tossing in a lot more
+code nodes in our workflow itself, which
+
+146
+00:02:50,390 --> 00:02:50,400
+code nodes in our workflow itself, which
+ 
+
+147
+00:02:50,400 --> 00:02:52,470
+code nodes in our workflow itself, which
+then begs the question, why are we even
+
+148
+00:02:52,470 --> 00:02:52,480
+then begs the question, why are we even
+ 
+
+149
+00:02:52,480 --> 00:02:54,790
+then begs the question, why are we even
+in NN in the first place? But as you
+
+150
+00:02:54,790 --> 00:02:54,800
+in NN in the first place? But as you
+ 
+
+151
+00:02:54,800 --> 00:02:56,309
+in NN in the first place? But as you
+take your workflow and add more deeply
+
+152
+00:02:56,309 --> 00:02:56,319
+take your workflow and add more deeply
+ 
+
+153
+00:02:56,319 --> 00:02:58,869
+take your workflow and add more deeply
+nested logic, more loops, more error
+
+154
+00:02:58,869 --> 00:02:58,879
+nested logic, more loops, more error
+ 
+
+155
+00:02:58,879 --> 00:03:02,309
+nested logic, more loops, more error
+handling, you begin to see some of the
+
+156
+00:03:02,309 --> 00:03:02,319
+handling, you begin to see some of the
+ 
+
+157
+00:03:02,319 --> 00:03:04,309
+handling, you begin to see some of the
+issues with the NN infrastructure
+
+158
+00:03:04,309 --> 00:03:04,319
+issues with the NN infrastructure
+ 
+
+159
+00:03:04,319 --> 00:03:06,630
+issues with the NN infrastructure
+because the equivalent of those 50 60
+
+160
+00:03:06,630 --> 00:03:06,640
+because the equivalent of those 50 60
+ 
+
+161
+00:03:06,640 --> 00:03:08,949
+because the equivalent of those 50 60
+node solutions inside of NAND could very
+
+162
+00:03:08,949 --> 00:03:08,959
+node solutions inside of NAND could very
+ 
+
+163
+00:03:08,959 --> 00:03:11,110
+node solutions inside of NAND could very
+easily just be a few hundred lines of
+
+164
+00:03:11,110 --> 00:03:11,120
+easily just be a few hundred lines of
+ 
+
+165
+00:03:11,120 --> 00:03:13,190
+easily just be a few hundred lines of
+code inside of something like cloud code
+
+166
+00:03:13,190 --> 00:03:13,200
+code inside of something like cloud code
+ 
+
+167
+00:03:13,200 --> 00:03:15,990
+code inside of something like cloud code
+which is much easier to test and scale.
+
+168
+00:03:15,990 --> 00:03:16,000
+which is much easier to test and scale.
+ 
+
+169
+00:03:16,000 --> 00:03:17,350
+which is much easier to test and scale.
+Which brings us to the second point of
+
+170
+00:03:17,350 --> 00:03:17,360
+Which brings us to the second point of
+ 
+
+171
+00:03:17,360 --> 00:03:19,589
+Which brings us to the second point of
+scaling and that's throughput and
+
+172
+00:03:19,589 --> 00:03:19,599
+scaling and that's throughput and
+ 
+
+173
+00:03:19,599 --> 00:03:21,110
+scaling and that's throughput and
+thinking of how many users might be
+
+174
+00:03:21,110 --> 00:03:21,120
+thinking of how many users might be
+ 
+
+175
+00:03:21,120 --> 00:03:23,350
+thinking of how many users might be
+using this thing all at once. If we're
+
+176
+00:03:23,350 --> 00:03:23,360
+using this thing all at once. If we're
+ 
+
+177
+00:03:23,360 --> 00:03:24,630
+using this thing all at once. If we're
+trying to run hundreds of things in
+
+178
+00:03:24,630 --> 00:03:24,640
+trying to run hundreds of things in
+ 
+
+179
+00:03:24,640 --> 00:03:26,790
+trying to run hundreds of things in
+parallel, deal with thousands of API
+
+180
+00:03:26,790 --> 00:03:26,800
+parallel, deal with thousands of API
+ 
+
+181
+00:03:26,800 --> 00:03:29,030
+parallel, deal with thousands of API
+calls every hour and deal with very
+
+182
+00:03:29,030 --> 00:03:29,040
+calls every hour and deal with very
+ 
+
+183
+00:03:29,040 --> 00:03:32,869
+calls every hour and deal with very
+large data sets, chances are again NAN
+
+184
+00:03:32,869 --> 00:03:32,879
+large data sets, chances are again NAN
+ 
+
+185
+00:03:32,879 --> 00:03:34,309
+large data sets, chances are again NAN
+is going to struggle here. And the
+
+186
+00:03:34,309 --> 00:03:34,319
+is going to struggle here. And the
+ 
+
+187
+00:03:34,319 --> 00:03:36,550
+is going to struggle here. And the
+solutions for those scenarios inside of
+
+188
+00:03:36,550 --> 00:03:36,560
+solutions for those scenarios inside of
+ 
+
+189
+00:03:36,560 --> 00:03:39,830
+solutions for those scenarios inside of
+NAND eventually lead you towards some
+
+190
+00:03:39,830 --> 00:03:39,840
+NAND eventually lead you towards some
+ 
+
+191
+00:03:39,840 --> 00:03:42,070
+NAND eventually lead you towards some
+hacky type things, right? Where you're
+
+192
+00:03:42,070 --> 00:03:42,080
+hacky type things, right? Where you're
+ 
+
+193
+00:03:42,080 --> 00:03:43,910
+hacky type things, right? Where you're
+kind of going outside of the box with NN
+
+194
+00:03:43,910 --> 00:03:43,920
+kind of going outside of the box with NN
+ 
+
+195
+00:03:43,920 --> 00:03:45,830
+kind of going outside of the box with NN
+to make it work. And when you get to the
+
+196
+00:03:45,830 --> 00:03:45,840
+to make it work. And when you get to the
+ 
+
+197
+00:03:45,840 --> 00:03:47,110
+to make it work. And when you get to the
+place where you're trying to do hacky
+
+198
+00:03:47,110 --> 00:03:47,120
+place where you're trying to do hacky
+ 
+
+199
+00:03:47,120 --> 00:03:49,030
+place where you're trying to do hacky
+solutions to actually solve your problem
+
+200
+00:03:49,030 --> 00:03:49,040
+solutions to actually solve your problem
+ 
+
+201
+00:03:49,040 --> 00:03:52,309
+solutions to actually solve your problem
+with any again you need to ask yourself
+
+202
+00:03:52,309 --> 00:03:52,319
+with any again you need to ask yourself
+ 
+
+203
+00:03:52,319 --> 00:03:54,470
+with any again you need to ask yourself
+why am I doing this and not using a tool
+
+204
+00:03:54,470 --> 00:03:54,480
+why am I doing this and not using a tool
+ 
+
+205
+00:03:54,480 --> 00:03:57,429
+why am I doing this and not using a tool
+like cloud code and using real code to
+
+206
+00:03:57,429 --> 00:03:57,439
+like cloud code and using real code to
+ 
+
+207
+00:03:57,439 --> 00:03:59,190
+like cloud code and using real code to
+solve the problem in the manner is meant
+
+208
+00:03:59,190 --> 00:03:59,200
+solve the problem in the manner is meant
+ 
+
+209
+00:03:59,200 --> 00:04:00,470
+solve the problem in the manner is meant
+to be solved because when you're
+
+210
+00:04:00,470 --> 00:04:00,480
+to be solved because when you're
+ 
+
+211
+00:04:00,480 --> 00:04:02,470
+to be solved because when you're
+handling these large complex projects
+
+212
+00:04:02,470 --> 00:04:02,480
+handling these large complex projects
+ 
+
+213
+00:04:02,480 --> 00:04:04,229
+handling these large complex projects
+inevitably you begin to hit bottlenecks
+
+214
+00:04:04,229 --> 00:04:04,239
+inevitably you begin to hit bottlenecks
+ 
+
+215
+00:04:04,239 --> 00:04:06,470
+inevitably you begin to hit bottlenecks
+inside of naden and there's easy
+
+216
+00:04:06,470 --> 00:04:06,480
+inside of naden and there's easy
+ 
+
+217
+00:04:06,480 --> 00:04:09,110
+inside of naden and there's easy
+solutions inside of a normal coding
+
+218
+00:04:09,110 --> 00:04:09,120
+solutions inside of a normal coding
+ 
+
+219
+00:04:09,120 --> 00:04:11,509
+solutions inside of a normal coding
+ecosystem to solve that. Now, the second
+
+220
+00:04:11,509 --> 00:04:11,519
+ecosystem to solve that. Now, the second
+ 
+
+221
+00:04:11,519 --> 00:04:13,190
+ecosystem to solve that. Now, the second
+issue with NAND is its speed to
+
+222
+00:04:13,190 --> 00:04:13,200
+issue with NAND is its speed to
+ 
+
+223
+00:04:13,200 --> 00:04:14,789
+issue with NAND is its speed to
+deployment when it comes to complex
+
+224
+00:04:14,789 --> 00:04:14,799
+deployment when it comes to complex
+ 
+
+225
+00:04:14,799 --> 00:04:16,229
+deployment when it comes to complex
+projects. Now, this might surprise some
+
+226
+00:04:16,229 --> 00:04:16,239
+projects. Now, this might surprise some
+ 
+
+227
+00:04:16,239 --> 00:04:17,749
+projects. Now, this might surprise some
+of you because speed to deployment is
+
+228
+00:04:17,749 --> 00:04:17,759
+of you because speed to deployment is
+ 
+
+229
+00:04:17,759 --> 00:04:20,390
+of you because speed to deployment is
+kind of NAND's thing, but it's really
+
+230
+00:04:20,390 --> 00:04:20,400
+kind of NAND's thing, but it's really
+ 
+
+231
+00:04:20,400 --> 00:04:22,390
+kind of NAND's thing, but it's really
+only Naden's thing when it's with simple
+
+232
+00:04:22,390 --> 00:04:22,400
+only Naden's thing when it's with simple
+ 
+
+233
+00:04:22,400 --> 00:04:24,790
+only Naden's thing when it's with simple
+or medium difficulty projects. When
+
+234
+00:04:24,790 --> 00:04:24,800
+or medium difficulty projects. When
+ 
+
+235
+00:04:24,800 --> 00:04:26,870
+or medium difficulty projects. When
+we're dealing with complex issues, the
+
+236
+00:04:26,870 --> 00:04:26,880
+we're dealing with complex issues, the
+ 
+
+237
+00:04:26,880 --> 00:04:29,350
+we're dealing with complex issues, the
+fact is it is infinitely faster for me
+
+238
+00:04:29,350 --> 00:04:29,360
+fact is it is infinitely faster for me
+ 
+
+239
+00:04:29,360 --> 00:04:31,510
+fact is it is infinitely faster for me
+to hop inside of NAND or Codeex and
+
+240
+00:04:31,510 --> 00:04:31,520
+to hop inside of NAND or Codeex and
+ 
+
+241
+00:04:31,520 --> 00:04:33,590
+to hop inside of NAND or Codeex and
+prompt my way to the solution versus
+
+242
+00:04:33,590 --> 00:04:33,600
+prompt my way to the solution versus
+ 
+
+243
+00:04:33,600 --> 00:04:35,749
+prompt my way to the solution versus
+going inside of NADN and trying to tie a
+
+244
+00:04:35,749 --> 00:04:35,759
+going inside of NADN and trying to tie a
+ 
+
+245
+00:04:35,759 --> 00:04:37,430
+going inside of NADN and trying to tie a
+bunch of nodes together. And that also
+
+246
+00:04:37,430 --> 00:04:37,440
+bunch of nodes together. And that also
+ 
+
+247
+00:04:37,440 --> 00:04:39,270
+bunch of nodes together. And that also
+includes if I'm on any cloud version,
+
+248
+00:04:39,270 --> 00:04:39,280
+includes if I'm on any cloud version,
+ 
+
+249
+00:04:39,280 --> 00:04:41,030
+includes if I'm on any cloud version,
+which isn't available on the self-host,
+
+250
+00:04:41,030 --> 00:04:41,040
+which isn't available on the self-host,
+ 
+
+251
+00:04:41,040 --> 00:04:42,550
+which isn't available on the self-host,
+and that's their workflow builder.
+
+252
+00:04:42,550 --> 00:04:42,560
+and that's their workflow builder.
+ 
+
+253
+00:04:42,560 --> 00:04:44,550
+and that's their workflow builder.
+Furthermore, the output I get with real
+
+254
+00:04:44,550 --> 00:04:44,560
+Furthermore, the output I get with real
+ 
+
+255
+00:04:44,560 --> 00:04:46,070
+Furthermore, the output I get with real
+code is going to be easier to iterate
+
+256
+00:04:46,070 --> 00:04:46,080
+code is going to be easier to iterate
+ 
+
+257
+00:04:46,080 --> 00:04:48,150
+code is going to be easier to iterate
+upon, easier to test, and easier to add
+
+258
+00:04:48,150 --> 00:04:48,160
+upon, easier to test, and easier to add
+ 
+
+259
+00:04:48,160 --> 00:04:50,150
+upon, easier to test, and easier to add
+things on to it later down the line.
+
+260
+00:04:50,150 --> 00:04:50,160
+things on to it later down the line.
+ 
+
+261
+00:04:50,160 --> 00:04:51,909
+things on to it later down the line.
+Now, the third area where NAND struggles
+
+262
+00:04:51,909 --> 00:04:51,919
+Now, the third area where NAND struggles
+ 
+
+263
+00:04:51,919 --> 00:04:53,510
+Now, the third area where NAND struggles
+is commercial licensing. And this
+
+264
+00:04:53,510 --> 00:04:53,520
+is commercial licensing. And this
+ 
+
+265
+00:04:53,520 --> 00:04:55,189
+is commercial licensing. And this
+doesn't really get talked about enough,
+
+266
+00:04:55,189 --> 00:04:55,199
+doesn't really get talked about enough,
+ 
+
+267
+00:04:55,199 --> 00:04:58,150
+doesn't really get talked about enough,
+and I think it's because NAD's fair use
+
+268
+00:04:58,150 --> 00:04:58,160
+and I think it's because NAD's fair use
+ 
+
+269
+00:04:58,160 --> 00:05:00,070
+and I think it's because NAD's fair use
+policy is very confusing. NAD is not
+
+270
+00:05:00,070 --> 00:05:00,080
+policy is very confusing. NAD is not
+ 
+
+271
+00:05:00,080 --> 00:05:01,510
+policy is very confusing. NAD is not
+open source, and I've seen it referenced
+
+272
+00:05:01,510 --> 00:05:01,520
+open source, and I've seen it referenced
+ 
+
+273
+00:05:01,520 --> 00:05:03,110
+open source, and I've seen it referenced
+as open source by a lot of creators, and
+
+274
+00:05:03,110 --> 00:05:03,120
+as open source by a lot of creators, and
+ 
+
+275
+00:05:03,120 --> 00:05:05,510
+as open source by a lot of creators, and
+that's simply not true. It uses a fair
+
+276
+00:05:05,510 --> 00:05:05,520
+that's simply not true. It uses a fair
+ 
+
+277
+00:05:05,520 --> 00:05:07,430
+that's simply not true. It uses a fair
+use policy. Now, what does that mean?
+
+278
+00:05:07,430 --> 00:05:07,440
+use policy. Now, what does that mean?
+ 
+
+279
+00:05:07,440 --> 00:05:08,790
+use policy. Now, what does that mean?
+Well, that means if I build something
+
+280
+00:05:08,790 --> 00:05:08,800
+Well, that means if I build something
+ 
+
+281
+00:05:08,800 --> 00:05:10,710
+Well, that means if I build something
+that's awesome inside of any and I want
+
+282
+00:05:10,710 --> 00:05:10,720
+that's awesome inside of any and I want
+ 
+
+283
+00:05:10,720 --> 00:05:13,270
+that's awesome inside of any and I want
+to sell it or use it as a SAS project,
+
+284
+00:05:13,270 --> 00:05:13,280
+to sell it or use it as a SAS project,
+ 
+
+285
+00:05:13,280 --> 00:05:15,990
+to sell it or use it as a SAS project,
+well, I can, but only in certain
+
+286
+00:05:15,990 --> 00:05:16,000
+well, I can, but only in certain
+ 
+
+287
+00:05:16,000 --> 00:05:19,909
+well, I can, but only in certain
+instances. And those instances are if my
+
+288
+00:05:19,909 --> 00:05:19,919
+instances. And those instances are if my
+ 
+
+289
+00:05:19,919 --> 00:05:21,749
+instances. And those instances are if my
+application I built an NN does not
+
+290
+00:05:21,749 --> 00:05:21,759
+application I built an NN does not
+ 
+
+291
+00:05:21,759 --> 00:05:23,749
+application I built an NN does not
+require the user to give me credentials.
+
+292
+00:05:23,749 --> 00:05:23,759
+require the user to give me credentials.
+ 
+
+293
+00:05:23,759 --> 00:05:25,270
+require the user to give me credentials.
+So, imagine I built a personal
+
+294
+00:05:25,270 --> 00:05:25,280
+So, imagine I built a personal
+ 
+
+295
+00:05:25,280 --> 00:05:27,430
+So, imagine I built a personal
+assistant. Imagine I built my version of
+
+296
+00:05:27,430 --> 00:05:27,440
+assistant. Imagine I built my version of
+ 
+
+297
+00:05:27,440 --> 00:05:29,909
+assistant. Imagine I built my version of
+of OpenClaw inside of Nen. Well, that
+
+298
+00:05:29,909 --> 00:05:29,919
+of OpenClaw inside of Nen. Well, that
+ 
+
+299
+00:05:29,919 --> 00:05:32,310
+of OpenClaw inside of Nen. Well, that
+might require you to give me your email
+
+300
+00:05:32,310 --> 00:05:32,320
+might require you to give me your email
+ 
+
+301
+00:05:32,320 --> 00:05:33,990
+might require you to give me your email
+credentials or your Gmail credentials or
+
+302
+00:05:33,990 --> 00:05:34,000
+credentials or your Gmail credentials or
+ 
+
+303
+00:05:34,000 --> 00:05:35,350
+credentials or your Gmail credentials or
+whatever credentials. can't do that
+
+304
+00:05:35,350 --> 00:05:35,360
+whatever credentials. can't do that
+ 
+
+305
+00:05:35,360 --> 00:05:37,590
+whatever credentials. can't do that
+inside of NAN, right? And there's many
+
+306
+00:05:37,590 --> 00:05:37,600
+inside of NAN, right? And there's many
+ 
+
+307
+00:05:37,600 --> 00:05:39,510
+inside of NAN, right? And there's many
+many scenarios you can imagine that
+
+308
+00:05:39,510 --> 00:05:39,520
+many scenarios you can imagine that
+ 
+
+309
+00:05:39,520 --> 00:05:41,590
+many scenarios you can imagine that
+would require the customer to give their
+
+310
+00:05:41,590 --> 00:05:41,600
+would require the customer to give their
+ 
+
+311
+00:05:41,600 --> 00:05:43,029
+would require the customer to give their
+credentials for whatever reason to make
+
+312
+00:05:43,029 --> 00:05:43,039
+credentials for whatever reason to make
+ 
+
+313
+00:05:43,039 --> 00:05:45,749
+credentials for whatever reason to make
+the app work. You can't do that in NAND.
+
+314
+00:05:45,749 --> 00:05:45,759
+the app work. You can't do that in NAND.
+ 
+
+315
+00:05:45,759 --> 00:05:47,270
+the app work. You can't do that in NAND.
+And what that means is you're very
+
+316
+00:05:47,270 --> 00:05:47,280
+And what that means is you're very
+ 
+
+317
+00:05:47,280 --> 00:05:49,430
+And what that means is you're very
+limited in what you can create inside of
+
+318
+00:05:49,430 --> 00:05:49,440
+limited in what you can create inside of
+ 
+
+319
+00:05:49,440 --> 00:05:51,670
+limited in what you can create inside of
+NAN and then turn around and make a SAS
+
+320
+00:05:51,670 --> 00:05:51,680
+NAN and then turn around and make a SAS
+ 
+
+321
+00:05:51,680 --> 00:05:55,270
+NAN and then turn around and make a SAS
+project. So in terms of using NADN to
+
+322
+00:05:55,270 --> 00:05:55,280
+project. So in terms of using NADN to
+ 
+
+323
+00:05:55,280 --> 00:05:56,950
+project. So in terms of using NADN to
+build something to make money, again
+
+324
+00:05:56,950 --> 00:05:56,960
+build something to make money, again
+ 
+
+325
+00:05:56,960 --> 00:05:58,550
+build something to make money, again
+this falls very very short. Again,
+
+326
+00:05:58,550 --> 00:05:58,560
+this falls very very short. Again,
+ 
+
+327
+00:05:58,560 --> 00:05:59,670
+this falls very very short. Again,
+compare that to something like cloud
+
+328
+00:05:59,670 --> 00:05:59,680
+compare that to something like cloud
+ 
+
+329
+00:05:59,680 --> 00:06:02,150
+compare that to something like cloud
+code. I build it. It's my code. I can
+
+330
+00:06:02,150 --> 00:06:02,160
+code. I build it. It's my code. I can
+ 
+
+331
+00:06:02,160 --> 00:06:03,990
+code. I build it. It's my code. I can
+sell it however I want. I can package it
+
+332
+00:06:03,990 --> 00:06:04,000
+sell it however I want. I can package it
+ 
+
+333
+00:06:04,000 --> 00:06:05,749
+sell it however I want. I can package it
+however I want. I can take things that
+
+334
+00:06:05,749 --> 00:06:05,759
+however I want. I can take things that
+ 
+
+335
+00:06:05,759 --> 00:06:08,150
+however I want. I can take things that
+are open source. Not the case with NAND.
+
+336
+00:06:08,150 --> 00:06:08,160
+are open source. Not the case with NAND.
+ 
+
+337
+00:06:08,160 --> 00:06:09,350
+are open source. Not the case with NAND.
+And that's a huge issue if you're
+
+338
+00:06:09,350 --> 00:06:09,360
+And that's a huge issue if you're
+ 
+
+339
+00:06:09,360 --> 00:06:11,029
+And that's a huge issue if you're
+someone who's in this to build to make
+
+340
+00:06:11,029 --> 00:06:11,039
+someone who's in this to build to make
+ 
+
+341
+00:06:11,039 --> 00:06:13,029
+someone who's in this to build to make
+money. So those are the three areas
+
+342
+00:06:13,029 --> 00:06:13,039
+money. So those are the three areas
+ 
+
+343
+00:06:13,039 --> 00:06:14,469
+money. So those are the three areas
+where NAND struggles and they're areas
+
+344
+00:06:14,469 --> 00:06:14,479
+where NAND struggles and they're areas
+ 
+
+345
+00:06:14,479 --> 00:06:16,230
+where NAND struggles and they're areas
+that are becoming more and more apparent
+
+346
+00:06:16,230 --> 00:06:16,240
+that are becoming more and more apparent
+ 
+
+347
+00:06:16,240 --> 00:06:19,189
+that are becoming more and more apparent
+in today's day and age. Now like I said
+
+348
+00:06:19,189 --> 00:06:19,199
+in today's day and age. Now like I said
+ 
+
+349
+00:06:19,199 --> 00:06:20,870
+in today's day and age. Now like I said
+in the beginning, this is not an any hit
+
+350
+00:06:20,870 --> 00:06:20,880
+in the beginning, this is not an any hit
+ 
+
+351
+00:06:20,880 --> 00:06:23,110
+in the beginning, this is not an any hit
+piece. Any is a tool and it's the best
+
+352
+00:06:23,110 --> 00:06:23,120
+piece. Any is a tool and it's the best
+ 
+
+353
+00:06:23,120 --> 00:06:25,029
+piece. Any is a tool and it's the best
+tool for the job in many instances. But
+
+354
+00:06:25,029 --> 00:06:25,039
+tool for the job in many instances. But
+ 
+
+355
+00:06:25,039 --> 00:06:26,870
+tool for the job in many instances. But
+what is its lane? When does it make
+
+356
+00:06:26,870 --> 00:06:26,880
+what is its lane? When does it make
+ 
+
+357
+00:06:26,880 --> 00:06:29,909
+what is its lane? When does it make
+sense to use? Let's talk about that now
+
+358
+00:06:29,909 --> 00:06:29,919
+sense to use? Let's talk about that now
+ 
+
+359
+00:06:29,919 --> 00:06:31,749
+sense to use? Let's talk about that now
+because I think there's three specific
+
+360
+00:06:31,749 --> 00:06:31,759
+because I think there's three specific
+ 
+
+361
+00:06:31,759 --> 00:06:34,230
+because I think there's three specific
+places where NAND should still be your
+
+362
+00:06:34,230 --> 00:06:34,240
+places where NAND should still be your
+ 
+
+363
+00:06:34,240 --> 00:06:36,469
+places where NAND should still be your
+go-to because there's still three areas
+
+364
+00:06:36,469 --> 00:06:36,479
+go-to because there's still three areas
+ 
+
+365
+00:06:36,479 --> 00:06:38,790
+go-to because there's still three areas
+where Naden wins. Number one is its
+
+366
+00:06:38,790 --> 00:06:38,800
+where Naden wins. Number one is its
+ 
+
+367
+00:06:38,800 --> 00:06:40,309
+where Naden wins. Number one is its
+speed to deployment with simple or
+
+368
+00:06:40,309 --> 00:06:40,319
+speed to deployment with simple or
+ 
+
+369
+00:06:40,319 --> 00:06:42,469
+speed to deployment with simple or
+medium difficulty projects. Number two
+
+370
+00:06:42,469 --> 00:06:42,479
+medium difficulty projects. Number two
+ 
+
+371
+00:06:42,479 --> 00:06:44,870
+medium difficulty projects. Number two
+is its accessibility for non-technical
+
+372
+00:06:44,870 --> 00:06:44,880
+is its accessibility for non-technical
+ 
+
+373
+00:06:44,880 --> 00:06:47,590
+is its accessibility for non-technical
+teams and number three is its entire
+
+374
+00:06:47,590 --> 00:06:47,600
+teams and number three is its entire
+ 
+
+375
+00:06:47,600 --> 00:06:49,830
+teams and number three is its entire
+integration ecosystem. So let's talk
+
+376
+00:06:49,830 --> 00:06:49,840
+integration ecosystem. So let's talk
+ 
+
+377
+00:06:49,840 --> 00:06:51,430
+integration ecosystem. So let's talk
+about those. So let's start with number
+
+378
+00:06:51,430 --> 00:06:51,440
+about those. So let's start with number
+ 
+
+379
+00:06:51,440 --> 00:06:52,950
+about those. So let's start with number
+one which is its speed to deployment
+
+380
+00:06:52,950 --> 00:06:52,960
+one which is its speed to deployment
+ 
+
+381
+00:06:52,960 --> 00:06:55,110
+one which is its speed to deployment
+with simpler medium-sized projects. N is
+
+382
+00:06:55,110 --> 00:06:55,120
+with simpler medium-sized projects. N is
+ 
+
+383
+00:06:55,120 --> 00:06:56,710
+with simpler medium-sized projects. N is
+still king here. If I want to put
+
+384
+00:06:56,710 --> 00:06:56,720
+still king here. If I want to put
+ 
+
+385
+00:06:56,720 --> 00:06:59,909
+still king here. If I want to put
+together a very quick MVP with a
+
+386
+00:06:59,909 --> 00:06:59,919
+together a very quick MVP with a
+ 
+
+387
+00:06:59,919 --> 00:07:02,550
+together a very quick MVP with a
+relatively linear idea that I know how I
+
+388
+00:07:02,550 --> 00:07:02,560
+relatively linear idea that I know how I
+ 
+
+389
+00:07:02,560 --> 00:07:04,230
+relatively linear idea that I know how I
+want it to start from beginning to end,
+
+390
+00:07:04,230 --> 00:07:04,240
+want it to start from beginning to end,
+ 
+
+391
+00:07:04,240 --> 00:07:06,629
+want it to start from beginning to end,
+I can do that in Nen in 5 10 minutes and
+
+392
+00:07:06,629 --> 00:07:06,639
+I can do that in Nen in 5 10 minutes and
+ 
+
+393
+00:07:06,639 --> 00:07:08,629
+I can do that in Nen in 5 10 minutes and
+I can do it in a visual manner which is
+
+394
+00:07:08,629 --> 00:07:08,639
+I can do it in a visual manner which is
+ 
+
+395
+00:07:08,639 --> 00:07:11,510
+I can do it in a visual manner which is
+very easy to both explain to a
+
+396
+00:07:11,510 --> 00:07:11,520
+very easy to both explain to a
+ 
+
+397
+00:07:11,520 --> 00:07:13,589
+very easy to both explain to a
+non-technical team but also troubleshoot
+
+398
+00:07:13,589 --> 00:07:13,599
+non-technical team but also troubleshoot
+ 
+
+399
+00:07:13,599 --> 00:07:15,589
+non-technical team but also troubleshoot
+and iterate upon versus if I try to do
+
+400
+00:07:15,589 --> 00:07:15,599
+and iterate upon versus if I try to do
+ 
+
+401
+00:07:15,599 --> 00:07:17,270
+and iterate upon versus if I try to do
+something like that in clawed code, it
+
+402
+00:07:17,270 --> 00:07:17,280
+something like that in clawed code, it
+ 
+
+403
+00:07:17,280 --> 00:07:18,790
+something like that in clawed code, it
+involves a lot of additional overhead
+
+404
+00:07:18,790 --> 00:07:18,800
+involves a lot of additional overhead
+ 
+
+405
+00:07:18,800 --> 00:07:20,870
+involves a lot of additional overhead
+that may just not make sense at these
+
+406
+00:07:20,870 --> 00:07:20,880
+that may just not make sense at these
+ 
+
+407
+00:07:20,880 --> 00:07:22,790
+that may just not make sense at these
+early stages. And that speed to
+
+408
+00:07:22,790 --> 00:07:22,800
+early stages. And that speed to
+ 
+
+409
+00:07:22,800 --> 00:07:24,150
+early stages. And that speed to
+deployment on these lower level
+
+410
+00:07:24,150 --> 00:07:24,160
+deployment on these lower level
+ 
+
+411
+00:07:24,160 --> 00:07:25,990
+deployment on these lower level
+projects, a lot of this glue work, that
+
+412
+00:07:25,990 --> 00:07:26,000
+projects, a lot of this glue work, that
+ 
+
+413
+00:07:26,000 --> 00:07:27,830
+projects, a lot of this glue work, that
+sort of internal tools behind the scenes
+
+414
+00:07:27,830 --> 00:07:27,840
+sort of internal tools behind the scenes
+ 
+
+415
+00:07:27,840 --> 00:07:29,589
+sort of internal tools behind the scenes
+isn't something you can dismiss out of
+
+416
+00:07:29,589 --> 00:07:29,599
+isn't something you can dismiss out of
+ 
+
+417
+00:07:29,599 --> 00:07:33,189
+isn't something you can dismiss out of
+hand. And it is where NAD is 100% a
+
+418
+00:07:33,189 --> 00:07:33,199
+hand. And it is where NAD is 100% a
+ 
+
+419
+00:07:33,199 --> 00:07:35,110
+hand. And it is where NAD is 100% a
+winner. And piggybacking off of that is
+
+420
+00:07:35,110 --> 00:07:35,120
+winner. And piggybacking off of that is
+ 
+
+421
+00:07:35,120 --> 00:07:37,110
+winner. And piggybacking off of that is
+point number two, which is accessibility
+
+422
+00:07:37,110 --> 00:07:37,120
+point number two, which is accessibility
+ 
+
+423
+00:07:37,120 --> 00:07:39,270
+point number two, which is accessibility
+to non-technical teams. And this is not
+
+424
+00:07:39,270 --> 00:07:39,280
+to non-technical teams. And this is not
+ 
+
+425
+00:07:39,280 --> 00:07:41,589
+to non-technical teams. And this is not
+something that can be dismissed. A large
+
+426
+00:07:41,589 --> 00:07:41,599
+something that can be dismissed. A large
+ 
+
+427
+00:07:41,599 --> 00:07:44,230
+something that can be dismissed. A large
+part of NAND's meteoric rise was its
+
+428
+00:07:44,230 --> 00:07:44,240
+part of NAND's meteoric rise was its
+ 
+
+429
+00:07:44,240 --> 00:07:46,550
+part of NAND's meteoric rise was its
+accessibility. It was the ability to
+
+430
+00:07:46,550 --> 00:07:46,560
+accessibility. It was the ability to
+ 
+
+431
+00:07:46,560 --> 00:07:48,710
+accessibility. It was the ability to
+allow people who weren't technical to
+
+432
+00:07:48,710 --> 00:07:48,720
+allow people who weren't technical to
+ 
+
+433
+00:07:48,720 --> 00:07:50,469
+allow people who weren't technical to
+actually get their hands dirty and start
+
+434
+00:07:50,469 --> 00:07:50,479
+actually get their hands dirty and start
+ 
+
+435
+00:07:50,479 --> 00:07:52,469
+actually get their hands dirty and start
+doing things that were completely
+
+436
+00:07:52,469 --> 00:07:52,479
+doing things that were completely
+ 
+
+437
+00:07:52,479 --> 00:07:53,909
+doing things that were completely
+outside their wheelhouse a few years
+
+438
+00:07:53,909 --> 00:07:53,919
+outside their wheelhouse a few years
+ 
+
+439
+00:07:53,919 --> 00:07:56,309
+outside their wheelhouse a few years
+ago, but were actually realistic for
+
+440
+00:07:56,309 --> 00:07:56,319
+ago, but were actually realistic for
+ 
+
+441
+00:07:56,319 --> 00:07:58,230
+ago, but were actually realistic for
+them to build because it was visual,
+
+442
+00:07:58,230 --> 00:07:58,240
+them to build because it was visual,
+ 
+
+443
+00:07:58,240 --> 00:08:00,629
+them to build because it was visual,
+because it was relatively simple. So, if
+
+444
+00:08:00,629 --> 00:08:00,639
+because it was relatively simple. So, if
+ 
+
+445
+00:08:00,639 --> 00:08:02,469
+because it was relatively simple. So, if
+you're dealing with a client or a team
+
+446
+00:08:02,469 --> 00:08:02,479
+you're dealing with a client or a team
+ 
+
+447
+00:08:02,479 --> 00:08:04,309
+you're dealing with a client or a team
+that is full of people who quote unquote
+
+448
+00:08:04,309 --> 00:08:04,319
+that is full of people who quote unquote
+ 
+
+449
+00:08:04,319 --> 00:08:06,390
+that is full of people who quote unquote
+aren't technical, yet they need to get
+
+450
+00:08:06,390 --> 00:08:06,400
+aren't technical, yet they need to get
+ 
+
+451
+00:08:06,400 --> 00:08:08,070
+aren't technical, yet they need to get
+hands-on on this project, may need to
+
+452
+00:08:08,070 --> 00:08:08,080
+hands-on on this project, may need to
+ 
+
+453
+00:08:08,080 --> 00:08:09,430
+hands-on on this project, may need to
+edit it, may need to actually
+
+454
+00:08:09,430 --> 00:08:09,440
+edit it, may need to actually
+ 
+
+455
+00:08:09,440 --> 00:08:11,589
+edit it, may need to actually
+troubleshoot it, well, NN is brilliant
+
+456
+00:08:11,589 --> 00:08:11,599
+troubleshoot it, well, NN is brilliant
+ 
+
+457
+00:08:11,599 --> 00:08:13,589
+troubleshoot it, well, NN is brilliant
+for that. Versus the alternative, which
+
+458
+00:08:13,589 --> 00:08:13,599
+for that. Versus the alternative, which
+ 
+
+459
+00:08:13,599 --> 00:08:15,189
+for that. Versus the alternative, which
+is like, hey, I built this Python app
+
+460
+00:08:15,189 --> 00:08:15,199
+is like, hey, I built this Python app
+ 
+
+461
+00:08:15,199 --> 00:08:17,749
+is like, hey, I built this Python app
+for you. Here's the GitHub repo. Go
+
+462
+00:08:17,749 --> 00:08:17,759
+for you. Here's the GitHub repo. Go
+ 
+
+463
+00:08:17,759 --> 00:08:19,189
+for you. Here's the GitHub repo. Go
+ahead and edit it as you need. Well,
+
+464
+00:08:19,189 --> 00:08:19,199
+ahead and edit it as you need. Well,
+ 
+
+465
+00:08:19,199 --> 00:08:21,110
+ahead and edit it as you need. Well,
+that's a bridge too far, frankly, for
+
+466
+00:08:21,110 --> 00:08:21,120
+that's a bridge too far, frankly, for
+ 
+
+467
+00:08:21,120 --> 00:08:23,749
+that's a bridge too far, frankly, for
+honestly 99% of the population. So if
+
+468
+00:08:23,749 --> 00:08:23,759
+honestly 99% of the population. So if
+ 
+
+469
+00:08:23,759 --> 00:08:25,430
+honestly 99% of the population. So if
+you're building things for teams of
+
+470
+00:08:25,430 --> 00:08:25,440
+you're building things for teams of
+ 
+
+471
+00:08:25,440 --> 00:08:27,110
+you're building things for teams of
+non-developers who do need to get
+
+472
+00:08:27,110 --> 00:08:27,120
+non-developers who do need to get
+ 
+
+473
+00:08:27,120 --> 00:08:30,070
+non-developers who do need to get
+hands-on, frankly, NADN totally shines
+
+474
+00:08:30,070 --> 00:08:30,080
+hands-on, frankly, NADN totally shines
+ 
+
+475
+00:08:30,080 --> 00:08:32,310
+hands-on, frankly, NADN totally shines
+in that department. And lastly, the
+
+476
+00:08:32,310 --> 00:08:32,320
+in that department. And lastly, the
+ 
+
+477
+00:08:32,320 --> 00:08:34,550
+in that department. And lastly, the
+integration system of NADN is pretty
+
+478
+00:08:34,550 --> 00:08:34,560
+integration system of NADN is pretty
+ 
+
+479
+00:08:34,560 --> 00:08:37,829
+integration system of NADN is pretty
+unmatched. There's what 4 500 built-in
+
+480
+00:08:37,829 --> 00:08:37,839
+unmatched. There's what 4 500 built-in
+ 
+
+481
+00:08:37,839 --> 00:08:39,670
+unmatched. There's what 4 500 built-in
+integrations inside of NADN that is
+
+482
+00:08:39,670 --> 00:08:39,680
+integrations inside of NADN that is
+ 
+
+483
+00:08:39,680 --> 00:08:41,430
+integrations inside of NADN that is
+essentially abstract away the entire
+
+484
+00:08:41,430 --> 00:08:41,440
+essentially abstract away the entire
+ 
+
+485
+00:08:41,440 --> 00:08:44,149
+essentially abstract away the entire
+authentication process, which frankly
+
+486
+00:08:44,149 --> 00:08:44,159
+authentication process, which frankly
+ 
+
+487
+00:08:44,159 --> 00:08:46,470
+authentication process, which frankly
+can be a pain in the butt even if you're
+
+488
+00:08:46,470 --> 00:08:46,480
+can be a pain in the butt even if you're
+ 
+
+489
+00:08:46,480 --> 00:08:48,230
+can be a pain in the butt even if you're
+using something like cloud code. And
+
+490
+00:08:48,230 --> 00:08:48,240
+using something like cloud code. And
+ 
+
+491
+00:08:48,240 --> 00:08:49,910
+using something like cloud code. And
+that integration ecosystem and that
+
+492
+00:08:49,910 --> 00:08:49,920
+that integration ecosystem and that
+ 
+
+493
+00:08:49,920 --> 00:08:52,790
+that integration ecosystem and that
+abstraction layer is again huge for some
+
+494
+00:08:52,790 --> 00:08:52,800
+abstraction layer is again huge for some
+ 
+
+495
+00:08:52,800 --> 00:08:55,829
+abstraction layer is again huge for some
+of this internal background glue work
+
+496
+00:08:55,829 --> 00:08:55,839
+of this internal background glue work
+ 
+
+497
+00:08:55,839 --> 00:08:57,030
+of this internal background glue work
+that essentially keeps a lot of
+
+498
+00:08:57,030 --> 00:08:57,040
+that essentially keeps a lot of
+ 
+
+499
+00:08:57,040 --> 00:08:58,470
+that essentially keeps a lot of
+businesses running with low-level
+
+500
+00:08:58,470 --> 00:08:58,480
+businesses running with low-level
+ 
+
+501
+00:08:58,480 --> 00:09:00,230
+businesses running with low-level
+automations. So let's kind of recap
+
+502
+00:09:00,230 --> 00:09:00,240
+automations. So let's kind of recap
+ 
+
+503
+00:09:00,240 --> 00:09:02,230
+automations. So let's kind of recap
+where we are in 2026 with all these
+
+504
+00:09:02,230 --> 00:09:02,240
+where we are in 2026 with all these
+ 
+
+505
+00:09:02,240 --> 00:09:05,030
+where we are in 2026 with all these
+tools because the gap between NAND and
+
+506
+00:09:05,030 --> 00:09:05,040
+tools because the gap between NAND and
+ 
+
+507
+00:09:05,040 --> 00:09:06,790
+tools because the gap between NAND and
+these coding agents like claude code
+
+508
+00:09:06,790 --> 00:09:06,800
+these coding agents like claude code
+ 
+
+509
+00:09:06,800 --> 00:09:09,430
+these coding agents like claude code
+used to be a crack, but now it's a
+
+510
+00:09:09,430 --> 00:09:09,440
+used to be a crack, but now it's a
+ 
+
+511
+00:09:09,440 --> 00:09:11,590
+used to be a crack, but now it's a
+canyon and it's a canyon that's getting
+
+512
+00:09:11,590 --> 00:09:11,600
+canyon and it's a canyon that's getting
+ 
+
+513
+00:09:11,600 --> 00:09:14,230
+canyon and it's a canyon that's getting
+larger and larger. But that doesn't mean
+
+514
+00:09:14,230 --> 00:09:14,240
+larger and larger. But that doesn't mean
+ 
+
+515
+00:09:14,240 --> 00:09:17,110
+larger and larger. But that doesn't mean
+NAND is dying. It just means nen has a
+
+516
+00:09:17,110 --> 00:09:17,120
+NAND is dying. It just means nen has a
+ 
+
+517
+00:09:17,120 --> 00:09:19,430
+NAND is dying. It just means nen has a
+very specific lane now. And while again
+
+518
+00:09:19,430 --> 00:09:19,440
+very specific lane now. And while again
+ 
+
+519
+00:09:19,440 --> 00:09:22,070
+very specific lane now. And while again
+6 months to 12 months ago the highway
+
+520
+00:09:22,070 --> 00:09:22,080
+6 months to 12 months ago the highway
+ 
+
+521
+00:09:22,080 --> 00:09:24,230
+6 months to 12 months ago the highway
+was kind of dominated by nen well now
+
+522
+00:09:24,230 --> 00:09:24,240
+was kind of dominated by nen well now
+ 
+
+523
+00:09:24,240 --> 00:09:25,829
+was kind of dominated by nen well now
+maybe it just has a couple lanes on the
+
+524
+00:09:25,829 --> 00:09:25,839
+maybe it just has a couple lanes on the
+ 
+
+525
+00:09:25,839 --> 00:09:28,150
+maybe it just has a couple lanes on the
+right hand side and that's okay because
+
+526
+00:09:28,150 --> 00:09:28,160
+right hand side and that's okay because
+ 
+
+527
+00:09:28,160 --> 00:09:29,910
+right hand side and that's okay because
+again it's a tool. You're an AI
+
+528
+00:09:29,910 --> 00:09:29,920
+again it's a tool. You're an AI
+ 
+
+529
+00:09:29,920 --> 00:09:31,350
+again it's a tool. You're an AI
+developer. You should be somewhat tool
+
+530
+00:09:31,350 --> 00:09:31,360
+developer. You should be somewhat tool
+ 
+
+531
+00:09:31,360 --> 00:09:33,269
+developer. You should be somewhat tool
+agnostic. We just want to solve problems
+
+532
+00:09:33,269 --> 00:09:33,279
+agnostic. We just want to solve problems
+ 
+
+533
+00:09:33,279 --> 00:09:35,110
+agnostic. We just want to solve problems
+and use the correct tool for the job.
+
+534
+00:09:35,110 --> 00:09:35,120
+and use the correct tool for the job.
+ 
+
+535
+00:09:35,120 --> 00:09:37,269
+and use the correct tool for the job.
+This isn't a hit on nan. This isn't me
+
+536
+00:09:37,269 --> 00:09:37,279
+This isn't a hit on nan. This isn't me
+ 
+
+537
+00:09:37,279 --> 00:09:38,949
+This isn't a hit on nan. This isn't me
+trying to hype up cloud code. It's just
+
+538
+00:09:38,949 --> 00:09:38,959
+trying to hype up cloud code. It's just
+ 
+
+539
+00:09:38,959 --> 00:09:40,949
+trying to hype up cloud code. It's just
+the reality. And if you want to become a
+
+540
+00:09:40,949 --> 00:09:40,959
+the reality. And if you want to become a
+ 
+
+541
+00:09:40,959 --> 00:09:43,110
+the reality. And if you want to become a
+more mature AI developer, it is
+
+542
+00:09:43,110 --> 00:09:43,120
+more mature AI developer, it is
+ 
+
+543
+00:09:43,120 --> 00:09:45,190
+more mature AI developer, it is
+imperative you understand which lane
+
+544
+00:09:45,190 --> 00:09:45,200
+imperative you understand which lane
+ 
+
+545
+00:09:45,200 --> 00:09:47,190
+imperative you understand which lane
+you're in for which particular job.
+
+546
+00:09:47,190 --> 00:09:47,200
+you're in for which particular job.
+ 
+
+547
+00:09:47,200 --> 00:09:49,590
+you're in for which particular job.
+Which means the true power is in knowing
+
+548
+00:09:49,590 --> 00:09:49,600
+Which means the true power is in knowing
+ 
+
+549
+00:09:49,600 --> 00:09:51,990
+Which means the true power is in knowing
+how to do both. We do not want to be a
+
+550
+00:09:51,990 --> 00:09:52,000
+how to do both. We do not want to be a
+ 
+
+551
+00:09:52,000 --> 00:09:54,710
+how to do both. We do not want to be a
+one-trick pony. But I also think it's
+
+552
+00:09:54,710 --> 00:09:54,720
+one-trick pony. But I also think it's
+ 
+
+553
+00:09:54,720 --> 00:09:56,230
+one-trick pony. But I also think it's
+important to have these conversations,
+
+554
+00:09:56,230 --> 00:09:56,240
+important to have these conversations,
+ 
+
+555
+00:09:56,240 --> 00:09:58,230
+important to have these conversations,
+especially in the AI space where these
+
+556
+00:09:58,230 --> 00:09:58,240
+especially in the AI space where these
+ 
+
+557
+00:09:58,240 --> 00:10:01,430
+especially in the AI space where these
+things are just changing so so rapidly.
+
+558
+00:10:01,430 --> 00:10:01,440
+things are just changing so so rapidly.
+ 
+
+559
+00:10:01,440 --> 00:10:03,030
+things are just changing so so rapidly.
+So that's where I'm going to leave you
+
+560
+00:10:03,030 --> 00:10:03,040
+So that's where I'm going to leave you
+ 
+
+561
+00:10:03,040 --> 00:10:05,269
+So that's where I'm going to leave you
+for today. As always, check out the
+
+562
+00:10:05,269 --> 00:10:05,279
+for today. As always, check out the
+ 
+
+563
+00:10:05,279 --> 00:10:06,870
+for today. As always, check out the
+links in the description and in the
+
+564
+00:10:06,870 --> 00:10:06,880
+links in the description and in the
+ 
+
+565
+00:10:06,880 --> 00:10:07,990
+links in the description and in the
+comments if you're looking for more
+
+566
+00:10:07,990 --> 00:10:08,000
+comments if you're looking for more
+ 
+
+567
+00:10:08,000 --> 00:10:10,550
+comments if you're looking for more
+resources about both Claude Code and NNN
+
+568
+00:10:10,550 --> 00:10:10,560
+resources about both Claude Code and NNN
+ 
+
+569
+00:10:10,560 --> 00:10:11,910
+resources about both Claude Code and NNN
+because I think they still have a ton of
+
+570
+00:10:11,910 --> 00:10:11,920
+because I think they still have a ton of
+ 
+
+571
+00:10:11,920 --> 00:10:13,910
+because I think they still have a ton of
+value no matter where you are in your AI
+
+572
+00:10:13,910 --> 00:10:13,920
+value no matter where you are in your AI
+ 
+
+573
+00:10:13,920 --> 00:10:15,910
+value no matter where you are in your AI
+journey. Tons of resources in the free
+
+574
+00:10:15,910 --> 00:10:15,920
+journey. Tons of resources in the free
+ 
+
+575
+00:10:15,920 --> 00:10:17,990
+journey. Tons of resources in the free
+school. I also have Chase AI Plus which
+
+576
+00:10:17,990 --> 00:10:18,000
+school. I also have Chase AI Plus which
+ 
+
+577
+00:10:18,000 --> 00:10:19,350
+school. I also have Chase AI Plus which
+is if you're a little more serious about
+
+578
+00:10:19,350 --> 00:10:19,360
+is if you're a little more serious about
+ 
+
+579
+00:10:19,360 --> 00:10:20,389
+is if you're a little more serious about
+this and you're trying to figure out,
+
+580
+00:10:20,389 --> 00:10:20,399
+this and you're trying to figure out,
+ 
+
+581
+00:10:20,399 --> 00:10:21,750
+this and you're trying to figure out,
+hey, how can I actually use these skills
+
+582
+00:10:21,750 --> 00:10:21,760
+hey, how can I actually use these skills
+ 
+
+583
+00:10:21,760 --> 00:10:23,350
+hey, how can I actually use these skills
+to make money? So, make sure to check
+
+584
+00:10:23,350 --> 00:10:23,360
+to make money? So, make sure to check
+ 
+
+585
+00:10:23,360 --> 00:10:26,230
+to make money? So, make sure to check
+that out as well. And as always, I'll
+
+586
+00:10:26,230 --> 00:10:26,240
+that out as well. And as always, I'll
+ 
+
+587
+00:10:26,240 --> 00:10:28,480
+that out as well. And as always, I'll
+see you
+

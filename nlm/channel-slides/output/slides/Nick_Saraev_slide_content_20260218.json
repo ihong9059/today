@@ -1,0 +1,38 @@
+{
+  "channel": "Nick Saraev",
+  "title": "Nick Saraev - AI Insights",
+  "date": "2026-02-18",
+  "video_count": 1,
+  "videos": [
+    {
+      "title": "CLAUDE CODE FULL COURSE 4 HOURS: Build & Sell (2026)",
+      "url": "https://www.youtube.com/watch?v=QoQBzR1NIqI",
+      "upload_date": "2026-02-12T00:00:00"
+    }
+  ],
+  "slides": [
+    {
+      "type": "title",
+      "title": "Nick Saraev",
+      "subtitle": "1 Videos Analyzed",
+      "date": "2026-02-18"
+    },
+    {
+      "type": "video_list",
+      "title": "Videos",
+      "items": [
+        "CLAUDE CODE FULL COURSE 4 HOURS: Build & Sell (2026)"
+      ]
+    },
+    {
+      "type": "video_summary",
+      "title": "CLAUDE CODE FULL COURSE 4 HOURS: Build & Sell (202",
+      "content": "Hey, this is the definitive course on Claude Code for beginners. I use Claude Code every day to manage a business that does over $4 million a year in profit. I also teach over 2,000 people how to use Claude Code, both for personal and then corporate or professional tasks. So this is more or less what I do all day. Once you understand what I'm about to show you in this course, it's no small stretch to say that Claude Code will augment your productivity. You'll gain leverage in areas that you prob..."
+    },
+    {
+      "type": "closing",
+      "title": "Thank You",
+      "subtitle": "2026-02-18"
+    }
+  ]
+}

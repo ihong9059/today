@@ -1,0 +1,33 @@
+{
+  "channels": [
+    {
+      "name": "Nate Herk",
+      "url": "https://www.youtube.com/@nateherk",
+      "enabled": true
+    },
+    {
+      "name": "Nick Saraev",
+      "url": "https://www.youtube.com/@nicksaraev",
+      "enabled": true
+    },
+    {
+      "name": "Jack Roberts",
+      "url": "https://www.youtube.com/@Itssssss_Jack",
+      "enabled": true
+    },
+    {
+      "name": "Chase H AI",
+      "url": "https://www.youtube.com/@Chase-H-AI",
+      "enabled": true
+    }
+  ],
+  "settings": {
+    "hours_lookback": 72,
+    "expand_hours": 168,
+    "min_videos_for_expand": 5,
+    "max_videos_per_channel": 10,
+    "subtitle_language": "en",
+    "fallback_language": "ko",
+    "use_notebooklm": true
+  }
+}

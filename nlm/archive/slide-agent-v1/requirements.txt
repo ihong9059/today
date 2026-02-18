@@ -1,0 +1,10 @@
+# YouTube Slide Agent - Dependencies
+
+# YouTube transcript extraction
+yt-dlp>=2024.1.1
+
+# PPTX generation
+python-pptx>=0.6.21
+
+# Utilities (included in standard library but listed for clarity)
+# json, subprocess, datetime, pathlib, logging - standard library

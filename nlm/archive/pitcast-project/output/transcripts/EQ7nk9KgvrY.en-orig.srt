@@ -1,0 +1,1635 @@
+1
+00:00:00,000 --> 00:00:02,550
+
+So, Anthropic just released Sonnet 4.6
+
+2
+00:00:02,550 --> 00:00:02,560
+So, Anthropic just released Sonnet 4.6
+ 
+
+3
+00:00:02,560 --> 00:00:04,550
+So, Anthropic just released Sonnet 4.6
+today, and the benchmarks are really
+
+4
+00:00:04,550 --> 00:00:04,560
+today, and the benchmarks are really
+ 
+
+5
+00:00:04,560 --> 00:00:06,710
+today, and the benchmarks are really
+good. So good, in fact, it's actually
+
+6
+00:00:06,710 --> 00:00:06,720
+good. So good, in fact, it's actually
+ 
+
+7
+00:00:06,720 --> 00:00:10,150
+good. So good, in fact, it's actually
+beating out Opus 4.6 in some areas while
+
+8
+00:00:10,150 --> 00:00:10,160
+beating out Opus 4.6 in some areas while
+ 
+
+9
+00:00:10,160 --> 00:00:13,030
+beating out Opus 4.6 in some areas while
+coming in at a 40% cheaper price point.
+
+10
+00:00:13,030 --> 00:00:13,040
+coming in at a 40% cheaper price point.
+ 
+
+11
+00:00:13,040 --> 00:00:14,789
+coming in at a 40% cheaper price point.
+But, do we really care about those
+
+12
+00:00:14,789 --> 00:00:14,799
+But, do we really care about those
+ 
+
+13
+00:00:14,799 --> 00:00:16,230
+But, do we really care about those
+particular benchmarks? And more
+
+14
+00:00:16,230 --> 00:00:16,240
+particular benchmarks? And more
+ 
+
+15
+00:00:16,240 --> 00:00:17,590
+particular benchmarks? And more
+importantly, where should you be
+
+16
+00:00:17,590 --> 00:00:17,600
+importantly, where should you be
+ 
+
+17
+00:00:17,600 --> 00:00:20,390
+importantly, where should you be
+deploying Sonnet 4.6 moving forward?
+
+18
+00:00:20,390 --> 00:00:20,400
+deploying Sonnet 4.6 moving forward?
+ 
+
+19
+00:00:20,400 --> 00:00:22,070
+deploying Sonnet 4.6 moving forward?
+We're going to talk about all that more
+
+20
+00:00:22,070 --> 00:00:22,080
+We're going to talk about all that more
+ 
+
+21
+00:00:22,080 --> 00:00:24,630
+We're going to talk about all that more
+in this video. So, the first Sonnet 4.6
+
+22
+00:00:24,630 --> 00:00:24,640
+in this video. So, the first Sonnet 4.6
+ 
+
+23
+00:00:24,640 --> 00:00:25,910
+in this video. So, the first Sonnet 4.6
+feature I want to talk about is their
+
+24
+00:00:25,910 --> 00:00:25,920
+feature I want to talk about is their
+ 
+
+25
+00:00:25,920 --> 00:00:27,990
+feature I want to talk about is their
+new context window length. It is now 1
+
+26
+00:00:27,990 --> 00:00:28,000
+new context window length. It is now 1
+ 
+
+27
+00:00:28,000 --> 00:00:30,710
+new context window length. It is now 1
+million tokens. Now, some people might
+
+28
+00:00:30,710 --> 00:00:30,720
+million tokens. Now, some people might
+ 
+
+29
+00:00:30,720 --> 00:00:32,310
+million tokens. Now, some people might
+jump at this and say, "Awesome. That's
+
+30
+00:00:32,310 --> 00:00:32,320
+jump at this and say, "Awesome. That's
+ 
+
+31
+00:00:32,320 --> 00:00:33,670
+jump at this and say, "Awesome. That's
+great." But if you've been watching my
+
+32
+00:00:33,670 --> 00:00:33,680
+great." But if you've been watching my
+ 
+
+33
+00:00:33,680 --> 00:00:35,030
+great." But if you've been watching my
+channel at all, you know about the idea
+
+34
+00:00:35,030 --> 00:00:35,040
+channel at all, you know about the idea
+ 
+
+35
+00:00:35,040 --> 00:00:37,670
+channel at all, you know about the idea
+of context rot. That's the idea that as
+
+36
+00:00:37,670 --> 00:00:37,680
+of context rot. That's the idea that as
+ 
+
+37
+00:00:37,680 --> 00:00:39,350
+of context rot. That's the idea that as
+we fill up the context window, and
+
+38
+00:00:39,350 --> 00:00:39,360
+we fill up the context window, and
+ 
+
+39
+00:00:39,360 --> 00:00:41,750
+we fill up the context window, and
+really once we hit about 100,000 150,000
+
+40
+00:00:41,750 --> 00:00:41,760
+really once we hit about 100,000 150,000
+ 
+
+41
+00:00:41,760 --> 00:00:44,790
+really once we hit about 100,000 150,000
+tokens, the effectiveness of our model
+
+42
+00:00:44,790 --> 00:00:44,800
+tokens, the effectiveness of our model
+ 
+
+43
+00:00:44,800 --> 00:00:47,510
+tokens, the effectiveness of our model
+tends to drop significantly, which calls
+
+44
+00:00:47,510 --> 00:00:47,520
+tends to drop significantly, which calls
+ 
+
+45
+00:00:47,520 --> 00:00:50,069
+tends to drop significantly, which calls
+into question how useful is a giant
+
+46
+00:00:50,069 --> 00:00:50,079
+into question how useful is a giant
+ 
+
+47
+00:00:50,079 --> 00:00:52,389
+into question how useful is a giant
+context window. So, Enthropic speaks to
+
+48
+00:00:52,389 --> 00:00:52,399
+context window. So, Enthropic speaks to
+ 
+
+49
+00:00:52,399 --> 00:00:53,750
+context window. So, Enthropic speaks to
+this a little bit. So they say, "Hey,
+
+50
+00:00:53,750 --> 00:00:53,760
+this a little bit. So they say, "Hey,
+ 
+
+51
+00:00:53,760 --> 00:00:55,590
+this a little bit. So they say, "Hey,
+the new context window, it's big enough
+
+52
+00:00:55,590 --> 00:00:55,600
+the new context window, it's big enough
+ 
+
+53
+00:00:55,600 --> 00:00:57,350
+the new context window, it's big enough
+to hold entire code bases, but more
+
+54
+00:00:57,350 --> 00:00:57,360
+to hold entire code bases, but more
+ 
+
+55
+00:00:57,360 --> 00:00:59,430
+to hold entire code bases, but more
+importantly, it can reason effectively
+
+56
+00:00:59,430 --> 00:00:59,440
+importantly, it can reason effectively
+ 
+
+57
+00:00:59,440 --> 00:01:01,110
+importantly, it can reason effectively
+across all that context." The
+
+58
+00:01:01,110 --> 00:01:01,120
+across all that context." The
+ 
+
+59
+00:01:01,120 --> 00:01:03,029
+across all that context." The
+implication there being, oh no, it's
+
+60
+00:01:03,029 --> 00:01:03,039
+implication there being, oh no, it's
+ 
+
+61
+00:01:03,039 --> 00:01:04,710
+implication there being, oh no, it's
+huge, but you know, you won't deal with
+
+62
+00:01:04,710 --> 00:01:04,720
+huge, but you know, you won't deal with
+ 
+
+63
+00:01:04,720 --> 00:01:06,310
+huge, but you know, you won't deal with
+context rot right away. And what they
+
+64
+00:01:06,310 --> 00:01:06,320
+context rot right away. And what they
+ 
+
+65
+00:01:06,320 --> 00:01:09,270
+context rot right away. And what they
+use as proof is this vending bench arena
+
+66
+00:01:09,270 --> 00:01:09,280
+use as proof is this vending bench arena
+ 
+
+67
+00:01:09,280 --> 00:01:10,870
+use as proof is this vending bench arena
+evaluation, and we'll go into benchmarks
+
+68
+00:01:10,870 --> 00:01:10,880
+evaluation, and we'll go into benchmarks
+ 
+
+69
+00:01:10,880 --> 00:01:13,030
+evaluation, and we'll go into benchmarks
+in a second. Basically, they have it run
+
+70
+00:01:13,030 --> 00:01:13,040
+in a second. Basically, they have it run
+ 
+
+71
+00:01:13,040 --> 00:01:15,109
+in a second. Basically, they have it run
+a simulated business over time, and they
+
+72
+00:01:15,109 --> 00:01:15,119
+a simulated business over time, and they
+ 
+
+73
+00:01:15,119 --> 00:01:16,469
+a simulated business over time, and they
+say, "Hey, cuz it did so good, this
+
+74
+00:01:16,469 --> 00:01:16,479
+say, "Hey, cuz it did so good, this
+ 
+
+75
+00:01:16,479 --> 00:01:18,630
+say, "Hey, cuz it did so good, this
+means the context window rot issue isn't
+
+76
+00:01:18,630 --> 00:01:18,640
+means the context window rot issue isn't
+ 
+
+77
+00:01:18,640 --> 00:01:20,950
+means the context window rot issue isn't
+as much of a problem anymore."
+
+78
+00:01:20,950 --> 00:01:20,960
+as much of a problem anymore."
+ 
+
+79
+00:01:20,960 --> 00:01:22,310
+as much of a problem anymore."
+H I would take that with a grain of
+
+80
+00:01:22,310 --> 00:01:22,320
+H I would take that with a grain of
+ 
+
+81
+00:01:22,320 --> 00:01:24,789
+H I would take that with a grain of
+salt. So, I think getting bigger context
+
+82
+00:01:24,789 --> 00:01:24,799
+salt. So, I think getting bigger context
+ 
+
+83
+00:01:24,799 --> 00:01:26,390
+salt. So, I think getting bigger context
+windows is good, but it doesn't
+
+84
+00:01:26,390 --> 00:01:26,400
+windows is good, but it doesn't
+ 
+
+85
+00:01:26,400 --> 00:01:28,230
+windows is good, but it doesn't
+necessarily mean it's as good as you
+
+86
+00:01:28,230 --> 00:01:28,240
+necessarily mean it's as good as you
+ 
+
+87
+00:01:28,240 --> 00:01:30,230
+necessarily mean it's as good as you
+would think. So, we'll hold off till I
+
+88
+00:01:30,230 --> 00:01:30,240
+would think. So, we'll hold off till I
+ 
+
+89
+00:01:30,240 --> 00:01:32,789
+would think. So, we'll hold off till I
+see more evidence that this isn't a
+
+90
+00:01:32,789 --> 00:01:32,799
+see more evidence that this isn't a
+ 
+
+91
+00:01:32,799 --> 00:01:34,069
+see more evidence that this isn't a
+problem. So, now let's take a look at
+
+92
+00:01:34,069 --> 00:01:34,079
+problem. So, now let's take a look at
+ 
+
+93
+00:01:34,079 --> 00:01:35,190
+problem. So, now let's take a look at
+the benchmarks. And we have all the
+
+94
+00:01:35,190 --> 00:01:35,200
+the benchmarks. And we have all the
+ 
+
+95
+00:01:35,200 --> 00:01:37,270
+the benchmarks. And we have all the
+Frontier models on here. We have Sonnet
+
+96
+00:01:37,270 --> 00:01:37,280
+Frontier models on here. We have Sonnet
+ 
+
+97
+00:01:37,280 --> 00:01:40,149
+Frontier models on here. We have Sonnet
+4.6 over here on the left. Now, compared
+
+98
+00:01:40,149 --> 00:01:40,159
+4.6 over here on the left. Now, compared
+ 
+
+99
+00:01:40,159 --> 00:01:43,350
+4.6 over here on the left. Now, compared
+to Sonnet 4.5, Sonnet 4.6 is frankly a
+
+100
+00:01:43,350 --> 00:01:43,360
+to Sonnet 4.5, Sonnet 4.6 is frankly a
+ 
+
+101
+00:01:43,360 --> 00:01:45,190
+to Sonnet 4.5, Sonnet 4.6 is frankly a
+huge leap board. It crushes it on
+
+102
+00:01:45,190 --> 00:01:45,200
+huge leap board. It crushes it on
+ 
+
+103
+00:01:45,200 --> 00:01:47,190
+huge leap board. It crushes it on
+virtually every single test. And when we
+
+104
+00:01:47,190 --> 00:01:47,200
+virtually every single test. And when we
+ 
+
+105
+00:01:47,200 --> 00:01:50,870
+virtually every single test. And when we
+compare Sonnet 4.6 to Opus 4.6, remember
+
+106
+00:01:50,870 --> 00:01:50,880
+compare Sonnet 4.6 to Opus 4.6, remember
+ 
+
+107
+00:01:50,880 --> 00:01:53,030
+compare Sonnet 4.6 to Opus 4.6, remember
+Opus 4.6 6 is a much larger, more
+
+108
+00:01:53,030 --> 00:01:53,040
+Opus 4.6 6 is a much larger, more
+ 
+
+109
+00:01:53,040 --> 00:01:54,950
+Opus 4.6 6 is a much larger, more
+expensive model. It actually wins in
+
+110
+00:01:54,950 --> 00:01:54,960
+expensive model. It actually wins in
+ 
+
+111
+00:01:54,960 --> 00:01:57,190
+expensive model. It actually wins in
+some cases. And the two I'd like to call
+
+112
+00:01:57,190 --> 00:01:57,200
+some cases. And the two I'd like to call
+ 
+
+113
+00:01:57,200 --> 00:01:59,109
+some cases. And the two I'd like to call
+out because it's two places where Sonnet
+
+114
+00:01:59,109 --> 00:01:59,119
+out because it's two places where Sonnet
+ 
+
+115
+00:01:59,119 --> 00:02:01,910
+out because it's two places where Sonnet
+4.6 beats everybody is a gentic
+
+116
+00:02:01,910 --> 00:02:01,920
+4.6 beats everybody is a gentic
+ 
+
+117
+00:02:01,920 --> 00:02:04,550
+4.6 beats everybody is a gentic
+financial analysis and office tasks.
+
+118
+00:02:04,550 --> 00:02:04,560
+financial analysis and office tasks.
+ 
+
+119
+00:02:04,560 --> 00:02:06,709
+financial analysis and office tasks.
+Now, office tasks in computer use in
+
+120
+00:02:06,709 --> 00:02:06,719
+Now, office tasks in computer use in
+ 
+
+121
+00:02:06,719 --> 00:02:08,949
+Now, office tasks in computer use in
+general is really what Anthropic is
+
+122
+00:02:08,949 --> 00:02:08,959
+general is really what Anthropic is
+ 
+
+123
+00:02:08,959 --> 00:02:10,710
+general is really what Anthropic is
+pushing with Sonnet 4.6. And you see
+
+124
+00:02:10,710 --> 00:02:10,720
+pushing with Sonnet 4.6. And you see
+ 
+
+125
+00:02:10,720 --> 00:02:12,550
+pushing with Sonnet 4.6. And you see
+here in this clip they released, that's
+
+126
+00:02:12,550 --> 00:02:12,560
+here in this clip they released, that's
+ 
+
+127
+00:02:12,560 --> 00:02:14,309
+here in this clip they released, that's
+all they're demoing. So, a lot of this
+
+128
+00:02:14,309 --> 00:02:14,319
+all they're demoing. So, a lot of this
+ 
+
+129
+00:02:14,319 --> 00:02:16,470
+all they're demoing. So, a lot of this
+has to do with Claude Co-work. And what
+
+130
+00:02:16,470 --> 00:02:16,480
+has to do with Claude Co-work. And what
+ 
+
+131
+00:02:16,480 --> 00:02:18,070
+has to do with Claude Co-work. And what
+they're constantly pushing is that, hey,
+
+132
+00:02:18,070 --> 00:02:18,080
+they're constantly pushing is that, hey,
+ 
+
+133
+00:02:18,080 --> 00:02:19,270
+they're constantly pushing is that, hey,
+Sonet 4.6
+
+134
+00:02:19,270 --> 00:02:19,280
+Sonet 4.6
+ 
+
+135
+00:02:19,280 --> 00:02:21,990
+Sonet 4.6
+is really really good at a using your
+
+136
+00:02:21,990 --> 00:02:22,000
+is really really good at a using your
+ 
+
+137
+00:02:22,000 --> 00:02:24,150
+is really really good at a using your
+computer, b being able to browse the
+
+138
+00:02:24,150 --> 00:02:24,160
+computer, b being able to browse the
+ 
+
+139
+00:02:24,160 --> 00:02:27,030
+computer, b being able to browse the
+web, and c being able to execute again
+
+140
+00:02:27,030 --> 00:02:27,040
+web, and c being able to execute again
+ 
+
+141
+00:02:27,040 --> 00:02:29,190
+web, and c being able to execute again
+these office tasks. Think of things like
+
+142
+00:02:29,190 --> 00:02:29,200
+these office tasks. Think of things like
+ 
+
+143
+00:02:29,200 --> 00:02:31,510
+these office tasks. Think of things like
+Excel or email or things of that nature.
+
+144
+00:02:31,510 --> 00:02:31,520
+Excel or email or things of that nature.
+ 
+
+145
+00:02:31,520 --> 00:02:34,229
+Excel or email or things of that nature.
+More practical use cases for I would say
+
+146
+00:02:34,229 --> 00:02:34,239
+More practical use cases for I would say
+ 
+
+147
+00:02:34,239 --> 00:02:36,309
+More practical use cases for I would say
+your average everyday AI user, not
+
+148
+00:02:36,309 --> 00:02:36,319
+your average everyday AI user, not
+ 
+
+149
+00:02:36,319 --> 00:02:39,110
+your average everyday AI user, not
+necessarily some hardcore coders. Now,
+
+150
+00:02:39,110 --> 00:02:39,120
+necessarily some hardcore coders. Now,
+ 
+
+151
+00:02:39,120 --> 00:02:40,470
+necessarily some hardcore coders. Now,
+speaking of coding and more technical
+
+152
+00:02:40,470 --> 00:02:40,480
+speaking of coding and more technical
+ 
+
+153
+00:02:40,480 --> 00:02:43,270
+speaking of coding and more technical
+tasks, Sonet 4.6 still holds its own.
+
+154
+00:02:43,270 --> 00:02:43,280
+tasks, Sonet 4.6 still holds its own.
+ 
+
+155
+00:02:43,280 --> 00:02:44,710
+tasks, Sonet 4.6 still holds its own.
+So, when we look at agentic terminal
+
+156
+00:02:44,710 --> 00:02:44,720
+So, when we look at agentic terminal
+ 
+
+157
+00:02:44,720 --> 00:02:47,670
+So, when we look at agentic terminal
+coding and agentic coding, 4.6 6 by the
+
+158
+00:02:47,670 --> 00:02:47,680
+coding and agentic coding, 4.6 6 by the
+ 
+
+159
+00:02:47,680 --> 00:02:50,869
+coding and agentic coding, 4.6 6 by the
+numbers is basically as good as Opus 4.5
+
+160
+00:02:50,869 --> 00:02:50,879
+numbers is basically as good as Opus 4.5
+ 
+
+161
+00:02:50,879 --> 00:02:53,670
+numbers is basically as good as Opus 4.5
+while again being 40% cheaper. And we
+
+162
+00:02:53,670 --> 00:02:53,680
+while again being 40% cheaper. And we
+ 
+
+163
+00:02:53,680 --> 00:02:55,430
+while again being 40% cheaper. And we
+compare it to the other Frontier models
+
+164
+00:02:55,430 --> 00:02:55,440
+compare it to the other Frontier models
+ 
+
+165
+00:02:55,440 --> 00:02:59,509
+compare it to the other Frontier models
+like Gemini 3 Pro and 5.2. Again, it is
+
+166
+00:02:59,509 --> 00:02:59,519
+like Gemini 3 Pro and 5.2. Again, it is
+ 
+
+167
+00:02:59,519 --> 00:03:02,149
+like Gemini 3 Pro and 5.2. Again, it is
+doing pretty good. So, here's another
+
+168
+00:03:02,149 --> 00:03:02,159
+doing pretty good. So, here's another
+ 
+
+169
+00:03:02,159 --> 00:03:03,589
+doing pretty good. So, here's another
+chart I found on Twitter that shows a
+
+170
+00:03:03,589 --> 00:03:03,599
+chart I found on Twitter that shows a
+ 
+
+171
+00:03:03,599 --> 00:03:06,149
+chart I found on Twitter that shows a
+Sonnet 4.6 versus Opus 4.6.
+
+172
+00:03:06,149 --> 00:03:06,159
+Sonnet 4.6 versus Opus 4.6.
+ 
+
+173
+00:03:06,159 --> 00:03:08,070
+Sonnet 4.6 versus Opus 4.6.
+Head-to-head, same benchmarks you just
+
+174
+00:03:08,070 --> 00:03:08,080
+Head-to-head, same benchmarks you just
+ 
+
+175
+00:03:08,080 --> 00:03:09,589
+Head-to-head, same benchmarks you just
+saw, just easier to see. And I think
+
+176
+00:03:09,589 --> 00:03:09,599
+saw, just easier to see. And I think
+ 
+
+177
+00:03:09,599 --> 00:03:11,350
+saw, just easier to see. And I think
+this one is important because now the
+
+178
+00:03:11,350 --> 00:03:11,360
+this one is important because now the
+ 
+
+179
+00:03:11,360 --> 00:03:13,430
+this one is important because now the
+question becomes, when should I use
+
+180
+00:03:13,430 --> 00:03:13,440
+question becomes, when should I use
+ 
+
+181
+00:03:13,440 --> 00:03:16,309
+question becomes, when should I use
+Sonnet versus Opus? Because unless
+
+182
+00:03:16,309 --> 00:03:16,319
+Sonnet versus Opus? Because unless
+ 
+
+183
+00:03:16,319 --> 00:03:18,710
+Sonnet versus Opus? Because unless
+you're on the max plane at 200 bucks a
+
+184
+00:03:18,710 --> 00:03:18,720
+you're on the max plane at 200 bucks a
+ 
+
+185
+00:03:18,720 --> 00:03:20,470
+you're on the max plane at 200 bucks a
+month where you can just kind of spam
+
+186
+00:03:20,470 --> 00:03:20,480
+month where you can just kind of spam
+ 
+
+187
+00:03:20,480 --> 00:03:22,710
+month where you can just kind of spam
+Opus and not worry about it, for those
+
+188
+00:03:22,710 --> 00:03:22,720
+Opus and not worry about it, for those
+ 
+
+189
+00:03:22,720 --> 00:03:25,270
+Opus and not worry about it, for those
+of you who are a little more token
+
+190
+00:03:25,270 --> 00:03:25,280
+of you who are a little more token
+ 
+
+191
+00:03:25,280 --> 00:03:27,509
+of you who are a little more token
+conscious and costconscious, now there's
+
+192
+00:03:27,509 --> 00:03:27,519
+conscious and costconscious, now there's
+ 
+
+193
+00:03:27,519 --> 00:03:29,430
+conscious and costconscious, now there's
+a real decision to be made because there
+
+194
+00:03:29,430 --> 00:03:29,440
+a real decision to be made because there
+ 
+
+195
+00:03:29,440 --> 00:03:30,869
+a real decision to be made because there
+are instances where Sonnet is just going
+
+196
+00:03:30,869 --> 00:03:30,879
+are instances where Sonnet is just going
+ 
+
+197
+00:03:30,879 --> 00:03:33,030
+are instances where Sonnet is just going
+to do just fine. And so we can see over
+
+198
+00:03:33,030 --> 00:03:33,040
+to do just fine. And so we can see over
+ 
+
+199
+00:03:33,040 --> 00:03:34,789
+to do just fine. And so we can see over
+here on the right where is Opus the
+
+200
+00:03:34,789 --> 00:03:34,799
+here on the right where is Opus the
+ 
+
+201
+00:03:34,799 --> 00:03:37,350
+here on the right where is Opus the
+strongest, agentic search, novel problem
+
+202
+00:03:37,350 --> 00:03:37,360
+strongest, agentic search, novel problem
+ 
+
+203
+00:03:37,360 --> 00:03:39,350
+strongest, agentic search, novel problem
+solving and terminal coding and sonnet
+
+204
+00:03:39,350 --> 00:03:39,360
+solving and terminal coding and sonnet
+ 
+
+205
+00:03:39,360 --> 00:03:41,670
+solving and terminal coding and sonnet
+leads in scale tool use, financial
+
+206
+00:03:41,670 --> 00:03:41,680
+leads in scale tool use, financial
+ 
+
+207
+00:03:41,680 --> 00:03:44,470
+leads in scale tool use, financial
+analysis and office task. So I think
+
+208
+00:03:44,470 --> 00:03:44,480
+analysis and office task. So I think
+ 
+
+209
+00:03:44,480 --> 00:03:45,910
+analysis and office task. So I think
+looking at this you start to get a clear
+
+210
+00:03:45,910 --> 00:03:45,920
+looking at this you start to get a clear
+ 
+
+211
+00:03:45,920 --> 00:03:47,190
+looking at this you start to get a clear
+picture of like all right when should I
+
+212
+00:03:47,190 --> 00:03:47,200
+picture of like all right when should I
+ 
+
+213
+00:03:47,200 --> 00:03:48,949
+picture of like all right when should I
+still be using Opus and I think that's
+
+214
+00:03:48,949 --> 00:03:48,959
+still be using Opus and I think that's
+ 
+
+215
+00:03:48,959 --> 00:03:51,030
+still be using Opus and I think that's
+when you're dealing with more complex
+
+216
+00:03:51,030 --> 00:03:51,040
+when you're dealing with more complex
+ 
+
+217
+00:03:51,040 --> 00:03:52,789
+when you're dealing with more complex
+problems if you're dealing with more
+
+218
+00:03:52,789 --> 00:03:52,799
+problems if you're dealing with more
+ 
+
+219
+00:03:52,799 --> 00:03:55,110
+problems if you're dealing with more
+novel coding issues but if you're doing
+
+220
+00:03:55,110 --> 00:03:55,120
+novel coding issues but if you're doing
+ 
+
+221
+00:03:55,120 --> 00:03:57,509
+novel coding issues but if you're doing
+more everyday mundane things that you
+
+222
+00:03:57,509 --> 00:03:57,519
+more everyday mundane things that you
+ 
+
+223
+00:03:57,519 --> 00:03:59,670
+more everyday mundane things that you
+know is not going to require the full
+
+224
+00:03:59,670 --> 00:03:59,680
+know is not going to require the full
+ 
+
+225
+00:03:59,680 --> 00:04:01,589
+know is not going to require the full
+throughput of everything anthropic has
+
+226
+00:04:01,589 --> 00:04:01,599
+throughput of everything anthropic has
+ 
+
+227
+00:04:01,599 --> 00:04:03,429
+throughput of everything anthropic has
+to offer well then maybe we should be
+
+228
+00:04:03,429 --> 00:04:03,439
+to offer well then maybe we should be
+ 
+
+229
+00:04:03,439 --> 00:04:05,589
+to offer well then maybe we should be
+using sonnet because it's just so dang
+
+230
+00:04:05,589 --> 00:04:05,599
+using sonnet because it's just so dang
+ 
+
+231
+00:04:05,599 --> 00:04:08,229
+using sonnet because it's just so dang
+cheap especially again if you're rather
+
+232
+00:04:08,229 --> 00:04:08,239
+cheap especially again if you're rather
+ 
+
+233
+00:04:08,239 --> 00:04:10,309
+cheap especially again if you're rather
+costconscious and the cost thing cannot
+
+234
+00:04:10,309 --> 00:04:10,319
+costconscious and the cost thing cannot
+ 
+
+235
+00:04:10,319 --> 00:04:11,750
+costconscious and the cost thing cannot
+be dismissed out of hand because
+
+236
+00:04:11,750 --> 00:04:11,760
+be dismissed out of hand because
+ 
+
+237
+00:04:11,760 --> 00:04:14,309
+be dismissed out of hand because
+historically anthropic API cost have
+
+238
+00:04:14,309 --> 00:04:14,319
+historically anthropic API cost have
+ 
+
+239
+00:04:14,319 --> 00:04:16,229
+historically anthropic API cost have
+been rather expensive. So over here on
+
+240
+00:04:16,229 --> 00:04:16,239
+been rather expensive. So over here on
+ 
+
+241
+00:04:16,239 --> 00:04:17,749
+been rather expensive. So over here on
+the model pricing page, there's nothing
+
+242
+00:04:17,749 --> 00:04:17,759
+the model pricing page, there's nothing
+ 
+
+243
+00:04:17,759 --> 00:04:20,390
+the model pricing page, there's nothing
+special about the Opus 4.6 and Sonet 4.6
+
+244
+00:04:20,390 --> 00:04:20,400
+special about the Opus 4.6 and Sonet 4.6
+ 
+
+245
+00:04:20,400 --> 00:04:22,390
+special about the Opus 4.6 and Sonet 4.6
+pricing, they pretty much follow the
+
+246
+00:04:22,390 --> 00:04:22,400
+pricing, they pretty much follow the
+ 
+
+247
+00:04:22,400 --> 00:04:23,990
+pricing, they pretty much follow the
+same form those two models have been
+
+248
+00:04:23,990 --> 00:04:24,000
+same form those two models have been
+ 
+
+249
+00:04:24,000 --> 00:04:25,430
+same form those two models have been
+using for quite a while now. And
+
+250
+00:04:25,430 --> 00:04:25,440
+using for quite a while now. And
+ 
+
+251
+00:04:25,440 --> 00:04:27,350
+using for quite a while now. And
+Enthropic echoes that sentiment at the
+
+252
+00:04:27,350 --> 00:04:27,360
+Enthropic echoes that sentiment at the
+ 
+
+253
+00:04:27,360 --> 00:04:28,710
+Enthropic echoes that sentiment at the
+end of their article where they say, "We
+
+254
+00:04:28,710 --> 00:04:28,720
+end of their article where they say, "We
+ 
+
+255
+00:04:28,720 --> 00:04:30,950
+end of their article where they say, "We
+find Opus 4.6 remains the strongest
+
+256
+00:04:30,950 --> 00:04:30,960
+find Opus 4.6 remains the strongest
+ 
+
+257
+00:04:30,960 --> 00:04:32,550
+find Opus 4.6 remains the strongest
+option for task that demand the deepest
+
+258
+00:04:32,550 --> 00:04:32,560
+option for task that demand the deepest
+ 
+
+259
+00:04:32,560 --> 00:04:34,790
+option for task that demand the deepest
+reasoning such as codebase refactoring,
+
+260
+00:04:34,790 --> 00:04:34,800
+reasoning such as codebase refactoring,
+ 
+
+261
+00:04:34,800 --> 00:04:36,150
+reasoning such as codebase refactoring,
+coordinating multiple agents in a
+
+262
+00:04:36,150 --> 00:04:36,160
+coordinating multiple agents in a
+ 
+
+263
+00:04:36,160 --> 00:04:37,430
+coordinating multiple agents in a
+workflow, and problems where getting it
+
+264
+00:04:37,430 --> 00:04:37,440
+workflow, and problems where getting it
+ 
+
+265
+00:04:37,440 --> 00:04:40,710
+workflow, and problems where getting it
+just right is paramount." So Opus 4.6 6
+
+266
+00:04:40,710 --> 00:04:40,720
+just right is paramount." So Opus 4.6 6
+ 
+
+267
+00:04:40,720 --> 00:04:42,629
+just right is paramount." So Opus 4.6 6
+is the nuclear bomb option and we've
+
+268
+00:04:42,629 --> 00:04:42,639
+is the nuclear bomb option and we've
+ 
+
+269
+00:04:42,639 --> 00:04:43,830
+is the nuclear bomb option and we've
+kind of had to use the nuke for
+
+270
+00:04:43,830 --> 00:04:43,840
+kind of had to use the nuke for
+ 
+
+271
+00:04:43,840 --> 00:04:45,430
+kind of had to use the nuke for
+everything for the last few weeks just
+
+272
+00:04:45,430 --> 00:04:45,440
+everything for the last few weeks just
+ 
+
+273
+00:04:45,440 --> 00:04:46,950
+everything for the last few weeks just
+because of the disparity between Opus
+
+274
+00:04:46,950 --> 00:04:46,960
+because of the disparity between Opus
+ 
+
+275
+00:04:46,960 --> 00:04:50,230
+because of the disparity between Opus
+4.6 and Sonnet 4.5, but now we finally
+
+276
+00:04:50,230 --> 00:04:50,240
+4.6 and Sonnet 4.5, but now we finally
+ 
+
+277
+00:04:50,240 --> 00:04:52,230
+4.6 and Sonnet 4.5, but now we finally
+have a scalpel which I think is awesome
+
+278
+00:04:52,230 --> 00:04:52,240
+have a scalpel which I think is awesome
+ 
+
+279
+00:04:52,240 --> 00:04:54,710
+have a scalpel which I think is awesome
+news. And of note, Sonnet 4.6 is now the
+
+280
+00:04:54,710 --> 00:04:54,720
+news. And of note, Sonnet 4.6 is now the
+ 
+
+281
+00:04:54,720 --> 00:04:56,629
+news. And of note, Sonnet 4.6 is now the
+default option when you're using the
+
+282
+00:04:56,629 --> 00:04:56,639
+default option when you're using the
+ 
+
+283
+00:04:56,639 --> 00:04:58,550
+default option when you're using the
+Claude web app. So definitely check it
+
+284
+00:04:58,550 --> 00:04:58,560
+Claude web app. So definitely check it
+ 
+
+285
+00:04:58,560 --> 00:05:00,390
+Claude web app. So definitely check it
+out. I think they're really pushing the
+
+286
+00:05:00,390 --> 00:05:00,400
+out. I think they're really pushing the
+ 
+
+287
+00:05:00,400 --> 00:05:01,990
+out. I think they're really pushing the
+Claude co-work side of this with Sonnet
+
+288
+00:05:01,990 --> 00:05:02,000
+Claude co-work side of this with Sonnet
+ 
+
+289
+00:05:02,000 --> 00:05:04,629
+Claude co-work side of this with Sonnet
+4.6 because again, I think if you are
+
+290
+00:05:04,629 --> 00:05:04,639
+4.6 because again, I think if you are
+ 
+
+291
+00:05:04,639 --> 00:05:06,390
+4.6 because again, I think if you are
+pretty deep in the AI stuff, you don't
+
+292
+00:05:06,390 --> 00:05:06,400
+pretty deep in the AI stuff, you don't
+ 
+
+293
+00:05:06,400 --> 00:05:07,909
+pretty deep in the AI stuff, you don't
+even realize how much of a bubble you're
+
+294
+00:05:07,909 --> 00:05:07,919
+even realize how much of a bubble you're
+ 
+
+295
+00:05:07,919 --> 00:05:09,990
+even realize how much of a bubble you're
+in. Like if you're using a clawed max p
+
+296
+00:05:09,990 --> 00:05:10,000
+in. Like if you're using a clawed max p
+ 
+
+297
+00:05:10,000 --> 00:05:13,189
+in. Like if you're using a clawed max p
+plan and paying $100, $200 a month for
+
+298
+00:05:13,189 --> 00:05:13,199
+plan and paying $100, $200 a month for
+ 
+
+299
+00:05:13,199 --> 00:05:15,749
+plan and paying $100, $200 a month for
+essentially unlimited opus usage, like
+
+300
+00:05:15,749 --> 00:05:15,759
+essentially unlimited opus usage, like
+ 
+
+301
+00:05:15,759 --> 00:05:17,990
+essentially unlimited opus usage, like
+you are not like you kind of are the
+
+302
+00:05:17,990 --> 00:05:18,000
+you are not like you kind of are the
+ 
+
+303
+00:05:18,000 --> 00:05:19,350
+you are not like you kind of are the
+target consumer, but at the same time
+
+304
+00:05:19,350 --> 00:05:19,360
+target consumer, but at the same time
+ 
+
+305
+00:05:19,360 --> 00:05:20,950
+target consumer, but at the same time
+you're such a small percentage of the
+
+306
+00:05:20,950 --> 00:05:20,960
+you're such a small percentage of the
+ 
+
+307
+00:05:20,960 --> 00:05:23,270
+you're such a small percentage of the
+market. So I don't think it's a surprise
+
+308
+00:05:23,270 --> 00:05:23,280
+market. So I don't think it's a surprise
+ 
+
+309
+00:05:23,280 --> 00:05:25,110
+market. So I don't think it's a surprise
+that they're really moving into this
+
+310
+00:05:25,110 --> 00:05:25,120
+that they're really moving into this
+ 
+
+311
+00:05:25,120 --> 00:05:28,070
+that they're really moving into this
+co-work office usage space, right? It's
+
+312
+00:05:28,070 --> 00:05:28,080
+co-work office usage space, right? It's
+ 
+
+313
+00:05:28,080 --> 00:05:29,749
+co-work office usage space, right? It's
+almost like enterprise light and
+
+314
+00:05:29,749 --> 00:05:29,759
+almost like enterprise light and
+ 
+
+315
+00:05:29,759 --> 00:05:31,029
+almost like enterprise light and
+Anthropic, if you've been paying
+
+316
+00:05:31,029 --> 00:05:31,039
+Anthropic, if you've been paying
+ 
+
+317
+00:05:31,039 --> 00:05:32,870
+Anthropic, if you've been paying
+attention, is really deep in the
+
+318
+00:05:32,870 --> 00:05:32,880
+attention, is really deep in the
+ 
+
+319
+00:05:32,880 --> 00:05:34,790
+attention, is really deep in the
+enterprise space, especially when you
+
+320
+00:05:34,790 --> 00:05:34,800
+enterprise space, especially when you
+ 
+
+321
+00:05:34,800 --> 00:05:35,990
+enterprise space, especially when you
+consider their size versus something
+
+322
+00:05:35,990 --> 00:05:36,000
+consider their size versus something
+ 
+
+323
+00:05:36,000 --> 00:05:38,710
+consider their size versus something
+like OpenAI. So, really cool update.
+
+324
+00:05:38,710 --> 00:05:38,720
+like OpenAI. So, really cool update.
+ 
+
+325
+00:05:38,720 --> 00:05:39,909
+like OpenAI. So, really cool update.
+Glad it's here. Let me know in the
+
+326
+00:05:39,909 --> 00:05:39,919
+Glad it's here. Let me know in the
+ 
+
+327
+00:05:39,919 --> 00:05:42,960
+Glad it's here. Let me know in the
+comments what you thought.
+

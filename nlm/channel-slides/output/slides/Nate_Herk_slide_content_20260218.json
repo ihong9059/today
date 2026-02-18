@@ -1,0 +1,49 @@
+{
+  "channel": "Nate Herk",
+  "title": "Nate Herk - AI Insights",
+  "date": "2026-02-18",
+  "video_count": 2,
+  "videos": [
+    {
+      "title": "How to Sign AI Workflow Clients (With 0 Followers)",
+      "url": "https://www.youtube.com/watch?v=_rZAR-s4KIo",
+      "upload_date": "2026-02-16T00:00:00"
+    },
+    {
+      "title": "How a College Student Made $500k with Cold Email (Exact Framework)",
+      "url": "https://www.youtube.com/watch?v=XB2xmX3USUI",
+      "upload_date": "2026-02-14T00:00:00"
+    }
+  ],
+  "slides": [
+    {
+      "type": "title",
+      "title": "Nate Herk",
+      "subtitle": "2 Videos Analyzed",
+      "date": "2026-02-18"
+    },
+    {
+      "type": "video_list",
+      "title": "Videos",
+      "items": [
+        "How to Sign AI Workflow Clients (With 0 Followers)",
+        "How a College Student Made $500k with Cold Email (Exact Fram"
+      ]
+    },
+    {
+      "type": "video_summary",
+      "title": "How to Sign AI Workflow Clients (With 0 Followers)",
+      "content": "People keep telling me they can't land People keep telling me they can't land People keep telling me they can't land AI clients because they don't have a AI clients because they don't have a AI clients because they don't have a YouTube channel since I got my first YouTube channel since I got my first YouTube channel since I got my first clients through content. But you don't clients through content. But you don't clients through content. But you don't actually need content at all. If I lost actu..."
+    },
+    {
+      "type": "video_summary",
+      "title": "How a College Student Made $500k with Cold Email (",
+      "content": "Cold email is responsible for some of Cold email is responsible for some of Cold email is responsible for some of the fastest client acquisition in the the fastest client acquisition in the the fastest client acquisition in the agency space and it's even more powerful agency space and it's even more powerful agency space and it's even more powerful in 2026 if you know how to use AI right. in 2026 if you know how to use AI right. in 2026 if you know how to use AI right. So to show you guys how I ..."
+    },
+    {
+      "type": "closing",
+      "title": "Thank You",
+      "subtitle": "2026-02-18"
+    }
+  ]
+}

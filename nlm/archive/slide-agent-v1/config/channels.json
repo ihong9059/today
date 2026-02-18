@@ -1,0 +1,38 @@
+{
+  "channels": [
+    {
+      "id": "nateherk",
+      "name": "Nate Herk",
+      "url": "https://www.youtube.com/@nateherk",
+      "enabled": true,
+      "description": "AI automation and workflow tutorials"
+    },
+    {
+      "id": "nicksaraev",
+      "name": "Nick Saraev",
+      "url": "https://www.youtube.com/@nicksaraev",
+      "enabled": true,
+      "description": "AI tools and productivity automation"
+    },
+    {
+      "id": "Itssssss_Jack",
+      "name": "Jack (AI)",
+      "url": "https://www.youtube.com/@Itssssss_Jack",
+      "enabled": true,
+      "description": "AI news and tutorials"
+    },
+    {
+      "id": "Chase-H-AI",
+      "name": "Chase H AI",
+      "url": "https://www.youtube.com/@Chase-H-AI",
+      "enabled": true,
+      "description": "AI development and tools"
+    }
+  ],
+  "settings": {
+    "hours_lookback": 168,
+    "subtitle_language": "en",
+    "fallback_language": "ko",
+    "max_videos_per_channel": 5
+  }
+}

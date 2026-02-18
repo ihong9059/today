@@ -1,0 +1,129 @@
+{
+  "title": "AI News Digest - 2026-02-18",
+  "date": "2026-02-18",
+  "sources": [
+    {
+      "title": "How to Sign AI Workflow Clients (With 0 Followers)",
+      "channel": "Nate Herk ",
+      "url": "https://www.youtube.com/watch?v=_rZAR-s4KIo"
+    },
+    {
+      "title": "How a College Student Made $500k with Cold Email (Exact Framework)",
+      "channel": "Nate Herk ",
+      "url": "https://www.youtube.com/watch?v=XB2xmX3USUI"
+    },
+    {
+      "title": "CLAUDE CODE FULL COURSE 4 HOURS: Build & Sell (2026)",
+      "channel": "Nick Saraev",
+      "url": "https://www.youtube.com/watch?v=QoQBzR1NIqI"
+    },
+    {
+      "title": "5 INSANE Claude Cowork use cases (Build Anything)",
+      "channel": "Jack Roberts",
+      "url": "https://www.youtube.com/watch?v=EZdSVpgtjG0"
+    },
+    {
+      "title": "AntiGravity + Claude Code Destroys Every Workflow Tool (NEW Skill)",
+      "channel": "Jack Roberts",
+      "url": "https://www.youtube.com/watch?v=cFThM_D3nl8"
+    },
+    {
+      "title": "Claude Sonnet 4.6 Is Here (and Better Than Opus?)",
+      "channel": "Chase AI",
+      "url": "https://www.youtube.com/watch?v=EQ7nk9KgvrY"
+    },
+    {
+      "title": "I used to build everything in n8n, here's why I stopped (mostly)",
+      "channel": "Chase AI",
+      "url": "https://www.youtube.com/watch?v=1t8Fs6cndB8"
+    },
+    {
+      "title": "i converted all my n8n agents to real code and it was stupid easy",
+      "channel": "Chase AI",
+      "url": "https://www.youtube.com/watch?v=dSp4jL8R2o0"
+    },
+    {
+      "title": "OpenClaw Google Setup is a Nightmare (Here's the Fix)",
+      "channel": "Chase AI",
+      "url": "https://www.youtube.com/watch?v=h_N2Y2XyR3M"
+    }
+  ],
+  "sections": [
+    {
+      "title": "From Nate Herk ",
+      "type": "channel_summary",
+      "videos": [
+        {
+          "title": "How to Sign AI Workflow Clients (With 0 Followers)",
+          "url": "https://www.youtube.com/watch?v=_rZAR-s4KIo",
+          "transcript_preview": "People keep telling me they can't land People keep telling me they can't land People keep telling me they can't land AI clients because they don't have a AI clients because they don't have a AI clients because they don't have a YouTube channel since I got my first YouTube channel since I got my first YouTube channel since I got my first clients through content. But you don't clients through content. But you don't clients through content. But you don't actually need content at all. If I lost actu..."
+        },
+        {
+          "title": "How a College Student Made $500k with Cold Email (Exact Framework)",
+          "url": "https://www.youtube.com/watch?v=XB2xmX3USUI",
+          "transcript_preview": "Cold email is responsible for some of Cold email is responsible for some of Cold email is responsible for some of the fastest client acquisition in the the fastest client acquisition in the the fastest client acquisition in the agency space and it's even more powerful agency space and it's even more powerful agency space and it's even more powerful in 2026 if you know how to use AI right. in 2026 if you know how to use AI right. in 2026 if you know how to use AI right. So to show you guys how I ..."
+        }
+      ]
+    },
+    {
+      "title": "From Nick Saraev",
+      "type": "channel_summary",
+      "videos": [
+        {
+          "title": "CLAUDE CODE FULL COURSE 4 HOURS: Build & Sell (2026)",
+          "url": "https://www.youtube.com/watch?v=QoQBzR1NIqI",
+          "transcript_preview": "Hey, this is the definitive course on Claude Code for beginners. I use Claude Code every day to manage a business that does over $4 million a year in profit. I also teach over 2,000 people how to use Claude Code, both for personal and then corporate or professional tasks. So this is more or less what I do all day. Once you understand what I'm about to show you in this course, it's no small stretch to say that Claude Code will augment your productivity. You'll gain leverage in areas that you prob..."
+        }
+      ]
+    },
+    {
+      "title": "From Jack Roberts",
+      "type": "channel_summary",
+      "videos": [
+        {
+          "title": "5 INSANE Claude Cowork use cases (Build Anything)",
+          "url": "https://www.youtube.com/watch?v=EZdSVpgtjG0",
+          "transcript_preview": "Cloud Co just dropped and it is a Cloud Co just dropped and it is a Cloud Co just dropped and it is a superpower, but only if you know how to superpower, but only if you know how to superpower, but only if you know how to use it correctly. It can even do things use it correctly. It can even do things use it correctly. It can even do things that weren't possible before, like that weren't possible before, like that weren't possible before, like automating boring tasks and learning automating borin..."
+        },
+        {
+          "title": "AntiGravity + Claude Code Destroys Every Workflow Tool (NEW Skill)",
+          "url": "https://www.youtube.com/watch?v=cFThM_D3nl8",
+          "transcript_preview": "Plug code is the most powerful AI coding Plug code is the most powerful AI coding Plug code is the most powerful AI coding tool on the planet and using it in tool on the planet and using it in tool on the planet and using it in anti-gravity will give you an unfair anti-gravity will give you an unfair anti-gravity will give you an unfair advantage. Anthropic just released a advantage. Anthropic just released a advantage. Anthropic just released a powerful new feature that lets you build powerful ..."
+        }
+      ]
+    },
+    {
+      "title": "From Chase AI",
+      "type": "channel_summary",
+      "videos": [
+        {
+          "title": "Claude Sonnet 4.6 Is Here (and Better Than Opus?)",
+          "url": "https://www.youtube.com/watch?v=EQ7nk9KgvrY",
+          "transcript_preview": "So, Anthropic just released Sonnet 4.6 So, Anthropic just released Sonnet 4.6 So, Anthropic just released Sonnet 4.6 today, and the benchmarks are really today, and the benchmarks are really today, and the benchmarks are really good. So good, in fact, it's actually good. So good, in fact, it's actually good. So good, in fact, it's actually beating out Opus 4.6 in some areas while beating out Opus 4.6 in some areas while beating out Opus 4.6 in some areas while coming in at a 40% cheaper price po..."
+        },
+        {
+          "title": "I used to build everything in n8n, here's why I stopped (mostly)",
+          "url": "https://www.youtube.com/watch?v=1t8Fs6cndB8",
+          "transcript_preview": "I've built hundreds of NAND workflows I've built hundreds of NAND workflows I've built hundreds of NAND workflows and I've taught thousands of people how and I've taught thousands of people how and I've taught thousands of people how to use it and for the first time I'm to use it and for the first time I'm to use it and for the first time I'm telling people to stop mostly and that's telling people to stop mostly and that's telling people to stop mostly and that's not because NAND is bad. It's de..."
+        },
+        {
+          "title": "i converted all my n8n agents to real code and it was stupid easy",
+          "url": "https://www.youtube.com/watch?v=dSp4jL8R2o0",
+          "transcript_preview": "NADN has been one of the most powerful NADN has been one of the most powerful NADN has been one of the most powerful noode tools on the market for some time noode tools on the market for some time noode tools on the market for some time now. But today, as platforms like Claude now. But today, as platforms like Claude now. But today, as platforms like Claude Code, Codeex, and anti-gravity become Code, Codeex, and anti-gravity become Code, Codeex, and anti-gravity become both more powerful and mor..."
+        },
+        {
+          "title": "OpenClaw Google Setup is a Nightmare (Here's the Fix)",
+          "url": "https://www.youtube.com/watch?v=h_N2Y2XyR3M",
+          "transcript_preview": "OpenClaw is the fastest growing OpenClaw is the fastest growing OpenClaw is the fastest growing open-source AI project of all time. And open-source AI project of all time. And open-source AI project of all time. And somehow, even with all that hype behind somehow, even with all that hype behind somehow, even with all that hype behind it, there is not a single good guide it, there is not a single good guide it, there is not a single good guide that shows you how to properly set up that shows you ..."
+        }
+      ]
+    }
+  ],
+  "key_insights": [
+    {
+      "type": "keywords",
+      "content": "Key AI topics mentioned: AI, machine learning, GPT, LLM, automation, Claude, ChatGPT"
+    }
+  ],
+  "action_items": []
+}
