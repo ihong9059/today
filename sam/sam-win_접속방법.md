@@ -133,6 +133,31 @@ Start-Service sshd
 
 ---
 
+## Lenovo Windows PC에서 접속 (설정 완료)
+
+### SSH config 위치
+`C:\Users\lenovo\.ssh\config`
+
+### 설정 내용
+```
+Host sam-win
+  HostName 100.99.239.85
+  User visitor
+  IdentityFile ~/.ssh/id_ed25519_sam
+```
+
+### 접속 방법
+```bash
+ssh sam-win
+```
+> 비밀번호 없이 바로 접속됨
+
+### 사용된 키 파일
+- 개인키: `C:\Users\lenovo\.ssh\id_ed25519_sam`
+- 공개키: `C:\Users\lenovo\.ssh\id_ed25519_sam.pub`
+
+---
+
 ## 참고
 - sam-win의 visitor 계정은 관리자 그룹에 속해 있음
 - 관리자 계정은 `C:\ProgramData\ssh\administrators_authorized_keys` 파일 사용
