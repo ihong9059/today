@@ -1,0 +1,7 @@
+# SSH Private Keys - 절대 공개하면 안 됨
+*.pem
+*.ppk
+
+# OS 파일
+.DS_Store
+Thumbs.db

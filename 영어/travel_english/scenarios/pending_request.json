@@ -1,9 +1,0 @@
-{
-  "level": "beginner",
-  "departure": "서울",
-  "destination": "파리",
-  "budget": "2000",
-  "duration": "14",
-  "output_file": "scenarios\\scenario_20260208_010247.json",
-  "timestamp": "20260208_010247"
-}
