@@ -34,7 +34,7 @@ powershell -Command "Get-ChildItem 'C:\todo\today\.claude\sessions\session_*.md'
 - 어제 작업보고서 확인 (완료/미완료 파악)
 - 오늘 작업보고서(YYYY-MM-DD_작업보고서.md) 확인 또는 생성
 
-### 4. 오늘 할일 통합 표시
+### 4. 오늘 할일 통합 및 작업보고서 반영
 
 다음 항목들을 통합하여 테이블 형식으로 표시:
 - 세션의 "다음에 할 일"
@@ -46,6 +46,8 @@ powershell -Command "Get-ChildItem 'C:\todo\today\.claude\sessions\session_*.md'
 | 1 | ... | 세션 | ⬜ |
 | 2 | ... | 어제 미완료 | ⬜ |
 | 3 | ... | 오늘 할일 | ⬜ |
+
+**중요: 오늘 작업보고서(YYYY-MM-DD_작업보고서.md)의 "오늘 할일" 섹션에 위 통합 테이블을 Edit 도구로 반영한다.**
 
 ### 5. 작업 시작 질문
 
