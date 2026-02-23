@@ -1,3 +1,0 @@
-@echo off
-echo Connecting to EC2 (samks - 15.164.220.60)...
-ssh -i "C:\todo\today\sam\samks204.pem" ec2-user@15.164.220.60

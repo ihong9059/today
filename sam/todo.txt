@@ -1,5 +1,0 @@
-- github진행사항 확인
-- rdp 설치
-- google cloud설치
-- skill사용방법 설명
-
