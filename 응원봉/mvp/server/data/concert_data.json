@@ -1,0 +1,176 @@
+{
+  "artist": {
+    "name": "BTS",
+    "korean_name": "방탄소년단",
+    "fandom_name": "아미 (ARMY)",
+    "official_color": "#800080",
+    "debut_date": "2013-06-13"
+  },
+  "members": [
+    {
+      "stage_name": "RM",
+      "real_name": "김남준",
+      "birthday": "1994-09-12",
+      "position": "리더, 메인 래퍼",
+      "emoji": "🐨"
+    },
+    {
+      "stage_name": "진",
+      "real_name": "김석진",
+      "birthday": "1992-12-04",
+      "position": "서브 보컬",
+      "emoji": "🐹"
+    },
+    {
+      "stage_name": "슈가",
+      "real_name": "민윤기",
+      "birthday": "1993-03-09",
+      "position": "리드 래퍼",
+      "emoji": "🐱"
+    },
+    {
+      "stage_name": "제이홉",
+      "real_name": "정호석",
+      "birthday": "1994-02-18",
+      "position": "메인 댄서, 서브 래퍼",
+      "emoji": "🐿️"
+    },
+    {
+      "stage_name": "지민",
+      "real_name": "박지민",
+      "birthday": "1995-10-13",
+      "position": "메인 댄서, 리드 보컬",
+      "emoji": "🐥"
+    },
+    {
+      "stage_name": "뷔",
+      "real_name": "김태형",
+      "birthday": "1995-12-30",
+      "position": "서브 보컬",
+      "emoji": "🐻"
+    },
+    {
+      "stage_name": "정국",
+      "real_name": "전정국",
+      "birthday": "1997-09-01",
+      "position": "메인 보컬, 리드 댄서, 서브 래퍼, 센터",
+      "emoji": "🐰"
+    }
+  ],
+  "concert": {
+    "tour_name": "2026 World Tour - Seoul",
+    "venue": "서울 잠실 주경기장",
+    "date": "2026-06-15",
+    "start_time": "18:00"
+  },
+  "setlist": [
+    {
+      "order": 1,
+      "title": "Dynamite",
+      "color_name": "골드",
+      "color_rgb": [
+        255,
+        215,
+        0
+      ],
+      "fan_chant": "BTS! BTS!",
+      "highlight": "후렴구에서 점프!"
+    },
+    {
+      "order": 2,
+      "title": "좋아좋아",
+      "color_name": "파란색",
+      "color_rgb": [
+        0,
+        100,
+        255
+      ],
+      "fan_chant": "좋아! 좋아!",
+      "highlight": "떼창 구간"
+    },
+    {
+      "order": 3,
+      "title": "봄날",
+      "color_name": "분홍색",
+      "color_rgb": [
+        255,
+        182,
+        193
+      ],
+      "fan_chant": "보고 싶다~",
+      "highlight": "풍선 흔들기"
+    },
+    {
+      "order": 4,
+      "title": "Butter",
+      "color_name": "노란색",
+      "color_rgb": [
+        255,
+        255,
+        0
+      ],
+      "fan_chant": "Get it, let it roll!",
+      "highlight": "사이드 스텝"
+    },
+    {
+      "order": 5,
+      "title": "작은 것들을 위한 시 (Boy With Luv)",
+      "color_name": "핑크",
+      "color_rgb": [
+        255,
+        105,
+        180
+      ],
+      "fan_chant": "Oh my my my!",
+      "highlight": "손가락 하트"
+    },
+    {
+      "order": 6,
+      "title": "피 땀 눈물",
+      "color_name": "빨간색",
+      "color_rgb": [
+        220,
+        20,
+        60
+      ],
+      "fan_chant": "내 피 땀 눈물~",
+      "highlight": "섹시 무브"
+    },
+    {
+      "order": 7,
+      "title": "달려라 방탄",
+      "color_name": "초록색",
+      "color_rgb": [
+        0,
+        255,
+        100
+      ],
+      "fan_chant": "탄탄탄 방탄!",
+      "highlight": "전력 점프"
+    },
+    {
+      "order": 8,
+      "title": "소우주 (Mikrokosmos)",
+      "color_name": "보라색",
+      "color_rgb": [
+        138,
+        43,
+        226
+      ],
+      "fan_chant": "넌 별처럼 빛나~",
+      "highlight": "아미밤 은하수"
+    }
+  ],
+  "fandom_terms": {
+    "보라해": "보라색처럼 영원히 사랑한다는 BTS-아미 인사",
+    "떼창": "팬들이 함께 부르는 합창",
+    "응원봉": "아미밤(ARMY Bomb), 공식 응원 도구",
+    "떡밥": "아티스트가 팬들에게 던지는 힌트나 소재",
+    "최애": "가장 좋아하는 멤버",
+    "입덕": "팬이 되는 것",
+    "덕질": "팬 활동을 하는 것"
+  },
+  "current_state": {
+    "song_index": 0
+  }
+}
