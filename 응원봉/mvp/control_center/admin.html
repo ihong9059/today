@@ -162,6 +162,33 @@
         .log-line.join { color: #2196f3; }
         .log-line.leave { color: #f44336; }
 
+        /* 버튼 알림 */
+        .button-alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.4);
+            animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
+            z-index: 1000;
+            font-weight: bold;
+        }
+        .button-alert .alert-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
         /* 추첨 섹션 */
         .lottery-section {
             text-align: center;
@@ -395,7 +422,13 @@
                     refreshDevices();
                     break;
                 case 'device_reaction':
-                    log(`반응: ${data.device_id} - ${data.reaction}`, 'reaction');
+                    const action = data.action || '';
+                    if (data.reaction === 'button') {
+                        log(`🔘 버튼 클릭: ${data.device_id} (${action})`, 'reaction');
+                        showButtonAlert(data.device_id, action);
+                    } else {
+                        log(`반응: ${data.device_id} - ${data.reaction}`, 'reaction');
+                    }
                     break;
                 case 'lottery_result':
                     log(`🎉 추첨 완료! ${data.count}명 당첨`, 'winner');
@@ -562,6 +595,19 @@
         function clearLog() {
             document.getElementById('eventLog').innerHTML = '';
             log('로그 초기화됨');
+        }
+
+        // 버튼 클릭 알림 표시
+        function showButtonAlert(deviceId, action) {
+            const alert = document.createElement('div');
+            alert.className = 'button-alert';
+            alert.innerHTML = `<span class="alert-icon">🔘</span>버튼 클릭! <br><small>${deviceId}</small>`;
+            document.body.appendChild(alert);
+
+            // 3초 후 제거
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
         }
 
         // 초기화

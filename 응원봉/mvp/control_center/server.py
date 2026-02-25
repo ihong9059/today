@@ -97,7 +97,7 @@ class DeviceManager:
                 self.unregister(device_id)
         return False
 
-    def lottery(self, count: int = 1, ble_only: bool = True) -> List[str]:
+    def lottery(self, count: int = 1, ble_only: bool = False) -> List[str]:
         """추첨 - 연결된 디바이스 중 랜덤 선택
 
         Args:
@@ -111,7 +111,11 @@ class DeviceManager:
                 if self.devices.get(did, {}).get("ble_connected", False)
             ]
         else:
-            connected_ids = list(self.websockets.keys())
+            # admin 제외, fanstick 타입만 선택
+            connected_ids = [
+                did for did in self.websockets.keys()
+                if self.devices.get(did, {}).get("type") == "fanstick"
+            ]
 
         if not connected_ids:
             return []
@@ -185,17 +189,15 @@ async def websocket_endpoint(websocket: WebSocket, device_id: str):
 
 # ===== REST API 엔드포인트 =====
 
-class LotteryRequest(BaseModel):
-    count: int = 1
-
 class CommandRequest(BaseModel):
     command: str  # "led", "melody", "message"
     params: dict
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    return {"name": "AI FanStick Control Center", "status": "running"}
+    """루트 접속 시 관리자 페이지로 이동"""
+    return await admin_page()
 
 
 @app.get("/api/devices")
@@ -209,17 +211,34 @@ async def get_devices():
     }
 
 
+class LotteryRequest(BaseModel):
+    count: int = 1
+    ble_only: bool = False  # MVP에서는 BLE 없이도 추첨 가능
+
+
 @app.post("/api/lottery")
 async def run_lottery(request: LotteryRequest):
-    """추첨 실행 - BLE 연결된 응원봉만 대상"""
-    ble_count = device_manager.get_ble_connected_count()
-    if ble_count == 0:
+    """추첨 실행 - BLE 연결 또는 전체 디바이스 대상"""
+    if request.ble_only:
+        ble_count = device_manager.get_ble_connected_count()
+        if ble_count == 0:
+            raise HTTPException(
+                status_code=400,
+                detail=f"BLE 연결된 응원봉이 없습니다. (전체 연결: {device_manager.get_connected_count()}명)"
+            )
+
+    # admin 제외한 fanstick 디바이스만 추첨 대상
+    connected_count = len([
+        did for did in device_manager.websockets.keys()
+        if device_manager.devices.get(did, {}).get("type") == "fanstick"
+    ])
+    if connected_count == 0:
         raise HTTPException(
             status_code=400,
-            detail=f"BLE 연결된 응원봉이 없습니다. (전체 연결: {device_manager.get_connected_count()}명)"
+            detail=f"추첨 대상 디바이스가 없습니다. (전체 연결: {device_manager.get_connected_count()}명)"
         )
 
-    winners = device_manager.lottery(request.count, ble_only=True)
+    winners = device_manager.lottery(request.count, ble_only=request.ble_only)
 
     if not winners:
         raise HTTPException(status_code=400, detail="추첨 대상이 없습니다.")
