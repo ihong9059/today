@@ -15,8 +15,7 @@ import {
 import Button from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import MarketOverview from '@/components/stock/MarketOverview';
-import StockCard from '@/components/stock/StockCard';
-import { sampleStocks } from '@/data/stocks';
+import RealtimeStockList from '@/components/stock/RealtimeStockList';
 
 const features = [
   {
@@ -171,11 +170,11 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 오늘의 추천 종목
               </h3>
-              <div className="space-y-4">
-                {sampleStocks.slice(0, 3).map((stock) => (
-                  <StockCard key={stock.code} stock={stock} />
-                ))}
-              </div>
+              <RealtimeStockList
+                codes={['005930', '000660', '105560']}
+                limit={3}
+                refreshInterval={60000}
+              />
               <Link href="/recommend" className="block mt-4">
                 <Button variant="outline" className="w-full">
                   더 많은 추천 보기

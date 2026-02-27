@@ -67,4 +67,8 @@ button: gpio5, buzzer: gpio2, din: gpio1, sda: gpio6, scl: gpio7
  그리고 이에대한 시나리오와 설명서를 만들어 주세요.
  
 
+claude, 전체 system의 구성및 동작 원리를 확인하고, 그에 따른 자료를 만들어,
+시스템 사용자에게 배포할려고 합니다.
+각 project(esp32c3, smartphone App, server, control center)의 역할과,
+data의 흐름및 동작순서등 전체적인 흐름을 이해할수있도록 설명서를 md file로 만들어 주세요.
 

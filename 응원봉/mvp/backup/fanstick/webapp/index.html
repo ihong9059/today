@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>AI FanStick</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .header h1 {
+            font-size: 1.8em;
+            color: #bb86fc;
+            margin-bottom: 5px;
+        }
+        .header .subtitle {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .status-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #f44336;
+        }
+        .status-dot.connected { background: #4caf50; }
+        .status-dot.connecting { background: #ff9800; animation: pulse 1s infinite; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .card h2 {
+            font-size: 1em;
+            color: #bb86fc;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 현재 곡 카드 */
+        .song-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .color-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.2);
+            flex-shrink: 0;
+        }
+        .song-info h3 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        .song-info p {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        /* 버튼 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .btn-primary {
+            background: #9c27b0;
+            color: white;
+        }
+        .btn-primary:hover { background: #7b1fa2; }
+        .btn-primary:disabled { background: #666; cursor: not-allowed; }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* 마이크 버튼 */
+        .mic-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+        .mic-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #9c27b0, #673ab7);
+            border: none;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(156, 39, 176, 0.4);
+            transition: all 0.2s;
+        }
+        .mic-btn:hover { transform: scale(1.05); }
+        .mic-btn.recording {
+            background: linear-gradient(135deg, #f44336, #e91e63);
+            animation: pulse 0.5s infinite;
+        }
+        .mic-btn:disabled { background: #666; box-shadow: none; }
+
+        /* AI 응답 */
+        .ai-response {
+            background: rgba(156, 39, 176, 0.1);
+            border-left: 4px solid #9c27b0;
+            padding: 15px;
+            border-radius: 0 12px 12px 0;
+            margin: 15px 0;
+        }
+        .ai-response p {
+            line-height: 1.6;
+        }
+        .recognized-text {
+            color: #888;
+            font-style: italic;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        /* 연결 섹션 */
+        .connect-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .connect-section input {
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(0,0,0,0.2);
+            color: white;
+            font-size: 1em;
+        }
+
+        /* 로그 */
+        .log {
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.8em;
+        }
+        .log-line { margin: 2px 0; }
+        .log-line.error { color: #f44336; }
+        .log-line.success { color: #4caf50; }
+        .log-line.info { color: #2196f3; }
+
+        /* 컬러 프리셋 */
+        .color-presets {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .preset {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .preset:hover { transform: scale(1.1); border-color: white; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AI FanStick</h1>
+        <p class="subtitle">K-POP Concert AI Assistant</p>
+    </div>
+
+    <div class="status-bar">
+        <div class="status-chip">
+            <div class="status-dot" id="serverDot"></div>
+            <span id="serverStatus">Server</span>
+        </div>
+        <div class="status-chip">
+            <div class="status-dot" id="bleDot"></div>
+            <span id="bleStatus">BLE</span>
+        </div>
+        <div class="status-chip">
+            <div class="status-dot" id="controlDot"></div>
+            <span id="controlStatus">본부</span>
+        </div>
+    </div>
+
+    <!-- 연결 설정 -->
+    <div class="card">
+        <h2>🔗 Connection</h2>
+        <div class="connect-section">
+            <input type="text" id="serverUrl" placeholder="Server URL" value="http://178.128.90.37:8080">
+            <input type="text" id="controlUrl" placeholder="본부 URL" value="ws://178.128.90.37:8090">
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="connectServer()">Connect Server</button>
+                <button class="btn btn-secondary" onclick="connectBLE()">Connect BLE</button>
+                <button class="btn btn-secondary" onclick="connectControl()">📡 본부 연결</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 당첨 알림 (숨김) -->
+    <div class="card" id="winnerCard" style="display:none; background:linear-gradient(135deg, rgba(255,215,0,0.3), rgba(255,140,0,0.3)); border:2px solid #ffd700;">
+        <h2 style="color:#ffd700;">🏆 축하합니다!</h2>
+        <p id="winnerMessage" style="text-align:center; font-size:1.2em; padding:20px;">당첨되셨습니다!</p>
+    </div>
+
+    <!-- 현재 곡 -->
+    <div class="card">
+        <h2>🎵 Now Playing</h2>
+        <div class="song-card">
+            <div class="color-preview" id="colorPreview" style="background: rgb(128,0,128)"></div>
+            <div class="song-info" style="flex:1;">
+                <h3 id="songTitle">-</h3>
+                <p id="songDetail">Connect to server first</p>
+            </div>
+            <button class="btn btn-primary" id="playCurrentBtn" onclick="playCurrentSong()" style="width:50px; height:50px; border-radius:50%; font-size:1.5em; padding:0;">
+                ▶
+            </button>
+        </div>
+        <div class="btn-group" style="margin-top: 15px;">
+            <button class="btn btn-secondary" onclick="prevSong()">⏮ Prev</button>
+            <button class="btn btn-secondary" onclick="stopAudio()">⏹ Stop</button>
+            <button class="btn btn-secondary" onclick="nextSong()">Next ⏭</button>
+        </div>
+    </div>
+
+    <!-- AI 응답 -->
+    <div class="card" id="responseCard" style="display:none;">
+        <h2>🤖 AI Response</h2>
+        <p class="recognized-text" id="recognizedText"></p>
+        <div class="ai-response">
+            <p id="aiResponse"></p>
+        </div>
+    </div>
+
+    <!-- LED 제어 -->
+    <div class="card">
+        <h2>💡 LED Control</h2>
+        <div class="color-presets">
+            <div class="preset" style="background:#ff0000" onclick="setColor(255,0,0)"></div>
+            <div class="preset" style="background:#00ff00" onclick="setColor(0,255,0)"></div>
+            <div class="preset" style="background:#0000ff" onclick="setColor(0,0,255)"></div>
+            <div class="preset" style="background:#ffff00" onclick="setColor(255,255,0)"></div>
+            <div class="preset" style="background:#ff00ff" onclick="setColor(255,0,255)"></div>
+            <div class="preset" style="background:#00ffff" onclick="setColor(0,255,255)"></div>
+            <div class="preset" style="background:#800080" onclick="setColor(128,0,128)"></div>
+            <div class="preset" style="background:#ffd700" onclick="setColor(255,215,0)"></div>
+        </div>
+        <div class="btn-group" style="margin-top: 15px;">
+            <button class="btn btn-secondary" onclick="setPattern('rainbow')">🌈 Rainbow</button>
+            <button class="btn btn-secondary" onclick="setPattern('pulse')">💫 Pulse</button>
+            <button class="btn btn-secondary" onclick="setPattern('blink')">✨ Blink</button>
+        </div>
+    </div>
+
+    <!-- 음악 -->
+    <div class="card">
+        <h2>🎵 Music</h2>
+        <p style="color:#888; font-size:0.85em; margin-bottom:10px;">버저 멜로디 (ESP32)</p>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="sendBLE('B:ack')">🔔 Test</button>
+            <button class="btn btn-secondary" onclick="playMelody('dynamite')">🎤 Dynamite</button>
+            <button class="btn btn-secondary" onclick="playMelody('butter')">🧈 Butter</button>
+            <button class="btn btn-secondary" onclick="playMelody('spring')">🌸 봄날</button>
+            <button class="btn btn-secondary" onclick="playMelody('army')">💜 ARMY</button>
+        </div>
+
+        <p style="color:#888; font-size:0.85em; margin:15px 0 10px 0;">📱 오디오 재생 (스마트폰)</p>
+        <div id="nowPlaying" style="display:none; background:rgba(156,39,176,0.2); padding:10px; border-radius:8px; margin-bottom:10px;">
+            <span style="color:#bb86fc;">▶ Now Playing:</span> <span id="nowPlayingTitle">-</span>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="playAudio('dynamite')">🎤 Dynamite</button>
+            <button class="btn btn-primary" onclick="playAudio('butter')">🧈 Butter</button>
+            <button class="btn btn-primary" onclick="playAudio('spring')">🌸 봄날</button>
+            <button class="btn btn-primary" onclick="playAudio('mikrokosmos')">🌌 소우주</button>
+        </div>
+        <div class="btn-group" style="margin-top:10px;">
+            <button class="btn btn-danger" onclick="stopAudio()">⏹ 정지</button>
+            <input type="range" id="volumeSlider" min="0" max="100" value="80"
+                   style="flex:1; accent-color:#9c27b0;"
+                   oninput="setVolume(this.value)">
+            <span style="color:#888; font-size:0.8em;">🔊</span>
+        </div>
+    </div>
+
+    <!-- 로그 -->
+    <div class="card">
+        <h2>📋 Log</h2>
+        <div class="log" id="log"></div>
+    </div>
+
+    <!-- 마이크 버튼 -->
+    <div class="mic-container">
+        <button class="mic-btn" id="micBtn" onclick="toggleMic()">🎤</button>
+    </div>
+
+    <script>
+        // State
+        let serverConnected = false;
+        let bleConnected = false;
+        let bleDevice = null;
+        let bleCharacteristic = null;
+        let isRecording = false;
+        let recognition = null;
+        let currentColor = [128, 0, 128];
+
+        // BLE UUIDs
+        const SERVICE_UUID = '4fafc201-1fb5-459e-8fcc-c5c9c331914b';
+        const LED_CHAR_UUID = 'beb5483e-36e1-4688-b7f5-ea07361b26a8';
+
+        // Logging
+        function log(msg, type = '') {
+            const logDiv = document.getElementById('log');
+            const line = document.createElement('div');
+            line.className = 'log-line ' + type;
+            line.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            logDiv.appendChild(line);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(msg);
+        }
+
+        // Server Connection
+        async function connectServer() {
+            const url = document.getElementById('serverUrl').value;
+            log('Connecting to server...', 'info');
+
+            try {
+                const res = await fetch(url + '/api/status');
+                const data = await res.json();
+                serverConnected = true;
+                document.getElementById('serverDot').classList.add('connected');
+                document.getElementById('serverStatus').textContent = 'Connected';
+                log('Server connected!', 'success');
+                loadConcertInfo();
+            } catch (e) {
+                log('Server connection failed: ' + e.message, 'error');
+            }
+        }
+
+        async function loadConcertInfo() {
+            const url = document.getElementById('serverUrl').value;
+            try {
+                const res = await fetch(url + '/api/concert');
+                const data = await res.json();
+                updateSongDisplay(data.current_song, data.next_song);
+            } catch (e) {
+                log('Failed to load concert info', 'error');
+            }
+        }
+
+        let currentSongInfo = null;  // 현재 곡 정보 저장
+
+        function updateSongDisplay(current, next) {
+            currentSongInfo = current;  // 현재 곡 정보 저장
+            document.getElementById('songTitle').textContent = current.title;
+            const nextText = next ? `Next: ${next.title}` : 'Last song';
+            document.getElementById('songDetail').textContent = `${current.color_name} • ${nextText}`;
+
+            currentColor = current.color_rgb;
+            const [r, g, b] = currentColor;
+            document.getElementById('colorPreview').style.background = `rgb(${r},${g},${b})`;
+
+            // 재생 버튼 상태 업데이트
+            updatePlayButton();
+
+            if (bleConnected) {
+                sendBLE(`C:${r},${g},${b}`);
+            }
+        }
+
+        // 현재 곡 재생
+        function playCurrentSong() {
+            if (!currentSongInfo) {
+                log('곡 정보 없음. 서버에 연결하세요.', 'error');
+                return;
+            }
+
+            // 이미 재생 중이면 정지
+            if (currentAudio && !currentAudio.paused) {
+                stopAudio();
+                return;
+            }
+
+            // 곡 제목을 기반으로 오디오 키 매핑
+            const title = currentSongInfo.title.toLowerCase();
+            let audioKey = null;
+
+            if (title.includes('dynamite')) audioKey = 'dynamite';
+            else if (title.includes('butter')) audioKey = 'butter';
+            else if (title.includes('봄날') || title.includes('spring')) audioKey = 'spring';
+            else if (title.includes('소우주') || title.includes('mikrokosmos')) audioKey = 'mikrokosmos';
+
+            // 매칭되는 곡이 없으면 색상/분위기 기반으로 대체
+            if (!audioKey) {
+                audioKey = getSimilarSong(currentSongInfo);
+                log(`${currentSongInfo.title} → ${songData[audioKey].title} 샘플로 대체`, 'info');
+            }
+
+            playAudioWithColor(audioKey, currentSongInfo.color_rgb);
+        }
+
+        // 비슷한 분위기의 곡 찾기 (색상 기반)
+        function getSimilarSong(songInfo) {
+            const [r, g, b] = songInfo.color_rgb;
+            const colorName = songInfo.color_name ? songInfo.color_name.toLowerCase() : '';
+
+            // 색상/분위기 기반 매핑
+            if (colorName.includes('gold') || colorName.includes('yellow') || r > 200 && g > 150) {
+                return 'dynamite';  // 밝고 경쾌한 곡
+            } else if (colorName.includes('pink') || colorName.includes('rose') || (r > 200 && b > 150)) {
+                return 'spring';    // 서정적인 곡
+            } else if (colorName.includes('purple') || colorName.includes('violet') || (r < 150 && b > 150)) {
+                return 'mikrokosmos';  // 웅장한 곡
+            } else {
+                return 'butter';    // 기본 (부드러운 곡)
+            }
+        }
+
+        // 오디오 재생 (원곡 색상 유지)
+        function playAudioWithColor(audioKey, originalColor) {
+            const data = songData[audioKey];
+            if (!data) return;
+
+            stopAudio();
+            currentAudio = new Audio(data.url);
+            currentAudio.volume = document.getElementById('volumeSlider').value / 100;
+            currentSongName = data.title;
+
+            document.getElementById('nowPlaying').style.display = 'block';
+            document.getElementById('nowPlayingTitle').textContent = data.title + ' (로딩중...)';
+
+            currentAudio.oncanplay = () => {
+                document.getElementById('nowPlayingTitle').textContent = data.title;
+            };
+            currentAudio.onplay = () => {
+                log('Playing: ' + data.title, 'success');
+                document.getElementById('nowPlayingTitle').textContent = data.title + ' ♪';
+                // 원곡 색상 적용 (대체 곡 색상이 아닌 현재 곡 색상)
+                if (originalColor) {
+                    setColor(originalColor[0], originalColor[1], originalColor[2]);
+                } else {
+                    setColor(data.color[0], data.color[1], data.color[2]);
+                }
+                sendBLE('B:ack');
+                updatePlayButton();
+            };
+            currentAudio.onended = () => {
+                document.getElementById('nowPlaying').style.display = 'none';
+                currentAudio = null;
+                updatePlayButton();
+            };
+            currentAudio.onerror = () => {
+                log('Audio error', 'error');
+                updatePlayButton();
+            };
+
+            currentAudio.play().catch(e => log('Play error: ' + e.message, 'error'));
+        }
+
+        // 재생 버튼 상태 업데이트
+        function updatePlayButton() {
+            const btn = document.getElementById('playCurrentBtn');
+            if (currentAudio && !currentAudio.paused) {
+                btn.textContent = '⏸';
+            } else {
+                btn.textContent = '▶';
+            }
+        }
+
+        async function nextSong() {
+            if (!serverConnected) return;
+            const url = document.getElementById('serverUrl').value;
+            try {
+                const res = await fetch(url + '/api/song/next', { method: 'POST' });
+                const data = await res.json();
+                updateSongDisplay(data.current_song, data.next_song);
+                log('Next song: ' + data.current_song.title, 'success');
+            } catch (e) {
+                log('Failed: ' + e.message, 'error');
+            }
+        }
+
+        async function prevSong() {
+            if (!serverConnected) return;
+            const url = document.getElementById('serverUrl').value;
+            try {
+                const res = await fetch(url + '/api/song/prev', { method: 'POST' });
+                const data = await res.json();
+                updateSongDisplay(data.current_song, data.next_song);
+                log('Prev song: ' + data.current_song.title, 'success');
+            } catch (e) {
+                log('Failed: ' + e.message, 'error');
+            }
+        }
+
+        // BLE Connection
+        async function connectBLE() {
+            if (!navigator.bluetooth) {
+                log('Web Bluetooth not supported!', 'error');
+                alert('This browser does not support Web Bluetooth. Use Chrome on Android.');
+                return;
+            }
+
+            log('Scanning for BLE devices...', 'info');
+            document.getElementById('bleDot').classList.add('connecting');
+
+            try {
+                bleDevice = await navigator.bluetooth.requestDevice({
+                    filters: [{ services: [SERVICE_UUID] }],
+                    optionalServices: [SERVICE_UUID]
+                });
+
+                log('Connecting to ' + bleDevice.name + '...', 'info');
+
+                const server = await bleDevice.gatt.connect();
+                const service = await server.getPrimaryService(SERVICE_UUID);
+                bleCharacteristic = await service.getCharacteristic(LED_CHAR_UUID);
+
+                bleConnected = true;
+                bleName = bleDevice.name || '응원봉';  // BLE 디바이스 이름 저장
+                document.getElementById('bleDot').classList.remove('connecting');
+                document.getElementById('bleDot').classList.add('connected');
+                document.getElementById('bleStatus').textContent = bleName;
+                log('BLE connected: ' + bleName, 'success');
+
+                // Send current color
+                const [r, g, b] = currentColor;
+                sendBLE(`C:${r},${g},${b}`);
+
+                bleDevice.addEventListener('gattserverdisconnected', () => {
+                    bleConnected = false;
+                    document.getElementById('bleDot').classList.remove('connected');
+                    document.getElementById('bleStatus').textContent = 'Disconnected';
+                    log('BLE disconnected', 'error');
+                });
+
+            } catch (e) {
+                document.getElementById('bleDot').classList.remove('connecting');
+                log('BLE error: ' + e.message, 'error');
+            }
+        }
+
+        async function sendBLE(cmd) {
+            if (!bleConnected || !bleCharacteristic) {
+                log('BLE 전송 실패: 연결 안됨 (' + cmd + ')', 'error');
+                return;
+            }
+            const encoder = new TextEncoder();
+            const data = encoder.encode(cmd + '\n');
+            try {
+                await bleCharacteristic.writeValueWithoutResponse(data);
+                log('BLE sent: ' + cmd, 'info');
+            } catch (e) {
+                log('BLE trying fallback...', 'info');
+                try {
+                    await bleCharacteristic.writeValue(data);
+                    log('BLE sent (fallback): ' + cmd, 'info');
+                } catch (e2) {
+                    log('BLE error: ' + e2.message, 'error');
+                }
+            }
+        }
+
+        function setColor(r, g, b) {
+            currentColor = [r, g, b];
+            document.getElementById('colorPreview').style.background = `rgb(${r},${g},${b})`;
+            sendBLE(`C:${r},${g},${b}`);
+        }
+
+        function setPattern(pattern) {
+            sendBLE(`P:${pattern}`);
+            log('Pattern: ' + pattern, 'info');
+        }
+
+        // 버저 멜로디 재생
+        function playMelody(song) {
+            sendBLE(`B:${song}`);
+            log('Melody: ' + song, 'info');
+        }
+
+        // 오디오 재생 (HTML5 Audio - 더 간단하고 안정적)
+        let currentAudio = null;
+        let currentSongName = '';
+
+        // 곡 정보 (제목, 색상, Spotify 30초 미리듣기 URL)
+        const songData = {
+            'dynamite': {
+                title: 'Dynamite',
+                color: [255, 215, 0],
+                url: 'https://p.scdn.co/mp3-preview/98e266fea9df84fa3e5ca84934c513211e89489b'
+            },
+            'butter': {
+                title: 'Butter',
+                color: [255, 255, 0],
+                url: 'https://p.scdn.co/mp3-preview/4d63fe1638aa41592706f835bd076443b09d8afa'
+            },
+            'spring': {
+                title: '봄날 (Spring Day)',
+                color: [255, 182, 193],
+                url: 'https://p.scdn.co/mp3-preview/e2504a289eb9462a6d08e17ae9ce1fade272ab1f'
+            },
+            'mikrokosmos': {
+                title: '소우주 (Mikrokosmos)',
+                color: [138, 43, 226],
+                url: 'https://p.scdn.co/mp3-preview/0db175501cc9bf42fc762bc240a9f1142c8b001a'
+            }
+        };
+
+        function playAudio(song) {
+            const data = songData[song];
+            if (!data) {
+                log('Unknown song: ' + song, 'error');
+                return;
+            }
+
+            // 기존 재생 중지
+            stopAudio();
+
+            // 새 오디오 생성 (Spotify 30초 미리듣기)
+            currentAudio = new Audio(data.url);
+            log('Playing: ' + data.title, 'info');
+            currentAudio.volume = document.getElementById('volumeSlider').value / 100;
+            currentSongName = data.title;
+
+            // Now Playing 표시
+            document.getElementById('nowPlaying').style.display = 'block';
+            document.getElementById('nowPlayingTitle').textContent = data.title + ' (로딩중...)';
+
+            // 이벤트 핸들러
+            currentAudio.onloadstart = () => log('Loading: ' + data.title, 'info');
+            currentAudio.oncanplay = () => {
+                log('Ready: ' + data.title, 'success');
+                document.getElementById('nowPlayingTitle').textContent = data.title;
+            };
+            currentAudio.onplay = () => {
+                log('Playing: ' + data.title, 'success');
+                document.getElementById('nowPlayingTitle').textContent = data.title + ' ♪';
+                // LED 색상 변경
+                setColor(data.color[0], data.color[1], data.color[2]);
+                // 버저로 시작 알림
+                sendBLE('B:ack');
+                updatePlayButton();
+            };
+            currentAudio.onended = () => {
+                log('Ended: ' + data.title, 'info');
+                document.getElementById('nowPlaying').style.display = 'none';
+                currentAudio = null;
+                updatePlayButton();
+            };
+            currentAudio.onerror = (e) => {
+                log('Audio error: ' + (e.message || 'Failed to load'), 'error');
+                document.getElementById('nowPlayingTitle').textContent = data.title + ' (오류)';
+            };
+
+            // 재생 시작
+            currentAudio.play().catch(e => {
+                log('Play error: ' + e.message, 'error');
+                document.getElementById('nowPlayingTitle').textContent = data.title + ' (재생 실패)';
+            });
+        }
+
+        function stopAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                currentAudio = null;
+                log('Audio stopped', 'info');
+            }
+            document.getElementById('nowPlaying').style.display = 'none';
+            updatePlayButton();
+        }
+
+        // 볼륨 조절
+        function setVolume(vol) {
+            if (currentAudio) {
+                currentAudio.volume = vol / 100;
+            }
+        }
+
+        // Speech Recognition
+        function initSpeechRecognition() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                log('Speech recognition not supported', 'error');
+                return false;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.lang = 'ko-KR';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onresult = async (event) => {
+                const text = event.results[0][0].transcript;
+                log('Recognized: ' + text, 'info');
+                stopRecording();
+                await askAI(text);
+            };
+
+            recognition.onerror = (event) => {
+                log('Speech error: ' + event.error, 'error');
+                stopRecording();
+            };
+
+            recognition.onend = () => {
+                stopRecording();
+            };
+
+            return true;
+        }
+
+        function toggleMic() {
+            if (isRecording) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        }
+
+        function startRecording() {
+            if (!recognition && !initSpeechRecognition()) {
+                alert('Speech recognition not available');
+                return;
+            }
+
+            isRecording = true;
+            document.getElementById('micBtn').classList.add('recording');
+            recognition.start();
+            log('Listening...', 'info');
+        }
+
+        function stopRecording() {
+            isRecording = false;
+            document.getElementById('micBtn').classList.remove('recording');
+            if (recognition) {
+                recognition.stop();
+            }
+        }
+
+        async function askAI(question) {
+            if (!serverConnected) {
+                log('Server not connected', 'error');
+                return;
+            }
+
+            const url = document.getElementById('serverUrl').value;
+            log('Asking AI...', 'info');
+
+            try {
+                const res = await fetch(url + '/api/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question })
+                });
+                const data = await res.json();
+
+                // Show response
+                document.getElementById('responseCard').style.display = 'block';
+                document.getElementById('recognizedText').textContent = '"' + question + '"';
+                document.getElementById('aiResponse').textContent = data.response;
+
+                // Update color
+                if (data.led_color) {
+                    const [r, g, b] = data.led_color;
+                    currentColor = [r, g, b];
+                    document.getElementById('colorPreview').style.background = `rgb(${r},${g},${b})`;
+                    sendBLE(`C:${r},${g},${b}`);
+                }
+
+                // TTS
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(data.response);
+                    utterance.lang = 'ko-KR';
+                    speechSynthesis.speak(utterance);
+                }
+
+                log('AI response received', 'success');
+
+            } catch (e) {
+                log('AI error: ' + e.message, 'error');
+            }
+        }
+
+        // ===== 본부 관제 시스템 연결 =====
+        let controlWs = null;
+        let controlConnected = false;
+        // 디바이스 ID를 localStorage에 저장하여 재사용
+        let deviceId = localStorage.getItem('fanstick_device_id');
+        if (!deviceId) {
+            deviceId = 'fan-' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('fanstick_device_id', deviceId);
+        }
+        let bleName = '';  // BLE 연결된 응원봉 이름
+
+        function connectControl() {
+            const wsUrl = document.getElementById('controlUrl').value;
+            const fullUrl = wsUrl + '/ws/' + deviceId;
+
+            log('본부 연결 중...', 'info');
+            document.getElementById('controlDot').classList.add('connecting');
+
+            try {
+                controlWs = new WebSocket(fullUrl);
+
+                controlWs.onopen = () => {
+                    // 디바이스 정보 전송 (BLE 연결된 응원봉 이름 포함)
+                    controlWs.send(JSON.stringify({
+                        type: 'fan',
+                        name: bleName || ('응원봉 ' + deviceId.substr(-4)),
+                        ble_connected: bleConnected,
+                        ble_name: bleName,
+                        platform: navigator.platform
+                    }));
+                };
+
+                controlWs.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    handleControlMessage(data);
+                };
+
+                controlWs.onclose = () => {
+                    controlConnected = false;
+                    document.getElementById('controlDot').classList.remove('connected', 'connecting');
+                    document.getElementById('controlStatus').textContent = '연결 끊김';
+                    log('본부 연결 끊김', 'error');
+                };
+
+                controlWs.onerror = (e) => {
+                    log('본부 연결 오류', 'error');
+                };
+
+            } catch (e) {
+                log('본부 연결 실패: ' + e.message, 'error');
+                document.getElementById('controlDot').classList.remove('connecting');
+            }
+        }
+
+        function handleControlMessage(data) {
+            log('본부 메시지: ' + data.type, 'info');
+
+            switch (data.type) {
+                case 'connected':
+                    controlConnected = true;
+                    document.getElementById('controlDot').classList.remove('connecting');
+                    document.getElementById('controlDot').classList.add('connected');
+                    document.getElementById('controlStatus').textContent = '본부 연결됨';
+                    log('본부에 연결되었습니다! ID: ' + deviceId, 'success');
+                    break;
+
+                case 'winner':
+                    // 당첨!
+                    showWinnerEffect(data);
+                    break;
+
+                case 'led_command':
+                    // LED 명령
+                    if (data.led) {
+                        log('LED 명령 수신: R=' + data.led.r + ' G=' + data.led.g + ' B=' + data.led.b, 'info');
+                        if (!bleConnected) {
+                            log('BLE 미연결! Connect BLE 버튼을 눌러주세요.', 'error');
+                        } else {
+                            log('BLE로 LED 명령 전송 중...', 'info');
+                        }
+                        setColor(data.led.r, data.led.g, data.led.b);
+                        if (data.led.pattern && data.led.pattern !== 'solid') {
+                            setPattern(data.led.pattern);
+                        }
+                    }
+                    break;
+
+                case 'melody_command':
+                    // 멜로디 명령
+                    if (data.melody) {
+                        playMelody(data.melody);
+                    }
+                    break;
+
+                case 'display_message':
+                    // 메시지 표시
+                    if (data.message) {
+                        log('📢 본부 메시지: ' + data.message, 'success');
+                        // 화면에 메시지 표시
+                        showControlMessage(data.message);
+                        // ESP32 OLED에도 표시
+                        sendBLE('T:' + data.message);
+                    }
+                    break;
+
+                case 'lottery_result':
+                    // 추첨 결과 발표
+                    log('🎉 추첨 결과: ' + data.count + '명 당첨!', 'success');
+                    break;
+            }
+        }
+
+        // 본부 메시지 표시
+        function showControlMessage(message) {
+            // 기존 메시지 제거
+            const existing = document.getElementById('controlMessage');
+            if (existing) existing.remove();
+
+            // 새 메시지 생성
+            const msgDiv = document.createElement('div');
+            msgDiv.id = 'controlMessage';
+            msgDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, rgba(156,39,176,0.95), rgba(103,58,183,0.95));
+                color: white;
+                padding: 30px 40px;
+                border-radius: 20px;
+                font-size: 1.3em;
+                text-align: center;
+                z-index: 9999;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+                animation: fadeIn 0.3s ease;
+                max-width: 80%;
+            `;
+            msgDiv.innerHTML = `
+                <div style="font-size:2em; margin-bottom:15px;">📢</div>
+                <div style="font-weight:bold; margin-bottom:10px;">본부 메시지</div>
+                <div>${message}</div>
+            `;
+            document.body.appendChild(msgDiv);
+
+            // 5초 후 자동 닫기
+            setTimeout(() => {
+                if (msgDiv.parentNode) {
+                    msgDiv.style.animation = 'fadeOut 0.3s ease';
+                    setTimeout(() => msgDiv.remove(), 300);
+                }
+            }, 5000);
+
+            // 클릭하면 닫기
+            msgDiv.onclick = () => msgDiv.remove();
+
+            // 진동
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]);
+            }
+        }
+
+        function showWinnerEffect(data) {
+            // 당첨 카드 표시
+            document.getElementById('winnerCard').style.display = 'block';
+            document.getElementById('winnerMessage').textContent = data.message || '당첨되셨습니다!';
+
+            // LED 효과
+            if (data.led) {
+                setColor(data.led.r, data.led.g, data.led.b);
+                if (data.led.pattern) {
+                    setPattern(data.led.pattern);
+                }
+            }
+
+            // 멜로디 재생
+            if (data.melody) {
+                playMelody(data.melody);
+            }
+
+            // 진동 (지원되는 경우)
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200, 100, 200]);
+            }
+
+            // TTS 축하 메시지
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance('축하합니다! 당첨되셨습니다!');
+                utterance.lang = 'ko-KR';
+                speechSynthesis.speak(utterance);
+            }
+
+            log('🏆 당첨되었습니다!!!', 'success');
+
+            // 5초 후 당첨 카드 숨기기
+            setTimeout(() => {
+                document.getElementById('winnerCard').style.display = 'none';
+            }, 10000);
+        }
+
+        // 본부에 반응 전송
+        function sendReaction(reaction) {
+            if (controlConnected && controlWs) {
+                controlWs.send(JSON.stringify({
+                    type: 'reaction',
+                    reaction: reaction
+                }));
+                log('반응 전송: ' + reaction, 'info');
+            }
+        }
+
+        // Initialize
+        log('AI FanStick Web App Ready', 'success');
+        log('Device ID: ' + deviceId, 'info');
+    </script>
+</body>
+</html>

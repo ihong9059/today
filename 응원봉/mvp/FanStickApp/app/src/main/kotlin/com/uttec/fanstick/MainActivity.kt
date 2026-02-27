@@ -86,6 +86,7 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
 
     // UI State
     private val _bleState = mutableStateOf(BleState.DISCONNECTED)
+    private val _connectedBleName = mutableStateOf("")
     private val _serverConnected = mutableStateOf(false)
     private val _controlConnected = mutableStateOf(false)
     private val _scannedDevices = mutableStateListOf<BluetoothDevice>()
@@ -698,8 +699,15 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
 
         coroutineScope.launch(Dispatchers.IO) {
             try {
+                // BLE 이름을 질문에 포함시켜 AI가 활용하도록 함
+                val bleInfo = if (_connectedBleName.value.isNotEmpty()) {
+                    " (현재 연결된 응원봉: ${_connectedBleName.value})"
+                } else ""
+                val enhancedQuestion = question + bleInfo
+
                 val jsonBody = JSONObject().apply {
-                    put("question", question)
+                    put("question", enhancedQuestion)
+                    put("ble_name", _connectedBleName.value)
                 }.toString()
 
                 val request = Request.Builder()
@@ -949,7 +957,8 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
                     Log.d(TAG, "Connected to GATT server")
                     handler.post {
                         _bleState.value = BleState.CONNECTED
-                        _statusMessage.value = "연결됨! 서비스 검색 중..."
+                        _connectedBleName.value = gatt.device.name ?: "Unknown"
+                        _statusMessage.value = "${_connectedBleName.value} 연결됨!"
                     }
                     gatt.discoverServices()
                 }

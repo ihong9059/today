@@ -145,7 +145,7 @@ void setup() {
   Serial.println("[OLED] 한글 초기화 완료");
 
   // BLE 초기화
-  BLEDevice::init("홍광선 응원봉");
+  BLEDevice::init("홍광삼 응원봉");
   pServer = BLEDevice::createServer();
   pServer->setCallbacks(new ServerCallbacks());
 
