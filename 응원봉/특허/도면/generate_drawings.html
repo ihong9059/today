@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>AI FanStick 특허 도면</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Malgun Gothic', sans-serif; background: white; }
+
+        .drawing-page {
+            width: 800px;
+            height: 1000px;
+            margin: 20px auto;
+            padding: 40px;
+            background: white;
+            border: 2px solid #000;
+            page-break-after: always;
+        }
+
+        .drawing-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+
+        /* 공통 박스 스타일 */
+        .box {
+            border: 2px solid #000;
+            padding: 10px;
+            text-align: center;
+            background: white;
+            font-size: 12px;
+        }
+
+        .box-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* 화살표 */
+        .arrow-down {
+            text-align: center;
+            font-size: 24px;
+            margin: 5px 0;
+        }
+
+        .arrow-right {
+            display: inline-block;
+            font-size: 20px;
+        }
+
+        /* 도 1: 시스템 구성도 */
+        .fig1-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .fig1-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .fig1-main-box {
+            border: 3px solid #000;
+            padding: 20px;
+            width: 500px;
+        }
+
+        .fig1-sub-box {
+            border: 1px solid #000;
+            padding: 8px;
+            margin: 5px;
+            font-size: 11px;
+        }
+
+        .fig1-device {
+            border: 3px solid #000;
+            padding: 15px;
+            width: 300px;
+        }
+
+        /* 참조번호 */
+        .ref-num {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* 도 2: 흐름도 */
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .flow-box {
+            border: 2px solid #000;
+            padding: 12px 20px;
+            min-width: 400px;
+            text-align: center;
+        }
+
+        .flow-start {
+            border-radius: 30px;
+            background: #f0f0f0;
+        }
+
+        .flow-process {
+            background: white;
+        }
+
+        .flow-decision {
+            transform: rotate(0deg);
+            border: 2px solid #000;
+            padding: 15px;
+            position: relative;
+        }
+
+        .decision-diamond {
+            width: 150px;
+            height: 80px;
+            border: 2px solid #000;
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .decision-text {
+            transform: rotate(-45deg);
+            font-size: 11px;
+        }
+
+        /* 도 3: 시퀀스 다이어그램 */
+        .sequence {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 20px;
+        }
+
+        .seq-actor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 120px;
+        }
+
+        .seq-actor-box {
+            border: 2px solid #000;
+            padding: 10px;
+            width: 100px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .seq-lifeline {
+            width: 2px;
+            height: 500px;
+            background: #000;
+            margin-top: 10px;
+        }
+
+        .seq-messages {
+            position: absolute;
+            top: 120px;
+            left: 50px;
+            width: 700px;
+        }
+
+        .seq-msg {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            font-size: 11px;
+        }
+
+        .seq-arrow {
+            flex-grow: 1;
+            height: 2px;
+            background: #000;
+            position: relative;
+        }
+
+        .seq-arrow::after {
+            content: '>';
+            position: absolute;
+            right: -5px;
+            top: -8px;
+        }
+
+        /* 도 4: 프로토콜 구조 */
+        .protocol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .protocol-table th, .protocol-table td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .protocol-table th {
+            background: #e0e0e0;
+            font-weight: bold;
+        }
+
+        /* 도 5, 6, 7: 알고리즘 흐름도 */
+        .algo-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .algo-box {
+            border: 2px solid #000;
+            padding: 10px 15px;
+            min-width: 350px;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        .algo-decision {
+            border: 2px solid #000;
+            padding: 15px;
+            background: #f8f8f8;
+            font-size: 11px;
+        }
+
+        .branch {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 10px 0;
+        }
+
+        .branch-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .branch-label {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        @media print {
+            .drawing-page { border: none; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 도 1: 전체 시스템 구성도 -->
+<div class="drawing-page" id="fig1">
+    <div class="drawing-title">【도 1】 AI FanStick 전체 시스템 구성도</div>
+
+    <div class="fig1-container">
+        <!-- 사용자 -->
+        <div class="box" style="width: 150px;">
+            <div class="ref-num">(10)</div>
+            <div>사용자</div>
+            <div style="font-size:10px">(음성 질문)</div>
+        </div>
+
+        <div class="arrow-down">▼</div>
+
+        <!-- AI 서버 (상단) -->
+        <div class="fig1-row">
+            <div class="box" style="width: 180px; height: 80px;">
+                <div class="ref-num">(50)</div>
+                <div class="box-title">AI 서버</div>
+                <div style="font-size:10px">(Gemini/OpenAI)</div>
+            </div>
+            <div style="font-size: 20px;">◄───────►</div>
+            <!-- 스마트폰 앱 -->
+            <div class="fig1-main-box">
+                <div class="ref-num">(100)</div>
+                <div class="box-title" style="font-size:14px; margin-bottom:15px;">스마트폰 애플리케이션</div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="fig1-sub-box">
+                        <div class="ref-num">(110)</div>
+                        로컬 데이터 저장부
+                    </div>
+                    <div class="fig1-sub-box">
+                        <div class="ref-num">(120)</div>
+                        프롬프트 생성부
+                    </div>
+                    <div class="fig1-sub-box">
+                        <div class="ref-num">(130)</div>
+                        음성 인식부 (STT)
+                    </div>
+                    <div class="fig1-sub-box">
+                        <div class="ref-num">(140)</div>
+                        AI 통신부
+                    </div>
+                    <div class="fig1-sub-box">
+                        <div class="ref-num">(150)</div>
+                        응답 파싱부
+                    </div>
+                    <div class="fig1-sub-box">
+                        <div class="ref-num">(160)</div>
+                        BLE 통신부
+                    </div>
+                    <div class="fig1-sub-box" style="grid-column: span 2;">
+                        <div class="ref-num">(170)</div>
+                        온디바이스 AI (Local LLM)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow-down">▼ BLE</div>
+
+        <!-- 응원봉 장치 -->
+        <div class="fig1-device">
+            <div class="ref-num">(200)</div>
+            <div class="box-title" style="font-size:14px; margin-bottom:15px;">응원봉 장치</div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                <div class="fig1-sub-box">
+                    <div class="ref-num">(210)</div>
+                    BLE 수신부
+                </div>
+                <div class="fig1-sub-box">
+                    <div class="ref-num">(220)</div>
+                    마이크로컨트롤러<br>(ESP32)
+                </div>
+                <div class="fig1-sub-box">
+                    <div class="ref-num">(230)</div>
+                    LED 발광부<br>(WS2812)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 도 2: 시스템 프롬프트 생성 흐름도 -->
+<div class="drawing-page" id="fig2">
+    <div class="drawing-title">【도 2】 시스템 프롬프트 생성 흐름도</div>
+
+    <div class="flowchart">
+        <div class="flow-box flow-start">시작 (앱 실행)</div>
+        <div class="arrow-down">▼</div>
+
+        <div class="flow-box flow-process">
+            <b>S100:</b> 로컬 JSON 데이터 로드<br>
+            <span style="font-size:10px">(setlist, artist, current_state)</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="flow-box flow-process">
+            <b>S110:</b> 현재 곡 인덱스 조회<br>
+            <span style="font-size:10px">current_index = current_state.song_index</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="flow-box flow-process">
+            <b>S120:</b> 콘텍스트 정보 추출<br>
+            <span style="font-size:10px">현재 곡, 다음 곡, 남은 곡 수, 아티스트 정보</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="flow-box flow-process">
+            <b>S130:</b> 시스템 프롬프트 템플릿 적용<br>
+            <span style="font-size:10px">"당신은 {artist} 콘서트 AI 비서입니다..."</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="flow-box flow-process">
+            <b>S140:</b> 동적 시스템 프롬프트 출력<br>
+            <span style="font-size:10px">[LED:R,G,B] 형식 지시문 포함</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-decision" style="width:200px;">곡 인덱스 변경?</div>
+
+        <div class="branch">
+            <div class="branch-item">
+                <div class="branch-label">Yes</div>
+                <div style="font-size:11px">→ S110으로 복귀</div>
+            </div>
+            <div class="branch-item">
+                <div class="branch-label">No</div>
+                <div style="font-size:11px">→ 현재 프롬프트 유지</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 도 3: 음성-AI-LED 파이프라인 시퀀스 다이어그램 -->
+<div class="drawing-page" id="fig3">
+    <div class="drawing-title">【도 3】 음성-AI-LED 파이프라인 시퀀스 다이어그램</div>
+
+    <div style="position: relative; height: 800px;">
+        <!-- 액터들 -->
+        <div style="display: flex; justify-content: space-around; padding: 0 20px;">
+            <div class="seq-actor">
+                <div class="seq-actor-box">사용자<br>(10)</div>
+                <div class="seq-lifeline"></div>
+            </div>
+            <div class="seq-actor">
+                <div class="seq-actor-box">스마트폰 앱<br>(100)</div>
+                <div class="seq-lifeline"></div>
+            </div>
+            <div class="seq-actor">
+                <div class="seq-actor-box">AI 서버<br>(50)</div>
+                <div class="seq-lifeline"></div>
+            </div>
+            <div class="seq-actor">
+                <div class="seq-actor-box">응원봉<br>(200)</div>
+                <div class="seq-lifeline"></div>
+            </div>
+        </div>
+
+        <!-- 메시지들 -->
+        <div style="position: absolute; top: 90px; left: 20px; width: 760px; font-size: 11px;">
+            <div style="margin: 20px 0; display: flex; align-items: center;">
+                <span style="width: 80px; text-align: right;">① 음성 입력</span>
+                <div style="flex-grow: 0.4; height: 2px; background: #000; margin: 0 10px;"></div>
+                <span style="font-size:10px">"다음 곡 뭐야?"</span>
+            </div>
+
+            <div style="margin: 20px 0; margin-left: 100px;">
+                <span>② STT 변환 (~500ms)</span>
+            </div>
+
+            <div style="margin: 20px 0; margin-left: 100px;">
+                <span>③ 시스템 프롬프트 + 사용자 질문 결합</span>
+            </div>
+
+            <div style="margin: 20px 0; display: flex; align-items: center;">
+                <span style="width: 180px;"></span>
+                <span>④ API 요청</span>
+                <div style="width: 200px; height: 2px; background: #000; margin: 0 10px;"></div>
+                <span>►</span>
+            </div>
+
+            <div style="margin: 20px 0; margin-left: 450px;">
+                <span>⑤ AI 처리</span>
+            </div>
+
+            <div style="margin: 20px 0; display: flex; align-items: center;">
+                <span style="width: 180px;"></span>
+                <span>◄</span>
+                <div style="width: 200px; height: 2px; background: #000; margin: 0 10px;"></div>
+                <span>⑥ API 응답 (~1500ms)</span>
+            </div>
+
+            <div style="margin: 20px 0; margin-left: 100px;">
+                <span>⑦ 응답 파싱: 텍스트 + [LED:0,100,255]</span>
+            </div>
+
+            <div style="margin: 20px 0; display: flex; align-items: center;">
+                <span style="width: 80px; text-align: right;">◄───</span>
+                <span style="margin: 0 10px;">⑧ TTS 음성 출력</span>
+            </div>
+
+            <div style="margin: 20px 0; display: flex; align-items: center;">
+                <span style="width: 180px;"></span>
+                <span>⑨ BLE 전송</span>
+                <div style="width: 330px; height: 2px; background: #000; margin: 0 10px;"></div>
+                <span>►</span>
+            </div>
+
+            <div style="margin: 20px 0; margin-left: 600px;">
+                <span>⑩ LED 색상 변경</span>
+            </div>
+
+            <div style="margin: 20px 0; display: flex; align-items: center;">
+                <span style="width: 180px;"></span>
+                <span>◄</span>
+                <div style="width: 330px; height: 2px; background: #000; margin: 0 10px;"></div>
+                <span>⑪ OK (~200ms)</span>
+            </div>
+
+            <div style="margin-top: 40px; border: 1px solid #000; padding: 10px; font-size: 10px;">
+                <b>【타이밍】</b><br>
+                ① → ②: ~200ms | ② → ③: ~500ms | ③ → ⑥: ~1500ms | ⑥ → ⑧⑨: ~100ms | ⑨ → ⑪: ~200ms<br>
+                <b>총 소요 시간: 약 2.5초 (3초 이내)</b>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 도 4: BLE 명령 프로토콜 구조 -->
+<div class="drawing-page" id="fig4">
+    <div class="drawing-title">【도 4】 BLE 명령 프로토콜 구조</div>
+
+    <div style="padding: 20px;">
+        <!-- 4-1. 명령 프레임 구조 -->
+        <h3 style="font-size: 14px; margin-bottom: 15px;">【4-1】 명령 프레임 구조</h3>
+        <table class="protocol-table">
+            <tr>
+                <th>바이트</th>
+                <th>필드</th>
+                <th>설명</th>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>TYPE</td>
+                <td>명령 유형 (1 문자: C, P, T, B, L, S)</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>DELIM</td>
+                <td>구분자 (콜론 ':')</td>
+            </tr>
+            <tr>
+                <td>2~N</td>
+                <td>PARAMS</td>
+                <td>파라미터 (가변 길이)</td>
+            </tr>
+        </table>
+        <div style="text-align: center; font-size: 12px; margin: 10px 0;">
+            형식: &lt;TYPE&gt;:&lt;PARAMETERS&gt; | 예시: "C:255,100,0"
+        </div>
+
+        <!-- 4-2. 명령 유형별 상세 -->
+        <h3 style="font-size: 14px; margin: 20px 0 15px;">【4-2】 명령 유형별 상세</h3>
+        <table class="protocol-table">
+            <tr>
+                <th>TYPE</th>
+                <th>명령명</th>
+                <th>파라미터 형식</th>
+                <th>예시</th>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>Color (색상 변경)</td>
+                <td>R,G,B (각 0-255)</td>
+                <td>"C:255,0,128"</td>
+            </tr>
+            <tr>
+                <td>P</td>
+                <td>Pattern (패턴 변경)</td>
+                <td>패턴명</td>
+                <td>"P:rainbow"</td>
+            </tr>
+            <tr>
+                <td>T</td>
+                <td>Text (텍스트 표시)</td>
+                <td>UTF-8, 최대 32바이트</td>
+                <td>"T:좋아좋아"</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>Buzzer (버저 피드백)</td>
+                <td>소리 유형</td>
+                <td>"B:ack"</td>
+            </tr>
+            <tr>
+                <td>L</td>
+                <td>Luminance (밝기 조절)</td>
+                <td>밝기 값 (0-255)</td>
+                <td>"L:200"</td>
+            </tr>
+            <tr>
+                <td>S</td>
+                <td>Song Info (곡 정보)</td>
+                <td>곡제목|색상명</td>
+                <td>"S:Dynamite|Gold"</td>
+            </tr>
+        </table>
+
+        <!-- 4-3. 응답 프레임 구조 -->
+        <h3 style="font-size: 14px; margin: 20px 0 15px;">【4-3】 응답 프레임 구조</h3>
+        <table class="protocol-table">
+            <tr>
+                <th>응답</th>
+                <th>의미</th>
+            </tr>
+            <tr>
+                <td>OK</td>
+                <td>명령 실행 성공</td>
+            </tr>
+            <tr>
+                <td>ERR:01</td>
+                <td>알 수 없는 명령 유형</td>
+            </tr>
+            <tr>
+                <td>ERR:02</td>
+                <td>파라미터 형식 오류</td>
+            </tr>
+            <tr>
+                <td>ERR:03</td>
+                <td>값 범위 초과 (RGB > 255)</td>
+            </tr>
+            <tr>
+                <td>ERR:04</td>
+                <td>명령 실행 실패</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- 도 5: AI 응답 파싱 알고리즘 흐름도 -->
+<div class="drawing-page" id="fig5">
+    <div class="drawing-title">【도 5】 AI 응답 파싱 알고리즘 흐름도</div>
+
+    <div class="algo-flow">
+        <div class="algo-box flow-start">
+            시작 (AI 응답 수신)<br>
+            <span style="font-size:10px">입력: "다음 곡은 좋아좋아야! [LED:0,100,255]"</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box">
+            <b>P100:</b> 정규식 패턴 매칭 수행<br>
+            <span style="font-size:10px">패턴: \[LED:(\d{1,3}),(\d{1,3}),(\d{1,3})\]</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-decision" style="width: 180px;">패턴 매칭 성공?</div>
+
+        <div class="branch">
+            <div class="branch-item">
+                <div class="branch-label">Yes</div>
+                <div class="arrow-down">▼</div>
+                <div class="algo-box" style="min-width: 200px;">
+                    <b>P110:</b> RGB 값 추출<br>
+                    <span style="font-size:10px">R=0, G=100, B=255</span>
+                </div>
+            </div>
+            <div class="branch-item">
+                <div class="branch-label">No</div>
+                <div class="arrow-down">▼</div>
+                <div class="algo-box" style="min-width: 200px;">
+                    <b>P120:</b> 폴백 처리<br>
+                    <span style="font-size:10px">로컬 DB에서 현재 곡<br>응원색 조회</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box">
+            <b>P130:</b> RGB 값 유효성 검증<br>
+            <span style="font-size:10px">0 ≤ R,G,B ≤ 255 범위 보정</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box">
+            <b>P140:</b> 텍스트 부분 추출<br>
+            <span style="font-size:10px">LED 태그 제거 → "다음 곡은 좋아좋아야!"</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box">
+            <b>P150:</b> 결과 객체 생성<br>
+            <span style="font-size:10px">{ text: "...", led_color: (0,100,255) }</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box" style="background: #f0f0f0;">
+            <b>P160:</b> 병렬 출력 분기
+        </div>
+
+        <div class="branch" style="margin-top: 15px;">
+            <div class="branch-item">
+                <div class="algo-box" style="min-width: 150px;">
+                    TTS 출력<br>
+                    <span style="font-size:10px">(비동기)</span>
+                </div>
+            </div>
+            <div class="branch-item">
+                <div class="algo-box" style="min-width: 150px;">
+                    BLE 전송<br>
+                    <span style="font-size:10px">"C:0,100,255"</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 도 6: 하이브리드 AI 아키텍처 -->
+<div class="drawing-page" id="fig6">
+    <div class="drawing-title">【도 6】 하이브리드 AI 아키텍처 (클라우드 + 온디바이스)</div>
+
+    <div class="algo-flow">
+        <div class="algo-box flow-start">사용자 음성 질문</div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box">
+            <b>H100:</b> 네트워크 상태 감지<br>
+            <span style="font-size:10px">ConnectivityManager.activeNetwork</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-decision" style="width: 200px;">네트워크 연결?</div>
+
+        <div class="branch">
+            <div class="branch-item">
+                <div class="branch-label">Yes (온라인)</div>
+                <div class="arrow-down">▼</div>
+                <div class="algo-box" style="min-width: 220px; border: 3px solid #000;">
+                    <b>H110:</b> 클라우드 AI 호출<br>
+                    <span style="font-size:10px">Gemini / OpenAI API</span><br>
+                    <span style="font-size:9px; color:#666;">고품질 응답, ~2초</span>
+                </div>
+                <div class="arrow-down">▼</div>
+                <div class="algo-decision" style="width: 100px; font-size:10px;">성공?</div>
+            </div>
+            <div class="branch-item">
+                <div class="branch-label">No (오프라인)</div>
+                <div class="arrow-down">▼</div>
+                <div class="algo-box" style="min-width: 220px; border: 3px solid #000;">
+                    <b>H130:</b> 온디바이스 AI 호출<br>
+                    <span style="font-size:10px">Local LLM (Gemma 2B)</span><br>
+                    <span style="font-size:9px; color:#666;">오프라인 가능, 3-8초</span>
+                </div>
+                <div class="arrow-down">▼</div>
+                <div class="algo-decision" style="width: 100px; font-size:10px;">성공?</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; text-align: center; font-size: 11px;">
+            <span style="color: #666;">실패 시 ↓</span>
+        </div>
+
+        <div class="algo-box" style="margin-top: 10px; background: #f8f8f8;">
+            <b>H140:</b> 규칙 기반 폴백 (Rule-based Fallback)<br>
+            <span style="font-size:10px">로컬 DB에서 현재 곡 정보 조회 → 템플릿 응답 생성</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box">
+            <b>H150:</b> 응답 파싱 및 출력<br>
+            <span style="font-size:10px">LED 색상 추출 → BLE 전송 | 텍스트 → TTS 출력</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box flow-start">응원봉 LED 제어</div>
+    </div>
+</div>
+
+<!-- 도 7: 온디바이스 AI 처리 상세 흐름도 -->
+<div class="drawing-page" id="fig7">
+    <div class="drawing-title">【도 7】 온디바이스 AI 처리 상세 흐름도</div>
+
+    <div class="algo-flow">
+        <div class="algo-box flow-start">앱 시작 (최초 실행)</div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-decision" style="width: 180px;">로컬 모델 존재?</div>
+
+        <div class="branch">
+            <div class="branch-item">
+                <div class="branch-label">Yes</div>
+                <div class="arrow-down">▼</div>
+                <div class="algo-box" style="min-width: 180px;">
+                    <b>L100:</b> 모델 로드<br>
+                    <span style="font-size:10px">메모리 매핑<br>초기화: 2-5초</span>
+                </div>
+            </div>
+            <div class="branch-item">
+                <div class="branch-label">No</div>
+                <div class="arrow-down">▼</div>
+                <div class="algo-box" style="min-width: 180px;">
+                    <b>L050:</b> 모델 다운로드<br>
+                    <span style="font-size:10px">HuggingFace/Firebase<br>~1.2GB, Wi-Fi 권장</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box">
+            <b>L110:</b> 모델 인스턴스 초기화<br>
+            <span style="font-size:10px">LlmInference.builder().setModelPath(...).setMaxTokens(200).build()</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box" style="background: #f0f0f0;">대기 상태 (사용자 질문 대기)</div>
+        <div class="arrow-down">▼ 사용자 질문 입력</div>
+
+        <div class="algo-box">
+            <b>L120:</b> 프롬프트 구성<br>
+            <span style="font-size:10px">${systemPrompt} + "User: ${question}" + "Assistant:"</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box">
+            <b>L130:</b> 로컬 추론 실행<br>
+            <span style="font-size:10px">llmInference.generateResponse(prompt)<br>추론 시간: 3-8초 (디바이스에 따라)</span>
+        </div>
+        <div class="arrow-down">▼</div>
+
+        <div class="algo-box">
+            <b>L140:</b> 응답 후처리<br>
+            <span style="font-size:10px">LED 색상 태그 추출 [LED:R,G,B]<br>텍스트 정제 → TTS 출력 + BLE 전송</span>
+        </div>
+
+        <div style="margin-top: 30px; border: 2px solid #000; padding: 15px; font-size: 11px;">
+            <b>【디바이스별 예상 성능】</b><br><br>
+            <table style="width: 100%; font-size: 11px;">
+                <tr><td>Pixel 8 Pro / S24 Ultra:</td><td>3-4초 (최적)</td></tr>
+                <tr><td>Pixel 7 / S22:</td><td>5-6초 (양호)</td></tr>
+                <tr><td>Pixel 6a / 중급기:</td><td>6-8초 (보통)</td></tr>
+                <tr><td>4GB RAM 미만:</td><td>미지원</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
