@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Device Monitor</string>
-    <string name="widget_description">CPU, RAM, Storage 실시간 모니터링 위젯</string>
-</resources>
