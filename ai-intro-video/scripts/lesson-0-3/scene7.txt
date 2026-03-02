@@ -1,0 +1,23 @@
+오늘 배운 내용을 정리해 봅시다.
+
+for 문과 range는 Epoch 반복에 사용됩니다.
+for epoch in range(100) 형태입니다.
+
+중첩 for 문은 Batch 처리에 사용됩니다.
+for batch in dataloader 형태입니다.
+
+if 문은 조건부 저장과 조기 종료에 사용됩니다.
+if val_loss < best 형태입니다.
+
+break 문은 Early Stopping에 사용됩니다.
+if patience > 10 콜론 break 형태입니다.
+
+while 문은 목표 기반 학습에 사용됩니다.
+while accuracy < 0.95 형태입니다.
+
+잊어버려도 괜찮습니다.
+"AI 학습은 반복문 안에서 일어난다"는 것만 기억하세요.
+AI에게 "PyTorch 학습 루프 코드 작성해줘"라고 물어보면 됩니다.
+
+다음 레슨에서는 함수에 대해 알아보겠습니다.
+감사합니다.

@@ -1,0 +1,28 @@
+이제 조건문, if 문에 대해 알아봅시다.
+조건문은 "AI 학습의 뇌" 역할을 합니다.
+
+가장 중요한 활용은 Early Stopping, 조기 종료입니다.
+과적합을 방지하는 핵심 기법이죠.
+
+코드를 볼까요?
+
+if val_loss < best_loss 콜론.
+    best_loss = val_loss
+    save_model()
+else 콜론.
+    patience += 1
+
+이 코드는 검증 손실이 개선되면 모델을 저장하고,
+개선되지 않으면 patience를 증가시킵니다.
+
+그리고 다음 조건을 추가합니다.
+
+if patience > 10 콜론.
+    print("Early stopping!")
+    break
+
+10번 연속 개선이 없으면 학습을 중단합니다.
+이것이 Early Stopping입니다.
+
+더 오래 학습해도 오히려 성능이 나빠지기 때문에,
+적절한 시점에 멈추는 것이 중요합니다.

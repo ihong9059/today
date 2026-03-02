@@ -1,0 +1,22 @@
+{
+  "name": "ai-intro-video",
+  "version": "1.0.0",
+  "description": "AI 첫걸음 교육 소개 동영상",
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion render AIIntroVideo out/video.mp4",
+    "render": "remotion render AIIntroVideo out/video.mp4 --codec=h264"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@remotion/bundler": "^4.0.431",
+    "@remotion/cli": "^4.0.431",
+    "openai": "^6.25.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "remotion": "^4.0.431",
+    "typescript": "^5.9.3"
+  }
+}
