@@ -1,0 +1,11 @@
+순전파 단계를 자세히 알아보겠습니다.
+
+입력 데이터를 모델에 넣습니다.
+outputs = model(inputs) 형태입니다.
+모델이 예측값을 출력합니다.
+
+그다음 손실을 계산합니다.
+loss = criterion(outputs, labels) 입니다.
+예측값과 정답의 차이를 측정합니다.
+
+손실 함수로는 CrossEntropyLoss나 MSELoss를 주로 사용합니다.

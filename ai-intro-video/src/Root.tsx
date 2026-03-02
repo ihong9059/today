@@ -30,6 +30,16 @@ import { Lesson3_5Video, LESSON_3_5_DURATION, Lesson3_5Thumbnail } from "./lesso
 import { Lesson3_6Video, LESSON_3_6_DURATION, Lesson3_6Thumbnail } from "./lessons/Level3/Lesson3_6";
 import { Lesson3_7Video, LESSON_3_7_DURATION, Lesson3_7Thumbnail } from "./lessons/Level3/Lesson3_7";
 import { Lesson3_8Video, LESSON_3_8_DURATION, Lesson3_8Thumbnail } from "./lessons/Level3/Lesson3_8";
+import { Lesson4_1Video, LESSON_4_1_DURATION, Lesson4_1Thumbnail } from "./lessons/Level4/Lesson4_1";
+import { Lesson4_2Video, LESSON_4_2_DURATION, Lesson4_2Thumbnail } from "./lessons/Level4/Lesson4_2";
+import { Lesson4_3Video, LESSON_4_3_DURATION, Lesson4_3Thumbnail } from "./lessons/Level4/Lesson4_3";
+import { Lesson4_4Video, LESSON_4_4_DURATION, Lesson4_4Thumbnail } from "./lessons/Level4/Lesson4_4";
+import { Lesson4_5Video, LESSON_4_5_DURATION, Lesson4_5Thumbnail } from "./lessons/Level4/Lesson4_5";
+import { Lesson4_6Video, LESSON_4_6_DURATION, Lesson4_6Thumbnail } from "./lessons/Level4/Lesson4_6";
+import { Lesson4_7Video, LESSON_4_7_DURATION, Lesson4_7Thumbnail } from "./lessons/Level4/Lesson4_7";
+import { Lesson51Video, LESSON51_DURATION, Lesson51Thumbnail } from "./lessons/Level5/Lesson51";
+import { Lesson52Video, LESSON52_DURATION, Lesson52Thumbnail } from "./lessons/Level5/Lesson52";
+import { Lesson53Video, LESSON53_DURATION, Lesson53Thumbnail } from "./lessons/Level5/Lesson53";
 
 // 30fps, 12분 5초 = 725초 = 21750 프레임 (나레이션 길이 기반)
 const FPS = 30;
@@ -545,6 +555,178 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Lesson3-8Thumbnail"
         component={Lesson3_8Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* ============ Level 4: PyTorch 실전 ============ */}
+      {/* Lesson 4-1: MNIST 손글씨 분류 */}
+      <Composition
+        id="Lesson4-1"
+        component={Lesson4_1Video}
+        durationInFrames={LESSON_4_1_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson4-1Thumbnail"
+        component={Lesson4_1Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 4-2: 이미지 분류 CNN */}
+      <Composition
+        id="Lesson4-2"
+        component={Lesson4_2Video}
+        durationInFrames={LESSON_4_2_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson4-2Thumbnail"
+        component={Lesson4_2Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 4-3: 텍스트 분류 */}
+      <Composition
+        id="Lesson4-3"
+        component={Lesson4_3Video}
+        durationInFrames={LESSON_4_3_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson4-3Thumbnail"
+        component={Lesson4_3Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 4-4: nn.Module 기초 */}
+      <Composition
+        id="Lesson4-4"
+        component={Lesson4_4Video}
+        durationInFrames={LESSON_4_4_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson4-4Thumbnail"
+        component={Lesson4_4Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 4-5: 데이터 로딩 */}
+      <Composition
+        id="Lesson4-5"
+        component={Lesson4_5Video}
+        durationInFrames={LESSON_4_5_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson4-5Thumbnail"
+        component={Lesson4_5Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 4-6: 학습 루프 */}
+      <Composition
+        id="Lesson4-6"
+        component={Lesson4_6Video}
+        durationInFrames={LESSON_4_6_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson4-6Thumbnail"
+        component={Lesson4_6Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 4-7: 모델 저장과 로드 */}
+      <Composition
+        id="Lesson4-7"
+        component={Lesson4_7Video}
+        durationInFrames={LESSON_4_7_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson4-7Thumbnail"
+        component={Lesson4_7Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* ============ Level 5: CNN & 이미지 처리 ============ */}
+      {/* Lesson 5-1: 컴퓨터 비전 소개 */}
+      <Composition
+        id="Lesson5-1"
+        component={Lesson51Video}
+        durationInFrames={LESSON51_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson5-1Thumbnail"
+        component={Lesson51Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 5-2: 합성곱 연산 이해하기 */}
+      <Composition
+        id="Lesson5-2"
+        component={Lesson52Video}
+        durationInFrames={LESSON52_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson5-2Thumbnail"
+        component={Lesson52Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 5-3: 풀링과 정규화 */}
+      <Composition
+        id="Lesson5-3"
+        component={Lesson53Video}
+        durationInFrames={LESSON53_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson5-3Thumbnail"
+        component={Lesson53Thumbnail}
         durationInFrames={1}
         fps={30}
         width={1280}

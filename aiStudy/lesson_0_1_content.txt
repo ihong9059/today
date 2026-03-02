@@ -1,0 +1,158 @@
+# Python 환경 설정
+
+## 📚 학습 목표
+이 레슨을 완료하면:
+- Python을 설치하고 버전을 확인할 수 있습니다
+- VS Code, PyCharm, Jupyter의 차이를 이해합니다
+- VS Code에 Python 확장을 설치하고 코드를 실행할 수 있습니다
+- Jupyter Notebook에서 셀 단위로 코드를 실행할 수 있습니다
+- 가상환경을 생성하고 활성화/비활성화할 수 있습니다
+
+---
+
+## 🔧 1. Python 설치
+
+### Step 1: 다운로드
+[python.org](https://www.python.org/downloads/) 접속 → Download 버튼 클릭
+
+### Step 2: 설치 시 주의사항
+⚠️ **반드시 "Add Python to PATH" 체크!**
+
+```
+┌─────────────────────────────────────────┐
+│  [✓] Add Python 3.x to PATH  ← 필수!   │
+│  [Install Now]                          │
+└─────────────────────────────────────────┘
+```
+
+### Step 3: 설치 확인
+```bash
+# Windows (명령 프롬프트 또는 PowerShell)
+python --version
+
+# Mac/Linux (터미널)
+python3 --version
+```
+
+출력 예시: `Python 3.11.5`
+
+---
+
+## 💻 2. IDE 선택 가이드
+
+| IDE | 특징 | 추천 대상 |
+|-----|------|-----------|
+| **VS Code** | 가볍고 확장성 뛰어남, 무료 | 초보자~전문가 모두 👍 |
+| **PyCharm** | Python 전용, 강력한 기능 | Python 전문 개발자 |
+| **Jupyter** | 셀 단위 실행, 결과 바로 확인 | 데이터 분석, AI 학습 👍 |
+
+> 💡 **추천**: VS Code + Jupyter 조합이 AI 학습에 최적!
+
+---
+
+## 🖥️ 3. VS Code 설치 및 설정
+
+### Step 1: 다운로드
+[code.visualstudio.com](https://code.visualstudio.com/) 접속 → 다운로드
+
+### Step 2: Python 확장 설치
+```
+사이드바 확장 아이콘 → "Python" 검색 → Microsoft 제공 확장 설치
+```
+
+### Step 3: 첫 코드 실행
+```python
+# hello.py
+print("Hello, AI!")
+```
+
+▶️ 실행: 우측 상단 재생 버튼 또는 `Ctrl+F5`
+
+---
+
+## 📓 4. Jupyter Notebook
+
+### 설치
+```bash
+pip install jupyter
+```
+
+### 실행
+```bash
+jupyter notebook
+```
+→ 브라우저가 자동으로 열립니다!
+
+### 기본 단축키
+| 단축키 | 기능 |
+|--------|------|
+| `Shift + Enter` | 셀 실행 후 다음 셀로 이동 |
+| `Ctrl + Enter` | 셀 실행 (현재 셀 유지) |
+| `Esc + A` | 위에 새 셀 추가 |
+| `Esc + B` | 아래에 새 셀 추가 |
+
+---
+
+## 🏠 5. 가상환경 (Virtual Environment)
+
+### 왜 필요한가?
+```
+프로젝트 A: TensorFlow 2.0 필요
+프로젝트 B: TensorFlow 1.5 필요
+→ 가상환경으로 독립된 환경 구축!
+```
+
+### 생성
+```bash
+python -m venv myenv    # myenv라는 가상환경 생성
+```
+
+### 활성화
+```bash
+# Windows
+myenv\Scripts\activate
+
+# Mac/Linux
+source myenv/bin/activate
+```
+
+### 비활성화
+```bash
+deactivate
+```
+
+### 활성화 확인
+```
+활성화 시: (myenv) C:\Users\...>
+비활성화 시: C:\Users\...>
+```
+
+---
+
+## 🆘 문제 해결 팁
+
+설치 중 에러가 발생하면:
+1. **에러 메시지 복사**
+2. **ChatGPT/Claude에 붙여넣기**
+3. **운영체제 정보 함께 전달**
+
+예시 질문:
+> "Windows 11에서 python --version 실행 시 '명령을 찾을 수 없습니다' 에러가 발생합니다. 어떻게 해결하나요?"
+
+---
+
+## 📖 추가 학습 자료
+
+- [Python 공식 튜토리얼](https://docs.python.org/ko/3/tutorial/)
+- [VS Code Python 확장 가이드](https://code.visualstudio.com/docs/python/python-tutorial)
+- [Jupyter 공식 문서](https://jupyter.org/documentation)
+
+---
+
+## ✅ 학습 체크리스트
+- [ ] Python 설치 완료
+- [ ] python --version으로 버전 확인
+- [ ] VS Code 설치 및 Python 확장 설치
+- [ ] hello.py 파일 생성 및 실행
+- [ ] Jupyter Notebook 설치 및 실행
+- [ ] 가상환경 생성/활성화/비활성화 연습

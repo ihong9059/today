@@ -8,6 +8,17 @@ import {
   LEVEL_4_LESSON_7,
 } from './level4-content';
 
+import {
+  LEVEL_5_LESSON_1,
+  LEVEL_5_LESSON_2,
+  LEVEL_5_LESSON_3,
+  LEVEL_5_LESSON_4,
+  LEVEL_5_LESSON_5,
+  LEVEL_5_LESSON_6,
+  LEVEL_5_LESSON_7,
+  LEVEL_5_LESSON_8,
+} from './level5-content';
+
 export interface Lesson {
   id: string;
   title: string;
@@ -6358,17 +6369,7 @@ patience = 10
         description: "이미지 표현, 픽셀, 채널 이해",
         duration: "30분",
         videoUrl: "",
-        content: `
-# 컴퓨터 비전 소개
-
-## 학습 목표
-- 컴퓨터가 이미지를 어떻게 인식하는지 이해한다
-- 픽셀과 채널의 개념을 배운다
-- 이미지 데이터의 구조를 파악한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_5_LESSON_1
       },
       {
         id: "5-2",
@@ -6376,17 +6377,7 @@ patience = 10
         description: "커널, 스트라이드, 패딩, 특성 맵",
         duration: "50분",
         videoUrl: "",
-        content: `
-# 합성곱 연산
-
-## 학습 목표
-- 합성곱 연산의 원리를 이해한다
-- 커널/필터의 역할을 배운다
-- 스트라이드와 패딩의 효과를 이해한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_5_LESSON_2
       },
       {
         id: "5-3",
@@ -6394,16 +6385,7 @@ patience = 10
         description: "Max Pooling, Batch Normalization",
         duration: "40분",
         videoUrl: "",
-        content: `
-# 풀링과 정규화
-
-## 학습 목표
-- 풀링 레이어의 역할을 이해한다
-- Batch Normalization을 적용한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_5_LESSON_3
       },
       {
         id: "5-4",
@@ -6411,16 +6393,7 @@ patience = 10
         description: "LeNet, AlexNet, VGG 구조 이해",
         duration: "50분",
         videoUrl: "",
-        content: `
-# CNN 아키텍처
-
-## 학습 목표
-- 대표적인 CNN 아키텍처를 학습한다
-- LeNet, AlexNet, VGG의 구조를 비교한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_5_LESSON_4
       },
       {
         id: "5-5",
@@ -6428,16 +6401,7 @@ patience = 10
         description: "PyTorch로 CNN 구현하기",
         duration: "60분",
         videoUrl: "",
-        content: `
-# CNN 구현 (MNIST)
-
-## 학습 목표
-- PyTorch로 CNN을 구현한다
-- MNIST 데이터셋으로 학습한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_5_LESSON_5
       },
       {
         id: "5-6",
@@ -6445,16 +6409,7 @@ patience = 10
         description: "더 복잡한 이미지 분류",
         duration: "50분",
         videoUrl: "",
-        content: `
-# CNN 구현 (CIFAR-10)
-
-## 학습 목표
-- 컬러 이미지를 분류한다
-- 더 깊은 네트워크를 구현한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_5_LESSON_6
       },
       {
         id: "5-7",
@@ -6462,16 +6417,7 @@ patience = 10
         description: "Pre-trained 모델, Fine-tuning",
         duration: "50분",
         videoUrl: "",
-        content: `
-# 전이 학습
-
-## 학습 목표
-- 사전 학습된 모델을 활용한다
-- Fine-tuning 기법을 적용한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_5_LESSON_7
       },
       {
         id: "5-8",
@@ -6479,16 +6425,7 @@ patience = 10
         description: "회전, 뒤집기, 색상 변환",
         duration: "40분",
         videoUrl: "",
-        content: `
-# 데이터 증강
-
-## 학습 목표
-- 데이터 증강의 필요성을 이해한다
-- 다양한 증강 기법을 적용한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_5_LESSON_8
       }
     ]
   },

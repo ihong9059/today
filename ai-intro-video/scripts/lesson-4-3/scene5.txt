@@ -1,0 +1,11 @@
+PyTorch 코드를 보겠습니다.
+
+TextClassifier 클래스에서 nn.Embedding으로 임베딩 층을 정의합니다.
+
+어휘 크기와 임베딩 차원을 지정하죠.
+
+forward 함수에서는 먼저 임베딩을 적용하고, 평균 풀링으로 문장 벡터를 만듭니다.
+
+그리고 Linear와 Sigmoid를 통과해 확률을 출력합니다.
+
+손실 함수는 이진 분류니까 BCELoss를 사용합니다.
