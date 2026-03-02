@@ -1,3 +1,13 @@
+import {
+  LEVEL_4_LESSON_1,
+  LEVEL_4_LESSON_2,
+  LEVEL_4_LESSON_3,
+  LEVEL_4_LESSON_4,
+  LEVEL_4_LESSON_5,
+  LEVEL_4_LESSON_6,
+  LEVEL_4_LESSON_7,
+} from './level4-content';
+
 export interface Lesson {
   id: string;
   title: string;
@@ -6269,7 +6279,7 @@ patience = 10
     title: "Level 4",
     subtitle: "실전 프로젝트",
     description: "실제 데이터로 AI 모델을 만들고 배포하기",
-    totalTime: "준비 중",
+    totalTime: "약 31분",
     prerequisites: ["Level 3"],
     color: "bg-orange-500",
     icon: "🚀",
@@ -6278,133 +6288,57 @@ patience = 10
         id: "4-1",
         title: "MNIST 손글씨 분류",
         description: "첫 번째 완전한 딥러닝 프로젝트",
-        duration: "준비 중",
+        duration: "약 5분",
         videoUrl: "",
-        content: `
-# MNIST 손글씨 분류
-
-## 학습 목표
-- 완전한 딥러닝 파이프라인을 구현한다
-- 98% 이상의 정확도를 달성한다
-
-## 프로젝트 개요
-0~9 숫자 손글씨 이미지를 분류하는 신경망을 만듭니다.
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_4_LESSON_1
       },
       {
         id: "4-2",
         title: "이미지 분류 CNN",
         description: "합성곱 신경망으로 이미지 분류하기",
-        duration: "준비 중",
+        duration: "약 5분",
         videoUrl: "",
-        content: `
-# 이미지 분류 CNN
-
-## 학습 목표
-- CNN의 구조를 이해한다
-- 실제 이미지 데이터로 분류기를 만든다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_4_LESSON_2
       },
       {
         id: "4-3",
         title: "텍스트 분류",
         description: "감성 분석 모델 만들기",
-        duration: "준비 중",
+        duration: "약 4분",
         videoUrl: "",
-        content: `
-# 텍스트 분류
-
-## 학습 목표
-- 텍스트 데이터 전처리를 할 수 있다
-- 감성 분석 모델을 구현한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_4_LESSON_3
       },
       {
         id: "4-4",
         title: "nn.Module 기초",
         description: "레이어 정의, forward(), 파라미터 관리",
-        duration: "50분",
+        duration: "약 4분",
         videoUrl: "",
-        content: `
-# nn.Module 기초
-
-## 학습 목표
-- nn.Module을 상속하여 커스텀 레이어를 만든다
-- forward() 메서드를 구현한다
-- 파라미터를 관리하고 확인한다
-
-## 핵심 내용
-- nn.Module 상속
-- __init__에서 레이어 정의
-- forward()에서 연산 정의
-- parameters() 메서드
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_4_LESSON_4
       },
       {
         id: "4-5",
         title: "데이터 로딩",
         description: "Dataset, DataLoader, transforms 사용법",
-        duration: "45분",
+        duration: "약 5분",
         videoUrl: "",
-        content: `
-# 데이터 로딩
-
-## 학습 목표
-- Dataset 클래스를 이해한다
-- DataLoader로 배치 처리를 한다
-- transforms로 데이터 전처리를 한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_4_LESSON_5
       },
       {
         id: "4-6",
         title: "학습 루프",
         description: "train/eval 모드, optimizer, loss 함수",
-        duration: "50분",
+        duration: "약 4분",
         videoUrl: "",
-        content: `
-# 학습 루프
-
-## 학습 목표
-- 완전한 학습 루프를 구현한다
-- train/eval 모드를 전환한다
-- optimizer와 loss 함수를 사용한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_4_LESSON_6
       },
       {
         id: "4-7",
-        title: "모델 저장/로드",
-        description: "state_dict, checkpoint 관리",
-        duration: "30분",
+        title: "모델 저장과 로드",
+        description: "state_dict, checkpoint, TorchScript",
+        duration: "약 4분",
         videoUrl: "",
-        content: `
-# 모델 저장/로드
-
-## 학습 목표
-- state_dict로 모델을 저장한다
-- checkpoint를 관리한다
-- 학습 재개를 구현한다
-
-## Coming Soon!
-이 레슨은 준비 중입니다.
-`
+        content: LEVEL_4_LESSON_7
       }
     ]
   },
