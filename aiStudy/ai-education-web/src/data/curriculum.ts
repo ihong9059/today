@@ -19,6 +19,7 @@ import {
   LEVEL_5_LESSON_8,
 } from './level5-content';
 
+import { lesson0_2_content } from './lessons/lesson-0-2';
 export interface Lesson {
   id: string;
   title: string;
@@ -225,216 +226,7 @@ deactivate
         description: "외우지 말고 이해하세요! AI에서 모든 것은 숫자입니다.",
         duration: "6분 18초",
         videoUrl: "https://youtu.be/3HVABWZ_9k4",
-        content: `
-# 변수와 자료형
-
-## 📚 학습 목표
-이 레슨을 완료하면:
-- AI에서 왜 모든 것이 숫자인지 이해합니다
-- int, float, str, bool 자료형을 구분할 수 있습니다
-- 리스트가 벡터처럼 사용되는 것을 이해합니다
-- 딕셔너리로 설정값을 관리하는 방법을 압니다
-
----
-
-## 🎯 핵심 메시지
-
-> **"외우지 말고 이해하세요!"**
-> 문법은 필요할 때 AI에게 물어보면 됩니다.
-
----
-
-## 🔢 1. 숫자형 (int, float)
-
-### 정수 (int)
-소수점이 없는 숫자
-
-\`\`\`python
-epochs = 100       # 학습 반복 횟수
-batch_size = 32    # 배치 크기
-num_layers = 3     # 신경망 층 수
-\`\`\`
-
-### 실수 (float)
-소수점이 있는 숫자 - **AI에서 가장 많이 사용!**
-
-\`\`\`python
-learning_rate = 0.001   # 학습률
-loss = 0.342            # 손실값
-accuracy = 0.97         # 정확도 (97%)
-weight = -1.25          # 가중치
-\`\`\`
-
-### AI에서의 역할
-\`\`\`
-┌─────────────────────────────────────────┐
-│  신경망의 모든 것이 숫자!               │
-│  • 가중치 (weight)                      │
-│  • 바이어스 (bias)                      │
-│  • 학습률 (learning_rate)               │
-│  • 손실값 (loss)                        │
-│  • 예측값 (prediction)                  │
-└─────────────────────────────────────────┘
-\`\`\`
-
----
-
-## 📝 2. 문자열 (str)
-
-텍스트 데이터를 저장
-
-\`\`\`python
-model_name = "GPT-4"
-prompt = "안녕하세요, AI입니다."
-file_path = "model.pth"
-\`\`\`
-
-### 자연어 처리(NLP)에서
-\`\`\`
-"Hello" → [0.23, -0.15, 0.42, ...]  # 임베딩 벡터로 변환
-\`\`\`
-→ 결국 텍스트도 숫자가 됩니다!
-
----
-
-## ✓ 3. 불리언 (bool)
-
-참(True) 또는 거짓(False)만 가능
-
-\`\`\`python
-is_training = True      # 학습 모드
-is_cuda_available = True  # GPU 사용 가능
-use_dropout = False     # 드롭아웃 미사용
-\`\`\`
-
-### 조건문에서 활용
-\`\`\`python
-if is_training:
-    model.train()
-else:
-    model.eval()
-\`\`\`
-
----
-
-## 📦 4. 리스트 (list) - 가장 많이 사용!
-
-순서가 있는 데이터 모음 → **벡터처럼 사용!**
-
-\`\`\`python
-# 3차원 좌표 (벡터)
-point = [3.0, 4.5, 2.1]
-
-# RGB 픽셀값
-red = [255, 0, 0]
-green = [0, 255, 0]
-
-# 신경망 층 구성
-layers = [784, 128, 64, 10]
-\`\`\`
-
-### 2차원 리스트 = 행렬!
-\`\`\`python
-# 2x3 행렬
-matrix = [
-    [1, 2, 3],
-    [4, 5, 6]
-]
-
-# 가중치 행렬
-weights = [
-    [0.1, 0.2],
-    [0.3, 0.4],
-    [0.5, 0.6]
-]
-\`\`\`
-
-### 시각화
-\`\`\`
-1차원 리스트 (벡터):
-[1, 2, 3, 4, 5]
-
-2차원 리스트 (행렬):
-┌─────────────┐
-│  1   2   3  │
-│  4   5   6  │
-└─────────────┘
-
-3차원 리스트 (텐서, 예: 컬러 이미지):
-┌───┐┌───┐┌───┐
-│ R ││ G ││ B │
-└───┘└───┘└───┘
-\`\`\`
-
----
-
-## 📚 5. 딕셔너리 (dict)
-
-키-값 쌍으로 데이터 저장 → **설정값 관리에 최적!**
-
-\`\`\`python
-# 모델 설정
-config = {
-    "learning_rate": 0.001,
-    "epochs": 100,
-    "batch_size": 32,
-    "optimizer": "Adam"
-}
-
-# 접근
-print(config["learning_rate"])  # 0.001
-\`\`\`
-
-### AI 프로젝트에서 실제 사용 예시
-\`\`\`python
-# 학습 결과 저장
-results = {
-    "train_loss": [0.5, 0.3, 0.2, 0.15],
-    "val_loss": [0.6, 0.4, 0.35, 0.3],
-    "best_accuracy": 0.95
-}
-\`\`\`
-
----
-
-## 🔄 자료형 변환
-
-\`\`\`python
-# 문자열 → 정수
-num = int("42")      # 42
-
-# 정수 → 실수
-price = float(100)   # 100.0
-
-# 숫자 → 문자열
-text = str(3.14)     # "3.14"
-
-# 리스트 → 튜플
-t = tuple([1, 2, 3]) # (1, 2, 3)
-\`\`\`
-
----
-
-## 💡 핵심 인사이트
-
-| 자료형 | AI에서의 역할 |
-|--------|---------------|
-| **int** | 반복 횟수, 층 수, 인덱스 |
-| **float** | 가중치, 학습률, 손실값, 정확도 |
-| **str** | 텍스트 데이터, 파일 경로 |
-| **bool** | 학습/평가 모드 전환, 옵션 |
-| **list** | 벡터, 행렬, 배치 데이터 |
-| **dict** | 설정값, 하이퍼파라미터, 결과 저장 |
-
----
-
-## ✅ 학습 체크리스트
-- [ ] int와 float의 차이 이해
-- [ ] 리스트가 벡터처럼 사용됨을 이해
-- [ ] 2차원 리스트가 행렬임을 이해
-- [ ] 딕셔너리로 설정값 관리 가능함을 이해
-
-`
+        content: lesson0_2_content
       },
       {
         id: "0-3",
@@ -6450,10 +6242,229 @@ patience = 10
 
 ## 학습 목표
 - 시퀀스 데이터의 특성을 이해한다
-- 시계열, 텍스트, 음성 데이터를 다룬다
+- 시계열, 텍스트, 음성 데이터의 공통점을 파악한다
+- 왜 일반 신경망으로는 부족한지 이해한다
+- RNN의 필요성을 인식한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## 시퀀스 데이터란?
+
+### 정의
+\`\`\`
+시퀀스 데이터 = 순서가 있는 데이터
+
+예: "안녕하세요" → 각 글자의 순서가 바뀌면 의미가 달라짐
+"하녕안세요" ≠ "안녕하세요"
+
+시퀀스 데이터에서는 순서가 매우 중요!
+\`\`\`
+
+### 시퀀스 데이터의 종류
+| 유형 | 예시 | 특징 |
+|------|------|------|
+| **시계열** | 주식 가격, 날씨, 심박수 | 시간에 따라 순차적 기록 |
+| **텍스트** | 문장, 문서, 대화 | 단어/문자가 순서대로 나열 |
+| **음성** | 말소리, 음악 | 시간에 따라 변하는 파형 |
+
+## 시계열 데이터
+
+### 특징
+\`\`\`
+시간에 따라 순차적으로 기록된 데이터
+
+예: 주식 가격
+월요일: 100원
+화요일: 105원
+수요일: 103원
+
+순서 자체가 중요한 정보!
+- 가격이 오르는 추세인지, 내리는 추세인지
+- 어제와 오늘의 변화를 보고 내일을 예측
+\`\`\`
+
+### 시계열의 중요성
+\`\`\`
+순서를 무시하고 평균만 구한다면?
+→ 추세(오르는지/내리는지)를 알 수 없음
+
+과거 정보가 미래 예측에 직접적 영향
+→ 이전 데이터를 기억하고 있어야 함
+\`\`\`
+
+### 시계열 데이터 예시
+\`\`\`python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 주식 가격 시뮬레이션
+np.random.seed(42)
+days = 100
+prices = [100]  # 시작 가격
+
+for _ in range(days - 1):
+    change = np.random.normal(0, 2)  # 일일 변동
+    new_price = prices[-1] + change
+    prices.append(new_price)
+
+# 순서가 중요! 시간 순서대로 봐야 추세 파악 가능
+\`\`\`
+
+## 텍스트 데이터
+
+### 순서의 중요성
+\`\`\`
+"나는 밥을 먹는다" vs "밥을 나는 먹는다"
+→ 같은 단어지만 느낌이 다름
+
+"개가 사람을 물었다" vs "사람이 개를 물었다"
+→ 순서에 따라 의미가 완전히 달라짐!
+\`\`\`
+
+### 문맥의 중요성
+\`\`\`
+"사과"라는 단어의 의미
+
+문장 1: "빨간 사과가 맛있다"
+→ 사과 = 과일 🍎
+
+문장 2: "진심으로 사과드립니다"
+→ 사과 = 잘못에 대한 용서 구함
+
+앞뒤 단어(문맥)를 보고 의미를 파악해야 함!
+\`\`\`
+
+### 텍스트 활용 분야
+\`\`\`
+- 챗봇: 대화 문맥 이해
+- 번역기: 문장 구조 파악
+- 검색 엔진: 질의 의미 이해
+- 감성 분석: 긍정/부정 판단
+\`\`\`
+
+## 음성 데이터
+
+### 특징
+\`\`\`
+소리 파형이 시간에 따라 변화
+
+"안녕" 발음:
+"아" → "ㄴ" → "녕" 소리가 순서대로 이어짐
+
+이 순서가 바뀌면 완전히 다른 말이 됨!
+\`\`\`
+
+### 음성 처리 응용
+\`\`\`
+- 음성 비서: Siri, Google Assistant, Alexa
+- 자동 자막 생성: YouTube 자동 자막
+- 음성 번역: 실시간 통역
+- 화자 인식: 목소리로 신원 확인
+\`\`\`
+
+## 왜 일반 신경망으로는 부족한가?
+
+### 일반 신경망의 한계
+\`\`\`
+완전연결층(Fully Connected)이나 CNN:
+- 입력을 독립적으로 처리
+- 첫 번째 입력과 마지막 입력 사이의 관계를 기억하지 못함
+- 각 입력을 개별적으로 봄
+
+예: 5개의 숫자 [1, 2, 3, 4, 5] 입력
+→ 1번과 5번 사이의 순서 관계를 학습하기 어려움
+\`\`\`
+
+### 시퀀스에서의 문제
+\`\`\`
+"The cat sat on the ___"
+
+다음 단어를 예측하려면?
+→ 앞의 모든 단어를 기억하고 있어야 함
+→ "cat"이 주어이므로 관련 단어 예측 가능
+
+일반 신경망은 이런 "기억" 능력이 없음!
+\`\`\`
+
+### 고정 크기 입력의 한계
+\`\`\`
+일반 신경망: 입력 크기가 고정
+- 10단어 문장용 모델 vs 100단어 문장용 모델
+- 서로 다른 모델이 필요
+
+시퀀스 모델: 가변 길이 처리 가능
+- 어떤 길이의 시퀀스도 동일한 모델로 처리
+\`\`\`
+
+## RNN의 등장
+
+### 기본 아이디어
+\`\`\`
+이전 단계의 정보를 기억하고 다음 단계에 전달!
+
+책을 읽을 때:
+- 앞 내용을 기억하면서 다음 문장을 이해
+- 문맥을 유지하며 전체 이야기를 파악
+
+RNN도 마찬가지로:
+- 각 원소를 처리할 때마다 정보를 저장
+- 다음 원소를 처리할 때 이 정보를 함께 사용
+\`\`\`
+
+### Hidden State (은닉 상태)
+\`\`\`
+RNN의 핵심: Hidden State
+
+시퀀스 처리:
+[입력1] → 처리 → h1 (기억 저장)
+[입력2] + h1 → 처리 → h2 (기억 업데이트)
+[입력3] + h2 → 처리 → h3
+...
+
+각 단계에서:
+- 현재 입력 + 이전 기억 → 새로운 기억
+- 순서 정보가 자연스럽게 유지됨
+\`\`\`
+
+### RNN의 장점
+\`\`\`
+1. 순서 정보 유지
+   - 시퀀스의 순서를 자연스럽게 처리
+
+2. 가변 길이 처리
+   - 어떤 길이의 시퀀스도 처리 가능
+
+3. 파라미터 공유
+   - 모든 시점에서 같은 가중치 사용
+   - 효율적인 학습 가능
+\`\`\`
+
+## 시퀀스 데이터 vs 정적 데이터
+
+| 특성 | 정적 데이터 | 시퀀스 데이터 |
+|------|------------|--------------|
+| **예시** | 이미지, 표 | 텍스트, 음성, 시계열 |
+| **순서** | 무관 | 매우 중요 |
+| **처리 방식** | CNN, MLP | RNN, LSTM, Transformer |
+| **문맥** | 공간적 패턴 | 시간적/순차적 의존성 |
+
+## 핵심 요약
+
+\`\`\`
+1. 시퀀스 데이터 = 순서가 중요한 데이터
+   - 시계열: 시간에 따른 변화
+   - 텍스트: 단어/문자의 순서
+   - 음성: 소리의 시간적 변화
+
+2. 일반 신경망의 한계:
+   - 순서 정보를 기억하지 못함
+   - 문맥을 파악하기 어려움
+
+3. RNN의 해결책:
+   - Hidden State로 이전 정보 기억
+   - 순서 정보를 유지하며 시퀀스 처리
+
+4. 다음 강의 예고:
+   - RNN의 구체적인 구조와 작동 원리
+\`\`\`
 `
       },
       {
@@ -6466,11 +6477,248 @@ patience = 10
 # RNN 기본 구조
 
 ## 학습 목표
-- RNN의 순환 구조를 이해한다
-- 은닉 상태의 역할을 배운다
+- RNN의 정의와 목적을 이해한다
+- 은닉 상태(Hidden State)의 역할을 배운다
+- 순환 구조와 파라미터 공유를 이해한다
+- PyTorch로 RNN을 구현할 수 있다
+- 다양한 RNN 아키텍처를 알아본다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## RNN이란?
+
+**RNN(Recurrent Neural Network)**은 시퀀스 데이터를 처리하기 위해 설계된 신경망입니다.
+
+### RNN의 핵심 아이디어
+- **순환(Recurrence)**: 이전 시점의 출력이 현재 시점의 입력으로 다시 들어감
+- **기억(Memory)**: 과거 정보를 "기억"하며 처리
+- **순서 인식**: 데이터의 순서(시간적 관계)를 학습
+
+\`\`\`
+일반 신경망: 입력 → 출력 (독립적 처리)
+RNN:        입력 + 이전상태 → 출력 + 현재상태 (연결된 처리)
+\`\`\`
+
+## 은닉 상태 (Hidden State)
+
+은닉 상태는 RNN의 "메모리" 역할을 합니다.
+
+### 은닉 상태의 특징
+- **과거 정보 저장**: 지금까지 본 시퀀스의 요약 정보
+- **시점마다 업데이트**: 새 입력을 받을 때마다 갱신
+- **다음 시점으로 전달**: 순환 구조의 핵심
+
+### 은닉 상태 계산 공식
+
+\`\`\`
+h_t = tanh(W_hh · h_(t-1) + W_xh · x_t + b)
+\`\`\`
+
+| 기호 | 의미 |
+|------|------|
+| h_t | 현재 시점의 은닉 상태 |
+| h_(t-1) | 이전 시점의 은닉 상태 |
+| x_t | 현재 시점의 입력 |
+| W_hh | 은닉→은닉 가중치 |
+| W_xh | 입력→은닉 가중치 |
+| b | 편향 |
+| tanh | 활성화 함수 (-1~1 범위) |
+
+### 시각적 이해
+
+\`\`\`
+시점 t=1:  x₁ ─→ [RNN] ─→ h₁
+                    ↓
+시점 t=2:  x₂ ─→ [RNN] ─→ h₂
+                    ↓
+시점 t=3:  x₃ ─→ [RNN] ─→ h₃
+                    ↓
+           ...
+\`\`\`
+
+## 파라미터 공유
+
+RNN의 핵심 특징 중 하나는 **파라미터 공유**입니다.
+
+### 파라미터 공유의 의미
+- **동일한 가중치 재사용**: 모든 시점에서 같은 W_hh, W_xh 사용
+- **시퀀스 길이 무관**: 어떤 길이의 시퀀스든 동일한 모델 적용
+- **일반화 능력**: 다양한 위치의 패턴을 동일하게 학습
+
+\`\`\`
+시점 1: h₁ = f(W·x₁ + U·h₀)  ─┐
+시점 2: h₂ = f(W·x₂ + U·h₁)   │ 같은 W, U 사용!
+시점 3: h₃ = f(W·x₃ + U·h₂)  ─┘
+\`\`\`
+
+## 시간 펼치기 (Time Unfolding)
+
+순환 구조를 시간축으로 "펼쳐서" 시각화하면 학습 과정을 이해하기 쉽습니다.
+
+### 펼치기 전 (순환 표현)
+\`\`\`
+    ┌──────────┐
+x_t → │   RNN    │ → y_t
+    │          │
+    └────↑─────┘
+         │
+        h_t (자기 자신으로 순환)
+\`\`\`
+
+### 펼친 후 (시간축 표현)
+\`\`\`
+x₁ ────→ [RNN] ────→ y₁
+            │
+            ↓ h₁
+x₂ ────→ [RNN] ────→ y₂
+            │
+            ↓ h₂
+x₃ ────→ [RNN] ────→ y₃
+\`\`\`
+
+## PyTorch RNN 구현
+
+### 기본 RNN 생성
+
+\`\`\`python
+import torch
+import torch.nn as nn
+
+# RNN 레이어 생성
+rnn = nn.RNN(
+    input_size=10,    # 입력 벡터 차원
+    hidden_size=20,   # 은닉 상태 차원
+    num_layers=1,     # RNN 레이어 수
+    batch_first=True  # (batch, seq, feature) 형태
+)
+
+# 입력 데이터 (배치=3, 시퀀스길이=5, 입력차원=10)
+x = torch.randn(3, 5, 10)
+
+# 초기 은닉 상태 (레이어수, 배치, 은닉차원)
+h0 = torch.zeros(1, 3, 20)
+
+# 순전파
+output, hn = rnn(x, h0)
+
+print(f"출력 shape: {output.shape}")  # (3, 5, 20)
+print(f"최종 은닉상태 shape: {hn.shape}")  # (1, 3, 20)
+\`\`\`
+
+### 텍스트 분류 RNN 모델
+
+\`\`\`python
+class TextRNN(nn.Module):
+    def __init__(self, vocab_size, embed_dim, hidden_dim, num_classes):
+        super().__init__()
+
+        # 임베딩 레이어
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+
+        # RNN 레이어
+        self.rnn = nn.RNN(
+            input_size=embed_dim,
+            hidden_size=hidden_dim,
+            batch_first=True
+        )
+
+        # 출력 레이어
+        self.fc = nn.Linear(hidden_dim, num_classes)
+
+    def forward(self, x):
+        # x: (batch, seq_len) 단어 인덱스
+
+        # 임베딩: (batch, seq_len, embed_dim)
+        embedded = self.embedding(x)
+
+        # RNN: output (batch, seq_len, hidden_dim)
+        #      h_n (1, batch, hidden_dim)
+        output, h_n = self.rnn(embedded)
+
+        # 마지막 은닉 상태로 분류
+        # h_n.squeeze(0): (batch, hidden_dim)
+        out = self.fc(h_n.squeeze(0))
+
+        return out
+
+# 모델 생성
+model = TextRNN(
+    vocab_size=10000,
+    embed_dim=100,
+    hidden_dim=256,
+    num_classes=2
+)
+\`\`\`
+
+## 다양한 RNN 아키텍처
+
+RNN은 입력과 출력의 관계에 따라 다양한 구조로 활용됩니다.
+
+### 1. One-to-Many (하나→여러개)
+- **입력**: 하나의 입력
+- **출력**: 시퀀스 출력
+- **예시**: 이미지 → 캡션 생성
+
+\`\`\`
+[이미지] → [RNN] → "A" → [RNN] → "cat" → [RNN] → "sits"
+\`\`\`
+
+### 2. Many-to-One (여러개→하나)
+- **입력**: 시퀀스 입력
+- **출력**: 하나의 출력
+- **예시**: 문장 → 감성 분류
+
+\`\`\`
+"This" → [RNN] → "movie" → [RNN] → "is" → [RNN] → "great" → [RNN] → [긍정]
+\`\`\`
+
+### 3. Many-to-Many (여러개→여러개)
+- **입력**: 시퀀스 입력
+- **출력**: 시퀀스 출력
+- **예시**: 기계 번역, 품사 태깅
+
+\`\`\`
+"나는" → [RNN] → "I"
+"학생" → [RNN] → "am"
+"이다" → [RNN] → "a student"
+\`\`\`
+
+### 4. 양방향 RNN (Bidirectional)
+- 과거→미래 + 미래→과거 양방향으로 처리
+- 문맥을 더 풍부하게 이해
+
+\`\`\`python
+bi_rnn = nn.RNN(
+    input_size=10,
+    hidden_size=20,
+    bidirectional=True  # 양방향 활성화
+)
+# 출력 차원이 hidden_size * 2 = 40이 됨
+\`\`\`
+
+## 핵심 정리
+
+| 개념 | 설명 |
+|------|------|
+| RNN | 시퀀스 처리를 위한 순환 신경망 |
+| 은닉 상태 | 과거 정보를 저장하는 메모리 |
+| 파라미터 공유 | 모든 시점에서 동일한 가중치 사용 |
+| 시간 펼치기 | 순환 구조를 시간축으로 시각화 |
+| nn.RNN | PyTorch의 RNN 구현 |
+
+## 실습 과제
+
+1. **기본 RNN 실험**
+   - 다양한 hidden_size로 RNN 생성
+   - 시퀀스 길이에 따른 출력 확인
+
+2. **간단한 시퀀스 예측**
+   - 숫자 시퀀스 다음 값 예측
+   - 예: [1, 2, 3, 4] → 5
+
+3. **양방향 RNN 비교**
+   - 단방향 vs 양방향 성능 비교
+
+## 다음 레슨 예고
+다음 시간에는 **RNN의 문제점**인 기울기 소실과 장기 의존성 문제를 알아보고, 이를 해결하는 방법을 배웁니다.
 `
       },
       {
@@ -6483,11 +6731,248 @@ patience = 10
 # RNN의 문제점
 
 ## 학습 목표
-- 기울기 소실/폭발 문제를 이해한다
-- 장기 의존성 문제를 파악한다
+- 역전파 시 기울기 계산 과정을 이해한다
+- 기울기 소실(Vanishing Gradient) 문제를 파악한다
+- 기울기 폭발(Exploding Gradient) 문제를 이해한다
+- 장기 의존성(Long-term Dependency) 문제를 인식한다
+- 해결책의 방향성을 알아본다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## RNN 역전파의 문제
+
+RNN은 시간을 통한 역전파(BPTT: Backpropagation Through Time)를 사용합니다.
+
+### BPTT의 기울기 계산
+
+\`\`\`
+시점 1 ← 시점 2 ← 시점 3 ← ... ← 시점 T
+  ↑        ↑        ↑              ↑
+기울기    기울기    기울기         기울기
+\`\`\`
+
+문제: 기울기가 시간을 거슬러 전파될 때 **반복적으로 곱해짐**
+
+\`\`\`
+∂L/∂h₁ = ∂L/∂hT × ∂hT/∂hT₋₁ × ... × ∂h₂/∂h₁
+       = ∂L/∂hT × (W_hh)^(T-1) × ...
+\`\`\`
+
+## 기울기 소실 (Vanishing Gradient)
+
+### 문제 발생 원인
+
+가중치가 1보다 작을 때, 반복 곱셈으로 기울기가 **급격히 작아짐**
+
+\`\`\`
+W = 0.5 일 때:
+  시점 1: 0.5
+  시점 2: 0.5 × 0.5 = 0.25
+  시점 3: 0.25 × 0.5 = 0.125
+  시점 10: 0.5^10 ≈ 0.001
+  시점 20: 0.5^20 ≈ 0.000001
+\`\`\`
+
+### 시각적 이해
+
+\`\`\`
+기울기 크기
+    │
+1.0 │ ■
+    │  ■
+0.5 │   ■
+    │    ■
+0.1 │     ■■■■■■■■ (거의 0에 수렴)
+    └─────────────────→ 시점
+      1  2  3  4  5 ... 20
+\`\`\`
+
+### 결과
+- 오래된 시점의 정보에 대한 학습 불가능
+- 먼 과거의 입력이 현재 출력에 영향을 못 줌
+- **단기 기억만 가능**
+
+## 기울기 폭발 (Exploding Gradient)
+
+### 문제 발생 원인
+
+가중치가 1보다 클 때, 반복 곱셈으로 기울기가 **급격히 커짐**
+
+\`\`\`
+W = 1.5 일 때:
+  시점 1: 1.5
+  시점 2: 1.5 × 1.5 = 2.25
+  시점 3: 2.25 × 1.5 = 3.375
+  시점 10: 1.5^10 ≈ 57.7
+  시점 20: 1.5^20 ≈ 3325
+\`\`\`
+
+### 시각적 이해
+
+\`\`\`
+기울기 크기
+    │           ■
+    │         ■
+    │       ■   (기하급수적 증가)
+    │     ■
+    │   ■
+    │ ■
+    └─────────────────→ 시점
+      1  2  3  4  5 ... 20
+\`\`\`
+
+### 결과
+- 가중치가 **NaN** 또는 **Inf**로 발산
+- 학습이 불안정해지거나 완전히 실패
+- 수치적 오버플로우 발생
+
+### 기울기 폭발 해결책: Gradient Clipping
+
+\`\`\`python
+import torch.nn as nn
+
+# 기울기 클리핑 적용
+max_norm = 1.0
+
+# 학습 루프
+for epoch in range(epochs):
+    optimizer.zero_grad()
+    loss = model(x, y)
+    loss.backward()
+
+    # 기울기가 max_norm을 넘지 않도록 자르기
+    nn.utils.clip_grad_norm_(model.parameters(), max_norm)
+
+    optimizer.step()
+\`\`\`
+
+## 장기 의존성 (Long-term Dependency)
+
+### 문제 정의
+
+**멀리 떨어진 정보**에 의존해야 하는 경우, RNN은 학습에 실패합니다.
+
+### 예시 1: 언어 모델
+
+\`\`\`
+"나는 프랑스에서 태어났다. ... (중간에 많은 문장들) ...
+ 그래서 나는 [프랑스어]를 할 수 있다."
+
+RNN: "프랑스" 정보가 끝까지 전달되지 않음
+     → [영어]? [일본어]? (잘못된 예측)
+\`\`\`
+
+### 예시 2: 시계열 예측
+
+\`\`\`
+주가 데이터:
+1월: 상승 신호 발생
+2월 ~ 11월: 일반적인 변동
+12월: 1월 신호 기반 예측 필요
+
+RNN: 1월 정보가 12월까지 전달 안 됨
+     → 예측 실패
+\`\`\`
+
+### 핵심 원인
+
+\`\`\`
+입력 ─→ h₁ ─→ h₂ ─→ h₃ ─→ ... ─→ h₁₀₀
+ ↓
+초기 정보가 수백 번의 변환을 거치며 "희석"됨
+\`\`\`
+
+## 문제 시각화 실험
+
+\`\`\`python
+import torch
+import torch.nn as nn
+import matplotlib.pyplot as plt
+
+# 기울기 변화 실험
+def gradient_experiment(W_value, steps=50):
+    gradients = []
+    grad = 1.0
+
+    for t in range(steps):
+        grad *= W_value  # 매 시점 가중치 곱셈
+        gradients.append(grad)
+
+    return gradients
+
+# W < 1: 기울기 소실
+vanishing = gradient_experiment(0.8, 50)
+
+# W > 1: 기울기 폭발
+exploding = gradient_experiment(1.2, 50)
+
+# 시각화
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 2, 1)
+plt.plot(vanishing)
+plt.title('Vanishing Gradient (W=0.8)')
+plt.xlabel('Time Step')
+plt.ylabel('Gradient')
+plt.yscale('log')
+
+plt.subplot(1, 2, 2)
+plt.plot(exploding)
+plt.title('Exploding Gradient (W=1.2)')
+plt.xlabel('Time Step')
+plt.ylabel('Gradient')
+plt.yscale('log')
+
+plt.tight_layout()
+plt.show()
+\`\`\`
+
+## 해결책 방향
+
+### 1. 구조적 해결
+- **LSTM**: 게이트 메커니즘으로 정보 흐름 제어
+- **GRU**: 단순화된 게이트 구조
+
+### 2. 학습 기법
+- **Gradient Clipping**: 기울기 최대값 제한
+- **적절한 가중치 초기화**: Xavier, He 초기화
+
+### 3. 정규화
+- **Layer Normalization**: 각 레이어 정규화
+- **Batch Normalization**: 배치 단위 정규화
+
+### 비교 표
+
+| 문제 | 원인 | 결과 | 해결책 |
+|------|------|------|--------|
+| 기울기 소실 | W < 1 반복 곱셈 | 학습 불가 | LSTM/GRU |
+| 기울기 폭발 | W > 1 반복 곱셈 | NaN 발산 | Gradient Clipping |
+| 장기 의존성 | 정보 희석 | 먼 과거 무시 | LSTM/GRU |
+
+## 핵심 정리
+
+| 개념 | 설명 |
+|------|------|
+| BPTT | RNN의 시간 역전파 알고리즘 |
+| 기울기 소실 | 기울기가 0으로 수렴하는 문제 |
+| 기울기 폭발 | 기울기가 무한으로 발산하는 문제 |
+| 장기 의존성 | 먼 과거 정보 학습 불가 문제 |
+| Gradient Clipping | 기울기 폭발 방지 기법 |
+
+## 실습 과제
+
+1. **기울기 변화 실험**
+   - 다양한 W 값으로 기울기 변화 관찰
+   - 시각화 그래프 생성
+
+2. **Gradient Clipping 적용**
+   - 클리핑 전후 학습 비교
+   - 최적의 max_norm 값 탐색
+
+3. **장기 의존성 테스트**
+   - 긴 시퀀스로 RNN 학습
+   - 정보 유지 여부 확인
+
+## 다음 레슨 예고
+다음 시간에는 이 문제들을 해결하는 **LSTM (Long Short-Term Memory)**의 구조와 게이트 메커니즘을 배웁니다.
 `
       },
       {
@@ -6497,14 +6982,307 @@ patience = 10
         duration: "60분",
         videoUrl: "",
         content: `
-# LSTM
+# LSTM (Long Short-Term Memory)
 
 ## 학습 목표
-- LSTM의 게이트 구조를 이해한다
-- 셀 상태와 기억 메커니즘을 배운다
+- LSTM의 등장 배경을 이해한다
+- 셀 상태(Cell State)의 역할을 배운다
+- 세 가지 게이트의 동작 원리를 파악한다
+- PyTorch로 LSTM을 구현할 수 있다
+- RNN과 LSTM의 차이를 이해한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## LSTM이란?
+
+**LSTM(Long Short-Term Memory)**은 1997년 Hochreiter와 Schmidhuber가 제안한 RNN의 변형입니다.
+
+### LSTM의 등장 배경
+- RNN의 **기울기 소실 문제** 해결
+- **장기 의존성** 학습 가능
+- 정보를 선택적으로 **기억하고 잊는** 메커니즘
+
+### RNN vs LSTM 비교
+
+| 특성 | RNN | LSTM |
+|------|-----|------|
+| 기억 | 은닉 상태만 | 셀 상태 + 은닉 상태 |
+| 게이트 | 없음 | 3개 (망각/입력/출력) |
+| 장기 기억 | 어려움 | 가능 |
+| 복잡도 | 단순 | 복잡 |
+
+## 셀 상태 (Cell State)
+
+셀 상태는 LSTM의 **장기 기억 저장소**입니다.
+
+### 셀 상태의 특징
+- **컨베이어 벨트**처럼 정보가 흐름
+- 작은 선형 연산만 거침 (덧셈, 곱셈)
+- 기울기가 쉽게 전파됨
+
+\`\`\`
+셀 상태 흐름:
+
+C₀ ──→ C₁ ──→ C₂ ──→ C₃ ──→ ...
+       │      │      │
+    (약간의 수정만 발생)
+\`\`\`
+
+### 은닉 상태 vs 셀 상태
+
+| 은닉 상태 (h) | 셀 상태 (C) |
+|--------------|-------------|
+| 단기 기억 | 장기 기억 |
+| 현재 출력에 영향 | 정보 저장에 집중 |
+| tanh 거침 | 선형적 흐름 |
+
+## 망각 게이트 (Forget Gate)
+
+**어떤 정보를 버릴지** 결정합니다.
+
+### 수식
+\`\`\`
+f_t = σ(W_f · [h_{t-1}, x_t] + b_f)
+\`\`\`
+
+### 동작 원리
+- 출력 범위: 0 ~ 1 (시그모이드)
+- **0에 가까우면**: 해당 정보 삭제
+- **1에 가까우면**: 해당 정보 유지
+
+\`\`\`
+예시: "나는 서울에 산다. 그녀는 부산에 산다."
+      → "나는"에서 "그녀는"으로 바뀔 때
+      → 주어 정보를 잊고 새로 기억
+\`\`\`
+
+### 시각화
+\`\`\`
+이전 셀 상태(C_{t-1})
+      │
+      ↓
+    [× f_t]  ← 망각 게이트 (0~1)
+      │
+      ↓
+(일부 정보 삭제됨)
+\`\`\`
+
+## 입력 게이트 (Input Gate)
+
+**어떤 새 정보를 저장할지** 결정합니다.
+
+### 수식
+\`\`\`
+i_t = σ(W_i · [h_{t-1}, x_t] + b_i)    # 저장 여부
+C̃_t = tanh(W_C · [h_{t-1}, x_t] + b_C)  # 후보 값
+\`\`\`
+
+### 동작 원리
+1. **입력 게이트 (i_t)**: 무엇을 저장할지 결정 (0~1)
+2. **후보 셀 상태 (C̃_t)**: 저장할 새 정보 (-1~1)
+
+### 시각화
+\`\`\`
+현재 입력(x_t) + 이전 은닉상태(h_{t-1})
+                │
+        ┌───────┴───────┐
+        ↓               ↓
+    [sigmoid]       [tanh]
+        │               │
+       i_t            C̃_t
+        │               │
+        └───────┬───────┘
+                ↓
+            [i_t × C̃_t]
+                │
+                ↓
+        (새로 저장할 정보)
+\`\`\`
+
+## 셀 상태 업데이트
+
+망각과 입력을 조합하여 **새 셀 상태**를 만듭니다.
+
+### 수식
+\`\`\`
+C_t = f_t × C_{t-1} + i_t × C̃_t
+\`\`\`
+
+### 해석
+- **f_t × C_{t-1}**: 이전 기억 중 유지할 부분
+- **i_t × C̃_t**: 새로 추가할 정보
+- 두 값을 **더해서** 새 셀 상태 생성
+
+\`\`\`
+  C_{t-1}    새 정보(C̃_t)
+    │            │
+    ↓            ↓
+  [× f_t]    [× i_t]
+    │            │
+    └─────┬──────┘
+          ↓
+        [+]
+          │
+          ↓
+        C_t (새 셀 상태)
+\`\`\`
+
+## 출력 게이트 (Output Gate)
+
+**셀 상태 중 무엇을 출력할지** 결정합니다.
+
+### 수식
+\`\`\`
+o_t = σ(W_o · [h_{t-1}, x_t] + b_o)
+h_t = o_t × tanh(C_t)
+\`\`\`
+
+### 동작 원리
+- 셀 상태를 **tanh**로 변환 (-1~1)
+- 출력 게이트로 **필터링**
+- 결과가 **새 은닉 상태** (h_t)
+
+\`\`\`
+    C_t
+     │
+     ↓
+  [tanh]
+     │
+     ↓
+  [× o_t]  ← 출력 게이트 (0~1)
+     │
+     ↓
+    h_t (출력 및 다음 시점 전달)
+\`\`\`
+
+## LSTM 전체 구조
+
+\`\`\`
+┌─────────────────────────────────────────────────┐
+│                   LSTM Cell                      │
+│                                                  │
+│  C_{t-1} ──[×]────────[+]──────────→ C_t        │
+│            ↑    ↑      ↑                        │
+│            │    │      │                        │
+│           f_t  C̃_t    i_t                       │
+│            │    │      │                        │
+│         ┌──┴────┴──────┴──┐                     │
+│         │  게이트 계산     │                     │
+│         └────────┬────────┘                     │
+│                  │                              │
+│  h_{t-1} ───────>│                              │
+│                  │                              │
+│  x_t ───────────>│                              │
+│                  │                              │
+│                  └──────[tanh]──[×]──→ h_t      │
+│                              ↑                  │
+│                             o_t                 │
+└─────────────────────────────────────────────────┘
+\`\`\`
+
+## PyTorch LSTM 구현
+
+### 기본 LSTM 사용
+
+\`\`\`python
+import torch
+import torch.nn as nn
+
+# LSTM 레이어 생성
+lstm = nn.LSTM(
+    input_size=10,    # 입력 차원
+    hidden_size=20,   # 은닉 상태 차원
+    num_layers=1,     # 레이어 수
+    batch_first=True  # (batch, seq, feature)
+)
+
+# 입력 데이터
+x = torch.randn(32, 15, 10)  # (배치, 시퀀스, 입력차원)
+
+# 초기 상태 (h_0, c_0)
+h0 = torch.zeros(1, 32, 20)  # 은닉 상태
+c0 = torch.zeros(1, 32, 20)  # 셀 상태
+
+# 순전파
+output, (hn, cn) = lstm(x, (h0, c0))
+
+print(f"출력 shape: {output.shape}")      # (32, 15, 20)
+print(f"최종 은닉상태: {hn.shape}")        # (1, 32, 20)
+print(f"최종 셀상태: {cn.shape}")          # (1, 32, 20)
+\`\`\`
+
+### 텍스트 분류 LSTM 모델
+
+\`\`\`python
+class TextLSTM(nn.Module):
+    def __init__(self, vocab_size, embed_dim, hidden_dim, num_classes):
+        super().__init__()
+
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+
+        self.lstm = nn.LSTM(
+            input_size=embed_dim,
+            hidden_size=hidden_dim,
+            num_layers=2,           # 2층 LSTM
+            batch_first=True,
+            dropout=0.3,            # 드롭아웃
+            bidirectional=True      # 양방향
+        )
+
+        # 양방향이므로 hidden_dim * 2
+        self.fc = nn.Linear(hidden_dim * 2, num_classes)
+
+    def forward(self, x):
+        # 임베딩
+        embedded = self.embedding(x)
+
+        # LSTM
+        lstm_out, (h_n, c_n) = self.lstm(embedded)
+
+        # 양방향 마지막 은닉 상태 연결
+        # h_n: (num_layers * 2, batch, hidden)
+        h_forward = h_n[-2]  # 순방향 마지막 레이어
+        h_backward = h_n[-1]  # 역방향 마지막 레이어
+        h_concat = torch.cat([h_forward, h_backward], dim=1)
+
+        # 분류
+        out = self.fc(h_concat)
+        return out
+
+# 모델 생성
+model = TextLSTM(
+    vocab_size=10000,
+    embed_dim=128,
+    hidden_dim=256,
+    num_classes=2
+)
+\`\`\`
+
+## 핵심 정리
+
+| 구성 요소 | 역할 | 활성화 함수 |
+|-----------|------|-------------|
+| 망각 게이트 (f) | 과거 정보 삭제 | Sigmoid (0~1) |
+| 입력 게이트 (i) | 새 정보 저장 | Sigmoid (0~1) |
+| 후보 셀 (C̃) | 저장할 정보 생성 | Tanh (-1~1) |
+| 출력 게이트 (o) | 출력 정보 선택 | Sigmoid (0~1) |
+| 셀 상태 (C) | 장기 기억 저장 | - |
+| 은닉 상태 (h) | 단기 기억/출력 | Tanh |
+
+## 실습 과제
+
+1. **LSTM vs RNN 비교**
+   - 긴 시퀀스에서 성능 비교
+   - 기울기 흐름 시각화
+
+2. **게이트 값 시각화**
+   - 각 게이트의 출력값 확인
+   - 정보 흐름 분석
+
+3. **다층 LSTM 실험**
+   - 레이어 수에 따른 성능 변화
+   - 양방향 LSTM 비교
+
+## 다음 레슨 예고
+다음 시간에는 LSTM을 단순화한 **GRU (Gated Recurrent Unit)**를 배우고, LSTM과 비교해봅니다.
 `
       },
       {
@@ -6514,14 +7292,286 @@ patience = 10
         duration: "40분",
         videoUrl: "",
         content: `
-# GRU
+# GRU (Gated Recurrent Unit)
 
 ## 학습 목표
-- GRU와 LSTM의 차이를 이해한다
-- 리셋/업데이트 게이트를 배운다
+- GRU의 등장 배경을 이해한다
+- 리셋 게이트와 업데이트 게이트의 역할을 배운다
+- GRU의 동작 원리를 파악한다
+- LSTM과 GRU의 차이를 비교한다
+- PyTorch로 GRU를 구현할 수 있다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## GRU란?
+
+**GRU(Gated Recurrent Unit)**는 2014년 Cho 등이 제안한 LSTM의 간소화 버전입니다.
+
+### GRU의 특징
+- LSTM보다 **더 단순한 구조**
+- 게이트 수: 3개 → 2개로 감소
+- 셀 상태 없이 **은닉 상태만** 사용
+- 적은 파라미터로 **빠른 학습**
+
+### LSTM vs GRU 비교
+
+| 특성 | LSTM | GRU |
+|------|------|-----|
+| 게이트 수 | 3개 | 2개 |
+| 상태 | 셀 + 은닉 | 은닉만 |
+| 파라미터 | 많음 | 적음 |
+| 학습 속도 | 느림 | 빠름 |
+| 장기 의존성 | 우수 | 양호 |
+
+## 리셋 게이트 (Reset Gate)
+
+**이전 은닉 상태를 얼마나 무시할지** 결정합니다.
+
+### 수식
+\`\`\`
+r_t = σ(W_r · [h_{t-1}, x_t] + b_r)
+\`\`\`
+
+### 동작 원리
+- 출력 범위: 0 ~ 1 (시그모이드)
+- **0에 가까우면**: 이전 상태 무시 (리셋)
+- **1에 가까우면**: 이전 상태 유지
+
+### 역할
+\`\`\`
+r_t ≈ 0일 때: "이전 기억 지우고 새로 시작"
+r_t ≈ 1일 때: "이전 기억 참고해서 진행"
+\`\`\`
+
+### 시각화
+\`\`\`
+이전 은닉상태 (h_{t-1})
+         │
+         ↓
+    [× r_t]  ← 리셋 게이트 (0~1)
+         │
+         ↓
+(일부/전부 리셋된 상태)
+\`\`\`
+
+## 업데이트 게이트 (Update Gate)
+
+**이전 상태와 새 정보의 비율**을 결정합니다.
+
+### 수식
+\`\`\`
+z_t = σ(W_z · [h_{t-1}, x_t] + b_z)
+\`\`\`
+
+### 동작 원리
+- LSTM의 **망각 게이트 + 입력 게이트** 역할을 통합
+- **z_t가 크면**: 이전 상태 유지 (변화 적음)
+- **z_t가 작으면**: 새 정보로 업데이트 (변화 큼)
+
+### 핵심 아이디어
+\`\`\`
+새 상태 = z_t × (이전 상태) + (1-z_t) × (새 정보)
+
+z_t = 0.9: 90% 이전 유지, 10% 새 정보
+z_t = 0.1: 10% 이전 유지, 90% 새 정보
+\`\`\`
+
+## 후보 은닉 상태
+
+**새로운 정보**를 담는 후보 상태입니다.
+
+### 수식
+\`\`\`
+h̃_t = tanh(W_h · [r_t ⊙ h_{t-1}, x_t] + b_h)
+\`\`\`
+
+### 동작 원리
+- 리셋 게이트로 필터링된 이전 상태 사용
+- 현재 입력과 결합
+- tanh로 -1~1 범위로 정규화
+
+\`\`\`
+              x_t
+               │
+               ↓
+[r_t ⊙ h_{t-1}] ─→ [concat] ─→ [tanh] ─→ h̃_t
+\`\`\`
+
+## 최종 은닉 상태 업데이트
+
+업데이트 게이트로 **이전과 새 정보를 혼합**합니다.
+
+### 수식
+\`\`\`
+h_t = z_t ⊙ h_{t-1} + (1 - z_t) ⊙ h̃_t
+\`\`\`
+
+### 해석
+- **z_t ⊙ h_{t-1}**: 이전 상태에서 유지할 부분
+- **(1 - z_t) ⊙ h̃_t**: 새로 추가할 부분
+- 두 값의 **가중 평균**으로 새 은닉 상태 생성
+
+\`\`\`
+  h_{t-1}         h̃_t
+    │              │
+    ↓              ↓
+ [× z_t]     [× (1-z_t)]
+    │              │
+    └──────┬───────┘
+           ↓
+          [+]
+           │
+           ↓
+          h_t (새 은닉 상태)
+\`\`\`
+
+## GRU 전체 구조
+
+\`\`\`
+┌─────────────────────────────────────────────┐
+│                  GRU Cell                    │
+│                                              │
+│   h_{t-1} ────────[× z_t]─────────┐         │
+│       │              ↑            │         │
+│       │              │            ↓         │
+│       └──┬───────────┴─────────[+]──→ h_t   │
+│          │                       ↑          │
+│          ↓                       │          │
+│       [× r_t]    ┌─────[× (1-z_t)]          │
+│          │       │       ↑                  │
+│          ↓       │       │                  │
+│       [concat]───┴───→[tanh]→ h̃_t          │
+│          ↑                                  │
+│          │                                  │
+│        x_t                                  │
+│                                              │
+│   게이트:  r_t = σ(W_r·[h,x])               │
+│           z_t = σ(W_z·[h,x])               │
+└─────────────────────────────────────────────┘
+\`\`\`
+
+## PyTorch GRU 구현
+
+### 기본 GRU 사용
+
+\`\`\`python
+import torch
+import torch.nn as nn
+
+# GRU 레이어 생성
+gru = nn.GRU(
+    input_size=10,    # 입력 차원
+    hidden_size=20,   # 은닉 상태 차원
+    num_layers=1,     # 레이어 수
+    batch_first=True  # (batch, seq, feature)
+)
+
+# 입력 데이터
+x = torch.randn(32, 15, 10)  # (배치, 시퀀스, 입력차원)
+
+# 초기 은닉 상태
+h0 = torch.zeros(1, 32, 20)
+
+# 순전파 (LSTM과 달리 셀 상태 없음!)
+output, hn = gru(x, h0)
+
+print(f"출력 shape: {output.shape}")      # (32, 15, 20)
+print(f"최종 은닉상태: {hn.shape}")        # (1, 32, 20)
+\`\`\`
+
+### 텍스트 분류 GRU 모델
+
+\`\`\`python
+class TextGRU(nn.Module):
+    def __init__(self, vocab_size, embed_dim, hidden_dim, num_classes):
+        super().__init__()
+
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+
+        self.gru = nn.GRU(
+            input_size=embed_dim,
+            hidden_size=hidden_dim,
+            num_layers=2,
+            batch_first=True,
+            dropout=0.3,
+            bidirectional=True
+        )
+
+        # 양방향이므로 hidden_dim * 2
+        self.fc = nn.Linear(hidden_dim * 2, num_classes)
+
+    def forward(self, x):
+        # 임베딩
+        embedded = self.embedding(x)
+
+        # GRU (셀 상태 없음!)
+        gru_out, h_n = self.gru(embedded)
+
+        # 양방향 마지막 은닉 상태 연결
+        h_forward = h_n[-2]
+        h_backward = h_n[-1]
+        h_concat = torch.cat([h_forward, h_backward], dim=1)
+
+        # 분류
+        out = self.fc(h_concat)
+        return out
+
+# 모델 생성
+model = TextGRU(
+    vocab_size=10000,
+    embed_dim=128,
+    hidden_dim=256,
+    num_classes=2
+)
+\`\`\`
+
+## LSTM vs GRU 선택 기준
+
+### GRU를 선택하는 경우
+- 데이터셋이 **작은** 경우
+- **빠른 학습**이 필요한 경우
+- 리소스(메모리, 연산)가 **제한적**인 경우
+- 시퀀스가 비교적 **짧은** 경우
+
+### LSTM을 선택하는 경우
+- 데이터셋이 **큰** 경우
+- **매우 긴 시퀀스**를 다루는 경우
+- **정교한 기억** 제어가 필요한 경우
+- 정확도가 가장 중요한 경우
+
+### 비교 표
+
+| 관점 | LSTM | GRU |
+|------|------|-----|
+| 파라미터 수 | 많음 (8×hidden²) | 적음 (6×hidden²) |
+| 학습 속도 | 느림 | 빠름 |
+| 메모리 | 많이 사용 | 적게 사용 |
+| 긴 시퀀스 | 우수 | 양호 |
+| 짧은 시퀀스 | 양호 | 비슷/더 좋음 |
+
+## 핵심 정리
+
+| 구성 요소 | 역할 | 특징 |
+|-----------|------|------|
+| 리셋 게이트 (r) | 이전 상태 리셋 | 0이면 완전 리셋 |
+| 업데이트 게이트 (z) | 상태 혼합 비율 | 망각+입력 통합 |
+| 후보 은닉 (h̃) | 새 정보 생성 | 리셋된 상태 사용 |
+| 최종 은닉 (h) | 상태 업데이트 | 가중 평균 |
+
+## 실습 과제
+
+1. **GRU vs LSTM 성능 비교**
+   - 동일한 데이터셋으로 학습
+   - 정확도, 학습 시간 비교
+
+2. **게이트 값 분석**
+   - 리셋/업데이트 게이트 값 시각화
+   - 시퀀스 위치에 따른 변화 확인
+
+3. **하이퍼파라미터 실험**
+   - hidden_size 변화에 따른 성능
+   - num_layers 변화 영향
+
+## 다음 레슨 예고
+다음 시간에는 RNN/LSTM/GRU에 텍스트를 입력하기 위한 **텍스트 전처리** 방법을 배웁니다.
 `
       },
       {
@@ -6534,11 +7584,350 @@ patience = 10
 # 텍스트 전처리
 
 ## 학습 목표
-- 텍스트를 토큰화한다
-- 단어 임베딩을 이해한다
+- 텍스트 전처리의 필요성을 이해한다
+- 토큰화(Tokenization)의 개념과 방법을 배운다
+- 단어 임베딩(Embedding)의 원리를 파악한다
+- 패딩(Padding)과 시퀀스 정렬을 이해한다
+- 전처리 파이프라인을 구축할 수 있다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## 텍스트 전처리가 필요한 이유
+
+신경망은 **숫자만 처리**할 수 있습니다. 텍스트를 입력하려면 변환이 필요합니다.
+
+### 전처리 파이프라인
+\`\`\`
+텍스트 → 토큰화 → 정수 인코딩 → 임베딩 → 패딩 → 모델 입력
+\`\`\`
+
+### 예시 흐름
+\`\`\`
+"I love AI"
+    ↓ 토큰화
+["I", "love", "AI"]
+    ↓ 정수 인코딩
+[5, 128, 42]
+    ↓ 임베딩
+[[0.2, 0.5, ...], [0.8, 0.1, ...], [0.3, 0.7, ...]]
+    ↓ 패딩
+[[0.2, 0.5, ...], [0.8, 0.1, ...], [0.3, 0.7, ...], [0, 0, ...]]
+\`\`\`
+
+## 토큰화 (Tokenization)
+
+텍스트를 **작은 단위(토큰)**로 분리하는 과정입니다.
+
+### 토큰화 방법
+
+#### 1. 단어 기반 토큰화
+\`\`\`python
+text = "I love machine learning"
+tokens = text.split()
+# ["I", "love", "machine", "learning"]
+\`\`\`
+
+#### 2. 문자 기반 토큰화
+\`\`\`python
+text = "AI"
+tokens = list(text)
+# ["A", "I"]
+\`\`\`
+
+#### 3. 서브워드 토큰화 (BPE, WordPiece)
+\`\`\`python
+text = "unbelievable"
+# BPE: ["un", "believ", "able"]
+# WordPiece: ["un", "##believable"]
+\`\`\`
+
+### 토큰화 비교
+
+| 방식 | 장점 | 단점 |
+|------|------|------|
+| 단어 | 직관적 | OOV 문제 |
+| 문자 | OOV 없음 | 시퀀스 길어짐 |
+| 서브워드 | 균형적 | 복잡함 |
+
+### PyTorch 토큰화 예제
+
+\`\`\`python
+from torchtext.data.utils import get_tokenizer
+
+# 기본 영어 토크나이저
+tokenizer = get_tokenizer("basic_english")
+
+text = "Hello, I'm learning PyTorch!"
+tokens = tokenizer(text)
+print(tokens)
+# ['hello', ',', "i'm", 'learning', 'pytorch', '!']
+\`\`\`
+
+## 어휘 사전 (Vocabulary)
+
+토큰을 **정수 인덱스로 매핑**하는 사전입니다.
+
+### 어휘 사전 구축
+
+\`\`\`python
+from collections import Counter
+
+# 코퍼스의 모든 토큰
+all_tokens = ["i", "love", "ai", "i", "love", "python", "love"]
+
+# 빈도 계산
+counter = Counter(all_tokens)
+print(counter)
+# Counter({'love': 3, 'i': 2, 'ai': 1, 'python': 1})
+
+# 어휘 사전 생성 (빈도순)
+vocab = {word: idx for idx, (word, _) in enumerate(counter.most_common())}
+vocab['<PAD>'] = len(vocab)  # 패딩 토큰
+vocab['<UNK>'] = len(vocab)  # 미등록 단어
+print(vocab)
+# {'love': 0, 'i': 1, 'ai': 2, 'python': 3, '<PAD>': 4, '<UNK>': 5}
+\`\`\`
+
+### 특수 토큰
+
+| 토큰 | 용도 |
+|------|------|
+| \`<PAD>\` | 패딩 (길이 맞추기) |
+| \`<UNK>\` | 미등록 단어 |
+| \`<SOS>\` | 시퀀스 시작 |
+| \`<EOS>\` | 시퀀스 끝 |
+
+## 임베딩 (Embedding)
+
+정수 인덱스를 **밀집 벡터(Dense Vector)**로 변환합니다.
+
+### 임베딩이 필요한 이유
+
+\`\`\`
+원-핫 인코딩의 문제점:
+- 단어 수가 많으면 차원이 너무 큼 (10만 단어 → 10만 차원)
+- 단어 간 관계를 표현 못함 (모든 단어가 동일 거리)
+
+임베딩의 장점:
+- 고정된 저차원 벡터 (예: 100~300 차원)
+- 의미적 관계 학습 (비슷한 단어는 비슷한 벡터)
+\`\`\`
+
+### PyTorch Embedding
+
+\`\`\`python
+import torch
+import torch.nn as nn
+
+# 임베딩 레이어 생성
+# num_embeddings: 어휘 크기
+# embedding_dim: 임베딩 차원
+embedding = nn.Embedding(
+    num_embeddings=1000,  # 어휘 크기
+    embedding_dim=128      # 임베딩 차원
+)
+
+# 정수 인덱스 입력
+word_indices = torch.tensor([5, 128, 42])  # "I love AI"
+
+# 임베딩 벡터 출력
+embedded = embedding(word_indices)
+print(embedded.shape)  # torch.Size([3, 128])
+\`\`\`
+
+### 사전 학습 임베딩
+
+이미 학습된 임베딩을 사용하면 성능이 향상됩니다.
+
+#### Word2Vec
+\`\`\`
+의미적 관계 학습:
+king - man + woman ≈ queen
+\`\`\`
+
+#### GloVe
+\`\`\`
+통계 기반 + 학습 기반 결합
+대규모 코퍼스에서 단어 동시출현 활용
+\`\`\`
+
+\`\`\`python
+# 사전 학습 임베딩 로드 예시
+import gensim.downloader as api
+
+# Word2Vec 모델 다운로드
+word2vec = api.load('word2vec-google-news-300')
+
+# 단어 벡터 확인
+vector = word2vec['computer']  # 300차원 벡터
+print(vector.shape)  # (300,)
+
+# 유사 단어 찾기
+similar = word2vec.most_similar('computer', topn=5)
+print(similar)
+# [('computers', 0.87), ('laptop', 0.82), ...]
+\`\`\`
+
+## 패딩 (Padding)
+
+배치 처리를 위해 **시퀀스 길이를 동일하게** 맞춥니다.
+
+### 패딩이 필요한 이유
+\`\`\`
+시퀀스 1: [1, 2, 3]       (길이 3)
+시퀀스 2: [4, 5, 6, 7, 8] (길이 5)
+시퀀스 3: [9, 10]         (길이 2)
+
+→ 배치 처리 시 길이가 다르면 행렬 연산 불가!
+\`\`\`
+
+### 패딩 적용
+\`\`\`python
+from torch.nn.utils.rnn import pad_sequence
+
+# 길이가 다른 시퀀스들
+seq1 = torch.tensor([1, 2, 3])
+seq2 = torch.tensor([4, 5, 6, 7, 8])
+seq3 = torch.tensor([9, 10])
+
+# 패딩 적용 (최대 길이에 맞춤)
+padded = pad_sequence(
+    [seq1, seq2, seq3],
+    batch_first=True,
+    padding_value=0  # PAD 토큰 인덱스
+)
+print(padded)
+# tensor([[1, 2, 3, 0, 0],
+#         [4, 5, 6, 7, 8],
+#         [9, 10, 0, 0, 0]])
+\`\`\`
+
+### 트렁케이션 (Truncation)
+
+최대 길이를 넘으면 **잘라내기**
+
+\`\`\`python
+max_length = 10
+
+def truncate(sequence, max_len):
+    return sequence[:max_len]
+
+long_seq = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+truncated = truncate(long_seq, max_length)
+# [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+\`\`\`
+
+## 전처리 파이프라인 구축
+
+### 완전한 전처리 예제
+
+\`\`\`python
+import torch
+import torch.nn as nn
+from torch.utils.data import Dataset, DataLoader
+from collections import Counter
+
+class TextDataset(Dataset):
+    def __init__(self, texts, labels, vocab=None, max_len=100):
+        self.texts = texts
+        self.labels = labels
+        self.max_len = max_len
+
+        # 어휘 사전 구축
+        if vocab is None:
+            self.vocab = self._build_vocab(texts)
+        else:
+            self.vocab = vocab
+
+    def _build_vocab(self, texts, min_freq=2):
+        # 토큰화 및 빈도 계산
+        counter = Counter()
+        for text in texts:
+            tokens = text.lower().split()
+            counter.update(tokens)
+
+        # 특수 토큰 + 빈도 이상 단어
+        vocab = {'<PAD>': 0, '<UNK>': 1}
+        for word, freq in counter.items():
+            if freq >= min_freq:
+                vocab[word] = len(vocab)
+
+        return vocab
+
+    def _encode(self, text):
+        tokens = text.lower().split()
+        indices = [
+            self.vocab.get(token, self.vocab['<UNK>'])
+            for token in tokens
+        ]
+        return indices
+
+    def __len__(self):
+        return len(self.texts)
+
+    def __getitem__(self, idx):
+        # 텍스트 → 인덱스
+        indices = self._encode(self.texts[idx])
+
+        # 트렁케이션
+        indices = indices[:self.max_len]
+
+        # 텐서 변환
+        return {
+            'input': torch.tensor(indices),
+            'label': torch.tensor(self.labels[idx])
+        }
+
+def collate_fn(batch):
+    inputs = [item['input'] for item in batch]
+    labels = torch.stack([item['label'] for item in batch])
+
+    # 패딩
+    padded_inputs = nn.utils.rnn.pad_sequence(
+        inputs, batch_first=True, padding_value=0
+    )
+
+    return {'input': padded_inputs, 'label': labels}
+
+# 사용 예시
+texts = [
+    "I love this movie",
+    "This film is terrible",
+    "Great acting and story"
+]
+labels = [1, 0, 1]  # 긍정/부정
+
+dataset = TextDataset(texts, labels)
+dataloader = DataLoader(dataset, batch_size=2, collate_fn=collate_fn)
+
+for batch in dataloader:
+    print(f"Input shape: {batch['input'].shape}")
+    print(f"Labels: {batch['label']}")
+\`\`\`
+
+## 핵심 정리
+
+| 단계 | 목적 | 결과 |
+|------|------|------|
+| 토큰화 | 텍스트 분리 | 토큰 리스트 |
+| 정수 인코딩 | 토큰 → 숫자 | 인덱스 리스트 |
+| 임베딩 | 숫자 → 벡터 | 밀집 벡터 |
+| 패딩 | 길이 맞추기 | 동일 길이 시퀀스 |
+
+## 실습 과제
+
+1. **토큰화 비교**
+   - 단어/문자/서브워드 토큰화 결과 비교
+   - 각 방식의 시퀀스 길이 분석
+
+2. **어휘 사전 분석**
+   - 실제 텍스트로 어휘 사전 구축
+   - 빈도별 단어 분포 시각화
+
+3. **사전 학습 임베딩**
+   - GloVe 임베딩 로드 및 활용
+   - 유사 단어 검색 실험
+
+## 다음 레슨 예고
+다음 시간에는 지금까지 배운 LSTM과 텍스트 전처리를 활용하여 **감성 분석(Sentiment Analysis)** 모델을 구현합니다.
 `
       },
       {
@@ -6551,11 +7940,423 @@ patience = 10
 # 감성 분석 구현
 
 ## 학습 목표
-- LSTM으로 감성 분석 모델을 만든다
-- IMDB 데이터셋을 활용한다
+- IMDB 데이터셋을 이해한다
+- 감성 분석 문제를 파악한다
+- LSTM 기반 감성 분류기를 구현한다
+- 모델 학습 및 평가를 수행한다
+- 실제 리뷰로 예측해본다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## 감성 분석이란?
+
+**감성 분석(Sentiment Analysis)**은 텍스트에서 **감정이나 의견**을 추출하는 NLP 작업입니다.
+
+### 감성 분석의 유형
+
+| 유형 | 설명 | 예시 |
+|------|------|------|
+| 이진 분류 | 긍정/부정 | 영화 리뷰 |
+| 다중 분류 | 매우부정~매우긍정 | 별점 예측 |
+| 측면 기반 | 여러 측면 평가 | "음식은 좋지만 서비스는 나빠요" |
+
+### 활용 분야
+- 제품 리뷰 분석
+- 소셜 미디어 모니터링
+- 고객 피드백 분석
+- 브랜드 평판 관리
+
+## IMDB 데이터셋
+
+**IMDB 영화 리뷰 데이터셋**은 감성 분석의 대표적인 벤치마크입니다.
+
+### 데이터셋 구성
+\`\`\`
+총 50,000개 리뷰
+├── 학습: 25,000개
+│   ├── 긍정: 12,500개
+│   └── 부정: 12,500개
+└── 테스트: 25,000개
+    ├── 긍정: 12,500개
+    └── 부정: 12,500개
+\`\`\`
+
+### 데이터 예시
+\`\`\`
+긍정 리뷰:
+"This movie was absolutely fantastic! Great acting and story."
+→ 레이블: 1 (긍정)
+
+부정 리뷰:
+"Terrible waste of time. The plot made no sense."
+→ 레이블: 0 (부정)
+\`\`\`
+
+### PyTorch로 IMDB 로드
+
+\`\`\`python
+from torchtext.datasets import IMDB
+from torchtext.data.utils import get_tokenizer
+from torchtext.vocab import build_vocab_from_iterator
+
+# 토크나이저
+tokenizer = get_tokenizer('basic_english')
+
+# 데이터셋 로드
+train_iter, test_iter = IMDB(split=('train', 'test'))
+
+# 어휘 사전 구축
+def yield_tokens(data_iter):
+    for label, text in data_iter:
+        yield tokenizer(text)
+
+vocab = build_vocab_from_iterator(
+    yield_tokens(train_iter),
+    specials=['<unk>', '<pad>'],
+    min_freq=5
+)
+vocab.set_default_index(vocab['<unk>'])
+
+print(f"어휘 크기: {len(vocab)}")
+\`\`\`
+
+## LSTM 감성 분류기 모델
+
+### 모델 아키텍처
+
+\`\`\`
+입력 텍스트 → 임베딩 → LSTM → 전결합층 → 분류
+      │           │        │        │
+  [batch, seq]  [batch,   [batch,   [batch, 2]
+              seq, emb]  hidden]
+\`\`\`
+
+### 모델 구현
+
+\`\`\`python
+import torch
+import torch.nn as nn
+
+class SentimentLSTM(nn.Module):
+    def __init__(self, vocab_size, embed_dim, hidden_dim,
+                 num_layers, num_classes, dropout=0.5):
+        super().__init__()
+
+        # 임베딩 레이어
+        self.embedding = nn.Embedding(
+            vocab_size,
+            embed_dim,
+            padding_idx=1  # <pad> 인덱스
+        )
+
+        # LSTM 레이어
+        self.lstm = nn.LSTM(
+            input_size=embed_dim,
+            hidden_size=hidden_dim,
+            num_layers=num_layers,
+            batch_first=True,
+            dropout=dropout if num_layers > 1 else 0,
+            bidirectional=True
+        )
+
+        # 드롭아웃
+        self.dropout = nn.Dropout(dropout)
+
+        # 출력 레이어 (양방향이므로 hidden_dim * 2)
+        self.fc = nn.Linear(hidden_dim * 2, num_classes)
+
+    def forward(self, x):
+        # x: (batch, seq_len)
+
+        # 임베딩: (batch, seq_len, embed_dim)
+        embedded = self.embedding(x)
+        embedded = self.dropout(embedded)
+
+        # LSTM: (batch, seq_len, hidden_dim * 2)
+        lstm_out, (h_n, c_n) = self.lstm(embedded)
+
+        # 양방향 마지막 은닉 상태 결합
+        # h_n: (num_layers * 2, batch, hidden_dim)
+        h_forward = h_n[-2]  # 순방향 마지막 레이어
+        h_backward = h_n[-1]  # 역방향 마지막 레이어
+        hidden = torch.cat([h_forward, h_backward], dim=1)
+
+        # 드롭아웃
+        hidden = self.dropout(hidden)
+
+        # 분류: (batch, num_classes)
+        output = self.fc(hidden)
+
+        return output
+
+# 모델 생성
+model = SentimentLSTM(
+    vocab_size=len(vocab),
+    embed_dim=128,
+    hidden_dim=256,
+    num_layers=2,
+    num_classes=2,
+    dropout=0.5
+)
+print(model)
+\`\`\`
+
+## 데이터 전처리
+
+### 데이터 파이프라인
+
+\`\`\`python
+from torch.utils.data import DataLoader
+from torch.nn.utils.rnn import pad_sequence
+
+# 텍스트 → 텐서 변환
+def text_pipeline(text):
+    return vocab(tokenizer(text))
+
+def label_pipeline(label):
+    return 1 if label == 'pos' else 0
+
+# 배치 처리 함수
+def collate_batch(batch):
+    label_list, text_list = [], []
+
+    for label, text in batch:
+        label_list.append(label_pipeline(label))
+        processed_text = torch.tensor(
+            text_pipeline(text),
+            dtype=torch.int64
+        )
+        text_list.append(processed_text)
+
+    # 레이블 텐서
+    labels = torch.tensor(label_list, dtype=torch.int64)
+
+    # 텍스트 패딩
+    texts = pad_sequence(
+        text_list,
+        batch_first=True,
+        padding_value=vocab['<pad>']
+    )
+
+    return labels, texts
+
+# 데이터로더 생성
+train_iter, test_iter = IMDB(split=('train', 'test'))
+train_dataloader = DataLoader(
+    list(train_iter),
+    batch_size=64,
+    shuffle=True,
+    collate_fn=collate_batch
+)
+test_dataloader = DataLoader(
+    list(test_iter),
+    batch_size=64,
+    shuffle=False,
+    collate_fn=collate_batch
+)
+\`\`\`
+
+## 학습 및 평가
+
+### 학습 함수
+
+\`\`\`python
+import torch.optim as optim
+
+# 하이퍼파라미터
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = model.to(device)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+def train_epoch(model, dataloader, criterion, optimizer):
+    model.train()
+    total_loss = 0
+    correct = 0
+    total = 0
+
+    for labels, texts in dataloader:
+        labels = labels.to(device)
+        texts = texts.to(device)
+
+        # 순전파
+        optimizer.zero_grad()
+        outputs = model(texts)
+        loss = criterion(outputs, labels)
+
+        # 역전파
+        loss.backward()
+        optimizer.step()
+
+        # 통계
+        total_loss += loss.item()
+        _, predicted = torch.max(outputs, 1)
+        total += labels.size(0)
+        correct += (predicted == labels).sum().item()
+
+    avg_loss = total_loss / len(dataloader)
+    accuracy = 100 * correct / total
+    return avg_loss, accuracy
+\`\`\`
+
+### 평가 함수
+
+\`\`\`python
+def evaluate(model, dataloader, criterion):
+    model.eval()
+    total_loss = 0
+    correct = 0
+    total = 0
+
+    with torch.no_grad():
+        for labels, texts in dataloader:
+            labels = labels.to(device)
+            texts = texts.to(device)
+
+            outputs = model(texts)
+            loss = criterion(outputs, labels)
+
+            total_loss += loss.item()
+            _, predicted = torch.max(outputs, 1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+
+    avg_loss = total_loss / len(dataloader)
+    accuracy = 100 * correct / total
+    return avg_loss, accuracy
+\`\`\`
+
+### 학습 루프
+
+\`\`\`python
+num_epochs = 10
+
+for epoch in range(num_epochs):
+    train_loss, train_acc = train_epoch(
+        model, train_dataloader, criterion, optimizer
+    )
+    test_loss, test_acc = evaluate(
+        model, test_dataloader, criterion
+    )
+
+    print(f"Epoch {epoch+1}/{num_epochs}")
+    print(f"Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.2f}%")
+    print(f"Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.2f}%")
+    print("-" * 50)
+\`\`\`
+
+## 예측하기
+
+### 새 리뷰 예측
+
+\`\`\`python
+def predict_sentiment(model, text, vocab, tokenizer):
+    model.eval()
+
+    # 전처리
+    tokens = tokenizer(text)
+    indices = torch.tensor(
+        [vocab[token] for token in tokens],
+        dtype=torch.int64
+    ).unsqueeze(0).to(device)
+
+    # 예측
+    with torch.no_grad():
+        output = model(indices)
+        probabilities = torch.softmax(output, dim=1)
+        prediction = torch.argmax(output, dim=1).item()
+
+    sentiment = "긍정" if prediction == 1 else "부정"
+    confidence = probabilities[0][prediction].item()
+
+    return sentiment, confidence
+
+# 테스트
+reviews = [
+    "This movie was absolutely amazing! Best film I've seen this year.",
+    "Terrible movie. Complete waste of time and money.",
+    "It was okay, nothing special but not bad either."
+]
+
+for review in reviews:
+    sentiment, confidence = predict_sentiment(
+        model, review, vocab, tokenizer
+    )
+    print(f"리뷰: {review[:50]}...")
+    print(f"예측: {sentiment} (확신도: {confidence:.2%})")
+    print()
+\`\`\`
+
+### 예측 결과 예시
+\`\`\`
+리뷰: This movie was absolutely amazing! Best film I'v...
+예측: 긍정 (확신도: 95.23%)
+
+리뷰: Terrible movie. Complete waste of time and money...
+예측: 부정 (확신도: 92.87%)
+
+리뷰: It was okay, nothing special but not bad either...
+예측: 긍정 (확신도: 58.34%)
+\`\`\`
+
+## 모델 개선 방법
+
+### 1. 사전 학습 임베딩 사용
+\`\`\`python
+# GloVe 임베딩 로드
+pretrained_embeddings = load_glove_embeddings(vocab)
+model.embedding.weight.data.copy_(pretrained_embeddings)
+model.embedding.weight.requires_grad = False  # 프리징
+\`\`\`
+
+### 2. 양방향 LSTM + Attention
+\`\`\`python
+class AttentionLSTM(nn.Module):
+    # Attention 메커니즘 추가
+    pass
+\`\`\`
+
+### 3. 데이터 증강
+- 동의어 치환
+- 역번역 (Back-translation)
+- 랜덤 삽입/삭제
+
+## 핵심 정리
+
+| 단계 | 내용 |
+|------|------|
+| 데이터 로드 | IMDB 데이터셋 |
+| 전처리 | 토큰화 → 인코딩 → 패딩 |
+| 모델 | 임베딩 → LSTM → 분류 |
+| 학습 | CrossEntropyLoss + Adam |
+| 평가 | 정확도, 손실 |
+| 예측 | softmax → argmax |
+
+## 실습 과제
+
+1. **모델 튜닝**
+   - hidden_dim, num_layers 변경
+   - dropout 비율 조정
+
+2. **GRU 비교**
+   - LSTM을 GRU로 교체
+   - 성능 및 학습 속도 비교
+
+3. **한국어 감성 분석**
+   - 네이버 영화 리뷰 데이터 활용
+   - 한국어 토크나이저 적용
+
+## 레벨 6 완료!
+
+축하합니다! Level 6의 모든 레슨을 완료했습니다.
+
+### 배운 내용 정리
+- 시퀀스 데이터의 특성
+- RNN의 구조와 한계
+- LSTM과 GRU의 게이트 메커니즘
+- 텍스트 전처리 파이프라인
+- 실제 감성 분석 구현
+
+### 다음 단계
+Level 7에서는 **어텐션(Attention) 메커니즘**과 **트랜스포머(Transformer)**를 배웁니다!
 `
       }
     ]
@@ -6580,11 +8381,220 @@ patience = 10
 # Attention 메커니즘
 
 ## 학습 목표
-- Attention의 핵심 개념을 이해한다
+- Attention의 핵심 개념과 등장 배경을 이해한다
 - Query, Key, Value의 역할을 배운다
+- Attention Score 계산 방법을 익힌다
+- Scaled Dot-Product Attention 공식을 이해한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## Attention의 등장 배경
+
+**Attention**은 2017년 구글의 "Attention is All You Need" 논문에서 등장했습니다. 이 논문이 GPT와 ChatGPT의 시작점입니다.
+
+### 기존 방식의 한계
+\`\`\`
+기존 RNN/LSTM의 문제점:
+- 시퀀스를 순차적으로 처리
+- 긴 문장에서 앞부분 정보가 희석됨
+- 병렬 처리 불가능
+
+Attention의 해결책:
+- 모든 위치를 한 번에 참조
+- 중요한 부분에 더 집중
+- 덜 중요한 부분은 무시
+\`\`\`
+
+### 핵심 아이디어
+마치 사람이 글을 읽을 때 핵심 단어에 집중하는 것처럼, Attention은 입력의 모든 부분을 동시에 보면서 중요한 정보에 더 큰 가중치를 부여합니다.
+
+## Query, Key, Value 개념
+
+Attention을 이해하기 위해 **검색 시스템**을 떠올려 봅시다.
+
+### 검색 비유
+\`\`\`
+검색어: "파이썬 리스트 정렬" → Query (질문)
+문서 제목/키워드 → Key (비교 대상)
+문서 내용 → Value (실제 정보)
+
+검색 과정:
+1. Query와 각 Key를 비교하여 관련도 계산
+2. 관련도가 높은 문서의 Value를 가져옴
+\`\`\`
+
+### Q, K, V 정의
+| 요소 | 의미 | 역할 |
+|------|------|------|
+| **Query (Q)** | 내가 찾는 것 | 질문하는 역할 |
+| **Key (K)** | 비교 대상 | 응답하는 역할 |
+| **Value (V)** | 실제 정보 | 정보를 전달 |
+
+### Q, K, V 생성
+같은 입력에서 Query, Key, Value를 모두 만듭니다:
+
+\`\`\`python
+# 학습 가능한 가중치 행렬
+W_Q, W_K, W_V = nn.Linear(d_model, d_k), nn.Linear(d_model, d_k), nn.Linear(d_model, d_v)
+
+# Q, K, V 생성
+Q = W_Q(X)  # Query 벡터
+K = W_K(X)  # Key 벡터
+V = W_V(X)  # Value 벡터
+\`\`\`
+
+## Attention Score 계산
+
+Query와 Key가 얼마나 관련 있는지 측정하는 점수입니다.
+
+### 계산 방법: 내적 (Dot Product)
+\`\`\`
+score = Q · K^T
+
+Q 벡터와 K 벡터의 내적 → 스칼라 값
+값이 클수록 두 벡터가 비슷함 (관련성 높음)
+\`\`\`
+
+### 예시
+\`\`\`
+문장: "나는 밥을 먹는다"
+
+"먹는다"의 Query와 각 단어의 Key를 내적:
+- "나는" Key: 0.3
+- "밥을" Key: 0.9 (높음! 의미적으로 관련)
+- "먹는다" Key: 0.5
+
+→ "밥을"에 더 집중하게 됨
+\`\`\`
+
+### 스케일링의 필요성
+\`\`\`
+문제: 차원이 커지면 내적 값도 커짐
+     → 소프트맥스 결과가 극단적이 됨
+
+해결: 내적 결과를 √d_k로 나눔
+     → Scaled Dot-Product Attention
+\`\`\`
+
+## Softmax와 가중 합
+
+### Softmax 적용
+\`\`\`python
+# 스케일링된 점수에 소프트맥스 적용
+attention_weights = softmax(scores / sqrt(d_k))
+
+# 결과: 모든 점수가 0~1 사이, 합은 1
+# 예: [0.1, 0.5, 0.2, 0.2] → 확률 분포
+\`\`\`
+
+### 가중 합계
+\`\`\`python
+# Attention 가중치와 Value를 곱해서 합산
+output = attention_weights @ V
+
+# 가중치가 높은 Value는 많이 반영
+# 가중치가 낮은 Value는 적게 반영
+\`\`\`
+
+### Context Vector
+결과는 입력 시퀀스 전체를 참조하되, **관련 있는 부분에 더 집중한 정보**가 담긴 Context Vector입니다.
+
+## Scaled Dot-Product Attention 공식
+
+### 핵심 수식
+\`\`\`
+Attention(Q, K, V) = softmax(Q K^T / √d_k) V
+\`\`\`
+
+### 단계별 계산
+\`\`\`
+1. Q와 K^T를 행렬 곱 → 유사도 행렬
+2. √d_k로 나눔 → 스케일링
+3. softmax 적용 → 확률화 (Attention Weights)
+4. V와 곱함 → 최종 출력
+\`\`\`
+
+### 시각적 표현
+\`\`\`
+     Q        K^T           Attention    V        Output
+  [n×d_k] × [d_k×n] = [n×n]            [n×d_v] = [n×d_v]
+                        ↓
+                   softmax + scale
+\`\`\`
+
+## Attention의 장점
+
+### 1. 장거리 의존성 포착
+\`\`\`
+RNN: 먼 단어 사이의 관계 파악 어려움
+     "그 사람이 ... (100단어) ... 갔다" → 연결 약함
+
+Attention: 거리에 상관없이 직접 참조
+     모든 위치를 한 번에 연결 가능
+\`\`\`
+
+### 2. 병렬 처리 가능
+\`\`\`
+RNN: 순차적 처리 필수 (t-1 → t → t+1)
+Attention: 모든 위치를 동시에 계산
+          → GPU 활용 극대화
+\`\`\`
+
+### 3. 해석 가능성
+\`\`\`
+Attention Weight를 시각화하면
+모델이 어디에 집중하는지 확인 가능
+→ 번역 시 어떤 단어를 참조했는지 파악
+\`\`\`
+
+## PyTorch 구현
+
+### 직접 구현
+\`\`\`python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class ScaledDotProductAttention(nn.Module):
+    def forward(self, Q, K, V):
+        d_k = K.size(-1)  # Key 차원
+
+        # 1. Q와 K의 내적
+        scores = torch.matmul(Q, K.transpose(-2, -1))
+
+        # 2. 스케일링
+        scores = scores / (d_k ** 0.5)
+
+        # 3. 소프트맥스
+        attn_weights = F.softmax(scores, dim=-1)
+
+        # 4. V와 곱하기
+        output = torch.matmul(attn_weights, V)
+
+        return output, attn_weights
+\`\`\`
+
+### PyTorch 내장 함수
+\`\`\`python
+# PyTorch 2.0+ 내장 함수 사용
+output = F.scaled_dot_product_attention(Q, K, V)
+\`\`\`
+
+## 정리
+
+| 개념 | 설명 |
+|------|------|
+| Query | 질문하는 벡터 |
+| Key | 비교 대상 벡터 |
+| Value | 실제 정보 벡터 |
+| Attention Score | Q·K 내적으로 계산한 유사도 |
+| Softmax | 점수를 확률로 변환 |
+| 스케일링 | √d_k로 나눠 수치 안정화 |
+
+### 핵심 공식
+\`\`\`
+Attention(Q, K, V) = softmax(QK^T / √d_k) × V
+\`\`\`
+
+**핵심 포인트**: Attention은 입력의 모든 위치를 동시에 참조하며, 관련성이 높은 부분에 더 집중하여 정보를 추출합니다.
 `
       },
       {
@@ -6597,11 +8607,240 @@ patience = 10
 # Self-Attention
 
 ## 학습 목표
-- Self-Attention의 원리를 이해한다
-- 문맥 이해 메커니즘을 배운다
+- Self-Attention의 개념을 이해한다
+- 같은 시퀀스 내에서 자기 참조가 어떻게 작동하는지 배운다
+- Self-Attention의 계산 과정을 단계별로 이해한다
+- 장점과 단점을 파악한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## Self-Attention이란?
+
+**Self-Attention**은 같은 시퀀스 내에서 단어들이 **서로를 참조**하며 문맥을 이해하는 방식입니다.
+
+### 일반 Attention vs Self-Attention
+\`\`\`
+일반 Attention:
+- 두 개의 시퀀스가 있음
+- 하나는 질문하는 쪽, 다른 하나는 정보 제공
+
+Self-Attention:
+- 같은 시퀀스 내에서 서로 참조
+- 각 단어가 Q, K, V 모두 될 수 있음
+- 이것이 "Self"의 의미!
+\`\`\`
+
+### 문맥 이해 예시
+\`\`\`
+"나는 은행에 갔다"
+
+"은행"이 무엇인가?
+- 금융 은행? 강가의 은행?
+- Self-Attention은 "갔다"와의 관계를 통해
+- 금융 은행임을 파악함
+\`\`\`
+
+### 대명사 해소
+\`\`\`
+"The cat sat on the mat because it was tired"
+
+"it"은 무엇을 가리키나?
+- Self-Attention은 "cat"과의 관계를 학습
+- "sat", "tired" 같은 단어들의 문맥을 통해 파악
+\`\`\`
+
+## Self-Attention 계산 과정
+
+### 단계 1: Q, K, V 생성
+\`\`\`python
+# 각 단어 벡터에 세 개의 가중치 행렬을 곱함
+Q = X @ W_Q  # Query 벡터
+K = X @ W_K  # Key 벡터
+V = X @ W_V  # Value 벡터
+
+# 같은 입력 X에서 Q, K, V 모두 생성
+\`\`\`
+
+### 단계 2: Attention Score 계산
+\`\`\`python
+# Query와 모든 Key의 내적
+scores = Q @ K.T
+
+# Q와 K가 비슷하면 점수가 높음
+\`\`\`
+
+### 단계 3: 스케일링 & 소프트맥스
+\`\`\`python
+# 스케일링 (수치 안정화)
+scaled_scores = scores / sqrt(d_k)
+
+# 소프트맥스로 확률 분포 생성
+attention_weights = softmax(scaled_scores)
+\`\`\`
+
+### 단계 4: 가중 합계
+\`\`\`python
+# Attention 가중치와 Value 곱하여 합산
+output = attention_weights @ V
+\`\`\`
+
+### 수식 요약
+\`\`\`
+Self-Attention(X) = softmax(QK^T / √d_k) × V
+
+여기서 Q = XW_Q, K = XW_K, V = XW_V
+\`\`\`
+
+## 구체적인 예시
+
+### 문장: "I love AI"
+\`\`\`
+입력: ["I", "love", "AI"]
+각 단어의 임베딩이 주어졌을 때
+
+1. Q, K, V 생성
+   - "I"의 Q, K, V
+   - "love"의 Q, K, V
+   - "AI"의 Q, K, V
+
+2. "love"의 관점에서 Attention 계산
+   - "love"의 Q와 모든 K를 내적
+   - "I"와의 점수: 주어-동사 관계로 높음
+   - "AI"와의 점수: 목적어 관계로 높음
+   - "love" 자신과의 점수: 중간
+
+3. 소프트맥스 적용
+   - "I": 0.4
+   - "love": 0.2
+   - "AI": 0.4
+
+4. 가중 합산
+   - 각 단어의 Value를 확률로 가중 합산
+   - 결과: 문맥 정보가 반영된 "love"의 새 표현
+\`\`\`
+
+### Attention Weight 시각화
+\`\`\`
+        I    love   AI
+I     [0.6   0.2   0.2]
+love  [0.4   0.2   0.4]
+AI    [0.2   0.5   0.3]
+
+→ 각 행은 해당 단어가 다른 단어들에 얼마나 주목하는지
+\`\`\`
+
+## Self-Attention의 장점
+
+### 1. 장거리 의존성 포착
+\`\`\`
+RNN: 먼 거리의 정보가 희석됨
+     문장이 길어지면 앞부분 정보 손실
+
+Self-Attention: 거리에 상관없이 직접 연결
+     모든 위치 쌍을 한 번에 계산
+\`\`\`
+
+### 2. 병렬 처리 가능
+\`\`\`
+RNN: 순차적 처리 필수 (t-1 완료 후 t 계산)
+     → 학습/추론 시간 오래 걸림
+
+Self-Attention: 모든 위치를 동시에 계산
+     → GPU 활용 극대화
+\`\`\`
+
+### 3. 해석 가능성
+\`\`\`
+Attention 가중치를 시각화하면
+모델이 어떤 단어에 집중했는지 확인 가능
+→ 모델의 판단 근거를 이해할 수 있음
+\`\`\`
+
+## Self-Attention의 단점
+
+### 계산 복잡도
+\`\`\`
+시간 복잡도: O(n²)
+- n: 시퀀스 길이
+- 모든 위치 쌍을 비교해야 함
+
+문장 길이    계산량
+100         10,000
+1,000       1,000,000
+10,000      100,000,000
+
+→ 긴 문서 처리 시 병목 현상
+\`\`\`
+
+### 해결 방안
+- Sparse Attention (일부만 계산)
+- Linear Attention (근사 기법)
+- Longformer, BigBird 등 효율적 변형
+
+## PyTorch 구현
+
+\`\`\`python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class SelfAttention(nn.Module):
+    def __init__(self, d_model, d_k):
+        super().__init__()
+        self.d_k = d_k
+
+        # Q, K, V를 위한 선형 레이어
+        self.W_Q = nn.Linear(d_model, d_k)
+        self.W_K = nn.Linear(d_model, d_k)
+        self.W_V = nn.Linear(d_model, d_k)
+
+    def forward(self, x):
+        # Q, K, V 생성 (같은 입력 x에서)
+        Q = self.W_Q(x)
+        K = self.W_K(x)
+        V = self.W_V(x)
+
+        # Attention Score 계산
+        scores = torch.matmul(Q, K.transpose(-2, -1))
+
+        # 스케일링
+        scores = scores / (self.d_k ** 0.5)
+
+        # 소프트맥스
+        attn_weights = F.softmax(scores, dim=-1)
+
+        # 가중 합계
+        output = torch.matmul(attn_weights, V)
+
+        return output, attn_weights
+
+# 사용 예시
+d_model = 512  # 입력 차원
+d_k = 64       # Attention 차원
+seq_len = 10   # 시퀀스 길이
+batch_size = 32
+
+model = SelfAttention(d_model, d_k)
+x = torch.randn(batch_size, seq_len, d_model)
+output, weights = model(x)
+\`\`\`
+
+## 정리
+
+| 개념 | 설명 |
+|------|------|
+| Self-Attention | 같은 시퀀스 내에서 자기 참조 |
+| Q, K, V | 같은 입력에서 생성되는 세 벡터 |
+| 계산 | Q·K^T → scale → softmax → ×V |
+| 복잡도 | O(n²) - 시퀀스 길이의 제곱 |
+
+### 핵심 포인트
+\`\`\`
+Self-Attention은 Transformer의 기본 빌딩 블록
+- GPT, BERT 등 모든 현대 언어 모델의 핵심
+- 같은 시퀀스 내 단어들이 서로를 참조
+- 문맥을 풍부하게 이해할 수 있음
+\`\`\`
+
+**다음 레슨**: Multi-Head Attention - 여러 개의 Attention을 병렬로 사용해 다양한 관점을 학습합니다.
 `
       },
       {
@@ -6614,11 +8853,227 @@ patience = 10
 # Multi-Head Attention
 
 ## 학습 목표
-- Multi-Head Attention의 장점을 이해한다
-- 병렬 처리 방식을 배운다
+- Multi-Head Attention의 개념과 필요성을 이해한다
+- 여러 Head가 다양한 관점을 학습하는 방식을 배운다
+- 차원 분할과 병렬 처리를 이해한다
+- PyTorch로 구현하는 방법을 익힌다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## Multi-Head Attention이란?
+
+**Multi-Head Attention**은 여러 개의 Attention을 **병렬로 실행**하여 다양한 관점에서 정보를 수집하는 방식입니다.
+
+### 왜 Multi-Head가 필요한가?
+\`\`\`
+단일 Head의 한계:
+- 하나의 관점으로만 봄
+- 문장의 다양한 관계를 동시에 포착하기 어려움
+
+Multi-Head의 장점:
+- 여러 관점에서 동시에 분석
+- 문법적, 의미적, 위치적 관계를 병렬로 학습
+\`\`\`
+
+### 다양한 관계의 예시
+\`\`\`
+"고양이가 쥐를 쫓았다"
+
+Head 1: 주어-동사 관계 ("고양이가" ↔ "쫓았다")
+Head 2: 목적어-동사 관계 ("쥐를" ↔ "쫓았다")
+Head 3: 위치 정보 (인접 단어 관계)
+Head 4: 전역 문맥 (문장 전체 패턴)
+\`\`\`
+
+## Multi-Head 구조
+
+### 전체 흐름
+\`\`\`
+입력 X
+    ↓
+┌───────────────────────────────────┐
+│        h개의 Head로 분기           │
+│  ┌─────┐ ┌─────┐     ┌─────┐     │
+│  │Head1│ │Head2│ ... │Head h│    │
+│  │ Q1  │ │ Q2  │     │ Qh   │    │
+│  │ K1  │ │ K2  │     │ Kh   │    │
+│  │ V1  │ │ V2  │     │ Vh   │    │
+│  └──┬──┘ └──┬──┘     └──┬──┘     │
+└─────┼───────┼───────────┼────────┘
+      ↓       ↓           ↓
+   Attention  Attention  Attention
+      ↓       ↓           ↓
+┌─────┴───────┴───────────┴────────┐
+│         Concatenate               │
+└─────────────────┬────────────────┘
+                  ↓
+            Linear (W_O)
+                  ↓
+              Output
+\`\`\`
+
+### 수식
+\`\`\`
+MultiHead(Q, K, V) = Concat(head₁, ..., head_h) × W_O
+
+여기서 head_i = Attention(Q × W_Q^i, K × W_K^i, V × W_V^i)
+\`\`\`
+
+## 차원 분할
+
+### 효율적인 설계
+\`\`\`
+모델 차원: d_model = 512
+Head 개수: h = 8
+
+각 Head 차원: d_k = d_model / h = 512 / 8 = 64
+
+→ 총 파라미터 수는 단일 Head와 비슷
+→ 계산량은 늘지 않으면서 표현력은 증가
+\`\`\`
+
+### 차원 계산 예시
+\`\`\`
+입력: [batch, seq_len, 512]
+         ↓ (8개 Head로 분할)
+각 Head: [batch, seq_len, 64] × 8
+         ↓ (Attention 수행)
+각 출력: [batch, seq_len, 64] × 8
+         ↓ (Concatenate)
+합친 결과: [batch, seq_len, 512]
+         ↓ (W_O 적용)
+최종 출력: [batch, seq_len, 512]
+\`\`\`
+
+## 각 Head의 역할
+
+실제 학습된 모델을 분석하면 각 Head가 **다른 패턴**을 담당합니다.
+
+### 발견된 역할들
+| Head | 학습된 패턴 |
+|------|------------|
+| Head 1 | 인접 단어에 집중 (지역적 관계) |
+| Head 2 | 문장 끝 토큰 주목 (마침표, 구분자) |
+| Head 3 | 대명사 해소 ("it" → "cat") |
+| Head 4 | 동사-목적어 관계 |
+| Head 5 | 구문 구조 파악 |
+| ... | ... |
+
+### 자동 학습
+\`\`\`
+이런 역할 분담은 명시적으로 지정하지 않음
+→ 학습 과정에서 자동으로 최적화
+→ 각 Head가 유용한 패턴을 스스로 찾아냄
+\`\`\`
+
+## 실제 모델의 Head 수
+
+| 모델 | Head 수 | 차원 |
+|------|---------|------|
+| Transformer 원본 | 8 | 512 |
+| BERT-Base | 12 | 768 |
+| BERT-Large | 16 | 1024 |
+| GPT-2 | 12 | 768 |
+| GPT-3 | 96 | 12288 |
+| GPT-4 | ~128 | ~16000+ |
+
+## PyTorch 구현
+
+### 내장 클래스 사용
+\`\`\`python
+import torch
+import torch.nn as nn
+
+# PyTorch 내장 MultiheadAttention
+attn = nn.MultiheadAttention(
+    embed_dim=512,   # 모델 차원
+    num_heads=8      # Head 개수
+)
+
+# 사용법
+# query, key, value 형태: (seq_len, batch, embed_dim)
+output, attn_weights = attn(query, key, value)
+
+# Self-Attention: query = key = value
+output, weights = attn(x, x, x)
+\`\`\`
+
+### 직접 구현
+\`\`\`python
+class MultiHeadAttention(nn.Module):
+    def __init__(self, d_model, num_heads):
+        super().__init__()
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+
+        # Q, K, V, O를 위한 가중치 행렬
+        self.W_Q = nn.Linear(d_model, d_model)
+        self.W_K = nn.Linear(d_model, d_model)
+        self.W_V = nn.Linear(d_model, d_model)
+        self.W_O = nn.Linear(d_model, d_model)
+
+    def forward(self, x):
+        batch_size, seq_len, d_model = x.size()
+
+        # Q, K, V 생성
+        Q = self.W_Q(x)
+        K = self.W_K(x)
+        V = self.W_V(x)
+
+        # Multi-Head로 분할: [batch, seq, d_model] → [batch, heads, seq, d_k]
+        Q = Q.view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        K = K.view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        V = V.view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+
+        # Scaled Dot-Product Attention
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / (self.d_k ** 0.5)
+        attn_weights = torch.softmax(scores, dim=-1)
+        context = torch.matmul(attn_weights, V)
+
+        # Head 합치기: [batch, heads, seq, d_k] → [batch, seq, d_model]
+        context = context.transpose(1, 2).contiguous()
+        context = context.view(batch_size, seq_len, -1)
+
+        # 최종 선형 변환
+        output = self.W_O(context)
+
+        return output, attn_weights
+\`\`\`
+
+### 핵심: 텐서 reshape
+\`\`\`python
+# 분할
+[batch, seq, d_model]
+    ↓ view
+[batch, seq, heads, d_k]
+    ↓ transpose(1, 2)
+[batch, heads, seq, d_k]
+
+# 합치기
+[batch, heads, seq, d_k]
+    ↓ transpose(1, 2)
+[batch, seq, heads, d_k]
+    ↓ view
+[batch, seq, d_model]
+\`\`\`
+
+## 정리
+
+| 개념 | 설명 |
+|------|------|
+| Multi-Head | 여러 Attention을 병렬로 실행 |
+| 차원 분할 | d_model을 h개의 d_k로 나눔 |
+| 역할 분담 | 각 Head가 다른 패턴 학습 |
+| Concat | 모든 Head 출력을 이어붙임 |
+| W_O | 최종 선형 변환 |
+
+### 핵심 포인트
+\`\`\`
+Multi-Head Attention = 여러 관점에서 동시에 분석
+- 계산량 증가 없이 표현력 향상
+- 각 Head가 자동으로 역할 분담
+- Transformer의 강력한 표현력의 비결
+\`\`\`
+
+**핵심 공식**: MultiHead(Q, K, V) = Concat(head₁, ..., head_h) × W_O
 `
       },
       {
@@ -6631,11 +9086,235 @@ patience = 10
 # Positional Encoding
 
 ## 학습 목표
-- 위치 정보의 필요성을 이해한다
-- 사인/코사인 인코딩을 배운다
+- 위치 정보가 필요한 이유를 이해한다
+- 사인/코사인 Positional Encoding의 원리를 배운다
+- 학습 가능한 위치 임베딩과의 차이를 이해한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## 왜 위치 정보가 필요한가?
+
+### Transformer의 구조적 특성
+\`\`\`
+RNN: 단어를 순서대로 하나씩 처리 → 자연스럽게 위치 정보 포함
+Transformer: 모든 위치를 동시에 처리 → 위치 정보가 사라짐!
+
+문제: "개가 사람을 물었다" vs "사람이 개를 물었다"
+두 문장의 단어 집합은 동일하지만 의미가 완전히 다름
+→ 순서가 중요하다!
+\`\`\`
+
+### 간단한 해결책과 그 한계
+
+#### 시도 1: 정수 인덱스 사용
+\`\`\`
+위치: [1, 2, 3, 4, 5, ...]
+
+문제점:
+- 문장이 길어지면 값이 계속 커짐
+- 임베딩 벡터 크기와 스케일이 맞지 않음
+- 학습이 어려워짐
+\`\`\`
+
+#### 시도 2: 정규화된 값 사용
+\`\`\`
+5단어 문장: [0.0, 0.25, 0.5, 0.75, 1.0]
+10단어 문장: [0.0, 0.11, 0.22, ...]
+
+문제점:
+- 같은 위치라도 문장 길이에 따라 값이 달라짐
+- 상대적 위치 관계를 표현하기 어려움
+\`\`\`
+
+## Sinusoidal Positional Encoding
+
+### 핵심 아이디어
+사인과 코사인 함수를 사용해 각 위치를 **고유한 벡터**로 표현합니다.
+
+### 수학적 공식
+\`\`\`
+PE(pos, 2i) = sin(pos / 10000^(2i/d_model))
+PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
+
+pos: 토큰의 위치 (0, 1, 2, ...)
+i: 차원 인덱스 (0, 1, 2, ..., d_model/2-1)
+d_model: 임베딩 차원 (예: 512)
+\`\`\`
+
+### 공식의 의미
+\`\`\`
+차원별 주파수:
+- 낮은 차원 (i가 작음): 빠른 주기의 파동
+- 높은 차원 (i가 큼): 느린 주기의 파동
+
+위치별 패턴:
+- 각 위치는 여러 주파수의 파동이 조합된 고유한 패턴
+- 마치 이진수처럼 다양한 "비트"를 표현
+\`\`\`
+
+### 시각적 이해
+\`\`\`
+차원 0-1:   sin(pos/1)     cos(pos/1)     ← 빠른 변화
+차원 2-3:   sin(pos/10)    cos(pos/10)    ← 중간 변화
+차원 4-5:   sin(pos/100)   cos(pos/100)   ← 느린 변화
+...
+
+Position 0: [0.00, 1.00, 0.00, 1.00, 0.00, 1.00, ...]
+Position 1: [0.84, 0.54, 0.10, 0.99, 0.01, 1.00, ...]
+Position 2: [0.91, -0.42, 0.20, 0.98, 0.02, 1.00, ...]
+\`\`\`
+
+## Sinusoidal Encoding의 장점
+
+### 1. 값이 -1~1 사이로 제한
+\`\`\`
+sin, cos 함수의 특성:
+- 출력 범위: [-1, 1]
+- 위치가 아무리 커져도 안정적인 값
+- 임베딩 벡터와 스케일이 비슷해짐
+\`\`\`
+
+### 2. 상대적 위치 표현 가능
+\`\`\`
+수학적 특성:
+PE(pos+k)는 PE(pos)의 선형 변환으로 표현 가능
+
+의미:
+- 모델이 "3칸 떨어진 단어"와 같은 상대적 거리를 학습할 수 있음
+- 절대 위치보다 상대 위치가 언어에서 더 중요한 경우가 많음
+\`\`\`
+
+### 3. 길이 제한 없음
+\`\`\`
+학습하지 않은 긴 문장에도 적용 가능
+- 학습: 최대 512 토큰
+- 추론: 1000 토큰도 가능 (단, 성능은 저하될 수 있음)
+\`\`\`
+
+## PyTorch 구현
+
+### 기본 구현
+\`\`\`python
+import torch
+import math
+
+class PositionalEncoding(torch.nn.Module):
+    def __init__(self, d_model, max_len=5000):
+        super().__init__()
+
+        # 위치 인코딩 행렬 생성
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len).unsqueeze(1).float()
+
+        # 주파수 계산: 1 / 10000^(2i/d_model)
+        div_term = torch.exp(
+            torch.arange(0, d_model, 2).float() *
+            (-math.log(10000.0) / d_model)
+        )
+
+        # 사인과 코사인 적용
+        pe[:, 0::2] = torch.sin(position * div_term)  # 짝수 차원
+        pe[:, 1::2] = torch.cos(position * div_term)  # 홀수 차원
+
+        # [max_len, d_model] → [1, max_len, d_model]
+        pe = pe.unsqueeze(0)
+
+        # 학습되지 않는 버퍼로 등록
+        self.register_buffer('pe', pe)
+
+    def forward(self, x):
+        # x: [batch, seq_len, d_model]
+        seq_len = x.size(1)
+        return x + self.pe[:, :seq_len, :]
+\`\`\`
+
+### 사용 예시
+\`\`\`python
+# 초기화
+d_model = 512
+pos_encoder = PositionalEncoding(d_model)
+
+# 단어 임베딩 (예시)
+batch_size = 2
+seq_len = 10
+word_embeddings = torch.randn(batch_size, seq_len, d_model)
+
+# 위치 정보 추가
+output = pos_encoder(word_embeddings)
+# 결과: word_embeddings + positional_encoding
+\`\`\`
+
+## 학습 가능한 Positional Embedding
+
+### BERT의 방식
+\`\`\`python
+class LearnedPositionalEmbedding(torch.nn.Module):
+    def __init__(self, d_model, max_len=512):
+        super().__init__()
+        # 학습 가능한 파라미터로 위치 임베딩 정의
+        self.pe = torch.nn.Embedding(max_len, d_model)
+
+    def forward(self, x):
+        seq_len = x.size(1)
+        positions = torch.arange(seq_len, device=x.device)
+        return x + self.pe(positions)
+\`\`\`
+
+### Sinusoidal vs Learned
+
+| 특성 | Sinusoidal | Learned |
+|------|------------|---------|
+| **파라미터** | 없음 (고정) | max_len × d_model |
+| **길이 일반화** | 좋음 | 학습 길이에 제한 |
+| **성능** | 비슷 | 비슷 |
+| **사용 예** | 원래 Transformer | BERT, GPT |
+
+### 최신 연구: RoPE, ALiBi
+\`\`\`
+RoPE (Rotary Position Embedding):
+- 회전 행렬을 사용한 상대적 위치 인코딩
+- LLaMA, GPT-NeoX 등에서 사용
+
+ALiBi (Attention with Linear Biases):
+- Attention Score에 선형 bias 추가
+- 위치 임베딩 없이 상대 위치 표현
+- BLOOM 등에서 사용
+\`\`\`
+
+## 위치 정보가 Transformer에 미치는 영향
+
+### 입력 처리 과정
+\`\`\`
+1. 토큰화: "나는 밥을 먹는다" → [토큰1, 토큰2, 토큰3]
+2. 단어 임베딩: 각 토큰 → 벡터
+3. 위치 인코딩 더하기: 임베딩 + PE
+4. Transformer에 입력
+\`\`\`
+
+### 덧셈의 의미
+\`\`\`python
+final_input = word_embedding + positional_encoding
+
+# word_embedding: 단어의 의미적 정보
+# positional_encoding: 위치 정보
+# final_input: 의미 + 위치가 결합된 표현
+\`\`\`
+
+## 핵심 요약
+
+\`\`\`
+1. Transformer는 병렬 처리로 순서 정보가 사라짐
+   → Positional Encoding으로 위치 정보 주입
+
+2. Sinusoidal Encoding의 장점:
+   - 값이 -1~1로 안정적
+   - 상대적 위치 학습 가능
+   - 길이에 제한 없음
+
+3. 핵심 공식:
+   PE(pos, 2i) = sin(pos / 10000^(2i/d_model))
+   PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
+
+4. 위치 정보 적용: Input = Word Embedding + Positional Encoding
+\`\`\`
 `
       },
       {
@@ -6650,9 +9329,330 @@ patience = 10
 ## 학습 목표
 - Transformer의 전체 구조를 이해한다
 - Encoder와 Decoder의 역할을 배운다
+- Layer Normalization과 Residual Connection을 이해한다
+- Feed Forward Network의 역할을 배운다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## Transformer 전체 구조
+
+### 개요
+\`\`\`
+입력 → [Encoder] → [Decoder] → 출력
+
+Encoder: 입력을 이해하고 표현 (문맥 벡터 생성)
+Decoder: 표현을 바탕으로 출력 생성
+\`\`\`
+
+### 구조 다이어그램
+\`\`\`
+┌─────────────────────────────────────────────┐
+│                 Transformer                  │
+├──────────────────┬──────────────────────────┤
+│     Encoder      │        Decoder           │
+│  ┌────────────┐  │   ┌────────────────┐     │
+│  │Multi-Head  │  │   │ Masked         │     │
+│  │Attention   │  │   │ Multi-Head Attn│     │
+│  └─────┬──────┘  │   └───────┬────────┘     │
+│        ↓         │           ↓              │
+│  ┌────────────┐  │   ┌────────────────┐     │
+│  │Add & Norm  │  │   │ Add & Norm     │     │
+│  └─────┬──────┘  │   └───────┬────────┘     │
+│        ↓         │           ↓              │
+│  ┌────────────┐  │   ┌────────────────┐     │
+│  │Feed Forward│  │→→→│ Cross-Attention│     │
+│  └─────┬──────┘  │   └───────┬────────┘     │
+│        ↓         │           ↓              │
+│  ┌────────────┐  │   ┌────────────────┐     │
+│  │Add & Norm  │  │   │ Add & Norm     │     │
+│  └────────────┘  │   └───────┬────────┘     │
+│                  │           ↓              │
+│                  │   ┌────────────────┐     │
+│                  │   │ Feed Forward   │     │
+│                  │   └───────┬────────┘     │
+│                  │           ↓              │
+│                  │   ┌────────────────┐     │
+│                  │   │ Add & Norm     │     │
+│                  │   └────────────────┘     │
+└──────────────────┴──────────────────────────┘
+\`\`\`
+
+## Encoder 상세
+
+### 구성 요소
+\`\`\`
+Encoder Layer (N=6개 반복):
+1. Multi-Head Self-Attention
+2. Add & Norm (Residual + Layer Norm)
+3. Feed Forward Network
+4. Add & Norm
+\`\`\`
+
+### 역할
+\`\`\`
+입력 시퀀스 전체를 양방향으로 이해
+- 모든 토큰이 서로를 참조 가능
+- 문맥을 고려한 풍부한 표현 생성
+
+예: "I love it" → 각 단어가 전체 문맥을 반영한 벡터로 변환
+\`\`\`
+
+### PyTorch 구현
+\`\`\`python
+class EncoderLayer(torch.nn.Module):
+    def __init__(self, d_model, n_heads, d_ff, dropout=0.1):
+        super().__init__()
+        self.self_attn = MultiHeadAttention(d_model, n_heads)
+        self.feed_forward = FeedForward(d_model, d_ff)
+        self.norm1 = torch.nn.LayerNorm(d_model)
+        self.norm2 = torch.nn.LayerNorm(d_model)
+        self.dropout = torch.nn.Dropout(dropout)
+
+    def forward(self, x, mask=None):
+        # Self-Attention + Residual + Norm
+        attn_output = self.self_attn(x, x, x, mask)
+        x = self.norm1(x + self.dropout(attn_output))
+
+        # Feed Forward + Residual + Norm
+        ff_output = self.feed_forward(x)
+        x = self.norm2(x + self.dropout(ff_output))
+        return x
+\`\`\`
+
+## Decoder 상세
+
+### 구성 요소
+\`\`\`
+Decoder Layer (N=6개 반복):
+1. Masked Multi-Head Self-Attention
+2. Add & Norm
+3. Cross-Attention (Encoder 출력 참조)
+4. Add & Norm
+5. Feed Forward Network
+6. Add & Norm
+\`\`\`
+
+### Masked Self-Attention
+\`\`\`
+목적: 미래 토큰을 보지 못하게 막음
+
+예: "나는 밥을 먹는다" 생성 시
+- "나는" 생성: 아무것도 참조 안 함
+- "밥을" 생성: "나는"만 참조 가능
+- "먹는다" 생성: "나는 밥을"만 참조 가능
+
+마스크 행렬:
+     나는  밥을  먹는다
+나는   1    0     0
+밥을   1    1     0
+먹는다  1    1     1
+
+(1 = 참조 가능, 0 = 마스킹)
+\`\`\`
+
+### Cross-Attention
+\`\`\`
+Decoder가 Encoder의 출력을 참조
+
+Query: Decoder의 현재 상태
+Key, Value: Encoder의 출력
+
+역할: 입력 문장의 어떤 부분에 집중할지 결정
+예: 번역 시 출력 단어와 관련된 입력 단어에 집중
+\`\`\`
+
+### PyTorch 구현
+\`\`\`python
+class DecoderLayer(torch.nn.Module):
+    def __init__(self, d_model, n_heads, d_ff, dropout=0.1):
+        super().__init__()
+        self.self_attn = MultiHeadAttention(d_model, n_heads)
+        self.cross_attn = MultiHeadAttention(d_model, n_heads)
+        self.feed_forward = FeedForward(d_model, d_ff)
+        self.norm1 = torch.nn.LayerNorm(d_model)
+        self.norm2 = torch.nn.LayerNorm(d_model)
+        self.norm3 = torch.nn.LayerNorm(d_model)
+        self.dropout = torch.nn.Dropout(dropout)
+
+    def forward(self, x, enc_output, src_mask=None, tgt_mask=None):
+        # Masked Self-Attention
+        attn_output = self.self_attn(x, x, x, tgt_mask)
+        x = self.norm1(x + self.dropout(attn_output))
+
+        # Cross-Attention (Encoder 참조)
+        cross_output = self.cross_attn(x, enc_output, enc_output, src_mask)
+        x = self.norm2(x + self.dropout(cross_output))
+
+        # Feed Forward
+        ff_output = self.feed_forward(x)
+        x = self.norm3(x + self.dropout(ff_output))
+        return x
+\`\`\`
+
+## Layer Normalization
+
+### 왜 필요한가?
+\`\`\`
+깊은 네트워크의 문제:
+- 값이 점점 커지거나 작아짐
+- 학습이 불안정해짐
+
+Layer Norm의 역할:
+- 각 층의 출력을 정규화
+- 평균 0, 분산 1로 조정
+- 학습을 안정화
+\`\`\`
+
+### 수식
+\`\`\`
+LayerNorm(x) = γ * (x - μ) / (σ + ε) + β
+
+μ: 평균
+σ: 표준편차
+γ, β: 학습 가능한 파라미터
+ε: 안정성을 위한 작은 값
+\`\`\`
+
+### Batch Norm vs Layer Norm
+\`\`\`
+Batch Norm: 배치 차원에서 정규화 (CNN에 적합)
+Layer Norm: 특성 차원에서 정규화 (시퀀스에 적합)
+
+Transformer는 Layer Norm 사용:
+- 배치 크기에 독립적
+- 시퀀스 길이가 달라도 동작
+\`\`\`
+
+## Residual Connection
+
+### Add & Norm 구조
+\`\`\`
+Output = LayerNorm(x + SubLayer(x))
+
+x: 서브레이어 입력
+SubLayer(x): Attention 또는 FFN의 출력
+\`\`\`
+
+### 왜 필요한가?
+\`\`\`
+깊은 네트워크의 문제: Gradient Vanishing
+- 역전파 시 기울기가 점점 작아짐
+- 앞쪽 레이어가 학습되지 않음
+
+Residual Connection 해결:
+- 기울기가 직접 전파되는 경로 제공
+- x + f(x) 구조로 학습 안정화
+- 원래 정보를 유지하면서 변환 학습
+\`\`\`
+
+### 효과
+\`\`\`
+1. 더 깊은 모델 학습 가능
+2. 학습 속도 향상
+3. 정보 손실 방지
+\`\`\`
+
+## Feed Forward Network (FFN)
+
+### 구조
+\`\`\`
+FFN(x) = max(0, xW₁ + b₁)W₂ + b₂
+
+두 개의 선형 변환 + ReLU 활성화
+\`\`\`
+
+### 차원 변화
+\`\`\`
+입력: d_model (512)
+  ↓ 확장
+중간: d_ff (2048) → ReLU 적용
+  ↓ 축소
+출력: d_model (512)
+
+역할:
+- Attention 후 비선형 변환
+- 각 위치별로 독립적으로 적용
+- 모델의 표현력 증가
+\`\`\`
+
+### PyTorch 구현
+\`\`\`python
+class FeedForward(torch.nn.Module):
+    def __init__(self, d_model, d_ff, dropout=0.1):
+        super().__init__()
+        self.linear1 = torch.nn.Linear(d_model, d_ff)
+        self.linear2 = torch.nn.Linear(d_ff, d_model)
+        self.dropout = torch.nn.Dropout(dropout)
+        self.relu = torch.nn.ReLU()
+
+    def forward(self, x):
+        # d_model → d_ff → d_model
+        x = self.linear1(x)
+        x = self.relu(x)
+        x = self.dropout(x)
+        x = self.linear2(x)
+        return x
+\`\`\`
+
+## 전체 Transformer 구현
+
+\`\`\`python
+class Transformer(torch.nn.Module):
+    def __init__(self, src_vocab, tgt_vocab, d_model=512,
+                 n_heads=8, n_layers=6, d_ff=2048):
+        super().__init__()
+
+        # 임베딩
+        self.src_embed = torch.nn.Embedding(src_vocab, d_model)
+        self.tgt_embed = torch.nn.Embedding(tgt_vocab, d_model)
+        self.pos_encoding = PositionalEncoding(d_model)
+
+        # Encoder & Decoder 스택
+        self.encoder_layers = torch.nn.ModuleList([
+            EncoderLayer(d_model, n_heads, d_ff)
+            for _ in range(n_layers)
+        ])
+        self.decoder_layers = torch.nn.ModuleList([
+            DecoderLayer(d_model, n_heads, d_ff)
+            for _ in range(n_layers)
+        ])
+
+        # 출력 레이어
+        self.output_linear = torch.nn.Linear(d_model, tgt_vocab)
+
+    def forward(self, src, tgt, src_mask=None, tgt_mask=None):
+        # Encoder
+        enc_output = self.pos_encoding(self.src_embed(src))
+        for layer in self.encoder_layers:
+            enc_output = layer(enc_output, src_mask)
+
+        # Decoder
+        dec_output = self.pos_encoding(self.tgt_embed(tgt))
+        for layer in self.decoder_layers:
+            dec_output = layer(dec_output, enc_output, src_mask, tgt_mask)
+
+        # 출력
+        return self.output_linear(dec_output)
+\`\`\`
+
+## 핵심 요약
+
+\`\`\`
+1. Transformer = Encoder + Decoder
+   - Encoder: 입력 이해 (양방향)
+   - Decoder: 출력 생성 (단방향 + Cross-Attention)
+
+2. 핵심 구성 요소:
+   - Multi-Head Attention: 다양한 관점에서 참조
+   - FFN: 비선형 변환
+   - Add & Norm: 학습 안정화
+
+3. Residual Connection: x + SubLayer(x)
+   - 깊은 모델 학습 가능
+   - 기울기 소실 방지
+
+4. Layer Normalization: 각 층 정규화
+   - 학습 안정화
+   - 시퀀스에 적합
+\`\`\`
 `
       },
       {
@@ -6665,11 +9665,281 @@ patience = 10
 # BERT 개요
 
 ## 학습 목표
-- BERT의 학습 방식을 이해한다
-- MLM과 NSP를 배운다
+- BERT의 구조와 특징을 이해한다
+- MLM (Masked Language Model)의 원리를 배운다
+- NSP (Next Sentence Prediction)를 이해한다
+- BERT의 Fine-tuning 방식을 배운다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## BERT란?
+
+### 정의
+\`\`\`
+BERT = Bidirectional Encoder Representations from Transformers
+
+Google이 2018년 발표한 언어 모델
+NLP의 다양한 태스크에서 당시 최고 성능 달성
+\`\`\`
+
+### 핵심 특징
+\`\`\`
+1. Encoder-only: Transformer의 Encoder만 사용
+2. 양방향(Bidirectional): 왼쪽과 오른쪽 문맥을 동시에 참조
+3. Pre-training + Fine-tuning: 대규모 학습 후 태스크별 미세조정
+\`\`\`
+
+### 왜 양방향이 중요한가?
+\`\`\`
+예문: "나는 은행에서 돈을 찾았다"
+
+단방향 (GPT 방식):
+- "은행" 예측 시: "나는 ___" → 문맥 부족
+- 금융 은행? 강둑(bank)?
+
+양방향 (BERT 방식):
+- "은행" 예측 시: "나는 ___ 에서 돈을 찾았다"
+- "돈"이라는 뒤쪽 문맥까지 활용 → 금융 은행!
+\`\`\`
+
+## BERT 구조
+
+### 아키텍처
+\`\`\`
+BERT-Base:
+- 12개 Encoder 레이어
+- 768 Hidden 차원
+- 12 Attention Heads
+- 110M 파라미터
+
+BERT-Large:
+- 24개 Encoder 레이어
+- 1024 Hidden 차원
+- 16 Attention Heads
+- 340M 파라미터
+\`\`\`
+
+### 입력 표현
+\`\`\`
+입력 = Token Embedding + Segment Embedding + Position Embedding
+
+[CLS] 문장1 [SEP] 문장2 [SEP]
+
+- [CLS]: 분류 태스크용 특수 토큰
+- [SEP]: 문장 구분자
+\`\`\`
+
+### 입력 구조 다이어그램
+\`\`\`
+입력: [CLS] I love AI [SEP] It's great [SEP]
+
+Token Embedding:   E_CLS  E_I  E_love  E_AI  E_SEP  E_It's  E_great  E_SEP
+                     +     +     +      +      +      +       +       +
+Segment Embedding:  E_A   E_A   E_A    E_A    E_A    E_B     E_B     E_B
+                     +     +     +      +      +      +       +       +
+Position Embedding: E_0   E_1   E_2    E_3    E_4    E_5     E_6     E_7
+                     ↓     ↓     ↓      ↓      ↓      ↓       ↓       ↓
+                  최종 입력 벡터 (각 토큰별)
+\`\`\`
+
+## MLM (Masked Language Model)
+
+### 개념
+\`\`\`
+입력의 일부 토큰을 [MASK]로 가리고
+가려진 토큰을 예측하는 학습 방식
+\`\`\`
+
+### 학습 과정
+\`\`\`
+1. 입력의 15%를 무작위 선택
+2. 선택된 토큰 처리:
+   - 80%: [MASK]로 대체
+   - 10%: 다른 랜덤 토큰으로 대체
+   - 10%: 그대로 유지
+
+예시:
+원본: "나는 밥을 먹는다"
+마스킹: "나는 [MASK] 먹는다"
+예측: "밥을" (정답)
+\`\`\`
+
+### 왜 이렇게 복잡하게?
+\`\`\`
+문제: [MASK] 토큰은 Fine-tuning에는 없음
+해결: 10%를 다른 토큰이나 원본으로 유지
+     → 모델이 모든 토큰에 주의를 기울이게 됨
+\`\`\`
+
+### PyTorch 구현 예시
+\`\`\`python
+def mask_tokens(inputs, tokenizer, mlm_probability=0.15):
+    labels = inputs.clone()
+
+    # 15% 확률로 마스킹할 위치 선택
+    probability_matrix = torch.full(labels.shape, mlm_probability)
+    masked_indices = torch.bernoulli(probability_matrix).bool()
+
+    # 마스킹되지 않은 토큰의 라벨은 -100 (loss 계산에서 제외)
+    labels[~masked_indices] = -100
+
+    # 80%: [MASK]로 대체
+    indices_replaced = torch.bernoulli(torch.full(labels.shape, 0.8)).bool() & masked_indices
+    inputs[indices_replaced] = tokenizer.mask_token_id
+
+    # 10%: 랜덤 토큰으로 대체
+    indices_random = torch.bernoulli(torch.full(labels.shape, 0.5)).bool() & masked_indices & ~indices_replaced
+    random_words = torch.randint(len(tokenizer), labels.shape)
+    inputs[indices_random] = random_words[indices_random]
+
+    # 나머지 10%: 그대로 유지
+    return inputs, labels
+\`\`\`
+
+## NSP (Next Sentence Prediction)
+
+### 개념
+\`\`\`
+두 문장이 연속된 문장인지 아닌지 판별하는 이진 분류 태스크
+\`\`\`
+
+### 학습 데이터 구성
+\`\`\`
+IsNext (50%):
+- 문장1: "나는 공원에 갔다"
+- 문장2: "거기서 산책을 했다"
+- 라벨: IsNext (연속)
+
+NotNext (50%):
+- 문장1: "나는 공원에 갔다"
+- 문장2: "오늘 주가가 올랐다"
+- 라벨: NotNext (무관)
+\`\`\`
+
+### 목적
+\`\`\`
+문장 간의 관계를 이해하는 능력 학습
+- QA (질문-답변 관계)
+- NLI (자연어 추론)
+- 등의 태스크에 도움
+\`\`\`
+
+### NSP 학습 구조
+\`\`\`
+[CLS] 문장1 [SEP] 문장2 [SEP]
+  ↓
+BERT Encoder
+  ↓
+[CLS] 토큰의 출력 벡터
+  ↓
+2-class Classifier
+  ↓
+IsNext / NotNext
+\`\`\`
+
+## Pre-training과 Fine-tuning
+
+### Pre-training (사전 학습)
+\`\`\`
+데이터: Wikipedia + BooksCorpus (3.3B 단어)
+태스크: MLM + NSP 동시 학습
+목적: 범용적인 언어 이해 능력 습득
+
+비용: 4일 (TPU 64개) → 일반적으로 접근 어려움
+     → 공개된 Pre-trained 모델 사용
+\`\`\`
+
+### Fine-tuning (미세 조정)
+\`\`\`
+Pre-trained BERT를 특정 태스크에 맞게 추가 학습
+
+특징:
+- 작은 데이터셋으로도 가능
+- 빠른 학습 (몇 시간 내)
+- 간단한 출력 레이어만 추가
+\`\`\`
+
+### Fine-tuning 예시
+\`\`\`python
+from transformers import BertForSequenceClassification
+
+# 분류 태스크용 BERT 로드
+model = BertForSequenceClassification.from_pretrained(
+    'bert-base-uncased',
+    num_labels=2  # 이진 분류
+)
+
+# Fine-tuning (간단한 추가 학습)
+for batch in train_dataloader:
+    outputs = model(**batch)
+    loss = outputs.loss
+    loss.backward()
+    optimizer.step()
+\`\`\`
+
+## BERT의 다양한 활용
+
+### 1. 문장 분류 (Sentence Classification)
+\`\`\`
+[CLS] 문장 [SEP] → BERT → [CLS] 출력 → 분류기 → 긍정/부정
+
+예: 감성 분석, 스팸 분류
+\`\`\`
+
+### 2. 토큰 분류 (Token Classification)
+\`\`\`
+각 토큰 → BERT → 각 토큰 출력 → 분류기 → 태그
+
+예: 개체명 인식 (NER), 품사 태깅
+\`\`\`
+
+### 3. 질문 답변 (Question Answering)
+\`\`\`
+[CLS] 질문 [SEP] 지문 [SEP] → BERT → 답변 위치 (시작, 끝)
+
+예: SQuAD 데이터셋
+\`\`\`
+
+### 4. 문장 쌍 분류 (Sentence Pair Classification)
+\`\`\`
+[CLS] 문장1 [SEP] 문장2 [SEP] → BERT → 관계 분류
+
+예: 자연어 추론 (NLI), 의미 유사도
+\`\`\`
+
+## BERT 변형 모델들
+
+### 주요 변형
+| 모델 | 특징 |
+|------|------|
+| **RoBERTa** | NSP 제거, 더 많은 데이터로 학습 |
+| **ALBERT** | 파라미터 공유로 경량화 |
+| **DistilBERT** | 지식 증류로 6배 빠름 |
+| **ELECTRA** | 대체 토큰 탐지 방식 |
+
+### 한국어 BERT
+\`\`\`
+KoBERT: SKT에서 개발한 한국어 BERT
+KoELECTRA: 한국어 ELECTRA
+multilingual BERT: 다국어 지원 버전
+\`\`\`
+
+## 핵심 요약
+
+\`\`\`
+1. BERT = 양방향 Transformer Encoder
+   - 왼쪽과 오른쪽 문맥을 동시에 참조
+   - 깊은 언어 이해 가능
+
+2. Pre-training 태스크:
+   - MLM: 15% 토큰을 마스킹하고 예측
+   - NSP: 두 문장이 연속인지 판별
+
+3. 입력 구성:
+   [CLS] + 문장1 + [SEP] + 문장2 + [SEP]
+   Token + Segment + Position Embedding
+
+4. Fine-tuning으로 다양한 NLP 태스크에 적용:
+   - 문장 분류, 토큰 분류, QA, NLI 등
+\`\`\`
 `
       },
       {
@@ -6682,11 +9952,315 @@ patience = 10
 # GPT 개요
 
 ## 학습 목표
-- GPT의 구조를 이해한다
-- 자기회귀 생성 방식을 배운다
+- GPT의 구조와 특징을 이해한다
+- 자기회귀(Autoregressive) 생성 방식을 배운다
+- GPT 시리즈의 발전 과정을 알아본다
+- BERT와의 차이점을 이해한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## GPT란?
+
+### 정의
+\`\`\`
+GPT = Generative Pre-trained Transformer
+
+OpenAI가 개발한 생성형 언어 모델
+Transformer의 Decoder만 사용하는 구조
+\`\`\`
+
+### 핵심 특징
+\`\`\`
+1. Decoder-only: Encoder 없이 Decoder만 사용
+2. 자기회귀(Autoregressive): 이전 토큰들을 보고 다음 토큰 예측
+3. 단방향(Unidirectional): 왼쪽에서 오른쪽으로만 참조
+4. 생성(Generation)에 특화: 텍스트를 자연스럽게 생성
+\`\`\`
+
+## GPT vs BERT
+
+### 구조 비교
+\`\`\`
+BERT (Encoder-only):
+[CLS] I love [MASK] [SEP]
+  ↓ ↓   ↓     ↓     ↓
+양방향 Self-Attention (모든 토큰이 서로 참조)
+  ↓
+[MASK] = "AI" 예측
+
+GPT (Decoder-only):
+I   love   AI   [생성]
+↓    ↓     ↓      ↓
+단방향 Masked Self-Attention (이전 토큰만 참조)
+  ↓
+다음 토큰 예측
+\`\`\`
+
+### 용도 비교
+| 특성 | BERT | GPT |
+|------|------|-----|
+| **구조** | Encoder-only | Decoder-only |
+| **참조 방향** | 양방향 | 단방향 (왼쪽→오른쪽) |
+| **학습 방식** | MLM, NSP | 다음 토큰 예측 |
+| **주요 용도** | 이해 (분류, NER, QA) | 생성 (텍스트 생성, 대화) |
+
+## 자기회귀 생성 (Autoregressive Generation)
+
+### 핵심 개념
+\`\`\`
+다음 토큰 예측을 반복하여 텍스트 생성
+
+P(토큰_n | 토큰_1, 토큰_2, ..., 토큰_n-1)
+
+조건부 확률을 연쇄적으로 계산
+\`\`\`
+
+### 생성 과정
+\`\`\`
+입력: "AI는"
+
+Step 1: P(? | "AI는")
+        → "정말" 선택
+
+Step 2: P(? | "AI는 정말")
+        → "놀라운" 선택
+
+Step 3: P(? | "AI는 정말 놀라운")
+        → "기술입니다" 선택
+
+Step 4: P(? | "AI는 정말 놀라운 기술입니다")
+        → [EOS] 종료 토큰 선택
+
+결과: "AI는 정말 놀라운 기술입니다"
+\`\`\`
+
+### Masked Self-Attention
+\`\`\`
+GPT는 미래 토큰을 볼 수 없도록 마스킹
+
+"나는 밥을 먹는다" 처리 시:
+
+        나는  밥을  먹는다
+나는     ✓    ✗     ✗
+밥을     ✓    ✓     ✗
+먹는다   ✓    ✓     ✓
+
+✓: 참조 가능, ✗: 마스킹됨
+
+→ 학습 시에도 추론 시와 동일한 조건 유지
+\`\`\`
+
+## GPT 구조 상세
+
+### 아키텍처
+\`\`\`
+GPT-1:
+- 12 Decoder 레이어
+- 768 Hidden 차원
+- 12 Attention Heads
+- 117M 파라미터
+
+GPT-2:
+- 48 Decoder 레이어 (Large)
+- 1600 Hidden 차원
+- 25 Attention Heads
+- 1.5B 파라미터
+
+GPT-3:
+- 96 Decoder 레이어
+- 12288 Hidden 차원
+- 96 Attention Heads
+- 175B 파라미터
+\`\`\`
+
+### Decoder 레이어 구성
+\`\`\`
+입력 토큰 임베딩 + 위치 임베딩
+           ↓
+┌──────────────────────────┐
+│ Masked Multi-Head Attn   │
+│        ↓                 │
+│ Add & Layer Norm         │
+│        ↓                 │
+│ Feed Forward Network     │
+│        ↓                 │
+│ Add & Layer Norm         │
+└──────────────────────────┘
+         × N layers
+           ↓
+Linear + Softmax → 다음 토큰 확률
+\`\`\`
+
+### PyTorch 구현 예시
+\`\`\`python
+class GPTDecoderLayer(torch.nn.Module):
+    def __init__(self, d_model, n_heads, d_ff, dropout=0.1):
+        super().__init__()
+        self.self_attn = torch.nn.MultiheadAttention(d_model, n_heads)
+        self.feed_forward = torch.nn.Sequential(
+            torch.nn.Linear(d_model, d_ff),
+            torch.nn.GELU(),
+            torch.nn.Linear(d_ff, d_model)
+        )
+        self.norm1 = torch.nn.LayerNorm(d_model)
+        self.norm2 = torch.nn.LayerNorm(d_model)
+        self.dropout = torch.nn.Dropout(dropout)
+
+    def forward(self, x, mask=None):
+        # Masked Self-Attention
+        attn_out, _ = self.self_attn(x, x, x, attn_mask=mask)
+        x = self.norm1(x + self.dropout(attn_out))
+
+        # Feed Forward
+        ff_out = self.feed_forward(x)
+        x = self.norm2(x + self.dropout(ff_out))
+        return x
+\`\`\`
+
+## GPT 학습 방식
+
+### Pre-training 목표
+\`\`\`
+Language Modeling: 다음 단어 예측
+
+Loss = -Σ log P(토큰_i | 토큰_1, ..., 토큰_i-1)
+
+모든 위치에서 다음 토큰을 예측하도록 학습
+\`\`\`
+
+### 학습 데이터
+\`\`\`
+GPT-1: BooksCorpus (약 7,000권)
+GPT-2: WebText (약 40GB)
+GPT-3: Common Crawl + 다양한 데이터 (약 570GB)
+
+대규모 텍스트 데이터로 언어 패턴 학습
+\`\`\`
+
+### Zero-shot, Few-shot Learning
+\`\`\`
+GPT-3의 혁신: Fine-tuning 없이 태스크 수행
+
+Zero-shot: 예시 없이 지시만으로 수행
+  "다음 문장을 한국어로 번역하세요: Hello world"
+
+Few-shot: 몇 개의 예시를 주고 수행
+  "영어를 한국어로 번역합니다.
+   Hello → 안녕하세요
+   Thank you → 감사합니다
+   Goodbye → ???"
+
+In-context Learning: 프롬프트 내 예시로 학습
+\`\`\`
+
+## GPT 시리즈 발전
+
+### 발전 과정
+\`\`\`
+GPT-1 (2018): 사전학습 + Fine-tuning 패러다임 제시
+  ↓
+GPT-2 (2019): 스케일 확대, Zero-shot 가능성 발견
+  ↓
+GPT-3 (2020): 175B 파라미터, Few-shot 학습의 힘
+  ↓
+ChatGPT (2022): RLHF로 대화에 최적화
+  ↓
+GPT-4 (2023): 멀티모달, 더 높은 추론 능력
+\`\`\`
+
+### RLHF (Reinforcement Learning from Human Feedback)
+\`\`\`
+ChatGPT 성공의 핵심 기술
+
+1. SFT (Supervised Fine-Tuning)
+   - 인간이 작성한 대화 데이터로 학습
+
+2. Reward Model 학습
+   - 여러 응답 중 인간이 선호하는 응답 학습
+
+3. PPO (Proximal Policy Optimization)
+   - 보상 모델을 사용해 정책 최적화
+
+결과: 더 도움이 되고, 안전한 응답 생성
+\`\`\`
+
+## GPT 텍스트 생성
+
+### 생성 코드 예시
+\`\`\`python
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+# 모델과 토크나이저 로드
+tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+model = GPT2LMHeadModel.from_pretrained('gpt2')
+
+# 텍스트 생성
+prompt = "인공지능의 미래는"
+inputs = tokenizer(prompt, return_tensors='pt')
+
+outputs = model.generate(
+    **inputs,
+    max_length=50,
+    num_return_sequences=1,
+    temperature=0.7,
+    top_p=0.9,
+    do_sample=True
+)
+
+generated_text = tokenizer.decode(outputs[0])
+print(generated_text)
+\`\`\`
+
+### 생성 파라미터
+\`\`\`
+temperature: 확률 분포의 날카로움 조절
+  - 낮음 (0.1): 확실한 단어 선택, 일관된 출력
+  - 높음 (1.5): 다양한 단어 선택, 창의적 출력
+
+top_p (nucleus sampling): 상위 확률 p% 내에서 샘플링
+  - 0.9: 상위 90% 확률의 토큰들에서 선택
+
+top_k: 상위 k개 토큰에서만 샘플링
+  - 50: 가장 확률 높은 50개 중 선택
+\`\`\`
+
+## GPT의 응용
+
+### 주요 활용 분야
+\`\`\`
+1. 대화형 AI: ChatGPT, Claude 등
+2. 코드 생성: GitHub Copilot, CodeX
+3. 콘텐츠 생성: 글쓰기, 번역, 요약
+4. 질문 답변: 지식 기반 응답
+5. 창작: 스토리, 시, 노래 가사
+\`\`\`
+
+### 한계점
+\`\`\`
+1. Hallucination: 사실이 아닌 정보 생성
+2. 최신 정보 부재: 학습 데이터 기준 이후 정보 없음
+3. 긴 문맥 처리: 컨텍스트 길이 제한
+4. 수학적 추론: 복잡한 계산에서 오류 가능
+\`\`\`
+
+## 핵심 요약
+
+\`\`\`
+1. GPT = Decoder-only Transformer
+   - 단방향 (왼쪽→오른쪽)
+   - 자기회귀 생성 방식
+
+2. 학습 방식:
+   - 다음 토큰 예측 (Language Modeling)
+   - 대규모 텍스트로 Pre-training
+
+3. BERT vs GPT:
+   - BERT: 양방향, 이해에 특화
+   - GPT: 단방향, 생성에 특화
+
+4. 발전 핵심:
+   - 스케일 확대 (파라미터 수 증가)
+   - RLHF로 인간 선호도 반영
+   - In-context Learning으로 다양한 태스크 수행
+\`\`\`
 `
       },
       {
@@ -6699,11 +10273,323 @@ patience = 10
 # LLM 작동 원리
 
 ## 학습 목표
-- 대규모 언어 모델의 작동 원리를 이해한다
-- 토큰화와 샘플링 전략을 배운다
+- 토큰화(Tokenization)의 원리를 이해한다
+- 임베딩에서 출력까지의 추론 과정을 배운다
+- 다양한 샘플링 전략을 이해한다
+- LLM의 내부 작동 방식을 종합적으로 파악한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## 토큰화 (Tokenization)
+
+### 왜 토큰화가 필요한가?
+\`\`\`
+컴퓨터는 텍스트를 직접 처리할 수 없음
+→ 숫자로 변환이 필요
+
+텍스트 → 토큰 → 숫자(ID) → 임베딩 벡터
+\`\`\`
+
+### 토큰화 방식의 발전
+\`\`\`
+1. 단어 단위 (Word-level)
+   "I love AI" → ["I", "love", "AI"]
+   문제: 어휘 크기가 너무 큼, OOV(Out-of-Vocabulary) 문제
+
+2. 문자 단위 (Character-level)
+   "AI" → ["A", "I"]
+   문제: 시퀀스가 너무 길어짐
+
+3. 서브워드 단위 (Subword-level) ← 현재 주류
+   "unhappiness" → ["un", "happiness"] 또는 ["un", "happ", "iness"]
+   장점: 적절한 어휘 크기, OOV 문제 해결
+\`\`\`
+
+### BPE (Byte Pair Encoding)
+
+#### 알고리즘
+\`\`\`
+1. 모든 문자를 개별 토큰으로 시작
+2. 가장 자주 등장하는 토큰 쌍을 병합
+3. 원하는 어휘 크기가 될 때까지 반복
+
+예시:
+초기: ["l", "o", "w", "e", "r", "l", "o", "w"]
+
+Step 1: ("l", "o") 가장 빈번 → "lo"로 병합
+        ["lo", "w", "e", "r", "lo", "w"]
+
+Step 2: ("lo", "w") 가장 빈번 → "low"로 병합
+        ["low", "e", "r", "low"]
+
+...반복
+\`\`\`
+
+#### 특징
+\`\`\`
+자주 쓰는 단어: 하나의 토큰으로
+  "the" → [the]
+
+드문 단어: 여러 서브워드로 분해
+  "cryptocurrency" → ["crypt", "o", "currency"]
+
+이점:
+- 고정된 어휘 크기로 모든 단어 표현 가능
+- 새로운 단어도 서브워드 조합으로 처리
+\`\`\`
+
+### 토큰화 예시 (GPT)
+\`\`\`python
+from transformers import GPT2Tokenizer
+
+tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+
+text = "Hello, how are you doing today?"
+tokens = tokenizer.tokenize(text)
+print(tokens)
+# ['Hello', ',', 'Ġhow', 'Ġare', 'Ġyou', 'Ġdoing', 'Ġtoday', '?']
+
+token_ids = tokenizer.encode(text)
+print(token_ids)
+# [15496, 11, 703, 389, 345, 1804, 1909, 30]
+\`\`\`
+
+## 임베딩 (Embedding)
+
+### 토큰 ID → 벡터 변환
+\`\`\`
+토큰 ID는 단순한 정수 → 의미 정보 없음
+임베딩: ID를 고차원 벡터로 변환
+
+토큰 "love" (ID: 1234)
+  ↓ Embedding Layer
+[0.23, -0.15, 0.87, ..., 0.42]  (d_model 차원)
+\`\`\`
+
+### 임베딩의 특성
+\`\`\`
+학습된 임베딩은 의미적 관계를 반영:
+
+king - man + woman ≈ queen
+
+유사한 의미의 단어들은 벡터 공간에서 가까이 위치
+\`\`\`
+
+### 전체 입력 준비
+\`\`\`
+Input = Token Embedding + Position Embedding
+
+각 토큰마다:
+1. 토큰 ID → 임베딩 벡터
+2. 위치 정보 추가
+3. Transformer에 입력
+\`\`\`
+
+## LLM 추론 과정
+
+### 전체 흐름
+\`\`\`
+텍스트 입력
+    ↓
+토큰화 (Tokenization)
+    ↓
+토큰 ID 변환
+    ↓
+임베딩 + 위치 인코딩
+    ↓
+Transformer Layers (N번 반복)
+    ↓
+최종 Hidden State
+    ↓
+LM Head (Linear Layer)
+    ↓
+Logits (어휘 크기의 벡터)
+    ↓
+Softmax → 확률 분포
+    ↓
+샘플링 → 다음 토큰 선택
+\`\`\`
+
+### 코드로 보는 추론
+\`\`\`python
+import torch
+
+# 1. 토큰화
+input_ids = tokenizer.encode("AI is", return_tensors='pt')
+
+# 2. 모델 추론
+with torch.no_grad():
+    outputs = model(input_ids)
+
+# 3. 마지막 토큰의 logits
+logits = outputs.logits[:, -1, :]  # [batch, vocab_size]
+
+# 4. 확률 분포로 변환
+probs = torch.softmax(logits, dim=-1)
+
+# 5. 다음 토큰 선택
+next_token = torch.argmax(probs, dim=-1)  # Greedy
+
+# 6. 토큰 → 텍스트
+print(tokenizer.decode(next_token))
+\`\`\`
+
+## 샘플링 전략
+
+### 1. Greedy Decoding
+\`\`\`
+가장 높은 확률의 토큰을 선택
+
+next_token = argmax(P(token | context))
+
+장점: 결정적, 빠름
+단점: 다양성 없음, 반복적인 출력
+\`\`\`
+
+### 2. Temperature Sampling
+\`\`\`
+확률 분포를 조정하여 샘플링
+
+P'(token) = P(token)^(1/T) / Σ P(token)^(1/T)
+
+T = 1.0: 원래 분포
+T < 1.0: 더 날카롭게 (확실한 선택)
+T > 1.0: 더 평평하게 (다양한 선택)
+\`\`\`
+
+#### Temperature 효과
+\`\`\`
+원래 확률: [0.6, 0.2, 0.1, 0.1]
+
+T = 0.5: [0.82, 0.11, 0.04, 0.03] ← 더 확실
+T = 2.0: [0.35, 0.25, 0.20, 0.20] ← 더 다양
+\`\`\`
+
+### 3. Top-k Sampling
+\`\`\`
+상위 k개 토큰에서만 샘플링
+
+확률: [0.5, 0.2, 0.15, 0.1, 0.05]
+Top-3: [0.5, 0.2, 0.15] → 정규화 → [0.59, 0.24, 0.18]
+
+나머지 토큰은 확률 0으로 설정
+\`\`\`
+
+### 4. Top-p (Nucleus) Sampling
+\`\`\`
+누적 확률이 p가 될 때까지의 토큰들에서 샘플링
+
+확률: [0.5, 0.2, 0.15, 0.1, 0.05]
+p = 0.9일 때:
+  0.5 + 0.2 + 0.15 + 0.1 = 0.95 > 0.9
+  → 상위 3개 [0.5, 0.2, 0.15]에서 샘플링
+
+장점: 분포에 따라 후보 수가 동적으로 조절됨
+\`\`\`
+
+### 샘플링 전략 비교
+| 전략 | 특징 | 사용 시점 |
+|------|------|----------|
+| **Greedy** | 결정적, 일관됨 | 정확한 답이 필요할 때 |
+| **Temperature** | 다양성 조절 | 창의적 글쓰기 |
+| **Top-k** | k개로 제한 | 균형잡힌 생성 |
+| **Top-p** | 동적 후보 수 | 가장 일반적 |
+
+### 샘플링 구현
+\`\`\`python
+def sample_next_token(logits, temperature=1.0, top_k=50, top_p=0.9):
+    # Temperature 적용
+    logits = logits / temperature
+
+    # Top-k 필터링
+    if top_k > 0:
+        indices_to_remove = logits < torch.topk(logits, top_k)[0][..., -1, None]
+        logits[indices_to_remove] = float('-inf')
+
+    # Top-p 필터링
+    sorted_logits, sorted_indices = torch.sort(logits, descending=True)
+    cumulative_probs = torch.cumsum(torch.softmax(sorted_logits, dim=-1), dim=-1)
+    sorted_indices_to_remove = cumulative_probs > top_p
+    sorted_indices_to_remove[..., 1:] = sorted_indices_to_remove[..., :-1].clone()
+    sorted_indices_to_remove[..., 0] = False
+    indices_to_remove = sorted_indices_to_remove.scatter(
+        dim=-1, index=sorted_indices, src=sorted_indices_to_remove
+    )
+    logits[indices_to_remove] = float('-inf')
+
+    # 샘플링
+    probs = torch.softmax(logits, dim=-1)
+    next_token = torch.multinomial(probs, num_samples=1)
+
+    return next_token
+\`\`\`
+
+## 생성 완료 조건
+
+### 언제 생성을 멈추는가?
+\`\`\`
+1. EOS 토큰 생성
+   - [EOS] (End of Sequence) 토큰이 나오면 종료
+
+2. 최대 길이 도달
+   - max_length 또는 max_new_tokens 설정
+
+3. 반복 탐지
+   - repetition_penalty로 반복 억제
+   - no_repeat_ngram_size로 n-gram 반복 방지
+\`\`\`
+
+### 생성 파라미터 종합
+\`\`\`python
+outputs = model.generate(
+    input_ids,
+    max_new_tokens=100,      # 최대 새 토큰 수
+    temperature=0.7,         # 다양성 조절
+    top_k=50,               # 상위 k개 후보
+    top_p=0.9,              # 누적 확률 p
+    repetition_penalty=1.2,  # 반복 억제
+    do_sample=True,         # 샘플링 활성화
+    num_return_sequences=1   # 생성 시퀀스 수
+)
+\`\`\`
+
+## KV Cache 최적화
+
+### 문제점
+\`\`\`
+자기회귀 생성의 비효율성:
+- 토큰 1개 생성 → 전체 시퀀스 재계산
+- 시퀀스가 길어질수록 계산량 급증
+\`\`\`
+
+### KV Cache 해결책
+\`\`\`
+이전에 계산한 Key, Value를 캐시에 저장
+
+Step 1: "AI" → K1, V1 계산 및 저장
+Step 2: "AI is" → K1, V1 재사용 + K2, V2 추가
+Step 3: "AI is great" → K1,K2 재사용 + K3, V3 추가
+
+효과: O(n²) → O(n)으로 계산량 감소
+\`\`\`
+
+## 핵심 요약
+
+\`\`\`
+1. 토큰화: 텍스트 → 서브워드 토큰 → ID
+   - BPE가 현재 주류 방식
+   - 고정 어휘로 모든 단어 처리
+
+2. 추론 과정:
+   토큰화 → 임베딩 → Transformer → Logits → 샘플링
+
+3. 샘플링 전략:
+   - Greedy: 가장 확실한 선택
+   - Temperature: 다양성 조절
+   - Top-k/Top-p: 후보 토큰 제한
+
+4. 생성 루프:
+   다음 토큰 예측 → 추가 → 반복
+   EOS 또는 최대 길이까지 계속
+\`\`\`
 `
       }
     ]
@@ -6728,11 +10614,193 @@ patience = 10
 # GPU vs CPU
 
 ## 학습 목표
-- GPU와 CPU의 차이를 이해한다
-- 병렬 처리의 장점을 배운다
+- GPU와 CPU의 근본적인 차이를 이해한다
+- SIMT 아키텍처의 개념을 배운다
+- 딥러닝에서 GPU가 필수인 이유를 이해한다
+- 메모리 대역폭의 중요성을 학습한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## CPU의 특징
+
+CPU(Central Processing Unit)는 **순차 처리에 최적화**된 프로세서입니다.
+
+### CPU의 핵심 특성
+| 특징 | 설명 |
+|------|------|
+| 코어 수 | 일반적으로 4~16개의 강력한 코어 |
+| 처리 방식 | 순차적(Sequential) 처리 |
+| 제어 유닛 | 각 코어가 독립적인 복잡한 제어 유닛 보유 |
+| 분기 예측 | 고급 분기 예측으로 조건문 최적화 |
+| 캐시 | 대용량 캐시 메모리 (L1/L2/L3) |
+
+### CPU가 잘하는 작업
+- 복잡한 조건 분기가 많은 프로그램
+- 순차적 의존성이 있는 알고리즘
+- 운영체제, 웹 브라우저 등 범용 소프트웨어
+
+\`\`\`python
+# CPU에 적합한 작업 예시: 순차적 의존성
+def fibonacci(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b  # 이전 값에 의존
+    return b
+\`\`\`
+
+## GPU의 특징
+
+GPU(Graphics Processing Unit)는 **대규모 병렬 처리에 최적화**된 프로세서입니다.
+
+### GPU의 핵심 특성
+| 특징 | 설명 |
+|------|------|
+| 코어 수 | 수천 개의 작은 코어 (NVIDIA RTX 4090: 16,384개) |
+| 처리 방식 | 대규모 병렬(Parallel) 처리 |
+| 제어 유닛 | 여러 코어가 제어 유닛을 공유 |
+| 설계 목표 | 단순 연산의 대량 처리 |
+| 메모리 | 고대역폭 전용 메모리 (HBM2/GDDR6) |
+
+### GPU가 잘하는 작업
+- 행렬 연산, 벡터 연산
+- 이미지/영상 처리
+- 딥러닝 학습 및 추론
+
+## SIMT 아키텍처
+
+**SIMT(Single Instruction Multiple Threads)**는 NVIDIA GPU의 핵심 아키텍처입니다.
+
+### SIMD vs SIMT
+\`\`\`
+SIMD (Single Instruction Multiple Data)
+- 하나의 명령어가 여러 데이터를 동시에 처리
+- CPU의 벡터 확장 (AVX, SSE)
+
+SIMT (Single Instruction Multiple Threads)
+- 같은 명령어를 수천 개의 스레드가 동시에 실행
+- 각 스레드가 다른 데이터를 처리
+- GPU의 기본 동작 방식
+\`\`\`
+
+### Warp 단위 실행
+\`\`\`
+┌─────────────────────────────────────┐
+│           Warp (32 threads)          │
+├────┬────┬────┬────┬─────────┬────┤
+│ T0 │ T1 │ T2 │ T3 │   ...   │ T31│
+└────┴────┴────┴────┴─────────┴────┘
+         ↓ 같은 명령어 실행
+      [ADD, MUL, LOAD, ...]
+\`\`\`
+
+- NVIDIA GPU는 32개 스레드를 하나의 **Warp**로 묶어 실행
+- Warp 내 모든 스레드는 동일한 명령어를 동시에 실행
+- 각 스레드는 서로 다른 데이터를 처리
+
+## 딥러닝과 GPU
+
+딥러닝의 핵심 연산은 **행렬 곱셈**입니다.
+
+### 신경망의 순전파
+\`\`\`python
+# 뉴런 하나의 계산
+output = activation(W @ input + b)
+
+# W @ input = 행렬 곱셈
+# 수천~수억 개의 독립적인 곱셈-덧셈 연산
+\`\`\`
+
+### 행렬 곱셈의 병렬성
+\`\`\`
+행렬 A(1000×1000) × 행렬 B(1000×1000)
+= 1,000,000개의 독립적인 내적 연산
+= GPU에서 병렬 처리 가능!
+\`\`\`
+
+### 성능 비교 예시
+| 작업 | CPU (Intel i9) | GPU (RTX 4090) | 배율 |
+|------|---------------|----------------|------|
+| 4096×4096 행렬 곱셈 | 45초 | 0.1초 | 450× |
+| ResNet-50 학습 (1 epoch) | 180분 | 3분 | 60× |
+| GPT-2 추론 (배치 32) | 12초 | 0.2초 | 60× |
+
+## 메모리 대역폭
+
+GPU의 또 다른 장점은 **높은 메모리 대역폭**입니다.
+
+### 대역폭 비교
+| 메모리 유형 | 대역폭 |
+|------------|--------|
+| DDR4 (CPU) | ~50 GB/s |
+| DDR5 (CPU) | ~100 GB/s |
+| GDDR6 (GPU) | ~500 GB/s |
+| HBM2e (데이터센터 GPU) | ~2,000 GB/s |
+
+### 왜 대역폭이 중요한가?
+\`\`\`
+딥러닝 학습 과정:
+1. 대량의 데이터를 메모리에서 읽기
+2. 연산 수행
+3. 결과를 메모리에 쓰기
+
+→ 메모리 대역폭이 병목이 됨
+→ HBM2는 DDR4보다 40배 빠른 데이터 전송
+\`\`\`
+
+## CPU와 GPU의 협력
+
+현대 딥러닝 시스템에서는 CPU와 GPU가 **협력**합니다.
+
+### 역할 분담
+\`\`\`
+┌─────────────────────────────────────────┐
+│                  CPU                     │
+│  - 데이터 로드 및 전처리                  │
+│  - 학습 루프 제어                         │
+│  - 모델 저장/로드                         │
+│  - GPU로 데이터 전송                      │
+└───────────────────┬─────────────────────┘
+                    ↓ PCIe / NVLink
+┌─────────────────────────────────────────┐
+│                  GPU                     │
+│  - 순전파 계산                            │
+│  - 역전파 계산                            │
+│  - 가중치 업데이트                         │
+│  - 행렬 연산 가속                          │
+└─────────────────────────────────────────┘
+\`\`\`
+
+### PyTorch에서의 활용
+\`\`\`python
+import torch
+
+# GPU 사용 가능 확인
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+    print(f"GPU: {torch.cuda.get_device_name(0)}")
+else:
+    device = torch.device("cpu")
+
+# 데이터를 GPU로 이동
+model = MyModel().to(device)
+data = data.to(device)
+
+# GPU에서 연산 수행
+output = model(data)
+\`\`\`
+
+## 정리
+
+| 항목 | CPU | GPU |
+|------|-----|-----|
+| 코어 수 | 적음 (4~64) | 많음 (수천 개) |
+| 코어 성능 | 높음 | 낮음 |
+| 처리 방식 | 순차적 | 병렬적 |
+| 적합한 작업 | 복잡한 제어 흐름 | 대량의 단순 연산 |
+| 메모리 대역폭 | ~100 GB/s | ~2,000 GB/s |
+| 딥러닝 역할 | 데이터 전처리, 제어 | 학습/추론 연산 |
+
+**핵심 포인트**: 딥러닝은 대규모 행렬 연산의 연속이므로, GPU의 병렬 처리 능력이 필수적입니다.
 `
       },
       {
@@ -6745,11 +10813,261 @@ patience = 10
 # CUDA 개요
 
 ## 학습 목표
-- CUDA 프로그래밍 모델을 이해한다
-- 스레드 계층 구조를 배운다
+- CUDA 플랫폼의 개념을 이해한다
+- Host와 Device의 관계를 이해한다
+- 커널 함수의 개념을 배운다
+- 스레드 계층 구조(Thread, Block, Grid)를 이해한다
+- threadIdx, blockIdx, blockDim의 활용법을 익힌다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## CUDA란?
+
+**CUDA(Compute Unified Device Architecture)**는 NVIDIA가 개발한 **병렬 컴퓨팅 플랫폼**입니다.
+
+### CUDA의 특징
+| 특징 | 설명 |
+|------|------|
+| 개발사 | NVIDIA |
+| 목적 | GPU를 범용 연산에 활용 |
+| 언어 | C/C++ 확장 문법 |
+| 등장 | 2007년 |
+
+### CUDA가 아니었다면?
+\`\`\`
+과거: GPU는 그래픽 처리 전용
+     → 범용 연산 불가능
+
+CUDA 등장 후: GPU를 일반 연산에 활용
+     → 딥러닝 혁명의 기반
+     → 과학 시뮬레이션 가속
+     → 영상 처리 실시간화
+\`\`\`
+
+## Host와 Device
+
+CUDA 프로그래밍에서는 **두 가지 처리 장치**를 사용합니다.
+
+### 용어 정의
+| 용어 | 의미 | 역할 |
+|------|------|------|
+| **Host** | CPU + 시스템 메모리 | 프로그램 제어, 데이터 준비 |
+| **Device** | GPU + GPU 메모리 | 병렬 연산 수행 |
+
+### 실행 흐름
+\`\`\`
+┌─────────── Host (CPU) ───────────┐
+│  1. 데이터 준비                    │
+│  2. GPU 메모리 할당                │
+│  3. Host → Device 데이터 복사      │
+│  4. 커널 실행 명령                  │
+│  5. Device → Host 결과 복사        │
+│  6. 결과 후처리                    │
+└──────────────────────────────────┘
+         ↕ PCIe / NVLink
+┌─────────── Device (GPU) ─────────┐
+│  병렬 연산 수행                    │
+│  (수천 개 스레드 동시 실행)         │
+└──────────────────────────────────┘
+\`\`\`
+
+### 메모리 분리
+\`\`\`
+Host Memory (RAM)     Device Memory (VRAM)
+┌─────────────┐       ┌─────────────┐
+│   data[]    │ ────→ │  d_data[]   │
+│   result[]  │ ←──── │  d_result[] │
+└─────────────┘       └─────────────┘
+     CPU용                 GPU용
+\`\`\`
+
+## 커널 함수
+
+**커널(Kernel)**은 GPU에서 실행되는 함수입니다.
+
+### 커널의 특징
+- \`__global__\` 키워드로 선언
+- Host에서 호출하고 Device에서 실행
+- 여러 스레드가 동시에 같은 코드를 실행
+
+### 커널 선언 예시
+\`\`\`cuda
+// __global__ 키워드로 커널 함수 선언
+__global__ void vectorAdd(float* a, float* b, float* c, int n) {
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if (idx < n) {
+        c[idx] = a[idx] + b[idx];  // 각 스레드가 하나의 원소 처리
+    }
+}
+\`\`\`
+
+### 함수 실행 위치 지정자
+| 지정자 | 호출 위치 | 실행 위치 | 용도 |
+|--------|----------|----------|------|
+| \`__global__\` | Host | Device | 커널 함수 |
+| \`__device__\` | Device | Device | GPU 내부 헬퍼 함수 |
+| \`__host__\` | Host | Host | 일반 CPU 함수 (기본값) |
+
+## 스레드 계층 구조
+
+CUDA는 **3단계 계층 구조**로 스레드를 조직합니다.
+
+### Thread → Block → Grid
+\`\`\`
+┌─────────────────────────────────────────────────────┐
+│                    Grid (그리드)                     │
+│  ┌───────────┐ ┌───────────┐ ┌───────────┐         │
+│  │  Block 0  │ │  Block 1  │ │  Block 2  │  ...    │
+│  │ ┌─┬─┬─┬─┐ │ │ ┌─┬─┬─┬─┐ │ │ ┌─┬─┬─┬─┐ │         │
+│  │ │T│T│T│T│ │ │ │T│T│T│T│ │ │ │T│T│T│T│ │         │
+│  │ ├─┼─┼─┼─┤ │ │ ├─┼─┼─┼─┤ │ │ ├─┼─┼─┼─┤ │         │
+│  │ │T│T│T│T│ │ │ │T│T│T│T│ │ │ │T│T│T│T│ │         │
+│  │ └─┴─┴─┴─┘ │ │ └─┴─┴─┴─┘ │ │ └─┴─┴─┴─┘ │         │
+│  └───────────┘ └───────────┘ └───────────┘         │
+└─────────────────────────────────────────────────────┘
+T = Thread (스레드)
+\`\`\`
+
+### 계층별 특징
+| 계층 | 설명 | 공유 메모리 |
+|------|------|------------|
+| **Thread** | 최소 실행 단위 | 레지스터, 로컬 메모리 |
+| **Block** | 스레드의 그룹 (최대 1024개) | Shared Memory 공유 |
+| **Grid** | 블록의 그룹 | Global Memory 공유 |
+
+## 스레드 인덱스 변수
+
+각 스레드는 자신의 **위치를 알 수 있는 변수**를 가집니다.
+
+### 핵심 내장 변수
+| 변수 | 의미 | 타입 |
+|------|------|------|
+| \`threadIdx\` | 블록 내 스레드 인덱스 | dim3 (x, y, z) |
+| \`blockIdx\` | 그리드 내 블록 인덱스 | dim3 (x, y, z) |
+| \`blockDim\` | 블록의 크기 | dim3 (x, y, z) |
+| \`gridDim\` | 그리드의 크기 | dim3 (x, y, z) |
+
+### 전역 인덱스 계산
+\`\`\`cuda
+// 1D 배열에서 전역 인덱스 계산
+int globalIdx = threadIdx.x + blockIdx.x * blockDim.x;
+
+// 예시: blockDim.x = 256, blockIdx.x = 3, threadIdx.x = 100
+// globalIdx = 100 + 3 * 256 = 868
+\`\`\`
+
+### 시각적 이해
+\`\`\`
+Block 0        Block 1        Block 2
+[T0,T1,T2,T3]  [T0,T1,T2,T3]  [T0,T1,T2,T3]  (threadIdx.x)
+ ↓              ↓              ↓
+[0, 1, 2, 3]   [4, 5, 6, 7]   [8, 9,10,11]   (globalIdx)
+\`\`\`
+
+## 커널 실행 구문
+
+커널은 **실행 구성(Execution Configuration)**과 함께 호출됩니다.
+
+### 실행 구문 형식
+\`\`\`cuda
+kernelFunction<<<gridSize, blockSize>>>(arguments);
+//              └──────┬──────┘
+//          그리드 크기, 블록 크기
+\`\`\`
+
+### 예시: 10,000개 원소 처리
+\`\`\`cuda
+int n = 10000;
+int blockSize = 256;  // 블록당 256 스레드
+int gridSize = (n + blockSize - 1) / blockSize;  // 올림 나눗셈
+// gridSize = (10000 + 255) / 256 = 40
+
+vectorAdd<<<gridSize, blockSize>>>(d_a, d_b, d_c, n);
+// 40개 블록 × 256 스레드 = 10,240 스레드 실행
+// (240개는 경계 검사로 무시됨)
+\`\`\`
+
+### 2D/3D 실행 구성
+\`\`\`cuda
+// 이미지 처리: 1920×1080 픽셀
+dim3 blockSize(16, 16);  // 16×16 = 256 스레드/블록
+dim3 gridSize(
+    (1920 + 15) / 16,    // 120 블록
+    (1080 + 15) / 16     // 68 블록
+);
+
+imageProcess<<<gridSize, blockSize>>>(image, width, height);
+
+// 커널 내부
+__global__ void imageProcess(...) {
+    int x = threadIdx.x + blockIdx.x * blockDim.x;
+    int y = threadIdx.y + blockIdx.y * blockDim.y;
+    // 각 스레드가 하나의 픽셀 처리
+}
+\`\`\`
+
+## 완전한 CUDA 프로그램 구조
+
+\`\`\`cuda
+#include <cuda_runtime.h>
+#include <stdio.h>
+
+// 1. 커널 함수 정의
+__global__ void vectorAdd(float* a, float* b, float* c, int n) {
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if (idx < n) {
+        c[idx] = a[idx] + b[idx];
+    }
+}
+
+int main() {
+    int n = 10000;
+    size_t size = n * sizeof(float);
+
+    // 2. Host 메모리 할당 및 초기화
+    float *h_a = (float*)malloc(size);
+    float *h_b = (float*)malloc(size);
+    float *h_c = (float*)malloc(size);
+
+    // 3. Device 메모리 할당
+    float *d_a, *d_b, *d_c;
+    cudaMalloc(&d_a, size);
+    cudaMalloc(&d_b, size);
+    cudaMalloc(&d_c, size);
+
+    // 4. Host → Device 복사
+    cudaMemcpy(d_a, h_a, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_b, h_b, size, cudaMemcpyHostToDevice);
+
+    // 5. 커널 실행
+    int blockSize = 256;
+    int gridSize = (n + blockSize - 1) / blockSize;
+    vectorAdd<<<gridSize, blockSize>>>(d_a, d_b, d_c, n);
+
+    // 6. Device → Host 복사
+    cudaMemcpy(h_c, d_c, size, cudaMemcpyDeviceToHost);
+
+    // 7. 메모리 해제
+    cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
+    free(h_a); free(h_b); free(h_c);
+
+    return 0;
+}
+\`\`\`
+
+## 정리
+
+| 개념 | 설명 |
+|------|------|
+| CUDA | NVIDIA의 GPU 병렬 컴퓨팅 플랫폼 |
+| Host/Device | CPU/GPU와 각각의 메모리 |
+| 커널 | GPU에서 실행되는 \`__global__\` 함수 |
+| Thread | 최소 실행 단위 |
+| Block | 스레드 그룹 (최대 1024개) |
+| Grid | 블록 그룹 |
+| threadIdx | 블록 내 스레드 위치 |
+| blockIdx | 그리드 내 블록 위치 |
+| blockDim | 블록 크기 |
+
+**핵심 포인트**: CUDA는 계층적 스레드 구조를 통해 수천 개의 스레드가 동시에 작업을 분담합니다.
 `
       },
       {
@@ -6762,11 +11080,278 @@ patience = 10
 # CUDA 환경 설정
 
 ## 학습 목표
-- CUDA 개발 환경을 구축한다
-- nvcc 컴파일러를 사용한다
+- CUDA 개발 환경의 구성 요소를 이해한다
+- CUDA Toolkit을 설치한다
+- nvcc 컴파일러 사용법을 익힌다
+- 환경 설정을 검증한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## CUDA 개발 환경 구성 요소
+
+CUDA 개발에는 **세 가지 핵심 구성 요소**가 필요합니다.
+
+### 필수 구성 요소
+| 구성 요소 | 역할 | 설치 방법 |
+|----------|------|----------|
+| **NVIDIA 드라이버** | GPU 하드웨어 제어 | NVIDIA 웹사이트 |
+| **CUDA Toolkit** | 개발 도구 및 라이브러리 | developer.nvidia.com |
+| **호환 컴파일러** | C/C++ 컴파일 | Visual Studio, GCC |
+
+### 설치 순서
+\`\`\`
+1. NVIDIA 그래픽 드라이버 설치
+2. CUDA Toolkit 설치
+3. 환경 변수 설정
+4. 설치 확인
+\`\`\`
+
+## GPU 호환성 확인
+
+### Compute Capability
+각 NVIDIA GPU는 **Compute Capability**라는 버전을 가집니다.
+
+| 세대 | Compute Capability | 예시 GPU |
+|------|-------------------|----------|
+| Kepler | 3.0 - 3.7 | GTX 780 |
+| Maxwell | 5.0 - 5.3 | GTX 970 |
+| Pascal | 6.0 - 6.2 | GTX 1080 |
+| Turing | 7.5 | RTX 2080 |
+| Ampere | 8.0 - 8.6 | RTX 3090 |
+| Ada Lovelace | 8.9 | RTX 4090 |
+
+### 호환성 확인 방법
+\`\`\`bash
+# Windows (PowerShell)
+nvidia-smi
+
+# 출력 예시:
+# NVIDIA-SMI 535.104.05   Driver Version: 535.104.05   CUDA Version: 12.2
+\`\`\`
+
+## CUDA Toolkit 설치
+
+### 다운로드 위치
+- 공식 사이트: developer.nvidia.com/cuda-toolkit
+
+### 설치 옵션
+| 옵션 | 설명 | 권장 사용자 |
+|------|------|------------|
+| Express | 모든 구성 요소 자동 설치 | 초보자 |
+| Custom | 필요한 구성 요소만 선택 | 고급 사용자 |
+
+### 주요 설치 구성 요소
+\`\`\`
+CUDA Toolkit 구성 요소:
+├── CUDA Runtime        # 런타임 라이브러리
+├── CUDA Libraries      # cuBLAS, cuFFT, cuDNN 등
+├── CUDA Tools          # nvcc, nvprof, Nsight
+├── CUDA Samples        # 예제 코드
+└── Documentation       # 문서
+\`\`\`
+
+## 환경 변수 설정
+
+### Windows 환경 변수
+\`\`\`
+CUDA_PATH = C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.0
+PATH += %CUDA_PATH%\\bin
+PATH += %CUDA_PATH%\\libnvvp
+\`\`\`
+
+### Linux 환경 변수 (.bashrc)
+\`\`\`bash
+export CUDA_HOME=/usr/local/cuda
+export PATH=$CUDA_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+\`\`\`
+
+### 환경 변수 확인
+\`\`\`bash
+# CUDA 버전 확인
+nvcc --version
+
+# 출력 예시:
+# nvcc: NVIDIA (R) Cuda compiler driver
+# Built on Tue_Aug_15_22:02:13_PDT_2023
+# Cuda compilation tools, release 12.2, V12.2.140
+\`\`\`
+
+## nvcc 컴파일러
+
+**nvcc(NVIDIA CUDA Compiler)**는 CUDA 코드를 컴파일하는 도구입니다.
+
+### nvcc의 역할
+\`\`\`
+┌─────────────────────────────────────┐
+│          .cu 소스 파일              │
+└──────────────┬──────────────────────┘
+               ↓
+┌─────────────────────────────────────┐
+│              nvcc                   │
+│  ┌─────────┐     ┌───────────────┐  │
+│  │ Host 코드│     │ Device 코드  │  │
+│  │ (C/C++) │     │ (CUDA 커널)  │  │
+│  └────┬────┘     └───────┬───────┘  │
+│       ↓                  ↓          │
+│   gcc/cl.exe          PTX/cubin     │
+└──────────────┬──────────────────────┘
+               ↓
+┌─────────────────────────────────────┐
+│         실행 파일 (.exe/.out)        │
+└─────────────────────────────────────┘
+\`\`\`
+
+### 기본 컴파일 명령
+\`\`\`bash
+# 기본 컴파일
+nvcc hello.cu -o hello
+
+# 최적화 옵션
+nvcc -O3 hello.cu -o hello
+
+# 아키텍처 지정
+nvcc -arch=sm_86 hello.cu -o hello
+
+# 디버그 정보 포함
+nvcc -g -G hello.cu -o hello
+\`\`\`
+
+### 주요 nvcc 옵션
+| 옵션 | 설명 | 예시 |
+|------|------|------|
+| \`-o\` | 출력 파일명 지정 | \`-o myapp\` |
+| \`-arch\` | GPU 아키텍처 지정 | \`-arch=sm_86\` |
+| \`-O\` | 최적화 레벨 | \`-O3\` |
+| \`-g\` | Host 디버그 정보 | \`-g\` |
+| \`-G\` | Device 디버그 정보 | \`-G\` |
+| \`-I\` | 헤더 파일 경로 | \`-I/path/to/headers\` |
+| \`-L\` | 라이브러리 경로 | \`-L/path/to/libs\` |
+| \`-l\` | 라이브러리 링크 | \`-lcudart\` |
+
+### 분리 컴파일
+\`\`\`bash
+# 대규모 프로젝트에서 분리 컴파일
+nvcc -dc module1.cu -o module1.o
+nvcc -dc module2.cu -o module2.o
+nvcc module1.o module2.o -o myapp
+\`\`\`
+
+## 설치 확인
+
+### 방법 1: nvidia-smi
+\`\`\`bash
+nvidia-smi
+
+# 정상 출력 예시:
+# +-----------------------------------------------------------------------------+
+# | NVIDIA-SMI 535.104.05   Driver Version: 535.104.05   CUDA Version: 12.2    |
+# |-------------------------------+----------------------+----------------------+
+# | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+# | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+# |===============================+======================+======================|
+# |   0  NVIDIA GeForce ...  Off  | 00000000:01:00.0 Off |                  N/A |
+# |  0%   45C    P8    15W / 350W |    512MiB / 24576MiB |      0%      Default |
+# +-------------------------------+----------------------+----------------------+
+\`\`\`
+
+### 방법 2: deviceQuery
+\`\`\`bash
+# CUDA Samples의 deviceQuery 실행
+./deviceQuery
+
+# 주요 출력 정보:
+# - GPU 이름
+# - Compute Capability
+# - CUDA 코어 수
+# - 메모리 크기
+# - 메모리 대역폭
+\`\`\`
+
+### 방법 3: 간단한 테스트 프로그램
+\`\`\`cuda
+// test_cuda.cu
+#include <stdio.h>
+
+__global__ void hello() {
+    printf("Hello from GPU! Thread %d\\n", threadIdx.x);
+}
+
+int main() {
+    hello<<<1, 5>>>();
+    cudaDeviceSynchronize();
+    return 0;
+}
+\`\`\`
+
+\`\`\`bash
+# 컴파일 및 실행
+nvcc test_cuda.cu -o test_cuda
+./test_cuda
+
+# 출력:
+# Hello from GPU! Thread 0
+# Hello from GPU! Thread 1
+# Hello from GPU! Thread 2
+# Hello from GPU! Thread 3
+# Hello from GPU! Thread 4
+\`\`\`
+
+## Python 환경에서 CUDA
+
+### PyTorch CUDA 확인
+\`\`\`python
+import torch
+
+# CUDA 사용 가능 여부
+print(f"CUDA available: {torch.cuda.is_available()}")
+
+# CUDA 버전
+print(f"CUDA version: {torch.version.cuda}")
+
+# GPU 정보
+if torch.cuda.is_available():
+    print(f"GPU: {torch.cuda.get_device_name(0)}")
+    print(f"GPU count: {torch.cuda.device_count()}")
+\`\`\`
+
+### cuDNN 설치
+\`\`\`bash
+# cuDNN은 딥러닝 연산 최적화 라이브러리
+# PyTorch, TensorFlow 성능 향상에 필수
+
+# conda로 설치
+conda install cudnn
+
+# 또는 NVIDIA 웹사이트에서 직접 다운로드
+\`\`\`
+
+## 문제 해결
+
+### 일반적인 오류와 해결책
+| 오류 | 원인 | 해결책 |
+|------|------|--------|
+| nvcc not found | 환경 변수 미설정 | PATH에 CUDA bin 추가 |
+| Driver version insufficient | 드라이버 구버전 | 드라이버 업데이트 |
+| No CUDA-capable device | GPU 미인식 | 드라이버 재설치 |
+| Out of memory | GPU 메모리 부족 | 배치 크기 줄이기 |
+
+### 드라이버/툴킷 버전 호환성
+\`\`\`
+CUDA Toolkit 12.x → Driver 525.60.13 이상 필요
+CUDA Toolkit 11.x → Driver 450.80.02 이상 필요
+CUDA Toolkit 10.x → Driver 410.48 이상 필요
+\`\`\`
+
+## 정리
+
+| 항목 | 내용 |
+|------|------|
+| 필수 구성 요소 | NVIDIA 드라이버, CUDA Toolkit, 호환 컴파일러 |
+| 버전 확인 | nvidia-smi, nvcc --version |
+| 컴파일 명령 | nvcc source.cu -o output |
+| 환경 변수 | CUDA_PATH, PATH, LD_LIBRARY_PATH |
+| 테스트 도구 | deviceQuery, bandwidthTest |
+
+**핵심 포인트**: 올바른 드라이버와 툴킷 버전 조합이 안정적인 CUDA 개발의 기초입니다.
 `
       },
       {
@@ -6779,11 +11364,349 @@ patience = 10
 # 첫 CUDA 프로그램
 
 ## 학습 목표
-- 간단한 CUDA 커널을 작성한다
-- 벡터 덧셈을 구현한다
+- CUDA 프로그램의 기본 구조를 익힌다
+- cudaMalloc, cudaMemcpy, cudaFree 함수를 이해한다
+- 벡터 덧셈 커널을 직접 작성한다
+- 커널 실행 구성을 설정한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## CUDA 프로그램 기본 구조
+
+모든 CUDA 프로그램은 **5단계 패턴**을 따릅니다.
+
+### 기본 패턴
+\`\`\`
+1. Host 메모리 할당 및 초기화
+2. Device 메모리 할당
+3. Host → Device 데이터 복사
+4. 커널 실행
+5. Device → Host 결과 복사
+6. 메모리 해제
+\`\`\`
+
+### 시각적 흐름
+\`\`\`
+┌─────────────── Host (CPU) ───────────────┐
+│  1. malloc()     - 메모리 할당            │
+│  2. 데이터 초기화                         │
+└────────────────────┬─────────────────────┘
+                     ↓
+┌─────────────── Device (GPU) ─────────────┐
+│  3. cudaMalloc()  - GPU 메모리 할당       │
+│  4. cudaMemcpy()  - 데이터 복사 (H→D)     │
+│  5. kernel<<<>>>  - 커널 실행             │
+│  6. cudaMemcpy()  - 결과 복사 (D→H)       │
+│  7. cudaFree()    - GPU 메모리 해제       │
+└──────────────────────────────────────────┘
+\`\`\`
+
+## cudaMalloc - GPU 메모리 할당
+
+### 함수 시그니처
+\`\`\`cuda
+cudaError_t cudaMalloc(void** devPtr, size_t size);
+\`\`\`
+
+### 사용법
+\`\`\`cuda
+float* d_array;  // device 포인터 (관례적으로 d_ 접두사 사용)
+int n = 1000;
+size_t size = n * sizeof(float);
+
+// GPU 메모리 할당
+cudaMalloc(&d_array, size);
+// d_array는 이제 GPU 메모리를 가리킴
+\`\`\`
+
+### 주의사항
+\`\`\`
+✓ 반드시 포인터의 주소(&)를 전달
+✓ 크기는 바이트 단위
+✗ CPU에서 d_array 값을 직접 읽으면 안됨
+  → 반드시 cudaMemcpy로 복사 후 사용
+\`\`\`
+
+## cudaMemcpy - 메모리 복사
+
+### 함수 시그니처
+\`\`\`cuda
+cudaError_t cudaMemcpy(void* dst, const void* src,
+                       size_t count, cudaMemcpyKind kind);
+\`\`\`
+
+### 복사 방향
+| 상수 | 방향 | 용도 |
+|------|------|------|
+| \`cudaMemcpyHostToDevice\` | CPU → GPU | 입력 데이터 전송 |
+| \`cudaMemcpyDeviceToHost\` | GPU → CPU | 결과 가져오기 |
+| \`cudaMemcpyDeviceToDevice\` | GPU → GPU | GPU 내부 복사 |
+| \`cudaMemcpyHostToHost\` | CPU → CPU | 일반 복사 |
+
+### 사용 예시
+\`\`\`cuda
+float h_input[1000];   // Host 배열
+float* d_input;        // Device 포인터
+
+// GPU 메모리 할당
+cudaMalloc(&d_input, 1000 * sizeof(float));
+
+// Host → Device 복사
+cudaMemcpy(d_input, h_input, 1000 * sizeof(float),
+           cudaMemcpyHostToDevice);
+
+// 커널 실행 후...
+
+// Device → Host 복사
+cudaMemcpy(h_input, d_input, 1000 * sizeof(float),
+           cudaMemcpyDeviceToHost);
+\`\`\`
+
+## cudaFree - GPU 메모리 해제
+
+### 함수 시그니처
+\`\`\`cuda
+cudaError_t cudaFree(void* devPtr);
+\`\`\`
+
+### 사용법
+\`\`\`cuda
+float* d_array;
+cudaMalloc(&d_array, size);
+
+// ... 사용 ...
+
+// 메모리 해제
+cudaFree(d_array);
+d_array = nullptr;  // 권장: 해제 후 nullptr 설정
+\`\`\`
+
+### 메모리 누수 방지
+\`\`\`cuda
+// 나쁜 예: 해제하지 않으면 메모리 누수
+void badFunction() {
+    float* d_temp;
+    cudaMalloc(&d_temp, size);
+    // cudaFree 없이 함수 종료 → 메모리 누수!
+}
+
+// 좋은 예: 항상 쌍으로 사용
+void goodFunction() {
+    float* d_temp;
+    cudaMalloc(&d_temp, size);
+    // ... 작업 ...
+    cudaFree(d_temp);  // 반드시 해제
+}
+\`\`\`
+
+## 벡터 덧셈 예제
+
+### 문제 정의
+\`\`\`
+두 벡터 A, B를 더해 C를 계산
+C[i] = A[i] + B[i], for i = 0, 1, ..., n-1
+\`\`\`
+
+### CPU 구현 (순차)
+\`\`\`c
+void vectorAddCPU(float* a, float* b, float* c, int n) {
+    for (int i = 0; i < n; i++) {
+        c[i] = a[i] + b[i];  // 순차 처리
+    }
+}
+// 10,000개 원소 → 10,000번 반복
+\`\`\`
+
+### GPU 구현 (병렬)
+\`\`\`cuda
+__global__ void vectorAddGPU(float* a, float* b, float* c, int n) {
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if (idx < n) {
+        c[idx] = a[idx] + b[idx];  // 각 스레드가 하나의 원소 처리
+    }
+}
+// 10,000개 원소 → 10,000개 스레드가 동시에 처리!
+\`\`\`
+
+### 전역 인덱스 계산
+\`\`\`
+idx = threadIdx.x + blockIdx.x * blockDim.x
+
+예시: blockDim.x = 256, blockIdx.x = 3, threadIdx.x = 100
+idx = 100 + 3 × 256 = 100 + 768 = 868
+→ 이 스레드는 배열의 868번 원소를 처리
+\`\`\`
+
+### 경계 검사의 중요성
+\`\`\`cuda
+// 왜 if (idx < n) 검사가 필요한가?
+
+n = 10000, blockSize = 256
+gridSize = (10000 + 255) / 256 = 40 블록
+총 스레드 수 = 40 × 256 = 10,240개
+
+→ 240개의 스레드는 유효한 데이터가 없음
+→ 경계 검사로 잘못된 메모리 접근 방지
+\`\`\`
+
+## 완전한 벡터 덧셈 프로그램
+
+\`\`\`cuda
+#include <cuda_runtime.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+// 커널 함수
+__global__ void vectorAdd(float* a, float* b, float* c, int n) {
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if (idx < n) {
+        c[idx] = a[idx] + b[idx];
+    }
+}
+
+int main() {
+    int n = 10000;
+    size_t size = n * sizeof(float);
+
+    // 1. Host 메모리 할당
+    float* h_a = (float*)malloc(size);
+    float* h_b = (float*)malloc(size);
+    float* h_c = (float*)malloc(size);
+
+    // 2. 데이터 초기화
+    for (int i = 0; i < n; i++) {
+        h_a[i] = (float)i;
+        h_b[i] = (float)(i * 2);
+    }
+
+    // 3. Device 메모리 할당
+    float *d_a, *d_b, *d_c;
+    cudaMalloc(&d_a, size);
+    cudaMalloc(&d_b, size);
+    cudaMalloc(&d_c, size);
+
+    // 4. Host → Device 복사
+    cudaMemcpy(d_a, h_a, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_b, h_b, size, cudaMemcpyHostToDevice);
+
+    // 5. 커널 실행 구성
+    int blockSize = 256;
+    int gridSize = (n + blockSize - 1) / blockSize;
+    printf("Grid: %d blocks, Block: %d threads\\n", gridSize, blockSize);
+
+    // 6. 커널 실행
+    vectorAdd<<<gridSize, blockSize>>>(d_a, d_b, d_c, n);
+
+    // 7. Device → Host 복사
+    cudaMemcpy(h_c, d_c, size, cudaMemcpyDeviceToHost);
+
+    // 8. 결과 검증
+    bool correct = true;
+    for (int i = 0; i < n; i++) {
+        if (h_c[i] != h_a[i] + h_b[i]) {
+            correct = false;
+            break;
+        }
+    }
+    printf("Result: %s\\n", correct ? "PASS" : "FAIL");
+
+    // 9. 메모리 해제
+    cudaFree(d_a);
+    cudaFree(d_b);
+    cudaFree(d_c);
+    free(h_a);
+    free(h_b);
+    free(h_c);
+
+    return 0;
+}
+\`\`\`
+
+### 컴파일 및 실행
+\`\`\`bash
+nvcc vector_add.cu -o vector_add
+./vector_add
+
+# 출력:
+# Grid: 40 blocks, Block: 256 threads
+# Result: PASS
+\`\`\`
+
+## 커널 실행 구성
+
+### 블록 크기 선택 가이드
+| 블록 크기 | 장점 | 단점 |
+|----------|------|------|
+| 32 | Warp 크기 정확히 일치 | 블록 수 증가 |
+| 64 | 작은 데이터에 적합 | Occupancy 낮을 수 있음 |
+| 128 | 균형적 선택 | - |
+| **256** | 대부분의 경우 최적 | - |
+| 512 | Occupancy 향상 가능 | 레지스터 압박 |
+| 1024 | 최대 크기 | 제약 조건 많음 |
+
+### 올림 나눗셈 공식
+\`\`\`cuda
+// gridSize 계산 (올림 나눗셈)
+int gridSize = (n + blockSize - 1) / blockSize;
+
+// 동일한 표현
+int gridSize = ceil((float)n / blockSize);
+int gridSize = (n - 1) / blockSize + 1;
+\`\`\`
+
+## 에러 처리
+
+### 에러 체크 매크로
+\`\`\`cuda
+#define CHECK_CUDA(call) \\
+    do { \\
+        cudaError_t err = call; \\
+        if (err != cudaSuccess) { \\
+            printf("CUDA Error: %s at line %d\\n", \\
+                   cudaGetErrorString(err), __LINE__); \\
+            exit(1); \\
+        } \\
+    } while(0)
+
+// 사용 예시
+CHECK_CUDA(cudaMalloc(&d_a, size));
+CHECK_CUDA(cudaMemcpy(d_a, h_a, size, cudaMemcpyHostToDevice));
+\`\`\`
+
+### 커널 에러 체크
+\`\`\`cuda
+// 커널 실행 후 에러 체크
+vectorAdd<<<gridSize, blockSize>>>(d_a, d_b, d_c, n);
+
+// 방법 1: getLastError
+cudaError_t err = cudaGetLastError();
+if (err != cudaSuccess) {
+    printf("Kernel error: %s\\n", cudaGetErrorString(err));
+}
+
+// 방법 2: 동기화 후 체크
+cudaDeviceSynchronize();
+err = cudaGetLastError();
+\`\`\`
+
+## 정리
+
+| 함수 | 역할 | 예시 |
+|------|------|------|
+| cudaMalloc | GPU 메모리 할당 | cudaMalloc(&d_ptr, size) |
+| cudaMemcpy | 메모리 복사 | cudaMemcpy(dst, src, size, kind) |
+| cudaFree | GPU 메모리 해제 | cudaFree(d_ptr) |
+| kernel<<<G,B>>> | 커널 실행 | add<<<grid, block>>>(args) |
+
+### CUDA 프로그램 체크리스트
+\`\`\`
+□ cudaMalloc 성공 여부 확인
+□ cudaMemcpy 방향 올바르게 지정
+□ 커널에서 경계 검사 (idx < n)
+□ 커널 실행 후 에러 체크
+□ 모든 cudaMalloc에 대응하는 cudaFree
+□ Host 메모리도 free
+\`\`\`
+
+**핵심 포인트**: cudaMalloc → cudaMemcpy → kernel<<<>>> → cudaMemcpy → cudaFree 패턴을 숙지하세요!
 `
       },
       {
@@ -6796,45 +11719,1028 @@ patience = 10
 # 메모리 관리
 
 ## 학습 목표
-- CUDA 메모리 계층을 이해한다
-- 메모리 최적화 기법을 배운다
+- CUDA 메모리 계층 구조를 이해한다
+- Global, Shared, Constant, Local 메모리의 특징을 배운다
+- 각 메모리 유형의 적절한 사용 시나리오를 파악한다
+- Shared Memory를 활용한 최적화 기법을 익힌다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## CUDA 메모리 계층
+
+GPU는 **다양한 종류의 메모리**를 가지며, 각각 속도와 용도가 다릅니다.
+
+### 메모리 계층 개요
+\`\`\`
+┌─────────────────────────────────────────────────────┐
+│                    GPU 칩                           │
+│  ┌───────────────────────────────────────────────┐  │
+│  │              SM (Streaming Multiprocessor)     │  │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────────────┐│  │
+│  │  │Register │  │Register │  │  Shared Memory  ││  │
+│  │  │ (빠름)   │  │ (빠름)   │  │   (48-164KB)   ││  │
+│  │  └────┬────┘  └────┬────┘  └───────┬─────────┘│  │
+│  │       │            │               │          │  │
+│  │  ┌────┴────────────┴───────────────┴────────┐ │  │
+│  │  │           L1 Cache / Shared Memory       │ │  │
+│  │  └──────────────────┬───────────────────────┘ │  │
+│  └─────────────────────┼─────────────────────────┘  │
+│                        │                            │
+│  ┌─────────────────────┴──────────────────────────┐ │
+│  │                L2 Cache (모든 SM 공유)          │ │
+│  └─────────────────────┬──────────────────────────┘ │
+└────────────────────────┼────────────────────────────┘
+                         │
+┌────────────────────────┴────────────────────────────┐
+│            Global Memory (VRAM: 8GB ~ 80GB)         │
+│                    (가장 느림)                       │
+└─────────────────────────────────────────────────────┘
+\`\`\`
+
+### 메모리 비교
+| 메모리 유형 | 위치 | 속도 | 크기 | 접근 범위 |
+|------------|------|------|------|----------|
+| **Register** | On-chip | 가장 빠름 | ~256KB/SM | 단일 스레드 |
+| **Shared** | On-chip | 매우 빠름 | 48-164KB/SM | 블록 내 공유 |
+| **L1 Cache** | On-chip | 빠름 | 48-192KB/SM | 자동 캐시 |
+| **L2 Cache** | On-chip | 빠름 | 6MB+ | 전체 GPU |
+| **Global** | Off-chip | 느림 | 8GB-80GB | 전체 GPU |
+| **Constant** | Off-chip (캐시) | 빠름 | 64KB | 읽기 전용 |
+
+## Global Memory
+
+**Global Memory**는 GPU의 **메인 메모리**입니다.
+
+### 특징
+\`\`\`
+장점:
+- 가장 큰 용량 (8GB ~ 80GB)
+- 모든 스레드에서 접근 가능
+- Host와 데이터 교환 가능
+
+단점:
+- 가장 느린 메모리 (400-600 cycles)
+- Off-chip에 위치
+\`\`\`
+
+### 할당 및 사용
+\`\`\`cuda
+// Global Memory 할당
+float* d_data;
+cudaMalloc(&d_data, size);
+
+// Host에서 Global Memory로 복사
+cudaMemcpy(d_data, h_data, size, cudaMemcpyHostToDevice);
+
+// 커널에서 Global Memory 접근
+__global__ void kernel(float* data) {
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    float value = data[idx];  // Global Memory 읽기
+    data[idx] = value * 2;    // Global Memory 쓰기
+}
+\`\`\`
+
+### Coalesced Access (합쳤된 접근)
+\`\`\`
+좋은 접근 패턴 (Coalesced):
+Thread 0 → data[0]
+Thread 1 → data[1]
+Thread 2 → data[2]
+→ 한 번의 메모리 트랜잭션으로 처리
+
+나쁜 접근 패턴 (Strided):
+Thread 0 → data[0]
+Thread 1 → data[32]
+Thread 2 → data[64]
+→ 여러 번의 메모리 트랜잭션 필요 (32배 느려질 수 있음)
+\`\`\`
+
+## Shared Memory
+
+**Shared Memory**는 블록 내 스레드들이 **공유하는 고속 메모리**입니다.
+
+### 특징
+| 항목 | 설명 |
+|------|------|
+| 위치 | On-chip (SM 내부) |
+| 속도 | Global의 ~100배 빠름 |
+| 크기 | SM당 48KB ~ 164KB |
+| 수명 | 커널 실행 동안만 유지 |
+| 범위 | 같은 블록 내 스레드만 공유 |
+
+### 선언 방법
+\`\`\`cuda
+// 정적 할당 (컴파일 시 크기 결정)
+__shared__ float sharedData[256];
+
+// 동적 할당 (런타임에 크기 결정)
+extern __shared__ float dynamicShared[];
+
+// 커널 호출 시 동적 크기 지정
+kernel<<<grid, block, sharedMemSize>>>(args);
+\`\`\`
+
+### 활용 예시: 타일 행렬 곱셈
+\`\`\`cuda
+__global__ void matMulTiled(float* A, float* B, float* C, int N) {
+    // Shared Memory에 타일 로드
+    __shared__ float tileA[TILE_SIZE][TILE_SIZE];
+    __shared__ float tileB[TILE_SIZE][TILE_SIZE];
+
+    int row = blockIdx.y * TILE_SIZE + threadIdx.y;
+    int col = blockIdx.x * TILE_SIZE + threadIdx.x;
+    float sum = 0.0f;
+
+    for (int t = 0; t < N / TILE_SIZE; t++) {
+        // Global → Shared로 데이터 로드
+        tileA[threadIdx.y][threadIdx.x] = A[row * N + t * TILE_SIZE + threadIdx.x];
+        tileB[threadIdx.y][threadIdx.x] = B[(t * TILE_SIZE + threadIdx.y) * N + col];
+
+        __syncthreads();  // 모든 스레드가 로드 완료할 때까지 대기
+
+        // Shared Memory에서 연산 (빠름!)
+        for (int k = 0; k < TILE_SIZE; k++) {
+            sum += tileA[threadIdx.y][k] * tileB[k][threadIdx.x];
+        }
+
+        __syncthreads();
+    }
+
+    C[row * N + col] = sum;
+}
+\`\`\`
+
+### __syncthreads()
+\`\`\`cuda
+// 블록 내 모든 스레드 동기화
+__syncthreads();
+
+// 언제 필요한가?
+// 1. Shared Memory에 쓴 후, 다른 스레드가 읽기 전
+// 2. 모든 스레드가 특정 작업을 완료해야 할 때
+
+// 주의: 조건문 안에서 __syncthreads() 사용 시
+// 모든 스레드가 같은 조건을 만족해야 함 (deadlock 방지)
+\`\`\`
+
+## Constant Memory
+
+**Constant Memory**는 **읽기 전용 캐시 메모리**입니다.
+
+### 특징
+\`\`\`
+- 크기: 64KB 고정
+- 모든 스레드가 같은 값을 읽을 때 최적
+- 캐시되어 빠른 접근 가능
+- Host에서 설정, Device에서 읽기만
+\`\`\`
+
+### 선언 및 사용
+\`\`\`cuda
+// 전역 범위에 선언
+__constant__ float constData[256];
+
+// Host에서 값 설정
+float hostData[256];
+cudaMemcpyToSymbol(constData, hostData, sizeof(hostData));
+
+// 커널에서 읽기
+__global__ void kernel() {
+    float value = constData[threadIdx.x];  // 캐시된 읽기
+}
+\`\`\`
+
+### 적합한 용도
+\`\`\`
+✓ 컨볼루션 필터 가중치
+✓ 룩업 테이블
+✓ 물리 상수
+✓ 변환 행렬
+
+✗ 스레드마다 다른 데이터 접근
+✗ 동적으로 변하는 데이터
+\`\`\`
+
+## Local Memory (Register)
+
+**Local Memory**와 **Register**는 각 스레드의 **개인 저장소**입니다.
+
+### Register
+\`\`\`cuda
+__global__ void kernel() {
+    // 레지스터에 저장 (가장 빠름)
+    float localVar = 0.0f;    // 레지스터
+    int index = threadIdx.x;  // 레지스터
+
+    // 연산도 레지스터에서 수행
+    localVar = localVar + 1.0f;
+}
+\`\`\`
+
+### Local Memory (Register Spill)
+\`\`\`cuda
+__global__ void kernel() {
+    // 레지스터가 부족하면 Local Memory로 스필
+    float largeArray[100];  // 큰 배열 → Local Memory
+
+    // Local Memory는 실제로 Global Memory에 위치
+    // → 느리므로 피해야 함
+}
+\`\`\`
+
+### 레지스터 사용량 확인
+\`\`\`bash
+# 컴파일 시 레지스터 사용량 출력
+nvcc --ptxas-options=-v kernel.cu
+
+# 출력 예시:
+# ptxas info: Used 32 registers, 48 bytes smem, 0 bytes cmem
+\`\`\`
+
+## 메모리 최적화 전략
+
+### 전략 1: Global Memory 접근 최소화
+\`\`\`cuda
+// 나쁜 예: Global Memory 반복 접근
+__global__ void bad(float* data) {
+    for (int i = 0; i < 100; i++) {
+        data[threadIdx.x] += 1.0f;  // 매번 Global 접근
+    }
+}
+
+// 좋은 예: 레지스터 활용
+__global__ void good(float* data) {
+    float temp = data[threadIdx.x];  // 한 번만 읽기
+    for (int i = 0; i < 100; i++) {
+        temp += 1.0f;  // 레지스터에서 연산
+    }
+    data[threadIdx.x] = temp;  // 한 번만 쓰기
+}
+\`\`\`
+
+### 전략 2: Shared Memory로 데이터 재사용
+\`\`\`cuda
+// 여러 스레드가 같은 데이터를 사용할 때
+__shared__ float sharedData[BLOCK_SIZE];
+
+// 1. 협력하여 데이터 로드
+sharedData[threadIdx.x] = globalData[blockIdx.x * BLOCK_SIZE + threadIdx.x];
+__syncthreads();
+
+// 2. Shared Memory에서 반복 접근
+for (int i = 0; i < BLOCK_SIZE; i++) {
+    result += sharedData[i];  // 빠른 접근
+}
+\`\`\`
+
+### 전략 3: Coalesced Access 보장
+\`\`\`cuda
+// 연속 스레드 → 연속 메모리
+int idx = threadIdx.x + blockIdx.x * blockDim.x;
+float value = data[idx];  // Coalesced!
+
+// 구조체 배열 (SoA)이 배열의 구조체 (AoS)보다 효율적
+// AoS: struct Particle { float x, y, z; } particles[N];
+// SoA: float x[N], y[N], z[N];  // 권장
+\`\`\`
+
+## 정리
+
+| 메모리 | 속도 | 크기 | 범위 | 용도 |
+|--------|------|------|------|------|
+| Register | 최고속 | 작음 | 스레드 | 지역 변수 |
+| Shared | 고속 | 48-164KB | 블록 | 데이터 재사용 |
+| Constant | 고속 (캐시) | 64KB | 전체 | 상수, 룩업 |
+| Global | 저속 | 수십GB | 전체 | 메인 데이터 |
+
+### 최적화 원칙
+\`\`\`
+1. Global Memory 접근을 최소화
+2. 데이터 재사용이 있으면 Shared Memory 활용
+3. Coalesced Access 패턴 유지
+4. 레지스터 스필을 피함 (배열 크기 제한)
+5. __syncthreads()로 동기화 보장
+\`\`\`
+
+**핵심 포인트**: 메모리 계층을 이해하고 적절한 메모리를 선택하는 것이 CUDA 성능 최적화의 핵심입니다.
 `
       },
       {
         id: "8-6",
-        title: "병렬 패턴",
-        description: "Reduction, Scan, Histogram",
+        title: "스트림과 비동기 실행",
+        description: "CUDA Stream, 파이프라인, 동시성",
         duration: "50분",
         videoUrl: "",
         content: `
-# 병렬 패턴
+# 스트림과 비동기 실행
 
 ## 학습 목표
-- 대표적인 병렬 알고리즘 패턴을 배운다
-- Reduction과 Scan을 구현한다
+- CUDA Stream의 개념을 이해한다
+- 비동기 데이터 전송과 커널 실행을 배운다
+- 여러 스트림을 사용한 파이프라인을 구현한다
+- 동기화 기법을 익힌다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## CUDA의 동기 vs 비동기 실행
+
+### 기본 동작 (동기 실행)
+\`\`\`cuda
+// 기본적으로 순차적 실행
+cudaMemcpy(d_a, h_a, size, cudaMemcpyHostToDevice);  // 완료까지 대기
+kernel<<<grid, block>>>(d_a);                         // 실행 시작
+cudaMemcpy(h_a, d_a, size, cudaMemcpyDeviceToHost);  // 완료까지 대기
+\`\`\`
+
+### 시간 흐름 (동기)
+\`\`\`
+시간 →
+┌─────────┐
+│ H→D 복사 │ CPU 대기 중...
+└────┬────┘
+     ↓
+     ┌────────────┐
+     │ 커널 실행   │ CPU 대기 중...
+     └─────┬──────┘
+           ↓
+           ┌─────────┐
+           │ D→H 복사 │ CPU 대기 중...
+           └─────────┘
+\`\`\`
+
+### 비동기 실행의 이점
+\`\`\`
+비동기 실행:
+- CPU는 GPU 작업을 기다리지 않고 다른 작업 수행
+- 여러 GPU 작업을 동시에 실행 (overlap)
+- 전체 실행 시간 단축
+\`\`\`
+
+## CUDA Stream
+
+**Stream**은 **순서대로 실행되는 작업 큐**입니다.
+
+### Stream의 특징
+| 특징 | 설명 |
+|------|------|
+| 정의 | GPU 작업들의 순서화된 큐 |
+| 내부 동작 | 같은 스트림 내 작업은 순차 실행 |
+| 스트림 간 | 다른 스트림의 작업은 동시 실행 가능 |
+| Default Stream | Stream 지정 안하면 기본 스트림 사용 |
+
+### Default Stream (Stream 0)
+\`\`\`cuda
+// 스트림을 지정하지 않으면 기본 스트림 사용
+kernel<<<grid, block>>>();  // default stream
+cudaMemcpy(...);            // default stream, 동기적
+
+// 모든 작업이 순차적으로 실행됨
+\`\`\`
+
+## Stream 생성 및 사용
+
+### Stream 생성
+\`\`\`cuda
+cudaStream_t stream;
+cudaStreamCreate(&stream);  // 스트림 생성
+
+// 작업 수행...
+
+cudaStreamDestroy(stream);  // 스트림 해제
+\`\`\`
+
+### 커널 실행에 스트림 지정
+\`\`\`cuda
+// <<<그리드, 블록, 공유메모리, 스트림>>>
+kernel<<<grid, block, 0, stream>>>(args);
+//                    ↑     ↑
+//            sharedMem   stream
+\`\`\`
+
+### 비동기 메모리 복사
+\`\`\`cuda
+// cudaMemcpyAsync: 비동기 메모리 복사
+cudaMemcpyAsync(d_a, h_a, size, cudaMemcpyHostToDevice, stream);
+
+// 주의: Host 메모리는 반드시 pinned memory여야 함!
+// 일반 malloc()은 비동기 복사 불가
+\`\`\`
+
+## Pinned Memory (Page-locked Memory)
+
+### 왜 필요한가?
+\`\`\`
+일반 메모리 (pageable):
+- OS가 페이지 스왑 가능
+- GPU가 직접 접근 불가
+- 내부 버퍼 거쳐 복사 → 비동기 불가
+
+Pinned 메모리 (page-locked):
+- OS 스왑 불가, 고정 위치
+- GPU가 DMA로 직접 접근
+- 비동기 복사 가능!
+\`\`\`
+
+### Pinned Memory 할당
+\`\`\`cuda
+float* h_pinnedData;
+
+// Pinned memory 할당
+cudaMallocHost(&h_pinnedData, size);
+
+// 또는
+cudaHostAlloc(&h_pinnedData, size, cudaHostAllocDefault);
+
+// 사용 후 해제
+cudaFreeHost(h_pinnedData);
+\`\`\`
+
+### 주의사항
+\`\`\`
+✓ 비동기 전송에 필수
+✓ 일반 memcpy보다 빠름
+
+✗ 과도한 사용은 시스템 메모리 부족 야기
+✗ 필요한 만큼만 할당
+\`\`\`
+
+## 다중 스트림 파이프라인
+
+### 단일 스트림 (비효율적)
+\`\`\`
+Stream 0:
+[H→D Copy]───[Kernel]───[D→H Copy]
+             └── GPU 유휴 ──┘
+\`\`\`
+
+### 다중 스트림 (효율적)
+\`\`\`
+Stream 0: [H→D]─[Kernel]─[D→H]
+Stream 1:      [H→D]─[Kernel]─[D→H]
+Stream 2:           [H→D]─[Kernel]─[D→H]
+
+→ 복사와 연산이 동시에 실행됨!
+\`\`\`
+
+### 다중 스트림 구현
+\`\`\`cuda
+const int nStreams = 4;
+cudaStream_t streams[nStreams];
+
+// 스트림 생성
+for (int i = 0; i < nStreams; i++) {
+    cudaStreamCreate(&streams[i]);
+}
+
+// 데이터를 청크로 분할
+int chunkSize = n / nStreams;
+size_t chunkBytes = chunkSize * sizeof(float);
+
+// 각 스트림에서 비동기 작업 실행
+for (int i = 0; i < nStreams; i++) {
+    int offset = i * chunkSize;
+
+    // 비동기 H→D 복사
+    cudaMemcpyAsync(d_a + offset, h_a + offset, chunkBytes,
+                    cudaMemcpyHostToDevice, streams[i]);
+
+    // 커널 실행
+    kernel<<<gridSize, blockSize, 0, streams[i]>>>(d_a + offset, chunkSize);
+
+    // 비동기 D→H 복사
+    cudaMemcpyAsync(h_result + offset, d_result + offset, chunkBytes,
+                    cudaMemcpyDeviceToHost, streams[i]);
+}
+
+// 모든 스트림 완료 대기
+cudaDeviceSynchronize();
+
+// 스트림 해제
+for (int i = 0; i < nStreams; i++) {
+    cudaStreamDestroy(streams[i]);
+}
+\`\`\`
+
+## 동기화 기법
+
+### 전체 Device 동기화
+\`\`\`cuda
+// 모든 스트림의 모든 작업 완료 대기
+cudaDeviceSynchronize();
+\`\`\`
+
+### 특정 스트림 동기화
+\`\`\`cuda
+// 해당 스트림의 작업 완료 대기
+cudaStreamSynchronize(stream);
+\`\`\`
+
+### 스트림 완료 확인 (비차단)
+\`\`\`cuda
+// 완료 여부만 확인 (대기하지 않음)
+cudaError_t status = cudaStreamQuery(stream);
+if (status == cudaSuccess) {
+    // 스트림 작업 완료
+} else if (status == cudaErrorNotReady) {
+    // 아직 실행 중
+}
+\`\`\`
+
+### 이벤트 기반 동기화
+\`\`\`cuda
+cudaEvent_t event;
+cudaEventCreate(&event);
+
+// 스트림에 이벤트 기록
+cudaEventRecord(event, stream1);
+
+// 다른 스트림이 이벤트 완료 대기
+cudaStreamWaitEvent(stream2, event, 0);
+// stream2는 stream1의 이벤트가 완료될 때까지 대기
+
+cudaEventDestroy(event);
+\`\`\`
+
+## CUDA 이벤트로 시간 측정
+
+### 이벤트 기반 타이밍
+\`\`\`cuda
+cudaEvent_t start, stop;
+cudaEventCreate(&start);
+cudaEventCreate(&stop);
+
+// 시작 시간 기록
+cudaEventRecord(start);
+
+// 측정할 작업
+kernel<<<grid, block>>>(args);
+
+// 종료 시간 기록
+cudaEventRecord(stop);
+
+// 완료 대기
+cudaEventSynchronize(stop);
+
+// 경과 시간 계산
+float milliseconds = 0;
+cudaEventElapsedTime(&milliseconds, start, stop);
+printf("Kernel time: %.3f ms\\n", milliseconds);
+
+cudaEventDestroy(start);
+cudaEventDestroy(stop);
+\`\`\`
+
+### CPU 타이밍 vs GPU 이벤트 타이밍
+\`\`\`
+CPU 타이밍 (부정확):
+- GPU 작업이 비동기이므로 실제 실행 시간과 다름
+- CPU는 커널 시작 즉시 다음 코드로 진행
+
+GPU 이벤트 타이밍 (정확):
+- GPU 타임스탬프 사용
+- 실제 GPU 실행 시간 측정
+- 비동기 작업에도 정확
+\`\`\`
+
+## 실제 파이프라인 예제
+
+### 완전한 파이프라인 코드
+\`\`\`cuda
+#include <cuda_runtime.h>
+#include <stdio.h>
+
+__global__ void processKernel(float* data, int n) {
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    if (idx < n) {
+        data[idx] = data[idx] * 2.0f;  // 간단한 처리
+    }
+}
+
+int main() {
+    const int n = 1 << 20;  // 1M elements
+    const int nStreams = 4;
+    const int chunkSize = n / nStreams;
+    const size_t totalBytes = n * sizeof(float);
+    const size_t chunkBytes = chunkSize * sizeof(float);
+
+    // Pinned host memory
+    float *h_data, *h_result;
+    cudaMallocHost(&h_data, totalBytes);
+    cudaMallocHost(&h_result, totalBytes);
+
+    // Device memory
+    float *d_data;
+    cudaMalloc(&d_data, totalBytes);
+
+    // Initialize data
+    for (int i = 0; i < n; i++) h_data[i] = (float)i;
+
+    // Create streams
+    cudaStream_t streams[nStreams];
+    for (int i = 0; i < nStreams; i++) {
+        cudaStreamCreate(&streams[i]);
+    }
+
+    // Timing
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    cudaEventRecord(start);
+
+    // Pipeline execution
+    for (int i = 0; i < nStreams; i++) {
+        int offset = i * chunkSize;
+        cudaMemcpyAsync(d_data + offset, h_data + offset,
+                        chunkBytes, cudaMemcpyHostToDevice, streams[i]);
+
+        processKernel<<<chunkSize/256, 256, 0, streams[i]>>>
+                      (d_data + offset, chunkSize);
+
+        cudaMemcpyAsync(h_result + offset, d_data + offset,
+                        chunkBytes, cudaMemcpyDeviceToHost, streams[i]);
+    }
+
+    cudaEventRecord(stop);
+    cudaEventSynchronize(stop);
+
+    float ms;
+    cudaEventElapsedTime(&ms, start, stop);
+    printf("Pipeline time: %.3f ms\\n", ms);
+
+    // Cleanup
+    for (int i = 0; i < nStreams; i++) {
+        cudaStreamDestroy(streams[i]);
+    }
+    cudaFreeHost(h_data);
+    cudaFreeHost(h_result);
+    cudaFree(d_data);
+    cudaEventDestroy(start);
+    cudaEventDestroy(stop);
+
+    return 0;
+}
+\`\`\`
+
+## 정리
+
+| 개념 | 설명 |
+|------|------|
+| Stream | 순서화된 GPU 작업 큐 |
+| 비동기 실행 | CPU가 GPU 완료를 기다리지 않음 |
+| Pinned Memory | 비동기 복사에 필수, cudaMallocHost |
+| cudaMemcpyAsync | 비동기 메모리 복사 |
+| cudaStreamCreate | 스트림 생성 |
+| cudaStreamSynchronize | 특정 스트림 동기화 |
+| cudaDeviceSynchronize | 전체 동기화 |
+| cudaEvent | 시간 측정, 스트림 간 동기화 |
+
+### 성능 향상 전략
+\`\`\`
+1. 데이터를 청크로 분할
+2. 여러 스트림 사용
+3. 복사와 연산 오버랩
+4. Pinned memory 활용
+5. 적절한 동기화 지점 설정
+\`\`\`
+
+**핵심 포인트**: 스트림을 활용한 파이프라인은 GPU 활용률을 극대화하고 전체 처리 시간을 단축합니다.
 `
       },
       {
         id: "8-7",
-        title: "PyTorch + CUDA",
-        description: ".to(device), 텐서 연산 가속",
+        title: "CUDA 성능 최적화",
+        description: "Occupancy, Coalescing, Branch Divergence",
         duration: "40분",
         videoUrl: "",
         content: `
-# PyTorch + CUDA
+# CUDA 성능 최적화
 
 ## 학습 목표
-- PyTorch에서 GPU를 활용한다
-- 텐서 연산을 가속한다
+- Occupancy 개념을 이해하고 최적화한다
+- Memory Coalescing의 중요성을 배운다
+- Branch Divergence를 이해하고 최소화한다
+- Nsight 도구를 활용한 프로파일링 기법을 익힌다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## Occupancy (점유율)
+
+**Occupancy**는 SM의 자원이 얼마나 효율적으로 사용되는지를 나타냅니다.
+
+### Occupancy 정의
+\`\`\`
+Occupancy = 활성 Warp 수 / 최대 가능 Warp 수
+
+예: SM의 최대 Warp = 64, 실제 활성 = 32
+Occupancy = 32/64 = 50%
+\`\`\`
+
+### Occupancy에 영향을 주는 요소
+| 요소 | 영향 | 최적화 방향 |
+|------|------|------------|
+| 레지스터 사용량 | 스레드당 레지스터↑ → Occupancy↓ | 레지스터 사용 줄이기 |
+| Shared Memory | 블록당 공유메모리↑ → Occupancy↓ | 필요한 만큼만 사용 |
+| 블록 크기 | 너무 작으면 비효율 | 256 권장, 최소 128 |
+
+### Occupancy 계산 예시
+\`\`\`
+SM 자원 (예: Ampere 아키텍처):
+- 최대 레지스터: 65,536개/SM
+- 최대 Shared Memory: 164KB/SM
+- 최대 스레드: 2,048개/SM (64 Warps)
+- 최대 블록: 32개/SM
+
+커널 사용량:
+- 레지스터: 스레드당 64개
+- Shared Memory: 블록당 48KB
+- 블록 크기: 256 스레드
+
+계산:
+- 레지스터 제한: 65536 / 64 = 1024 스레드 가능
+- Shared 제한: 164KB / 48KB = 3.4 → 3블록, 768 스레드
+- 블록 크기 제한: 최대 32블록, 각 256 = 8192 (최대 초과)
+
+실제 Occupancy = min(1024, 768) / 2048 = 37.5%
+\`\`\`
+
+### Occupancy 향상 기법
+\`\`\`cuda
+// 방법 1: 레지스터 사용량 제한
+__global__ void __launch_bounds__(256, 4) kernel() {
+    // 256 스레드/블록, 최소 4블록/SM 보장
+    // 컴파일러가 레지스터 사용 최적화
+}
+
+// 방법 2: 지역 변수 줄이기
+__global__ void bad() {
+    float data[100];  // 레지스터 스필 → 느림
+}
+
+__global__ void good() {
+    float data[8];    // 레지스터에 유지 가능
+}
+\`\`\`
+
+### 높은 Occupancy가 항상 좋은가?
+\`\`\`
+꼭 그렇지 않음!
+- Occupancy 50%도 충분히 빠를 수 있음
+- 메모리 대역폭에 의해 성능이 제한되는 경우
+- ILP(Instruction Level Parallelism)이 높은 경우
+
+최적화 순서:
+1. 먼저 알고리즘 최적화
+2. 메모리 접근 패턴 최적화
+3. 그 다음 Occupancy 고려
+\`\`\`
+
+## Memory Coalescing (메모리 합치기)
+
+**Coalescing**은 여러 스레드의 메모리 접근을 **하나의 트랜잭션으로 합치는 것**입니다.
+
+### Coalesced vs Non-coalesced
+\`\`\`
+Coalesced (좋음):
+Thread 0 → data[0]   ┐
+Thread 1 → data[1]   │ 하나의 128B 트랜잭션
+Thread 2 → data[2]   │
+...                  │
+Thread 31→ data[31]  ┘
+
+Non-coalesced (나쁨):
+Thread 0 → data[0]     → 별도 트랜잭션
+Thread 1 → data[100]   → 별도 트랜잭션
+Thread 2 → data[200]   → 별도 트랜잭션
+→ 32개의 별도 트랜잭션 (32배 느림!)
+\`\`\`
+
+### Coalesced Access 패턴
+\`\`\`cuda
+// 좋은 패턴: 연속 접근
+__global__ void coalesced(float* data) {
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    float val = data[idx];  // Coalesced!
+}
+
+// 나쁜 패턴: Stride 접근
+__global__ void strided(float* data, int stride) {
+    int idx = threadIdx.x * stride;  // stride > 1이면 비효율
+    float val = data[idx];  // Non-coalesced!
+}
+\`\`\`
+
+### 구조체 배열 vs 배열의 구조체
+\`\`\`cuda
+// AoS (Array of Structures) - 비효율
+struct Particle {
+    float x, y, z;
+    float vx, vy, vz;
+};
+Particle particles[N];
+// Thread i가 particles[i].x 접근 → Non-coalesced
+
+// SoA (Structure of Arrays) - 효율적
+struct ParticleData {
+    float x[N], y[N], z[N];
+    float vx[N], vy[N], vz[N];
+};
+// Thread i가 x[i] 접근 → Coalesced!
+\`\`\`
+
+### 2D 배열 접근
+\`\`\`cuda
+// 행 우선 순서 (C/C++ 기본) - 행 방향 접근이 Coalesced
+float data[HEIGHT][WIDTH];
+
+// 좋은 패턴: 같은 행의 연속 열 접근
+__global__ void good(float* data, int width) {
+    int row = blockIdx.y;
+    int col = threadIdx.x + blockIdx.x * blockDim.x;
+    float val = data[row * width + col];  // Coalesced
+}
+
+// 나쁜 패턴: 같은 열의 연속 행 접근
+__global__ void bad(float* data, int width) {
+    int col = blockIdx.x;
+    int row = threadIdx.x + blockIdx.y * blockDim.y;
+    float val = data[row * width + col];  // Non-coalesced
+}
+\`\`\`
+
+## Branch Divergence (분기 발산)
+
+**Branch Divergence**는 Warp 내 스레드들이 **서로 다른 분기를 실행**할 때 발생합니다.
+
+### SIMT 실행 모델
+\`\`\`
+Warp (32 threads) 특성:
+- 모든 스레드가 같은 명령어를 실행
+- 분기가 있으면 양쪽을 순차 실행
+- 비활성 스레드는 대기
+
+if (condition) {
+    A;  // 일부 스레드만 실행
+} else {
+    B;  // 나머지 스레드만 실행
+}
+// 실제로는 A와 B 모두 실행 (시간 = A + B)
+\`\`\`
+
+### Branch Divergence 예시
+\`\`\`cuda
+// Divergent (나쁨)
+__global__ void divergent(float* data) {
+    int idx = threadIdx.x;
+    if (idx % 2 == 0) {
+        data[idx] = expf(data[idx]);  // 짝수 스레드
+    } else {
+        data[idx] = logf(data[idx]);  // 홀수 스레드
+    }
+}
+// Warp 내에서 절반씩 다른 분기 → 2배 느림
+
+// Non-divergent (좋음)
+__global__ void nonDivergent(float* data) {
+    int idx = threadIdx.x;
+    int warpId = idx / 32;
+    if (warpId % 2 == 0) {
+        // Warp 0, 2, 4, ... 전체가 같은 분기
+        data[idx] = expf(data[idx]);
+    } else {
+        // Warp 1, 3, 5, ... 전체가 같은 분기
+        data[idx] = logf(data[idx]);
+    }
+}
+// 각 Warp가 같은 분기 → Divergence 없음
+\`\`\`
+
+### Divergence 최소화 기법
+\`\`\`cuda
+// 1. Warp 단위로 조건 맞추기
+if (threadIdx.x / 32 == targetWarp) { ... }
+
+// 2. 데이터 정렬로 분기 제거
+// 조건에 따라 데이터를 미리 정렬하여
+// 같은 조건의 데이터가 같은 Warp에 오도록
+
+// 3. 조건 연산 대신 산술 연산
+// 나쁜 예
+if (x > 0) y = a; else y = b;
+
+// 좋은 예 (Divergence 없음)
+float mask = (float)(x > 0);
+y = mask * a + (1 - mask) * b;
+\`\`\`
+
+## Shared Memory Bank Conflict
+
+### Bank 구조
+\`\`\`
+Shared Memory는 32개의 Bank로 구성
+- 각 Bank는 4바이트 단위
+- 연속 4바이트가 연속 Bank에 매핑
+
+Bank 0  Bank 1  Bank 2  ...  Bank 31
+[0-3]   [4-7]   [8-11]       [124-127]
+[128-131] ...
+\`\`\`
+
+### Bank Conflict
+\`\`\`cuda
+__shared__ float data[32];
+
+// Conflict 없음: 각 스레드가 다른 Bank
+float val = data[threadIdx.x];
+
+// 2-way Conflict: 2개 스레드가 같은 Bank
+float val = data[threadIdx.x * 2];  // 0,2,4... → Bank 0,2,4...
+                                     // 실제론 0,8,16.. → 같은 Bank!
+
+// 32-way Conflict (최악): 모든 스레드가 같은 Bank
+float val = data[0];  // 모두 Bank 0
+\`\`\`
+
+### Bank Conflict 해결
+\`\`\`cuda
+// 패딩으로 해결
+__shared__ float data[32][33];  // 32 + 1 패딩
+// 열 접근 시 각 행이 다른 Bank로 오프셋됨
+\`\`\`
+
+## NVIDIA 프로파일링 도구
+
+### Nsight Systems
+\`\`\`bash
+# 시스템 전체 프로파일링
+nsys profile ./my_cuda_app
+
+# 결과를 GUI로 확인
+nsys-ui report.qdrep
+\`\`\`
+- CPU/GPU 활동 타임라인 시각화
+- 커널 실행 시간, 메모리 전송 분석
+- 병목 지점 식별
+
+### Nsight Compute
+\`\`\`bash
+# 커널 상세 분석
+ncu --set full ./my_cuda_app
+
+# 특정 커널만 분석
+ncu --kernel-name myKernel ./my_cuda_app
+\`\`\`
+- Occupancy 분석
+- 메모리 처리량 측정
+- Warp 효율성 분석
+- 하드웨어 카운터 수집
+
+### 주요 분석 메트릭
+| 메트릭 | 의미 | 목표 |
+|--------|------|------|
+| Occupancy | SM 자원 활용률 | > 50% |
+| Memory Throughput | 메모리 대역폭 활용 | 이론적 최대에 근접 |
+| Compute Throughput | 연산 자원 활용 | 메모리/연산 균형 |
+| Warp Efficiency | 활성 스레드 비율 | 100%에 가깝게 |
+
+## 최적화 체크리스트
+
+### 메모리 최적화
+\`\`\`
+□ Global Memory 접근이 Coalesced인가?
+□ AoS를 SoA로 변환했는가?
+□ Shared Memory를 활용해 데이터 재사용?
+□ Bank Conflict가 없는가?
+□ 불필요한 Host-Device 전송이 없는가?
+\`\`\`
+
+### 실행 최적화
+\`\`\`
+□ 적절한 블록 크기를 사용하는가? (256 권장)
+□ Occupancy가 충분한가?
+□ Branch Divergence가 최소화되었는가?
+□ 스트림을 활용해 연산/전송 오버랩?
+\`\`\`
+
+### 알고리즘 최적화
+\`\`\`
+□ 병렬화에 적합한 알고리즘인가?
+□ 불필요한 동기화가 없는가?
+□ 워크로드가 균등하게 분배되는가?
+\`\`\`
+
+## 정리
+
+| 최적화 항목 | 문제 | 해결책 |
+|------------|------|--------|
+| Occupancy | SM 자원 낭비 | 블록 크기 조정, 레지스터 제한 |
+| Coalescing | 메모리 대역폭 낭비 | 연속 접근, SoA 구조 |
+| Divergence | Warp 효율 저하 | Warp 단위 분기, 산술 연산 |
+| Bank Conflict | Shared Memory 충돌 | 패딩, 접근 패턴 변경 |
+
+### 최적화 우선순위
+\`\`\`
+1. 알고리즘 선택 (가장 큰 영향)
+2. 메모리 접근 패턴 (Coalescing)
+3. Branch Divergence 최소화
+4. Occupancy 튜닝
+5. 미세 최적화 (Bank Conflict 등)
+\`\`\`
+
+**핵심 포인트**: 측정 없이 최적화하지 말고, Nsight 도구로 병목을 파악한 후 체계적으로 최적화하세요.
 `
       }
     ]
@@ -6859,11 +12765,120 @@ patience = 10
 # 프로젝트 개요
 
 ## 학습 목표
-- 번호판 인식 시스템의 요구사항을 분석한다
-- 전체 시스템을 설계한다
+- 번호판 인식 시스템의 전체 구조를 이해한다
+- 기능 및 비기능 요구사항을 분석한다
+- 시스템 아키텍처를 설계한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## 번호판 인식 시스템이란?
+
+번호판 인식 시스템(License Plate Recognition, LPR)은 카메라로 촬영한 이미지에서 차량 번호판을 자동으로 검출하고 문자를 인식하는 시스템입니다.
+
+### 실제 활용 분야
+- **주차장 관리**: 입출차 자동 기록
+- **교통 단속**: 과속, 신호위반 차량 식별
+- **물류 추적**: 화물차 운송 관리
+- **스마트 시티**: 교통 흐름 분석
+
+## 시스템 2단계 구조
+
+번호판 인식은 크게 **2단계**로 구성됩니다:
+
+\`\`\`
+[입력 이미지] → [번호판 검출] → [문자 인식] → [결과 출력]
+                 (Detection)      (Recognition)
+\`\`\`
+
+### 1단계: 번호판 검출 (Detection)
+- 이미지에서 번호판 위치를 찾아 바운딩 박스로 표시
+- YOLO, SSD 등 Object Detection 기법 활용
+
+### 2단계: 문자 인식 (Recognition)
+- 검출된 번호판 영역에서 문자를 인식
+- CNN 기반 OCR(광학 문자 인식) 기법 활용
+
+## 요구사항 분석
+
+### 기능 요구사항
+| 항목 | 설명 |
+|------|------|
+| 다양한 환경 | 주간/야간, 역광, 다양한 각도 |
+| 한국 번호판 | "12가 3456" 형식 지원 |
+| 실시간 처리 | 영상 스트림 처리 가능 |
+| 정확도 | 95% 이상 인식률 |
+
+### 비기능 요구사항
+| 항목 | 목표값 |
+|------|--------|
+| 추론 시간 | 이미지당 200ms 이내 |
+| GPU 활용 | CUDA 지원 |
+| 확장성 | 다중 카메라 지원 가능 |
+| 배포 | REST API로 서비스 제공 |
+
+## 시스템 아키텍처
+
+\`\`\`
+┌─────────────────────────────────────────────────────┐
+│                    입력 이미지                        │
+└─────────────────────────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────┐
+│              1. 번호판 검출 (YOLOv8)                   │
+│    - 이미지에서 번호판 위치 검출                         │
+│    - 바운딩 박스 좌표 반환                              │
+└─────────────────────────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────┐
+│              2. 번호판 영역 추출                        │
+│    - 검출된 좌표로 이미지 크롭                          │
+│    - 전처리 (크기 조정, 정규화)                         │
+└─────────────────────────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────┐
+│              3. 문자 인식 (CNN)                        │
+│    - 문자 분리                                        │
+│    - 개별 문자 분류                                    │
+└─────────────────────────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────┐
+│              4. 후처리 및 결과 출력                     │
+│    - 문자열 조합                                       │
+│    - 형식 검증                                        │
+└─────────────────────────────────────────────────────┘
+\`\`\`
+
+## 프로젝트 일정
+
+| 레슨 | 주제 | 핵심 내용 |
+|------|------|----------|
+| 9-1 | 프로젝트 개요 | 요구사항 분석, 아키텍처 설계 |
+| 9-2 | 데이터 준비 | 수집, 라벨링, 전처리 |
+| 9-3 | 번호판 검출 | YOLOv8 학습 |
+| 9-4 | 문자 인식 | CNN OCR 구현 |
+| 9-5 | 모델 통합 | 파이프라인 구축 |
+| 9-6 | 성능 평가 | 정확도, 속도 측정 |
+| 9-7 | 배포 | FastAPI, Docker |
+| 9-8 | 마무리 | 회고, 확장 방향 |
+
+## 기술 스택
+
+\`\`\`python
+# 핵심 라이브러리
+import torch           # 딥러닝 프레임워크
+from ultralytics import YOLO  # 객체 검출
+import cv2             # 이미지 처리
+from fastapi import FastAPI   # API 서버
+\`\`\`
+
+## 핵심 정리
+
+1. **2단계 구조**: 검출(Detection) → 인식(Recognition)
+2. **목표 성능**: 95% 정확도, 200ms 이내 추론
+3. **기술 스택**: YOLOv8 + CNN + PyTorch + FastAPI
+4. **모듈화 설계**: 각 단계를 독립적으로 개발하고 통합
 `
       },
       {
@@ -6876,11 +12891,160 @@ patience = 10
 # 데이터 수집/준비
 
 ## 학습 목표
-- 학습 데이터를 수집한다
-- 데이터 라벨링과 전처리를 수행한다
+- 번호판 이미지 데이터를 효과적으로 수집한다
+- 데이터 라벨링 방법과 도구를 이해한다
+- 전처리와 데이터 증강 기법을 적용한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## 데이터 수집의 중요성
+
+좋은 AI 모델은 좋은 데이터에서 시작합니다. 번호판 인식 모델을 만들려면 먼저 충분한 양의 학습 데이터가 필요합니다.
+
+## 데이터 수집 방법
+
+번호판 이미지를 모으는 방법은 여러 가지가 있습니다:
+
+### 1. 공개 데이터셋 활용
+\`\`\`python
+# Kaggle, GitHub 등에서 번호판 데이터셋 검색
+# 예: Korean License Plate Dataset
+# - Roboflow Universe
+# - Kaggle Datasets
+\`\`\`
+
+### 2. 직접 촬영
+- 주차장이나 도로에서 실제 차량 번호판 촬영
+- 다양한 각도와 조명 조건에서 촬영
+
+### 3. 크롤링 수집
+- 저작권과 개인정보 보호에 주의 필요
+- 공개된 이미지만 사용
+
+### 4. 합성 데이터 생성
+\`\`\`python
+# 프로그램으로 번호판 이미지 생성
+from PIL import Image, ImageDraw, ImageFont
+
+def generate_plate(text):
+    img = Image.new('RGB', (400, 80), 'white')
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype("NanumGothic.ttf", 48)
+    draw.text((50, 10), text, fill='black', font=font)
+    return img
+\`\`\`
+
+## 데이터 수집 시 주의사항
+
+| 항목 | 설명 |
+|------|------|
+| 다양성 확보 | 낮/밤, 맑음/비, 다양한 각도 |
+| 품질 확인 | 흐릿하거나 잘린 이미지 제외 |
+| 균형 잡힌 데이터 | 특정 지역 번호판 편중 방지 |
+| 충분한 양 | 최소 1,000장, 권장 10,000장 이상 |
+
+## 데이터 라벨링
+
+라벨링이란 데이터에 정답을 표시하는 작업입니다.
+
+### 번호판 검출용 라벨링 (바운딩 박스)
+\`\`\`yaml
+# YOLO 형식 라벨 예시 (labels/image001.txt)
+# class x_center y_center width height (정규화된 값)
+0 0.5 0.45 0.3 0.1
+\`\`\`
+
+### 라벨링 도구
+- **LabelImg**: 가장 많이 사용되는 도구
+- **CVAT**: 웹 기반 라벨링 도구
+- **Roboflow**: 온라인 라벨링 및 증강
+
+### 문자 인식용 라벨링 (텍스트)
+\`\`\`python
+# 라벨 파일 예시 (labels.csv)
+# filename, plate_text
+# img001.jpg, 12가3456
+# img002.jpg, 서울34나5678
+\`\`\`
+
+**주의**: 라벨이 잘못되면 모델도 잘못 학습합니다!
+
+## 데이터 전처리
+
+전처리는 이미지를 모델에 맞게 가공하는 과정입니다.
+
+### 1. 크기 조정
+\`\`\`python
+import cv2
+
+# YOLO 입력 크기에 맞게 조정
+image = cv2.imread('plate.jpg')
+resized = cv2.resize(image, (416, 416))
+\`\`\`
+
+### 2. 정규화
+\`\`\`python
+import numpy as np
+
+# 픽셀 값을 0~1 사이로 변환
+normalized = image.astype(np.float32) / 255.0
+\`\`\`
+
+### 3. 색상 변환
+\`\`\`python
+# BGR → RGB 변환 (OpenCV는 BGR 사용)
+rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# 그레이스케일 변환
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+\`\`\`
+
+## 데이터 증강
+
+데이터 증강은 기존 이미지를 변형해서 데이터를 늘리는 기법입니다.
+
+\`\`\`python
+import albumentations as A
+
+# 데이터 증강 파이프라인
+transform = A.Compose([
+    # 1. 회전과 뒤집기
+    A.RandomRotate90(p=0.5),
+    A.HorizontalFlip(p=0.3),
+
+    # 2. 밝기와 대비 조절
+    A.RandomBrightnessContrast(
+        brightness_limit=0.3,
+        contrast_limit=0.3,
+        p=0.5
+    ),
+
+    # 3. 노이즈 추가
+    A.GaussNoise(var_limit=(10, 50), p=0.3),
+
+    # 4. 자르기와 확대
+    A.RandomCrop(width=350, height=350, p=0.3),
+])
+
+# 증강 적용
+augmented = transform(image=image)['image']
+\`\`\`
+
+### 증강 효과
+
+| 기법 | 효과 |
+|------|------|
+| 회전/뒤집기 | 다양한 각도 학습 |
+| 밝기/대비 | 조명 변화에 강건함 |
+| 노이즈 추가 | 실제 환경 시뮬레이션 |
+| 자르기/확대 | 다양한 거리 학습 |
+
+데이터 증강으로 적은 데이터로도 좋은 성능을 낼 수 있습니다!
+
+## 핵심 정리
+
+1. **데이터 수집**: 공개 데이터셋, 직접 촬영, 합성 데이터
+2. **라벨링**: 바운딩 박스(검출용), 텍스트(인식용)
+3. **전처리**: 크기 조정, 정규화, 색상 변환
+4. **데이터 증강**: 회전, 밝기 조절, 노이즈 추가 등
 `
       },
       {
@@ -6893,11 +13057,185 @@ patience = 10
 # 번호판 검출 모델
 
 ## 학습 목표
-- Object Detection 기법을 적용한다
-- YOLO 또는 SSD를 활용한다
+- Object Detection의 개념을 이해한다
+- YOLO의 작동 원리를 파악한다
+- YOLOv8로 번호판 검출 모델을 학습시킨다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## Object Detection이란?
+
+Object Detection은 이미지에서 물체를 찾아서 위치를 표시하는 기술입니다.
+
+### 이미지 분류 vs Object Detection
+| 구분 | 이미지 분류 | Object Detection |
+|------|------------|------------------|
+| 출력 | 전체 이미지의 클래스 | 물체 위치 + 클래스 |
+| 형태 | 단일 라벨 | 바운딩 박스 좌표 + 라벨 |
+| 개수 | 하나 | 여러 물체 가능 |
+
+### 바운딩 박스 출력
+\`\`\`python
+# 검출 결과 예시
+{
+    "x": 150,        # 박스 중심 x
+    "y": 200,        # 박스 중심 y
+    "width": 100,    # 박스 너비
+    "height": 40,    # 박스 높이
+    "class": "plate", # 클래스
+    "confidence": 0.95  # 신뢰도
+}
+\`\`\`
+
+## YOLO 소개
+
+YOLO는 **You Only Look Once**의 약자입니다. 한 번의 네트워크 통과로 물체 위치와 종류를 동시에 예측합니다.
+
+### YOLO의 작동 원리
+
+\`\`\`
+┌───────────────────────────────────┐
+│         입력 이미지 (416x416)       │
+└───────────────────────────────────┘
+                 │
+                 ▼
+┌───────────────────────────────────┐
+│     그리드 분할 (예: 13x13)         │
+│  ┌─┬─┬─┬─┬─┐                      │
+│  ├─┼─┼─┼─┼─┤  각 셀이 해당 영역의    │
+│  ├─┼─┼─┼─┼─┤  물체를 예측          │
+│  ├─┼─┼─┼─┼─┤                      │
+│  └─┴─┴─┴─┴─┘                      │
+└───────────────────────────────────┘
+                 │
+                 ▼
+┌───────────────────────────────────┐
+│        바운딩 박스 예측             │
+│  - 위치 (x, y, w, h)              │
+│  - 신뢰도 (confidence)             │
+│  - 클래스 확률                     │
+└───────────────────────────────────┘
+\`\`\`
+
+YOLO는 이 모든 과정이 **한 번에** 이루어지기 때문에 실시간 처리에 강합니다.
+
+### YOLO의 발전 과정
+
+| 버전 | 연도 | 특징 |
+|------|------|------|
+| YOLOv1 | 2016 | 실시간 검출의 시작 |
+| YOLOv3 | 2018 | 다양한 크기 물체 검출 개선 |
+| YOLOv5 | 2020 | PyTorch 기반, 사용 편리 |
+| YOLOv8 | 2023 | 최신 버전, 성능 향상 |
+
+## YOLOv8 설치 및 사용
+
+### 설치
+\`\`\`bash
+pip install ultralytics
+\`\`\`
+
+### 기본 사용법
+\`\`\`python
+from ultralytics import YOLO
+
+# 사전 학습된 모델 로드
+model = YOLO('yolov8s.pt')
+
+# 이미지 추론
+results = model('car_image.jpg')
+
+# 결과 시각화
+results[0].show()
+\`\`\`
+
+### 모델 크기별 비교
+| 모델 | 크기 | 속도 | 정확도 |
+|------|------|------|--------|
+| yolov8n | 가장 작음 | 가장 빠름 | 낮음 |
+| yolov8s | 작음 | 빠름 | 중간 |
+| yolov8m | 중간 | 보통 | 높음 |
+| yolov8l | 큼 | 느림 | 높음 |
+| yolov8x | 가장 큼 | 가장 느림 | 가장 높음 |
+
+번호판 검출에는 **yolov8s** 정도면 충분합니다!
+
+## 커스텀 데이터셋 학습
+
+### 데이터셋 구조
+\`\`\`
+dataset/
+├── train/
+│   ├── images/
+│   │   ├── img001.jpg
+│   │   └── img002.jpg
+│   └── labels/
+│       ├── img001.txt
+│       └── img002.txt
+└── val/
+    ├── images/
+    └── labels/
+\`\`\`
+
+### 설정 파일 (dataset.yaml)
+\`\`\`yaml
+path: ./dataset
+train: train/images
+val: val/images
+
+names:
+  0: plate  # 클래스 이름
+\`\`\`
+
+### 학습 실행
+\`\`\`python
+from ultralytics import YOLO
+
+# 모델 로드
+model = YOLO('yolov8s.pt')
+
+# 학습 시작
+model.train(
+    data='dataset.yaml',
+    epochs=100,       # 학습 반복 횟수
+    batch=16,         # 배치 크기
+    imgsz=416,        # 입력 이미지 크기
+    device='cuda'     # GPU 사용
+)
+\`\`\`
+
+### 학습 결과
+\`\`\`
+runs/detect/train/
+├── weights/
+│   ├── best.pt    ← 최고 성능 모델
+│   └── last.pt    ← 마지막 모델
+└── results.png    ← 학습 그래프
+\`\`\`
+
+## 학습된 모델 사용
+
+\`\`\`python
+from ultralytics import YOLO
+
+# 학습된 모델 로드
+model = YOLO('runs/detect/train/weights/best.pt')
+
+# 추론
+results = model('test_image.jpg')
+
+# 결과 확인
+for box in results[0].boxes:
+    x1, y1, x2, y2 = box.xyxy[0]  # 좌표
+    conf = box.conf[0]            # 신뢰도
+    print(f"번호판 위치: ({x1:.0f}, {y1:.0f}) ~ ({x2:.0f}, {y2:.0f})")
+    print(f"신뢰도: {conf:.2f}")
+\`\`\`
+
+## 핵심 정리
+
+1. **Object Detection**: 이미지에서 물체 위치와 클래스를 찾는 기술
+2. **YOLO**: 실시간 처리가 가능한 One-stage 검출기
+3. **YOLOv8**: Ultralytics 라이브러리로 쉽게 사용 가능
+4. **커스텀 학습**: 데이터셋 준비 → YAML 설정 → train 실행 → best.pt 생성
 `
       },
       {
@@ -6910,11 +13248,264 @@ patience = 10
 # 문자 인식 모델
 
 ## 학습 목표
-- CNN 기반 OCR을 구현한다
-- 문자 분류기를 학습시킨다
+- OCR(광학 문자 인식)의 개념을 이해한다
+- CNN 기반 문자 분류기를 구현한다
+- 한국 번호판의 문자 인식 모델을 학습시킨다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## OCR이란?
+
+OCR(Optical Character Recognition)은 이미지에서 문자를 읽어내는 기술입니다. 번호판 인식에서 검출 다음 단계가 바로 OCR입니다.
+
+### OCR의 두 가지 접근 방식
+
+| 방식 | 설명 | 장점 | 단점 |
+|------|------|------|------|
+| 문자 단위 | 각 문자를 개별 분리 후 인식 | 직관적, 이해 쉬움 | 문자 분리 필요 |
+| 시퀀스 인식 | 전체 문자열을 한 번에 인식 | 분리 불필요 | 복잡한 모델 필요 |
+
+우리는 **문자 단위 방식**으로 시작합니다. 더 직관적이고 이해하기 쉽습니다!
+
+## 한국 번호판 구조
+
+### 번호판 형식
+\`\`\`
+일반: 12가 3456
+신형: 123가 4567
+\`\`\`
+
+### 인식해야 할 클래스
+\`\`\`python
+# 숫자: 0~9 (10개)
+digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+# 한글: 지역/용도 문자 (약 40개)
+korean = [
+    '가', '나', '다', '라', '마', '바', '사', '아', '자',
+    '거', '너', '더', '러', '머', '버', '서', '어', '저',
+    '고', '노', '도', '로', '모', '보', '소', '오', '조',
+    '구', '누', '두', '루', '무', '부', '수', '우', '주',
+    '허', '하', '호', '배'
+]
+
+# 총 약 50개 클래스를 분류
+num_classes = len(digits) + len(korean)  # 약 50개
+\`\`\`
+
+## CNN 기반 문자 분류기
+
+### 모델 구조
+\`\`\`
+┌─────────────────────────────────────┐
+│   입력: 32x32 픽셀 문자 이미지         │
+└─────────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────┐
+│   Conv2d → BatchNorm → ReLU → Pool  │
+│   (특징 추출 레이어 1)                │
+└─────────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────┐
+│   Conv2d → BatchNorm → ReLU → Pool  │
+│   (특징 추출 레이어 2)                │
+└─────────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────┐
+│   Conv2d → BatchNorm → ReLU → Pool  │
+│   (특징 추출 레이어 3)                │
+└─────────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────┐
+│        Flatten + Fully Connected     │
+│        출력: 50개 클래스 확률          │
+└─────────────────────────────────────┘
+\`\`\`
+
+### PyTorch 구현
+\`\`\`python
+import torch
+import torch.nn as nn
+
+class CharClassifier(nn.Module):
+    def __init__(self, num_classes=50):
+        super().__init__()
+
+        # 컨볼루션 레이어
+        self.conv_layers = nn.Sequential(
+            # 레이어 1: 32x32 → 16x16
+            nn.Conv2d(1, 32, kernel_size=3, padding=1),
+            nn.BatchNorm2d(32),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+
+            # 레이어 2: 16x16 → 8x8
+            nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+
+            # 레이어 3: 8x8 → 4x4
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.BatchNorm2d(128),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+        )
+
+        # 완전연결 레이어
+        self.fc_layers = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(128 * 4 * 4, 256),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            nn.Linear(256, num_classes)
+        )
+
+    def forward(self, x):
+        x = self.conv_layers(x)
+        x = self.fc_layers(x)
+        return x
+\`\`\`
+
+## 학습 데이터 준비
+
+### 1. 실제 데이터 수집
+\`\`\`python
+import cv2
+import os
+
+def extract_characters(plate_image, save_dir):
+    """번호판 이미지에서 문자 추출"""
+    # 그레이스케일 변환
+    gray = cv2.cvtColor(plate_image, cv2.COLOR_BGR2GRAY)
+
+    # 이진화
+    _, binary = cv2.threshold(gray, 0, 255,
+                              cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+    # 컨투어 검출로 문자 분리
+    contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL,
+                                   cv2.CHAIN_APPROX_SIMPLE)
+
+    for i, cnt in enumerate(contours):
+        x, y, w, h = cv2.boundingRect(cnt)
+        char_img = binary[y:y+h, x:x+w]
+        char_img = cv2.resize(char_img, (32, 32))
+        cv2.imwrite(f'{save_dir}/char_{i}.png', char_img)
+\`\`\`
+
+### 2. 합성 데이터 생성
+\`\`\`python
+from PIL import Image, ImageDraw, ImageFont
+import random
+
+def generate_synthetic_char(char, font_path, size=32):
+    """합성 문자 이미지 생성"""
+    img = Image.new('L', (size, size), 255)  # 흰색 배경
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype(font_path, size-8)
+
+    # 문자 그리기
+    draw.text((4, 4), char, fill=0, font=font)
+
+    # 데이터 증강: 노이즈 추가
+    import numpy as np
+    img_array = np.array(img)
+    noise = np.random.normal(0, 10, img_array.shape)
+    img_array = np.clip(img_array + noise, 0, 255).astype(np.uint8)
+
+    return Image.fromarray(img_array)
+\`\`\`
+
+### 클래스 균형 주의사항
+\`\`\`python
+# 한글 사용 빈도가 다르므로 균형있게 수집
+# '가', '나' 등 자주 쓰이는 문자가 편중되지 않도록!
+
+class_counts = {}
+for char_file in os.listdir('train_data'):
+    label = char_file.split('_')[0]
+    class_counts[label] = class_counts.get(label, 0) + 1
+
+print("클래스별 데이터 수:", class_counts)
+# 부족한 클래스는 합성 데이터로 보충!
+\`\`\`
+
+## 모델 학습
+
+\`\`\`python
+import torch
+import torch.nn as nn
+from torch.utils.data import DataLoader
+from torchvision import transforms
+
+# 데이터 변환
+transform = transforms.Compose([
+    transforms.Grayscale(),
+    transforms.Resize((32, 32)),
+    transforms.ToTensor(),
+    transforms.Normalize([0.5], [0.5])
+])
+
+# 모델, 손실함수, 옵티마이저
+model = CharClassifier(num_classes=50)
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+
+# 학습 루프
+for epoch in range(50):
+    model.train()
+    total_loss = 0
+
+    for images, labels in train_loader:
+        # Forward
+        outputs = model(images)
+        loss = criterion(outputs, labels)
+
+        # Backward
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item()
+
+    print(f'Epoch {epoch+1}, Loss: {total_loss/len(train_loader):.4f}')
+
+# 모델 저장
+torch.save(model.state_dict(), 'char_classifier.pth')
+\`\`\`
+
+## 추론 (문자 인식)
+
+\`\`\`python
+def recognize_character(model, char_image, class_names):
+    """단일 문자 인식"""
+    model.eval()
+    with torch.no_grad():
+        # 전처리
+        img = transform(char_image).unsqueeze(0)
+
+        # 추론
+        output = model(img)
+        _, predicted = torch.max(output, 1)
+
+        return class_names[predicted.item()]
+
+# 사용 예시
+char_img = Image.open('test_char.png')
+result = recognize_character(model, char_img, class_names)
+print(f"인식 결과: {result}")
+\`\`\`
+
+## 핵심 정리
+
+1. **OCR**: 이미지에서 문자를 읽는 기술
+2. **문자 단위 인식**: 각 문자를 분리하여 개별 분류
+3. **CNN 분류기**: Conv → BatchNorm → ReLU → Pool 구조
+4. **한국 번호판**: 숫자 10개 + 한글 약 40개 = 약 50개 클래스
+5. **학습 데이터**: 실제 데이터 + 합성 데이터로 균형 확보
 `
       },
       {
@@ -6927,11 +13518,253 @@ patience = 10
 # 모델 통합
 
 ## 학습 목표
-- 검출과 인식 모델을 통합한다
-- 전체 파이프라인을 구축한다
+- 검출과 인식 모델을 하나로 연결한다
+- End-to-end 파이프라인을 구축한다
+- 전처리와 후처리 과정을 이해한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## 전체 파이프라인 구조
+
+지금까지 번호판 검출과 문자 인식을 배웠습니다. 이제 두 모델을 연결해 전체 파이프라인을 만듭니다.
+
+\`\`\`
+┌───────────────────────────────────────────────────────────┐
+│                      입력 이미지                            │
+└───────────────────────────────────────────────────────────┘
+                          │
+                          ▼
+┌───────────────────────────────────────────────────────────┐
+│              1. YOLO 검출기 (번호판 위치 검출)               │
+│              → 바운딩 박스 좌표 출력                         │
+└───────────────────────────────────────────────────────────┘
+                          │
+                          ▼
+┌───────────────────────────────────────────────────────────┐
+│              2. 이미지 크롭 + 전처리                        │
+│              → 번호판 영역만 추출                           │
+└───────────────────────────────────────────────────────────┘
+                          │
+                          ▼
+┌───────────────────────────────────────────────────────────┐
+│              3. 문자 분리 + CNN 인식                        │
+│              → 각 문자 인식 결과                            │
+└───────────────────────────────────────────────────────────┘
+                          │
+                          ▼
+┌───────────────────────────────────────────────────────────┐
+│              4. 후처리 + 결과 출력                          │
+│              → "12가3456" 최종 문자열                       │
+└───────────────────────────────────────────────────────────┘
+\`\`\`
+
+## 검출 결과 처리
+
+### 바운딩 박스 선택
+\`\`\`python
+def select_best_box(results, confidence_threshold=0.5):
+    """YOLO 결과에서 최적의 박스 선택"""
+    boxes = results[0].boxes
+
+    if len(boxes) == 0:
+        return None
+
+    # 신뢰도가 가장 높은 박스 선택
+    best_idx = boxes.conf.argmax()
+    best_conf = boxes.conf[best_idx].item()
+
+    if best_conf < confidence_threshold:
+        return None
+
+    # 좌표 추출 (x1, y1, x2, y2)
+    return boxes.xyxy[best_idx].cpu().numpy()
+\`\`\`
+
+### 이미지 크롭
+\`\`\`python
+import cv2
+
+def crop_plate(image, box, padding=5):
+    """바운딩 박스 영역 크롭 (패딩 추가)"""
+    x1, y1, x2, y2 = map(int, box)
+
+    # 패딩 추가 (이미지 범위 체크)
+    h, w = image.shape[:2]
+    x1 = max(0, x1 - padding)
+    y1 = max(0, y1 - padding)
+    x2 = min(w, x2 + padding)
+    y2 = min(h, y2 + padding)
+
+    return image[y1:y2, x1:x2]
+\`\`\`
+
+## 문자 분리와 인식
+
+### 전처리
+\`\`\`python
+def preprocess_plate(plate_image):
+    """번호판 이미지 전처리"""
+    # 그레이스케일 변환
+    gray = cv2.cvtColor(plate_image, cv2.COLOR_BGR2GRAY)
+
+    # 이진화 (Otsu's method)
+    _, binary = cv2.threshold(gray, 0, 255,
+                              cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+    return binary
+\`\`\`
+
+### 문자 분리
+\`\`\`python
+def segment_characters(binary_image):
+    """연결 요소 분석으로 문자 분리"""
+    # 컨투어 검출
+    contours, _ = cv2.findContours(binary_image, cv2.RETR_EXTERNAL,
+                                   cv2.CHAIN_APPROX_SIMPLE)
+
+    char_images = []
+    for cnt in contours:
+        x, y, w, h = cv2.boundingRect(cnt)
+
+        # 너무 작거나 큰 영역 필터링
+        if w < 10 or h < 20 or w > 100 or h > 100:
+            continue
+
+        # 문자 영역 추출 및 크기 조정
+        char_img = binary_image[y:y+h, x:x+w]
+        char_img = cv2.resize(char_img, (32, 32))
+
+        char_images.append((x, char_img))  # x좌표와 함께 저장
+
+    # x좌표 기준 정렬 (왼쪽→오른쪽)
+    char_images.sort(key=lambda x: x[0])
+
+    return [img for _, img in char_images]
+\`\`\`
+
+### 문자 인식
+\`\`\`python
+def recognize_characters(char_images, model, class_names):
+    """분리된 문자들 인식"""
+    model.eval()
+    result = ""
+
+    for char_img in char_images:
+        # 텐서 변환
+        tensor = transforms.ToTensor()(char_img).unsqueeze(0)
+
+        # 추론
+        with torch.no_grad():
+            output = model(tensor)
+            _, predicted = torch.max(output, 1)
+
+        result += class_names[predicted.item()]
+
+    return result
+\`\`\`
+
+## 통합 클래스 구현
+
+\`\`\`python
+import torch
+from ultralytics import YOLO
+
+class PlateRecognizer:
+    """번호판 인식 통합 클래스"""
+
+    def __init__(self, detector_path, classifier_path, class_names):
+        # 모델 로드
+        self.detector = YOLO(detector_path)
+        self.classifier = CharClassifier()
+        self.classifier.load_state_dict(torch.load(classifier_path))
+        self.classifier.eval()
+        self.class_names = class_names
+
+        # GPU 사용 설정
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.classifier.to(self.device)
+
+    def recognize(self, image):
+        """전체 파이프라인 실행"""
+        # 1. 번호판 검출
+        results = self.detector(image)
+        box = select_best_box(results)
+
+        if box is None:
+            return {"success": False, "message": "번호판 미검출"}
+
+        # 2. 번호판 영역 크롭
+        plate_img = crop_plate(image, box)
+
+        # 3. 전처리
+        binary = preprocess_plate(plate_img)
+
+        # 4. 문자 분리
+        char_images = segment_characters(binary)
+
+        if len(char_images) == 0:
+            return {"success": False, "message": "문자 분리 실패"}
+
+        # 5. 문자 인식
+        plate_text = recognize_characters(
+            char_images, self.classifier, self.class_names
+        )
+
+        return {
+            "success": True,
+            "plate_text": plate_text,
+            "confidence": results[0].boxes.conf[0].item(),
+            "box": box.tolist()
+        }
+
+# 사용 예시
+recognizer = PlateRecognizer(
+    detector_path='yolo_plate.pt',
+    classifier_path='char_classifier.pth',
+    class_names=class_names
+)
+
+image = cv2.imread('test_car.jpg')
+result = recognizer.recognize(image)
+print(result)  # {'success': True, 'plate_text': '12가3456', ...}
+\`\`\`
+
+## 성능 최적화 팁
+
+### 1. GPU 활용
+\`\`\`python
+# 검출기와 인식기를 같은 GPU에 로드
+device = torch.device('cuda:0')
+self.classifier.to(device)
+
+# 중간 결과를 GPU 메모리에 유지
+# 불필요한 CPU-GPU 복사 최소화
+\`\`\`
+
+### 2. 배치 처리
+\`\`\`python
+def batch_recognize(self, images):
+    """여러 이미지 배치 처리"""
+    results = []
+    for image in images:
+        results.append(self.recognize(image))
+    return results
+\`\`\`
+
+### 3. ONNX 변환 (추론 속도 개선)
+\`\`\`python
+# PyTorch → ONNX 변환
+dummy_input = torch.randn(1, 1, 32, 32)
+torch.onnx.export(model, dummy_input, "classifier.onnx")
+
+# TensorRT로 더욱 빠르게!
+\`\`\`
+
+## 핵심 정리
+
+1. **파이프라인 구조**: 검출 → 크롭 → 전처리 → 분리 → 인식
+2. **검출 결과 처리**: 신뢰도 기반 박스 선택, 패딩 추가 크롭
+3. **문자 분리**: 이진화 → 컨투어 검출 → 크기 필터링 → 정렬
+4. **통합 클래스**: PlateRecognizer로 전체 과정 캡슐화
+5. **최적화**: GPU 활용, 배치 처리, ONNX/TensorRT 변환
 `
       },
       {
@@ -6941,14 +13774,178 @@ patience = 10
         duration: "60분",
         videoUrl: "",
         content: `
-# 성능 최적화
+# 성능 평가
 
 ## 학습 목표
-- 추론 속도를 개선한다
-- 모델 경량화 기법을 적용한다
+- 검출 모델의 정확도 지표를 이해한다 (IoU, mAP)
+- 인식 모델의 평가 방법을 이해한다
+- 속도 측정과 테스트 데이터셋 구성 방법을 배운다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## 왜 성능 평가가 중요한가?
+
+모델을 학습시켰다면 성능을 측정해야 합니다. 객관적인 평가가 개선의 시작입니다!
+
+- **정확도 지표**: 모델 품질을 평가
+- **속도 지표**: 실용성을 판단
+
+## 검출 모델 평가 지표
+
+### IoU (Intersection over Union)
+\`\`\`
+      예측 박스와 실제 박스의 겹침 정도
+
+      ┌──────────────┐
+      │    실제 박스   │
+      │   ┌──────┼───┐
+      │   │ 겹침  │   │
+      └───┼──────┘   │
+          │   예측 박스│
+          └──────────┘
+
+      IoU = 겹친 영역 / 합집합 영역
+\`\`\`
+
+\`\`\`python
+def calculate_iou(box1, box2):
+    """IoU 계산"""
+    x1 = max(box1[0], box2[0])
+    y1 = max(box1[1], box2[1])
+    x2 = min(box1[2], box2[2])
+    y2 = min(box1[3], box2[3])
+
+    # 겹친 영역
+    intersection = max(0, x2-x1) * max(0, y2-y1)
+
+    # 합집합 영역
+    area1 = (box1[2]-box1[0]) * (box1[3]-box1[1])
+    area2 = (box2[2]-box2[0]) * (box2[3]-box2[1])
+    union = area1 + area2 - intersection
+
+    return intersection / union if union > 0 else 0
+\`\`\`
+
+### Precision & Recall
+| 지표 | 설명 | 의미 |
+|------|------|------|
+| Precision | 예측 중 정확한 비율 | 오검출이 적은가? |
+| Recall | 실제 대상 중 찾은 비율 | 놓친 것이 적은가? |
+
+\`\`\`python
+precision = TP / (TP + FP)  # True Positive / 전체 예측
+recall = TP / (TP + FN)     # True Positive / 실제 정답
+\`\`\`
+
+### mAP (mean Average Precision)
+\`\`\`python
+# YOLO 평가 시 자동 계산
+results = model.val(data='dataset.yaml')
+
+print(f"mAP@0.5: {results.box.map50:.3f}")
+print(f"mAP@0.5:0.95: {results.box.map:.3f}")
+\`\`\`
+
+## 인식 모델 평가 지표
+
+### 문자별 정확도
+\`\`\`python
+def character_accuracy(pred, gt):
+    """문자별 정확도"""
+    correct = sum(p == g for p, g in zip(pred, gt))
+    return correct / len(gt) if gt else 0
+
+# 예: "12가3456" vs "12나3456" → 6/7 = 85.7%
+\`\`\`
+
+### 전체 번호판 정확도 (Sequence Accuracy)
+\`\`\`python
+def plate_accuracy(predictions, ground_truths):
+    """전체 일치율 (한 글자라도 틀리면 오류)"""
+    correct = sum(p == g for p, g in zip(predictions, ground_truths))
+    return correct / len(ground_truths)
+
+# 예: 100개 중 95개 완전 일치 → 95%
+\`\`\`
+
+### 혼동 행렬 (Confusion Matrix)
+\`\`\`python
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+
+# 어떤 문자를 헷갈리는지 확인
+# 흔한 혼동: 7↔1, 0↔O, 가↔나
+
+cm = confusion_matrix(y_true, y_pred)
+sns.heatmap(cm, annot=True, fmt='d')
+\`\`\`
+
+## 속도 측정
+
+### FPS (Frames Per Second)
+\`\`\`python
+import time
+
+def measure_fps(model, images, warmup=10):
+    """FPS 측정 (워밍업 후)"""
+    # GPU 워밍업
+    for _ in range(warmup):
+        _ = model(images[0])
+
+    # 실제 측정
+    start = time.time()
+    for img in images:
+        _ = model(img)
+    elapsed = time.time() - start
+
+    fps = len(images) / elapsed
+    latency_ms = elapsed / len(images) * 1000
+
+    return fps, latency_ms
+\`\`\`
+
+### 실시간 처리 기준
+| 용도 | 필요 FPS |
+|------|---------|
+| 실시간 영상 | 30+ FPS |
+| 준실시간 | 10-30 FPS |
+| 오프라인 처리 | 1+ FPS |
+
+## 테스트 데이터셋 구성
+
+### 다양한 조건 포함
+\`\`\`
+test_data/
+├── daytime/        # 주간
+├── nighttime/      # 야간
+├── backlight/      # 역광
+├── tilted/         # 기울어진 각도
+├── far_distance/   # 먼 거리
+└── blur/           # 흐릿한 이미지
+\`\`\`
+
+**핵심**: 학습에 사용하지 않은 데이터로 평가해야 합니다!
+
+### 조건별 분석
+\`\`\`python
+def evaluate_by_condition(model, test_dirs):
+    """조건별 정확도 분석"""
+    results = {}
+    for condition, path in test_dirs.items():
+        images = load_images(path)
+        accuracy = evaluate(model, images)
+        results[condition] = accuracy
+        print(f"{condition}: {accuracy:.2%}")
+
+    # 취약점 파악 → 해당 데이터 보강 → 재학습
+    return results
+\`\`\`
+
+## 핵심 정리
+
+1. **검출 평가**: IoU (겹침 정도), mAP (종합 지표)
+2. **인식 평가**: 문자별 정확도, 전체 일치율, 혼동 행렬
+3. **속도 측정**: FPS, 지연시간 (워밍업 후 측정)
+4. **테스트 데이터**: 다양한 조건, 학습과 분리
+5. **개선 방향**: 취약 조건 파악 → 데이터 보강 → 반복 개선
 `
       },
       {
@@ -6958,14 +13955,195 @@ patience = 10
         duration: "60분",
         videoUrl: "",
         content: `
-# 배포
+# 실제 배포
 
 ## 학습 목표
-- 웹 서비스로 배포한다
-- API를 구현한다
+- 학습된 모델을 저장하고 로드하는 방법을 이해한다
+- FastAPI로 REST API 서버를 구축한다
+- Docker로 컨테이너화하여 배포한다
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+## 모델 저장 방법
+
+### PyTorch 저장 방식
+\`\`\`python
+import torch
+
+# 방법 1: state_dict 저장 (권장 - 배포용)
+torch.save(model.state_dict(), 'model_weights.pth')
+
+# 로드
+model = CharClassifier()
+model.load_state_dict(torch.load('model_weights.pth'))
+model.eval()
+
+# 방법 2: 전체 모델 저장
+torch.save(model, 'full_model.pth')
+
+# 로드
+model = torch.load('full_model.pth')
+\`\`\`
+
+### YOLO 모델 저장
+\`\`\`python
+# 학습 후 자동 저장됨
+# runs/detect/train/weights/best.pt
+
+# 사용 시
+from ultralytics import YOLO
+model = YOLO('best.pt')
+\`\`\`
+
+## FastAPI 서버 구축
+
+### 기본 구조
+\`\`\`python
+from fastapi import FastAPI, UploadFile, File
+from fastapi.responses import JSONResponse
+import cv2
+import numpy as np
+
+app = FastAPI(title="번호판 인식 API")
+
+# 모델 로드 (서버 시작 시 한 번)
+recognizer = PlateRecognizer(
+    detector_path='yolo_plate.pt',
+    classifier_path='char_classifier.pth',
+    class_names=CLASS_NAMES
+)
+
+@app.post("/recognize")
+async def recognize_plate(file: UploadFile = File(...)):
+    """번호판 인식 API"""
+    # 이미지 읽기
+    contents = await file.read()
+    nparr = np.frombuffer(contents, np.uint8)
+    image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+    # 인식
+    result = recognizer.recognize(image)
+
+    return JSONResponse(content=result)
+
+@app.get("/health")
+async def health_check():
+    """헬스 체크"""
+    return {"status": "healthy"}
+\`\`\`
+
+### 서버 실행
+\`\`\`bash
+# 개발 모드
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+# 프로덕션 모드
+uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
+\`\`\`
+
+### API 테스트
+\`\`\`python
+import requests
+
+# 이미지 전송
+with open('test_car.jpg', 'rb') as f:
+    response = requests.post(
+        'http://localhost:8000/recognize',
+        files={'file': f}
+    )
+
+print(response.json())
+# {'success': True, 'plate_text': '12가3456', ...}
+\`\`\`
+
+## Docker 컨테이너화
+
+### Dockerfile 작성
+\`\`\`dockerfile
+FROM python:3.9-slim
+
+# 작업 디렉토리
+WORKDIR /app
+
+# 시스템 패키지 설치
+RUN apt-get update && apt-get install -y \\
+    libgl1-mesa-glx \\
+    libglib2.0-0 \\
+    && rm -rf /var/lib/apt/lists/*
+
+# 파이썬 패키지 설치
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 코드 및 모델 복사
+COPY . .
+
+# 포트 노출
+EXPOSE 8000
+
+# 서버 실행
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+\`\`\`
+
+### requirements.txt
+\`\`\`
+fastapi==0.104.0
+uvicorn==0.24.0
+python-multipart==0.0.6
+torch==2.0.0
+ultralytics==8.0.0
+opencv-python-headless==4.8.0
+numpy==1.24.0
+\`\`\`
+
+### 빌드 및 실행
+\`\`\`bash
+# 이미지 빌드
+docker build -t plate-recognition .
+
+# 컨테이너 실행 (CPU)
+docker run -p 8000:8000 plate-recognition
+
+# GPU 사용 시
+docker run --gpus all -p 8000:8000 plate-recognition
+\`\`\`
+
+## 클라우드 배포
+
+### GPU 인스턴스 선택
+\`\`\`
+# AWS
+- p3.2xlarge (V100 GPU)
+- g4dn.xlarge (T4 GPU) - 가성비 좋음
+
+# GCP
+- n1-standard-4 + NVIDIA T4
+
+# Azure
+- NC6s_v3 (V100)
+\`\`\`
+
+### 모니터링 설정
+\`\`\`python
+# Prometheus metrics 추가
+from prometheus_client import Counter, Histogram
+
+request_count = Counter('requests_total', 'Total requests')
+latency = Histogram('request_latency_seconds', 'Request latency')
+
+@app.post("/recognize")
+async def recognize_plate(file: UploadFile = File(...)):
+    request_count.inc()
+    with latency.time():
+        # 인식 처리
+        ...
+\`\`\`
+
+## 핵심 정리
+
+1. **모델 저장**: state_dict 방식 권장, YOLO는 best.pt 사용
+2. **FastAPI 서버**: POST 엔드포인트로 이미지 수신, JSON 응답
+3. **Docker**: 환경을 패키징하여 일관된 실행 환경 보장
+4. **클라우드 배포**: GPU 인스턴스 + 로드 밸런서
+5. **모니터링**: 응답 시간, 에러율 추적으로 안정성 확보
 `
       },
       {
@@ -6975,19 +14153,161 @@ patience = 10
         duration: "40분",
         videoUrl: "",
         content: `
-# 프로젝트 마무리
+# 프로젝트 회고
 
 ## 학습 목표
-- 프로젝트를 문서화한다
-- 발표 자료를 준비한다
+- Level 9 전체 프로젝트를 회고한다
+- 사용한 기술과 배운 점을 정리한다
+- 확장 가능성과 다음 단계를 탐색한다
 
-## 최종 결과물
-- 번호판 인식 웹 서비스
-- 소스 코드 + 문서
-- 데모 영상
+## 전체 파이프라인 정리
 
-## Coming Soon!
-이 레슨은 준비 중입니다.
+번호판 인식 시스템을 처음부터 끝까지 완성했습니다!
+
+\`\`\`
+┌──────────────────────────────────────────────────────────────┐
+│                        Level 9 완성 시스템                      │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  [입력 이미지] ──────────────────────────────────────────────▶  │
+│                                                              │
+│       │                                                      │
+│       ▼                                                      │
+│  ┌─────────────────┐                                         │
+│  │  번호판 검출      │  ← Lesson 9-3: YOLOv8                  │
+│  │  (YOLO)         │                                         │
+│  └─────────────────┘                                         │
+│       │                                                      │
+│       ▼                                                      │
+│  ┌─────────────────┐                                         │
+│  │  영역 추출        │  ← Lesson 9-5: 크롭 + 전처리            │
+│  │  (Crop)         │                                         │
+│  └─────────────────┘                                         │
+│       │                                                      │
+│       ▼                                                      │
+│  ┌─────────────────┐                                         │
+│  │  문자 인식        │  ← Lesson 9-4: CNN OCR                 │
+│  │  (CNN OCR)      │                                         │
+│  └─────────────────┘                                         │
+│       │                                                      │
+│       ▼                                                      │
+│  ┌─────────────────┐                                         │
+│  │  API 서비스       │  ← Lesson 9-7: FastAPI + Docker        │
+│  │  (FastAPI)      │                                         │
+│  └─────────────────┘                                         │
+│       │                                                      │
+│       ▼                                                      │
+│                                                              │
+│  ◀─────────────────────────────────────── [결과: "12가3456"]  │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+\`\`\`
+
+## 사용한 기술 정리
+
+| 단계 | 기술 | 목적 |
+|------|------|------|
+| 데이터 준비 | LabelImg, Albumentations | 라벨링, 증강 |
+| 번호판 검출 | YOLOv8 (Ultralytics) | Object Detection |
+| 문자 인식 | CNN + PyTorch | 문자 분류 |
+| 모델 통합 | Python Class | End-to-end 파이프라인 |
+| 배포 | FastAPI + Docker | REST API 서비스 |
+
+## 실전 응용 분야
+
+완성한 기술은 다양한 분야에 활용됩니다:
+
+### 1. 주차장 관리 시스템
+\`\`\`
+입차 → 번호판 인식 → DB 기록 → 출차 시 요금 계산
+\`\`\`
+
+### 2. 교통 단속
+\`\`\`
+과속 카메라 → 번호판 인식 → 위반 차량 자동 등록
+\`\`\`
+
+### 3. 스마트 시티
+\`\`\`
+교통 CCTV → 차량 흐름 분석 → 혼잡도 예측
+\`\`\`
+
+### 4. 물류 추적
+\`\`\`
+화물차 입출고 → 자동 기록 → 운송 이력 관리
+\`\`\`
+
+## 확장 가능성
+
+### 1. 다른 국가 번호판
+\`\`\`python
+# 데이터셋만 변경하면 다른 국가 번호판도 가능
+# 미국, 일본, 유럽 등
+\`\`\`
+
+### 2. 오토바이 번호판
+\`\`\`python
+# 더 작은 크기, 다른 형식
+# 별도 데이터셋으로 학습
+\`\`\`
+
+### 3. 실시간 영상 처리
+\`\`\`python
+import cv2
+
+cap = cv2.VideoCapture(0)  # 카메라 입력
+while True:
+    ret, frame = cap.read()
+    result = recognizer.recognize(frame)
+    # 화면에 결과 표시
+    cv2.imshow('LPR', frame)
+\`\`\`
+
+### 4. 다중 카메라 시스템
+\`\`\`python
+# 여러 카메라 → 로드 밸런서 → 분산 처리
+\`\`\`
+
+## 다음 단계 제안
+
+### 성능 개선
+- [ ] 더 많은 데이터로 재학습
+- [ ] 야간/역광 조건 데이터 보강
+- [ ] 모델 경량화 (TensorRT, ONNX)
+
+### 기능 확장
+- [ ] 실시간 영상 스트림 처리
+- [ ] 엣지 디바이스 배포 (Jetson Nano)
+- [ ] 차량 색상/종류 인식 추가
+
+### 다른 프로젝트로 확장
+- [ ] 얼굴 인식 시스템
+- [ ] 제품 결함 검출
+- [ ] 의료 이미지 분석
+
+## Level 9 완료!
+
+\`\`\`
+ ╔═══════════════════════════════════════════════════════╗
+ ║                                                       ║
+ ║   🎉 축하합니다! Level 9 프로젝트를 완료했습니다!       ║
+ ║                                                       ║
+ ║   - 번호판 인식 시스템 완성                            ║
+ ║   - 검출부터 배포까지 전체 과정 경험                    ║
+ ║   - 실제 AI 프로젝트 개발 역량 습득                    ║
+ ║                                                       ║
+ ║   이제 여러분도 AI 프로젝트를 만들 수 있습니다!         ║
+ ║                                                       ║
+ ╚═══════════════════════════════════════════════════════╝
+\`\`\`
+
+## 핵심 정리
+
+1. **프로젝트 구조**: 검출 → 인식 → 통합 → 배포
+2. **사용 기술**: YOLO, CNN, PyTorch, FastAPI, Docker
+3. **응용 분야**: 주차장, 교통 단속, 물류, 스마트 시티
+4. **확장**: 다른 국가, 영상 처리, 엣지 배포
+5. **다음 목표**: 성능 개선, 기능 확장, 새 프로젝트 도전
 `
       }
     ]

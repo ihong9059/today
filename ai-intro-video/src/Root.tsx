@@ -40,6 +40,41 @@ import { Lesson4_7Video, LESSON_4_7_DURATION, Lesson4_7Thumbnail } from "./lesso
 import { Lesson51Video, LESSON51_DURATION, Lesson51Thumbnail } from "./lessons/Level5/Lesson51";
 import { Lesson52Video, LESSON52_DURATION, Lesson52Thumbnail } from "./lessons/Level5/Lesson52";
 import { Lesson53Video, LESSON53_DURATION, Lesson53Thumbnail } from "./lessons/Level5/Lesson53";
+import { Lesson54Video, LESSON54_DURATION, Lesson54Thumbnail } from "./lessons/Level5/Lesson54";
+import { Lesson55Video, LESSON55_DURATION, Lesson55Thumbnail } from "./lessons/Level5/Lesson55";
+import { Lesson56Video, LESSON56_DURATION, Lesson56Thumbnail } from "./lessons/Level5/Lesson56";
+import { Lesson57Video, LESSON57_DURATION, Lesson57Thumbnail } from "./lessons/Level5/Lesson57";
+import { Lesson58Video, LESSON58_DURATION, Lesson58Thumbnail } from "./lessons/Level5/Lesson58";
+import { Lesson61Video, LESSON61_DURATION, Lesson61Thumbnail } from "./lessons/Level6/Lesson61";
+import { Lesson62Video, LESSON62_DURATION, Lesson62Thumbnail } from "./lessons/Level6/Lesson62";
+import { Lesson63Video, LESSON63_DURATION, Lesson63Thumbnail } from "./lessons/Level6/Lesson63";
+import { Lesson64Video, LESSON64_DURATION, Lesson64Thumbnail } from "./lessons/Level6/Lesson64";
+import { Lesson65Video, LESSON65_DURATION, Lesson65Thumbnail } from "./lessons/Level6/Lesson65";
+import { Lesson66Video, LESSON66_DURATION, Lesson66Thumbnail } from "./lessons/Level6/Lesson66";
+import { Lesson71Video, LESSON71_DURATION, Lesson71Thumbnail } from "./lessons/Level7/Lesson71";
+import { Lesson72Video, LESSON72_DURATION, Lesson72Thumbnail } from "./lessons/Level7/Lesson72";
+import { Lesson73Video, LESSON73_DURATION, Lesson73Thumbnail } from "./lessons/Level7/Lesson73";
+import { Lesson74Video, LESSON74_DURATION, Lesson74Thumbnail } from "./lessons/Level7/Lesson74";
+import { Lesson75Video, LESSON75_DURATION, Lesson75Thumbnail } from "./lessons/Level7/Lesson75";
+import { Lesson76Video, LESSON76_DURATION, Lesson76Thumbnail } from "./lessons/Level7/Lesson76";
+import { Lesson77Video, LESSON77_DURATION, Lesson77Thumbnail } from "./lessons/Level7/Lesson77";
+import { Lesson78Video, LESSON78_DURATION, Lesson78Thumbnail } from "./lessons/Level7/Lesson78";
+import { Lesson67Video, LESSON67_DURATION, Lesson67Thumbnail } from "./lessons/Level6/Lesson67";
+import { Lesson81Video, LESSON81_DURATION, Lesson81Thumbnail } from "./lessons/Level8/Lesson81";
+import { Lesson82Video, LESSON82_DURATION, Lesson82Thumbnail } from "./lessons/Level8/Lesson82";
+import { Lesson83Video, LESSON83_DURATION, Lesson83Thumbnail } from "./lessons/Level8/Lesson83";
+import { Lesson84Video, LESSON84_DURATION, Lesson84Thumbnail } from "./lessons/Level8/Lesson84";
+import { Lesson85Video, LESSON85_DURATION, Lesson85Thumbnail } from "./lessons/Level8/Lesson85";
+import { Lesson86Video, LESSON86_DURATION, Lesson86Thumbnail } from "./lessons/Level8/Lesson86";
+import { Lesson87Video, LESSON87_DURATION, Lesson87Thumbnail } from "./lessons/Level8/Lesson87";
+import { Lesson91Video, LESSON91_DURATION, Lesson91Thumbnail } from "./lessons/Level9/Lesson91";
+import { Lesson92Video, LESSON92_DURATION, Lesson92Thumbnail } from "./lessons/Level9/Lesson92";
+import { Lesson93Video, LESSON93_DURATION, Lesson93Thumbnail } from "./lessons/Level9/Lesson93";
+import { Lesson94Video, LESSON94_DURATION, Lesson94Thumbnail } from "./lessons/Level9/Lesson94";
+import { Lesson95Video, LESSON95_DURATION, Lesson95Thumbnail } from "./lessons/Level9/Lesson95";
+import { Lesson96Video, LESSON96_DURATION, Lesson96Thumbnail } from "./lessons/Level9/Lesson96";
+import { Lesson97Video, LESSON97_DURATION, Lesson97Thumbnail } from "./lessons/Level9/Lesson97";
+import { Lesson98Video, LESSON98_DURATION, Lesson98Thumbnail } from "./lessons/Level9/Lesson98";
 
 // 30fps, 12분 5초 = 725초 = 21750 프레임 (나레이션 길이 기반)
 const FPS = 30;
@@ -727,6 +762,604 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Lesson5-3Thumbnail"
         component={Lesson53Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 5-4: CNN 아키텍처 */}
+      <Composition
+        id="Lesson5-4"
+        component={Lesson54Video}
+        durationInFrames={LESSON54_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson5-4Thumbnail"
+        component={Lesson54Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 5-5: CNN 구현 (MNIST) */}
+      <Composition
+        id="Lesson5-5"
+        component={Lesson55Video}
+        durationInFrames={LESSON55_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson5-5Thumbnail"
+        component={Lesson55Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 5-6: CNN 구현 (CIFAR-10) */}
+      <Composition
+        id="Lesson5-6"
+        component={Lesson56Video}
+        durationInFrames={LESSON56_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson5-6Thumbnail"
+        component={Lesson56Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 5-7: 전이 학습 (Transfer Learning) */}
+      <Composition
+        id="Lesson5-7"
+        component={Lesson57Video}
+        durationInFrames={LESSON57_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson5-7Thumbnail"
+        component={Lesson57Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 5-8: 데이터 증강 (Data Augmentation) */}
+      <Composition
+        id="Lesson5-8"
+        component={Lesson58Video}
+        durationInFrames={LESSON58_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson5-8Thumbnail"
+        component={Lesson58Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* ============ Level 6: 시퀀스 모델 (RNN/LSTM) ============ */}
+      {/* Lesson 6-1: 시퀀스 데이터 */}
+      <Composition
+        id="Lesson6-1"
+        component={Lesson61Video}
+        durationInFrames={LESSON61_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson6-1Thumbnail"
+        component={Lesson61Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 6-2: RNN 기본 구조 */}
+      <Composition
+        id="Lesson6-2"
+        component={Lesson62Video}
+        durationInFrames={LESSON62_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson6-2Thumbnail"
+        component={Lesson62Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 6-3: RNN의 문제점 */}
+      <Composition
+        id="Lesson6-3"
+        component={Lesson63Video}
+        durationInFrames={LESSON63_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson6-3Thumbnail"
+        component={Lesson63Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 6-4: LSTM */}
+      <Composition
+        id="Lesson6-4"
+        component={Lesson64Video}
+        durationInFrames={LESSON64_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson6-4Thumbnail"
+        component={Lesson64Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 6-5: GRU */}
+      <Composition
+        id="Lesson6-5"
+        component={Lesson65Video}
+        durationInFrames={LESSON65_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson6-5Thumbnail"
+        component={Lesson65Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 6-6: 텍스트 전처리 */}
+      <Composition
+        id="Lesson6-6"
+        component={Lesson66Video}
+        durationInFrames={LESSON66_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson6-6Thumbnail"
+        component={Lesson66Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 6-7: 감성 분석 구현 */}
+      <Composition
+        id="Lesson6-7"
+        component={Lesson67Video}
+        durationInFrames={LESSON67_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson6-7Thumbnail"
+        component={Lesson67Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* ============ Level 7: Transformer & LLM 원리 ============ */}
+      {/* Lesson 7-1: Attention 메커니즘 */}
+      <Composition
+        id="Lesson7-1"
+        component={Lesson71Video}
+        durationInFrames={LESSON71_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson7-1Thumbnail"
+        component={Lesson71Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      {/* Lesson 7-2: Self-Attention */}
+      <Composition
+        id="Lesson7-2"
+        component={Lesson72Video}
+        durationInFrames={LESSON72_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson7-2Thumbnail"
+        component={Lesson72Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 7-3: Multi-Head Attention */}
+      <Composition
+        id="Lesson7-3"
+        component={Lesson73Video}
+        durationInFrames={LESSON73_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson7-3Thumbnail"
+        component={Lesson73Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      {/* Lesson 7-4: Positional Encoding */}
+      <Composition
+        id="Lesson7-4"
+        component={Lesson74Video}
+        durationInFrames={LESSON74_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson7-4Thumbnail"
+        component={Lesson74Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 7-5: Transformer 구조 */}
+      <Composition
+        id="Lesson7-5"
+        component={Lesson75Video}
+        durationInFrames={LESSON75_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson7-5Thumbnail"
+        component={Lesson75Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 7-6: BERT 개요 */}
+      <Composition
+        id="Lesson7-6"
+        component={Lesson76Video}
+        durationInFrames={LESSON76_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson7-6Thumbnail"
+        component={Lesson76Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 7-7: GPT 개요 */}
+      <Composition
+        id="Lesson7-7"
+        component={Lesson77Video}
+        durationInFrames={LESSON77_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson7-7Thumbnail"
+        component={Lesson77Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 7-8: LLM 작동 원리 */}
+      <Composition
+        id="Lesson7-8"
+        component={Lesson78Video}
+        durationInFrames={LESSON78_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson7-8Thumbnail"
+        component={Lesson78Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* ============ Level 9: 종합 프로젝트 (번호판 인식) ============ */}
+            {/* Lesson 8-1: GPU vs CPU */}
+      <Composition
+        id="Lesson8-1"
+        component={Lesson81Video}
+        durationInFrames={LESSON81_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson8-1Thumbnail"
+        component={Lesson81Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+            {/* Lesson 8-2: CUDA 개요 */}
+      <Composition
+        id="Lesson8-2"
+        component={Lesson82Video}
+        durationInFrames={LESSON82_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson8-2Thumbnail"
+        component={Lesson82Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 8-3: CUDA 환경 설정 */}
+      <Composition
+        id="Lesson8-3"
+        component={Lesson83Video}
+        durationInFrames={LESSON83_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson8-3Thumbnail"
+        component={Lesson83Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 8-4: 첫 CUDA 프로그램 */}
+      <Composition
+        id="Lesson8-4"
+        component={Lesson84Video}
+        durationInFrames={LESSON84_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson8-4Thumbnail"
+        component={Lesson84Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 8-5: CUDA 메모리 관리 */}
+      <Composition
+        id="Lesson8-5"
+        component={Lesson85Video}
+        durationInFrames={LESSON85_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson8-5Thumbnail"
+        component={Lesson85Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 8-6: CUDA 스트림과 비동기 실행 */}
+      <Composition
+        id="Lesson8-6"
+        component={Lesson86Video}
+        durationInFrames={LESSON86_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson8-6Thumbnail"
+        component={Lesson86Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 8-7: CUDA 성능 최적화 */}
+      <Composition
+        id="Lesson8-7"
+        component={Lesson87Video}
+        durationInFrames={LESSON87_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson8-7Thumbnail"
+        component={Lesson87Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 9-1: 프로젝트 개요 */}
+      <Composition
+        id="Lesson9-1"
+        component={Lesson91Video}
+        durationInFrames={LESSON91_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson9-1Thumbnail"
+        component={Lesson91Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 9-2: 데이터 수집/준비 */}
+      <Composition
+        id="Lesson9-2"
+        component={Lesson92Video}
+        durationInFrames={LESSON92_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson9-2Thumbnail"
+        component={Lesson92Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 9-3: 번호판 검출 모델 */}
+      <Composition
+        id="Lesson9-3"
+        component={Lesson93Video}
+        durationInFrames={LESSON93_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson9-3Thumbnail"
+        component={Lesson93Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 9-4: 문자 인식 모델 */}
+      <Composition
+        id="Lesson9-4"
+        component={Lesson94Video}
+        durationInFrames={LESSON94_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson9-4Thumbnail"
+        component={Lesson94Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 9-5: 모델 통합 */}
+      <Composition
+        id="Lesson9-5"
+        component={Lesson95Video}
+        durationInFrames={LESSON95_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson9-5Thumbnail"
+        component={Lesson95Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 9-6: 성능 평가 */}
+      <Composition
+        id="Lesson9-6"
+        component={Lesson96Video}
+        durationInFrames={LESSON96_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson9-6Thumbnail"
+        component={Lesson96Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 9-7: 실제 배포 */}
+      <Composition
+        id="Lesson9-7"
+        component={Lesson97Video}
+        durationInFrames={LESSON97_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson9-7Thumbnail"
+        component={Lesson97Thumbnail}
+        durationInFrames={1}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      {/* Lesson 9-8: 프로젝트 회고 */}
+      <Composition
+        id="Lesson9-8"
+        component={Lesson98Video}
+        durationInFrames={LESSON98_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson9-8Thumbnail"
+        component={Lesson98Thumbnail}
         durationInFrames={1}
         fps={30}
         width={1280}
