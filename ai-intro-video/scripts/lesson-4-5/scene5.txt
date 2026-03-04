@@ -1,9 +1,0 @@
-PyTorch는 MNIST, CIFAR-10 같은 내장 데이터셋을 제공합니다.
-
-torchvision.datasets에서 불러올 수 있습니다.
-root로 저장 경로를 지정하고,
-train 파라미터로 학습용인지 테스트용인지 선택합니다.
-download를 True로 하면 자동으로 다운로드합니다.
-transform에 전처리 파이프라인을 전달합니다.
-
-이렇게 하면 손쉽게 벤치마크 데이터셋을 사용할 수 있습니다.

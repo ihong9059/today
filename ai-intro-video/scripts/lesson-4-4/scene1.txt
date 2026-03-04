@@ -1,6 +1,0 @@
-안녕하세요! 이번 강의에서는 PyTorch의 핵심인 nn.Module에 대해 배워보겠습니다.
-
-nn.Module은 PyTorch에서 모든 신경망의 기본이 되는 클래스입니다.
-우리가 사용하는 nn.Linear, nn.Conv2d, nn.ReLU 같은 모든 레이어가 nn.Module을 상속받습니다.
-
-이번 강의에서는 nn.Module의 구조와 사용법을 알아보겠습니다.
