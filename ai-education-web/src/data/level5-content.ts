@@ -141,7 +141,7 @@ export const LEVEL_5_LESSON_1 = `
 \`\`\`
 
 ### PyTorch 예시
-\`\`\`python
+\`\`\`text
 import torch
 from torchvision import transforms
 from PIL import Image
@@ -187,7 +187,7 @@ batch = tensor.unsqueeze(0)  # (1, 3, H, W)
 \`\`\`
 
 ### PyTorch 정규화
-\`\`\`python
+\`\`\`text
 # ImageNet 통계 사용 (가장 일반적)
 transform = transforms.Compose([
     transforms.ToTensor(),  # 0~1로 변환
@@ -442,7 +442,7 @@ Stride = 2
 ## 💻 6. PyTorch 구현
 
 ### Conv2d 기본 사용
-\`\`\`python
+\`\`\`text
 import torch
 import torch.nn as nn
 
@@ -462,7 +462,7 @@ print(output.shape)  # torch.Size([1, 64, 32, 32])
 \`\`\`
 
 ### 파라미터 수 계산
-\`\`\`python
+\`\`\`text
 # 가중치: out_channels × in_channels × kernel × kernel
 # 편향: out_channels
 
@@ -567,7 +567,7 @@ Max Pooling = 영역 내 최대값 선택
 \`\`\`
 
 ### PyTorch 구현
-\`\`\`python
+\`\`\`text
 import torch.nn as nn
 
 # Max Pooling 정의
@@ -619,7 +619,7 @@ Average Pooling = 영역 내 평균값
 \`\`\`
 
 ### PyTorch 구현
-\`\`\`python
+\`\`\`text
 # Global Average Pooling
 gap = nn.AdaptiveAvgPool2d(1)  # 출력 크기 1×1
 
@@ -682,7 +682,7 @@ y = γx̂ + β
 \`\`\`
 
 ### PyTorch 구현
-\`\`\`python
+\`\`\`text
 # Conv 뒤에 BatchNorm 배치
 self.conv1 = nn.Conv2d(3, 64, 3, padding=1)
 self.bn1 = nn.BatchNorm2d(64)  # 채널 수
@@ -743,7 +743,7 @@ def forward(self, x):
 \`\`\`
 
 ### PyTorch 구현
-\`\`\`python
+\`\`\`text
 self.dropout = nn.Dropout(p=0.5)  # 50% 비활성화
 
 def forward(self, x):
@@ -862,7 +862,7 @@ Conv1 → Pool → Conv2 → Pool → FC → FC → 출력
 \`\`\`
 
 ### PyTorch 구현
-\`\`\`python
+\`\`\`text
 class LeNet5(nn.Module):
     def __init__(self):
         super().__init__()
@@ -971,7 +971,7 @@ FC: 4096 → 4096 → 1000
 \`\`\`
 
 ### PyTorch 구현 (간략)
-\`\`\`python
+\`\`\`text
 def make_layers(cfg):
     layers = []
     in_channels = 3
@@ -1125,7 +1125,7 @@ CNN의 장점:
 ## 📦 2. 환경 설정
 
 ### 라이브러리 임포트
-\`\`\`python
+\`\`\`text
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -1140,7 +1140,7 @@ print(f'Using device: {device}')
 \`\`\`
 
 ### 데이터 로드
-\`\`\`python
+\`\`\`text
 # 데이터 변환
 transform = transforms.Compose([
     transforms.ToTensor(),
@@ -1184,7 +1184,7 @@ FC2: 128 → 10
 \`\`\`
 
 ### PyTorch 구현
-\`\`\`python
+\`\`\`text
 class MNIST_CNN(nn.Module):
     def __init__(self):
         super().__init__()
@@ -1235,7 +1235,7 @@ print(f'총 파라미터: {sum(p.numel() for p in model.parameters()):,}')
 
 ## ⚙️ 4. 학습 설정
 
-\`\`\`python
+\`\`\`text
 # 손실 함수와 옵티마이저
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
@@ -1248,7 +1248,7 @@ scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.5)
 
 ## 🔄 5. 학습 루프
 
-\`\`\`python
+\`\`\`text
 def train(model, loader, criterion, optimizer, device):
     model.train()
     total_loss = 0
@@ -1296,7 +1296,7 @@ def test(model, loader, criterion, device):
 \`\`\`
 
 ### 학습 실행
-\`\`\`python
+\`\`\`text
 epochs = 10
 history = {'train_loss': [], 'train_acc': [], 'test_loss': [], 'test_acc': []}
 
@@ -1327,7 +1327,7 @@ Epoch 10/10 | Train Loss: 0.0089, Acc: 99.72% | Test Acc: 99.21%
 
 ## 📊 6. 결과 시각화
 
-\`\`\`python
+\`\`\`text
 fig, axes = plt.subplots(1, 2, figsize=(12, 4))
 
 # 손실 그래프
@@ -1347,7 +1347,7 @@ plt.show()
 \`\`\`
 
 ### 예측 결과 확인
-\`\`\`python
+\`\`\`text
 # 테스트 이미지로 예측
 model.eval()
 images, labels = next(iter(test_loader))
@@ -1441,7 +1441,7 @@ CIFAR-10 vs MNIST:
 ## 📦 2. 데이터 준비
 
 ### 데이터 증강 적용
-\`\`\`python
+\`\`\`text
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -1494,7 +1494,7 @@ FC: 256 → 10
 \`\`\`
 
 ### PyTorch 구현
-\`\`\`python
+\`\`\`text
 class CIFAR10_CNN(nn.Module):
     def __init__(self):
         super().__init__()
@@ -1557,7 +1557,7 @@ print(f'파라미터 수: {sum(p.numel() for p in model.parameters()):,}')
 
 ## ⚙️ 4. 학습 설정
 
-\`\`\`python
+\`\`\`text
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-4)
 
@@ -1569,7 +1569,7 @@ scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=50)
 
 ## 🔄 5. 학습 실행
 
-\`\`\`python
+\`\`\`text
 epochs = 50
 best_acc = 0
 
@@ -1641,7 +1641,7 @@ Best Test Accuracy: 85.21%
 ## 📊 6. 결과 분석
 
 ### 클래스별 정확도
-\`\`\`python
+\`\`\`text
 # 클래스별 정확도 계산
 class_names = ['plane', 'car', 'bird', 'cat', 'deer',
                'dog', 'frog', 'horse', 'ship', 'truck']
@@ -1820,7 +1820,7 @@ FC: 최종 분류
 ## 📦 3. PyTorch에서 Pre-trained 모델
 
 ### 사용 가능한 모델
-\`\`\`python
+\`\`\`text
 from torchvision import models
 
 # 주요 모델들
@@ -1832,7 +1832,7 @@ efficientnet_b0 = models.efficientnet_b0(pretrained=True)  # 5.3M params
 \`\`\`
 
 ### 모델 구조 확인
-\`\`\`python
+\`\`\`text
 model = models.resnet18(pretrained=True)
 print(model)
 
@@ -1849,7 +1849,7 @@ print(model)
 ## 🔧 4. Feature Extraction 방식
 
 ### 마지막 레이어만 교체
-\`\`\`python
+\`\`\`text
 import torch
 import torch.nn as nn
 from torchvision import models
@@ -1871,7 +1871,7 @@ print(f"학습 가능 파라미터: {sum(p.numel() for p in model.parameters() i
 \`\`\`
 
 ### 학습
-\`\`\`python
+\`\`\`text
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = model.to(device)
 
@@ -1890,7 +1890,7 @@ for epoch in range(10):
 ## 🎯 5. Fine-tuning 방식
 
 ### 전체 네트워크 미세 조정
-\`\`\`python
+\`\`\`text
 # Pre-trained 모델 로드
 model = models.resnet18(pretrained=True)
 
@@ -1909,7 +1909,7 @@ optimizer = torch.optim.Adam([
 \`\`\`
 
 ### 점진적 언프리징
-\`\`\`python
+\`\`\`text
 # 처음에는 FC만 학습
 for param in model.parameters():
     param.requires_grad = False
@@ -1926,7 +1926,7 @@ model.layer3.requires_grad_(True)
 
 ## 💻 6. 완전한 예제: CIFAR-10 전이 학습
 
-\`\`\`python
+\`\`\`text
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -2103,7 +2103,7 @@ export const LEVEL_5_LESSON_8 = `
 ## 🖼️ 2. 기본 변환 기법
 
 ### 기하학적 변환
-\`\`\`python
+\`\`\`text
 from torchvision import transforms
 
 # 1. 좌우 반전 (Horizontal Flip)
@@ -2126,7 +2126,7 @@ transforms.RandomCrop(32, padding=4)
 \`\`\`
 
 ### 크기 및 비율 변환
-\`\`\`python
+\`\`\`text
 # 5. 랜덤 리사이즈 크롭
 transforms.RandomResizedCrop(
     size=224,
@@ -2148,7 +2148,7 @@ transforms.RandomAffine(
 ## 🎨 3. 색상 변환
 
 ### ColorJitter
-\`\`\`python
+\`\`\`text
 # 밝기, 대비, 채도, 색조 변환
 transforms.ColorJitter(
     brightness=0.2,  # ±20% 밝기
@@ -2159,7 +2159,7 @@ transforms.ColorJitter(
 \`\`\`
 
 ### 기타 색상 변환
-\`\`\`python
+\`\`\`text
 # 그레이스케일 변환
 transforms.RandomGrayscale(p=0.1)
 # 10% 확률로 흑백 변환
@@ -2176,7 +2176,7 @@ transforms.RandomInvert(p=0.1)
 ## 📦 4. 실전 변환 파이프라인
 
 ### CIFAR-10용 기본 증강
-\`\`\`python
+\`\`\`text
 train_transform = transforms.Compose([
     transforms.RandomHorizontalFlip(p=0.5),
     transforms.RandomCrop(32, padding=4),
@@ -2197,7 +2197,7 @@ test_transform = transforms.Compose([
 \`\`\`
 
 ### ImageNet용 강한 증강
-\`\`\`python
+\`\`\`text
 train_transform = transforms.Compose([
     transforms.RandomResizedCrop(224),
     transforms.RandomHorizontalFlip(),
@@ -2230,7 +2230,7 @@ train_transform = transforms.Compose([
 모델이 일부만 보고도 인식하도록 학습!
 \`\`\`
 
-\`\`\`python
+\`\`\`text
 # PyTorch 구현
 transforms.RandomErasing(
     p=0.5,           # 50% 확률
@@ -2252,7 +2252,7 @@ transforms.RandomErasing(
     라벨: [0.6, 0.4]
 \`\`\`
 
-\`\`\`python
+\`\`\`text
 def mixup_data(x, y, alpha=1.0):
     lam = np.random.beta(alpha, alpha)
     batch_size = x.size(0)
@@ -2326,7 +2326,7 @@ def mixup_criterion(criterion, pred, y_a, y_b, lam):
 
 ## 💻 7. 완전한 예제
 
-\`\`\`python
+\`\`\`text
 import torch
 from torchvision import transforms, datasets
 from torch.utils.data import DataLoader

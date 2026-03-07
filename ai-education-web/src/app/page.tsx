@@ -37,6 +37,24 @@ export default function Home() {
               >
                 로드맵 보기
               </Link>
+              <Link
+                href="/report"
+                className="inline-flex items-center px-8 py-4 border-2 border-orange-300 text-orange-200 font-semibold rounded-lg hover:bg-orange-500/20 transition-colors"
+              >
+                📊 분석 보고서
+              </Link>
+              <Link
+                href="/guide"
+                className="inline-flex items-center px-8 py-4 border-2 border-emerald-300 text-emerald-200 font-semibold rounded-lg hover:bg-emerald-500/20 transition-colors"
+              >
+                🐍 실습 가이드
+              </Link>
+              <Link
+                href="/transformer"
+                className="inline-flex items-center px-8 py-4 border-2 border-violet-300 text-violet-200 font-semibold rounded-lg hover:bg-violet-500/20 transition-colors"
+              >
+                🤖 Transformer 원리
+              </Link>
             </div>
           </div>
         </div>

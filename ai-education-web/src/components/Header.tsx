@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { BookOpen, Home, Map, GraduationCap } from 'lucide-react';
+import { BookOpen, Home, Map, GraduationCap, FileText, HelpCircle, Bot } from 'lucide-react';
 
 export default function Header() {
   return (
@@ -34,6 +34,27 @@ export default function Header() {
             >
               <Map className="h-4 w-4" />
               <span>로드맵</span>
+            </Link>
+            <Link
+              href="/report"
+              className="flex items-center space-x-1 text-gray-600 hover:text-orange-600 transition-colors"
+            >
+              <FileText className="h-4 w-4" />
+              <span>보고서</span>
+            </Link>
+            <Link
+              href="/guide"
+              className="flex items-center space-x-1 text-gray-600 hover:text-emerald-600 transition-colors"
+            >
+              <HelpCircle className="h-4 w-4" />
+              <span>실습 가이드</span>
+            </Link>
+            <Link
+              href="/transformer"
+              className="flex items-center space-x-1 text-gray-600 hover:text-violet-600 transition-colors"
+            >
+              <Bot className="h-4 w-4" />
+              <span>Transformer</span>
             </Link>
           </nav>
         </div>

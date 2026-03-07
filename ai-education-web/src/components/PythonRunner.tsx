@@ -17,6 +17,7 @@ declare global {
 export default function PythonRunner({ initialCode, onClose }: PythonRunnerProps) {
   const [code, setCode] = useState(initialCode);
   const [output, setOutput] = useState<string>('');
+  const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -84,28 +85,83 @@ export default function PythonRunner({ initialCode, onClose }: PythonRunnerProps
 
     setIsRunning(true);
     setOutput('');
+    setImages([]);
     setError(null);
 
     try {
-      // Redirect stdout
+      // Detect and load required packages before running
+      const packagesToLoad: string[] = [];
+      if (/\bimport\s+numpy\b|\bfrom\s+numpy\b/.test(code)) packagesToLoad.push('numpy');
+      if (/\bimport\s+matplotlib\b|\bfrom\s+matplotlib\b/.test(code)) packagesToLoad.push('matplotlib');
+      if (/\bimport\s+scipy\b|\bfrom\s+scipy\b/.test(code)) packagesToLoad.push('scipy');
+      if (/\bimport\s+pandas\b|\bfrom\s+pandas\b/.test(code)) packagesToLoad.push('pandas');
+
+      if (packagesToLoad.length > 0) {
+        await pyodide.loadPackage(packagesToLoad);
+      }
+
+      const usesMpl = packagesToLoad.includes('matplotlib');
+
+      // Redirect stdout and set up matplotlib capture
       pyodide.runPython(`
 import sys
 from io import StringIO
 sys.stdout = StringIO()
 sys.stderr = StringIO()
+_plot_images_ = []
 `);
+
+      if (usesMpl) {
+        // Override plt.show() to capture figures as base64 PNG
+        pyodide.runPython(`
+import matplotlib
+matplotlib.use('agg')
+import matplotlib.pyplot as plt
+import base64
+from io import BytesIO
+
+_original_show_ = plt.show
+def _capture_show_(*args, **kwargs):
+    for fig_num in plt.get_fignums():
+        fig = plt.figure(fig_num)
+        buf = BytesIO()
+        fig.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
+        buf.seek(0)
+        _plot_images_.append(base64.b64encode(buf.read()).decode('utf-8'))
+        buf.close()
+    plt.close('all')
+
+plt.show = _capture_show_
+`);
+      }
 
       // Run user code
       await pyodide.runPythonAsync(code);
+
+      // If matplotlib was used but plt.show() was never called, capture remaining figures
+      if (usesMpl) {
+        pyodide.runPython(`
+import matplotlib.pyplot as plt
+if plt.get_fignums():
+    _capture_show_()
+`);
+      }
 
       // Get output
       const stdout = pyodide.runPython('sys.stdout.getvalue()');
       const stderr = pyodide.runPython('sys.stderr.getvalue()');
 
+      // Get captured plot images
+      const plotImages: string[] = pyodide.runPython('_plot_images_').toJs();
+
+      if (plotImages.length > 0) {
+        setImages(plotImages);
+      }
+
       if (stderr) {
         setOutput(stdout + '\n' + stderr);
       } else {
-        setOutput(stdout || '(출력 없음)');
+        setOutput(stdout || (plotImages.length > 0 ? '' : '(출력 없음)'));
       }
     } catch (err: any) {
       setError(err.message || '실행 오류');
@@ -122,6 +178,7 @@ sys.stderr = StringIO()
 
   const clearOutput = () => {
     setOutput('');
+    setImages([]);
     setError(null);
   };
 
@@ -200,13 +257,31 @@ sys.stderr = StringIO()
             <div className="bg-gray-100 px-4 py-2 text-xs text-gray-600 font-semibold">
               출력 결과
             </div>
-            <div className="p-4 bg-gray-50 min-h-[100px] max-h-[300px] overflow-auto">
+            <div className="p-4 bg-gray-50 min-h-[100px] max-h-[500px] overflow-auto">
               {error ? (
                 <pre className="text-red-600 font-mono text-sm whitespace-pre-wrap">{error}</pre>
-              ) : output ? (
-                <pre className="text-gray-800 font-mono text-sm whitespace-pre-wrap">{output}</pre>
               ) : (
-                <p className="text-gray-400 italic">실행 버튼을 눌러 코드를 실행하세요</p>
+                <>
+                  {output && (
+                    <pre className="text-gray-800 font-mono text-sm whitespace-pre-wrap">{output}</pre>
+                  )}
+                  {images.length > 0 && (
+                    <div className="space-y-3 mt-2">
+                      {images.map((img, i) => (
+                        <div key={i} className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+                          <img
+                            src={`data:image/png;base64,${img}`}
+                            alt={`Plot ${i + 1}`}
+                            className="w-full h-auto"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {!output && images.length === 0 && (
+                    <p className="text-gray-400 italic">실행 버튼을 눌러 코드를 실행하세요</p>
+                  )}
+                </>
               )}
             </div>
           </div>

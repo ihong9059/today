@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Clock, PlayCircle, ExternalLink, BookOpen } from 'lucide-react';
 import { getLessonById, getNextLesson, getPrevLesson } from '@/data/curriculum';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
+import ColabButton from '@/components/ColabButton';
 
 export default function LessonPage() {
   const params = useParams();
@@ -28,13 +29,6 @@ export default function LessonPage() {
   const { level, lesson } = result;
   const prevLesson = getPrevLesson(lessonId);
   const nextLesson = getNextLesson(lessonId);
-
-  const getYouTubeEmbedUrl = (url: string) => {
-    const videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)?.[1];
-    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
-  };
-
-  const embedUrl = lesson.videoUrl ? getYouTubeEmbedUrl(lesson.videoUrl) : null;
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -70,31 +64,59 @@ export default function LessonPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Video Section */}
-            {embedUrl && (
-              <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-                <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-                  <h2 className="text-lg font-semibold text-gray-900 flex items-center">
-                    <PlayCircle className="h-5 w-5 mr-2 text-red-500" />
-                    강의 영상
-                  </h2>
-                  <a
-                    href={lesson.videoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-blue-600 hover:underline flex items-center"
-                  >
-                    YouTube에서 보기
-                    <ExternalLink className="h-4 w-4 ml-1" />
-                  </a>
+            {/* Video Section - 클릭 시 새 탭에서 YouTube 재생 */}
+            {lesson.videoUrl && (
+              <a
+                href={lesson.videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block bg-white rounded-xl shadow-sm overflow-hidden group hover:shadow-md transition-shadow"
+              >
+                <div className="relative aspect-video bg-gray-900">
+                  <img
+                    src={`https://img.youtube.com/vi/${lesson.videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)?.[1]}/maxresdefault.jpg`}
+                    alt={`${lesson.title} 강의 영상`}
+                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center group-hover:bg-red-500 group-hover:scale-110 transition-all shadow-lg">
+                      <PlayCircle className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <div className="flex items-center justify-between text-white">
+                      <span className="font-semibold flex items-center">
+                        <PlayCircle className="h-4 w-4 mr-2" />
+                        강의 영상 보기 (새 탭에서 재생)
+                      </span>
+                      <span className="text-sm text-gray-300 flex items-center">
+                        YouTube
+                        <ExternalLink className="h-3 w-3 ml-1" />
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="aspect-video">
-                  <iframe
-                    src={embedUrl}
-                    title={lesson.title}
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
+              </a>
+            )}
+
+            {/* Colab Notebook Download - Level 3 이상에서만 표시 (PyTorch/GPU 필요) */}
+            {lesson.content && level.id >= 3 && (
+              <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl shadow-sm p-5 border border-orange-200">
+                <div className="flex items-center justify-between flex-wrap gap-3">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 flex items-center">
+                      <span className="text-xl mr-2">📓</span>
+                      Google Colab에서 실습하기
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      이 레슨은 PyTorch/GPU가 필요합니다. 노트북을 다운로드 후{' '}
+                      <a href="https://colab.research.google.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Google Colab</a>에서 열어주세요.
+                    </p>
+                  </div>
+                  <ColabButton
+                    lessonTitle={lesson.title}
+                    levelTitle={level.title}
+                    lessonContent={lesson.content}
                   />
                 </div>
               </div>
@@ -116,7 +138,7 @@ export default function LessonPage() {
             )}
 
             {/* Placeholder for lessons without content */}
-            {!lesson.content && !embedUrl && (
+            {!lesson.content && !lesson.videoUrl && (
               <div className="bg-white rounded-xl shadow-sm p-8 text-center">
                 <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -161,6 +183,40 @@ export default function LessonPage() {
                 )}
               </dl>
             </div>
+
+            {/* Colab Guide - Level 3 이상에서만 표시 */}
+            {level.id >= 3 && (
+              <div className="bg-orange-50 rounded-xl shadow-sm p-6 border border-orange-200">
+                <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
+                  <span className="mr-2">💡</span>실습 환경 안내
+                </h3>
+                <div className="text-sm text-gray-700 space-y-2">
+                  <p>이 레벨은 <strong>PyTorch/GPU</strong>가 필요하여 Google Colab 사용을 권장합니다.</p>
+                  <div className="mt-3 pt-3 border-t border-orange-200">
+                    <p className="text-xs text-gray-500">
+                      Colab은 무료 GPU를 제공하여 PyTorch, CNN, Transformer 등을 실행할 수 있습니다.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Pyodide Guide - Level 0~2에서만 표시 */}
+            {level.id < 3 && (
+              <div className="bg-green-50 rounded-xl shadow-sm p-6 border border-green-200">
+                <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
+                  <span className="mr-2">💡</span>실습 환경 안내
+                </h3>
+                <div className="text-sm text-gray-700 space-y-2">
+                  <p>코드 블록의 <strong>▶ 실행</strong> 버튼을 누르면 브라우저에서 바로 Python을 실행할 수 있습니다.</p>
+                  <div className="mt-3 pt-3 border-t border-green-200">
+                    <p className="text-xs text-gray-500">
+                      별도 설치 없이 NumPy, Matplotlib 등 기본 라이브러리를 사용할 수 있습니다.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Quick Navigation */}
             <div className="bg-white rounded-xl shadow-sm p-6">

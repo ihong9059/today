@@ -10,9 +10,53 @@ import dynamic from 'next/dynamic';
 
 // Dynamic import to avoid SSR issues with Pyodide
 const PythonRunner = dynamic(() => import('./PythonRunner'), { ssr: false });
+const ActivationFunctionChart = dynamic(() => import('./ActivationFunctionChart'), { ssr: false });
+const NeuronFlowChart = dynamic(() => import('./charts/NeuronFlowChart'), { ssr: false });
+const PerceptronChart = dynamic(() => import('./charts/PerceptronChart'), { ssr: false });
+const XORChart = dynamic(() => import('./charts/XORChart'), { ssr: false });
+const MLPChart = dynamic(() => import('./charts/MLPChart'), { ssr: false });
 
 interface MarkdownRendererProps {
   content: string;
+}
+
+function preprocessContent(raw: string): string {
+  // Convert ASCII box drawings (┌─┐│└─┘) into fenced code blocks
+  // so they render in a monospace <pre> with proper alignment.
+  // We detect consecutive lines that start with box-drawing chars (│┌└├╔║╚╠┃┏┗)
+  // and wrap them in ```text ... ``` blocks.
+  const lines = raw.split('\n');
+  const result: string[] = [];
+  let i = 0;
+
+  const isBoxLine = (line: string): boolean => {
+    const trimmed = line.trimStart();
+    return /^[┌┐└┘│├┤┬┴┼─╔╗╚╝║╠╣╦╩╬═┏┓┗┛┃┣┫┳┻╋━]/.test(trimmed);
+  };
+
+  while (i < lines.length) {
+    if (isBoxLine(lines[i])) {
+      // Already inside a code block? Check previous lines
+      const prevNonEmpty = result.length > 0 ? result[result.length - 1].trim() : '';
+      const alreadyInCode = prevNonEmpty === '```' || prevNonEmpty === '```text';
+
+      if (!alreadyInCode) {
+        result.push('```text');
+      }
+      while (i < lines.length && isBoxLine(lines[i])) {
+        result.push(lines[i]);
+        i++;
+      }
+      if (!alreadyInCode) {
+        result.push('```');
+      }
+    } else {
+      result.push(lines[i]);
+      i++;
+    }
+  }
+
+  return result.join('\n');
 }
 
 export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
@@ -43,11 +87,75 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
+            p({ children, node, ...props }: any) {
+              // Check for special chart markers
+              const extractText = (c: any): string => {
+                if (typeof c === 'string') return c;
+                if (Array.isArray(c)) return c.map(extractText).join('');
+                return '';
+              };
+              const text = extractText(children).trim();
+              // Chart marker mappings
+              const chartMarkers: { [key: string]: React.ReactNode } = {
+                '[ACTIVATION_CHART]': <ActivationFunctionChart />,
+                '[NEURON_FLOW_CHART]': <NeuronFlowChart />,
+                '[PERCEPTRON_CHART]': <PerceptronChart />,
+                '[PERCEPTRON_FULL_CHART]': <PerceptronChart variant="full" />,
+                '[XOR_CHART]': <XORChart />,
+                '[MLP_CHART]': <MLPChart />,
+              };
+
+              if (chartMarkers[text]) {
+                return chartMarkers[text];
+              }
+              return <p {...props}>{children}</p>;
+            },
+            pre({ children, node, ...props }: any) {
+              // Extract text content from <pre><code>...</code></pre>
+              // to detect ASCII box art in language-less code blocks
+              const extractText = (child: any): string => {
+                if (typeof child === 'string') return child;
+                if (child?.props?.children) {
+                  const ch = child.props.children;
+                  if (typeof ch === 'string') return ch;
+                  if (Array.isArray(ch)) return ch.map(extractText).join('');
+                  return extractText(ch);
+                }
+                return '';
+              };
+              const text = extractText(children);
+              const hasBoxChars = /[┌└┏┗╔╚│║┃─━═]/.test(text);
+              // Check if child <code> has a language class
+              const childClass = children?.props?.className || '';
+              const hasLanguage = /language-/.test(childClass);
+
+              if (hasBoxChars && !hasLanguage) {
+                const innerText = text.replace(/\n$/, '').trim();
+                return (
+                  <div className="my-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 font-mono text-sm text-gray-800 whitespace-pre overflow-x-auto shadow-sm">
+                    {innerText}
+                  </div>
+                );
+              }
+              return <pre {...props}>{children}</pre>;
+            },
             code({ node, inline, className, children, ...props }: any) {
               const match = /language-(\w+)/.exec(className || '');
               const language = match ? match[1] : '';
               const codeString = String(children).replace(/\n$/, '');
               const isPython = language === 'python' || language === 'py';
+              // Detect block code: has newlines or no inline flag
+              const isBlock = !inline && (codeString.includes('\n') || !className);
+
+              // ASCII box art rendered as a styled card
+              const isBoxArt = isBlock && /[┌└┏┗╔╚│║┃─━═]/.test(codeString);
+              if (isBoxArt) {
+                return (
+                  <div className="my-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 font-mono text-sm text-gray-800 whitespace-pre overflow-x-auto shadow-sm">
+                    {codeString}
+                  </div>
+                );
+              }
 
               if (!inline && language) {
                 return (
