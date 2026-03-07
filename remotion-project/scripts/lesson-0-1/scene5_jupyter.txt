@@ -1,0 +1,7 @@
+Jupyter Notebook도 설치해봅시다.
+터미널에서 pip install jupyter를 실행합니다.
+설치가 완료되면 jupyter notebook 명령어로 실행하세요.
+브라우저가 자동으로 열리면서 Jupyter가 시작됩니다.
+Shift + Enter로 셀을 실행하고
+Esc + B로 새로운 셀을 추가할 수 있어요.
+AI 학습할 때 정말 편리합니다!

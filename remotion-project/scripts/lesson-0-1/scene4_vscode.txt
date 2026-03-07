@@ -1,0 +1,7 @@
+VS Code를 설치해봅시다.
+code.visualstudio.com에서 다운로드하세요.
+설치 후 사이드바의 확장 아이콘을 클릭하고
+Python을 검색해서 Microsoft에서 제공하는 확장을 설치합니다.
+이제 hello.py 파일을 만들고
+print("Hello, AI!")를 입력한 후
+우측 상단의 재생 버튼을 누르면 실행됩니다!
