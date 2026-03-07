@@ -9,6 +9,13 @@ interface StatsHistory {
   watchTimeMinutes: number;
 }
 
+interface ServerStatsEntry {
+  timestamp: string;
+  subscriberCount: number;
+  viewCount: number;
+  videoCount: number;
+}
+
 interface YouTubeStatsChartProps {
   currentStats: {
     subscriberCount: string;
@@ -16,9 +23,6 @@ interface YouTubeStatsChartProps {
     videoCount: string;
   };
 }
-
-const STORAGE_KEY = 'youtube_stats_history';
-const MAX_DAYS = 7;
 
 // 외부 함수로 이동
 const formatNumber = (num: number) => {
@@ -30,76 +34,59 @@ export default function YouTubeStatsChart({ currentStats }: YouTubeStatsChartPro
   const [history, setHistory] = useState<StatsHistory[]>([]);
   const [activeMetric, setActiveMetric] = useState<'subscribers' | 'views' | 'watchTime'>('subscribers');
   const [hoveredPoint, setHoveredPoint] = useState<{ index: number; x: number; y: number } | null>(null);
+  const [lastUpdate, setLastUpdate] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // 통계 이력 로드 및 현재 통계 저장
+  // 서버에서 통계 이력 로드
   useEffect(() => {
-    const loadAndSaveHistory = () => {
-      if (!currentStats) return;
+    const fetchHistory = async () => {
+      try {
+        const response = await fetch('/api/youtube-stats/history');
+        if (response.ok) {
+          const data = await response.json();
 
-      const today = new Date().toISOString().split('T')[0];
-      const stored = localStorage.getItem(STORAGE_KEY);
-      let historyData: StatsHistory[] = stored ? JSON.parse(stored) : [];
+          // 서버 데이터를 차트 형식으로 변환
+          const historyData: StatsHistory[] = data.history.map((entry: ServerStatsEntry) => ({
+            date: entry.timestamp.split('T')[0],
+            subscriberCount: entry.subscriberCount,
+            viewCount: entry.viewCount,
+            watchTimeMinutes: Math.round(entry.viewCount * 2.5),
+          }));
 
-      const currentSubs = parseInt(currentStats.subscriberCount) || 0;
-      const currentViews = parseInt(currentStats.viewCount) || 0;
+          // 데이터가 없으면 현재 통계로 초기 데이터 생성
+          if (historyData.length === 0 && currentStats) {
+            const currentSubs = parseInt(currentStats.subscriberCount) || 0;
+            const currentViews = parseInt(currentStats.viewCount) || 0;
 
-      // 히스토리가 비어있으면 지난 7일치 샘플 데이터 생성 (약간의 변동 포함)
-      if (historyData.length === 0) {
-        for (let i = 6; i >= 0; i--) {
-          const date = new Date();
-          date.setDate(date.getDate() - i);
-          const dateStr = date.toISOString().split('T')[0];
+            for (let i = 6; i >= 0; i--) {
+              const date = new Date();
+              date.setDate(date.getDate() - i);
+              const dateStr = date.toISOString().split('T')[0];
 
-          // 과거로 갈수록 약간 적은 값 (성장 추세 시뮬레이션)
-          const variation = i * 0.5; // 0.5% 감소씩
-          const subs = Math.round(currentSubs * (1 - variation / 100));
-          const views = Math.round(currentViews * (1 - variation / 100));
+              const variation = i * 0.5;
+              const subs = Math.round(currentSubs * (1 - variation / 100));
+              const views = Math.round(currentViews * (1 - variation / 100));
 
-          historyData.push({
-            date: dateStr,
-            subscriberCount: subs,
-            viewCount: views,
-            watchTimeMinutes: Math.round(views * 2.5),
-          });
-        }
-      } else {
-        // 오늘 데이터가 없으면 추가
-        const todayExists = historyData.some(h => h.date === today);
-        if (!todayExists) {
-          const newEntry: StatsHistory = {
-            date: today,
-            subscriberCount: currentSubs,
-            viewCount: currentViews,
-            watchTimeMinutes: Math.round(currentViews * 2.5),
-          };
-          historyData.push(newEntry);
-        } else {
-          // 오늘 데이터 업데이트
-          historyData = historyData.map(h => {
-            if (h.date === today) {
-              return {
-                ...h,
-                subscriberCount: currentSubs,
-                viewCount: currentViews,
-                watchTimeMinutes: Math.round(currentViews * 2.5),
-              };
+              historyData.push({
+                date: dateStr,
+                subscriberCount: subs,
+                viewCount: views,
+                watchTimeMinutes: Math.round(views * 2.5),
+              });
             }
-            return h;
-          });
+          }
+
+          setHistory(historyData);
+          setLastUpdate(data.lastUpdate);
         }
+      } catch (error) {
+        console.error('Failed to fetch stats history:', error);
+      } finally {
+        setLoading(false);
       }
-
-      // 최근 7일만 유지
-      historyData.sort((a, b) => a.date.localeCompare(b.date));
-      if (historyData.length > MAX_DAYS) {
-        historyData = historyData.slice(-MAX_DAYS);
-      }
-
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(historyData));
-      setHistory(historyData);
     };
 
-    loadAndSaveHistory();
+    fetchHistory();
   }, [currentStats]);
 
   // 캔버스 그리기
@@ -345,12 +332,23 @@ export default function YouTubeStatsChart({ currentStats }: YouTubeStatsChartPro
 
   const changeData = getChange();
 
+  if (loading) {
+    return (
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-xl font-bold mb-4">통계 추이</h2>
+        <div className="flex justify-center items-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+        </div>
+      </div>
+    );
+  }
+
   if (history.length === 0) {
     return (
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-xl font-bold mb-4">통계 추이</h2>
         <p className="text-gray-500 text-center py-8">
-          아직 기록된 통계가 없습니다. 매일 방문하면 통계 추이를 확인할 수 있습니다.
+          아직 기록된 통계가 없습니다. 1시간마다 자동으로 수집됩니다.
         </p>
       </div>
     );
@@ -359,7 +357,14 @@ export default function YouTubeStatsChart({ currentStats }: YouTubeStatsChartPro
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold">통계 추이</h2>
+        <div>
+          <h2 className="text-xl font-bold">통계 추이</h2>
+          {lastUpdate && (
+            <p className="text-xs text-gray-400 mt-1">
+              마지막 업데이트: {new Date(lastUpdate).toLocaleString('ko-KR')} (1시간 간격 자동 수집)
+            </p>
+          )}
+        </div>
         {changeData && (
           <div className={`text-sm font-medium ${changeData.change >= 0 ? 'text-green-600' : 'text-red-600'}`}>
             {changeData.change >= 0 ? '+' : ''}{formatNumber(changeData.change)} ({changeData.percentChange}%)
