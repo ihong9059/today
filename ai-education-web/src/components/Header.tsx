@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { BookOpen, Home, Map, GraduationCap, FileText, HelpCircle, Bot } from 'lucide-react';
 
+const VERSION = "v1.2.0";
+
 export default function Header() {
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
@@ -11,6 +13,7 @@ export default function Header() {
           <Link href="/" className="flex items-center space-x-2">
             <GraduationCap className="h-8 w-8 text-blue-600" />
             <span className="text-xl font-bold text-gray-900">AI 첫걸음</span>
+            <span className="text-xs text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded">{VERSION}</span>
           </Link>
 
           <nav className="flex items-center space-x-6">
