@@ -2,6 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+const YouTubeStatsChart = dynamic(() => import('@/components/charts/YouTubeStatsChart'), {
+  ssr: false,
+  loading: () => <div className="bg-white rounded-lg shadow-md p-6 h-96 animate-pulse" />,
+});
 
 interface YouTubeStats {
   viewCount: string;
@@ -122,6 +128,11 @@ export default function AdminAnalyticsPage() {
                 </p>
                 <p className="text-sm text-gray-400 mt-1">개</p>
               </div>
+            </div>
+
+            {/* 통계 추이 그래프 */}
+            <div className="mb-8">
+              <YouTubeStatsChart currentStats={channelStats} />
             </div>
 
             {/* 최근 동영상 */}
