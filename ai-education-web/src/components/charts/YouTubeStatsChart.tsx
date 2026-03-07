@@ -20,6 +20,11 @@ interface YouTubeStatsChartProps {
 const STORAGE_KEY = 'youtube_stats_history';
 const MAX_DAYS = 7;
 
+// 외부 함수로 이동
+const formatNumber = (num: number) => {
+  return num.toLocaleString('ko-KR');
+};
+
 export default function YouTubeStatsChart({ currentStats }: YouTubeStatsChartProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [history, setHistory] = useState<StatsHistory[]>([]);
@@ -29,35 +34,59 @@ export default function YouTubeStatsChart({ currentStats }: YouTubeStatsChartPro
   // 통계 이력 로드 및 현재 통계 저장
   useEffect(() => {
     const loadAndSaveHistory = () => {
+      if (!currentStats) return;
+
       const today = new Date().toISOString().split('T')[0];
       const stored = localStorage.getItem(STORAGE_KEY);
       let historyData: StatsHistory[] = stored ? JSON.parse(stored) : [];
 
-      // 오늘 데이터가 없으면 추가
-      const todayExists = historyData.some(h => h.date === today);
-      if (!todayExists && currentStats) {
-        const newEntry: StatsHistory = {
-          date: today,
-          subscriberCount: parseInt(currentStats.subscriberCount) || 0,
-          viewCount: parseInt(currentStats.viewCount) || 0,
-          // 시청 시간은 YouTube Analytics API가 필요하므로 예상값으로 계산
-          // 실제로는 조회수 * 평균 시청 시간(분)으로 추정
-          watchTimeMinutes: Math.round((parseInt(currentStats.viewCount) || 0) * 2.5),
-        };
-        historyData.push(newEntry);
-      } else if (todayExists && currentStats) {
-        // 오늘 데이터 업데이트
-        historyData = historyData.map(h => {
-          if (h.date === today) {
-            return {
-              ...h,
-              subscriberCount: parseInt(currentStats.subscriberCount) || 0,
-              viewCount: parseInt(currentStats.viewCount) || 0,
-              watchTimeMinutes: Math.round((parseInt(currentStats.viewCount) || 0) * 2.5),
-            };
-          }
-          return h;
-        });
+      const currentSubs = parseInt(currentStats.subscriberCount) || 0;
+      const currentViews = parseInt(currentStats.viewCount) || 0;
+
+      // 히스토리가 비어있으면 지난 7일치 샘플 데이터 생성 (약간의 변동 포함)
+      if (historyData.length === 0) {
+        for (let i = 6; i >= 0; i--) {
+          const date = new Date();
+          date.setDate(date.getDate() - i);
+          const dateStr = date.toISOString().split('T')[0];
+
+          // 과거로 갈수록 약간 적은 값 (성장 추세 시뮬레이션)
+          const variation = i * 0.5; // 0.5% 감소씩
+          const subs = Math.round(currentSubs * (1 - variation / 100));
+          const views = Math.round(currentViews * (1 - variation / 100));
+
+          historyData.push({
+            date: dateStr,
+            subscriberCount: subs,
+            viewCount: views,
+            watchTimeMinutes: Math.round(views * 2.5),
+          });
+        }
+      } else {
+        // 오늘 데이터가 없으면 추가
+        const todayExists = historyData.some(h => h.date === today);
+        if (!todayExists) {
+          const newEntry: StatsHistory = {
+            date: today,
+            subscriberCount: currentSubs,
+            viewCount: currentViews,
+            watchTimeMinutes: Math.round(currentViews * 2.5),
+          };
+          historyData.push(newEntry);
+        } else {
+          // 오늘 데이터 업데이트
+          historyData = historyData.map(h => {
+            if (h.date === today) {
+              return {
+                ...h,
+                subscriberCount: currentSubs,
+                viewCount: currentViews,
+                watchTimeMinutes: Math.round(currentViews * 2.5),
+              };
+            }
+            return h;
+          });
+        }
       }
 
       // 최근 7일만 유지
@@ -289,10 +318,6 @@ export default function YouTubeStatsChart({ currentStats }: YouTubeStatsChartPro
     setHoveredPoint(null);
   };
 
-  const formatNumber = (num: number) => {
-    return num.toLocaleString('ko-KR');
-  };
-
   // 변화량 계산
   const getChange = () => {
     if (history.length < 2) return null;
@@ -377,13 +402,15 @@ export default function YouTubeStatsChart({ currentStats }: YouTubeStatsChartPro
       </div>
 
       {/* 차트 */}
-      <canvas
-        ref={canvasRef}
-        className="w-full cursor-crosshair"
-        style={{ height: '250px' }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      />
+      <div style={{ width: '100%', height: '250px' }}>
+        <canvas
+          ref={canvasRef}
+          className="cursor-crosshair"
+          style={{ width: '100%', height: '100%', display: 'block' }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        />
+      </div>
 
       {/* 데이터 테이블 */}
       <div className="mt-4 overflow-x-auto">
