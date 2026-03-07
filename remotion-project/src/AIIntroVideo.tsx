@@ -154,6 +154,97 @@ const Particles: React.FC<{ count?: number; color?: string }> = ({ count = 30, c
   );
 };
 
+// ============ GLOBAL OVERLAY ============
+
+// UTTEC-Lab 로고 및 교육 사이트 URL 오버레이 (모든 씬에 표시)
+const GlobalOverlay: React.FC = () => {
+  const frame = useCurrentFrame();
+  const logoOpacity = fadeIn(frame, 0, 30);
+
+  return (
+    <>
+      {/* 왼쪽 상단 UTTEC-Lab 로고 */}
+      <div
+        style={{
+          position: "absolute",
+          top: 30,
+          left: 40,
+          zIndex: 1000,
+          opacity: logoOpacity,
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+        }}
+      >
+        <div
+          style={{
+            width: 50,
+            height: 50,
+            borderRadius: 12,
+            background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: `0 4px 15px ${colors.primary}60`,
+          }}
+        >
+          <span style={{ fontSize: 28, fontWeight: "bold", color: colors.white }}>U</span>
+        </div>
+        <span
+          style={{
+            fontSize: 32,
+            fontWeight: "bold",
+            color: colors.white,
+            textShadow: `0 2px 10px rgba(0,0,0,0.5)`,
+            letterSpacing: 1,
+          }}
+        >
+          UTTEC-Lab
+        </span>
+      </div>
+
+      {/* 하단 교육 사이트 URL */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 20,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          opacity: logoOpacity,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            padding: "12px 40px",
+            backgroundColor: `${colors.gray[900]}dd`,
+            borderRadius: 30,
+            border: `2px solid ${colors.primary}60`,
+            boxShadow: `0 4px 20px rgba(0,0,0,0.4)`,
+          }}
+        >
+          <span style={{ fontSize: 24, color: colors.gray[100], fontWeight: 500 }}>
+            교육 사이트:
+          </span>
+          <span
+            style={{
+              fontSize: 26,
+              color: colors.accent,
+              fontWeight: "bold",
+              marginLeft: 10,
+              textShadow: `0 0 10px ${colors.accent}60`,
+            }}
+          >
+            http://uttec-ai.duckdns.org
+          </span>
+        </div>
+      </div>
+    </>
+  );
+};
+
 // ============ UI COMPONENTS ============
 
 // 글로우 텍스트
@@ -1767,6 +1858,9 @@ export const AIIntroVideo: React.FC = () => {
       <Sequence from={SCENE_TIMINGS.scene8_outro.start} durationInFrames={SCENE_TIMINGS.scene8_outro.duration}>
         <Scene8Outro />
       </Sequence>
+
+      {/* 전체 영상에 UTTEC-Lab 로고 및 교육 사이트 URL 오버레이 */}
+      <GlobalOverlay />
     </AbsoluteFill>
   );
 };
