@@ -35,84 +35,127 @@ export const lesson3_6_content = `
 
 ### 배치 정규화의 공식
 
-\`\`\`text
-배치 정규화 4단계:
+**배치 정규화 4단계:**
 
-Step 1. 배치 평균 계산
-  mu = (1/m) * sum(x_i)    (m = 배치 크기)
+**Step 1.** 배치 평균 계산 ($m$ = 배치 크기)
 
-Step 2. 배치 분산 계산
-  var = (1/m) * sum((x_i - mu)^2)
+$$\mu_B = \frac{1}{m} \sum_{i=1}^{m} x_i$$
 
-Step 3. 정규화 (평균=0, 분산=1로 만들기)
-  x_hat = (x - mu) / sqrt(var + epsilon)
-  (epsilon은 0으로 나누는 것을 방지, 보통 1e-5)
+**Step 2.** 배치 분산 계산
 
-Step 4. 스케일 & 시프트 (학습 가능한 파라미터!)
-  y = gamma * x_hat + beta
-  (gamma와 beta는 역전파로 학습됨)
-\`\`\`
+$$\sigma_B^2 = \frac{1}{m} \sum_{i=1}^{m} (x_i - \mu_B)^2$$
 
-Step 4가 중요합니다. 정규화만 하면 표현력이 줄어들 수 있기 때문에, 네트워크가 필요하다면 원래 분포로 되돌릴 수 있게 gamma와 beta를 학습합니다.
+**Step 3.** 정규화 (평균=0, 분산=1로 만들기)
 
-### 실행해보기: 배치 정규화 구현
+$$\hat{x}_i = \frac{x_i - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}}$$
+
+($\epsilon$은 0으로 나누는 것을 방지, 보통 $10^{-5}$)
+
+**Step 4.** 스케일 & 시프트 (학습 가능한 파라미터!)
+
+$$y_i = \gamma \hat{x}_i + \beta$$
+
+($\gamma$와 $\beta$는 역전파로 학습됨)
+
+Step 4가 중요합니다. 정규화만 하면 표현력이 줄어들 수 있기 때문에, 네트워크가 필요하다면 원래 분포로 되돌릴 수 있게 $\gamma$와 $\beta$를 학습합니다.
+
+### 🔬 실습: 배치 정규화 구현
+
+배치 정규화가 값의 분포를 어떻게 안정화시키는지 직접 확인해봅시다.
 
 \`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
+# ═══════════════════════════════════════════════════════════════
+# 📊 배치 정규화(Batch Normalization) 직접 구현
+# 목표: 각 특성의 값을 평균=0, 표준편차=1로 정규화
+# ═══════════════════════════════════════════════════════════════
+
 np.random.seed(42)
 
 def batch_norm_forward(x, gamma, beta, epsilon=1e-5):
-    """배치 정규화 순전파 구현"""
+    """
+    배치 정규화 순전파
+    ─────────────────────────────────────────
+    x: 입력 (batch_size × features)
+    gamma: 스케일 파라미터 (학습 가능)
+    beta: 시프트 파라미터 (학습 가능)
+    ─────────────────────────────────────────
+    """
+    # Step 1️⃣: 배치 평균 계산
     mu = np.mean(x, axis=0)
+
+    # Step 2️⃣: 배치 분산 계산
     var = np.var(x, axis=0)
+
+    # Step 3️⃣: 정규화 (평균=0, 분산=1)
     x_hat = (x - mu) / np.sqrt(var + epsilon)
+
+    # Step 4️⃣: 스케일 & 시프트
     out = gamma * x_hat + beta
+
     return out, x_hat, mu, var
 
-# 시뮬레이션: 신경망 은닉층의 출력값 (배치 크기=64, 특성=4)
-batch_size = 64
-features = 4
+# ─────────────────────────────────────────────────────────────────
+# 📌 시뮬레이션: 신경망 은닉층의 출력값
+# ─────────────────────────────────────────────────────────────────
+batch_size = 64  # 배치 크기
+features = 4      # 특성 수
 
-# 정규화 전: 각 특성마다 다른 범위의 값
+# 🎯 문제 상황: 각 특성마다 완전히 다른 범위의 값!
 raw_values = np.random.randn(batch_size, features)
-raw_values[:, 0] = raw_values[:, 0] * 10 + 50
-raw_values[:, 1] = raw_values[:, 1] * 0.01 - 2
-raw_values[:, 2] = raw_values[:, 2] * 100 + 0
-raw_values[:, 3] = raw_values[:, 3] * 5 + 20
+raw_values[:, 0] = raw_values[:, 0] * 10 + 50    # 특성1: 평균~50, 범위 큼
+raw_values[:, 1] = raw_values[:, 1] * 0.01 - 2   # 특성2: 평균~-2, 범위 작음
+raw_values[:, 2] = raw_values[:, 2] * 100 + 0    # 특성3: 평균~0, 범위 매우 큼
+raw_values[:, 3] = raw_values[:, 3] * 5 + 20     # 특성4: 평균~20, 범위 중간
 
-# 배치 정규화 적용
-gamma = np.ones(features)
-beta = np.zeros(features)
+# ✅ 배치 정규화 적용
+gamma = np.ones(features)   # 초기 스케일 = 1
+beta = np.zeros(features)   # 초기 시프트 = 0
 normalized, x_hat, mu, var = batch_norm_forward(raw_values, gamma, beta)
 
-# 시각화
+# ─────────────────────────────────────────────────────────────────
+# 📈 시각화: 정규화 전후 비교
+# ─────────────────────────────────────────────────────────────────
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
+# 왼쪽: 정규화 전
 axes[0].boxplot([raw_values[:, i] for i in range(features)],
-                labels=["특성1", "특성2", "특성3", "특성4"])
-axes[0].set_title("배치 정규화 전", fontsize=13)
-axes[0].set_ylabel("값")
-axes[0].axhline(y=0, color="gray", linestyle="--", alpha=0.5)
+                labels=["특성1\\n(평균~50)", "특성2\\n(평균~-2)", "특성3\\n(평균~0)", "특성4\\n(평균~20)"])
+axes[0].set_title("❌ 배치 정규화 전: 특성마다 범위가 제각각!", fontsize=13, fontweight='bold')
+axes[0].set_ylabel("값", fontsize=12)
+axes[0].axhline(y=0, color="red", linestyle="--", alpha=0.5, label="기준선 (0)")
+axes[0].legend()
+axes[0].grid(True, alpha=0.3)
 
+# 오른쪽: 정규화 후
 axes[1].boxplot([normalized[:, i] for i in range(features)],
                 labels=["특성1", "특성2", "특성3", "특성4"])
-axes[1].set_title("배치 정규화 후", fontsize=13)
-axes[1].set_ylabel("값")
-axes[1].axhline(y=0, color="gray", linestyle="--", alpha=0.5)
+axes[1].set_title("✅ 배치 정규화 후: 모든 특성이 동일한 범위!", fontsize=13, fontweight='bold')
+axes[1].set_ylabel("값", fontsize=12)
+axes[1].axhline(y=0, color="green", linestyle="--", alpha=0.7, label="평균 = 0")
+axes[1].legend()
+axes[1].grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("batch_norm_effect.png", dpi=100, bbox_inches="tight")
 plt.show()
 
-print("=== 정규화 전 ===")
+# ─────────────────────────────────────────────────────────────────
+# 📊 결과 출력
+# ─────────────────────────────────────────────────────────────────
+print("=" * 55)
+print("📊 배치 정규화 효과 비교")
+print("=" * 55)
+print("\\n❌ 정규화 전:")
 for i in range(features):
-    print(f"  특성 {i+1}: 평균={np.mean(raw_values[:, i]):.2f}, 표준편차={np.std(raw_values[:, i]):.2f}")
-print()
-print("=== 정규화 후 ===")
+    print(f"   특성 {i+1}: 평균={np.mean(raw_values[:, i]):>8.2f}, 표준편차={np.std(raw_values[:, i]):>8.2f}")
+
+print("\\n✅ 정규화 후:")
 for i in range(features):
-    print(f"  특성 {i+1}: 평균={np.mean(normalized[:, i]):.4f}, 표준편차={np.std(normalized[:, i]):.4f}")
+    print(f"   특성 {i+1}: 평균={np.mean(normalized[:, i]):>8.4f}, 표준편차={np.std(normalized[:, i]):>8.4f}")
+
+print("\\n💡 모든 특성이 평균≈0, 표준편차≈1로 정규화되었습니다!")
 print()
 print("모든 특성이 평균=0, 표준편차=1 근처로 정규화되었습니다!")
 \`\`\`
@@ -137,15 +180,17 @@ print("모든 특성이 평균=0, 표준편차=1 근처로 정규화되었습니
 | 훈련 시 | 현재 미니배치의 평균/분산 | 배치마다 다른 통계로 노이즈 효과 |
 | 추론 시 | 훈련 중 누적된 이동 평균/분산 | 단일 샘플도 일관되게 처리 |
 
-\`\`\`text
-훈련 중 이동 평균 업데이트:
-  running_mean = momentum * running_mean + (1 - momentum) * batch_mean
-  running_var  = momentum * running_var  + (1 - momentum) * batch_var
+**훈련 중 이동 평균 업데이트:**
 
-추론 시:
-  x_hat = (x - running_mean) / sqrt(running_var + epsilon)
-  y = gamma * x_hat + beta
-\`\`\`
+$$\mu_{running} = \text{momentum} \cdot \mu_{running} + (1 - \text{momentum}) \cdot \mu_B$$
+
+$$\sigma^2_{running} = \text{momentum} \cdot \sigma^2_{running} + (1 - \text{momentum}) \cdot \sigma^2_B$$
+
+**추론 시:**
+
+$$\hat{x} = \frac{x - \mu_{running}}{\sqrt{\sigma^2_{running} + \epsilon}}$$
+
+$$y = \gamma \hat{x} + \beta$$
 
 ---
 
@@ -162,80 +207,111 @@ print("모든 특성이 평균=0, 표준편차=1 근처로 정규화되었습니
 
 ### 드롭아웃의 작동 원리
 
-\`\`\`text
-훈련 시:
-  1. 각 뉴런을 확률 p로 끔 (보통 p=0.5 또는 p=0.2)
-  2. 살아남은 뉴런의 출력을 1/(1-p)로 스케일링
-     (이것을 "inverted dropout"이라 합니다)
+**훈련 시:**
+1. 각 뉴런을 확률 $p$로 끔 (보통 $p=0.5$ 또는 $p=0.2$)
+2. 살아남은 뉴런의 출력을 $\frac{1}{1-p}$로 스케일링 (이것을 "inverted dropout"이라 합니다)
 
-추론 시:
-  1. 모든 뉴런을 켬 (드롭아웃 없음)
-  2. 스케일링 없음 (훈련 시 이미 보정했으므로)
-\`\`\`
+**추론 시:**
+1. 모든 뉴런을 켬 (드롭아웃 없음)
+2. 스케일링 없음 (훈련 시 이미 보정했으므로)
 
-### 왜 1/(1-p)로 스케일링할까?
+### 왜 $\frac{1}{1-p}$로 스케일링할까?
 
 훈련 중에 뉴런의 절반을 끄면 출력의 기대값이 절반으로 줄어듭니다. 추론 시에는 모든 뉴런이 켜져 있으므로 출력이 두 배가 됩니다. 이 불일치를 맞추기 위해 훈련 시 살아남은 뉴런의 값을 키워줍니다.
 
-### 실행해보기: 드롭아웃 구현과 앙상블 효과
+### 🔬 실습: 드롭아웃 구현과 앙상블 효과
+
+드롭아웃이 어떻게 뉴런을 무작위로 끄고, 앙상블 효과를 만드는지 확인해봅시다.
 
 \`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
+# ═══════════════════════════════════════════════════════════════
+# 📊 드롭아웃(Dropout) 직접 구현
+# 매 학습마다 무작위로 뉴런을 꺼서 과적합 방지
+# ═══════════════════════════════════════════════════════════════
+
 np.random.seed(42)
 
 def dropout_forward(x, drop_rate=0.5, training=True):
-    """드롭아웃 순전파 (Inverted Dropout)"""
+    """
+    드롭아웃 순전파 (Inverted Dropout 방식)
+    ─────────────────────────────────────────
+    x: 입력 (뉴런 출력값)
+    drop_rate: 끌 확률 (0.5 = 50% 끔)
+    training: 훈련 모드 여부
+    ─────────────────────────────────────────
+    """
     if not training:
-        return x, None
+        return x, None  # 추론 시에는 그냥 통과!
+
+    # 🎲 무작위 마스크 생성 (1=켜기, 0=끄기)
     mask = np.random.binomial(1, 1 - drop_rate, size=x.shape)
+
+    # 📐 출력 = 입력 × 마스크 × 스케일 조정
+    # 스케일: 1/(1-p) 로 나눠서 기대값 유지
     out = x * mask / (1 - drop_rate)
     return out, mask
 
-# 8개 뉴런의 출력값
+# ─────────────────────────────────────────────────────────────────
+# 📌 예시: 8개 뉴런의 출력값
+# ─────────────────────────────────────────────────────────────────
 x = np.array([0.5, 1.2, -0.3, 0.8, -1.5, 0.7, 0.2, -0.9])
 
-print("=== 원본 뉴런 출력 ===")
-print(f"  값: {x}")
-print(f"  합계: {np.sum(x):.2f}")
-print()
+print("=" * 60)
+print("📌 원본 뉴런 출력")
+print("=" * 60)
+print(f"   값: {x}")
+print(f"   합계: {np.sum(x):.2f}")
 
-# 드롭아웃 적용 3번
-print("=== 훈련 시 드롭아웃 (drop_rate=0.5) ===")
+# ─────────────────────────────────────────────────────────────────
+# 🎲 드롭아웃 적용 (3회 시행)
+# ─────────────────────────────────────────────────────────────────
+print("\\n🎲 드롭아웃 적용 (drop_rate=0.5, 즉 50% 끔)")
+print("-" * 60)
 for trial in range(3):
     np.random.seed(trial)
     dropped, mask = dropout_forward(x, drop_rate=0.5, training=True)
     active = int(np.sum(mask))
-    print(f"  시행 {trial+1}: 마스크={mask.astype(int)}")
-    print(f"          활성 뉴런={active}개, 출력합계={np.sum(dropped):.2f}")
+    print(f"   시행 {trial+1}:")
+    print(f"      마스크  = {mask.astype(int)} (1=켜짐, 0=꺼짐)")
+    print(f"      활성 뉴런 = {active}개 / 8개")
+    print(f"      출력 합계 = {np.sum(dropped):.2f}")
     print()
 
-# 앙상블 효과 시각화
+# ─────────────────────────────────────────────────────────────────
+# 📈 앙상블 효과 시각화 (1000번 시행)
+# ─────────────────────────────────────────────────────────────────
 n_trials = 1000
 sums_with_dropout = []
 for _ in range(n_trials):
     dropped, _ = dropout_forward(x, drop_rate=0.5, training=True)
     sums_with_dropout.append(np.sum(dropped))
 
-fig, ax = plt.subplots(figsize=(10, 4))
+fig, ax = plt.subplots(figsize=(12, 5))
 ax.hist(sums_with_dropout, bins=30, alpha=0.7, color="steelblue", edgecolor="white",
-        label="드롭아웃 출력 합계 분포")
-ax.axvline(x=np.sum(x), color="red", linewidth=2, linestyle="--",
-           label=f"원본 합계: {np.sum(x):.2f}")
-ax.axvline(x=np.mean(sums_with_dropout), color="green", linewidth=2, linestyle="--",
-           label=f"드롭아웃 평균: {np.mean(sums_with_dropout):.2f}")
-ax.set_xlabel("출력 합계")
-ax.set_ylabel("빈도")
-ax.set_title("드롭아웃의 앙상블 효과: 1000번 시행", fontsize=13)
-ax.legend()
+        label="🎲 드롭아웃 출력 합계 분포")
+ax.axvline(x=np.sum(x), color="red", linewidth=3, linestyle="--",
+           label=f"🔴 원본 합계: {np.sum(x):.2f}")
+ax.axvline(x=np.mean(sums_with_dropout), color="green", linewidth=3, linestyle="--",
+           label=f"🟢 드롭아웃 평균: {np.mean(sums_with_dropout):.2f}")
+ax.set_xlabel("출력 합계", fontsize=12)
+ax.set_ylabel("빈도", fontsize=12)
+ax.set_title("📊 드롭아웃의 앙상블 효과: 1000번 시행 시 평균이 원본과 일치!", fontsize=14, fontweight='bold')
+ax.legend(fontsize=11)
+ax.grid(True, alpha=0.3)
 plt.tight_layout()
-plt.savefig("dropout_ensemble.png", dpi=100, bbox_inches="tight")
 plt.show()
 
-print(f"드롭아웃 1000회 평균: {np.mean(sums_with_dropout):.3f}")
-print(f"원본 합계: {np.sum(x):.3f}")
-print("inverted dropout 덕분에 평균이 원본과 거의 같습니다!")
+print("=" * 60)
+print("📊 결과 분석")
+print("=" * 60)
+print(f"   🎲 드롭아웃 1000회 평균: {np.mean(sums_with_dropout):.3f}")
+print(f"   🔴 원본 합계: {np.sum(x):.3f}")
+print("-" * 60)
+print("   💡 Inverted Dropout 덕분에 평균이 원본과 거의 같습니다!")
+print("   → 추론 시 별도 스케일링 없이 바로 사용 가능!")
 \`\`\`
 
 ---
@@ -371,11 +447,11 @@ print("드롭아웃이 훈련-검증 갭을 줄여 과적합을 방지합니다!
 
 ### 일반적인 권장 사항
 
-\`\`\`text
-CNN (이미지): Conv -> BatchNorm -> ReLU -> (Dropout은 FC층에서만)
-MLP (일반): Linear -> BatchNorm -> ReLU -> Dropout
-Transformer: LayerNorm + Dropout (BatchNorm 대신 LayerNorm)
-\`\`\`
+| 네트워크 종류 | 권장 구성 |
+|--------------|----------|
+| CNN (이미지) | Conv → BatchNorm → ReLU → (Dropout은 FC층에서만) |
+| MLP (일반) | Linear → BatchNorm → ReLU → Dropout |
+| Transformer | LayerNorm + Dropout (BatchNorm 대신 LayerNorm) |
 
 ---
 
@@ -390,14 +466,14 @@ Transformer: LayerNorm + Dropout (BatchNorm 대신 LayerNorm)
 | Instance Norm | 각 샘플의 각 채널 | 스타일 정보 제거 | 스타일 변환 |
 | Group Norm | 채널을 그룹으로 | 작은 배치에서도 안정적 | 객체 탐지 |
 
-\`\`\`text
-시각적으로 보면 (N=배치, C=채널, H,W=공간):
+시각적으로 보면 ($N$=배치, $C$=채널, $H,W$=공간):
 
-Batch Norm:    N 축을 따라 정규화 (각 채널별)
-Layer Norm:    C,H,W 축을 따라 정규화 (각 샘플별)
-Instance Norm: H,W 축을 따라 정규화 (각 샘플, 각 채널별)
-Group Norm:    그룹 내 C,H,W를 따라 정규화
-\`\`\`
+| 정규화 방식 | 정규화 축 | 설명 |
+|------------|----------|------|
+| Batch Norm | $N$ 축 | 각 채널별로 배치 전체에서 정규화 |
+| Layer Norm | $C,H,W$ 축 | 각 샘플별로 모든 특성에서 정규화 |
+| Instance Norm | $H,W$ 축 | 각 샘플, 각 채널별로 정규화 |
+| Group Norm | 그룹 내 $C,H,W$ | 채널을 그룹으로 나누어 정규화 |
 
 > **트렌드**: 최근 Transformer 기반 모델(GPT, BERT 등)에서는 **Layer Norm**이 표준입니다. 배치 크기에 의존하지 않아 더 유연하기 때문입니다.
 
@@ -407,10 +483,10 @@ Group Norm:    그룹 내 C,H,W를 따라 정규화
 
 | 개념 | 핵심 내용 | 기억할 포인트 |
 |------|-----------|--------------|
-| 배치 정규화 | 각 층 출력을 평균0, 분산1로 정규화 | gamma, beta로 표현력 유지 |
+| 배치 정규화 | 각 층 출력을 평균 0, 분산 1로 정규화 | $\gamma$, $\beta$로 표현력 유지 |
 | 내부 공변량 변화 | 앞 층이 바뀌면 뒤 층 입력 분포 변함 | BN이 이 문제를 완화 |
 | 드롭아웃 | 훈련 시 뉴런을 무작위로 끔 | 추론 시에는 모든 뉴런 ON |
-| Inverted Dropout | 훈련 시 1/(1-p)로 스케일링 | 추론 시 별도 처리 불필요 |
+| Inverted Dropout | 훈련 시 $\frac{1}{1-p}$로 스케일링 | 추론 시 별도 처리 불필요 |
 | 훈련 vs 추론 | BN과 Dropout 모두 동작이 다름 | model.train() vs model.eval() |
 | Layer Norm | Transformer의 표준 정규화 | 배치 크기에 무관 |
 

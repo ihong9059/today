@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Play } from 'lucide-react';
@@ -21,37 +24,51 @@ interface MarkdownRendererProps {
 }
 
 function preprocessContent(raw: string): string {
-  // Convert ASCII box drawings (┌─┐│└─┘) into fenced code blocks
-  // so they render in a monospace <pre> with proper alignment.
-  // We detect consecutive lines that start with box-drawing chars (│┌└├╔║╚╠┃┏┗)
-  // and wrap them in ```text ... ``` blocks.
+  // Convert ASCII box drawings into properly formatted code blocks
+  // Track code block state to avoid double-wrapping
   const lines = raw.split('\n');
   const result: string[] = [];
+  let inCodeBlock = false;
   let i = 0;
 
   const isBoxLine = (line: string): boolean => {
     const trimmed = line.trimStart();
+    // Unicode box-drawing characters
     return /^[┌┐└┘│├┤┬┴┼─╔╗╚╝║╠╣╦╩╬═┏┓┗┛┃┣┫┳┻╋━]/.test(trimmed);
   };
 
-  while (i < lines.length) {
-    if (isBoxLine(lines[i])) {
-      // Already inside a code block? Check previous lines
-      const prevNonEmpty = result.length > 0 ? result[result.length - 1].trim() : '';
-      const alreadyInCode = prevNonEmpty === '```' || prevNonEmpty === '```text';
+  const isCodeFence = (line: string): boolean => {
+    return /^```/.test(line.trim());
+  };
 
-      if (!alreadyInCode) {
-        result.push('```text');
-      }
+  while (i < lines.length) {
+    const line = lines[i];
+
+    // Track code block state
+    if (isCodeFence(line)) {
+      inCodeBlock = !inCodeBlock;
+      result.push(line);
+      i++;
+      continue;
+    }
+
+    // If we're inside a code block, just pass through
+    if (inCodeBlock) {
+      result.push(line);
+      i++;
+      continue;
+    }
+
+    // Outside code block: check for box lines that need wrapping
+    if (isBoxLine(line)) {
+      result.push('```text');
       while (i < lines.length && isBoxLine(lines[i])) {
         result.push(lines[i]);
         i++;
       }
-      if (!alreadyInCode) {
-        result.push('```');
-      }
+      result.push('```');
     } else {
-      result.push(lines[i]);
+      result.push(line);
       i++;
     }
   }
@@ -85,7 +102,9 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
         prose-code:text-pink-600 prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
       ">
         <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
+          remarkPlugins={[remarkGfm, remarkMath]}
+          rehypePlugins={[rehypeKatex]}
+          children={preprocessContent(content)}
           components={{
             p({ children, node, ...props }: any) {
               // Check for special chart markers
@@ -124,15 +143,21 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
                 return '';
               };
               const text = extractText(children);
-              const hasBoxChars = /[┌└┏┗╔╚│║┃─━═]/.test(text);
-              // Check if child <code> has a language class
+              // Detect Unicode box chars OR ASCII box patterns
+              const hasUnicodeBox = /[┌└┏┗╔╚│║┃─━═┐┘┓┛╗╝├┤┬┴┼┣┫┳┻╋]/.test(text);
+              const hasAsciiBox = /(\+[-=]+\+|\|.+\||^\s*[-=]{3,}\s*$)/m.test(text);
+              const hasBoxChars = hasUnicodeBox || hasAsciiBox;
+              // Check if child <code> has a language class (excluding 'text')
               const childClass = children?.props?.className || '';
-              const hasLanguage = /language-/.test(childClass);
+              const hasLanguage = /language-(?!text)/.test(childClass);
 
               if (hasBoxChars && !hasLanguage) {
                 const innerText = text.replace(/\n$/, '').trim();
                 return (
-                  <div className="my-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 font-mono text-sm text-gray-800 whitespace-pre overflow-x-auto shadow-sm">
+                  <div
+                    className="my-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 text-sm text-gray-800 whitespace-pre overflow-x-auto shadow-sm"
+                    style={{ fontFamily: "'D2Coding', 'Noto Sans Mono', 'Consolas', monospace", lineHeight: '1.4' }}
+                  >
                     {innerText}
                   </div>
                 );
@@ -148,10 +173,16 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
               const isBlock = !inline && (codeString.includes('\n') || !className);
 
               // ASCII box art rendered as a styled card
-              const isBoxArt = isBlock && /[┌└┏┗╔╚│║┃─━═]/.test(codeString);
+              // Detect Unicode box chars OR ASCII box patterns (+--+, |, etc.)
+              const hasUnicodeBox = /[┌└┏┗╔╚│║┃─━═┐┘┓┛╗╝├┤┬┴┼┣┫┳┻╋]/.test(codeString);
+              const hasAsciiBox = /(\+[-=]+\+|\|.+\||^\s*[-=]{3,}\s*$)/m.test(codeString);
+              const isBoxArt = isBlock && (!language || language === 'text') && (hasUnicodeBox || hasAsciiBox);
               if (isBoxArt) {
                 return (
-                  <div className="my-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 font-mono text-sm text-gray-800 whitespace-pre overflow-x-auto shadow-sm">
+                  <div
+                    className="my-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 text-sm text-gray-800 whitespace-pre overflow-x-auto shadow-sm"
+                    style={{ fontFamily: "'D2Coding', 'Noto Sans Mono', 'Consolas', monospace", lineHeight: '1.4' }}
+                  >
                     {codeString}
                   </div>
                 );
@@ -254,9 +285,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
               </td>
             ),
           }}
-        >
-          {content}
-        </ReactMarkdown>
+        />
       </div>
 
       {/* Python Runner Modal */}

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { BookOpen, Home, Map, GraduationCap, FileText, HelpCircle, Bot } from 'lucide-react';
 
-const VERSION = "v1.2.0";
+const VERSION = "v1.5.1";
 
 export default function Header() {
   return (

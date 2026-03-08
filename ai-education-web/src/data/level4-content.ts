@@ -44,7 +44,7 @@ MNIST(Modified National Institute of Standards and Technology)는 손으로 쓴 
 
 딥러닝 프로젝트는 항상 필요한 도구를 불러오는 것부터 시작합니다. 각 라이브러리의 역할을 이해하는 것이 중요합니다.
 
-\`\`\`text
+\`\`\`python
 import torch                          # PyTorch 핵심 라이브러리
 import torch.nn as nn                 # 신경망 레이어 모음
 import torch.optim as optim           # 최적화 알고리즘 (Adam, SGD 등)
@@ -68,7 +68,7 @@ print("Using device:", device)
 
 > **비유**: 요리 전에 재료를 씻고 손질하듯, 모델에 데이터를 넣기 전에 전처리가 필요합니다.
 
-\`\`\`text
+\`\`\`python
 # 데이터 변환 파이프라인을 정의합니다
 transform = transforms.Compose([
     # 1단계: PIL 이미지를 PyTorch 텐서로 변환 (0~255 -> 0.0~1.0)
@@ -87,7 +87,7 @@ transform = transforms.Compose([
 
 ### 데이터셋 다운로드와 DataLoader 생성
 
-\`\`\`text
+\`\`\`python
 # 훈련 데이터셋 (60,000개)
 train_dataset = datasets.MNIST(
     root="./data",       # 다운로드 경로
@@ -128,7 +128,7 @@ test_loader = DataLoader(test_dataset, batch_size=1000, shuffle=False)
 | Dropout | 256 | 256 | - | 과적합 방지 |
 | 출력층 | 256 | 10 | - | 각 숫자(0~9)에 대한 점수 |
 
-\`\`\`text
+\`\`\`python
 class MNISTClassifier(nn.Module):
     def __init__(self):
         super().__init__()
@@ -166,7 +166,7 @@ PyTorch의 CrossEntropyLoss는 내부적으로 Softmax를 포함하고 있습니
 
 ## Step 3: 학습 설정
 
-\`\`\`text
+\`\`\`python
 # 손실 함수: 다중 클래스 분류에 사용
 criterion = nn.CrossEntropyLoss()
 
@@ -190,7 +190,7 @@ epochs = 10
 
 > **비유**: 학습 루프는 시험공부와 같습니다. 문제를 풀고(순전파), 답을 확인하고(손실 계산), 틀린 부분을 분석하고(역전파), 그 부분을 보완합니다(가중치 업데이트). 이 과정을 반복할수록 실력이 향상됩니다.
 
-\`\`\`text
+\`\`\`python
 for epoch in range(epochs):
     model.train()  # 학습 모드 (Dropout 활성화)
     total_loss = 0
@@ -228,7 +228,7 @@ PyTorch는 기본적으로 그래디언트를 누적합니다. 이전 배치의 
 
 ## Step 5: 모델 평가
 
-\`\`\`text
+\`\`\`python
 model.eval()   # 평가 모드 (Dropout 비활성화)
 correct = 0
 total = 0
@@ -323,7 +323,7 @@ CNN은 세 가지 핵심 아이디어로 이 문제들을 해결합니다:
 
 > **비유**: 합성곱은 돋보기로 이미지를 훑는 것과 같습니다. 3x3 크기의 돋보기(필터)가 이미지 위를 한 칸씩 이동하면서 "이 부분에 세로선이 있나?", "모서리가 있나?" 같은 질문에 답합니다.
 
-\`\`\`text
+\`\`\`python
 # Conv2d의 주요 파라미터
 nn.Conv2d(
     in_channels=3,     # 입력 채널 수 (RGB 이미지 = 3)
@@ -349,7 +349,7 @@ nn.Conv2d(
 
 > **비유**: 풀링은 이미지를 요약하는 것입니다. 2x2 영역에서 가장 두드러진 특징(최댓값)만 남기고 나머지는 버립니다. 마치 긴 글을 핵심 문장만 남기고 요약하는 것과 같습니다.
 
-\`\`\`text
+\`\`\`python
 nn.MaxPool2d(kernel_size=2, stride=2)
 # 2x2 영역에서 최댓값만 선택
 # 결과: 크기가 절반으로 줄어듦 (32x32 -> 16x16)
@@ -364,7 +364,7 @@ nn.MaxPool2d(kernel_size=2, stride=2)
 
 > **비유**: 배치 정규화는 각 레이어의 출력을 "표준 점수"로 변환하는 것입니다. 학생들의 시험 점수가 과목마다 다른 범위를 가지면 비교가 어렵듯, 레이어 출력의 분포가 들쭉날쭉하면 학습이 불안정해집니다.
 
-\`\`\`text
+\`\`\`python
 nn.BatchNorm2d(32)  # 32개 채널 각각을 정규화
 \`\`\`
 
@@ -387,7 +387,7 @@ CIFAR-10은 MNIST보다 한 단계 어려운 이미지 분류 데이터셋입니
 
 CIFAR-10의 10개 클래스: 비행기, 자동차, 새, 고양이, 사슴, 개, 개구리, 말, 배, 트럭
 
-\`\`\`text
+\`\`\`python
 from torchvision import datasets, transforms
 
 # 훈련용 변환 (데이터 증강 포함)
@@ -435,7 +435,7 @@ test_dataset = datasets.CIFAR10(
 | FC | 256 | - | 분류 준비 |
 | 출력 | 10 | - | 클래스별 점수 |
 
-\`\`\`text
+\`\`\`python
 class ImageClassifier(nn.Module):
     def __init__(self, num_classes=10):
         super().__init__()
@@ -551,7 +551,7 @@ export const LEVEL_4_LESSON_3 = `
 
 ### 전체 과정 예시
 
-\`\`\`text
+\`\`\`python
 # 원본 텍스트
 "This movie is really great!"
 
@@ -574,7 +574,7 @@ export const LEVEL_4_LESSON_3 = `
 
 > **비유**: 토큰화는 문장을 레고 블록처럼 작은 조각으로 분해하는 것입니다. 어떤 크기로 분해하느냐에 따라 결과가 달라집니다.
 
-\`\`\`text
+\`\`\`python
 from torchtext.data.utils import get_tokenizer
 
 # 영어 기본 토크나이저
@@ -599,7 +599,7 @@ tokens = tokenizer("This movie is great!")
 
 > **비유**: 어휘 사전은 "단어-번호 변환표"입니다. 도서관에서 각 책에 고유 번호를 붙이듯, 각 단어에 고유 번호를 부여합니다.
 
-\`\`\`text
+\`\`\`python
 # 간단한 어휘 사전 구축 예시
 vocab = {
     "<pad>": 0,    # 패딩 (빈 칸 채우기용)
@@ -633,7 +633,7 @@ encoded = encode(["this", "movie", "is", "great"], vocab)
 
 > **비유**: 임베딩은 단어의 "주민등록번호"를 "성격 프로필"로 바꾸는 과정입니다. 숫자 42는 아무런 의미 정보를 담고 있지 않지만, [0.2, -0.1, 0.5, ...]같은 벡터는 그 단어의 의미를 담고 있습니다.
 
-\`\`\`text
+\`\`\`python
 # 임베딩 레이어: 숫자 인덱스 -> 의미 벡터
 embedding = nn.Embedding(
     num_embeddings=10000,  # 어휘 크기 (단어 수)
@@ -671,7 +671,7 @@ word_vectors = embedding(word_indices)
 | 입력 게이트 (Input Gate) | 새 정보 저장 결정 | 수첩에 새로 적기 |
 | 출력 게이트 (Output Gate) | 현재 필요한 정보 출력 | 수첩에서 읽기 |
 
-\`\`\`text
+\`\`\`python
 # LSTM 레이어 생성
 lstm = nn.LSTM(
     input_size=128,    # 입력 벡터 크기 (= 임베딩 차원)
@@ -687,7 +687,7 @@ lstm = nn.LSTM(
 
 감성 분석(Sentiment Analysis)은 텍스트가 긍정적인지 부정적인지 판단하는 작업입니다.
 
-\`\`\`text
+\`\`\`python
 class SentimentClassifier(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_dim, num_classes):
         super().__init__()
@@ -739,7 +739,7 @@ LSTM의 마지막 은닉 상태(hidden)는 전체 문장을 읽은 후의 "요�
 
 ## 학습 코드
 
-\`\`\`text
+\`\`\`python
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
@@ -834,7 +834,7 @@ nn.Module은 PyTorch에서 **모든 신경망 레이어와 모델의 기본 클�
 
 ## 기본 구조: 반드시 지켜야 할 규칙
 
-\`\`\`text
+\`\`\`python
 import torch
 import torch.nn as nn
 
@@ -871,7 +871,7 @@ super().__init__()을 호출하지 않으면 PyTorch가 내부적으로 사용�
 
 > **비유**: nn.Linear는 "투표 시스템"입니다. 각 입력에 가중치(투표 영향력)를 곱하고 합산하여 결과를 냅니다.
 
-\`\`\`text
+\`\`\`python
 # 784개 입력을 받아 256개 출력을 만드는 레이어
 linear = nn.Linear(in_features=784, out_features=256)
 # 내부적으로 가중치 행렬 [256, 784]와 편향 벡터 [256]을 가짐
@@ -879,14 +879,14 @@ linear = nn.Linear(in_features=784, out_features=256)
 
 ### 합성곱층 (Conv2d)
 
-\`\`\`text
+\`\`\`python
 # 3채널 입력, 64채널 출력, 3x3 필터
 conv = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, padding=1)
 \`\`\`
 
 ### 활성화 함수
 
-\`\`\`text
+\`\`\`python
 relu = nn.ReLU()           # max(0, x) - 음수를 0으로
 sigmoid = nn.Sigmoid()     # 0~1 사이로 압축
 tanh = nn.Tanh()           # -1~1 사이로 압축
@@ -901,7 +901,7 @@ tanh = nn.Tanh()           # -1~1 사이로 압축
 
 ### 정규화 레이어
 
-\`\`\`text
+\`\`\`python
 bn = nn.BatchNorm2d(64)    # 배치 정규화 (CNN용)
 bn1d = nn.BatchNorm1d(256) # 배치 정규화 (FC용)
 dropout = nn.Dropout(0.5)  # 50% 뉴런을 무작위로 끔
@@ -913,7 +913,7 @@ dropout = nn.Dropout(0.5)  # 50% 뉴런을 무작위로 끔
 
 레이어가 단순히 순서대로 연결되는 경우, nn.Sequential을 사용하면 코드가 간결해집니다.
 
-\`\`\`text
+\`\`\`python
 # 방법 1: nn.Sequential 사용 (간결)
 model_simple = nn.Sequential(
     nn.Linear(784, 256),
@@ -954,7 +954,7 @@ class ModelFlexible(nn.Module):
 
 모델이 정확히 어떤 파라미터를 가지고 있는지 확인하는 것은 디버깅과 최적화에 매우 중요합니다.
 
-\`\`\`text
+\`\`\`python
 model = ModelFlexible()
 
 # 모든 파라미터의 이름과 크기 출력
@@ -983,7 +983,7 @@ print("Trainable parameters: {:,}".format(trainable))
 
 > **비유**: 축구 선수가 연습(train)할 때와 시합(eval)할 때 행동이 다르듯, 모델도 학습할 때와 평가할 때 동작이 달라야 합니다.
 
-\`\`\`text
+\`\`\`python
 # 학습 모드: Dropout 활성화, BatchNorm이 배치 통계 사용
 model.train()
 
@@ -1007,7 +1007,7 @@ with torch.no_grad():
 
 큰 모델은 반복되는 패턴을 "블록"으로 만들어 재사용하면 코드가 깔끔해집니다.
 
-\`\`\`text
+\`\`\`python
 class ConvBlock(nn.Module):
     """Conv -> BatchNorm -> ReLU 패턴을 하나의 블록으로"""
     def __init__(self, in_ch, out_ch, kernel_size=3, padding=1):
@@ -1109,7 +1109,7 @@ Dataset은 "데이터 하나를 어떻게 가져올 것인가"를 정의하는 �
 | __len__ | 데이터셋의 총 크기 | 정수 |
 | __getitem__ | 인덱스로 데이터 1개 가져오기 | (입력, 라벨) 튜플 |
 
-\`\`\`text
+\`\`\`python
 from torch.utils.data import Dataset
 import torch
 
@@ -1146,7 +1146,7 @@ DataLoader는 내부적으로 인덱스를 생성하고, 각 인덱스에 대해
 
 > **비유**: DataLoader는 레스토랑의 웨이터입니다. 주방(Dataset)에서 음식(데이터)을 가져와 테이블(모델)에 배달하는데, 한 번에 여러 접시(배치)를 나르고, 매번 다른 메뉴 순서(셔플)로 서빙합니다.
 
-\`\`\`text
+\`\`\`python
 from torch.utils.data import DataLoader
 
 train_loader = DataLoader(
@@ -1175,7 +1175,7 @@ train_loader = DataLoader(
 
 ### DataLoader 사용 패턴
 
-\`\`\`text
+\`\`\`python
 # 기본 사용법: for 문으로 배치를 하나씩 가져옴
 for batch_idx, (data, target) in enumerate(train_loader):
     # data 크기: [batch_size, channels, height, width]
@@ -1196,7 +1196,7 @@ for batch_idx, (data, target) in enumerate(train_loader):
 
 모든 이미지 데이터에 필수적으로 적용하는 변환입니다.
 
-\`\`\`text
+\`\`\`python
 from torchvision import transforms
 
 # 기본 변환 파이프라인
@@ -1214,7 +1214,7 @@ basic_transform = transforms.Compose([
 
 > **비유**: 데이터 증강은 "같은 시험 문제를 조금씩 변형해서 연습량을 늘리는 것"입니다. 고양이 사진을 뒤집거나, 밝기를 바꾸거나, 약간 회전시키면 모델 입장에서는 새로운 데이터입니다.
 
-\`\`\`text
+\`\`\`python
 # 훈련용 변환: 증강 포함
 train_transform = transforms.Compose([
     transforms.RandomHorizontalFlip(p=0.5),   # 50% 확률로 좌우 반전
@@ -1255,7 +1255,7 @@ test_transform = transforms.Compose([
 
 폴더 이름이 클래스 라벨이 되는 구조는 실무에서 가장 흔합니다.
 
-\`\`\`text
+\`\`\`python
 # 폴더 구조 예시:
 # data/
 #   train/
@@ -1286,7 +1286,7 @@ print("Total images:", len(train_dataset))  # 폴더 내 전체 이미지 수
 
 ## 실전 예제 2: CSV 데이터 로딩
 
-\`\`\`text
+\`\`\`python
 import pandas as pd
 
 class CSVDataset(Dataset):
@@ -1318,7 +1318,7 @@ loader = DataLoader(dataset, batch_size=32, shuffle=True)
 
 ## 데이터셋 분할: 훈련/검증 나누기
 
-\`\`\`text
+\`\`\`python
 from torch.utils.data import random_split
 
 # 전체 데이터를 80% 훈련, 20% 검증으로 분할
@@ -1414,7 +1414,7 @@ PyTorch는 .backward()를 호출할 때마다 그래디언트를 기존 값에 �
 
 ## 기본 학습 함수 구현
 
-\`\`\`text
+\`\`\`python
 def train_one_epoch(model, loader, criterion, optimizer, device):
     """한 에폭의 학습을 수행하는 함수"""
     model.train()  # 학습 모드 (Dropout, BatchNorm 활성화)
@@ -1454,7 +1454,7 @@ loss는 PyTorch 텐서로, 전체 계산 그래프에 연결되어 있습니다.
 
 검증(Validation)은 모델이 학습 데이터에만 잘 맞는 것이 아니라, 처음 보는 데이터에도 잘 동작하는지 확인하는 과정입니다.
 
-\`\`\`text
+\`\`\`python
 def validate(model, loader, criterion, device):
     """검증/테스트를 수행하는 함수"""
     model.eval()  # 평가 모드 (Dropout 비활성화, BatchNorm 고정)
@@ -1495,7 +1495,7 @@ def validate(model, loader, criterion, device):
 
 ## 전체 학습 과정: 에폭 루프
 
-\`\`\`text
+\`\`\`python
 # 하이퍼파라미터
 epochs = 50
 best_val_loss = float("inf")   # 최고 성능 추적
@@ -1570,7 +1570,7 @@ for epoch in range(epochs):
 
 학습이 진행될수록 학습률을 줄이면 더 세밀한 최적화가 가능합니다.
 
-\`\`\`text
+\`\`\`python
 # 방법 1: StepLR - 일정 에폭마다 학습률을 감소
 scheduler = torch.optim.lr_scheduler.StepLR(
     optimizer, step_size=10, gamma=0.1
@@ -1702,7 +1702,7 @@ export const LEVEL_4_LESSON_7 = `
 
 state_dict는 파이썬 딕셔너리로, 각 레이어의 이름을 키(key)로, 해당 레이어의 가중치 텐서를 값(value)으로 가집니다.
 
-\`\`\`text
+\`\`\`python
 # state_dict 내용 확인
 model = MyModel()
 print(model.state_dict().keys())
@@ -1716,7 +1716,7 @@ for name, tensor in model.state_dict().items():
 
 ### 저장하기
 
-\`\`\`text
+\`\`\`python
 # 모델의 가중치(state_dict)만 저장합니다
 torch.save(model.state_dict(), "model_weights.pt")
 # .pt 또는 .pth 확장자를 관례적으로 사용합니다
@@ -1724,7 +1724,7 @@ torch.save(model.state_dict(), "model_weights.pt")
 
 ### 로드하기
 
-\`\`\`text
+\`\`\`python
 # 1단계: 모델 구조를 먼저 생성합니다 (코드가 필요!)
 model = MyModel()
 
@@ -1750,14 +1750,14 @@ model.eval()
 
 ### 저장하기
 
-\`\`\`text
+\`\`\`python
 # 모델 전체를 저장합니다 (구조 + 가중치)
 torch.save(model, "model_full.pt")
 \`\`\`
 
 ### 로드하기
 
-\`\`\`text
+\`\`\`python
 # 모델 클래스 코드 없이도 바로 사용 가능
 model = torch.load("model_full.pt")
 model.eval()
@@ -1793,7 +1793,7 @@ model.eval()
 
 ### 체크포인트 저장하기
 
-\`\`\`text
+\`\`\`python
 def save_checkpoint(model, optimizer, epoch, val_loss, filepath):
     """학습 상태 전체를 체크포인트로 저장"""
     checkpoint = {
@@ -1811,7 +1811,7 @@ save_checkpoint(model, optimizer, epoch, val_loss, "checkpoint.pt")
 
 ### 체크포인트에서 학습 재개하기
 
-\`\`\`text
+\`\`\`python
 def load_checkpoint(filepath, model, optimizer):
     """체크포인트를 로드하고 학습 상태를 복원"""
     checkpoint = torch.load(filepath)
@@ -1861,7 +1861,7 @@ for epoch in range(start_epoch + 1, total_epochs):
 
 ### GPU에서 저장, CPU에서 로드
 
-\`\`\`text
+\`\`\`python
 # === GPU에서 학습 후 저장 ===
 model = MyModel().cuda()
 # ... 학습 진행 ...
@@ -1878,7 +1878,7 @@ model.eval()
 
 ### CPU에서 저장, GPU에서 로드
 
-\`\`\`text
+\`\`\`python
 # === CPU에서 저장 ===
 torch.save(model.state_dict(), "model_cpu.pt")
 
@@ -1901,7 +1901,7 @@ GPU에서 저장한 텐서는 기본적으로 "cuda:0"이라는 위치 정보를
 
 가장 기본적이고 많이 사용하는 전략입니다.
 
-\`\`\`text
+\`\`\`python
 best_val_loss = float("inf")
 
 for epoch in range(epochs):
@@ -1919,7 +1919,7 @@ for epoch in range(epochs):
 
 긴 학습에서는 주기적 체크포인트와 최고 모델을 함께 저장합니다.
 
-\`\`\`text
+\`\`\`python
 for epoch in range(epochs):
     train_loss, _ = train_one_epoch(...)
     val_loss, val_acc = validate(...)
@@ -1939,7 +1939,7 @@ for epoch in range(epochs):
 
 디스크 공간을 절약하면서도 안전하게 체크포인트를 관리합니다.
 
-\`\`\`text
+\`\`\`python
 import os
 
 def save_with_rotation(model, optimizer, epoch, val_loss, max_keep=3):
@@ -1967,7 +1967,7 @@ def save_with_rotation(model, optimizer, epoch, val_loss, max_keep=3):
 | AttributeError: Can't pickle | 전체 모델 저장 시 직렬화 불가 객체 | state_dict 방식으로 전환 |
 | FileNotFoundError | 잘못된 저장 경로 | 절대 경로 사용 권장 |
 
-\`\`\`text
+\`\`\`python
 # 부분 로드 (모델 구조가 약간 변경된 경우)
 model.load_state_dict(
     torch.load("model.pt"),

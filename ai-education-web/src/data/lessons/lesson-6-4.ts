@@ -54,7 +54,7 @@ GRU는 2014년 Cho 등이 제안했습니다. LSTM과의 주요 차이점:
 
 **"이전 기억을 얼마나 무시할까?"** 를 결정합니다.
 
-\\\`\\\`\\\`text
+\`\`\`text
 r_t = sigmoid(W_r * [h_(t-1), x_t] + b_r)
 
 r_t의 값:
@@ -64,7 +64,7 @@ r_t의 값:
 LSTM의 "망각 게이트"와 비슷하지만,
 직접 셀 상태를 지우는 것이 아니라
 "후보 은닉 상태를 만들 때" 과거를 얼마나 참고할지를 결정합니다.
-\\\`\\\`\\\`
+\`\`\`
 
 ---
 
@@ -72,7 +72,7 @@ LSTM의 "망각 게이트"와 비슷하지만,
 
 **"이전 상태와 새 정보를 어떤 비율로 섞을까?"** 를 결정합니다.
 
-\\\`\\\`\\\`text
+\`\`\`text
 z_t = sigmoid(W_z * [h_(t-1), x_t] + b_z)
 
 핵심 아이디어: z_t 하나로 "잊기"와 "기억하기"를 동시에 처리!
@@ -87,13 +87,13 @@ z_t가 작으면 (예: 0.1):
 
 LSTM에서는 망각 게이트(f)와 입력 게이트(i)가 별도였지만,
 GRU에서는 z_t와 (1-z_t)로 하나의 게이트가 두 역할을 합니다!
-\\\`\\\`\\\`
+\`\`\`
 
 ---
 
 ## 후보 은닉 상태와 최종 업데이트
 
-\\\`\\\`\\\`text
+\`\`\`text
 Step 1: 후보 은닉 상태 생성
   h_t~ = tanh(W_h * [r_t * h_(t-1), x_t] + b_h)
 
@@ -106,13 +106,13 @@ Step 2: 최종 은닉 상태 (가중 평균)
   z_t * h_(t-1):     이전 상태에서 유지할 부분
   (1-z_t) * h_t~:    새로 추가할 부분
   --> 두 값의 가중 평균!
-\\\`\\\`\\\`
+\`\`\`
 
 ---
 
 ## GRU 전체 흐름 정리
 
-\\\`\\\`\\\`text
+\`\`\`text
 입력: x_t, h_(t-1)
 
 Step 1 (Reset):    r_t = sigmoid(W_r * [h_(t-1), x_t] + b_r)
@@ -124,7 +124,7 @@ Step 4 (Output):   h_t = z_t * h_(t-1) + (1 - z_t) * h_t~
 
 주목: LSTM과 달리 셀 상태(C)가 없습니다!
 은닉 상태(h) 하나로 모든 것을 처리합니다.
-\\\`\\\`\\\`
+\`\`\`
 
 ---
 
@@ -145,7 +145,7 @@ Step 4 (Output):   h_t = z_t * h_(t-1) + (1 - z_t) * h_t~
 
 ## 실행해보기: GRU 게이트 시각화
 
-\\\`\\\`\\\`python
+\`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -213,13 +213,13 @@ plt.show()
 print("Reset Gate:  close to 0 = ignore past, close to 1 = use past")
 print("Update Gate: close to 1 = keep old state, close to 0 = use new candidate")
 print("GRU uses only 2 gates instead of LSTM\\'s 3!")
-\\\`\\\`\\\`
+\`\`\`
 
 ---
 
 ## 실행해보기: LSTM vs GRU 파라미터 수 비교
 
-\\\`\\\`\\\`python
+\`\`\`python
 import numpy as np
 
 def count_params(input_size, hidden_size, model_type):
@@ -252,7 +252,7 @@ for inp in input_sizes:
 print()
 print("GRU always has 75% of LSTM\\'s parameters (3/4 ratio)")
 print("This means faster training and less memory!")
-\\\`\\\`\\\`
+\`\`\`
 
 ---
 
@@ -260,7 +260,7 @@ print("This means faster training and less memory!")
 
 ### GRU를 선택하는 경우
 
-\\\`\\\`\\\`text
+\`\`\`text
 1. 데이터셋이 작을 때
    --> 파라미터가 적어서 과적합 위험이 낮음
 
@@ -272,11 +272,11 @@ print("This means faster training and less memory!")
 
 4. 시퀀스가 비교적 짧을 때 (< 100 스텝)
    --> 짧은 시퀀스에서는 LSTM과 성능 차이가 거의 없음
-\\\`\\\`\\\`
+\`\`\`
 
 ### LSTM을 선택하는 경우
 
-\\\`\\\`\\\`text
+\`\`\`text
 1. 매우 긴 시퀀스를 다룰 때 (> 500 스텝)
    --> 셀 상태 덕분에 장기 의존성을 더 잘 포착
 
@@ -288,11 +288,11 @@ print("This means faster training and less memory!")
 
 4. 최고 정확도가 중요할 때
    --> 약간이라도 더 나은 성능이 필요한 경우
-\\\`\\\`\\\`
+\`\`\`
 
 ### 실무 팁
 
-\\\`\\\`\\\`text
+\`\`\`text
 실무에서의 선택 전략:
 
 1단계: GRU로 빠르게 프로토타입 만들기
@@ -301,13 +301,13 @@ print("This means faster training and less memory!")
 
 요즘은 Transformer가 대부분의 시퀀스 작업을 대체하고 있지만,
 작은 데이터셋이나 실시간 처리에서는 여전히 GRU/LSTM이 유용합니다.
-\\\`\\\`\\\`
+\`\`\`
 
 ---
 
 ## PyTorch에서 GRU 사용 (참고)
 
-\\\`\\\`\\\`text
+\`\`\`python
 import torch
 import torch.nn as nn
 
@@ -329,7 +329,7 @@ output, hn = gru(x, h0)
 print(f"output: {output.shape}")   # (32, 15, 40)
 print(f"hn: {hn.shape}")           # (4, 32, 20)
 # 반환값도 (output, hn)만 -- (output, (hn, cn))이 아님!
-\\\`\\\`\\\`
+\`\`\`
 
 ---
 

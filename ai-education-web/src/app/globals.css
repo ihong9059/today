@@ -16,6 +16,16 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@layer base {
+  /* D2Coding font for Korean monospace - ASCII diagrams */
+  @font-face {
+    font-family: 'D2Coding';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/D2Coding.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

@@ -4,8 +4,8 @@ import LevelCard from '@/components/LevelCard';
 import { curriculum } from '@/data/curriculum';
 
 // YouTube 소개 영상 URL
-const INTRO_VIDEO_URL = "https://www.youtube.com/watch?v=HTllLaf8Eto";
-const INTRO_VIDEO_ID = "HTllLaf8Eto";
+const INTRO_VIDEO_URL = "https://youtu.be/5isz28FgLXk";
+const INTRO_VIDEO_ID = "5isz28FgLXk";
 const INTRO_THUMBNAIL_URL = `https://img.youtube.com/vi/${INTRO_VIDEO_ID}/maxresdefault.jpg`;
 
 
@@ -69,7 +69,7 @@ export default function Home() {
               강의 소개 영상
             </h2>
             <p className="text-gray-300">
-              AI 첫걸음 과정이 어떻게 진행되는지 10분만 투자해서 알아보세요
+              AI 첫걸음 과정이 어떻게 진행되는지 6분만 투자해서 알아보세요
             </p>
           </div>
           <div className="relative aspect-video bg-gray-800 rounded-2xl overflow-hidden shadow-2xl">
@@ -97,7 +97,7 @@ export default function Home() {
           </div>
           <div className="mt-8 flex justify-center gap-8 text-center">
             <div>
-              <div className="text-2xl font-bold text-blue-400">8분</div>
+              <div className="text-2xl font-bold text-blue-400">6분</div>
               <div className="text-gray-400 text-sm">영상 길이</div>
             </div>
             <div>

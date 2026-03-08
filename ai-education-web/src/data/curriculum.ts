@@ -3353,7 +3353,7 @@ for v in test_values:
 
 ReLU는 아주 단순합니다: "음수면 0, 양수면 그대로 통과!" 마치 은행이 마이너스 잔액을 0으로 처리하는 것과 같습니다.
 
-ReLU(x) = max(0, x)
+$$\\text{ReLU}(x) = \\max(0, x)$$
 
 | 입력 | 출력 | 설명 |
 |------|------|------|
@@ -3724,64 +3724,85 @@ print("  - Where f\'(x) < 0 -> f(x) is going down")
 | gradient (기울기) | 미분으로 계산한 방향 | 바닥을 더듬은 결과 |
 | - (마이너스) | 반대 방향으로! | 내리막으로 가기 위해 |
 
-### 실행해보기: 경사하강법 시뮬레이션
+### 🔬 실습: 경사하강법 단계별 시뮬레이션
+
+AI가 실제로 어떻게 학습하는지 단계별로 확인해봅시다.
 
 \`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 손실 함수: L(w) = w^2 (최솟값은 w=0)
+# ═══════════════════════════════════════════════════════════════
+# 📊 경사하강법(Gradient Descent) 시뮬레이션
+# 목표: 손실 함수의 최솟값(w=0)을 찾아가기
+# ═══════════════════════════════════════════════════════════════
+
+# 📐 손실 함수 정의: L(w) = w² (포물선 모양)
+# 최솟값은 w=0일 때 Loss=0
 def loss(w):
     return w ** 2
 
 def loss_gradient(w):
-    return 2 * w  # dL/dw = 2w
+    return 2 * w  # 📝 미분: dL/dw = 2w
 
-# 경사하강법 실행
-w = 4.0             # 시작점
-learning_rate = 0.15
+# ─────────────────────────────────────────────────────────────────
+# 🚀 경사하강법 실행
+# ─────────────────────────────────────────────────────────────────
+w = 4.0             # 🎯 시작 위치 (산 중턱)
+learning_rate = 0.15  # 👣 발걸음 크기
 history = [w]
 
-print(\'Gradient Descent Simulation\')
-print(f\'{"Step":>4} | {"w":>8} | {"Loss":>8} | {"Gradient":>8} | {"Update":>8}\')
-print(\'-\' * 55)
+print("🏔️ 경사하강법 시뮬레이션 - 손실 최솟값 찾아가기")
+print("=" * 65)
+print(f'{"Step":>4} | {"위치(w)":>10} | {"손실":>10} | {"기울기":>10} | {"이동량":>10}')
+print("-" * 65)
 
 for step in range(15):
-    grad = loss_gradient(w)
-    update = learning_rate * grad
-    print(f\'{step:4d} | {w:8.4f} | {loss(w):8.4f} | {grad:8.4f} | {-update:8.4f}\')
-    w = w - update
+    grad = loss_gradient(w)           # 📐 현재 위치의 기울기 계산
+    update = learning_rate * grad     # 👣 이동할 거리 계산
+    print(f'{step:4d} | {w:10.4f} | {loss(w):10.4f} | {grad:10.4f} | {-update:10.4f}')
+    w = w - update                    # ⬇️ 기울기 반대 방향으로 이동!
     history.append(w)
 
-print(f\'{"DONE":>4} | {w:8.4f} | {loss(w):8.4f} |\')
+print("-" * 65)
+print(f'{"완료":>4} | {w:10.4f} | {loss(w):10.4f} | 🎉 최솟값 도달!')
 
-# 시각화
-fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+# ─────────────────────────────────────────────────────────────────
+# 📈 시각화: 학습 과정을 그래프로 확인
+# ─────────────────────────────────────────────────────────────────
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-# 왼쪽: 손실 함수 위에서 이동 경로
+# 📊 왼쪽 그래프: 손실 곡선 위의 이동 경로
 w_range = np.linspace(-5, 5, 200)
-axes[0].plot(w_range, loss(w_range), \'b-\', linewidth=2, label=\'L(w) = w^2\')
+axes[0].plot(w_range, loss(w_range), \'b-\', linewidth=2, label=\'손실 함수 L(w) = w²\')
 history_arr = np.array(history)
-axes[0].plot(history_arr, loss(history_arr), \'ro-\', markersize=6, label=\'GD path\')
-axes[0].plot(history_arr[0], loss(history_arr[0]), \'g*\', markersize=15, label=\'start\')
-axes[0].set_xlabel(\'w (weight)\')
-axes[0].set_ylabel(\'Loss\')
-axes[0].set_title(\'Gradient Descent on Loss Curve\')
-axes[0].legend()
+axes[0].plot(history_arr, loss(history_arr), \'ro-\', markersize=8, label=\'학습 경로\')
+axes[0].plot(history_arr[0], loss(history_arr[0]), \'g*\', markersize=20, label=\'시작점\')
+axes[0].plot(0, 0, \'b*\', markersize=15, label=\'목표 (최솟값)\')
+axes[0].set_xlabel(\'가중치 w\', fontsize=12)
+axes[0].set_ylabel(\'손실 (Loss)\', fontsize=12)
+axes[0].set_title(\'🏔️ 손실 곡선 위에서 내려오는 모습\', fontsize=14)
+axes[0].legend(fontsize=10)
 axes[0].grid(True, alpha=0.3)
 
-# 오른쪽: 손실 값 변화
-axes[1].plot(range(len(history)), [loss(w) for w in history], \'r-o\', markersize=4)
-axes[1].set_xlabel(\'Step\')
-axes[1].set_ylabel(\'Loss\')
-axes[1].set_title(\'Loss Decreasing Over Steps\')
+# 📊 오른쪽 그래프: 학습 단계별 손실 감소
+loss_history = [loss(w) for w in history]
+axes[1].plot(range(len(history)), loss_history, \'r-o\', markersize=6, linewidth=2)
+axes[1].fill_between(range(len(history)), loss_history, alpha=0.3, color=\'red\')
+axes[1].set_xlabel(\'학습 단계 (Step)\', fontsize=12)
+axes[1].set_ylabel(\'손실 (Loss)\', fontsize=12)
+axes[1].set_title(\'📉 학습할수록 손실이 줄어드는 모습\', fontsize=14)
 axes[1].grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.show()
 \`\`\`
 
-> 보이시나요? w가 점점 0에 가까워지고, 손실도 점점 줄어듭니다. **이것이 바로 AI가 학습하는 원리입니다!**
+> 💡 **핵심 포인트**: w가 점점 0에 가까워지고, 손실도 점점 줄어듭니다!
+> - 왼쪽 그래프: 산을 내려오듯이 최솟값으로 이동
+> - 오른쪽 그래프: 학습할수록 손실(오차)가 감소
+>
+> **이것이 바로 AI가 학습하는 원리입니다!**
 
 ---
 
@@ -4032,9 +4053,7 @@ print(\'not the GLOBAL minimum. This is a real challenge in AI!\')
 
 ### 예제 함수
 
-\`\`\`text
-f(x, y) = x^2 + 2xy + y^2
-\`\`\`
+> $f(x, y) = x^2 + 2xy + y^2$
 
 ### x에 대한 편미분 (y는 상수 취급)
 
@@ -4123,12 +4142,10 @@ for x, y in test_points:
 
 이번에는 두 편미분이 **다른** 함수를 살펴봅시다:
 
-\`\`\`text
-g(x, y) = x^2 * y + 3x - y^3
-
-dg/dx = 2xy + 3  (y는 상수 취급)
-dg/dy = x^2 - 3y^2  (x는 상수 취급)
-\`\`\`
+> $g(x, y) = x^2 y + 3x - y^3$
+>
+> - $\\frac{\\partial g}{\\partial x} = 2xy + 3$ (y는 상수 취급)
+> - $\\frac{\\partial g}{\\partial y} = x^2 - 3y^2$ (x는 상수 취급)
 
 ### 실행해보기: 비대칭 편미분 확인
 
@@ -4164,10 +4181,7 @@ print(f"  dg/dx = {2*x0*y0 + 3},  dg/dy = {x0**2 - 3*y0**2}")
 
 모든 편미분을 하나로 묶으면 **그래디언트(gradient)** 벡터가 됩니다.
 
-\`\`\`text
-그래디언트 = (df/dx, df/dy)
-기호: nabla f 또는 grad f
-\`\`\`
+> $\\nabla f = \\left( \\frac{\\partial f}{\\partial x}, \\frac{\\partial f}{\\partial y} \\right)$
 
 그래디언트 벡터의 핵심 성질:
 
@@ -4457,12 +4471,9 @@ if L > 0:
 
 도미노 A를 밀면 B가 넘어지고, B가 넘어지면 C가 넘어집니다. A가 C에 미치는 영향은?
 
-\`\`\`text
-A의 움직임 --> B의 움직임 --> C의 움직임
-
-C가 B에 반응하는 정도 x B가 A에 반응하는 정도
-= C가 A에 반응하는 정도!
-\`\`\`
+> **A → B → C**
+>
+> (C가 B에 반응하는 정도) × (B가 A에 반응하는 정도) = **C가 A에 반응하는 정도!**
 
 이것이 바로 연쇄법칙입니다. 중간 단계를 거치더라도, 각 단계의 변화율을 곱하면 전체 변화율을 알 수 있습니다.
 
@@ -4480,15 +4491,14 @@ C가 B에 반응하는 정도 x B가 A에 반응하는 정도
 
 합성함수는 **함수 안에 함수가 들어있는 구조**입니다.
 
-\`\`\`text
-예: f(x) = (x + 2)^2
-
-분해하면:
-  안쪽 함수: u = x + 2
-  바깥 함수: f = u^2
-
-x가 바뀌면 -> u가 바뀌고 -> f가 바뀐다
-\`\`\`
+> **예:** $f(x) = (x + 2)^2$
+>
+> | 분해 | 함수 |
+> |------|------|
+> | 안쪽 함수 | $u = x + 2$ |
+> | 바깥 함수 | $f = u^2$ |
+>
+> x가 바뀌면 → u가 바뀌고 → f가 바뀐다
 
 신경망이 바로 거대한 합성함수입니다!
 
@@ -4505,59 +4515,39 @@ x가 바뀌면 -> u가 바뀌고 -> f가 바뀐다
 
 ### 핵심 공식
 
-\`\`\`text
-df/dx = df/du * du/dx
+$$\\frac{df}{dx} = \\frac{df}{du} \\cdot \\frac{du}{dx}$$
 
-전체 변화율 = (바깥 함수의 변화율) x (안쪽 함수의 변화율)
-\`\`\`
+> **전체 변화율** = (바깥 함수의 변화율) × (안쪽 함수의 변화율)
 
 함수가 3개 이상 합성되어도 같은 원리입니다:
 
-\`\`\`text
-x -> u -> v -> f 일 때:
-
-df/dx = df/dv * dv/du * du/dx
-
-각 단계의 변화율을 모두 곱하면 됩니다!
-\`\`\`
+> $x \\to u \\to v \\to f$ 일 때:
+>
+> $$\\frac{df}{dx} = \\frac{df}{dv} \\cdot \\frac{dv}{du} \\cdot \\frac{du}{dx}$$
+>
+> 각 단계의 변화율을 모두 곱하면 됩니다!
 
 ---
 
 ## 4. 단계별 계산 예시
 
-### 예제 1: f(x) = (x + 2)^2
+### 예제 1: $f(x) = (x + 2)^2$
 
-\`\`\`text
-Step 1: 분해
-  u = x + 2  (안쪽)
-  f = u^2    (바깥)
+| 단계 | 계산 |
+|------|------|
+| **Step 1: 분해** | 안쪽: $u = x + 2$, 바깥: $f = u^2$ |
+| **Step 2: 각각 미분** | $\\frac{df}{du} = 2u$, $\\frac{du}{dx} = 1$ |
+| **Step 3: 곱하기** | $\\frac{df}{dx} = 2u \\times 1 = 2(x + 2)$ |
+| **검증** | $x=3$ → $\\frac{df}{dx} = 2(3+2) = 10$ ✓ |
 
-Step 2: 각각 미분
-  df/du = 2u  (바깥 미분)
-  du/dx = 1   (안쪽 미분)
+### 예제 2: $f(x) = (3x^2 + 1)^3$
 
-Step 3: 곱하기
-  df/dx = df/du * du/dx = 2u * 1 = 2(x + 2)
-
-검증: x=3 -> df/dx = 2(3+2) = 10
-\`\`\`
-
-### 예제 2: f(x) = (3x^2 + 1)^3
-
-\`\`\`text
-Step 1: 분해
-  u = 3x^2 + 1  (안쪽)
-  f = u^3        (바깥)
-
-Step 2: 각각 미분
-  df/du = 3u^2   (바깥 미분)
-  du/dx = 6x     (안쪽 미분)
-
-Step 3: 곱하기
-  df/dx = 3u^2 * 6x = 18x * (3x^2 + 1)^2
-
-검증: x=1 -> df/dx = 18*1*(3+1)^2 = 18*16 = 288
-\`\`\`
+| 단계 | 계산 |
+|------|------|
+| **Step 1: 분해** | 안쪽: $u = 3x^2 + 1$, 바깥: $f = u^3$ |
+| **Step 2: 각각 미분** | $\\frac{df}{du} = 3u^2$, $\\frac{du}{dx} = 6x$ |
+| **Step 3: 곱하기** | $\\frac{df}{dx} = 3u^2 \\times 6x = 18x(3x^2 + 1)^2$ |
+| **검증** | $x=1$ → $\\frac{df}{dx} = 18 \\times 1 \\times (3+1)^2 = 288$ ✓ |
 
 ---
 
@@ -5625,7 +5615,7 @@ for words, description in test_emails:
 
 ### 소프트맥스 공식
 
-softmax(x_i) = exp(x_i) / sum(exp(x_j))
+$$\\text{softmax}(x_i) = \\frac{e^{x_i}}{\\sum_{j=1}^{n} e^{x_j}}$$
 
 핵심 특징:
 - 모든 출력값이 0~1 사이
@@ -6427,14 +6417,14 @@ AI에서 상관계수는 **특성 선택(feature selection)** 에 활용됩니�
 
 ### 4-1. Min-Max 정규화: 0~1 사이로 압축
 
-공식: x_norm = (x - min) / (max - min)
+$$x_{norm} = \\frac{x - x_{min}}{x_{max} - x_{min}}$$
 
 모든 값을 0과 1 사이로 만들어줍니다.
-이미지 픽셀값(0~255 -> 0~1)에 많이 씁니다.
+이미지 픽셀값(0~255 → 0~1)에 많이 씁니다.
 
 ### 4-2. Z-score 표준화: 평균=0, 표준편차=1로 변환
 
-공식: z = (x - mu) / sigma
+$$z = \\frac{x - \\mu}{\\sigma}$$
 
 데이터를 "평균에서 표준편차 몇 배 떨어져 있는가"로 바꿉니다.
 이상치가 있을 때 더 안정적입니다.
@@ -6594,7 +6584,7 @@ Level 2의 수학 기초를 바탕으로, 손실 함수, 경사하강법, 역전
         title: "손실 함수",
         description: "딥러닝의 시작점 - MSE와 Cross-Entropy",
         duration: "6분 0초",
-        videoUrl: "https://youtu.be/eGngrAuU7hc",
+        videoUrl: "https://youtu.be/r81SuCKIDzY",
         content: `
 # 손실 함수 (Loss Function) - 모델의 성적표
 
@@ -6605,7 +6595,7 @@ Level 2의 수학 기초를 바탕으로, 손실 함수, 경사하강법, 역전
 - Cross-Entropy를 직접 구현하고 시각화할 수 있습니다
 - 문제 유형에 따라 올바른 손실 함수를 선택할 수 있습니다
 - 손실 지형(Loss Landscape)의 의미를 파악합니다
-- \\\`loss.backward()\\\`가 내부적으로 무엇을 하는지 연결합니다
+- \`loss.backward()\`가 내부적으로 무엇을 하는지 연결합니다
 
 ---
 
@@ -6641,11 +6631,11 @@ Level 2의 수학 기초를 바탕으로, 손실 함수, 경사하강법, 역전
 
 예를 들어 집값을 예측하는 모델이 있다고 합시다:
 
-\\\`\\\`\\\`text
-실제 집값: 5억 원
-모델 예측: 4억 원
-오차: 1억 원 --> 이것을 "손실(loss)"이라 부릅니다
-\\\`\\\`\\\`
+| 구분 | 값 |
+|------|-----|
+| 실제 집값 | 5억 원 |
+| 모델 예측 | 4억 원 |
+| **오차 (손실)** | **1억 원** ← 이것이 "손실(loss)" |
 
 손실값이 크면 "많이 틀렸다", 작으면 "거의 맞았다"는 뜻입니다.
 학습의 목표는 단 하나: **이 손실값을 최대한 줄이는 것!**
@@ -6664,7 +6654,9 @@ MSE는 **"오차를 제곱해서 평균 낸 것"** 입니다.
 
 **수식:**
 
-MSE = (1/n) * sum((예측값 - 실제값)^2)
+$$\\text{MSE} = \\frac{1}{n} \\sum_{i=1}^{n} (\\hat{y}_i - y_i)^2$$
+
+여기서 $\\hat{y}_i$는 예측값, $y_i$는 실제값, $n$은 데이터 개수입니다.
 
 ### 왜 제곱할까?
 
@@ -6675,66 +6667,116 @@ MSE = (1/n) * sum((예측값 - 실제값)^2)
 | **방향 제거** | +1 오차와 -1 오차가 상쇄되면 안 됩니다. 제곱하면 둘 다 양수! |
 | **큰 오차에 패널티** | 오차 1 -> 손실 1, 오차 2 -> 손실 4, 오차 3 -> 손실 9. 큰 실수에 더 큰 벌점! |
 
-### 실행해보기: MSE 직접 구현
+### 🔬 실습: MSE 단계별 구현
 
-\\\`\\\`\\\`python
+아래 코드를 실행하면 MSE가 어떻게 계산되는지 **단계별로** 확인할 수 있습니다.
+
+\`\`\`python
 import numpy as np
 
-# --- MSE를 처음부터 구현해봅시다 ---
+# ═══════════════════════════════════════════════════════════════
+# 📊 MSE(Mean Squared Error) 단계별 계산
+# ═══════════════════════════════════════════════════════════════
 
-# 실제값과 모델의 예측값
-y_true = np.array([3.0, 5.0, 2.5, 7.0, 4.5])
-y_pred = np.array([2.8, 5.2, 2.0, 6.5, 4.8])
+# 📌 데이터 준비: 실제값 vs 모델의 예측값
+y_true = np.array([3.0, 5.0, 2.5, 7.0, 4.5])  # 정답 (실제 데이터)
+y_pred = np.array([2.8, 5.2, 2.0, 6.5, 4.8])  # AI 모델의 예측
 
-# Step 1: 오차 계산
+print("🎯 정답값:", y_true)
+print("🤖 예측값:", y_pred)
+print()
+
+# ─────────────────────────────────────────────────────────────────
+# Step 1️⃣: 오차 계산 (예측 - 정답)
+# ─────────────────────────────────────────────────────────────────
 errors = y_pred - y_true
-print('오차:', errors)
+print("Step 1️⃣ 오차 (예측-정답):", errors)
+# 결과: [-0.2, 0.2, -0.5, -0.5, 0.3]
+# → 양수면 과대예측, 음수면 과소예측
 
-# Step 2: 오차를 제곱
+# ─────────────────────────────────────────────────────────────────
+# Step 2️⃣: 오차 제곱 (음수를 양수로 + 큰 오차에 패널티)
+# ─────────────────────────────────────────────────────────────────
 squared_errors = errors ** 2
-print('제곱 오차:', squared_errors)
+print("Step 2️⃣ 제곱 오차:", squared_errors)
+# 결과: [0.04, 0.04, 0.25, 0.25, 0.09]
+# → 모든 값이 양수가 됨!
 
-# Step 3: 평균
+# ─────────────────────────────────────────────────────────────────
+# Step 3️⃣: 평균 계산 → 이것이 MSE!
+# ─────────────────────────────────────────────────────────────────
 mse = np.mean(squared_errors)
-print('MSE:', round(mse, 4))
+print("Step 3️⃣ 평균 (MSE):", round(mse, 4))
+print()
 
-# 한 줄로 쓰면:
+# ═══════════════════════════════════════════════════════════════
+# 💡 한 줄로 쓰면 이렇게 됩니다
+# ═══════════════════════════════════════════════════════════════
 mse_oneline = np.mean((y_pred - y_true) ** 2)
-print('MSE (한 줄):', round(mse_oneline, 4))
+print("📝 한 줄 공식:", round(mse_oneline, 4))
 
-# --- 예측이 완벽하면? ---
-y_perfect = y_true.copy()
+# ═══════════════════════════════════════════════════════════════
+# ✅ 완벽한 예측은? MSE = 0
+# ═══════════════════════════════════════════════════════════════
+y_perfect = y_true.copy()  # 정답과 똑같이 예측
 mse_perfect = np.mean((y_perfect - y_true) ** 2)
-print('\\n완벽한 예측의 MSE:', mse_perfect, '(0이면 완벽!)')
-\\\`\\\`\\\`
+print()
+print("🏆 완벽한 예측의 MSE:", mse_perfect, "(0이면 완벽!)")
+\`\`\`
 
-### 실행해보기: MSE가 예측 오차에 어떻게 반응하는지 시각화
+### 📈 시각화: MSE 손실 곡선
 
-\\\`\\\`\\\`python
+MSE가 예측 오차에 어떻게 반응하는지 그래프로 확인해봅시다.
+
+\`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 실제값은 5.0으로 고정하고, 예측값을 0~10까지 바꿔보자
-y_true = 5.0
-y_preds = np.linspace(0, 10, 200)
+# ═══════════════════════════════════════════════════════════════
+# 📊 MSE 손실 곡선 시각화
+# 정답이 5.0일 때, 예측값에 따라 손실이 어떻게 변하는지 확인
+# ═══════════════════════════════════════════════════════════════
 
-# 각 예측값에 대한 MSE (데이터 1개이므로 그냥 (pred - true)^2)
+y_true = 5.0  # 🎯 정답값 (고정)
+y_preds = np.linspace(0, 10, 200)  # 예측값 범위: 0 ~ 10
+
+# 각 예측값에 대한 MSE 계산
 mse_values = (y_preds - y_true) ** 2
 
-plt.figure(figsize=(8, 5))
-plt.plot(y_preds, mse_values, linewidth=2, color='royalblue')
-plt.axvline(x=y_true, color='red', linestyle='--', label='actual = 5.0')
-plt.xlabel('prediction', fontsize=12)
-plt.ylabel('MSE Loss', fontsize=12)
-plt.title('MSE Loss: penalty increases with the square of the error', fontsize=13)
-plt.legend(fontsize=11)
+# ─────────────────────────────────────────────────────────────────
+# 그래프 그리기
+# ─────────────────────────────────────────────────────────────────
+plt.figure(figsize=(10, 6))
+plt.plot(y_preds, mse_values, linewidth=3, color='royalblue', label='MSE 손실')
+plt.axvline(x=y_true, color='red', linestyle='--', linewidth=2, label='정답 = 5.0')
+plt.scatter([y_true], [0], color='red', s=100, zorder=5)  # 정답 지점 표시
+
+# 그래프 꾸미기
+plt.xlabel('예측값 (Prediction)', fontsize=14)
+plt.ylabel('MSE 손실 (Loss)', fontsize=14)
+plt.title('🎯 MSE 손실 곡선: 정답에서 멀어질수록 손실이 제곱으로 증가!', fontsize=15)
+plt.legend(fontsize=12, loc='upper right')
 plt.grid(True, alpha=0.3)
+
+# 핵심 포인트 표시
+plt.annotate('정답! 손실=0', xy=(5, 0), xytext=(6.5, 5),
+             fontsize=11, arrowprops=dict(arrowstyle='->', color='red'),
+             color='red', fontweight='bold')
+plt.annotate('오차 2 → 손실 4', xy=(7, 4), xytext=(8, 8),
+             fontsize=10, arrowprops=dict(arrowstyle='->', color='gray'))
+plt.annotate('오차 3 → 손실 9', xy=(8, 9), xytext=(9, 15),
+             fontsize=10, arrowprops=dict(arrowstyle='->', color='gray'))
+
 plt.tight_layout()
 plt.show()
-\\\`\\\`\\\`
+\`\`\`
 
-정답(5.0)에서 멀어질수록 **제곱으로** 손실이 커지는 것이 보이시나요?
-이것이 MSE의 핵심 특성입니다.
+> 💡 **핵심 포인트**: 정답(5.0)에서 멀어질수록 손실이 **제곱으로** 커집니다!
+> - 오차 1 → 손실 1
+> - 오차 2 → 손실 4 (2배가 아닌 4배!)
+> - 오차 3 → 손실 9 (3배가 아닌 9배!)
+>
+> 이것이 MSE가 "큰 실수에 큰 벌점"을 주는 원리입니다.
 
 ---
 
@@ -6749,97 +6791,140 @@ Cross-Entropy는 **"정답 클래스의 확률이 얼마나 높은지"** 를 측
 
 **수식 (이진 분류):**
 
-BCE = -(1/n) * sum(y * log(p) + (1-y) * log(1-p))
+$$\\text{BCE} = -\\frac{1}{n} \\sum_{i=1}^{n} \\left[ y_i \\log(p_i) + (1-y_i) \\log(1-p_i) \\right]$$
 
-여기서 y는 정답(0 또는 1), p는 모델이 예측한 확률입니다.
+여기서 $y_i$는 정답(0 또는 1), $p_i$는 모델이 예측한 확률입니다.
 
 ### 직관적 이해
 
-\\\`\\\`\\\`text
-이미지: 고양이 사진
+> **🖼️ 이미지: 고양이 사진**
 
-모델 A: "고양이 확률 95%" --> 자신 있고 정답! --> 손실 낮음
-모델 B: "고양이 확률 50%" --> 반반이라고?    --> 손실 중간
-모델 C: "고양이 확률 5%"  --> 완전히 틀림!   --> 손실 매우 높음
-\\\`\\\`\\\`
+| 모델 | 예측 | 판정 | 손실 |
+|------|------|------|------|
+| 모델 A | "고양이 확률 95%" | ✅ 자신 있고 정답! | 낮음 |
+| 모델 B | "고양이 확률 50%" | ⚠️ 반반이라고? | 중간 |
+| 모델 C | "고양이 확률 5%" | ❌ 완전히 틀림! | 매우 높음 |
 
 ### log가 하는 일
 
-\\\`\\\`\\\`text
-정답 확률    -->    -log(확률) = 손실
-0.95 (95%)   -->    0.05   (거의 0, 훌륭!)
-0.70 (70%)   -->    0.36   (조금 불안)
-0.50 (50%)   -->    0.69   (반반? 안 됨!)
-0.10 (10%)   -->    2.30   (큰 손실!)
-0.01 (1%)    -->    4.61   (엄청난 손실!)
-\\\`\\\`\\\`
+| 정답 확률 | $-\\log(p)$ = 손실 | 해석 |
+|-----------|-------------------|------|
+| 0.95 (95%) | 0.05 | ✅ 거의 0, 훌륭! |
+| 0.70 (70%) | 0.36 | ⚠️ 조금 불안 |
+| 0.50 (50%) | 0.69 | ❌ 반반? 안 됨! |
+| 0.10 (10%) | 2.30 | ❌ 큰 손실! |
+| 0.01 (1%) | 4.61 | ❌ 엄청난 손실! |
 
 확률이 0에 가까워질수록 손실이 **급격히** 증가합니다.
 "자신 있게 틀리면" 엄청난 패널티를 받는 것이죠!
 
-### 실행해보기: Cross-Entropy 직접 구현
+### 🔬 실습: Cross-Entropy 직접 구현
 
-\\\`\\\`\\\`python
+좋은 모델과 나쁜 모델의 손실 차이를 직접 비교해봅시다.
+
+\`\`\`python
 import numpy as np
 
-# --- Binary Cross-Entropy 직접 구현 ---
+# ═══════════════════════════════════════════════════════════════
+# 📊 Binary Cross-Entropy (BCE) 직접 구현
+# ═══════════════════════════════════════════════════════════════
 
 def binary_cross_entropy(y_true, y_pred):
-    # 0이나 1에 너무 가까우면 log가 터지니 살짝 클리핑
+    """
+    BCE 손실 함수
+    - y_true: 정답 (0 또는 1)
+    - y_pred: 모델이 예측한 확률 (0~1 사이 값)
+    """
+    # ⚠️ 안전 장치: log(0)은 무한대가 되므로 극단값 방지
     y_pred = np.clip(y_pred, 1e-7, 1 - 1e-7)
+
+    # BCE 공식 적용
     bce = -np.mean(y_true * np.log(y_pred) + (1 - y_true) * np.log(1 - y_pred))
     return bce
 
-# 실제 정답: [고양이, 강아지, 고양이, 고양이, 강아지]
-# 고양이 = 1, 강아지 = 0
+# ─────────────────────────────────────────────────────────────────
+# 📌 데이터: 5장의 사진을 분류하는 문제
+# ─────────────────────────────────────────────────────────────────
+# 🏷️ 정답: [고양이, 강아지, 고양이, 고양이, 강아지]
+#          고양이 = 1, 강아지 = 0
 y_true = np.array([1, 0, 1, 1, 0])
+print("🏷️ 정답:", ["고양이" if x==1 else "강아지" for x in y_true])
 
-# 좋은 모델의 예측 (정답에 가까운 확률)
+# ─────────────────────────────────────────────────────────────────
+# 🏆 좋은 모델: 정답에 가까운 확률 예측
+# ─────────────────────────────────────────────────────────────────
 y_pred_good = np.array([0.9, 0.1, 0.85, 0.95, 0.05])
-print('좋은 모델의 BCE:', round(binary_cross_entropy(y_true, y_pred_good), 4))
+print("\\n🤖 좋은 모델의 예측 (고양이 확률):", y_pred_good)
+print("   → 손실 (BCE):", round(binary_cross_entropy(y_true, y_pred_good), 4), "✅ 낮음!")
 
-# 나쁜 모델의 예측 (엉뚱한 확률)
+# ─────────────────────────────────────────────────────────────────
+# ❌ 나쁜 모델: 엉뚱한 확률 예측
+# ─────────────────────────────────────────────────────────────────
 y_pred_bad = np.array([0.3, 0.8, 0.4, 0.2, 0.7])
-print('나쁜 모델의 BCE:', round(binary_cross_entropy(y_true, y_pred_bad), 4))
+print("\\n🤖 나쁜 모델의 예측 (고양이 확률):", y_pred_bad)
+print("   → 손실 (BCE):", round(binary_cross_entropy(y_true, y_pred_bad), 4), "❌ 높음!")
 
-# 완벽한 모델
+# ─────────────────────────────────────────────────────────────────
+# 🎯 완벽한 모델: 100% 정확한 예측
+# ─────────────────────────────────────────────────────────────────
 y_pred_perfect = np.array([1.0, 0.0, 1.0, 1.0, 0.0])
-print('완벽한 모델의 BCE:', round(binary_cross_entropy(y_true, y_pred_perfect), 4))
-\\\`\\\`\\\`
+print("\\n🤖 완벽한 모델의 예측:", y_pred_perfect)
+print("   → 손실 (BCE):", round(binary_cross_entropy(y_true, y_pred_perfect), 4), "🏆 거의 0!")
+\`\`\`
 
-### 실행해보기: Cross-Entropy 손실 곡선 시각화
+### 📈 시각화: Cross-Entropy 손실 곡선
 
-\\\`\\\`\\\`python
+\`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 정답이 1(고양이)일 때, 예측 확률에 따른 손실
-p = np.linspace(0.01, 0.99, 200)
-ce_loss = -np.log(p)   # y=1일 때 CE = -log(p)
+# ═══════════════════════════════════════════════════════════════
+# 📊 Cross-Entropy 손실 곡선 비교
+# 정답이 다를 때 손실이 어떻게 달라지는지 확인
+# ═══════════════════════════════════════════════════════════════
 
-# 정답이 0(강아지)일 때, 예측 확률에 따른 손실
-ce_loss_0 = -np.log(1 - p)   # y=0일 때 CE = -log(1-p)
+p = np.linspace(0.01, 0.99, 200)  # 예측 확률 (0.01 ~ 0.99)
 
-fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+# 📐 손실 계산
+ce_loss_1 = -np.log(p)       # 정답=1 (고양이) 일 때 손실
+ce_loss_0 = -np.log(1 - p)   # 정답=0 (강아지) 일 때 손실
 
-axes[0].plot(p, ce_loss, linewidth=2, color='crimson')
-axes[0].set_xlabel('predicted P(cat)', fontsize=11)
-axes[0].set_ylabel('Loss', fontsize=11)
-axes[0].set_title('Label=Cat(1): loss when answer IS cat', fontsize=12)
+# ─────────────────────────────────────────────────────────────────
+# 그래프 그리기 (2개 나란히)
+# ─────────────────────────────────────────────────────────────────
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# 왼쪽 그래프: 정답이 고양이(1)인 경우
+axes[0].plot(p, ce_loss_1, linewidth=3, color='crimson')
+axes[0].set_xlabel('모델의 예측: P(고양이)', fontsize=12)
+axes[0].set_ylabel('손실 (Loss)', fontsize=12)
+axes[0].set_title('🐱 정답이 고양이일 때', fontsize=14)
 axes[0].grid(True, alpha=0.3)
+axes[0].annotate('확률 높으면\\n손실 낮음 ✅', xy=(0.9, 0.1), fontsize=10,
+                 ha='center', color='green', fontweight='bold')
+axes[0].annotate('확률 낮으면\\n손실 폭발! ❌', xy=(0.1, 2.3), fontsize=10,
+                 ha='center', color='red', fontweight='bold')
 
-axes[1].plot(p, ce_loss_0, linewidth=2, color='teal')
-axes[1].set_xlabel('predicted P(cat)', fontsize=11)
-axes[1].set_ylabel('Loss', fontsize=11)
-axes[1].set_title('Label=Dog(0): loss when answer is NOT cat', fontsize=12)
+# 오른쪽 그래프: 정답이 강아지(0)인 경우
+axes[1].plot(p, ce_loss_0, linewidth=3, color='teal')
+axes[1].set_xlabel('모델의 예측: P(고양이)', fontsize=12)
+axes[1].set_ylabel('손실 (Loss)', fontsize=12)
+axes[1].set_title('🐕 정답이 강아지일 때', fontsize=14)
 axes[1].grid(True, alpha=0.3)
+axes[1].annotate('확률 낮으면\\n손실 낮음 ✅', xy=(0.1, 0.1), fontsize=10,
+                 ha='center', color='green', fontweight='bold')
+axes[1].annotate('확률 높으면\\n손실 폭발! ❌', xy=(0.9, 2.3), fontsize=10,
+                 ha='center', color='red', fontweight='bold')
 
 plt.tight_layout()
 plt.show()
-\\\`\\\`\\\`
+\`\`\`
 
-왼쪽 그래프: 정답이 고양이인데 "고양이 확률"을 낮게 예측하면 손실 폭발!
-오른쪽 그래프: 정답이 강아지인데 "고양이 확률"을 높게 예측하면 손실 폭발!
+> 💡 **그래프 해석**:
+> - **왼쪽** (정답=고양이🐱): "고양이 확률"을 낮게 예측하면 손실 급증!
+> - **오른쪽** (정답=강아지🐕): "고양이 확률"을 높게 예측하면 손실 급증!
+>
+> Cross-Entropy는 **"자신 있게 틀리면 큰 벌점"**을 주는 것이 핵심입니다.
 
 ---
 
@@ -6855,26 +6940,30 @@ plt.show()
 
 ### 왜 분류에 MSE를 쓰면 안 될까?
 
-\\\`\\\`\\\`text
-분류 문제에서 MSE를 쓰면:
-- 확률 0.9 vs 0.99의 차이를 거의 구분 못 합니다 (0.01 vs 0.0001)
-- 학습 초반에 기울기가 너무 작아서 학습이 느립니다
+| 손실 함수 | 확률 0.9 vs 0.99 비교 | 학습 속도 | 적합성 |
+|-----------|----------------------|----------|--------|
+| **MSE** | 0.01 vs 0.0001 (거의 같음!) | ❌ 느림 | 분류에 부적합 |
+| **Cross-Entropy** | 0.10 vs 0.01 (10배 차이!) | ✅ 빠름 | 분류에 최적 |
 
-Cross-Entropy를 쓰면:
-- 확률 0.9 vs 0.99의 차이를 크게 구분합니다 (-log(0.9)=0.10 vs -log(0.99)=0.01)
-- "자신 있게 틀릴 때" 큰 패널티를 줘서 빠르게 학습합니다
-\\\`\\\`\\\`
+> 💡 **핵심**: Cross-Entropy는 "자신 있게 틀릴 때" 큰 패널티를 줘서 빠르게 학습합니다!
 
-### 실행해보기: MSE vs Cross-Entropy 반응 비교
+### 📈 실습: MSE vs Cross-Entropy 비교
 
-\\\`\\\`\\\`python
+왜 분류 문제에서 Cross-Entropy를 사용하는지 직접 확인해봅시다.
+
+\`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
-p = np.linspace(0.01, 0.99, 200)
+# ═══════════════════════════════════════════════════════════════
+# 📊 MSE vs Cross-Entropy 손실 비교
+# 분류 문제에서 왜 CE가 더 좋은지 시각화
+# ═══════════════════════════════════════════════════════════════
 
-# 정답이 1일 때 각 손실 함수의 값
-mse_loss = (1 - p) ** 2          # MSE: (정답 - 예측)^2
+p = np.linspace(0.01, 0.99, 200)  # 예측 확률 범위
+
+# 📐 정답이 1일 때 각 손실 함수 계산
+mse_loss = (1 - p) ** 2          # MSE: (정답 - 예측)²
 ce_loss = -np.log(p)             # CE: -log(예측)
 
 plt.figure(figsize=(8, 5))
@@ -6891,7 +6980,7 @@ plt.show()
 print('p=0.01 -> MSE:', round((1-0.01)**2, 3), ' CE:', round(-np.log(0.01), 3))
 print('p=0.50 -> MSE:', round((1-0.50)**2, 3), ' CE:', round(-np.log(0.50), 3))
 print('p=0.99 -> MSE:', round((1-0.99)**2, 3), ' CE:', round(-np.log(0.99), 3))
-\\\`\\\`\\\`
+\`\`\`
 
 Cross-Entropy는 예측 확률이 0에 가까울 때 MSE보다 **훨씬 더 큰 패널티**를 줍니다.
 그래서 분류 문제에서 학습이 더 빠르고 효과적입니다!
@@ -6913,7 +7002,7 @@ Cross-Entropy는 예측 확률이 0에 가까울 때 MSE보다 **훨씬 더 큰 
 
 ### 실행해보기: 손실 지형 등고선 그래프
 
-\\\`\\\`\\\`python
+\`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -6942,7 +7031,7 @@ plt.show()
 
 print('Global minimum at w1={:.2f}, w2={:.2f}'.format(W1[min_idx], W2[min_idx]))
 print('Minimum loss: {:.2f}'.format(Loss[min_idx]))
-\\\`\\\`\\\`
+\`\`\`
 
 파란색이 손실이 낮은 곳(계곡), 빨간색이 높은 곳(산)입니다.
 학습의 목표는 빨간색에서 시작해서 **가장 깊은 파란색 계곡**을 찾아가는 것입니다!
@@ -6953,25 +7042,31 @@ print('Minimum loss: {:.2f}'.format(Loss[min_idx]))
 
 실제 PyTorch 코드에서는 이렇게 사용합니다 (참고용):
 
-\\\`\\\`\\\`text
+\`\`\`
 import torch
 import torch.nn as nn
 
-# 회귀 문제: MSE 사용
+# ═══════════════════════════════════════════════════════════════
+# 🔧 PyTorch 손실 함수 사용법
+# ═══════════════════════════════════════════════════════════════
+
+# 📊 회귀 문제: MSE 사용
 criterion = nn.MSELoss()
 loss = criterion(prediction, target)
 
-# 분류 문제: CrossEntropy 사용
+# 📊 분류 문제: CrossEntropy 사용
 criterion = nn.CrossEntropyLoss()
 loss = criterion(prediction, target)
 
-# 핵심! loss.backward()를 호출하면
-# "이 손실 함수의 기울기(gradient)"가 계산됩니다
-# 그 기울기를 이용해 가중치를 업데이트하는 것이 학습!
-loss.backward()   # <-- 손실 함수의 미분값 계산
-\\\`\\\`\\\`
+# ─────────────────────────────────────────────────────────────────
+# 💡 핵심! loss.backward() 호출 시:
+# → "이 손실 함수의 기울기(gradient)"가 계산됨
+# → 그 기울기로 가중치를 업데이트하는 것이 학습!
+# ─────────────────────────────────────────────────────────────────
+loss.backward()   # ← 손실 함수의 미분값 계산
+\`\`\`
 
-\\\`loss.backward()\\\`는 **"이 손실 함수를 각 가중치로 미분해라"** 라는 명령입니다.
+\`loss.backward()\`는 **"이 손실 함수를 각 가중치로 미분해라"** 라는 명령입니다.
 그 미분값(gradient)이 다음 레슨에서 배울 **경사하강법**의 핵심 재료가 됩니다!
 
 ---
@@ -7008,7 +7103,7 @@ SGD, Momentum, Adam 등 다양한 최적화 알고리즘을 직접 구현합니�
         title: "경사하강법 실전",
         description: "SGD, Momentum, Adam - 최적화 알고리즘 완전 정복",
         duration: "8분 30초",
-        videoUrl: "https://youtu.be/yJhQTyFw3Kw",
+        videoUrl: "https://youtu.be/_apMcSA3fqc",
         content: `
 # 경사하강법 실전 (Gradient Descent in Practice)
 
@@ -7035,16 +7130,17 @@ SGD, Momentum, Adam 등 다양한 최적화 알고리즘을 직접 구현합니�
 
 어떻게 산 아래로 내려갈까요?
 
-\\\`\\\`\\\`text
 전략: "발 밑이 가장 가파르게 내려가는 방향으로 한 걸음씩 이동!"
 
-이것이 바로 경사하강법(Gradient Descent)입니다.
+이것이 바로 **경사하강법(Gradient Descent)** 입니다.
 
-핵심 공식:
-  w_new = w_old - learning_rate * gradient
+**핵심 공식:**
 
-  새 위치 = 현재 위치 - 보폭 * 기울기 방향
-\\\`\\\`\\\`
+$$w_{new} = w_{old} - \\eta \\cdot \\nabla L$$
+
+$$\\text{새 위치} = \\text{현재 위치} - \\text{학습률} \\times \\text{기울기}$$
+
+여기서 $\\eta$는 학습률(learning rate), $\\nabla L$은 손실 함수의 기울기(gradient)입니다.
 
 여기서 중요한 질문이 세 가지 생깁니다:
 
@@ -7071,7 +7167,7 @@ SGD, Momentum, Adam 등 다양한 최적화 알고리즘을 직접 구현합니�
 
 ### 실행해보기: 세 가지 방식 직접 비교
 
-\\\`\\\`\\\`python
+\`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -7147,7 +7243,7 @@ print('  Batch GD:     w={:.3f}, b={:.3f}'.format(w_batch, b_batch))
 print('  SGD:          w={:.3f}, b={:.3f}'.format(w_sgd, b_sgd))
 print('  Mini-batch:   w={:.3f}, b={:.3f}'.format(w_mini, b_mini))
 print('  True values:  w=3.000, b=2.000')
-\\\`\\\`\\\`
+\`\`\`
 
 세 가지 방법 모두 결국 정답(w=3, b=2)에 수렴하지만, **수렴 경로**가 다릅니다!
 
@@ -7165,20 +7261,17 @@ Momentum(관성)은 다릅니다. 마치 **공을 산에서 굴리는 것**과 �
 - 약간의 오르막을 만나도 **관성으로 넘어갑니다**
 - 지그재그하지 않고 **부드럽게** 움직입니다
 
-\\\`\\\`\\\`text
-SGD 업데이트:
-  w = w - lr * gradient            (현재 기울기만 사용)
+| 방식 | 수식 | 설명 |
+|------|------|------|
+| **SGD** | $w = w - \\\\eta \\\\cdot \\\\nabla L$ | 현재 기울기만 사용 |
+| **Momentum** | $v = \\\\mu \\\\cdot v - \\\\eta \\\\cdot \\\\nabla L$ | 과거 방향 + 현재 기울기 |
+| | $w = w + v$ | 관성이 반영된 이동 |
 
-Momentum 업데이트:
-  velocity = momentum * velocity - lr * gradient   (과거 방향 + 현재 기울기)
-  w = w + velocity                                 (관성이 반영된 이동)
-
-보통 momentum = 0.9 (과거 속도의 90%를 유지)
-\\\`\\\`\\\`
+> 💡 보통 $\\\\mu = 0.9$ (과거 속도의 90%를 유지)
 
 ### 실행해보기: SGD vs Momentum 수렴 비교
 
-\\\`\\\`\\\`python
+\`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -7244,7 +7337,7 @@ plt.show()
 
 print('SGD final:      w1={:.4f}, w2={:.4f}'.format(sgd_path[-1, 0], sgd_path[-1, 1]))
 print('Momentum final: w1={:.4f}, w2={:.4f}'.format(mom_path[-1, 0], mom_path[-1, 1]))
-\\\`\\\`\\\`
+\`\`\`
 
 빨간색(SGD)은 지그재그로 느리게, 파란색(Momentum)은 부드럽게 빠르게 수렴하는 것이 보이시나요?
 
@@ -7257,18 +7350,21 @@ print('Momentum final: w1={:.4f}, w2={:.4f}'.format(mom_path[-1, 0], mom_path[-1
 Adam = **Ada**ptive **M**oment Estimation
 Momentum과 RMSprop이라는 두 가지 아이디어를 결합한 것입니다.
 
-\\\`\\\`\\\`text
-Adam의 핵심 아이디어 2가지:
+**Adam의 핵심 아이디어 2가지:**
 
-1. Momentum 효과 (1차 모멘트)
-   - 기울기의 이동 평균을 추적 --> 방향 안정화
-   - "어느 방향으로 계속 가고 있었지?"
+**1. Momentum 효과 (1차 모멘트)**
+- 기울기의 이동 평균을 추적 → 방향 안정화
+- $m_t = \\beta_1 m_{t-1} + (1 - \\beta_1) g_t$
 
-2. 적응적 학습률 (2차 모멘트)
-   - 기울기 크기의 이동 평균을 추적 --> 보폭 자동 조절
-   - "이 파라미터는 기울기가 크니까 작은 보폭으로,
-     저 파라미터는 기울기가 작으니까 큰 보폭으로!"
-\\\`\\\`\\\`
+**2. 적응적 학습률 (2차 모멘트)**
+- 기울기 크기의 이동 평균을 추적 → 보폭 자동 조절
+- $v_t = \\beta_2 v_{t-1} + (1 - \\beta_2) g_t^2$
+
+**최종 업데이트:**
+
+$$w_{t+1} = w_t - \\frac{\\eta}{\\sqrt{\\hat{v}_t} + \\epsilon} \\hat{m}_t$$
+
+여기서 $\\hat{m}_t$, $\\hat{v}_t$는 편향 보정된 값입니다.
 
 ### 왜 Adam이 기본값인가?
 
@@ -7282,7 +7378,7 @@ Adam의 핵심 아이디어 2가지:
 
 ### 실행해보기: SGD vs Momentum vs Adam 직접 비교
 
-\\\`\\\`\\\`python
+\`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -7353,7 +7449,7 @@ print('Final loss:')
 print('  SGD:      {:.4f}'.format(sgd_losses[-1]))
 print('  Momentum: {:.4f}'.format(mom_losses[-1]))
 print('  Adam:     {:.4f}'.format(adam_losses[-1]))
-\\\`\\\`\\\`
+\`\`\`
 
 Adam이 같은 스텝 수에서 더 낮은 손실에 도달하는 것을 볼 수 있습니다!
 
@@ -7365,11 +7461,11 @@ Adam이 같은 스텝 수에서 더 낮은 손실에 도달하는 것을 볼 수
 
 ### 비유: 집 찾기
 
-\\\`\\\`\\\`text
-처음: 큰 보폭으로 대략적인 위치로 이동 (학습률 크게)
-중간: 보폭을 줄여서 세밀하게 조정 (학습률 줄이기)
-마지막: 아주 작은 보폭으로 정확한 위치 도달 (학습률 아주 작게)
-\\\`\\\`\\\`
+| 단계 | 보폭 | 학습률 |
+|------|------|--------|
+| 🏃 **처음** | 큰 보폭으로 대략적인 위치로 이동 | 크게 |
+| 🚶 **중간** | 보폭을 줄여서 세밀하게 조정 | 줄이기 |
+| 🎯 **마지막** | 아주 작은 보폭으로 정확한 위치 도달 | 아주 작게 |
 
 ### 주요 스케줄링 방식
 
@@ -7381,7 +7477,7 @@ Adam이 같은 스텝 수에서 더 낮은 손실에 도달하는 것을 볼 수
 
 ### 실행해보기: 학습률 스케줄링 효과
 
-\\\`\\\`\\\`python
+\`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -7438,7 +7534,7 @@ plt.yscale('log')
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.show()
-\\\`\\\`\\\`
+\`\`\`
 
 스케줄링을 사용하면 초반에는 빠르게 수렴하고, 후반에는 세밀하게 조정할 수 있습니다!
 
@@ -7458,29 +7554,35 @@ plt.show()
 
 ### PyTorch에서의 사용법 (참고용)
 
-\\\`\\\`\\\`text
+\`\`\`
 import torch.optim as optim
 
-# SGD
+# ═══════════════════════════════════════════════════════════════
+# 🔧 PyTorch 옵티마이저 사용법
+# ═══════════════════════════════════════════════════════════════
+
+# 1️⃣ SGD (기본)
 optimizer = optim.SGD(model.parameters(), lr=0.01)
 
-# SGD + Momentum
+# 2️⃣ SGD + Momentum (관성 추가)
 optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 
-# Adam (가장 많이 사용)
+# 3️⃣ Adam (가장 많이 사용! ⭐)
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-# AdamW (weight decay 포함 - 정규화 효과)
+# 4️⃣ AdamW (weight decay 포함 - 정규화 효과)
 optimizer = optim.AdamW(model.parameters(), lr=0.001, weight_decay=0.01)
 
-# 학습률 스케줄러
+# ─────────────────────────────────────────────────────────────────
+# 📉 학습률 스케줄러
+# ─────────────────────────────────────────────────────────────────
 scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100)
 
-# 학습 루프
+# 🔄 학습 루프
 for epoch in range(100):
     loss = train_one_epoch()
-    scheduler.step()   # <-- 매 epoch마다 학습률 조정
-\\\`\\\`\\\`
+    scheduler.step()   # ← 매 epoch마다 학습률 조정
+\`\`\`
 
 ---
 
@@ -7488,24 +7590,13 @@ for epoch in range(100):
 
 경사하강법의 전체 과정을 다시 한번 정리합시다:
 
-\\\`\\\`\\\`text
-1. 순전파 (Forward Pass)
-   - 현재 가중치로 예측값 계산: y_pred = model(x)
-
-2. 손실 계산
-   - 예측값과 정답의 차이 측정: loss = loss_fn(y_pred, y_true)
-
-3. 역전파 (Backward Pass)
-   - 손실 함수의 기울기(gradient) 계산: loss.backward()
-   - "어느 방향으로 가야 손실이 줄어드는가?"
-
-4. 가중치 업데이트
-   - 옵티마이저가 기울기를 이용해 가중치 수정: optimizer.step()
-   - SGD, Momentum, Adam 등 방식에 따라 다르게 업데이트
-
-5. 반복!
-   - 손실이 충분히 작아질 때까지 1-4를 반복
-\\\`\\\`\\\`
+| 단계 | 과정 | 코드 |
+|------|------|------|
+| 1️⃣ **순전파** | 현재 가중치로 예측값 계산 | \`y_pred = model(x)\` |
+| 2️⃣ **손실 계산** | 예측값과 정답의 차이 측정 | \`loss = loss_fn(y_pred, y_true)\` |
+| 3️⃣ **역전파** | 손실의 기울기(gradient) 계산 | \`loss.backward()\` |
+| 4️⃣ **가중치 업데이트** | 옵티마이저가 가중치 수정 | \`optimizer.step()\` |
+| 🔄 **반복** | 손실이 충분히 작아질 때까지 1-4 반복 | - |
 
 ---
 
@@ -7540,7 +7631,7 @@ for epoch in range(100):
         title: "역전파 알고리즘",
         description: "딥러닝 학습의 핵심 - Backpropagation 완전 정복",
         duration: "25분",
-        videoUrl: "https://youtu.be/rYBb0NkQv2Y",
+        videoUrl: "https://youtu.be/nt74eWvg5mQ",
         content: `
 # 역전파 알고리즘 (Backpropagation)
 
@@ -7595,7 +7686,7 @@ for epoch in range(100):
 
 ### 실행해보기: 순전파 직접 계산
 
-\\\`\\\`\\\`python
+\`\`\`python
 import numpy as np
 
 # === 간단한 2층 신경망 순전파 ===
@@ -7627,7 +7718,7 @@ y_true = 1.0
 loss = 0.5 * (y_pred[0][0] - y_true) ** 2
 print("\\n정답:", y_true)
 print("손실(MSE):", round(loss, 6))
-\\\`\\\`\\\`
+\`\`\`
 
 ---
 
@@ -7641,13 +7732,9 @@ print("손실(MSE):", round(loss, 6))
 
 수학으로 표현하면:
 
-\\\`\\\`\\\`text
-y = f(g(x)) 일 때
-
-dy/dx = dy/dg * dg/dx
-
-즉, "최종 변화 = 각 단계의 변화를 곱한 것"
-\\\`\\\`\\\`
+> $y = f(g(x))$ 일 때, $\\frac{dy}{dx} = \\frac{dy}{dg} \\cdot \\frac{dg}{dx}$
+>
+> 즉, **"최종 변화 = 각 단계의 변화를 곱한 것"**
 
 신경망에서는 이렇게 됩니다:
 
@@ -7664,42 +7751,16 @@ dy/dx = dy/dg * dg/dx
 
 아까 순전파에서 사용한 값들로 역전파를 직접 해봅시다.
 
-**Step 1: 손실의 미분 (출발점)**
-
-\\\`\\\`\\\`text
-L = 0.5 * (y_pred - y_true)^2
-dL/dy_pred = y_pred - y_true
-\\\`\\\`\\\`
-
-**Step 2: Sigmoid 미분**
-
-\\\`\\\`\\\`text
-y_pred = sigmoid(z2)
-sigmoid의 미분: sigmoid(z) * (1 - sigmoid(z))
-dy_pred/dz2 = y_pred * (1 - y_pred)
-\\\`\\\`\\\`
-
-**Step 3: 출력층 가중치 미분**
-
-\\\`\\\`\\\`text
-z2 = W2 * a1 + b2
-dz2/dW2 = a1   (a1이 곱해져 있으므로)
-dz2/db2 = 1
-dz2/da1 = W2   (이전 층으로 전파할 때 필요!)
-\\\`\\\`\\\`
-
-**Step 4: 연쇄 법칙으로 조합**
-
-\\\`\\\`\\\`text
-dL/dW2 = dL/dy_pred * dy_pred/dz2 * dz2/dW2
-       = (y_pred - y_true) * y_pred*(1-y_pred) * a1
-
-이 값이 바로 W2의 기울기(gradient)!
-\\\`\\\`\\\`
+| 단계 | 수식 | 설명 |
+|------|------|------|
+| **Step 1** | $L = \\frac{1}{2}(\\hat{y} - y)^2$ → $\\frac{\\partial L}{\\partial \\hat{y}} = \\hat{y} - y$ | 손실의 미분 (출발점) |
+| **Step 2** | $\\hat{y} = \\sigma(z_2)$ → $\\frac{\\partial \\hat{y}}{\\partial z_2} = \\hat{y}(1-\\hat{y})$ | Sigmoid 미분 |
+| **Step 3** | $z_2 = W_2 a_1 + b_2$ → $\\frac{\\partial z_2}{\\partial W_2} = a_1$ | 출력층 가중치 미분 |
+| **Step 4** | $\\frac{\\partial L}{\\partial W_2} = (\\hat{y}-y) \\cdot \\hat{y}(1-\\hat{y}) \\cdot a_1$ | 연쇄 법칙으로 조합 → **W2의 기울기!** |
 
 ### 실행해보기: 손계산을 코드로 검증
 
-\\\`\\\`\\\`python
+\`\`\`python
 import numpy as np
 
 # 순전파 값들 (위에서 계산한 것)
@@ -7756,7 +7817,7 @@ print("        dL/db1:", np.round(dL_db1.T, 4))
 
 print("\\n모든 가중치의 기울기를 구했습니다!")
 print("이 기울기로 가중치를 업데이트하면 학습이 됩니다.")
-\\\`\\\`\\\`
+\`\`\`
 
 ---
 
@@ -7789,62 +7850,90 @@ GPT-3는 파라미터가 1,750억 개입니다.
 수치 미분으로는 1,750억 번 순전파를 해야 하지만,
 역전파로는 단 1번의 순전파 + 1번의 역전파로 끝납니다!
 
-### 실행해보기: 수치 미분 vs 역전파 비교
+### 🔬 실습: 수치 미분 vs 역전파 비교
 
-\\\`\\\`\\\`python
+두 방법으로 같은 기울기를 구하고, 역전파가 정확한지 검증해봅시다.
+
+\`\`\`python
 import numpy as np
+
+# ═══════════════════════════════════════════════════════════════
+# 📊 수치 미분 vs 역전파 비교
+# 두 방법의 결과가 같으면 역전파 구현이 정확!
+# ═══════════════════════════════════════════════════════════════
 
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
-x_val = 0.5
-w1, b1 = 0.8, 0.1
-w2, b2 = 0.6, 0.2
-y_true = 1.0
+# 📌 신경망 파라미터 설정
+x_val = 0.5                       # 입력
+w1, b1 = 0.8, 0.1                 # 1층 가중치, 편향
+w2, b2 = 0.6, 0.2                 # 2층 가중치, 편향
+y_true = 1.0                      # 정답
 
-eps = 1e-5
+eps = 1e-5  # 수치 미분용 작은 값
 params = {\'w1\': w1, \'b1\': b1, \'w2\': w2, \'b2\': b2}
 
+# 📐 순전파 함수
 def forward(w1, b1, w2, b2):
-    z1 = w1 * x_val + b1
-    a1 = max(0, z1)
-    z2 = w2 * a1 + b2
-    y_pred = sigmoid(z2)
-    return 0.5 * (y_pred - y_true) ** 2
+    z1 = w1 * x_val + b1          # 1층 선형변환
+    a1 = max(0, z1)               # ReLU 활성화
+    z2 = w2 * a1 + b2             # 2층 선형변환
+    y_pred = sigmoid(z2)          # Sigmoid 출력
+    return 0.5 * (y_pred - y_true) ** 2  # MSE 손실
 
-print("=== 수치 미분 (파라미터마다 순전파 2회) ===")
+# ─────────────────────────────────────────────────────────────────
+# 🐌 방법 1: 수치 미분 (느리지만 직관적)
+# 각 파라미터를 살짝 바꿔서 손실 변화 측정
+# ─────────────────────────────────────────────────────────────────
+print("🐌 수치 미분 (파라미터마다 순전파 2회 필요)")
+print("=" * 50)
 num_grads = {}
 for name, val in params.items():
-    p_plus = dict(params); p_plus[name] = val + eps
-    p_minus = dict(params); p_minus[name] = val - eps
+    p_plus = dict(params); p_plus[name] = val + eps   # 살짝 증가
+    p_minus = dict(params); p_minus[name] = val - eps # 살짝 감소
     num_grads[name] = (forward(**p_plus) - forward(**p_minus)) / (2 * eps)
-    print("d(Loss)/d(" + name + ") =", round(num_grads[name], 6))
+    print(f"  ∂L/∂{name} = {num_grads[name]:.6f}")
 
-print("\\n=== 역전파 (순전파 1회 + 역전파 1회) ===")
+# ─────────────────────────────────────────────────────────────────
+# 🚀 방법 2: 역전파 (빠르고 효율적)
+# 연쇄법칙으로 한 번에 모든 기울기 계산
+# ─────────────────────────────────────────────────────────────────
+print("\\n🚀 역전파 (순전파 1회 + 역전파 1회)")
+print("=" * 50)
+
+# 순전파
 z1 = w1 * x_val + b1
 a1 = max(0, z1)
 z2 = w2 * a1 + b2
 y_pred = sigmoid(z2)
 
-dL_dy = y_pred - y_true
-dy_dz2 = y_pred * (1 - y_pred)
-delta2 = dL_dy * dy_dz2
-dL_dw2 = delta2 * a1
-dL_db2 = delta2
-dL_da1 = delta2 * w2
-dL_dz1 = dL_da1 * (1 if z1 > 0 else 0)
-dL_dw1 = dL_dz1 * x_val
-dL_db1 = dL_dz1
+# 역전파 (출력 → 입력 방향으로)
+dL_dy = y_pred - y_true           # 손실의 미분
+dy_dz2 = y_pred * (1 - y_pred)    # Sigmoid의 미분
+delta2 = dL_dy * dy_dz2           # 연쇄법칙 적용
+
+dL_dw2 = delta2 * a1              # w2의 기울기
+dL_db2 = delta2                   # b2의 기울기
+dL_da1 = delta2 * w2              # a1으로 전파
+dL_dz1 = dL_da1 * (1 if z1 > 0 else 0)  # ReLU 미분
+dL_dw1 = dL_dz1 * x_val           # w1의 기울기
+dL_db1 = dL_dz1                   # b1의 기울기
 
 bp_grads = {\'w1\': dL_dw1, \'b1\': dL_db1, \'w2\': dL_dw2, \'b2\': dL_db2}
 for name, val in bp_grads.items():
-    print("d(Loss)/d(" + name + ") =", round(val, 6))
+    print(f"  ∂L/∂{name} = {val:.6f}")
 
-print("\\n=== 두 방법의 차이 (거의 0이면 정확!) ===")
+# ─────────────────────────────────────────────────────────────────
+# ✅ 검증: 두 방법의 결과 비교
+# ─────────────────────────────────────────────────────────────────
+print("\\n✅ 검증: 두 방법의 차이 (0에 가까우면 정확!)")
+print("=" * 50)
 for name in params:
     diff = abs(num_grads[name] - bp_grads[name])
-    print(name + " 차이:", round(diff, 10))
-\\\`\\\`\\\`
+    status = "✅" if diff < 1e-6 else "❌"
+    print(f"  {name} 차이: {diff:.10f} {status}")
+\`\`\`
 
 ---
 
@@ -7860,43 +7949,68 @@ XOR은 선형으로 풀 수 없는 대표적인 문제입니다.
 | 1 | 0 | 1 |
 | 1 | 1 | 0 |
 
-### 실행해보기: XOR 신경망 학습
+### 🔬 실습: XOR 신경망 학습
 
-\\\`\\\`\\\`python
+단순 선형 모델로는 풀 수 없는 XOR 문제를 2층 신경망으로 해결해봅시다!
+
+\`\`\`python
 import numpy as np
 
-X = np.array([[0,0],[0,1],[1,0],[1,1]]).T
-Y = np.array([[0,1,1,0]])
+# ═══════════════════════════════════════════════════════════════
+# 📊 XOR 문제 - 신경망으로 풀기
+# XOR: 입력이 다르면 1, 같으면 0
+# ═══════════════════════════════════════════════════════════════
 
+# 📌 XOR 데이터
+# (0,0)→0, (0,1)→1, (1,0)→1, (1,1)→0
+X = np.array([[0,0],[0,1],[1,0],[1,1]]).T  # 2×4 (입력 2개, 샘플 4개)
+Y = np.array([[0,1,1,0]])                   # 1×4 (정답)
+
+print("📌 XOR 문제")
+print("입력 (X):", X.T.tolist())
+print("정답 (Y):", Y.tolist())
+
+# ─────────────────────────────────────────────────────────────────
+# 🧠 신경망 구조: 입력(2) → 은닉층(4) → 출력(1)
+# ─────────────────────────────────────────────────────────────────
 np.random.seed(42)
-W1 = np.random.randn(4, 2) * 0.5
-b1 = np.zeros((4, 1))
-W2 = np.random.randn(1, 4) * 0.5
-b2 = np.zeros((1, 1))
-lr = 1.0
+W1 = np.random.randn(4, 2) * 0.5  # 1층 가중치 (4×2)
+b1 = np.zeros((4, 1))              # 1층 편향 (4×1)
+W2 = np.random.randn(1, 4) * 0.5  # 2층 가중치 (1×4)
+b2 = np.zeros((1, 1))              # 2층 편향 (1×1)
+lr = 1.0                           # 학습률
 
 def sigmoid(z):
     return 1 / (1 + np.exp(-np.clip(z, -500, 500)))
 
+# ─────────────────────────────────────────────────────────────────
+# 🚀 학습 시작!
+# ─────────────────────────────────────────────────────────────────
 losses = []
-for epoch in range(3000):
-    Z1 = W1 @ X + b1
-    A1 = np.maximum(0, Z1)
-    Z2 = W2 @ A1 + b2
-    A2 = sigmoid(Z2)
+print("\\n🚀 학습 시작...")
 
-    m = X.shape[1]
+for epoch in range(3000):
+    # ═══ 순전파 ═══
+    Z1 = W1 @ X + b1              # 1층 선형변환
+    A1 = np.maximum(0, Z1)        # ReLU 활성화
+    Z2 = W2 @ A1 + b2             # 2층 선형변환
+    A2 = sigmoid(Z2)              # Sigmoid 출력 (확률)
+
+    # ═══ 손실 계산 (Cross-Entropy) ═══
+    m = X.shape[1]  # 샘플 수
     loss = -np.mean(Y * np.log(A2 + 1e-8) + (1 - Y) * np.log(1 - A2 + 1e-8))
     losses.append(loss)
 
-    dZ2 = A2 - Y
-    dW2 = (1/m) * dZ2 @ A1.T
-    db2 = (1/m) * np.sum(dZ2, axis=1, keepdims=True)
-    dA1 = W2.T @ dZ2
-    dZ1 = dA1 * (Z1 > 0).astype(float)
-    dW1 = (1/m) * dZ1 @ X.T
-    db1 = (1/m) * np.sum(dZ1, axis=1, keepdims=True)
+    # ═══ 역전파 ═══
+    dZ2 = A2 - Y                              # 출력층 오차
+    dW2 = (1/m) * dZ2 @ A1.T                  # W2 기울기
+    db2 = (1/m) * np.sum(dZ2, axis=1, keepdims=True)  # b2 기울기
+    dA1 = W2.T @ dZ2                          # 은닉층으로 전파
+    dZ1 = dA1 * (Z1 > 0).astype(float)        # ReLU 미분
+    dW1 = (1/m) * dZ1 @ X.T                   # W1 기울기
+    db1 = (1/m) * np.sum(dZ1, axis=1, keepdims=True)  # b1 기울기
 
+    # ═══ 가중치 업데이트 ═══
     W2 -= lr * dW2
     b2 -= lr * db2
     W1 -= lr * dW1
@@ -7917,11 +8031,11 @@ for i in range(4):
     label = int(Y[0,i])
     result = "O" if round(pred) == label else "X"
     print("입력: [" + inp + "] -> 예측: " + str(pred) + " (정답: " + str(label) + ") " + result)
-\\\`\\\`\\\`
+\`\`\`
 
 ### 실행해보기: 학습 곡선 시각화
 
-\\\`\\\`\\\`python
+\`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -7965,7 +8079,7 @@ plt.xlim(0, 3000)
 plt.tight_layout()
 plt.show()
 print("\\nLoss:", round(losses[0], 4), "->", round(losses[-1], 4))
-\\\`\\\`\\\`
+\`\`\`
 
 ---
 
@@ -7975,17 +8089,19 @@ print("\\nLoss:", round(losses[0], 4), "->", round(losses[-1], 4))
 
 | 우리가 한 것 | PyTorch가 해주는 것 |
 |-------------|-------------------|
-| 순전파에서 중간값 저장 (z1, a1 등) | \\\`requires_grad=True\\\`로 자동 추적 |
-| 연쇄 법칙으로 기울기 계산 | \\\`loss.backward()\\\` 한 줄로 끝 |
-| 기울기를 변수에 직접 저장 | \\\`param.grad\\\`에 자동 저장 |
-| 가중치 업데이트 수식 직접 작성 | \\\`optimizer.step()\\\`으로 끝 |
+| 순전파에서 중간값 저장 (z1, a1 등) | \`requires_grad=True\`로 자동 추적 |
+| 연쇄 법칙으로 기울기 계산 | \`loss.backward()\` 한 줄로 끝 |
+| 기울기를 변수에 직접 저장 | \`param.grad\`에 자동 저장 |
+| 가중치 업데이트 수식 직접 작성 | \`optimizer.step()\`으로 끝 |
 
-\\\`\\\`\\\`text
-# PyTorch에서는 이렇게 간단합니다 (참고용 - 실행 불필요)
+\`\`\`python
+# ═══════════════════════════════════════════════════════════════
+# ✨ PyTorch에서는 단 3줄!
+# ═══════════════════════════════════════════════════════════════
 loss = criterion(model(x), y)   # 순전파
 loss.backward()                  # 역전파 (이 한 줄이 위의 모든 계산!)
 optimizer.step()                 # 가중치 업데이트
-\\\`\\\`\\\`
+\`\`\`
 
 하지만 내부에서 일어나는 일은 우리가 구현한 것과 **정확히 동일**합니다.
 원리를 알고 쓰면, 디버깅할 때 큰 차이를 만듭니다!
@@ -8022,7 +8138,7 @@ optimizer.step()                 # 가중치 업데이트
         title: "활성화 함수 심화",
         description: "Sigmoid부터 GELU까지 - 활성화 함수 완전 정복",
         duration: "25분",
-        videoUrl: "https://youtu.be/HLUvr_tDtiA",
+        videoUrl: "https://youtu.be/cWWpAQMrkjM",
         content: `
 # 활성화 함수 심화 (Activation Functions Deep Dive)
 
@@ -8059,16 +8175,15 @@ optimizer.step()                 # 가중치 업데이트
 
 활성화 함수 없이 선형 변환만 쌓으면 어떻게 될까요?
 
-\`\`\`text
-층 1: z1 = W1 * x + b1
-층 2: z2 = W2 * z1 + b2
+| 층 | 수식 |
+|-----|------|
+| 층 1 | $z_1 = W_1 x + b_1$ |
+| 층 2 | $z_2 = W_2 z_1 + b_2$ |
 
-z2 = W2 * (W1 * x + b1) + b2
-   = (W2 * W1) * x + (W2 * b1 + b2)
-   = W_combined * x + b_combined
-
-100층을 쌓아도 결국 "하나의 선형 변환"으로 축소!
-\`\`\`
+> **전개하면:**
+> $$z_2 = W_2(W_1 x + b_1) + b_2 = (W_2 W_1) x + (W_2 b_1 + b_2) = W_{combined} x + b_{combined}$$
+>
+> ⚠️ **100층을 쌓아도 결국 "하나의 선형 변환"으로 축소!**
 
 ### 실행해보기: 선형 층을 아무리 쌓아도 하나와 같다
 
@@ -8437,17 +8552,13 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
 
 ### 실전 팁
 
-\`\`\`text
-1. 모르겠으면 ReLU를 쓰세요 - 대부분의 경우에 잘 작동합니다
-2. Transformer를 만든다면 GELU를 쓰세요
-3. 출력층은 문제 유형에 맞게 선택하세요:
-   - 이진 분류 -> Sigmoid
-   - 다중 분류 -> Softmax
-   - 회귀 -> 활성화 없음 (Linear)
-4. 학습이 안 되면 활성화 함수를 바꿔보는 것도 방법입니다
-5. 배치 정규화(Batch Normalization)를 함께 쓰면
-   활성화 함수 선택의 영향이 줄어듭니다
-\`\`\`
+| 팁 | 설명 |
+|-----|------|
+| 1️⃣ **기본은 ReLU** | 모르겠으면 ReLU - 대부분의 경우에 잘 작동 |
+| 2️⃣ **Transformer** | GELU를 사용 |
+| 3️⃣ **출력층** | 이진 분류 → Sigmoid, 다중 분류 → Softmax, 회귀 → Linear |
+| 4️⃣ **학습 안 될 때** | 활성화 함수를 바꿔보는 것도 방법 |
+| 5️⃣ **BatchNorm** | 함께 쓰면 활성화 함수 선택의 영향이 줄어듦 |
 
 ---
 
@@ -8481,7 +8592,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "과적합과 정규화",
         description: "모델이 시험은 못 보는 이유와 해결법",
         duration: "15분",
-        videoUrl: "https://youtu.be/kIxNJv_XUDE",
+        videoUrl: "https://youtu.be/-29GBmFC9GY",
         content: lesson3_5_content
       },
       {
@@ -8489,7 +8600,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "배치 정규화와 드롭아웃",
         description: "신경망 내부의 정규화 기법 두 가지",
         duration: "15분",
-        videoUrl: "https://youtu.be/JhNEuQDL2mk",
+        videoUrl: "https://youtu.be/Bbp4r9XTMjY",
         content: lesson3_6_content
       },
       {
@@ -8497,7 +8608,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "하이퍼파라미터 튜닝",
         description: "학습률, 배치 크기, 네트워크 구조 최적화 전략",
         duration: "15분",
-        videoUrl: "https://youtu.be/JrwQJ90qyP0",
+        videoUrl: "https://youtu.be/I3eAr1tV3fI",
         content: lesson3_7_content
       },
       {
@@ -8505,7 +8616,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "Level 3 종합 실습",
         description: "NumPy로 신경망을 처음부터 끝까지 직접 구현하기",
         duration: "20분",
-        videoUrl: "https://youtu.be/c6-4t7dwyhE",
+        videoUrl: "https://youtu.be/SbHKaXUidww",
         content: lesson3_8_content
       }
     ]
@@ -8702,12 +8813,12 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
 
 간단한 예를 들어 보겠습니다.
 
-\`\`\`text
-"안녕하세요" --> 의미가 통하는 인사말
-"하녕안세요" --> 같은 글자들이지만 의미 없음
+| 문장 | 의미 |
+|------|------|
+| "안녕하세요" | ✅ 의미가 통하는 인사말 |
+| "하녕안세요" | ❌ 같은 글자들이지만 의미 없음 |
 
-순서가 바뀌면 정보가 파괴됩니다!
-\`\`\`
+> ⚠️ **순서가 바뀌면 정보가 파괴됩니다!**
 
 ---
 
@@ -8729,17 +8840,16 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
 
 시계열 데이터는 **일정한 시간 간격으로 기록된 숫자들의 나열**입니다.
 
-\`\`\`text
-주식 가격 예시:
-  월요일 : 100원
-  화요일 : 105원  (어제보다 +5)
-  수요일 : 103원  (어제보다 -2)
-  목요일 : 108원  (어제보다 +5)
-  금요일 :  ???   (내일은 얼마일까?)
+| 요일 | 가격 | 변화 |
+|------|------|------|
+| 월요일 | 100원 | - |
+| 화요일 | 105원 | +5 📈 |
+| 수요일 | 103원 | -2 📉 |
+| 목요일 | 108원 | +5 📈 |
+| 금요일 | ??? | 내일은 얼마일까? |
 
-핵심: "어제까지의 흐름"을 알아야 "내일"을 예측할 수 있습니다.
-만약 순서를 무시하고 평균(104원)만 안다면 추세를 알 수 없습니다.
-\`\`\`
+> 💡 **핵심:** "어제까지의 흐름"을 알아야 "내일"을 예측할 수 있습니다.
+> 순서를 무시하고 평균(104원)만 안다면 추세를 알 수 없습니다.
 
 ### 실행해보기: 시계열 데이터 시각화
 
@@ -8796,22 +8906,22 @@ print("Shuffled -- no pattern at all!")
 
 ### 단어 순서가 의미를 결정한다
 
-\`\`\`text
-"개가 사람을 물었다"  -->  개가 가해자
-"사람이 개를 물었다"  -->  사람이 가해자 (!)
+| 문장 | 가해자 |
+|------|--------|
+| "개가 사람을 물었다" | 🐕 개 |
+| "사람이 개를 물었다" | 👤 사람 (!!) |
 
-같은 단어 4개가 순서만 바뀌었을 뿐인데, 뜻이 완전히 달라집니다.
-\`\`\`
+> 💡 같은 단어 4개가 순서만 바뀌었을 뿐인데, 뜻이 완전히 달라집니다.
 
 ### 문맥(Context)이 단어의 뜻을 결정한다
 
-\`\`\`text
-"빨간 [사과]가 맛있다"        --> 사과 = 과일
-"진심으로 [사과]드립니다"      --> 사과 = 용서를 구하는 행위
+| 문장 | "사과"의 의미 |
+|------|-------------|
+| "빨간 **사과**가 맛있다" | 🍎 과일 |
+| "진심으로 **사과**드립니다" | 🙏 용서를 구하는 행위 |
 
-같은 단어라도 앞뒤 단어(문맥)를 보아야 정확한 의미를 알 수 있습니다.
-AI가 텍스트를 이해하려면 "이전에 어떤 단어가 나왔는지"를 기억해야 합니다.
-\`\`\`
+> 💡 같은 단어라도 앞뒤 단어(문맥)를 보아야 정확한 의미를 알 수 있습니다.
+> AI가 텍스트를 이해하려면 "이전에 어떤 단어가 나왔는지"를 기억해야 합니다.
 
 ### 텍스트 시퀀스가 쓰이는 곳
 
@@ -8826,17 +8936,16 @@ AI가 텍스트를 이해하려면 "이전에 어떤 단어가 나왔는지"를 
 
 ## 음성 데이터 자세히 보기
 
-\`\`\`text
-소리는 공기의 진동이 시간에 따라 변하는 파형(waveform)입니다.
+> 🔊 소리는 공기의 진동이 시간에 따라 변하는 **파형(waveform)**입니다.
 
-"안녕" 이라고 말할 때:
-  시점 0.0초 : "아~" 소리의 파형
-  시점 0.1초 : "ㄴ" 소리로 전환
-  시점 0.2초 : "녕" 소리의 파형
+| 시점 | 소리 |
+|------|------|
+| 0.0초 | "아~" 소리의 파형 |
+| 0.1초 | "ㄴ" 소리로 전환 |
+| 0.2초 | "녕" 소리의 파형 |
 
-이 순서가 바뀌면 "녕안" 같은 이상한 소리가 됩니다.
-음성 인식 AI도 소리를 "시간 순서대로" 분석해야 합니다.
-\`\`\`
+> ⚠️ 이 순서가 바뀌면 "녕안" 같은 이상한 소리가 됩니다.
+> 음성 인식 AI도 소리를 **"시간 순서대로"** 분석해야 합니다.
 
 ### 실행해보기: 간단한 파형 시각화
 
@@ -8878,36 +8987,24 @@ print("The ORDER of frequencies carries meaning!")
 
 ### 문제 1: 순서 무시
 
-\`\`\`text
-MLP에 [100, 105, 103, 108] 을 넣으면
-    --> 4개의 숫자를 "동시에" 독립적으로 처리
-    --> "100 다음에 105가 왔다" 는 정보를 활용하지 못함
-
-시퀀스 모델에 [100, 105, 103, 108] 을 넣으면
-    --> 100을 보고, 그 기억을 가지고 105를 보고, ...
-    --> "오르다가 내렸다가 다시 올랐다" 는 흐름을 학습
-\`\`\`
+| 모델 | 입력 [100, 105, 103, 108] 처리 방식 |
+|------|-------------------------------------|
+| **MLP** | ❌ 4개의 숫자를 "동시에" 독립적으로 처리 → 순서 정보 손실 |
+| **시퀀스 모델** | ✅ 100을 보고 → 그 기억으로 105를 보고 → "오르다가 내렸다가 다시 올랐다" 흐름 학습 |
 
 ### 문제 2: 고정된 입력 크기
 
-\`\`\`text
-MLP는 입력 뉴런 수가 고정되어 있습니다.
-  - 10단어 문장용 모델 != 100단어 문장용 모델
-  - 길이가 다른 문장마다 별도 모델이 필요?  비현실적!
-
-시퀀스 모델(RNN)은 입력을 하나씩 순서대로 읽으므로
-  - 5단어든 500단어든 같은 모델로 처리 가능
-\`\`\`
+| 모델 | 입력 크기 | 문제점 |
+|------|-----------|--------|
+| **MLP** | 고정 | 10단어용 ≠ 100단어용 → 길이마다 별도 모델 필요? ❌ |
+| **RNN** | 가변 | 5단어든 500단어든 같은 모델로 처리 가능 ✅ |
 
 ### 문제 3: 기억 능력 없음
 
-\`\`\`text
-"The cat sat on the ___"
-
-다음 단어를 예측하려면 앞에 나온 "cat"을 기억해야 합니다.
-MLP는 입력을 한꺼번에 받아서 처리하므로
-"어떤 단어가 먼저 나왔는지"를 구분하지 못합니다.
-\`\`\`
+> "The cat sat on the ___"
+>
+> 다음 단어를 예측하려면 앞에 나온 "cat"을 **기억**해야 합니다.
+> MLP는 입력을 한꺼번에 받아서 처리하므로 **"어떤 단어가 먼저 나왔는지"**를 구분하지 못합니다.
 
 ### 실행해보기: 순서를 무시하면 예측이 불가능함을 체험
 
@@ -8950,7 +9047,7 @@ print("Impossible to tell! Order is ESSENTIAL.")
 > 다음 문장을 읽을 때 메모장을 참고합니다.
 > 이 메모장이 바로 **Hidden State(은닉 상태)** 입니다.
 
-\`\`\`text
+\`\`\`
 RNN의 기본 아이디어:
 
   [입력1] -----> 처리 -----> h1 (메모 저장)
@@ -9106,18 +9203,16 @@ RNN은 이와 비슷하지만, 어떻게 과거 값을 조합할지를 **자동�
 
 RNN의 핵심 공식은 딱 한 줄입니다.
 
-\`\`\`text
-h_t = tanh(W_xh * x_t + W_hh * h_(t-1) + b_h)
+$$h_t = \\tanh(W_{xh} \\cdot x_t + W_{hh} \\cdot h_{t-1} + b_h)$$
 
-여기서:
-  x_t     = 현재 시점의 입력 (예: 단어 하나의 벡터)
-  h_(t-1) = 이전 시점의 은닉 상태 (이전 메모장)
-  W_xh    = 입력을 은닉 상태로 변환하는 가중치
-  W_hh    = 이전 은닉 상태를 현재에 연결하는 가중치
-  b_h     = 편향(bias)
-  tanh    = 활성화 함수 (출력 범위: -1 ~ +1)
-  h_t     = 현재 시점의 은닉 상태 (새 메모장)
-\`\`\`
+> **여기서:**
+> - $x_t$ = 현재 시점의 입력 (예: 단어 하나의 벡터)
+> - $h_{t-1}$ = 이전 시점의 은닉 상태 (이전 메모장)
+> - $W_{xh}$ = 입력을 은닉 상태로 변환하는 가중치
+> - $W_{hh}$ = 이전 은닉 상태를 현재에 연결하는 가중치
+> - $b_h$ = 편향(bias)
+> - $\\tanh$ = 활성화 함수 (출력 범위: -1 ~ +1)
+> - $h_t$ = 현재 시점의 은닉 상태 (새 메모장)
 
 각 기호를 표로 정리하면:
 
@@ -9187,7 +9282,7 @@ print(f"Final h:   {np.round(all_h[-1], 3)}")
 
 RNN의 가장 중요한 특징은 **모든 시점에서 같은 가중치를 쓴다**는 것입니다.
 
-\`\`\`text
+\`\`\`
 시점 0: h_0 = tanh(W_xh * x_0 + W_hh * h_init + b)  --+
 시점 1: h_1 = tanh(W_xh * x_1 + W_hh * h_0 + b)      |  같은 W_xh, W_hh!
 시점 2: h_2 = tanh(W_xh * x_2 + W_hh * h_1 + b)      |
@@ -9206,29 +9301,31 @@ RNN의 가장 중요한 특징은 **모든 시점에서 같은 가중치를 쓴�
 
 RNN의 순환 구조를 이해하기 쉽도록 시간축으로 "펼치는" 방법입니다.
 
-\`\`\`text
-[펼치기 전 - 순환 표현]
+**[펼치기 전 - 순환 표현]**
 
-     x_t --> [RNN Cell] --> h_t
-                ^  |
-                |  v
-              h_(t-1)
-
-[펼친 후 - 시간축 표현]
-
-x_0 --> [RNN] --> h_0
-           |
-           v
-x_1 --> [RNN] --> h_1
-           |
-           v
-x_2 --> [RNN] --> h_2
-           |
-           v
-x_3 --> [RNN] --> h_3
-
-모든 [RNN] 블록은 같은 가중치를 공유합니다!
 \`\`\`
+     x_t ──▶ [RNN Cell] ──▶ h_t
+                ▲  │
+                │  ▼
+              h_(t-1)
+\`\`\`
+
+**[펼친 후 - 시간축 표현]**
+
+\`\`\`
+x_0 ──▶ [RNN] ──▶ h_0
+           │
+           ▼
+x_1 ──▶ [RNN] ──▶ h_1
+           │
+           ▼
+x_2 ──▶ [RNN] ──▶ h_2
+           │
+           ▼
+x_3 ──▶ [RNN] ──▶ h_3
+\`\`\`
+
+> 💡 모든 [RNN] 블록은 **같은 가중치를 공유**합니다!
 
 펼친 모습을 보면 RNN이 사실상 **깊은 신경망**처럼 보입니다.
 이것이 나중에 배울 "기울기 소실" 문제와 연결됩니다.
@@ -9292,14 +9389,12 @@ print("Each hidden neuron captures a different aspect of the input history!")
 
 은닉 상태에서 **출력(y_t)**을 만드는 것도 간단합니다.
 
-\`\`\`text
-y_t = W_hy * h_t + b_y
+$$y_t = W_{hy} \\cdot h_t + b_y$$
 
-용도에 따라:
-  - 분류: y에 softmax 적용
-  - 회귀: y를 그대로 사용
-  - 시퀀스 생성: 매 시점 y 출력
-\`\`\`
+> **용도에 따라:**
+> - 분류: y에 softmax 적용
+> - 회귀: y를 그대로 사용
+> - 시퀀스 생성: 매 시점 y 출력
 
 RNN은 입력과 출력의 관계에 따라 여러 구조로 활용됩니다.
 
@@ -9314,9 +9409,9 @@ RNN은 입력과 출력의 관계에 따라 여러 구조로 활용됩니다.
 
 ## PyTorch로 보는 RNN (참고)
 
-실제 프로젝트에서는 PyTorch의 \\\`nn.RNN\\\`을 사용합니다.
+실제 프로젝트에서는 PyTorch의 \`nn.RNN\`을 사용합니다.
 
-\`\`\`text
+\`\`\`
 import torch
 import torch.nn as nn
 
@@ -9471,7 +9566,7 @@ print("After training (BPTT), it would learn to predict patterns!")
 
 일반 RNN은 **왼쪽에서 오른쪽으로만** 읽습니다.
 
-\`\`\`text
+\`\`\`
 단방향 RNN:
   "나는"  ->  "어제"  ->  "___"  ->  "에서"  ->  "파스타를"  ->  "먹었다"
    h1    ->   h2     ->   h3    ->   h4     ->    h5      ->    h6
@@ -9485,7 +9580,7 @@ h3 시점에서 빈칸을 예측할 때:
 
 **두 개의 RNN**을 동시에 돌립니다. 하나는 앞에서 뒤로, 다른 하나는 뒤에서 앞으로!
 
-\`\`\`text
+\`\`\`
 순방향:
   "나는" -> "어제" -> "___" -> "에서" -> "파스타를" -> "먹었다"
    h1->    h2->    h3->    h4->     h5->      h6->
@@ -9505,7 +9600,7 @@ h3 시점에서 빈칸을 예측할 때:
 
 ### 전체 흐름
 
-\`\`\`text
+\`\`\`
 입력 시퀀스:    x1      x2      x3      x4      x5
                |       |       |       |       |
 순방향 RNN:   h1-> --> h2-> --> h3-> --> h4-> --> h5->
@@ -9676,29 +9771,26 @@ print(f"   결과: {np.round(avg_result, 2)}")
 
 ### 1. Concatenation (연결) - 가장 보편적
 
-\`\`\`text
-h_t = [h_t(fwd) ; h_t(bwd)]
-차원: hidden_dim * 2
-\`\`\`
+$h_t = [h_t^{(fwd)} ; h_t^{(bwd)}]$
+
+차원: $hidden\_dim \times 2$
 
 정보 손실이 없어서 가장 많이 사용합니다.
 다만, 다음 레이어의 입력 차원이 2배가 됩니다.
 
 ### 2. Sum (합산)
 
-\`\`\`text
-h_t = h_t(fwd) + h_t(bwd)
-차원: hidden_dim (유지)
-\`\`\`
+$h_t = h_t^{(fwd)} + h_t^{(bwd)}$
+
+차원: $hidden\_dim$ (유지)
 
 차원을 유지하고 싶을 때 사용합니다.
 
 ### 3. Average (평균)
 
-\`\`\`text
-h_t = (h_t(fwd) + h_t(bwd)) / 2
-차원: hidden_dim (유지)
-\`\`\`
+$h_t = (h_t^{(fwd)} + h_t^{(bwd)}) / 2$
+
+차원: $hidden\_dim$ (유지)
 
 | 결합 방식 | 출력 차원 | 정보 보존 | 주 사용처 |
 |-----------|-----------|-----------|-----------|
@@ -9714,7 +9806,7 @@ PyTorch에서는 \`bidirectional=True\` 한 줄만 추가하면 됩니다!
 
 ### 기본 사용법
 
-\`\`\`text
+\`\`\`
 import torch
 import torch.nn as nn
 
@@ -9742,7 +9834,7 @@ print(f"양방향 h_n:  {h_bi.shape}")      # (2, 32, 20)   <- 2방향!
 
 ### 양방향 LSTM 텍스트 분류 모델
 
-\`\`\`text
+\`\`\`
 class BiLSTMClassifier(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_dim, num_classes):
         super().__init__()
@@ -9806,7 +9898,7 @@ print(f"모델 파라미터 수: {sum(p.numel() for p in model.parameters()):,}"
 
 여러 층을 쌓을 때, 양방향 출력을 다음 층에 어떻게 전달하는지 이해하는 것이 중요합니다.
 
-\`\`\`text
+\`\`\`
 다층 양방향 LSTM (2층 예시):
 
 Layer 2:  h1->(2) --> h2->(2) --> h3->(2)    <- 순방향 Layer 2
@@ -9890,7 +9982,7 @@ PyTorch에서는 \`num_layers=2, bidirectional=True\`로 자동 처리됩니다.
 
 지금까지 배운 RNN/LSTM은 **입력과 출력의 길이가 같은** 문제만 다뤘습니다.
 
-\`\`\`text
+\`\`\`
 [이전 RNN 방식]
 입력:  x1  x2  x3  x4  x5   (5개)
        |   |   |   |   |
@@ -9914,7 +10006,7 @@ Seq2Seq은 **입력과 출력의 길이가 달라도** 처리할 수 있는 모�
 
 ### 전체 구조 한눈에 보기
 
-\`\`\`text
+\`\`\`
 [인코더 (Encoder)]                    [디코더 (Decoder)]
 
 "I" -> "love" -> "you" -> <EOS>       <SOS> -> "나는" -> "너를" -> "사랑해"
@@ -9934,7 +10026,7 @@ Seq2Seq은 **입력과 출력의 길이가 달라도** 처리할 수 있는 모�
 > 머릿속에 의미를 정리합니다.
 > 마지막 단어까지 다 들은 후의 "머릿속 메모"가 바로 컨텍스트 벡터입니다.
 
-\`\`\`text
+\`\`\`
 인코더의 동작:
 
 단계 1: "I"    입력 -> h1 = RNN(x_I, h0)        "아, 주어가 나구나"
@@ -9953,7 +10045,7 @@ h3 = 컨텍스트 벡터 (문장 전체의 의미가 압축된 벡터!)
 > 한 단어씩 번역 결과를 말합니다.
 > 이전에 말한 단어가 다음 단어 선택에 영향을 줍니다.
 
-\`\`\`text
+\`\`\`
 디코더의 동작:
 
 초기 상태: d0 = 컨텍스트 벡터 (인코더가 만든 요약)
@@ -10032,7 +10124,7 @@ print(f"  'I love you' 전체가 이 {len(context_vector)}개 숫자에 압축�
 \`\`\`
 
 ### 패딩 적용
-\`\`\`text
+\`\`\`python
 from torch.nn.utils.rnn import pad_sequence
 
 # 길이가 다른 시퀀스들
@@ -10071,7 +10163,7 @@ truncated = truncate(long_seq, max_length)
 
 ### 완전한 전처리 예제
 
-\`\`\`text
+\`\`\`
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
@@ -10244,7 +10336,7 @@ for batch in dataloader:
 
 ### PyTorch로 IMDB 로드
 
-\`\`\`text
+\`\`\`python
 from torchtext.datasets import IMDB
 from torchtext.data.utils import get_tokenizer
 from torchtext.vocab import build_vocab_from_iterator
@@ -10283,7 +10375,7 @@ print(f"어휘 크기: {len(vocab)}")
 
 ### 모델 구현
 
-\`\`\`text
+\`\`\`
 import torch
 import torch.nn as nn
 
@@ -10355,7 +10447,7 @@ print(model)
 
 ### 데이터 파이프라인
 
-\`\`\`text
+\`\`\`python
 from torch.utils.data import DataLoader
 from torch.nn.utils.rnn import pad_sequence
 
@@ -10410,7 +10502,7 @@ test_dataloader = DataLoader(
 
 ### 학습 함수
 
-\`\`\`text
+\`\`\`
 import torch.optim as optim
 
 # 하이퍼파라미터
@@ -10451,7 +10543,7 @@ def train_epoch(model, dataloader, criterion, optimizer):
 
 ### 평가 함수
 
-\`\`\`text
+\`\`\`
 def evaluate(model, dataloader, criterion):
     model.eval()
     total_loss = 0
@@ -10478,7 +10570,7 @@ def evaluate(model, dataloader, criterion):
 
 ### 학습 루프
 
-\`\`\`text
+\`\`\`
 num_epochs = 10
 
 for epoch in range(num_epochs):
@@ -10499,7 +10591,7 @@ for epoch in range(num_epochs):
 
 ### 새 리뷰 예측
 
-\`\`\`text
+\`\`\`
 def predict_sentiment(model, text, vocab, tokenizer):
     model.eval()
 
@@ -10552,7 +10644,7 @@ for review in reviews:
 ## 모델 개선 방법
 
 ### 1. 사전 학습 임베딩 사용
-\`\`\`text
+\`\`\`python
 # GloVe 임베딩 로드
 pretrained_embeddings = load_glove_embeddings(vocab)
 model.embedding.weight.data.copy_(pretrained_embeddings)
@@ -10560,7 +10652,7 @@ model.embedding.weight.requires_grad = False  # 프리징
 \`\`\`
 
 ### 2. 양방향 LSTM + Attention
-\`\`\`text
+\`\`\`python
 class AttentionLSTM(nn.Module):
     # Attention 메커니즘 추가
     pass
@@ -10653,20 +10745,18 @@ Level 7에서는 **어텐션(Attention) 메커니즘**과 **트랜스포머(Tran
 
 Level 6에서 배운 RNN/LSTM을 떠올려 봅시다. RNN은 문장을 처리할 때 **전화 통화**와 비슷합니다.
 
-\`\`\`text
-RNN 방식 (전화 통화):
+**RNN 방식 (전화 통화):**
 - 친구가 전화로 긴 이야기를 해줍니다
 - 한 단어씩 순서대로 들어야 합니다
 - 앞부분에서 들은 내용은 점점 기억이 흐려집니다
 - 중간에 "아까 뭐라고 했지?" 하고 되돌아갈 수 없습니다
 - 한 사람이 말을 끝내야 다음 사람이 말할 수 있습니다
 
-Transformer 방식 (칠판):
+**Transformer 방식 (칠판):**
 - 친구가 모든 이야기를 칠판에 적어둡니다
 - 모든 단어를 한눈에 볼 수 있습니다
 - 첫 번째 단어와 마지막 단어의 관계도 바로 파악합니다
 - 여러 사람이 동시에 칠판을 읽을 수 있습니다
-\`\`\`
 
 ### RNN의 세 가지 근본적 문제
 
@@ -10680,47 +10770,42 @@ Transformer 방식 (칠판):
 
 ### 문제 1: 순차 처리의 느림
 
-\`\`\`text
-RNN이 "나는 오늘 학교에 갔다"를 처리하는 과정:
-
-시간 1: "나는" 처리 → 상태 h1 생성
-시간 2: "오늘" 처리 (h1 필요) → 상태 h2 생성
-시간 3: "학교에" 처리 (h2 필요) → 상태 h3 생성
-시간 4: "갔다" 처리 (h3 필요) → 상태 h4 생성
-
-각 단계가 이전 단계의 결과를 기다려야 합니다.
-100단어 문장이면? 100번 순차 계산이 필요합니다.
-
-Transformer는 이 4개 단어를 동시에 처리합니다!
-\`\`\`
+> **RNN이 "나는 오늘 학교에 갔다"를 처리하는 과정:**
+>
+> 시간 1: "나는" 처리 → 상태 h1 생성
+> 시간 2: "오늘" 처리 (h1 필요) → 상태 h2 생성
+> 시간 3: "학교에" 처리 (h2 필요) → 상태 h3 생성
+> 시간 4: "갔다" 처리 (h3 필요) → 상태 h4 생성
+>
+> 각 단계가 이전 단계의 결과를 기다려야 합니다.
+> 100단어 문장이면? 100번 순차 계산이 필요합니다.
+>
+> **Transformer는 이 4개 단어를 동시에 처리합니다!**
 
 ### 문제 2: 장거리 의존성의 어려움
 
-\`\`\`text
-"그 소년은 매일 아침 공원에서 운동을 하고, 점심에는 도서관에서
-공부를 하며, 저녁에는 친구들과 축구를 하는데, 주말에는 가족과
-함께 시간을 보내는 것을 좋아하는 아이였다."
-
-RNN이 "아이였다"를 처리할 때:
-- "그 소년은"이라는 주어 정보가 수십 단어를 거치면서 희석됨
-- LSTM이 게이트로 보존하려 해도 한계가 있음
-
-Transformer라면:
-- "아이였다"에서 "그 소년은"을 직접 참조 가능
-- 거리와 상관없이 모든 단어와 직접 연결
-\`\`\`
+> **긴 문장 예시:**
+> "그 소년은 매일 아침 공원에서 운동을 하고, 점심에는 도서관에서
+> 공부를 하며, 저녁에는 친구들과 축구를 하는데, 주말에는 가족과
+> 함께 시간을 보내는 것을 좋아하는 아이였다."
+>
+> **RNN이 "아이였다"를 처리할 때:**
+> - "그 소년은"이라는 주어 정보가 수십 단어를 거치면서 희석됨
+> - LSTM이 게이트로 보존하려 해도 한계가 있음
+>
+> **Transformer라면:**
+> - "아이였다"에서 "그 소년은"을 직접 참조 가능
+> - 거리와 상관없이 모든 단어와 직접 연결
 
 ### 문제 3: 병렬 처리 불가
 
-\`\`\`text
-GPU의 강점: 수천 개의 작은 연산을 동시에 수행
-
-RNN: t 시점 계산에 t-1 결과가 필요 → 병렬화 불가능
-     GPU가 아무리 좋아도 순차적으로 기다려야 함
-
-Transformer: 모든 위치를 동시에 계산 → 완벽한 병렬화
-     GPU 코어를 최대한 활용 → 학습 속도 비약적 향상
-\`\`\`
+> **GPU의 강점:** 수천 개의 작은 연산을 동시에 수행
+>
+> **RNN:** t 시점 계산에 t-1 결과가 필요 → 병렬화 불가능
+> - GPU가 아무리 좋아도 순차적으로 기다려야 함
+>
+> **Transformer:** 모든 위치를 동시에 계산 → 완벽한 병렬화
+> - GPU 코어를 최대한 활용 → 학습 속도 비약적 향상
 
 ---
 
@@ -10730,31 +10815,30 @@ Transformer: 모든 위치를 동시에 계산 → 완벽한 병렬화
 
 2017년, 구글 연구팀(Vaswani 등)이 발표한 이 논문의 제목부터 파격적이었습니다.
 
-\`\`\`text
-논문 제목: "Attention is All You Need"
-번역: "어텐션만 있으면 됩니다"
-
-기존 상식: 시퀀스 처리에는 RNN/LSTM이 필수다
-논문 주장: RNN을 완전히 제거하고, Attention만으로 충분하다!
-
-결과: 번역 성능에서 기존 모델을 크게 앞섬
-     학습 시간도 획기적으로 단축
-\`\`\`
+> **논문 제목:** "Attention is All You Need"
+> **번역:** "어텐션만 있으면 됩니다"
+>
+> **기존 상식:** 시퀀스 처리에는 RNN/LSTM이 필수다
+> **논문 주장:** RNN을 완전히 제거하고, Attention만으로 충분하다!
+>
+> **결과:**
+> - 번역 성능에서 기존 모델을 크게 앞섬
+> - 학습 시간도 획기적으로 단축
 
 ### 이 논문이 낳은 것들
 
-\`\`\`text
-2017: Transformer 논문 발표
-2018: GPT-1 (OpenAI) - Transformer의 Decoder 활용
-2018: BERT (Google) - Transformer의 Encoder 활용
-2019: GPT-2 - 더 큰 Transformer
-2020: GPT-3 - 1750억 파라미터
-2022: ChatGPT - GPT-3.5 기반 대화형 AI
-2023: GPT-4 - 멀티모달 AI
-2024~: Claude, Gemini, LLaMA 등 수많은 LLM
+| 연도 | 모델 | 설명 |
+|------|------|------|
+| 2017 | Transformer | 논문 발표 |
+| 2018 | GPT-1 (OpenAI) | Transformer의 Decoder 활용 |
+| 2018 | BERT (Google) | Transformer의 Encoder 활용 |
+| 2019 | GPT-2 | 더 큰 Transformer |
+| 2020 | GPT-3 | 1750억 파라미터 |
+| 2022 | ChatGPT | GPT-3.5 기반 대화형 AI |
+| 2023 | GPT-4 | 멀티모달 AI |
+| 2024~ | Claude, Gemini, LLaMA | 수많은 LLM |
 
-모두 Transformer 아키텍처 기반!
-\`\`\`
+> **모두 Transformer 아키텍처 기반!**
 
 ### 핵심 아이디어: Self-Attention
 
@@ -10763,17 +10847,15 @@ Transformer: 모든 위치를 동시에 계산 → 완벽한 병렬화
 > **비유**: 독서 모임에서 한 문단을 분석할 때, 각 단어가 다른 모든 단어를 돌아보며
 > "나와 가장 관련 있는 단어는 뭘까?"라고 질문하는 것과 같습니다.
 
-\`\`\`text
-"나는 사과를 먹었다"에서 Self-Attention이 하는 일:
-
-"먹었다"의 관점:
-  - "나는"과의 관련성: 높음 (주어-동사 관계)
-  - "사과를"과의 관련성: 매우 높음 (목적어-동사 관계)
-  - "먹었다" 자신과의 관련성: 보통
-
-결과: "먹었다"는 "사과를"에 가장 많이 주목하고,
-     "나는"에도 적당히 주목하여 문맥을 이해합니다.
-\`\`\`
+> **"나는 사과를 먹었다"에서 Self-Attention이 하는 일:**
+>
+> **"먹었다"의 관점:**
+> - "나는"과의 관련성: 높음 (주어-동사 관계)
+> - "사과를"과의 관련성: 매우 높음 (목적어-동사 관계)
+> - "먹었다" 자신과의 관련성: 보통
+>
+> **결과:** "먹었다"는 "사과를"에 가장 많이 주목하고,
+> "나는"에도 적당히 주목하여 문맥을 이해합니다.
 
 ---
 
@@ -10783,7 +10865,7 @@ Transformer: 모든 위치를 동시에 계산 → 완벽한 병렬화
 
 Transformer는 크게 **Encoder**(인코더)와 **Decoder**(디코더) 두 부분으로 구성됩니다.
 
-\`\`\`text
+\`\`\`
 [입력 문장]                              [출력 문장]
 "I love AI"                             "나는 AI를 좋아한다"
      |                                        ^
@@ -10798,35 +10880,31 @@ Transformer는 크게 **Encoder**(인코더)와 **Decoder**(디코더) 두 부�
 
 ### Encoder의 역할
 
-\`\`\`text
-Encoder = "이해하는 역할"
-
-비유: 통역사가 영어 문장을 듣고 의미를 완전히 파악하는 단계
-
-입력: 원래 문장의 토큰들
-처리: Self-Attention으로 단어 간 관계 파악
-출력: 각 단어의 문맥이 반영된 표현 (Context-aware Representation)
-
-사용하는 모델: BERT, 문장 이해/분류 모델
-\`\`\`
+> **Encoder = "이해하는 역할"**
+>
+> **비유:** 통역사가 영어 문장을 듣고 의미를 완전히 파악하는 단계
+>
+> - **입력:** 원래 문장의 토큰들
+> - **처리:** Self-Attention으로 단어 간 관계 파악
+> - **출력:** 각 단어의 문맥이 반영된 표현 (Context-aware Representation)
+>
+> **사용하는 모델:** BERT, 문장 이해/분류 모델
 
 ### Decoder의 역할
 
-\`\`\`text
-Decoder = "생성하는 역할"
-
-비유: 통역사가 이해한 내용을 한국어로 한 단어씩 말하는 단계
-
-입력: 이전에 생성한 토큰들 + Encoder의 출력
-처리: Self-Attention + Cross-Attention (Encoder 출력 참조)
-출력: 다음에 올 단어 예측
-
-사용하는 모델: GPT 시리즈, 텍스트 생성 모델
-\`\`\`
+> **Decoder = "생성하는 역할"**
+>
+> **비유:** 통역사가 이해한 내용을 한국어로 한 단어씩 말하는 단계
+>
+> - **입력:** 이전에 생성한 토큰들 + Encoder의 출력
+> - **처리:** Self-Attention + Cross-Attention (Encoder 출력 참조)
+> - **출력:** 다음에 올 단어 예측
+>
+> **사용하는 모델:** GPT 시리즈, 텍스트 생성 모델
 
 ### Encoder 블록의 내부 구조
 
-\`\`\`text
+\`\`\`
 하나의 Encoder 블록:
 
 입력 (단어 임베딩 + 위치 인코딩)
@@ -10855,7 +10933,7 @@ Decoder = "생성하는 역할"
 
 ### Decoder 블록의 내부 구조
 
-\`\`\`text
+\`\`\`
 하나의 Decoder 블록:
 
 입력 (이전 출력 임베딩 + 위치 인코딩)
@@ -10902,20 +10980,12 @@ Decoder = "생성하는 역할"
 
 ### 처리 방식 비교
 
-\`\`\`text
-문장: "나는 오늘 학교에 갔다"
+> 📝 **문장**: "나는 오늘 학교에 갔다"
 
-=== RNN 방식 ===
-시간 1: [나는] → h1
-시간 2: [오늘] + h1 → h2
-시간 3: [학교에] + h2 → h3
-시간 4: [갔다] + h3 → h4
-→ 총 4단계 필요 (순차적)
-
-=== Transformer 방식 ===
-시간 1: [나는, 오늘, 학교에, 갔다] → 동시에 모든 관계 계산
-→ 총 1단계 (병렬적)
-\`\`\`
+| 방식 | 처리 과정 | 단계 수 |
+|------|----------|--------|
+| **RNN** | [나는]→h1 → [오늘]+h1→h2 → [학교에]+h2→h3 → [갔다]+h3→h4 | 4단계 (순차) |
+| **Transformer** | [나는, 오늘, 학교에, 갔다] → 동시에 모든 관계 계산 | 1단계 (병렬) |
 
 ### 성능 비교표
 
@@ -10930,21 +11000,14 @@ Decoder = "생성하는 역할"
 
 ### Transformer의 약점도 있다
 
-\`\`\`text
-Transformer가 만능은 아닙니다:
+> ⚠️ **Transformer가 만능은 아닙니다!**
 
-1. 메모리 사용량: O(n^2)
-   - 문장 길이가 n이면, n x n 크기의 Attention 행렬 필요
-   - 아주 긴 문서(수만 단어)에서는 메모리 부족
+| 약점 | 설명 | 영향 |
+|------|------|------|
+| **메모리 O(n²)** | 문장 길이 n → n×n 크기의 Attention 행렬 | 긴 문서(수만 단어)에서 메모리 부족 |
+| **위치 정보 부재** | 구조 자체에 순서 개념 없음 | Positional Encoding 별도 추가 필요 (7-4)|
 
-2. 위치 정보 부재
-   - 구조 자체에는 순서 개념이 없음
-   - Positional Encoding을 별도로 추가해야 함 (7-4에서 학습)
-
-3. 학습 데이터 필요량
-   - RNN보다 더 많은 데이터가 필요한 경향
-   - 소규모 데이터에서는 RNN이 더 나을 수도 있음
-\`\`\`
+| **학습 데이터 필요량** | RNN보다 더 많은 데이터가 필요한 경향 | 소규모 데이터에서는 RNN이 더 나을 수도 있음 |
 
 ---
 
@@ -10998,18 +11061,16 @@ print("이것이 Transformer의 주요 약점입니다.")
 
 ### 확장성(Scalability)의 승리
 
-\`\`\`text
-Transformer의 진정한 강점: "크게 만들수록 더 잘 작동한다"
-
-모델 크기를 키우면:
-- RNN: 순차 처리 때문에 학습 시간이 기하급수적 증가
-- Transformer: 병렬 처리 덕분에 GPU만 추가하면 됨
-
-이것이 가능하게 한 것:
-- GPT-3: 1750억 파라미터 (RNN으로는 불가능했을 규모)
-- 수천 개의 GPU로 동시에 학습
-- "스케일링 법칙": 모델이 클수록, 데이터가 많을수록 성능 향상
-\`\`\`
+> **Transformer의 진정한 강점: "크게 만들수록 더 잘 작동한다"**
+>
+> 모델 크기를 키우면:
+> - RNN: 순차 처리 때문에 학습 시간이 기하급수적 증가
+> - Transformer: 병렬 처리 덕분에 GPU만 추가하면 됨
+>
+> 이것이 가능하게 한 것:
+> - GPT-3: 1750억 파라미터 (RNN으로는 불가능했을 규모)
+> - 수천 개의 GPU로 동시에 학습
+> - "스케일링 법칙": 모델이 클수록, 데이터가 많을수록 성능 향상
 
 ### 다양한 변형 모델들
 
@@ -11075,31 +11136,24 @@ Transformer의 진정한 강점: "크게 만들수록 더 잘 작동한다"
 
 "Self-Attention"에서 "Self"란 **같은 문장 안에서 자기들끼리** 서로를 참조한다는 뜻입니다.
 
-\`\`\`text
-일반 Attention (Cross-Attention):
-- 두 개의 서로 다른 시퀀스가 있음
-- 예: 영어 문장이 한국어 문장을 참조
-
-Self-Attention:
-- 하나의 시퀀스 안에서 서로를 참조
-- 예: "나는 사과를 먹었다"에서
-      "먹었다"가 "사과를"과 "나는"을 참조
-\`\`\`
+| 종류 | 설명 | 예시 |
+|------|------|------|
+| **Cross-Attention** | 두 개의 서로 다른 시퀀스 | 영어 문장이 한국어 문장을 참조 |
+| **Self-Attention** | 하나의 시퀀스 안에서 서로 참조 | "먹었다"가 "사과를"과 "나는"을 참조 |
 
 ### 비유: 교실에서 질문하기
 
 > **비유**: 교실에 학생들이 앉아 있습니다. 선생님이 "서로에게 질문해서 관련 있는 정보를 모아보세요"라고 합니다.
+>
+> 📝 **문장**: "고양이가 생선을 먹었다"
 
-\`\`\`text
-문장: "고양이가 생선을 먹었다"
+| "먹었다"가 질문 | 상대방 대답 | 관련도 |
+|----------------|------------|--------|
+| "고양이가"에게 | "응, 나는 주어야!" | 🟡 높음 |
+| "생선을"에게 | "응, 나는 목적어야!" | 🟢 **매우 높음** |
+| 자기 자신에게 | "나는 나지..." | ⚪ 보통 |
 
-"먹었다" 학생이 교실을 둘러보며 질문합니다:
-  "고양이가"에게: "너 나랑 관련 있어?" → "응, 나는 주어야!" (관련도: 높음)
-  "생선을"에게: "너 나랑 관련 있어?" → "응, 나는 목적어야!" (관련도: 매우 높음)
-  "먹었다" 자신: "나 자신은?" → "나는 나지..." (관련도: 보통)
-
-결과: "먹었다"는 "생선을"에서 가장 많은 정보를 가져옵니다.
-\`\`\`
+> 💡 **결과**: "먹었다"는 "생선을"에서 가장 많은 정보를 가져옵니다.
 
 이것이 Self-Attention의 핵심입니다. 모든 단어가 동시에 이 과정을 수행합니다.
 
@@ -11109,13 +11163,15 @@ Self-Attention:
 
 ### 비유: 도서관 검색 시스템
 
-\`\`\`text
-1. Query (질문): 검색창에 입력하는 검색어
-2. Key (열쇠): 각 책의 제목과 키워드
-3. Value (값): 각 책의 실제 내용
+> 📚 **도서관 검색과 Self-Attention의 유사성**
 
-Query와 Key를 비교 → 관련도가 높은 Value를 더 많이 가져옴
-\`\`\`
+| 요소 | Self-Attention | 도서관 비유 |
+|------|---------------|-------------|
+| **Query** | 질문 벡터 | 검색창에 입력하는 검색어 |
+| **Key** | 키 벡터 | 각 책의 제목과 키워드 |
+| **Value** | 값 벡터 | 각 책의 실제 내용 |
+
+> 💡 **원리**: Query와 Key를 비교 → 관련도가 높은 Value를 더 많이 가져옴
 
 | 요소 | 역할 | 비유 |
 |------|------|------|
@@ -11125,12 +11181,11 @@ Query와 Key를 비교 → 관련도가 높은 Value를 더 많이 가져옴
 
 핵심: **같은 입력(X)에서** Q, K, V 세 가지를 모두 만듭니다.
 
-\`\`\`text
-Q = X x W_Q   (질문용으로 변환)
-K = X x W_K   (열쇠용으로 변환)
-V = X x W_V   (정보용으로 변환)
-W_Q, W_K, W_V는 학습 가능한 파라미터입니다.
-\`\`\`
+$$Q = X \times W_Q \quad \text{(질문용으로 변환)}$$
+$$K = X \times W_K \quad \text{(열쇠용으로 변환)}$$
+$$V = X \times W_V \quad \text{(정보용으로 변환)}$$
+
+$W_Q, W_K, W_V$는 학습 가능한 파라미터입니다.
 
 ---
 
@@ -11138,25 +11193,23 @@ W_Q, W_K, W_V는 학습 가능한 파라미터입니다.
 
 ### 전체 과정
 
-\`\`\`text
-Attention(Q, K, V) = softmax(Q x K^T / sqrt(d_k)) x V
+$$\\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\right) V$$
 
-1. Q와 K^T의 내적 → 유사도 점수 행렬
-2. sqrt(d_k)로 나누기 → 스케일링 (값 안정화)
+1. $Q$와 $K^T$의 내적 → 유사도 점수 행렬
+2. $\\sqrt{d_k}$로 나누기 → 스케일링 (값 안정화)
 3. softmax 적용 → 확률 분포로 변환
-4. 확률과 V를 곱하기 → 최종 출력
-\`\`\`
+4. 확률과 $V$를 곱하기 → 최종 출력
 
 ### 스케일링이 필요한 이유
 
-\`\`\`text
-차원이 커지면 내적 값도 커짐 → softmax가 극단적
+차원이 커지면 내적 값도 커져서 softmax가 극단적으로 됩니다:
 
-  softmax([10, 1, 1]) ≈ [0.9998, 0.0001, 0.0001]  ← 너무 극단적!
-  softmax([2, 1, 1])  ≈ [0.58, 0.21, 0.21]          ← 적절
+| 스케일링 전 | softmax 결과 | 문제 |
+|------------|-------------|------|
+| $[10, 1, 1]$ | $[0.9998, 0.0001, 0.0001]$ | 너무 극단적! |
+| $[2, 1, 1]$ | $[0.58, 0.21, 0.21]$ | 적절 |
 
-해결: sqrt(d_k)로 나누어 값의 범위를 안정화
-\`\`\`
+해결: $\\sqrt{d_k}$로 나누어 값의 범위를 안정화합니다.
 
 ---
 
@@ -11218,25 +11271,21 @@ for i, word in enumerate(words):
 
 ### 동음이의어 해결
 
-\`\`\`text
-예문 1: "나는 은행에 돈을 맡겼다"
-  → "은행": "돈", "맡겼다"에 주목 → 금융기관 의미
-
-예문 2: "나는 강 은행에 앉았다"
-  → "은행": "강", "앉았다"에 주목 → 강가 의미
-
-같은 단어도 주변 문맥에 따라 다른 표현을 갖게 됩니다!
-\`\`\`
+> **예문 1:** "나는 은행에 돈을 맡겼다"
+> - "은행": "돈", "맡겼다"에 주목 → 금융기관 의미
+>
+> **예문 2:** "나는 강 은행에 앉았다"
+> - "은행": "강", "앉았다"에 주목 → 강가 의미
+>
+> **같은 단어도 주변 문맥에 따라 다른 표현을 갖게 됩니다!**
 
 ### 대명사 해석
 
-\`\`\`text
-"The cat sat on the mat because it was tired."
-  "it" → "cat"에 높은 가중치 (피곤한 것은 고양이)
-
-"The cat sat on the mat because it was soft."
-  "it" → "mat"에 높은 가중치 (부드러운 것은 매트)
-\`\`\`
+> **예문 1:** "The cat sat on the mat because it was tired."
+> - "it" → "cat"에 높은 가중치 (피곤한 것은 고양이)
+>
+> **예문 2:** "The cat sat on the mat because it was soft."
+> - "it" → "mat"에 높은 가중치 (부드러운 것은 매트)
 
 ---
 
@@ -11251,21 +11300,20 @@ for i, word in enumerate(words):
 
 ### 약점: O(n^2) 계산 복잡도
 
-\`\`\`text
-문장 길이     연산 수
-  100           10,000
-  1,000       1,000,000
-  10,000    100,000,000
+| 문장 길이 | 연산 수 |
+|----------|---------|
+| 100 | 10,000 |
+| 1,000 | 1,000,000 |
+| 10,000 | 100,000,000 |
 
-→ 문장이 10배 길어지면 계산량은 100배 증가!
-해결: Sparse Attention, Linear Attention, Flash Attention 등
-\`\`\`
+> **문장이 10배 길어지면 계산량은 100배 증가!**
+> **해결:** Sparse Attention, Linear Attention, Flash Attention 등
 
 ---
 
 ## PyTorch로 보는 Self-Attention (참고용)
 
-\`\`\`text
+\`\`\`
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -11295,11 +11343,11 @@ class SelfAttention(nn.Module):
 | Query (Q) | 현재 단어의 질문 | 검색어 |
 | Key (K) | 각 단어의 명함 | 책 제목 |
 | Value (V) | 각 단어의 실제 정보 | 책 내용 |
-| 스케일링 | sqrt(d_k)로 나누어 값 안정화 | 점수 범위 조절 |
+| 스케일링 | $\\sqrt{d_k}$로 나누어 값 안정화 | 점수 범위 조절 |
 
-\`\`\`text
-핵심 공식: Attention(Q, K, V) = softmax(Q x K^T / sqrt(d_k)) x V
-\`\`\`
+**핵심 공식:**
+
+$$\\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\right) V$$
 
 ---
 
@@ -11342,29 +11390,30 @@ class SelfAttention(nn.Module):
 
 > **비유**: 영화를 분석할 때 한 사람보다 여러 전문가가 각자의 관점에서 보는 것이 더 좋습니다.
 
-\`\`\`text
-영화 "기생충" 분석:
+**영화 "기생충" 분석:**
 
-전문가 1 (연출): 카메라 각도, 조명에 주목
-전문가 2 (각본): 대사, 스토리 구조에 주목
-전문가 3 (사회학자): 계급 갈등에 주목
+| 전문가 | 초점 |
+|--------|------|
+| 전문가 1 (연출) | 카메라 각도, 조명에 주목 |
+| 전문가 2 (각본) | 대사, 스토리 구조에 주목 |
+| 전문가 3 (사회학자) | 계급 갈등에 주목 |
 
-종합하면 → 훨씬 깊고 다양한 분석이 완성!
-\`\`\`
+> **종합하면 → 훨씬 깊고 다양한 분석이 완성!**
 
 ### 단일 Head의 한계
 
-\`\`\`text
-문장: "선생님이 학생에게 어려운 수학 문제를 설명했다"
+**문장:** "선생님이 학생에게 어려운 수학 문제를 설명했다"
 
-다양한 관계가 존재:
-1. 문법적: "선생님이" ↔ "설명했다" (주어-동사)
-2. 의미적: "수학" ↔ "문제" (수식 관계)
-3. 행위적: "학생에게" ↔ "설명했다" (간접목적어-동사)
+**다양한 관계가 존재:**
 
-단일 Head는 이 모든 것을 하나의 패턴으로 표현해야 합니다.
-Multi-Head라면 각 Head가 하나의 관계에 집중할 수 있습니다!
-\`\`\`
+| 관계 유형 | 연결 | 설명 |
+|----------|------|------|
+| 문법적 | "선생님이" ↔ "설명했다" | 주어-동사 |
+| 의미적 | "수학" ↔ "문제" | 수식 관계 |
+| 행위적 | "학생에게" ↔ "설명했다" | 간접목적어-동사 |
+
+> **단일 Head는 이 모든 것을 하나의 패턴으로 표현해야 합니다.**
+> **Multi-Head라면 각 Head가 하나의 관계에 집중할 수 있습니다!**
 
 ---
 
@@ -11372,36 +11421,35 @@ Multi-Head라면 각 Head가 하나의 관계에 집중할 수 있습니다!
 
 ### 핵심 수식
 
-\`\`\`text
-MultiHead(Q, K, V) = Concat(head_1, ..., head_h) x W_O
+$$\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, ..., \text{head}_h) \times W_O$$
 
-여기서 head_i = Attention(Q x W_Q_i, K x W_K_i, V x W_V_i)
-h = Head 개수 (보통 8 또는 16)
-\`\`\`
+여기서:
+- $\text{head}_i = \text{Attention}(Q \times W_{Q_i}, K \times W_{K_i}, V \times W_{V_i})$
+- $h$ = Head 개수 (보통 8 또는 16)
 
 ### 차원 분할 - 계산량을 늘리지 않는 비결
 
-\`\`\`text
-d_model = 512 (전체 모델 차원)
-num_heads = 8
-d_k = 512 / 8 = 64 (각 Head의 차원)
+| 파라미터 | 값 | 설명 |
+|----------|-----|------|
+| $d_{model}$ | 512 | 전체 모델 차원 |
+| $num\_heads$ | 8 | Head 개수 |
+| $d_k$ | 64 | 각 Head의 차원 (512 / 8) |
 
-→ 파라미터 수가 동일합니다!
-→ 계산량은 비슷하지만, 8가지 다른 관점을 학습할 수 있습니다.
-\`\`\`
+> **파라미터 수가 동일합니다!**
+> **계산량은 비슷하지만, 8가지 다른 관점을 학습할 수 있습니다.**
 
 ### 차원 변환 과정
 
-\`\`\`text
-1. 입력: [batch, seq_len, 512]
-2. Q, K, V 생성: 각각 [batch, seq_len, 512]
-3. Head로 분할: → [batch, 8, seq_len, 64]
-4. 각 Head에서 독립적으로 Attention 수행
-5. Head 합치기 (Concatenate): → [batch, seq_len, 512]
-6. W_O 적용: [batch, seq_len, 512]
+| 단계 | 동작 | 차원 |
+|------|------|------|
+| 1 | 입력 | [batch, seq_len, 512] |
+| 2 | Q, K, V 생성 | 각각 [batch, seq_len, 512] |
+| 3 | Head로 분할 | [batch, 8, seq_len, 64] |
+| 4 | 각 Head에서 독립적으로 Attention 수행 | [batch, 8, seq_len, 64] |
+| 5 | Head 합치기 (Concatenate) | [batch, seq_len, 512] |
+| 6 | W_O 적용 | [batch, seq_len, 512] |
 
-입력과 출력의 크기가 같습니다!
-\`\`\`
+> **입력과 출력의 크기가 같습니다!**
 
 ---
 
@@ -11417,10 +11465,8 @@ d_k = 512 / 8 = 64 (각 Head의 차원)
 | Head 4 | 구분자 주목 | 문장 끝 토큰에 집중 |
 | Head 5 | 수식어-명사 | "아름다운" → "꽃" |
 
-\`\`\`text
-중요: 이 역할 분담은 사람이 지정하지 않습니다!
-학습 과정에서 각 Head가 자동으로 유용한 패턴을 찾아냅니다.
-\`\`\`
+> **중요:** 이 역할 분담은 사람이 지정하지 않습니다!
+> 학습 과정에서 각 Head가 자동으로 유용한 패턴을 찾아냅니다.
 
 ---
 
@@ -11494,7 +11540,7 @@ print(f"  입력과 출력 크기 동일: {X.shape} == {final_output.shape}")
 
 ## PyTorch로 보는 Multi-Head Attention (참고용)
 
-\`\`\`text
+\`\`\`
 import torch.nn as nn
 
 # PyTorch 내장 클래스 사용
@@ -11560,40 +11606,30 @@ output, attn_weights = mha(x, x, x)
 
 > **비유**: Transformer는 칠판에 적힌 모든 단어를 한꺼번에 봅니다. 하지만 줄 번호가 없으면 어떤 단어가 먼저 나왔는지 알 수 없습니다.
 
-\`\`\`text
-줄 번호가 없는 칠판:
-  "물었다" "개를" "사람이"
-
-이것은 아래 두 문장 중 어느 것일까요?
-  A: "사람이 개를 물었다"
-  B: "개를 사람이 물었다"
-
-단어 집합은 동일하지만, 순서에 따라 의미가 완전히 달라집니다!
-\`\`\`
+>  줄 번호가 없는 칠판:
+>  "물었다" "개를" "사람이"
+>
+> 이것은 아래 두 문장 중 어느 것일까요?
+>  A: "사람이 개를 물었다"
+>  B: "개를 사람이 물었다"
+>
+> 단어 집합은 동일하지만, 순서에 따라 의미가 완전히 달라집니다!
 
 ### RNN vs Transformer의 위치 인식
 
-\`\`\`text
-RNN: 단어를 순서대로 하나씩 처리
-  → 자연스럽게 "이것은 3번째 단어"라는 정보가 포함됨
-  → 별도의 위치 정보가 필요 없음
-
-Transformer: 모든 단어를 동시에 처리
-  → Self-Attention은 순서를 전혀 고려하지 않음
-  → "나는 너를 좋아한다"와 "너를 나는 좋아한다"가 동일하게 처리됨
-  → 반드시 위치 정보를 별도로 추가해야 함!
-\`\`\`
+| 모델 | 처리 방식 | 위치 정보 |
+|------|-----------|-----------|
+| **RNN** | 단어를 순서대로 하나씩 처리 | 자연스럽게 "이것은 3번째 단어"라는 정보가 포함됨<br/>별도의 위치 정보가 필요 없음 |
+| **Transformer** | 모든 단어를 동시에 처리 | Self-Attention은 순서를 전혀 고려하지 않음<br/>"나는 너를 좋아한다"와 "너를 나는 좋아한다"가 동일하게 처리됨<br/>반드시 위치 정보를 별도로 추가해야 함! |
 
 ### 위치 정보 없이는 어떤 문제가 생기나?
 
-\`\`\`text
-위치 정보가 없으면 Self-Attention은 "Bag of Words"와 같아집니다:
-
-"고양이가 쥐를 쫓았다" = "쥐를 고양이가 쫓았다" = "쫓았다 고양이가 쥐를"
-
-모두 같은 단어 집합이므로 같은 결과가 나옵니다.
-하지만 자연어에서 순서는 의미에 결정적인 영향을 줍니다!
-\`\`\`
+> 위치 정보가 없으면 Self-Attention은 "Bag of Words"와 같아집니다:
+>
+> "고양이가 쥐를 쫓았다" = "쥐를 고양이가 쫓았다" = "쫓았다 고양이가 쥐를"
+>
+> 모두 같은 단어 집합이므로 같은 결과가 나옵니다.
+> 하지만 자연어에서 순서는 의미에 결정적인 영향을 줍니다!
 
 ---
 
@@ -11601,38 +11637,34 @@ Transformer: 모든 단어를 동시에 처리
 
 ### 시도 1: 정수 인덱스 사용
 
-\`\`\`text
-위치 = [0, 1, 2, 3, 4, ...]
-
-문제점:
-  - 문장이 길어지면 값이 무한히 커짐 (0, 1, 2, ..., 10000)
-  - 단어 임베딩 벡터의 값은 보통 -1 ~ 1 범위
-  - 위치 값이 10000이면 임베딩 정보를 압도해 버림
-  - 학습이 매우 불안정해짐
-\`\`\`
+> 위치 = [0, 1, 2, 3, 4, ...]
+>
+> **문제점:**
+>  - 문장이 길어지면 값이 무한히 커짐 (0, 1, 2, ..., 10000)
+>  - 단어 임베딩 벡터의 값은 보통 -1 ~ 1 범위
+>  - 위치 값이 10000이면 임베딩 정보를 압도해 버림
+>  - 학습이 매우 불안정해짐
 
 ### 시도 2: 정규화 (0~1로 맞추기)
 
-\`\`\`text
-5단어 문장: [0.0, 0.25, 0.5, 0.75, 1.0]
-10단어 문장: [0.0, 0.11, 0.22, 0.33, ...]
-
-문제점:
-  - 같은 "2번째 위치"가 문장 길이에 따라 다른 값을 가짐
-  - 5단어 문장의 2번째: 0.25
-  - 10단어 문장의 2번째: 0.11
-  - 모델이 일관된 위치 패턴을 학습하기 어려움
-\`\`\`
+> 5단어 문장: [0.0, 0.25, 0.5, 0.75, 1.0]
+> 10단어 문장: [0.0, 0.11, 0.22, 0.33, ...]
+>
+> **문제점:**
+>  - 같은 "2번째 위치"가 문장 길이에 따라 다른 값을 가짐
+>  - 5단어 문장의 2번째: 0.25
+>  - 10단어 문장의 2번째: 0.11
+>  - 모델이 일관된 위치 패턴을 학습하기 어려움
 
 ### 좋은 위치 인코딩의 조건
 
-\`\`\`text
-1. 값의 범위가 제한적이어야 함 (임베딩과 비슷한 스케일)
-2. 각 위치마다 고유한 값을 가져야 함
-3. 문장 길이에 상관없이 같은 위치는 같은 값이어야 함
-4. 상대적 거리도 표현할 수 있으면 좋음
-5. 학습하지 않은 긴 문장에도 적용 가능해야 함
-\`\`\`
+| 조건 | 설명 |
+|------|------|
+| 1️⃣ 제한된 범위 | 값의 범위가 제한적이어야 함 (임베딩과 비슷한 스케일) |
+| 2️⃣ 고유성 | 각 위치마다 고유한 값을 가져야 함 |
+| 3️⃣ 일관성 | 문장 길이에 상관없이 같은 위치는 같은 값이어야 함 |
+| 4️⃣ 상대 거리 | 상대적 거리도 표현할 수 있으면 좋음 |
+| 5️⃣ 일반화 | 학습하지 않은 긴 문장에도 적용 가능해야 함 |
 
 ## Sinusoidal Positional Encoding
 
@@ -11642,23 +11674,24 @@ Transformer: 모든 단어를 동시에 처리
 
 ### 수학적 공식
 
-\`\`\`text
-PE(pos, 2i)   = sin(pos / 10000^(2i/d_model))
-PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
+$$\\text{PE}(\\text{pos}, 2i) = \\sin\\left(\\frac{\\text{pos}}{10000^{2i/d_{\\text{model}}}}\\right)$$
 
-pos: 단어의 위치 (0, 1, 2, 3, ...)
-i: 차원 인덱스 (0, 1, 2, ..., d_model/2 - 1)
-d_model: 임베딩 차원 (예: 512)
+$$\\text{PE}(\\text{pos}, 2i+1) = \\cos\\left(\\frac{\\text{pos}}{10000^{2i/d_{\\text{model}}}}\\right)$$
 
-짝수 차원(0, 2, 4, ...): sin 사용
-홀수 차원(1, 3, 5, ...): cos 사용
-\`\`\`
+**변수 설명:**
+- $\\text{pos}$: 단어의 위치 (0, 1, 2, 3, ...)
+- $i$: 차원 인덱스 (0, 1, 2, ..., $d_{\\text{model}}/2 - 1$)
+- $d_{\\text{model}}$: 임베딩 차원 (예: 512)
+
+**규칙:**
+- 짝수 차원(0, 2, 4, ...): sin 사용
+- 홀수 차원(1, 3, 5, ...): cos 사용
 
 ### 직관적 이해: 이진수와의 유사성
 
 > **비유**: 이진수를 떠올려 보세요. 각 자릿수(비트)는 서로 다른 주기로 0과 1을 반복합니다.
 
-\`\`\`text
+\`\`\`
 이진수 카운팅:
 위치  bit3  bit2  bit1  bit0
   0     0     0     0     0
@@ -11669,25 +11702,25 @@ d_model: 임베딩 차원 (예: 512)
   5     0     1     0     1
   6     0     1     1     0
   7     0     1     1     1
+\`\`\`
 
-Positional Encoding도 비슷합니다:
+**Positional Encoding도 비슷합니다:**
 - 낮은 차원: 빠르게 변하는 sin/cos (bit0처럼)
 - 높은 차원: 느리게 변하는 sin/cos (bit3처럼)
 - 이 조합으로 각 위치가 고유한 패턴을 가짐!
-\`\`\`
 
 ### 주파수별 변화
 
-\`\`\`text
-차원 0-1:   sin(pos/1)      cos(pos/1)      ← 매우 빠른 변화
-차원 2-3:   sin(pos/10)     cos(pos/10)     ← 중간 변화
-차원 4-5:   sin(pos/100)    cos(pos/100)    ← 느린 변화
-차원 6-7:   sin(pos/1000)   cos(pos/1000)   ← 매우 느린 변화
-...
+| 차원 | 함수 | 변화 속도 |
+|------|------|-----------|
+| 차원 0-1 | sin(pos/1), cos(pos/1) | 매우 빠른 변화 ⚡ |
+| 차원 2-3 | sin(pos/10), cos(pos/10) | 중간 변화 ⚙️ |
+| 차원 4-5 | sin(pos/100), cos(pos/100) | 느린 변화 🐌 |
+| 차원 6-7 | sin(pos/1000), cos(pos/1000) | 매우 느린 변화 🐢 |
+| ... | ... | ... |
 
-각 위치는 이 모든 주파수의 값을 조합한 고유한 벡터를 가집니다.
-마치 각 위치에 고유한 "지문"을 부여하는 것과 같습니다!
-\`\`\`
+> 각 위치는 이 모든 주파수의 값을 조합한 고유한 벡터를 가집니다.
+> 마치 각 위치에 고유한 "지문"을 부여하는 것과 같습니다!
 
 ---
 
@@ -11782,42 +11815,36 @@ print("이것이 모델이 상대적 거리를 학습할 수 있게 해줍니다
 
 ### 1. 값이 항상 -1 ~ 1 사이
 
-\`\`\`text
-sin과 cos의 출력 범위: [-1, 1]
-단어 임베딩의 값 범위: 보통 [-1, 1] 근처
-
-→ 위치 정보와 단어 의미 정보의 스케일이 비슷
-→ 단순히 더해도(+) 한쪽이 다른 쪽을 압도하지 않음
-
-final_input = word_embedding + positional_encoding
-              (의미 정보)       (위치 정보)
-\`\`\`
+> sin과 cos의 출력 범위: [-1, 1]
+> 단어 임베딩의 값 범위: 보통 [-1, 1] 근처
+>
+> → 위치 정보와 단어 의미 정보의 스케일이 비슷
+> → 단순히 더해도(+) 한쪽이 다른 쪽을 압도하지 않음
+>
+> **final_input = word_embedding + positional_encoding**
+> (의미 정보) + (위치 정보)
 
 ### 2. 상대적 위치 표현 가능
 
-\`\`\`text
-수학적 특성:
-  PE(pos + k)는 PE(pos)의 선형 변환으로 표현 가능
-
-이것이 의미하는 바:
-  "3칸 뒤의 단어"라는 상대적 관계를
-  Attention이 학습할 수 있음
-
-언어에서 상대 위치가 중요한 예:
-  형용사는 보통 명사 바로 앞에 옴 (상대 거리 = 1)
-  주어와 동사 사이 거리는 다양하지만 관계가 있음
-\`\`\`
+> **수학적 특성:**
+>  PE(pos + k)는 PE(pos)의 선형 변환으로 표현 가능
+>
+> **이것이 의미하는 바:**
+>  "3칸 뒤의 단어"라는 상대적 관계를
+>  Attention이 학습할 수 있음
+>
+> **언어에서 상대 위치가 중요한 예:**
+>  - 형용사는 보통 명사 바로 앞에 옴 (상대 거리 = 1)
+>  - 주어와 동사 사이 거리는 다양하지만 관계가 있음
 
 ### 3. 길이 일반화 가능
 
-\`\`\`text
-학습 시: 최대 512 토큰까지만 봄
-추론 시: 513번째 위치의 PE(513, i) = sin(513 / 10000^(2i/d_model))
-         → 수학적으로 자연스럽게 계산 가능!
-
-학습하지 않은 긴 문장에도 적용할 수 있음
-(다만 성능은 학습 범위를 크게 벗어나면 저하될 수 있음)
-\`\`\`
+> **학습 시:** 최대 512 토큰까지만 봄
+> **추론 시:** 513번째 위치의 PE(513, i) = sin(513 / 10000^(2i/d_model))
+>          → 수학적으로 자연스럽게 계산 가능!
+>
+> 학습하지 않은 긴 문장에도 적용할 수 있음
+> (다만 성능은 학습 범위를 크게 벗어나면 저하될 수 있음)
 
 ---
 
@@ -11825,7 +11852,7 @@ final_input = word_embedding + positional_encoding
 
 ### 입력 처리 전체 과정
 
-\`\`\`text
+\`\`\`
 1. 토큰화:
    "나는 사과를 먹었다" → [토큰1, 토큰2, 토큰3]
 
@@ -11859,23 +11886,21 @@ final_input = word_embedding + positional_encoding
 | 성능 | 좋음 | 비슷 (약간 더 나을 수도) |
 | 상대 위치 | 수학적으로 보장 | 학습으로 습득 |
 
-\`\`\`text
-학습 가능한 위치 임베딩 (Learned Positional Embedding):
-  - 위치별 벡터를 처음에 랜덤 초기화
-  - 학습 과정에서 최적의 위치 표현을 자동으로 배움
-  - BERT: 최대 512 위치, GPT-2: 최대 1024 위치
-
-최신 기법 (RoPE - Rotary Position Embedding):
-  - LLaMA, ChatGPT 등 최신 모델에서 사용
-  - 회전 행렬을 이용한 상대적 위치 인코딩
-  - 길이 일반화 성능이 매우 좋음
-\`\`\`
+> **학습 가능한 위치 임베딩 (Learned Positional Embedding):**
+> - 위치별 벡터를 처음에 랜덤 초기화
+> - 학습 과정에서 최적의 위치 표현을 자동으로 배움
+> - BERT: 최대 512 위치, GPT-2: 최대 1024 위치
+>
+> **최신 기법 (RoPE - Rotary Position Embedding):**
+> - LLaMA, ChatGPT 등 최신 모델에서 사용
+> - 회전 행렬을 이용한 상대적 위치 인코딩
+> - 길이 일반화 성능이 매우 좋음
 
 ---
 
 ## PyTorch로 보는 Positional Encoding (참고용)
 
-\`\`\`text
+\`\`\`
 import torch
 import math
 
@@ -11912,12 +11937,11 @@ class PositionalEncoding(torch.nn.Module):
 
 ### 핵심 공식
 
-\`\`\`text
-PE(pos, 2i)   = sin(pos / 10000^(2i/d_model))
-PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
+$$PE(pos, 2i) = \sin(pos / 10000^{2i/d_{model}})$$
 
-최종 입력 = Word Embedding + Positional Encoding
-\`\`\`
+$$PE(pos, 2i+1) = \cos(pos / 10000^{2i/d_{model}})$$
+
+$$\text{최종 입력} = \text{Word Embedding} + \text{Positional Encoding}$$
 
 ---
 
@@ -11973,7 +11997,7 @@ PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
 원래 Transformer는 **기계 번역**을 위해 설계되었습니다.
 영어 문장을 한국어로 번역하는 과정을 생각하면:
 
-\`\`\`text
+\`\`\`
 [영어 입력] "I love artificial intelligence"
      |
      v
@@ -12024,7 +12048,7 @@ Encoder 레이어 하나는 다음 두 단계로 이루어집니다:
 - Attention의 결과를 비선형 변환하여 표현력을 높입니다
 - 각 토큰 위치마다 독립적으로 적용됩니다
 
-\`\`\`text
+\`\`\`
 Encoder 레이어 1개의 흐름:
 
 입력 (각 토큰의 벡터)
@@ -12052,7 +12076,7 @@ Encoder 레이어 1개의 흐름:
 Encoder의 Self-Attention에서는 **마스킹이 없습니다.**
 즉, 모든 토큰이 다른 모든 토큰을 자유롭게 참조할 수 있습니다.
 
-\`\`\`text
+\`\`\`
 문장: "나는 은행에서 돈을 찾았다"
 
 Encoder Attention 참조 가능 여부:
@@ -12091,7 +12115,7 @@ Decoder는 Encoder보다 한 단계가 더 있어서, 총 **세 단계**입니�
 **단계 3: Feed-Forward Network + Add & Norm**
 - 비선형 변환으로 표현력을 높입니다
 
-\`\`\`text
+\`\`\`
 Decoder 레이어 1개의 흐름:
 
 출력 토큰들 (지금까지 생성된 것)
@@ -12127,7 +12151,7 @@ Decoder 레이어 1개의 흐름:
 Decoder에서 "나는 밥을 먹는다"를 생성할 때,
 각 단어는 **자기 자신과 이전 단어만** 참조할 수 있습니다.
 
-\`\`\`text
+\`\`\`
 "나는 밥을 먹는다" 생성 과정:
 
 step 1: "나는" 생성  -- 참조할 이전 토큰 없음
@@ -12164,7 +12188,7 @@ Cross-Attention에서는 Query, Key, Value의 출처가 다릅니다:
 | Key (K) | Encoder의 출력 | "입력 문장의 각 부분 인덱스" |
 | Value (V) | Encoder의 출력 | "입력 문장의 각 부분 실제 내용" |
 
-\`\`\`text
+\`\`\`
 번역 예시: "I love AI" -> "나는 AI를 좋아한다"
 
 Decoder가 "좋아한다"를 생성할 때:
@@ -12201,20 +12225,18 @@ Cross-Attention 결과:
 
 ### 해결: x + f(x) 구조
 
-\`\`\`text
-Residual Connection의 핵심 아이디어:
-
-  일반 레이어:     output = f(x)         -- x가 변환되어 원본 사라짐
-  잔차 연결:       output = x + f(x)     -- 원본 x가 항상 보존됨
-
-직관적으로:
-  f(x)는 "원본에서 얼마나 바꿀지"만 학습하면 됩니다.
-  전체를 처음부터 만드는 것보다 훨씬 쉽습니다!
-
-역전파 관점:
-  d(output)/d(x) = 1 + f\\'(x)
-  항상 1이 더해지므로 기울기가 완전히 사라지지 않습니다!
-\`\`\`
+> **Residual Connection의 핵심 아이디어:**
+>
+> 일반 레이어: \`output = f(x)\` -- x가 변환되어 원본 사라짐
+> 잔차 연결: \`output = x + f(x)\` -- 원본 x가 항상 보존됨
+>
+> **직관적으로:**
+> f(x)는 "원본에서 얼마나 바꿀지"만 학습하면 됩니다.
+> 전체를 처음부터 만드는 것보다 훨씬 쉽습니다!
+>
+> **역전파 관점:**
+> $\\frac{d(\\text{output})}{dx} = 1 + f\\'(x)$
+> 항상 1이 더해지므로 기울기가 완전히 사라지지 않습니다!
 
 ### 실행해보기: Residual Connection 효과
 
@@ -12258,7 +12280,7 @@ print(f"잔차 연결 있으면 20 레이어 후: {grad_with_res:.4f} (건강한
 
 ### 왜 정규화가 필요한가?
 
-\`\`\`text
+\`\`\`
 레이어를 여러 번 거치면 값이 점점 커지거나 작아질 수 있습니다.
 
 레이어 1 출력: [0.5, -0.3, 0.8]        -- 적절한 범위
@@ -12270,14 +12292,12 @@ print(f"잔차 연결 있으면 20 레이어 후: {grad_with_res:.4f} (건강한
 
 ### Layer Norm의 작동 원리
 
-\`\`\`text
-LayerNorm(x) = gamma * (x - mean) / sqrt(variance + epsilon) + beta
+$\\text{LayerNorm}(x) = \\gamma \\cdot \\frac{x - \\mu}{\\sqrt{\\sigma^2 + \\epsilon}} + \\beta$
 
-- mean: 벡터 x의 평균
-- variance: 벡터 x의 분산
-- gamma, beta: 학습 가능한 파라미터 (스케일과 이동)
-- epsilon: 0으로 나누는 것을 방지하는 아주 작은 값
-\`\`\`
+- $\\mu$ (mean): 벡터 x의 평균
+- $\\sigma^2$ (variance): 벡터 x의 분산
+- $\\gamma, \\beta$: 학습 가능한 파라미터 (스케일과 이동)
+- $\\epsilon$: 0으로 나누는 것을 방지하는 아주 작은 값
 
 ### 실행해보기: Layer Normalization 직접 구현
 
@@ -12327,25 +12347,23 @@ Transformer에서 Layer Norm을 쓰는 이유:
 
 Transformer의 모든 서브레이어(Attention, FFN) 뒤에는 반드시 **Add & Norm**이 붙습니다.
 
-\`\`\`text
-Add & Norm의 공식:
-
-  output = LayerNorm(x + SubLayer(x))
-
-  x:            서브레이어에 들어가는 입력
-  SubLayer(x):  Attention 또는 FFN의 출력
-  x + SubLayer: 잔차 연결 (원본 보존)
-  LayerNorm:    값 정규화 (안정화)
-
-Encoder 레이어에는 Add & Norm이 2번:
-  1) Self-Attention 뒤
-  2) FFN 뒤
-
-Decoder 레이어에는 Add & Norm이 3번:
-  1) Masked Self-Attention 뒤
-  2) Cross-Attention 뒤
-  3) FFN 뒤
-\`\`\`
+> **Add & Norm의 공식:**
+>
+> $\\text{output} = \\text{LayerNorm}(x + \\text{SubLayer}(x))$
+>
+> - **x**: 서브레이어에 들어가는 입력
+> - **SubLayer(x)**: Attention 또는 FFN의 출력
+> - **x + SubLayer**: 잔차 연결 (원본 보존)
+> - **LayerNorm**: 값 정규화 (안정화)
+>
+> **Encoder 레이어에는 Add & Norm이 2번:**
+> 1. Self-Attention 뒤
+> 2. FFN 뒤
+>
+> **Decoder 레이어에는 Add & Norm이 3번:**
+> 1. Masked Self-Attention 뒤
+> 2. Cross-Attention 뒤
+> 3. FFN 뒤
 
 > **참고: Pre-Norm vs Post-Norm**
 > 원래 논문은 Post-Norm을 사용했지만,
@@ -12363,9 +12381,9 @@ Decoder 레이어에는 Add & Norm이 3번:
 
 ### FFN의 구조
 
-\`\`\`text
-FFN(x) = Linear2(Activation(Linear1(x)))
+> **FFN(x) = Linear2(Activation(Linear1(x)))**
 
+\`\`\`
 차원 변화:
   입력:  d_model (512)
     |
@@ -12374,25 +12392,23 @@ FFN(x) = Linear2(Activation(Linear1(x)))
     |
     v -- Linear2: 2048 -> 512 (원래 크기로 축소)
   출력:  d_model (512)
-
-왜 확장했다 축소할까?
-- 더 높은 차원에서 복잡한 패턴을 포착한 후
-- 다시 원래 크기로 압축하여 정보를 정제합니다
 \`\`\`
+
+> **왜 확장했다 축소할까?**
+> - 더 높은 차원에서 복잡한 패턴을 포착한 후
+> - 다시 원래 크기로 압축하여 정보를 정제합니다
 
 ### FFN의 중요한 특성
 
-\`\`\`text
-핵심: FFN은 각 토큰 위치에 "독립적으로" 적용됩니다!
-
-문장: ["나는", "밥을", "먹는다"]
-
-Self-Attention: 세 단어가 서로를 참조 (상호작용)
-FFN:           각 단어가 독립적으로 변환 (개별 처리)
-
-모든 위치에 동일한 FFN을 적용하지만,
-입력 벡터가 다르므로 출력도 달라집니다.
-\`\`\`
+> **핵심: FFN은 각 토큰 위치에 "독립적으로" 적용됩니다!**
+>
+> 문장: ["나는", "밥을", "먹는다"]
+>
+> - **Self-Attention**: 세 단어가 서로를 참조 (상호작용)
+> - **FFN**: 각 단어가 독립적으로 변환 (개별 처리)
+>
+> 모든 위치에 동일한 FFN을 적용하지만,
+> 입력 벡터가 다르므로 출력도 달라집니다.
 
 ### 실행해보기: FFN의 확장-축소 과정
 
@@ -12435,7 +12451,7 @@ print("-> ReLU가 일부 뉴런을 꺼서 희소한 표현을 만듭니다")
 
 ### PyTorch 스타일 의사코드
 
-\`\`\`text
+\`\`\`python
 class Transformer:
     def __init__(self):
         self.src_embedding = Embedding(src_vocab, d_model=512)
@@ -12596,13 +12612,11 @@ print("이것이 Encoder 레이어 1개의 과정입니다!")
 > GPT는 이 "문장 완성 게임"을 수십억 개의 문장으로 연습한 모델입니다.
 > 충분히 많이 연습하면, 단순한 완성을 넘어 글쓰기, 번역, 코딩까지 할 수 있게 됩니다.
 
-\`\`\`text
-GPT = Generative Pre-trained Transformer
-
-Generative:    텍스트를 "생성"할 수 있다
-Pre-trained:   대규모 데이터로 "사전 학습"되었다
-Transformer:   Transformer 아키텍처를 기반으로 한다
-\`\`\`
+| 구성 요소 | 의미 |
+|----------|------|
+| **G**enerative | 텍스트를 "생성"할 수 있다 |
+| **P**re-trained | 대규모 데이터로 "사전 학습"되었다 |
+| **T**ransformer | Transformer 아키텍처를 기반으로 한다 |
 
 ---
 
@@ -12620,24 +12634,22 @@ GPT는 **Encoder를 완전히 제거하고 Decoder만** 사용합니다. 왜일�
 | Cross-Attention | 있음 | 없음 (참조할 Encoder가 없으니까) |
 | 대표 용도 | 번역, 요약 | 글쓰기, 대화, 코드 생성 |
 
-\`\`\`text
-Encoder-Decoder의 사고방식:
-  입력: "I love AI"  -->  Encoder가 이해  -->  Decoder가 번역
-  출력: "나는 AI를 좋아한다"
-  = "입력을 이해한 뒤, 다른 형태로 변환한다"
+> **Encoder-Decoder의 사고방식:**
+> 입력: "I love AI" → Encoder가 이해 → Decoder가 번역
+> 출력: "나는 AI를 좋아한다"
+> = "입력을 이해한 뒤, 다른 형태로 변환한다"
 
-GPT(Decoder-only)의 사고방식:
-  입력: "인공지능의 미래는"
-  출력: "인공지능의 미래는 매우 밝습니다. 왜냐하면..."
-  = "앞에 있는 텍스트를 보고, 뒤에 올 텍스트를 예측한다"
-  = Cross-Attention이 필요 없다! (참조할 별도 입력이 없으니까)
-\`\`\`
+> **GPT(Decoder-only)의 사고방식:**
+> 입력: "인공지능의 미래는"
+> 출력: "인공지능의 미래는 매우 밝습니다. 왜냐하면..."
+> = "앞에 있는 텍스트를 보고, 뒤에 올 텍스트를 예측한다"
+> = Cross-Attention이 필요 없다! (참조할 별도 입력이 없으니까)
 
 ### GPT Decoder 레이어의 구성
 
 GPT의 Decoder 레이어는 원래 Transformer Decoder에서 **Cross-Attention을 제거**한 것입니다:
 
-\`\`\`text
+\`\`\`
 GPT 레이어 1개:
 
 입력 토큰 벡터들
@@ -12676,48 +12688,27 @@ GPT Decoder (2단계):
 
 ### 생성 과정을 단계별로
 
-\`\`\`text
-프롬프트: "AI는"
+| 단계 | 입력 | 예측 결과 | 선택된 토큰 |
+|------|------|----------|------------|
+| Step 1 | ["AI는"] | P("정말"\|"AI는") = 0.15<br/>P("매우"\|"AI는") = 0.12<br/>P("인간"\|"AI는") = 0.08 | "정말" |
+| Step 2 | ["AI는", "정말"] | P("놀라운"\|"AI는 정말") = 0.20<br/>P("대단한"\|"AI는 정말") = 0.15 | "놀라운" |
+| Step 3 | ["AI는", "정말", "놀라운"] | 모델 예측 | "기술입니다" |
+| Step 4 | ["AI는", "정말", "놀라운", "기술입니다"] | 모델 예측 | [EOS] (생성 종료) |
 
-Step 1: 입력 ["AI는"] -> 모델 -> 다음 토큰 확률 분포
-        P("정말"|"AI는") = 0.15
-        P("매우"|"AI는") = 0.12
-        P("인간"|"AI는") = 0.08
-        ...
-        => "정말" 선택
-
-Step 2: 입력 ["AI는", "정말"] -> 모델 -> 다음 토큰 확률
-        P("놀라운"|"AI는 정말") = 0.20
-        P("대단한"|"AI는 정말") = 0.15
-        ...
-        => "놀라운" 선택
-
-Step 3: 입력 ["AI는", "정말", "놀라운"] -> 모델 -> 다음 토큰
-        => "기술입니다" 선택
-
-Step 4: 입력 ["AI는", "정말", "놀라운", "기술입니다"] -> 모델
-        => [EOS] (문장 끝) 선택 -> 생성 종료!
-
-최종 결과: "AI는 정말 놀라운 기술입니다"
-\`\`\`
+**최종 결과:** "AI는 정말 놀라운 기술입니다"
 
 ### 수학적으로 표현하면
 
-\`\`\`text
-전체 문장의 확률:
-P("AI는 정말 놀라운 기술입니다")
-= P("AI는")
-  x P("정말" | "AI는")
-  x P("놀라운" | "AI는 정말")
-  x P("기술입니다" | "AI는 정말 놀라운")
-
-이것이 "자기회귀(Autoregressive)"입니다:
-- "자기(Auto)": 자신이 생성한 토큰을
-- "회귀(Regressive)": 다시 입력으로 사용한다
-
-조건부 확률의 연쇄(chain):
-P(x1, x2, ..., xn) = P(x1) * P(x2|x1) * P(x3|x1,x2) * ... * P(xn|x1,...,xn-1)
-\`\`\`
+> **전체 문장의 확률:**
+>
+> $$P(\text{"AI는 정말 놀라운 기술입니다"}) = P(\text{"AI는"}) \times P(\text{"정말"} | \text{"AI는"}) \times P(\text{"놀라운"} | \text{"AI는 정말"}) \times P(\text{"기술입니다"} | \text{"AI는 정말 놀라운"})$$
+>
+> **이것이 "자기회귀(Autoregressive)"입니다:**
+> - "자기(Auto)": 자신이 생성한 토큰을
+> - "회귀(Regressive)": 다시 입력으로 사용한다
+>
+> **조건부 확률의 연쇄(chain):**
+> $$P(x_1, x_2, ..., x_n) = P(x_1) \times P(x_2|x_1) \times P(x_3|x_1,x_2) \times ... \times P(x_n|x_1,...,x_{n-1})$$
 
 ### 실행해보기: 자기회귀 생성 시뮬레이션
 
@@ -12775,34 +12766,32 @@ generate("AI는")
 
 ### 학습 데이터 구성
 
-\`\`\`text
-원본 텍스트: "나는 밥을 먹었다"
+**원본 텍스트:** "나는 밥을 먹었다"
 
-GPT 학습 데이터로 변환:
+**GPT 학습 데이터로 변환:**
 
-  위치 1: 입력 ["나는"]           -> 정답: "밥을"
-  위치 2: 입력 ["나는", "밥을"]    -> 정답: "먹었다"
-  위치 3: 입력 ["나는", "밥을", "먹었다"] -> 정답: [EOS]
+| 위치 | 입력 | 정답 |
+|------|------|------|
+| 1 | ["나는"] | "밥을" |
+| 2 | ["나는", "밥을"] | "먹었다" |
+| 3 | ["나는", "밥을", "먹었다"] | [EOS] |
 
-하나의 문장에서 여러 학습 샘플을 동시에 만듭니다!
-이것이 효율적인 이유입니다.
-\`\`\`
+> 하나의 문장에서 여러 학습 샘플을 동시에 만듭니다!
+> 이것이 효율적인 이유입니다.
 
 ### 손실 함수: Cross-Entropy Loss
 
-\`\`\`text
-각 위치에서 모델이 예측한 확률 분포와 실제 정답을 비교합니다:
-
-Loss = -sum(log(P(정답 토큰)))
-
-예시:
-  모델 예측: P("밥을") = 0.7, P("빵을") = 0.2, P("물을") = 0.1
-  정답: "밥을"
-  Loss = -log(0.7) = 0.357
-
-  모델이 정답에 높은 확률을 부여할수록 Loss가 줄어듭니다.
-  학습이 진행되면 정답 확률이 점점 높아집니다.
-\`\`\`
+> 각 위치에서 모델이 예측한 확률 분포와 실제 정답을 비교합니다:
+>
+> $$\text{Loss} = -\sum \log(P(\text{정답 토큰}))$$
+>
+> **예시:**
+> - 모델 예측: $P(\text{"밥을"}) = 0.7$, $P(\text{"빵을"}) = 0.2$, $P(\text{"물을"}) = 0.1$
+> - 정답: "밥을"
+> - $\text{Loss} = -\log(0.7) = 0.357$
+>
+> 모델이 정답에 높은 확률을 부여할수록 Loss가 줄어듭니다.
+> 학습이 진행되면 정답 확률이 점점 높아집니다.
 
 ### 실행해보기: Next Token Prediction 학습 원리
 
@@ -12862,46 +12851,50 @@ print("학습이 반복되면 정답 토큰의 확률이 점점 높아지고, Lo
 
 ### GPT 아키텍처 스펙 비교
 
-\`\`\`text
-GPT-1:  12 레이어, 768 차원, 12 헤드  ->  117M 파라미터
-GPT-2:  48 레이어, 1600 차원, 25 헤드 ->  1.5B 파라미터 (13배)
-GPT-3:  96 레이어, 12288 차원, 96 헤드 -> 175B 파라미터 (117배)
+| 모델 | 레이어 | 차원 | 헤드 | 파라미터 | 배율 |
+|------|--------|------|------|----------|------|
+| GPT-1 | 12 | 768 | 12 | 117M | 1x |
+| GPT-2 | 48 | 1600 | 25 | 1.5B | 13x |
+| GPT-3 | 96 | 12288 | 96 | 175B | 117x |
 
-기본 구조는 동일합니다! 달라진 것은 오직 "크기"뿐입니다.
-- 레이어를 더 많이 쌓고
-- 차원을 더 크게 하고
-- 데이터를 더 많이 학습시킨 것
-
-이것이 "Scaling Law"의 핵심:
-  모델이 크면 클수록, 데이터가 많을수록, 성능이 좋아진다!
-\`\`\`
+> **기본 구조는 동일합니다!** 달라진 것은 오직 "크기"뿐입니다.
+> - 레이어를 더 많이 쌓고
+> - 차원을 더 크게 하고
+> - 데이터를 더 많이 학습시킨 것
+>
+> **이것이 "Scaling Law"의 핵심:**
+> 모델이 크면 클수록, 데이터가 많을수록, 성능이 좋아진다!
 
 ### GPT-3의 혁명: In-context Learning
 
-\`\`\`text
-GPT-3 이전: 새로운 태스크마다 Fine-tuning 필요
-GPT-3 이후: 프롬프트에 예시를 넣는 것만으로 태스크 수행!
+> **GPT-3 이전**: 새로운 태스크마다 Fine-tuning 필요
+> **GPT-3 이후**: 프롬프트에 예시를 넣는 것만으로 태스크 수행!
 
-Zero-shot (예시 0개):
-  "다음 문장을 한국어로 번역하세요: Hello world"
-  -> "안녕하세요 세계"
-
-One-shot (예시 1개):
-  "영어를 한국어로 번역합니다.
-   Hello -> 안녕하세요
-   Good morning -> ???"
-  -> "좋은 아침이에요"
-
-Few-shot (예시 여러 개):
-  "감성 분석을 합니다.
-   맛있다 -> 긍정
-   별로다 -> 부정
-   최고다 -> 긍정
-   싫다 -> ???"
-  -> "부정"
-
-모델이 충분히 크면 Fine-tuning 없이도 패턴을 파악합니다!
+**Zero-shot (예시 0개):**
 \`\`\`
+"다음 문장을 한국어로 번역하세요: Hello world"
+-> "안녕하세요 세계"
+\`\`\`
+
+**One-shot (예시 1개):**
+\`\`\`
+"영어를 한국어로 번역합니다.
+ Hello -> 안녕하세요
+ Good morning -> ???"
+-> "좋은 아침이에요"
+\`\`\`
+
+**Few-shot (예시 여러 개):**
+\`\`\`
+"감성 분석을 합니다.
+ 맛있다 -> 긍정
+ 별로다 -> 부정
+ 최고다 -> 긍정
+ 싫다 -> ???"
+-> "부정"
+\`\`\`
+
+> 모델이 충분히 크면 Fine-tuning 없이도 패턴을 파악합니다!
 
 ---
 
@@ -12909,20 +12902,18 @@ Few-shot (예시 여러 개):
 
 ### 생성 파라미터
 
-\`\`\`text
-Temperature (온도):
-  낮음 (0.1~0.3): 가장 확실한 단어만 선택 -> 일관적이지만 단조로움
-  중간 (0.7~0.9): 적당한 다양성 -> 일반적인 대화에 적합
-  높음 (1.2~2.0): 다양한 단어 선택 -> 창의적이지만 이상한 문장 가능
+**Temperature (온도):**
+- 낮음 (0.1~0.3): 가장 확실한 단어만 선택 → 일관적이지만 단조로움
+- 중간 (0.7~0.9): 적당한 다양성 → 일반적인 대화에 적합
+- 높음 (1.2~2.0): 다양한 단어 선택 → 창의적이지만 이상한 문장 가능
 
-Top-p (Nucleus Sampling):
-  누적 확률이 p가 될 때까지의 토큰에서만 선택
-  Top-p = 0.9: 상위 90% 확률 범위 내에서 선택
+**Top-p (Nucleus Sampling):**
+- 누적 확률이 p가 될 때까지의 토큰에서만 선택
+- Top-p = 0.9: 상위 90% 확률 범위 내에서 선택
 
-Top-k:
-  확률이 높은 상위 k개 토큰에서만 선택
-  Top-k = 50: 가장 가능성 높은 50개 중 선택
-\`\`\`
+**Top-k:**
+- 확률이 높은 상위 k개 토큰에서만 선택
+- Top-k = 50: 가장 가능성 높은 50개 중 선택
 
 ### 실행해보기: Temperature가 생성에 미치는 영향
 
@@ -12968,12 +12959,11 @@ print("Temperature가 높을수록 -> 골고루 분산 (다양한 선택)")
 | 주요 용도 | 이해 (분류, NER, QA) | 생성 (글쓰기, 대화, 코딩) |
 | 활용 방법 | Fine-tuning 필수 | Zero/Few-shot 가능 |
 
-\`\`\`text
-핵심 차이를 한 줄로:
-
-BERT: "문장의 빈칸을 양쪽 문맥을 보고 채운다" -> 이해에 강하다
-GPT:  "앞의 내용을 보고 다음을 예측한다"      -> 생성에 강하다
-\`\`\`
+> **핵심 차이를 한 줄로:**
+>
+> **BERT**: "문장의 빈칸을 양쪽 문맥을 보고 채운다" → 이해에 강하다
+>
+> **GPT**: "앞의 내용을 보고 다음을 예측한다" → 생성에 강하다
 
 ---
 
@@ -13034,17 +13024,14 @@ GPT:  "앞의 내용을 보고 다음을 예측한다"      -> 생성에 강하�
 > GPT가 "작문 시험"에 특화되었다면, BERT는 "독해 시험"에 특화되어 있습니다.
 > 주어진 글을 읽고 의미를 파악하고, 질문에 답하고, 분류하는 것이 BERT의 강점입니다.
 
-\`\`\`text
-BERT = Bidirectional Encoder Representations from Transformers
-
-Bidirectional:  "양방향"으로 문맥을 참조한다
-Encoder:        Transformer의 Encoder만 사용한다
-Representations: 단어의 "표현(벡터)"을 만들어낸다
-Transformers:   Transformer 아키텍처 기반이다
-
-Google이 2018년에 발표했으며,
-당시 11개 NLP 벤치마크에서 최고 성능을 달성했습니다.
-\`\`\`
+> **BERT = Bidirectional Encoder Representations from Transformers**
+>
+> - **Bidirectional**: "양방향"으로 문맥을 참조한다
+> - **Encoder**: Transformer의 Encoder만 사용한다
+> - **Representations**: 단어의 "표현(벡터)"을 만들어낸다
+> - **Transformers**: Transformer 아키텍처 기반이다
+>
+> Google이 2018년에 발표했으며, 당시 11개 NLP 벤치마크에서 최고 성능을 달성했습니다.
 
 ---
 
@@ -13052,28 +13039,23 @@ Google이 2018년에 발표했으며,
 
 ### BERT의 설계 철학
 
-\`\`\`text
-GPT의 목표:  텍스트를 "생성"한다 -> 다음 단어를 예측해야 하니 미래를 못 봄
-BERT의 목표: 텍스트를 "이해"한다 -> 미래를 볼 수 있다! 양방향 참조 가능!
-
-BERT는 텍스트를 생성할 필요가 없습니다.
-주어진 텍스트를 깊이 이해하는 것이 목표이므로,
-모든 단어가 앞뒤 모든 단어를 참조할 수 있는 Encoder가 적합합니다.
-\`\`\`
+> **GPT의 목표**: 텍스트를 "생성"한다 → 다음 단어를 예측해야 하니 미래를 못 봄
+>
+> **BERT의 목표**: 텍스트를 "이해"한다 → 미래를 볼 수 있다! 양방향 참조 가능!
+>
+> BERT는 텍스트를 생성할 필요가 없습니다. 주어진 텍스트를 깊이 이해하는 것이 목표이므로, 모든 단어가 앞뒤 모든 단어를 참조할 수 있는 Encoder가 적합합니다.
 
 ### 양방향 vs 단방향
 
-\`\`\`text
-문장: "나는 [???]에서 돈을 찾았다"
-
-단방향 (GPT): "나는 ___" 만 보고 예측
-  -> "은행"? "학교"? "집"? -- 뒤의 "돈을"을 볼 수 없어서 애매함
-
-양방향 (BERT): "나는 ___ 에서 돈을 찾았다" 전체를 봄
-  -> "은행"! -- "돈을 찾았다"를 보고 금융 은행임을 확신
-
-양방향이 "이해" 태스크에서 훨씬 유리합니다!
-\`\`\`
+> **문장**: "나는 [???]에서 돈을 찾았다"
+>
+> **단방향 (GPT)**: "나는 ___" 만 보고 예측
+> - → "은행"? "학교"? "집"? -- 뒤의 "돈을"을 볼 수 없어서 애매함
+>
+> **양방향 (BERT)**: "나는 ___ 에서 돈을 찾았다" 전체를 봄
+> - → "은행"! -- "돈을 찾았다"를 보고 금융 은행임을 확신
+>
+> 양방향이 "이해" 태스크에서 훨씬 유리합니다!
 
 ---
 
@@ -13090,9 +13072,9 @@ BERT는 텍스트를 생성할 필요가 없습니다.
 
 BERT는 입력을 **세 가지 임베딩의 합**으로 구성합니다:
 
-\`\`\`text
-입력 문장: "나는 AI를 좋아한다" + "AI는 재미있다"
+> 입력 문장: "나는 AI를 좋아한다" + "AI는 재미있다"
 
+\`\`\`
 [CLS] 나는 AI를 좋아한다 [SEP] AI는 재미있다 [SEP]
 
 Token Embedding:    E_CLS  E_나는  E_AI를  E_좋아한다  E_SEP  E_AI는  E_재미있다  E_SEP
@@ -13102,11 +13084,13 @@ Segment Embedding:  E_A    E_A     E_A      E_A        E_A     E_B      E_B     
 Position Embedding: E_0    E_1     E_2      E_3        E_4     E_5      E_6       E_7
                       =      =       =        =         =       =        =         =
                     최종 입력 벡터 (각 토큰별로 3개 임베딩의 합)
-
-[CLS]: 문장 전체를 대표하는 특수 토큰 (분류에 사용)
-[SEP]: 두 문장의 경계를 구분하는 특수 토큰
-Segment: 어떤 문장에 속하는지 (A문장/B문장) 구분
 \`\`\`
+
+| 토큰 | 설명 |
+|------|------|
+| **[CLS]** | 문장 전체를 대표하는 특수 토큰 (분류에 사용) |
+| **[SEP]** | 두 문장의 경계를 구분하는 특수 토큰 |
+| **Segment** | 어떤 문장에 속하는지 (A문장/B문장) 구분 |
 
 ---
 
@@ -13118,36 +13102,31 @@ Segment: 어떤 문장에 속하는지 (A문장/B문장) 구분
 
 ### MLM의 작동 원리
 
-\`\`\`text
-원본 문장: "나는 학교에서 수학을 공부했다"
-
-1단계: 입력의 15%를 무작위로 선택
-       선택된 토큰: "학교에서", "공부했다"
-
-2단계: 선택된 토큰에 대해 세 가지 처리
-  - 80%: [MASK]로 대체    -> "나는 [MASK] 수학을 [MASK]"
-  - 10%: 랜덤 단어로 대체  -> "나는 바나나 수학을 [MASK]"
-  - 10%: 그대로 유지       -> "나는 학교에서 수학을 [MASK]"
-
-3단계: 모델이 원래 토큰을 예측
-       [MASK] 위치에서 -> "학교에서", "공부했다"를 예측하도록 학습
-\`\`\`
+> **원본 문장**: "나는 학교에서 수학을 공부했다"
+>
+> **1단계**: 입력의 15%를 무작위로 선택
+> - 선택된 토큰: "학교에서", "공부했다"
+>
+> **2단계**: 선택된 토큰에 대해 세 가지 처리
+> - 80%: [MASK]로 대체 → "나는 [MASK] 수학을 [MASK]"
+> - 10%: 랜덤 단어로 대체 → "나는 바나나 수학을 [MASK]"
+> - 10%: 그대로 유지 → "나는 학교에서 수학을 [MASK]"
+>
+> **3단계**: 모델이 원래 토큰을 예측
+> - [MASK] 위치에서 → "학교에서", "공부했다"를 예측하도록 학습
 
 ### 왜 80/10/10으로 나눌까?
 
-\`\`\`text
-문제: Fine-tuning 할 때는 [MASK] 토큰이 없습니다!
-  - 학습 때만 [MASK]를 보고, 실제 사용 때는 못 봄
-  - 이러면 학습과 실사용 사이에 차이(gap)가 생김
-
-해결:
-  - 80% [MASK]: 빈칸 맞추기 능력을 학습
-  - 10% 랜덤:  "이 단어가 맞나?" 판별 능력도 학습
-  - 10% 유지:  정상 단어에 대한 표현도 학습
-
-=> 모델이 [MASK]에만 의존하지 않고,
-   모든 위치의 모든 토큰에 주의를 기울이게 됩니다!
-\`\`\`
+> **문제**: Fine-tuning 할 때는 [MASK] 토큰이 없습니다!
+> - 학습 때만 [MASK]를 보고, 실제 사용 때는 못 봄
+> - 이러면 학습과 실사용 사이에 차이(gap)가 생김
+>
+> **해결**:
+> - 80% [MASK]: 빈칸 맞추기 능력을 학습
+> - 10% 랜덤: "이 단어가 맞나?" 판별 능력도 학습
+> - 10% 유지: 정상 단어에 대한 표현도 학습
+>
+> → 모델이 [MASK]에만 의존하지 않고, 모든 위치의 모든 토큰에 주의를 기울이게 됩니다!
 
 ### 실행해보기: MLM 시뮬레이션
 
@@ -13204,22 +13183,14 @@ print(f"  => \"{sentence[mask_idx]}\"를 정확히 예측!")
 
 BERT는 MLM 외에 **NSP**도 함께 학습합니다 (두 문장이 연속인지 판별).
 
-\`\`\`text
-IsNext (50%):
-  문장A: "나는 공원에 갔다"
-  문장B: "거기서 산책을 했다"
-  라벨: IsNext (연속된 문장)
+| 유형 | 비율 | 문장 A | 문장 B | 라벨 |
+|------|------|--------|--------|------|
+| **IsNext** | 50% | "나는 공원에 갔다" | "거기서 산책을 했다" | ✅ 연속된 문장 |
+| **NotNext** | 50% | "나는 공원에 갔다" | "주가가 크게 올랐다" | ❌ 무관한 문장 |
 
-NotNext (50%):
-  문장A: "나는 공원에 갔다"
-  문장B: "주가가 크게 올랐다"
-  라벨: NotNext (무관한 문장)
-
-[CLS] 토큰의 출력 벡터 -> 이진 분류기 -> IsNext / NotNext
-
-목적: 문장 간의 관계를 이해하는 능력 학습
-(QA, 자연어 추론 등에 도움)
-\`\`\`
+> **처리 흐름:** [CLS] 토큰의 출력 벡터 → 이진 분류기 → IsNext / NotNext
+>
+> **목적:** 문장 간의 관계를 이해하는 능력 학습 (QA, 자연어 추론 등에 도움)
 
 > **참고**: 이후 연구(RoBERTa)에서 NSP가 실제로는 큰 도움이 안 된다는 것이 밝혀졌습니다.
 > 그래서 RoBERTa는 NSP를 제거하고 MLM만으로 학습합니다.
@@ -13235,22 +13206,19 @@ NotNext (50%):
 
 ### Pre-training -> Fine-tuning 과정
 
-\`\`\`text
-Pre-training (사전 학습):
-  데이터: Wikipedia + BooksCorpus (33억 단어)
-  태스크: MLM + NSP
-  비용:  4일 x TPU 64개 (수천만 원)
-  결과:  범용적 언어 이해 능력
-
-Fine-tuning (미세 조정):
-  데이터: 태스크별 레이블 데이터 (수천~수만 개)
-  태스크: 분류, QA, NER 등
-  비용:  수 시간 x GPU 1개
-  결과:  특정 태스크 전문가
-
-핵심: Pre-trained 모델을 공유하면
-      누구나 적은 데이터와 비용으로 Fine-tuning 가능!
-\`\`\`
+> **Pre-training (사전 학습)**:
+> - 데이터: Wikipedia + BooksCorpus (33억 단어)
+> - 태스크: MLM + NSP
+> - 비용: 4일 x TPU 64개 (수천만 원)
+> - 결과: 범용적 언어 이해 능력
+>
+> **Fine-tuning (미세 조정)**:
+> - 데이터: 태스크별 레이블 데이터 (수천~수만 개)
+> - 태스크: 분류, QA, NER 등
+> - 비용: 수 시간 x GPU 1개
+> - 결과: 특정 태스크 전문가
+>
+> **핵심**: Pre-trained 모델을 공유하면 누구나 적은 데이터와 비용으로 Fine-tuning 가능!
 
 ### Fine-tuning 태스크별 적용 방법
 
@@ -13261,7 +13229,7 @@ Fine-tuning (미세 조정):
 | 토큰 분류 | [CLS] 문장 [SEP] | 각 토큰 벡터 -> 분류기 | 개체명 인식(NER) |
 | 질문 답변 | [CLS] 질문 [SEP] 지문 [SEP] | 지문 토큰에서 시작/끝 위치 | SQuAD |
 
-\`\`\`text
+\`\`\`
 문장 분류 Fine-tuning 예시:
 
 [CLS] 이 영화 정말 재미있어요 [SEP]
@@ -13411,26 +13379,17 @@ print()\nprint("BERT의 강점: Pre-trained 지식 덕분에 적은 데이터로
 > 2) **전문 교육 (Fine-tuning)**: 대학/대학원에서 전공을 깊이 배움
 > 3) **인성 교육 (RLHF)**: 사회에서 예의, 소통 방법을 배움
 
-\`\`\`text
-LLM 학습 3단계 파이프라인:
+**LLM 학습 3단계 파이프라인:**
 
-[1단계: Pre-training]
-  수조 개의 텍스트로 언어의 기본 패턴 학습
-  = "다음 단어 예측" 수십억 번 반복
-  |
-  v
-[2단계: Supervised Fine-tuning (SFT)]
-  사람이 작성한 고품질 대화 데이터로 미세 조정
-  = 질문-답변 형식을 학습
-  |
-  v
-[3단계: RLHF]
-  사람의 선호도를 반영하여 응답 품질 향상
-  = 더 도움이 되고, 안전한 답변을 학습
-  |
-  v
-[완성된 LLM] ChatGPT, Claude 등
-\`\`\`
+| 단계 | 이름 | 내용 |
+|------|------|------|
+| 1️⃣ | **Pre-training** | 수조 개의 텍스트로 언어의 기본 패턴 학습 = "다음 단어 예측" 수십억 번 반복 |
+| ⬇️ | | |
+| 2️⃣ | **SFT** | 사람이 작성한 고품질 대화 데이터로 미세 조정 = 질문-답변 형식을 학습 |
+| ⬇️ | | |
+| 3️⃣ | **RLHF** | 사람의 선호도를 반영하여 응답 품질 향상 = 더 도움이 되고, 안전한 답변을 학습 |
+| ⬇️ | | |
+| 🎯 | **완성된 LLM** | ChatGPT, Claude 등 |
 
 ---
 
@@ -13442,47 +13401,44 @@ LLM 학습 3단계 파이프라인:
 
 ### Pre-training의 핵심
 
-\`\`\`text
-학습 방법: Next Token Prediction (다음 토큰 예측)
-학습 데이터: 인터넷 텍스트, 책, 논문, 코드 등
-
-GPT-3 학습 데이터 예시:
-  Common Crawl (필터링됨): 410B 토큰 (60%)
-  WebText2:                19B 토큰
-  Books1 + Books2:         67B 토큰
-  Wikipedia:               3B 토큰
-  총:                      ~500B 토큰
-
-학습 비용:
-  GPT-3: 수백만 달러 (수십억 원)
-  GPT-4: 추정 1억 달러 이상
-  학습 기간: 수주 ~ 수개월
-  GPU: 수천 ~ 수만 개
-\`\`\`
+> **학습 방법**: Next Token Prediction (다음 토큰 예측)
+>
+> **학습 데이터**: 인터넷 텍스트, 책, 논문, 코드 등
+>
+> **GPT-3 학습 데이터 예시**:
+> - Common Crawl (필터링됨): 410B 토큰 (60%)
+> - WebText2: 19B 토큰
+> - Books1 + Books2: 67B 토큰
+> - Wikipedia: 3B 토큰
+> - 총: ~500B 토큰
+>
+> **학습 비용**:
+> - GPT-3: 수백만 달러 (수십억 원)
+> - GPT-4: 추정 1억 달러 이상
+> - 학습 기간: 수주 ~ 수개월
+> - GPU: 수천 ~ 수만 개
 
 ### Pre-training에서 배우는 것들
 
-\`\`\`text
-언어 지식:
-  - 문법 (주어-동사 일치, 시제 등)
-  - 어휘와 의미 관계
-  - 문장 구조와 스타일
-
-세계 지식:
-  - "파리는 프랑스의 수도이다"
-  - "물은 100도에서 끓는다"
-  - 역사, 과학, 문화 등의 사실
-
-추론 능력:
-  - 패턴 인식
-  - 논리적 연결
-  - 유추 (analogy)
-
-코드 지식 (코드를 포함한 경우):
-  - 프로그래밍 언어 문법
-  - 알고리즘 패턴
-  - 버그 패턴
-\`\`\`
+> **언어 지식**:
+> - 문법 (주어-동사 일치, 시제 등)
+> - 어휘와 의미 관계
+> - 문장 구조와 스타일
+>
+> **세계 지식**:
+> - "파리는 프랑스의 수도이다"
+> - "물은 100도에서 끓는다"
+> - 역사, 과학, 문화 등의 사실
+>
+> **추론 능력**:
+> - 패턴 인식
+> - 논리적 연결
+> - 유추 (analogy)
+>
+> **코드 지식 (코드를 포함한 경우)**:
+> - 프로그래밍 언어 문법
+> - 알고리즘 패턴
+> - 버그 패턴
 
 ### 실행해보기: Pre-training 데이터 규모 시각화
 
@@ -13524,7 +13480,7 @@ print(f"  비용:    GPT-1 -> GPT-4 = {100000000/10000:.0f}배 증가")
 
 ### SFT의 핵심
 
-\`\`\`text
+\`\`\`
 Pre-trained 모델의 문제:
   입력: "한국의 수도는 어디인가요?"
   출력: "한국의 수도는 어디인가요? 일본의 수도는..."  (질문을 이어서 생성!)
@@ -13554,7 +13510,7 @@ SFT로 해결:
 
 ### RLHF의 3단계 과정
 
-\`\`\`text
+\`\`\`
 [Step 1: 보상 모델(Reward Model) 학습]
 
   같은 질문에 대해 여러 응답을 생성:
@@ -13588,7 +13544,7 @@ SFT로 해결:
 
 ### RLHF의 효과
 
-\`\`\`text
+\`\`\`
 RLHF 전 (SFT만):
   Q: "폭탄 만드는 법 알려줘"
   A: "폭탄을 만들려면 먼저..." (위험한 정보 제공)
@@ -13661,23 +13617,21 @@ print("=> 응답 1처럼 도움이 되고 정확한 답변을 학습")
 
 ### Scaling Laws의 핵심 발견
 
-\`\`\`text
-2020년 OpenAI의 연구에서 발견:
-
-모델 성능(Loss)은 세 가지에 의해 예측 가능하게 개선됩니다:
-
-1) 모델 크기 (N): 파라미터 수
-2) 데이터 크기 (D): 학습 토큰 수
-3) 컴퓨팅 (C): 학습에 투입한 연산량
-
-L(N, D) ~ a/N^alpha + b/D^beta + c
-
-핵심 통찰:
-- 세 요소를 동시에 늘려야 효과적
-- 모델만 키우고 데이터가 부족하면 비효율
-- 데이터만 많고 모델이 작으면 한계
-- 로그 스케일에서 거의 직선적으로 개선
-\`\`\`
+> 2020년 OpenAI의 연구에서 발견:
+>
+> 모델 성능(Loss)은 세 가지에 의해 예측 가능하게 개선됩니다:
+>
+> 1) 모델 크기 (N): 파라미터 수
+> 2) 데이터 크기 (D): 학습 토큰 수
+> 3) 컴퓨팅 (C): 학습에 투입한 연산량
+>
+> $L(N, D) \sim a/N^{\alpha} + b/D^{\beta} + c$
+>
+> 핵심 통찰:
+> - 세 요소를 동시에 늘려야 효과적
+> - 모델만 키우고 데이터가 부족하면 비효율
+> - 데이터만 많고 모델이 작으면 한계
+> - 로그 스케일에서 거의 직선적으로 개선
 
 ### 실행해보기: Scaling Law 시각화
 
@@ -13723,7 +13677,7 @@ print()\nprint("로그 스케일에서 거의 직선적으로 개선됩니다!")
 
 ### 주요 프롬프트 기법
 
-\`\`\`text
+\`\`\`
 1) Zero-shot: 예시 없이 직접 질문
    "다음 문장의 감성을 분석하세요: 이 영화 재미있어요"
 
@@ -13811,20 +13765,18 @@ print("핵심: 구체적이고 구조화된 프롬프트 = 더 좋은 응답!")
 
 ### LLM의 공통 구조
 
-\`\`\`text
-거의 모든 현대 LLM은 동일한 기본 구조를 공유합니다:
-
-1) Decoder-only Transformer (GPT 스타일)
-2) Next Token Prediction으로 Pre-training
-3) SFT + RLHF (또는 유사한 정렬 기법)
-
-차이점:
-  - 모델 크기와 아키텍처 세부 사항
-  - 학습 데이터의 구성과 양
-  - 정렬(Alignment) 방법의 차이
-  - 컨텍스트 윈도우 크기
-  - 멀티모달 지원 여부
-\`\`\`
+> 거의 모든 현대 LLM은 동일한 기본 구조를 공유합니다:
+>
+> 1) Decoder-only Transformer (GPT 스타일)
+> 2) Next Token Prediction으로 Pre-training
+> 3) SFT + RLHF (또는 유사한 정렬 기법)
+>
+> 차이점:
+>   - 모델 크기와 아키텍처 세부 사항
+>   - 학습 데이터의 구성과 양
+>   - 정렬(Alignment) 방법의 차이
+>   - 컨텍스트 윈도우 크기
+>   - 멀티모달 지원 여부
 
 ---
 
@@ -13832,7 +13784,7 @@ print("핵심: 구체적이고 구조화된 프롬프트 = 더 좋은 응답!")
 
 ### 현재 한계
 
-\`\`\`text
+\`\`\`
 1) 환각 (Hallucination)
    - 사실이 아닌 정보를 자신있게 생성
    - "서울 타워는 1975년에 건설되었습니다" (실제: 1969년 착공, 1975년 완공은 맞지만 세부 사실 오류 가능)
@@ -13852,7 +13804,7 @@ print("핵심: 구체적이고 구조화된 프롬프트 = 더 좋은 응답!")
 
 ### 발전 방향
 
-\`\`\`text
+\`\`\`
 1) 멀티모달 (Multimodal)
    - 텍스트 + 이미지 + 오디오 + 비디오 통합 처리
    - GPT-4o, Gemini 등이 선도
@@ -14450,7 +14402,7 @@ nvcc test_cuda.cu -o test_cuda
 ## Python 환경에서 CUDA
 
 ### PyTorch CUDA 확인
-\`\`\`text
+\`\`\`
 import torch
 
 # CUDA 사용 가능 여부
@@ -15963,7 +15915,7 @@ ncu --kernel-name myKernel ./my_cuda_app
 
 ### 2단계 파이프라인 흐름
 
-\`\`\`text
+\`\`\`
 [입력 이미지] → [1단계: 번호판 검출] → [2단계: 문자 인식] → [결과 출력]
                   (Detection)            (Recognition)
                   YOLO 모델               CNN 모델
@@ -16034,7 +15986,7 @@ ncu --kernel-name myKernel ./my_cuda_app
 
 ### 데이터 흐름 시각화
 
-\`\`\`text
+\`\`\`
 [카메라/파일] ──→ [전체 이미지: 1920x1080]
                         │
                         ▼
@@ -16061,7 +16013,7 @@ ncu --kernel-name myKernel ./my_cuda_app
 
 ### 핵심 설계 코드 구조
 
-\`\`\`text
+\`\`\`python
 # 전체 파이프라인의 뼈대 (PyTorch + Ultralytics)
 class LPRSystem:
     def __init__(self):
@@ -16155,7 +16107,7 @@ print(f"총 클래스 수: {len(digits) + len(hangul_chars)}개")
 | FastAPI | 0.100+ | REST API 서버 | 배포 |
 | Docker | 24.0+ | 컨테이너화 | 배포 |
 
-\`\`\`text
+\`\`\`bash
 # 개발 환경 설치 (참고용)
 pip install torch torchvision          # 딥러닝
 pip install ultralytics                # YOLOv8
@@ -16280,7 +16232,7 @@ for source, desc in datasets.items():
 
 실제 데이터가 부족할 때, 프로그래밍으로 번호판 이미지를 만들 수 있습니다.
 
-\`\`\`text
+\`\`\`python
 # 합성 번호판 이미지 생성 (PIL 활용)
 from PIL import Image, ImageDraw, ImageFont
 import random
@@ -16342,7 +16294,7 @@ plates = ["12가 3456", "34나 7890", "56다 1234"]
 
 ### YOLO 형식 라벨링 상세
 
-\`\`\`text
+\`\`\`
 # YOLO 라벨 형식 (labels/img001.txt)
 # <class_id> <x_center> <y_center> <width> <height>
 # 모든 값은 이미지 크기로 정규화 (0~1 사이)
@@ -16405,7 +16357,7 @@ for fname, text in labels:
 
 ### 전처리 단계 흐름
 
-\`\`\`text
+\`\`\`
 [원본 이미지] → [크기 조정] → [색상 변환] → [정규화] → [텐서 변환] → [모델 입력]
 \`\`\`
 
@@ -16451,7 +16403,7 @@ print(f"정규화 후: [{normalized.min():.1f}, {normalized.max():.1f}]")
 
 ### 3. 색상 변환
 
-\`\`\`text
+\`\`\`python
 import cv2
 
 # OpenCV는 BGR 순서, PyTorch/YOLO는 RGB 순서
@@ -16510,7 +16462,7 @@ print(f"  합계: {sum(splits.values())}장")
 
 ### Albumentations 증강 파이프라인
 
-\`\`\`text
+\`\`\`python
 import albumentations as A
 
 # 번호판 검출에 최적화된 증강 파이프라인
@@ -16574,7 +16526,7 @@ print(f"새로운 장면을 만들어내지는 않습니다!")
 
 체계적인 디렉토리 구조는 프로젝트 관리의 기본입니다.
 
-\`\`\`text
+\`\`\`
 project/
 ├── data/
 │   ├── raw/                  # 원본 이미지
@@ -16805,7 +16757,7 @@ print(f"번호판 검출 추천: yolov8s (속도와 정확도의 균형)")
 
 ### 데이터셋 구조
 
-\`\`\`text
+\`\`\`
 dataset/
 ├── train/
 │   ├── images/          # 학습 이미지 (jpg/png)
@@ -16824,7 +16776,7 @@ dataset/
 
 ### 설정 파일 작성
 
-\`\`\`text
+\`\`\`yaml
 # dataset.yaml
 path: ./dataset          # 데이터셋 루트 경로
 train: train/images      # 학습 이미지 경로 (상대)
@@ -16843,7 +16795,7 @@ names:
 
 ### 학습 실행
 
-\`\`\`text
+\`\`\`python
 from ultralytics import YOLO
 
 # 사전 학습된 모델을 기반으로 Fine-tuning
@@ -16866,7 +16818,7 @@ results = model.train(
 
 ### 학습 결과 파일 구조
 
-\`\`\`text
+\`\`\`
 runs/detect/plate_detect/
 ├── weights/
 │   ├── best.pt           # 검증 성능 최고 모델 (배포용)
@@ -16927,7 +16879,7 @@ print(f"F1 Score: {f1:.1f}% (Precision과 Recall의 조화 평균)")
 
 ## 학습된 모델로 추론
 
-\`\`\`text
+\`\`\`python
 from ultralytics import YOLO
 import cv2
 
@@ -17081,7 +17033,7 @@ for a, b in similar_pairs:
 
 ### 모델 아키텍처 상세
 
-\`\`\`text
+\`\`\`
 입력: 1 x 32 x 32 (그레이스케일, 32x32 픽셀)
         |
         v
@@ -17105,7 +17057,7 @@ for a, b in similar_pairs:
 
 ### PyTorch 구현
 
-\`\`\`text
+\`\`\`
 import torch
 import torch.nn as nn
 
@@ -17173,7 +17125,7 @@ print(f"총 파라미터 수: {total_params:,}개")
 
 번호판 이미지에서 개별 문자를 분리하는 것은 문자 단위 인식의 핵심 전처리입니다.
 
-\`\`\`text
+\`\`\`python
 import cv2
 import numpy as np
 
@@ -17231,7 +17183,7 @@ def segment_characters(plate_image):
 ### 합성 데이터 생성
 
 실제 문자 데이터가 부족할 때 프로그래밍으로 생성할 수 있습니다.
-\`\`\`text
+\`\`\`python
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 import random
@@ -17298,7 +17250,7 @@ print(f"  3. 오버샘플링/언더샘플링")
 
 ## 모델 학습
 
-\`\`\`text
+\`\`\`
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -17384,7 +17336,7 @@ for epoch in range(50):
 
 학습된 모델로 실제 문자를 인식하는 과정입니다.
 
-\`\`\`text
+\`\`\`
 import torch
 from PIL import Image
 
@@ -17583,7 +17535,7 @@ mAP는 Precision-Recall 곡선 아래의 면적(AP)을 모든 클래스에 대�
 | mAP@0.5:0.95 | IoU 0.5부터 0.95까지 평균 AP | map |
 | mAP@0.75 | IoU 0.75 기준 AP (엄격) | map75 |
 
-\`\`\`text
+\`\`\`python
 # YOLO 모델 평가 (자동으로 mAP 계산)
 from ultralytics import YOLO
 
@@ -17871,7 +17823,7 @@ for ca in [0.99, 0.98, 0.97, 0.95, 0.90]:
 
 ### PyTorch 모델 저장 방식
 
-\`\`\`text
+\`\`\`
 import torch
 
 # 방법 1: state_dict만 저장 (권장)
@@ -17894,7 +17846,7 @@ model = torch.load("char_classifier_full.pth")
 TorchScript는 PyTorch 모델을 Python 없이 실행 가능한 형태로 변환합니다.
 C++ 환경에서도 실행할 수 있어 배포에 유리합니다.
 
-\`\`\`text
+\`\`\`
 import torch
 
 # 방법 1: torch.jit.trace (입력 예시 기반)
@@ -17916,7 +17868,7 @@ output = loaded(dummy_input)
 > **비유**: ONNX는 "만국 공통어"입니다.
 > PyTorch로 만든 모델을 TensorFlow, TensorRT 등 어디서든 쓸 수 있게 변환합니다.
 
-\`\`\`text
+\`\`\`
 import torch
 
 # ONNX로 변환
@@ -17951,7 +17903,7 @@ print(f"Output shape: {result[0].shape}")
 
 ### 프로젝트 구조
 
-\`\`\`text
+\`\`\`
 plate-api/
     main.py              # FastAPI 앱
     models/
@@ -17964,7 +17916,7 @@ plate-api/
 
 ### FastAPI 서버 코드
 
-\`\`\`text
+\`\`\`python
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse
 import numpy as np
@@ -18024,7 +17976,7 @@ async def health_check():
 
 ### 서버 실행과 테스트
 
-\`\`\`text
+\`\`\`bash
 # 설치
 pip install fastapi uvicorn python-multipart
 
@@ -18039,7 +17991,7 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
 
 ### API 호출 예시
 
-\`\`\`text
+\`\`\`python
 import requests
 
 # 이미지 파일 전송
@@ -18065,7 +18017,7 @@ print(f"Processing time: {result.get('processing_time_ms', 0)}ms")
 
 ### Dockerfile
 
-\`\`\`text
+\`\`\`dockerfile
 FROM python:3.9-slim
 
 WORKDIR /app
@@ -18094,7 +18046,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ### 빌드와 실행
 
-\`\`\`text
+\`\`\`bash
 # 이미지 빌드
 docker build -t plate-recognition:v1 .
 
@@ -18124,7 +18076,7 @@ docker logs -f plate-api
 
 ### 엣지 배포 최적화 전략
 
-\`\`\`text
+\`\`\`python
 # 1. 모델 경량화
 # YOLOv8n (nano) 사용 - 가장 작은 모델
 model = YOLO("yolov8n.pt")
@@ -18243,7 +18195,7 @@ MLOps = Machine Learning + Operations (DevOps)
 
 ### 실험 추적 예시
 
-\`\`\`text
+\`\`\`python
 import mlflow
 
 # 실험 시작
@@ -18273,7 +18225,7 @@ with mlflow.start_run(run_name="yolov8n-epoch100"):
 데이터가 바뀌면 모델 성능도 바뀝니다.
 어떤 데이터로 학습한 모델인지 추적해야 합니다.
 
-\`\`\`text
+\`\`\`bash
 # DVC로 데이터 버전 관리
 dvc init
 dvc add data/plates/
@@ -18301,7 +18253,7 @@ git commit -m "Update dataset v2: +500 night images"
 
 ### ML 프로젝트의 CI/CD
 
-\`\`\`text
+\`\`\`yaml
 # .github/workflows/ml-pipeline.yml (GitHub Actions 예시)
 name: ML Pipeline
 
@@ -18438,7 +18390,7 @@ print("When accuracy falls below threshold -> Retrain needed")
 새 모델을 바로 전체 교체하면 위험합니다.
 트래픽의 일부만 새 모델로 보내서 성능을 비교합니다.
 
-\`\`\`text
+\`\`\`python
 # A/B 테스트 라우터 (간단 버전)
 import random
 

@@ -48,47 +48,69 @@ export const lesson3_5_content = `
 
 다항식 회귀로 과적합이 어떻게 생기는지 직접 확인해봅시다.
 
-### 실행해보기: 다항식 차수에 따른 과적합
+### 🔬 실습: 다항식 차수에 따른 과적합
+
+모델 복잡도(다항식 차수)가 과적합에 어떤 영향을 주는지 확인해봅시다.
 
 \`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
+# ═══════════════════════════════════════════════════════════════
+# 📊 과적합 시각화: 모델 복잡도의 영향
+# 같은 데이터에 1차, 4차, 14차 다항식을 적합시켜 비교
+# ═══════════════════════════════════════════════════════════════
+
 np.random.seed(42)
 
-x_train = np.linspace(0, 2 * np.pi, 15)
-y_train = np.sin(x_train) + np.random.normal(0, 0.2, len(x_train))
+# 📌 데이터 준비
+x_train = np.linspace(0, 2 * np.pi, 15)  # 훈련 데이터 (15개 점)
+y_train = np.sin(x_train) + np.random.normal(0, 0.2, len(x_train))  # 노이즈 포함
 
-x_test = np.linspace(0, 2 * np.pi, 100)
-y_true = np.sin(x_test)
+x_test = np.linspace(0, 2 * np.pi, 100)  # 테스트용 (촘촘한 점)
+y_true = np.sin(x_test)                   # 실제 함수 (sin)
 
+# 📐 세 가지 복잡도로 실험
 degrees = [1, 4, 14]
-titles = ["과소적합 (1차)", "적절한 적합 (4차)", "과적합 (14차)"]
+titles = ["❌ 과소적합 (1차)", "✅ 적절한 적합 (4차)", "❌ 과적합 (14차)"]
 
-fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
 for i, deg in enumerate(degrees):
+    # 다항식 피팅
     coeffs = np.polyfit(x_train, y_train, deg)
     y_pred = np.polyval(coeffs, x_test)
     y_train_pred = np.polyval(coeffs, x_train)
+
+    # 오차 계산
     train_error = np.mean((y_train - y_train_pred) ** 2)
     test_error = np.mean((y_true - y_pred) ** 2)
 
-    axes[i].scatter(x_train, y_train, color="blue", label="훈련 데이터", zorder=5)
-    axes[i].plot(x_test, y_true, "g--", label="실제 함수", alpha=0.7)
-    axes[i].plot(x_test, y_pred, "r-", label=f"{deg}차 다항식", linewidth=2)
-    axes[i].set_title(titles[i], fontsize=13)
-    axes[i].set_ylim(-2, 2)
-    axes[i].legend(fontsize=9)
-    axes[i].text(0.5, -1.6, f"훈련오차: {train_error:.3f}", fontsize=10)
-    axes[i].text(0.5, -1.9, f"테스트오차: {test_error:.3f}", fontsize=10)
+    # 그래프 그리기
+    axes[i].scatter(x_train, y_train, color="blue", s=80, label="🔵 훈련 데이터", zorder=5)
+    axes[i].plot(x_test, y_true, "g--", linewidth=2, label="🟢 실제 함수 (sin)", alpha=0.7)
+    axes[i].plot(x_test, y_pred, "r-", label=f"🔴 {deg}차 다항식", linewidth=2)
+    axes[i].set_title(titles[i], fontsize=14, fontweight='bold')
+    axes[i].set_ylim(-2.5, 2.5)
+    axes[i].legend(fontsize=9, loc='upper right')
+    axes[i].grid(True, alpha=0.3)
+
+    # 오차 표시
+    axes[i].text(0.3, -1.8, f"📊 훈련 오차: {train_error:.3f}", fontsize=11,
+                 bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+    axes[i].text(0.3, -2.2, f"📊 테스트 오차: {test_error:.3f}", fontsize=11,
+                 bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
 
 plt.tight_layout()
-plt.savefig("overfitting_comparison.png", dpi=100, bbox_inches="tight")
 plt.show()
-print("왼쪽: 너무 단순해서 패턴을 못 잡음 (과소적합)")
-print("가운데: 적절하게 패턴을 포착 (Good Fit)")
-print("오른쪽: 노이즈까지 외워버림 (과적합)")
+
+print("=" * 60)
+print("🔍 결과 해석:")
+print("-" * 60)
+print("❌ 왼쪽 (1차): 너무 단순해서 패턴을 못 잡음 → 과소적합")
+print("✅ 가운데 (4차): 적절하게 패턴을 포착 → Good Fit!")
+print("❌ 오른쪽 (14차): 노이즈까지 외워버림 → 과적합")
+print("=" * 60)
 \`\`\`
 
 > 핵심 관찰: 14차 다항식은 훈련 데이터를 거의 완벽하게 지나가지만, 데이터 사이에서 크게 흔들립니다. 이것이 **과적합**입니다.
@@ -112,13 +134,13 @@ print("오른쪽: 노이즈까지 외워버림 (과적합)")
 
 ### L1 정규화의 원리
 
-\`\`\`text
-L1 정규화된 손실 = 원래 손실 + lambda * (|w1| + |w2| + ... + |wn|)
+L1 정규화된 손실 함수:
 
-lambda(람다): 정규화 강도를 조절하는 하이퍼파라미터
-- lambda가 크면: 더 많은 가중치가 0이 됨 (더 단순한 모델)
-- lambda가 작으면: 원래 손실에 가까움 (덜 제약)
-\`\`\`
+$$L_{L1} = L_{원래} + \lambda \sum_{i=1}^{n} |w_i|$$
+
+여기서 $\lambda$(람다)는 정규화 강도를 조절하는 하이퍼파라미터입니다:
+- $\lambda$가 크면: 더 많은 가중치가 0이 됨 (더 단순한 모델)
+- $\lambda$가 작으면: 원래 손실에 가까움 (덜 제약)
 
 L1 정규화는 많은 가중치를 **정확히 0으로** 만들어 불필요한 특성을 자동 제거합니다. 이것을 **특성 선택(Feature Selection)** 효과라고 합니다.
 
@@ -128,83 +150,109 @@ L1 정규화는 많은 가중치를 **정확히 0으로** 만들어 불필요한
 
 > **비유**: L2 정규화는 "모든 물건을 가져가되, 각각 조금씩만!"이라고 말하는 것과 같습니다. 어떤 하나에 올인하지 않고 골고루 분산합니다.
 
-\`\`\`text
-L2 정규화된 손실 = 원래 손실 + lambda * (w1^2 + w2^2 + ... + wn^2)
+L2 정규화된 손실 함수:
+
+$$L_{L2} = L_{원래} + \lambda \sum_{i=1}^{n} w_i^2$$
 
 효과: 가중치가 너무 크게 자라지 못하도록 억제
 - 큰 가중치에 더 큰 벌칙 (제곱이니까)
 - 가중치가 0에 가까워지지만, 정확히 0이 되지는 않음
-\`\`\`
 
 ### L1 vs L2 비교
 
 | 특성 | L1 (Lasso) | L2 (Ridge) |
 |------|-----------|-----------|
-| 벌칙 항 | 가중치 절대값의 합 | 가중치 제곱의 합 |
+| 벌칙 항 | $\sum \|w_i\|$ (절대값의 합) | $\sum w_i^2$ (제곱의 합) |
 | 효과 | 가중치를 0으로 만듦 | 가중치를 작게 만듦 |
 | 특성 선택 | 불필요한 특성 자동 제거 | 모든 특성 유지 |
 | 딥러닝에서 | 덜 사용됨 | 매우 많이 사용됨 (Weight Decay) |
 
-### 실행해보기: 정규화 효과 비교
+### 🔬 실습: 정규화 효과 비교
+
+L2 정규화가 과적합을 어떻게 방지하는지 직접 확인해봅시다.
 
 \`\`\`python
 import numpy as np
 import matplotlib.pyplot as plt
 
+# ═══════════════════════════════════════════════════════════════
+# 📊 정규화(Regularization) 효과 비교
+# 같은 10차 다항식에서 정규화 유무에 따른 차이
+# ═══════════════════════════════════════════════════════════════
+
 np.random.seed(42)
 
+# 📌 데이터 준비
 n_train = 12
 x_train = np.sort(np.random.uniform(0, 1, n_train))
 y_train = np.sin(2 * np.pi * x_train) + np.random.normal(0, 0.3, n_train)
 x_test = np.linspace(0, 1, 200)
 y_true = np.sin(2 * np.pi * x_test)
 
-degree = 10
+degree = 10  # 10차 다항식 (과적합 유발)
 
+# 📐 다항식 특성 생성 함수
 def make_poly_features(x, deg):
+    """x, x², x³, ... x^deg 특성 생성"""
     return np.column_stack([x ** i for i in range(deg + 1)])
 
 X_train = make_poly_features(x_train, degree)
 X_test = make_poly_features(x_test, degree)
 
-# 1) 정규화 없음
+# ─────────────────────────────────────────────────────────────────
+# ❌ 방법 1: 정규화 없음 (과적합 발생!)
+# ─────────────────────────────────────────────────────────────────
 w_no_reg = np.linalg.lstsq(X_train, y_train, rcond=None)[0]
 
-# 2) L2 정규화
-lambda_l2 = 0.01
+# ─────────────────────────────────────────────────────────────────
+# ✅ 방법 2: L2 정규화 적용 (과적합 방지)
+# 손실 = 원래손실 + λ × (가중치 제곱합)
+# ─────────────────────────────────────────────────────────────────
+lambda_l2 = 0.01  # 정규화 강도
 XtX = X_train.T @ X_train
 XtY = X_train.T @ y_train
 I = np.eye(degree + 1)
-I[0, 0] = 0
+I[0, 0] = 0  # 편향(b)은 정규화 안 함
 w_l2 = np.linalg.solve(XtX + lambda_l2 * I, XtY)
 
+# 예측
 y_no_reg = X_test @ w_no_reg
 y_l2_pred = X_test @ w_l2
 
-fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+# ─────────────────────────────────────────────────────────────────
+# 📈 시각화
+# ─────────────────────────────────────────────────────────────────
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-axes[0].scatter(x_train, y_train, color="blue", zorder=5, label="훈련 데이터")
-axes[0].plot(x_test, y_true, "g--", alpha=0.5, label="실제 함수")
-axes[0].plot(x_test, y_no_reg, "r-", linewidth=2, label="정규화 없음")
+# 왼쪽: 정규화 없음
+axes[0].scatter(x_train, y_train, color="blue", s=80, zorder=5, label="🔵 훈련 데이터")
+axes[0].plot(x_test, y_true, "g--", linewidth=2, alpha=0.7, label="🟢 실제 함수")
+axes[0].plot(x_test, y_no_reg, "r-", linewidth=2, label="🔴 10차 다항식")
 axes[0].set_ylim(-2.5, 2.5)
-axes[0].set_title("정규화 없음 (10차 다항식)", fontsize=12)
-axes[0].legend()
+axes[0].set_title("❌ 정규화 없음 → 과적합!", fontsize=14, fontweight='bold')
+axes[0].legend(fontsize=10)
+axes[0].grid(True, alpha=0.3)
 
-axes[1].scatter(x_train, y_train, color="blue", zorder=5, label="훈련 데이터")
-axes[1].plot(x_test, y_true, "g--", alpha=0.5, label="실제 함수")
-axes[1].plot(x_test, y_l2_pred, "purple", linewidth=2, label="L2 정규화")
+# 오른쪽: L2 정규화
+axes[1].scatter(x_train, y_train, color="blue", s=80, zorder=5, label="🔵 훈련 데이터")
+axes[1].plot(x_test, y_true, "g--", linewidth=2, alpha=0.7, label="🟢 실제 함수")
+axes[1].plot(x_test, y_l2_pred, "purple", linewidth=2, label="🟣 L2 정규화")
 axes[1].set_ylim(-2.5, 2.5)
-axes[1].set_title("L2 정규화 적용 (10차 다항식)", fontsize=12)
-axes[1].legend()
+axes[1].set_title("✅ L2 정규화 적용 → 부드러운 곡선!", fontsize=14, fontweight='bold')
+axes[1].legend(fontsize=10)
+axes[1].grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("regularization_comparison.png", dpi=100, bbox_inches="tight")
 plt.show()
 
-print("=== 가중치 크기 비교 ===")
-print(f"정규화 없음 - 최대 가중치: {np.max(np.abs(w_no_reg)):.1f}")
-print(f"L2 정규화  - 최대 가중치: {np.max(np.abs(w_l2)):.1f}")
-print("L2 정규화가 가중치를 작게 유지하여 부드러운 곡선을 만듭니다!")
+# 결과 출력
+print("=" * 55)
+print("📊 가중치 크기 비교")
+print("=" * 55)
+print(f"❌ 정규화 없음 - 최대 가중치: {np.max(np.abs(w_no_reg)):>12.1f}")
+print(f"✅ L2 정규화  - 최대 가중치: {np.max(np.abs(w_l2)):>12.1f}")
+print("-" * 55)
+print("💡 L2 정규화가 가중치를 작게 유지하여 부드러운 곡선을 만듭니다!")
 \`\`\`
 
 ---
