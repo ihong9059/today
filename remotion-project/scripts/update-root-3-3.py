@@ -1,0 +1,52 @@
+with open("src/Root.tsx", "r", encoding="utf-8") as f:
+    content = f.read()
+
+# Add imports
+import_line = 'import { Lesson3_2Thumbnail } from "./Lesson3_2Thumbnail";'
+new_imports = '''import { Lesson3_2Thumbnail } from "./Lesson3_2Thumbnail";
+import { Lesson3_3Video, LESSON_3_3_DURATION } from "./Lesson3_3Video";
+import { Lesson3_3Thumbnail } from "./Lesson3_3Thumbnail";'''
+
+if "Lesson3_3Video" not in content:
+    content = content.replace(import_line, new_imports)
+
+# Add compositions
+lesson_3_2_thumb = '''      <Still
+        id="Lesson3-2-Thumbnail"
+        component={Lesson3_2Thumbnail}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="AIIntroVideo"'''
+
+lesson_3_3_added = '''      <Still
+        id="Lesson3-2-Thumbnail"
+        component={Lesson3_2Thumbnail}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Lesson3-3"
+        component={Lesson3_3Video}
+        durationInFrames={LESSON_3_3_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Still
+        id="Lesson3-3-Thumbnail"
+        component={Lesson3_3Thumbnail}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="AIIntroVideo"'''
+
+if "Lesson3-3" not in content:
+    content = content.replace(lesson_3_2_thumb, lesson_3_3_added)
+
+with open("src/Root.tsx", "w", encoding="utf-8") as f:
+    f.write(content)
+
+print("Root.tsx updated with Lesson 3-3")

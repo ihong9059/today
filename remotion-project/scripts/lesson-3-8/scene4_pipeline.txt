@@ -1,0 +1,25 @@
+실전 딥러닝 파이프라인!
+
+1단계: 데이터 준비
+   - 훈련/검증/테스트 분리
+   - 전처리, 정규화
+   - DataLoader로 배치 구성
+
+2단계: 모델 설계
+   - 층 구조 결정
+   - 활성화 함수 선택
+   - BatchNorm, Dropout 추가
+
+3단계: 학습 설정
+   - 손실 함수: nn.CrossEntropyLoss() 등
+   - 옵티마이저: Adam(lr=0.001)
+   - 스케줄러: CosineAnnealingLR
+
+4단계: 학습 루프
+   - forward → loss → backward → step
+   - 매 에포크 검증 손실 체크
+   - 최고 모델 저장
+
+5단계: 평가 및 배포!
+   - 테스트 세트로 최종 평가
+   - model.eval() 잊지 마세요!

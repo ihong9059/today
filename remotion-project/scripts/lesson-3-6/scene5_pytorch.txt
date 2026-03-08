@@ -1,0 +1,17 @@
+PyTorch 코드로 확인해봐요!
+
+nn.BatchNorm2d(64)  # 64채널 이미지용
+nn.BatchNorm1d(128)  # 128차원 벡터용
+
+nn.Dropout(p=0.5)  # 50% 확률로 드롭
+nn.Dropout2d(p=0.2)  # 2D 특성맵용
+
+전형적인 CNN 블록은 이런 순서예요.
+Conv → BatchNorm → ReLU → Dropout
+
+중요한 팁!
+model.train()  # 학습 모드: 드롭아웃 ON, BN은 배치 통계
+model.eval()   # 평가 모드: 드롭아웃 OFF, BN은 이동평균
+
+테스트 전에 model.eval() 꼭 호출하세요!
+안 하면 결과가 달라질 수 있어요.

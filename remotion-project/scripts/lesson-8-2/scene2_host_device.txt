@@ -1,0 +1,1 @@
+CUDA에서 CPU와 GPU를 각각 Host와 Device라고 부릅니다. Host는 CPU와 CPU 메모리를 의미하고, Device는 GPU와 GPU 메모리를 의미합니다. 프로그램은 Host에서 시작해서 필요할 때 Device로 데이터를 보내고, 연산 결과를 다시 Host로 가져옵니다.
