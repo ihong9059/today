@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - UTTEC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .user-info {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .welcome {
+            margin-bottom: 30px;
+        }
+        .welcome h2 {
+            font-size: 1.8rem;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        .welcome p {
+            color: #666;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        .card-header {
+            padding: 24px;
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            color: white;
+        }
+        .card-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        .card-header p {
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+        .card-body {
+            padding: 24px;
+        }
+        .card-body ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        .card-body li {
+            padding: 8px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-body li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+        }
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #0f3460;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #16213e;
+        }
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+        .btn-pdf {
+            background: #dc2626;
+            color: white;
+        }
+        .btn-pdf:hover {
+            background: #b91c1c;
+        }
+        .icon {
+            width: 18px;
+            height: 18px;
+        }
+        .back-link {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .back-link a {
+            color: #666;
+            text-decoration: none;
+        }
+        .back-link a:hover {
+            color: #0f3460;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>UTTEC Admin Dashboard</h1>
+        <div class="header-right">
+            <span class="user-info" id="userInfo"></span>
+            <button class="logout-btn" onclick="logout()">로그아웃</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="welcome">
+            <h2>전시회 자료 관리</h2>
+            <p>영업 및 기술 문서를 확인하고 다운로드할 수 있습니다.</p>
+        </div>
+
+        <div class="card-grid">
+            <!-- Sales Guide Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>영업사원용 기술 설명서</h3>
+                    <p>Sales Guide for Exhibition</p>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>진동 센서 동작 원리</li>
+                        <li>3계층 아키텍처 설명</li>
+                        <li>예지정비 기능 상세</li>
+                        <li>고객 FAQ 대응</li>
+                    </ul>
+                    <div class="card-actions">
+                        <a href="sales_guide.html" class="btn btn-primary" target="_blank">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            웹에서 보기
+                        </a>
+                        <a href="sales_guide.pdf" class="btn btn-pdf" download>
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            PDF 다운로드
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Process Guide Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>AI 고장예지/품질판정 프로세스</h3>
+                    <p>AI Process Guide</p>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>AI 모델 학습 과정</li>
+                        <li>데이터 수집 → 전처리 → 학습</li>
+                        <li>고장 예지 사례</li>
+                        <li>품질 판정 프로세스</li>
+                    </ul>
+                    <div class="card-actions">
+                        <a href="ai_process_guide.html" class="btn btn-primary" target="_blank">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            웹에서 보기
+                        </a>
+                        <a href="ai_process_guide.pdf" class="btn btn-pdf" download>
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            PDF 다운로드
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="index.html">&larr; 메인 페이지로 돌아가기</a>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        if (sessionStorage.getItem('adminAuth') !== 'true') {
+            window.location.href = 'admin_login.html';
+        }
+
+        // Display user info
+        const user = sessionStorage.getItem('adminUser') || 'Admin';
+        document.getElementById('userInfo').textContent = `${user} 님`;
+
+        function logout() {
+            sessionStorage.removeItem('adminAuth');
+            sessionStorage.removeItem('adminUser');
+            window.location.href = 'admin_login.html';
+        }
+    </script>
+</body>
+</html>
