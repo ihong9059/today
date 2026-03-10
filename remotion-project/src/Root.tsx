@@ -152,6 +152,7 @@ import { Lesson9_7Video, LESSON_9_7_DURATION } from "./Lesson9_7Video";
 import { Lesson9_7Thumbnail } from "./Lesson9_7Thumbnail";
 import { Lesson9_8Video, LESSON_9_8_DURATION } from "./Lesson9_8Video";
 import { Lesson9_8Thumbnail } from "./Lesson9_8Thumbnail";
+import { AIQualityVideo, AI_QUALITY_VIDEO_DURATION } from "./AIQualityVideo";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -1203,6 +1204,14 @@ export const RemotionRoot: React.FC = () => {
       <Still
         id="AIIntro-Thumbnail"
         component={AIIntroThumbnail}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="AIQualityVideo"
+        component={AIQualityVideo}
+        durationInFrames={AI_QUALITY_VIDEO_DURATION}
+        fps={30}
         width={1920}
         height={1080}
       />
