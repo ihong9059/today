@@ -1,0 +1,12 @@
+트랜스포머 블록에서요.
+FFN은 어디에 있을까요?
+
+Attention 다음에 나와요!
+각 블록마다 하나씩 있어요!
+
+구조를 보면요.
+Self-Attention, Add & Norm
+그 다음에 FFN!
+그리고 또 Add & Norm!
+
+이렇게 배치되어 있어요!

@@ -1,60 +1,72 @@
-#!/usr/bin/env python3
-"""Level 8-6: 스트림과 비동기 실행 TTS 생성 스크립트"""
-
-import asyncio
 import edge_tts
+import asyncio
 import os
 
-VOICE = "ko-KR-SunHiNeural"
-OUTPUT_DIR = "../public/audio/lesson-8-6"
+# Level 8-6: 메모리 최적화
+SCENES = {
+    "intro": """안녕하세요! 레벨 8 여섯 번째 레슨, 메모리 최적화입니다.
+GPU 메모리는 제한되어 있어서 효율적인 사용이 중요합니다.
+메모리를 절약하는 다양한 기법들을 알아보겠습니다.""",
 
-SCRIPTS = {
-    "intro": """CUDA 스트림과 비동기 실행에 대해 알아보겠습니다.
-스트림을 사용하면 여러 작업을 동시에 실행할 수 있습니다.
-GPU 활용률을 극대화하는 핵심 기법입니다.""",
+    "memory_analysis": """먼저 GPU 메모리 사용량을 분석하는 방법입니다.
+torch.cuda.memory_allocated()로 현재 사용 중인 메모리를 확인합니다.
+torch.cuda.max_memory_allocated()로 최대 사용량을 알 수 있어요.
+torch.cuda.memory_reserved()는 캐시를 포함한 예약 메모리를 보여줍니다.
+nvidia-smi 명령어로도 전체 GPU 메모리 상태를 확인할 수 있습니다.
+메모리 누수를 찾으려면 각 단계마다 메모리 사용량을 로깅하세요.""",
 
-    "stream": """CUDA 스트림이란 무엇일까요?
-스트림은 순서대로 실행되는 작업 큐입니다.
-같은 스트림 내 작업은 순차적으로 실행됩니다.
-다른 스트림의 작업은 동시에 실행될 수 있습니다.""",
+    "batch_size": """배치 사이즈 최적화에 대해 알아볼게요.
+배치 사이즈가 클수록 학습이 안정적이지만, 메모리 사용량도 증가합니다.
+메모리 한계 내에서 가장 큰 배치 사이즈를 찾는 것이 좋습니다.
+그래디언트 누적을 사용하면 작은 배치로도 큰 배치 효과를 얻을 수 있어요.
+예를 들어, 배치 사이즈 8로 4번 누적하면 32와 비슷한 효과입니다.
+optimizer.step()을 누적 횟수마다 한 번씩만 호출합니다.""",
 
-    "async": """비동기 실행의 장점을 알아봅시다.
-CPU는 GPU 작업을 기다리지 않고 다른 작업을 수행합니다.
-데이터 전송과 커널 실행을 동시에 할 수 있습니다.
-전체 실행 시간이 크게 단축됩니다.""",
+    "no_grad": """불필요한 그래디언트를 피하는 방법입니다.
+추론 시에는 torch.no_grad() 컨텍스트를 사용하세요.
+그래디언트 계산이 비활성화되어 메모리를 절약합니다.
+모델 평가나 검증 루프에서 반드시 사용해야 합니다.
+torch.inference_mode()는 더 강력한 최적화를 제공합니다.
+텐서의 requires_grad를 False로 설정하는 것도 도움이 됩니다.""",
 
-    "overlap": """파이프라인 오버랩을 구현해봅시다.
-데이터를 청크로 나누어 처리합니다.
-첫 번째 청크를 처리하는 동안 두 번째 청크를 전송합니다.
-이렇게 하면 대기 시간이 줄어들어 효율이 높아집니다.""",
+    "memory_cleanup": """메모리 정리 방법들을 알아볼게요.
+더 이상 필요 없는 텐서는 del로 명시적으로 삭제합니다.
+torch.cuda.empty_cache()로 캐시된 메모리를 해제합니다.
+단, empty_cache는 실제 사용 중인 메모리는 해제하지 않습니다.
+Python의 gc.collect()와 함께 사용하면 더 효과적입니다.
+큰 텐서를 작은 텐서로 분할해서 처리하는 것도 방법입니다.""",
 
-    "sync": """동기화 방법을 알아봅시다.
-cudaStreamSynchronize로 특정 스트림의 완료를 기다립니다.
-cudaDeviceSynchronize로 모든 스트림의 완료를 기다립니다.
-cudaEvent를 사용하면 더 세밀한 동기화가 가능합니다.""",
+    "offloading": """CPU 오프로딩 기법을 소개해드릴게요.
+사용하지 않는 데이터를 일시적으로 CPU로 옮깁니다.
+필요할 때 다시 GPU로 가져옵니다.
+CPU-GPU 데이터 전송 오버헤드가 있지만, 메모리 부족을 해결할 수 있어요.
+DeepSpeed의 ZeRO-Offload가 이 기법을 자동화합니다.
+optimizer state를 CPU에 저장하는 것도 효과적입니다.""",
 
-    "event": """CUDA Event로 시간을 측정할 수 있습니다.
-Event를 기록하고 경과 시간을 계산합니다.
-정확한 GPU 실행 시간을 측정할 수 있습니다.
-성능 최적화에 필수적인 도구입니다.""",
+    "efficient_data": """데이터 타입 최적화에 대해 알아볼게요.
+FP16이나 BF16을 사용하면 메모리 사용량이 절반으로 줄어듭니다.
+INT8 양자화는 더 적은 메모리를 사용합니다.
+torch.utils.checkpoint로 중간 활성화를 재계산할 수 있습니다.
+메모리와 계산 시간 사이의 트레이드오프가 있습니다.
+모델 구조 자체를 효율적으로 설계하는 것도 중요합니다.""",
 
-    "outro": """Level 8-6을 완료했습니다!
-스트림을 사용해 GPU 작업을 병렬화할 수 있습니다.
-비동기 실행으로 전체 성능을 향상시킬 수 있습니다.
-다음 레슨에서는 CUDA 성능 최적화 기법을 배워보겠습니다."""
+    "outro": """이번 레슨에서 GPU 메모리 최적화 기법들을 배웠습니다.
+메모리 분석, 배치 사이즈 조절, 오프로딩 등 다양한 방법을 알아봤습니다.
+다음 레슨에서는 프로파일링과 디버깅을 살펴보겠습니다."""
 }
 
-async def generate_audio(name: str, text: str):
-    output_path = os.path.join(OUTPUT_DIR, f"{name}.mp3")
-    communicate = edge_tts.Communicate(text, VOICE)
-    await communicate.save(output_path)
-    print(f"Generated: {output_path}")
+async def generate_tts():
+    output_dir = "public/audio/lesson-8-6"
+    os.makedirs(output_dir, exist_ok=True)
 
-async def main():
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    tasks = [generate_audio(name, text) for name, text in SCRIPTS.items()]
-    await asyncio.gather(*tasks)
-    print("All audio files generated!")
+    for scene_name, text in SCENES.items():
+        output_file = f"{output_dir}/{scene_name}.mp3"
+        print(f"Generating {scene_name}...")
+
+        communicate = edge_tts.Communicate(text, "ko-KR-SunHiNeural")
+        await communicate.save(output_file)
+        print(f"Saved: {output_file}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(generate_tts())
+    print("All audio files generated!")

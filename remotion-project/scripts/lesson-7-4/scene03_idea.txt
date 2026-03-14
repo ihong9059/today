@@ -1,0 +1,18 @@
+해결 아이디어는 간단해요!
+
+값들을 정규화하는 거예요!
+평균을 0으로, 분산을 1로 맞춰요.
+
+이렇게 하면 값들이요.
+일정한 범위 안에 있게 돼요!
+
+학습이 훨씬 안정적이 되죠!
+
+정규화 방법에는 여러 가지가 있어요.
+Batch Normalization,
+Layer Normalization,
+Instance Normalization 등이요!
+
+트랜스포머에서는요.
+Layer Normalization을 써요!
+

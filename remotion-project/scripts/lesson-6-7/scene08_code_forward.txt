@@ -1,0 +1,28 @@
+forward 함수를 구현해 볼게요!
+
+def forward(self, x)로 시작해요.
+x는 입력 텍스트의 정수 시퀀스예요.
+
+먼저 임베딩을 적용해요.
+embedded = self.embedding(x)
+정수 시퀀스가 벡터 시퀀스로 바뀌어요.
+
+LSTM에 통과시켜요.
+lstm_out, (hidden, cell) = self.lstm(embedded)
+출력과 은닉 상태를 모두 받아요.
+
+여기서 중요한 점이 있어요!
+마지막 레이어의 은닉 상태만 사용해요.
+hidden = hidden[-1]로 가져와요.
+이게 문장 전체의 요약 벡터예요.
+
+분류기를 통과시켜요.
+out = self.fc(hidden)
+선형 변환을 거쳐요.
+
+마지막으로 시그모이드!
+out = self.sigmoid(out)
+0에서 1 사이의 확률이 나와요.
+
+return out으로 결과를 반환해요!
+

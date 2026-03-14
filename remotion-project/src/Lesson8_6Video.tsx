@@ -1,16 +1,17 @@
 import React from "react";
 import { AbsoluteFill, Audio, Img, Sequence, staticFile, useCurrentFrame } from "remotion";
 
-export const LESSON_8_6_DURATION = 3547;
+export const LESSON_8_6_DURATION = 6515;
 
 const SCENE_TIMINGS = {
-  intro: { start: 0, duration: 430 },
-  stream: { start: 430, duration: 490 },
-  async: { start: 920, duration: 521 },
-  overlap: { start: 1441, duration: 503 },
-  sync: { start: 1944, duration: 555 },
-  event: { start: 2499, duration: 496 },
-  outro: { start: 2995, duration: 552 },
+  intro: { start: 0, duration: 498 },
+  memory_analysis: { start: 498, duration: 1022 },
+  batch_size: { start: 1520, duration: 996 },
+  no_grad: { start: 2516, duration: 873 },
+  memory_cleanup: { start: 3389, duration: 888 },
+  offloading: { start: 4277, duration: 845 },
+  efficient_data: { start: 5122, duration: 875 },
+  outro: { start: 5997, duration: 518 },
 };
 
 const COLORS = {
@@ -24,12 +25,12 @@ const COLORS = {
 
 const GlobalOverlay: React.FC = () => (
   <>
-    <div style={{ position: "absolute", top: 30, left: 40, display: "flex", alignItems: "center", gap: 12, zIndex: 100 }}>
-      <Img src={staticFile("images/logo.png")} style={{ width: 50, height: 50, borderRadius: 8 }} />
-      <span style={{ color: COLORS.light, fontSize: 24, fontWeight: 700, fontFamily: "Pretendard, sans-serif" }}>UTTEC-Lab</span>
+    <div style={{ position: "absolute", top: 30, left: 40, zIndex: 9999, display: "flex", alignItems: "center", gap: 15 }}>
+      <Img src={staticFile("images/logo.png")} style={{ width: 60, height: 60, borderRadius: 8 }} />
+      <span style={{ color: "white", fontSize: 28, fontWeight: "bold", textShadow: "2px 2px 4px rgba(0,0,0,0.7)" }}>UTTEC-Lab</span>
     </div>
-    <div style={{ position: "absolute", bottom: 30, right: 40, color: "rgba(255,255,255,0.6)", fontSize: 20, fontFamily: "Pretendard, sans-serif", zIndex: 100 }}>
-      ai.uttec-lab.com
+    <div style={{ position: "absolute", bottom: 30, left: "50%", transform: "translateX(-50%)", zIndex: 9999, background: "rgba(244, 63, 94, 0.9)", padding: "10px 30px", borderRadius: 25 }}>
+      <span style={{ color: "white", fontSize: 22, fontWeight: "bold", letterSpacing: 1 }}>http://uttec-ai.duckdns.org</span>
     </div>
   </>
 );
@@ -42,9 +43,9 @@ const SceneIntro: React.FC = () => {
       <GlobalOverlay />
       <Audio src={staticFile("audio/lesson-8-6/intro.mp3")} />
       <div style={{ textAlign: "center", opacity, transform: `translateY(${20 - opacity * 20}px)` }}>
-        <div style={{ fontSize: 180, marginBottom: 20 }}>🔀</div>
-        <div style={{ fontSize: 72, fontWeight: 800, color: COLORS.light, marginBottom: 20 }}>스트림과 비동기 실행</div>
-        <div style={{ fontSize: 36, color: "rgba(255,255,255,0.9)" }}>GPU 활용 극대화</div>
+        <div style={{ fontSize: 180, marginBottom: 20 }}>💾</div>
+        <div style={{ fontSize: 72, fontWeight: 800, color: COLORS.light, marginBottom: 20 }}>메모리 최적화</div>
+        <div style={{ fontSize: 36, color: "rgba(255,255,255,0.9)" }}>GPU 메모리 효율적으로 활용하기</div>
         <div style={{ marginTop: 40, padding: "15px 40px", background: "rgba(0,0,0,0.3)", borderRadius: 50, fontSize: 28, color: COLORS.light }}>
           Level 8-6
         </div>
@@ -53,121 +54,174 @@ const SceneIntro: React.FC = () => {
   );
 };
 
-const SceneStream: React.FC = () => {
+const SceneMemoryAnalysis: React.FC = () => {
+  const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-6/stream.mp3")} />
+      <Audio src={staticFile("audio/lesson-8-6/memory_analysis.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>CUDA Stream이란?</h1>
-        <div style={{ display: "flex", gap: 60 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>메모리 사용량 분석</h1>
+        <div style={{ background: "rgba(0,0,0,0.4)", borderRadius: 16, padding: 40, marginBottom: 40, fontFamily: "monospace" }}>
+          <div style={{ fontSize: 22, color: "#f8f8f2", lineHeight: 2 }}>
+            <div><span style={{ color: "#75715e" }}># 현재 메모리 사용량</span></div>
+            <div>torch.cuda.<span style={{ color: "#a6e22e" }}>memory_allocated</span>() / <span style={{ color: "#ae81ff" }}>1e9</span>  <span style={{ color: "#75715e" }}># GB</span></div>
+            <div style={{ marginTop: 15 }}><span style={{ color: "#75715e" }}># 최대 메모리 사용량</span></div>
+            <div>torch.cuda.<span style={{ color: "#a6e22e" }}>max_memory_allocated</span>() / <span style={{ color: "#ae81ff" }}>1e9</span></div>
+            <div style={{ marginTop: 15 }}><span style={{ color: "#75715e" }}># 메모리 통계 초기화</span></div>
+            <div>torch.cuda.<span style={{ color: "#a6e22e" }}>reset_peak_memory_stats</span>()</div>
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20 }}>
+          {[
+            { label: "모델", percent: 40 },
+            { label: "활성화", percent: 30 },
+            { label: "그래디언트", percent: 20 },
+            { label: "Optimizer", percent: 10 },
+          ].map((item, i) => (
+            <div key={i} style={{ background: "rgba(244,63,94,0.15)", borderRadius: 12, padding: 25, textAlign: "center" }}>
+              <div style={{ fontSize: 22, color: COLORS.light, fontWeight: 700, marginBottom: 10 }}>{item.label}</div>
+              <div style={{ fontSize: 36, color: COLORS.primary, fontWeight: 800 }}>{item.percent}%</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const SceneBatchSize: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-8-6/batch_size.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>배치 크기 최적화</h1>
+        <div style={{ display: "flex", gap: 50 }}>
           <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40 }}>
-            <div style={{ fontSize: 80, textAlign: "center", marginBottom: 20 }}>📋</div>
-            <ul style={{ fontSize: 26, color: COLORS.light, lineHeight: 2 }}>
-              <li>순서대로 실행되는 작업 큐</li>
-              <li>같은 스트림 = 순차 실행</li>
-              <li>다른 스트림 = 동시 실행 가능</li>
+            <div style={{ fontSize: 60, textAlign: "center", marginBottom: 20 }}>📊</div>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>Gradient Accumulation</div>
+            <ul style={{ fontSize: 22, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+              <li>작은 배치로 여러 번 순전파</li>
+              <li>그래디언트 누적</li>
+              <li>한 번에 업데이트</li>
+              <li>메모리 절약 + 큰 효과 배치</li>
             </ul>
           </div>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.1)", borderRadius: 20, padding: 40 }}>
-            <div style={{ fontSize: 24, color: COLORS.light, marginBottom: 20 }}>예시 코드:</div>
-            <pre style={{ fontSize: 20, color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
-{`cudaStream_t stream;
-cudaStreamCreate(&stream);
-
-kernel<<<grid, block, 0, stream>>>();
-
-cudaStreamDestroy(stream);`}
-            </pre>
-          </div>
-        </div>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-const SceneAsync: React.FC = () => {
-  return (
-    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
-      <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-6/async.mp3")} />
-      <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>비동기 실행의 장점</h1>
-        <div style={{ display: "flex", gap: 40 }}>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40, textAlign: "center" }}>
-            <div style={{ fontSize: 80, marginBottom: 20 }}>💻</div>
-            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700 }}>CPU 작업 계속</div>
-            <div style={{ fontSize: 22, color: "rgba(255,255,255,0.7)", marginTop: 10 }}>GPU 기다리지 않음</div>
-          </div>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40, textAlign: "center" }}>
-            <div style={{ fontSize: 80, marginBottom: 20 }}>🔄</div>
-            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700 }}>오버랩 가능</div>
-            <div style={{ fontSize: 22, color: "rgba(255,255,255,0.7)", marginTop: 10 }}>전송 + 연산 동시</div>
-          </div>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40, textAlign: "center" }}>
-            <div style={{ fontSize: 80, marginBottom: 20 }}>⏱️</div>
-            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700 }}>시간 단축</div>
-            <div style={{ fontSize: 22, color: "rgba(255,255,255,0.7)", marginTop: 10 }}>전체 성능 향상</div>
-          </div>
-        </div>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-const SceneOverlap: React.FC = () => {
-  return (
-    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
-      <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-6/overlap.mp3")} />
-      <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>파이프라인 오버랩</h1>
-        <div style={{ background: "rgba(244,63,94,0.1)", borderRadius: 20, padding: 40, marginBottom: 30 }}>
-          <div style={{ display: "flex", gap: 20, marginBottom: 20 }}>
-            <div style={{ width: 120, fontSize: 20, color: COLORS.light }}>Stream 0:</div>
-            <div style={{ flex: 1, display: "flex", gap: 5 }}>
-              <div style={{ flex: 1, padding: 15, background: COLORS.primary, borderRadius: 8, textAlign: "center", color: COLORS.light }}>H→D</div>
-              <div style={{ flex: 2, padding: 15, background: COLORS.secondary, borderRadius: 8, textAlign: "center", color: COLORS.light }}>Kernel</div>
-              <div style={{ flex: 1, padding: 15, background: COLORS.accent, borderRadius: 8, textAlign: "center", color: COLORS.light }}>D→H</div>
-            </div>
-          </div>
-          <div style={{ display: "flex", gap: 20 }}>
-            <div style={{ width: 120, fontSize: 20, color: COLORS.light }}>Stream 1:</div>
-            <div style={{ flex: 1, display: "flex", gap: 5 }}>
-              <div style={{ width: 80 }}></div>
-              <div style={{ flex: 1, padding: 15, background: COLORS.primary, borderRadius: 8, textAlign: "center", color: COLORS.light }}>H→D</div>
-              <div style={{ flex: 2, padding: 15, background: COLORS.secondary, borderRadius: 8, textAlign: "center", color: COLORS.light }}>Kernel</div>
-              <div style={{ flex: 1, padding: 15, background: COLORS.accent, borderRadius: 8, textAlign: "center", color: COLORS.light }}>D→H</div>
+          <div style={{ flex: 1, background: "rgba(0,0,0,0.4)", borderRadius: 16, padding: 40, fontFamily: "monospace" }}>
+            <div style={{ fontSize: 20, color: "#f8f8f2", lineHeight: 2 }}>
+              <div>accumulation_steps = <span style={{ color: "#ae81ff" }}>4</span></div>
+              <div style={{ marginTop: 10 }}><span style={{ color: "#66d9ef" }}>for</span> i, (data, target) <span style={{ color: "#66d9ef" }}>in</span> <span style={{ color: "#a6e22e" }}>enumerate</span>(loader):</div>
+              <div style={{ paddingLeft: 20 }}>output = model(data)</div>
+              <div style={{ paddingLeft: 20 }}>loss = criterion(output, target)</div>
+              <div style={{ paddingLeft: 20 }}>loss = loss / accumulation_steps</div>
+              <div style={{ paddingLeft: 20 }}>loss.<span style={{ color: "#a6e22e" }}>backward</span>()</div>
+              <div style={{ paddingLeft: 20, marginTop: 10 }}><span style={{ color: "#66d9ef" }}>if</span> (i+<span style={{ color: "#ae81ff" }}>1</span>) % accumulation_steps == <span style={{ color: "#ae81ff" }}>0</span>:</div>
+              <div style={{ paddingLeft: 40 }}>optimizer.<span style={{ color: "#a6e22e" }}>step</span>()</div>
+              <div style={{ paddingLeft: 40 }}>optimizer.<span style={{ color: "#a6e22e" }}>zero_grad</span>()</div>
             </div>
           </div>
         </div>
-        <div style={{ fontSize: 26, color: COLORS.light, textAlign: "center" }}>
-          청크 단위로 나눠 처리 → 대기 시간 감소!
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const SceneNoGrad: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-8-6/no_grad.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>불필요한 그래디언트 차단</h1>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 30 }}>
+          <div style={{ background: "rgba(0,0,0,0.4)", borderRadius: 16, padding: 35, fontFamily: "monospace" }}>
+            <div style={{ fontSize: 20, color: COLORS.primary, marginBottom: 15, fontWeight: 700 }}>추론/검증 시</div>
+            <div style={{ fontSize: 20, color: "#f8f8f2", lineHeight: 2 }}>
+              <div><span style={{ color: "#66d9ef" }}>with</span> torch.<span style={{ color: "#a6e22e" }}>no_grad</span>():</div>
+              <div style={{ paddingLeft: 20 }}>output = model(data)</div>
+              <div style={{ paddingLeft: 20 }}>loss = criterion(output, target)</div>
+            </div>
+            <div style={{ fontSize: 18, color: "rgba(255,255,255,0.6)", marginTop: 15 }}>
+              그래디언트 저장 안 함
+            </div>
+          </div>
+          <div style={{ background: "rgba(0,0,0,0.4)", borderRadius: 16, padding: 35, fontFamily: "monospace" }}>
+            <div style={{ fontSize: 20, color: COLORS.primary, marginBottom: 15, fontWeight: 700 }}>일부 파라미터 동결</div>
+            <div style={{ fontSize: 20, color: "#f8f8f2", lineHeight: 2 }}>
+              <div><span style={{ color: "#66d9ef" }}>for</span> param <span style={{ color: "#66d9ef" }}>in</span> model.backbone.<span style={{ color: "#a6e22e" }}>parameters</span>():</div>
+              <div style={{ paddingLeft: 20 }}>param.requires_grad = <span style={{ color: "#ae81ff" }}>False</span></div>
+            </div>
+            <div style={{ fontSize: 18, color: "rgba(255,255,255,0.6)", marginTop: 15 }}>
+              해당 레이어는 업데이트 안 함
+            </div>
+          </div>
+          <div style={{ background: "rgba(0,0,0,0.4)", borderRadius: 16, padding: 35, fontFamily: "monospace" }}>
+            <div style={{ fontSize: 20, color: COLORS.primary, marginBottom: 15, fontWeight: 700 }}>eval 모드</div>
+            <div style={{ fontSize: 20, color: "#f8f8f2", lineHeight: 2 }}>
+              <div>model.<span style={{ color: "#a6e22e" }}>eval</span>()</div>
+              <div style={{ marginTop: 10 }}><span style={{ color: "#75715e" }}># 추론 수행</span></div>
+              <div style={{ marginTop: 10 }}>model.<span style={{ color: "#a6e22e" }}>train</span>()</div>
+            </div>
+            <div style={{ fontSize: 18, color: "rgba(255,255,255,0.6)", marginTop: 15 }}>
+              Dropout/BatchNorm 비활성화
+            </div>
+          </div>
+          <div style={{ background: "rgba(0,0,0,0.4)", borderRadius: 16, padding: 35, fontFamily: "monospace" }}>
+            <div style={{ fontSize: 20, color: COLORS.primary, marginBottom: 15, fontWeight: 700 }}>inplace 연산</div>
+            <div style={{ fontSize: 20, color: "#f8f8f2", lineHeight: 2 }}>
+              <div>x.<span style={{ color: "#a6e22e" }}>relu_</span>()  <span style={{ color: "#75715e" }}># inplace</span></div>
+              <div>x.<span style={{ color: "#a6e22e" }}>add_</span>(y)  <span style={{ color: "#75715e" }}># inplace</span></div>
+            </div>
+            <div style={{ fontSize: 18, color: "rgba(255,255,255,0.6)", marginTop: 15 }}>
+              새 메모리 할당 안 함
+            </div>
+          </div>
         </div>
       </div>
     </AbsoluteFill>
   );
 };
 
-const SceneSync: React.FC = () => {
+const SceneMemoryCleanup: React.FC = () => {
+  const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-6/sync.mp3")} />
+      <Audio src={staticFile("audio/lesson-8-6/memory_cleanup.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>동기화 방법</h1>
-        <div style={{ display: "flex", gap: 30 }}>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 30 }}>
-            <div style={{ fontSize: 28, color: COLORS.primary, fontWeight: 700, marginBottom: 15 }}>cudaStreamSynchronize</div>
-            <div style={{ fontSize: 22, color: COLORS.light }}>특정 스트림 완료 대기</div>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>메모리 정리</h1>
+        <div style={{ display: "flex", gap: 50, alignItems: "center" }}>
+          <div style={{ flex: 1, background: "rgba(0,0,0,0.4)", borderRadius: 16, padding: 40, fontFamily: "monospace" }}>
+            <div style={{ fontSize: 22, color: "#f8f8f2", lineHeight: 2 }}>
+              <div><span style={{ color: "#75715e" }}># 캐시 비우기</span></div>
+              <div>torch.cuda.<span style={{ color: "#a6e22e" }}>empty_cache</span>()</div>
+              <div style={{ marginTop: 20 }}><span style={{ color: "#75715e" }}># 변수 삭제</span></div>
+              <div><span style={{ color: "#66d9ef" }}>del</span> large_tensor</div>
+              <div>torch.cuda.<span style={{ color: "#a6e22e" }}>empty_cache</span>()</div>
+              <div style={{ marginTop: 20 }}><span style={{ color: "#75715e" }}># 그래디언트 초기화</span></div>
+              <div>optimizer.<span style={{ color: "#a6e22e" }}>zero_grad</span>(set_to_none=<span style={{ color: "#ae81ff" }}>True</span>)</div>
+            </div>
           </div>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 30 }}>
-            <div style={{ fontSize: 28, color: COLORS.secondary, fontWeight: 700, marginBottom: 15 }}>cudaDeviceSynchronize</div>
-            <div style={{ fontSize: 22, color: COLORS.light }}>모든 스트림 완료 대기</div>
-          </div>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 30 }}>
-            <div style={{ fontSize: 28, color: COLORS.accent, fontWeight: 700, marginBottom: 15 }}>cudaEvent</div>
-            <div style={{ fontSize: 22, color: COLORS.light }}>세밀한 동기화 지점</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ background: "rgba(244,63,94,0.15)", borderRadius: 16, padding: 35, marginBottom: 20 }}>
+              <div style={{ fontSize: 26, color: COLORS.light, fontWeight: 700, marginBottom: 15 }}>⚠️ 주의</div>
+              <ul style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", lineHeight: 1.8 }}>
+                <li>empty_cache()는 느림</li>
+                <li>자주 호출하지 말 것</li>
+                <li>필요할 때만 사용</li>
+              </ul>
+            </div>
+            <div style={{ background: "rgba(244,63,94,0.15)", borderRadius: 16, padding: 35 }}>
+              <div style={{ fontSize: 26, color: COLORS.light, fontWeight: 700, marginBottom: 15 }}>✅ 추천</div>
+              <ul style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", lineHeight: 1.8 }}>
+                <li>set_to_none=True 사용</li>
+                <li>불필요한 변수 즉시 삭제</li>
+                <li>메모리 누수 방지</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -175,27 +229,80 @@ const SceneSync: React.FC = () => {
   );
 };
 
-const SceneEvent: React.FC = () => {
+const SceneOffloading: React.FC = () => {
+  const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-6/event.mp3")} />
+      <Audio src={staticFile("audio/lesson-8-6/offloading.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>CUDA Event로 시간 측정</h1>
-        <div style={{ background: "rgba(244,63,94,0.1)", borderRadius: 20, padding: 40 }}>
-          <pre style={{ fontSize: 22, color: COLORS.light, lineHeight: 1.8, margin: 0 }}>
-{`cudaEvent_t start, stop;
-cudaEventCreate(&start);
-cudaEventCreate(&stop);
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>CPU Offloading</h1>
+        <div style={{ display: "flex", gap: 50 }}>
+          <div style={{ flex: 1, textAlign: "center" }}>
+            <div style={{ fontSize: 100, marginBottom: 20 }}>🔄</div>
+            <div style={{ fontSize: 32, color: COLORS.light, fontWeight: 700, marginBottom: 20 }}>메모리 교환</div>
+            <div style={{ fontSize: 22, color: "rgba(255,255,255,0.8)", lineHeight: 1.8 }}>
+              GPU 메모리 부족 시<br />
+              일부 데이터를 CPU로
+            </div>
+          </div>
+          <div style={{ flex: 2, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40 }}>
+            <div style={{ fontSize: 26, color: COLORS.light, fontWeight: 700, marginBottom: 20 }}>활용 전략</div>
+            <ul style={{ fontSize: 22, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+              <li><strong>Optimizer 상태:</strong> CPU에 저장</li>
+              <li><strong>활성화 값:</strong> 필요 시 재계산</li>
+              <li><strong>파라미터:</strong> 사용 시에만 GPU로</li>
+              <li><strong>Trade-off:</strong> 속도 vs 메모리</li>
+            </ul>
+          </div>
+        </div>
+        <div style={{ background: "rgba(0,0,0,0.4)", borderRadius: 16, padding: 35, marginTop: 40, fontFamily: "monospace" }}>
+          <div style={{ fontSize: 20, color: "#f8f8f2", lineHeight: 2 }}>
+            <div><span style={{ color: "#75715e" }}># DeepSpeed ZeRO Offload</span></div>
+            <div><span style={{ color: "#66d9ef" }}>from</span> deepspeed <span style={{ color: "#66d9ef" }}>import</span> DeepSpeedConfig</div>
+            <div>config = {"{"} <span style={{ color: "#e6db74" }}>"zero_optimization"</span>: {"{"} <span style={{ color: "#e6db74" }}>"offload_optimizer"</span>: {"{"} <span style={{ color: "#e6db74" }}>"device"</span>: <span style={{ color: "#e6db74" }}>"cpu"</span> {"}"} {"}"} {"}"}</div>
+          </div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
 
-cudaEventRecord(start);
-kernel<<<grid, block>>>();
-cudaEventRecord(stop);
-
-cudaEventSynchronize(stop);
-float ms;
-cudaEventElapsedTime(&ms, start, stop);`}
-          </pre>
+const SceneEfficientData: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-8-6/efficient_data.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>효율적인 데이터 타입</h1>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 30 }}>
+          {[
+            { type: "FP16/BF16", memory: "50% 절약", use: "학습/추론" },
+            { type: "INT8", memory: "75% 절약", use: "추론 최적화" },
+            { type: "INT4", memory: "87.5% 절약", use: "양자화 모델" },
+          ].map((item, i) => (
+            <div key={i} style={{
+              background: "rgba(244,63,94,0.15)",
+              borderRadius: 16,
+              padding: 35,
+              textAlign: "center",
+              transform: `translateY(${Math.sin((frame + i * 20) * 0.05) * 5}px)`
+            }}>
+              <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 15 }}>{item.type}</div>
+              <div style={{ fontSize: 36, color: COLORS.primary, fontWeight: 800, marginBottom: 10 }}>{item.memory}</div>
+              <div style={{ fontSize: 20, color: "rgba(255,255,255,0.8)" }}>{item.use}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ background: "rgba(244,63,94,0.15)", borderRadius: 16, padding: 40, marginTop: 40 }}>
+          <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>추가 팁</div>
+          <ul style={{ fontSize: 22, color: "rgba(255,255,255,0.8)", lineHeight: 2, columns: 2, columnGap: 40 }}>
+            <li>작은 입력 크기로 시작</li>
+            <li>Dynamic Shape 피하기</li>
+            <li>불필요한 .cpu() 호출 제거</li>
+            <li>메모리 프로파일링 습관화</li>
+          </ul>
         </div>
       </div>
     </AbsoluteFill>
@@ -212,12 +319,12 @@ const SceneOutro: React.FC = () => {
       <div style={{ textAlign: "center", opacity }}>
         <div style={{ fontSize: 120, marginBottom: 30 }}>✅</div>
         <div style={{ fontSize: 56, fontWeight: 800, color: COLORS.light, marginBottom: 30 }}>학습 완료!</div>
-        <div style={{ fontSize: 32, color: "rgba(255,255,255,0.9)", lineHeight: 1.8 }}>
-          스트림으로 GPU 작업 병렬화<br />
-          비동기 실행으로 성능 향상
+        <div style={{ fontSize: 28, color: "rgba(255,255,255,0.9)", lineHeight: 1.8 }}>
+          메모리 분석, 배치 최적화, 그래디언트 차단<br />
+          메모리 정리, Offloading, 효율적 데이터 타입
         </div>
-        <div style={{ marginTop: 40, fontSize: 28, color: "rgba(255,255,255,0.7)" }}>
-          다음: CUDA 성능 최적화
+        <div style={{ marginTop: 40, fontSize: 26, color: "rgba(255,255,255,0.7)" }}>
+          다음: 프로파일링과 디버깅
         </div>
       </div>
     </AbsoluteFill>
@@ -227,11 +334,12 @@ const SceneOutro: React.FC = () => {
 export const Lesson8_6Video: React.FC = () => (
   <AbsoluteFill>
     <Sequence from={SCENE_TIMINGS.intro.start} durationInFrames={SCENE_TIMINGS.intro.duration}><SceneIntro /></Sequence>
-    <Sequence from={SCENE_TIMINGS.stream.start} durationInFrames={SCENE_TIMINGS.stream.duration}><SceneStream /></Sequence>
-    <Sequence from={SCENE_TIMINGS.async.start} durationInFrames={SCENE_TIMINGS.async.duration}><SceneAsync /></Sequence>
-    <Sequence from={SCENE_TIMINGS.overlap.start} durationInFrames={SCENE_TIMINGS.overlap.duration}><SceneOverlap /></Sequence>
-    <Sequence from={SCENE_TIMINGS.sync.start} durationInFrames={SCENE_TIMINGS.sync.duration}><SceneSync /></Sequence>
-    <Sequence from={SCENE_TIMINGS.event.start} durationInFrames={SCENE_TIMINGS.event.duration}><SceneEvent /></Sequence>
+    <Sequence from={SCENE_TIMINGS.memory_analysis.start} durationInFrames={SCENE_TIMINGS.memory_analysis.duration}><SceneMemoryAnalysis /></Sequence>
+    <Sequence from={SCENE_TIMINGS.batch_size.start} durationInFrames={SCENE_TIMINGS.batch_size.duration}><SceneBatchSize /></Sequence>
+    <Sequence from={SCENE_TIMINGS.no_grad.start} durationInFrames={SCENE_TIMINGS.no_grad.duration}><SceneNoGrad /></Sequence>
+    <Sequence from={SCENE_TIMINGS.memory_cleanup.start} durationInFrames={SCENE_TIMINGS.memory_cleanup.duration}><SceneMemoryCleanup /></Sequence>
+    <Sequence from={SCENE_TIMINGS.offloading.start} durationInFrames={SCENE_TIMINGS.offloading.duration}><SceneOffloading /></Sequence>
+    <Sequence from={SCENE_TIMINGS.efficient_data.start} durationInFrames={SCENE_TIMINGS.efficient_data.duration}><SceneEfficientData /></Sequence>
     <Sequence from={SCENE_TIMINGS.outro.start} durationInFrames={SCENE_TIMINGS.outro.duration}><SceneOutro /></Sequence>
   </AbsoluteFill>
 );

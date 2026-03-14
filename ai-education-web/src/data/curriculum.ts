@@ -8704,7 +8704,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "컴퓨터 비전 소개",
         description: "이미지 표현, 픽셀, 채널 이해",
         duration: "30분",
-        videoUrl: "https://youtu.be/P4dWdCYkw7M",
+        videoUrl: "https://youtu.be/qWkmrKjnfGY",
         content: LEVEL_5_LESSON_1
       },
       {
@@ -8712,7 +8712,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "합성곱 연산",
         description: "커널, 스트라이드, 패딩, 특성 맵",
         duration: "50분",
-        videoUrl: "https://youtu.be/pqc84Oe1Puc",
+        videoUrl: "https://youtu.be/83hahCSUjd4",
         content: LEVEL_5_LESSON_2
       },
       {
@@ -8720,7 +8720,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "풀링과 정규화",
         description: "Max Pooling, Batch Normalization",
         duration: "40분",
-        videoUrl: "https://youtu.be/2_J7vb04oeQ",
+        videoUrl: "https://youtu.be/mfEM_doBq1c",
         content: LEVEL_5_LESSON_3
       },
       {
@@ -8728,7 +8728,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "CNN 아키텍처",
         description: "LeNet, AlexNet, VGG 구조 이해",
         duration: "50분",
-        videoUrl: "https://youtu.be/VirxtNmwX8A",
+        videoUrl: "https://youtu.be/f_J0tVsCYB4",
         content: LEVEL_5_LESSON_4
       },
       {
@@ -8736,7 +8736,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "CNN 구현 (MNIST)",
         description: "PyTorch로 CNN 구현하기",
         duration: "60분",
-        videoUrl: "https://youtu.be/TORYkTcB_lA",
+        videoUrl: "https://youtu.be/3wJoDSD0BRk",
         content: LEVEL_5_LESSON_5
       },
       {
@@ -8744,7 +8744,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "CNN 구현 (CIFAR-10)",
         description: "더 복잡한 이미지 분류",
         duration: "50분",
-        videoUrl: "https://youtu.be/XSiTvVV5ecc",
+        videoUrl: "https://youtu.be/EXi7-9vPsyY",
         content: LEVEL_5_LESSON_6
       },
       {
@@ -8752,7 +8752,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "전이 학습",
         description: "Pre-trained 모델, Fine-tuning",
         duration: "50분",
-        videoUrl: "https://youtu.be/kArjl2ap4DY",
+        videoUrl: "https://youtu.be/anSfILe_oKo",
         content: LEVEL_5_LESSON_7
       },
       {
@@ -8760,7 +8760,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "데이터 증강",
         description: "회전, 뒤집기, 색상 변환",
         duration: "40분",
-        videoUrl: "https://youtu.be/G4-FGtJ5TNc",
+        videoUrl: "https://youtu.be/00gh5ce910w",
         content: LEVEL_5_LESSON_8
       }
     ]
@@ -8780,7 +8780,7 @@ print("\\nReLU and Leaky ReLU typically converge faster than Sigmoid/Tanh!")
         title: "시퀀스 데이터란 무엇인가?",
         description: "순서가 있는 데이터의 특성과 왜 특별한 모델이 필요한지",
         duration: "30분",
-        videoUrl: "https://youtu.be/w2G10HriB_s",
+        videoUrl: "https://youtu.be/iWyVsU0s4OY",
         content: `
 # 시퀀스 데이터란 무엇인가?
 
@@ -9163,7 +9163,7 @@ RNN은 이와 비슷하지만, 어떻게 과거 값을 조합할지를 **자동�
         title: "RNN의 구조와 동작 원리",
         description: "순환 구조, 은닉 상태 계산, 파라미터 공유를 numpy로 직접 구현",
         duration: "50분",
-        videoUrl: "https://youtu.be/-zTjMsPlHw4",
+        videoUrl: "https://youtu.be/gH1Kad605TA",
         content: `
 # RNN의 구조와 동작 원리
 
@@ -9514,7 +9514,7 @@ print("After training (BPTT), it would learn to predict patterns!")
         title: "LSTM -- 장기 기억의 비밀",
         description: "기울기 소실 문제와 LSTM 게이트 메커니즘",
         duration: "40분",
-        videoUrl: "https://youtu.be/3PYTxCSA5d4",
+        videoUrl: "https://youtu.be/BXk0EsaITsQ",
         content: lesson6_3_content
       },
       {
@@ -9522,7 +9522,7 @@ print("After training (BPTT), it would learn to predict patterns!")
         title: "GRU -- LSTM의 효율적인 동생",
         description: "GRU 게이트 구조와 LSTM 비교, 모델 선택 가이드",
         duration: "60분",
-        videoUrl: "https://youtu.be/DL_9xda2U04",
+        videoUrl: "https://youtu.be/3PHOX2sAA5Y",
         content: lesson6_4_content
       },
       {
@@ -9530,7 +9530,7 @@ print("After training (BPTT), it would learn to predict patterns!")
         title: "양방향 RNN",
         description: "Bidirectional RNN으로 양쪽 문맥 활용하기",
         duration: "40분",
-        videoUrl: "https://youtu.be/0uch5HmqyaM",
+        videoUrl: "https://youtu.be/ZEwREXjQyxQ",
         content: `
 # 양방향 RNN (Bidirectional RNN)
 
@@ -9946,7 +9946,7 @@ PyTorch에서는 \`num_layers=2, bidirectional=True\`로 자동 처리됩니다.
         title: "Seq2Seq 모델",
         description: "인코더-디코더 구조로 시퀀스 변환하기",
         duration: "45분",
-        videoUrl: "https://youtu.be/xqaB-xGYjak",
+        videoUrl: "https://youtu.be/-ie-excqhGs",
         content: `
 # Seq2Seq (Sequence-to-Sequence) 모델
 
@@ -10279,7 +10279,7 @@ for batch in dataloader:
         title: "감성 분석 구현",
         description: "영화 리뷰 긍정/부정 분류",
         duration: "55분",
-        videoUrl: "https://youtu.be/DNWgqqQnwgc",
+        videoUrl: "https://youtu.be/H_HoiQMYW7w",
         content: `
 # 감성 분석 구현
 
@@ -10720,7 +10720,7 @@ Level 7에서는 **어텐션(Attention) 메커니즘**과 **트랜스포머(Tran
         title: "Transformer 개요",
         description: "Attention is All You Need, RNN과의 비교",
         duration: "50분",
-        videoUrl: "https://youtu.be/cinEeraY4NY",
+        videoUrl: "https://youtu.be/h9lewORELi0",
         content: `
 # Transformer 개요 - 현대 AI의 시작점
 
@@ -11110,7 +11110,7 @@ print("이것이 Transformer의 주요 약점입니다.")
         title: "Self-Attention",
         description: "Q, K, V 개념과 Attention Score 계산",
         duration: "50분",
-        videoUrl: "https://youtu.be/pox8idg9nKw",
+        videoUrl: "https://youtu.be/92hqcZEHb2c",
         content: `
 # Self-Attention - Transformer의 핵심 엔진
 
@@ -11365,7 +11365,7 @@ $$\\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\
         title: "Multi-Head Attention",
         description: "여러 전문가의 동시 분석, 차원 분할",
         duration: "45분",
-        videoUrl: "https://youtu.be/QAGdZX1HEdo",
+        videoUrl: "https://youtu.be/zRwU_fddG9I",
         content: `
 # Multi-Head Attention - 여러 전문가의 협업
 
@@ -11580,7 +11580,7 @@ output, attn_weights = mha(x, x, x)
         title: "Positional Encoding",
         description: "위치 정보의 필요성, Sinusoidal Encoding",
         duration: "40분",
-        videoUrl: "https://youtu.be/80BuegDB2dU",
+        videoUrl: "https://youtu.be/aGxnDQRQ5v4",
         content: `
 # Positional Encoding - 순서의 비밀
 
@@ -11962,7 +11962,7 @@ $$\text{최종 입력} = \text{Word Embedding} + \text{Positional Encoding}$$
         title: "Encoder & Decoder 구조",
         description: "Transformer 전체 구조, Layer Norm, Residual Connection, FFN",
         duration: "60분",
-        videoUrl: "https://youtu.be/tBnyN7Lqjek",
+        videoUrl: "https://youtu.be/KAmg9NsTLtM",
         content: `
 # Encoder & Decoder 구조: Transformer의 전체 그림
 
@@ -12583,7 +12583,7 @@ print("이것이 Encoder 레이어 1개의 과정입니다!")
         title: "GPT 구조",
         description: "Decoder-only 아키텍처, 자기회귀 생성, Next Token Prediction",
         duration: "45분",
-        videoUrl: "https://youtu.be/fQYzP3NfZBc",
+        videoUrl: "https://youtu.be/HfxDtd1BbZ4",
         content: `
 # GPT 구조: Decoder-only의 힘
 
@@ -12995,7 +12995,7 @@ print("Temperature가 높을수록 -> 골고루 분산 (다양한 선택)")
         title: "BERT 구조",
         description: "Encoder-only 아키텍처, Masked Language Model, 양방향 문맥",
         duration: "45분",
-        videoUrl: "https://youtu.be/-tAfn8NGiWQ",
+        videoUrl: "https://youtu.be/ikJjZTv42Og",
         content: `
 # BERT 구조: 양방향으로 읽는 AI
 
@@ -13350,7 +13350,7 @@ print()\nprint("BERT의 강점: Pre-trained 지식 덕분에 적은 데이터로
         title: "LLM 학습과 활용",
         description: "Pre-training, Fine-tuning, RLHF, 프롬프트 엔지니어링, Scaling Laws",
         duration: "45분",
-        videoUrl: "https://youtu.be/6NsMPIjo4TY",
+        videoUrl: "https://youtu.be/07YOlnTXYnQ",
         content: `
 # LLM 학습과 활용: 거대 언어 모델의 세계
 
@@ -13904,7 +13904,7 @@ print("핵심 흐름: Transformer -> 스케일 업 -> RLHF -> 멀티모달 -> Ag
         title: "GPU와 병렬 컴퓨팅",
         description: "왜 AI에 GPU가 필요한가, CPU vs GPU, SIMD 개념",
         duration: "40분",
-        videoUrl: "https://youtu.be/TOc35ipura8",
+        videoUrl: "https://youtu.be/Sq1TUHZnUFs",
         content: lesson8_1_content
       },
       {
@@ -13912,7 +13912,7 @@ print("핵심 흐름: Transformer -> 스케일 업 -> RLHF -> 멀티모달 -> Ag
         title: "CUDA 개요",
         description: "커널, 스레드, 블록, 그리드",
         duration: "50분",
-        videoUrl: "https://youtu.be/LwAvLwO2p_o",
+        videoUrl: "https://youtu.be/1L4ogclf5nQ",
         content: `
 # CUDA 개요
 
@@ -14179,7 +14179,7 @@ int main() {
         title: "CUDA 환경 설정",
         description: "드라이버, 툴킷, nvcc",
         duration: "40분",
-        videoUrl: "https://youtu.be/JRS-kPAkf0U",
+        videoUrl: "https://youtu.be/1-aPUGWJFME",
         content: `
 # CUDA 환경 설정
 
@@ -14463,7 +14463,7 @@ CUDA Toolkit 10.x → Driver 410.48 이상 필요
         title: "첫 CUDA 프로그램",
         description: "Hello World, 벡터 덧셈",
         duration: "50분",
-        videoUrl: "https://youtu.be/B--h8g02Vjg",
+        videoUrl: "https://youtu.be/jdrHLSUz6Y8",
         content: `
 # 첫 CUDA 프로그램
 
@@ -14818,7 +14818,7 @@ err = cudaGetLastError();
         title: "Mixed Precision 훈련",
         description: "FP32, FP16, BF16 부동소수점과 혼합 정밀도",
         duration: "50분",
-        videoUrl: "https://youtu.be/YaxEcWjFmEI",
+        videoUrl: "https://youtu.be/Ydqwfz8z_XQ",
         content: `
 # Mixed Precision 훈련 -- 숫자의 정밀도를 줄여서 속도를 올리자
 
@@ -15132,7 +15132,7 @@ float value = data[idx];  // Coalesced!
         title: "스트림과 비동기 실행",
         description: "CUDA Stream, 파이프라인, 동시성",
         duration: "50분",
-        videoUrl: "https://youtu.be/H9MtQHtSkPU",
+        videoUrl: "https://youtu.be/QCbrzT-Bozo",
         content: `
 # 스트림과 비동기 실행
 
@@ -15511,7 +15511,7 @@ int main() {
         title: "CUDA 성능 최적화",
         description: "Occupancy, Coalescing, Branch Divergence",
         duration: "40분",
-        videoUrl: "https://youtu.be/BNqgayj2Kf0",
+        videoUrl: "https://youtu.be/mGuLiFgoDOY",
         content: `
 # CUDA 성능 최적화
 
@@ -15864,7 +15864,7 @@ ncu --kernel-name myKernel ./my_cuda_app
         title: "프로젝트 개요",
         description: "요구사항 분석, 시스템 설계",
         duration: "40분",
-        videoUrl: "https://youtu.be/P7Wxu6sZKjE",
+        videoUrl: "https://youtu.be/5gx_mtLxpiE",
         content: `
 # 프로젝트 개요 - 번호판 인식 시스템
 
@@ -16159,7 +16159,7 @@ pip install fastapi uvicorn            # API 서버
         title: "데이터 수집/준비",
         description: "이미지 수집, 라벨링, 전처리",
         duration: "60분",
-        videoUrl: "https://youtu.be/xXtfVzylxVY",
+        videoUrl: "https://youtu.be/iFyk0gm4TWU",
         content: `
 # 데이터 파이프라인 - 수집, 라벨링, 전처리
 
@@ -16572,7 +16572,7 @@ project/
         title: "번호판 검출 모델",
         description: "Object Detection (YOLO/SSD)",
         duration: "90분",
-        videoUrl: "https://youtu.be/AKHZZu-WE8Y",
+        videoUrl: "https://youtu.be/5y08MQAyZo0",
         content: `
 # 번호판 검출 모델 - YOLO 기반 Object Detection
 
@@ -16939,7 +16939,7 @@ for box in results[0].boxes:
         title: "문자 인식 모델",
         description: "CNN 기반 OCR",
         duration: "90분",
-        videoUrl: "https://youtu.be/1CrHfCO0deg",
+        videoUrl: "https://youtu.be/64-Crp_K07I",
         content: `
 # 문자 인식 모델 - CNN 기반 OCR
 
@@ -17428,7 +17428,7 @@ print(f"     예: 한글 위치에 숫자가 오면 형식 오류로 판단")
         title: "모델 평가",
         description: "mAP, 혼동 행렬, F1-score로 성능 측정",
         duration: "60분",
-        videoUrl: "https://youtu.be/aa0lrltDBf8",
+        videoUrl: "https://youtu.be/nYI9pcuomWY",
         content: `
 # 모델 평가
 
@@ -17789,7 +17789,7 @@ for ca in [0.99, 0.98, 0.97, 0.95, 0.90]:
         title: "모델 배포",
         description: "FastAPI, TorchScript, ONNX, 엣지 배포",
         duration: "60분",
-        videoUrl: "https://youtu.be/6q7Fyh17b0E",
+        videoUrl: "https://youtu.be/nOlRvA8T6lU",
         content: `
 # 모델 배포
 
@@ -18135,7 +18135,7 @@ model.export(format="onnx", half=True)  # 모델 크기 절반, 속도 향상
         title: "MLOps 기초",
         description: "버전 관리, CI/CD, 모니터링, A/B 테스트",
         duration: "60분",
-        videoUrl: "https://youtu.be/xExbM5HmTbc",
+        videoUrl: "https://youtu.be/JTKZfOU147w",
         content: `
 # MLOps 기초
 
@@ -18490,7 +18490,7 @@ Level 3을 갖춘 조직은 많지 않습니다.
         title: "최종 회고",
         description: "전체 과정 리뷰, 커리어 가이드, 다음 단계",
         duration: "60분",
-        videoUrl: "https://youtu.be/jtSOrd5YLW0",
+        videoUrl: "https://youtu.be/SwX0-RgcrJE",
         content: `
 # 최종 회고 - Level 0부터 Level 9까지의 여정
 

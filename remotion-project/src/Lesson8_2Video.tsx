@@ -1,16 +1,17 @@
 import React from "react";
 import { AbsoluteFill, Audio, Img, Sequence, staticFile, useCurrentFrame } from "remotion";
 
-export const LESSON_8_2_DURATION = 4408;
+export const LESSON_8_2_DURATION = 7175;
 
 const SCENE_TIMINGS = {
-  intro: { start: 0, duration: 577 },
-  hostDevice: { start: 577, duration: 673 },
-  kernel: { start: 1250, duration: 611 },
-  threadBlock: { start: 1861, duration: 665 },
-  example: { start: 2526, duration: 733 },
-  pytorch: { start: 3259, duration: 612 },
-  outro: { start: 3871, duration: 537 },
+  intro: { start: 0, duration: 541 },
+  cuda_basics: { start: 541, duration: 875 },
+  thread_hierarchy: { start: 1416, duration: 1167 },
+  memory_types: { start: 2583, duration: 1089 },
+  pytorch_cuda: { start: 3672, duration: 1000 },
+  synchronization: { start: 4672, duration: 973 },
+  error_handling: { start: 5645, duration: 996 },
+  outro: { start: 6641, duration: 534 },
 };
 
 const COLORS = {
@@ -24,12 +25,12 @@ const COLORS = {
 
 const GlobalOverlay: React.FC = () => (
   <>
-    <div style={{ position: "absolute", top: 30, left: 40, display: "flex", alignItems: "center", gap: 12, zIndex: 100 }}>
-      <Img src={staticFile("images/logo.png")} style={{ width: 50, height: 50, borderRadius: 8 }} />
-      <span style={{ color: COLORS.light, fontSize: 24, fontWeight: 700, fontFamily: "Pretendard, sans-serif" }}>UTTEC-Lab</span>
+    <div style={{ position: "absolute", top: 30, left: 40, zIndex: 9999, display: "flex", alignItems: "center", gap: 15 }}>
+      <Img src={staticFile("images/logo.png")} style={{ width: 60, height: 60, borderRadius: 8 }} />
+      <span style={{ color: "white", fontSize: 28, fontWeight: "bold", textShadow: "2px 2px 4px rgba(0,0,0,0.7)" }}>UTTEC-Lab</span>
     </div>
-    <div style={{ position: "absolute", bottom: 30, right: 40, color: "rgba(255,255,255,0.6)", fontSize: 20, fontFamily: "Pretendard, sans-serif", zIndex: 100 }}>
-      ai.uttec-lab.com
+    <div style={{ position: "absolute", bottom: 30, left: "50%", transform: "translateX(-50%)", zIndex: 9999, background: "rgba(244, 63, 94, 0.9)", padding: "10px 30px", borderRadius: 25 }}>
+      <span style={{ color: "white", fontSize: 22, fontWeight: "bold", letterSpacing: 1 }}>http://uttec-ai.duckdns.org</span>
     </div>
   </>
 );
@@ -53,52 +54,34 @@ const SceneIntro: React.FC = () => {
   );
 };
 
-const SceneHostDevice: React.FC = () => {
-  return (
-    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
-      <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-2/host_device.mp3")} />
-      <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>Host와 Device</h1>
-        <div style={{ display: "flex", gap: 60, justifyContent: "center", alignItems: "center" }}>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40, textAlign: "center" }}>
-            <div style={{ fontSize: 80, marginBottom: 20 }}>💻</div>
-            <div style={{ fontSize: 32, color: COLORS.light, fontWeight: 700 }}>Host</div>
-            <div style={{ fontSize: 24, color: "rgba(255,255,255,0.7)", marginTop: 10 }}>CPU + CPU 메모리</div>
-          </div>
-          <div style={{ fontSize: 60, color: COLORS.primary }}>⇄</div>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40, textAlign: "center" }}>
-            <div style={{ fontSize: 80, marginBottom: 20 }}>🎮</div>
-            <div style={{ fontSize: 32, color: COLORS.light, fontWeight: 700 }}>Device</div>
-            <div style={{ fontSize: 24, color: "rgba(255,255,255,0.7)", marginTop: 10 }}>GPU + GPU 메모리</div>
-          </div>
-        </div>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-const SceneKernel: React.FC = () => {
+const SceneCudaBasics: React.FC = () => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-2/kernel.mp3")} />
+      <Audio src={staticFile("audio/lesson-8-2/cuda_basics.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>커널 (Kernel)</h1>
-        <div style={{ display: "flex", gap: 40 }}>
-          <div style={{ flex: 1 }}>
-            <div style={{ background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 30, marginBottom: 20 }}>
-              <div style={{ fontSize: 24, color: COLORS.light }}>CPU (for loop)</div>
-              <div style={{ fontSize: 20, color: "rgba(255,255,255,0.6)", marginTop: 10 }}>순차 처리: 1→2→3→...</div>
-            </div>
-            <div style={{ background: "rgba(244,63,94,0.3)", borderRadius: 20, padding: 30 }}>
-              <div style={{ fontSize: 24, color: COLORS.light }}>GPU (kernel)</div>
-              <div style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", marginTop: 10 }}>병렬 처리: 모두 동시!</div>
-            </div>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>CUDA란 무엇인가?</h1>
+        <div style={{ display: "flex", gap: 50 }}>
+          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40 }}>
+            <div style={{ fontSize: 60, textAlign: "center", marginBottom: 20 }}>🎮</div>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>CUDA</div>
+            <div style={{ fontSize: 22, color: "rgba(255,255,255,0.8)", textAlign: "center" }}>Compute Unified Device Architecture</div>
+            <ul style={{ fontSize: 22, color: "rgba(255,255,255,0.8)", lineHeight: 2, marginTop: 20 }}>
+              <li>NVIDIA의 병렬 컴퓨팅 플랫폼</li>
+              <li>GPU에서 범용 연산 수행</li>
+              <li>C/C++ 확장 언어 제공</li>
+            </ul>
           </div>
-          <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <div style={{ fontSize: 120 }}>⚡</div>
+          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40 }}>
+            <div style={{ fontSize: 60, textAlign: "center", marginBottom: 20 }}>📦</div>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>Host & Device</div>
+            <ul style={{ fontSize: 22, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+              <li><strong>Host:</strong> CPU와 시스템 메모리</li>
+              <li><strong>Device:</strong> GPU와 GPU 메모리</li>
+              <li>데이터를 Host에서 Device로 전송</li>
+              <li>연산 후 결과를 다시 Host로</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -106,70 +89,64 @@ const SceneKernel: React.FC = () => {
   );
 };
 
-const SceneThreadBlock: React.FC = () => {
+const SceneThreadHierarchy: React.FC = () => {
+  const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-2/thread_block.mp3")} />
+      <Audio src={staticFile("audio/lesson-8-2/thread_hierarchy.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>Thread → Block → Grid</h1>
-        <div style={{ display: "flex", gap: 30, justifyContent: "center" }}>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ width: 80, height: 80, background: COLORS.primary, borderRadius: "50%", display: "flex", justifyContent: "center", alignItems: "center", fontSize: 24, color: COLORS.light, margin: "0 auto" }}>T</div>
-            <div style={{ fontSize: 20, color: COLORS.light, marginTop: 10 }}>Thread</div>
-          </div>
-          <div style={{ fontSize: 40, color: COLORS.primary, alignSelf: "center" }}>→</div>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 5, padding: 10, background: "rgba(244,63,94,0.3)", borderRadius: 10 }}>
-              {Array(9).fill(0).map((_, i) => (
-                <div key={i} style={{ width: 25, height: 25, background: COLORS.primary, borderRadius: "50%" }}></div>
-              ))}
-            </div>
-            <div style={{ fontSize: 20, color: COLORS.light, marginTop: 10 }}>Block</div>
-          </div>
-          <div style={{ fontSize: 40, color: COLORS.primary, alignSelf: "center" }}>→</div>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10, padding: 15, background: "rgba(244,63,94,0.15)", borderRadius: 10 }}>
-              {Array(4).fill(0).map((_, i) => (
-                <div key={i} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 3, padding: 5, background: "rgba(244,63,94,0.3)", borderRadius: 5 }}>
-                  {Array(9).fill(0).map((_, j) => (
-                    <div key={j} style={{ width: 8, height: 8, background: COLORS.primary, borderRadius: "50%" }}></div>
-                  ))}
-                </div>
-              ))}
-            </div>
-            <div style={{ fontSize: 20, color: COLORS.light, marginTop: 10 }}>Grid</div>
-          </div>
-        </div>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-const SceneExample: React.FC = () => {
-  return (
-    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
-      <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-2/example.mp3")} />
-      <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>벡터 덧셈 예제</h1>
-        <div style={{ background: "rgba(244,63,94,0.1)", borderRadius: 20, padding: 30 }}>
-          <pre style={{ fontSize: 22, color: COLORS.light, lineHeight: 1.6, margin: 0 }}>
-{`// 각 스레드가 하나의 원소 처리
-int idx = blockIdx.x * blockDim.x + threadIdx.x;
-C[idx] = A[idx] + B[idx];`}
-          </pre>
-        </div>
-        <div style={{ display: "flex", gap: 20, marginTop: 30, justifyContent: "center" }}>
-          {["A", "+", "B", "=", "C"].map((item, i) => (
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>스레드 계층 구조</h1>
+        <div style={{ display: "flex", gap: 40, justifyContent: "center" }}>
+          {[
+            { title: "Grid", desc: "전체 커널 실행 단위", icon: "🌐", color: "rgba(244,63,94,0.3)" },
+            { title: "Block", desc: "스레드 그룹\n공유 메모리 접근", icon: "📦", color: "rgba(244,63,94,0.5)" },
+            { title: "Thread", desc: "개별 실행 단위\n로컬 변수 보유", icon: "⚡", color: "rgba(244,63,94,0.7)" },
+          ].map((item, i) => (
             <div key={i} style={{
-              width: item === "+" || item === "=" ? 50 : 100,
-              height: 60,
-              background: item === "+" || item === "=" ? "transparent" : "rgba(244,63,94,0.3)",
-              borderRadius: 10,
-              display: "flex", justifyContent: "center", alignItems: "center",
-              fontSize: 32, color: COLORS.light, fontWeight: 700
-            }}>{item}</div>
+              flex: 1,
+              background: item.color,
+              borderRadius: 20,
+              padding: 35,
+              textAlign: "center",
+              transform: `scale(${1 + Math.sin((frame + i * 20) * 0.03) * 0.02})`
+            }}>
+              <div style={{ fontSize: 70, marginBottom: 15 }}>{item.icon}</div>
+              <div style={{ fontSize: 32, color: COLORS.light, fontWeight: 700, marginBottom: 15 }}>{item.title}</div>
+              <div style={{ fontSize: 20, color: "rgba(255,255,255,0.9)", whiteSpace: "pre-line", lineHeight: 1.6 }}>{item.desc}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ textAlign: "center", marginTop: 40 }}>
+          <div style={{ fontSize: 24, color: "rgba(255,255,255,0.8)" }}>Grid → Block(들) → Thread(들)</div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const SceneMemoryTypes: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-8-2/memory_types.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>CUDA 메모리 종류</h1>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 30 }}>
+          {[
+            { title: "Global Memory", desc: "모든 스레드 접근 가능\n가장 크고 느림", speed: "느림" },
+            { title: "Shared Memory", desc: "블록 내 공유\n매우 빠름", speed: "빠름" },
+            { title: "Local Memory", desc: "스레드 전용\nGlobal에 저장", speed: "느림" },
+            { title: "Register", desc: "스레드 전용\n가장 빠름", speed: "매우 빠름" },
+          ].map((item, i) => (
+            <div key={i} style={{ background: "rgba(244,63,94,0.15)", borderRadius: 16, padding: 30 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 15 }}>
+                <div style={{ fontSize: 26, color: COLORS.light, fontWeight: 700 }}>{item.title}</div>
+                <div style={{ fontSize: 16, color: COLORS.primary, background: "rgba(244,63,94,0.3)", padding: "5px 15px", borderRadius: 20 }}>{item.speed}</div>
+              </div>
+              <div style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", whiteSpace: "pre-line", lineHeight: 1.6 }}>{item.desc}</div>
+            </div>
           ))}
         </div>
       </div>
@@ -177,22 +154,94 @@ C[idx] = A[idx] + B[idx];`}
   );
 };
 
-const ScenePytorch: React.FC = () => {
+const ScenePytorchCuda: React.FC = () => {
+  const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-2/pytorch.mp3")} />
+      <Audio src={staticFile("audio/lesson-8-2/pytorch_cuda.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>PyTorch에서는 간단!</h1>
-        <div style={{ background: "rgba(244,63,94,0.1)", borderRadius: 20, padding: 40 }}>
-          <pre style={{ fontSize: 28, color: COLORS.light, lineHeight: 1.8, margin: 0 }}>
-{`tensor.cuda()
-# 또는
-tensor.to('cuda')`}
-          </pre>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>PyTorch에서 CUDA 사용</h1>
+        <div style={{ background: "rgba(0,0,0,0.4)", borderRadius: 16, padding: 40, fontFamily: "monospace" }}>
+          <div style={{ fontSize: 22, color: "#f8f8f2", lineHeight: 2 }}>
+            <div><span style={{ color: "#66d9ef" }}>import</span> torch</div>
+            <div style={{ marginTop: 15 }}># GPU 사용 가능 확인</div>
+            <div>torch.cuda.<span style={{ color: "#a6e22e" }}>is_available</span>()</div>
+            <div style={{ marginTop: 15 }}># 텐서를 GPU로 이동</div>
+            <div>x = x.<span style={{ color: "#a6e22e" }}>to</span>(<span style={{ color: "#e6db74" }}>'cuda'</span>)</div>
+            <div style={{ marginTop: 15 }}># 모델을 GPU로 이동</div>
+            <div>model = model.<span style={{ color: "#a6e22e" }}>cuda</span>()</div>
+            <div style={{ marginTop: 15 }}># GPU 선택</div>
+            <div>device = torch.<span style={{ color: "#a6e22e" }}>device</span>(<span style={{ color: "#e6db74" }}>'cuda:0'</span>)</div>
+          </div>
         </div>
-        <div style={{ marginTop: 40, textAlign: "center", fontSize: 28, color: "rgba(255,255,255,0.8)" }}>
-          내부 원리를 이해하면 성능 최적화에 도움!
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const SceneSynchronization: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-8-2/synchronization.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>동기화와 비동기 실행</h1>
+        <div style={{ display: "flex", gap: 50 }}>
+          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40 }}>
+            <div style={{ fontSize: 50, textAlign: "center", marginBottom: 20 }}>🔄</div>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>비동기 실행</div>
+            <ul style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", lineHeight: 1.8 }}>
+              <li>CUDA 연산은 기본적으로 비동기</li>
+              <li>CPU와 GPU가 병렬로 동작</li>
+              <li>커널 호출 후 바로 반환</li>
+              <li>처리량 최대화</li>
+            </ul>
+          </div>
+          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40 }}>
+            <div style={{ fontSize: 50, textAlign: "center", marginBottom: 20 }}>⏱️</div>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>동기화</div>
+            <ul style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", lineHeight: 1.8 }}>
+              <li>torch.cuda.synchronize()</li>
+              <li>GPU 작업 완료 대기</li>
+              <li>정확한 시간 측정에 필요</li>
+              <li>디버깅 시 유용</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const SceneErrorHandling: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-8-2/error_handling.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>에러 처리</h1>
+        <div style={{ display: "flex", gap: 40 }}>
+          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 35 }}>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20 }}>흔한 에러들</div>
+            <ul style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+              <li><strong>CUDA out of memory:</strong> GPU 메모리 부족</li>
+              <li><strong>device-side assert:</strong> 인덱스 오류</li>
+              <li><strong>CUDA runtime error:</strong> 런타임 에러</li>
+              <li><strong>CUDA illegal memory access:</strong> 잘못된 메모리 접근</li>
+            </ul>
+          </div>
+          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 35 }}>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20 }}>해결 방법</div>
+            <ul style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+              <li>배치 크기 줄이기</li>
+              <li>torch.cuda.empty_cache()</li>
+              <li>CUDA_LAUNCH_BLOCKING=1</li>
+              <li>nvidia-smi로 상태 확인</li>
+            </ul>
+          </div>
         </div>
       </div>
     </AbsoluteFill>
@@ -209,11 +258,12 @@ const SceneOutro: React.FC = () => {
       <div style={{ textAlign: "center", opacity }}>
         <div style={{ fontSize: 120, marginBottom: 30 }}>✅</div>
         <div style={{ fontSize: 56, fontWeight: 800, color: COLORS.light, marginBottom: 30 }}>학습 완료!</div>
-        <div style={{ fontSize: 32, color: "rgba(255,255,255,0.9)", lineHeight: 1.8 }}>
-          Host/Device | 커널 | Thread-Block-Grid
+        <div style={{ fontSize: 28, color: "rgba(255,255,255,0.9)", lineHeight: 1.8 }}>
+          CUDA 기초: Host/Device, 스레드 계층, 메모리 종류<br />
+          PyTorch에서 쉽게 GPU 활용 가능
         </div>
-        <div style={{ marginTop: 40, fontSize: 28, color: "rgba(255,255,255,0.7)" }}>
-          다음: GPU 메모리 계층
+        <div style={{ marginTop: 40, fontSize: 26, color: "rgba(255,255,255,0.7)" }}>
+          다음: PyTorch CUDA 최적화
         </div>
       </div>
     </AbsoluteFill>
@@ -223,11 +273,12 @@ const SceneOutro: React.FC = () => {
 export const Lesson8_2Video: React.FC = () => (
   <AbsoluteFill>
     <Sequence from={SCENE_TIMINGS.intro.start} durationInFrames={SCENE_TIMINGS.intro.duration}><SceneIntro /></Sequence>
-    <Sequence from={SCENE_TIMINGS.hostDevice.start} durationInFrames={SCENE_TIMINGS.hostDevice.duration}><SceneHostDevice /></Sequence>
-    <Sequence from={SCENE_TIMINGS.kernel.start} durationInFrames={SCENE_TIMINGS.kernel.duration}><SceneKernel /></Sequence>
-    <Sequence from={SCENE_TIMINGS.threadBlock.start} durationInFrames={SCENE_TIMINGS.threadBlock.duration}><SceneThreadBlock /></Sequence>
-    <Sequence from={SCENE_TIMINGS.example.start} durationInFrames={SCENE_TIMINGS.example.duration}><SceneExample /></Sequence>
-    <Sequence from={SCENE_TIMINGS.pytorch.start} durationInFrames={SCENE_TIMINGS.pytorch.duration}><ScenePytorch /></Sequence>
+    <Sequence from={SCENE_TIMINGS.cuda_basics.start} durationInFrames={SCENE_TIMINGS.cuda_basics.duration}><SceneCudaBasics /></Sequence>
+    <Sequence from={SCENE_TIMINGS.thread_hierarchy.start} durationInFrames={SCENE_TIMINGS.thread_hierarchy.duration}><SceneThreadHierarchy /></Sequence>
+    <Sequence from={SCENE_TIMINGS.memory_types.start} durationInFrames={SCENE_TIMINGS.memory_types.duration}><SceneMemoryTypes /></Sequence>
+    <Sequence from={SCENE_TIMINGS.pytorch_cuda.start} durationInFrames={SCENE_TIMINGS.pytorch_cuda.duration}><ScenePytorchCuda /></Sequence>
+    <Sequence from={SCENE_TIMINGS.synchronization.start} durationInFrames={SCENE_TIMINGS.synchronization.duration}><SceneSynchronization /></Sequence>
+    <Sequence from={SCENE_TIMINGS.error_handling.start} durationInFrames={SCENE_TIMINGS.error_handling.duration}><SceneErrorHandling /></Sequence>
     <Sequence from={SCENE_TIMINGS.outro.start} durationInFrames={SCENE_TIMINGS.outro.duration}><SceneOutro /></Sequence>
   </AbsoluteFill>
 );

@@ -1,0 +1,29 @@
+Let me summarize what we've covered so far.
+
+What humans do is as follows.
+
+First, design initial experiments. Decide what conditions to try.
+
+Second, perform ICP component analysis. Chemical analysis can only be done by humans.
+
+Third, calculate and evaluate recovery rates. Judge whether targets are achieved.
+
+Fourth, determine optimal conditions. Final decision-making belongs to humans.
+
+Fifth, set target particle size for AI. Tell the AI what particle size indicates good quality.
+
+What AI does is as follows.
+
+First, real-time particle size monitoring. Monitoring 24 hours without interruption.
+
+Second, alert when deviations occur. Immediately notify of problems.
+
+Third, automatically adjust equipment conditions. Perform feedback control.
+
+Fourth, learn particle size patterns. Understand relationships between equipment and particle size.
+
+Fifth, detect anomalies early. Prevent equipment failures.
+
+In the end, humans define what good quality is, and AI automatically manages maintaining that quality.
+
+The result of this collaboration is consistent quality, high productivity, and low defect rates.

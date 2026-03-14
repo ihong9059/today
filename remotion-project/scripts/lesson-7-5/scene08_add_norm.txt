@@ -1,0 +1,17 @@
+Add & Norm을 자세히 볼까요?
+
+Add는 잔차 연결이에요.
+x + SubLayer(x)
+
+Norm은 LayerNorm이에요.
+정규화를 적용해요!
+
+순서가 중요해요!
+Post-Norm은 더하기 후 Norm이에요.
+Pre-Norm은 Norm 후 더하기예요.
+
+최신 모델들은 대부분요.
+Pre-Norm을 사용해요!
+
+안정적인 학습이 가능하거든요.
+

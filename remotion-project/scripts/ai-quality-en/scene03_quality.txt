@@ -1,0 +1,13 @@
+So how do we determine quality?
+
+The most important indicator is the recovery rate. It represents the ratio of valuable metals actually recovered compared to those contained in the input waste batteries.
+
+Component purity is also important. It indicates how much lithium, cobalt, and nickel are contained in the black mass.
+
+Now, here's an important point.
+
+This type of chemical component analysis can only be accurately measured through an ICP analyzer, that is, Inductively Coupled Plasma Optical Emission Spectrometry.
+
+Collecting black mass samples, analyzing them with ICP equipment, and verifying the results must be performed by humans.
+
+AI cannot measure chemical components in real-time. Let me make this point clear first.

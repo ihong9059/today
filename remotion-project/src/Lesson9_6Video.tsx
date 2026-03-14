@@ -1,16 +1,16 @@
 import React from "react";
 import { AbsoluteFill, Audio, Img, Sequence, staticFile, useCurrentFrame } from "remotion";
 
-export const LESSON_9_6_DURATION = 3257;
+export const LESSON_9_6_DURATION = 5023;
 
 const SCENE_TIMINGS = {
-  intro: { start: 0, duration: 442 },
-  fastapi: { start: 442, duration: 531 },
-  optimization: { start: 973, duration: 498 },
-  docker: { start: 1471, duration: 469 },
-  edge: { start: 1940, duration: 489 },
-  scaling: { start: 2429, duration: 433 },
-  outro: { start: 2862, duration: 395 },
+  intro: { start: 0, duration: 551 },
+  fastapi: { start: 551, duration: 847 },
+  optimization: { start: 1398, duration: 891 },
+  docker: { start: 2289, duration: 715 },
+  edge: { start: 3004, duration: 832 },
+  scaling: { start: 3836, duration: 711 },
+  outro: { start: 4547, duration: 476 },
 };
 
 const COLORS = {
@@ -24,12 +24,12 @@ const COLORS = {
 
 const GlobalOverlay: React.FC = () => (
   <>
-    <div style={{ position: "absolute", top: 30, left: 40, display: "flex", alignItems: "center", gap: 12, zIndex: 100 }}>
-      <Img src={staticFile("images/logo.png")} style={{ width: 50, height: 50, borderRadius: 8 }} />
-      <span style={{ color: COLORS.light, fontSize: 24, fontWeight: 700, fontFamily: "Pretendard, sans-serif" }}>UTTEC-Lab</span>
+    <div style={{ position: "absolute", top: 30, left: 40, zIndex: 9999, display: "flex", alignItems: "center", gap: 15 }}>
+      <Img src={staticFile("images/logo.png")} style={{ width: 60, height: 60, borderRadius: 8 }} />
+      <span style={{ color: "white", fontSize: 28, fontWeight: "bold", textShadow: "2px 2px 4px rgba(0,0,0,0.7)" }}>UTTEC-Lab</span>
     </div>
-    <div style={{ position: "absolute", bottom: 30, right: 40, color: "rgba(255,255,255,0.6)", fontSize: 20, fontFamily: "Pretendard, sans-serif", zIndex: 100 }}>
-      ai.uttec-lab.com
+    <div style={{ position: "absolute", bottom: 30, left: "50%", transform: "translateX(-50%)", zIndex: 9999, background: "rgba(245, 158, 11, 0.9)", padding: "10px 30px", borderRadius: 25 }}>
+      <span style={{ color: "white", fontSize: 22, fontWeight: "bold", letterSpacing: 1 }}>http://uttec-ai.duckdns.org</span>
     </div>
   </>
 );

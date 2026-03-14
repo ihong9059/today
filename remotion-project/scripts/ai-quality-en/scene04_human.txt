@@ -1,0 +1,21 @@
+Now for the key question.
+
+What equipment settings and environmental conditions should we use to achieve the highest recovery rate?
+
+Let me explain the process of finding these optimal conditions.
+
+Step 1. Input waste battery cells into the process.
+
+Step 2. Set equipment and environmental conditions. Equipment conditions include blade specifications, rotation speed, and process flow rate. Environmental conditions include temperature, humidity, and pressure.
+
+Step 3. Produce black mass with the configured settings.
+
+Step 4. Collect samples from the produced black mass, perform component analysis with ICP equipment, and calculate the recovery rate.
+
+If the recovery rate doesn't reach the target, change the equipment or environmental conditions and repeat from Step 1.
+
+This process may require dozens of repeated experiments.
+
+And the important point is, AI does not intervene in any of this process.
+
+Finding the optimal recovery rate conditions is entirely accomplished through human experimentation and judgment.

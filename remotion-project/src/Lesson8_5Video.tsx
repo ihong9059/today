@@ -1,16 +1,17 @@
 import React from "react";
 import { AbsoluteFill, Audio, Img, Sequence, staticFile, useCurrentFrame } from "remotion";
 
-export const LESSON_8_5_DURATION = 4215;
+export const LESSON_8_5_DURATION = 6269;
 
 const SCENE_TIMINGS = {
-  intro: { start: 0, duration: 503 },
-  precision: { start: 503, duration: 759 },
-  why: { start: 1262, duration: 541 },
-  amp: { start: 1803, duration: 655 },
-  scaling: { start: 2458, duration: 641 },
-  bf16: { start: 3099, duration: 548 },
-  outro: { start: 3647, duration: 568 },
+  intro: { start: 0, duration: 560 },
+  why_distributed: { start: 560, duration: 837 },
+  data_parallel: { start: 1397, duration: 820 },
+  ddp: { start: 2217, duration: 1014 },
+  model_parallel: { start: 3231, duration: 819 },
+  fsdp: { start: 4050, duration: 913 },
+  practical_tips: { start: 4963, duration: 787 },
+  outro: { start: 5750, duration: 519 },
 };
 
 const COLORS = {
@@ -24,12 +25,12 @@ const COLORS = {
 
 const GlobalOverlay: React.FC = () => (
   <>
-    <div style={{ position: "absolute", top: 30, left: 40, display: "flex", alignItems: "center", gap: 12, zIndex: 100 }}>
-      <Img src={staticFile("images/logo.png")} style={{ width: 50, height: 50, borderRadius: 8 }} />
-      <span style={{ color: COLORS.light, fontSize: 24, fontWeight: 700, fontFamily: "Pretendard, sans-serif" }}>UTTEC-Lab</span>
+    <div style={{ position: "absolute", top: 30, left: 40, zIndex: 9999, display: "flex", alignItems: "center", gap: 15 }}>
+      <Img src={staticFile("images/logo.png")} style={{ width: 60, height: 60, borderRadius: 8 }} />
+      <span style={{ color: "white", fontSize: 28, fontWeight: "bold", textShadow: "2px 2px 4px rgba(0,0,0,0.7)" }}>UTTEC-Lab</span>
     </div>
-    <div style={{ position: "absolute", bottom: 30, right: 40, color: "rgba(255,255,255,0.6)", fontSize: 20, fontFamily: "Pretendard, sans-serif", zIndex: 100 }}>
-      ai.uttec-lab.com
+    <div style={{ position: "absolute", bottom: 30, left: "50%", transform: "translateX(-50%)", zIndex: 9999, background: "rgba(244, 63, 94, 0.9)", padding: "10px 30px", borderRadius: 25 }}>
+      <span style={{ color: "white", fontSize: 22, fontWeight: "bold", letterSpacing: 1 }}>http://uttec-ai.duckdns.org</span>
     </div>
   </>
 );
@@ -42,9 +43,9 @@ const SceneIntro: React.FC = () => {
       <GlobalOverlay />
       <Audio src={staticFile("audio/lesson-8-5/intro.mp3")} />
       <div style={{ textAlign: "center", opacity, transform: `translateY(${20 - opacity * 20}px)` }}>
-        <div style={{ fontSize: 180, marginBottom: 20 }}>⚡</div>
-        <div style={{ fontSize: 72, fontWeight: 800, color: COLORS.light, marginBottom: 20 }}>Mixed Precision 훈련</div>
-        <div style={{ fontSize: 36, color: "rgba(255,255,255,0.9)" }}>숫자 정밀도로 속도 향상</div>
+        <div style={{ fontSize: 180, marginBottom: 20 }}>🌐</div>
+        <div style={{ fontSize: 72, fontWeight: 800, color: COLORS.light, marginBottom: 20 }}>분산 학습 기초</div>
+        <div style={{ fontSize: 36, color: "rgba(255,255,255,0.9)" }}>여러 GPU로 함께 학습하기</div>
         <div style={{ marginTop: 40, padding: "15px 40px", background: "rgba(0,0,0,0.3)", borderRadius: 50, fontSize: 28, color: COLORS.light }}>
           Level 8-5
         </div>
@@ -53,146 +54,220 @@ const SceneIntro: React.FC = () => {
   );
 };
 
-const ScenePrecision: React.FC = () => {
+const SceneWhyDistributed: React.FC = () => {
+  const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-5/precision.mp3")} />
+      <Audio src={staticFile("audio/lesson-8-5/why_distributed.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>부동소수점 정밀도</h1>
-        <div style={{ display: "flex", gap: 30 }}>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 30, textAlign: "center" }}>
-            <div style={{ fontSize: 48, fontWeight: 700, color: COLORS.primary, marginBottom: 15 }}>FP32</div>
-            <div style={{ fontSize: 24, color: COLORS.light, marginBottom: 10 }}>32비트</div>
-            <div style={{ fontSize: 20, color: "rgba(255,255,255,0.7)" }}>높은 정밀도<br />넓은 범위</div>
-          </div>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 30, textAlign: "center" }}>
-            <div style={{ fontSize: 48, fontWeight: 700, color: COLORS.secondary, marginBottom: 15 }}>FP16</div>
-            <div style={{ fontSize: 24, color: COLORS.light, marginBottom: 10 }}>16비트</div>
-            <div style={{ fontSize: 20, color: "rgba(255,255,255,0.7)" }}>절반 메모리<br />좁은 범위</div>
-          </div>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 30, textAlign: "center" }}>
-            <div style={{ fontSize: 48, fontWeight: 700, color: COLORS.accent, marginBottom: 15 }}>BF16</div>
-            <div style={{ fontSize: 24, color: COLORS.light, marginBottom: 10 }}>16비트</div>
-            <div style={{ fontSize: 20, color: "rgba(255,255,255,0.7)" }}>FP32 지수범위<br />Brain Float</div>
-          </div>
-        </div>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-const SceneWhy: React.FC = () => {
-  return (
-    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
-      <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-5/why.mp3")} />
-      <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>왜 Mixed Precision?</h1>
-        <div style={{ display: "flex", gap: 40 }}>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40, textAlign: "center" }}>
-            <div style={{ fontSize: 80, marginBottom: 20 }}>💾</div>
-            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700 }}>메모리 절반</div>
-            <div style={{ fontSize: 22, color: "rgba(255,255,255,0.7)", marginTop: 10 }}>더 큰 배치 가능</div>
-          </div>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40, textAlign: "center" }}>
-            <div style={{ fontSize: 80, marginBottom: 20 }}>🚀</div>
-            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700 }}>2배+ 속도</div>
-            <div style={{ fontSize: 22, color: "rgba(255,255,255,0.7)", marginTop: 10 }}>Tensor Core 활용</div>
-          </div>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40, textAlign: "center" }}>
-            <div style={{ fontSize: 80, marginBottom: 20 }}>🤖</div>
-            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700 }}>대용량 모델</div>
-            <div style={{ fontSize: 22, color: "rgba(255,255,255,0.7)", marginTop: 10 }}>LLM 학습 필수</div>
-          </div>
-        </div>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-const SceneAmp: React.FC = () => {
-  return (
-    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
-      <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-5/amp.mp3")} />
-      <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>PyTorch AMP 사용</h1>
-        <div style={{ background: "rgba(244,63,94,0.1)", borderRadius: 20, padding: 40 }}>
-          <pre style={{ fontSize: 22, color: COLORS.light, lineHeight: 1.8, margin: 0 }}>
-{`from torch.cuda.amp import autocast, GradScaler
-
-scaler = GradScaler()
-
-for data, target in loader:
-    with autocast():           # FP16 자동 적용
-        output = model(data)
-        loss = criterion(output, target)
-
-    scaler.scale(loss).backward()
-    scaler.step(optimizer)
-    scaler.update()`}
-          </pre>
-        </div>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-const SceneScaling: React.FC = () => {
-  return (
-    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
-      <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-5/scaling.mp3")} />
-      <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>Loss Scaling</h1>
-        <div style={{ display: "flex", gap: 60 }}>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 28, color: COLORS.light, marginBottom: 30 }}>문제: FP16 언더플로우</div>
-            <div style={{ background: "rgba(244,63,94,0.1)", borderRadius: 15, padding: 25, marginBottom: 20 }}>
-              <div style={{ fontSize: 22, color: "rgba(255,255,255,0.8)" }}>
-                작은 그래디언트 → 0으로 반올림
-              </div>
-            </div>
-            <div style={{ fontSize: 28, color: COLORS.light, marginBottom: 30, marginTop: 40 }}>해결: 스케일링</div>
-            <div style={{ background: "rgba(244,63,94,0.1)", borderRadius: 15, padding: 25 }}>
-              <div style={{ fontSize: 22, color: "rgba(255,255,255,0.8)" }}>
-                Loss × 큰 값 → 역전파 → ÷ 원복
-              </div>
-            </div>
-          </div>
-          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <div style={{ fontSize: 150 }}>⚖️</div>
-          </div>
-        </div>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-const SceneBf16: React.FC = () => {
-  return (
-    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
-      <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-8-5/bf16.mp3")} />
-      <div style={{ padding: 80, paddingTop: 100 }}>
-        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>BF16의 장점</h1>
-        <div style={{ display: "flex", gap: 60 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>왜 분산 학습인가?</h1>
+        <div style={{ display: "flex", gap: 50 }}>
           <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40 }}>
-            <div style={{ fontSize: 80, textAlign: "center", marginBottom: 20 }}>🧠</div>
-            <ul style={{ fontSize: 26, color: COLORS.light, lineHeight: 2 }}>
-              <li>FP32와 같은 지수 범위</li>
-              <li>오버플로우 거의 없음</li>
-              <li>Loss Scaling 불필요</li>
+            <div style={{ fontSize: 60, textAlign: "center", marginBottom: 20 }}>⚡</div>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>속도</div>
+            <ul style={{ fontSize: 22, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+              <li>4 GPU = 4배 빠른 학습</li>
+              <li>배치 크기 증가</li>
+              <li>학습 시간 단축</li>
+              <li>더 많은 실험 가능</li>
             </ul>
           </div>
-          <div style={{ flex: 1, background: "rgba(244,63,94,0.1)", borderRadius: 20, padding: 40 }}>
-            <div style={{ fontSize: 24, color: COLORS.light, marginBottom: 20 }}>지원 GPU:</div>
-            <div style={{ fontSize: 28, color: "rgba(255,255,255,0.9)", lineHeight: 2 }}>
-              • NVIDIA A100+<br />
-              • NVIDIA H100<br />
-              • AMD MI300
+          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40 }}>
+            <div style={{ fontSize: 60, textAlign: "center", marginBottom: 20 }}>💪</div>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>규모</div>
+            <ul style={{ fontSize: 22, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+              <li>대형 모델 학습 가능</li>
+              <li>메모리 한계 극복</li>
+              <li>대규모 데이터셋 처리</li>
+              <li>상용 모델 수준 도달</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const SceneDataParallel: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-8-5/data_parallel.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>DataParallel (DP)</h1>
+        <div style={{ display: "flex", gap: 50, alignItems: "center" }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ textAlign: "center", marginBottom: 30 }}>
+              <div style={{ fontSize: 80, marginBottom: 15 }}>📦</div>
+              <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700 }}>단일 프로세스</div>
             </div>
+            <div style={{ background: "rgba(244,63,94,0.15)", borderRadius: 16, padding: 30 }}>
+              <ul style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+                <li>가장 간단한 방법</li>
+                <li>한 줄로 적용 가능</li>
+                <li>GPU 0이 병목</li>
+                <li>멀티 노드 불가</li>
+              </ul>
+            </div>
+          </div>
+          <div style={{ flex: 1, background: "rgba(0,0,0,0.4)", borderRadius: 16, padding: 40, fontFamily: "monospace" }}>
+            <div style={{ fontSize: 22, color: "#f8f8f2", lineHeight: 2 }}>
+              <div><span style={{ color: "#66d9ef" }}>import</span> torch.nn <span style={{ color: "#66d9ef" }}>as</span> nn</div>
+              <div style={{ marginTop: 15 }}># 간단한 적용</div>
+              <div>model = nn.<span style={{ color: "#a6e22e" }}>DataParallel</span>(model)</div>
+              <div style={{ marginTop: 15 }}># GPU 지정</div>
+              <div>model = nn.<span style={{ color: "#a6e22e" }}>DataParallel</span>(</div>
+              <div style={{ paddingLeft: 30 }}>model,</div>
+              <div style={{ paddingLeft: 30 }}>device_ids=[<span style={{ color: "#ae81ff" }}>0</span>,<span style={{ color: "#ae81ff" }}>1</span>,<span style={{ color: "#ae81ff" }}>2</span>,<span style={{ color: "#ae81ff" }}>3</span>]</div>
+              <div>)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const SceneDdp: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-8-5/ddp.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>DistributedDataParallel (DDP)</h1>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 30 }}>
+          {[
+            { icon: "🚀", title: "멀티 프로세스", desc: "각 GPU마다 독립 프로세스\n통신 오버헤드 최소화" },
+            { icon: "⚡", title: "효율적", desc: "GPU 0 병목 없음\nDP보다 훨씬 빠름" },
+            { icon: "🌐", title: "확장성", desc: "멀티 노드 지원\n수백 개 GPU 활용" },
+            { icon: "🔄", title: "그래디언트 동기화", desc: "All-reduce 연산\n모든 GPU 평균 계산" },
+          ].map((item, i) => (
+            <div key={i} style={{
+              background: "rgba(244,63,94,0.15)",
+              borderRadius: 16,
+              padding: 35,
+              transform: `translateY(${Math.sin((frame + i * 15) * 0.05) * 5}px)`
+            }}>
+              <div style={{ fontSize: 50, textAlign: "center", marginBottom: 15 }}>{item.icon}</div>
+              <div style={{ fontSize: 26, color: COLORS.light, fontWeight: 700, marginBottom: 15, textAlign: "center" }}>{item.title}</div>
+              <div style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.5 }}>{item.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const SceneModelParallel: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-8-5/model_parallel.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>Model Parallelism</h1>
+        <div style={{ display: "flex", gap: 50 }}>
+          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40 }}>
+            <div style={{ fontSize: 60, textAlign: "center", marginBottom: 20 }}>🧩</div>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>Pipeline Parallel</div>
+            <ul style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+              <li>모델을 레이어별로 분할</li>
+              <li>각 GPU가 일부 레이어 담당</li>
+              <li>순차적으로 데이터 전달</li>
+              <li>초대형 모델에 적합</li>
+            </ul>
+          </div>
+          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 40 }}>
+            <div style={{ fontSize: 60, textAlign: "center", marginBottom: 20 }}>🔀</div>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>Tensor Parallel</div>
+            <ul style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+              <li>하나의 레이어를 분할</li>
+              <li>행렬 연산을 나눔</li>
+              <li>매우 큰 레이어 처리</li>
+              <li>통신량이 많음</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const SceneFsdp: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-8-5/fsdp.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>FSDP (Fully Sharded Data Parallel)</h1>
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
+          <div style={{ fontSize: 100, marginBottom: 20 }}>💎</div>
+          <div style={{ fontSize: 32, color: COLORS.light, fontWeight: 700 }}>최신 분산 학습 기술</div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 30 }}>
+          {[
+            { title: "파라미터 샤딩", desc: "모델 파라미터 분할 저장" },
+            { title: "그래디언트 샤딩", desc: "그래디언트도 분산 저장" },
+            { title: "Optimizer 샤딩", desc: "Optimizer 상태 분할" },
+          ].map((item, i) => (
+            <div key={i} style={{
+              background: "rgba(244,63,94,0.15)",
+              borderRadius: 16,
+              padding: 30,
+              textAlign: "center",
+              transform: `scale(${1 + Math.sin((frame + i * 20) * 0.04) * 0.02})`
+            }}>
+              <div style={{ fontSize: 24, color: COLORS.light, fontWeight: 700, marginBottom: 10 }}>{item.title}</div>
+              <div style={{ fontSize: 18, color: "rgba(255,255,255,0.8)" }}>{item.desc}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ background: "rgba(244,63,94,0.15)", borderRadius: 16, padding: 35, marginTop: 40, textAlign: "center" }}>
+          <div style={{ fontSize: 24, color: COLORS.light, marginBottom: 10 }}>
+            <strong>결과:</strong> 메모리 사용량 최대 1/N로 감소 (N = GPU 개수)
+          </div>
+          <div style={{ fontSize: 20, color: "rgba(255,255,255,0.8)" }}>
+            DDP 대비 훨씬 큰 모델 학습 가능
+          </div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const ScenePracticalTips: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-8-5/practical_tips.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100 }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>실전 팁</h1>
+        <div style={{ display: "flex", gap: 40 }}>
+          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 35 }}>
+            <div style={{ fontSize: 50, textAlign: "center", marginBottom: 20 }}>🎯</div>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>선택 가이드</div>
+            <ul style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+              <li><strong>소형 모델:</strong> DDP</li>
+              <li><strong>중형 모델:</strong> DDP + Mixed Precision</li>
+              <li><strong>대형 모델:</strong> FSDP</li>
+              <li><strong>초대형 모델:</strong> FSDP + Model Parallel</li>
+            </ul>
+          </div>
+          <div style={{ flex: 1, background: "rgba(244,63,94,0.15)", borderRadius: 20, padding: 35 }}>
+            <div style={{ fontSize: 50, textAlign: "center", marginBottom: 20 }}>💡</div>
+            <div style={{ fontSize: 28, color: COLORS.light, fontWeight: 700, marginBottom: 20, textAlign: "center" }}>주의사항</div>
+            <ul style={{ fontSize: 20, color: "rgba(255,255,255,0.8)", lineHeight: 2 }}>
+              <li>배치 크기 조정 필요</li>
+              <li>학습률 스케일링</li>
+              <li>Seed 고정으로 재현성 확보</li>
+              <li>통신 오버헤드 고려</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -210,12 +285,12 @@ const SceneOutro: React.FC = () => {
       <div style={{ textAlign: "center", opacity }}>
         <div style={{ fontSize: 120, marginBottom: 30 }}>✅</div>
         <div style={{ fontSize: 56, fontWeight: 800, color: COLORS.light, marginBottom: 30 }}>학습 완료!</div>
-        <div style={{ fontSize: 32, color: "rgba(255,255,255,0.9)", lineHeight: 1.8 }}>
-          Mixed Precision으로 2배 이상 속도 향상<br />
-          메모리 효율과 성능을 동시에!
+        <div style={{ fontSize: 28, color: "rgba(255,255,255,0.9)", lineHeight: 1.8 }}>
+          DP, DDP, Model Parallel, FSDP<br />
+          모델 크기에 맞는 분산 전략 선택
         </div>
-        <div style={{ marginTop: 40, fontSize: 28, color: "rgba(255,255,255,0.7)" }}>
-          다음: 스트림과 비동기 실행
+        <div style={{ marginTop: 40, fontSize: 26, color: "rgba(255,255,255,0.7)" }}>
+          다음: 메모리 최적화
         </div>
       </div>
     </AbsoluteFill>
@@ -225,11 +300,12 @@ const SceneOutro: React.FC = () => {
 export const Lesson8_5Video: React.FC = () => (
   <AbsoluteFill>
     <Sequence from={SCENE_TIMINGS.intro.start} durationInFrames={SCENE_TIMINGS.intro.duration}><SceneIntro /></Sequence>
-    <Sequence from={SCENE_TIMINGS.precision.start} durationInFrames={SCENE_TIMINGS.precision.duration}><ScenePrecision /></Sequence>
-    <Sequence from={SCENE_TIMINGS.why.start} durationInFrames={SCENE_TIMINGS.why.duration}><SceneWhy /></Sequence>
-    <Sequence from={SCENE_TIMINGS.amp.start} durationInFrames={SCENE_TIMINGS.amp.duration}><SceneAmp /></Sequence>
-    <Sequence from={SCENE_TIMINGS.scaling.start} durationInFrames={SCENE_TIMINGS.scaling.duration}><SceneScaling /></Sequence>
-    <Sequence from={SCENE_TIMINGS.bf16.start} durationInFrames={SCENE_TIMINGS.bf16.duration}><SceneBf16 /></Sequence>
+    <Sequence from={SCENE_TIMINGS.why_distributed.start} durationInFrames={SCENE_TIMINGS.why_distributed.duration}><SceneWhyDistributed /></Sequence>
+    <Sequence from={SCENE_TIMINGS.data_parallel.start} durationInFrames={SCENE_TIMINGS.data_parallel.duration}><SceneDataParallel /></Sequence>
+    <Sequence from={SCENE_TIMINGS.ddp.start} durationInFrames={SCENE_TIMINGS.ddp.duration}><SceneDdp /></Sequence>
+    <Sequence from={SCENE_TIMINGS.model_parallel.start} durationInFrames={SCENE_TIMINGS.model_parallel.duration}><SceneModelParallel /></Sequence>
+    <Sequence from={SCENE_TIMINGS.fsdp.start} durationInFrames={SCENE_TIMINGS.fsdp.duration}><SceneFsdp /></Sequence>
+    <Sequence from={SCENE_TIMINGS.practical_tips.start} durationInFrames={SCENE_TIMINGS.practical_tips.duration}><ScenePracticalTips /></Sequence>
     <Sequence from={SCENE_TIMINGS.outro.start} durationInFrames={SCENE_TIMINGS.outro.duration}><SceneOutro /></Sequence>
   </AbsoluteFill>
 );

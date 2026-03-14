@@ -1,0 +1,25 @@
+PyTorch 코드로 구현해 볼게요!
+
+먼저 클래스를 정의해요.
+class SentimentLSTM(nn.Module)로 시작합니다.
+
+init 함수에서 레이어들을 만들어요.
+self.embedding = nn.Embedding을 생성해요.
+어휘 크기와 임베딩 차원을 인자로 넣어요.
+
+self.lstm = nn.LSTM을 생성해요.
+입력 크기는 임베딩 차원이에요.
+은닉 크기를 지정하고요.
+num_layers로 레이어 수를 정해요.
+batch_first=True로 설정해요.
+dropout도 추가할 수 있어요!
+
+self.fc = nn.Linear를 생성해요.
+은닉 크기를 입력으로 받고요.
+출력은 1개예요. 긍정/부정 확률이니까요.
+
+self.sigmoid = nn.Sigmoid()도 추가해요.
+확률을 0과 1 사이로 만들어줘요.
+
+이렇게 하면 모델의 뼈대가 완성됐어요!
+

@@ -1,31 +1,33 @@
-import edge_tts
-import asyncio
+import subprocess
 import os
 
-VOICE = "ko-KR-SunHiNeural"
+SCRIPTS_DIR = "scripts/lesson-6-3"
 OUTPUT_DIR = "public/audio/lesson-6-3"
-SCRIPT_DIR = "scripts/lesson-6-3"
+VOICE = "ko-KR-SunHiNeural"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-scenes = [
-    ("scene1_intro.txt", "intro.mp3"),
-    ("scene2_vanishing.txt", "vanishing.mp3"),
-    ("scene3_cell.txt", "cell.mp3"),
-    ("scene4_forget.txt", "forget.mp3"),
-    ("scene5_input.txt", "input.mp3"),
-    ("scene6_output.txt", "output.mp3"),
-    ("scene7_outro.txt", "outro.mp3"),
+scripts = [
+    "scene01_intro",
+    "scene02_rnn_problem",
+    "scene03_lstm_analogy",
+    "scene04_two_states",
+    "scene05_forget_gate",
+    "scene06_input_gate",
+    "scene07_cell_update",
+    "scene08_output_gate",
+    "scene09_lstm_flow",
+    "scene10_comparison",
+    "scene11_outro",
 ]
 
-async def generate_tts():
-    for script_file, audio_file in scenes:
-        with open(f"{SCRIPT_DIR}/{script_file}", "r", encoding="utf-8") as f:
-            text = f.read().strip()
+for script in scripts:
+    input_file = f"{SCRIPTS_DIR}/{script}.txt"
+    output_file = f"{OUTPUT_DIR}/{script}.mp3"
 
-        communicate = edge_tts.Communicate(text, VOICE)
-        await communicate.save(f"{OUTPUT_DIR}/{audio_file}")
-        print(f"Generated: {audio_file}")
+    cmd = f'edge-tts --voice {VOICE} --file "{input_file}" --write-media "{output_file}"'
+    print(f"Generating {script}...")
+    subprocess.run(cmd, shell=True, check=True)
+    print(f"  -> {output_file}")
 
-asyncio.run(generate_tts())
-print("All TTS files generated!")
+print("\nAll TTS files generated!")

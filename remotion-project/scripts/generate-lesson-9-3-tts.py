@@ -1,64 +1,72 @@
-#!/usr/bin/env python3
-"""
-Level 9-3: 번호판 검출 모델 (YOLO)
-TTS 음성 생성 스크립트
-"""
-
-import asyncio
 import edge_tts
+import asyncio
 import os
 
-OUTPUT_DIR = r"C:\todo\today\remotion-project\public\audio\lesson-9-3"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+# Level 9-3: YOLO 번호판 검출 모델
+SCENES = {
+    "intro": """안녕하세요! 레벨 9 세 번째 레슨, YOLO 번호판 검출 모델입니다.
+준비된 데이터로 번호판 위치를 찾는 모델을 학습해보겠습니다.
+YOLOv8을 사용해서 객체 검출 모델을 만들어볼 거예요.""",
 
-VOICE = "ko-KR-SunHiNeural"
+    "yolo_intro": """YOLO에 대해 간단히 복습해볼게요.
+YOLO는 You Only Look Once의 약자입니다.
+이미지 전체를 한 번에 보고 객체의 위치와 종류를 예측합니다.
+실시간 처리가 가능할 정도로 빠릅니다.
+YOLOv8은 Ultralytics에서 개발한 최신 버전입니다.
+사용하기 쉽고 성능도 우수합니다.""",
 
-SCRIPTS = {
-    "intro": """레벨 9-3, 번호판 검출 모델입니다.
-YOLO를 사용해서 이미지에서 번호판 위치를 찾아내는 모델을 학습합니다.
-객체 검출의 핵심 개념과 실제 학습 과정을 배웁니다.""",
+    "setup": """학습 환경을 설정해볼게요.
+pip install ultralytics로 YOLOv8을 설치합니다.
+데이터셋 설정 파일, data.yaml을 작성합니다.
+train, val 경로와 클래스 이름을 지정합니다.
+우리 프로젝트에서는 license_plate 클래스 하나만 사용합니다.
+nc는 클래스 개수, names는 클래스 이름 리스트입니다.""",
 
-    "yolo": """YOLO는 You Only Look Once의 약자입니다.
-이미지를 한 번만 보고 객체의 위치와 클래스를 동시에 예측합니다.
-실시간 처리가 가능할 정도로 빠르면서도 정확합니다.
-최신 버전인 YOLOv8을 사용하겠습니다.""",
+    "training": """모델 학습 방법을 알아볼게요.
+from ultralytics import YOLO로 라이브러리를 불러옵니다.
+YOLO('yolov8n.pt')로 사전 학습된 모델을 로드합니다.
+model.train()으로 학습을 시작합니다.
+data 파라미터에 yaml 파일 경로를 지정합니다.
+epochs, imgsz, batch 등의 하이퍼파라미터를 설정합니다.""",
 
-    "architecture": """YOLO의 동작 원리를 살펴봅시다.
-이미지를 그리드로 나누고 각 셀이 객체를 담당합니다.
-각 셀은 바운딩 박스 좌표, 신뢰도, 클래스 확률을 예측합니다.
-NMS, 비최대 억제로 중복 박스를 제거합니다.""",
+    "hyperparams": """주요 하이퍼파라미터를 설명드릴게요.
+epochs는 전체 데이터셋 반복 횟수입니다. 100에서 300 사이를 사용합니다.
+imgsz는 입력 이미지 크기입니다. 640이 기본값입니다.
+batch는 배치 사이즈입니다. GPU 메모리에 맞게 조절합니다.
+lr0는 초기 학습률입니다. 0.01이 기본값입니다.
+patience는 조기 종료를 위한 인내 횟수입니다.""",
 
-    "training": """모델 학습을 시작합니다.
-YOLOv8은 울트라리틱스 라이브러리로 쉽게 사용할 수 있습니다.
-사전 학습된 가중치에서 시작해 전이 학습을 진행합니다.
-배치 크기, 에포크, 이미지 크기 등 하이퍼파라미터를 설정합니다.""",
+    "monitoring": """학습 모니터링 방법을 알아볼게요.
+YOLOv8은 자동으로 학습 로그를 저장합니다.
+runs 폴더에 결과가 저장됩니다.
+mAP, Precision, Recall 등의 지표를 확인할 수 있어요.
+텐서보드로 학습 곡선을 시각화할 수도 있습니다.
+과적합이 발생하면 데이터 증강을 강화하거나 정규화를 추가합니다.""",
 
-    "metrics": """학습 결과를 평가합니다.
-mAP, 평균 정밀도는 검출 모델의 핵심 지표입니다.
-Precision은 검출한 것 중 실제 번호판 비율입니다.
-Recall은 실제 번호판 중 검출한 비율입니다.""",
+    "inference": """학습된 모델로 추론하는 방법입니다.
+model.predict()로 이미지에서 번호판을 검출합니다.
+results에 검출 결과가 담깁니다.
+boxes 속성에서 바운딩 박스 좌표를 가져옵니다.
+conf로 신뢰도 점수를, cls로 클래스 번호를 확인합니다.
+results.plot()으로 결과를 시각화할 수 있어요.""",
 
-    "inference": """학습된 모델로 추론을 수행합니다.
-새 이미지를 넣으면 번호판 위치가 바운딩 박스로 출력됩니다.
-신뢰도 임계값을 조정해서 검출 민감도를 조절합니다.
-GPU를 사용하면 실시간 처리도 가능합니다.""",
-
-    "outro": """번호판 검출 모델 학습을 완료했습니다.
-YOLO로 빠르고 정확한 객체 검출이 가능합니다.
-다음 레슨에서는 검출된 번호판에서 문자를 인식하는 모델을 만듭니다."""
+    "outro": """이번 레슨에서 YOLO 번호판 검출 모델을 학습했습니다.
+환경 설정, 학습, 모니터링, 추론 방법을 알아봤습니다.
+다음 레슨에서는 CNN으로 문자 인식 모델을 만들어보겠습니다."""
 }
 
-async def generate_audio(name: str, text: str):
-    output_path = os.path.join(OUTPUT_DIR, f"{name}.mp3")
-    communicate = edge_tts.Communicate(text, VOICE)
-    await communicate.save(output_path)
-    print(f"Generated: {output_path}")
+async def generate_tts():
+    output_dir = "public/audio/lesson-9-3"
+    os.makedirs(output_dir, exist_ok=True)
 
-async def main():
-    print("=== Level 9-3 TTS 생성 시작 ===")
-    tasks = [generate_audio(name, text) for name, text in SCRIPTS.items()]
-    await asyncio.gather(*tasks)
-    print("=== 모든 TTS 생성 완료 ===")
+    for scene_name, text in SCENES.items():
+        output_file = f"{output_dir}/{scene_name}.mp3"
+        print(f"Generating {scene_name}...")
+
+        communicate = edge_tts.Communicate(text, "ko-KR-SunHiNeural")
+        await communicate.save(output_file)
+        print(f"Saved: {output_file}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(generate_tts())
+    print("All audio files generated!")

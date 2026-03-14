@@ -1,69 +1,67 @@
-#!/usr/bin/env python3
-"""
-Level 9-8: 최종 회고
-TTS 음성 생성 스크립트
-"""
-
-import asyncio
 import edge_tts
+import asyncio
 import os
 
-OUTPUT_DIR = r"C:\todo\today\remotion-project\public\audio\lesson-9-8"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+# Level 9-8: 최종 회고와 졸업
+SCENES = {
+    "intro": """안녕하세요! 레벨 9 마지막 레슨, 최종 회고와 졸업입니다.
+이번 레슨에서 전체 교육 과정을 되돌아보겠습니다.
+레벨 0부터 9까지, 긴 여정을 함께 해주셔서 감사합니다.""",
 
-VOICE = "ko-KR-SunHiNeural"
+    "journey": """우리의 학습 여정을 돌아볼게요.
+레벨 0에서 Python 기초와 개발 환경을 설정했습니다.
+레벨 1에서 데이터 분석의 기초를 배웠습니다.
+레벨 2에서 머신러닝 기초 알고리즘을 다뤘습니다.
+레벨 3에서 딥러닝과 신경망의 원리를 이해했습니다.
+각 단계가 다음 단계의 기반이 되었습니다.""",
 
-SCRIPTS = {
-    "intro": """레벨 9-8, 최종 회고입니다.
-전체 커리큘럼을 돌아보며 배운 내용을 정리합니다.
-AI 엔지니어로서의 다음 단계를 안내합니다.""",
+    "advanced": """고급 과정도 정리해볼게요.
+레벨 4에서 CNN과 이미지 처리를 학습했습니다.
+레벨 5에서 RNN과 시퀀스 모델링을 배웠습니다.
+레벨 6에서 Transformer와 어텐션 메커니즘을 이해했습니다.
+레벨 7에서 자연어 처리와 대형 언어 모델을 다뤘습니다.
+레벨 8에서 GPU 프로그래밍과 최적화 기법을 익혔습니다.""",
 
-    "review": """전체 과정을 되돌아봅니다.
-레벨 1에서 AI 기초 개념을 배웠습니다.
-레벨 2에서 파이썬과 수학 기초를 다졌습니다.
-레벨 3에서 딥러닝 기초를 익혔습니다.
-레벨 4에서 파이토치 실습을 했습니다.""",
+    "project": """종합 프로젝트를 정리해볼게요.
+레벨 9에서 번호판 인식 시스템을 직접 구축했습니다.
+데이터 수집부터 배포까지 전체 파이프라인을 경험했습니다.
+YOLO로 객체 검출, CNN으로 문자 인식을 구현했습니다.
+FastAPI와 Docker로 서비스를 배포했습니다.
+MLOps로 지속적인 운영 방법을 배웠습니다.""",
 
-    "advanced": """고급 주제도 배웠습니다.
-레벨 5에서 컴퓨터 비전과 CNN을 다뤘습니다.
-레벨 6에서 시퀀스 모델과 RNN을 학습했습니다.
-레벨 7에서 트랜스포머와 LLM을 배웠습니다.
-레벨 8에서 GPU 프로그래밍을 익혔습니다.""",
+    "skills": """여러분이 습득한 핵심 역량입니다.
+데이터를 수집, 전처리, 분석하는 능력을 갖췄습니다.
+다양한 딥러닝 모델을 이해하고 구현할 수 있습니다.
+실제 문제를 AI로 해결하는 경험을 쌓았습니다.
+모델을 최적화하고 배포하는 방법을 알게 되었습니다.
+이제 독자적으로 AI 프로젝트를 수행할 준비가 되었습니다.""",
 
-    "project": """종합 프로젝트를 완성했습니다.
-번호판 인식 시스템을 처음부터 끝까지 구현했습니다.
-데이터 수집, 모델 학습, 평가, 배포, 운영까지 경험했습니다.
-실제 AI 프로젝트의 전체 사이클을 이해했습니다.""",
+    "next_steps": """앞으로의 학습 방향을 제안드릴게요.
+Kaggle 대회에 참가해서 실력을 겨뤄보세요.
+GitHub에 프로젝트를 공유하고 포트폴리오를 만들어보세요.
+최신 논문을 읽고 새로운 기술을 따라가세요.
+오픈소스 프로젝트에 기여해보는 것도 좋습니다.
+커뮤니티에서 다른 개발자들과 교류해보세요.""",
 
-    "career": """AI 커리어 방향을 안내합니다.
-ML 엔지니어는 모델 개발과 최적화에 집중합니다.
-데이터 사이언티스트는 분석과 인사이트 도출에 집중합니다.
-MLOps 엔지니어는 모델 운영과 자동화에 집중합니다.
-연구원은 새로운 알고리즘 개발에 집중합니다.""",
-
-    "nextsteps": """다음 학습 방향입니다.
-Kaggle 대회 참가로 실력을 검증하세요.
-오픈소스 프로젝트에 기여해 보세요.
-최신 논문을 읽고 구현해 보세요.
-개인 프로젝트로 포트폴리오를 만드세요.""",
-
-    "outro": """AI 첫걸음 과정을 완료했습니다.
-축하합니다! 긴 여정을 함께해 주셔서 감사합니다.
-배운 것을 실제로 적용하며 계속 성장하세요.
-여러분의 AI 여정을 응원합니다!"""
+    "outro": """축하합니다! 전체 교육 과정을 성공적으로 마쳤습니다.
+AI와 딥러닝의 광활한 세계로 첫 발을 내딛었습니다.
+배움은 여기서 끝이 아니라 새로운 시작입니다.
+앞으로의 여정에 행운이 함께하기를 바랍니다.
+수고하셨습니다! 감사합니다."""
 }
 
-async def generate_audio(name: str, text: str):
-    output_path = os.path.join(OUTPUT_DIR, f"{name}.mp3")
-    communicate = edge_tts.Communicate(text, VOICE)
-    await communicate.save(output_path)
-    print(f"Generated: {output_path}")
+async def generate_tts():
+    output_dir = "public/audio/lesson-9-8"
+    os.makedirs(output_dir, exist_ok=True)
 
-async def main():
-    print("=== Level 9-8 TTS 생성 시작 ===")
-    tasks = [generate_audio(name, text) for name, text in SCRIPTS.items()]
-    await asyncio.gather(*tasks)
-    print("=== 모든 TTS 생성 완료 ===")
+    for scene_name, text in SCENES.items():
+        output_file = f"{output_dir}/{scene_name}.mp3"
+        print(f"Generating {scene_name}...")
+
+        communicate = edge_tts.Communicate(text, "ko-KR-SunHiNeural")
+        await communicate.save(output_file)
+        print(f"Saved: {output_file}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(generate_tts())
+    print("All audio files generated!")

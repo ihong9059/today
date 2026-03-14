@@ -1,0 +1,25 @@
+학습 과정을 알아볼게요!
+
+먼저 손실 함수를 정해요.
+이진 분류니까 BCE Loss를 사용해요.
+Binary Cross Entropy의 약자예요.
+criterion = nn.BCELoss()로 생성해요.
+
+옵티마이저도 필요해요.
+Adam을 주로 사용해요.
+optimizer = torch.optim.Adam을 만들어요.
+학습률은 0.001 정도가 좋아요.
+
+학습 루프를 만들어요.
+에폭 수만큼 반복해요.
+각 에폭마다 전체 데이터를 한 번씩 봐요.
+
+배치 단위로 학습해요.
+model(inputs)로 예측을 해요.
+loss = criterion(outputs, labels)로 손실을 계산해요.
+loss.backward()로 그래디언트를 계산해요.
+optimizer.step()으로 가중치를 업데이트해요.
+
+매 에폭마다 손실과 정확도를 확인해요.
+검증 데이터로 과적합 여부도 체크하고요!
+

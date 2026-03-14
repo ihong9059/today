@@ -1,0 +1,6 @@
+파이토치에서 데이터를 로드해볼게요.
+torchvision.datasets에서 MNIST를 바로 다운로드할 수 있어요.
+transforms.ToTensor로 텐서로 변환해요.
+그리고 정규화로 0에서 1 사이 값으로 만들어요.
+DataLoader로 배치 단위로 데이터를 불러옵니다.
+배치 사이즈는 64로 설정할게요.

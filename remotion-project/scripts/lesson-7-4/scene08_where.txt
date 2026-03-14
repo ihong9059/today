@@ -1,0 +1,18 @@
+트랜스포머에서 어디에 쓰일까요?
+
+두 가지 위치에서 사용돼요!
+
+첫째, 어텐션 출력 후에요.
+Multi-head Attention 결과에요.
+LayerNorm을 적용해요!
+
+둘째, FFN 출력 후에요.
+Feed Forward Network 결과에요.
+역시 LayerNorm을 적용해요!
+
+그리고 잔차 연결 후에 적용돼요!
+Add & Norm이라고 표현하죠!
+
+잔차 연결이 뭔지는요.
+다음 레슨에서 배워요!
+

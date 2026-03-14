@@ -1,16 +1,16 @@
 import React from "react";
 import { AbsoluteFill, Audio, Img, Sequence, staticFile, useCurrentFrame } from "remotion";
 
-export const LESSON_9_8_DURATION = 3859;
+export const LESSON_9_8_DURATION = 5120;
 
 const SCENE_TIMINGS = {
-  intro: { start: 0, duration: 393 },
-  review: { start: 393, duration: 567 },
-  advanced: { start: 960, duration: 596 },
-  project: { start: 1556, duration: 587 },
-  career: { start: 2143, duration: 675 },
-  nextsteps: { start: 2818, duration: 518 },
-  outro: { start: 3336, duration: 523 },
+  intro: { start: 0, duration: 504 },
+  journey: { start: 504, duration: 743 },
+  advanced: { start: 1247, duration: 804 },
+  project: { start: 2051, duration: 820 },
+  skills: { start: 2871, duration: 809 },
+  next_steps: { start: 3680, duration: 741 },
+  outro: { start: 4421, duration: 699 },
 };
 
 const COLORS = {
@@ -24,12 +24,12 @@ const COLORS = {
 
 const GlobalOverlay: React.FC = () => (
   <>
-    <div style={{ position: "absolute", top: 30, left: 40, display: "flex", alignItems: "center", gap: 12, zIndex: 100 }}>
-      <Img src={staticFile("images/logo.png")} style={{ width: 50, height: 50, borderRadius: 8 }} />
-      <span style={{ color: COLORS.light, fontSize: 24, fontWeight: 700, fontFamily: "Pretendard, sans-serif" }}>UTTEC-Lab</span>
+    <div style={{ position: "absolute", top: 30, left: 40, zIndex: 9999, display: "flex", alignItems: "center", gap: 15 }}>
+      <Img src={staticFile("images/logo.png")} style={{ width: 60, height: 60, borderRadius: 8 }} />
+      <span style={{ color: "white", fontSize: 28, fontWeight: "bold", textShadow: "2px 2px 4px rgba(0,0,0,0.7)" }}>UTTEC-Lab</span>
     </div>
-    <div style={{ position: "absolute", bottom: 30, right: 40, color: "rgba(255,255,255,0.6)", fontSize: 20, fontFamily: "Pretendard, sans-serif", zIndex: 100 }}>
-      ai.uttec-lab.com
+    <div style={{ position: "absolute", bottom: 30, left: "50%", transform: "translateX(-50%)", zIndex: 9999, background: "rgba(245, 158, 11, 0.9)", padding: "10px 30px", borderRadius: 25 }}>
+      <span style={{ color: "white", fontSize: 22, fontWeight: "bold", letterSpacing: 1 }}>http://uttec-ai.duckdns.org</span>
     </div>
   </>
 );
@@ -53,11 +53,11 @@ const SceneIntro: React.FC = () => {
   );
 };
 
-const SceneReview: React.FC = () => {
+const SceneJourney: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-9-8/review.mp3")} />
+      <Audio src={staticFile("audio/lesson-9-8/journey.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
         <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>전체 과정 회고 (1-4)</h1>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 25 }}>
@@ -156,11 +156,11 @@ const SceneProject: React.FC = () => {
   );
 };
 
-const SceneCareer: React.FC = () => {
+const SceneSkills: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-9-8/career.mp3")} />
+      <Audio src={staticFile("audio/lesson-9-8/skills.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
         <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>AI 커리어 방향</h1>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 30 }}>
@@ -188,7 +188,7 @@ const SceneNextSteps: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-9-8/nextsteps.mp3")} />
+      <Audio src={staticFile("audio/lesson-9-8/next_steps.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
         <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>다음 학습 방향</h1>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 30 }}>
@@ -237,11 +237,11 @@ const SceneOutro: React.FC = () => {
 export const Lesson9_8Video: React.FC = () => (
   <AbsoluteFill>
     <Sequence from={SCENE_TIMINGS.intro.start} durationInFrames={SCENE_TIMINGS.intro.duration}><SceneIntro /></Sequence>
-    <Sequence from={SCENE_TIMINGS.review.start} durationInFrames={SCENE_TIMINGS.review.duration}><SceneReview /></Sequence>
+    <Sequence from={SCENE_TIMINGS.journey.start} durationInFrames={SCENE_TIMINGS.journey.duration}><SceneJourney /></Sequence>
     <Sequence from={SCENE_TIMINGS.advanced.start} durationInFrames={SCENE_TIMINGS.advanced.duration}><SceneAdvanced /></Sequence>
     <Sequence from={SCENE_TIMINGS.project.start} durationInFrames={SCENE_TIMINGS.project.duration}><SceneProject /></Sequence>
-    <Sequence from={SCENE_TIMINGS.career.start} durationInFrames={SCENE_TIMINGS.career.duration}><SceneCareer /></Sequence>
-    <Sequence from={SCENE_TIMINGS.nextsteps.start} durationInFrames={SCENE_TIMINGS.nextsteps.duration}><SceneNextSteps /></Sequence>
+    <Sequence from={SCENE_TIMINGS.skills.start} durationInFrames={SCENE_TIMINGS.skills.duration}><SceneSkills /></Sequence>
+    <Sequence from={SCENE_TIMINGS.next_steps.start} durationInFrames={SCENE_TIMINGS.next_steps.duration}><SceneNextSteps /></Sequence>
     <Sequence from={SCENE_TIMINGS.outro.start} durationInFrames={SCENE_TIMINGS.outro.duration}><SceneOutro /></Sequence>
   </AbsoluteFill>
 );

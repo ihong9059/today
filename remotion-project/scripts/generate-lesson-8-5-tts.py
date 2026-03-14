@@ -1,60 +1,72 @@
-#!/usr/bin/env python3
-"""Level 8-5: Mixed Precision 훈련 TTS 생성 스크립트"""
-
-import asyncio
 import edge_tts
+import asyncio
 import os
 
-VOICE = "ko-KR-SunHiNeural"
-OUTPUT_DIR = "../public/audio/lesson-8-5"
+# Level 8-5: 분산 학습 기초
+SCENES = {
+    "intro": """안녕하세요! 레벨 8 다섯 번째 레슨, 분산 학습 기초입니다.
+대규모 모델을 학습하려면 여러 GPU를 함께 사용해야 합니다.
+분산 학습의 기본 개념과 PyTorch에서의 구현 방법을 알아보겠습니다.""",
 
-SCRIPTS = {
-    "intro": """Mixed Precision 훈련에 대해 알아보겠습니다.
-숫자의 정밀도를 줄여서 학습 속도를 높이는 기법입니다.
-FP32, FP16, BF16 등 다양한 부동소수점 형식을 활용합니다.""",
+    "why_distributed": """왜 분산 학습이 필요할까요?
+최신 대규모 모델은 단일 GPU 메모리에 들어가지 않습니다.
+GPT-3는 1750억 개의 파라미터를 가지고 있어요.
+이런 모델을 학습하려면 수백 개의 GPU가 필요합니다.
+또한 학습 시간도 단축할 수 있습니다.
+여러 GPU가 동시에 데이터를 처리하면 훨씬 빠르게 학습이 가능합니다.""",
 
-    "precision": """먼저 부동소수점 정밀도에 대해 알아봅시다.
-FP32는 32비트로, 높은 정밀도와 넓은 표현 범위를 가집니다.
-FP16은 16비트로, 절반의 메모리를 사용하지만 범위가 좁습니다.
-BF16은 Brain Float로, FP32와 같은 지수 범위를 가지면서 16비트만 사용합니다.""",
+    "data_parallel": """데이터 병렬 처리를 먼저 알아볼게요.
+데이터 병렬은 가장 간단한 분산 학습 방식입니다.
+같은 모델을 여러 GPU에 복제합니다.
+데이터를 나누어 각 GPU가 다른 배치를 처리합니다.
+각 GPU에서 계산한 그래디언트를 모아서 평균을 냅니다.
+이 평균 그래디언트로 모든 GPU의 모델을 동시에 업데이트합니다.""",
 
-    "why": """왜 Mixed Precision을 사용할까요?
-첫째, 메모리 사용량이 절반으로 줄어듭니다.
-둘째, Tensor Core를 활용해 연산 속도가 2배 이상 빨라집니다.
-셋째, 대용량 모델 학습이 가능해집니다.""",
+    "ddp": """PyTorch의 DDP, Distributed Data Parallel을 소개합니다.
+DDP는 데이터 병렬 학습을 위한 PyTorch의 공식 방법입니다.
+각 GPU에서 별도의 프로세스가 실행됩니다.
+NCCL 백엔드를 사용해서 GPU 간 통신을 효율적으로 처리합니다.
+기존 코드에서 몇 줄만 추가하면 분산 학습이 가능합니다.
+torch.distributed.init_process_group으로 초기화하고, DDP로 모델을 래핑합니다.""",
 
-    "amp": """PyTorch의 Automatic Mixed Precision, AMP를 사용하면 간단합니다.
-autocast 컨텍스트 매니저로 FP16 연산을 자동 적용합니다.
-GradScaler로 그래디언트 스케일링을 처리합니다.
-단 몇 줄의 코드로 Mixed Precision을 적용할 수 있습니다.""",
+    "model_parallel": """모델 병렬 처리도 알아볼게요.
+모델이 너무 커서 하나의 GPU에 들어가지 않을 때 사용합니다.
+모델의 다른 레이어를 다른 GPU에 배치합니다.
+예를 들어, 앞쪽 레이어는 GPU 0에, 뒤쪽 레이어는 GPU 1에 둡니다.
+데이터가 순차적으로 GPU를 거쳐 처리됩니다.
+파이프라인 병렬화로 효율을 높일 수 있습니다.""",
 
-    "scaling": """Loss Scaling이 중요합니다.
-FP16은 작은 그래디언트를 표현하지 못해 언더플로우가 발생할 수 있습니다.
-Loss를 큰 값으로 스케일링하면 그래디언트도 커져서 언더플로우를 방지합니다.
-역전파 후 다시 원래 크기로 스케일링합니다.""",
+    "fsdp": """FSDP, Fully Sharded Data Parallel을 소개해드릴게요.
+FSDP는 모델 파라미터를 GPU들 사이에 분할합니다.
+각 GPU가 모델의 일부분만 저장해서 메모리를 절약합니다.
+필요할 때 파라미터를 모아서 연산하고, 다시 분할합니다.
+PyTorch에서 torch.distributed.fsdp로 사용할 수 있습니다.
+대규모 모델 학습에 매우 효과적입니다.""",
 
-    "bf16": """BF16의 장점을 알아봅시다.
-BF16은 FP32와 같은 지수 범위를 가져 오버플로우가 적습니다.
-따라서 Loss Scaling이 필요 없는 경우가 많습니다.
-A100 이상의 최신 GPU에서 지원됩니다.""",
+    "practical_tips": """분산 학습 실전 팁들을 알려드릴게요.
+배치 사이즈는 GPU 수에 비례해서 조정하세요.
+학습률도 배치 사이즈에 맞게 스케일링이 필요합니다.
+체크포인트 저장은 한 프로세스에서만 수행합니다.
+로깅도 rank 0에서만 하면 중복을 피할 수 있어요.
+통신 병목을 줄이기 위해 그래디언트 버킷팅을 활용하세요.""",
 
-    "outro": """Level 8-5를 완료했습니다!
-Mixed Precision으로 학습 속도를 2배 이상 높일 수 있습니다.
-메모리 효율성과 성능을 동시에 얻을 수 있습니다.
-다음 레슨에서는 CUDA 스트림과 비동기 실행을 배워보겠습니다."""
+    "outro": """이번 레슨에서 분산 학습의 기초를 배웠습니다.
+데이터 병렬, 모델 병렬, DDP, FSDP 등 다양한 기법을 알아봤습니다.
+다음 레슨에서는 메모리 최적화 기법을 살펴보겠습니다."""
 }
 
-async def generate_audio(name: str, text: str):
-    output_path = os.path.join(OUTPUT_DIR, f"{name}.mp3")
-    communicate = edge_tts.Communicate(text, VOICE)
-    await communicate.save(output_path)
-    print(f"Generated: {output_path}")
+async def generate_tts():
+    output_dir = "public/audio/lesson-8-5"
+    os.makedirs(output_dir, exist_ok=True)
 
-async def main():
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    tasks = [generate_audio(name, text) for name, text in SCRIPTS.items()]
-    await asyncio.gather(*tasks)
-    print("All audio files generated!")
+    for scene_name, text in SCENES.items():
+        output_file = f"{output_dir}/{scene_name}.mp3"
+        print(f"Generating {scene_name}...")
+
+        communicate = edge_tts.Communicate(text, "ko-KR-SunHiNeural")
+        await communicate.save(output_file)
+        print(f"Saved: {output_file}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(generate_tts())
+    print("All audio files generated!")

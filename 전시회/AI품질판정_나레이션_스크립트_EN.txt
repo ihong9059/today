@@ -1,0 +1,395 @@
+====================================================================
+        AI Quality Judgment Process Explanation Video - Narration Script
+====================================================================
+        Total Length: Approximately 10 minutes (time stamps per scene)
+====================================================================
+
+
+[Scene 1: Opening] (0:00 ~ 0:40)
+--------------------------------------------------------------------
+
+Hello.
+
+Today, I will explain how AI is utilized
+for quality judgment in the battery recycling process.
+
+(pause)
+
+Let me start with a question.
+
+"Can AI really learn everything on its own
+and automatically produce optimal quality?"
+
+To give you the conclusion first,
+AI has clear boundaries and limitations in its role.
+
+Through this video today,
+I will clearly distinguish between
+what humans must do and what AI can do.
+
+
+[Scene 2: Process Overview - From Waste Batteries to Black Mass] (0:40 ~ 1:40)
+--------------------------------------------------------------------
+
+First, let's briefly look at the entire process.
+
+The battery recycling process consists of three main stages.
+
+First, primary crushing.
+Using a twin-shaft shear crusher,
+waste batteries are broken into pieces of 50 to 100 millimeters.
+
+Second, secondary crushing.
+Through a hammer crusher,
+pieces are further reduced to 5 to 20 millimeters.
+
+Third, the separation process.
+Using an impact mill,
+valuable metals are separated from the piece surfaces.
+
+After this process, we finally obtain
+"black mass," a powder containing valuable metals
+such as lithium, cobalt, and nickel.
+
+The two key goals of the process are:
+high recovery rate and
+uniform quality black mass production.
+
+
+[Scene 3: The Core of Quality - Recovery Rate and Purity] (1:40 ~ 2:40)
+--------------------------------------------------------------------
+
+So how do we determine quality?
+
+The most important indicator is the "recovery rate."
+It represents the ratio of valuable metals actually recovered
+compared to those contained in the input waste batteries.
+
+"Component purity" is also important.
+It indicates how much lithium, cobalt, and nickel
+are contained in the black mass.
+
+(pause)
+
+Now, here's an important point.
+
+This type of chemical component analysis
+can only be accurately measured
+through an ICP analyzer,
+that is, Inductively Coupled Plasma Optical Emission Spectrometry.
+
+Collecting black mass samples,
+analyzing them with ICP equipment,
+and verifying the results
+
+(with emphasis)
+must be performed by humans.
+
+AI cannot measure chemical components in real-time.
+Let me make this point clear first.
+
+
+[Scene 4: Finding Optimal Conditions - The Human Role] (2:40 ~ 4:20)
+--------------------------------------------------------------------
+
+Now for the key question.
+
+"What equipment settings and environmental conditions
+should we use to achieve the highest recovery rate?"
+
+Let me explain the process of finding these optimal conditions.
+
+(slowly, step by step)
+
+Step 1.
+Input waste battery cells into the process.
+
+Step 2.
+Set equipment and environmental conditions.
+
+Equipment conditions include
+blade specifications, rotation speed, and process flow rate.
+
+Environmental conditions include
+temperature, humidity, and pressure.
+
+Step 3.
+Produce black mass with the configured settings.
+
+Step 4.
+Collect samples from the produced black mass,
+perform component analysis with ICP equipment,
+and calculate the recovery rate.
+
+(pause)
+
+If the recovery rate doesn't reach the target,
+change the equipment or environmental conditions
+and repeat from Step 1.
+
+This process may require dozens of repeated experiments.
+
+(emphasis)
+And the important point is,
+AI does not intervene in any of this process.
+
+Finding the optimal recovery rate conditions
+is entirely accomplished through human experimentation and judgment.
+
+
+[Scene 5: The Question - Where is AI Used?] (4:20 ~ 5:00)
+--------------------------------------------------------------------
+
+Naturally, you might wonder at this point.
+
+"Then where exactly is AI used?"
+
+"If AI cannot analyze chemical components in real-time,
+what can AI actually learn?"
+
+(pause)
+
+Good question.
+This is exactly the core of today's explanation.
+
+
+[Scene 6: What AI Learns - Physical Size Optimization] (5:00 ~ 6:30)
+--------------------------------------------------------------------
+
+What AI learns is
+
+(emphasis)
+"the physical size of crushed materials."
+
+Specifically,
+it measures and manages the particle size distribution
+of black mass powder.
+
+Particle size distribution can be measured
+in real-time using laser diffraction sensors.
+
+The measured values include D10, D50, and D90,
+which represent the particle sizes at
+the lower 10 percent, median, and upper 90 percent
+of the particle size distribution.
+
+(pause)
+
+Now, here's the key connection.
+
+Earlier, I mentioned that humans find
+optimal recovery rate conditions through repeated experiments.
+
+Something is discovered during that experimentation process.
+
+"At a specific particle size distribution, recovery rate is highest."
+
+For example,
+when D50 is 15 micrometers
+and the distribution deviation is within plus or minus 2 micrometers,
+the recovery rate was highest at 94 percent.
+
+Humans discover this correlation first.
+
+(slowly)
+Then,
+when we set that particle size distribution as the "target" for AI,
+AI learns the optimal equipment and environmental conditions
+to maintain that particle size distribution.
+
+In other words,
+AI doesn't learn the chemical recovery rate itself,
+but learns the physical size that correlates with recovery rate.
+
+
+[Scene 7: AI Learning Process - Step by Step Explanation] (6:30 ~ 7:50)
+--------------------------------------------------------------------
+
+Let me organize the AI learning process in three stages.
+
+(first stage)
+Stage 1, Goal Setting.
+This is decided by humans.
+
+Through multiple repeated experiments, we confirm optimal recovery rate conditions,
+record the particle size distribution characteristics under those conditions,
+and tell the AI "this particle size distribution is the target."
+
+For example,
+D10 is 5 micrometers,
+D50 is 15 micrometers,
+D90 is 30 micrometers,
+standard deviation within 8 micrometers.
+
+We define targets like this.
+
+(second stage)
+Stage 2, Data Collection.
+
+Input data includes equipment and environmental conditions.
+Blade angle, rotation speed, feed rate, temperature, humidity, pressure, and so on.
+
+Output data is the measured particle size distribution.
+D10, D50, D90 values and standard deviation.
+
+While operating the process,
+we accumulate combination data of inputs and outputs.
+
+(third stage)
+Stage 3, Model Training.
+
+AI receives input data
+and trains a model to predict particle size distribution.
+
+It compares predicted values with actual measurements
+and improves the model to reduce errors.
+
+When training is complete,
+AI understands the relationship:
+"with these equipment and environmental conditions,
+this particle size distribution will result."
+
+
+[Scene 8: AI Application - Role in Mass Production] (7:50 ~ 8:50)
+--------------------------------------------------------------------
+
+So, what role does AI play
+in the mass production stage?
+
+(explanation)
+AI monitors particle size distribution in real-time.
+24 hours a day, without rest.
+
+When particle size data comes from sensors,
+AI compares it against the target range.
+
+If the D50 value exceeds 18 micrometers,
+AI issues an adjustment command to increase rotation speed.
+
+Conversely, if D50 is below 12 micrometers,
+it commands to decrease rotation speed.
+
+If distribution deviation suddenly increases,
+it sends a warning alert to inspect blade condition.
+
+This is how AI performs real-time feedback control.
+
+(emphasis)
+Here's the key point.
+
+AI only manages physical size.
+Chemical recovery rate is still managed by humans
+through periodic ICP sampling.
+
+However, if particle size is maintained consistently,
+recovery rate also remains stable,
+as this correlation has already been verified through human experimentation.
+
+AI's particle size management therefore
+directly contributes to quality stabilization.
+
+
+[Scene 9: Summary - Division of Roles Between Humans and AI] (8:50 ~ 9:40)
+--------------------------------------------------------------------
+
+Let me summarize what we've covered so far.
+
+(human role)
+What humans do is as follows.
+
+First, design initial experiments.
+Decide what conditions to try.
+
+Second, perform ICP component analysis.
+Chemical analysis can only be done by humans.
+
+Third, calculate and evaluate recovery rates.
+Judge whether targets are achieved.
+
+Fourth, determine optimal conditions.
+Final decision-making belongs to humans.
+
+Fifth, set target particle size for AI.
+Tell the AI what particle size indicates good quality.
+
+(AI role)
+What AI does is as follows.
+
+First, real-time particle size monitoring.
+Monitoring 24 hours without interruption.
+
+Second, alert when deviations occur.
+Immediately notify of problems.
+
+Third, automatically adjust equipment conditions.
+Perform feedback control.
+
+Fourth, learn particle size patterns.
+Understand relationships between equipment and particle size.
+
+Fifth, detect anomalies early.
+Prevent equipment failures.
+
+(collaboration result)
+In the end, humans define "what good quality is,"
+and AI automatically manages "maintaining that quality."
+
+The result of this collaboration is
+consistent quality, high productivity, and low defect rates.
+
+
+[Scene 10: Closing - Implementation Benefits and Conclusion] (9:40 ~ 10:00)
+--------------------------------------------------------------------
+
+Let me share the benefits of implementing the AI quality management system.
+
+Particle size deviation decreased by 40 percent,
+and quality defect rate decreased by 60 percent.
+Manual inspection time was reduced by 70 percent,
+and equipment utilization improved by 15 percent.
+
+(conclusion, slowly)
+
+AI is not magic.
+It can only learn and manage what is measurable.
+
+But within that scope,
+AI is faster, more accurate, and tireless compared to humans.
+
+When human expertise meets AI's real-time management capability,
+we can achieve the highest quality and efficiency.
+
+Thank you for watching.
+If you have any questions, please visit our booth for consultation.
+
+
+====================================================================
+                            End of Script
+====================================================================
+
+
+[Appendix: Pronunciation Guide]
+
+ICP = "I-C-P" (read as letters)
+D10, D50, D90 = "D-ten", "D-fifty", "D-ninety"
+um (micrometer) = "micrometer"
+RPM = "R-P-M"
+Black Mass = "Black Mass"
+
+
+[Appendix: Emphasis Points]
+
+1. "must be performed by humans" - emphasize in chemical analysis section
+2. "AI does not intervene" - emphasize in initial optimization process
+3. "physical size" - emphasize when explaining AI learning targets
+4. "AI is not magic" - emphasize in closing
+
+
+[Appendix: Pause Timing]
+
+- After Scene 1 question: 2 seconds
+- Before Scene 3 ICP explanation: 1.5 seconds
+- After Scene 5 question: 2 seconds
+- Before Scene 6 key point: 1.5 seconds
+- Before Scene 9 role division: 1 second
+- Before Scene 10 conclusion: 2 seconds

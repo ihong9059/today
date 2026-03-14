@@ -1,0 +1,18 @@
+실전 증강 파이프라인을 볼게요.
+
+CIFAR-10 기준으로 설명할게요.
+
+먼저 RandomHorizontalFlip에 p는 0.5예요.
+절반 확률로 좌우 반전해요.
+
+RandomRotation은 15도 정도가 적당해요.
+너무 크면 객체가 이상해 보여요.
+
+RandomCrop은 32에 패딩 4를 줘요.
+이미지 위치 변화를 학습해요.
+
+ColorJitter는 0.2 정도로 설정해요.
+brightness, contrast, saturation 모두요.
+
+선택적으로 RandomErasing도 쓸 수 있어요.
+이미지 일부를 지워서 강건하게 만들어요!

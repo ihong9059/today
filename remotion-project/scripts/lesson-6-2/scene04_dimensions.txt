@@ -1,0 +1,17 @@
+각 기호의 차원을 표로 정리해 볼게요.
+
+x_t는 현재 입력이에요.
+이번에 읽은 데이터이고 차원은 input_size예요.
+
+h_t-1은 이전 은닉 상태예요.
+지금까지의 요약이고 차원은 hidden_size예요.
+
+W_xh는 입력 가중치예요.
+입력을 은닉으로 변환하고,
+차원은 hidden_size 곱하기 input_size예요.
+
+W_hh는 순환 가중치예요.
+이전 은닉을 현재 은닉으로 연결하고,
+차원은 hidden_size 곱하기 hidden_size예요.
+
+b_h는 편향이고 차원은 hidden_size예요.

@@ -1,64 +1,65 @@
-#!/usr/bin/env python3
-"""
-Level 9-2: 데이터 수집/준비
-TTS 음성 생성 스크립트
-"""
-
-import asyncio
 import edge_tts
+import asyncio
 import os
 
-OUTPUT_DIR = r"C:\todo\today\remotion-project\public\audio\lesson-9-2"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+# Level 9-2: 데이터 수집과 전처리
+SCENES = {
+    "intro": """안녕하세요! 레벨 9 두 번째 레슨, 데이터 수집과 전처리입니다.
+AI 프로젝트의 성공은 좋은 데이터에서 시작합니다.
+번호판 인식에 필요한 데이터를 수집하고 전처리하는 방법을 알아보겠습니다.""",
 
-VOICE = "ko-KR-SunHiNeural"
+    "data_sources": """데이터 수집 방법을 알아볼게요.
+공개 데이터셋을 활용할 수 있습니다. AI Hub나 Kaggle에서 찾아보세요.
+직접 촬영한 이미지도 사용할 수 있습니다.
+웹 크롤링으로 이미지를 수집할 수도 있지만, 저작권에 주의해야 합니다.
+다양한 환경의 이미지를 확보하는 것이 중요합니다.
+낮, 밤, 비 오는 날, 흐린 날 등 다양한 조건을 포함해야 합니다.""",
 
-SCRIPTS = {
-    "intro": """레벨 9-2, 데이터 수집과 준비입니다.
-AI 모델의 성능은 데이터 품질에 달려있습니다.
-번호판 인식을 위한 이미지 수집, 라벨링, 전처리 방법을 배웁니다.""",
+    "annotation": """어노테이션 작업에 대해 설명드릴게요.
+번호판의 위치를 바운딩 박스로 표시합니다.
+YOLO 형식은 클래스, 중심 좌표, 너비, 높이를 사용합니다.
+각 값은 이미지 크기로 정규화된 0에서 1 사이의 값입니다.
+LabelImg나 CVAT 같은 도구를 사용하면 편리합니다.
+어노테이션 품질이 모델 성능에 직접적인 영향을 미칩니다.""",
 
-    "collection": """데이터 수집 방법을 알아봅니다.
-직접 촬영, 공개 데이터셋 활용, 웹 크롤링 등 다양한 방법이 있습니다.
-주간, 야간, 맑음, 비, 다양한 환경을 포함해야 합니다.
-최소 1000장 이상 수집을 권장합니다. 많을수록 좋습니다.""",
+    "preprocessing": """이미지 전처리 방법을 알아볼게요.
+이미지 크기를 일정하게 조절합니다. 보통 640x640을 사용합니다.
+RGB 채널 순서를 확인하고 필요시 변환합니다.
+픽셀 값을 0에서 1 사이로 정규화합니다.
+OpenCV의 cv2.resize(), cv2.cvtColor() 함수를 사용합니다.
+일관된 전처리 파이프라인을 구축하는 것이 중요합니다.""",
 
-    "labeling": """라벨링은 AI 학습의 핵심입니다.
-번호판 검출을 위해 바운딩 박스 좌표를 표시합니다.
-문자 인식을 위해 번호판 텍스트를 입력합니다.
-라벨미, 시버트 같은 도구를 사용하면 편리합니다.""",
+    "augmentation": """데이터 증강 기법을 소개해드릴게요.
+학습 데이터가 부족할 때 데이터를 늘리는 방법입니다.
+회전, 크기 조절, 좌우 반전으로 변형을 만듭니다.
+밝기, 대비, 색상을 조절합니다.
+블러, 노이즈를 추가해서 실제 환경을 시뮬레이션합니다.
+Albumentations 라이브러리를 사용하면 쉽게 구현할 수 있어요.""",
 
-    "format": """라벨 포맷을 살펴봅시다.
-YOLO 포맷은 클래스 번호와 중심점 좌표, 너비, 높이를 사용합니다.
-COCO 포맷은 JSON으로 상세한 어노테이션을 저장합니다.
-프로젝트에 맞는 포맷을 선택하고 일관성을 유지하세요.""",
+    "split": """데이터 분할 방법을 알아볼게요.
+전체 데이터를 학습용, 검증용, 테스트용으로 나눕니다.
+보통 8:1:1 또는 7:1.5:1.5 비율을 사용합니다.
+각 세트에 다양한 데이터가 고르게 분포되어야 합니다.
+시간 순서가 있는 데이터는 순서를 고려해서 분할합니다.
+random seed를 고정해서 재현 가능하게 만듭니다.""",
 
-    "augmentation": """데이터 증강으로 학습 데이터를 늘립니다.
-회전, 밝기 조절, 노이즈 추가, 블러 적용 등이 있습니다.
-다양한 환경을 시뮬레이션해서 모델의 일반화 성능을 높입니다.
-알부멘테이션 라이브러리를 추천합니다.""",
-
-    "split": """데이터를 학습, 검증, 테스트 세트로 분할합니다.
-일반적으로 7대 2대 1 비율을 사용합니다.
-같은 차량이 여러 세트에 나뉘지 않도록 주의하세요.
-계층적 샘플링으로 클래스 분포를 유지합니다.""",
-
-    "outro": """데이터 준비가 완료되었습니다.
-품질 좋은 데이터가 좋은 모델의 시작입니다.
-다음 레슨에서는 번호판 검출 모델을 학습합니다."""
+    "outro": """이번 레슨에서 데이터 수집과 전처리를 배웠습니다.
+어노테이션, 전처리, 증강, 분할 방법을 알아봤습니다.
+다음 레슨에서는 YOLO로 번호판 검출 모델을 학습하겠습니다."""
 }
 
-async def generate_audio(name: str, text: str):
-    output_path = os.path.join(OUTPUT_DIR, f"{name}.mp3")
-    communicate = edge_tts.Communicate(text, VOICE)
-    await communicate.save(output_path)
-    print(f"Generated: {output_path}")
+async def generate_tts():
+    output_dir = "public/audio/lesson-9-2"
+    os.makedirs(output_dir, exist_ok=True)
 
-async def main():
-    print("=== Level 9-2 TTS 생성 시작 ===")
-    tasks = [generate_audio(name, text) for name, text in SCRIPTS.items()]
-    await asyncio.gather(*tasks)
-    print("=== 모든 TTS 생성 완료 ===")
+    for scene_name, text in SCENES.items():
+        output_file = f"{output_dir}/{scene_name}.mp3"
+        print(f"Generating {scene_name}...")
+
+        communicate = edge_tts.Communicate(text, "ko-KR-SunHiNeural")
+        await communicate.save(output_file)
+        print(f"Saved: {output_file}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(generate_tts())
+    print("All audio files generated!")

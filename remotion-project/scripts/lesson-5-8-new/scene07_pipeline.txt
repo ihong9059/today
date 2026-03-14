@@ -1,0 +1,6 @@
+실제 파이프라인을 구성해볼게요.
+학습용 변환을 만들어요.
+RandomResizedCrop으로 크기 조절하며 자르기.
+RandomHorizontalFlip으로 좌우 뒤집기.
+ColorJitter로 색상 변화 주기.
+ToTensor와 Normalize로 마무리해요.

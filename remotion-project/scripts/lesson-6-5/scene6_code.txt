@@ -1,6 +1,0 @@
-PyTorch에서 양방향 LSTM을 만들어 봅시다.
-nn.LSTM에서 bidirectional=True를 설정하면 됩니다.
-num_layers로 층 수를 지정할 수 있습니다.
-출력 텐서의 마지막 차원이 hidden_size의 2배가 됩니다.
-양방향이므로 정방향과 역방향을 합친 결과입니다.
-분류 작업에서는 마지막 은닉 상태를 사용합니다.

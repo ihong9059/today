@@ -1,0 +1,6 @@
+파이토치 코드를 작성해볼게요.
+nn.Module을 상속받아 클래스를 정의해요.
+init에서 레이어들을 정의하고요.
+forward에서 순전파 로직을 작성해요.
+Conv2d, ReLU, MaxPool2d를 순서대로 적용해요.
+view로 텐서를 펼치고 Linear 레이어에 넣어요.

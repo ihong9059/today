@@ -1,0 +1,16 @@
+전체 수식을 정리해볼게요!
+
+멀티헤드 어텐션은요.
+MultiHead(Q, K, V) 함수예요.
+
+먼저 각 헤드 i에서요.
+head_i = Attention(Q W_Q^i, K W_K^i, V W_V^i)
+
+그 다음 모든 헤드를 연결해요.
+Concat(head_1, head_2, ..., head_h)
+
+마지막으로 출력 프로젝션이요.
+Concat 결과에 W_O를 곱해요!
+
+이게 멀티헤드 어텐션의 전체 과정이에요!
+

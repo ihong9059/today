@@ -1,0 +1,13 @@
+디코더 블록 구조를 봐요!
+
+첫째, Masked Self-Attention!
+미래를 못 보게 막아요!
+
+둘째, Cross-Attention!
+인코더 출력을 봐요!
+
+셋째, FFN!
+피드 포워드 네트워크예요!
+
+각 서브레이어 후에요.
+Add & Norm!

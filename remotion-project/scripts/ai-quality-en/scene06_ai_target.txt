@@ -1,0 +1,21 @@
+What AI learns is the physical size of crushed materials.
+
+Specifically, it measures and manages the particle size distribution of black mass powder.
+
+Particle size distribution can be measured in real-time using laser diffraction sensors.
+
+The measured values include D10, D50, and D90, which represent the particle sizes at the lower 10 percent, median, and upper 90 percent of the particle size distribution.
+
+Now, here's the key connection.
+
+Earlier, I mentioned that humans find optimal recovery rate conditions through repeated experiments.
+
+Something is discovered during that experimentation process. At a specific particle size distribution, recovery rate is highest.
+
+For example, when D50 is 15 micrometers and the distribution deviation is within plus or minus 2 micrometers, the recovery rate was highest at 94 percent.
+
+Humans discover this correlation first.
+
+Then, when we set that particle size distribution as the target for AI, AI learns the optimal equipment and environmental conditions to maintain that particle size distribution.
+
+In other words, AI doesn't learn the chemical recovery rate itself, but learns the physical size that correlates with recovery rate.

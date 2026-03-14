@@ -1,0 +1,21 @@
+So, what role does AI play in the mass production stage?
+
+AI monitors particle size distribution in real-time. 24 hours a day, without rest.
+
+When particle size data comes from sensors, AI compares it against the target range.
+
+If the D50 value exceeds 18 micrometers, AI issues an adjustment command to increase rotation speed.
+
+Conversely, if D50 is below 12 micrometers, it commands to decrease rotation speed.
+
+If distribution deviation suddenly increases, it sends a warning alert to inspect blade condition.
+
+This is how AI performs real-time feedback control.
+
+Here's the key point.
+
+AI only manages physical size. Chemical recovery rate is still managed by humans through periodic ICP sampling.
+
+However, if particle size is maintained consistently, recovery rate also remains stable, as this correlation has already been verified through human experimentation.
+
+AI's particle size management therefore directly contributes to quality stabilization.

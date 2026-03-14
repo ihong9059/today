@@ -1,0 +1,15 @@
+코드로 보면 간단해요!
+
+PyTorch에서는요.
+
+class FFN:
+  self.linear1 = Linear(512, 2048)
+  self.linear2 = Linear(2048, 512)
+  self.gelu = GELU()
+
+forward 함수는요.
+x = self.gelu(self.linear1(x))
+x = self.linear2(x)
+return x
+
+정말 간단하죠?

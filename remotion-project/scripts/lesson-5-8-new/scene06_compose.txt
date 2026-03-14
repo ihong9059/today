@@ -1,0 +1,5 @@
+여러 변환을 조합해볼게요.
+transforms.Compose로 연결해요.
+순서대로 적용돼요.
+예를 들어, Resize, RandomCrop, ToTensor 순으로요.
+학습 데이터에는 증강을, 테스트 데이터에는 기본 전처리만 적용해요.

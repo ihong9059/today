@@ -1,0 +1,15 @@
+transforms.Compose로 증강을 조합해요.
+
+여러 변환을 순서대로 연결하는 거예요.
+리스트 안에 변환들을 넣으면 돼요.
+
+훈련용은 강한 증강을 적용해요.
+RandomHorizontalFlip, RandomRotation,
+RandomCrop, ColorJitter를 조합해요.
+
+마지막에 ToTensor와 Normalize를 넣어요.
+텐서 변환과 정규화는 필수예요!
+
+테스트용은 증강을 빼요.
+ToTensor와 Normalize만 사용해요.
+평가할 때는 원본 그대로 테스트해야 해요!

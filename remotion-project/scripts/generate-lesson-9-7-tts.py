@@ -1,64 +1,65 @@
-#!/usr/bin/env python3
-"""
-Level 9-7: MLOps 기초
-TTS 음성 생성 스크립트
-"""
-
-import asyncio
 import edge_tts
+import asyncio
 import os
 
-OUTPUT_DIR = r"C:\todo\today\remotion-project\public\audio\lesson-9-7"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+# Level 9-7: MLOps 기초
+SCENES = {
+    "intro": """안녕하세요! 레벨 9 일곱 번째 레슨, MLOps 기초입니다.
+모델을 한 번 배포하는 것보다 지속적으로 관리하는 것이 더 중요합니다.
+MLOps의 핵심 개념과 실천 방법을 알아보겠습니다.""",
 
-VOICE = "ko-KR-SunHiNeural"
+    "versioning": """버전 관리의 중요성을 알아볼게요.
+데이터, 코드, 모델 모두 버전 관리가 필요합니다.
+Git으로 코드를 관리합니다.
+DVC, Data Version Control로 데이터셋을 버전 관리합니다.
+MLflow로 모델과 실험을 추적합니다.
+어떤 데이터와 코드로 어떤 모델이 만들어졌는지 추적할 수 있어야 합니다.""",
 
-SCRIPTS = {
-    "intro": """레벨 9-7, MLOps 기초입니다.
-모델을 지속적으로 운영하고 개선하는 MLOps를 배웁니다.
-개발과 운영을 연결하는 DevOps의 ML 버전입니다.""",
+    "pipeline": """자동화 파이프라인을 구축해볼게요.
+데이터 수집부터 배포까지 전 과정을 자동화합니다.
+Airflow나 Kubeflow로 워크플로를 정의합니다.
+DAG, Directed Acyclic Graph로 작업 순서를 관리합니다.
+각 단계가 실패하면 알림을 받고 빠르게 대응합니다.
+정기적으로 파이프라인이 실행되어 모델을 갱신합니다.""",
 
-    "versioning": """모델 버전 관리를 합니다.
-데이터, 코드, 모델 각각 버전을 관리합니다.
-DVC, MLflow 같은 도구로 실험을 추적합니다.
-어떤 데이터로 어떤 하이퍼파라미터로 학습했는지 기록합니다.""",
+    "cicd": """CI/CD를 ML에 적용하는 방법입니다.
+CI, Continuous Integration은 코드 변경 시 자동으로 테스트합니다.
+데이터 품질 테스트, 모델 성능 테스트를 포함합니다.
+CD, Continuous Deployment는 테스트 통과 시 자동 배포합니다.
+GitHub Actions, Jenkins, GitLab CI를 사용할 수 있습니다.
+성능 기준을 통과해야만 배포가 진행됩니다.""",
 
-    "pipeline": """자동화 파이프라인을 구축합니다.
-데이터 수집, 전처리, 학습, 평가, 배포가 자동으로 실행됩니다.
-Airflow, Kubeflow 같은 워크플로 도구를 사용합니다.
-새 데이터가 들어오면 모델이 자동으로 재학습됩니다.""",
+    "monitoring": """서비스 모니터링 방법입니다.
+모델이 프로덕션에서 어떻게 동작하는지 추적해야 합니다.
+예측 정확도, 응답 시간, 에러율을 모니터링합니다.
+데이터 드리프트를 감지합니다. 입력 데이터 분포가 변하면 성능이 저하됩니다.
+Prometheus로 지표를 수집하고 Grafana로 시각화합니다.
+이상 징후 발견 시 자동으로 알림을 보냅니다.""",
 
-    "cicd": """CI/CD를 적용합니다.
-코드 변경 시 자동으로 테스트가 실행됩니다.
-모델 성능이 기준을 통과하면 자동 배포됩니다.
-깃헙 액션, 젠킨스 등을 활용합니다.""",
+    "abtest": """A/B 테스트와 롤백을 알아볼게요.
+새 모델을 전체 배포하기 전에 일부 트래픽으로 테스트합니다.
+예를 들어, 90%는 기존 모델, 10%는 새 모델을 사용합니다.
+새 모델의 성능이 더 좋으면 점진적으로 비율을 늘립니다.
+문제가 발생하면 빠르게 이전 버전으로 롤백합니다.
+이를 카나리 배포 또는 블루-그린 배포라고 합니다.""",
 
-    "monitoring": """서비스 모니터링을 구축합니다.
-모델 성능 저하, 데이터 드리프트를 감지합니다.
-추론 시간, 에러율, 리소스 사용량을 추적합니다.
-알림을 설정해서 문제를 빠르게 대응합니다.""",
-
-    "abtest": """A/B 테스트로 모델을 비교합니다.
-트래픽의 일부를 새 모델로 보내 성능을 측정합니다.
-통계적으로 유의미한 차이가 있는지 확인합니다.
-점진적으로 새 모델로 전환하는 카나리 배포도 있습니다.""",
-
-    "outro": """MLOps 기초를 배웠습니다.
-지속적인 개선이 좋은 AI 서비스의 핵심입니다.
-다음 레슨에서는 전체 프로젝트를 회고하며 마무리합니다."""
+    "outro": """이번 레슨에서 MLOps 기초를 배웠습니다.
+버전 관리, 파이프라인 자동화, 모니터링 방법을 알아봤습니다.
+다음 레슨에서 전체 과정을 정리하고 마무리하겠습니다."""
 }
 
-async def generate_audio(name: str, text: str):
-    output_path = os.path.join(OUTPUT_DIR, f"{name}.mp3")
-    communicate = edge_tts.Communicate(text, VOICE)
-    await communicate.save(output_path)
-    print(f"Generated: {output_path}")
+async def generate_tts():
+    output_dir = "public/audio/lesson-9-7"
+    os.makedirs(output_dir, exist_ok=True)
 
-async def main():
-    print("=== Level 9-7 TTS 생성 시작 ===")
-    tasks = [generate_audio(name, text) for name, text in SCRIPTS.items()]
-    await asyncio.gather(*tasks)
-    print("=== 모든 TTS 생성 완료 ===")
+    for scene_name, text in SCENES.items():
+        output_file = f"{output_dir}/{scene_name}.mp3"
+        print(f"Generating {scene_name}...")
+
+        communicate = edge_tts.Communicate(text, "ko-KR-SunHiNeural")
+        await communicate.save(output_file)
+        print(f"Saved: {output_file}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(generate_tts())
+    print("All audio files generated!")

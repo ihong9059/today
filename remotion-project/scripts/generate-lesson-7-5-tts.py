@@ -6,26 +6,39 @@ VOICE = "ko-KR-SunHiNeural"
 OUTPUT_DIR = "public/audio/lesson-7-5"
 SCRIPT_DIR = "scripts/lesson-7-5"
 
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-scenes = [
-    ("scene1_intro.txt", "intro.mp3"),
-    ("scene2_encoder.txt", "encoder.mp3"),
-    ("scene3_decoder.txt", "decoder.mp3"),
-    ("scene4_residual.txt", "residual.mp3"),
-    ("scene5_layernorm.txt", "layernorm.mp3"),
-    ("scene6_ffn.txt", "ffn.mp3"),
-    ("scene7_outro.txt", "outro.mp3"),
+scripts = [
+    "scene01_intro",
+    "scene02_problem",
+    "scene03_idea",
+    "scene04_resnet",
+    "scene05_why_works",
+    "scene06_gradient",
+    "scene07_transformer",
+    "scene08_add_norm",
+    "scene09_dimension",
+    "scene10_benefit",
+    "scene11_code",
+    "scene12_outro",
 ]
 
-async def generate_tts():
-    for script_file, audio_file in scenes:
-        with open(f"{SCRIPT_DIR}/{script_file}", "r", encoding="utf-8") as f:
+async def generate_tts(text: str, output_path: str):
+    communicate = edge_tts.Communicate(text, VOICE)
+    await communicate.save(output_path)
+    print(f"Generated: {output_path}")
+
+async def main():
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    for script in scripts:
+        script_path = os.path.join(SCRIPT_DIR, f"{script}.txt")
+        output_path = os.path.join(OUTPUT_DIR, f"{script}.mp3")
+
+        with open(script_path, "r", encoding="utf-8") as f:
             text = f.read().strip()
 
-        communicate = edge_tts.Communicate(text, VOICE)
-        await communicate.save(f"{OUTPUT_DIR}/{audio_file}")
-        print(f"Generated: {audio_file}")
+        await generate_tts(text, output_path)
 
-asyncio.run(generate_tts())
-print("All TTS files generated!")
+    print("\nAll TTS files generated successfully!")
+
+if __name__ == "__main__":
+    asyncio.run(main())

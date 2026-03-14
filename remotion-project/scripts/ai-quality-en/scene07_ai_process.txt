@@ -1,0 +1,23 @@
+Let me organize the AI learning process in three stages.
+
+Stage 1, Goal Setting. This is decided by humans.
+
+Through multiple repeated experiments, we confirm optimal recovery rate conditions, record the particle size distribution characteristics under those conditions, and tell the AI this particle size distribution is the target.
+
+For example, D10 is 5 micrometers, D50 is 15 micrometers, D90 is 30 micrometers, standard deviation within 8 micrometers. We define targets like this.
+
+Stage 2, Data Collection.
+
+Input data includes equipment and environmental conditions. Blade angle, rotation speed, feed rate, temperature, humidity, pressure, and so on.
+
+Output data is the measured particle size distribution. D10, D50, D90 values and standard deviation.
+
+While operating the process, we accumulate combination data of inputs and outputs.
+
+Stage 3, Model Training.
+
+AI receives input data and trains a model to predict particle size distribution.
+
+It compares predicted values with actual measurements and improves the model to reduce errors.
+
+When training is complete, AI understands the relationship: with these equipment and environmental conditions, this particle size distribution will result.

@@ -1,0 +1,16 @@
+코드로 보면 간단해요!
+
+PyTorch에서는요.
+그냥 덧셈만 하면 돼요!
+
+x = x + self.attention(x)
+이렇게 한 줄이에요!
+
+Pre-Norm 스타일이면요.
+x = x + self.attention(self.norm(x))
+
+더하기 연산만으로요.
+강력한 효과를 얻어요!
+
+아주 간단하죠?
+

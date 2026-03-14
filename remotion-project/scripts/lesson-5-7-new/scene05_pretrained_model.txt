@@ -1,0 +1,5 @@
+파이토치에서 사전학습 모델을 불러와볼게요.
+torchvision.models에 ResNet, VGG 등이 있어요.
+pretrained=True로 설정하면 ImageNet 가중치를 가져와요.
+1000개 클래스 분류 모델이에요.
+우리 문제에 맞게 마지막 층을 바꿔줘야 해요.

@@ -1,0 +1,20 @@
+PyTorch로 MNIST 데이터를 로딩해볼게요.
+
+먼저 필요한 라이브러리를 임포트해요.
+torch, torchvision 그리고 transforms를 사용해요.
+
+데이터 변환을 정의할게요.
+transforms.ToTensor로 이미지를 텐서로 바꿔요.
+그리고 Normalize로 정규화해요.
+MNIST의 평균은 0.1307, 표준편차는 0.3081이에요.
+
+왜 정규화를 할까요?
+데이터를 0 중심으로 맞추면 학습이 더 안정적이에요.
+
+datasets.MNIST로 데이터를 다운로드해요.
+train=True면 훈련 데이터, False면 테스트 데이터예요.
+처음 실행하면 자동으로 다운로드되니까 편해요.
+
+DataLoader로 배치 단위로 묶어요.
+배치 사이즈 64는 보통 좋은 선택이에요.
+shuffle=True로 데이터를 섞어주면 학습이 더 잘 돼요.

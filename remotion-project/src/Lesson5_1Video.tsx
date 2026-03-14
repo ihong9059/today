@@ -1,16 +1,17 @@
 import React from "react";
 import { AbsoluteFill, Audio, Img, Sequence, staticFile, useCurrentFrame } from "remotion";
 
-export const LESSON_5_1_DURATION = 6832;
+export const LESSON_5_1_DURATION = 8784;
 
 const SCENE_TIMINGS = {
-  intro: { start: 0, duration: 806 },
-  applications: { start: 806, duration: 1012 },
-  pixel: { start: 1818, duration: 974 },
-  channel: { start: 2792, duration: 1057 },
-  tensor: { start: 3849, duration: 1221 },
-  normalization: { start: 5070, duration: 803 },
-  outro: { start: 5873, duration: 959 },
+  intro: { start: 0, duration: 579 },
+  what_is_cv: { start: 579, duration: 908 },
+  applications: { start: 1487, duration: 1412 },
+  pixel: { start: 2899, duration: 1103 },
+  channel: { start: 4002, duration: 1107 },
+  tensor: { start: 5109, duration: 1269 },
+  normalization: { start: 6378, duration: 1131 },
+  outro: { start: 7509, duration: 1275 },
 };
 
 const COLORS = {
@@ -53,6 +54,48 @@ const SceneIntro: React.FC = () => {
   );
 };
 
+const SceneWhatIsCV: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = Math.min(1, frame / 30);
+  return (
+    <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
+      <GlobalOverlay />
+      <Audio src={staticFile("audio/lesson-5-1/scene2_what_is_cv.mp3")} />
+      <div style={{ padding: 80, paddingTop: 100, opacity, transform: `translateY(${20 - opacity * 20}px)` }}>
+        <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>컴퓨터 비전이란?</h1>
+        <div style={{ display: "flex", gap: 60 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ background: "rgba(236,72,153,0.15)", borderRadius: 20, padding: 40, marginBottom: 30 }}>
+              <div style={{ fontSize: 28, color: COLORS.light, lineHeight: 1.6 }}>
+                컴퓨터가 <span style={{ color: COLORS.primary, fontWeight: 700 }}>이미지나 영상</span>을<br />
+                인간처럼 이해하고 분석하는 기술
+              </div>
+            </div>
+            <div style={{ display: "grid", gap: 20 }}>
+              {[
+                { icon: "👁️", text: "시각 정보 처리" },
+                { icon: "🧠", text: "패턴 인식" },
+                { icon: "📊", text: "데이터 추출" },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 20, background: "rgba(255,255,255,0.05)", borderRadius: 15, padding: 20 }}>
+                  <span style={{ fontSize: 36 }}>{item.icon}</span>
+                  <span style={{ fontSize: 24, color: COLORS.light }}>{item.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 150, marginBottom: 20 }}>🖼️➡️🤖</div>
+              <div style={{ fontSize: 24, color: "rgba(255,255,255,0.7)" }}>이미지 → 컴퓨터 이해</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 const SceneApplications: React.FC = () => {
   const frame = useCurrentFrame();
   const apps = [
@@ -66,7 +109,7 @@ const SceneApplications: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-5-1/scene2_applications.mp3")} />
+      <Audio src={staticFile("audio/lesson-5-1/scene3_applications.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
         <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 50 }}>컴퓨터 비전의 응용 분야</h1>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 30 }}>
@@ -92,7 +135,7 @@ const ScenePixel: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-5-1/scene3_pixel.mp3")} />
+      <Audio src={staticFile("audio/lesson-5-1/scene4_pixel.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
         <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>픽셀(Pixel)이란?</h1>
         <div style={{ display: "flex", gap: 60 }}>
@@ -133,7 +176,7 @@ const SceneChannel: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
       <GlobalOverlay />
-      <Audio src={staticFile("audio/lesson-5-1/scene4_channel.mp3")} />
+      <Audio src={staticFile("audio/lesson-5-1/scene5_channel.mp3")} />
       <div style={{ padding: 80, paddingTop: 100 }}>
         <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>채널(Channel)의 이해</h1>
         <div style={{ display: "flex", gap: 60 }}>
@@ -174,7 +217,7 @@ const SceneChannel: React.FC = () => {
 const SceneTensor: React.FC = () => (
   <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
     <GlobalOverlay />
-    <Audio src={staticFile("audio/lesson-5-1/scene5_tensor.mp3")} />
+    <Audio src={staticFile("audio/lesson-5-1/scene6_tensor.mp3")} />
     <div style={{ padding: 80, paddingTop: 100 }}>
       <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>텐서로 표현하기</h1>
       <div style={{ display: "flex", gap: 40 }}>
@@ -209,7 +252,7 @@ const SceneTensor: React.FC = () => (
 const SceneNormalization: React.FC = () => (
   <AbsoluteFill style={{ background: COLORS.background, fontFamily: "Pretendard, sans-serif" }}>
     <GlobalOverlay />
-    <Audio src={staticFile("audio/lesson-5-1/scene6_normalization.mp3")} />
+    <Audio src={staticFile("audio/lesson-5-1/scene7_normalization.mp3")} />
     <div style={{ padding: 80, paddingTop: 100 }}>
       <h1 style={{ fontSize: 56, color: COLORS.primary, marginBottom: 40 }}>정규화의 중요성</h1>
       <div style={{ display: "flex", gap: 40 }}>
@@ -244,7 +287,7 @@ const SceneNormalization: React.FC = () => (
 const SceneOutro: React.FC = () => (
   <AbsoluteFill style={{ background: COLORS.gradient, justifyContent: "center", alignItems: "center", fontFamily: "Pretendard, sans-serif" }}>
     <GlobalOverlay />
-    <Audio src={staticFile("audio/lesson-5-1/scene7_outro.mp3")} />
+    <Audio src={staticFile("audio/lesson-5-1/scene8_outro.mp3")} />
     <div style={{ textAlign: "center" }}>
       <div style={{ fontSize: 48, color: COLORS.light, marginBottom: 40 }}>오늘 배운 내용</div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 25, maxWidth: 1000 }}>
@@ -265,6 +308,7 @@ const SceneOutro: React.FC = () => (
 export const Lesson5_1Video: React.FC = () => (
   <AbsoluteFill style={{ background: COLORS.background }}>
     <Sequence from={SCENE_TIMINGS.intro.start} durationInFrames={SCENE_TIMINGS.intro.duration}><SceneIntro /></Sequence>
+    <Sequence from={SCENE_TIMINGS.what_is_cv.start} durationInFrames={SCENE_TIMINGS.what_is_cv.duration}><SceneWhatIsCV /></Sequence>
     <Sequence from={SCENE_TIMINGS.applications.start} durationInFrames={SCENE_TIMINGS.applications.duration}><SceneApplications /></Sequence>
     <Sequence from={SCENE_TIMINGS.pixel.start} durationInFrames={SCENE_TIMINGS.pixel.duration}><ScenePixel /></Sequence>
     <Sequence from={SCENE_TIMINGS.channel.start} durationInFrames={SCENE_TIMINGS.channel.duration}><SceneChannel /></Sequence>
