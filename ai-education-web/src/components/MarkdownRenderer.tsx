@@ -169,6 +169,9 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
               const language = match ? match[1] : '';
               const codeString = String(children).replace(/\n$/, '');
               const isPython = language === 'python' || language === 'py';
+              // Check if code uses libraries not supported by Pyodide (browser)
+              const unsupportedLibs = /\b(import\s+torch|from\s+torch|import\s+tensorflow|from\s+tensorflow|import\s+keras|from\s+keras|import\s+cv2|from\s+cv2|import\s+sklearn|from\s+sklearn)\b/;
+              const canRunInBrowser = isPython && !unsupportedLibs.test(codeString);
               // Detect block code: has newlines or no inline flag
               const isBlock = !inline && (codeString.includes('\n') || !className);
 
@@ -194,7 +197,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
                     <div className="bg-gray-800 px-4 py-2 text-xs text-gray-400 font-mono flex items-center justify-between">
                       <span>{language}</span>
                       <div className="flex items-center space-x-3">
-                        {isPython && (
+                        {canRunInBrowser && (
                           <button
                             onClick={() => openPythonRunner(codeString)}
                             className="hover:text-green-400 transition-colors flex items-center text-green-500"
@@ -202,6 +205,11 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
                             <Play className="h-3 w-3 mr-1" />
                             실행
                           </button>
+                        )}
+                        {isPython && !canRunInBrowser && (
+                          <span className="text-yellow-400 text-xs">
+                            ⚠️ 로컬 실행 필요
+                          </span>
                         )}
                         <button
                           onClick={() => navigator.clipboard.writeText(codeString)}

@@ -1,8 +1,32 @@
 [
   {
-    "timestamp": "2026-03-07T04:43:14.919Z",
-    "subscriberCount": 19,
-    "viewCount": 436,
+    "timestamp": "2026-03-14T05:57:37.759Z",
+    "subscriberCount": 27,
+    "viewCount": 674,
     "videoCount": 78
+  },
+  {
+    "timestamp": "2026-03-14T09:14:02.423Z",
+    "subscriberCount": 27,
+    "viewCount": 674,
+    "videoCount": 78
+  },
+  {
+    "timestamp": "2026-03-14T21:12:12.643Z",
+    "subscriberCount": 27,
+    "viewCount": 699,
+    "videoCount": 78
+  },
+  {
+    "timestamp": "2026-03-15T07:12:07.515Z",
+    "subscriberCount": 28,
+    "viewCount": 608,
+    "videoCount": 76
+  },
+  {
+    "timestamp": "2026-03-15T12:13:01.478Z",
+    "subscriberCount": 28,
+    "viewCount": 608,
+    "videoCount": 76
   }
 ]

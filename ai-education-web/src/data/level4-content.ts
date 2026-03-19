@@ -4,6 +4,18 @@
 export const LEVEL_4_LESSON_1 = `
 # MNIST 손글씨 분류
 
+> **🖥️ 로컬 실행 필수**
+>
+> 이 레슨의 모든 코드는 **PyTorch**를 사용하며, **브라우저에서 실행되지 않습니다**.
+>
+> **실행 방법:**
+> 1. Python 설치: [python.org](https://www.python.org/downloads/)
+> 2. 터미널에서 PyTorch 설치: \`pip install torch torchvision\`
+> 3. 레슨 하단의 **"전체 통합 코드"**를 복사하여 \`mnist_train.py\`로 저장
+> 4. 터미널에서 실행: \`python mnist_train.py\`
+>
+> 💡 각 코드 조각은 학습용으로, 개별 실행이 불가합니다. 전체 통합 코드를 사용하세요.
+
 ## 학습 목표
 이 레슨을 완료하면:
 - MNIST 데이터셋의 구조와 역사적 의미를 이해합니다
@@ -45,6 +57,7 @@ MNIST(Modified National Institute of Standards and Technology)는 손으로 쓴 
 딥러닝 프로젝트는 항상 필요한 도구를 불러오는 것부터 시작합니다. 각 라이브러리의 역할을 이해하는 것이 중요합니다.
 
 \`\`\`python
+# [코드 조각 1/7] 로컬 Python 환경에서 실행하세요 (브라우저 실행 불가)
 import torch                          # PyTorch 핵심 라이브러리
 import torch.nn as nn                 # 신경망 레이어 모음
 import torch.optim as optim           # 최적화 알고리즘 (Adam, SGD 등)
@@ -69,6 +82,7 @@ print("Using device:", device)
 > **비유**: 요리 전에 재료를 씻고 손질하듯, 모델에 데이터를 넣기 전에 전처리가 필요합니다.
 
 \`\`\`python
+# [코드 조각 2/7] 로컬 Python 환경에서 실행하세요 (브라우저 실행 불가)
 # 데이터 변환 파이프라인을 정의합니다
 transform = transforms.Compose([
     # 1단계: PIL 이미지를 PyTorch 텐서로 변환 (0~255 -> 0.0~1.0)
@@ -88,6 +102,7 @@ transform = transforms.Compose([
 ### 데이터셋 다운로드와 DataLoader 생성
 
 \`\`\`python
+# [코드 조각 3/7] 로컬 Python 환경에서 실행하세요 (브라우저 실행 불가)
 # 훈련 데이터셋 (60,000개)
 train_dataset = datasets.MNIST(
     root="./data",       # 다운로드 경로
@@ -129,6 +144,7 @@ test_loader = DataLoader(test_dataset, batch_size=1000, shuffle=False)
 | 출력층 | 256 | 10 | - | 각 숫자(0~9)에 대한 점수 |
 
 \`\`\`python
+# [코드 조각 4/7] 로컬 Python 환경에서 실행하세요 (브라우저 실행 불가)
 class MNISTClassifier(nn.Module):
     def __init__(self):
         super().__init__()
@@ -167,6 +183,7 @@ PyTorch의 CrossEntropyLoss는 내부적으로 Softmax를 포함하고 있습니
 ## Step 3: 학습 설정
 
 \`\`\`python
+# [코드 조각 5/7] 로컬 Python 환경에서 실행하세요 (브라우저 실행 불가)
 # 손실 함수: 다중 클래스 분류에 사용
 criterion = nn.CrossEntropyLoss()
 
@@ -191,6 +208,7 @@ epochs = 10
 > **비유**: 학습 루프는 시험공부와 같습니다. 문제를 풀고(순전파), 답을 확인하고(손실 계산), 틀린 부분을 분석하고(역전파), 그 부분을 보완합니다(가중치 업데이트). 이 과정을 반복할수록 실력이 향상됩니다.
 
 \`\`\`python
+# [코드 조각 6/7] 로컬 Python 환경에서 실행하세요 (브라우저 실행 불가)
 for epoch in range(epochs):
     model.train()  # 학습 모드 (Dropout 활성화)
     total_loss = 0
@@ -229,6 +247,7 @@ PyTorch는 기본적으로 그래디언트를 누적합니다. 이전 배치의 
 ## Step 5: 모델 평가
 
 \`\`\`python
+# [코드 조각 7/7] 로컬 Python 환경에서 실행하세요 (브라우저 실행 불가)
 model.eval()   # 평가 모드 (Dropout 비활성화)
 correct = 0
 total = 0
@@ -277,6 +296,395 @@ print("Test Accuracy: {:.2f}%".format(accuracy))
 - [ ] 학습 루프 5단계를 순서대로 나열할 수 있다
 - [ ] model.train()과 model.eval()의 차이를 안다
 - [ ] torch.no_grad()를 왜 사용하는지 설명할 수 있다
+
+---
+
+## 전체 통합 코드
+
+아래는 위에서 설명한 모든 코드 조각을 하나로 합친 완전한 실행 가능 코드입니다. 이 코드를 복사하여 실행하면 MNIST 분류기를 학습시킬 수 있습니다.
+
+\`\`\`python
+# ============================================================
+# MNIST 손글씨 분류 - 전체 통합 코드
+# 이 파일 하나로 전체 학습 파이프라인을 실행할 수 있습니다.
+# ============================================================
+
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader
+from torchvision import datasets, transforms
+
+# ============================================================
+# 1. 디바이스 설정
+# ============================================================
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
+
+# ============================================================
+# 2. 데이터 전처리 및 로드
+# ============================================================
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.1307,), (0.3081,))
+])
+
+# 데이터셋 다운로드 및 로드
+train_dataset = datasets.MNIST(root="./data", train=True, download=True, transform=transform)
+test_dataset = datasets.MNIST(root="./data", train=False, download=True, transform=transform)
+
+# DataLoader 생성
+train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=1000, shuffle=False)
+
+print(f"훈련 데이터: {len(train_dataset)}개")
+print(f"테스트 데이터: {len(test_dataset)}개")
+
+# ============================================================
+# 3. 모델 정의 (MLP)
+# ============================================================
+class MNISTClassifier(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(784, 512)
+        self.fc2 = nn.Linear(512, 256)
+        self.fc3 = nn.Linear(256, 10)
+        self.dropout = nn.Dropout(0.2)
+
+    def forward(self, x):
+        x = x.view(-1, 784)
+        x = torch.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = torch.relu(self.fc2(x))
+        x = self.dropout(x)
+        x = self.fc3(x)
+        return x
+
+model = MNISTClassifier().to(device)
+print(f"모델 파라미터 수: {sum(p.numel() for p in model.parameters()):,}개")
+
+# ============================================================
+# 4. 학습 설정
+# ============================================================
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+epochs = 10
+
+# ============================================================
+# 5. 학습 함수
+# ============================================================
+def train_one_epoch(model, train_loader, criterion, optimizer, device):
+    model.train()
+    total_loss = 0
+    for data, target in train_loader:
+        data, target = data.to(device), target.to(device)
+        optimizer.zero_grad()
+        output = model(data)
+        loss = criterion(output, target)
+        loss.backward()
+        optimizer.step()
+        total_loss += loss.item()
+    return total_loss / len(train_loader)
+
+# ============================================================
+# 6. 평가 함수
+# ============================================================
+def evaluate(model, test_loader, device):
+    model.eval()
+    correct = 0
+    total = 0
+    with torch.no_grad():
+        for data, target in test_loader:
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            _, predicted = torch.max(output.data, 1)
+            total += target.size(0)
+            correct += (predicted == target).sum().item()
+    return 100 * correct / total
+
+# ============================================================
+# 7. 학습 실행
+# ============================================================
+print("\\n학습 시작...")
+print("-" * 40)
+
+for epoch in range(epochs):
+    avg_loss = train_one_epoch(model, train_loader, criterion, optimizer, device)
+    accuracy = evaluate(model, test_loader, device)
+    print(f"Epoch {epoch+1:2d}/{epochs} | Loss: {avg_loss:.4f} | Test Accuracy: {accuracy:.2f}%")
+
+print("-" * 40)
+print("학습 완료!")
+
+# ============================================================
+# 8. 최종 평가
+# ============================================================
+final_accuracy = evaluate(model, test_loader, device)
+print(f"\\n최종 테스트 정확도: {final_accuracy:.2f}%")
+
+# ============================================================
+# 9. 모델 저장 (선택사항)
+# ============================================================
+# torch.save(model.state_dict(), "mnist_classifier.pth")
+# print("모델 저장 완료: mnist_classifier.pth")
+\`\`\`
+
+**실행 방법:**
+1. 위 코드를 \`mnist_train.py\` 파일로 저장
+2. 터미널에서 \`python mnist_train.py\` 실행
+3. 약 1-2분 후 98% 이상의 정확도 달성
+
+**예상 출력:**
+\`\`\`
+Using device: cpu
+훈련 데이터: 60000개
+테스트 데이터: 10000개
+모델 파라미터 수: 535,818개
+
+학습 시작...
+----------------------------------------
+Epoch  1/10 | Loss: 0.3521 | Test Accuracy: 95.42%
+Epoch  2/10 | Loss: 0.1423 | Test Accuracy: 96.89%
+...
+Epoch 10/10 | Loss: 0.0412 | Test Accuracy: 98.21%
+----------------------------------------
+학습 완료!
+
+최종 테스트 정확도: 98.21%
+\`\`\`
+
+---
+
+## 모델 저장과 불러오기
+
+### .pth 파일이란?
+
+학습이 완료되면 모델의 **가중치(weights)**를 파일로 저장할 수 있습니다. PyTorch에서는 \`.pth\` 확장자를 사용합니다.
+
+| 항목 | 설명 |
+|------|------|
+| 저장 내용 | 신경망의 모든 가중치와 편향(bias) 값 |
+| 파일 크기 | 약 2MB (535,818개 파라미터 기준) |
+| 형식 | PyTorch 직렬화 형식 |
+
+### 왜 모델을 저장하나요?
+
+1. **학습 시간 절약**: 10 에폭 학습에 수 분 소요 → 저장하면 다시 학습 불필요
+2. **배포**: 학습된 모델을 웹 서버나 앱에서 사용
+3. **재사용**: 학습 없이 즉시 예측(추론) 가능
+
+> **비유**: 요리 레시피를 완성한 후 레시피북에 적어두는 것과 같습니다. 다음에 요리할 때 처음부터 개발할 필요 없이 레시피만 보면 됩니다.
+
+### 모델 저장하기
+
+\`\`\`python
+# [코드 조각] 로컬 Python 환경에서 실행하세요 (브라우저 실행 불가)
+# 모델의 가중치만 저장 (권장 방식)
+torch.save(model.state_dict(), "mnist_classifier.pth")
+print("모델 저장 완료!")
+\`\`\`
+
+### 모델 불러오기
+
+\`\`\`python
+# [코드 조각] 로컬 Python 환경에서 실행하세요 (브라우저 실행 불가)
+# 1. 모델 구조 정의 (학습할 때와 동일해야 함)
+model = MNISTClassifier()
+
+# 2. 저장된 가중치 불러오기
+model.load_state_dict(torch.load("mnist_classifier.pth", weights_only=True))
+
+# 3. 평가 모드로 전환 (Dropout 비활성화)
+model.eval()
+
+# 4. 예측 수행
+with torch.no_grad():
+    output = model(image)
+    predicted = torch.argmax(output, dim=1)
+\`\`\`
+
+### 추론(예측) 전체 코드
+
+저장된 모델을 불러와서 예측하는 전체 코드입니다.
+
+\`\`\`python
+# [추론용 전체 코드] 로컬 Python 환경에서 실행하세요 (브라우저 실행 불가)
+# ============================================================
+# MNIST 추론(예측) 예제
+# mnist_classifier.pth 파일이 있어야 실행됩니다.
+# ============================================================
+
+import torch
+import torch.nn as nn
+from torchvision import datasets, transforms
+import random
+
+# 모델 구조 정의
+class MNISTClassifier(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(784, 512)
+        self.fc2 = nn.Linear(512, 256)
+        self.fc3 = nn.Linear(256, 10)
+        self.dropout = nn.Dropout(0.2)
+
+    def forward(self, x):
+        x = x.view(-1, 784)
+        x = torch.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = torch.relu(self.fc2(x))
+        x = self.dropout(x)
+        x = self.fc3(x)
+        return x
+
+# 모델 로드
+model = MNISTClassifier()
+model.load_state_dict(torch.load("mnist_classifier.pth", weights_only=True))
+model.eval()
+print("모델 로드 완료!")
+
+# 테스트 데이터 준비
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.1307,), (0.3081,))
+])
+test_dataset = datasets.MNIST(root="./data", train=False, download=True, transform=transform)
+
+# 랜덤 샘플 5개 예측
+print("\\n랜덤 샘플 5개 예측 결과:")
+for i in range(5):
+    idx = random.randint(0, len(test_dataset) - 1)
+    image, label = test_dataset[idx]
+
+    with torch.no_grad():
+        output = model(image.unsqueeze(0))
+        probabilities = torch.softmax(output, dim=1)
+        predicted = torch.argmax(output, dim=1).item()
+        confidence = probabilities[0][predicted].item() * 100
+
+    status = "O" if predicted == label else "X"
+    print(f"  정답={label}, 예측={predicted}, 확신도={confidence:.1f}% [{status}]")
+\`\`\`
+
+**예상 출력:**
+\`\`\`
+모델 로드 완료!
+
+랜덤 샘플 5개 예측 결과:
+  정답=2, 예측=2, 확신도=100.0% [O]
+  정답=8, 예측=8, 확신도=99.8% [O]
+  정답=7, 예측=7, 확신도=100.0% [O]
+  정답=3, 예측=3, 확신도=99.5% [O]
+  정답=5, 예측=5, 확신도=98.7% [O]
+\`\`\`
+
+### 실제 활용 사례
+
+| 분야 | 활용 예시 |
+|------|-----------|
+| 웹 서비스 | 사용자가 손글씨 그리면 숫자 인식 |
+| 모바일 앱 | 카메라로 숫자 인식 |
+| 문서 스캔 | 손글씨 숫자 자동 입력 |
+| 우편 분류 | 우편번호 자동 인식 |
+
+> **핵심 포인트**: 학습은 시간이 걸리지만, \`.pth\` 파일만 있으면 **즉시 예측**이 가능합니다!
+
+---
+
+## 다음 단계: 커스텀 데이터로 프로젝트 진행하기
+
+MNIST는 이미 준비된 데이터셋입니다. 실제 프로젝트에서는 직접 데이터를 준비해야 합니다.
+
+### MNIST vs 실제 프로젝트 비교
+
+| 항목 | MNIST | 실제 프로젝트 |
+|------|-------|--------------|
+| 데이터 수집 | 자동 다운로드 | 직접 수집/구매 |
+| 라벨링 | 이미 완료됨 | 직접 라벨링 필요 |
+| 전처리 | 표준화됨 | 데이터에 맞게 설계 |
+| Dataset | \`datasets.MNIST\` | 커스텀 클래스 작성 |
+| 모델 | 참고 자료 풍부 | 직접 실험 필요 |
+
+### 커스텀 프로젝트 워크플로우
+
+\`\`\`text
+┌─────────────────────────────────────────────────────────────┐
+│                   딥러닝 프로젝트 파이프라인                   │
+├─────────────────────────────────────────────────────────────┤
+│  1. 데이터 수집    →  이미지, 텍스트, 센서 데이터 등          │
+│  2. 데이터 정리    →  라벨링, 폴더 구조화, 품질 검수          │
+│  3. Dataset 클래스 →  PyTorch가 이해하는 형식으로 변환       │
+│  4. DataLoader    →  배치 단위로 데이터 공급                │
+│  5. 모델 정의     →  신경망 구조 설계                       │
+│  6. 학습/평가     →  학습 루프 실행, 검증                   │
+│  7. 모델 저장     →  .pth 파일로 가중치 저장                │
+│  8. 배포/추론     →  실제 서비스에 적용                     │
+└─────────────────────────────────────────────────────────────┘
+\`\`\`
+
+### 커스텀 Dataset 클래스 기본 구조
+
+실제 프로젝트에서는 다음과 같이 커스텀 Dataset을 만듭니다:
+
+\`\`\`python
+# [코드 조각] 로컬 Python 환경에서 실행하세요 (브라우저 실행 불가)
+from torch.utils.data import Dataset
+from PIL import Image
+import pandas as pd
+import os
+
+class CustomImageDataset(Dataset):
+    """
+    커스텀 Dataset 클래스
+
+    필수 메서드 3가지:
+    - __init__: 데이터 로드/초기화
+    - __len__: 데이터 개수 반환
+    - __getitem__: 인덱스로 샘플 반환
+    """
+
+    def __init__(self, csv_file, img_dir, transform=None):
+        self.labels_df = pd.read_csv(csv_file)
+        self.img_dir = img_dir
+        self.transform = transform
+
+    def __len__(self):
+        return len(self.labels_df)
+
+    def __getitem__(self, idx):
+        # 이미지 로드
+        img_name = self.labels_df.iloc[idx]['filename']
+        img_path = os.path.join(self.img_dir, img_name)
+        image = Image.open(img_path).convert('RGB')
+
+        # 라벨
+        label = self.labels_df.iloc[idx]['label']
+
+        # 변환 적용
+        if self.transform:
+            image = self.transform(image)
+
+        return image, label
+\`\`\`
+
+### 폴더 구조 예시
+
+\`\`\`text
+data/
+├── train/           # 학습 데이터 (70~80%)
+│   ├── cat/        # 클래스별 폴더
+│   │   ├── cat_001.jpg
+│   │   └── ...
+│   ├── dog/
+│   └── bird/
+├── val/             # 검증 데이터 (10~15%)
+│   ├── cat/
+│   ├── dog/
+│   └── bird/
+└── test/            # 테스트 데이터 (10~15%)
+\`\`\`
+
+> **참고**: 상세한 커스텀 데이터셋 가이드는 학습 자료 폴더의 \`딥러닝_프로젝트_절차_가이드.md\`를 참조하세요.
 `;
 
 export const LEVEL_4_LESSON_2 = `
