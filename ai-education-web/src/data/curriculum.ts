@@ -11232,16 +11232,19 @@ W_Q = np.random.randn(d_model, d_k) * 0.5
 W_K = np.random.randn(d_model, d_k) * 0.5
 W_V = np.random.randn(d_model, d_k) * 0.5
 Q, K, V = X @ W_Q, X @ W_K, X @ W_V
-print()\nprint(f"  Q 크기: {Q.shape}, K 크기: {K.shape}, V 크기: {V.shape}")
+print()
+print(f"  Q 크기: {Q.shape}, K 크기: {K.shape}, V 크기: {V.shape}")
 
 # 단계 2: Attention Score
 scores = Q @ K.T
-print()\nprint(f"===== Attention Score (스케일링 전) =====")
+print()
+print(f"===== Attention Score (스케일링 전) =====")
 print(f"  {np.round(scores, 3)}")
 
 # 단계 3: 스케일링
 scaled_scores = scores / np.sqrt(d_k)
-print()\nprint(f"===== 스케일링 후 (/ sqrt({d_k})) =====")
+print()
+print(f"===== 스케일링 후 (/ sqrt({d_k})) =====")
 print(f"  {np.round(scaled_scores, 3)}")
 
 # 단계 4: Softmax
@@ -11250,7 +11253,8 @@ def softmax(x):
     return exp_x / np.sum(exp_x, axis=-1, keepdims=True)
 
 attention_weights = softmax(scaled_scores)
-print()\nprint(f"===== Attention 가중치 (softmax) =====")
+print()
+print(f"===== Attention 가중치 (softmax) =====")
 header = "           " + "  ".join(f"{w:>8}" for w in words)
 print(header)
 for i, word in enumerate(words):
@@ -11259,7 +11263,8 @@ for i, word in enumerate(words):
 
 # 단계 5: 가중 합계
 output = attention_weights @ V
-print()\nprint(f"===== 최종 출력 =====")
+print()
+print(f"===== 최종 출력 =====")
 for i, word in enumerate(words):
     max_idx = np.argmax(attention_weights[i])
     print(f"  {word} → 가장 주목: {words[max_idx]} ({attention_weights[i, max_idx]:.1%})")
@@ -12258,7 +12263,8 @@ for i in range(num_layers):
         print(f"  {i+1}번째 레이어 후 기울기: {grad_no_res:.6f}")
 
 # 2) Residual Connection 있으면
-print()\nprint("=== Residual Connection 있으면 ===")
+print()
+print("=== Residual Connection 있으면 ===")
 grad_with_res = gradient
 for i in range(num_layers):
     layer_grad = np.random.uniform(0.3, 0.9)
@@ -12266,7 +12272,8 @@ for i in range(num_layers):
     if (i + 1) % 5 == 0:
         print(f"  {i+1}번째 레이어 후 기울기: {grad_with_res:.4f}")
 
-print()\nprint(f"잔차 연결 없이 20 레이어 후: {grad_no_res:.8f} (거의 0!)")
+print()
+print(f"잔차 연결 없이 20 레이어 후: {grad_no_res:.8f} (거의 0!)")
 print(f"잔차 연결 있으면 20 레이어 후: {grad_with_res:.4f} (건강한 크기)")
 \`\`\`
 
@@ -12319,13 +12326,15 @@ print("정규화 전:", x_unstable)
 print(f"  평균: {np.mean(x_unstable):.1f}, 표준편차: {np.std(x_unstable):.1f}")
 
 x_normalized = layer_norm(x_unstable)
-print()\nprint("정규화 후:", np.round(x_normalized, 4))
+print()
+print("정규화 후:", np.round(x_normalized, 4))
 print(f"  평균: {np.mean(x_normalized):.6f}, 표준편차: {np.std(x_normalized):.4f}")
 
 gamma = np.array([1.5, 1.5, 1.5, 1.5])
 beta = np.array([0.5, 0.5, 0.5, 0.5])
 x_scaled = layer_norm(x_unstable, gamma, beta)
-print()\nprint("gamma/beta 적용 후:", np.round(x_scaled, 4))
+print()
+print("gamma/beta 적용 후:", np.round(x_scaled, 4))
 print("-> 값이 안정적인 범위 안에 있으면서도 학습 가능!")
 \`\`\`
 
@@ -12439,9 +12448,11 @@ hidden, output = ffn(x)
 print(f"입력 크기:  {x.shape[0]} (d_model={d_model})")
 print(f"중간 크기:  {hidden.shape[0]} (d_ff={d_ff}, {d_ff//d_model}배 확장)")
 print(f"출력 크기:  {output.shape[0]} (d_model={d_model})")
-print()\nprint(f"입력 벡터:  {np.round(x, 3)}")
+print()
+print(f"입력 벡터:  {np.round(x, 3)}")
 print(f"출력 벡터:  {np.round(output, 3)}")
-print()\nprint(f"ReLU 후 0인 뉴런: {np.sum(hidden == 0)}/{d_ff}")
+print()
+print(f"ReLU 후 0인 뉴런: {np.sum(hidden == 0)}/{d_ff}")
 print("-> ReLU가 일부 뉴런을 꺼서 희소한 표현을 만듭니다")
 \`\`\`
 
@@ -12521,7 +12532,8 @@ for pos in range(seq_len):
             pos_enc[pos, i] = np.cos(pos / 10000**((i-1)/d_model))
 
 input_vectors = embeddings + pos_enc
-print()\nprint("2) 위치 인코딩 추가 후:")
+print()
+print("2) 위치 인코딩 추가 후:")
 for i, word in enumerate(vocab):
     print(f"   {word}: {np.round(input_vectors[i], 3)}")
 
@@ -12531,7 +12543,8 @@ scores = scores / np.sqrt(d_model)
 attn_weights = np.exp(scores) / np.exp(scores).sum(axis=-1, keepdims=True)
 attn_output = attn_weights @ input_vectors
 
-print()\nprint("3) Self-Attention 가중치:")
+print()
+print("3) Self-Attention 가중치:")
 print("         나는   밥을   먹는다")
 for i, word in enumerate(vocab):
     weights_str = "  ".join([f"{w:.3f}" for w in attn_weights[i]])
@@ -12543,11 +12556,13 @@ mean = residual.mean(axis=-1, keepdims=True)
 std = residual.std(axis=-1, keepdims=True)
 normalized = (residual - mean) / (std + 1e-5)
 
-print()\nprint("4) Add & Norm 후:")
+print()
+print("4) Add & Norm 후:")
 for i, word in enumerate(vocab):
     print(f"   {word}: {np.round(normalized[i], 3)}")
 
-print()\nprint("전체 흐름: 임베딩 -> Self-Attention -> Add&Norm -> FFN -> Add&Norm")
+print()
+print("전체 흐름: 임베딩 -> Self-Attention -> Add&Norm -> FFN -> Add&Norm")
 print("이것이 Encoder 레이어 1개의 과정입니다!")
 \`\`\`
 
@@ -12730,7 +12745,7 @@ def generate(prompt, max_tokens=5):
     tokens = [prompt]
     context = prompt
 
-    print(f"프롬프트: \"{prompt}\"")
+    print(f"프롬프트: '{prompt}'")
     print("-" * 50)
 
     for step in range(max_tokens):
@@ -12748,10 +12763,10 @@ def generate(prompt, max_tokens=5):
         context = " ".join(tokens[0 if prompt == "<start>" else 0:])
 
         print(f"  Step {step+1}: P({chosen}|{context.rsplit(chosen, 1)[0].strip()}) = {probs[chosen]:.2f}")
-        print(f"           현재까지: \"{' '.join(tokens)}\"")
+        print(f"           현재까지: '{' '.join(tokens)}'")
 
     print()
-    print(f"최종 생성: \"{' '.join(tokens)}\"")
+    print(f"최종 생성: '{' '.join(tokens)}'")
 
 generate("AI는")
 \`\`\`
@@ -12824,11 +12839,11 @@ for pos in range(len(sentence) - 1):
     loss = -np.log(probs[target_idx])
 
     print(f"위치 {pos+1}: 입력 = {context}")
-    print(f"  정답: \"{target}\"")
+    print(f"  정답: '{target}'")
     print(f"  예측 확률 분포:")
     for i, word in enumerate(vocab):
         marker = " <-- 정답" if word == target else ""
-        print(f"    P(\"{word}\") = {probs[i]:.3f}{marker}")
+        print(f"    P('{word}') = {probs[i]:.3f}{marker}")
     print(f"  Loss = -log({probs[target_idx]:.3f}) = {loss:.3f}")
     print()
 
@@ -13154,15 +13169,16 @@ if roll < 0.8:
 elif roll < 0.9:
     random_word = np.random.choice(vocab)
     masked_sentence[mask_idx] = random_word
-    action = f"랜덤 단어 \"{random_word}\"로 대체"
+    action = f"랜덤 단어 '{random_word}'로 대체"
 else:
     action = "그대로 유지"
 
 print(f"마스킹 결과: {' '.join(masked_sentence)} ({action})")
-print(f"정답: \"{sentence[mask_idx]}\"")
+print(f"정답: '{sentence[mask_idx]}'")
 
 # 모델의 예측 시뮬레이션
-print()\nprint("모델의 예측 확률:")
+print()
+print("모델의 예측 확률:")
 probs = np.random.dirichlet(np.ones(len(vocab)) * 0.5)
 # 정답에 높은 확률 부여 (학습된 모델이라 가정)
 probs[1] = 0.65  # "학교에서"
@@ -13170,11 +13186,12 @@ probs = probs / probs.sum()
 
 for word, prob in sorted(zip(vocab, probs), key=lambda x: -x[1])[:5]:
     marker = " <-- 정답!" if word == sentence[mask_idx] else ""
-    print(f"  P(\"{word}\") = {prob:.3f}{marker}")
+    print(f"  P('{word}') = {prob:.3f}{marker}")
 
-print()\nprint("양방향 문맥 덕분에:")
-print(f"  왼쪽: \"{sentence[0]}\" + 오른쪽: \"{' '.join(sentence[2:])}\"")
-print(f"  => \"{sentence[mask_idx]}\"를 정확히 예측!")
+print()
+print("양방향 문맥 덕분에:")
+print(f"  왼쪽: '{sentence[0]}' + 오른쪽: '{' '.join(sentence[2:])}'")
+print(f"  => '{sentence[mask_idx]}'를 정확히 예측!")
 \`\`\`
 
 ---
@@ -13301,11 +13318,13 @@ for sent, true_label in sentences:
     correct += int(is_correct)
     mark = "O" if is_correct else "X"
 
-    print(f"  [{mark}] \"{sent}\"")
+    print(f"  [{mark}] '{sent}'")
     print(f"      예측: {pred_label} ({probs[pred_idx]:.2f}), 정답: {true_label}")
 
-print()\nprint(f"정확도: {correct}/{len(sentences)} ({correct/len(sentences)*100:.0f}%)")
-print()\nprint("BERT의 강점: Pre-trained 지식 덕분에 적은 데이터로도 높은 정확도!")
+print()
+print(f"정확도: {correct}/{len(sentences)} ({correct/len(sentences)*100:.0f}%)")
+print()
+print("BERT의 강점: Pre-trained 지식 덕분에 적은 데이터로도 높은 정확도!")
 \`\`\`
 
 ---
@@ -13461,10 +13480,11 @@ print("-" * 60)
 for name, info in models.items():
     params_str = f"{info['params']:.1f}B" if info["params"] >= 1 else f"{info['params']*1000:.0f}M"
     tokens_str = f"{info['tokens']:.0f}B"
-    cost_str = "$" + f"{info[\'cost_usd\']:,.0f}"
+    cost_str = "$" + f"{info['cost_usd']:,.0f}"
     print(f"{name:<20} {params_str:>10} {tokens_str:>12} {cost_str:>15}")
 
-print()\nprint("규모 성장률:")
+print()
+print("규모 성장률:")
 print(f"  파라미터: GPT-1 -> GPT-4 = {1800/0.117:.0f}배 증가")
 print(f"  토큰 수: GPT-1 -> GPT-4 = {13000/5:.0f}배 증가")
 print(f"  비용:    GPT-1 -> GPT-4 = {100000000/10000:.0f}배 증가")
@@ -13585,7 +13605,7 @@ responses = [
     },
 ]
 
-print(f"질문: \"{question}\"")
+print(f"질문: '{question}'")
 print("=== 보상 모델의 평가 ===")
 
 for i, resp in enumerate(responses):
@@ -13595,7 +13615,7 @@ for i, resp in enumerate(responses):
               resp["safe"] * 0.2 +
               resp["clear"] * 0.2)
 
-    print(f"응답 {i+1}: \"{resp['text'][:60]}...\"")
+    print(f"응답 {i+1}: '{resp['text'][:60]}...'")
     print(f"  도움됨: {resp['helpful']:.1f}  "
           f"정확성: {resp['accurate']:.1f}  "
           f"안전성: {resp['safe']:.1f}  "
@@ -13658,13 +13678,16 @@ for params, loss in zip(param_sizes, losses):
     bar = "#" * max(0, bar_len)
     print(f"{param_str:>12} {loss:>8.3f} |{bar}")
 
-print()\nprint(f"{'':>12} {'':>8} {'낮은 Loss':>10}{'':>10}{'높은 Loss':>10}")
-print()\nprint(f"핵심: 모델이 10배 커지면 Loss가 약 15% 감소")
+print()
+print(f"{'':>12} {'':>8} {'낮은 Loss':>10}{'':>10}{'높은 Loss':>10}")
+print()
+print(f"핵심: 모델이 10배 커지면 Loss가 약 15% 감소")
 print(f"  0.1B -> 1B:    {(losses[0]-losses[2])/losses[0]*100:.1f}% 개선")
 print(f"  1B   -> 10B:   {(losses[2]-losses[4])/losses[2]*100:.1f}% 개선")
 print(f"  10B  -> 100B:  {(losses[4]-losses[6])/losses[4]*100:.1f}% 개선")
 print(f"  100B -> 1000B: {(losses[6]-losses[8])/losses[6]*100:.1f}% 개선")
-print()\nprint("로그 스케일에서 거의 직선적으로 개선됩니다!")
+print()
+print("로그 스케일에서 거의 직선적으로 개선됩니다!")
 \`\`\`
 
 ---
@@ -13740,7 +13763,7 @@ for p in prompts:
     bar_len = int(p["quality_score"] * 30)
     bar = "#" * bar_len
     print(f"[{p['type']}]")
-    print(f"  프롬프트: \"{p['prompt']}\"")
+    print(f"  프롬프트: '{p['prompt']}'")
     print(f"  응답 품질: {p['quality_score']:.0%} |{bar}|")
     print(f"  예상 응답: {p['expected']}")
     print()
@@ -17183,37 +17206,56 @@ def segment_characters(plate_image):
 ### 합성 데이터 생성
 
 실제 문자 데이터가 부족할 때 프로그래밍으로 생성할 수 있습니다.
+
+> **참고**: 아래는 합성 데이터 생성 개념을 시뮬레이션한 예제입니다.
+> 실제 이미지 생성은 PIL(Pillow) 라이브러리가 필요합니다.
+
 \`\`\`python
-from PIL import Image, ImageDraw, ImageFont
 import numpy as np
-import random
 
-def generate_char_dataset(chars, font_path, samples_per_char=100):
-    """합성 문자 이미지 데이터셋 생성"""
+np.random.seed(42)
+
+def generate_synthetic_data(num_chars=5, samples_per_char=3):
+    """Generate synthetic character image data"""
     dataset = []
+    char_labels = ["0", "1", "2", "A", "B"]
 
-    for char in chars:
-        for _ in range(samples_per_char):
-            # 흰색 배경에 검은 글자
-            img = Image.new("L", (32, 32), 255)
-            draw = ImageDraw.Draw(img)
-            font_size = random.randint(20, 28)
-            font = ImageFont.truetype(font_path, font_size)
+    for idx, char in enumerate(char_labels[:num_chars]):
+        for sample in range(samples_per_char):
+            # 32x32 white background
+            img = np.ones((32, 32)) * 255
 
-            # 위치 약간 랜덤하게 (자연스러움)
-            offset_x = random.randint(0, 4)
-            offset_y = random.randint(0, 4)
-            draw.text((offset_x, offset_y), char, fill=0, font=font)
+            # Simulate character region (dark area in center)
+            cx = 16 + np.random.randint(-2, 3)
+            cy = 16 + np.random.randint(-2, 3)
 
-            # 노이즈 추가
-            img_array = np.array(img).astype(np.float32)
-            noise = np.random.normal(0, random.uniform(5, 15),
-                                     img_array.shape)
-            img_array = np.clip(img_array + noise, 0, 255)
+            for dx in range(-8, 9):
+                for dy in range(-8, 9):
+                    x, y = cx + dx, cy + dy
+                    if 0 <= x < 32 and 0 <= y < 32:
+                        dist = abs(dx) + abs(dy)
+                        if dist < 10:
+                            img[y, x] = np.random.randint(0, 50)
 
-            dataset.append((img_array.astype(np.uint8), char))
+            # Add noise
+            noise = np.random.normal(0, 10, img.shape)
+            img = np.clip(img + noise, 0, 255).astype(np.uint8)
+            dataset.append((img, char))
 
     return dataset
+
+# Generate dataset
+dataset = generate_synthetic_data(num_chars=5, samples_per_char=3)
+
+print("=== Synthetic Data Generation ===")
+print(f"Total samples: {len(dataset)}")
+print(f"Characters: ['0', '1', '2', 'A', 'B']")
+print()
+
+for i, (img, label) in enumerate(dataset[:5]):
+    print(f"Sample {i+1}: char='{label}', shape={img.shape}")
+    print(f"  Pixel range: {img.min()} ~ {img.max()}")
+    print(f"  Mean brightness: {img.mean():.1f}")
 \`\`\`
 
 ### 클래스 균형 확인
@@ -17234,10 +17276,8 @@ char_counts = {
 
 values = list(char_counts.values())
 print("=== 클래스 불균형 분석 ===")
-print(f"최다 클래스: {max(char_counts, key=char_counts.get)} "
-      f"({max(values)}개)")
-print(f"최소 클래스: {min(char_counts, key=char_counts.get)} "
-      f"({min(values)}개)")
+print(f"최다 클래스: {max(char_counts, key=char_counts.get)} ({max(values)}개)")
+print(f"최소 클래스: {min(char_counts, key=char_counts.get)} ({min(values)}개)")
 print(f"불균형 비율: {max(values) / min(values):.1f}배 차이")
 print()
 print(f"대책:")
