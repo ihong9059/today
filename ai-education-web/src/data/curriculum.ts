@@ -16255,34 +16255,38 @@ for source, desc in datasets.items():
 
 실제 데이터가 부족할 때, 프로그래밍으로 번호판 이미지를 만들 수 있습니다.
 
+> **참고**: 실제 이미지 생성은 PIL 라이브러리가 필요합니다. 아래는 개념 시뮬레이션입니다.
+
 \`\`\`python
-# 합성 번호판 이미지 생성 (PIL 활용)
-from PIL import Image, ImageDraw, ImageFont
-import random
 import numpy as np
 
-def generate_plate(text, noise_level=10):
-    """합성 번호판 이미지 생성"""
-    # 1. 흰색 배경 번호판 생성
-    img = Image.new("RGB", (400, 80), "white")
-    draw = ImageDraw.Draw(img)
+def generate_plate_simulation(text, noise_level=10):
+    """합성 번호판 이미지 생성 시뮬레이션"""
+    # 400x80 크기의 흰색 배경 (RGB)
+    img = np.ones((80, 400, 3), dtype=np.uint8) * 255
 
-    # 2. 테두리 그리기
-    draw.rectangle([(2, 2), (397, 77)], outline="black", width=2)
+    # 테두리 시뮬레이션 (상하좌우 가장자리를 검은색으로)
+    img[0:3, :, :] = 0    # 상단
+    img[-3:, :, :] = 0    # 하단
+    img[:, 0:3, :] = 0    # 좌측
+    img[:, -3:, :] = 0    # 우측
 
-    # 3. 텍스트 그리기
-    font = ImageFont.truetype("NanumGothic.ttf", 48)
-    draw.text((50, 10), text, fill="black", font=font)
+    # 텍스트 영역 시뮬레이션 (중앙에 어두운 영역)
+    img[20:60, 50:350, :] = np.random.randint(0, 50, (40, 300, 3))
 
-    # 4. 현실감을 위한 노이즈 추가
-    img_array = np.array(img)
-    noise = np.random.normal(0, noise_level, img_array.shape)
-    img_array = np.clip(img_array + noise, 0, 255).astype(np.uint8)
+    # 노이즈 추가
+    noise = np.random.normal(0, noise_level, img.shape)
+    img = np.clip(img + noise, 0, 255).astype(np.uint8)
 
-    return Image.fromarray(img_array)
+    return img
 
-# 다양한 번호판 텍스트 생성
-plates = ["12가 3456", "34나 7890", "56다 1234"]
+# 테스트
+plates = ["12A 3456", "34B 7890", "56C 1234"]
+print("=== Synthetic Plate Generation ===")
+for text in plates:
+    img = generate_plate_simulation(text)
+    print(f"Plate '{text}': shape={img.shape}, dtype={img.dtype}")
+    print(f"  Pixel range: {img.min()} ~ {img.max()}")
 \`\`\`
 
 > **핵심 팁**: 합성 데이터만으로는 실제 환경의 복잡함을 재현할 수 없습니다. 반드시 실제 데이터와 혼합해서 사용하세요.
@@ -16427,18 +16431,35 @@ print(f"정규화 후: [{normalized.min():.1f}, {normalized.max():.1f}]")
 ### 3. 색상 변환
 
 \`\`\`python
-import cv2
+import numpy as np
 
 # OpenCV는 BGR 순서, PyTorch/YOLO는 RGB 순서
 # 반드시 변환이 필요합니다!
-rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-# 문자 인식에는 그레이스케일이 효과적
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# BGR -> RGB 변환 시뮬레이션
+def bgr_to_rgb(img):
+    """BGR to RGB conversion"""
+    return img[:, :, ::-1]
 
-# 이진화 (문자 분리에 유용)
-_, binary = cv2.threshold(gray, 0, 255,
-                          cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+# 그레이스케일 변환
+def to_grayscale(img):
+    """RGB to Grayscale: 0.299*R + 0.587*G + 0.114*B"""
+    return np.dot(img[..., :3], [0.299, 0.587, 0.114])
+
+# 이진화 (Otsu 방식 시뮬레이션)
+def threshold_otsu(gray, threshold=128):
+    """Simple thresholding (Otsu simulation)"""
+    return (gray > threshold).astype(np.uint8) * 255
+
+# 테스트
+sample_img = np.random.randint(0, 256, (100, 100, 3), dtype=np.uint8)
+gray = to_grayscale(sample_img)
+binary = threshold_otsu(gray)
+
+print("=== Color Conversion Demo ===")
+print(f"Original (BGR): shape={sample_img.shape}")
+print(f"Grayscale: shape={gray.shape}, range=[{gray.min():.0f}, {gray.max():.0f}]")
+print(f"Binary: unique values={np.unique(binary)}")
 \`\`\`
 
 ### 4. 데이터셋 분할
@@ -16485,39 +16506,49 @@ print(f"  합계: {sum(splits.values())}장")
 
 ### Albumentations 증강 파이프라인
 
+> **참고**: 실제 구현은 albumentations 라이브러리 설치 필요. 아래는 증강 개념 시뮬레이션입니다.
+
 \`\`\`python
-import albumentations as A
+import numpy as np
 
-# 번호판 검출에 최적화된 증강 파이프라인
-train_transform = A.Compose([
-    # 조명 관련 증강
-    A.RandomBrightnessContrast(
-        brightness_limit=0.3,
-        contrast_limit=0.3,
-        p=0.5
-    ),
-    A.HueSaturationValue(
-        hue_shift_limit=10,
-        sat_shift_limit=30,
-        val_shift_limit=30,
-        p=0.3
-    ),
+def augment_brightness(img, factor=0.3):
+    """Brightness adjustment"""
+    delta = np.random.uniform(-factor, factor)
+    return np.clip(img * (1 + delta), 0, 255).astype(np.uint8)
 
-    # 날씨/환경 시뮬레이션
-    A.GaussNoise(var_limit=(10, 50), p=0.3),
-    A.MotionBlur(blur_limit=5, p=0.2),
-    A.RandomFog(fog_coef_lower=0.1, fog_coef_upper=0.3, p=0.1),
+def augment_noise(img, var=25):
+    """Gaussian noise"""
+    noise = np.random.normal(0, var, img.shape)
+    return np.clip(img + noise, 0, 255).astype(np.uint8)
 
-    # 기하학적 변환
-    A.Rotate(limit=15, p=0.3),
-    A.RandomScale(scale_limit=0.2, p=0.3),
+def augment_rotate(img, angle_limit=15):
+    """Rotation simulation (simplified)"""
+    angle = np.random.uniform(-angle_limit, angle_limit)
+    return img, angle  # Return angle for reference
 
-    # 최종 크기 조정
-    A.Resize(416, 416),
-], bbox_params=A.BboxParams(
-    format="yolo",        # YOLO 형식 바운딩 박스
-    label_fields=["class_labels"]
-))
+# Demo
+np.random.seed(42)
+sample = np.random.randint(100, 200, (64, 64, 3), dtype=np.uint8)
+
+print("=== Data Augmentation Demo ===")
+print(f"Original: mean={sample.mean():.1f}")
+
+bright = augment_brightness(sample, 0.3)
+print(f"Brightness adjusted: mean={bright.mean():.1f}")
+
+noisy = augment_noise(sample, 25)
+print(f"With noise: mean={noisy.mean():.1f}, std={noisy.std():.1f}")
+
+_, angle = augment_rotate(sample, 15)
+print(f"Rotation angle: {angle:.1f} degrees")
+
+print()
+print("Augmentation pipeline (Albumentations):")
+print("  1. RandomBrightnessContrast (p=0.5)")
+print("  2. GaussNoise (p=0.3)")
+print("  3. MotionBlur (p=0.2)")
+print("  4. Rotate (limit=15, p=0.3)")
+print("  5. Resize(416, 416)")
 \`\`\`
 
 ### 증강 전후 데이터 규모 변화
