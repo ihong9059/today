@@ -236,6 +236,7 @@ cat PROGRESS_LOG.md
 
 ## 참고 자료
 
+- [Google Colab 사용 가이드](docs/Google_Colab_사용가이드.md) - Colab 상세 사용법
 - [PyTorch 공식 튜토리얼](https://pytorch.org/tutorials/)
 - [Ultralytics YOLOv8](https://docs.ultralytics.com/)
 - [Google Colab](https://colab.research.google.com/)

@@ -114,17 +114,39 @@
 
 ## 데이터셋
 
-### AIHUB 자동차 번호판 데이터
+### 옵션 1: Kaggle 데이터셋 (권장, 즉시 사용 가능)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [andrewmvd/car-plate-detection](https://www.kaggle.com/datasets/andrewmvd/car-plate-detection) |
+| 비용 | **무료** |
+| 이미지 | 433개 |
+| 라벨 | Pascal VOC XML (바운딩박스) |
+
+**다운로드:**
+```bash
+# Kaggle API 설치
+pip install kaggle
+
+# API 키 설정 (~/.kaggle/kaggle.json)
+# https://www.kaggle.com/settings → API → Create New Token
+
+# 다운로드
+cd ai-practice/03-LicensePlate/experiments/step1_detection
+kaggle datasets download -d andrewmvd/car-plate-detection
+unzip car-plate-detection.zip -d data/
+```
+
+### 옵션 2: AIHUB 자동차 번호판 데이터 (대용량)
 
 | 항목 | 내용 |
 |------|------|
 | 출처 | [AIHUB](https://aihub.or.kr/aidata/27727) |
-| 비용 | **무료** (회원가입 필요) |
+| 비용 | **무료** (회원가입 + 승인 필요, 1-2일) |
 | 번호판 이미지 | 10만 장 |
 | 라벨 | JSON (번호판 값, 바운딩박스) |
 
-### 다운로드 방법
-
+**다운로드:**
 ```bash
 # 1. AIHUB 회원가입 (aihub.or.kr)
 # 2. 데이터셋 승인 신청
@@ -143,14 +165,21 @@ chmod +x aihubshell
 
 ### 1. 데이터 준비
 ```bash
-# AIHUB에서 데이터 다운로드 후 data/raw/ 에 배치
+# Kaggle 데이터셋 다운로드 (권장)
+cd ai-practice/03-LicensePlate/experiments/step1_detection
+kaggle datasets download -d andrewmvd/car-plate-detection
+unzip car-plate-detection.zip -d data/
 ```
 
 ### 2. Step 1: 번호판 검출
 ```bash
 cd experiments/step1_detection
-python train.py      # 검출 모델 학습
-python detect.py     # 테스트
+
+# 방법 1: Colab에서 (GPU 무료 사용)
+# notebooks/Step1_Detection_Colab.ipynb 실행
+
+# 방법 2: 로컬에서 (GPU 필요)
+python train_yolo.py
 ```
 
 ### 3. Step 2: 문자 분할
