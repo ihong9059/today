@@ -1,0 +1,13 @@
+{
+  "experiment": "EXP-00 Baseline",
+  "date": "2026-03-21 15:40",
+  "device": "cpu",
+  "model": "CNN (32-64-128-10)",
+  "epochs": 10,
+  "learning_rate": 0.001,
+  "batch_size": 64,
+  "final_train_acc": 99.62,
+  "final_test_acc": 99.26,
+  "final_train_loss": 0.011195411391323677,
+  "final_test_loss": 0.026200325204990806
+}
