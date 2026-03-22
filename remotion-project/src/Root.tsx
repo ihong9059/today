@@ -156,6 +156,10 @@ import { AIQualityVideo, AI_QUALITY_VIDEO_DURATION } from "./AIQualityVideo";
 import { AIQualityVideoEN, AI_QUALITY_VIDEO_EN_DURATION } from "./AIQualityVideoEN";
 import { FritschVideoKO, FRITSCH_VIDEO_KO_DURATION } from "./FritschVideoKO";
 import { FritschVideoEN, FRITSCH_VIDEO_EN_DURATION } from "./FritschVideoEN";
+import { SmartFactoryVideo, SMARTFACTORY_VIDEO_DURATION } from "./SmartFactoryVideo";
+import { QualityControlVideo, TOTAL_DURATION as QUALITY_CONTROL_DURATION } from "./QualityControlVideo";
+import { ImprovementVideo, TOTAL_DURATION as IMPROVEMENT_DURATION } from "./ImprovementVideo";
+import { RecoveryVideo, TOTAL_DURATION as RECOVERY_DURATION } from "./RecoveryVideo";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -1238,6 +1242,38 @@ export const RemotionRoot: React.FC = () => {
         id="FritschVideoEN"
         component={FritschVideoEN}
         durationInFrames={FRITSCH_VIDEO_EN_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="SmartFactoryVideo"
+        component={SmartFactoryVideo}
+        durationInFrames={SMARTFACTORY_VIDEO_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="QualityControlVideo"
+        component={QualityControlVideo}
+        durationInFrames={QUALITY_CONTROL_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="ImprovementVideo"
+        component={ImprovementVideo}
+        durationInFrames={IMPROVEMENT_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="RecoveryVideo"
+        component={RecoveryVideo}
+        durationInFrames={RECOVERY_DURATION}
         fps={30}
         width={1920}
         height={1080}
