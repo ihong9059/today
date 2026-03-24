@@ -1,0 +1,29 @@
+1985년 삼성전기 입사
+audio deck개발:
+    - logic deck: assembler
+    - headphone streo
+    - cd deck및 pickup 
+연구소 software팀:
+    - ecr printer(금전 등록기)
+    - 한국형 CATV System(ms 70%)
+    - 이스라엘 MATAV Digital Cable System
+    - 캐나다 Tee com 위성 수시기 개발
+    - 한국 digital 위성 수신기(skylife STB 개발)
+우영:
+    - digital TV for Loewe
+UTTEC 사업 start:
+    - 지하주차장 dimming system개발 판매(국내 최초)
+    - 주차장 주차 시스템 개발(초음파 센서 + BLE MESH)
+    - 현대 자동차 사이드 brake검사 시스템(BLE Mesh)
+    - 일본 자전거 주차장 무선 제어 시스템(BLE Mesh)
+    - smart farm용 차량 monitoring system(기울기 센서+LTE+BLE)
+    - smart Factory AI Monitoring system 
+    - AI education system 
+
+주요 강조사항
+- 1985 ~ 2026현재까지 회로, software개발
+- 현재 개발인력만 3명 운영
+- ai 시대에 맞추어, 사업 영역 변환
+
+
+

@@ -1,0 +1,24 @@
+{
+  "name": "task-tracker-cli",
+  "version": "1.0.0",
+  "description": "Simple CLI task tracker for GSD workflow learning",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "task": "./src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "cli",
+    "task",
+    "todo",
+    "gsd"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^14.0.3"
+  }
+}

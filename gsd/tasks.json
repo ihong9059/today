@@ -1,0 +1,23 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "GSD 학습 완료",
+      "done": true,
+      "createdAt": "2026-03-24T06:18:12.676Z"
+    },
+    {
+      "id": 2,
+      "text": "CLI 도구 테스트",
+      "done": true,
+      "createdAt": "2026-03-24T06:18:12.778Z"
+    },
+    {
+      "id": 3,
+      "text": "myJob",
+      "done": false,
+      "createdAt": "2026-03-24T06:19:14.140Z"
+    }
+  ],
+  "nextId": 4
+}
