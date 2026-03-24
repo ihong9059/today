@@ -160,6 +160,8 @@ import { SmartFactoryVideo, SMARTFACTORY_VIDEO_DURATION } from "./SmartFactoryVi
 import { QualityControlVideo, TOTAL_DURATION as QUALITY_CONTROL_DURATION } from "./QualityControlVideo";
 import { ImprovementVideo, TOTAL_DURATION as IMPROVEMENT_DURATION } from "./ImprovementVideo";
 import { RecoveryVideo, TOTAL_DURATION as RECOVERY_DURATION } from "./RecoveryVideo";
+import { UttecVideoKO, UTTEC_VIDEO_DURATION } from "./UttecVideoKO";
+import { UttecVideoEN, UTTEC_VIDEO_EN_DURATION } from "./UttecVideoEN";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -1298,6 +1300,23 @@ export const RemotionRoot: React.FC = () => {
         id="DumulmeoriTravel"
         component={DumulmeoriTravel}
         durationInFrames={8700}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      {/* UTTEC Company Introduction Videos */}
+      <Composition
+        id="UttecVideoKO"
+        component={UttecVideoKO}
+        durationInFrames={UTTEC_VIDEO_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="UttecVideoEN"
+        component={UttecVideoEN}
+        durationInFrames={UTTEC_VIDEO_EN_DURATION}
         fps={30}
         width={1920}
         height={1080}
