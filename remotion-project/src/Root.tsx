@@ -162,6 +162,7 @@ import { ImprovementVideo, TOTAL_DURATION as IMPROVEMENT_DURATION } from "./Impr
 import { RecoveryVideo, TOTAL_DURATION as RECOVERY_DURATION } from "./RecoveryVideo";
 import { UttecVideoKO, UTTEC_VIDEO_DURATION } from "./UttecVideoKO";
 import { UttecVideoEN, UTTEC_VIDEO_EN_DURATION } from "./UttecVideoEN";
+import { TurboMillVideo, TURBO_MILL_DURATION } from "./TurboMillVideo";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -1276,6 +1277,14 @@ export const RemotionRoot: React.FC = () => {
         id="RecoveryVideo"
         component={RecoveryVideo}
         durationInFrames={RECOVERY_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="TurboMillVideo"
+        component={TurboMillVideo}
+        durationInFrames={TURBO_MILL_DURATION}
         fps={30}
         width={1920}
         height={1080}
