@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X-ray 영상 AI 진단 시스템 — 기술 조사 보고서</title>
+<style>
+:root{--p:#0c4a6e;--p2:#0369a1;--p3:#0ea5e9;--acc:#9333ea;--acc2:#a855f7;--bg:#f0f9ff;--card:#fff;--tx:#0f172a;--txl:#64748b;--bdr:#e2e8f0;--ok:#16a34a;--warn:#ca8a04;--err:#dc2626;--info:#0284c7;--med:#7c3aed}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--tx);line-height:1.75;font-size:15.5px}
+.hero{background:linear-gradient(135deg,#0c4a6e 0%,#0369a1 40%,#7c3aed 100%);color:#fff;padding:60px 20px 44px;text-align:center}
+.hero h1{font-size:2.1em;font-weight:800;margin-bottom:6px}
+.hero .sub{font-size:1.05em;opacity:.88;margin-bottom:18px}
+.hero .tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hero .tag{background:rgba(255,255,255,.15);padding:4px 14px;border-radius:20px;font-size:.82em}
+.kpi-strip{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:900px;margin:-24px auto 20px;position:relative;z-index:2}
+.kpi{background:#fff;border-radius:12px;padding:14px 16px;text-align:center;min-width:110px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.kpi .v{font-size:1.5em;font-weight:800}.kpi .l{font-size:.75em;color:var(--txl)}
+.toc{max-width:900px;margin:0 auto 22px;background:#fff;border-radius:12px;padding:18px 26px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.toc h2{font-size:1.1em;color:var(--p);margin-bottom:8px}.toc ol{columns:2;column-gap:24px;padding-left:18px;font-size:.88em}.toc li{margin-bottom:3px;break-inside:avoid}.toc a{color:var(--p2);text-decoration:none}.toc a:hover{color:var(--acc);text-decoration:underline}
+.ct{max-width:920px;margin:0 auto;padding:0 16px 60px}
+.sec{background:var(--card);border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.05);margin-bottom:22px;overflow:hidden}
+.sh{background:var(--p);color:#fff;padding:14px 22px;font-size:1.2em;font-weight:700;display:flex;align-items:center;gap:10px}
+.sh .n{background:var(--acc);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8em;flex-shrink:0}
+.sb{padding:22px 24px}
+.sb h3{color:var(--p);font-size:1.08em;margin:20px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--bdr)}.sb h3:first-child{margin-top:0}
+.sb h4{color:var(--p2);font-size:1em;margin:14px 0 6px}.sb p{margin-bottom:10px}.sb ul,.sb ol{margin:6px 0 10px 18px}.sb li{margin-bottom:3px}
+table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:.88em}th{background:var(--p);color:#fff;padding:8px 10px;text-align:left;font-weight:600}td{padding:7px 10px;border-bottom:1px solid var(--bdr)}tr:nth-child(even){background:#f8fafc}tr:hover{background:#eef2f7}.hl{background:#faf5ff!important;font-weight:600}
+.co{padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.92em;border-left:4px solid var(--info);background:#eff6ff}.co.ok{border-color:var(--ok);background:#f0fdf4}.co.warn{border-color:var(--warn);background:#fefce8}.co.err{border-color:var(--err);background:#fef2f2}.co.med{border-color:var(--med);background:#faf5ff}.co strong{color:var(--p)}
+.bd{display:inline-block;padding:2px 9px;border-radius:10px;font-size:.74em;font-weight:700;color:#fff}.bd-p{background:var(--p2)}.bd-a{background:var(--acc)}.bd-ok{background:var(--ok)}.bd-err{background:var(--err)}.bd-warn{background:var(--warn)}.bd-med{background:var(--med)}
+.flow{display:flex;flex-direction:column;align-items:center;gap:0;margin:14px 0}
+.flow-h{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.fb{background:#fff;border:2px solid var(--p);border-radius:10px;padding:10px 18px;text-align:center;min-width:120px;font-weight:600;font-size:.88em}.fb.act{background:var(--acc);border-color:var(--acc);color:#fff}.fb.pri{background:var(--p);color:#fff}.fb.ok{border-color:var(--ok);background:#f0fdf4}.fb.err{border-color:var(--err);background:#fef2f2}.fb.med{border-color:var(--med);background:#faf5ff}
+.fb small{display:block;font-weight:400;font-size:.84em;color:var(--txl);margin-top:2px}.fb.act small,.fb.pri small{color:rgba(255,255,255,.8)}
+.fa{font-size:1.3em;color:var(--p);padding:2px 0;line-height:1}.fah{font-size:1.2em;color:var(--p);padding:0 5px}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
+.cd{background:#fff;border:1px solid var(--bdr);border-radius:10px;padding:14px;text-align:center;transition:transform .15s}.cd:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}.cd .ic{font-size:1.8em;margin-bottom:4px}.cd h5{color:var(--p);margin-bottom:4px;font-size:.92em}.cd p{font-size:.8em;color:var(--txl);line-height:1.5}.cd.feat{border-color:var(--acc);border-width:2px;background:#faf5ff}
+.dia{background:#f8fafc;border:1px solid var(--bdr);border-radius:10px;padding:16px;margin:14px 0;overflow-x:auto;display:flex;justify-content:center}.dia svg{max-width:100%;height:auto}
+.pb-wrap{margin:5px 0 8px}.pb-label{display:flex;justify-content:space-between;font-size:.8em;margin-bottom:2px}.pb-label span:last-child{font-weight:700}.pb{height:16px;background:#e2e8f0;border-radius:8px;overflow:hidden}.pb-fill{height:100%;border-radius:8px}
+.step{display:flex;gap:14px;margin-bottom:12px;align-items:flex-start;background:#fff;border:1px solid var(--bdr);border-radius:10px;padding:12px}.step-n{flex-shrink:0;width:36px;height:36px;background:var(--p);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1em}.step-c{flex:1}.step-c strong{color:var(--p)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}.cmp-b{background:#fff;border:2px solid var(--bdr);border-radius:10px;padding:14px;text-align:center}.cmp-b h5{color:var(--p);margin-bottom:6px}.cmp-b.right{border-color:var(--acc)}
+.tl{position:relative;margin:14px 0 14px 16px;padding-left:22px;border-left:3px solid var(--p)}.tl-i{position:relative;margin-bottom:16px}.tl-i::before{content:'';position:absolute;left:-29px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--p);border:3px solid #fff}.tl-i.active::before{background:var(--acc)}.tl-i h5{color:var(--p);font-size:.92em}.tl-i p{font-size:.83em;color:var(--txl);margin-top:2px}
+pre{background:#1e293b;color:#e2e8f0;padding:14px;border-radius:8px;overflow-x:auto;font-size:.82em;line-height:1.6;margin:10px 0 14px}
+code{font-family:'Fira Code','Consolas',monospace}
+.footer{text-align:center;padding:28px 16px;color:var(--txl);font-size:.82em;border-top:1px solid var(--bdr);margin-top:36px}
+@media(max-width:640px){.hero h1{font-size:1.5em}.toc ol{columns:1}.cmp{grid-template-columns:1fr}.cg{grid-template-columns:1fr 1fr}table{font-size:.78em}th,td{padding:5px 6px}.kpi-strip{gap:6px}.kpi{min-width:85px;padding:10px 8px}}
+[id]{scroll-margin-top:16px}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<h1>X-ray 영상 AI 진단 시스템</h1>
+<div class="sub">X-ray 사진을 분석하여 환자 질환을 감별하는 AI의 적용 방법</div>
+<div class="tags"><span class="tag">기술 조사 보고서</span><span class="tag">2026-03-26</span><span class="tag">비전문가 대상</span></div>
+</div>
+
+<div class="kpi-strip">
+<div class="kpi"><div class="v" style="color:var(--p3)">1,451</div><div class="l">FDA 승인 AI 의료기기</div></div>
+<div class="kpi"><div class="v" style="color:var(--acc)">76%</div><div class="l">영상의학 분야</div></div>
+<div class="kpi"><div class="v" style="color:var(--ok)">95~99%</div><div class="l">흉부 X-ray 정확도</div></div>
+<div class="kpi"><div class="v" style="color:var(--med)">+2~5%p</div><div class="l">AI+전문의 향상</div></div>
+<div class="kpi"><div class="v" style="color:var(--err)">&lt;1초</div><div class="l">AI 판독 시간</div></div>
+</div>
+
+<nav class="toc"><h2>목차</h2>
+<ol>
+<li><a href="#s1">개요: X-ray AI 진단이란?</a></li>
+<li><a href="#s2">AI가 X-ray를 분석하는 원리</a></li>
+<li><a href="#s3">핵심 AI 기술</a></li>
+<li><a href="#s4">어떤 질환을 감지하는가?</a></li>
+<li><a href="#s5">주요 AI 제품 및 기업</a></li>
+<li><a href="#s6">공개 학습 데이터셋</a></li>
+<li><a href="#s7">시스템 구축 방법</a></li>
+<li><a href="#s8">규제 및 인허가</a></li>
+<li><a href="#s9">한계점 및 과제</a></li>
+<li><a href="#s10">한국 시장 현황</a></li>
+<li><a href="#s11">요약 및 시사점</a></li>
+</ol></nav>
+
+<div class="ct">
+
+<!-- 1 -->
+<div class="sec" id="s1"><div class="sh"><span class="n">1</span>개요: X-ray AI 진단이란?</div><div class="sb">
+
+<h3>1.1 한 줄 정의</h3>
+<div class="co med"><strong>X-ray AI 진단</strong> = 인공지능이 X-ray 사진을 자동으로 분석하여 <strong>질환의 유무, 위치, 심각도</strong>를 판별하는 기술</div>
+
+<h3>1.2 어떻게 동작하나요?</h3>
+<div class="flow-h" style="gap:4px">
+<div class="fb" style="min-width:100px">X-ray 촬영<small>DICOM 파일</small></div>
+<div class="fah">&rarr;</div>
+<div class="fb act" style="min-width:120px">AI 모델 분석<small>딥러닝, &lt;1초</small></div>
+<div class="fah">&rarr;</div>
+<div class="fb med" style="min-width:130px">분석 결과<small>히트맵 + 확률 + 위치<br>"폐렴 확률 92%"</small></div>
+<div class="fah">&rarr;</div>
+<div class="fb ok" style="min-width:120px">전문의 확인<small>최종 진단은<br>의사가 결정</small></div>
+</div>
+
+<h3>1.3 현재 수준 (2025~2026)</h3>
+<div class="cg" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+<div class="cd"><div class="ic">&#127973;</div><h5>FDA 승인</h5><p><strong style="font-size:1.3em;color:var(--p3)">1,451개</strong><br>AI 의료기기<br>(2025.12 기준)</p></div>
+<div class="cd"><div class="ic">&#128248;</div><h5>영상의학</h5><p><strong style="font-size:1.3em;color:var(--acc)">1,104개</strong><br>전체의 76%가<br>영상 분야</p></div>
+<div class="cd"><div class="ic">&#127919;</div><h5>정확도</h5><p><strong style="font-size:1.3em;color:var(--ok)">95~99%</strong><br>흉부 X-ray<br>질환별 상이</p></div>
+<div class="cd"><div class="ic">&#129489;&#8205;&#9877;&#65039;</div><h5>AI + 전문의</h5><p><strong style="font-size:1.3em;color:var(--med)">+2~5%p</strong><br>전문의 단독 대비<br>정확도 향상</p></div>
+</div>
+
+<div class="co ok"><strong>핵심 포인트:</strong> AI는 전문의를 "대체"하는 것이 아니라 "보조"합니다.<br><strong>AI + 전문의 &gt; 전문의 단독 &gt; AI 단독</strong> &mdash; 이것이 현재의 의학적 합의입니다.</div>
+
+<h3>1.4 일상적 비유로 이해하기</h3>
+<table>
+<tr><th>비유</th><th>설명</th></tr>
+<tr><td><strong>맞춤법 검사기</strong></td><td>글을 쓸 때 빨간 밑줄이 나오지만, 최종 수정은 사람이 결정하듯 &mdash; AI도 "여기 이상 있을 수 있어요"라고 알려주고, 최종 판단은 의사가 합니다</td></tr>
+<tr><td><strong>내비게이션</strong></td><td>길을 안내하지만 최종 운전은 사람이 하듯 &mdash; AI는 "이 부위를 보세요"라고 가이드하고, 진단은 의사가 합니다</td></tr>
+<tr><td><strong>보안 카메라 AI</strong></td><td>수상한 사람을 자동 감지하지만 경비원이 최종 확인하듯 &mdash; AI는 수천 장의 X-ray에서 의심 부위를 빠르게 찾아줍니다</td></tr>
+</table>
+</div></div>
+
+<!-- 2 -->
+<div class="sec" id="s2"><div class="sh"><span class="n">2</span>AI가 X-ray를 분석하는 원리</div><div class="sb">
+
+<h3>2.1 전체 프로세스 (5단계)</h3>
+
+<div class="step"><div class="step-n">1</div><div class="step-c"><strong>영상 촬영 & 전송</strong><br>X-ray 촬영 &rarr; <strong>DICOM</strong>(의료 영상 표준 파일) 생성 &rarr; <strong>PACS</strong>(병원 영상 저장소)에 저장</div></div>
+<div class="step"><div class="step-n">2</div><div class="step-c"><strong>전처리 (Pre-processing)</strong><br>DICOM 파일을 AI가 읽을 수 있는 형태로 변환. 해상도 조정(224&times;224 또는 512&times;512), 밝기/대비 정규화, 히스토그램 평활화(CLAHE)</div></div>
+<div class="step"><div class="step-n">3</div><div class="step-c"><strong>AI 모델 추론 (Inference)</strong><br>CNN(합성곱 신경망) 또는 Vision Transformer가 이미지를 분석<br>&bull; <strong>분류</strong>: "이 X-ray는 폐렴일 확률 92%"<br>&bull; <strong>검출</strong>: "좌하엽에 병변 위치 표시"<br>&bull; <strong>분할</strong>: "병변 영역을 마스크로 표시"</div></div>
+<div class="step"><div class="step-n">4</div><div class="step-c"><strong>결과 생성</strong><br>&bull; <strong>Grad-CAM 히트맵</strong>: AI가 어디를 보고 판단했는지 빨간색으로 표시<br>&bull; 질환별 확률 목록<br>&bull; 구조화 보고서 (DICOM SR)</div></div>
+<div class="step"><div class="step-n">5</div><div class="step-c"><strong>전문의 확인 (최종 진단)</strong><br>영상의학 전문의가 AI 결과를 참고하여 최종 진단. AI가 놓치거나 오판한 부분을 수정</div></div>
+
+<h3>2.2 Grad-CAM 히트맵이란?</h3>
+<div class="co med">"AI가 <strong>왜</strong> 그렇게 판단했는지"를 눈으로 볼 수 있게 해주는 기술입니다.</div>
+
+<div class="dia">
+<svg viewBox="0 0 560 170" width="560" height="170" style="font-family:inherit">
+<rect x="10" y="10" width="150" height="150" rx="8" fill="#1e293b"/>
+<text x="85" y="85" text-anchor="middle" font-size="11" fill="#94a3b8">원본 X-ray</text>
+<rect x="30" y="40" width="110" height="100" rx="4" fill="none" stroke="#475569" stroke-width="1"/>
+<text x="85" y="95" text-anchor="middle" font-size="9" fill="#64748b">폐 영역</text>
+<text x="175" y="90" font-size="20" fill="var(--p)">+</text>
+<rect x="200" y="10" width="150" height="150" rx="8" fill="#1e293b"/>
+<text x="275" y="35" text-anchor="middle" font-size="11" fill="#94a3b8">Grad-CAM 히트맵</text>
+<ellipse cx="255" cy="100" rx="30" ry="25" fill="#ef4444" opacity=".7"/>
+<ellipse cx="260" cy="95" rx="20" ry="16" fill="#fbbf24" opacity=".6"/>
+<ellipse cx="262" cy="93" rx="10" ry="8" fill="#fff" opacity=".5"/>
+<text x="275" y="145" text-anchor="middle" font-size="8" fill="#fbbf24">빨간색 = AI 주목 영역</text>
+<text x="367" y="90" font-size="20" fill="var(--p)">=</text>
+<rect x="395" y="10" width="150" height="150" rx="8" fill="#1e293b"/>
+<text x="470" y="35" text-anchor="middle" font-size="11" fill="#94a3b8">결합 결과</text>
+<rect x="415" y="40" width="110" height="100" rx="4" fill="none" stroke="#475569" stroke-width="1"/>
+<ellipse cx="445" cy="100" rx="30" ry="25" fill="#ef4444" opacity=".4"/>
+<text x="470" y="145" text-anchor="middle" font-size="9" fill="#fbbf24" font-weight="600">"좌하엽 폐렴 의심"</text>
+</svg>
+</div>
+<p>의사는 이 히트맵을 보고 AI가 올바른 부위를 보고 있는지 확인할 수 있습니다. 만약 AI가 엉뚱한 곳(예: 뼈)을 보고 폐렴이라 했다면, 의사가 즉시 오판임을 알 수 있습니다.</p>
+
+<h3>2.3 DICOM과 PACS 쉽게 이해하기</h3>
+<table>
+<tr><th>용어</th><th>비유</th><th>설명</th></tr>
+<tr><td><strong>DICOM</strong></td><td>JPEG가 사진 표준이듯</td><td>의료 영상의 <strong>국제 표준 파일 포맷</strong>. 영상 + 환자정보 + 촬영조건 포함</td></tr>
+<tr><td><strong>PACS</strong></td><td>구글 포토 같은</td><td>병원의 모든 의료 영상을 <strong>저장 &middot; 전송 &middot; 열람</strong>하는 시스템</td></tr>
+</table>
+</div></div>
+
+<!-- 3 -->
+<div class="sec" id="s3"><div class="sh"><span class="n">3</span>핵심 AI 기술</div><div class="sb">
+
+<h3>3.1 CNN (합성곱 신경망) &mdash; 가장 핵심</h3>
+<div class="co">사람의 눈이 이미지를 "부분 &rarr; 전체" 순서로 인식하듯, CNN도 이미지에서 <strong>작은 패턴 &rarr; 큰 패턴</strong> 순서로 특징을 추출합니다.</div>
+
+<div class="flow">
+<div class="fb" style="min-width:280px">X-ray 이미지 입력<small>예: 224 &times; 224 픽셀</small></div>
+<div class="fa">&darr;</div>
+<div class="fb" style="min-width:280px;border-color:var(--p3)">1차 합성곱<small>"가장자리, 밝기 변화" 같은 <strong>저수준 특징</strong></small></div>
+<div class="fa">&darr;</div>
+<div class="fb" style="min-width:280px;border-color:var(--acc)">2차 합성곱<small>"폐의 윤곽, 심장 모양" 같은 <strong>중수준 특징</strong></small></div>
+<div class="fa">&darr;</div>
+<div class="fb" style="min-width:280px;border-color:var(--med)">3차 합성곱<small>"폐렴 침윤, 결절 패턴" 같은 <strong>고수준 특징</strong></small></div>
+<div class="fa">&darr;</div>
+<div class="fb act" style="min-width:280px">최종 판단<small>"폐렴 확률: 92%"</small></div>
+</div>
+
+<h4>주요 CNN 모델 비교</h4>
+<table>
+<tr><th>모델</th><th>핵심 특징</th><th>X-ray 성능</th><th>추천도</th></tr>
+<tr class="hl"><td><strong>DenseNet-121</strong></td><td>모든 레이어가 연결, 특징 재사용</td><td>높음</td><td><span class="bd bd-ok">가장 추천</span></td></tr>
+<tr><td><strong>ResNet-50</strong></td><td>깊은 네트워크를 안정적으로 학습</td><td><strong>98.37%</strong></td><td><span class="bd bd-p">추천</span></td></tr>
+<tr><td><strong>EfficientNet</strong></td><td>효율적, 경량</td><td>98% (COVID)</td><td><span class="bd bd-p">경량 필요 시</span></td></tr>
+<tr><td><strong>InceptionV3</strong></td><td>다중 스케일 특징 추출</td><td>95.56% (14질환)</td><td><span class="bd bd-p">다중 질환</span></td></tr>
+</table>
+
+<h3>3.2 Transfer Learning (전이 학습)</h3>
+<div class="co">"처음부터 배우지 말고, 이미 배운 것을 활용하자!"</div>
+
+<div class="cmp">
+<div class="cmp-b">
+<h5>처음부터 학습</h5>
+<div style="font-size:2.5em">&#128118;</div>
+<p style="font-size:.85em">아무것도 모르는 상태에서 시작<br>수십만 장 데이터 필요<br>수일~수주 학습 시간</p>
+</div>
+<div class="cmp-b right">
+<h5 style="color:var(--acc)">전이 학습 (추천)</h5>
+<div style="font-size:2.5em">&#128104;&#8205;&#127891;</div>
+<p style="font-size:.85em"><strong>ImageNet(1400만장)에서 사전 학습된 모델</strong><br>의료 데이터로 미세 조정만<br>적은 데이터, 빠른 학습</p>
+</div>
+</div>
+<p>비유하면: 영어를 잘하는 사람이 프랑스어를 배우는 것이, 아무 언어도 모르는 사람이 프랑스어를 배우는 것보다 훨씬 빠른 것과 같습니다.</p>
+
+<h3>3.3 데이터 증강 &mdash; 주의사항</h3>
+<div class="co err"><strong>흉부 X-ray는 좌우 반전(Horizontal Flip)을 하면 안 됩니다!</strong><br>심장이 반대편으로 가서 비정상 이미지가 됩니다. (심장은 왼쪽에 있어야 정상)</div>
+<table>
+<tr><th>기법</th><th>가능 여부</th><th>설명</th></tr>
+<tr><td>회전 (소각도)</td><td><span class="bd bd-ok">가능</span></td><td>&pm;10&deg; 정도</td></tr>
+<tr><td>밝기/대비 조절</td><td><span class="bd bd-ok">가능</span></td><td>CLAHE, 감마 보정</td></tr>
+<tr><td>노이즈 추가</td><td><span class="bd bd-ok">가능</span></td><td>가우시안 노이즈</td></tr>
+<tr><td>크기 조절</td><td><span class="bd bd-ok">가능</span></td><td>확대/축소</td></tr>
+<tr class="hl"><td><strong>좌우 반전</strong></td><td><span class="bd bd-err">금지!</span></td><td>심장 위치 반전 &rarr; 비정상</td></tr>
+</table>
+</div></div>
+
+<!-- 4 -->
+<div class="sec" id="s4"><div class="sh"><span class="n">4</span>어떤 질환을 감지하는가?</div><div class="sb">
+
+<h3>4.1 흉부 X-ray (가장 활발)</h3>
+<table>
+<tr><th>질환</th><th>AI 최고 정확도</th><th>설명</th></tr>
+<tr><td><strong>폐렴</strong></td><td><span class="bd bd-ok">99.20%</span></td><td>세균성/바이러스성 구분 가능</td></tr>
+<tr><td><strong>COVID-19</strong></td><td><span class="bd bd-ok">99.37%</span></td><td>일반 폐렴과 코로나 구분</td></tr>
+<tr><td><strong>폐결핵 (TB)</strong></td><td><span class="bd bd-ok">98.72%</span></td><td>활동성 결핵 감지</td></tr>
+<tr><td><strong>폐암/결절</strong></td><td><span class="bd bd-ok">97.20%</span></td><td>결절 위치 + 크기 감지</td></tr>
+<tr><td><strong>5종 동시 분류</strong></td><td><span class="bd bd-a">99.39%</span></td><td>COVID, 기흉, 폐렴, 폐암, 결핵</td></tr>
+<tr><td><strong>14개 질환 분류</strong></td><td><span class="bd bd-p">95.56%</span></td><td>NIH ChestX-ray14 기반</td></tr>
+</table>
+
+<h3>4.2 정확도 시각적 비교</h3>
+<div class="pb-wrap"><div class="pb-label"><span>COVID-19</span><span style="color:var(--ok)">99.37%</span></div><div class="pb"><div class="pb-fill" style="width:99.37%;background:linear-gradient(90deg,var(--p3),var(--ok))"></div></div></div>
+<div class="pb-wrap"><div class="pb-label"><span>폐렴</span><span style="color:var(--ok)">99.20%</span></div><div class="pb"><div class="pb-fill" style="width:99.2%;background:linear-gradient(90deg,var(--p3),var(--ok))"></div></div></div>
+<div class="pb-wrap"><div class="pb-label"><span>폐결핵</span><span style="color:var(--ok)">98.72%</span></div><div class="pb"><div class="pb-fill" style="width:98.72%;background:linear-gradient(90deg,var(--p3),var(--ok))"></div></div></div>
+<div class="pb-wrap"><div class="pb-label"><span>폐암</span><span style="color:var(--ok)">97.20%</span></div><div class="pb"><div class="pb-fill" style="width:97.2%;background:linear-gradient(90deg,var(--p3),var(--acc))"></div></div></div>
+<div class="pb-wrap"><div class="pb-label"><span>골절 (뼈)</span><span style="color:var(--p3)">91~98%</span></div><div class="pb"><div class="pb-fill" style="width:94%;background:linear-gradient(90deg,var(--info),var(--p3))"></div></div></div>
+<div class="pb-wrap"><div class="pb-label"><span>치과 (충치/치주)</span><span style="color:var(--acc)">98%+ AUC</span></div><div class="pb"><div class="pb-fill" style="width:98%;background:linear-gradient(90deg,var(--acc),var(--med))"></div></div></div>
+
+<h3>4.3 다른 X-ray 분야</h3>
+<div class="cg" style="grid-template-columns:repeat(3,1fr)">
+<div class="cd"><div class="ic">&#129460;</div><h5>골절 감지</h5><p>대퇴경부 <strong>91%</strong><br>요골/척골 <strong>98%</strong><br>응급실 미세골절 감지</p></div>
+<div class="cd"><div class="ic">&#129463;</div><h5>치과 X-ray</h5><p>충치 AUC <strong>98.31%</strong><br>치주질환 <strong>98.67%</strong><br>동시 감지 가능</p></div>
+<div class="cd"><div class="ic">&#128105;&#8205;&#9877;&#65039;</div><h5>유방촬영</h5><p>FDA 승인 <strong>20개+</strong><br>AI+전문의 <strong>~93%</strong><br>5년 위험도 예측</p></div>
+</div>
+</div></div>
+
+<!-- 5 -->
+<div class="sec" id="s5"><div class="sh"><span class="n">5</span>주요 AI 제품 및 기업</div><div class="sb">
+
+<h3>5.1 한국 기업 <span class="bd bd-a">글로벌 경쟁력</span></h3>
+<div class="cg" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+<div class="cd feat"><div class="ic">&#127480;&#127472;</div><h5>루닛 (Lunit)</h5><p>INSIGHT CXR<br>폐결절 AUC <strong>0.93</strong><br>25만장+ 검증<br><span class="bd bd-ok">FDA</span> <span class="bd bd-p">식약처</span> <span class="bd bd-med">CE</span></p></div>
+<div class="cd"><div class="ic">&#127480;&#127472;</div><h5>뷰노 (VUNO)</h5><p>Med-Chest X-ray<br>Med-BoneAge<br><span class="bd bd-ok">FDA</span> <span class="bd bd-p">식약처</span></p></div>
+<div class="cd"><div class="ic">&#127480;&#127472;</div><h5>코어라인소프트</h5><p>AVIEW 시리즈<br>폐질환 종합<br><span class="bd bd-err">FDA 11건 (국내 최다)</span></p></div>
+<div class="cd"><div class="ic">&#127480;&#127472;</div><h5>JLK</h5><p>뇌경색/뇌출혈<br>210개+ 병원<br><span class="bd bd-ok">FDA 5건</span></p></div>
+</div>
+
+<h3>5.2 글로벌 기업</h3>
+<table>
+<tr><th>기업</th><th>국가</th><th>주요 제품</th><th>특징</th></tr>
+<tr><td><strong>Qure.ai</strong></td><td>인도</td><td>qXR-Detect</td><td>26개 소견 감지, FDA 9개, CE 65개+</td></tr>
+<tr><td><strong>Aidoc</strong></td><td>이스라엘</td><td>다수</td><td>FDA 30개 (2025), 폐색전/뇌출혈/골절</td></tr>
+<tr><td><strong>Zebra Medical</strong></td><td>이스라엘</td><td>다수</td><td>폐, 심혈관, 암 (Nanox에 인수)</td></tr>
+<tr><td><strong>Google DeepMind</strong></td><td>미국</td><td>Med-Gemini</td><td>X-ray 판독문 자동 생성 (연구 단계)</td></tr>
+</table>
+
+<h3>5.3 루닛 INSIGHT CXR 상세</h3>
+<div style="background:linear-gradient(135deg,#faf5ff,#eff6ff);border:2px solid var(--acc);border-radius:12px;padding:18px;margin:12px 0">
+<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+<div style="flex:1;min-width:200px">
+<div style="font-weight:800;color:var(--p);font-size:1.1em;margin-bottom:8px">루닛 INSIGHT CXR</div>
+<table style="margin:0">
+<tr><td>설립</td><td>2013년 (서울)</td></tr>
+<tr><td>감지 질환</td><td>폐결절, 경화, 기흉, 흉막삼출, 심비대 등 <strong>10종+</strong></td></tr>
+<tr><td>검증 규모</td><td><strong>25만 장+</strong> 임상 검증</td></tr>
+<tr><td>도입</td><td>전 세계 <strong>3,000개+</strong> 의료기관</td></tr>
+<tr><td>성능</td><td>폐결절 AUC <strong>0.93</strong> (글로벌 최고, Radiology 저널)</td></tr>
+<tr><td>파트너</td><td>삼성 헬스케어 전략적 파트너십</td></tr>
+</table>
+</div>
+</div>
+</div>
+</div></div>
+
+<!-- 6 -->
+<div class="sec" id="s6"><div class="sh"><span class="n">6</span>공개 학습 데이터셋</div><div class="sb">
+<p>AI를 학습시키려면 대량의 라벨링된(질환이 표시된) X-ray 데이터가 필요합니다. 다행히 좋은 공개 데이터셋이 있습니다:</p>
+<table>
+<tr><th>데이터셋</th><th>출처</th><th>규모</th><th>내용</th><th>추천 용도</th></tr>
+<tr class="hl"><td><strong>CheXpert</strong></td><td>스탠포드</td><td>224,316장</td><td>14개 소견 라벨</td><td>흉부 분류 벤치마크</td></tr>
+<tr><td><strong>MIMIC-CXR</strong></td><td>MIT</td><td>377,110장</td><td>판독문 + 라벨</td><td>최대 규모, 리포트 생성</td></tr>
+<tr><td><strong>NIH ChestX-ray14</strong></td><td>미국 NIH</td><td>112,120장</td><td>14개 병명</td><td>약한 지도학습</td></tr>
+<tr><td><strong>VinDr-CXR</strong></td><td>빈그룹</td><td>18,000장</td><td>22개 소견 (위치 표기)</td><td>병변 검출 (BBox)</td></tr>
+<tr><td><strong>MURA</strong></td><td>스탠포드</td><td>40,561장</td><td>정상/비정상</td><td>근골격계 7부위</td></tr>
+</table>
+<div class="co">가장 많이 사용되는 조합: <strong>CheXpert</strong>로 분류 모델 학습 + <strong>VinDr-CXR</strong>로 병변 위치 검출 학습</div>
+</div></div>
+
+<!-- 7 -->
+<div class="sec" id="s7"><div class="sh"><span class="n">7</span>시스템 구축 방법</div><div class="sb">
+
+<h3>7.1 구축 4단계</h3>
+<div class="tl">
+<div class="tl-i active"><h5>Phase 1: 데이터 준비 (2~3개월)</h5><p>DICOM 수집 &rarr; 비식별화 &rarr; 전문의 라벨링 &rarr; 전처리 &rarr; 데이터 증강</p></div>
+<div class="tl-i active"><h5>Phase 2: 모델 개발 (2~4개월)</h5><p>DenseNet-121 선택 &rarr; Transfer Learning (ImageNet) &rarr; Fine-tuning &rarr; Grad-CAM &rarr; 성능 평가</p></div>
+<div class="tl-i"><h5>Phase 3: 임상 검증 (3~6개월)</h5><p>후향적 검증 &rarr; 전향적 검증 (Shadow Mode) &rarr; 전문의 vs AI 비교 &rarr; 다기관 검증</p></div>
+<div class="tl-i"><h5>Phase 4: 배포 및 인허가 (6~12개월)</h5><p>식약처/FDA 신청 &rarr; PACS 연동 개발 &rarr; 병원 배포 &rarr; 사후 관리</p></div>
+</div>
+
+<h3>7.2 추천 기술 스택</h3>
+<table>
+<tr><th>영역</th><th>추천</th><th>이유</th></tr>
+<tr class="hl"><td><strong>프레임워크</strong></td><td>MONAI (PyTorch 기반)</td><td>의료 영상 전용, 전처리~배포 지원</td></tr>
+<tr><td>모델</td><td>DenseNet-121</td><td>흉부 X-ray 최적 성능</td></tr>
+<tr><td>전처리</td><td>pydicom + OpenCV</td><td>DICOM 파싱 + 영상 처리</td></tr>
+<tr><td>설명 가능</td><td>Grad-CAM</td><td>임상 수용성 필수</td></tr>
+<tr><td>배포</td><td>NVIDIA Clara + Docker</td><td>PACS 연동, 컨테이너 배포</td></tr>
+</table>
+
+<h3>7.3 간단한 코드 예시</h3>
+<pre><code>import torch
+import torchvision.models as models
+
+# 1. 사전학습 DenseNet-121 로드
+model = models.densenet121(pretrained=True)
+
+# 2. 마지막 층을 14개 질환 분류로 변경
+model.classifier = torch.nn.Linear(1024, 14)
+
+# 3. X-ray 이미지 전처리 + 추론
+output = model(input_tensor)
+probabilities = torch.sigmoid(output)
+
+# 4. 결과: "폐렴 92%, 정상 5%, 결핵 3%"
+</code></pre>
+
+<h3>7.4 배포 방식 비교</h3>
+<div class="cg" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+<div class="cd"><h5>Cloud</h5><p>AWS/GCP + PACS<br>확장성 우수<br><span class="bd bd-warn">개인정보 이슈</span></p></div>
+<div class="cd"><h5>On-premise</h5><p>병원 내 GPU 서버<br>데이터 유출 없음<br><span class="bd bd-warn">초기 투자</span></p></div>
+<div class="cd feat"><h5>Hybrid (추천)</h5><p>추론=병원 내<br>학습=클라우드<br><span class="bd bd-ok">보안+확장성</span></p></div>
+</div>
+</div></div>
+
+<!-- 8 -->
+<div class="sec" id="s8"><div class="sh"><span class="n">8</span>규제 및 인허가</div><div class="sb">
+<table>
+<tr><th>국가</th><th>기관</th><th>주요 경로</th><th>소요</th><th>특기 사항</th></tr>
+<tr class="hl"><td><strong>한국</strong></td><td>식약처 (MFDS)</td><td>의료기기 허가/인증</td><td>2~6개월</td><td><strong>세계 최초</strong> 생성형 AI 의료기기 가이드라인 (2025.01)</td></tr>
+<tr><td>미국</td><td>FDA</td><td>510(k), De Novo</td><td>3~12개월</td><td>2025년만 295건 승인 (역대 최다)</td></tr>
+<tr><td>유럽</td><td>CE (MDR)</td><td>MDR + AI Act</td><td>6~18개월</td><td>AI Act 2026.01 시행 (의료 AI = 고위험)</td></tr>
+</table>
+<div class="co ok"><strong>한국 식약처 강점:</strong> 루닛 44일, JLK 58일만에 허가 취득. 세계에서 가장 선진적인 AI 의료기기 가이드라인 보유.</div>
+
+<h3>개인정보 보호</h3>
+<table>
+<tr><th>법규</th><th>핵심 요구사항</th></tr>
+<tr><td><strong>한국 개인정보보호법</strong></td><td>의료 데이터 처리 시 동의, 비식별화 조치</td></tr>
+<tr><td>미국 HIPAA</td><td>PHI 최소 필요 원칙, AI 학습 데이터 보호</td></tr>
+<tr><td>EU GDPR</td><td>명시적 동의, 자동화 결정 설명권</td></tr>
+</table>
+</div></div>
+
+<!-- 9 -->
+<div class="sec" id="s9"><div class="sh"><span class="n">9</span>한계점 및 과제</div><div class="sb">
+<div class="cg" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+<div class="cd" style="border-color:var(--err)"><div class="ic">&#9888;&#65039;</div><h5>데이터 편향</h5><p>성별/인종 편향 학습<br>&rarr; 특정 그룹 오진 위험<br><strong>대응:</strong> 다양한 데이터 확보</p></div>
+<div class="cd" style="border-color:var(--warn)"><div class="ic">&#128270;</div><h5>설명 불가능</h5><p>"왜 폐렴인가?" 완전한<br>설명 아직 어려움<br><strong>대응:</strong> Grad-CAM 활용</p></div>
+<div class="cd" style="border-color:var(--warn)"><div class="ic">&#128200;</div><h5>실제 vs 연구 성능 차이</h5><p>루닛: AUC 0.94(연구)<br>&rarr; 0.84(실제 임상)<br><strong>대응:</strong> 전향적 검증 필수</p></div>
+<div class="cd" style="border-color:var(--err)"><div class="ic">&#128680;</div><h5>거짓 양성/음성</h5><p>정상을 질환으로 (불안)<br>질환을 정상으로 (위험!)<br><strong>대응:</strong> 전문의 최종 확인</p></div>
+<div class="cd" style="border-color:var(--txl)"><div class="ic">&#128104;&#8205;&#9877;&#65039;</div><h5>경보 피로</h5><p>너무 많은 AI 알림<br>&rarr; 무시 습관화<br><strong>대응:</strong> 정확도 향상</p></div>
+<div class="cd" style="border-color:var(--txl)"><div class="ic">&#9878;&#65039;</div><h5>법적 책임</h5><p>AI 오진 시 책임 소재<br>AI? 의사? 제조사?<br><strong>대응:</strong> 법률 정비 중</p></div>
+</div>
+</div></div>
+
+<!-- 10 -->
+<div class="sec" id="s10"><div class="sh"><span class="n">10</span>한국 시장 현황</div><div class="sb">
+
+<h3>10.1 한국 AI 의료 현황</h3>
+<div class="cg" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+<div class="cd feat"><div class="ic">&#127480;&#127472;</div><h5>영상 AI 비중</h5><p style="font-size:1.8em;font-weight:800;color:var(--acc)">70%</p><p>국내 AI 의료의<br>대부분이 영상 분야</p></div>
+<div class="cd"><div class="ic">&#127973;</div><h5>도입 병원</h5><p style="font-size:1.5em;font-weight:800;color:var(--p3)">210+</p><p>JLK 기준<br>병원 설치 수</p></div>
+<div class="cd"><div class="ic">&#128176;</div><h5>정부 투자</h5><p style="font-size:1.3em;font-weight:800;color:var(--ok)">2배+ 확대</p><p>AI 의료기술<br>R&D 투자 계획</p></div>
+</div>
+
+<h3>10.2 한국 기업 글로벌 진출</h3>
+<table>
+<tr><th>기업</th><th>FDA 승인</th><th>진출 국가</th></tr>
+<tr><td><strong>루닛</strong></td><td>O</td><td>미국, EU, 일본, 동남아, 중동, 아프리카</td></tr>
+<tr><td><strong>코어라인소프트</strong></td><td><strong>11건 (최다)</strong></td><td>미국, EU, 일본, 대만, 싱가포르, 호주, 브라질</td></tr>
+<tr><td><strong>JLK</strong></td><td>5건</td><td>미국, 일본, EU, 동남아</td></tr>
+<tr><td><strong>뷰노</strong></td><td>O</td><td>미국, 일본</td></tr>
+</table>
+
+<h3>10.3 향후 트렌드</h3>
+<div class="cg" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+<div class="cd"><div class="ic">&#129302;</div><h5>다중 질환 동시 진단</h5><p>한 장의 X-ray에서<br>10개+ 질환 동시 검출</p></div>
+<div class="cd"><div class="ic">&#128209;</div><h5>AI 판독문 자동 작성</h5><p>Med-Gemini 등<br>생성형 AI 활용</p></div>
+<div class="cd"><div class="ic">&#128302;</div><h5>5년 위험도 예측</h5><p>현재 질환 + 미래<br>발생 확률까지 예측</p></div>
+<div class="cd"><div class="ic">&#9889;</div><h5>Edge AI</h5><p>X-ray 장비 자체에서<br>AI 구동 (서버 불필요)</p></div>
+</div>
+</div></div>
+
+<!-- 11 -->
+<div class="sec" id="s11"><div class="sh"><span class="n">11</span>요약 및 시사점</div><div class="sb">
+
+<h3>핵심 요약</h3>
+<table>
+<tr><th>항목</th><th>핵심 내용</th></tr>
+<tr><td><strong>기술 성숙도</strong></td><td>흉부 X-ray AI는 95~99% 정확도로 <strong>임상 적용 단계</strong></td></tr>
+<tr><td><strong>역할</strong></td><td>전문의 "대체"가 아닌 "보조" &mdash; <strong>AI+전문의 &gt; 전문의 단독</strong></td></tr>
+<tr><td><strong>핵심 기술</strong></td><td>CNN(DenseNet-121) + Transfer Learning + Grad-CAM</td></tr>
+<tr><td><strong>한국 강점</strong></td><td>루닛 &middot; 코어라인소프트 등 <strong>글로벌 경쟁력</strong>, 식약처 선진적 가이드라인</td></tr>
+<tr><td><strong>주요 과제</strong></td><td>데이터 편향, 설명 가능성, 전향적 검증, 건보 수가</td></tr>
+<tr><td><strong>구축 기간</strong></td><td>데이터 준비~배포 약 <strong>12~24개월</strong></td></tr>
+</table>
+
+<h3>5가지 시사점</h3>
+<div style="counter-reset:tip">
+<div class="step"><div class="step-n">1</div><div class="step-c"><strong>흉부 X-ray부터 시작</strong><br>가장 기술 성숙도가 높고, 공개 데이터셋이 풍부한 분야</div></div>
+<div class="step"><div class="step-n">2</div><div class="step-c"><strong>Transfer Learning 활용</strong><br>처음부터 만들지 말고, DenseNet-121 사전학습 모델에서 Fine-tuning</div></div>
+<div class="step"><div class="step-n">3</div><div class="step-c"><strong>설명 가능성(Grad-CAM) 필수</strong><br>히트맵 없이는 임상 수용 불가. 처음부터 설계에 포함</div></div>
+<div class="step"><div class="step-n">4</div><div class="step-c"><strong>규제를 개발 초기부터 반영</strong><br>식약처 인허가 요건을 개발 초기부터 고려 (사후 대응은 비용 폭증)</div></div>
+<div class="step"><div class="step-n">5</div><div class="step-c"><strong>검증된 국내 솔루션 검토</strong><br>루닛 INSIGHT CXR 등 이미 검증된 제품 도입이 <strong>가장 빠른 경로</strong></div></div>
+</div>
+</div></div>
+
+</div>
+
+<div class="footer">
+<p>본 보고서는 2026년 3월 26일 기준으로 작성되었습니다.</p>
+<p>의료 AI는 빠르게 발전하는 분야로, 최신 정보는 해당 기관 &middot; 기업 공식 사이트를 참조하시기 바랍니다.</p>
+</div>
+</body>
+</html>

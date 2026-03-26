@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이축 전단 파쇄기 Edge AI 지능화 시스템 구축 제안서</title>
+<style>
+:root{--p:#0f2b46;--p2:#1a4a7a;--p3:#2563eb;--acc:#e65100;--acc2:#ff8f00;--bg:#f4f6f9;--card:#fff;--tx:#1e293b;--txl:#64748b;--bdr:#e2e8f0;--ok:#16a34a;--warn:#ca8a04;--err:#dc2626;--info:#2563eb}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--tx);line-height:1.72;font-size:15.5px}
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--p) 0%,var(--p2) 60%,var(--p3) 100%);color:#fff;padding:56px 24px 40px;text-align:center}
+.hero h1{font-size:2em;font-weight:800;margin-bottom:8px}
+.hero .sub{font-size:1.05em;opacity:.88;margin-bottom:20px}
+.hero .tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hero .tag{background:rgba(255,255,255,.14);padding:4px 14px;border-radius:20px;font-size:.82em}
+/* Kpi strip */
+.kpi-strip{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;max-width:860px;margin:-22px auto 24px;position:relative;z-index:2}
+.kpi{background:#fff;border-radius:10px;padding:14px 18px;text-align:center;min-width:120px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.kpi .val{font-size:1.6em;font-weight:800;color:var(--p3)}
+.kpi .lbl{font-size:.78em;color:var(--txl)}
+/* TOC */
+.toc{max-width:860px;margin:0 auto 24px;background:#fff;border-radius:12px;padding:20px 28px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.toc h2{font-size:1.1em;color:var(--p);margin-bottom:10px}
+.toc ol{columns:2;column-gap:28px;padding-left:18px;font-size:.9em}
+.toc li{margin-bottom:3px;break-inside:avoid}
+.toc a{color:var(--p2);text-decoration:none}
+.toc a:hover{color:var(--acc);text-decoration:underline}
+/* Container */
+.ct{max-width:880px;margin:0 auto;padding:0 16px 60px}
+/* Section */
+.sec{background:var(--card);border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.05);margin-bottom:24px;overflow:hidden}
+.sec-h{background:var(--p);color:#fff;padding:14px 22px;font-size:1.2em;font-weight:700;display:flex;align-items:center;gap:10px}
+.sec-h .n{background:var(--acc);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.82em;flex-shrink:0}
+.sec-b{padding:22px 24px}
+.sec-b h3{color:var(--p);font-size:1.1em;margin:22px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--bdr)}
+.sec-b h3:first-child{margin-top:0}
+.sec-b h4{color:var(--p2);font-size:1em;margin:16px 0 6px}
+.sec-b p{margin-bottom:10px}
+.sec-b ul,.sec-b ol{margin:6px 0 10px 18px}.sec-b li{margin-bottom:3px}
+/* Tables */
+table{width:100%;border-collapse:collapse;margin:10px 0 16px;font-size:.9em}
+th{background:var(--p);color:#fff;padding:9px 10px;text-align:left;font-weight:600;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--bdr)}
+tr:nth-child(even){background:#f8fafc}tr:hover{background:#eef2f7}
+.hl{background:#fff3e0!important;font-weight:600}
+/* Callout */
+.co{padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.93em;border-left:4px solid var(--info);background:#eff6ff}
+.co.ok{border-color:var(--ok);background:#f0fdf4}
+.co.warn{border-color:var(--warn);background:#fefce8}
+.co.err{border-color:var(--err);background:#fef2f2}
+.co strong{color:var(--p)}
+/* Badge */
+.bd{display:inline-block;padding:2px 9px;border-radius:10px;font-size:.75em;font-weight:700;color:#fff}
+.bd-p{background:var(--p2)}.bd-a{background:var(--acc)}.bd-ok{background:var(--ok)}.bd-err{background:var(--err)}.bd-warn{background:var(--warn)}
+/* Flow */
+.flow{display:flex;flex-direction:column;align-items:center;gap:0;margin:14px 0}
+.flow-h{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.fb{background:#fff;border:2px solid var(--p);border-radius:10px;padding:10px 18px;text-align:center;min-width:130px;font-weight:600;font-size:.9em}
+.fb.act{background:var(--acc);border-color:var(--acc);color:#fff}
+.fb.pri{background:var(--p);border-color:var(--p);color:#fff}
+.fb.ok{border-color:var(--ok);background:#f0fdf4}
+.fb.err{border-color:var(--err);background:#fef2f2}
+.fb small{display:block;font-weight:400;font-size:.84em;color:var(--txl);margin-top:2px}
+.fb.act small,.fb.pri small{color:rgba(255,255,255,.78)}
+.fa{font-size:1.4em;color:var(--p);padding:3px 0;line-height:1}
+.fah{font-size:1.3em;color:var(--p);padding:0 5px}
+/* Cards */
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}
+.cd{background:#fff;border:1px solid var(--bdr);border-radius:10px;padding:14px;text-align:center;transition:transform .15s}
+.cd:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.cd .ic{font-size:1.8em;margin-bottom:6px}
+.cd h5{color:var(--p);margin-bottom:4px;font-size:.95em}
+.cd p{font-size:.82em;color:var(--txl);line-height:1.5}
+.cd.feat{border-color:var(--acc);border-width:2px;background:#fffaf0}
+/* Architecture diagram */
+.arch{background:linear-gradient(180deg,#f0f4f8,#e2e8f0);border-radius:12px;padding:20px;margin:14px 0;border:1px solid var(--bdr)}
+.arch-lv{border:2px solid var(--p);border-radius:8px;padding:12px;margin:6px auto;max-width:640px;text-align:center;background:#fff;position:relative}
+.arch-lv.hl2{border-color:var(--acc);background:#fffaf0}
+.arch-lv .lb{font-weight:700;color:var(--p);font-size:.95em}
+.arch-lv .ds{font-size:.82em;color:var(--txl)}
+.arch-lv-tag{display:inline-block;background:var(--p);color:#fff;font-size:.72em;padding:2px 10px;border-radius:10px;margin-bottom:6px;font-weight:600}
+.arch-conn{text-align:center;font-size:1.1em;color:var(--p);margin:2px 0;font-weight:600}
+/* Sensor map SVG */
+.dia{background:#f8fafc;border:1px solid var(--bdr);border-radius:10px;padding:16px;margin:14px 0;overflow-x:auto;display:flex;justify-content:center}
+.dia svg{max-width:100%;height:auto}
+/* Progress bar */
+.pb-wrap{margin:6px 0 10px}
+.pb-label{display:flex;justify-content:space-between;font-size:.82em;margin-bottom:3px}
+.pb-label span:last-child{font-weight:700}
+.pb{height:14px;background:#e2e8f0;border-radius:7px;overflow:hidden}
+.pb-fill{height:100%;border-radius:7px;transition:width .6s}
+/* Compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.cmp-b{background:#fff;border:2px solid var(--bdr);border-radius:10px;padding:14px;text-align:center}
+.cmp-b h5{color:var(--p);margin-bottom:6px}
+.cmp-b.right{border-color:var(--acc)}
+/* Safety layers */
+.sl{margin:14px 0}
+.sl-r{display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:3px;border-radius:8px;color:#fff;font-weight:600;font-size:.92em}
+.sl-r:nth-child(1){background:#1e40af}.sl-r:nth-child(2){background:#0e7490}.sl-r:nth-child(3){background:#a16207}
+.sl-r:nth-child(4){background:#c2410c}.sl-r:nth-child(5){background:#991b1b}
+.sl-n{background:rgba(255,255,255,.22);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85em}
+.sl-t{flex:1}.sl-d{font-weight:400;font-size:.85em;opacity:.88}
+/* Timeline */
+.tl{position:relative;margin:14px 0 14px 20px;padding-left:24px;border-left:3px solid var(--p)}
+.tl-i{position:relative;margin-bottom:18px}
+.tl-i::before{content:'';position:absolute;left:-31px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--p);border:3px solid #fff}
+.tl-i.active::before{background:var(--acc)}
+.tl-i h5{color:var(--p);font-size:.95em}
+.tl-i p{font-size:.85em;color:var(--txl);margin-top:2px}
+/* Footer */
+.footer{text-align:center;padding:28px 16px;color:var(--txl);font-size:.82em;border-top:1px solid var(--bdr);margin-top:36px}
+/* Chart simple */
+.chart-bar{display:flex;align-items:end;gap:6px;height:140px;margin:14px 0;padding:0 10px}
+.chart-bar .bar{flex:1;border-radius:6px 6px 0 0;position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;min-width:40px}
+.chart-bar .bar .val{font-size:.72em;font-weight:700;margin-bottom:2px;color:var(--p)}
+.chart-bar .bar .fill{width:100%;border-radius:6px 6px 0 0}
+.chart-bar .bar .lbl{font-size:.68em;color:var(--txl);margin-top:4px;text-align:center}
+/* Responsive */
+@media(max-width:640px){.hero h1{font-size:1.5em}.toc ol{columns:1}.cmp{grid-template-columns:1fr}.cg{grid-template-columns:1fr 1fr}table{font-size:.8em}th,td{padding:5px 6px}.kpi-strip{gap:6px}.kpi{min-width:90px;padding:10px}}
+[id]{scroll-margin-top:16px}
+@media print{.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sec{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+<h1>이축 전단 파쇄기(Shredder)<br>Edge AI 지능화 시스템 구축 제안서</h1>
+<div class="sub">고장/사고 예지 + 파쇄 품질 향상을 위한 엣지 AI 시스템</div>
+<div class="tags">
+<span class="tag">한국기계엔지니어링 SHREDDER</span>
+<span class="tag">2&times;55kW | 15~25RPM</span>
+<span class="tag">2026-03-26 | v1.0</span>
+</div>
+</div>
+
+<!-- KPI -->
+<div class="kpi-strip">
+<div class="kpi"><div class="val">14<span style="font-size:.5em">개</span></div><div class="lbl">센서</div></div>
+<div class="kpi"><div class="val">8<span style="font-size:.5em">종</span></div><div class="lbl">AI 모델</div></div>
+<div class="kpi"><div class="val">4<span style="font-size:.5em">개월</span></div><div class="lbl">구축 기간</div></div>
+<div class="kpi"><div class="val" style="color:var(--acc)">8,500<span style="font-size:.45em">만원</span></div><div class="lbl">투자 비용</div></div>
+<div class="kpi"><div class="val" style="color:var(--ok)">2.1<span style="font-size:.5em">억/년</span></div><div class="lbl">연간 절감</div></div>
+<div class="kpi"><div class="val" style="color:var(--ok)">4.9<span style="font-size:.5em">개월</span></div><div class="lbl">투자 회수</div></div>
+</div>
+
+<!-- TOC -->
+<nav class="toc">
+<h2>목차</h2>
+<ol>
+<li><a href="#s1">Executive Summary</a></li>
+<li><a href="#s2">대상 설비 분석</a></li>
+<li><a href="#s3">현재 문제점 및 과제</a></li>
+<li><a href="#s4">시스템 목표</a></li>
+<li><a href="#s5">Edge AI 아키텍처</a></li>
+<li><a href="#s6">센서 설계 (14개)</a></li>
+<li><a href="#s7">AI 기능 1: 고장 예지</a></li>
+<li><a href="#s8">AI 기능 2: 사고/발화 예방</a></li>
+<li><a href="#s9">AI 기능 3: 파쇄 품질 관리</a></li>
+<li><a href="#s10">AI 기능 4: 연계 분석</a></li>
+<li><a href="#s11">하드웨어 & 소프트웨어</a></li>
+<li><a href="#s12">대시보드 및 알림</a></li>
+<li><a href="#s13">구축 일정 (4개월)</a></li>
+<li><a href="#s14">투자 비용 및 ROI</a></li>
+<li><a href="#s15">향후 확장 계획</a></li>
+<li><a href="#s16">부록</a></li>
+</ol>
+</nav>
+
+<div class="ct">
+
+<!-- ===== 1 ===== -->
+<div class="sec" id="s1">
+<div class="sec-h"><span class="n">1</span>Executive Summary</div>
+<div class="sec-b">
+
+<h3>1.1 제안 배경 — 슈레더의 3대 과제</h3>
+<div class="cg" style="grid-template-columns:repeat(3,1fr)">
+<div class="cd feat"><div class="ic">&#9888;&#65039;</div><h5>칼날 마모/파손</h5><p>육안 점검, 경험 기반 교체<br>비계획 정지 연 40h+<br>파쇄 품질 저하</p></div>
+<div class="cd feat"><div class="ic">&#128293;</div><h5>화재/폭발 위험</h5><p>IR 센서 + 수동 대응<br>감지→대응 <strong>수십 초 지연</strong><br>인명 위험</p></div>
+<div class="cd feat"><div class="ic">&#128200;</div><h5>파쇄 품질 불균일</h5><p>정기 샘플링 (수시간)<br>후속 공정 효율 저하<br>회수율 손실 1~2%</p></div>
+</div>
+
+<h3>1.2 제안 솔루션</h3>
+<div class="arch">
+<div style="text-align:center;font-weight:700;color:var(--p);margin-bottom:10px;font-size:1.05em">슈레더 Edge AI 지능화 시스템</div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:10px">
+<div class="fb" style="min-width:150px;border-color:var(--p3);background:#eff6ff"><strong>고장 예지</strong><small>칼날 마모 · 베어링<br>감속기 · RUL 예측</small></div>
+<div class="fb" style="min-width:150px;border-color:var(--err);background:#fef2f2"><strong>사고 예방</strong><small>발화 감지 · 분진 폭발<br>가스 누출 · &lt;1초 대응</small></div>
+<div class="fb" style="min-width:150px;border-color:var(--ok);background:#f0fdf4"><strong>품질 관리</strong><small>파쇄 크기 균일성<br>처리량 · 최적 RPM</small></div>
+</div>
+<div class="arch-conn">&darr;</div>
+<div class="arch-lv hl2" style="max-width:280px"><div class="lb">Edge AI Gateway</div><div class="ds">NVIDIA Jetson Orin NX · 14개 센서</div></div>
+<div class="arch-conn">&darr;</div>
+<div class="arch-lv" style="max-width:440px;background:var(--p);color:#fff"><div class="lb" style="color:#fff">이축 전단 파쇄기 (SHREDDER)</div><div class="ds" style="color:rgba(255,255,255,.7)">2&times;55kW · 15~25RPM · N&#8322; 분위기 · 방폭 · 한국기계엔지니어링</div></div>
+</div>
+
+<h3>1.3 왜 슈레더부터 시작하는가?</h3>
+<table>
+<tr><th>이유</th><th>설명</th></tr>
+<tr><td><strong>가장 높은 위험</strong></td><td>배터리 열폭주 · 화재 · 폭발이 가장 먼저 발생하는 공정</td></tr>
+<tr><td><strong>가장 큰 영향</strong></td><td>1차 공정이 멈추면 전체 라인이 정지 (병목)</td></tr>
+<tr><td><strong>즉각적 효과</strong></td><td>센서 14개 + Edge 1대로 빠르게 구축, 효과 입증</td></tr>
+<tr><td><strong>확장 기반</strong></td><td>슈레더에서 검증된 시스템을 크러셔&rarr;핀밀&rarr;ACM으로 확장</td></tr>
+</table>
+</div></div>
+
+<!-- ===== 2 ===== -->
+<div class="sec" id="s2">
+<div class="sec-h"><span class="n">2</span>대상 설비 분석</div>
+<div class="sec-b">
+
+<h3>2.1 이축 전단 파쇄기 사양</h3>
+<table>
+<tr><th>항목</th><th>사양</th><th>비고</th></tr>
+<tr><td>제조사</td><td>(주)한국기계엔지니어링</td><td>www.topcrusher.co.kr</td></tr>
+<tr><td>형식</td><td>이축 전단 파쇄기 (Twin-Shaft Shear Shredder)</td><td></td></tr>
+<tr><td>모터</td><td>2 &times; 55kW (각 축 독립 구동)</td><td>총 110kW</td></tr>
+<tr><td>회전속도</td><td>15~25 RPM</td><td>저속 · 고토크</td></tr>
+<tr><td>파쇄 크기</td><td>50~100mm</td><td>1차 파쇄</td></tr>
+<tr><td>투입물</td><td>폐배터리 (방전 처리 완료)</td><td>EV/LIB/폐리튬</td></tr>
+<tr><td>안전 설비</td><td>N&#8322; 퍼지, 방폭, 밀폐, 자동 소화</td><td>ATEX 인증</td></tr>
+</table>
+
+<h3>2.2 슈레더 구조 및 AI 감시 대상</h3>
+<div class="dia">
+<svg viewBox="0 0 520 370" width="520" height="370" style="font-family:inherit">
+<!-- Hopper -->
+<rect x="180" y="10" width="160" height="36" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+<text x="260" y="33" text-anchor="middle" font-size="12" fill="#475569" font-weight="600">호퍼 (투입구)</text>
+<line x1="260" y1="46" x2="260" y2="62" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+<defs><marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#475569"/></marker></defs>
+<!-- Housing -->
+<rect x="40" y="62" width="440" height="180" rx="10" fill="#fff" stroke="#1a4a7a" stroke-width="2"/>
+<text x="260" y="82" text-anchor="middle" font-size="11" fill="#94a3b8">하우징 (Housing)</text>
+<!-- Shaft A -->
+<rect x="60" y="96" width="200" height="50" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="70" y="112" font-size="10" fill="#1e40af" font-weight="700">모터A 55kW</text>
+<text x="70" y="126" font-size="10" fill="#1e40af">&rarr; 감속기A &rarr; 베어링A &rarr; 칼날A</text>
+<text x="70" y="140" font-size="10" fill="#e65100" font-weight="700">축 A &#x21BB; (시계방향)</text>
+<circle cx="248" cy="118" r="8" fill="#e65100"/><text x="248" y="122" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">AI</text>
+<!-- Shaft B -->
+<rect x="60" y="154" width="200" height="50" rx="6" fill="#fff7ed" stroke="#e65100" stroke-width="1.5"/>
+<text x="70" y="170" font-size="10" fill="#9a3412" font-weight="700">모터B 55kW</text>
+<text x="70" y="184" font-size="10" fill="#9a3412">&rarr; 감속기B &rarr; 베어링B &rarr; 칼날B</text>
+<text x="70" y="198" font-size="10" fill="#2563eb" font-weight="700">축 B &#x21BA; (반시계방향)</text>
+<circle cx="248" cy="176" r="8" fill="#2563eb"/><text x="248" y="180" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">AI</text>
+<!-- Blades -->
+<rect x="274" y="100" width="100" height="100" rx="8" fill="#1a4a7a"/>
+<text x="324" y="140" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">칼날 맞물림</text>
+<text x="324" y="156" text-anchor="middle" font-size="10" fill="#fbbf24">전단+압축+마찰</text>
+<text x="324" y="172" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.7)">50~100mm 파쇄</text>
+<!-- Key parts legend -->
+<rect x="390" y="96" width="80" height="115" rx="6" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="430" y="112" text-anchor="middle" font-size="9" fill="#64748b" font-weight="600">핵심 소모부품</text>
+<text x="400" y="128" font-size="9" fill="#e65100">&#9312; 칼날</text><text x="400" y="142" font-size="8" fill="#94a3b8">200~500h 교체</text>
+<text x="400" y="158" font-size="9" fill="#2563eb">&#9313; 베어링</text><text x="400" y="172" font-size="8" fill="#94a3b8">상태 기반 교체</text>
+<text x="400" y="188" font-size="9" fill="#64748b">&#9314; 감속기 오일</text><text x="400" y="202" font-size="8" fill="#94a3b8">3,000~5,000h</text>
+<!-- Discharge -->
+<line x1="260" y1="242" x2="260" y2="260" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="180" y="260" width="160" height="36" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+<text x="260" y="283" text-anchor="middle" font-size="12" fill="#166534" font-weight="600">배출구 (50~100mm)</text>
+<line x1="260" y1="296" x2="260" y2="314" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="260" y="333" text-anchor="middle" font-size="11" fill="#94a3b8">&rarr; 2차 분쇄기 (해머 크러셔)</text>
+</svg>
+</div>
+
+<h3>2.3 고장 모드 분석 (FMEA)</h3>
+<table>
+<tr><th>고장 모드</th><th>빈도</th><th>심각도</th><th>감지난이도</th><th>RPN</th><th>현재 대응</th></tr>
+<tr class="hl"><td><strong>칼날 마모</strong></td><td>높음(3)</td><td>중(2)</td><td>높음(3)</td><td><strong>18</strong></td><td>육안 점검, 경험 교체</td></tr>
+<tr class="hl"><td><strong>베어링 손상</strong></td><td>중(2)</td><td>상(3)</td><td>높음(3)</td><td><strong>18</strong></td><td>정기 교체 (과잉)</td></tr>
+<tr class="hl"><td><strong>전해액 누출</strong></td><td>중(2)</td><td>상(3)</td><td>높음(3)</td><td><strong>18</strong></td><td>1일 1회 점검</td></tr>
+<tr><td>감속기 이상</td><td>낮음(1)</td><td>상(3)</td><td>높음(3)</td><td>9</td><td>정기 오일 점검</td></tr>
+<tr><td>열폭주/화재</td><td>낮음(1)</td><td>극상(4)</td><td>중(2)</td><td>8</td><td>IR 센서 + 수동 소화</td></tr>
+<tr><td>칼날 파손/탈락</td><td>낮음(1)</td><td>상(3)</td><td>중(2)</td><td>6</td><td>이상 시 정지</td></tr>
+</table>
+<div class="co err"><strong>RPN 상위 3개</strong>: 칼날 마모(18), 베어링 손상(18), 전해액 누출(18) &rarr; AI 우선 적용 대상</div>
+</div></div>
+
+<!-- ===== 3 ===== -->
+<div class="sec" id="s3">
+<div class="sec-h"><span class="n">3</span>현재 문제점 및 과제</div>
+<div class="sec-b">
+<div class="cg" style="grid-template-columns:repeat(3,1fr)">
+<div class="cd"><div class="ic" style="color:var(--p3)">&#128295;</div><h5>고장/정비</h5><p>칼날 마모 미감지<br>베어링 과잉 교체<br>비계획 정지 연 40h+<br><strong style="color:var(--err)">손실: 연 1.6억원</strong></p></div>
+<div class="cd"><div class="ic" style="color:var(--err)">&#128293;</div><h5>안전</h5><p>발화 감지 수십 초 지연<br>거짓 경보 월 5회+<br>전해액 누출 미감지<br><strong style="color:var(--err)">인명 위험</strong></p></div>
+<div class="cd"><div class="ic" style="color:var(--ok)">&#128200;</div><h5>파쇄 품질</h5><p>파쇄 크기 편차 &pm;15%<br>피드백 2~4시간 지연<br>RPM 수동 조정<br><strong style="color:var(--err)">분진 손실 1~2%</strong></p></div>
+</div>
+
+<h3>3대 과제 요약</h3>
+<div class="cg" style="grid-template-columns:1fr">
+<div class="cd feat" style="text-align:left;padding:16px 20px">
+<div style="display:flex;gap:16px;flex-wrap:wrap">
+<div style="flex:1;min-width:200px"><h5 style="color:var(--p3)">과제 1: 고장 예지</h5><p>칼날 마모 자동 감지 + 베어링 RUL 예측<br><strong>비계획 정지 40h &rarr; 12h (70%&darr;)</strong></p></div>
+<div style="flex:1;min-width:200px"><h5 style="color:var(--err)">과제 2: 사고 예방</h5><p>열폭주/화재 감지 1초 이내 + 자동 대응<br><strong>거짓 경보율 30% &rarr; 5%</strong></p></div>
+<div style="flex:1;min-width:200px"><h5 style="color:var(--ok)">과제 3: 파쇄 품질</h5><p>파쇄 크기 실시간 모니터링 + RPM 최적화<br><strong>편차 &pm;15% &rarr; &pm;5%</strong></p></div>
+</div>
+</div>
+</div>
+</div></div>
+
+<!-- ===== 4 ===== -->
+<div class="sec" id="s4">
+<div class="sec-h"><span class="n">4</span>시스템 목표</div>
+<div class="sec-b">
+<table>
+<tr><th>KPI</th><th>현재</th><th>구축 후 (4개월)</th><th>안정화 (+6개월)</th></tr>
+<tr><td><strong>비계획 정지</strong></td><td>연 40시간</td><td>연 20시간 (50%&darr;)</td><td style="color:var(--ok);font-weight:700">연 12시간 (70%&darr;)</td></tr>
+<tr><td><strong>칼날 RUL 예측 오차</strong></td><td>없음</td><td>&pm;25%</td><td style="color:var(--ok);font-weight:700">&pm;15%</td></tr>
+<tr><td><strong>베어링 이상 감지율</strong></td><td>30%</td><td>80%</td><td style="color:var(--ok);font-weight:700">95%+</td></tr>
+<tr><td><strong>발화 감지&rarr;대응</strong></td><td>수십 초</td><td>3초 이내</td><td style="color:var(--ok);font-weight:700">1초 이내</td></tr>
+<tr><td><strong>거짓 경보율</strong></td><td>30%+</td><td>10%</td><td style="color:var(--ok);font-weight:700">5% 이하</td></tr>
+<tr><td><strong>파쇄 크기 편차</strong></td><td>&pm;15%</td><td>&pm;8%</td><td style="color:var(--ok);font-weight:700">&pm;5%</td></tr>
+<tr><td><strong>분진 손실율</strong></td><td>1~2%</td><td>0.5%</td><td style="color:var(--ok);font-weight:700">0.3% 이하</td></tr>
+</table>
+</div></div>
+
+<!-- ===== 5 ===== -->
+<div class="sec" id="s5">
+<div class="sec-h"><span class="n">5</span>Edge AI 시스템 아키텍처</div>
+<div class="sec-b">
+<div class="arch">
+<!-- Level 3 -->
+<div class="arch-lv-tag">Level 3: 서버/클라우드</div>
+<div class="arch-lv" style="max-width:540px"><div class="lb">데이터 레이크 (S3) &nbsp;|&nbsp; AI 학습 서버 (GPU) &nbsp;|&nbsp; 대시보드 (Grafana)</div><div class="ds">장기 분석 · 모델 재학습 · 리포트</div></div>
+<div class="arch-conn">&darr; 1GbE / MQTT &darr;</div>
+<!-- Level 2 -->
+<div class="arch-lv-tag" style="background:var(--acc)">Level 2: Edge AI (실시간 추론)</div>
+<div class="arch-lv hl2" style="max-width:540px;padding:16px">
+<div class="lb" style="font-size:1em">Edge AI Gateway &mdash; NVIDIA Jetson Orin NX 16GB</div>
+<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0">
+<span class="bd bd-p">고장 예지 (4 모델)</span>
+<span class="bd bd-err">사고 예방 (3 모델)</span>
+<span class="bd bd-ok">품질 관리 (2 모델)</span>
+<span class="bd bd-a">연계 분석 (1 모델)</span>
+</div>
+<div class="ds">로컬 DB (TimescaleDB) &mdash; 30일 데이터 보관</div>
+</div>
+<div class="arch-conn">&darr; OPC UA / EtherCAT &darr;</div>
+<!-- Level 1 -->
+<div class="arch-lv-tag" style="background:var(--err)">Level 1: 제어 (Safety PLC 독립)</div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+<div class="arch-lv" style="max-width:240px;border-color:var(--err)"><div class="lb" style="color:var(--err)">Safety PLC</div><div class="ds">비상정지 · 자동소화<br>N&#8322; 밸브 · 게이트 밸브</div></div>
+<div class="arch-lv" style="max-width:240px"><div class="lb">Process PLC</div><div class="ds">축 A/B RPM · 피더 속도<br>역회전 제어</div></div>
+</div>
+<div class="arch-conn">&darr; 아날로그/디지털 I/O &darr;</div>
+<!-- Level 0 -->
+<div class="arch-lv-tag">Level 0: 센서 + 슈레더</div>
+<div class="arch-lv" style="max-width:540px;background:var(--p);color:#fff">
+<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:6px">
+<span class="bd" style="background:#2563eb">진동&times;2</span>
+<span class="bd" style="background:#dc2626">온도&times;3</span>
+<span class="bd" style="background:#ca8a04">전류&times;2</span>
+<span class="bd" style="background:#7c3aed">속도&times;2</span>
+<span class="bd" style="background:#dc2626">안전&times;4</span>
+<span class="bd" style="background:#16a34a">품질&times;1</span>
+</div>
+<div class="lb" style="color:#fff;font-size:1em">이축 전단 파쇄기 (SHREDDER) &mdash; 14개 센서</div>
+</div>
+</div>
+
+<h3>핵심 설계 원칙</h3>
+<table>
+<tr><th>원칙</th><th>적용</th><th>근거</th></tr>
+<tr><td><strong>Safety PLC 독립</strong></td><td>Edge AI 다운 시에도 안전 독립 작동</td><td>배터리 발화는 AI 오류와 무관하게 대응 필수</td></tr>
+<tr><td><strong>Edge 실시간 추론</strong></td><td>모든 판단 현장 Edge에서 &lt;100ms</td><td>열폭주는 수초 내 진행, 클라우드 지연 불허</td></tr>
+<tr><td><strong>슈레더 전용 최적화</strong></td><td>14개 센서로 이축 파쇄기 맞춤 모델</td><td>범용 솔루션 대비 정확도 · 비용 우위</td></tr>
+<tr><td><strong>확장 설계</strong></td><td>후속 공정 센서 추가 가능</td><td>검증 후 크러셔&rarr;핀밀&rarr;ACM 확장</td></tr>
+</table>
+</div></div>
+
+<!-- ===== 6 ===== -->
+<div class="sec" id="s6">
+<div class="sec-h"><span class="n">6</span>센서 설계: 슈레더 전용 14개</div>
+<div class="sec-b">
+<h3>6.1 센서 상세</h3>
+<table>
+<tr><th>#</th><th>ID</th><th>센서 유형</th><th>설치 위치</th><th>샘플링</th><th>목적</th><th>AI</th></tr>
+<tr><td>1</td><td><strong>VIB-A</strong></td><td>3축 진동 가속도계</td><td>축A 베어링</td><td>1ms</td><td>베어링 마모, 불균형</td><td><span class="bd bd-p">고장</span></td></tr>
+<tr><td>2</td><td><strong>VIB-B</strong></td><td>3축 진동 가속도계</td><td>축B 베어링</td><td>1ms</td><td>베어링 마모, 불균형</td><td><span class="bd bd-p">고장</span></td></tr>
+<tr><td>3</td><td><strong>TMP-A</strong></td><td>PT100</td><td>축A 베어링</td><td>1s</td><td>베어링 과열, 윤활</td><td><span class="bd bd-p">고장</span></td></tr>
+<tr><td>4</td><td><strong>TMP-B</strong></td><td>PT100</td><td>축B 베어링</td><td>1s</td><td>베어링 과열, 윤활</td><td><span class="bd bd-p">고장</span></td></tr>
+<tr><td>5</td><td><strong>TMP-IR</strong></td><td>적외선 온도</td><td>파쇄 챔버 상부</td><td>100ms</td><td><strong>발화 감지 (주)</strong></td><td><span class="bd bd-err">안전</span></td></tr>
+<tr><td>6</td><td><strong>CUR-A</strong></td><td>CT 전류</td><td>축A 모터</td><td>10ms</td><td>부하 변동, 칼날 마모</td><td><span class="bd bd-p">고장</span><span class="bd bd-ok">품질</span></td></tr>
+<tr><td>7</td><td><strong>CUR-B</strong></td><td>CT 전류</td><td>축B 모터</td><td>10ms</td><td>부하 변동, 칼날 마모</td><td><span class="bd bd-p">고장</span><span class="bd bd-ok">품질</span></td></tr>
+<tr><td>8</td><td><strong>SPD-A</strong></td><td>엔코더</td><td>축A</td><td>10ms</td><td>회전속도, 슬립</td><td><span class="bd bd-p">고장</span><span class="bd bd-ok">품질</span></td></tr>
+<tr><td>9</td><td><strong>SPD-B</strong></td><td>엔코더</td><td>축B</td><td>10ms</td><td>회전속도, 슬립</td><td><span class="bd bd-p">고장</span><span class="bd bd-ok">품질</span></td></tr>
+<tr><td>10</td><td><strong>TMP-IR2</strong></td><td>적외선 온도 <span class="bd bd-err">이중화</span></td><td>파쇄 챔버 측면</td><td>100ms</td><td><strong>발화 감지 백업</strong></td><td><span class="bd bd-err">안전</span></td></tr>
+<tr><td>11</td><td><strong>DST-1</strong></td><td>레이저 분진</td><td>챔버 상부</td><td>1s</td><td>분진 농도, 폭발 위험</td><td><span class="bd bd-err">안전</span></td></tr>
+<tr><td>12</td><td><strong>GAS-1</strong></td><td>복합가스 (VOC/H&#8322;/CO)</td><td>배출부</td><td>1s</td><td><strong>전해액 누출</strong></td><td><span class="bd bd-err">안전</span></td></tr>
+<tr><td>13</td><td><strong>PS-1</strong></td><td>초음파 근접</td><td>배출 슈트</td><td>100ms</td><td>배출물 흐름, 막힘</td><td><span class="bd bd-p">고장</span><span class="bd bd-ok">품질</span></td></tr>
+<tr><td>14</td><td><strong>SCL-1</strong></td><td>컨베이어 스케일</td><td>배출 컨베이어</td><td>1s</td><td>처리량 모니터링</td><td><span class="bd bd-ok">품질</span></td></tr>
+</table>
+
+<h3>6.2 센서 배치도</h3>
+<div class="dia">
+<svg viewBox="0 0 500 420" width="500" height="420" style="font-family:inherit">
+<!-- Hopper -->
+<rect x="175" y="8" width="150" height="30" rx="6" fill="#e2e8f0" stroke="#94a3b8"/>
+<text x="250" y="28" text-anchor="middle" font-size="11" fill="#475569" font-weight="600">호퍼</text>
+<line x1="250" y1="38" x2="250" y2="54" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+<!-- Housing -->
+<rect x="30" y="54" width="440" height="220" rx="10" fill="#fff" stroke="#1a4a7a" stroke-width="2"/>
+<!-- IR sensors -->
+<circle cx="70" cy="80" r="10" fill="#dc2626"/><text x="70" y="84" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">IR</text>
+<text x="70" y="100" text-anchor="middle" font-size="8" fill="#dc2626" font-weight="600">TMP-IR</text>
+<text x="70" y="110" text-anchor="middle" font-size="7" fill="#94a3b8">(주)</text>
+<circle cx="430" cy="80" r="10" fill="#dc2626" opacity=".7"/><text x="430" y="84" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">IR2</text>
+<text x="430" y="100" text-anchor="middle" font-size="8" fill="#dc2626" font-weight="600">TMP-IR2</text>
+<text x="430" y="110" text-anchor="middle" font-size="7" fill="#94a3b8">(이중화)</text>
+<!-- Dust -->
+<circle cx="250" cy="80" r="10" fill="#ca8a04"/><text x="250" y="84" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">DST</text>
+<text x="250" y="100" text-anchor="middle" font-size="8" fill="#ca8a04" font-weight="600">DST-1 (분진)</text>
+<!-- Shaft A sensors -->
+<rect x="50" y="120" width="180" height="52" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+<text x="60" y="136" font-size="9" fill="#1e40af" font-weight="600">축 A &#x21BB;</text>
+<circle cx="110" cy="152" r="8" fill="#2563eb"/><text x="110" y="156" text-anchor="middle" font-size="6.5" fill="#fff">VIB-A</text>
+<circle cx="140" cy="152" r="8" fill="#dc2626"/><text x="140" y="156" text-anchor="middle" font-size="6.5" fill="#fff">TMP-A</text>
+<circle cx="170" cy="152" r="8" fill="#ca8a04"/><text x="170" y="156" text-anchor="middle" font-size="6.5" fill="#fff">CUR-A</text>
+<circle cx="200" cy="152" r="8" fill="#7c3aed"/><text x="200" y="156" text-anchor="middle" font-size="6.5" fill="#fff">SPD-A</text>
+<!-- Shaft B sensors -->
+<rect x="50" y="180" width="180" height="52" rx="6" fill="#fff7ed" stroke="#e65100" stroke-width="1"/>
+<text x="60" y="196" font-size="9" fill="#9a3412" font-weight="600">축 B &#x21BA;</text>
+<circle cx="110" cy="212" r="8" fill="#2563eb"/><text x="110" y="216" text-anchor="middle" font-size="6.5" fill="#fff">VIB-B</text>
+<circle cx="140" cy="212" r="8" fill="#dc2626"/><text x="140" y="216" text-anchor="middle" font-size="6.5" fill="#fff">TMP-B</text>
+<circle cx="170" cy="212" r="8" fill="#ca8a04"/><text x="170" y="216" text-anchor="middle" font-size="6.5" fill="#fff">CUR-B</text>
+<circle cx="200" cy="212" r="8" fill="#7c3aed"/><text x="200" y="216" text-anchor="middle" font-size="6.5" fill="#fff">SPD-B</text>
+<!-- Blade area -->
+<rect x="250" y="124" width="120" height="104" rx="8" fill="#0f2b46"/>
+<text x="310" y="168" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">칼날</text>
+<text x="310" y="184" text-anchor="middle" font-size="9" fill="#fbbf24">맞물림 영역</text>
+<text x="310" y="200" text-anchor="middle" font-size="9" fill="rgba(255,255,255,.6)">전단력 파쇄</text>
+<!-- Legend -->
+<rect x="386" y="130" width="76" height="94" rx="6" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="424" y="146" text-anchor="middle" font-size="8" fill="#64748b" font-weight="600">범례</text>
+<circle cx="396" cy="158" r="5" fill="#2563eb"/><text x="408" y="162" font-size="8" fill="#475569">진동</text>
+<circle cx="396" cy="174" r="5" fill="#dc2626"/><text x="408" y="178" font-size="8" fill="#475569">온도</text>
+<circle cx="396" cy="190" r="5" fill="#ca8a04"/><text x="408" y="194" font-size="8" fill="#475569">전류/분진</text>
+<circle cx="396" cy="206" r="5" fill="#7c3aed"/><text x="408" y="210" font-size="8" fill="#475569">속도</text>
+<!-- Discharge sensors -->
+<line x1="250" y1="274" x2="250" y2="296" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+<circle cx="200" cy="306" r="10" fill="#dc2626" opacity=".8"/><text x="200" y="310" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">GAS</text>
+<text x="200" y="326" text-anchor="middle" font-size="8" fill="#dc2626" font-weight="600">GAS-1</text>
+<circle cx="250" cy="306" r="10" fill="#7c3aed"/><text x="250" y="310" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">PS</text>
+<text x="250" y="326" text-anchor="middle" font-size="8" fill="#7c3aed" font-weight="600">PS-1</text>
+<circle cx="300" cy="306" r="10" fill="#16a34a"/><text x="300" y="310" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">SCL</text>
+<text x="300" y="326" text-anchor="middle" font-size="8" fill="#16a34a" font-weight="600">SCL-1</text>
+<!-- Conveyor -->
+<line x1="250" y1="336" x2="250" y2="356" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="170" y="356" width="160" height="28" rx="6" fill="#f0fdf4" stroke="#16a34a"/>
+<text x="250" y="375" text-anchor="middle" font-size="10" fill="#166534" font-weight="600">배출 컨베이어 &rarr; 2차</text>
+<!-- Total -->
+<text x="250" y="410" text-anchor="middle" font-size="10" fill="#64748b" font-weight="600">총 14개 센서</text>
+</svg>
+</div>
+</div></div>
+
+<!-- ===== 7 ===== -->
+<div class="sec" id="s7">
+<div class="sec-h"><span class="n">7</span>AI 기능 1: 고장 예지</div>
+<div class="sec-b">
+<h3>7.1 고장 예지 모델 4종</h3>
+<table>
+<tr><th>#</th><th>모델명</th><th>알고리즘</th><th>입력</th><th>출력</th><th>추론</th><th>정확도</th></tr>
+<tr><td>1</td><td><strong>베어링 이상 탐지</strong></td><td>LSTM Autoencoder</td><td>VIB FFT 1024 bins</td><td>이상 점수 0~1</td><td>&lt;10ms</td><td>95%+</td></tr>
+<tr><td>2</td><td><strong>칼날 마모 예측</strong></td><td>Gradient Boosting</td><td>CUR+SPD+VIB (24)</td><td>마모율 (%), RUL</td><td>&lt;5ms</td><td>92%+</td></tr>
+<tr><td>3</td><td><strong>축 불균형 진단</strong></td><td>Classical DSP</td><td>VIB 1X 성분</td><td>불균형 레벨</td><td>&lt;1ms</td><td>98%+</td></tr>
+<tr><td>4</td><td><strong>이물질 끼임 감지</strong></td><td>패턴 인식</td><td>CUR 스파이크+SPD 급변</td><td>끼임 확률</td><td>&lt;5ms</td><td>95%+</td></tr>
+</table>
+
+<h3>7.2 베어링 이상 탐지 프로세스</h3>
+<div class="flow">
+<div class="fb">VIB-A/B 원시 데이터<small>100kHz 샘플링</small></div>
+<div class="fa">&darr;</div>
+<div class="fb">FFT 변환<small>주파수 스펙트럼 1024 bins</small></div>
+<div class="fa">&darr;</div>
+<div class="fb" style="border-color:var(--p3)">Envelope Analysis<small>BPFO/BPFI/BSF/FTF 추출</small></div>
+<div class="fa">&darr;</div>
+<div class="fb act">LSTM Autoencoder<small>정상 패턴 학습 &rarr; 재구성 오차 = 이상 점수</small></div>
+<div class="fa">&darr;</div>
+<div class="fb ok" style="min-width:320px;text-align:left;padding:12px 18px">
+<strong>이상 점수 판정</strong><br>
+<span style="color:var(--ok)">0.0~0.3: 정상</span> &nbsp;
+<span style="color:var(--warn)">0.3~0.5: 주의</span> &nbsp;
+<span style="color:var(--acc)">0.5~0.7: 경고</span><br>
+<span style="color:var(--err)">0.7~0.9: 위험</span> &nbsp;
+<span style="color:#fff;background:var(--err);padding:1px 6px;border-radius:4px">0.9~1.0: 긴급</span>
+</div>
+</div>
+
+<h3>7.3 칼날 마모 예측 — RUL 곡선</h3>
+<div class="dia">
+<svg viewBox="0 0 460 200" width="460" height="200" style="font-family:inherit">
+<!-- Axes -->
+<line x1="50" y1="170" x2="430" y2="170" stroke="#94a3b8" stroke-width="1.5"/>
+<line x1="50" y1="170" x2="50" y2="20" stroke="#94a3b8" stroke-width="1.5"/>
+<text x="240" y="195" text-anchor="middle" font-size="10" fill="#64748b">운전시간 (h)</text>
+<text x="20" y="95" text-anchor="middle" font-size="10" fill="#64748b" transform="rotate(-90,20,95)">마모율 (%)</text>
+<!-- Y labels -->
+<text x="44" y="174" text-anchor="end" font-size="9" fill="#94a3b8">0%</text>
+<text x="44" y="144" text-anchor="end" font-size="9" fill="#94a3b8">20%</text>
+<text x="44" y="114" text-anchor="end" font-size="9" fill="#94a3b8">40%</text>
+<text x="44" y="84" text-anchor="end" font-size="9" fill="#94a3b8">60%</text>
+<text x="44" y="54" text-anchor="end" font-size="9" fill="#94a3b8">80%</text>
+<text x="44" y="30" text-anchor="end" font-size="9" fill="#dc2626" font-weight="700">100%</text>
+<!-- X labels -->
+<text x="50" y="184" font-size="9" fill="#94a3b8">0</text>
+<text x="126" y="184" font-size="9" fill="#94a3b8">100</text>
+<text x="202" y="184" font-size="9" fill="#94a3b8">200</text>
+<text x="278" y="184" font-size="9" fill="#94a3b8">300</text>
+<text x="354" y="184" font-size="9" fill="#94a3b8">400</text>
+<text x="420" y="184" font-size="9" fill="#94a3b8">500</text>
+<!-- Threshold -->
+<line x1="50" y1="26" x2="430" y2="26" stroke="#dc2626" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="434" y="30" font-size="8" fill="#dc2626">교체 필요</text>
+<!-- Actual curve -->
+<path d="M50,170 Q150,150 200,112" stroke="#2563eb" stroke-width="2.5" fill="none"/>
+<!-- Current point -->
+<circle cx="200" cy="112" r="6" fill="#2563eb"/>
+<text x="208" y="108" font-size="9" fill="#2563eb" font-weight="700">현재 38%</text>
+<!-- Predicted -->
+<path d="M200,112 Q300,72 370,34" stroke="#e65100" stroke-width="2" stroke-dasharray="6,3" fill="none"/>
+<text x="310" y="60" font-size="9" fill="#e65100" font-weight="600">AI 예측선</text>
+<!-- RUL annotation -->
+<line x1="200" y1="120" x2="200" y2="160" stroke="#2563eb" stroke-width="1" stroke-dasharray="2,2"/>
+<line x1="370" y1="38" x2="370" y2="160" stroke="#e65100" stroke-width="1" stroke-dasharray="2,2"/>
+<line x1="200" y1="155" x2="370" y2="155" stroke="#e65100" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+<text x="285" y="152" text-anchor="middle" font-size="10" fill="#e65100" font-weight="700">RUL = 120시간</text>
+<text x="285" y="164" text-anchor="middle" font-size="8" fill="#94a3b8">(5일 후 교체 권고)</text>
+</svg>
+</div>
+
+<h3>7.4 알림 및 정비 권고</h3>
+<table>
+<tr><th>등급</th><th>조건</th><th>알림 방식</th><th>권고 조치</th></tr>
+<tr style="background:#f0fdf4"><td><span class="bd bd-ok">정상</span></td><td>이상 점수 &lt;0.3</td><td>대시보드</td><td>정상 운전</td></tr>
+<tr style="background:#fefce8"><td><span class="bd bd-warn">주의</span></td><td>0.3~0.5 또는 RUL&lt;500h</td><td>대시보드</td><td>모니터링 강화, 부품 발주</td></tr>
+<tr style="background:#fff7ed"><td><span class="bd bd-a">경고</span></td><td>0.5~0.7 또는 RUL&lt;200h</td><td>이메일+SMS</td><td>정비 일정 확정</td></tr>
+<tr style="background:#fef2f2"><td><span class="bd bd-err">위험</span></td><td>0.7~0.9 또는 RUL&lt;100h</td><td>전화+사이렌</td><td>조기 정비 실시</td></tr>
+<tr style="background:#fecaca"><td><span class="bd" style="background:#7f1d1d">긴급</span></td><td>이상 점수 &gt;0.9</td><td><strong>자동 정지 권고</strong></td><td>즉시 정지, 현장 점검</td></tr>
+</table>
+</div></div>
+
+<!-- ===== 8 ===== -->
+<div class="sec" id="s8">
+<div class="sec-h"><span class="n">8</span>AI 기능 2: 사고/발화 예방</div>
+<div class="sec-b">
+<h3>8.1 안전 AI 모델 3종</h3>
+<table>
+<tr><th>#</th><th>모델명</th><th>알고리즘</th><th>입력</th><th>출력</th><th>추론</th></tr>
+<tr class="hl"><td>5</td><td><strong>발화 감지</strong></td><td>Rate-of-Change + Anomaly</td><td>TMP-IR, IR2, A/B</td><td>발화 확률+위치</td><td><strong>&lt;100ms</strong></td></tr>
+<tr><td>6</td><td><strong>분진 폭발 예측</strong></td><td>CUSUM + 트렌드</td><td>DST-1</td><td>폭발 위험도</td><td>&lt;500ms</td></tr>
+<tr><td>7</td><td><strong>전해액 누출</strong></td><td>Multi-gas Fusion</td><td>GAS-1 (VOC/H&#8322;/CO)</td><td>누출 확률</td><td>&lt;1s</td></tr>
+</table>
+
+<h3>8.2 발화 감지 다중 판단 체계</h3>
+<div class="arch">
+<div class="arch-lv" style="max-width:480px;border-color:var(--err);background:#fef2f2">
+<div class="lb" style="color:var(--err)">판단 1: 온도 급변 (Edge AI)</div>
+<div class="ds">TMP-IR 또는 TMP-IR2에서 dT/dt &gt; 5&deg;C/s &nbsp; | &nbsp; <strong>&lt;50ms</strong></div>
+</div>
+<div class="arch-conn" style="color:var(--err);font-size:1em">OR &darr;</div>
+<div class="arch-lv" style="max-width:480px;border-color:var(--err);background:#fef2f2">
+<div class="lb" style="color:var(--err)">판단 2: 온도 절대값 (Edge AI + Safety PLC)</div>
+<div class="ds">TMP-IR &gt; 150&deg;C &nbsp; | &nbsp; Safety PLC 독립 감시</div>
+</div>
+<div class="arch-conn" style="color:var(--err);font-size:1em">OR &darr;</div>
+<div class="arch-lv" style="max-width:480px;border-color:var(--err);background:#fef2f2">
+<div class="lb" style="color:var(--err)">판단 3: 복합 이상 (Edge AI Fusion)</div>
+<div class="ds">온도 상승 + 가스 농도 상승 + 진동 변화 동시 감지</div>
+</div>
+<div class="arch-conn" style="color:var(--err);font-size:1.2em">&darr; 어느 하나라도 트리거 시 &darr;</div>
+<div class="arch-lv" style="max-width:480px;border-color:#7f1d1d;background:#7f1d1d;color:#fff">
+<div class="lb" style="color:#fff;font-size:1em">즉시 자동 대응 실행</div>
+<div style="text-align:left;padding:6px 10px;font-size:.88em;color:rgba(255,255,255,.9)">
+1. 게이트 밸브 폐쇄 (화재 격리) &mdash; &lt;500ms<br>
+2. 자동 소화 시스템 작동 &mdash; &lt;1s<br>
+3. N&#8322; 퍼지 최대 출력 &mdash; &lt;1s<br>
+4. 슈레더 비상 정지 &mdash; &lt;1s<br>
+5. 전화 + 사이렌 + 비상 방송 &mdash; &lt;3s
+</div>
+</div>
+</div>
+<div class="co err"><strong>핵심: 이중 안전 구조</strong> &mdash; AI가 다운되어도 Safety PLC가 독립 대응. Safety PLC가 놓쳐도 Edge AI가 복합 패턴으로 사전 경고.</div>
+
+<h3>8.3 거짓 경보 감소 전략</h3>
+<table>
+<tr><th>현재 문제</th><th>AI 해결 방법</th><th>기대 효과</th></tr>
+<tr><td>임계값 초과 즉시 경보</td><td><strong>트렌드 분석</strong>: 스파이크 vs 지속 상승 구분</td><td>노이즈 경보 제거</td></tr>
+<tr><td>단일 센서 의존</td><td><strong>이중화 교차 검증</strong>: IR+IR2 동시 확인</td><td>센서 오작동 제거</td></tr>
+<tr><td>정상 변동을 이상으로 판단</td><td><strong>학습 기반 정상 범위</strong>: RPM별 패턴</td><td>조건별 맞춤 임계값</td></tr>
+<tr><td>환경 가스 혼동</td><td><strong>Multi-gas Fusion</strong>: VOC+H&#8322;+CO 복합</td><td>전해액 특이 패턴만 감지</td></tr>
+</table>
+</div></div>
+
+<!-- ===== 9 ===== -->
+<div class="sec" id="s9">
+<div class="sec-h"><span class="n">9</span>AI 기능 3: 파쇄 품질 관리</div>
+<div class="sec-b">
+<h3>9.1 품질 AI 모델</h3>
+<table>
+<tr><th>#</th><th>모델명</th><th>알고리즘</th><th>입력</th><th>출력</th><th>추론</th></tr>
+<tr><td>8</td><td><strong>파쇄 크기 예측</strong></td><td>Random Forest</td><td>CUR, SPD, SCL 등 12개</td><td>예상 파쇄 크기, 균일도</td><td>&lt;5ms</td></tr>
+<tr><td>-</td><td><strong>RPM 최적화</strong></td><td>룰 기반 + 피드백</td><td>예측값 + 목표값</td><td>최적 RPM 권고</td><td>&lt;100ms</td></tr>
+</table>
+
+<h3>9.2 간접 측정 원리</h3>
+<div class="co">슈레더 단계에서는 인라인 입도 분석기 설치가 어려우므로 <strong>센서 데이터로 파쇄 품질을 간접 추정</strong>합니다.</div>
+<table>
+<tr><th>센서 데이터</th><th>파쇄 품질과의 상관</th><th>활용</th></tr>
+<tr><td><strong>전류 (CUR)</strong></td><td>전류&uarr; = 부하&uarr; = 더 잘게 / 마모 시 효율&darr;</td><td>마모 보정 후 크기 추정</td></tr>
+<tr><td><strong>회전속도 (SPD)</strong></td><td>RPM&uarr; = 파쇄 빈도&uarr; = 더 잘게</td><td>RPM-크기 상관 모델</td></tr>
+<tr><td><strong>처리량 (SCL)</strong></td><td>처리량&uarr; = 체류시간&darr; = 더 크게</td><td>투입량 보정</td></tr>
+<tr><td><strong>진동 (VIB)</strong></td><td>칼날 상태에 따른 패턴 변화</td><td>칼날 마모 보정</td></tr>
+<tr><td><strong>배출 흐름 (PS)</strong></td><td>배출물 높이/속도 &rarr; 크기 간접 추정</td><td>막힘 · 과대 파쇄 감지</td></tr>
+</table>
+
+<h3>9.3 RPM 최적화 피드백 루프</h3>
+<div class="flow">
+<div class="fb">투입 재료 정보<small>배터리 종류 · 크기 · 방전 상태</small></div>
+<div class="fa">&darr;</div>
+<div class="fb act">AI 초기 RPM 추천<small>투입물 특성별 최적 RPM</small></div>
+<div class="fa">&darr;</div>
+<div class="fb">Process PLC<small>축 A/B RPM 설정</small></div>
+<div class="fa">&darr;</div>
+<div class="fb pri">슈레더 운전<small>CUR, SPD, VIB, SCL, PS 센서 측정</small></div>
+<div class="fa">&darr;</div>
+<div class="fb" style="border-color:var(--p3)">AI 파쇄 품질 예측<small>예상 크기: 75mm</small></div>
+<div class="fa">&darr;</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+<div class="fb ok" style="min-width:140px">정상 범위<small>50~100mm<br>운전 유지</small></div>
+<div class="fb err" style="min-width:140px">이탈 감지<small>&gt;100mm 또는 &lt;50mm<br>RPM &pm;1~2 조정</small></div>
+</div>
+</div>
+<div style="text-align:center;font-size:.85em;color:var(--txl);margin-top:4px">&uarr; 피드백 루프 (실시간) &uarr;</div>
+</div></div>
+
+<!-- ===== 10 ===== -->
+<div class="sec" id="s10">
+<div class="sec-h"><span class="n">10</span>AI 기능 4: 설비-품질-안전 연계 분석</div>
+<div class="sec-b">
+
+<h3>10.1 상관관계</h3>
+<table>
+<tr><th>연계</th><th>시나리오</th><th>AI 판단</th><th>조치</th></tr>
+<tr><td><span class="bd bd-p">설비&rarr;품질</span></td><td>칼날 마모 30%&uarr; &rarr; 전류 10%&uarr; &rarr; 파쇄 과대</td><td>"원인: 칼날 마모"</td><td>RPM 조정 + 교체 계획</td></tr>
+<tr><td><span class="bd bd-p">설비&rarr;안전</span></td><td>베어링 과열 &rarr; 윤활유 가스 &rarr; 가스 감지</td><td>"전해액이 아닌 윤활유 원인"</td><td>거짓 경보 방지 + 정비</td></tr>
+<tr><td><span class="bd bd-err">안전&rarr;품질</span></td><td>N&#8322; 부족 &rarr; 산화 &rarr; 블랙매스 변색</td><td>"원인: N&#8322; 농도 부족"</td><td>N&#8322; 유량 증가</td></tr>
+<tr><td><span class="bd bd-ok">품질&rarr;설비</span></td><td>파쇄 크기 급변 &rarr; 칼날 파손 의심</td><td>"파손 징후"</td><td><strong>즉시 정지 + 점검</strong></td></tr>
+</table>
+
+<h3>10.2 통합 건강 점수</h3>
+<div style="background:#f8fafc;border:1px solid var(--bdr);border-radius:10px;padding:18px;margin:14px 0">
+<div style="font-weight:700;color:var(--p);margin-bottom:12px;font-size:1.05em">슈레더 통합 건강 점수</div>
+<!-- Equipment -->
+<div style="font-weight:600;color:var(--p2);margin-bottom:4px">설비 건강 (40%)</div>
+<div class="pb-wrap"><div class="pb-label"><span>칼날 상태</span><span style="color:var(--warn)">65%</span></div><div class="pb"><div class="pb-fill" style="width:65%;background:var(--warn)"></div></div></div>
+<div class="pb-wrap"><div class="pb-label"><span>베어링 A</span><span style="color:var(--ok)">88%</span></div><div class="pb"><div class="pb-fill" style="width:88%;background:var(--ok)"></div></div></div>
+<div class="pb-wrap"><div class="pb-label"><span>베어링 B</span><span style="color:var(--ok)">82%</span></div><div class="pb"><div class="pb-fill" style="width:82%;background:var(--ok)"></div></div></div>
+<div class="pb-wrap"><div class="pb-label"><span>감속기</span><span style="color:var(--ok)">90%</span></div><div class="pb"><div class="pb-fill" style="width:90%;background:var(--ok)"></div></div></div>
+<!-- Safety -->
+<div style="font-weight:600;color:var(--err);margin:10px 0 4px">안전 상태 (35%)</div>
+<div class="pb-wrap"><div class="pb-label"><span>발화 위험도</span><span style="color:var(--ok)">100% (정상)</span></div><div class="pb"><div class="pb-fill" style="width:100%;background:var(--ok)"></div></div></div>
+<div class="pb-wrap"><div class="pb-label"><span>분진 위험도</span><span style="color:var(--ok)">92%</span></div><div class="pb"><div class="pb-fill" style="width:92%;background:var(--ok)"></div></div></div>
+<div class="pb-wrap"><div class="pb-label"><span>가스 누출</span><span style="color:var(--ok)">95%</span></div><div class="pb"><div class="pb-fill" style="width:95%;background:var(--ok)"></div></div></div>
+<!-- Quality -->
+<div style="font-weight:600;color:var(--info);margin:10px 0 4px">품질 상태 (25%)</div>
+<div class="pb-wrap"><div class="pb-label"><span>파쇄 크기 적합도</span><span style="color:var(--warn)">78%</span></div><div class="pb"><div class="pb-fill" style="width:78%;background:var(--warn)"></div></div></div>
+<div class="pb-wrap"><div class="pb-label"><span>처리량 달성률</span><span style="color:var(--ok)">88%</span></div><div class="pb"><div class="pb-fill" style="width:88%;background:var(--ok)"></div></div></div>
+<!-- Total -->
+<div style="border-top:2px solid var(--bdr);margin-top:12px;padding-top:10px">
+<div class="pb-wrap"><div class="pb-label"><span style="font-size:1em;font-weight:700">종합 건강 점수</span><span style="font-size:1.3em;color:var(--p3)">83점 [양호]</span></div><div class="pb" style="height:20px"><div class="pb-fill" style="width:83%;background:linear-gradient(90deg,var(--p3),var(--ok))"></div></div></div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:.8em">
+<span class="bd bd-ok">90~100 최적</span>
+<span class="bd bd-p">70~89 양호</span>
+<span class="bd bd-warn">50~69 주의</span>
+<span class="bd bd-a">30~49 경고</span>
+<span class="bd bd-err">0~29 위험</span>
+</div>
+</div>
+</div></div>
+
+<!-- ===== 11 ===== -->
+<div class="sec" id="s11">
+<div class="sec-h"><span class="n">11</span>하드웨어 & 소프트웨어</div>
+<div class="sec-b">
+<h3>Edge AI Gateway</h3>
+<table>
+<tr><th>구성</th><th>사양</th><th>용도</th></tr>
+<tr><td>프로세서</td><td>NVIDIA Jetson Orin NX 16GB</td><td>AI 추론 (100 TOPS)</td></tr>
+<tr><td>스토리지</td><td>512GB NVMe SSD</td><td>로컬 30일 저장</td></tr>
+<tr><td>아날로그</td><td>16ch 24bit ADC (100kHz)</td><td>VIB, TMP, CUR, PS</td></tr>
+<tr><td>디지털</td><td>8ch GPIO + 2포트 RS485</td><td>SPD, DST, GAS, SCL</td></tr>
+<tr><td>RTD</td><td>4ch PT100</td><td>TMP-A, TMP-B</td></tr>
+<tr><td>네트워크</td><td>1GbE &times; 2</td><td>Safety PLC + Cloud</td></tr>
+<tr><td>환경</td><td>IP65, -40~70&deg;C, 24V DC</td><td>현장 캐비닛</td></tr>
+<tr><td>UPS</td><td>30분 외장</td><td>정전 시 안전 셧다운</td></tr>
+</table>
+
+<h3>소프트웨어 스택</h3>
+<div class="cmp">
+<div class="cmp-b"><h5>Edge (현장)</h5><p style="font-size:.85em;text-align:left;padding:0 8px">
+Ubuntu 22.04 + JetPack 6<br>Docker + NVIDIA Runtime<br>TensorRT + scikit-learn<br>NumPy + SciPy<br>ZeroMQ / MQTT<br>TimescaleDB<br>Qt/QML (HMI)</p></div>
+<div class="cmp-b right"><h5>서버/클라우드</h5><p style="font-size:.85em;text-align:left;padding:0 8px">
+Grafana (대시보드)<br>PostgreSQL (메타 DB)<br>InfluxDB (시계열)<br>MLflow (모델 관리)<br>DVC (데이터 버전)<br>Flutter (모바일 앱)</p></div>
+</div>
+</div></div>
+
+<!-- ===== 12 ===== -->
+<div class="sec" id="s12">
+<div class="sec-h"><span class="n">12</span>대시보드 및 알림</div>
+<div class="sec-b">
+<h3>대시보드 구성</h3>
+<div class="cg" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+<div class="cd"><div class="ic">&#128202;</div><h5>종합 현황</h5><p>건강 점수, RPM<br>전류, 온도, 처리량</p></div>
+<div class="cd"><div class="ic">&#128295;</div><h5>설비 상태</h5><p>칼날 마모+RUL<br>베어링, 진동 스펙트럼</p></div>
+<div class="cd"><div class="ic">&#128293;</div><h5>안전 상태</h5><p>5단계 등급, IR 트렌드<br>분진/가스, N&#8322;</p></div>
+<div class="cd"><div class="ic">&#128200;</div><h5>품질 상태</h5><p>파쇄 크기, 처리량<br>RPM 최적화</p></div>
+<div class="cd"><div class="ic">&#128196;</div><h5>이벤트 로그</h5><p>알림 이력, 정비 이력<br>AI 판단 로그</p></div>
+</div>
+<h3>알림 체계</h3>
+<div class="sl">
+<div class="sl-r" style="background:var(--ok)"><div class="sl-n">&#10004;</div><div class="sl-t"><strong>정보</strong> <div class="sl-d">정비 권고, RUL&lt;500h &nbsp;|&nbsp; 대시보드 &nbsp;|&nbsp; 24시간 내</div></div></div>
+<div class="sl-r" style="background:var(--warn)"><div class="sl-n">&#9888;</div><div class="sl-t"><strong>경고</strong> <div class="sl-d">이상&gt;0.5, RUL&lt;200h, 품질 이탈 &nbsp;|&nbsp; 이메일+SMS &nbsp;|&nbsp; 4시간 내</div></div></div>
+<div class="sl-r" style="background:var(--acc)"><div class="sl-n">&#9888;</div><div class="sl-t"><strong>위험</strong> <div class="sl-d">이상&gt;0.7, RUL&lt;100h &nbsp;|&nbsp; 전화+사이렌 &nbsp;|&nbsp; 1시간 내</div></div></div>
+<div class="sl-r" style="background:var(--err)"><div class="sl-n">&#128680;</div><div class="sl-t"><strong>긴급</strong> <div class="sl-d">발화/폭발 징후, 이상&gt;0.9 &nbsp;|&nbsp; <strong>자동 대응+전화+비상 방송</strong> &nbsp;|&nbsp; 즉시</div></div></div>
+</div>
+</div></div>
+
+<!-- ===== 13 ===== -->
+<div class="sec" id="s13">
+<div class="sec-h"><span class="n">13</span>구축 일정 (4개월)</div>
+<div class="sec-b">
+<div class="tl">
+<div class="tl-i active"><h5>1단계: 센서 설치 + Edge 설치 (1~4주)</h5><p>14개 센서 설치 · Edge Gateway 캐비닛 · Safety PLC 연동 · 통신 시운전</p></div>
+<div class="tl-i active"><h5>2단계: 데이터 수집 + 기본 모니터링 (3~6주)</h5><p>정상 운전 데이터 수집 (AI 학습용) · 기본 대시보드 · Safety PLC 검증 · 임계값 경보 운영</p></div>
+<div class="tl-i"><h5>3단계: AI 모델 학습 + 배포 (7~12주)</h5><p>8종 AI 모델 학습 · Shadow Mode 배포 · AI vs 실제 비교 검증 · 모델 튜닝</p></div>
+<div class="tl-i"><h5>4단계: 실운영 전환 (13~16주)</h5><p>AI 기반 알림 활성화 · 운전자 교육 (8h) · 정비 스케줄링 AI · 성과 측정</p></div>
+</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+<span class="bd bd-p">4주: 센서 완료</span>
+<span class="bd bd-a">8주: 데이터 확보</span>
+<span class="bd bd-warn">12주: AI 검증</span>
+<span class="bd bd-ok">16주: 실운영 전환</span>
+</div>
+</div></div>
+
+<!-- ===== 14 ===== -->
+<div class="sec" id="s14">
+<div class="sec-h"><span class="n">14</span>투자 비용 및 ROI</div>
+<div class="sec-b">
+<h3>14.1 투자 비용</h3>
+<table>
+<tr><th>구분</th><th>항목</th><th style="text-align:right">금액 (만원)</th></tr>
+<tr><td rowspan="5"><strong>하드웨어</strong></td><td>Edge AI Gateway (Jetson Orin NX + DAQ)</td><td style="text-align:right">800</td></tr>
+<tr><td>Safety PLC + 이중화 I/O</td><td style="text-align:right">600</td></tr>
+<tr><td>센서 14개 (진동, 온도, 전류, 속도, 분진, 가스, 근접, 스케일)</td><td style="text-align:right">885</td></tr>
+<tr><td>캐비닛 + UPS + 배선 + HMI</td><td style="text-align:right">500</td></tr>
+<tr class="hl"><td><strong>HW 소계</strong></td><td style="text-align:right"><strong>2,785</strong></td></tr>
+<tr><td rowspan="4"><strong>소프트웨어</strong></td><td>Edge AI 플랫폼 (수집+추론+통신)</td><td style="text-align:right">1,500</td></tr>
+<tr><td>AI 모델 8종 개발 · 학습</td><td style="text-align:right">1,500</td></tr>
+<tr><td>대시보드 + 모바일 앱</td><td style="text-align:right">800</td></tr>
+<tr class="hl"><td><strong>SW 소계</strong></td><td style="text-align:right"><strong>3,800</strong></td></tr>
+<tr><td rowspan="5"><strong>서비스</strong></td><td>센서 설치 + 시운전</td><td style="text-align:right">500</td></tr>
+<tr><td>Safety PLC 연동 + 검증</td><td style="text-align:right">300</td></tr>
+<tr><td>운전자 교육 (8시간)</td><td style="text-align:right">100</td></tr>
+<tr><td>Shadow Mode 검증 (4주)</td><td style="text-align:right">500</td></tr>
+<tr class="hl"><td><strong>서비스 소계</strong></td><td style="text-align:right"><strong>1,400</strong></td></tr>
+<tr style="background:#eff6ff"><td colspan="2" style="font-weight:700;font-size:1.05em">총 투자액 (예비비 7% 포함)</td><td style="text-align:right;font-weight:700;font-size:1.15em;color:var(--p3)">약 8,500만원</td></tr>
+</table>
+
+<h3>14.2 연간 절감 효과</h3>
+<div class="chart-bar">
+<div class="bar"><div class="val">0.7억</div><div class="fill" style="height:70%;background:var(--p3)"></div><div class="lbl">비계획<br>정지</div></div>
+<div class="bar"><div class="val">0.5억</div><div class="fill" style="height:50%;background:var(--ok)"></div><div class="lbl">분진 손실<br>개선</div></div>
+<div class="bar"><div class="val">0.3억</div><div class="fill" style="height:30%;background:var(--info)"></div><div class="lbl">후속 공정<br>효율</div></div>
+<div class="bar"><div class="val">0.25억</div><div class="fill" style="height:25%;background:var(--err)"></div><div class="lbl">안전사고<br>비용</div></div>
+<div class="bar"><div class="val">0.2억</div><div class="fill" style="height:20%;background:var(--warn)"></div><div class="lbl">정비<br>비용</div></div>
+<div class="bar"><div class="val">0.12억</div><div class="fill" style="height:12%;background:#7c3aed"></div><div class="lbl">부품<br>재고</div></div>
+</div>
+<div style="text-align:center;font-weight:700;color:var(--ok);font-size:1.1em;margin-top:6px">연간 총 절감: 약 2.07억원</div>
+
+<h3>14.3 ROI 분석</h3>
+<div class="cg" style="grid-template-columns:repeat(3,1fr)">
+<div class="cd feat"><h5>투자 회수 기간</h5><div style="font-size:2em;font-weight:800;color:var(--acc)">4.9<span style="font-size:.4em">개월</span></div></div>
+<div class="cd"><h5>3년 ROI</h5><div style="font-size:2em;font-weight:800;color:var(--p3)">630<span style="font-size:.4em">%</span></div></div>
+<div class="cd"><h5>5년 ROI</h5><div style="font-size:2em;font-weight:800;color:var(--ok)">1,117<span style="font-size:.4em">%</span></div></div>
+</div>
+</div></div>
+
+<!-- ===== 15 ===== -->
+<div class="sec" id="s15">
+<div class="sec-h"><span class="n">15</span>향후 확장 계획</div>
+<div class="sec-b">
+<div class="flow">
+<div class="fb act" style="min-width:280px"><strong>Phase 0 (현재 제안)</strong><small>슈레더 Edge AI<br>14개 센서 · 8종 AI · 8,500만원</small></div>
+<div class="fa">&darr; <span style="font-size:.6em;color:var(--txl)">성과 검증 후</span></div>
+<div class="fb" style="min-width:280px"><strong>Phase 1 (+4개월)</strong><small>+ 해머 크러셔<br>+11개 센서 · +4종 AI · ~4,000만원</small></div>
+<div class="fa">&darr;</div>
+<div class="fb" style="min-width:280px"><strong>Phase 2 (+4개월)</strong><small>+ 핀밀 + ACM<br>+17개 센서 · +6종 AI · ~6,000만원</small></div>
+<div class="fa">&darr;</div>
+<div class="fb ok" style="min-width:280px"><strong>Phase 3 (+4개월)</strong><small>통합 지능 + Digital Twin<br>전 공정 상관분석 · ERP/MES · ~5,000만원</small></div>
+</div>
+<div class="co ok"><strong>Edge AI Gateway는 확장을 고려한 사양</strong>으로 선정하여, 추가 HW 투자 없이 센서와 모델만 추가하면 됩니다.<br>전체 확장 시: 42개 센서, 18종+ AI 모델, 약 2.4억원</div>
+</div></div>
+
+<!-- ===== 16 ===== -->
+<div class="sec" id="s16">
+<div class="sec-h"><span class="n">16</span>부록</div>
+<div class="sec-b">
+<h3>A. AI 모델 학습 데이터 요구량</h3>
+<table>
+<tr><th>모델</th><th>최소 학습 데이터</th><th>수집 기간</th><th>비고</th></tr>
+<tr><td>베어링 이상 탐지</td><td>정상 28일 + 이상 2일</td><td>2개월</td><td>Transfer Learning 가능</td></tr>
+<tr><td>칼날 마모 예측</td><td>교체 3사이클</td><td>3개월</td><td>마모 진행 데이터 필수</td></tr>
+<tr><td>축 불균형 진단</td><td>정상 7일</td><td>2주</td><td>Classical DSP</td></tr>
+<tr><td>이물질 끼임</td><td>이벤트 10건+</td><td>1개월</td><td>이벤트 기반</td></tr>
+<tr><td>발화 감지</td><td>정상 14일 + 시뮬레이션</td><td>1개월</td><td>실발화 없이도 가능</td></tr>
+<tr><td>분진 폭발 예측</td><td>정상 14일</td><td>1개월</td><td>트렌드 학습</td></tr>
+<tr><td>전해액 누출</td><td>정상 14일</td><td>1개월</td><td>정상 가스 패턴</td></tr>
+<tr><td>파쇄 크기 예측</td><td>500 배치+</td><td>2개월</td><td>수동 측정 병행</td></tr>
+</table>
+
+<h3>B. 슈레더 정비 SOP (AI 연동)</h3>
+<table>
+<tr><th>정비 항목</th><th>AI 트리거</th><th>정비 절차</th><th>소요</th></tr>
+<tr><td>칼날 연마</td><td>마모율 60~70% + RUL&lt;200h</td><td>LOTO &rarr; 챔버 개방 &rarr; 연마 &rarr; 조립 &rarr; 시운전</td><td>4h</td></tr>
+<tr><td>칼날 교체</td><td>마모율 &gt;80% 또는 크랙</td><td>LOTO &rarr; 전체 세트 교체 &rarr; 시운전</td><td>6h</td></tr>
+<tr><td>베어링 교체</td><td>이상 점수 &gt;0.7 또는 RUL&lt;200h</td><td>LOTO &rarr; 축 분해 &rarr; 교체 &rarr; 조립</td><td>8h</td></tr>
+<tr><td>감속기 오일</td><td>누적 3,000~5,000h</td><td>오일 배출 &rarr; 플러싱 &rarr; 신유 주입</td><td>2h</td></tr>
+<tr><td>긴급 점검</td><td>이상 점수 &gt;0.9</td><td>즉시 정지 &rarr; LOTO &rarr; 현장 점검</td><td>가변</td></tr>
+</table>
+
+<h3>C. 한국기계엔지니어링</h3>
+<table>
+<tr><td><strong>회사명</strong></td><td>(주)한국기계엔지니어링 (HANKOOK P.M ENG)</td></tr>
+<tr><td><strong>홈페이지</strong></td><td>www.topcrusher.co.kr</td></tr>
+<tr><td><strong>전화</strong></td><td>031-427-7783~5</td></tr>
+<tr><td><strong>이메일</strong></td><td>topcrusher@naver.com</td></tr>
+<tr><td><strong>소재지</strong></td><td>경기도 군포시 공단로 140번안길 30</td></tr>
+</table>
+</div></div>
+
+</div><!-- /ct -->
+
+<div class="footer">
+<p>본 제안서는 2026년 3월 26일 기준으로 작성되었습니다.</p>
+<p>실제 구축 시 현장 실사 및 상세 설계를 통해 사양 · 비용이 조정될 수 있습니다.</p>
+<p>본 제안은 슈레더(1차 파쇄기) 단독 적용 범위이며, 검증 후 후속 공정으로 단계적 확장을 권고합니다.</p>
+</div>
+</body>
+</html>
