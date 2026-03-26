@@ -1,0 +1,16 @@
+claude, 이 회로도를 기준(esp32_gpio_포트매핑.md)으로,
+esp32Wroom과 관련하여, program공부를 할려고 합니다.
+
+1. red, yellow, blue led 동작
+2. beep Alarm동작
+3. buzzer에 melody 동작
+4. ws2812에 r,g,b 동작
+5. i2c bus로 device찾기 동작
+6. aht20 온습도 센서 동작
+7. rtc동작
+8. uart 입력및 출력 동작
+
+web과 연결하여
+1 ~ 8까지 동작하는 web App을 만들기
+
+의 과정에 대한 계획서를 md file로 만들어 주세요.
