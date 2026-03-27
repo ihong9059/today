@@ -18,3 +18,8 @@ UTTEC 회사소개 동영상을 remotion을 사용하여 만들어 주세요.
 신뢰감있는 음성 설명이 되도록 해주세요.
 
 
+이 folder의 내용을 참고하여, uttec homepage를 만들려고합니다.
+이 내용을 기준으로 homepage 기본 format을 만들어 주세요.
+현재 homepage trend에 맞추어 배경을 만들어 주세요.
+
+homepage web server를 이 folder안에 만들어 주세요.

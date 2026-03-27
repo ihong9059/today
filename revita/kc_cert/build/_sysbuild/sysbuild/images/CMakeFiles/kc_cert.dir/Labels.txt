@@ -1,0 +1,13 @@
+# Target labels
+ kc_cert
+# Source files and their labels
+/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/CMakeFiles/kc_cert
+/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/CMakeFiles/kc_cert.rule
+/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/CMakeFiles/kc_cert-complete.rule
+/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-build.rule
+/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-configure.rule
+/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-download.rule
+/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-install.rule
+/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-mkdir.rule
+/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-patch.rule
+/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-update.rule

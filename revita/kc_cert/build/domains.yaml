@@ -1,0 +1,7 @@
+default: kc_cert
+build_dir: /home/uttec/revita/zephyr_workspace/kc_cert/build
+domains:
+  - name: kc_cert
+    build_dir: /home/uttec/revita/zephyr_workspace/kc_cert/build/kc_cert
+flash_order:
+  - kc_cert

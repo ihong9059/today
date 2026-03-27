@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/CMakeFiles/kc_cert"
+		},
+		{
+			"file" : "/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/CMakeFiles/kc_cert.rule"
+		},
+		{
+			"file" : "/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/CMakeFiles/kc_cert-complete.rule"
+		},
+		{
+			"file" : "/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-build.rule"
+		},
+		{
+			"file" : "/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-configure.rule"
+		},
+		{
+			"file" : "/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-download.rule"
+		},
+		{
+			"file" : "/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-install.rule"
+		},
+		{
+			"file" : "/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-mkdir.rule"
+		},
+		{
+			"file" : "/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-patch.rule"
+		},
+		{
+			"file" : "/home/uttec/revita/zephyr_workspace/kc_cert/build/_sysbuild/sysbuild/images/kc_cert-prefix/src/kc_cert-stamp/kc_cert-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"kc_cert"
+		],
+		"name" : "kc_cert"
+	}
+}
