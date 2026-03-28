@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영상의학 병원 인수 후 SNOMED CT 시스템화 계획서</title>
+<style>
+  :root {
+    --primary: #2563eb; --primary-light: #dbeafe; --primary-dark: #1e40af;
+    --accent: #7c3aed; --accent-light: #ede9fe;
+    --success: #059669; --success-light: #d1fae5;
+    --warning: #d97706; --warning-light: #fef3c7;
+    --danger: #dc2626; --danger-light: #fee2e2;
+    --info: #0891b2; --info-light: #cffafe;
+    --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+    --gray-300: #d1d5db; --gray-500: #6b7280; --gray-600: #4b5563;
+    --gray-700: #374151; --gray-800: #1f2937; --gray-900: #111827;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Pretendard',-apple-system,'Segoe UI','Malgun Gothic',sans-serif; background:var(--gray-50); color:var(--gray-800); line-height:1.8; font-size:16px; }
+
+  .sidebar { position:fixed; left:0; top:0; width:280px; height:100vh; background:var(--gray-900); color:#fff; overflow-y:auto; z-index:100; padding:20px 0; transition:transform .3s; }
+  .sidebar-title { font-size:13px; font-weight:700; padding:0 18px 14px; border-bottom:1px solid rgba(255,255,255,.1); margin-bottom:10px; line-height:1.5; }
+  .sidebar-title span { color:#60a5fa; }
+  .sidebar-title .sub { color:#94a3b8; font-size:11px; font-weight:400; display:block; margin-top:4px; }
+  .sidebar a { display:block; padding:6px 18px; color:#94a3b8; text-decoration:none; font-size:12px; transition:.2s; border-left:3px solid transparent; }
+  .sidebar a:hover,.sidebar a.active { color:#fff; background:rgba(255,255,255,.05); border-left-color:#60a5fa; }
+  .sidebar a .num { display:inline-block; width:22px; color:#60a5fa; font-weight:600; }
+  .sidebar .divider { height:1px; background:rgba(255,255,255,.08); margin:8px 18px; }
+
+  .menu-toggle { display:none; position:fixed; top:14px; left:14px; z-index:200; background:var(--gray-900); color:#fff; border:none; border-radius:8px; width:42px; height:42px; font-size:20px; cursor:pointer; }
+  .main { margin-left:280px; max-width:940px; padding:36px 48px 80px; }
+
+  /* HERO */
+  .hero { background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 50%,#1e40af 100%); color:#fff; border-radius:16px; padding:44px 40px; margin-bottom:40px; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-60px; right:-60px; width:220px; height:220px; background:rgba(96,165,250,.1); border-radius:50%; }
+  .hero-badge { display:inline-block; background:rgba(255,255,255,.15); padding:3px 14px; border-radius:20px; font-size:11px; font-weight:600; margin-bottom:14px; letter-spacing:.5px; }
+  .hero h1 { font-size:28px; font-weight:800; margin-bottom:10px; line-height:1.4; position:relative; }
+  .hero .subtitle { font-size:15px; opacity:.85; line-height:1.7; position:relative; }
+  .hero-meta { display:flex; gap:20px; margin-top:18px; font-size:12px; opacity:.7; position:relative; }
+
+  /* EXEC SUMMARY */
+  .exec-box { background:linear-gradient(135deg,#ecfdf5,#d1fae5); border:2px solid #6ee7b7; border-radius:16px; padding:32px; margin-bottom:40px; }
+  .exec-box h2 { font-size:20px; color:#065f46; margin-bottom:18px; display:flex; align-items:center; gap:10px; }
+  .exec-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  .exec-item { background:#fff; border-radius:12px; padding:18px; border:1px solid #a7f3d0; }
+  .exec-item .q { font-size:12px; font-weight:700; color:var(--primary); margin-bottom:6px; }
+  .exec-item .a { font-size:13px; line-height:1.6; color:var(--gray-700); }
+  .exec-item .a strong { color:#065f46; }
+
+  /* SECTIONS */
+  .section { margin-bottom:52px; scroll-margin-top:20px; }
+  .section-header { display:flex; align-items:center; gap:12px; margin-bottom:22px; padding-bottom:10px; border-bottom:2px solid var(--primary-light); }
+  .section-num { display:flex; align-items:center; justify-content:center; width:38px; height:38px; background:var(--primary); color:#fff; border-radius:10px; font-weight:800; font-size:17px; flex-shrink:0; }
+  .section-header h2 { font-size:21px; font-weight:700; color:var(--gray-900); }
+  h3 { font-size:16px; font-weight:700; color:var(--gray-900); margin:24px 0 12px; }
+  p { margin-bottom:12px; font-size:15px; }
+
+  /* CARDS */
+  .info-card { border-radius:12px; padding:22px 26px; margin:18px 0; border-left:4px solid; }
+  .info-card.blue { background:var(--primary-light); border-color:var(--primary); }
+  .info-card.green { background:var(--success-light); border-color:var(--success); }
+  .info-card.yellow { background:var(--warning-light); border-color:var(--warning); }
+  .info-card.red { background:var(--danger-light); border-color:var(--danger); }
+  .info-card.purple { background:var(--accent-light); border-color:var(--accent); }
+  .info-card .card-title { font-weight:700; font-size:14px; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+  .info-card p,.info-card li { font-size:13px; line-height:1.7; }
+
+  .analogy { background:linear-gradient(135deg,#fefce8,#fef9c3); border:1px solid #fde047; border-radius:12px; padding:22px 26px; margin:18px 0; }
+  .analogy .analogy-title { font-size:14px; font-weight:700; color:var(--warning); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+
+  /* TABLES */
+  .table-wrap { overflow-x:auto; margin:18px 0; border-radius:12px; border:1px solid var(--gray-200); box-shadow:0 1px 3px rgba(0,0,0,.04); }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead { background:var(--gray-100); }
+  th { text-align:left; padding:10px 14px; font-weight:700; color:var(--gray-700); font-size:12px; border-bottom:2px solid var(--gray-200); white-space:nowrap; }
+  td { padding:10px 14px; border-bottom:1px solid var(--gray-100); vertical-align:top; line-height:1.6; }
+  tr:last-child td { border-bottom:none; }
+  tr:hover { background:var(--gray-50); }
+  .code-cell { font-family:'Consolas',monospace; font-weight:700; color:var(--primary-dark); white-space:nowrap; }
+
+  /* CODE */
+  .code-card { background:linear-gradient(135deg,#1e293b,#0f172a); color:#e2e8f0; border-radius:12px; padding:26px 28px; margin:18px 0; font-family:'Consolas','Monaco',monospace; font-size:12.5px; line-height:1.8; overflow-x:auto; position:relative; white-space:pre; }
+  .code-card .badge { position:absolute; top:10px; right:14px; background:rgba(96,165,250,.2); color:#60a5fa; font-size:10px; padding:2px 10px; border-radius:10px; font-family:-apple-system,sans-serif; }
+  .code-card .hl { color:#60a5fa; font-weight:600; }
+  .code-card .gr { color:#4ade80; }
+  .code-card .yw { color:#fbbf24; }
+  .code-card .pk { color:#f472b6; }
+  .code-card .dm { color:#64748b; }
+
+  /* METRICS */
+  .metric-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:18px 0; }
+  .metric-card { background:#fff; border:1px solid var(--gray-200); border-radius:12px; padding:18px; text-align:center; }
+  .metric-card .value { font-size:26px; font-weight:800; line-height:1.2; }
+  .metric-card .value.blue { color:var(--primary); }
+  .metric-card .value.green { color:var(--success); }
+  .metric-card .value.purple { color:var(--accent); }
+  .metric-card .value.orange { color:var(--warning); }
+  .metric-card .label { font-size:11px; color:var(--gray-500); margin-top:5px; line-height:1.4; }
+
+  /* COMPARE */
+  .compare-box { display:grid; grid-template-columns:1fr 1fr; gap:0; border-radius:12px; overflow:hidden; border:1px solid var(--gray-200); margin:18px 0; }
+  .compare-side { padding:22px 26px; }
+  .compare-side.before { background:#fef2f2; border-right:2px solid var(--gray-200); }
+  .compare-side.after { background:#f0fdf4; }
+  .compare-side h4 { font-size:13px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  .compare-side.before h4 { color:var(--danger); }
+  .compare-side.after h4 { color:var(--success); }
+  .compare-side p,.compare-side li { font-size:12.5px; line-height:1.7; }
+
+  /* FLOW */
+  .flow { display:flex; align-items:stretch; gap:0; margin:18px 0; overflow-x:auto; }
+  .flow-step { flex:1; min-width:130px; background:#fff; border:1px solid var(--gray-200); border-radius:12px; padding:16px 12px; text-align:center; }
+  .flow-step .step-num { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:var(--primary); color:#fff; border-radius:50%; font-size:12px; font-weight:700; margin-bottom:6px; }
+  .flow-step h4 { font-size:12px; font-weight:700; color:var(--gray-800); margin-bottom:4px; }
+  .flow-step p { font-size:11px; color:var(--gray-500); margin-bottom:0; line-height:1.4; }
+  .flow-arrow { display:flex; align-items:center; padding:0 3px; color:var(--primary); font-size:20px; flex-shrink:0; }
+
+  /* TIMELINE */
+  .timeline { margin:18px 0; position:relative; }
+  .timeline::before { content:''; position:absolute; left:18px; top:0; bottom:0; width:3px; background:var(--gray-200); }
+  .tl-item { position:relative; padding:0 0 28px 52px; }
+  .tl-item:last-child { padding-bottom:0; }
+  .tl-dot { position:absolute; left:8px; top:4px; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; z-index:1; }
+  .tl-dot.p1 { background:var(--primary); }
+  .tl-dot.p2 { background:var(--accent); }
+  .tl-dot.p3 { background:var(--success); }
+  .tl-dot.p4 { background:var(--warning); }
+  .tl-dot.p5 { background:var(--info); }
+  .tl-content { background:#fff; border:1px solid var(--gray-200); border-radius:12px; padding:18px 22px; }
+  .tl-content h4 { font-size:14px; font-weight:700; color:var(--gray-900); margin-bottom:3px; }
+  .tl-content .tl-period { font-size:11px; color:var(--gray-500); margin-bottom:8px; }
+  .tl-content ul { padding-left:16px; font-size:12.5px; color:var(--gray-700); }
+  .tl-content li { margin-bottom:3px; line-height:1.5; }
+
+  /* STRATEGY FLOW */
+  .strategy-flow { display:flex; align-items:center; gap:0; margin:18px 0; overflow-x:auto; }
+  .strategy-phase { flex:1; min-width:150px; padding:20px; border-radius:12px; text-align:center; }
+  .strategy-phase.p1 { background:var(--primary-light); border:2px solid var(--primary); }
+  .strategy-phase.p2 { background:var(--accent-light); border:1px solid #c4b5fd; }
+  .strategy-phase.p3 { background:var(--success-light); border:1px solid #6ee7b7; }
+  .strategy-phase h4 { font-size:13px; font-weight:700; margin-bottom:4px; }
+  .strategy-phase.p1 h4 { color:var(--primary-dark); }
+  .strategy-phase.p2 h4 { color:var(--accent); }
+  .strategy-phase.p3 h4 { color:var(--success); }
+  .strategy-phase p { font-size:11px; margin-bottom:0; }
+
+  /* RISK BADGE */
+  .risk-badge { display:inline-block; padding:2px 8px; border-radius:6px; font-size:11px; font-weight:600; }
+  .risk-badge.high { background:var(--danger-light); color:var(--danger); }
+  .risk-badge.mid { background:var(--warning-light); color:var(--warning); }
+
+  /* SUMMARY */
+  .summary-card { background:linear-gradient(135deg,#eff6ff,#ede9fe); border:1px solid #c7d2fe; border-radius:16px; padding:32px; margin:18px 0; }
+  .summary-card h3 { font-size:18px; color:var(--primary-dark); margin-bottom:18px; margin-top:0; }
+  .summary-list { list-style:none; padding:0; }
+  .summary-list li { display:flex; align-items:flex-start; gap:10px; padding:8px 0; font-size:14px; line-height:1.6; border-bottom:1px solid rgba(0,0,0,.06); }
+  .summary-list li:last-child { border-bottom:none; }
+  .summary-list .num-circle { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; background:var(--primary); color:#fff; border-radius:50%; font-size:12px; font-weight:700; flex-shrink:0; margin-top:2px; }
+
+  /* CHECKLIST */
+  .checklist { background:#fff; border:1px solid var(--gray-200); border-radius:12px; padding:22px; margin:18px 0; }
+  .checklist h4 { font-size:14px; font-weight:700; margin-bottom:12px; color:var(--gray-900); }
+  .check-item { display:flex; align-items:flex-start; gap:10px; padding:6px 0; font-size:13px; line-height:1.6; }
+  .check-icon { width:20px; height:20px; border:2px solid var(--gray-300); border-radius:4px; flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; font-size:12px; }
+
+  /* ROI HIGHLIGHT */
+  .roi-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0; }
+  .roi-card { background:#fff; border:1px solid var(--gray-200); border-radius:12px; padding:20px; }
+  .roi-card .roi-label { font-size:12px; color:var(--gray-500); margin-bottom:4px; }
+  .roi-card .roi-before { font-size:14px; color:var(--danger); text-decoration:line-through; margin-bottom:2px; }
+  .roi-card .roi-after { font-size:18px; font-weight:800; color:var(--success); }
+  .roi-card .roi-note { font-size:11px; color:var(--gray-500); margin-top:4px; }
+
+  @media (max-width:960px) {
+    .sidebar { transform:translateX(-100%); }
+    .sidebar.open { transform:translateX(0); }
+    .menu-toggle { display:flex; align-items:center; justify-content:center; }
+    .main { margin-left:0; padding:20px 18px 60px; }
+    .hero { padding:28px 22px; } .hero h1 { font-size:22px; }
+    .exec-grid { grid-template-columns:1fr; }
+    .metric-grid { grid-template-columns:1fr 1fr; }
+    .compare-box { grid-template-columns:1fr; }
+    .compare-side.before { border-right:none; border-bottom:2px solid var(--gray-200); }
+    .flow,.strategy-flow { flex-direction:column; }
+    .flow-arrow { transform:rotate(90deg); justify-content:center; }
+    .roi-grid { grid-template-columns:1fr; }
+    .hero-meta { flex-direction:column; gap:4px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+<nav class="sidebar">
+  <div class="sidebar-title">
+    <span>SNOMED CT</span> 시스템화 계획서
+    <span class="sub">영상의학 병원 인수 후 실행 계획</span>
+  </div>
+  <a href="#exec"><span class="num">&#9733;</span> 핵심 결론 (먼저 읽기)</a>
+  <div class="divider"></div>
+  <a href="#sec1"><span class="num">1</span> 왜 SNOMED CT인가</a>
+  <a href="#sec2"><span class="num">2</span> 인수 전 체크리스트</a>
+  <a href="#sec3"><span class="num">3</span> 전체 로드맵</a>
+  <a href="#sec4"><span class="num">4</span> Phase 1: 기반 구축</a>
+  <a href="#sec5"><span class="num">5</span> Phase 2: 데이터 표준화</a>
+  <a href="#sec6"><span class="num">6</span> Phase 3: AI 진단 도입</a>
+  <a href="#sec7"><span class="num">7</span> Phase 4: 자동 코딩</a>
+  <a href="#sec8"><span class="num">8</span> Phase 5: 외부 연동</a>
+  <a href="#sec9"><span class="num">9</span> 규제 / 법적 사항</a>
+  <a href="#sec10"><span class="num">10</span> 예산 / 인력</a>
+  <a href="#sec11"><span class="num">11</span> ROI / 기대효과</a>
+  <a href="#sec12"><span class="num">12</span> 리스크 대응</a>
+  <a href="#sec13"><span class="num">13</span> 의사결정 1페이지</a>
+  <div class="divider"></div>
+  <a href="#ref"><span class="num">&#128214;</span> 참고 자료</a>
+</nav>
+
+<div class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">INVESTOR BRIEFING</div>
+  <h1>영상의학 병원 인수 후<br>SNOMED CT 기반 시스템화 계획서</h1>
+  <p class="subtitle">"판독만 하는 병원"에서 "데이터가 돈이 되는 디지털 병원"으로 전환하는 18개월 로드맵</p>
+  <div class="hero-meta">
+    <span>작성일: 2026-03-28</span>
+    <span>총 투자: 약 2~3.5억원 / 18개월</span>
+    <span>ROI 발생: 6개월차부터</span>
+  </div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="exec-box" id="exec">
+  <h2>&#9989; 투자자 핵심 요약 3문 3답</h2>
+  <div class="exec-grid">
+    <div class="exec-item">
+      <div class="q">Q. 왜 SNOMED CT를 도입해야 하나?</div>
+      <div class="a">병원 데이터를 <strong>국제 표준 코드</strong>로 관리하면 AI 도입, 보험 청구 자동화, 원격판독 사업, 추가 병원 인수 시 즉시 통합이 가능합니다. <strong>한국은 2020년 가입, 라이선스 무료.</strong></div>
+    </div>
+    <div class="exec-item">
+      <div class="q">Q. 얼마가 들고 언제 회수되나?</div>
+      <div class="a">18개월간 <strong>약 2~3.5억원</strong>. 6개월차부터 보험 청구 자동화로 <strong>첫 ROI 발생</strong>. 원격판독 사업 확장 시 수익 구조 다변화.</div>
+    </div>
+    <div class="exec-item">
+      <div class="q">Q. 경쟁사가 이미 하고 있나?</div>
+      <div class="a">한국에서 <strong>판독문 &rarr; SNOMED CT 자동 변환 특화 솔루션은 아직 없음</strong>. Lunit, Vuno 등 영상 AI 기업도 이 영역 미진출. <strong>선점 기회.</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- KEY NUMBERS -->
+<div class="metric-grid">
+  <div class="metric-card">
+    <div class="value blue">96.2%</div>
+    <div class="label">AI 자동 코딩<br>유효 매칭률 (GPT-4+RAG)</div>
+  </div>
+  <div class="metric-card">
+    <div class="value green">무료</div>
+    <div class="label">SNOMED CT 라이선스<br>한국 회원국 (2020~)</div>
+  </div>
+  <div class="metric-card">
+    <div class="value purple">$86억</div>
+    <div class="label">2033년 AI 의료코딩<br>글로벌 시장 전망</div>
+  </div>
+  <div class="metric-card">
+    <div class="value orange">0곳</div>
+    <div class="label">한국 내 판독문 SNOMED CT<br>자동변환 경쟁사</div>
+  </div>
+</div>
+
+<!-- ===== SEC 1 ===== -->
+<div class="section" id="sec1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>왜 SNOMED CT를 도입해야 하는가</h2>
+  </div>
+
+  <div class="analogy">
+    <div class="analogy-title">&#128161; 투자자를 위한 쉬운 설명</div>
+    <p style="font-size:14px;margin-bottom:8px;"><strong>SNOMED CT</strong>는 전 세계 40개국 병원이 공통으로 사용하는 "의료 용어 바코드 시스템"입니다.</p>
+    <p style="font-size:14px;margin-bottom:0;">마트에서 상품마다 바코드를 찍어 관리하듯, 병원에서 모든 질환/소견에 <strong>고유 번호(코드)</strong>를 부여하여 컴퓨터가 이해하고 자동 처리할 수 있게 합니다.</p>
+  </div>
+
+  <h3>현재 vs SNOMED CT 도입 후</h3>
+  <div class="compare-box">
+    <div class="compare-side before">
+      <h4>&#10060; 현재 (대부분의 영상의학 병원)</h4>
+      <ul style="padding-left:16px;">
+        <li>판독문을 <strong>자유 텍스트</strong>로만 기록</li>
+        <li>의사마다 다른 표현/약어 사용</li>
+        <li>컴퓨터가 내용을 이해할 수 없음</li>
+        <li>보험 청구 코드(ICD-10) <strong>수동 입력</strong></li>
+        <li>다른 병원과 <strong>데이터 호환 불가</strong></li>
+        <li>통계 산출 불가 ("이달 폐렴 환자 몇 명?")</li>
+      </ul>
+      <p style="font-size:12px;color:var(--danger);margin-top:10px;margin-bottom:0;font-weight:600;">= 데이터가 사장되는 병원</p>
+    </div>
+    <div class="compare-side after">
+      <h4>&#9989; SNOMED CT 도입 후</h4>
+      <ul style="padding-left:16px;">
+        <li>판독 시 <strong>국제 표준 코드</strong> 자동 부여</li>
+        <li>AI가 판독문을 읽고 코드 추천</li>
+        <li>보험 청구(ICD-10) <strong>자동 변환</strong></li>
+        <li>전 세계 어떤 병원과도 <strong>데이터 호환</strong></li>
+        <li>통계/연구 데이터 <strong>즉시 추출</strong></li>
+        <li>원격판독 서비스 사업 가능</li>
+      </ul>
+      <p style="font-size:12px;color:var(--success);margin-top:10px;margin-bottom:0;font-weight:600;">= 데이터가 돈이 되는 병원</p>
+    </div>
+  </div>
+
+  <h3>왜 지금 해야 하는가?</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>근거</th><th>상세</th></tr></thead>
+      <tbody>
+        <tr><td><strong>한국 SNOMED CT 가입</strong></td><td>2020년 회원국 가입 &rarr; 라이선스 <strong>무료</strong></td></tr>
+        <tr><td><strong>디지털의료제품법</strong></td><td>2025년 1월 시행 &rarr; AI 의료기기에 표준화 필수</td></tr>
+        <tr><td><strong>시장 성장</strong></td><td>AI 의료 코딩 시장: 2025년 $29억 &rarr; 2033년 <strong>$86억</strong> (CAGR 14.2%)</td></tr>
+        <tr><td><strong>한국 경쟁사 없음</strong></td><td>판독문 SNOMED CT 자동 변환 특화 솔루션 0곳 &rarr; <strong>선점 기회</strong></td></tr>
+        <tr><td><strong>확장 시 통합 용이</strong></td><td>추가 병원 인수 시 같은 코드 체계로 <strong>즉시 데이터 통합</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SEC 2 ===== -->
+<div class="section" id="sec2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>인수 전 확인해야 할 사항 (Due Diligence)</h2>
+  </div>
+
+  <p>병원 인수 전, SNOMED CT 시스템화 관점에서 반드시 확인해야 할 체크리스트입니다.</p>
+
+  <div class="checklist">
+    <h4>&#128187; IT 인프라</h4>
+    <div class="check-item"><span class="check-icon"></span> PACS 시스템 종류/버전 &mdash; DICOM SR 지원 여부가 AI 연동의 핵심</div>
+    <div class="check-item"><span class="check-icon"></span> EMR 시스템 종류/버전 &mdash; HL7 FHIR 지원 여부, 코드 필드 확장 가능성</div>
+    <div class="check-item"><span class="check-icon"></span> 네트워크/서버 &mdash; GPU 보유 여부, 클라우드 연동 가능 여부</div>
+    <div class="check-item"><span class="check-icon"></span> DICOM 버전 3.0 이상 &mdash; 구조화 보고서 필수</div>
+  </div>
+
+  <div class="checklist">
+    <h4>&#128202; 데이터 현황</h4>
+    <div class="check-item"><span class="check-icon"></span> 기존 판독문 보유 건수 (최소 1,000건 이상이면 AI 학습에 유리)</div>
+    <div class="check-item"><span class="check-icon"></span> 현재 사용 코드 체계 (ICD-10만? 자체 코드?)</div>
+    <div class="check-item"><span class="check-icon"></span> 판독문 형식 통일 여부 (통일될수록 자동 코딩 정확도 향상)</div>
+    <div class="check-item"><span class="check-icon"></span> 기관 내 약어 목록 존재 여부</div>
+  </div>
+
+  <div class="checklist">
+    <h4>&#128101; 인력 현황</h4>
+    <div class="check-item"><span class="check-icon"></span> 영상의학 전문의 인원/전문 분야 &mdash; AI 검증, 코드 리뷰 참여 필요</div>
+    <div class="check-item"><span class="check-icon"></span> IT 관리 인력 유무 &mdash; 시스템 도입 주체</div>
+    <div class="check-item"><span class="check-icon"></span> 일/월 판독 건수 &mdash; ROI 계산 및 시스템 규모 결정의 핵심</div>
+  </div>
+</div>
+
+<!-- ===== SEC 3 ===== -->
+<div class="section" id="sec3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>전체 로드맵 (18개월)</h2>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot p1">1</div>
+      <div class="tl-content" style="border-color:var(--primary);">
+        <h4>Phase 1: 기반 구축</h4>
+        <div class="tl-period">인수 후 1~3개월</div>
+        <ul>
+          <li>SNOMED CT 라이선스 취득 (무료)</li>
+          <li>PACS/EMR 확장성 평가</li>
+          <li>SNOMED CT 데이터베이스 구축</li>
+          <li>핵심 인력 확보/교육</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot p2">2</div>
+      <div class="tl-content" style="border-color:var(--accent);">
+        <h4>Phase 2: 데이터 표준화</h4>
+        <div class="tl-period">3~6개월</div>
+        <ul>
+          <li>핵심 SNOMED CT 코드 서브셋 선정 (흉부 14종+)</li>
+          <li>표준 판독 양식(Template) 설계</li>
+          <li>ICD-10 &harr; SNOMED CT 크로스매핑 테이블</li>
+          <li>기존 판독문 데이터 분석/익명화</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot p3">3</div>
+      <div class="tl-content" style="border-color:var(--success);">
+        <h4>Phase 3: AI 진단 도입 &mdash; &#9733; 첫 ROI 발생</h4>
+        <div class="tl-period">6~10개월</div>
+        <ul>
+          <li>X-ray AI 제품 도입 (Lunit/VUNO 등 식약처 승인 제품)</li>
+          <li>AI 결과 &rarr; SNOMED CT 자동 변환 파이프라인</li>
+          <li>DICOM SR 구조화 보고서 자동 생성</li>
+          <li><strong>보험 청구 ICD-10 자동 변환 시작</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot p4">4</div>
+      <div class="tl-content" style="border-color:var(--warning);">
+        <h4>Phase 4: 판독문 자동 코딩 시스템</h4>
+        <div class="tl-period">10~14개월</div>
+        <ul>
+          <li>NER 엔진 + LLM RAG 파이프라인 구축</li>
+          <li>전문의 리뷰 UI 개발</li>
+          <li>피드백 루프 &rarr; 모델 자동 개선</li>
+          <li>흉부 &rarr; 근골격 &rarr; 복부 순차 확장</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot p5">5</div>
+      <div class="tl-content" style="border-color:var(--info);">
+        <h4>Phase 5: 외부 연동 및 사업 확장</h4>
+        <div class="tl-period">14~18개월</div>
+        <ul>
+          <li>HL7 FHIR 기반 타 병원/기관 연동</li>
+          <li>보험심사평가원(HIRA) 자동 청구 연동</li>
+          <li>원격판독 서비스 사업 런칭</li>
+          <li>데이터 2차 활용 (제약사 R&D, AI 학습 데이터)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SEC 4 ===== -->
+<div class="section" id="sec4">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2>Phase 1: 기반 구축 (1~3개월)</h2>
+  </div>
+
+  <div class="info-card green">
+    <div class="card-title">&#128273; SNOMED CT 라이선스: 무료</div>
+    <p>한국보건의료정보원(K-HIS)에 Affiliate License를 신청하면 <strong>무료</strong>로 취득 가능합니다. 한국은 2020년 SNOMED International 회원국이므로 별도 비용이 없습니다.</p>
+  </div>
+
+  <h3>SNOMED CT 데이터베이스 구축</h3>
+  <p>SNOMED CT는 <strong>35만+</strong> 개의 의료 개념이 담긴 거대한 체계입니다. 이것을 검색 가능한 데이터베이스로 구축해야 모든 후속 작업의 기반이 됩니다.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>작업</th><th>산출물</th><th>예상 비용</th></tr></thead>
+      <tbody>
+        <tr><td>SNOMED CT RF2 데이터 &rarr; PostgreSQL 적재</td><td>검색 가능 DB</td><td>500~1,000만원</td></tr>
+        <tr><td>IS-A 계층 구조 인덱싱</td><td>"폐렴" 검색 시 하위 질환 포함 검색</td><td>포함</td></tr>
+        <tr><td>한국어/영어 이중 검색</td><td>"폐렴" = "Pneumonia" = 233604007</td><td>포함</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>PACS/EMR 확장성 평가</h3>
+  <div class="code-card">
+    <span class="badge">EVALUATION</span>
+<span class="hl">현재 PACS/EMR 평가 기준:</span>
+
+  <span class="gr">&#9745;</span> DICOM 3.0 지원?              &rarr; SR(구조화 보고서) 저장 가능?
+  <span class="gr">&#9745;</span> DICOM SR 뷰어 내장?           &rarr; AI 결과를 PACS에서 열람?
+  <span class="gr">&#9745;</span> API/플러그인 확장 가능?        &rarr; 외부 AI/코딩 시스템 연동?
+  <span class="gr">&#9745;</span> HL7 FHIR R4 지원?             &rarr; 다른 병원과 데이터 교환?
+  <span class="gr">&#9745;</span> 코드 체계 커스텀 필드?         &rarr; SNOMED CT 코드 저장 공간?
+
+<span class="yw">판단:</span>
+  <span class="gr">모두 지원</span> &rarr; 기존 시스템에 확장 모듈만 추가
+  <span class="yw">일부 미지원</span> &rarr; 해당 모듈 업그레이드 또는 미들웨어
+  <span class="pk">대부분 미지원</span> &rarr; PACS/EMR 교체 검토
+  </div>
+</div>
+
+<!-- ===== SEC 5 ===== -->
+<div class="section" id="sec5">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>Phase 2: 데이터 표준화 (3~6개월)</h2>
+  </div>
+
+  <h3>핵심 SNOMED CT 코드 서브셋 (흉부 질환)</h3>
+  <p>35만+ 코드 중 우리 병원에서 <strong>실제로 사용하는 핵심 코드만 선별</strong>합니다.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>질환</th><th>SNOMED CT Code</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td><strong>폐렴</strong></td><td class="code-cell">233604007</td><td>가장 빈출 질환</td></tr>
+        <tr><td>폐결핵</td><td class="code-cell">154283005</td><td></td></tr>
+        <tr><td>기흉</td><td class="code-cell">36118008</td><td>응급</td></tr>
+        <tr><td>심비대</td><td class="code-cell">8186001</td><td></td></tr>
+        <tr><td>흉막삼출</td><td class="code-cell">60046008</td><td></td></tr>
+        <tr><td>폐결절</td><td class="code-cell">427359005</td><td>폐암 의심</td></tr>
+        <tr><td>COVID-19</td><td class="code-cell">840539006</td><td></td></tr>
+        <tr><td colspan="3" style="text-align:center;color:var(--gray-500);font-size:12px;">+ 7종 추가 (총 14종) + 해부학 위치 11종 + 한정자(심각도/확실성) 코드</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>판독 양식 표준화</h3>
+  <div class="compare-box">
+    <div class="compare-side before">
+      <h4>&#10060; 기존: 자유 텍스트</h4>
+      <p style="font-family:Consolas,monospace;font-size:12px;background:#fff;padding:12px;border-radius:8px;margin-top:8px;">
+        "Chest PA에서 좌하엽에 consolidation 보이며 pneumonia r/o. 심장 크기 정상."
+      </p>
+      <p style="font-size:11px;color:var(--danger);margin-bottom:0;">의사마다 다른 표현, 약어 혼용, 자동 처리 불가</p>
+    </div>
+    <div class="compare-side after">
+      <h4>&#9989; 개선: 반구조화 템플릿</h4>
+      <div style="font-size:12px;background:#fff;padding:12px;border-radius:8px;margin-top:8px;">
+        <strong>질환:</strong> [드롭다운] 폐렴 &rarr; <span style="color:var(--primary);font-weight:700;">233604007</span><br>
+        <strong>위치:</strong> [드롭다운] 좌하엽 &rarr; <span style="color:var(--primary);font-weight:700;">41224006</span><br>
+        <strong>확실성:</strong> [의심] &rarr; <span style="color:var(--primary);font-weight:700;">415684004</span><br>
+        <strong>비고:</strong> [자유 텍스트 유지]
+      </div>
+      <p style="font-size:11px;color:var(--success);margin-bottom:0;">드롭다운 선택 &rarr; SNOMED CT 자동 매핑</p>
+    </div>
+  </div>
+
+  <h3>ICD-10 자동 변환 테이블 (보험 청구)</h3>
+  <div class="info-card blue">
+    <div class="card-title">&#128176; 투자자 핵심 포인트</div>
+    <p style="margin-bottom:0;">SNOMED CT로 코딩된 진단을 보험 청구용 ICD-10으로 <strong>자동 변환</strong>합니다. 현재 건당 2~3분 수동 입력하는 작업이 <strong>0초</strong>가 됩니다. 일 100건 기준 <strong>연 600~900시간 절감</strong>.</p>
+  </div>
+</div>
+
+<!-- ===== SEC 6 ===== -->
+<div class="section" id="sec6">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2>Phase 3: AI 진단 시스템 도입 (6~10개월)</h2>
+  </div>
+
+  <div class="info-card yellow">
+    <div class="card-title">&#128161; 핵심 전략: 직접 개발 X, 상용 제품 도입 O</div>
+    <p style="margin-bottom:0;">AI를 직접 개발하면 데이터 수만 장, 임상 검증 수년이 필요합니다. 이미 <strong>식약처/FDA 승인을 받은 상용 제품</strong>을 도입하는 것이 합리적입니다.</p>
+  </div>
+
+  <h3>AI 제품 비교</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>제품</th><th>기업</th><th>성능</th><th>인허가</th><th>비용 (연)</th></tr></thead>
+      <tbody>
+        <tr style="background:#f0fdf4;"><td><strong>INSIGHT CXR</strong></td><td>Lunit (한국)</td><td>AUC 0.93, 10종+ 감지</td><td>FDA, CE, 식약처</td><td>2,000~5,000만</td></tr>
+        <tr><td>Med-Chest X-ray</td><td>VUNO (한국)</td><td>다중 질환 분류</td><td>FDA, 식약처</td><td>협의</td></tr>
+        <tr><td>AVIEW</td><td>Coreline Soft</td><td>FDA 11건 (국내 최다)</td><td>FDA, CE, 식약처</td><td>협의</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>AI 결과 &rarr; SNOMED CT 자동 변환 흐름</h3>
+  <div class="flow">
+    <div class="flow-step" style="background:#dbeafe;">
+      <div class="step-num">1</div>
+      <h4>X-ray 촬영</h4>
+      <p>DICOM 저장<br>PACS 전송</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#ede9fe;">
+      <div class="step-num">2</div>
+      <h4>AI 분석 (&lt;1초)</h4>
+      <p>"Pneumonia" 92%<br>위치: 좌하엽</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#fef3c7;">
+      <div class="step-num">3</div>
+      <h4>SNOMED CT 매핑</h4>
+      <p>233604007<br>41224006<br>410605003</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#d1fae5;">
+      <div class="step-num">4</div>
+      <h4>자동 출력</h4>
+      <p>DICOM SR<br>ICD-10 변환<br>CDS 알림</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#fce7f3;">
+      <div class="step-num">5</div>
+      <h4>전문의 확인</h4>
+      <p>승인 / 수정<br>최종 진단</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SEC 7 ===== -->
+<div class="section" id="sec7">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>Phase 4: 판독문 자동 코딩 (10~14개월)</h2>
+  </div>
+
+  <p>전문의가 쓴 판독문(자유 텍스트)을 AI가 읽어 SNOMED CT 코드를 자동 추천합니다.</p>
+
+  <div class="flow">
+    <div class="flow-step" style="background:#dbeafe;">
+      <div class="step-num">1</div>
+      <h4>NER (개체명 인식)</h4>
+      <p>"S8에 2.3cm HCC 의심"<br>&darr;<br>S8(부위), HCC(진단)</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#ede9fe;">
+      <div class="step-num">2</div>
+      <h4>SNOMED CT 매핑</h4>
+      <p>"HCC" &rarr; 벡터 검색<br>&darr;<br>254707005<br>(간세포암)</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#fef3c7;">
+      <div class="step-num">3</div>
+      <h4>논리 검증</h4>
+      <p>위치: 간 + 진단: 간세포암<br>&#9989; 일관성 확인<br>&#10060; 모순 시 차단</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#d1fae5;">
+      <div class="step-num">4</div>
+      <h4>전문의 승인</h4>
+      <p>코드 추천 화면<br>승인/수정 클릭<br>피드백 &rarr; AI 개선</p>
+    </div>
+  </div>
+
+  <div class="metric-grid" style="grid-template-columns:1fr 1fr 1fr;">
+    <div class="metric-card">
+      <div class="value blue">96.2%</div>
+      <div class="label">GPT-4 + RAG<br>유효 매칭률</div>
+    </div>
+    <div class="metric-card">
+      <div class="value purple">F1 0.871</div>
+      <div class="label">SapBERT 비지도학습<br>질환 카테고리</div>
+    </div>
+    <div class="metric-card">
+      <div class="value orange">57.6%</div>
+      <div class="label">정확 매칭<br>&rarr; 의사 최종 확인 필수</div>
+    </div>
+  </div>
+
+  <h3>범위 확장 전략</h3>
+  <div class="strategy-flow">
+    <div class="strategy-phase p1">
+      <h4>Step 1: 흉부(Chest)</h4>
+      <p>가장 판독 건수 많음<br>핵심 코드 14종 우선</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="strategy-phase p2">
+      <h4>Step 2: 근골격(MSK)</h4>
+      <p>골절, 관절 질환<br>응급 수요 높음</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="strategy-phase p3">
+      <h4>Step 3: 복부/뇌/유방</h4>
+      <p>간, 담도, 뇌, 유방<br>전체 영상의학 커버</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SEC 8 ===== -->
+<div class="section" id="sec8">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <h2>Phase 5: 외부 연동 및 사업 확장 (14~18개월)</h2>
+  </div>
+
+  <h3>수익 다변화 방향</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>사업 방향</th><th>내용</th><th>수익화</th></tr></thead>
+      <tbody>
+        <tr><td><strong>원격판독 서비스</strong></td><td>SNOMED CT 코딩된 표준 판독을 타 의료기관에 제공</td><td style="color:var(--success);font-weight:700;">높음</td></tr>
+        <tr><td><strong>AI 학습 데이터</strong></td><td>전문의 검증 완료 고품질 라벨링 데이터</td><td style="color:var(--success);font-weight:700;">높음</td></tr>
+        <tr><td><strong>제약사 R&D 데이터</strong></td><td>특정 질환 코호트 데이터 제공 (가명처리)</td><td style="color:var(--success);font-weight:700;">높음</td></tr>
+        <tr><td><strong>보험사 심사 파트너십</strong></td><td>표준화된 진단 데이터 &rarr; 보험 심사 자동화</td><td>중간</td></tr>
+        <tr><td><strong>해외 환자 유치</strong></td><td>SNOMED CT 보고서 &rarr; 해외 어디서든 이해 가능</td><td>중간</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-card green">
+    <div class="card-title">&#128200; 투자 포인트</div>
+    <p style="margin-bottom:0;">단순히 "병원 운영 효율화"가 아니라, 축적된 표준화 데이터 자체가 <strong>자산</strong>이 됩니다. 추가 병원 인수 시 같은 코드 체계로 즉시 통합 가능하므로, <strong>체인 확장의 기술적 기반</strong>이 됩니다.</p>
+  </div>
+</div>
+
+<!-- ===== SEC 9 ===== -->
+<div class="section" id="sec9">
+  <div class="section-header">
+    <div class="section-num">9</div>
+    <h2>규제 및 법적 고려사항</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>구분</th><th>해당 여부</th><th>규제 수준</th></tr></thead>
+      <tbody>
+        <tr><td><strong>SNOMED CT 라이선스</strong></td><td>K-HIS Affiliate License</td><td style="color:var(--success);font-weight:600;">무료</td></tr>
+        <tr style="background:#f0fdf4;"><td><strong>판독문 자동 코딩</strong></td><td>코딩 보조 도구 (의사 최종 확인)</td><td style="color:var(--success);font-weight:600;">비의료기기 &rarr; 규제 없음</td></tr>
+        <tr><td><strong>X-ray AI 진단</strong></td><td>의료기기 (식약처 승인 제품 사용)</td><td>승인 제품 사용 시 추가 인허가 불필요</td></tr>
+        <tr><td><strong>개인정보보호</strong></td><td>의료법 + 개인정보보호법</td><td>환자 정보 익명화/가명화 필수</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-card yellow">
+    <div class="card-title">&#128161; 핵심 규제 전략</div>
+    <p style="margin-bottom:0;">판독문 자동 코딩은 <strong>"코딩 보조 도구"로 포지셔닝</strong>하면 의료기기 규제 대상이 아닙니다. 전문의가 최종 승인하는 <strong>Human-in-the-Loop</strong> 구조를 유지하면 됩니다. 이는 정확도 보장과 규제 회피를 동시에 달성하는 전략입니다.</p>
+  </div>
+</div>
+
+<!-- ===== SEC 10 ===== -->
+<div class="section" id="sec10">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <h2>예산 및 인력 계획</h2>
+  </div>
+
+  <h3>18개월 총 투자 규모</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>항목</th><th>Phase</th><th>추정 비용</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>SNOMED CT 라이선스</td><td>1</td><td style="color:var(--success);font-weight:700;">무료</td><td>한국 회원국</td></tr>
+        <tr><td>PACS/EMR 연동 개발</td><td>1~2</td><td>3,000~5,000만</td><td>기존 시스템 상태에 따라</td></tr>
+        <tr><td>SNOMED CT DB 구축</td><td>1</td><td>500~1,000만</td><td></td></tr>
+        <tr><td>AI 진단 제품 라이선스</td><td>3</td><td>연 2,000~5,000만</td><td>Lunit/VUNO</td></tr>
+        <tr><td>자동 코딩 시스템 개발</td><td>4</td><td>5,000~8,000만</td><td>NER + LLM + UI</td></tr>
+        <tr><td>HL7 FHIR 연동</td><td>5</td><td>2,000~3,000만</td><td></td></tr>
+        <tr><td>인력 (18개월)</td><td>전체</td><td>1.2~1.8억</td><td>엔지니어 2명 기준</td></tr>
+        <tr style="background:var(--primary-light);font-weight:700;"><td colspan="2">합계</td><td>약 2~3.5억원</td><td>병원 규모에 따라 변동</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>필요 인력</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>역할</th><th>인원</th><th>구분</th><th>투입 시기</th></tr></thead>
+      <tbody>
+        <tr><td>의료정보 엔지니어</td><td>2명</td><td>정규직/외주</td><td>Phase 1부터</td></tr>
+        <tr><td>SNOMED CT 전문가</td><td>1명</td><td>외부 자문</td><td>Phase 1~2</td></tr>
+        <tr><td>AI/NLP 엔지니어</td><td>1~2명</td><td>외주/파트타임</td><td>Phase 3~4</td></tr>
+        <tr><td>영상의학 전문의</td><td>겸임</td><td>기존 인력</td><td>전체</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SEC 11 ===== -->
+<div class="section" id="sec11">
+  <div class="section-header">
+    <div class="section-num">11</div>
+    <h2>ROI 및 기대 효과</h2>
+  </div>
+
+  <h3>정량적 효과 (일 판독 100건 기준)</h3>
+  <div class="roi-grid">
+    <div class="roi-card">
+      <div class="roi-label">ICD-10 코딩 시간</div>
+      <div class="roi-before">건당 2~3분 수동 입력</div>
+      <div class="roi-after">자동 (0초)</div>
+      <div class="roi-note">연 600~900시간 절감</div>
+    </div>
+    <div class="roi-card">
+      <div class="roi-label">보험 청구 반려율</div>
+      <div class="roi-before">5~10% (부정확한 코딩)</div>
+      <div class="roi-after">1~2%</div>
+      <div class="roi-note">재처리 비용 대폭 절감</div>
+    </div>
+    <div class="roi-card">
+      <div class="roi-label">판독 소요 시간</div>
+      <div class="roi-before">건당 5~10분</div>
+      <div class="roi-after">AI 보조로 3~7분</div>
+      <div class="roi-note">20~30% 단축</div>
+    </div>
+    <div class="roi-card">
+      <div class="roi-label">데이터 검색/통계</div>
+      <div class="roi-before">수동 텍스트 검색</div>
+      <div class="roi-after">코드 기반 즉시 검색</div>
+      <div class="roi-note">연구/통계 시간 90% 절감</div>
+    </div>
+  </div>
+
+  <h3>정성적 효과</h3>
+  <div class="metric-grid" style="grid-template-columns:1fr 1fr 1fr;">
+    <div class="metric-card" style="text-align:left;">
+      <div style="font-size:22px;margin-bottom:6px;">&#127942;</div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:4px;">차별화된 브랜드</div>
+      <div style="font-size:12px;color:var(--gray-600);">"국제 표준 디지털 병원"으로 포지셔닝</div>
+    </div>
+    <div class="metric-card" style="text-align:left;">
+      <div style="font-size:22px;margin-bottom:6px;">&#127760;</div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:4px;">글로벌 호환</div>
+      <div style="font-size:12px;color:var(--gray-600);">해외 환자 유치, 국제 협진 가능</div>
+    </div>
+    <div class="metric-card" style="text-align:left;">
+      <div style="font-size:22px;margin-bottom:6px;">&#128200;</div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:4px;">체인 확장 기반</div>
+      <div style="font-size:12px;color:var(--gray-600);">추가 인수 시 데이터 즉시 통합</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SEC 12 ===== -->
+<div class="section" id="sec12">
+  <div class="section-header">
+    <div class="section-num">12</div>
+    <h2>리스크 및 대응 방안</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>리스크</th><th>영향도</th><th>대응 방안</th></tr></thead>
+      <tbody>
+        <tr><td>전문의의 새 시스템 저항</td><td><span class="risk-badge high">높음</span></td><td>기존 워크플로우 유지, 자유 텍스트 영역 보존, 점진 도입</td></tr>
+        <tr><td>한국어 NLP 정확도 부족</td><td><span class="risk-badge high">높음</span></td><td>흉부(Chest) 특화로 좁은 범위에서 고정확도 달성 후 확장</td></tr>
+        <tr><td>LLM 환각(Hallucination)</td><td><span class="risk-badge high">높음</span></td><td>온톨로지 검증 단계에서 잘못된 코드 자동 차단</td></tr>
+        <tr><td>PACS/EMR 호환성</td><td><span class="risk-badge mid">중간</span></td><td>인수 전 기술 실사(Due Diligence)에서 확인</td></tr>
+        <tr><td>학습 데이터 부족</td><td><span class="risk-badge high">높음</span></td><td>기존 판독문 활용 + 대학병원 산학협력</td></tr>
+        <tr><td>글로벌 빅테크 진입</td><td><span class="risk-badge mid">중간</span></td><td>한국어 + 한국 의료 환경 특화로 차별화</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SEC 13 ===== -->
+<div class="section" id="sec13">
+  <div class="section-header">
+    <div class="section-num" style="background:var(--success);">&#9733;</div>
+    <h2>의사결정자를 위한 1페이지 요약</h2>
+  </div>
+
+  <div class="summary-card">
+    <h3>&#128204; 이 계획서의 핵심</h3>
+    <div class="table-wrap" style="border:none;box-shadow:none;margin-bottom:0;">
+      <table>
+        <thead><tr><th style="width:35%;">질문</th><th>답변</th></tr></thead>
+        <tbody>
+          <tr><td><strong>꼭 SNOMED CT여야 하나?</strong></td><td>그렇다. 전 세계 40개국 표준이며, AI 의료기기/HL7 FHIR 모두 SNOMED CT 기반. 한국 2020년 가입, <strong>라이선스 무료</strong>.</td></tr>
+          <tr><td><strong>총 비용은?</strong></td><td>18개월간 <strong>약 2~3.5억원</strong>. 라이선스 무료. 주요 비용은 개발 인건비와 AI 제품.</td></tr>
+          <tr><td><strong>언제 ROI 발생?</strong></td><td>Phase 3 완료(6개월차)부터 보험 청구 자동화로 <strong>첫 ROI 발생</strong>.</td></tr>
+          <tr><td><strong>경쟁 위험은?</strong></td><td>한국에서 판독문 SNOMED CT 자동 변환 특화 솔루션은 <strong>0곳</strong>. 선점 기회.</td></tr>
+          <tr><td><strong>규제 위험은?</strong></td><td>자동 코딩은 비의료기기. X-ray AI는 식약처 승인 제품 사용. <strong>규제 리스크 낮음</strong>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3>즉시 착수 사항</h3>
+  <div class="code-card">
+    <span class="badge">ACTION ITEMS</span>
+<span class="yw">[즉시 착수]</span>
+  <span class="gr">&#9745;</span> SNOMED CT Affiliate License 신청 (무료, 1~2주)
+  <span class="gr">&#9745;</span> 인수 대상 병원 PACS/EMR 기술 실사
+  <span class="gr">&#9745;</span> 의료정보 엔지니어 채용/외주 탐색
+
+<span class="yw">[6개월 내]</span> <span class="pk">&larr; 첫 ROI 발생 시점</span>
+  <span class="gr">&#9745;</span> X-ray AI 제품 도입 (Lunit 또는 VUNO)
+  <span class="gr">&#9745;</span> 보험 청구 ICD-10 자동 변환 시작
+
+<span class="yw">[12개월 내]</span>
+  <span class="gr">&#9745;</span> 판독문 자동 코딩 MVP 운영
+
+<span class="yw">[18개월 내]</span>
+  <span class="gr">&#9745;</span> 원격판독 서비스 사업 런칭
+  <span class="gr">&#9745;</span> 데이터 2차 활용 사업 시작
+  </div>
+</div>
+
+<!-- ===== REFERENCES ===== -->
+<div class="section" id="ref">
+  <div class="section-header">
+    <div class="section-num" style="background:var(--gray-700);">&#128214;</div>
+    <h2>참고 자료</h2>
+  </div>
+
+  <h3>내부 기술 조사 자료</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>문서명</th><th>작성일</th><th>주요 참고 내용</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><a href="./X-ray_AI_진단_보고서.md" style="color:var(--primary);font-weight:600;">X-ray_AI_진단_보고서.md</a></td><td>2026-03-26</td><td>X-ray AI 기술 현황, AI 제품 비교, 시스템 구축 방법</td></tr>
+        <tr><td>2</td><td><a href="./SNOMED_CT_X-ray_AI_연동_가이드.html" style="color:var(--primary);font-weight:600;">SNOMED_CT_X-ray_AI_연동_가이드</a></td><td>2026-03-27</td><td>SNOMED CT 구조, X-ray 질환 코드 매핑, DICOM SR/FHIR</td></tr>
+        <tr><td>3</td><td><a href="./폐렴_SNOMED_CT_코드_가이드.html" style="color:var(--primary);font-weight:600;">폐렴_SNOMED_CT_코드_가이드</a></td><td>2026-03-28</td><td>폐렴 코드 계층, 속성, ICD-10 매핑, AI 활용</td></tr>
+        <tr><td>4</td><td><a href="./판독문_SNOMED_CT_자동변환_보고서.html" style="color:var(--primary);font-weight:600;">판독문_SNOMED_CT_자동변환_보고서</a></td><td>2026-03-27</td><td>NLP 기술, 비즈니스 모델, 시장 규모, 경쟁사, 규제</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>외부 참고 자료</h3>
+  <div class="info-card purple">
+    <p style="font-size:12px;margin-bottom:6px;"><strong>학술 논문:</strong> ChatGPT-4 for SNOMED CT Mapping (PubMed, 2025) &mdash; 96.2% 유효 매칭 | SapBERT-Based Annotation (PMC, 2024) &mdash; F1 0.871</p>
+    <p style="font-size:12px;margin-bottom:6px;"><strong>기관/표준:</strong> SNOMED International | 한국보건의료정보원(K-HIS) | 건강보험심사평가원(HIRA) | HL7 FHIR R4 | DICOM SR</p>
+    <p style="font-size:12px;margin-bottom:6px;"><strong>상용 서비스:</strong> AWS Comprehend Medical | Google Healthcare NLP | Lunit INSIGHT CXR | VUNO Med-Chest | Coreline AVIEW</p>
+    <p style="font-size:12px;margin-bottom:0;"><strong>시장 보고서:</strong> AI 의료 코딩 시장 $29억(2025) &rarr; $86억(2033), CAGR 14.2% | 헬스케어 NLP $52억 &rarr; $160억(2030), CAGR 25.3%</p>
+  </div>
+</div>
+
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.sidebar a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const id = entry.target.id;
+        const active = document.querySelector(`.sidebar a[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -75% 0px' });
+  sections.forEach(s => observer.observe(s));
+  const execBox = document.getElementById('exec');
+  if (execBox) {
+    new IntersectionObserver(e => {
+      if (e[0].isIntersecting) { navLinks.forEach(l => l.classList.remove('active')); const s = document.querySelector('.sidebar a[href="#exec"]'); if(s) s.classList.add('active'); }
+    }, { rootMargin:'-15% 0px -75% 0px' }).observe(execBox);
+  }
+  document.querySelectorAll('.sidebar a').forEach(l => l.addEventListener('click', () => { if(window.innerWidth<=960) document.querySelector('.sidebar').classList.remove('open'); }));
+</script>
+
+</body>
+</html>

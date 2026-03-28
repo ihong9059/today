@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG 파이프라인과 SNOMED CT 정확 매칭률 개선 가이드</title>
+<style>
+:root{--p:#2563eb;--pl:#dbeafe;--pd:#1e40af;--a:#7c3aed;--al:#ede9fe;--s:#059669;--sl:#d1fae5;--w:#d97706;--wl:#fef3c7;--d:#dc2626;--dl:#fee2e2;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;--g900:#111827;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Pretendard',-apple-system,'Segoe UI','Malgun Gothic',sans-serif;background:var(--g50);color:var(--g800);line-height:1.8;font-size:16px;}
+.sidebar{position:fixed;left:0;top:0;width:280px;height:100vh;background:var(--g900);color:#fff;overflow-y:auto;z-index:100;padding:20px 0;transition:transform .3s;}
+.sidebar-title{font-size:13px;font-weight:700;padding:0 18px 14px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:10px;line-height:1.5;}
+.sidebar-title span{color:#60a5fa;}
+.sidebar-title .sub{color:#94a3b8;font-size:11px;font-weight:400;display:block;margin-top:4px;}
+.sidebar a{display:block;padding:6px 18px;color:#94a3b8;text-decoration:none;font-size:12px;transition:.2s;border-left:3px solid transparent;}
+.sidebar a:hover,.sidebar a.active{color:#fff;background:rgba(255,255,255,.05);border-left-color:#60a5fa;}
+.sidebar a .num{display:inline-block;width:22px;color:#60a5fa;font-weight:600;}
+.sidebar .part{color:#94a3b8;font-size:10px;font-weight:700;padding:12px 18px 4px;text-transform:uppercase;letter-spacing:1px;}
+.sidebar .divider{height:1px;background:rgba(255,255,255,.08);margin:8px 18px;}
+.menu-toggle{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--g900);color:#fff;border:none;border-radius:8px;width:42px;height:42px;font-size:20px;cursor:pointer;}
+.main{margin-left:280px;max-width:920px;padding:36px 48px 80px;}
+.hero{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 50%,#7c3aed 100%);color:#fff;border-radius:16px;padding:44px 40px;margin-bottom:40px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:rgba(96,165,250,.1);border-radius:50%;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.15);padding:3px 14px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:14px;letter-spacing:.5px;}
+.hero h1{font-size:28px;font-weight:800;margin-bottom:10px;line-height:1.4;position:relative;}
+.hero .subtitle{font-size:15px;opacity:.85;line-height:1.7;position:relative;}
+.section{margin-bottom:52px;scroll-margin-top:20px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:10px;border-bottom:2px solid var(--pl);}
+.section-num{display:flex;align-items:center;justify-content:center;width:38px;height:38px;background:var(--p);color:#fff;border-radius:10px;font-weight:800;font-size:17px;flex-shrink:0;}
+.section-header h2{font-size:21px;font-weight:700;color:var(--g900);}
+h3{font-size:16px;font-weight:700;color:var(--g900);margin:24px 0 12px;}
+p{margin-bottom:12px;font-size:15px;}
+.info-card{border-radius:12px;padding:22px 26px;margin:18px 0;border-left:4px solid;}
+.info-card.blue{background:var(--pl);border-color:var(--p);}
+.info-card.green{background:var(--sl);border-color:var(--s);}
+.info-card.yellow{background:var(--wl);border-color:var(--w);}
+.info-card.red{background:var(--dl);border-color:var(--d);}
+.info-card.purple{background:var(--al);border-color:var(--a);}
+.info-card .card-title{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.info-card p,.info-card li{font-size:13px;line-height:1.7;}
+.analogy{background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde047;border-radius:12px;padding:22px 26px;margin:18px 0;}
+.analogy .analogy-title{font-size:14px;font-weight:700;color:var(--w);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.table-wrap{overflow-x:auto;margin:18px 0;border-radius:12px;border:1px solid var(--g200);box-shadow:0 1px 3px rgba(0,0,0,.04);}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead{background:var(--g100);}
+th{text-align:left;padding:10px 14px;font-weight:700;color:var(--g700);font-size:12px;border-bottom:2px solid var(--g200);white-space:nowrap;}
+td{padding:10px 14px;border-bottom:1px solid var(--g100);vertical-align:top;line-height:1.6;}
+tr:last-child td{border-bottom:none;}
+tr:hover{background:var(--g50);}
+.code-cell{font-family:'Consolas',monospace;font-weight:700;color:var(--pd);white-space:nowrap;}
+.code-card{background:linear-gradient(135deg,#1e293b,#0f172a);color:#e2e8f0;border-radius:12px;padding:26px 28px;margin:18px 0;font-family:'Consolas','Monaco',monospace;font-size:12.5px;line-height:1.8;overflow-x:auto;position:relative;white-space:pre;}
+.code-card .badge{position:absolute;top:10px;right:14px;background:rgba(96,165,250,.2);color:#60a5fa;font-size:10px;padding:2px 10px;border-radius:10px;font-family:-apple-system,sans-serif;}
+.code-card .hl{color:#60a5fa;font-weight:600;}
+.code-card .gr{color:#4ade80;}
+.code-card .yw{color:#fbbf24;}
+.code-card .pk{color:#f472b6;}
+.code-card .dm{color:#64748b;}
+.compare-box{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--g200);margin:18px 0;}
+.compare-side{padding:22px 26px;}
+.compare-side.before{background:#fef2f2;border-right:2px solid var(--g200);}
+.compare-side.after{background:#f0fdf4;}
+.compare-side h4{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.compare-side.before h4{color:var(--d);}
+.compare-side.after h4{color:var(--s);}
+.compare-side p,.compare-side li{font-size:12.5px;line-height:1.7;}
+.flow{display:flex;align-items:stretch;gap:0;margin:18px 0;overflow-x:auto;}
+.flow-step{flex:1;min-width:130px;background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px 12px;text-align:center;}
+.flow-step .step-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:var(--p);color:#fff;border-radius:50%;font-size:12px;font-weight:700;margin-bottom:6px;}
+.flow-step h4{font-size:12px;font-weight:700;color:var(--g800);margin-bottom:4px;}
+.flow-step p{font-size:11px;color:var(--g500);margin-bottom:0;line-height:1.4;}
+.flow-arrow{display:flex;align-items:center;padding:0 3px;color:var(--p);font-size:20px;flex-shrink:0;}
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0;}
+.metric-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:18px;text-align:center;}
+.metric-card .value{font-size:26px;font-weight:800;line-height:1.2;}
+.metric-card .value.blue{color:var(--p);}
+.metric-card .value.green{color:var(--s);}
+.metric-card .value.purple{color:var(--a);}
+.metric-card .value.orange{color:var(--w);}
+.metric-card .value.red{color:var(--d);}
+.metric-card .label{font-size:11px;color:var(--g500);margin-top:5px;line-height:1.4;}
+.visual-box{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:28px;margin:18px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+/* target diagram */
+.target-wrap{display:flex;align-items:center;justify-content:center;gap:40px;margin:18px 0;}
+.target{position:relative;width:220px;height:220px;}
+.target-ring{position:absolute;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;text-align:center;}
+.target-ring.outer{width:220px;height:220px;border-color:var(--g300);background:var(--g100);top:0;left:0;}
+.target-ring.mid{width:150px;height:150px;border-color:#fbbf24;background:#fef3c7;top:35px;left:35px;}
+.target-ring.inner{width:80px;height:80px;border-color:var(--s);background:var(--sl);top:70px;left:70px;}
+.target-labels{font-size:13px;line-height:2;}
+/* funnel */
+.funnel{margin:18px 0;}
+.funnel-step{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.funnel-bar{height:32px;border-radius:6px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:600;color:#fff;}
+.funnel-label{font-size:12px;color:var(--g600);white-space:nowrap;}
+/* timeline graph */
+.chart-wrap{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:28px;margin:18px 0;}
+.chart-bars{display:flex;align-items:flex-end;gap:12px;height:200px;padding-top:20px;}
+.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.chart-bar{width:100%;border-radius:6px 6px 0 0;transition:height .3s;}
+.chart-bar-label{font-size:11px;color:var(--g500);text-align:center;}
+.chart-bar-value{font-size:13px;font-weight:800;text-align:center;}
+.summary-card{background:linear-gradient(135deg,#eff6ff,#ede9fe);border:1px solid #c7d2fe;border-radius:16px;padding:32px;margin:18px 0;}
+.summary-card h3{font-size:18px;color:var(--pd);margin-bottom:18px;margin-top:0;}
+.summary-list{list-style:none;padding:0;}
+.summary-list li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:14px;line-height:1.6;border-bottom:1px solid rgba(0,0,0,.06);}
+.summary-list li:last-child{border-bottom:none;}
+.summary-list .num-circle{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:var(--p);color:#fff;border-radius:50%;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.part-divider{background:linear-gradient(135deg,var(--al),var(--pl));border:1px solid #c4b5fd;border-radius:12px;padding:24px 28px;margin:40px 0;text-align:center;}
+.part-divider h2{font-size:20px;font-weight:800;color:var(--a);margin-bottom:4px;}
+.part-divider p{font-size:13px;color:var(--g600);margin-bottom:0;}
+@media(max-width:960px){.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}.menu-toggle{display:flex;align-items:center;justify-content:center;}.main{margin-left:0;padding:20px 18px 60px;}.hero{padding:28px 22px;}.hero h1{font-size:22px;}.metric-grid{grid-template-columns:1fr 1fr;}.compare-box{grid-template-columns:1fr;}.compare-side.before{border-right:none;border-bottom:2px solid var(--g200);}.flow{flex-direction:column;}.flow-arrow{transform:rotate(90deg);justify-content:center;}.target-wrap{flex-direction:column;}}
+</style>
+</head>
+<body>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+<nav class="sidebar">
+  <div class="sidebar-title"><span>RAG 파이프라인</span><span class="sub">SNOMED CT 매칭률 개선 가이드</span></div>
+  <div class="part">Part 1 &mdash; RAG란?</div>
+  <a href="#sec1"><span class="num">1</span> RAG의 정의</a>
+  <a href="#sec2"><span class="num">2</span> 왜 RAG가 필요한가</a>
+  <a href="#sec3"><span class="num">3</span> 3단계 작동 원리</a>
+  <a href="#sec4"><span class="num">4</span> SNOMED CT에서의 RAG</a>
+  <a href="#sec5"><span class="num">5</span> RAG vs LLM 단독</a>
+  <a href="#sec6"><span class="num">6</span> 기술 구성요소</a>
+  <div class="divider"></div>
+  <div class="part">Part 2 &mdash; 매칭률 개선</div>
+  <a href="#sec7"><span class="num">7</span> 유효 vs 정확 매칭</a>
+  <a href="#sec8"><span class="num">8</span> 낮은 매칭률 5가지 원인</a>
+  <a href="#sec9"><span class="num">9</span> 개선 방향 5가지</a>
+  <a href="#sec10"><span class="num">10</span> 개선 로드맵</a>
+  <a href="#sec11"><span class="num">11</span> 요약</a>
+</nav>
+
+<div class="main">
+
+<div class="hero">
+  <div class="hero-badge">BEGINNER-FRIENDLY TECHNICAL GUIDE</div>
+  <h1>RAG 파이프라인과<br>SNOMED CT 정확 매칭률 개선 가이드</h1>
+  <p class="subtitle">LLM 기반 RAG란 무엇이며, 왜 정확 매칭률이 57.6%에 머무는가?<br>그리고 어떻게 85%+까지 끌어올리는가?</p>
+</div>
+
+<!-- ===== SEC 1 ===== -->
+<div class="section" id="sec1">
+  <div class="section-header"><div class="section-num">1</div><h2>RAG의 정의</h2></div>
+
+  <div class="info-card blue">
+    <div class="card-title">RAG = Retrieval-Augmented Generation (검색 증강 생성)</div>
+    <p style="margin-bottom:0;">LLM(대규모 언어 모델)이 답변을 생성하기 전에, 외부 데이터베이스에서 관련 정보를 먼저 <strong>"검색"</strong>한 뒤, 그 정보를 <strong>"참고"</strong>하여 더 정확한 답변을 <strong>"생성"</strong>하는 기술입니다.</p>
+  </div>
+
+  <div class="visual-box" style="text-align:center;">
+    <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
+      <div style="background:var(--pl);border:2px solid var(--p);border-radius:12px;padding:16px 24px;min-width:140px;">
+        <div style="font-size:22px;margin-bottom:4px;">&#128269;</div>
+        <div style="font-weight:800;color:var(--pd);font-size:15px;">Retrieval</div>
+        <div style="font-size:12px;color:var(--g600);">관련 자료를<br>먼저 찾아온다</div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:24px;color:var(--g300);">+</div>
+      <div style="background:var(--al);border:2px solid var(--a);border-radius:12px;padding:16px 24px;min-width:140px;">
+        <div style="font-size:22px;margin-bottom:4px;">&#128200;</div>
+        <div style="font-weight:800;color:var(--a);font-size:15px;">Augmented</div>
+        <div style="font-size:12px;color:var(--g600);">검색 결과로<br>보강한다</div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:24px;color:var(--g300);">+</div>
+      <div style="background:var(--sl);border:2px solid var(--s);border-radius:12px;padding:16px 24px;min-width:140px;">
+        <div style="font-size:22px;margin-bottom:4px;">&#9997;&#65039;</div>
+        <div style="font-weight:800;color:var(--s);font-size:15px;">Generation</div>
+        <div style="font-size:12px;color:var(--g600);">최종 답변을<br>만들어낸다</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="analogy">
+    <div class="analogy-title">&#128161; 한 줄 비유</div>
+    <div class="compare-box" style="margin:10px 0 0;border:none;">
+      <div class="compare-side before" style="border-radius:8px 0 0 8px;background:#fef2f2;">
+        <h4>&#10060; RAG 없는 LLM</h4>
+        <p>교과서 없이 시험 보는 학생<br><strong>(기억에만 의존)</strong></p>
+      </div>
+      <div class="compare-side after" style="border-radius:0 8px 8px 0;">
+        <h4>&#9989; RAG 있는 LLM</h4>
+        <p>교과서를 펼쳐놓고 시험 보는 학생<br><strong>(찾아보고 답변)</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SEC 2 ===== -->
+<div class="section" id="sec2">
+  <div class="section-header"><div class="section-num">2</div><h2>왜 RAG가 필요한가?</h2></div>
+
+  <h3>LLM 단독 사용의 3가지 문제</h3>
+
+  <div class="info-card red">
+    <div class="card-title">&#9888;&#65039; 문제 1: 환각 (Hallucination)</div>
+    <p>LLM에게 "HCC의 SNOMED CT 코드가 뭐야?"라고 물으면, <strong>"254637999"</strong>라고 답할 수 있습니다.<br>이 코드는 실제로 존재하지 않습니다! LLM이 패턴을 학습해서 <strong>"그럴듯한" 번호를 지어낸 것</strong>입니다.</p>
+  </div>
+  <div class="info-card red">
+    <div class="card-title">&#9888;&#65039; 문제 2: 학습 데이터의 한계</div>
+    <p>SNOMED CT의 35만+ 코드가 모두 학습 데이터에 포함되지 않을 수 있습니다. 특히 <strong>최신 코드, 희귀 질환 코드, 한국어 에디션 코드</strong>는 LLM이 모를 가능성이 높습니다.</p>
+  </div>
+  <div class="info-card red">
+    <div class="card-title">&#9888;&#65039; 문제 3: 버전 불일치</div>
+    <p>SNOMED CT는 연 2회 업데이트됩니다. LLM의 학습 데이터는 특정 시점에 고정되어 있어, <strong>새로 추가된 코드를 알 수 없습니다</strong>.</p>
+  </div>
+
+  <h3>RAG가 이 문제들을 해결하는 방법</h3>
+  <div class="info-card green">
+    <div class="card-title">&#9989; RAG의 해결 방식</div>
+    <p>LLM의 "기억"에 의존하지 않고, <strong>실제 SNOMED CT 데이터베이스를 "검색"</strong>하여 참고합니다.</p>
+    <ul style="padding-left:20px;margin-top:8px;">
+      <li><strong>환각 방지</strong> &rarr; 실제 DB에 있는 코드만 후보로 제시</li>
+      <li><strong>누락 방지</strong> &rarr; DB에 35만+ 코드가 전부 있으므로 빠짐없이 검색</li>
+      <li><strong>최신 반영</strong> &rarr; DB를 최신 버전으로 유지하면 항상 최신 코드 반영</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== SEC 3 ===== -->
+<div class="section" id="sec3">
+  <div class="section-header"><div class="section-num">3</div><h2>RAG의 3단계 작동 원리</h2></div>
+
+  <div class="flow">
+    <div class="flow-step" style="background:#dbeafe;">
+      <div class="step-num">1</div>
+      <h4>Retrieval (검색)</h4>
+      <p>"HCC"를 벡터로 변환<br>&darr;<br>SNOMED CT 벡터 DB에서<br>유사 코드 10개 추출</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#ede9fe;">
+      <div class="step-num">2</div>
+      <h4>Augmented (증강)</h4>
+      <p>LLM에게 프롬프트 전달:<br>"이 판독문에 맞는 코드를<br>후보 목록에서 선택해줘"</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#d1fae5;">
+      <div class="step-num">3</div>
+      <h4>Generation (생성)</h4>
+      <p>LLM: "254637007이 적합.<br>HCC는 Hepatocellular<br>carcinoma의 약어이므로"</p>
+    </div>
+  </div>
+
+  <div class="analogy">
+    <div class="analogy-title">&#128218; 비유: 도서관에서 리포트 쓰기</div>
+    <p style="font-size:13px;margin-bottom:4px;"><strong>Step 1</strong>: 도서관에 가서 "간암" 관련 책을 10권 찾아온다 (검색 엔진 담당)</p>
+    <p style="font-size:13px;margin-bottom:4px;"><strong>Step 2</strong>: 찾아온 책 10권을 책상 위에 펼쳐놓는다 (프롬프트에 포함)</p>
+    <p style="font-size:13px;margin-bottom:0;"><strong>Step 3</strong>: 학생(LLM)이 책을 참고하여 리포트 작성 (책에 있는 내용만 인용 &rarr; 지어내는 실수 방지)</p>
+  </div>
+
+  <div class="info-card purple">
+    <div class="card-title">&#127919; 핵심: "검색 범위를 좁히는 것"이 RAG의 본질</div>
+    <p style="margin-bottom:4px;"><strong>RAG 없이</strong>: 35만 개 코드 중 "기억"으로 1개 선택 &rarr; 눈 감고 고르는 것</p>
+    <p style="margin-bottom:0;"><strong>RAG 사용</strong>: 먼저 10~20개로 추출 &rarr; 그 안에서 선택 &rarr; <strong>정확도 크게 향상</strong></p>
+  </div>
+</div>
+
+<!-- ===== SEC 4 ===== -->
+<div class="section" id="sec4">
+  <div class="section-header"><div class="section-num">4</div><h2>SNOMED CT 자동변환에서의 RAG 구현</h2></div>
+
+  <h3>전체 5단계 파이프라인</h3>
+  <div class="flow">
+    <div class="flow-step" style="background:#fef3c7;">
+      <div class="step-num" style="background:var(--w);">1</div>
+      <h4>NER 엔진</h4>
+      <p>판독문에서<br>핵심 단어 추출<br>"S8", "HCC", "2.3cm"</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#dbeafe;">
+      <div class="step-num">2</div>
+      <h4>벡터 검색</h4>
+      <p>SapBERT + FAISS<br>"HCC" 유사 코드<br>10~20개 추출</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#ede9fe;">
+      <div class="step-num" style="background:var(--a);">3</div>
+      <h4>LLM 판단</h4>
+      <p>GPT-4o / Claude<br>후보 중 최적 선택<br>+ 이유 설명</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#d1fae5;">
+      <div class="step-num" style="background:var(--s);">4</div>
+      <h4>온톨로지 검증</h4>
+      <p>IS-A 그래프로<br>논리적 유효성 확인<br>"간" + "폐암" &rarr; &#10060;</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="background:#fce7f3;">
+      <div class="step-num" style="background:#ec4899;">5</div>
+      <h4>신뢰도 분기</h4>
+      <p>95%+ 자동 확정<br>&lt;70% 사람 검토<br>최종 출력</p>
+    </div>
+  </div>
+
+  <h3>벡터(Vector)란? &mdash; 초보자를 위한 설명</h3>
+  <div class="analogy">
+    <div class="analogy-title">&#128161; 벡터 = 단어의 의미를 숫자로 표현한 것</div>
+    <div style="font-size:13px;line-height:1.8;">
+      <p style="margin-bottom:8px;">예시: "간세포암" &rarr; [0.82, 0.15, -0.34, 0.91, ...] (768개 숫자)</p>
+      <p style="margin-bottom:8px;">"HCC" &rarr; [0.80, 0.17, -0.31, 0.89, ...] &larr; <strong>간세포암과 숫자 배열이 매우 비슷!</strong></p>
+      <p style="margin-bottom:8px;">"감기" &rarr; [0.12, 0.65, 0.48, -0.22, ...] &larr; 간세포암과 숫자가 매우 다름</p>
+      <p style="margin-bottom:0;color:var(--g600);">GPS 좌표처럼, 의미가 비슷한 단어들은 "의미 공간"에서 가까운 곳에 위치합니다. 컴퓨터는 이 거리를 계산하여 "비슷한 의미"를 찾습니다.</p>
+    </div>
+  </div>
+
+  <h3>FAISS란?</h3>
+  <div class="info-card blue">
+    <div class="card-title">FAISS = Meta(구 Facebook)가 만든 초고속 벡터 검색 엔진</div>
+    <p>35만 개의 SNOMED CT 벡터 중 입력과 가장 유사한 10개를 <strong>0.01초</strong> 만에 찾아줍니다.</p>
+    <p style="margin-bottom:0;color:var(--g600);">비유: "간세포암"과 가장 관련 있는 책 10권을 0.01초 만에 찾아주는 <strong>초고속 사서</strong></p>
+  </div>
+</div>
+
+<!-- ===== SEC 5 ===== -->
+<div class="section" id="sec5">
+  <div class="section-header"><div class="section-num">5</div><h2>RAG vs LLM 단독 &mdash; 성능 비교</h2></div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>방식</th><th>유효 매칭률</th><th>정확 매칭률</th><th>환각 위험</th><th>최신 코드</th></tr></thead>
+      <tbody>
+        <tr><td>LLM 단독 (GPT-4o만)</td><td>~80%</td><td>~35%</td><td style="color:var(--d);font-weight:600;">높음</td><td>&#10060;</td></tr>
+        <tr><td>벡터 검색 단독 (SapBERT+FAISS)</td><td>~87%</td><td>~45%</td><td style="color:var(--s);">없음</td><td>&#9989;</td></tr>
+        <tr style="background:#f0fdf4;"><td><strong>RAG (벡터 검색 + LLM)</strong></td><td style="font-weight:800;color:var(--s);">96.2%</td><td style="font-weight:800;color:var(--p);">57.6%</td><td style="color:var(--s);">매우 낮음</td><td>&#9989;</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>3가지 방식을 비유로 비교</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:18px 0;">
+    <div style="background:var(--dl);border:1px solid var(--d);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:6px;">&#129504;</div>
+      <div style="font-weight:700;font-size:13px;color:var(--d);margin-bottom:6px;">LLM 단독</div>
+      <div style="font-size:12px;color:var(--g700);">"머리는 좋은데<br>교과서가 없는 학생"</div>
+    </div>
+    <div style="background:var(--wl);border:1px solid var(--w);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:6px;">&#128218;</div>
+      <div style="font-weight:700;font-size:13px;color:var(--w);margin-bottom:6px;">벡터 검색 단독</div>
+      <div style="font-size:12px;color:var(--g700);">"교과서는 있는데<br>문제를 이해 못하는 학생"</div>
+    </div>
+    <div style="background:var(--sl);border:2px solid var(--s);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:6px;">&#127942;</div>
+      <div style="font-weight:700;font-size:13px;color:var(--s);margin-bottom:6px;">RAG (둘의 조합)</div>
+      <div style="font-size:12px;color:var(--g700);">"교과서를 펼쳐놓고<br>문제를 이해하며 푸는 우등생"</div>
+    </div>
+  </div>
+
+  <h3>실제 예시로 비교</h3>
+  <div class="code-card">
+    <span class="badge">EXAMPLE</span>
+<span class="yw">판독문:</span> "Rt. lower lobe에 patch opacity. r/o pneumonia."
+
+<span class="pk">[LLM 단독]</span>
+  &rarr; "233604007 | Pneumonia"
+  &rarr; <span class="dm">"r/o (rule out)"를 무시하고 확정 진단으로 처리</span>
+  &rarr; <span class="pk">&#10060; 실제로는 "의심"이지 "확정"이 아님</span>
+
+<span class="yw">[벡터 검색 단독]</span>
+  &rarr; 233604007, 385093006, 233607000 반환
+  &rarr; <span class="dm">어느 것이 맞는지 선택하지 못함 (유사도 점수만 제공)</span>
+  &rarr; <span class="yw">&#9651; 후보는 맞지만 최종 판단 불가</span>
+
+<span class="gr">[RAG]</span>
+  &rarr; 벡터 검색으로 폐렴 관련 코드 10개 추출
+  &rarr; LLM에게 "r/o = rule out, 의심 단계" 맥락 해석 요청
+  &rarr; <span class="gr">233604007 | Pneumonia + 확실성: 415684004 | Suspected</span>
+  &rarr; <span class="gr">&#9989; 질환 코드 + "의심" 상태까지 정확히 매핑</span>
+  </div>
+</div>
+
+<!-- ===== SEC 6 ===== -->
+<div class="section" id="sec6">
+  <div class="section-header"><div class="section-num">6</div><h2>RAG 파이프라인의 기술 구성요소</h2></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>구성요소</th><th>역할</th><th>기술</th><th>비유</th></tr></thead>
+      <tbody>
+        <tr><td><strong>임베딩 모델</strong></td><td>텍스트를 벡터로 변환</td><td>SapBERT</td><td>번역기 (단어 &rarr; 숫자)</td></tr>
+        <tr><td><strong>벡터 DB</strong></td><td>벡터 저장 및 유사도 검색</td><td>FAISS, Pinecone</td><td>도서관 + 사서</td></tr>
+        <tr><td><strong>LLM</strong></td><td>최종 판단 및 생성</td><td>GPT-4o, Claude API</td><td>전문가 (판단자)</td></tr>
+        <tr><td><strong>프롬프트 엔진</strong></td><td>LLM에게 질문 구성</td><td>커스텀 템플릿</td><td>시험 문제지 작성</td></tr>
+        <tr><td><strong>온톨로지 검증기</strong></td><td>코드의 논리적 유효성 검증</td><td>SNOMED CT IS-A 그래프</td><td>답안 검증 위원회</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== PART 2 DIVIDER ===== -->
+<div class="part-divider">
+  <h2>Part 2 &mdash; 정확 매칭률 57.6%의 원인과 개선</h2>
+  <p>유효 매칭 96.2%는 달성했지만, 정확 매칭은 왜 57.6%에 머무는가?</p>
+</div>
+
+<!-- ===== SEC 7 ===== -->
+<div class="section" id="sec7">
+  <div class="section-header"><div class="section-num">7</div><h2>유효 매칭 vs 정확 매칭 &mdash; 차이 이해하기</h2></div>
+
+  <div class="metric-grid" style="grid-template-columns:1fr 1fr;">
+    <div class="metric-card" style="border-color:var(--p);border-width:2px;">
+      <div class="value blue">96.2%</div>
+      <div class="label" style="font-size:12px;"><strong>유효 매칭 (Valid Match)</strong><br>AI 추천 코드가 "의미적으로 관련 있는" 경우<br>"간 악성종양" &larr; HCC 질문에 관련은 있음</div>
+    </div>
+    <div class="metric-card" style="border-color:var(--s);border-width:2px;">
+      <div class="value orange">57.6%</div>
+      <div class="label" style="font-size:12px;"><strong>정확 매칭 (Exact Match)</strong><br>AI 추천 코드가 "정확히 1:1 대응"하는 경우<br>"간세포암" &larr; HCC의 정확한 코드</div>
+    </div>
+  </div>
+
+  <h3>과녁 비유</h3>
+  <div class="target-wrap">
+    <div class="target">
+      <div class="target-ring outer"><span style="position:absolute;bottom:12px;font-size:11px;color:var(--g500);">빗나감 3.8%</span></div>
+      <div class="target-ring mid"><span style="position:absolute;bottom:8px;font-size:11px;color:var(--w);">유효 매칭 96.2%</span></div>
+      <div class="target-ring inner"><span style="font-size:11px;color:var(--s);font-weight:700;">정확<br>57.6%</span></div>
+    </div>
+    <div class="target-labels">
+      <div><span style="color:var(--s);font-weight:700;">&#9679;</span> 정확 매칭 = 정중앙 (정확한 코드)</div>
+      <div><span style="color:var(--w);font-weight:700;">&#9679;</span> 유효 매칭 = 원 안에 들어옴 (관련 코드)</div>
+      <div><span style="color:var(--g400);font-weight:700;">&#9679;</span> 빗나감 = 관련 없는 코드</div>
+    </div>
+  </div>
+
+  <h3>의료 현장에서 왜 문제인가?</h3>
+  <div class="info-card yellow">
+    <div class="card-title">&#9888;&#65039; 유효 매칭만 되고 정확 매칭이 안 된 경우</div>
+    <p style="margin-bottom:4px;">판독문: "좌하엽의 <strong>대엽성</strong> 폐렴"</p>
+    <p style="margin-bottom:4px;">AI 추천: 233604007 | Pneumonia (일반 폐렴) &larr; 유효 &#9989; / 정확 &#10060;</p>
+    <p style="margin-bottom:8px;">정답: <strong>278516003</strong> | Lobar pneumonia (대엽성 폐렴)</p>
+    <p style="margin-bottom:0;font-size:12px;color:var(--g600);">영향: 통계 집계 불가, 연구 데이터 부정확, 보험 청구 시 J18.1(대엽성) 대신 J18.9(상세불명)으로 정보 손실</p>
+  </div>
+</div>
+
+<!-- ===== SEC 8 ===== -->
+<div class="section" id="sec8">
+  <div class="section-header"><div class="section-num">8</div><h2>낮은 정확 매칭률의 5가지 원인</h2></div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>원인</th><th>핵심 문제</th><th>비유</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td><strong>SNOMED CT 과도한 세분화</strong></td><td>비슷한 코드가 너무 많음 (35만+)</td><td>100종류의 비슷한 파란색 중 하나를 고르기</td></tr>
+        <tr><td><strong>2</strong></td><td><strong>판독문 모호성/약어</strong></td><td>한/영 혼용, 기관별 약어 차이</td><td>방언이 섞인 문서를 표준어로 번역</td></tr>
+        <tr><td><strong>3</strong></td><td><strong>1:N 매핑 문제</strong></td><td>하나의 표현 &rarr; 여러 후보 코드</td><td>"과일" &rarr; 사과? 배? 포도?</td></tr>
+        <tr><td><strong>4</strong></td><td><strong>의미 유형 혼동</strong></td><td>disorder/finding/situation 구분 어려움</td><td>"폐렴"이 질환인지 소견인지 병력인지</td></tr>
+        <tr><td><strong>5</strong></td><td><strong>LLM 환각/혼동</strong></td><td>없는 코드 생성, 비슷한 코드 착각</td><td>기억으로 전화번호 한 자리 틀리기</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>원인 1: 코드가 너무 많다</h3>
+  <div class="code-card">
+    <span class="badge">EXAMPLE</span>
+<span class="yw">의사가 "폐렴"이라고 썼을 때, AI가 선택할 수 있는 후보들:</span>
+
+  233604007  Pneumonia (disorder)          <span class="dm">&larr; 일반 폐렴</span>
+  385093006  Community-acquired pneumonia   <span class="dm">&larr; 지역사회 획득</span>
+  233607000  Bacterial pneumonia            <span class="dm">&larr; 세균성</span>
+  75570004   Viral pneumonia                <span class="dm">&larr; 바이러스성</span>
+  278516003  Lobar pneumonia                <span class="dm">&larr; 대엽성</span>
+  396286009  Bronchopneumonia               <span class="dm">&larr; 기관지</span>
+  441590008  Hospital-acquired pneumonia    <span class="dm">&larr; 병원 획득</span>
+  422588002  Aspiration pneumonia           <span class="dm">&larr; 흡인성</span>
+  <span class="dm">...        (수십 개 더)</span>
+
+  <span class="pk">의사 의도: 233604007 (일반 폐렴)</span>
+  <span class="pk">AI 선택:   385093006 (지역사회 획득 폐렴)</span>
+  <span class="pk">&rarr; 유효 &#9989; / 정확 &#10060;</span>
+  </div>
+
+  <h3>원인 2: 판독문이 모호하다</h3>
+  <div class="info-card yellow">
+    <div class="card-title">&#128172; 같은 "의심"을 병원마다 다르게 표현</div>
+    <p style="margin-bottom:4px;">서울대: <strong>"r/o"</strong> (rule out)</p>
+    <p style="margin-bottom:4px;">삼성: <strong>"S/O"</strong> (suggestive of)</p>
+    <p style="margin-bottom:4px;">세브란스: <strong>"c/w"</strong> (consistent with)</p>
+    <p style="margin-bottom:0;font-size:12px;color:var(--g600);">전부 같은 "의심"인데 표현이 모두 다름 &rarr; AI 혼란</p>
+  </div>
+</div>
+
+<!-- ===== SEC 9 ===== -->
+<div class="section" id="sec9">
+  <div class="section-header"><div class="section-num">9</div><h2>개선 방향 5가지</h2></div>
+
+  <h3>개선 1: 도메인 특화 (범위 축소)</h3>
+  <div class="compare-box">
+    <div class="compare-side before">
+      <h4>&#10060; 현재: 전체 35만+ 코드</h4>
+      <p>서울 전체에서 특정 건물 하나를 찾는 것<br><br><strong>정확 매칭: 57.6%</strong></p>
+    </div>
+    <div class="compare-side after">
+      <h4>&#9989; 개선: 간(Liver) ~500개 코드</h4>
+      <p>강남구에서 특정 건물 하나를 찾는 것<br><br><strong>예상 정확 매칭: 80~85%</strong></p>
+    </div>
+  </div>
+
+  <h3>개선 2: Human-in-the-Loop (신뢰도별 분기)</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:18px 0;">
+    <div style="background:var(--sl);border:2px solid var(--s);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:13px;font-weight:700;color:var(--s);margin-bottom:6px;">신뢰도 95%+</div>
+      <div style="font-size:22px;margin-bottom:4px;">&#9989;</div>
+      <div style="font-size:12px;color:var(--g700);">자동 확정<br>사람 검토 불필요<br><strong>~40~50%</strong></div>
+    </div>
+    <div style="background:var(--wl);border:2px solid var(--w);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:13px;font-weight:700;color:var(--w);margin-bottom:6px;">신뢰도 70~95%</div>
+      <div style="font-size:22px;margin-bottom:4px;">&#128100;</div>
+      <div style="font-size:12px;color:var(--g700);">후보 3개 제시<br>코더가 클릭 선택<br><strong>~35~40%</strong></div>
+    </div>
+    <div style="background:var(--dl);border:2px solid var(--d);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:13px;font-weight:700;color:var(--d);margin-bottom:6px;">신뢰도 70% 미만</div>
+      <div style="font-size:22px;margin-bottom:4px;">&#129658;</div>
+      <div style="font-size:12px;color:var(--g700);">전문의 직접 검토<br>피드백 &rarr; 재학습<br><strong>~10~20%</strong></div>
+    </div>
+  </div>
+
+  <h3>개선 3: 피드백 루프 (사용할수록 좋아지는 시스템)</h3>
+  <div class="code-card">
+    <span class="badge">FEEDBACK LOOP</span>
+<span class="hl">AI 추천</span> &rarr; <span class="yw">전문의 수정</span> &rarr; <span class="gr">수정 데이터 축적</span> &rarr; <span class="pk">모델 재학습</span> &rarr; <span class="hl">AI 추천 개선</span>
+  <span class="dm">(이 순환이 반복될수록 정확도가 계속 향상됩니다)</span></div>
+
+  <h3>개선 4: 기관별 커스텀 사전 + 전이학습</h3>
+  <div class="analogy">
+    <div class="analogy-title">&#128161; 전이학습 비유</div>
+    <p style="font-size:13px;margin-bottom:0;">영어를 잘하는 사람이 프랑스어를 배우면 훨씬 빠릅니다. 마찬가지로 <strong>일반 의학 NLP(기본 모델)</strong> 위에 <strong>각 병원 판독문 스타일(어댑터)</strong>을 추가 학습하면, 처음부터 만드는 것보다 훨씬 빠르고 정확합니다.</p>
+  </div>
+
+  <h3>개선 5: 다단계 후보 재순위화 (Funnel)</h3>
+  <div class="funnel">
+    <div class="funnel-step">
+      <div class="funnel-bar" style="width:100%;background:var(--p);">100개</div>
+      <div class="funnel-label">1단계: 벡터 검색 (넓은 그물)</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-bar" style="width:60%;background:var(--a);">30개</div>
+      <div class="funnel-label">2단계: 도메인 필터 (간 관련만)</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-bar" style="width:25%;background:var(--w);">5개</div>
+      <div class="funnel-label">3단계: LLM 재순위화</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-bar" style="width:12%;background:var(--s);">1~2개</div>
+      <div class="funnel-label">4단계: 온톨로지 검증 &rarr; 최종 선택</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>단계</th><th>후보 수</th><th>예상 정확 매칭률</th></tr></thead>
+      <tbody>
+        <tr><td>벡터 검색만</td><td>100개</td><td>~45%</td></tr>
+        <tr><td>+ 도메인 필터</td><td>30개</td><td>~55%</td></tr>
+        <tr><td>+ LLM 재순위화</td><td>5개</td><td>~70%</td></tr>
+        <tr><td>+ 온톨로지 검증</td><td>1~2개</td><td><strong>~80%</strong></td></tr>
+        <tr style="background:#f0fdf4;"><td>+ Human-in-the-Loop</td><td>최종</td><td style="color:var(--s);font-weight:800;">~99%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SEC 10 ===== -->
+<div class="section" id="sec10">
+  <div class="section-header"><div class="section-num">10</div><h2>개선 로드맵과 목표 수치</h2></div>
+
+  <h3>시간에 따른 정확도 향상</h3>
+  <div class="chart-wrap">
+    <div style="font-size:13px;font-weight:700;color:var(--g700);margin-bottom:14px;">정확 매칭률 향상 추이</div>
+    <div class="chart-bars">
+      <div class="chart-bar-wrap"><div class="chart-bar-value" style="color:var(--d);">57%</div><div class="chart-bar" style="height:57%;background:linear-gradient(var(--d),#f87171);"></div><div class="chart-bar-label">시작</div></div>
+      <div class="chart-bar-wrap"><div class="chart-bar-value" style="color:var(--w);">60%</div><div class="chart-bar" style="height:60%;background:linear-gradient(var(--w),#fbbf24);"></div><div class="chart-bar-label">1개월</div></div>
+      <div class="chart-bar-wrap"><div class="chart-bar-value" style="color:var(--w);">70%</div><div class="chart-bar" style="height:70%;background:linear-gradient(var(--w),#fbbf24);"></div><div class="chart-bar-label">3개월</div></div>
+      <div class="chart-bar-wrap"><div class="chart-bar-value" style="color:var(--p);">78%</div><div class="chart-bar" style="height:78%;background:linear-gradient(var(--p),#60a5fa);"></div><div class="chart-bar-label">6개월</div></div>
+      <div class="chart-bar-wrap"><div class="chart-bar-value" style="color:var(--s);">85%</div><div class="chart-bar" style="height:85%;background:linear-gradient(var(--s),#34d399);"></div><div class="chart-bar-label">12개월</div></div>
+      <div class="chart-bar-wrap"><div class="chart-bar-value" style="color:var(--s);">90%</div><div class="chart-bar" style="height:90%;background:linear-gradient(#065f46,var(--s));"></div><div class="chart-bar-label">24개월</div></div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>시점</th><th>정확 매칭률</th><th>축적 데이터</th><th>자동 처리율</th></tr></thead>
+      <tbody>
+        <tr><td>시작</td><td>57%</td><td>0건</td><td>~40%</td></tr>
+        <tr><td>1개월</td><td>60%</td><td>~500건</td><td>~45%</td></tr>
+        <tr><td>3개월</td><td>70%</td><td>~2,000건</td><td>~55%</td></tr>
+        <tr><td>6개월</td><td>78%</td><td>~5,000건</td><td>~65%</td></tr>
+        <tr style="background:#f0fdf4;"><td><strong>12개월</strong></td><td style="font-weight:800;color:var(--s);">85%+</td><td>~12,000건</td><td>~75%</td></tr>
+        <tr style="background:#f0fdf4;"><td><strong>24개월</strong></td><td style="font-weight:800;color:var(--s);">90%+</td><td>~25,000건</td><td>~85%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-card green">
+    <div class="card-title">&#128161; 핵심 인사이트</div>
+    <p style="margin-bottom:0;">"AI가 100% 정확할 필요는 없다. AI가 대부분의 단순 작업을 처리하고, <strong>사람은 어려운 케이스에만 집중</strong>하면 된다. 결과: <strong>AI + 사람 = 99%+ 정확도</strong>. 이것이 Human-in-the-Loop의 본질이다."</p>
+  </div>
+</div>
+
+<!-- ===== SEC 11 ===== -->
+<div class="section" id="sec11">
+  <div class="section-header"><div class="section-num">11</div><h2>요약</h2></div>
+
+  <div class="summary-card">
+    <h3>Part 1 &mdash; RAG 핵심 요약</h3>
+    <ol class="summary-list">
+      <li><span class="num-circle">1</span><span>LLM 단독은 <strong>환각(없는 코드 생성) 위험</strong>이 높다</span></li>
+      <li><span class="num-circle">2</span><span>RAG = 먼저 DB에서 검색 + LLM이 후보 중 선택 &rarr; <strong>"교과서 보고 시험 보기"</strong></span></li>
+      <li><span class="num-circle">3</span><span>SNOMED CT RAG: 판독문 &rarr; NER &rarr; 벡터 검색(FAISS) &rarr; LLM(GPT-4o) &rarr; 온톨로지 검증</span></li>
+      <li><span class="num-circle">4</span><span>성능: RAG로 <strong>유효 매칭 96.2%</strong> 달성 (LLM 단독 ~80% 대비 크게 향상)</span></li>
+    </ol>
+  </div>
+
+  <div class="summary-card" style="background:linear-gradient(135deg,#f0fdf4,#d1fae5);border-color:#6ee7b7;">
+    <h3 style="color:#065f46;">Part 2 &mdash; 정확 매칭률 개선 핵심 요약</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--d);margin-bottom:8px;">&#10060; 왜 57.6%로 낮은가?</div>
+        <ol style="padding-left:18px;font-size:13px;">
+          <li>SNOMED CT 코드가 너무 많고 세분화</li>
+          <li>한국어 판독문이 모호하고 약어 불일치</li>
+          <li>1:N 매핑 (하나의 표현 &rarr; 여러 코드)</li>
+          <li>질환/소견/병력 의미 유형 혼동</li>
+          <li>LLM 환각 (없는 코드 생성)</li>
+        </ol>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--s);margin-bottom:8px;">&#9989; 어떻게 개선하는가?</div>
+        <ol style="padding-left:18px;font-size:13px;">
+          <li>도메인 특화 (간 &rarr; 폐 순차 확장) <strong>[+10~15%p]</strong></li>
+          <li>Human-in-the-Loop (신뢰도별 분기) <strong>[최종 99%]</strong></li>
+          <li>피드백 루프 (전문의 수정 &rarr; 재학습) <strong>[+10~15%p]</strong></li>
+          <li>기관별 커스텀 사전 + 전이학습 <strong>[+5~8%p]</strong></li>
+          <li>다단계 후보 재순위화 (Funnel) <strong>[+8~12%p]</strong></li>
+        </ol>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(0,0,0,.1);text-align:center;font-size:15px;font-weight:700;color:#065f46;">
+      목표: 현재 57.6% &rarr; 12개월 85%+ &rarr; 24개월 90%+ &rarr; AI+사람 = <span style="font-size:20px;">99%+</span>
+    </div>
+  </div>
+
+  <div class="info-card purple" style="margin-top:28px;">
+    <div class="card-title">&#128214; 관련 문서</div>
+    <p style="font-size:12px;margin-bottom:4px;">시스템 전체 구조 &rarr; <a href="./판독문_SNOMED_CT_자동변환_보고서.html" style="color:var(--a);font-weight:600;">판독문 SNOMED CT 자동변환 보고서</a></p>
+    <p style="font-size:12px;margin-bottom:0;">폐렴 SNOMED CT 코드 체계 &rarr; <a href="./폐렴_SNOMED_CT_코드_가이드.html" style="color:var(--a);font-weight:600;">폐렴 SNOMED CT 코드 가이드</a></p>
+  </div>
+</div>
+
+</div>
+
+<script>
+const sections=document.querySelectorAll('.section');const navLinks=document.querySelectorAll('.sidebar a');
+const observer=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const id=en.target.id;const a=document.querySelector(`.sidebar a[href="#${id}"]`);if(a)a.classList.add('active');}});},{rootMargin:'-15% 0px -75% 0px'});
+sections.forEach(s=>observer.observe(s));
+document.querySelectorAll('.sidebar a').forEach(l=>l.addEventListener('click',()=>{if(window.innerWidth<=960)document.querySelector('.sidebar').classList.remove('open');}));
+</script>
+</body>
+</html>

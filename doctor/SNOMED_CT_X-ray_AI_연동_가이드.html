@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNOMED CT &amp; X-ray AI 연동 가이드</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --primary-dark: #1e40af;
+    --accent: #7c3aed;
+    --accent-light: #ede9fe;
+    --success: #059669;
+    --success-light: #d1fae5;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --info: #0891b2;
+    --info-light: #cffafe;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, 'Segoe UI', sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-800);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* === NAV === */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    width: 280px;
+    height: 100vh;
+    background: var(--gray-900);
+    color: #fff;
+    overflow-y: auto;
+    z-index: 100;
+    padding: 24px 0;
+    transition: transform .3s;
+  }
+  .sidebar-title {
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .sidebar-title span { color: #60a5fa; }
+  .sidebar a {
+    display: block;
+    padding: 8px 20px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 13px;
+    transition: .2s;
+    border-left: 3px solid transparent;
+  }
+  .sidebar a:hover, .sidebar a.active {
+    color: #fff;
+    background: rgba(255,255,255,.05);
+    border-left-color: #60a5fa;
+  }
+  .sidebar a .num {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    background: rgba(255,255,255,.1);
+    border-radius: 50%;
+    font-size: 11px;
+    margin-right: 8px;
+    font-weight: 600;
+  }
+
+  /* === MAIN === */
+  .main {
+    margin-left: 280px;
+    padding: 40px 48px 120px;
+    max-width: 1000px;
+  }
+
+  /* === HERO === */
+  .hero {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #7c3aed 100%);
+    color: #fff;
+    padding: 56px 48px;
+    border-radius: 20px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: rgba(255,255,255,.08);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 160px; height: 160px;
+    background: rgba(255,255,255,.05);
+    border-radius: 50%;
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .hero p {
+    font-size: 17px;
+    opacity: .9;
+    position: relative;
+    max-width: 600px;
+  }
+  .hero-badges {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .hero-badge {
+    background: rgba(255,255,255,.15);
+    backdrop-filter: blur(4px);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* === SECTIONS === */
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--gray-900);
+  }
+
+  h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin: 32px 0 16px;
+    padding-left: 14px;
+    border-left: 4px solid var(--primary);
+  }
+  h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gray-700);
+    margin: 24px 0 12px;
+  }
+
+  p { margin-bottom: 14px; }
+
+  /* === CARDS === */
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    border: 1px solid var(--gray-200);
+  }
+  .card-accent {
+    border-left: 4px solid var(--primary);
+  }
+  .card-success { border-left: 4px solid var(--success); }
+  .card-warning { border-left: 4px solid var(--warning); }
+  .card-danger  { border-left: 4px solid var(--danger); }
+  .card-info    { border-left: 4px solid var(--info); }
+  .card-purple  { border-left: 4px solid var(--accent); }
+
+  .card-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* === INFO BOX === */
+  .info-box {
+    padding: 20px 24px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 15px;
+  }
+  .info-box.blue    { background: var(--primary-light); border: 1px solid #93c5fd; }
+  .info-box.green   { background: var(--success-light); border: 1px solid #6ee7b7; }
+  .info-box.yellow  { background: var(--warning-light); border: 1px solid #fcd34d; }
+  .info-box.red     { background: var(--danger-light);  border: 1px solid #fca5a5; }
+  .info-box.purple  { background: var(--accent-light);  border: 1px solid #c4b5fd; }
+  .info-box.cyan    { background: var(--info-light);    border: 1px solid #67e8f9; }
+  .info-box strong  { display: block; margin-bottom: 6px; font-size: 15px; }
+
+  /* === TABLES === */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  th {
+    background: var(--gray-800);
+    color: #fff;
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  tr:hover td { background: var(--gray-50); }
+  .code-cell {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  /* === FLOW DIAGRAMS === */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 24px 0;
+  }
+  .flow-step {
+    background: #fff;
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+    min-width: 140px;
+    position: relative;
+  }
+  .flow-step .step-icon {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+  .flow-step .step-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-800);
+  }
+  .flow-step .step-desc {
+    font-size: 11px;
+    color: var(--gray-500);
+    margin-top: 4px;
+  }
+  .flow-arrow {
+    font-size: 24px;
+    color: var(--primary);
+    padding: 0 8px;
+    font-weight: 700;
+  }
+
+  /* === COMPARE === */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  .compare-box {
+    border-radius: 12px;
+    padding: 24px;
+    border: 2px solid;
+  }
+  .compare-box.bad {
+    border-color: #fca5a5;
+    background: #fff5f5;
+  }
+  .compare-box.good {
+    border-color: #6ee7b7;
+    background: #f0fdf4;
+  }
+  .compare-box h4 {
+    margin: 0 0 12px;
+    padding: 0;
+    border: 0;
+  }
+  .compare-box.bad h4 { color: var(--danger); }
+  .compare-box.good h4 { color: var(--success); }
+  .compare-box code {
+    display: block;
+    background: rgba(0,0,0,.05);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin: 8px 0;
+    line-height: 1.6;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* === STATS === */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  }
+  .stat-num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1.2;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-top: 4px;
+  }
+
+  /* === CODE BLOCK === */
+  .code-block {
+    background: var(--gray-900);
+    color: #e2e8f0;
+    padding: 20px 24px;
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+    margin: 16px 0;
+    white-space: pre;
+  }
+  .code-block .comment { color: #6b7280; }
+  .code-block .keyword { color: #c084fc; }
+  .code-block .string  { color: #34d399; }
+  .code-block .number  { color: #fbbf24; }
+  .code-block .highlight { color: #60a5fa; font-weight: 700; }
+
+  /* === PIPELINE === */
+  .pipeline {
+    position: relative;
+    padding-left: 36px;
+    margin: 20px 0;
+  }
+  .pipeline::before {
+    content: '';
+    position: absolute;
+    left: 15px; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--primary), var(--accent));
+    border-radius: 2px;
+  }
+  .pipeline-step {
+    position: relative;
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 22px;
+    border: 1px solid var(--gray-200);
+  }
+  .pipeline-step::before {
+    content: '';
+    position: absolute;
+    left: -28px; top: 22px;
+    width: 13px; height: 13px;
+    background: var(--primary);
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  .pipeline-step .step-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .pipeline-step .step-title {
+    font-weight: 700;
+    font-size: 15px;
+    margin: 4px 0;
+  }
+  .pipeline-step .step-detail {
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+
+  /* === TAGS === */
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .tag-blue   { background: var(--primary-light); color: var(--primary-dark); }
+  .tag-green  { background: var(--success-light); color: var(--success); }
+  .tag-yellow { background: var(--warning-light); color: var(--warning); }
+  .tag-red    { background: var(--danger-light);  color: var(--danger); }
+  .tag-purple { background: var(--accent-light);  color: var(--accent); }
+
+  /* === MAPPING VISUAL === */
+  .mapping-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    font-size: 14px;
+  }
+  .mapping-label {
+    min-width: 140px;
+    font-weight: 600;
+    color: var(--gray-700);
+  }
+  .mapping-arrow { color: var(--primary); font-weight: 700; font-size: 18px; }
+  .mapping-code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--primary-light);
+    padding: 4px 10px;
+    border-radius: 6px;
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .mapping-name {
+    color: var(--gray-500);
+    font-size: 13px;
+  }
+
+  /* === ACCORDION === */
+  details {
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+  }
+  summary {
+    padding: 16px 20px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    user-select: none;
+  }
+  summary:hover { background: var(--gray-50); }
+  summary::marker { content: ''; }
+  summary::before {
+    content: '\25B6';
+    font-size: 10px;
+    color: var(--primary);
+    transition: transform .2s;
+  }
+  details[open] summary::before { transform: rotate(90deg); }
+  details .detail-content {
+    padding: 0 20px 20px;
+  }
+
+  /* === ROADMAP === */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .roadmap-step {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid var(--gray-200);
+    position: relative;
+  }
+  .roadmap-step.active { border-color: var(--primary); }
+  .roadmap-step .rm-phase {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .roadmap-step .rm-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin: 6px 0;
+  }
+  .roadmap-step .rm-time {
+    font-size: 12px;
+    color: var(--gray-500);
+  }
+  .roadmap-step ul {
+    margin-top: 10px;
+    padding-left: 16px;
+    font-size: 12px;
+    color: var(--gray-500);
+  }
+
+  /* === RESPONSIVE === */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 16px; left: 16px;
+    z-index: 200;
+    background: var(--gray-900);
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; padding: 24px 20px 80px; }
+    .menu-toggle { display: block; }
+    .hero { padding: 36px 24px; }
+    .hero h1 { font-size: 24px; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .roadmap { grid-template-columns: 1fr 1fr; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+
+  /* scrollbar */
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 2px; }
+
+  /* smooth scroll */
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-title"><span>SNOMED CT</span> &amp; X-ray AI<br>연동 가이드</div>
+  <a href="#s1"><span class="num">1</span>SNOMED CT가 뭔가요?</a>
+  <a href="#s2"><span class="num">2</span>왜 AI에 필요한가요?</a>
+  <a href="#s3"><span class="num">3</span>코드 체계 구조</a>
+  <a href="#s4"><span class="num">4</span>X-ray 질환 코드 매핑</a>
+  <a href="#s5"><span class="num">5</span>AI 결과 변환 과정</a>
+  <a href="#s6"><span class="num">6</span>DICOM SR 연동</a>
+  <a href="#s7"><span class="num">7</span>HL7 FHIR 연동</a>
+  <a href="#s8"><span class="num">8</span>의료 표준 전체 지도</a>
+  <a href="#s9"><span class="num">9</span>데이터셋 매핑</a>
+  <a href="#s10"><span class="num">10</span>ICD-10 크로스매핑</a>
+  <a href="#s11"><span class="num">11</span>한국 도입 현황</a>
+  <a href="#s12"><span class="num">12</span>규제와 인허가</a>
+  <a href="#s13"><span class="num">13</span>구현 코드 예시</a>
+  <a href="#s14"><span class="num">14</span>구축 로드맵</a>
+  <a href="#s15"><span class="num">15</span>핵심 요약</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <h1>SNOMED CT &amp; X-ray AI<br>연동 가이드</h1>
+  <p>AI가 X-ray를 분석한 결과를 전 세계 어디서든 이해할 수 있는 <strong>국제 표준 코드</strong>로 변환하는 방법을 알기 쉽게 설명합니다.</p>
+  <div class="hero-badges">
+    <span class="hero-badge">35만+ 의료 개념</span>
+    <span class="hero-badge">40개국+ 사용</span>
+    <span class="hero-badge">한국 2020 가입</span>
+    <span class="hero-badge">2026-03-27 작성</span>
+  </div>
+</div>
+
+<!-- ====== SECTION 1 ====== -->
+<section id="s1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>SNOMED CT가 뭔가요?</h2>
+  </div>
+
+  <div class="card card-accent">
+    <div class="card-title">한 줄 정의</div>
+    <p style="font-size:18px;font-weight:600;color:var(--primary);">
+      SNOMED CT = 전 세계 의사들이 같은 "언어"로 소통할 수 있게 해주는 <u>의료 용어 번호 체계</u>
+    </p>
+    <p>한국어로 "폐렴", 영어로 "Pneumonia", 일본어로 "肺炎" &mdash; 같은 질환인데 표현이 다릅니다.<br>
+    SNOMED CT는 이것을 <strong>233604007</strong>이라는 하나의 번호로 통일합니다.</p>
+  </div>
+
+  <div class="info-box blue">
+    <strong>쉬운 비유</strong>
+    우리가 전화번호로 사람을 특정하듯, SNOMED CT는 <strong>모든 의료 개념에 고유 전화번호를 부여</strong>합니다.<br>
+    "폐렴"의 전화번호는 <strong>233604007</strong>, "심장"의 전화번호는 <strong>80891009</strong>입니다.
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num">35만+</div>
+      <div class="stat-label">등록된 의료 개념</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">150만+</div>
+      <div class="stat-label">개념 간 관계</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">40+</div>
+      <div class="stat-label">사용 국가</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2020</div>
+      <div class="stat-label">한국 가입 연도</div>
+    </div>
+  </div>
+
+  <h3>다른 의료 코드와 비교</h3>
+  <table>
+    <thead>
+      <tr><th>코드 체계</th><th>목적</th><th>규모</th><th>비유</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>SNOMED CT</strong></td>
+        <td>임상 기록의 정밀 코딩</td>
+        <td>35만+ 개념</td>
+        <td>의료의 <strong>백과사전</strong> (가장 상세)</td>
+      </tr>
+      <tr>
+        <td><strong>ICD-10/11</strong></td>
+        <td>질병 분류, 보험 청구</td>
+        <td>~7만 코드</td>
+        <td>의료의 <strong>분류표</strong> (보험용)</td>
+      </tr>
+      <tr>
+        <td><strong>LOINC</strong></td>
+        <td>검사/관찰 항목 코딩</td>
+        <td>~10만 코드</td>
+        <td>검사실의 <strong>주문번호</strong></td>
+      </tr>
+      <tr>
+        <td><strong>RadLex</strong></td>
+        <td>영상의학 전문 용어</td>
+        <td>~7만 용어</td>
+        <td>영상과의 <strong>전문 사전</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====== SECTION 2 ====== -->
+<section id="s2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>왜 X-ray AI에 필요한가요?</h2>
+  </div>
+
+  <h3>SNOMED CT 없이 생기는 문제</h3>
+  <div class="compare-grid">
+    <div class="compare-box bad">
+      <h4>&#10060; SNOMED CT 없이</h4>
+      <code>
+병원 A의 AI: "Pneumonia"
+병원 B의 AI: "폐렴"
+병원 C의 AI: "lung_infection_03"
+      </code>
+      <p style="font-size:13px;color:#991b1b;">같은 질환인데 표현이 모두 다름<br>&rarr; 데이터 교환/통합 <strong>불가능</strong></p>
+    </div>
+    <div class="compare-box good">
+      <h4>&#9989; SNOMED CT 적용 시</h4>
+      <code>
+병원 A의 AI: <span style="color:#059669;font-weight:700">233604007</span>
+병원 B의 AI: <span style="color:#059669;font-weight:700">233604007</span>
+병원 C의 AI: <span style="color:#059669;font-weight:700">233604007</span>
+      </code>
+      <p style="font-size:13px;color:#065f46;">전 세계 어디서든 동일한 의미<br>&rarr; <strong>완전한 상호운용성</strong></p>
+    </div>
+  </div>
+
+  <h3>5가지 핵심 필요성</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div class="card card-accent" style="margin:0">
+      <div class="card-title">&#127760; 상호운용성</div>
+      <p style="font-size:14px;margin:0;">병원 A의 AI 결과를 병원 B에서 그대로 이해하고 활용할 수 있습니다.</p>
+    </div>
+    <div class="card card-purple" style="margin:0">
+      <div class="card-title">&#127919; 의미적 정밀성</div>
+      <p style="font-size:14px;margin:0;">"폐렴"과 "폐렴 의심"을 코드로 정확히 구분합니다.</p>
+    </div>
+    <div class="card card-success" style="margin:0">
+      <div class="card-title">&#9889; 의사결정 지원</div>
+      <p style="font-size:14px;margin:0;">"기흉 감지" &rarr; 응급 프로토콜 자동 트리거가 가능합니다.</p>
+    </div>
+    <div class="card card-info" style="margin:0">
+      <div class="card-title">&#128202; 데이터 분석</div>
+      <p style="font-size:14px;margin:0;">"전국 폐렴 AI 감지율" 같은 대규모 통계 산출이 가능합니다.</p>
+    </div>
+    <div class="card card-warning" style="margin:0;grid-column:span 2">
+      <div class="card-title">&#128220; 규제 준수</div>
+      <p style="font-size:14px;margin:0;">식약처/FDA/EU AI Act의 상호운용성 요구사항을 충족합니다. 글로벌 진출 시 필수입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 3 ====== -->
+<section id="s3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>코드 체계 구조</h2>
+  </div>
+
+  <h3>3가지 핵심 구성</h3>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0;">
+    <div class="card" style="margin:0;text-align:center;border-top:4px solid var(--primary)">
+      <div style="font-size:36px;margin-bottom:8px;">&#128196;</div>
+      <div style="font-weight:700;font-size:16px;margin-bottom:8px;">개념 (Concepts)</div>
+      <p style="font-size:13px;margin:0;">고유 번호 + 의미<br><span class="tag tag-blue">233604007 = 폐렴</span></p>
+    </div>
+    <div class="card" style="margin:0;text-align:center;border-top:4px solid var(--accent)">
+      <div style="font-size:36px;margin-bottom:8px;">&#127466;&#127475;</div>
+      <div style="font-weight:700;font-size:16px;margin-bottom:8px;">서술 (Descriptions)</div>
+      <p style="font-size:13px;margin:0;">다국어 이름/동의어<br><span class="tag tag-purple">Pneumonia, 폐렴, 肺炎</span></p>
+    </div>
+    <div class="card" style="margin:0;text-align:center;border-top:4px solid var(--success)">
+      <div style="font-size:36px;margin-bottom:8px;">&#128279;</div>
+      <div style="font-weight:700;font-size:16px;margin-bottom:8px;">관계 (Relationships)</div>
+      <p style="font-size:13px;margin:0;">개념 간 논리적 연결<br><span class="tag tag-green">폐렴 IS-A 폐질환</span></p>
+    </div>
+  </div>
+
+  <h3>계층 구조 (X-ray AI 관련)</h3>
+  <div class="card" style="font-size:14px;line-height:2;">
+    <div style="padding-left:0;font-weight:700;">&#128204; SNOMED CT 최상위</div>
+    <div style="padding-left:24px;">
+      <span class="tag tag-red" style="margin-right:4px;">임상소견</span> 질환, 증상
+      <div style="padding-left:24px;">
+        <span class="tag tag-blue">호흡기질환</span> &rarr; 폐렴, 결핵, 기흉, 폐부종 ...<br>
+        <span class="tag tag-blue">심혈관질환</span> &rarr; 심비대 ...<br>
+        <span class="tag tag-blue">종양</span> &rarr; 폐암, 유방암 ...
+      </div>
+    </div>
+    <div style="padding-left:24px;margin-top:8px;">
+      <span class="tag tag-green" style="margin-right:4px;">신체구조</span> 해부학적 위치
+      <div style="padding-left:24px;">
+        <span class="tag tag-green">폐</span> &rarr; 우상엽, 우중엽, 우하엽, 좌상엽, 좌하엽<br>
+        <span class="tag tag-green">심장</span> / <span class="tag tag-green">흉막</span> / <span class="tag tag-green">종격동</span>
+      </div>
+    </div>
+    <div style="padding-left:24px;margin-top:8px;">
+      <span class="tag tag-purple" style="margin-right:4px;">시술/검사</span>
+      <div style="padding-left:24px;">
+        <span class="tag tag-purple">흉부 X-ray</span> / <span class="tag tag-purple">CT</span> / <span class="tag tag-purple">유방촬영</span>
+      </div>
+    </div>
+    <div style="padding-left:24px;margin-top:8px;">
+      <span class="tag tag-yellow" style="margin-right:4px;">한정자</span> 심각도, 확실성
+      <div style="padding-left:24px;">
+        <span class="tag tag-yellow">경증/중등도/중증</span> &middot; <span class="tag tag-yellow">확정/의심/가능성</span> &middot; <span class="tag tag-yellow">좌/우/양측</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>후조합 표현 (코드 조합)</h3>
+  <div class="info-box purple">
+    <strong>"좌하엽의 중증 세균성 폐렴"을 코드로 표현하면?</strong>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;">
+      <span class="tag tag-blue" style="font-size:13px;padding:6px 12px;">233604007 <small>폐렴</small></span>
+      <span style="font-size:18px;">+</span>
+      <span class="tag tag-green" style="font-size:13px;padding:6px 12px;">41224006 <small>좌하엽</small></span>
+      <span style="font-size:18px;">+</span>
+      <span class="tag tag-red" style="font-size:13px;padding:6px 12px;">24484000 <small>중증</small></span>
+      <span style="font-size:18px;">+</span>
+      <span class="tag tag-yellow" style="font-size:13px;padding:6px 12px;">409822003 <small>세균</small></span>
+    </div>
+    <p style="margin-top:12px;margin-bottom:0;font-size:13px;">
+      &rarr; 기존 코드를 조합하면 아주 상세한 진단도 표현할 수 있습니다!
+    </p>
+  </div>
+</section>
+
+<!-- ====== SECTION 4 ====== -->
+<section id="s4">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2>X-ray 질환 코드 매핑</h2>
+  </div>
+
+  <h3>흉부 X-ray 14대 질환</h3>
+  <table>
+    <thead>
+      <tr><th>#</th><th>질환 (한글)</th><th>영문</th><th>SNOMED CT 코드</th><th>ICD-10</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>폐렴</td><td>Pneumonia</td><td class="code-cell">233604007</td><td class="code-cell">J18.9</td></tr>
+      <tr><td>2</td><td>기흉</td><td>Pneumothorax</td><td class="code-cell">36118008</td><td class="code-cell">J93.9</td></tr>
+      <tr><td>3</td><td>흉막삼출</td><td>Pleural Effusion</td><td class="code-cell">60046008</td><td class="code-cell">J90</td></tr>
+      <tr><td>4</td><td>심비대</td><td>Cardiomegaly</td><td class="code-cell">8186001</td><td class="code-cell">I51.7</td></tr>
+      <tr><td>5</td><td>무기폐</td><td>Atelectasis</td><td class="code-cell">46621007</td><td class="code-cell">J98.1</td></tr>
+      <tr><td>6</td><td>경화</td><td>Consolidation</td><td class="code-cell">60567007</td><td class="code-cell">J18.1</td></tr>
+      <tr><td>7</td><td>폐부종</td><td>Edema</td><td class="code-cell">19242006</td><td class="code-cell">J81.0</td></tr>
+      <tr><td>8</td><td>결절</td><td>Nodule</td><td class="code-cell">427359005</td><td class="code-cell">R91.1</td></tr>
+      <tr><td>9</td><td>종괴</td><td>Mass</td><td class="code-cell">309529002</td><td class="code-cell">R91.1</td></tr>
+      <tr><td>10</td><td>침윤</td><td>Infiltration</td><td class="code-cell">129614006</td><td class="code-cell">R91.8</td></tr>
+      <tr><td>11</td><td>폐기종</td><td>Emphysema</td><td class="code-cell">87433001</td><td class="code-cell">J43.9</td></tr>
+      <tr><td>12</td><td>섬유화</td><td>Fibrosis</td><td class="code-cell">51615001</td><td class="code-cell">J84.1</td></tr>
+      <tr><td>13</td><td>흉막비후</td><td>Pleural Thickening</td><td class="code-cell">78381009</td><td class="code-cell">J94.0</td></tr>
+      <tr><td>14</td><td>탈장</td><td>Hernia</td><td class="code-cell">414403008</td><td class="code-cell">K44.9</td></tr>
+    </tbody>
+  </table>
+
+  <details>
+    <summary>&#128204; 추가 질환 (COVID-19, 결핵, 폐암 등)</summary>
+    <div class="detail-content">
+      <table>
+        <thead><tr><th>질환</th><th>SNOMED CT</th><th>ICD-10</th></tr></thead>
+        <tbody>
+          <tr><td>COVID-19</td><td class="code-cell">840539006</td><td class="code-cell">U07.1</td></tr>
+          <tr><td>폐결핵</td><td class="code-cell">154283005</td><td class="code-cell">A15.0</td></tr>
+          <tr><td>폐암</td><td class="code-cell">254632001</td><td class="code-cell">C34.9</td></tr>
+          <tr><td>COPD</td><td class="code-cell">13645005</td><td class="code-cell">J44.9</td></tr>
+          <tr><td>폐색전증</td><td class="code-cell">59282003</td><td class="code-cell">I26.9</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>&#129460; 근골격계 / 치과 / 유방 질환</summary>
+    <div class="detail-content">
+      <table>
+        <thead><tr><th>질환</th><th>SNOMED CT</th><th>분야</th></tr></thead>
+        <tbody>
+          <tr><td>골절 (일반)</td><td class="code-cell">125605004</td><td>근골격</td></tr>
+          <tr><td>대퇴경부 골절</td><td class="code-cell">5913000</td><td>근골격</td></tr>
+          <tr><td>충치</td><td class="code-cell">80967001</td><td>치과</td></tr>
+          <tr><td>치주질환</td><td class="code-cell">2556008</td><td>치과</td></tr>
+          <tr><td>유방암</td><td class="code-cell">254838004</td><td>유방</td></tr>
+          <tr><td>유방 석회화</td><td class="code-cell">129748002</td><td>유방</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <h3>해부학적 위치 코드</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+    <div class="mapping-row"><span class="mapping-label">우상엽</span><span class="mapping-arrow">&rarr;</span><span class="mapping-code">45653009</span></div>
+    <div class="mapping-row"><span class="mapping-label">좌상엽</span><span class="mapping-arrow">&rarr;</span><span class="mapping-code">44714003</span></div>
+    <div class="mapping-row"><span class="mapping-label">우중엽</span><span class="mapping-arrow">&rarr;</span><span class="mapping-code">72481006</span></div>
+    <div class="mapping-row"><span class="mapping-label">좌하엽</span><span class="mapping-arrow">&rarr;</span><span class="mapping-code">41224006</span></div>
+    <div class="mapping-row"><span class="mapping-label">우하엽</span><span class="mapping-arrow">&rarr;</span><span class="mapping-code">266005</span></div>
+    <div class="mapping-row"><span class="mapping-label">심장</span><span class="mapping-arrow">&rarr;</span><span class="mapping-code">80891009</span></div>
+  </div>
+
+  <h3>AI 확률 &rarr; 확실성 코드</h3>
+  <table>
+    <thead><tr><th>AI 확률</th><th>의미</th><th>SNOMED CT</th><th>코드</th></tr></thead>
+    <tbody>
+      <tr><td><strong>&ge; 90%</strong></td><td style="color:var(--danger);font-weight:700;">확정 (Definite)</td><td>Definite</td><td class="code-cell">410605003</td></tr>
+      <tr><td><strong>70~89%</strong></td><td style="color:var(--warning);font-weight:700;">높은 가능성 (Probable)</td><td>Probable</td><td class="code-cell">2931005</td></tr>
+      <tr><td><strong>50~69%</strong></td><td style="color:#ca8a04;font-weight:700;">의심 (Suspected)</td><td>Suspected</td><td class="code-cell">415684004</td></tr>
+      <tr><td><strong>30~49%</strong></td><td style="color:var(--gray-500);">가능성 있음 (Possible)</td><td>Possible</td><td class="code-cell">60022001</td></tr>
+      <tr><td><strong>&lt; 30%</strong></td><td style="color:var(--gray-500);">배제 가능 (Unlikely)</td><td>Unlikely</td><td class="code-cell">261665006</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====== SECTION 5 ====== -->
+<section id="s5">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>AI 결과 변환 과정</h2>
+  </div>
+
+  <p>AI 모델이 X-ray를 분석한 결과를 SNOMED CT 표준 코드로 변환하는 <strong>6단계</strong> 과정입니다.</p>
+
+  <div class="pipeline">
+    <div class="pipeline-step">
+      <div class="step-num">Stage 1</div>
+      <div class="step-title">AI 모델 Raw 출력</div>
+      <div class="step-detail">AI가 X-ray를 분석하여 질환명, 확률, 위치(bbox)를 출력합니다.</div>
+      <div class="code-block" style="margin-top:12px;font-size:12px;">{"label": "Pneumonia", "probability": 0.92, "bbox": [120, 200, 350, 450]}</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">Stage 2</div>
+      <div class="step-title">라벨 &rarr; SNOMED CT 매핑</div>
+      <div class="step-detail">사전 정의된 매핑 테이블로 AI 라벨을 SNOMED CT 코드로 변환합니다.</div>
+      <div style="margin-top:8px;">
+        <div class="mapping-row"><span class="mapping-label">"Pneumonia"</span><span class="mapping-arrow">&rarr;</span><span class="mapping-code">233604007</span><span class="mapping-name">Pneumonia</span></div>
+      </div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">Stage 3</div>
+      <div class="step-title">확실성/심각도 결정</div>
+      <div class="step-detail">AI 확률(0.92)을 SNOMED CT 확실성 코드로 변환합니다.</div>
+      <div style="margin-top:8px;">
+        <div class="mapping-row"><span class="mapping-label">확률 92%</span><span class="mapping-arrow">&rarr;</span><span class="mapping-code">410605003</span><span class="mapping-name">Definite (&ge;90%)</span></div>
+      </div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">Stage 4</div>
+      <div class="step-title">위치 정보 코딩</div>
+      <div class="step-detail">Bounding Box 좌표를 해부학적 영역 코드로 변환합니다.</div>
+      <div style="margin-top:8px;">
+        <div class="mapping-row"><span class="mapping-label">bbox [120,200,350,450]</span><span class="mapping-arrow">&rarr;</span><span class="mapping-code">41224006</span><span class="mapping-name">좌하엽</span></div>
+      </div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">Stage 5</div>
+      <div class="step-title">후조합 표현 생성</div>
+      <div class="step-detail">모든 코드를 하나의 구조화된 결과로 조합합니다.</div>
+      <div class="code-block" style="margin-top:12px;font-size:12px;"><span class="highlight">질환</span>: 233604007 (Pneumonia)
+<span class="highlight">위치</span>: 41224006 (좌하엽)
+<span class="highlight">확실성</span>: 410605003 (Definite)
+<span class="highlight">확률</span>: 0.92</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">Stage 6</div>
+      <div class="step-title">출력 포맷 변환</div>
+      <div class="step-detail">최종 결과를 DICOM SR, HL7 FHIR, ICD-10 등 표준 포맷으로 변환합니다.</div>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+        <span class="tag tag-blue">DICOM SR</span>
+        <span class="tag tag-purple">HL7 FHIR</span>
+        <span class="tag tag-green">ICD-10 (보험)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 6 ====== -->
+<section id="s6">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2>DICOM SR 연동</h2>
+  </div>
+
+  <div class="info-box cyan">
+    <strong>DICOM SR (Structured Report)이란?</strong>
+    영상 판독 결과를 "구조화된 코드"로 저장하는 DICOM 표준입니다.<br>
+    자유 텍스트("좌하엽에 폐렴 소견")가 아니라 <strong>SNOMED CT 코드</strong>로 기록하므로 컴퓨터가 자동으로 처리할 수 있습니다.
+  </div>
+
+  <h3>AI 결과의 DICOM SR 구조</h3>
+  <div class="card">
+    <div style="font-size:14px;line-height:2.2;">
+      <div><strong style="color:var(--primary);">&#128203; DICOM SR Report</strong></div>
+      <div style="padding-left:20px;">
+        &#9500; <strong>검사 종류</strong>: 399208008 (흉부 X-ray) <span class="tag tag-purple">SNOMED CT</span><br>
+        &#9500; <strong>소견 #1</strong><br>
+        <div style="padding-left:24px;">
+          &#9500; 질환: <span class="mapping-code">233604007</span> Pneumonia <span class="tag tag-blue">SNOMED CT</span><br>
+          &#9500; 위치: <span class="mapping-code">41224006</span> 좌하엽 <span class="tag tag-green">SNOMED CT</span><br>
+          &#9500; 확실성: <span class="mapping-code">410605003</span> Definite <span class="tag tag-yellow">SNOMED CT</span><br>
+          &#9500; 확률: 0.92<br>
+          &#9492; 좌표: [120, 200, 350, 450]
+        </div>
+        &#9500; <strong>AI 모델 정보</strong>: ChestAI-DenseNet121 v2.1.0<br>
+        &#9492; <strong>권고</strong>: Follow-up CT recommended
+      </div>
+    </div>
+  </div>
+
+  <h3>IHE AI Results (IHE-AIR)</h3>
+  <div class="card card-info">
+    <p style="margin:0;font-size:14px;">
+      <strong>IHE</strong>는 의료 시스템 간 연동 표준을 정의하는 국제 기구입니다.<br>
+      <strong>AI Results (AIR)</strong> 프로파일은 AI 분석 결과를 DICOM SR + SNOMED CT로 인코딩하여 PACS에 저장하는 표준 워크플로우를 정의합니다.
+    </p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="step-icon">&#129302;</div>
+      <div class="step-label">AI Engine</div>
+      <div class="step-desc">X-ray 분석</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="border-color:var(--accent);">
+      <div class="step-icon">&#128196;</div>
+      <div class="step-label">DICOM SR</div>
+      <div class="step-desc">SNOMED CT 코딩</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="border-color:var(--success);">
+      <div class="step-icon">&#128190;</div>
+      <div class="step-label">PACS</div>
+      <div class="step-desc">영상+결과 저장</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="border-color:var(--warning);">
+      <div class="step-icon">&#128105;&#8205;&#9877;&#65039;</div>
+      <div class="step-label">전문의 뷰어</div>
+      <div class="step-desc">AI 결과 확인</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 7 ====== -->
+<section id="s7">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>HL7 FHIR 연동</h2>
+  </div>
+
+  <div class="info-box blue">
+    <strong>HL7 FHIR이란?</strong>
+    의료 데이터를 주고받기 위한 <strong>현대적 웹 API 표준</strong>입니다. 병원 시스템끼리 REST API + JSON으로 데이터를 교환합니다.<br>
+    쉽게 말해, <strong>의료판 REST API</strong>입니다. SNOMED CT를 기본 코딩 체계로 사용합니다.
+  </div>
+
+  <h3>AI 결과 &rarr; FHIR 리소스 매핑</h3>
+  <table>
+    <thead><tr><th>AI 결과 요소</th><th>FHIR 리소스</th><th>코딩 체계</th></tr></thead>
+    <tbody>
+      <tr><td>진단 보고서 전체</td><td><strong>DiagnosticReport</strong></td><td>SNOMED CT</td></tr>
+      <tr><td>개별 소견 (질환)</td><td><strong>Observation</strong></td><td>SNOMED CT</td></tr>
+      <tr><td>환자 상태</td><td><strong>Condition</strong></td><td>SNOMED CT</td></tr>
+      <tr><td>X-ray 영상 참조</td><td><strong>ImagingStudy</strong></td><td>DICOM</td></tr>
+      <tr><td>AI 모델 정보</td><td><strong>Device</strong></td><td>-</td></tr>
+      <tr><td>히트맵 이미지</td><td><strong>Media</strong></td><td>-</td></tr>
+      <tr><td>보험 청구 코드</td><td><strong>Condition.code</strong></td><td>ICD-10 (매핑)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>FHIR JSON 예시 (간략)</h3>
+  <div class="code-block" style="font-size:12px;"><span class="comment">// FHIR DiagnosticReport (AI 진단 보고서)</span>
+{
+  <span class="string">"resourceType"</span>: <span class="string">"DiagnosticReport"</span>,
+  <span class="string">"code"</span>: {
+    <span class="string">"coding"</span>: [{
+      <span class="string">"system"</span>: <span class="string">"http://snomed.info/sct"</span>,
+      <span class="string">"code"</span>: <span class="highlight">"399208008"</span>,         <span class="comment">// 흉부 X-ray</span>
+      <span class="string">"display"</span>: <span class="string">"Plain chest X-ray"</span>
+    }]
+  },
+  <span class="string">"conclusion"</span>: <span class="string">"AI detected Pneumonia (92%) in left lower lobe"</span>,
+  <span class="string">"conclusionCode"</span>: [{
+    <span class="string">"coding"</span>: [{
+      <span class="string">"system"</span>: <span class="string">"http://snomed.info/sct"</span>,
+      <span class="string">"code"</span>: <span class="highlight">"233604007"</span>,         <span class="comment">// 폐렴</span>
+      <span class="string">"display"</span>: <span class="string">"Pneumonia"</span>
+    }]
+  }]
+}</div>
+</section>
+
+<!-- ====== SECTION 8 ====== -->
+<section id="s8">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <h2>의료 표준 전체 지도</h2>
+  </div>
+
+  <p>X-ray AI 시스템에 관련된 모든 표준을 한눈에 봅니다.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0;">
+    <div class="card" style="margin:0;border-top:4px solid #ef4444;">
+      <div style="font-size:11px;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:1px;">영상 표준</div>
+      <div style="margin-top:8px;font-size:14px;"><strong>DICOM</strong> &mdash; 영상 파일 포맷</div>
+      <div style="font-size:14px;"><strong>DICOM SR</strong> &mdash; 구조화 보고서</div>
+      <div style="font-size:14px;"><strong>IHE AIR</strong> &mdash; AI 결과 전달</div>
+    </div>
+    <div class="card" style="margin:0;border-top:4px solid #2563eb;">
+      <div style="font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:1px;">용어 표준</div>
+      <div style="margin-top:8px;font-size:14px;"><strong>SNOMED CT</strong> &mdash; 임상 용어 (핵심!)</div>
+      <div style="font-size:14px;"><strong>ICD-10/11</strong> &mdash; 질병 분류/보험</div>
+      <div style="font-size:14px;"><strong>LOINC</strong> &mdash; 검사 코딩</div>
+      <div style="font-size:14px;"><strong>RadLex</strong> &mdash; 영상 용어</div>
+    </div>
+    <div class="card" style="margin:0;border-top:4px solid #7c3aed;">
+      <div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:1px;">교환 표준</div>
+      <div style="margin-top:8px;font-size:14px;"><strong>HL7 FHIR</strong> &mdash; API 데이터 교환</div>
+      <div style="font-size:14px;"><strong>HL7 CDA</strong> &mdash; 문서 교환</div>
+      <div style="font-size:14px;"><strong>OAuth 2.0</strong> &mdash; API 인증</div>
+    </div>
+  </div>
+
+  <div class="info-box green">
+    <strong>핵심 포인트</strong>
+    SNOMED CT는 이 모든 표준의 <strong>공통 언어</strong> 역할을 합니다.<br>
+    DICOM SR에도, FHIR에도, ICD 매핑에도 SNOMED CT 코드가 사용됩니다.
+  </div>
+</section>
+
+<!-- ====== SECTION 9 ====== -->
+<section id="s9">
+  <div class="section-header">
+    <div class="section-num">9</div>
+    <h2>공개 데이터셋 &harr; SNOMED CT 매핑</h2>
+  </div>
+
+  <div class="info-box yellow">
+    <strong>왜 중요한가?</strong>
+    AI를 학습시킬 때 사용하는 데이터셋의 라벨과, 실제 배포 시 출력하는 SNOMED CT 코드가 <strong>정확히 대응</strong>해야 합니다.<br>
+    매핑이 잘못되면 "폐렴"을 "결핵"으로 코딩하는 심각한 오류가 발생할 수 있습니다.
+  </div>
+
+  <h3>CheXpert (Stanford) 14개 라벨 매핑</h3>
+  <table>
+    <thead><tr><th>CheXpert 라벨</th><th>SNOMED CT 코드</th><th>매핑 난이도</th></tr></thead>
+    <tbody>
+      <tr><td>No Finding</td><td class="code-cell">17621005 (Normal)</td><td><span class="tag tag-green">쉬움</span></td></tr>
+      <tr><td>Pneumonia</td><td class="code-cell">233604007</td><td><span class="tag tag-green">쉬움</span></td></tr>
+      <tr><td>Cardiomegaly</td><td class="code-cell">8186001</td><td><span class="tag tag-green">쉬움</span></td></tr>
+      <tr><td>Pleural Effusion</td><td class="code-cell">60046008</td><td><span class="tag tag-green">쉬움</span></td></tr>
+      <tr><td>Pneumothorax</td><td class="code-cell">36118008</td><td><span class="tag tag-green">쉬움</span></td></tr>
+      <tr><td>Lung Opacity</td><td class="code-cell">263930000</td><td><span class="tag tag-yellow">보통</span></td></tr>
+      <tr><td>Lung Lesion</td><td class="code-cell">309529002</td><td><span class="tag tag-yellow">보통</span></td></tr>
+      <tr><td>Pleural Other</td><td class="code-cell">128601007</td><td><span class="tag tag-red">어려움</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>매핑 시 주의사항</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div class="card card-warning" style="margin:0;font-size:14px;">
+      <div class="card-title">1:N 매핑</div>
+      데이터셋의 "Fracture" 하나가 SNOMED CT에서는 부위별로 수십 개 코드에 대응됩니다.
+    </div>
+    <div class="card card-danger" style="margin:0;font-size:14px;">
+      <div class="card-title">의미 불일치</div>
+      "Lung Opacity"는 소견(Finding)이지 진단(Disorder)이 아닙니다. 구분이 필요합니다.
+    </div>
+    <div class="card card-info" style="margin:0;font-size:14px;">
+      <div class="card-title">위치 정보 부재</div>
+      데이터셋 라벨에 좌/우/엽 정보가 없으므로, AI의 Bbox/Segmentation으로 부위를 추가 코딩해야 합니다.
+    </div>
+    <div class="card card-accent" style="margin:0;font-size:14px;">
+      <div class="card-title">버전 관리</div>
+      SNOMED CT는 반기마다 업데이트됩니다. 매핑 테이블도 함께 갱신해야 합니다.
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 10 ====== -->
+<section id="s10">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <h2>ICD-10 크로스매핑</h2>
+  </div>
+
+  <div class="info-box blue">
+    <strong>왜 ICD-10도 필요한가?</strong>
+    SNOMED CT는 <strong>임상 기록</strong>용이고, ICD-10은 <strong>보험 청구</strong>용입니다.<br>
+    AI가 SNOMED CT로 코딩한 결과를 ICD-10으로 <strong>자동 변환</strong>하면 보험 청구가 자동화됩니다.
+  </div>
+
+  <div class="flow" style="margin:32px 0;">
+    <div class="flow-step">
+      <div class="step-icon">&#129302;</div>
+      <div class="step-label">AI 진단</div>
+      <div class="step-desc">"Pneumonia 92%"</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="border-color:var(--primary);">
+      <div class="step-icon">&#128196;</div>
+      <div class="step-label">SNOMED CT</div>
+      <div class="step-desc">233604007</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="border-color:var(--success);">
+      <div class="step-icon">&#128176;</div>
+      <div class="step-label">ICD-10</div>
+      <div class="step-desc">J18.9 (자동 매핑)</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" style="border-color:var(--warning);">
+      <div class="step-icon">&#127974;</div>
+      <div class="step-label">보험 청구</div>
+      <div class="step-desc">자동 처리</div>
+    </div>
+  </div>
+
+  <h3>매핑 유형</h3>
+  <table>
+    <thead><tr><th>유형</th><th>설명</th><th>예시</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1:1</strong></td><td>정확히 대응</td><td>폐렴 (233604007) &rarr; J18.9</td></tr>
+      <tr><td><strong>1:N</strong></td><td>SNOMED CT 1개 &rarr; ICD 여러 후보</td><td>골절 &rarr; 부위에 따라 S42, S52, S72...</td></tr>
+      <tr><td><strong>N:1</strong></td><td>SNOMED CT 여러 개 &rarr; ICD 1개</td><td>세균성/바이러스성 폐렴 모두 &rarr; J18.9</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box green">
+    <strong>자동 매핑 파일</strong>
+    SNOMED International은 공식 <strong>SNOMED CT &rarr; ICD-10 매핑 파일</strong>을 제공합니다.<br>
+    AI 시스템에 이 파일을 탑재하면 보험 청구 코드 변환이 자동화됩니다.
+  </div>
+</section>
+
+<!-- ====== SECTION 11 ====== -->
+<section id="s11">
+  <div class="section-header">
+    <div class="section-num">11</div>
+    <h2>한국 도입 현황</h2>
+  </div>
+
+  <table>
+    <thead><tr><th>항목</th><th>현황</th></tr></thead>
+    <tbody>
+      <tr><td><strong>가입 시기</strong></td><td>2020년 (SNOMED International 정회원)</td></tr>
+      <tr><td><strong>국내 관리</strong></td><td>한국보건의료정보원 (KHIS)</td></tr>
+      <tr><td><strong>한글 번역</strong></td><td>진행 중 (핵심 임상 용어 중심, 전체 번역 미완)</td></tr>
+      <tr><td><strong>사용 의무</strong></td><td>아직 법적 의무 아님 (권고 단계)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>정부 정책 연계</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div class="card" style="margin:0;font-size:14px;border-left:4px solid var(--primary);">
+      <strong>의료 마이데이터</strong><br>개인 건강 데이터 표준화에 SNOMED CT 활용 검토
+    </div>
+    <div class="card" style="margin:0;font-size:14px;border-left:4px solid var(--accent);">
+      <strong>건강정보 고속도로</strong><br>기관 간 의료 데이터 교환 표준으로 채택 추세
+    </div>
+    <div class="card" style="margin:0;font-size:14px;border-left:4px solid var(--success);">
+      <strong>정밀의료 사업</strong><br>유전체+임상 데이터 통합에 SNOMED CT 코딩 권장
+    </div>
+    <div class="card" style="margin:0;font-size:14px;border-left:4px solid var(--warning);">
+      <strong>디지털 헬스케어</strong><br>보건복지부 디지털 헬스 활성화 계획에 용어 표준화 포함
+    </div>
+  </div>
+
+  <h3>한국 주요 기업의 SNOMED CT 대응</h3>
+  <table>
+    <thead><tr><th>기업</th><th>현황</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td><strong>루닛</strong></td><td>DICOM SR 출력, SNOMED CT 부분 적용</td><td>FDA/CE 인증</td></tr>
+      <tr><td><strong>뷰노</strong></td><td>FHIR 연동 지원</td><td>FDA, 식약처</td></tr>
+      <tr><td><strong>코어라인소프트</strong></td><td>글로벌 표준 준수</td><td><strong>FDA 11건</strong> (국내 최다)</td></tr>
+      <tr><td><strong>JLK</strong></td><td>DICOM SR 기반 결과 전달</td><td>FDA 5건</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====== SECTION 12 ====== -->
+<section id="s12">
+  <div class="section-header">
+    <div class="section-num">12</div>
+    <h2>규제와 인허가</h2>
+  </div>
+
+  <h3>각국 SNOMED CT 요구 수준</h3>
+  <table>
+    <thead><tr><th>국가</th><th>규제 기관</th><th>SNOMED CT 요구</th><th>수준</th></tr></thead>
+    <tbody>
+      <tr><td>&#127468;&#127463; <strong>영국</strong></td><td>NHS Digital</td><td>1차 진료 <strong>의무 사용</strong> (2020~)</td><td><span class="tag tag-red">필수</span></td></tr>
+      <tr><td>&#127464;&#127462; <strong>캐나다</strong></td><td>Health Canada</td><td>국가 표준으로 채택</td><td><span class="tag tag-red">필수</span></td></tr>
+      <tr><td>&#127482;&#127480; <strong>미국</strong></td><td>FDA / ONC</td><td>상호운용성 규칙에 SNOMED CT 채택</td><td><span class="tag tag-yellow">강력 권고</span></td></tr>
+      <tr><td>&#127466;&#127482; <strong>유럽</strong></td><td>EU MDR + AI Act</td><td>상호운용성 요구, AI Act 투명성</td><td><span class="tag tag-yellow">강력 권고</span></td></tr>
+      <tr><td>&#127472;&#127479; <strong>한국</strong></td><td>식약처 (MFDS)</td><td>상호운용성 권고, 사용 시 가점</td><td><span class="tag tag-blue">권고</span></td></tr>
+      <tr><td>&#127462;&#127482; <strong>호주</strong></td><td>TGA / ADHA</td><td>SNOMED CT-AU 사용 권장</td><td><span class="tag tag-blue">권고</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>EU AI Act (2026.01 시행)</h3>
+  <div class="info-box red">
+    <strong>AI 의료기기 = 고위험(High-Risk) 분류</strong>
+    EU AI Act에서 의료 AI는 가장 엄격한 규제를 받습니다. SNOMED CT 사용은 투명성, 추적성, 정확성, 상호운용성 요건 충족에 크게 도움됩니다.
+  </div>
+</section>
+
+<!-- ====== SECTION 13 ====== -->
+<section id="s13">
+  <div class="section-header">
+    <div class="section-num">13</div>
+    <h2>구현 코드 예시</h2>
+  </div>
+
+  <p>실제 Python 코드로 AI 결과를 SNOMED CT로 변환하는 핵심 로직입니다.</p>
+
+  <h3>SNOMED CT 매핑 (핵심 부분)</h3>
+  <div class="code-block" style="font-size:12px;"><span class="comment"># AI 라벨 → SNOMED CT 매핑 테이블</span>
+FINDING_MAP = {
+    <span class="string">"Pneumonia"</span>:    {<span class="string">"code"</span>: <span class="highlight">"233604007"</span>, <span class="string">"display"</span>: <span class="string">"Pneumonia"</span>},
+    <span class="string">"Pneumothorax"</span>: {<span class="string">"code"</span>: <span class="highlight">"36118008"</span>,  <span class="string">"display"</span>: <span class="string">"Pneumothorax"</span>},
+    <span class="string">"Cardiomegaly"</span>: {<span class="string">"code"</span>: <span class="highlight">"8186001"</span>,   <span class="string">"display"</span>: <span class="string">"Cardiomegaly"</span>},
+    <span class="comment"># ... 14개 질환 전체</span>
+}
+
+<span class="comment"># AI 확률 → 확실성 코드</span>
+<span class="keyword">def</span> <span class="highlight">get_certainty</span>(probability):
+    <span class="keyword">if</span> probability >= <span class="number">0.90</span>: <span class="keyword">return</span> <span class="string">"410605003"</span>  <span class="comment"># Definite</span>
+    <span class="keyword">if</span> probability >= <span class="number">0.70</span>: <span class="keyword">return</span> <span class="string">"2931005"</span>    <span class="comment"># Probable</span>
+    <span class="keyword">if</span> probability >= <span class="number">0.50</span>: <span class="keyword">return</span> <span class="string">"415684004"</span>  <span class="comment"># Suspected</span>
+    <span class="keyword">return</span> <span class="string">"261665006"</span>                        <span class="comment"># Unlikely</span>
+
+<span class="comment"># 사용 예시</span>
+ai_result = {<span class="string">"label"</span>: <span class="string">"Pneumonia"</span>, <span class="string">"probability"</span>: <span class="number">0.92</span>}
+
+snomed = FINDING_MAP[ai_result[<span class="string">"label"</span>]]
+certainty = get_certainty(ai_result[<span class="string">"probability"</span>])
+
+<span class="keyword">print</span>(f<span class="string">"질환: {snomed['code']} ({snomed['display']})"</span>)
+<span class="keyword">print</span>(f<span class="string">"확실성: {certainty}"</span>)
+
+<span class="comment"># 출력:</span>
+<span class="comment"># 질환: 233604007 (Pneumonia)</span>
+<span class="comment"># 확실성: 410605003 (Definite)</span></div>
+
+  <h3>FHIR 보고서 생성 (핵심 부분)</h3>
+  <div class="code-block" style="font-size:12px;"><span class="comment"># SNOMED CT 결과를 FHIR JSON으로 변환</span>
+fhir_observation = {
+    <span class="string">"resourceType"</span>: <span class="string">"Observation"</span>,
+    <span class="string">"code"</span>: {
+        <span class="string">"coding"</span>: [{
+            <span class="string">"system"</span>: <span class="string">"http://snomed.info/sct"</span>,
+            <span class="string">"code"</span>: snomed[<span class="string">"code"</span>],         <span class="comment"># "233604007"</span>
+            <span class="string">"display"</span>: snomed[<span class="string">"display"</span>]    <span class="comment"># "Pneumonia"</span>
+        }]
+    },
+    <span class="string">"bodySite"</span>: {
+        <span class="string">"coding"</span>: [{
+            <span class="string">"system"</span>: <span class="string">"http://snomed.info/sct"</span>,
+            <span class="string">"code"</span>: <span class="highlight">"41224006"</span>,            <span class="comment"># 좌하엽</span>
+            <span class="string">"display"</span>: <span class="string">"Lower lobe of left lung"</span>
+        }]
+    }
+}
+
+<span class="comment"># → 이 JSON을 FHIR 서버에 POST하면 의료 시스템에 자동 등록</span></div>
+</section>
+
+<!-- ====== SECTION 14 ====== -->
+<section id="s14">
+  <div class="section-header">
+    <div class="section-num">14</div>
+    <h2>구축 로드맵</h2>
+  </div>
+
+  <p>X-ray AI 시스템에 SNOMED CT를 적용하는 <strong>4단계 로드맵</strong>입니다.</p>
+
+  <div class="roadmap">
+    <div class="roadmap-step active">
+      <div class="rm-phase">Phase 1</div>
+      <div class="rm-title">즉시 적용</div>
+      <div class="rm-time">2주</div>
+      <ul>
+        <li>라벨 &harr; SNOMED CT 매핑 테이블 작성</li>
+        <li>확률 &rarr; 확실성 코드 규칙 정의</li>
+        <li>ICD-10 크로스매핑 확보</li>
+      </ul>
+    </div>
+    <div class="roadmap-step">
+      <div class="rm-phase">Phase 2</div>
+      <div class="rm-title">단기 개발</div>
+      <div class="rm-time">1~2개월</div>
+      <ul>
+        <li>SNOMED CT 매핑 모듈 개발</li>
+        <li>FHIR 보고서 생성 모듈</li>
+        <li>규칙 기반 위치 매핑</li>
+      </ul>
+    </div>
+    <div class="roadmap-step">
+      <div class="rm-phase">Phase 3</div>
+      <div class="rm-title">중기 통합</div>
+      <div class="rm-time">3~6개월</div>
+      <ul>
+        <li>DICOM SR 출력 모듈</li>
+        <li>PACS 연동 테스트</li>
+        <li>AI 기반 정밀 위치 매핑</li>
+      </ul>
+    </div>
+    <div class="roadmap-step">
+      <div class="rm-phase">Phase 4</div>
+      <div class="rm-title">장기 인증</div>
+      <div class="rm-time">6~12개월</div>
+      <ul>
+        <li>IHE 상호운용성 인증</li>
+        <li>식약처/FDA 허가 서류 반영</li>
+        <li>버전 자동 업데이트 체계</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 15 ====== -->
+<section id="s15">
+  <div class="section-header">
+    <div class="section-num">15</div>
+    <h2>핵심 요약</h2>
+  </div>
+
+  <div class="card" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;border:0;">
+    <div style="font-size:20px;font-weight:800;margin-bottom:16px;">한 줄 요약</div>
+    <p style="font-size:17px;margin:0;">
+      SNOMED CT는 AI가 X-ray를 분석한 결과를 <strong>전 세계 어디서든 동일하게 이해할 수 있는 코드</strong>로 변환해주는 국제 표준입니다.<br>
+      적용하면 병원 간 데이터 호환, 보험 청구 자동화, 글로벌 규제 준수가 가능해집니다.
+    </p>
+  </div>
+
+  <table>
+    <thead><tr><th>항목</th><th>핵심 내용</th></tr></thead>
+    <tbody>
+      <tr><td><strong>SNOMED CT 역할</strong></td><td>AI 진단 결과를 국제 표준 코드로 변환 &rarr; 상호운용성 확보</td></tr>
+      <tr><td><strong>최소 작업</strong></td><td>라벨 &harr; SNOMED CT 매핑 테이블 + 확실성 코드 매핑 (2주)</td></tr>
+      <tr><td><strong>최적 구현</strong></td><td>SNOMED CT + DICOM SR + FHIR + ICD-10 자동 매핑</td></tr>
+      <tr><td><strong>한국 상황</strong></td><td>2020년 가입, 확산 중. 글로벌 진출 시 필수</td></tr>
+      <tr><td><strong>규제 추세</strong></td><td>영국 의무, 미국/EU 강력 권고, 한국 점진적 강화</td></tr>
+      <tr><td><strong>핵심 가치</strong></td><td>병원 간 호환 + 보험 자동화 + 규제 준수 + 임상 연구</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box green" style="margin-top:24px;">
+    <strong>다음 단계 제안</strong>
+    1. 먼저 <strong>매핑 테이블</strong>을 작성하세요 (Phase 1, 2주).<br>
+    2. 기존 AI 모델 출력에 <strong>SNOMED CT 코드를 추가</strong>하는 것부터 시작하세요.<br>
+    3. 글로벌 진출이나 식약처 허가를 준비한다면 <strong>FHIR + DICOM SR</strong>까지 확장하세요.
+  </div>
+
+  <div style="text-align:center;margin-top:48px;padding:24px;color:var(--gray-500);font-size:13px;border-top:1px solid var(--gray-200);">
+    본 문서는 2026년 3월 27일 기준으로 작성되었으며, X-ray_AI_진단_보고서.md의 보완 자료입니다.<br>
+    SNOMED CT 코드는 2025 국제판 기준이며, 최신 릴리스에서 확인이 필요합니다.
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// Active nav tracking
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => link.classList.remove('active'));
+      const id = entry.target.id;
+      const activeLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+      if (activeLink) activeLink.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Close mobile menu on link click
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.remove('open');
+  });
+});
+</script>
+
+</body>
+</html>

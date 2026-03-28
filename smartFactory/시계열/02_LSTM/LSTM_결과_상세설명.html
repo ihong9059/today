@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LSTM Autoencoder &#49884;&#48044;&#47112;&#51060;&#49496; &#44208;&#44284; &#49345;&#49464; &#49444;&#47749;</title>
+<style>
+:root{--p:#7c3aed;--pl:#ede9fe;--pd:#5b21b6;--s:#059669;--sl:#d1fae5;--w:#d97706;--wl:#fef3c7;--d:#dc2626;--dl:#fee2e2;--b:#2563eb;--bl:#dbeafe;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;--g900:#111827;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Pretendard',-apple-system,'Segoe UI','Malgun Gothic',sans-serif;background:var(--g50);color:var(--g800);line-height:1.8;font-size:15px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.hero{background:linear-gradient(135deg,#5b21b6 0%,#7c3aed 50%,#2563eb 100%);color:#fff;border-radius:16px;padding:40px 36px;margin-bottom:36px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%;}
+.hero h1{font-size:26px;font-weight:800;margin-bottom:8px;position:relative;}
+.hero .sub{font-size:14px;opacity:.85;position:relative;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.15);padding:3px 14px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:14px;}
+.section{margin-bottom:44px;}
+h2{font-size:20px;font-weight:800;color:var(--g900);margin-bottom:18px;padding-bottom:8px;border-bottom:3px solid var(--pl);display:flex;align-items:center;gap:10px;}
+h2 .num{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--p);color:#fff;border-radius:8px;font-size:15px;flex-shrink:0;}
+h3{font-size:16px;font-weight:700;color:var(--g900);margin:20px 0 10px;}
+p{margin-bottom:12px;font-size:14px;}
+.img-wrap{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;margin:16px 0;text-align:center;}
+.img-wrap img{max-width:100%;border-radius:8px;}
+.img-wrap .caption{font-size:12px;color:var(--g500);margin-top:8px;}
+.info-card{border-radius:12px;padding:20px 24px;margin:16px 0;border-left:4px solid;}
+.info-card.blue{background:var(--bl);border-color:var(--b);}
+.info-card.green{background:var(--sl);border-color:var(--s);}
+.info-card.yellow{background:var(--wl);border-color:var(--w);}
+.info-card.red{background:var(--dl);border-color:var(--d);}
+.info-card.purple{background:var(--pl);border-color:var(--p);}
+.info-card .card-title{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.info-card p,.info-card li{font-size:13px;line-height:1.7;}
+.analogy{background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde047;border-radius:12px;padding:20px 24px;margin:16px 0;}
+.analogy .title{font-size:14px;font-weight:700;color:var(--w);margin-bottom:8px;}
+.code-box{background:#1e293b;color:#e2e8f0;border-radius:12px;padding:20px 24px;margin:16px 0;font-family:'Consolas',monospace;font-size:12px;line-height:1.7;overflow-x:auto;white-space:pre;}
+.code-box .hl{color:#60a5fa;font-weight:600;}
+.code-box .gr{color:#4ade80;}
+.code-box .yw{color:#fbbf24;}
+.code-box .pk{color:#f472b6;}
+.code-box .dm{color:#64748b;}
+.graph-card{background:#fff;border:2px solid var(--p);border-radius:16px;padding:24px;margin:20px 0;position:relative;}
+.graph-card .graph-num{position:absolute;top:-12px;left:20px;background:var(--p);color:#fff;padding:2px 14px;border-radius:8px;font-size:12px;font-weight:700;}
+.graph-card h3{margin-top:8px;color:var(--pd);}
+.compare-box{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--g200);margin:16px 0;}
+.compare-side{padding:20px 22px;}
+.compare-side.left{background:#fef2f2;border-right:2px solid var(--g200);}
+.compare-side.right{background:#f0fdf4;}
+.compare-side h4{font-size:13px;font-weight:700;margin-bottom:10px;}
+.compare-side.left h4{color:var(--d);}
+.compare-side.right h4{color:var(--s);}
+.compare-side li{font-size:12px;line-height:1.7;}
+.formula-box{background:var(--g900);color:#fff;border-radius:12px;padding:24px;margin:16px 0;text-align:center;}
+.formula-box .formula{font-size:18px;font-weight:800;color:#a78bfa;margin:12px 0;}
+.formula-box .desc{font-size:13px;color:#94a3b8;}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.metric-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;text-align:center;}
+.metric-card .value{font-size:24px;font-weight:800;color:var(--p);}
+.metric-card .label{font-size:11px;color:var(--g500);margin-top:4px;}
+.step-list{counter-reset:step;}
+.step-item{counter-increment:step;display:flex;gap:14px;margin:12px 0;padding:14px 18px;background:#fff;border:1px solid var(--g200);border-radius:10px;}
+.step-item::before{content:counter(step);display:flex;align-items:center;justify-content:center;min-width:28px;height:28px;background:var(--p);color:#fff;border-radius:50%;font-size:13px;font-weight:700;margin-top:2px;}
+.step-item .content{font-size:13px;line-height:1.6;}
+.step-item .content strong{color:var(--pd);}
+.flow-h{display:flex;align-items:center;gap:0;margin:16px 0;overflow-x:auto;}
+.flow-box{flex:1;min-width:110px;background:#fff;border:1px solid var(--g200);border-radius:10px;padding:14px 10px;text-align:center;}
+.flow-box h4{font-size:11px;font-weight:700;margin-bottom:4px;}
+.flow-box p{font-size:10px;color:var(--g500);margin-bottom:0;line-height:1.4;}
+.flow-arr{padding:0 4px;font-size:18px;color:var(--p);flex-shrink:0;}
+.score-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+.score-table th,.score-table td{padding:8px 12px;border:1px solid var(--g200);text-align:center;}
+.score-table th{background:var(--g100);font-weight:700;}
+.score-table .green{background:#d1fae5;color:#065f46;}
+.score-table .yellow{background:#fef3c7;color:#92400e;}
+.score-table .orange{background:#fed7aa;color:#9a3412;}
+.score-table .red{background:#fee2e2;color:#991b1b;}
+@media(max-width:768px){.compare-box{grid-template-columns:1fr;}.compare-side.left{border-right:none;border-bottom:2px solid var(--g200);}.metric-grid{grid-template-columns:1fr;}.flow-h{flex-direction:column;}.flow-arr{transform:rotate(90deg);}}
+</style>
+</head>
+<body>
+<div class="main">
+
+<div class="hero">
+  <div class="hero-badge">TIME SERIES MODEL #2</div>
+  <h1>LSTM Autoencoder &#49884;&#48044;&#47112;&#51060;&#49496; &#44208;&#44284; &#49345;&#49464; &#49444;&#47749;</h1>
+  <p class="sub">4&#44060;&#51032; &#44536;&#47000;&#54532;&#47484; &#54616;&#45208;&#54616;&#45208; &#51069;&#45716; &#48277; &mdash; "&#51648;&#44552; &#51221;&#49345;&#51064;&#44032;?" &#51060;&#49345; &#53456;&#51648; &#52404;&#54744;</p>
+</div>
+
+<!-- WHAT IS LSTM -->
+<div class="section">
+  <h2><span class="num">0</span> LSTM Autoencoder&#46976;?</h2>
+
+  <div class="compare-box">
+    <div class="compare-side left" style="background:var(--bl);border-color:var(--b);">
+      <h4 style="color:var(--b);">Prophet&#51032; &#51656;&#47928;</h4>
+      <p style="font-size:14px;text-align:center;padding:10px 0;margin:0;font-weight:600;">"&#45236;&#51068; &#50728;&#46020;&#44032; &#47751; &#46020;?"<br><span style="font-size:12px;font-weight:400;color:var(--g600);">&#8594; &#50696;&#52769; (Prediction)</span></p>
+    </div>
+    <div class="compare-side right" style="background:var(--pl);">
+      <h4 style="color:var(--p);">LSTM&#51032; &#51656;&#47928;</h4>
+      <p style="font-size:14px;text-align:center;padding:10px 0;margin:0;font-weight:600;">"&#51648;&#44552; &#49345;&#53468;&#44032; &#51221;&#49345;&#51064;&#44032;?"<br><span style="font-size:12px;font-weight:400;color:var(--g600);">&#8594; &#51060;&#49345; &#53456;&#51648; (Anomaly Detection)</span></p>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <div class="desc">LSTM Autoencoder&#51032; &#50896;&#47532;</div>
+    <div class="formula">&#51116;&#44396;&#49457; &#50724;&#52264; = |&#51077;&#47141; - &#48373;&#50896;|&sup2;</div>
+    <div class="desc">&#51221;&#49345;&#51060;&#47732; &#48373;&#50896; &#51096; &#46120; &rarr; &#50724;&#52264; &#51089;&#51020; &rarr; &#51221;&#49345;!<br>&#51060;&#49345;&#51060;&#47732; &#48373;&#50896; &#47803; &#46120; &rarr; &#50724;&#52264; &#53372; &rarr; &#51060;&#49345;!</div>
+  </div>
+
+  <div class="analogy">
+    <div class="title">&#128161; &#48708;&#50976;: &#52828;&#44396; &#50620;&#44404; &#50508;&#50500;&#48372;&#44592;</div>
+    <p style="font-size:13px;margin-bottom:4px;">&#54217;&#49548;&#50640; <strong>&#52828;&#44396;&#46308; &#50620;&#44404;&#47564;</strong> &#48656;&#50728; &#49324;&#46988;&#51060;</p>
+    <p style="font-size:13px;margin-bottom:4px;">&#52828;&#44396;&#44032; &#50724;&#47732;: "&#50500;, &#51060; &#50620;&#44404; &#50508;&#50500;!" &rarr; <strong>&#48373;&#50896; &#49457;&#44277;</strong> &rarr; &#50724;&#52264; &#51089;&#51020; = &#51221;&#49345; &#10004;</p>
+    <p style="font-size:13px;margin-bottom:0;">&#47784;&#47476;&#45716; &#49324;&#46988;&#51060; &#50724;&#47732;: "&#50612;? &#51060;&#44148; &#45804;&#46972;!" &rarr; <strong>&#48373;&#50896; &#49892;&#54056;</strong> &rarr; &#50724;&#52264; &#53372; = &#51060;&#49345;! &#128680;</p>
+  </div>
+
+  <div class="info-card purple">
+    <div class="card-title">&#128202; &#51060; &#49884;&#48044;&#47112;&#51060;&#49496;&#50640;&#49436; &#49324;&#50857;&#54620; &#45936;&#51060;&#53552;</div>
+    <p style="margin-bottom:4px;"><strong>&#49468;&#49436; 3&#44060;&#47484; &#46041;&#49884; &#49324;&#50857;</strong> (&#45796;&#48320;&#47049;!) &mdash; Prophet&#44284;&#51032; &#44032;&#51109; &#53360; &#52264;&#51060;!</p>
+    <ul style="padding-left:18px;margin-bottom:0;">
+      <li><strong>&#50728;&#46020;</strong> (temperature) &mdash; &#48288;&#50612;&#47553; &#50728;&#46020; (&deg;C)</li>
+      <li><strong>&#51652;&#46041;</strong> (vibration) &mdash; &#51652;&#46041; RMS (mm/s)</li>
+      <li><strong>&#51204;&#47448;</strong> (current) &mdash; &#47784;&#53552; &#51204;&#47448; (A)</li>
+    </ul>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card"><div class="value">3&#44060;</div><div class="label">&#46041;&#49884; &#48516;&#49437; &#49468;&#49436;<br>(&#50728;&#46020;+&#51652;&#46041;+&#51204;&#47448;)</div></div>
+    <div class="metric-card"><div class="value">130&#44148;</div><div class="label">&#51060;&#49345; &#44048;&#51648;<br>(&#51204;&#52404;&#51032; 21%)</div></div>
+    <div class="metric-card"><div class="value">30h</div><div class="label">&#49884;&#53448;&#49828; &#50952;&#46020;&#50864;<br>(&#52572;&#44540; 30&#49884;&#44036; &#54056;&#53556;)</div></div>
+  </div>
+
+  <h3>LSTM Autoencoder &#51089;&#46041; &#55120;&#47492;</h3>
+  <div class="flow-h">
+    <div class="flow-box" style="background:var(--bl);border-color:var(--b);">
+      <h4>&#51077;&#47141;</h4>
+      <p>&#52572;&#44540; 30&#49884;&#44036;<br>&#50728;&#46020;+&#51652;&#46041;+&#51204;&#47448;</p>
+    </div>
+    <div class="flow-arr">&rarr;</div>
+    <div class="flow-box" style="background:var(--pl);border-color:var(--p);">
+      <h4>Encoder</h4>
+      <p>&#54056;&#53556; &#52628;&#52636;<br>&#54645;&#49900;&#47564; &#50517;&#52629;</p>
+    </div>
+    <div class="flow-arr">&rarr;</div>
+    <div class="flow-box" style="background:var(--wl);border-color:var(--w);">
+      <h4>Bottleneck</h4>
+      <p>&#50517;&#52629;&#46108; &#54645;&#49900;<br>(&#51221;&#49345; &#54056;&#53556;)</p>
+    </div>
+    <div class="flow-arr">&rarr;</div>
+    <div class="flow-box" style="background:var(--pl);border-color:var(--p);">
+      <h4>Decoder</h4>
+      <p>&#54645;&#49900;&#50640;&#49436;<br>&#50896;&#48376; &#48373;&#50896; &#49884;&#46020;</p>
+    </div>
+    <div class="flow-arr">&rarr;</div>
+    <div class="flow-box" style="background:var(--sl);border-color:var(--s);">
+      <h4>&#54032;&#51221;</h4>
+      <p>&#48373;&#50896; &#51096; &#46120; &rarr; &#51221;&#49345;<br>&#48373;&#50896; &#47803; &#46120; &rarr; <strong>&#51060;&#49345;!</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- GRAPH 1 -->
+<div class="section">
+  <div class="graph-card">
+    <div class="graph-num">&#44536;&#47000;&#54532; 1</div>
+    <h3>&#50896;&#48376; &#49468;&#49436; &#45936;&#51060;&#53552; &mdash; &#48288;&#50612;&#47553; &#50728;&#46020;</h3>
+
+    <div class="img-wrap">
+      <img src="lstm_result.png" alt="LSTM &#44208;&#44284;">
+      <div class="caption">&#50948;&#50640;&#49436; &#52395; &#48264;&#51704; &#44536;&#47000;&#54532;&#47484; &#48372;&#49464;&#50836;</div>
+    </div>
+
+    <div class="info-card blue">
+      <div class="card-title">&#128065;&#65039; Prophet &#44536;&#47000;&#54532; 1&#44284; &#46041;&#51068;&#54620; &#45936;&#51060;&#53552;!</div>
+      <p style="margin-bottom:4px;">&#44057;&#51008; &#50728;&#46020; &#45936;&#51060;&#53552;&#51648;&#47564;, <strong>&#47785;&#51201;&#51060; &#45796;&#47493;&#45768;&#45796;</strong>:</p>
+      <ul style="padding-left:18px;margin-bottom:0;">
+        <li>Prophet: &#51060; &#45936;&#51060;&#53552;&#47196; "&#48120;&#47000; &#50728;&#46020;&#47484; <strong>&#50696;&#52769;</strong>"</li>
+        <li>LSTM: &#51060; &#45936;&#51060;&#53552;&#47196; "&#51221;&#49345; &#54056;&#53556;&#51012; <strong>&#44592;&#50613;</strong>" &rarr; &#48708;&#51221;&#49345; &#44048;&#51648;</li>
+      </ul>
+    </div>
+
+    <div class="step-list">
+      <div class="step-item"><div class="content"><strong>&#52488;&#47197; &#51216;&#49440; &#50812;&#51901;</strong> (1&#50900;~3&#50900; &#52488;) = LSTM&#51060; "&#51221;&#49345;&#51060;&#46976; &#44148; &#51060;&#47088; &#44163;&#51060;&#45796;"&#46972;&#44256; <strong>&#44592;&#50613;&#54616;&#45716;</strong> &#44396;&#44036;</div></div>
+      <div class="step-item"><div class="content"><strong>&#52488;&#47197; &#51216;&#49440; &#50724;&#47480;&#51901;</strong> (3&#50900;~4&#50900;) = &#44592;&#50613;&#54620; &#51221;&#49345;&#44284; <strong>&#48708;&#44368;&#54616;&#50668;</strong> &#51060;&#49345;&#51012; &#44048;&#51648;&#54616;&#45716; &#44396;&#44036;</div></div>
+      <div class="step-item"><div class="content"><strong>&#50948;&#47196; &#53916;&#45716; &#49828;&#54028;&#51060;&#53356;</strong> (40~60&deg;C) = &#51060;&#49345; &#51060;&#48292;&#53944;! LSTM&#51060; <strong>"&#51060;&#44148; &#45236;&#44032; &#47784;&#47476;&#45716; &#54056;&#53556;!"</strong>&#51060;&#46972;&#44256; &#44048;&#51648;&#54624; &#44163;</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- GRAPH 2 — MOST IMPORTANT -->
+<div class="section">
+  <div class="graph-card" style="border-color:var(--d);border-width:3px;">
+    <div class="graph-num" style="background:var(--d);">&#44536;&#47000;&#54532; 2 &#9733;</div>
+    <h3 style="color:var(--d);">&#51116;&#44396;&#49457; &#50724;&#52264; &mdash; &#9733; &#44032;&#51109; &#51473;&#50836;&#54620; &#44536;&#47000;&#54532;!</h3>
+
+    <div class="info-card red">
+      <div class="card-title">&#128293; &#51060;&#44163;&#51060; LSTM Autoencoder&#51032; &#54645;&#49900; &#52636;&#47141;&#51077;&#45768;&#45796;!</div>
+      <p style="margin-bottom:0;">"&#44033; &#49884;&#51216;&#50640;&#49436; &#45936;&#51060;&#53552;&#44032; &#51221;&#49345;&#44284; &#50620;&#47560;&#45208; &#45796;&#47476;&#44032;?"&#47484; &#49688;&#52824;&#47196; &#48372;&#50668;&#51469;&#45768;&#45796;.</p>
+    </div>
+
+    <div class="code-box"><span class="yw">&#44536;&#47000;&#54532;&#50640;&#49436; &#48372;&#51060;&#45716; &#44163;:</span>
+
+  <span class="hl">&#54028;&#46976; &#49440;(&mdash;)</span>: &#51116;&#44396;&#49457; &#50724;&#52264; (MSE) &mdash; &#44033; &#49884;&#51216;&#51032; "&#51060;&#49345; &#51216;&#49688;"
+  <span class="pk">&#48736;&#44036; &#51216;&#49440;(--)</span>: &#51076;&#44228;&#44050; (0.5498) &mdash; &#51060; &#50948;&#45716; "&#51060;&#49345;"
+  <span class="pk">&#48516;&#54861; &#50689;&#50669;</span>: &#51060;&#49345;&#51004;&#47196; &#44048;&#51648;&#46108; &#44396;&#44036;!</div>
+
+    <h3>&#51069;&#45716; &#48169;&#48277;</h3>
+    <div class="code-box"><span class="yw">&#54028;&#46976; &#49440;&#51060; &#45230;&#51020; (0.3 &#51060;&#54616;):</span>
+  <span class="gr">&rarr; "&#51060; &#49884;&#51216;&#51032; &#45936;&#51060;&#53552;&#45716; &#45236;&#44032; &#44592;&#50613;&#54620; &#51221;&#49345; &#54056;&#53556;&#44284; &#48708;&#49847;&#54616;&#45796;"</span>
+  <span class="gr">&rarr; &#51221;&#49345;! &#10004;</span>
+
+<span class="yw">&#54028;&#46976; &#49440;&#51060; &#48736;&#44036; &#51216;&#49440; &#50948;&#47196; &#53916;&#50612;&#50732;&#46988;:</span>
+  <span class="pk">&rarr; "&#51060; &#49884;&#51216;&#51032; &#45936;&#51060;&#53552;&#45716; &#45236;&#44032; &#44592;&#50613;&#54620; &#51221;&#49345;&#44284; &#45796;&#47476;&#45796;!"</span>
+  <span class="pk">&rarr; &#51060;&#49345;! &#128680; &rarr; &#48516;&#54861; &#50689;&#50669;&#51004;&#47196; &#54364;&#49884;</span>
+
+<span class="yw">&#48516;&#54861; &#50689;&#50669;&#51060; &#45208;&#53440;&#45208;&#45716; &#49884;&#51216;:</span>
+  <span class="dm">&rarr; &#44536;&#47000;&#54532; 1&#50640;&#49436; &#50728;&#46020;&#44032; &#44553;&#46321;&#54620; &#49884;&#51216;&#44284; &#51068;&#52824;!</span>
+  <span class="dm">&rarr; LSTM&#51060; "&#51060;&#49345; &#44256;&#50728; &#51060;&#48292;&#53944;"&#47484; &#51221;&#54869;&#55176; &#51105;&#50500;&#45240;&#45796;!</span></div>
+
+    <h3>"&#51116;&#44396;&#49457; &#50724;&#52264;"&#46976; &#47924;&#50631;&#51064;&#44032;?</h3>
+    <div class="analogy">
+      <div class="title">&#128161; &#49789;&#44172; &#49444;&#47749;</div>
+      <p style="font-size:13px;margin-bottom:8px;"><strong>&#51221;&#49345;&#51068; &#46412;:</strong></p>
+      <p style="font-size:12px;margin-bottom:4px;">&#51077;&#47141;: [25.3&deg;C, 2.5mm/s, 85A] (&#50728;&#46020;, &#51652;&#46041;, &#51204;&#47448;)</p>
+      <p style="font-size:12px;margin-bottom:4px;">&#48373;&#50896;: [25.1&deg;C, 2.6mm/s, 84.8A] &larr; &#48708;&#49847;&#54616;&#44172; &#48373;&#50896;&#46120;!</p>
+      <p style="font-size:12px;margin-bottom:12px;">&#50724;&#52264;: <strong>0.05</strong> &larr; &#51089;&#51020; = &#51221;&#49345; &#10004;</p>
+      <p style="font-size:13px;margin-bottom:8px;"><strong>&#51060;&#49345;&#51068; &#46412;:</strong></p>
+      <p style="font-size:12px;margin-bottom:4px;">&#51077;&#47141;: [55.0&deg;C, 12.0mm/s, 130A] (3&#44060; &#47784;&#46160; &#44553;&#46321;!)</p>
+      <p style="font-size:12px;margin-bottom:4px;">&#48373;&#50896;: [27.0&deg;C, 3.0mm/s, 87A] &larr; &#51221;&#49345; &#54056;&#53556;&#51004;&#47196; &#48373;&#50896; &#49884;&#46020;&#54664;&#51648;&#47564; &#51204;&#54784; &#45796;&#47492;</p>
+      <p style="font-size:12px;margin-bottom:0;">&#50724;&#52264;: <strong>3.85</strong> &larr; &#53372;! = &#51060;&#49345;! &#128680;</p>
+    </div>
+
+    <h3>&#51076;&#44228;&#44050; (0.5498)&#51008; &#50612;&#46523;&#44172; &#51221;&#54644;&#51648;&#45716;&#44032;?</h3>
+    <div class="info-card yellow">
+      <div class="card-title">&#128202; &#51076;&#44228;&#44050; = &#54617;&#49845; &#45936;&#51060;&#53552;(&#51221;&#49345;)&#51032; &#49345;&#50948; 5%</div>
+      <p style="margin-bottom:4px;">"&#51221;&#49345; &#45936;&#51060;&#53552; &#51473;&#50640;&#49436;&#46020; 5%&#45716; &#50724;&#52264;&#44032; &#51060; &#51221;&#46020;&#44620;&#51648; &#50732;&#46972;&#44052; &#49688; &#51080;&#45796;. &#54616;&#51648;&#47564; &#51060; &#50948;&#47196; &#50732;&#46972;&#44032;&#47732; &#51221;&#49345;&#51060; &#50500;&#45776; &#44032;&#45733;&#49457;&#51060; &#45458;&#45796;!"</p>
+      <p style="margin-bottom:0;font-size:12px;color:var(--g600);">&#51076;&#44228;&#44050;&#51012; &#45230;&#52628;&#47732; &rarr; &#45908; &#48124;&#44048;&#54616;&#44172; &#44048;&#51648; (&#44144;&#51667; &#44221;&#48372;&#46020; &#51613;&#44032;)<br>&#51076;&#44228;&#44050;&#51012; &#45458;&#51060;&#47732; &rarr; &#45916; &#48124;&#44048; (&#45459;&#52832; &#49688; &#51080;&#51020;)</p>
+    </div>
+  </div>
+</div>
+
+<!-- GRAPH 3 -->
+<div class="section">
+  <div class="graph-card">
+    <div class="graph-num">&#44536;&#47000;&#54532; 3</div>
+    <h3>&#51116;&#44396;&#49457; &#50724;&#52264; &#48516;&#54252; &mdash; &#51221;&#49345; vs &#53580;&#49828;&#53944;</h3>
+
+    <div class="code-box"><span class="yw">&#44536;&#47000;&#54532;&#50640;&#49436; &#48372;&#51060;&#45716; &#44163;:</span>
+
+  <span class="gr">&#52488;&#47197; &#47561;&#45824;</span>: &#54617;&#49845;(&#51221;&#49345;) &#45936;&#51060;&#53552;&#51032; &#50724;&#52264; &#48516;&#54252;
+  <span class="hl">&#54028;&#46976; &#47561;&#45824;</span>: &#53580;&#49828;&#53944; &#45936;&#51060;&#53552;&#51032; &#50724;&#52264; &#48516;&#54252;
+  <span class="pk">&#48736;&#44036; &#51216;&#49440;</span>: &#51076;&#44228;&#44050;
+
+<span class="yw">&#51069;&#45716; &#48169;&#48277;:</span>
+
+  <span class="gr">&#52488;&#47197;(&#51221;&#49345;)&#44284; &#54028;&#46976;(&#53580;&#49828;&#53944;)&#51060; &#45824;&#48512;&#48516; &#44217;&#52840;</span>
+  &rarr; &#53580;&#49828;&#53944; &#45936;&#51060;&#53552;&#51032; &#45824;&#48512;&#48516;&#46020; &#51221;&#49345;!
+
+  <span class="pk">&#54028;&#46976; &#47561;&#45824;&#44032; &#48736;&#44036; &#51216;&#49440; &#50724;&#47480;&#51901;&#44620;&#51648; &#54140;&#51256; &#51080;&#51020;</span>
+  &rarr; &#51068;&#48512; &#53580;&#49828;&#53944; &#45936;&#51060;&#53552;&#44032; &#51221;&#49345; &#48276;&#50948;&#47484; &#48279;&#50612;&#45228; = <span class="pk">&#51060;&#49345;!</span>
+  &rarr; &#52509; <span class="yw">130&#44148;(21.0%)</span>&#51060; &#51060;&#49345;&#51004;&#47196; &#44048;&#51648;&#46120;</div>
+  </div>
+</div>
+
+<!-- GRAPH 4 — KEY DIFFERENCE -->
+<div class="section">
+  <div class="graph-card" style="border-color:var(--s);border-width:3px;">
+    <div class="graph-num" style="background:var(--s);">&#44536;&#47000;&#54532; 4 &#9733;</div>
+    <h3 style="color:var(--s);">&#9733; LSTM&#51032; &#44053;&#51216;: &#45796;&#48320;&#47049; &#46041;&#49884; &#48516;&#49437; (&#50728;&#46020;+&#51652;&#46041;+&#51204;&#47448;)</h3>
+
+    <div class="info-card green">
+      <div class="card-title">&#128293; &#51060;&#44163;&#51060; Prophet&#44284;&#51032; &#44032;&#51109; &#53360; &#52264;&#51060;&#51077;&#45768;&#45796;!</div>
+      <p style="margin-bottom:0;">Prophet&#51008; &#50728;&#46020; <strong>1&#44060;&#47564;</strong> &#48388;&#45768;&#45796;. LSTM&#51008; &#50728;&#46020;+&#51652;&#46041;+&#51204;&#47448; <strong>3&#44060;&#47484; &#46041;&#49884;&#50640;</strong> &#48388;&#45768;&#45796;!</p>
+    </div>
+
+    <div class="code-box"><span class="yw">&#44536;&#47000;&#54532;&#50640;&#49436; &#48372;&#51060;&#45716; &#44163;:</span>
+
+  <span class="pk">&#48736;&#44036; &#49440;</span>: &#50728;&#46020; (&deg;C) &mdash; &#50812;&#51901; Y&#52629;
+  <span class="hl">&#54028;&#46976; &#49440;</span>: &#51652;&#46041; &times;5 (mm/s, &#48372;&#44592; &#49789;&#44172; 5&#48176;) &mdash; &#50812;&#51901; Y&#52629;
+  <span class="gr">&#52488;&#47197; &#49440;</span>: &#51204;&#47448; (A) &mdash; &#50724;&#47480;&#51901; Y&#52629;</div>
+
+    <h3>&#50780; 3&#44060;&#47484; &#46041;&#49884;&#50640; &#48372;&#45716; &#44163;&#51060; &#51473;&#50836;&#54620;&#44032;?</h3>
+
+    <table class="score-table">
+      <thead><tr><th>&#49345;&#54889;</th><th>&#50728;&#46020;</th><th>&#51652;&#46041;</th><th>&#51204;&#47448;</th><th>Prophet &#54032;&#45800;</th><th>LSTM &#54032;&#45800;</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>&#50808;&#48512; &#50728;&#46020; &#49345;&#49849;</td>
+          <td class="yellow">&#8593;</td><td class="green">&#51221;&#49345;</td><td class="green">&#51221;&#49345;</td>
+          <td class="red">&#44221;&#48372;! &#10060;<br><small>(&#50728;&#46020;&#47564; &#48400;&#49436;)</small></td>
+          <td class="green">&#51221;&#49345; &#10004;<br><small>(&#45796;&#47480; &#49468;&#49436; OK)</small></td>
+        </tr>
+        <tr>
+          <td>&#48288;&#50612;&#47553; &#49552;&#49345;</td>
+          <td class="red">&#8593;&#8593;</td><td class="red">&#8593;&#8593;</td><td class="red">&#8593;&#8593;</td>
+          <td class="yellow">&#44221;&#48372;<br><small>(&#50728;&#46020;&#47564; &#48400;)</small></td>
+          <td class="red">&#51060;&#49345;! &#128680;<br><small>(3&#44060; &#46041;&#49884; &#48320;&#54868;!)</small></td>
+        </tr>
+        <tr>
+          <td>&#51060;&#47932;&#51656; &#45180;&#51076;</td>
+          <td class="green">&#51221;&#49345;</td><td class="green">&#51221;&#49345;</td><td class="red">&#44553;&#46321;!</td>
+          <td class="green">&#44048;&#51648; &#48520;&#44032; &#10060;<br><small>(&#51204;&#47448; &#50504; &#48400;)</small></td>
+          <td class="red">&#51060;&#49345;! &#128680;<br><small>(&#51204;&#47448; &#44553;&#46321; &#44048;&#51648;)</small></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-card purple">
+      <div class="card-title">&#128161; &#54645;&#49900;</div>
+      <p style="margin-bottom:0;">LSTM&#51008; <strong>"3&#44060; &#49468;&#49436;&#51032; &#46041;&#49884; &#48320;&#54868; &#54056;&#53556;"</strong>&#51012; &#44048;&#51648;&#54633;&#45768;&#45796;. &#50728;&#46020;&#47564; &#50732;&#46972;&#44032;&#47732; &#50808;&#48512; &#50836;&#51064;&#51068; &#49688; &#51080;&#51648;&#47564;, &#50728;&#46020;+&#51652;&#46041;+&#51204;&#47448;&#44032; <strong>&#46041;&#49884;&#50640;</strong> &#50732;&#46972;&#44032;&#47732; &#49444;&#48708;&#50640; &#47928;&#51228;&#44032; &#51080;&#45796;&#45716; &#44163;&#51077;&#45768;&#45796;!</p>
+    </div>
+  </div>
+</div>
+
+<!-- REAL WORLD APPLICATION -->
+<div class="section">
+  <h2><span class="num">&#9881;</span> &#49892;&#51228; &#49836;&#47112;&#45908;&#50640;&#49436;&#51032; &#54876;&#50857;</h2>
+
+  <div class="code-box"><span class="yw">LSTM Autoencoder&#44032; &#49836;&#47112;&#45908;&#50640;&#49436; &#54616;&#45716; &#51068;:</span>
+
+  1. <span class="gr">&#51221;&#49345; &#50868;&#51204; 28&#51068;</span> &#45936;&#51060;&#53552;&#47196; &#54617;&#49845;
+     &rarr; "&#51221;&#49345;&#51068; &#46412; &#50728;&#46020;&middot;&#51652;&#46041;&middot;&#51204;&#47448;&#51032; &#54056;&#53556;"&#51012; &#44592;&#50613;
+
+  2. &#51060;&#54980; &#49892;&#49884;&#44036;&#51004;&#47196; <span class="hl">&#47588; 1&#52488;&#47560;&#45796;</span>:
+     &rarr; &#52572;&#44540; 30&#52488; &#45936;&#51060;&#53552;&#47484; LSTM&#50640; &#51077;&#47141;
+     &rarr; &#51116;&#44396;&#49457; &#50724;&#52264; &#44228;&#49328;
+     &rarr; &#50724;&#52264;&#44032; &#51076;&#44228;&#44050; &#52488;&#44284; &#49884; &#44221;&#48372;</div>
+
+  <h3>&#44221;&#48372; &#46321;&#44553;</h3>
+  <table class="score-table">
+    <thead><tr><th>&#51060;&#49345; &#51216;&#49688;</th><th>&#46321;&#44553;</th><th>&#51312;&#52824;</th></tr></thead>
+    <tbody>
+      <tr><td>0.0 ~ 0.3</td><td class="green">&#51221;&#49345;</td><td>&#51221;&#49345; &#50868;&#51204;</td></tr>
+      <tr><td>0.3 ~ 0.5</td><td class="yellow">&#51452;&#51032;</td><td>&#47784;&#45768;&#53552;&#47553; &#44053;&#54868;</td></tr>
+      <tr><td>0.5 ~ 0.7</td><td class="orange">&#44221;&#44256;</td><td>&#51221;&#48708; &#44228;&#54925; &#49688;&#47549;</td></tr>
+      <tr><td>0.7 ~ 0.9</td><td class="red">&#50948;&#54744;</td><td>&#51312;&#44592; &#51221;&#48708; &#44428;&#44256;</td></tr>
+      <tr><td>0.9 ~ 1.0</td><td class="red" style="font-weight:800;">&#44596;&#44553;</td><td><strong>&#51593;&#49884; &#51221;&#51648; &#44428;&#44256;</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-card green">
+    <div class="card-title">&#128161; &#54645;&#49900; &#44032;&#52824;</div>
+    <p style="margin-bottom:0;"><strong>"&#49324;&#46988;&#51060; 24&#49884;&#44036; &#44048;&#49884;&#54624; &#49688; &#50630;&#45716; &#44163;&#51012; AI&#44032; &#45824;&#49888;!"</strong><br>&#48288;&#50612;&#47553;&#51060; &#49436;&#49436;&#55176; &#49552;&#49345;&#46104;&#45716; &#44163;&#51012; &#49324;&#46988;&#51008; &#45712;&#45180;&#51648; &#47803;&#54616;&#51648;&#47564;, LSTM&#51008; &#51652;&#46041;+&#50728;&#46020;+&#51204;&#47448;&#51032; &#48120;&#49464;&#54620; &#48320;&#54868;&#47484; &#44048;&#51648;&#54616;&#50668; <strong>&#44256;&#51109; &#51204;&#50640; &#44221;&#44256;</strong>&#54633;&#45768;&#45796;.</p>
+  </div>
+</div>
+
+<!-- COMPARISON SUMMARY -->
+<div class="section">
+  <h2><span class="num">vs</span> Prophet vs LSTM &#52509;&#51221;&#47532;</h2>
+
+  <table class="score-table" style="font-size:13px;">
+    <thead><tr><th></th><th>Prophet</th><th>LSTM Autoencoder</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:700;">&#51656;&#47928;</td><td>"&#45236;&#51068; &#50728;&#46020;&#44032; &#47751; &#46020;?"</td><td>"&#51648;&#44552; &#51221;&#49345;&#51064;&#44032;?"</td></tr>
+      <tr><td style="font-weight:700;">&#47785;&#51201;</td><td>&#50696;&#52769; (Prediction)</td><td>&#51060;&#49345; &#53456;&#51648; (Detection)</td></tr>
+      <tr><td style="font-weight:700;">&#51077;&#47141; &#49468;&#49436;</td><td>&#50728;&#46020; <strong>1&#44060;</strong> (&#45800;&#48320;&#47049;)</td><td>&#50728;&#46020;+&#51652;&#46041;+&#51204;&#47448; <strong>3&#44060;</strong> (&#45796;&#48320;&#47049;)</td></tr>
+      <tr><td style="font-weight:700;">&#44536;&#47000;&#54532; &#54645;&#49900;</td><td>&#53944;&#47116;&#46300;/&#44228;&#51208;&#49457; <strong>&#48516;&#54644;</strong></td><td>&#51116;&#44396;&#49457; &#50724;&#52264; (&#51060;&#49345; &#51216;&#49688;)</td></tr>
+      <tr><td style="font-weight:700;">&#44053;&#51216;</td><td>"&#50780; &#50732;&#46972;&#44032;&#45716;&#51648;" &#49444;&#47749;</td><td>"&#51060;&#49345; &#51060;&#48292;&#53944;" &#51088;&#46041; &#44048;&#51648;</td></tr>
+      <tr><td style="font-weight:700;">&#50557;&#51216;</td><td>&#51652;&#46041;/&#51204;&#47448; &#54876;&#50857; &#48520;&#44032;</td><td>"&#50780; &#51060;&#49345;&#51064;&#51648;" &#49444;&#47749; &#50612;&#47140;&#50880;</td></tr>
+      <tr><td style="font-weight:700;">&#49836;&#47112;&#45908; &#51201;&#50857;</td><td>&#52376;&#47532;&#47049; &#51109;&#44592; &#53944;&#47116;&#46300;</td><td><strong>&#48288;&#50612;&#47553; &#51060;&#49345; &#53456;&#51648;</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-card blue">
+    <div class="card-title">&#128073; &#44208;&#47200;</div>
+    <p style="margin-bottom:0;">Prophet&#44284; LSTM&#51008; <strong>&#44221;&#51137; &#44288;&#44228;&#44032; &#50500;&#45768;&#46972; &#54801;&#47141; &#44288;&#44228;</strong>&#51077;&#45768;&#45796;. Prophet&#51004;&#47196; &#51109;&#44592; &#53944;&#47116;&#46300;&#47484; &#54028;&#50501;&#54616;&#44256;, LSTM&#51004;&#47196; &#49892;&#49884;&#44036; &#51060;&#49345;&#51012; &#44048;&#51648;&#54633;&#45768;&#45796;. &#49836;&#47112;&#45908; AI &#49884;&#49828;&#53596;&#50640;&#49436;&#45716; <strong>&#46168; &#45796; &#49324;&#50857;</strong>&#54633;&#45768;&#45796;!</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

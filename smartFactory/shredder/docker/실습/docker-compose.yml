@@ -1,0 +1,25 @@
+name: monitor-system
+
+services:
+  server:
+    build: ./server
+    container_name: monitor-server
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  sensor:
+    build: ./sensor
+    container_name: monitor-sensor
+    depends_on:
+      - server
+    restart: unless-stopped
+
+  dashboard:
+    build: ./dashboard
+    container_name: monitor-dashboard
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+    restart: unless-stopped

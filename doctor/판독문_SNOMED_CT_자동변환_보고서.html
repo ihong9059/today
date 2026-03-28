@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>판독문 SNOMED CT 자동 변환 AI 도구 — 기술 타당성 및 비즈니스 모델 보고서</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --primary-dark: #1e40af;
+    --accent: #7c3aed;
+    --accent-light: #ede9fe;
+    --success: #059669;
+    --success-light: #d1fae5;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --info: #0891b2;
+    --info-light: #cffafe;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, 'Segoe UI', 'Malgun Gothic', sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-800);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* === SIDEBAR === */
+  .sidebar {
+    position: fixed; left: 0; top: 0;
+    width: 290px; height: 100vh;
+    background: var(--gray-900); color: #fff;
+    overflow-y: auto; z-index: 100;
+    padding: 24px 0; transition: transform .3s;
+  }
+  .sidebar-title {
+    font-size: 14px; font-weight: 700;
+    padding: 0 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    margin-bottom: 12px; line-height: 1.5;
+  }
+  .sidebar-title span { color: #60a5fa; }
+  .sidebar-title .sub { color: #94a3b8; font-size: 12px; font-weight: 400; display: block; margin-top: 4px; }
+  .sidebar a {
+    display: block; padding: 7px 20px;
+    color: #94a3b8; text-decoration: none;
+    font-size: 12.5px; transition: .2s;
+    border-left: 3px solid transparent;
+  }
+  .sidebar a:hover, .sidebar a.active {
+    color: #fff; background: rgba(255,255,255,.05);
+    border-left-color: #60a5fa;
+  }
+  .sidebar a .num {
+    display: inline-block; width: 26px;
+    color: #60a5fa; font-weight: 600;
+  }
+  .sidebar .divider {
+    height: 1px; background: rgba(255,255,255,.08);
+    margin: 10px 20px;
+  }
+
+  /* === MOBILE === */
+  .menu-toggle {
+    display: none; position: fixed;
+    top: 16px; left: 16px; z-index: 200;
+    background: var(--gray-900); color: #fff;
+    border: none; border-radius: 8px;
+    width: 44px; height: 44px;
+    font-size: 22px; cursor: pointer;
+  }
+
+  /* === MAIN === */
+  .main {
+    margin-left: 290px;
+    max-width: 920px;
+    padding: 40px 48px 80px;
+  }
+
+  /* === HERO === */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1e40af 100%);
+    color: #fff; border-radius: 16px;
+    padding: 48px 40px; margin-bottom: 48px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute;
+    top: -80px; right: -80px;
+    width: 260px; height: 260px;
+    background: rgba(96,165,250,.12); border-radius: 50%;
+  }
+  .hero::after {
+    content: ''; position: absolute;
+    bottom: -40px; left: 30%;
+    width: 180px; height: 180px;
+    background: rgba(124,58,237,.1); border-radius: 50%;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,.15);
+    padding: 4px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 600;
+    margin-bottom: 16px; letter-spacing: .5px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 12px; line-height: 1.4; position: relative; }
+  .hero .subtitle { font-size: 15px; opacity: .85; line-height: 1.7; position: relative; }
+  .hero-meta {
+    display: flex; gap: 20px; margin-top: 20px;
+    font-size: 12px; opacity: .7; position: relative;
+  }
+
+  /* === CONCLUSION BOX (at top) === */
+  .conclusion-hero {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border: 2px solid #6ee7b7;
+    border-radius: 16px; padding: 36px;
+    margin-bottom: 48px;
+  }
+  .conclusion-hero h2 {
+    font-size: 22px; color: #065f46; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .conclusion-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+  }
+  .conclusion-item {
+    background: #fff; border-radius: 12px; padding: 20px;
+    border: 1px solid #a7f3d0;
+  }
+  .conclusion-item .q {
+    font-size: 13px; font-weight: 700; color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .conclusion-item .a {
+    font-size: 14px; line-height: 1.6; color: var(--gray-700);
+  }
+  .conclusion-item .a strong { color: #065f46; }
+
+  /* === SECTIONS === */
+  .section { margin-bottom: 56px; scroll-margin-top: 24px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px; padding-bottom: 12px;
+    border-bottom: 2px solid var(--primary-light);
+  }
+  .section-num {
+    display: flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px;
+    background: var(--primary); color: #fff;
+    border-radius: 10px; font-weight: 800; font-size: 18px; flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 22px; font-weight: 700; color: var(--gray-900); }
+  h3 { font-size: 17px; font-weight: 700; color: var(--gray-900); margin: 28px 0 14px; }
+  p { margin-bottom: 14px; }
+
+  /* === INFO CARDS === */
+  .info-card {
+    border-radius: 12px; padding: 24px 28px; margin: 20px 0;
+    border-left: 4px solid;
+  }
+  .info-card.blue { background: var(--primary-light); border-color: var(--primary); }
+  .info-card.green { background: var(--success-light); border-color: var(--success); }
+  .info-card.yellow { background: var(--warning-light); border-color: var(--warning); }
+  .info-card.red { background: var(--danger-light); border-color: var(--danger); }
+  .info-card.purple { background: var(--accent-light); border-color: var(--accent); }
+  .info-card .card-title {
+    font-weight: 700; font-size: 15px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .info-card p, .info-card li { font-size: 14px; line-height: 1.7; }
+
+  /* === ANALOGY === */
+  .analogy {
+    background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+    border: 1px solid #fde047; border-radius: 12px;
+    padding: 24px 28px; margin: 20px 0;
+  }
+  .analogy .analogy-title {
+    font-size: 15px; font-weight: 700; color: var(--warning);
+    margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+  }
+
+  /* === TABLES === */
+  .table-wrap {
+    overflow-x: auto; margin: 20px 0;
+    border-radius: 12px; border: 1px solid var(--gray-200);
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead { background: var(--gray-100); }
+  th {
+    text-align: left; padding: 12px 16px;
+    font-weight: 700; color: var(--gray-700);
+    font-size: 13px; border-bottom: 2px solid var(--gray-200); white-space: nowrap;
+  }
+  td {
+    padding: 11px 16px; border-bottom: 1px solid var(--gray-100);
+    vertical-align: top; line-height: 1.6;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover { background: var(--gray-50); }
+  .code-cell {
+    font-family: 'Consolas', monospace; font-weight: 700;
+    color: var(--primary-dark); white-space: nowrap;
+  }
+
+  /* === DARK CODE === */
+  .code-card {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #e2e8f0; border-radius: 12px;
+    padding: 28px 32px; margin: 20px 0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 13px; line-height: 1.8;
+    overflow-x: auto; position: relative;
+    white-space: pre;
+  }
+  .code-card .badge {
+    position: absolute; top: 12px; right: 16px;
+    background: rgba(96,165,250,.2); color: #60a5fa;
+    font-size: 11px; padding: 2px 10px; border-radius: 10px;
+    font-family: -apple-system, sans-serif;
+  }
+  .code-card .hl { color: #60a5fa; font-weight: 600; }
+  .code-card .gr { color: #4ade80; }
+  .code-card .yw { color: #fbbf24; }
+  .code-card .pk { color: #f472b6; }
+  .code-card .dm { color: #64748b; }
+
+  /* === VISUAL BOX === */
+  .visual-box {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 28px; margin: 20px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  }
+
+  /* === FLOW DIAGRAM === */
+  .flow {
+    display: flex; align-items: stretch; gap: 0;
+    margin: 20px 0; overflow-x: auto;
+  }
+  .flow-step {
+    flex: 1; min-width: 140px;
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 18px 14px; text-align: center;
+  }
+  .flow-step .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; background: var(--primary); color: #fff;
+    border-radius: 50%; font-size: 13px; font-weight: 700; margin-bottom: 8px;
+  }
+  .flow-step h4 { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-bottom: 6px; }
+  .flow-step p { font-size: 11px; color: var(--gray-500); margin-bottom: 0; line-height: 1.5; }
+  .flow-arrow {
+    display: flex; align-items: center; padding: 0 4px;
+    color: var(--primary); font-size: 22px; flex-shrink: 0;
+  }
+
+  /* === METRIC CARDS === */
+  .metric-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    margin: 20px 0;
+  }
+  .metric-card {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 20px; text-align: center;
+  }
+  .metric-card .value {
+    font-size: 28px; font-weight: 800; line-height: 1.2;
+  }
+  .metric-card .value.blue { color: var(--primary); }
+  .metric-card .value.green { color: var(--success); }
+  .metric-card .value.purple { color: var(--accent); }
+  .metric-card .value.orange { color: var(--warning); }
+  .metric-card .label {
+    font-size: 12px; color: var(--gray-500); margin-top: 6px; line-height: 1.4;
+  }
+
+  /* === BIZ MODEL CARD === */
+  .biz-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;
+  }
+  .biz-card {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 24px; position: relative; overflow: hidden;
+  }
+  .biz-card.recommended {
+    border-color: var(--success); border-width: 2px;
+  }
+  .biz-card.recommended::after {
+    content: '1순위 추천'; position: absolute; top: 12px; right: -28px;
+    background: var(--success); color: #fff;
+    font-size: 11px; font-weight: 700; padding: 2px 32px;
+    transform: rotate(45deg);
+  }
+  .biz-card h4 {
+    font-size: 15px; font-weight: 700; color: var(--gray-900); margin-bottom: 4px;
+  }
+  .biz-card .biz-sub {
+    font-size: 12px; color: var(--gray-500); margin-bottom: 12px;
+  }
+  .biz-card .biz-detail {
+    font-size: 13px; color: var(--gray-700); line-height: 1.7;
+  }
+  .biz-card .biz-price {
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--gray-100);
+    font-size: 13px; font-weight: 600; color: var(--primary);
+  }
+
+  /* === TIMELINE === */
+  .timeline { margin: 20px 0; position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 20px; top: 0; bottom: 0;
+    width: 3px; background: var(--gray-200);
+  }
+  .tl-item {
+    position: relative; padding: 0 0 32px 56px;
+  }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot {
+    position: absolute; left: 10px; top: 4px;
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #fff; z-index: 1;
+  }
+  .tl-dot.phase1 { background: var(--primary); }
+  .tl-dot.phase2 { background: var(--accent); }
+  .tl-dot.phase3 { background: var(--success); }
+  .tl-dot.phase4 { background: var(--warning); }
+  .tl-content {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 20px 24px;
+  }
+  .tl-content h4 {
+    font-size: 15px; font-weight: 700; color: var(--gray-900); margin-bottom: 4px;
+  }
+  .tl-content .tl-period {
+    font-size: 12px; color: var(--gray-500); margin-bottom: 10px;
+  }
+  .tl-content ul {
+    padding-left: 18px; font-size: 13px; color: var(--gray-700);
+  }
+  .tl-content li { margin-bottom: 4px; line-height: 1.6; }
+
+  /* === COMPARE SIDE === */
+  .compare-box {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--gray-200); margin: 20px 0;
+  }
+  .compare-side { padding: 24px 28px; }
+  .compare-side.before { background: #fef2f2; border-right: 2px solid var(--gray-200); }
+  .compare-side.after { background: #f0fdf4; }
+  .compare-side h4 {
+    font-size: 14px; font-weight: 700; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .compare-side.before h4 { color: var(--danger); }
+  .compare-side.after h4 { color: var(--success); }
+  .compare-side p { font-size: 13px; line-height: 1.7; }
+
+  /* === COMPETITOR === */
+  .comp-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;
+  }
+  .comp-card {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 20px;
+  }
+  .comp-card h4 { font-size: 14px; font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
+  .comp-card .comp-type { font-size: 11px; color: var(--gray-500); margin-bottom: 10px; }
+  .comp-card .comp-desc { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+
+  /* === RISK TABLE === */
+  .risk-badge {
+    display: inline-block; padding: 2px 10px;
+    border-radius: 6px; font-size: 12px; font-weight: 600;
+  }
+  .risk-badge.high { background: var(--danger-light); color: var(--danger); }
+  .risk-badge.mid { background: var(--warning-light); color: var(--warning); }
+
+  /* === STRATEGY FLOW === */
+  .strategy-flow {
+    display: flex; align-items: center; gap: 0;
+    margin: 20px 0; overflow-x: auto;
+  }
+  .strategy-phase {
+    flex: 1; min-width: 200px; padding: 24px;
+    border-radius: 12px; text-align: center;
+  }
+  .strategy-phase.p1 { background: var(--primary-light); border: 2px solid var(--primary); }
+  .strategy-phase.p2 { background: var(--accent-light); border: 1px solid #c4b5fd; }
+  .strategy-phase.p3 { background: var(--success-light); border: 1px solid #6ee7b7; }
+  .strategy-phase h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .strategy-phase.p1 h4 { color: var(--primary-dark); }
+  .strategy-phase.p2 h4 { color: var(--accent); }
+  .strategy-phase.p3 h4 { color: var(--success); }
+  .strategy-phase p { font-size: 12px; margin-bottom: 0; }
+
+  /* === SUMMARY === */
+  .summary-card {
+    background: linear-gradient(135deg, #eff6ff 0%, #ede9fe 100%);
+    border: 1px solid #c7d2fe; border-radius: 16px;
+    padding: 36px; margin: 20px 0;
+  }
+  .summary-card h3 { font-size: 20px; color: var(--primary-dark); margin-bottom: 20px; margin-top: 0; }
+  .summary-list { list-style: none; padding: 0; }
+  .summary-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0; font-size: 15px; line-height: 1.6;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+  }
+  .summary-list li:last-child { border-bottom: none; }
+  .summary-list .num-circle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; background: var(--primary); color: #fff;
+    border-radius: 50%; font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 960px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .menu-toggle { display: flex; align-items: center; justify-content: center; }
+    .main { margin-left: 0; padding: 24px 20px 60px; }
+    .hero { padding: 32px 24px; }
+    .hero h1 { font-size: 22px; }
+    .conclusion-grid { grid-template-columns: 1fr; }
+    .metric-grid { grid-template-columns: 1fr 1fr; }
+    .biz-grid { grid-template-columns: 1fr; }
+    .comp-grid { grid-template-columns: 1fr; }
+    .compare-box { grid-template-columns: 1fr; }
+    .compare-side.before { border-right: none; border-bottom: 2px solid var(--gray-200); }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); justify-content: center; }
+    .strategy-flow { flex-direction: column; }
+    .hero-meta { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+<nav class="sidebar">
+  <div class="sidebar-title">
+    <span>판독문 &rarr; SNOMED CT</span>
+    <span class="sub">자동 변환 AI 도구 보고서</span>
+  </div>
+  <a href="#top-conclusion"><span class="num">&#9733;</span> 핵심 결론 (먼저 읽기)</a>
+  <div class="divider"></div>
+  <a href="#sec1"><span class="num">1</span> Executive Summary</a>
+  <a href="#sec2"><span class="num">2</span> 기술적 타당성 분석</a>
+  <a href="#sec3"><span class="num">3</span> Tool 개발 흐름</a>
+  <a href="#sec4"><span class="num">4</span> 기술 스택 상세</a>
+  <a href="#sec5"><span class="num">5</span> 비즈니스 모델</a>
+  <a href="#sec6"><span class="num">6</span> 시장 규모 / 경쟁</a>
+  <a href="#sec7"><span class="num">7</span> 규제 / 라이선스</a>
+  <a href="#sec8"><span class="num">8</span> 리스크 및 한계</a>
+  <a href="#sec9"><span class="num">9</span> 로드맵 제안</a>
+  <a href="#sec10"><span class="num">10</span> 결론 / 차별화 전략</a>
+</nav>
+
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">FEASIBILITY &amp; BUSINESS REPORT</div>
+    <h1>판독문 SNOMED CT 자동 변환 AI 도구<br>기술 타당성 및 비즈니스 모델 보고서</h1>
+    <p class="subtitle">영상의학과 판독문을 AI가 읽고, 국제 표준 의료 코드(SNOMED CT)로 자동 변환하는 시스템 &mdash; 과연 가능한가? 어떻게 만들고, 어떻게 돈을 버는가?</p>
+    <div class="hero-meta">
+      <span>작성일: 2026-03-27</span>
+      <span>대상: 영상의학과 판독문 &rarr; SNOMED CT</span>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- TOP CONCLUSION — 이 보고서의 목적과 결론을 먼저! -->
+  <!-- ============================================================ -->
+  <div id="top-conclusion">
+    <div class="analogy">
+      <div class="analogy-title">&#128161; 이 보고서가 다루는 핵심 질문</div>
+      <p style="font-size:15px;margin-bottom:0;">의사가 X-ray를 보고 쓰는 <strong>"판독문(자유 텍스트)"</strong>을 AI가 자동으로 읽어서 국제 표준 코드(<strong>SNOMED CT</strong>)로 변환하는 도구를 만들 수 있는가? 만든다면 어떤 기술이 필요하고, 어떤 사업 모델이 가능한가?</p>
+    </div>
+
+    <div class="conclusion-hero">
+      <h2>&#9989; 핵심 결론 3줄 요약</h2>
+      <div class="conclusion-grid">
+        <div class="conclusion-item">
+          <div class="q">Q. AI 자동 변환이 가능한가?</div>
+          <div class="a"><strong>가능하다.</strong> GPT-4+RAG로 96.2% 유효 매칭 달성. 다만 완전 자동화는 아직 어렵고, <strong>의사의 최종 확인</strong>이 필요하다.</div>
+        </div>
+        <div class="conclusion-item">
+          <div class="q">Q. 어떻게 Tool을 만드는가?</div>
+          <div class="a"><strong>NER &rarr; Entity Linking &rarr; Ontology 검증</strong> 3단계 파이프라인. <strong>간(Liver) 질환</strong>에 특화하여 시작, 점진 확장.</div>
+        </div>
+        <div class="conclusion-item">
+          <div class="q">Q. 어떻게 수익을 내는가?</div>
+          <div class="a"><strong>B2B SaaS</strong>(건당/월정액)로 시작 &rarr; EMR 플러그인 확장 &rarr; <strong>데이터 표준화 플랫폼</strong>으로 성장.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 1: Executive Summary -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>Executive Summary</h2>
+    </div>
+
+    <div class="analogy">
+      <div class="analogy-title">&#128161; 초보자를 위한 배경 설명</div>
+      <p style="font-size:14px;margin-bottom:8px;"><strong>판독문이란?</strong> 영상의학과 전문의가 X-ray, CT 등 영상을 보고 쓰는 진단 소견서입니다. "좌측 하엽에 2.3cm 크기의 폐렴 의심 소견" 같은 <strong>자연어 문장</strong>입니다.</p>
+      <p style="font-size:14px;margin-bottom:8px;"><strong>SNOMED CT란?</strong> 전 세계 병원이 공통으로 쓰는 의료 용어 번호 체계입니다. "폐렴" = 233604007처럼 <strong>모든 질환에 고유 번호</strong>를 부여합니다.</p>
+      <p style="font-size:14px;margin-bottom:0;"><strong>왜 변환이 필요한가?</strong> 의사가 쓴 텍스트를 컴퓨터가 이해할 수 있는 코드로 바꿔야 &mdash; 병원 간 데이터 공유, 보험 청구, AI 연구가 가능합니다.</p>
+    </div>
+
+    <div class="compare-box">
+      <div class="compare-side before">
+        <h4>&#10060; 현재 (수동 코딩)</h4>
+        <p style="font-size:14px;">의사가 판독문을 쓴 뒤, <strong>별도의 코더가 수동으로</strong> SNOMED CT / ICD-10 코드를 찾아 입력합니다.</p>
+        <p style="font-size:13px;color:var(--danger);margin-bottom:0;">시간 소모 / 인력 비용 / 코더 간 편차 / 오류 가능성</p>
+      </div>
+      <div class="compare-side after">
+        <h4>&#9989; 목표 (AI 자동 변환)</h4>
+        <p style="font-size:14px;">AI가 판독문을 읽고 <strong>자동으로 SNOMED CT 코드를 추천</strong>, 의사가 승인만 하면 끝.</p>
+        <p style="font-size:13px;color:var(--success);margin-bottom:0;">수초 내 처리 / 비용 절감 / 일관성 / 표준화된 데이터 자산</p>
+      </div>
+    </div>
+
+    <h3>핵심 수치 한눈에 보기</h3>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="value blue">96.2%</div>
+        <div class="label">GPT-4 + RAG<br>유효 SNOMED CT 매칭률</div>
+      </div>
+      <div class="metric-card">
+        <div class="value purple">F1 0.871</div>
+        <div class="label">SapBERT 비지도학습<br>질환 카테고리 매핑</div>
+      </div>
+      <div class="metric-card">
+        <div class="value orange">57.6%</div>
+        <div class="label">정확 매칭률 (Exact Match)<br>&#8594; 사람 검증 필수 영역</div>
+      </div>
+      <div class="metric-card">
+        <div class="value green">$86억</div>
+        <div class="label">2033년 AI 의료 코딩<br>시장 전망 (CAGR 14.2%)</div>
+      </div>
+    </div>
+
+    <div class="info-card blue">
+      <div class="card-title">&#127472;&#127479; 한국 상황</div>
+      <p style="margin-bottom:0;">한국은 <strong>2020년 SNOMED International 회원국 가입</strong> &mdash; SNOMED CT를 무료로 사용 가능. 현재 한국 시장에서 <strong>판독문 &rarr; SNOMED CT 자동 변환에 특화된 솔루션은 아직 없음</strong>. Lunit, Vuno 등 영상 AI 기업도 이 영역에는 미진출 상태.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2: 기술적 타당성 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>기술적 타당성 분석 &mdash; AI 자동 변환이 가능한가?</h2>
+    </div>
+
+    <div class="info-card green">
+      <div class="card-title">&#9989; 결론: 가능하다. 단, 조건부</div>
+      <p style="margin-bottom:0;">AI가 판독문에서 질환/부위/수치를 추출하고 SNOMED CT 코드로 매핑하는 것은 기술적으로 가능합니다. 다만 <strong>정확 매칭률이 57.6%</strong>이므로, 의사가 최종 확인하는 <strong>Human-in-the-Loop</strong> 구조가 필수입니다.</p>
+    </div>
+
+    <h3>현재 기술 수준</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>구분</th><th>현재 수준</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td><strong>개체명 인식 (NER)</strong></td><td class="code-cell">F1 0.90+</td><td>BioBERT, Med7 등으로 부위/진단/수치 추출 가능</td></tr>
+          <tr><td><strong>SNOMED CT 매핑</strong></td><td class="code-cell">유효 매칭 96.2%</td><td>GPT-4 + RAG 조합 시</td></tr>
+          <tr><td><strong>정확 매칭 (Exact Match)</strong></td><td class="code-cell">57.6%</td><td>인간 검증 필수 영역</td></tr>
+          <tr><td><strong>질환 카테고리 매핑</strong></td><td class="code-cell">F1 0.871</td><td>SapBERT + FAISS 비지도학습</td></tr>
+          <tr><td><strong>한국어 판독문 처리</strong></td><td>가능</td><td>다국어 LLM + 한국어 의학 코퍼스 필요</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>핵심 기술 원리: 3단계 파이프라인</h3>
+    <div class="analogy">
+      <div class="analogy-title">&#128161; 비유: 외국어 통역처럼 이해하세요</div>
+      <p style="font-size:14px;margin-bottom:0;">판독문(한국어 자유 문장) &rarr; AI가 핵심 단어를 뽑아내고(1단계) &rarr; 그 단어에 해당하는 국제 코드를 찾고(2단계) &rarr; 찾은 코드가 논리적으로 맞는지 검증(3단계)</p>
+    </div>
+
+    <div class="flow">
+      <div class="flow-step" style="background:#dbeafe;">
+        <div class="step-num">1</div>
+        <h4>개체명 인식 (NER)</h4>
+        <p>"S8에 2.3cm HCC 의심"<br>&darr;<br>S8(부위), 2.3cm(수치),<br>HCC(진단), 의심(확신도)</p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step" style="background:#ede9fe;">
+        <div class="step-num">2</div>
+        <h4>의미적 매핑</h4>
+        <p>추출된 "HCC" &darr;<br>SNOMED CT 사전에서<br>벡터 유사도로 검색<br>&darr; <strong>254707005</strong></p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step" style="background:#d1fae5;">
+        <div class="step-num">3</div>
+        <h4>온톨로지 검증</h4>
+        <p>위치: "간(Liver)"<br>코드: "간세포암" &#9989;<br><br>위치: "간" + "충수염" &#10060;<br>논리적 모순 차단!</p>
+      </div>
+    </div>
+
+    <h3>현재 기술의 한계</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>한계</th><th>설명</th><th>대응 방안</th></tr></thead>
+        <tbody>
+          <tr><td><strong>정확 매칭률 부족</strong></td><td>Exact Match 57.6%</td><td>Human-in-the-Loop 워크플로우</td></tr>
+          <tr><td><strong>한국어 학습 데이터 부족</strong></td><td>영어 중심 모델이 대부분</td><td>한국어 판독문 코퍼스 구축 필요</td></tr>
+          <tr><td><strong>희귀 질환 코딩</strong></td><td>드문 코드는 학습 데이터 부족</td><td>전문의 피드백 루프</td></tr>
+          <tr><td><strong>약어/줄임말 다양성</strong></td><td>기관별 약어 차이</td><td>기관별 커스텀 사전 구축</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 3: Tool 개발 흐름 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>Tool 개발 흐름 &mdash; 어떻게 만드는가?</h2>
+    </div>
+
+    <h3>전체 시스템 아키텍처</h3>
+    <div class="code-card">
+      <span class="badge">SYSTEM ARCHITECTURE</span>
+<span class="hl">&#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;</span>
+<span class="hl">&#9474;</span>          <span class="yw">&#128100; &#49324;&#50857;&#51088; &#51064;&#53552;&#54168;&#51060;&#49828; (Web/API)</span>                <span class="hl">&#9474;</span>
+<span class="hl">&#9474;</span>  &#54032;&#46021;&#47928; &#51077;&#47141; &rarr; &#53076;&#46300; &#52628;&#52380; &#44208;&#44284; &rarr; &#49849;&#51064;/&#49688;&#51221; &rarr; &#52572;&#51333; &#54869;&#51221;  <span class="hl">&#9474;</span>
+<span class="hl">&#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9516;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;</span>
+                        <span class="dm">&#9474;</span>
+  <span class="gr">NER Engine</span> &rarr; <span class="gr">Entity Linker</span> &rarr; <span class="gr">Ontology Validator</span> &rarr; <span class="pk">Human Review</span>
+  <span class="dm">(&#44060;&#52404;&#47749; &#51064;&#49885;)</span>   <span class="dm">(SNOMED CT &#47588;&#54609;)</span>  <span class="dm">(&#44228;&#52789; &#44396;&#51312; &#44160;&#51613;)</span>     <span class="dm">(&#51032;&#49324; &#52572;&#51333; &#54869;&#51064;)</span>
+                        <span class="dm">&#9474;</span>
+<span class="hl">&#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9524;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;</span>
+<span class="hl">&#9474;</span>               <span class="yw">&#128451; &#45936;&#51060;&#53552; &#47112;&#51060;&#50612;</span>                      <span class="hl">&#9474;</span>
+<span class="hl">&#9474;</span>  SNOMED CT DB &#9474; &#54620;&#44397;&#50612; &#51032;&#54617; &#49324;&#51204; &#9474; &#54617;&#49845; &#45936;&#51060;&#53552; &#9474; &#54588;&#46300;&#48177; &#45936;&#51060;&#53552;  <span class="hl">&#9474;</span>
+<span class="hl">&#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;</span></div>
+
+    <h3>개발 4단계 (총 13~17개월)</h3>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot phase1">1</div>
+        <div class="tl-content">
+          <h4>Phase 1: 데이터 및 기반 구축</h4>
+          <div class="tl-period">3~4개월</div>
+          <ul>
+            <li>SNOMED CT Affiliate License 취득 (K-HIS)</li>
+            <li>SNOMED CT 한국어 에디션 DB 구축</li>
+            <li>협력 병원과 한국어 판독문 코퍼스 수집 (익명화)</li>
+            <li>영상의학 전문의 참여한 NER 어노테이션(라벨링)</li>
+            <li><strong>간(Liver) 질환군</strong> 우선 범위 정의 (HCC, LC, Fatty Liver 등)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot phase2">2</div>
+        <div class="tl-content">
+          <h4>Phase 2: NLP 엔진 개발</h4>
+          <div class="tl-period">4~5개월</div>
+          <ul>
+            <li>한국어 의학 NER 모델 학습 (BioBERT/KoBERT Fine-tuning)</li>
+            <li>SNOMED CT Entity Linker 개발 (SapBERT + FAISS)</li>
+            <li>LLM 기반 RAG 파이프라인 구축 (GPT-4o / Claude API)</li>
+            <li>온톨로지 검증 로직 (IS-A 관계 그래프)</li>
+            <li>신뢰도 스코어링: 고신뢰 &rarr; 자동 / 저신뢰 &rarr; 사람 검토</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot phase3">3</div>
+        <div class="tl-content">
+          <h4>Phase 3: 서비스 플랫폼 개발</h4>
+          <div class="tl-period">3~4개월</div>
+          <ul>
+            <li>REST API 개발 (판독문 입력 &rarr; SNOMED CT 코드 반환)</li>
+            <li>리뷰 UI 개발 (코드 추천/승인/수정 웹)</li>
+            <li>PACS/EMR 연동 모듈 (HL7 FHIR R4)</li>
+            <li>피드백 루프: 전문의 수정 &rarr; 모델 재학습</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot phase4">4</div>
+        <div class="tl-content">
+          <h4>Phase 4: 검증 및 출시</h4>
+          <div class="tl-period">3~4개월</div>
+          <ul>
+            <li>파일럿 테스트 (협력 병원 2~3곳)</li>
+            <li>MFDS 사전 상담 (의료기기 해당 여부)</li>
+            <li>보안 인증 (ISMS-P, 개인정보보호)</li>
+            <li>상용 출시 v1.0</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 4: 기술 스택 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>기술 스택 상세</h2>
+    </div>
+
+    <h3>NER (개체명 인식) 기술</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>기술</th><th>특징</th><th>적합도</th></tr></thead>
+        <tbody>
+          <tr><td><strong>BioBERT</strong></td><td>PubMed 사전학습, 의학 NER SOTA</td><td>높음 (영어)</td></tr>
+          <tr><td><strong>KoBERT + 의학 Fine-tuning</strong></td><td>한국어 BERT, 한국어 판독문에 최적</td><td>높음 (한국어)</td></tr>
+          <tr><td><strong>ClinicalBERT</strong></td><td>MIMIC-III 임상 노트 학습</td><td>중간</td></tr>
+          <tr><td><strong>SpaCy + SciBERT</strong></td><td>Bi-GRU 조합으로 F1 0.90 달성</td><td>높음</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Entity Linking (SNOMED CT 매핑) 기술</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>기술</th><th>방식</th><th>성능</th></tr></thead>
+        <tbody>
+          <tr><td><strong>SapBERT + FAISS</strong></td><td>벡터 유사도 기반 비지도학습</td><td class="code-cell">F1 0.871 (질환)</td></tr>
+          <tr><td><strong>GPT-4o + RAG</strong></td><td>LLM + 검색 증강 생성</td><td class="code-cell">유효 매칭 96.2%</td></tr>
+          <tr><td><strong>Amazon Comprehend Medical</strong></td><td>AWS 관리형 서비스 (InferSNOMEDCT API)</td><td>상용 검증 완료</td></tr>
+          <tr><td><strong>MedCAT</strong></td><td>자기지도학습, UMLS/SNOMED CT</td><td>대규모 병원 검증</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>인프라 구성</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>구성요소</th><th>추천 기술</th></tr></thead>
+        <tbody>
+          <tr><td>클라우드</td><td>AWS (Comprehend Medical 연계) 또는 GCP</td></tr>
+          <tr><td>벡터 DB</td><td>FAISS, Pinecone, Weaviate</td></tr>
+          <tr><td>SNOMED CT DB</td><td>PostgreSQL + 계층 구조 인덱싱</td></tr>
+          <tr><td>API</td><td>FastAPI (Python)</td></tr>
+          <tr><td>프론트엔드</td><td>React + 코드 리뷰 UI</td></tr>
+          <tr><td>MLOps</td><td>MLflow, SageMaker</td></tr>
+          <tr><td>의료 데이터 표준</td><td>HL7 FHIR R4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 5: 비즈니스 모델 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec5">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>비즈니스 모델 &mdash; 어떻게 돈을 버는가?</h2>
+    </div>
+
+    <div class="biz-grid">
+      <div class="biz-card recommended">
+        <h4>모델 A: B2B SaaS</h4>
+        <div class="biz-sub">판독 코딩 자동화 플랫폼</div>
+        <div class="biz-detail">
+          병원/의원이 API를 호출하여 판독문을 보내면 SNOMED CT 코드를 자동 추천받는 서비스.
+          <br><strong>타겟:</strong> 원격판독센터, 중소 병원, 건강검진센터
+        </div>
+        <div class="biz-price">건당 &#8361;500~2,000 / 월정액 &#8361;50만~500만</div>
+      </div>
+      <div class="biz-card">
+        <h4>모델 B: 데이터 표준화 플랫폼</h4>
+        <div class="biz-sub">의료 데이터 거래소</div>
+        <div class="biz-detail">
+          비정형 판독문 &rarr; SNOMED CT 코딩 &rarr; 표준화된 구조화 데이터로 변환 후 제약사 R&D, 보험사, AI 학습 데이터로 2차 활용.
+        </div>
+        <div class="biz-price">데이터 표준화 + 중개 수수료</div>
+      </div>
+      <div class="biz-card">
+        <h4>모델 C: EMR/PACS 플러그인</h4>
+        <div class="biz-sub">기존 시스템에 설치</div>
+        <div class="biz-detail">
+          기존 EMR/PACS에 플러그인으로 설치하여 워크플로우 변경 없이 바로 적용. 대형 병원, 종합병원 타겟.
+        </div>
+        <div class="biz-price">월정액 라이선스 &#8361;100만~300만</div>
+      </div>
+      <div class="biz-card">
+        <h4>모델 D: 글로벌 원격판독 코딩</h4>
+        <div class="biz-sub">AI 코딩 + 전문의 판독 패키지</div>
+        <div class="biz-detail">
+          AI 코딩 + 한국 영상의학 전문의 원격판독을 원스톱 서비스. 동남아, 중동 등 전문의 부족 국가 타겟.
+        </div>
+        <div class="biz-price">건당 판독료 + 코딩 수수료</div>
+      </div>
+    </div>
+
+    <h3>비즈니스 모델 비교 평가</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>기준</th><th>모델 A (SaaS)</th><th>모델 B (데이터)</th><th>모델 C (플러그인)</th><th>모델 D (글로벌)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>진입 장벽</strong></td><td style="color:var(--success);font-weight:600;">낮음</td><td>높음</td><td>중간</td><td>높음</td></tr>
+          <tr><td><strong>시장 진입 속도</strong></td><td style="color:var(--success);font-weight:600;">빠름</td><td>느림</td><td>중간</td><td>느림</td></tr>
+          <tr><td><strong>수익 확장성</strong></td><td>중간</td><td style="color:var(--success);font-weight:600;">높음</td><td>중간</td><td style="color:var(--success);font-weight:600;">높음</td></tr>
+          <tr><td><strong>규제 리스크</strong></td><td style="color:var(--success);font-weight:600;">낮음</td><td>높음</td><td>중간</td><td>높음</td></tr>
+          <tr style="background:#f0fdf4;"><td><strong>추천 우선순위</strong></td><td style="font-weight:800;color:var(--success);">&#9733; 1순위</td><td>3순위</td><td>2순위</td><td>4순위</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>추천 진입 전략: 순차 확장</h3>
+    <div class="strategy-flow">
+      <div class="strategy-phase p1">
+        <h4>Phase 1: SaaS</h4>
+        <p>간(Liver) 특화<br>원격판독센터 타겟<br><strong>빠른 시장 진입</strong></p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="strategy-phase p2">
+        <h4>Phase 2: 플러그인</h4>
+        <p>다장기 확장<br>대형병원 Enterprise<br><strong>안정적 수익</strong></p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="strategy-phase p3">
+        <h4>Phase 3: 데이터 플랫폼</h4>
+        <p>데이터 2차 활용<br>제약사/보험사 확장<br><strong>고부가 가치</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 6: 시장 규모 / 경쟁 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec6">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <h2>시장 규모 및 경쟁 환경</h2>
+    </div>
+
+    <h3>글로벌 시장 규모</h3>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="value blue">$29억</div>
+        <div class="label">2025년<br>AI 의료 코딩 시장</div>
+      </div>
+      <div class="metric-card">
+        <div class="value green">$86억</div>
+        <div class="label">2033년 전망<br>CAGR 14.2%</div>
+      </div>
+      <div class="metric-card">
+        <div class="value purple">$52억</div>
+        <div class="label">2025년<br>헬스케어 NLP 시장</div>
+      </div>
+      <div class="metric-card">
+        <div class="value orange">25.3%</div>
+        <div class="label">헬스케어 NLP<br>CAGR (2030)</div>
+      </div>
+    </div>
+
+    <h3>글로벌 경쟁사</h3>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <h4>Solventum (구 3M)</h4>
+        <div class="comp-type">글로벌 대기업 / 완전 자동화</div>
+        <div class="comp-desc">360 Encompass Autonomous Coding &mdash; 40년+ 의료 코딩 경험</div>
+      </div>
+      <div class="comp-card">
+        <h4>Microsoft / Nuance</h4>
+        <div class="comp-type">글로벌 대기업 / 영상의학 특화</div>
+        <div class="comp-desc">DAX, PowerScribe One &mdash; $600~800/월/의사</div>
+      </div>
+      <div class="comp-card">
+        <h4>CodaMetrix (보스턴)</h4>
+        <div class="comp-type">스타트업 / $1.09억 펀딩</div>
+        <div class="comp-desc">EHR &rarr; 청구코드 자동 변환</div>
+      </div>
+      <div class="comp-card">
+        <h4>Fathom Health (SF)</h4>
+        <div class="comp-type">스타트업 / $6,100만 펀딩</div>
+        <div class="comp-desc">90%+ 코딩 자동화</div>
+      </div>
+    </div>
+
+    <h3>한국 시장: 기회가 열려 있다</h3>
+    <div class="info-card green">
+      <div class="card-title">&#127472;&#127479; 한국 관련 기업 현황</div>
+      <div class="table-wrap" style="border:none;box-shadow:none;margin:10px 0 0;">
+        <table>
+          <thead><tr><th>기업</th><th>현황</th><th>SNOMED CT 코딩</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Lunit</strong></td><td>영상 AI (CXR, MMG) 특화</td><td style="color:var(--danger);font-weight:600;">미진출</td></tr>
+            <tr><td><strong>Vuno</strong></td><td>의료 AI SaMD</td><td style="color:var(--danger);font-weight:600;">미진출</td></tr>
+            <tr><td><strong>SELVAS AI</strong></td><td>음성인식 기반 의료</td><td style="color:var(--danger);font-weight:600;">미진출</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:12px;margin-bottom:0;font-weight:700;">&#8594; 한국 시장에서 "판독문 &rarr; SNOMED CT 자동 변환"에 특화된 솔루션은 아직 없음!</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 7: 규제 / 라이선스 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec7">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <h2>규제 및 라이선스 고려사항</h2>
+    </div>
+
+    <h3>SNOMED CT 라이선스</h3>
+    <div class="info-card blue">
+      <div class="card-title">&#128273; 핵심: 한국 내 무료 사용 가능</div>
+      <p style="margin-bottom:0;">한국은 2020년 SNOMED International 회원국 가입. <strong>K-HIS를 통한 Affiliate License를 취득하면 무료</strong>로 사용 가능합니다. 해외 비회원국 배포 시에만 연간 라이선스 비용이 발생합니다.</p>
+    </div>
+
+    <h3>의료기기 규제 (MFDS)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>분류</th><th>기준</th><th>규제 수준</th></tr></thead>
+        <tbody>
+          <tr style="background:#f0fdf4;"><td><strong>비의료기기</strong> &#9733;</td><td>코딩 보조 도구 (의사가 최종 확인)</td><td style="color:var(--success);font-weight:600;">규제 없음</td></tr>
+          <tr><td>의료기기 (보조)</td><td>임상 의사결정 지원 (CDS)</td><td>경량 규제</td></tr>
+          <tr><td>의료기기 (결정)</td><td>자동 진단/예측 (Sole Determinant)</td><td style="color:var(--danger);">임상 근거 필수, 인허가</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-card yellow">
+      <div class="card-title">&#128161; 권장 전략</div>
+      <p style="margin-bottom:0;">Phase 1에서는 <strong>"코딩 보조 도구"</strong>로 포지셔닝하여 의료기기 규제를 회피. 전문의가 최종 승인하는 <strong>Human-in-the-Loop 구조</strong>를 유지하면 비의료기기로 분류됩니다.</p>
+    </div>
+
+    <h3>개인정보보호</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>항목</th><th>요구사항</th></tr></thead>
+        <tbody>
+          <tr><td><strong>개인정보보호법</strong></td><td>의료 데이터 처리 시 별도 동의 필요</td></tr>
+          <tr><td><strong>의료법</strong></td><td>환자 정보 익명화/가명화 처리 필수</td></tr>
+          <tr><td><strong>ISMS-P 인증</strong></td><td>의료 정보 처리 시 권장</td></tr>
+          <tr><td><strong>데이터 3법</strong></td><td>가명처리 시 2차 활용 가능</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 8: 리스크 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec8">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <h2>리스크 및 한계</h2>
+    </div>
+
+    <h3>기술 리스크</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>리스크</th><th>영향도</th><th>대응 방안</th></tr></thead>
+        <tbody>
+          <tr><td>한국어 의학 NLP 정확도 부족</td><td><span class="risk-badge high">높음</span></td><td>간(Liver) 등 특정 장기 특화로 정밀도 향상</td></tr>
+          <tr><td>SNOMED CT 한국어 에디션 미비</td><td><span class="risk-badge mid">중간</span></td><td>영문 SNOMED CT + 한/영 매핑 테이블 구축</td></tr>
+          <tr><td>기관별 판독문 스타일 차이</td><td><span class="risk-badge mid">중간</span></td><td>기관별 커스텀 사전 + 전이학습</td></tr>
+          <tr><td>LLM Hallucination</td><td><span class="risk-badge high">높음</span></td><td>온톨로지 검증 단계로 잘못된 코드 차단</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>비즈니스 리스크</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>리스크</th><th>영향도</th><th>대응 방안</th></tr></thead>
+        <tbody>
+          <tr><td>병원의 새 시스템 도입 저항</td><td><span class="risk-badge high">높음</span></td><td>기존 PACS/EMR 플러그인 방식으로 마찰 최소화</td></tr>
+          <tr><td>글로벌 빅테크 진입</td><td><span class="risk-badge high">높음</span></td><td>한국어 + 한국 의료 환경 특화로 차별화</td></tr>
+          <tr><td>규제 환경 변화</td><td><span class="risk-badge mid">중간</span></td><td>MFDS 사전 상담, 규제 전문가 자문</td></tr>
+          <tr><td>학습 데이터 확보 어려움</td><td><span class="risk-badge high">높음</span></td><td>대학병원 산학협력, IRB 사전 승인</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 9: 로드맵 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec9">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <h2>로드맵 제안</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot phase1">1</div>
+        <div class="tl-content" style="border-color:var(--primary);">
+          <h4>단기 (0~6개월) &mdash; MVP 개발</h4>
+          <div class="tl-period">간(Liver) 질환 특화 프로토타입</div>
+          <ul>
+            <li>SNOMED CT Affiliate License 취득</li>
+            <li>간 질환 SNOMED CT 서브셋 구축 (HCC, LC, Fatty Liver 등)</li>
+            <li>협력 병원 1곳 &rarr; 판독문 500건+ 수집/어노테이션</li>
+            <li>GPT-4o + RAG 기반 매핑 엔진 MVP</li>
+            <li>간단한 리뷰 UI (Web) 구축</li>
+            <li><strong>목표: 유효 매칭 90%+</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot phase2">2</div>
+        <div class="tl-content" style="border-color:var(--accent);">
+          <h4>중기 (6~12개월) &mdash; 파일럿 및 검증</h4>
+          <div class="tl-period">실제 병원 환경에서 파일럿 운영</div>
+          <ul>
+            <li>파일럿 병원 2~3곳 확보 (원격판독센터 포함)</li>
+            <li>NER 모델 자체 학습 (BioBERT/KoBERT Fine-tuning)</li>
+            <li>피드백 루프 &rarr; 모델 지속 개선</li>
+            <li>MFDS 사전 상담, ISMS-P 인증 준비</li>
+            <li><strong>목표: 유효 매칭 95%+, 사용자 만족도 80%+</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot phase3">3</div>
+        <div class="tl-content" style="border-color:var(--success);">
+          <h4>장기 (12~24개월) &mdash; 상용화 및 확장</h4>
+          <div class="tl-period">상용 출시, 다장기 확장, 해외 진출</div>
+          <ul>
+            <li>정식 상용 출시 (SaaS)</li>
+            <li>간 &rarr; 폐 &rarr; 뇌 &rarr; 복부 순차 확장</li>
+            <li>EMR/PACS 플러그인 개발</li>
+            <li>대형병원 Enterprise 계약</li>
+            <li>데이터 표준화 플랫폼으로 확장</li>
+            <li>해외 시장 진출 준비 (동남아 우선)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 10: 결론 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec10">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <h2>결론 &mdash; 핵심 요약 및 차별화 전략</h2>
+    </div>
+
+    <div class="summary-card">
+      <h3>&#128204; 이 보고서의 핵심 결론</h3>
+      <div class="table-wrap" style="border:none;box-shadow:none;margin-bottom:0;">
+        <table>
+          <thead><tr><th style="width:35%;">질문</th><th>답변</th></tr></thead>
+          <tbody>
+            <tr><td><strong>AI 자동 변환이 가능한가?</strong></td><td><strong style="color:var(--success);">가능하다.</strong> GPT-4+RAG로 96.2% 유효 매칭. 다만 완전 자동화는 아직 어렵고, Human-in-the-Loop 필수.</td></tr>
+            <tr><td><strong>어떤 흐름으로 Tool을 만드는가?</strong></td><td>NER &rarr; Entity Linking &rarr; Ontology Validation 3단계 파이프라인. <strong>간(Liver) 특화로 시작</strong>하여 점진 확장.</td></tr>
+            <tr><td><strong>어떤 비즈니스 모델이 가능한가?</strong></td><td><strong>B2B SaaS</strong>(건당/월정액)로 시작 &rarr; EMR 플러그인 &rarr; 데이터 표준화 플랫폼으로 성장.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3>4가지 차별화 전략</h3>
+    <div class="metric-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="metric-card" style="text-align:left;">
+        <div style="font-size:24px;margin-bottom:8px;">&#127472;&#127479;</div>
+        <div style="font-weight:700;font-size:15px;color:var(--gray-900);margin-bottom:6px;">한국어 판독문 특화</div>
+        <div style="font-size:13px;color:var(--gray-600);line-height:1.6;">글로벌 솔루션이 아직 커버하지 못하는 한국어 의학 텍스트 영역</div>
+      </div>
+      <div class="metric-card" style="text-align:left;">
+        <div style="font-size:24px;margin-bottom:8px;">&#127919;</div>
+        <div style="font-weight:700;font-size:15px;color:var(--gray-900);margin-bottom:6px;">간(Liver) 도메인 집중</div>
+        <div style="font-size:13px;color:var(--gray-600);line-height:1.6;">좁은 범위에서 높은 정확도 달성 후 확장하는 전략</div>
+      </div>
+      <div class="metric-card" style="text-align:left;">
+        <div style="font-size:24px;margin-bottom:8px;">&#129309;</div>
+        <div style="font-weight:700;font-size:15px;color:var(--gray-900);margin-bottom:6px;">원격판독센터 파트너십</div>
+        <div style="font-size:13px;color:var(--gray-600);line-height:1.6;">기존 판독 인프라(연세포커스의원 등)를 활용한 빠른 시장 진입</div>
+      </div>
+      <div class="metric-card" style="text-align:left;">
+        <div style="font-size:24px;margin-bottom:8px;">&#129302;+&#128105;&#8205;&#9878;&#65039;</div>
+        <div style="font-weight:700;font-size:15px;color:var(--gray-900);margin-bottom:6px;">Human-in-the-Loop</div>
+        <div style="font-size:13px;color:var(--gray-600);line-height:1.6;">의료기기 규제 회피 + 정확도 보장의 이중 효과</div>
+      </div>
+    </div>
+
+    <h3>핵심 성공 요인 (CSF)</h3>
+    <div class="summary-card" style="background:linear-gradient(135deg, #f0fdf4, #d1fae5);">
+      <ol class="summary-list">
+        <li>
+          <span class="num-circle" style="background:var(--success);">1</span>
+          <span><strong>양질의 한국어 판독문 학습 데이터 확보</strong><br>대학병원/판독센터 협력을 통한 익명화된 코퍼스 구축</span>
+        </li>
+        <li>
+          <span class="num-circle" style="background:var(--success);">2</span>
+          <span><strong>영상의학 전문의 참여</strong><br>어노테이션, 검증, 피드백 루프에 전문의 지속 참여</span>
+        </li>
+        <li>
+          <span class="num-circle" style="background:var(--success);">3</span>
+          <span><strong>SNOMED CT 전문 인력 확보</strong><br>온톨로지/의료 용어 전문가가 있어야 정확한 매핑 가능</span>
+        </li>
+        <li>
+          <span class="num-circle" style="background:var(--success);">4</span>
+          <span><strong>규제 전략 수립</strong><br>비의료기기 포지셔닝 &rarr; 점진적 인허가 확대</span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="info-card purple" style="margin-top:32px;">
+      <div class="card-title">&#128214; 참고 자료</div>
+      <p style="font-size:13px;margin-bottom:4px;"><strong>학술 논문:</strong> ChatGPT-4 for SNOMED CT Mapping (2025, 96.2%), SapBERT-Based Annotation (2024, F1 0.871)</p>
+      <p style="font-size:13px;margin-bottom:4px;"><strong>오픈소스:</strong> MedCAT, Apache cTAKES, Snap2SNOMED, SNOMED International OpenAI Demo</p>
+      <p style="font-size:13px;margin-bottom:0;"><strong>상용 서비스:</strong> AWS Comprehend Medical, Google Healthcare NLP API, John Snow Labs Spark NLP</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- SCROLL SPY -->
+<script>
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.sidebar a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const id = entry.target.id;
+        const activeLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(section => observer.observe(section));
+  // top conclusion
+  const topConc = document.getElementById('top-conclusion');
+  if (topConc) {
+    const topObs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const star = document.querySelector('.sidebar a[href="#top-conclusion"]');
+        if (star) star.classList.add('active');
+      }
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    topObs.observe(topConc);
+  }
+  document.querySelectorAll('.sidebar a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 960) document.querySelector('.sidebar').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>

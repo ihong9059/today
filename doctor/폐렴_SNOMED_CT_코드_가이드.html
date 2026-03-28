@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>폐렴 SNOMED CT 코드 완전 가이드</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --primary-dark: #1e40af;
+    --accent: #7c3aed;
+    --accent-light: #ede9fe;
+    --success: #059669;
+    --success-light: #d1fae5;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --info: #0891b2;
+    --info-light: #cffafe;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, 'Segoe UI', 'Malgun Gothic', sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-800);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* === SIDEBAR === */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    width: 280px;
+    height: 100vh;
+    background: var(--gray-900);
+    color: #fff;
+    overflow-y: auto;
+    z-index: 100;
+    padding: 24px 0;
+    transition: transform .3s;
+  }
+  .sidebar-title {
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .sidebar-title span { color: #60a5fa; }
+  .sidebar a {
+    display: block;
+    padding: 8px 20px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 13px;
+    transition: .2s;
+    border-left: 3px solid transparent;
+  }
+  .sidebar a:hover, .sidebar a.active {
+    color: #fff;
+    background: rgba(255,255,255,.05);
+    border-left-color: #60a5fa;
+  }
+  .sidebar a .num {
+    display: inline-block;
+    width: 24px;
+    color: #60a5fa;
+    font-weight: 600;
+  }
+
+  /* === MOBILE MENU === */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 16px; left: 16px;
+    z-index: 200;
+    background: var(--gray-900);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    width: 44px; height: 44px;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  /* === MAIN === */
+  .main {
+    margin-left: 280px;
+    max-width: 900px;
+    padding: 40px 48px 80px;
+  }
+
+  /* === HERO === */
+  .hero {
+    background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 48px 40px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,.08);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,.2);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: .5px;
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .hero .subtitle {
+    font-size: 17px;
+    opacity: .9;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    display: flex; gap: 24px;
+    margin-top: 24px;
+    font-size: 13px;
+    opacity: .8;
+  }
+
+  /* === SECTIONS === */
+  .section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--primary-light);
+  }
+  .section-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; height: 40px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gray-900);
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 28px 0 14px;
+  }
+
+  p { margin-bottom: 14px; }
+
+  /* === VISUAL BOXES === */
+  .visual-box {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 28px;
+    margin: 20px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  }
+  .visual-box.compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .compare-side {
+    padding: 24px 28px;
+  }
+  .compare-side.bad {
+    background: var(--danger-light);
+    border-right: 2px solid var(--gray-200);
+  }
+  .compare-side.good {
+    background: var(--success-light);
+  }
+  .compare-side h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .compare-side.bad h4 { color: var(--danger); }
+  .compare-side.good h4 { color: var(--success); }
+  .compare-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .compare-item .flag { font-size: 18px; flex-shrink: 0; }
+  .compare-item .label { color: var(--gray-700); }
+  .compare-item .code {
+    font-family: 'Consolas', monospace;
+    font-weight: 600;
+    color: var(--primary-dark);
+  }
+  .compare-result {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(0,0,0,.15);
+    font-size: 13px;
+    color: var(--gray-700);
+    line-height: 1.6;
+  }
+
+  /* === INFO CARDS === */
+  .info-card {
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 20px 0;
+    border-left: 4px solid;
+  }
+  .info-card.blue {
+    background: var(--primary-light);
+    border-color: var(--primary);
+  }
+  .info-card.green {
+    background: var(--success-light);
+    border-color: var(--success);
+  }
+  .info-card.yellow {
+    background: var(--warning-light);
+    border-color: var(--warning);
+  }
+  .info-card.red {
+    background: var(--danger-light);
+    border-color: var(--danger);
+  }
+  .info-card.purple {
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+  .info-card .card-title {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .info-card p, .info-card li {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* === CODE CARD (big featured code) === */
+  .code-card {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #e2e8f0;
+    border-radius: 12px;
+    padding: 32px;
+    margin: 20px 0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    overflow-x: auto;
+    position: relative;
+  }
+  .code-card .badge {
+    position: absolute;
+    top: 12px; right: 16px;
+    background: rgba(96,165,250,.2);
+    color: #60a5fa;
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-family: -apple-system, sans-serif;
+  }
+  .code-card .highlight { color: #60a5fa; font-weight: 600; }
+  .code-card .green { color: #4ade80; }
+  .code-card .yellow { color: #fbbf24; }
+  .code-card .pink { color: #f472b6; }
+  .code-card .dim { color: #64748b; }
+
+  /* === ANALOGY BOX === */
+  .analogy {
+    background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+    border: 1px solid #fde047;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 20px 0;
+  }
+  .analogy .analogy-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--warning);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* === TREE DIAGRAM === */
+  .tree {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 32px;
+    margin: 20px 0;
+    overflow-x: auto;
+  }
+  .tree-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 20px;
+  }
+  .tree-node {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    font-size: 14px;
+  }
+  .tree-node.level-0 { padding-left: 0; }
+  .tree-node.level-1 { padding-left: 32px; }
+  .tree-node.level-2 { padding-left: 64px; }
+  .tree-node.level-3 { padding-left: 96px; }
+  .tree-node.level-4 { padding-left: 128px; }
+  .tree-connector {
+    color: var(--gray-300);
+    font-family: monospace;
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+  }
+  .tree-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Consolas', monospace;
+  }
+  .tree-badge.root {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+  }
+  .tree-badge.main {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+  }
+  .tree-badge.sub {
+    background: var(--gray-100);
+    color: var(--gray-700);
+  }
+  .tree-label { color: var(--gray-700); }
+  .tree-node.highlight-row {
+    background: #fef3c7;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 4px 0;
+  }
+
+  /* === TABLES === */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 20px 0;
+    border-radius: 12px;
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead { background: var(--gray-100); }
+  th {
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 13px;
+    text-transform: none;
+    border-bottom: 2px solid var(--gray-200);
+    white-space: nowrap;
+  }
+  td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--gray-100);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover { background: var(--gray-50); }
+  .code-cell {
+    font-family: 'Consolas', monospace;
+    font-weight: 700;
+    color: var(--primary-dark);
+    white-space: nowrap;
+  }
+
+  /* === FLOW DIAGRAM === */
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 20px 0;
+    overflow-x: auto;
+    padding: 4px 0;
+  }
+  .flow-step {
+    flex: 1;
+    min-width: 160px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+  }
+  .flow-step .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .flow-step h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 8px;
+  }
+  .flow-step p {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-bottom: 0;
+    line-height: 1.5;
+  }
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    color: var(--primary);
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  /* === TAG STICKER === */
+  .sticker-box {
+    background: #fff;
+    border: 2px dashed var(--gray-300);
+    border-radius: 12px;
+    padding: 28px;
+    margin: 20px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .sticker-main {
+    background: var(--primary-light);
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .sticker-main .code-big {
+    font-family: 'Consolas', monospace;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary-dark);
+  }
+  .sticker-main .code-name {
+    font-size: 13px;
+    color: var(--primary);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+  .sticker-attrs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    flex: 1;
+  }
+  .sticker-attr {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  .sticker-attr .attr-label {
+    font-weight: 700;
+    color: var(--gray-500);
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .sticker-attr .attr-value {
+    color: var(--gray-800);
+    font-weight: 600;
+  }
+  .sticker-attr .attr-code {
+    font-family: 'Consolas', monospace;
+    font-size: 11px;
+    color: var(--gray-500);
+  }
+
+  /* === JSON BLOCK === */
+  .json-block {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 20px 0;
+    overflow-x: auto;
+    position: relative;
+  }
+  .json-block .label {
+    position: absolute;
+    top: 10px; right: 14px;
+    background: rgba(96,165,250,.15);
+    color: #60a5fa;
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 8px;
+    font-family: -apple-system, sans-serif;
+  }
+  .json-block pre {
+    color: #e2e8f0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .json-block .json-key { color: #7dd3fc; }
+  .json-block .json-str { color: #86efac; }
+  .json-block .json-num { color: #fbbf24; }
+
+  /* === FAQ === */
+  .faq-item {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    margin: 14px 0;
+    overflow: hidden;
+  }
+  .faq-q {
+    padding: 18px 24px;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--primary-dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background .2s;
+    user-select: none;
+  }
+  .faq-q:hover { background: var(--gray-50); }
+  .faq-q .q-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .faq-q .arrow {
+    margin-left: auto;
+    transition: transform .3s;
+    color: var(--gray-400);
+  }
+  .faq-a {
+    padding: 0 24px 18px 64px;
+    font-size: 14px;
+    color: var(--gray-700);
+    line-height: 1.8;
+    display: none;
+  }
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .arrow { transform: rotate(180deg); }
+
+  /* === SUMMARY CARD === */
+  .summary-card {
+    background: linear-gradient(135deg, #eff6ff 0%, #ede9fe 100%);
+    border: 1px solid #c7d2fe;
+    border-radius: 16px;
+    padding: 36px;
+    margin: 20px 0;
+  }
+  .summary-card h3 {
+    font-size: 20px;
+    color: var(--primary-dark);
+    margin-bottom: 20px;
+    margin-top: 0;
+  }
+  .summary-list {
+    list-style: none;
+    padding: 0;
+  }
+  .summary-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+  }
+  .summary-list li:last-child { border-bottom: none; }
+  .summary-list .num-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* === QUICK REF TABLE === */
+  .quick-ref { margin-top: 28px; }
+  .quick-ref table { font-size: 14px; }
+  .quick-ref thead { background: var(--primary); }
+  .quick-ref th { color: #fff; font-size: 13px; }
+  .quick-ref .code-cell { font-size: 15px; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 960px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .menu-toggle { display: flex; align-items: center; justify-content: center; }
+    .main { margin-left: 0; padding: 24px 20px 60px; }
+    .hero { padding: 32px 24px; }
+    .hero h1 { font-size: 24px; }
+    .visual-box.compare { grid-template-columns: 1fr; }
+    .compare-side.bad { border-right: none; border-bottom: 2px solid var(--gray-200); }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); justify-content: center; }
+    .sticker-box { flex-direction: column; }
+    .sticker-attrs { grid-template-columns: 1fr; }
+    .hero-meta { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+<nav class="sidebar">
+  <div class="sidebar-title"><span>SNOMED CT</span><br>폐렴 코드 완전 가이드</div>
+  <a href="#sec1"><span class="num">1</span> SNOMED CT란?</a>
+  <a href="#sec2"><span class="num">2</span> 폐렴의 대표 코드</a>
+  <a href="#sec3"><span class="num">3</span> 왜 코드가 여러 개?</a>
+  <a href="#sec4"><span class="num">4</span> 폐렴의 계층 구조</a>
+  <a href="#sec5"><span class="num">5</span> 전체 코드 목록</a>
+  <a href="#sec6"><span class="num">6</span> 하나의 코드, 여러 이름</a>
+  <a href="#sec7"><span class="num">7</span> 추가 정보(속성)</a>
+  <a href="#sec8"><span class="num">8</span> 실제 사용 예시</a>
+  <a href="#sec9"><span class="num">9</span> ICD-10과의 관계</a>
+  <a href="#sec10"><span class="num">10</span> AI 진단에서의 활용</a>
+  <a href="#sec11"><span class="num">11</span> 자주 묻는 질문</a>
+  <a href="#sec12"><span class="num">12</span> 요약</a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">BEGINNER-FRIENDLY GUIDE</div>
+    <h1>폐렴(Pneumonia)의<br>SNOMED CT 코드 완전 가이드</h1>
+    <p class="subtitle">"폐렴 코드가 하나가 아니라고?" &mdash; 초보자를 위한 SNOMED CT 폐렴 코드 이해하기</p>
+    <div class="hero-meta">
+      <span>작성일: 2026-03-28</span>
+      <span>대상: 의료 AI 입문자</span>
+      <span>관련: X-ray AI 진단 보고서</span>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 1 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>먼저 알아야 할 것: SNOMED CT란?</h2>
+    </div>
+
+    <div class="info-card blue">
+      <div class="card-title">한 줄 요약</div>
+      <p><strong>SNOMED CT = 전 세계 병원이 공통으로 사용하는 "의료 용어 사전 + 번호 체계"</strong></p>
+    </div>
+
+    <h3>왜 필요한가?</h3>
+    <p>병원마다, 나라마다 같은 병을 다르게 부릅니다. 이것이 문제가 됩니다.</p>
+
+    <div class="visual-box compare">
+      <div class="compare-side bad">
+        <h4>&#10060; SNOMED CT가 없을 때 &mdash; 혼란</h4>
+        <div class="compare-item"><span class="flag">&#127472;&#127479;</span> <span class="label">한국 병원:</span> "폐렴"</div>
+        <div class="compare-item"><span class="flag">&#127482;&#127480;</span> <span class="label">미국 병원:</span> "Pneumonia"</div>
+        <div class="compare-item"><span class="flag">&#127471;&#127477;</span> <span class="label">일본 병원:</span> "肺炎"</div>
+        <div class="compare-item"><span class="flag">&#129302;</span> <span class="label">AI 시스템A:</span> "lung_infection_type3"</div>
+        <div class="compare-item"><span class="flag">&#129302;</span> <span class="label">AI 시스템B:</span> "pneumonia_detected"</div>
+        <div class="compare-result">전부 같은 병인데, 컴퓨터는 같은 병인지 알 수 없음!<br>병원 간 데이터 공유 불가능</div>
+      </div>
+      <div class="compare-side good">
+        <h4>&#9989; SNOMED CT가 있을 때 &mdash; 통일</h4>
+        <div class="compare-item"><span class="flag">&#127472;&#127479;</span> <span class="label">한국 병원:</span> <span class="code">233604007</span></div>
+        <div class="compare-item"><span class="flag">&#127482;&#127480;</span> <span class="label">미국 병원:</span> <span class="code">233604007</span></div>
+        <div class="compare-item"><span class="flag">&#127471;&#127477;</span> <span class="label">일본 병원:</span> <span class="code">233604007</span></div>
+        <div class="compare-item"><span class="flag">&#129302;</span> <span class="label">AI 시스템A:</span> <span class="code">233604007</span></div>
+        <div class="compare-item"><span class="flag">&#129302;</span> <span class="label">AI 시스템B:</span> <span class="code">233604007</span></div>
+        <div class="compare-result">전부 같은 번호! 컴퓨터가 즉시 "같은 병"이라고 인식<br>전 세계 어디서든 데이터 공유 가능</div>
+      </div>
+    </div>
+
+    <div class="analogy">
+      <div class="analogy-title">&#128161; 일상생활 비유</div>
+      <div class="table-wrap" style="border:none;box-shadow:none;">
+        <table>
+          <thead><tr><th>일상</th><th>의료</th></tr></thead>
+          <tbody>
+            <tr><td>모든 상품에 <strong>바코드</strong>가 있다</td><td>모든 질환에 <strong>SNOMED CT 코드</strong>가 있다</td></tr>
+            <tr><td>바코드를 찍으면 상품 정보가 나온다</td><td>코드를 입력하면 질환 정보가 나온다</td></tr>
+            <tr><td>전 세계 어디서든 같은 바코드 = 같은 상품</td><td>전 세계 어디서든 같은 코드 = 같은 질환</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>폐렴의 대표 코드: 233604007</h2>
+    </div>
+
+    <div class="code-card">
+      <span class="badge">SNOMED CT</span>
+      <span class="highlight">SNOMED CT 코드:</span>  <span class="yellow">233604007</span>
+<span class="highlight">정식 명칭(FSN):</span>  Pneumonia (disorder)
+<span class="highlight">한국어:</span>          폐렴
+<span class="highlight">의미:</span>            폐(허파)에 염증이 생긴 질환
+
+<span class="dim">※ 이 코드는 폐렴의 "대표" 코드입니다.</span>
+<span class="dim">   원인이나 세부 유형을 특정하지 않은</span>
+<span class="dim">   "일반적인 폐렴"을 의미합니다.</span>
+    </div>
+
+    <h3>코드 번호의 의미</h3>
+    <div class="analogy">
+      <div class="analogy-title">&#128161; 고유 식별자(ID)일 뿐입니다</div>
+      <p style="font-size:14px;margin-bottom:8px;"><strong>233604007</strong>이라는 숫자 자체에 특별한 규칙은 없습니다. 날짜도, 분류 번호도 아닙니다.</p>
+      <p style="font-size:14px;margin-bottom:0;">주민등록번호가 사람을, 바코드 번호가 상품을 구별하듯이 &mdash; <strong>SNOMED CT 코드는 의료 개념을 구별</strong>하는 고유 번호입니다.</p>
+    </div>
+
+    <h3>233604007만 쓰면 되는 걸까?</h3>
+    <p><strong>상황에 따라 다릅니다!</strong></p>
+
+    <div class="visual-box" style="padding:0;overflow:hidden;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;">
+        <div style="padding:20px 24px;border-right:1px solid var(--gray-200);background:#f0fdf4;">
+          <div style="font-size:13px;font-weight:700;color:var(--success);margin-bottom:8px;">상황 1: 원인을 모르는 폐렴</div>
+          <div style="font-family:Consolas,monospace;font-weight:700;color:var(--primary-dark);font-size:15px;">233604007</div>
+          <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">Pneumonia &mdash; 이것만 쓰면 OK</div>
+        </div>
+        <div style="padding:20px 24px;border-right:1px solid var(--gray-200);background:#eff6ff;">
+          <div style="font-size:13px;font-weight:700;color:var(--primary);margin-bottom:8px;">상황 2: 세균이 원인인 폐렴</div>
+          <div style="font-family:Consolas,monospace;font-weight:700;color:var(--primary-dark);font-size:15px;">233607000</div>
+          <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">더 구체적인 코드 사용</div>
+        </div>
+        <div style="padding:20px 24px;background:#fdf4ff;">
+          <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;">상황 3: 코로나19 폐렴</div>
+          <div style="font-family:Consolas,monospace;font-weight:700;color:var(--primary-dark);font-size:15px;">840539006</div>
+          <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">원인 질환의 코드 사용</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card green">
+      <div class="card-title">&#9989; 규칙</div>
+      <p>가능한 한 <strong>가장 구체적인(자세한) 코드</strong>를 사용합니다.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 3 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>왜 코드가 하나가 아닐까?</h2>
+    </div>
+
+    <div class="analogy">
+      <div class="analogy-title">&#127822; "과일" 비유로 이해하기</div>
+      <p style="font-size:14px;margin-bottom:8px;">"과일"이라고만 하면 &mdash; 사과? 배? 포도? 알 수 없습니다.</p>
+      <p style="font-size:14px;margin-bottom:0;">마찬가지로 "폐렴"이라고만 하면 &mdash; <strong>세균성? 바이러스성? 곰팡이성?</strong> 알 수 없습니다.<br>폐렴은 하나의 병이 아니라, <strong>폐에 염증을 일으키는 여러 병의 총칭</strong>입니다.</p>
+    </div>
+
+    <h3>일반인 vs 의사의 시각</h3>
+
+    <div class="visual-box compare">
+      <div class="compare-side bad" style="background:#f3f4f6;">
+        <h4 style="color:var(--gray-700);">&#128100; 일반인의 시각</h4>
+        <p style="font-size:15px;text-align:center;padding:30px 0;margin:0;font-weight:600;">"폐렴이에요" &rarr; 끝. 하나의 병.</p>
+      </div>
+      <div class="compare-side good" style="background:#eff6ff;">
+        <h4 style="color:var(--primary-dark);">&#129658; 의사의 시각</h4>
+        <div style="font-size:13px;line-height:2;">
+          "폐렴이에요" &rarr;<br>
+          &nbsp;&nbsp;&#9500;&#9472; 원인이 뭔가요? (세균? 바이러스? 곰팡이?)<br>
+          &nbsp;&nbsp;&#9500;&#9472; 어느 쪽 폐? (왼쪽? 오른쪽? 양쪽?)<br>
+          &nbsp;&nbsp;&#9500;&#9472; 폐의 어느 부분? (상엽? 중엽? 하엽?)<br>
+          &nbsp;&nbsp;&#9500;&#9472; 심각도는? (경증? 중등증? 중증?)<br>
+          &nbsp;&nbsp;&#9500;&#9472; 감염 경로? (지역사회? 병원 내?)<br>
+          &nbsp;&nbsp;&#9492;&#9472; 환자 상태? (면역저하? 기저질환?)
+        </div>
+      </div>
+    </div>
+
+    <h3>코드가 여러 개인 이유 정리</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>이유</th><th>설명</th><th>예시</th></tr></thead>
+        <tbody>
+          <tr><td><strong>원인이 다르다</strong></td><td>원인균에 따라 치료법이 완전히 다름</td><td>세균성 &rarr; 항생제 / 바이러스성 &rarr; 항바이러스제</td></tr>
+          <tr><td><strong>위치가 다르다</strong></td><td>감염된 폐 부위에 따라 심각도 달라짐</td><td>좌하엽 폐렴, 우상엽 폐렴</td></tr>
+          <tr><td><strong>감염 경로가 다르다</strong></td><td>지역사회 vs 병원 내 감염은 원인균이 다름</td><td>지역사회 획득, 병원 획득 폐렴</td></tr>
+          <tr><td><strong>심각도가 다르다</strong></td><td>경증과 중증은 치료 방침이 다름</td><td>경증 폐렴, 중증 폐렴</td></tr>
+          <tr><td><strong>통계/연구 필요</strong></td><td>"올해 COVID-19 폐렴이 몇 건?" 통계</td><td>COVID-19 폐렴만 따로 집계</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 4 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>폐렴의 계층 구조 (가족 관계처럼 이해하기)</h2>
+    </div>
+
+    <p>SNOMED CT에서 폐렴은 <strong>가족 트리(족보)</strong>처럼 구성되어 있습니다.</p>
+
+    <div class="tree">
+      <div class="tree-title">폐렴의 가족 트리 &mdash; IS-A 관계</div>
+
+      <div class="tree-node level-0">
+        <span class="tree-connector"></span>
+        <span class="tree-badge root">질환 (Disease)</span>
+      </div>
+      <div class="tree-node level-1">
+        <span class="tree-connector">&#9474;</span>
+        <span class="tree-badge root">호흡기 질환 (Respiratory disorder)</span>
+      </div>
+      <div class="tree-node level-2">
+        <span class="tree-connector">&#9474;</span>
+        <span class="tree-badge root">하기도 질환 (Lower respiratory tract disorder)</span>
+      </div>
+      <div class="tree-node level-3">
+        <span class="tree-connector">&#9474;</span>
+        <span class="tree-badge root">폐 감염 (Pulmonary infection)</span>
+      </div>
+      <div class="tree-node level-3" style="padding-top:8px;">
+        <span class="tree-connector">&#9500;&#9472;</span>
+        <span class="tree-badge sub">폐결핵 154283005</span>
+      </div>
+      <div class="tree-node level-3">
+        <span class="tree-connector">&#9500;&#9472;</span>
+        <span class="tree-badge sub">폐농양</span>
+      </div>
+      <div class="tree-node level-3 highlight-row">
+        <span class="tree-connector">&#9492;&#9472;</span>
+        <span class="tree-badge main">&#11088; 폐렴 (Pneumonia) 233604007</span>
+      </div>
+      <div class="tree-node level-4">
+        <span class="tree-connector">&#9500;&#9472;</span>
+        <span class="tree-badge sub">233607000 세균성 폐렴</span>
+        <span class="tree-label"></span>
+      </div>
+      <div class="tree-node level-4">
+        <span class="tree-connector">&#9500;&#9472;</span>
+        <span class="tree-badge sub">75570004 바이러스성 폐렴</span>
+      </div>
+      <div class="tree-node level-4">
+        <span class="tree-connector">&#9500;&#9472;</span>
+        <span class="tree-badge sub">233611009 곰팡이성 폐렴</span>
+      </div>
+      <div class="tree-node level-4">
+        <span class="tree-connector">&#9492;&#9472;</span>
+        <span class="tree-badge sub">422588002 흡인성 폐렴</span>
+      </div>
+    </div>
+
+    <h3>IS-A 관계란?</h3>
+    <div class="info-card blue">
+      <div class="card-title">&#128218; IS-A = "~의 한 종류이다"</div>
+      <ul style="list-style:none;padding:0;margin-top:8px;">
+        <li style="padding:4px 0;">"세균성 폐렴" <strong>IS-A</strong> "폐렴" &rarr; 세균성 폐렴은 폐렴의 한 종류이다 &#9989;</li>
+        <li style="padding:4px 0;">"폐렴" <strong>IS-A</strong> "폐 감염" &rarr; 폐렴은 폐 감염의 한 종류이다 &#9989;</li>
+        <li style="padding:4px 0;margin-top:8px;color:var(--gray-500);">일상 비유: "골든 리트리버" IS-A "개" &rarr; 골든 리트리버는 개의 한 종류이다</li>
+      </ul>
+    </div>
+
+    <h3>이 구조가 왜 중요한가?</h3>
+    <div class="info-card green">
+      <div class="card-title">&#128269; 검색할 때 편리합니다</div>
+      <p>의사가 "폐렴 환자를 모두 찾아주세요"라고 하면, <strong>233604007(폐렴) 아래의 모든 하위 코드를 자동으로 포함</strong>합니다.</p>
+      <ul style="margin-top:8px;padding-left:20px;">
+        <li>세균성 폐렴 환자 &#9989; 포함</li>
+        <li>바이러스성 폐렴 환자 &#9989; 포함</li>
+        <li>COVID-19 폐렴 환자 &#9989; 포함</li>
+        <li>흡인성 폐렴 환자 &#9989; 포함</li>
+      </ul>
+      <p style="margin-top:8px;margin-bottom:0;">하나하나 찾을 필요 없이, <strong>상위 코드 하나로 전부 검색 가능!</strong></p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 5 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec5">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>폐렴 관련 SNOMED CT 코드 전체 목록</h2>
+    </div>
+
+    <h3>5.1 원인별 분류</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>분류</th><th>SNOMED CT Code</th><th>정식 명칭</th><th>한국어</th><th>설명</th></tr></thead>
+        <tbody>
+          <tr><td><strong>일반 폐렴</strong></td><td class="code-cell">233604007</td><td>Pneumonia (disorder)</td><td>폐렴</td><td>원인 불문, 가장 일반적인 코드</td></tr>
+          <tr><td>세균성 폐렴</td><td class="code-cell">233607000</td><td>Bacterial pneumonia</td><td>세균성 폐렴</td><td>세균이 원인인 폐렴</td></tr>
+          <tr><td>바이러스성 폐렴</td><td class="code-cell">75570004</td><td>Viral pneumonia</td><td>바이러스성 폐렴</td><td>바이러스가 원인인 폐렴</td></tr>
+          <tr><td>곰팡이성 폐렴</td><td class="code-cell">233611009</td><td>Fungal pneumonia</td><td>진균성 폐렴</td><td>곰팡이가 원인인 폐렴</td></tr>
+          <tr><td>기생충성 폐렴</td><td class="code-cell">78895009</td><td>Parasitic pneumonia</td><td>기생충성 폐렴</td><td>기생충이 원인인 폐렴</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>5.2 감염 경로별 분류</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>분류</th><th>SNOMED CT Code</th><th>정식 명칭</th><th>한국어</th><th>설명</th></tr></thead>
+        <tbody>
+          <tr><td>지역사회 획득 폐렴</td><td class="code-cell">385093006</td><td>Community-acquired pneumonia</td><td>지역사회 획득 폐렴</td><td>일상생활 중 감염</td></tr>
+          <tr><td>병원 획득 폐렴</td><td class="code-cell">441590008</td><td>Hospital-acquired pneumonia</td><td>병원 내 폐렴</td><td>입원 48시간 이후 발생</td></tr>
+          <tr><td>인공호흡기 관련 폐렴</td><td class="code-cell">429271009</td><td>Ventilator-associated pneumonia</td><td>인공호흡기 관련 폐렴</td><td>기계환기 중 발생</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>5.3 특수 유형</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>분류</th><th>SNOMED CT Code</th><th>정식 명칭</th><th>한국어</th><th>설명</th></tr></thead>
+        <tbody>
+          <tr><td>흡인성 폐렴</td><td class="code-cell">422588002</td><td>Aspiration pneumonia</td><td>흡인성 폐렴</td><td>음식/위산이 폐로 들어가 발생</td></tr>
+          <tr><td>간질성 폐렴</td><td class="code-cell">64667001</td><td>Interstitial pneumonia</td><td>간질성 폐렴</td><td>폐의 간질 조직에 염증</td></tr>
+          <tr><td>대엽성 폐렴</td><td class="code-cell">278516003</td><td>Lobar pneumonia</td><td>대엽성 폐렴</td><td>폐의 한 엽 전체에 발생</td></tr>
+          <tr><td>기관지 폐렴</td><td class="code-cell">396286009</td><td>Bronchopneumonia</td><td>기관지 폐렴</td><td>기관지 주변에 발생</td></tr>
+          <tr><td>보행 폐렴</td><td class="code-cell">408680002</td><td>Walking pneumonia</td><td>보행 폐렴</td><td>가벼운 증상, 일상생활 가능</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>5.4 특정 병원체별 분류</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>원인균</th><th>SNOMED CT Code</th><th>정식 명칭</th><th>한국어</th></tr></thead>
+        <tbody>
+          <tr><td>마이코플라즈마</td><td class="code-cell">46970008</td><td>Mycoplasma pneumonia</td><td>마이코플라즈마 폐렴</td></tr>
+          <tr><td>레지오넬라</td><td class="code-cell">80602006</td><td>Legionnaires' disease</td><td>레지오넬라 폐렴</td></tr>
+          <tr><td>인플루엔자</td><td class="code-cell">195878008</td><td>Influenzal pneumonia</td><td>인플루엔자 폐렴</td></tr>
+          <tr><td>COVID-19</td><td class="code-cell">840539006</td><td>Disease caused by SARS-CoV-2</td><td>코로나19 폐렴</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>5.5 한눈에 보는 전체 구조도</h3>
+    <div class="code-card">
+      <span class="badge">STRUCTURE MAP</span>
+<span class="yellow">233604007</span> <span class="highlight">폐렴 (Pneumonia)</span>
+<span class="dim">│</span>
+<span class="dim">├───</span> <span class="pink">[원인별]</span>
+<span class="dim">│    ├──</span> <span class="green">233607000</span> 세균성 폐렴
+<span class="dim">│    │    ├──</span> 폐렴구균 폐렴
+<span class="dim">│    │    ├──</span> 포도상구균 폐렴
+<span class="dim">│    │    ├──</span> 클렙시엘라 폐렴
+<span class="dim">│    │    └──</span> <span class="green">80602006</span> 레지오넬라 폐렴
+<span class="dim">│    │</span>
+<span class="dim">│    ├──</span> <span class="green">75570004</span> 바이러스성 폐렴
+<span class="dim">│    │    ├──</span> <span class="green">195878008</span> 인플루엔자 폐렴
+<span class="dim">│    │    ├──</span> <span class="green">840539006</span> COVID-19 폐렴
+<span class="dim">│    │    └──</span> RSV 폐렴
+<span class="dim">│    │</span>
+<span class="dim">│    ├──</span> <span class="green">233611009</span> 곰팡이성(진균성) 폐렴
+<span class="dim">│    └──</span> <span class="green">78895009</span> 기생충성 폐렴
+<span class="dim">│</span>
+<span class="dim">├───</span> <span class="pink">[감염 경로별]</span>
+<span class="dim">│    ├──</span> <span class="green">385093006</span> 지역사회 획득 폐렴
+<span class="dim">│    ├──</span> <span class="green">441590008</span> 병원 획득 폐렴
+<span class="dim">│    └──</span> <span class="green">429271009</span> 인공호흡기 관련 폐렴
+<span class="dim">│</span>
+<span class="dim">├───</span> <span class="pink">[해부학적 분류]</span>
+<span class="dim">│    ├──</span> <span class="green">278516003</span> 대엽성 폐렴
+<span class="dim">│    ├──</span> <span class="green">396286009</span> 기관지 폐렴
+<span class="dim">│    └──</span> <span class="green">64667001</span> 간질성 폐렴
+<span class="dim">│</span>
+<span class="dim">└───</span> <span class="pink">[특수 유형]</span>
+<span class="dim">     ├──</span> <span class="green">422588002</span> 흡인성 폐렴
+<span class="dim">     └──</span> <span class="green">408680002</span> 보행 폐렴
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 6 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec6">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <h2>하나의 코드, 여러 개의 이름 (동의어)</h2>
+    </div>
+
+    <p>SNOMED CT에서는 하나의 코드에 <strong>여러 이름(동의어)</strong>이 등록됩니다.</p>
+
+    <div class="visual-box" style="text-align:center;">
+      <div style="font-size:13px;color:var(--gray-500);margin-bottom:8px;">코드</div>
+      <div style="font-family:Consolas,monospace;font-size:28px;font-weight:800;color:var(--primary-dark);margin-bottom:20px;">233604007</div>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
+        <span style="background:var(--primary-light);color:var(--primary-dark);padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;">Pneumonia (disorder)</span>
+        <span style="background:#fef3c7;color:#92400e;padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;">폐렴</span>
+        <span style="background:#dbeafe;color:#1e40af;padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;">Pulmonary infection</span>
+        <span style="background:#fce7f3;color:#9d174d;padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;">허파염</span>
+        <span style="background:#ede9fe;color:#5b21b6;padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;">肺炎</span>
+        <span style="background:#d1fae5;color:#065f46;padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;">Lung inflammation</span>
+        <span style="background:#e0e7ff;color:#3730a3;padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;">Neumon&iacute;a</span>
+        <span style="background:#fee2e2;color:#991b1b;padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;">폐염</span>
+      </div>
+      <div style="margin-top:16px;font-size:13px;color:var(--gray-500);">어떤 단어로 입력하든 &rarr; 같은 코드 <strong>233604007</strong>로 인식</div>
+    </div>
+
+    <h3>왜 동의어가 중요한가?</h3>
+    <div class="info-card blue">
+      <div class="card-title">&#128172; 의사가 진료 기록을 입력할 때</div>
+      <ul style="list-style:none;padding:0;margin:0;">
+        <li style="padding:4px 0;">의사 A: "폐렴" 이라고 입력 &rarr; 시스템이 <strong>233604007</strong>로 변환</li>
+        <li style="padding:4px 0;">의사 B: "허파염" 이라고 입력 &rarr; 시스템이 <strong>233604007</strong>로 변환</li>
+        <li style="padding:4px 0;">의사 C: "Pneumonia" 입력 &rarr; 시스템이 <strong>233604007</strong>로 변환</li>
+      </ul>
+      <p style="margin-top:8px;margin-bottom:0;">어떤 단어로 입력하든 같은 코드! 검색도 어떤 단어로 찾든 같은 결과</p>
+    </div>
+
+    <h3>정식 명칭(FSN) vs 선호 용어(PT)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>구분</th><th>설명</th><th>예시</th></tr></thead>
+        <tbody>
+          <tr><td><strong>FSN</strong><br><span style="font-size:11px;color:var(--gray-500);">Fully Specified Name</span></td><td>괄호 안에 의미 분류가 포함된 공식 이름</td><td>Pneumonia <strong>(disorder)</strong></td></tr>
+          <tr><td><strong>PT</strong><br><span style="font-size:11px;color:var(--gray-500);">Preferred Term</span></td><td>해당 언어에서 일상적으로 쓰는 이름</td><td>한국: "폐렴" / 영어: "Pneumonia"</td></tr>
+          <tr><td><strong>SYN</strong><br><span style="font-size:11px;color:var(--gray-500);">Synonym</span></td><td>추가 동의어</td><td>"허파염", "Lung inflammation"</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-card yellow">
+      <div class="card-title">&#9888;&#65039; FSN의 괄호가 중요한 이유</div>
+      <p>"Pneumonia"라는 단어가 여러 맥락에서 쓰일 수 있습니다:</p>
+      <ul style="padding-left:20px;margin-top:8px;">
+        <li>Pneumonia <strong>(disorder)</strong> &rarr; 질환으로서의 폐렴</li>
+        <li>Pneumonia <strong>(finding)</strong> &rarr; 소견(발견)으로서의 폐렴</li>
+        <li>Pneumonia <strong>(organism)</strong> &rarr; 폐렴을 일으키는 균 이름</li>
+      </ul>
+      <p style="margin-bottom:0;margin-top:8px;">괄호 안의 구분이 있어야 정확히 어떤 의미인지 알 수 있습니다!</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 7 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec7">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <h2>폐렴 코드에 붙는 추가 정보 (속성)</h2>
+    </div>
+
+    <p>코드 하나만으로는 정보가 부족할 때, <strong>추가 정보를 속성(Attribute)으로 붙입니다.</strong></p>
+
+    <div class="analogy">
+      <div class="analogy-title">&#128230; 비유: 택배 송장</div>
+      <p style="font-size:14px;margin-bottom:0;">택배 상자 = <strong>233604007 (폐렴)</strong> &mdash; 여기에 추가 스티커(속성)를 붙이면 더 정확한 정보가 됩니다.</p>
+    </div>
+
+    <div class="sticker-box">
+      <div class="sticker-main">
+        <div class="code-big">233604007</div>
+        <div class="code-name">Pneumonia</div>
+      </div>
+      <div class="sticker-attrs">
+        <div class="sticker-attr">
+          <div class="attr-label">&#128205; 위치 (Finding-Site)</div>
+          <div class="attr-value">왼쪽 폐 하엽</div>
+          <div class="attr-code">41224006</div>
+        </div>
+        <div class="sticker-attr">
+          <div class="attr-label">&#128300; 형태 (Morphology)</div>
+          <div class="attr-value">염증</div>
+          <div class="attr-code">23583003</div>
+        </div>
+        <div class="sticker-attr">
+          <div class="attr-label">&#129440; 원인 (Causative-Agent)</div>
+          <div class="attr-value">폐렴구균</div>
+          <div class="attr-code">9861002</div>
+        </div>
+        <div class="sticker-attr">
+          <div class="attr-label">&#9888;&#65039; 심각도 (Severity)</div>
+          <div class="attr-value">중증 (Severe)</div>
+          <div class="attr-code">24484000</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>폐렴에 사용되는 주요 속성</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>속성 이름</th><th>의미</th><th>예시 코드</th><th>예시 값</th></tr></thead>
+        <tbody>
+          <tr><td><strong>FINDING-SITE</strong></td><td>어디에 발생했는가</td><td class="code-cell">41224006</td><td>왼쪽 폐 하엽</td></tr>
+          <tr><td><strong>ASSOCIATED-MORPHOLOGY</strong></td><td>어떤 형태 변화인가</td><td class="code-cell">23583003</td><td>염증 (Inflammation)</td></tr>
+          <tr><td><strong>CAUSATIVE-AGENT</strong></td><td>원인이 무엇인가</td><td class="code-cell">9861002</td><td>폐렴구균</td></tr>
+          <tr><td><strong>SEVERITY</strong></td><td>얼마나 심한가</td><td class="code-cell">24484000</td><td>중증 (Severe)</td></tr>
+          <tr><td><strong>LATERALITY</strong></td><td>좌우 어느 쪽인가</td><td class="code-cell">7771000</td><td>왼쪽 (Left)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>속성이 있을 때 vs 없을 때</h3>
+    <div class="visual-box compare">
+      <div class="compare-side bad" style="background:#fef2f2;">
+        <h4>&#10060; 속성이 없을 때</h4>
+        <p style="font-size:15px;text-align:center;padding:20px 0;margin:0;">"폐렴입니다"<br><span style="font-size:13px;color:var(--gray-500);">어디? 얼마나 심해? 원인은? &rarr; 알 수 없음</span></p>
+      </div>
+      <div class="compare-side good">
+        <h4>&#9989; 속성이 있을 때</h4>
+        <p style="font-size:14px;padding:10px 0;margin:0;">
+          <strong>233604007</strong> + FINDING-SITE:<strong>41224006</strong> + SEVERITY:<strong>24484000</strong><br>
+          <span style="font-size:13px;color:var(--gray-500);">&rarr; 왼쪽 아래 폐 + 중증 &rarr; 즉시 이해 가능<br>
+          &rarr; 다른 병원/나라에서도 정확히 같은 의미</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 8 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec8">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <h2>실제 사용 예시: 병원에서 이렇게 쓰입니다</h2>
+    </div>
+
+    <h3>시나리오: 김철수 환자의 X-ray 진단</h3>
+    <div class="info-card purple">
+      <div class="card-title">&#127973; 상황</div>
+      <p>김철수(65세) 환자가 기침과 발열로 내원. 흉부 X-ray 촬영 결과 왼쪽 아래 폐에 폐렴 소견 확인. AI 시스템이 92% 확률로 폐렴 감지.</p>
+    </div>
+
+    <div class="code-card">
+      <span class="badge">SNOMED CT 진단 기록</span>
+
+<span class="highlight">소견(Finding):</span>     <span class="yellow">233604007</span> | Pneumonia (폐렴)
+<span class="highlight">위치(Site):</span>        <span class="yellow">41224006</span>  | 왼쪽 폐 하엽
+<span class="highlight">심각도(Severity):</span>  <span class="yellow">24484000</span>  | 중증(Severe)
+<span class="highlight">확실성(Certainty):</span> <span class="yellow">410605003</span> | 확정(Confirmed)
+<span class="highlight">검사방법(Method):</span>  <span class="yellow">399208008</span> | 흉부 X-ray 촬영
+<span class="highlight">AI 신뢰도:</span>         <span class="green">0.92 (92%)</span>
+    </div>
+
+    <h3>이 기록이 시스템에서 어떻게 활용되는가</h3>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <h4>EHR 자동 저장</h4>
+        <p>의사가 직접 타이핑 없이 코드로 기록</p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <h4>보험 청구 변환</h4>
+        <p>233604007 &rarr; ICD-10: J18.9 자동 전송</p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <h4>의사결정 지원</h4>
+        <p>"중증 폐렴!" &rarr; 항생제 처방 권고 표시</p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <h4>전원/연구</h4>
+        <p>전 세계 동일 해석, 통계 자동 집계</p>
+      </div>
+    </div>
+
+    <h3>AI 진단 시스템의 출력 예시</h3>
+    <div class="json-block">
+      <span class="label">JSON Output</span>
+<pre>{
+  <span class="json-key">"patient_id"</span>: <span class="json-str">"KIM-CS-001"</span>,
+  <span class="json-key">"study_date"</span>: <span class="json-str">"2026-03-28"</span>,
+  <span class="json-key">"modality"</span>: <span class="json-str">"X-ray"</span>,
+  <span class="json-key">"ai_findings"</span>: [
+    {
+      <span class="json-key">"finding"</span>: {
+        <span class="json-key">"sctid"</span>: <span class="json-str">"233604007"</span>,
+        <span class="json-key">"display"</span>: <span class="json-str">"Pneumonia"</span>,
+        <span class="json-key">"display_ko"</span>: <span class="json-str">"폐렴"</span>
+      },
+      <span class="json-key">"body_site"</span>: {
+        <span class="json-key">"sctid"</span>: <span class="json-str">"41224006"</span>,
+        <span class="json-key">"display"</span>: <span class="json-str">"Structure of lower lobe of left lung"</span>,
+        <span class="json-key">"display_ko"</span>: <span class="json-str">"왼쪽 폐 하엽"</span>
+      },
+      <span class="json-key">"severity"</span>: {
+        <span class="json-key">"sctid"</span>: <span class="json-str">"24484000"</span>,
+        <span class="json-key">"display"</span>: <span class="json-str">"Severe"</span>,
+        <span class="json-key">"display_ko"</span>: <span class="json-str">"중증"</span>
+      },
+      <span class="json-key">"probability"</span>: <span class="json-num">0.92</span>,
+      <span class="json-key">"bounding_box"</span>: [<span class="json-num">300</span>, <span class="json-num">350</span>, <span class="json-num">450</span>, <span class="json-num">480</span>]
+    }
+  ]
+}</pre>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 9 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec9">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <h2>ICD-10 코드와의 관계</h2>
+    </div>
+
+    <h3>SNOMED CT와 ICD-10의 차이</h3>
+    <div class="analogy">
+      <div class="analogy-title">&#128218; "병원에서 ICD-10을 쓰는데, SNOMED CT는 왜 또 필요하죠?"</div>
+      <p style="font-size:14px;margin-bottom:8px;"><strong>ICD-10</strong> = 보험 청구, 사망 통계 등을 위한 <strong>"분류" 체계</strong> (큰 카테고리)</p>
+      <p style="font-size:14px;margin-bottom:12px;"><strong>SNOMED CT</strong> = 진료 기록을 위한 <strong>"서술" 체계</strong> (세밀한 구분)</p>
+      <p style="font-size:13px;color:var(--gray-600);margin-bottom:0;">비유: ICD-10 = 도서관의 "분류 번호" (문학, 과학, 역사...) / SNOMED CT = 책의 "ISBN 번호" (한 권 한 권 고유)</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>비교 항목</th><th>SNOMED CT</th><th>ICD-10</th></tr></thead>
+        <tbody>
+          <tr><td><strong>목적</strong></td><td>진료 기록의 정밀한 코딩</td><td>보험 청구, 질병 통계</td></tr>
+          <tr><td><strong>규모</strong></td><td>35만+ 개념</td><td>~7만 코드</td></tr>
+          <tr><td><strong>폐렴 코드 수</strong></td><td>수십~수백 개</td><td>약 20개</td></tr>
+          <tr><td><strong>정밀도</strong></td><td>매우 높음 (원인, 위치, 심각도 포함)</td><td>중간 (큰 카테고리)</td></tr>
+          <tr><td><strong>사용 장면</strong></td><td>AI 진단, 전자건강기록, 연구</td><td>보험 청구서, 사망진단서</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>폐렴의 SNOMED CT &rarr; ICD-10 매핑</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>SNOMED CT Code</th><th>SNOMED CT 명칭</th><th></th><th>ICD-10 Code</th><th>ICD-10 명칭</th></tr></thead>
+        <tbody>
+          <tr><td class="code-cell">233604007</td><td>Pneumonia</td><td style="text-align:center;">&rarr;</td><td class="code-cell">J18.9</td><td>폐렴, 상세불명</td></tr>
+          <tr><td class="code-cell">233607000</td><td>Bacterial pneumonia</td><td style="text-align:center;">&rarr;</td><td class="code-cell">J15.9</td><td>세균성 폐렴, 상세불명</td></tr>
+          <tr><td class="code-cell">75570004</td><td>Viral pneumonia</td><td style="text-align:center;">&rarr;</td><td class="code-cell">J12.9</td><td>바이러스성 폐렴, 상세불명</td></tr>
+          <tr><td class="code-cell">840539006</td><td>COVID-19</td><td style="text-align:center;">&rarr;</td><td class="code-cell">U07.1</td><td>COVID-19, 바이러스 확인</td></tr>
+          <tr><td class="code-cell">385093006</td><td>Community-acquired pneumonia</td><td style="text-align:center;">&rarr;</td><td class="code-cell">J18.9</td><td>폐렴, 상세불명</td></tr>
+          <tr><td class="code-cell">422588002</td><td>Aspiration pneumonia</td><td style="text-align:center;">&rarr;</td><td class="code-cell">J69.0</td><td>흡인성 폐렴</td></tr>
+          <tr><td class="code-cell">278516003</td><td>Lobar pneumonia</td><td style="text-align:center;">&rarr;</td><td class="code-cell">J18.1</td><td>대엽성 폐렴, 상세불명</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-card red">
+      <div class="card-title">&#9888;&#65039; 매핑 시 주의점</div>
+      <p>SNOMED CT &rarr; ICD-10 변환 시 <strong>정보가 손실</strong>될 수 있습니다!</p>
+      <p style="margin-bottom:4px;">예시:</p>
+      <ul style="padding-left:20px;margin-bottom:8px;">
+        <li>SNOMED CT: "왼쪽 하엽의 중증 폐렴구균 폐렴" (매우 자세함)</li>
+        <li>ICD-10: J13 "폐렴구균에 의한 폐렴" (위치, 심각도 정보 사라짐)</li>
+      </ul>
+      <p style="margin-bottom:0;">이것이 진료 기록에는 SNOMED CT를 쓰고, 보험 청구에만 ICD-10을 쓰는 이유입니다.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 10 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec10">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <h2>AI 진단 시스템에서의 활용</h2>
+    </div>
+
+    <h3>AI가 폐렴을 진단하는 과정</h3>
+    <div class="flow">
+      <div class="flow-step" style="background:#f0fdf4;">
+        <div class="step-num">1</div>
+        <h4>X-ray 촬영</h4>
+        <p>DICOM 형식으로 저장</p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step" style="background:#eff6ff;">
+        <div class="step-num">2</div>
+        <h4>AI 분석 (&lt;1초)</h4>
+        <p>"Pneumonia" 확률 92%<br>위치: [300,350,450,480]</p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step" style="background:#fef3c7;">
+        <div class="step-num">3</div>
+        <h4>SNOMED CT 변환</h4>
+        <p>"Pneumonia" &rarr; 233604007<br>좌표 &rarr; 41224006(좌하엽)</p>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step" style="background:#ede9fe;">
+        <div class="step-num">4</div>
+        <h4>표준화된 출력</h4>
+        <p>DICOM SR, HL7 FHIR,<br>ICD-10 자동 매핑</p>
+      </div>
+    </div>
+
+    <h3>AI 모델의 한계와 SNOMED CT</h3>
+    <div class="visual-box compare">
+      <div class="compare-side good" style="background:#f0fdf4;">
+        <h4>&#9989; AI가 할 수 있는 것</h4>
+        <div class="compare-item">"이 X-ray에서 폐렴이 보입니다" (233604007)</div>
+        <div class="compare-item">"왼쪽 아래 부분입니다" (위치)</div>
+        <div class="compare-item">"확률은 92%입니다" (신뢰도)</div>
+      </div>
+      <div class="compare-side bad" style="background:#fef2f2;">
+        <h4>&#10060; AI가 아직 어려운 것</h4>
+        <div class="compare-item">"세균성 폐렴입니다" (원인 구분)</div>
+        <div class="compare-item">"폐렴구균이 원인입니다" (특정 균 식별)</div>
+        <div class="compare-item">"항생제 A가 적합합니다" (치료 결정)</div>
+      </div>
+    </div>
+
+    <div class="info-card blue">
+      <div class="card-title">&#128161; 핵심</div>
+      <p>AI는 일반 코드(<strong>233604007</strong>)로 매핑하고, 의사가 추가 검사 후 세부 코드(233607000 등)로 변경합니다. 이것이 <strong>"AI는 보조, 최종 진단은 의사"</strong>인 이유입니다.</p>
+    </div>
+
+    <h3>코드 선택 가이드 (AI 시스템 개발자용)</h3>
+    <div class="code-card">
+      <span class="badge">DECISION FLOW</span>
+<span class="highlight">AI 출력에 따른 SNOMED CT 코드 선택:</span>
+
+  [AI 출력: <span class="yellow">"Pneumonia"</span>]
+       <span class="dim">│</span>
+       <span class="dim">├──</span> 원인 분류 가능? ──── <span class="pink">No</span> ──&gt; <span class="green">233604007</span> (Pneumonia) 사용
+       <span class="dim">│</span>
+       <span class="dim">└──</span> <span class="green">Yes</span> ──&gt; 세균성?     ──&gt; <span class="green">233607000</span> (Bacterial pneumonia)
+                   바이러스성? ──&gt; <span class="green">75570004</span>  (Viral pneumonia)
+                   COVID-19?  ──&gt; <span class="green">840539006</span> (COVID-19)
+                   흡인성?     ──&gt; <span class="green">422588002</span> (Aspiration pneumonia)
+
+  <span class="yellow">&#128161;</span> <span class="dim">원칙: 가능한 한 가장 구체적인 코드를 사용하되,</span>
+     <span class="dim">확실하지 않으면 상위(일반) 코드를 사용합니다.</span>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 11 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec11">
+    <div class="section-header">
+      <div class="section-num">11</div>
+      <h2>자주 묻는 질문 (FAQ)</h2>
+    </div>
+
+    <div class="faq-item open">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span class="q-badge">Q1</span>
+        폐렴 코드를 외워야 하나요?
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="faq-a">
+        <strong>아닙니다.</strong> 실제 시스템에서는 "폐렴"이라고 검색하면 관련 코드 목록이 자동으로 나타납니다. 코드 번호를 암기할 필요는 전혀 없습니다. 중요한 것은 <strong>어떤 상황에서 어떤 수준의 코드를 선택해야 하는지</strong> 이해하는 것입니다.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span class="q-badge">Q2</span>
+        233604007과 233607000 중 어떤 것을 써야 하나요?
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="faq-a">
+        <strong>원인을 아느냐에 따라 다릅니다.</strong> 원인이 확인되지 않은 폐렴이면 233604007, 세균이 원인인 것이 확인되면 233607000을 씁니다. <strong>"확실하지 않으면 일반(상위) 코드"</strong>가 원칙입니다.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span class="q-badge">Q3</span>
+        ICD-10 코드만 쓰면 안 되나요?
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="faq-a">
+        ICD-10은 보험 청구에는 충분하지만, <strong>진료 기록에는 부족</strong>합니다. "폐렴"의 위치, 심각도, 원인까지 기록하려면 SNOMED CT가 필요합니다. 또한 AI 시스템 간 데이터 교환에는 SNOMED CT가 국제 표준입니다.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span class="q-badge">Q4</span>
+        한국에서도 SNOMED CT를 쓰나요?
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="faq-a">
+        한국은 <strong>2020년에 SNOMED International에 가입</strong>했습니다. 아직 전면 도입 단계는 아니지만, 의료 AI 시스템과 국제 데이터 교환을 위해 점차 확대되고 있습니다. 현재는 주로 AI 의료기기와 연구 분야에서 사용 중입니다.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <span class="q-badge">Q5</span>
+        코드가 바뀌기도 하나요?
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="faq-a">
+        SNOMED CT는 <strong>연 2회 업데이트</strong>됩니다. 새로운 질환이 추가되거나(예: COVID-19), 기존 코드가 비활성화될 수 있습니다. 다만, 한 번 부여된 코드 번호가 다른 의미로 <strong>재사용되지는 않습니다.</strong> 버전 관리를 통해 추적 가능합니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 12 -->
+  <!-- ============================================================ -->
+  <div class="section" id="sec12">
+    <div class="section-header">
+      <div class="section-num">12</div>
+      <h2>요약</h2>
+    </div>
+
+    <div class="summary-card">
+      <h3>&#128204; 폐렴의 SNOMED CT 코드 핵심 요약</h3>
+      <ol class="summary-list">
+        <li>
+          <span class="num-circle">1</span>
+          <span><strong>대표 코드: 233604007 (Pneumonia)</strong><br>원인 불문, "폐렴" 전체를 대표하는 코드</span>
+        </li>
+        <li>
+          <span class="num-circle">2</span>
+          <span><strong>코드는 하나가 아니다</strong><br>원인별, 위치별, 경로별로 수십 개의 하위 코드 존재</span>
+        </li>
+        <li>
+          <span class="num-circle">3</span>
+          <span><strong>계층 구조 (IS-A)</strong><br>"세균성 폐렴 IS-A 폐렴 IS-A 폐감염 IS-A 호흡기질환" &mdash; 상위 코드로 검색하면 하위 코드도 포함</span>
+        </li>
+        <li>
+          <span class="num-circle">4</span>
+          <span><strong>하나의 코드 = 여러 이름</strong><br>233604007 = "폐렴" = "Pneumonia" = "허파염" = "肺炎"</span>
+        </li>
+        <li>
+          <span class="num-circle">5</span>
+          <span><strong>속성으로 정보 추가</strong><br>위치, 심각도, 원인 등을 코드로 함께 기록</span>
+        </li>
+        <li>
+          <span class="num-circle">6</span>
+          <span><strong>가장 구체적인 코드를 사용하는 것이 원칙</strong><br>확실하지 않으면 상위(일반) 코드 사용</span>
+        </li>
+      </ol>
+    </div>
+
+    <h3>기억해야 할 주요 코드 (빠른 참조)</h3>
+    <div class="table-wrap quick-ref">
+      <table>
+        <thead><tr><th>코드</th><th>한국어</th><th>영어</th><th>언제 사용?</th></tr></thead>
+        <tbody>
+          <tr><td class="code-cell">233604007</td><td><strong>폐렴</strong></td><td>Pneumonia</td><td>원인 모를 때, 일반적으로</td></tr>
+          <tr><td class="code-cell">233607000</td><td>세균성 폐렴</td><td>Bacterial pneumonia</td><td>세균이 원인일 때</td></tr>
+          <tr><td class="code-cell">75570004</td><td>바이러스성 폐렴</td><td>Viral pneumonia</td><td>바이러스가 원인일 때</td></tr>
+          <tr><td class="code-cell">840539006</td><td>COVID-19</td><td>COVID-19</td><td>코로나19일 때</td></tr>
+          <tr><td class="code-cell">422588002</td><td>흡인성 폐렴</td><td>Aspiration pneumonia</td><td>음식/위산 흡인일 때</td></tr>
+          <tr><td class="code-cell">385093006</td><td>지역사회 획득 폐렴</td><td>Community-acquired</td><td>일상에서 감염일 때</td></tr>
+          <tr><td class="code-cell">441590008</td><td>병원 획득 폐렴</td><td>Hospital-acquired</td><td>입원 중 감염일 때</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-card blue" style="margin-top:32px;">
+      <div class="card-title">&#128214; 더 알아보기</div>
+      <p style="margin-bottom:0;">이 문서는 SNOMED CT에서 폐렴이 어떻게 코드화되는지에 대한 입문 가이드입니다. 더 자세한 SNOMED CT 시스템 전반에 대해서는 <a href="./SNOMED_CT_X-ray_AI_연동_가이드.html" style="color:var(--primary-dark);font-weight:600;">SNOMED CT & X-ray AI 연동 가이드</a>를 참고하세요.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- SCROLL SPY -->
+<script>
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.sidebar a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const id = entry.target.id;
+        const activeLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(section => observer.observe(section));
+
+  // Close sidebar on mobile when clicking a link
+  document.querySelectorAll('.sidebar a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 960) {
+        document.querySelector('.sidebar').classList.remove('open');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>온도 모니터링 대시보드</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,'Malgun Gothic',sans-serif; background:#0f172a; color:#e2e8f0; padding:20px; }
+  h1 { text-align:center; font-size:24px; margin-bottom:20px; color:#60a5fa; }
+  .grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; max-width:900px; margin:0 auto 20px; }
+  .card { background:#1e293b; border-radius:12px; padding:20px; text-align:center; border:1px solid #334155; }
+  .card .label { font-size:12px; color:#94a3b8; margin-bottom:4px; }
+  .card .value { font-size:32px; font-weight:800; }
+  .card .value.green { color:#4ade80; }
+  .card .value.yellow { color:#fbbf24; }
+  .card .value.orange { color:#fb923c; }
+  .card .value.red { color:#f87171; }
+  #status-card { border-width:2px; }
+  .chart-area { background:#1e293b; border-radius:12px; padding:20px; max-width:900px; margin:0 auto 20px; border:1px solid #334155; }
+  .chart-title { font-size:14px; color:#94a3b8; margin-bottom:10px; }
+  canvas { width:100%; height:200px; }
+  .log-area { background:#1e293b; border-radius:12px; padding:16px; max-width:900px; margin:0 auto; border:1px solid #334155; max-height:200px; overflow-y:auto; }
+  .log-area .log-title { font-size:14px; color:#94a3b8; margin-bottom:8px; }
+  .log-item { font-size:12px; font-family:Consolas,monospace; padding:2px 0; color:#cbd5e1; }
+  .footer { text-align:center; margin-top:20px; font-size:11px; color:#475569; }
+  .docker-badge { display:inline-block; background:#1e40af; color:#93c5fd; padding:2px 10px; border-radius:10px; font-size:11px; margin-top:8px; }
+</style>
+</head>
+<body>
+  <h1>&#127777;&#65039; &#50728;&#46020; &#47784;&#45768;&#53552;&#47553; &#45824;&#49884;&#48372;&#46300;</h1>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">&#54788;&#51116; &#50728;&#46020;</div>
+      <div class="value green" id="temp-value">--.-&#176;C</div>
+    </div>
+    <div class="card" id="status-card">
+      <div class="label">&#49345;&#53468;</div>
+      <div class="value green" id="status-value">&#45824;&#44592;</div>
+    </div>
+    <div class="card">
+      <div class="label">&#49688;&#49888; &#44148;&#49688;</div>
+      <div class="value" id="count-value" style="color:#60a5fa;">0</div>
+    </div>
+  </div>
+
+  <div class="chart-area">
+    <div class="chart-title">&#128200; &#50728;&#46020; &#52628;&#51060; (&#52572;&#44540; 50&#44148;)</div>
+    <canvas id="chart"></canvas>
+  </div>
+
+  <div class="log-area">
+    <div class="log-title">&#128203; &#49892;&#49884;&#44036; &#47196;&#44536;</div>
+    <div id="log-list"></div>
+  </div>
+
+  <div class="footer">
+    Docker &#49892;&#49845; &#8212; PC&#50640;&#49436; &#44060;&#48156;, Raspberry Pi 5&#50640;&#49436; &#49892;&#54665;
+    <br><span class="docker-badge">&#128051; Powered by Docker</span>
+  </div>
+
+<script>
+const API = 'http://' + window.location.hostname + ':8000';
+const canvas = document.getElementById('chart');
+const ctx = canvas.getContext('2d');
+let tempHistory = [];
+
+const statusColors = { '\uc815\uc0c1':'green', '\uc8fc\uc758':'yellow', '\uacbd\uace0':'orange', '\uc704\ud5d8':'red' };
+const statusBorders = { '\uc815\uc0c1':'#4ade80', '\uc8fc\uc758':'#fbbf24', '\uacbd\uace0':'#fb923c', '\uc704\ud5d8':'#f87171' };
+
+function drawChart() {
+  const w = canvas.width = canvas.offsetWidth;
+  const h = canvas.height = 200;
+  ctx.clearRect(0, 0, w, h);
+  if (tempHistory.length < 2) return;
+
+  const temps = tempHistory.slice(-50);
+  const min = Math.min(...temps) - 5;
+  const max = Math.max(...temps) + 5;
+  const range = max - min || 1;
+
+  const y35 = h - ((35-min)/range)*h;
+  const y45 = h - ((45-min)/range)*h;
+  const y55 = h - ((55-min)/range)*h;
+  ctx.fillStyle='rgba(74,222,128,0.05)'; ctx.fillRect(0,y35,w,h-y35);
+  ctx.fillStyle='rgba(251,191,36,0.08)'; ctx.fillRect(0,y45,w,y35-y45);
+  ctx.fillStyle='rgba(251,146,60,0.08)'; ctx.fillRect(0,y55,w,y45-y55);
+  ctx.fillStyle='rgba(248,113,113,0.08)'; ctx.fillRect(0,0,w,y55);
+
+  ctx.beginPath(); ctx.strokeStyle='#60a5fa'; ctx.lineWidth=2;
+  temps.forEach((t,i) => {
+    const x = (i/(temps.length-1))*w;
+    const y = h - ((t-min)/range)*h;
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  temps.forEach((t,i) => {
+    const x = (i/(temps.length-1))*w;
+    const y = h - ((t-min)/range)*h;
+    ctx.beginPath();
+    ctx.fillStyle = t>=55?'#f87171':t>=45?'#fb923c':t>=35?'#fbbf24':'#4ade80';
+    ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
+  });
+}
+
+function addLog(msg) {
+  const el = document.getElementById('log-list');
+  const div = document.createElement('div');
+  div.className = 'log-item'; div.textContent = msg;
+  el.insertBefore(div, el.firstChild);
+  if (el.children.length > 30) el.removeChild(el.lastChild);
+}
+
+async function update() {
+  try {
+    const resp = await fetch(API + '/current');
+    const data = await resp.json();
+    if (data.temperature) {
+      const t = data.temperature;
+      const s = data.status || '\ub300\uae30';
+      const c = statusColors[s] || 'green';
+      document.getElementById('temp-value').textContent = t.toFixed(1) + '\u00b0C';
+      document.getElementById('temp-value').className = 'value ' + c;
+      document.getElementById('status-value').textContent = s;
+      document.getElementById('status-value').className = 'value ' + c;
+      document.getElementById('status-card').style.borderColor = statusBorders[s] || '#334155';
+      document.getElementById('count-value').textContent = data.count || 0;
+      tempHistory.push(t);
+      if (tempHistory.length > 50) tempHistory.shift();
+      drawChart();
+      const icons = {'\uc815\uc0c1':'\u2705','\uc8fc\uc758':'\u26a0\ufe0f','\uacbd\uace0':'\ud83d\udd36','\uc704\ud5d8':'\ud83d\udea8'};
+      addLog('[' + data.timestamp + '] ' + (icons[s]||'') + ' ' + t.toFixed(1) + '\u00b0C \u2014 ' + (data.message||s));
+    }
+  } catch(e) { addLog('[\uc5f0\uacb0 \uc2e4\ud328] ' + e.message); }
+}
+
+setInterval(update, 1000);
+update();
+</script>
+</body>
+</html>

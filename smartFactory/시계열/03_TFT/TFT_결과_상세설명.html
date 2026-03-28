@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TFT 시뮬레이션 결과 상세 설명</title>
+<style>
+:root{--p:#059669;--pl:#d1fae5;--pd:#065f46;--a:#7c3aed;--al:#ede9fe;--s:#059669;--sl:#d1fae5;--w:#d97706;--wl:#fef3c7;--d:#dc2626;--dl:#fee2e2;--b:#2563eb;--bl:#dbeafe;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;--g900:#111827;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Pretendard',-apple-system,'Segoe UI','Malgun Gothic',sans-serif;background:var(--g50);color:var(--g800);line-height:1.8;font-size:15px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.hero{background:linear-gradient(135deg,#065f46 0%,#059669 50%,#2563eb 100%);color:#fff;border-radius:16px;padding:40px 36px;margin-bottom:36px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%;}
+.hero h1{font-size:26px;font-weight:800;margin-bottom:8px;position:relative;}
+.hero .sub{font-size:14px;opacity:.85;position:relative;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.15);padding:3px 14px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:14px;}
+.section{margin-bottom:44px;}
+h2{font-size:20px;font-weight:800;color:var(--g900);margin-bottom:18px;padding-bottom:8px;border-bottom:3px solid var(--pl);display:flex;align-items:center;gap:10px;}
+h2 .num{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--p);color:#fff;border-radius:8px;font-size:15px;flex-shrink:0;}
+h3{font-size:16px;font-weight:700;color:var(--g900);margin:20px 0 10px;}
+p{margin-bottom:12px;font-size:14px;}
+.img-wrap{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;margin:16px 0;text-align:center;}
+.img-wrap img{max-width:100%;border-radius:8px;}
+.img-wrap .caption{font-size:12px;color:var(--g500);margin-top:8px;}
+.info-card{border-radius:12px;padding:20px 24px;margin:16px 0;border-left:4px solid;}
+.info-card.blue{background:var(--bl);border-color:var(--b);}
+.info-card.green{background:var(--sl);border-color:var(--s);}
+.info-card.yellow{background:var(--wl);border-color:var(--w);}
+.info-card.red{background:var(--dl);border-color:var(--d);}
+.info-card.purple{background:var(--al);border-color:var(--a);}
+.info-card .card-title{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.info-card p,.info-card li{font-size:13px;line-height:1.7;}
+.analogy{background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde047;border-radius:12px;padding:20px 24px;margin:16px 0;}
+.analogy .title{font-size:14px;font-weight:700;color:var(--w);margin-bottom:8px;}
+.code-box{background:#1e293b;color:#e2e8f0;border-radius:12px;padding:20px 24px;margin:16px 0;font-family:'Consolas',monospace;font-size:12px;line-height:1.7;overflow-x:auto;white-space:pre;}
+.code-box .hl{color:#60a5fa;font-weight:600;}.code-box .gr{color:#4ade80;}.code-box .yw{color:#fbbf24;}.code-box .pk{color:#f472b6;}.code-box .dm{color:#64748b;}
+.graph-card{background:#fff;border:2px solid var(--p);border-radius:16px;padding:24px;margin:20px 0;position:relative;}
+.graph-card .graph-num{position:absolute;top:-12px;left:20px;background:var(--p);color:#fff;padding:2px 14px;border-radius:8px;font-size:12px;font-weight:700;}
+.graph-card h3{margin-top:8px;color:var(--pd);}
+.compare-box{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0;}
+.compare-item{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;text-align:center;}
+.compare-item .model{font-size:12px;color:var(--g500);margin-bottom:4px;}
+.compare-item .desc{font-size:13px;font-weight:700;}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.metric-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;text-align:center;}
+.metric-card .value{font-size:24px;font-weight:800;color:var(--p);}
+.metric-card .label{font-size:11px;color:var(--g500);margin-top:4px;}
+.score-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+.score-table th,.score-table td{padding:8px 12px;border:1px solid var(--g200);text-align:center;}
+.score-table th{background:var(--g100);font-weight:700;}
+@media(max-width:768px){.compare-box{grid-template-columns:1fr;}.metric-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="main">
+
+<div class="hero">
+  <div class="hero-badge">TIME SERIES MODEL #3</div>
+  <h1>TFT (Temporal Fusion Transformer) &#44208;&#44284; &#49345;&#49464; &#49444;&#47749;</h1>
+  <p class="sub">"&#52572;&#49888; &#52572;&#44053;" &#49884;&#44228;&#50676; &#47784;&#45944; &mdash; 3&#51333;&#47448; &#51077;&#47141; + Attention + &#48320;&#49688; &#49440;&#53469;</p>
+</div>
+
+<div class="section">
+  <h2><span class="num">0</span> TFT&#46976;?</h2>
+  <div class="analogy">
+    <div class="title">&#128161; &#48708;&#50976;: 5&#44060; &#47784;&#45944; &#48708;&#44368;</div>
+    <p style="font-size:13px;margin-bottom:4px;"><strong>ARIMA</strong> = &#44228;&#49328;&#44592; (&#44036;&#45800;, &#45800;&#49692;)</p>
+    <p style="font-size:13px;margin-bottom:4px;"><strong>Prophet</strong> = &#44277;&#54617;&#50857; &#44228;&#49328;&#44592; (&#49789;&#51648;&#47564; &#44053;&#47141;)</p>
+    <p style="font-size:13px;margin-bottom:4px;"><strong>XGBoost</strong> = &#50641;&#49472; (&#47564;&#45733;&#50640; &#44032;&#44633;&#44256; &#48736;&#47492;)</p>
+    <p style="font-size:13px;margin-bottom:4px;"><strong>LSTM</strong> = &#45765;&#48513; (&#48373;&#51105;&#54620; &#51089;&#50629;, &#44592;&#50613;&#47141; &#51339;&#51020;)</p>
+    <p style="font-size:13px;margin-bottom:0;"><strong>TFT</strong> = <strong>&#50892;&#53356;&#49828;&#53580;&#51060;&#49496;</strong> (&#52572;&#44256; &#49457;&#45733;, &#54616;&#51648;&#47564; &#47924;&#44169;&#44256; &#48708;&#50032;)</p>
+  </div>
+
+  <div class="info-card green">
+    <div class="card-title">&#9733; TFT&#47564;&#51032; &#52264;&#48324;&#51216;: 3&#51333;&#47448; &#51077;&#47141;&#51012; &#46041;&#49884; &#52376;&#47532;</div>
+    <div class="compare-box" style="margin:10px 0 0;">
+      <div class="compare-item" style="background:#dbeafe;border-color:#2563eb;">
+        <div class="model">&#44284;&#44144; &#49468;&#49436; (Unknown)</div>
+        <div class="desc">&#50728;&#46020;, &#51652;&#46041;, &#51204;&#47448;<br><small style="font-weight:400;color:var(--g600);">&#48120;&#47000; &#44050;&#51012; &#47784;&#47492;</small></div>
+      </div>
+      <div class="compare-item" style="background:#fef3c7;border-color:#d97706;">
+        <div class="model">&#48120;&#47000; &#51221;&#48372; (Known)</div>
+        <div class="desc">&#49884;&#44036;, &#50836;&#51068;, &#49373;&#49328; &#49828;&#52992;&#51460;<br><small style="font-weight:400;color:var(--g600);">&#48120;&#47000;&#50640;&#46020; &#50508; &#49688; &#51080;&#51020;</small></div>
+      </div>
+      <div class="compare-item" style="background:#ede9fe;border-color:#7c3aed;">
+        <div class="model">&#44256;&#51221; &#51221;&#48372; (Static)</div>
+        <div class="desc">&#51109;&#48708; ID, &#52860;&#45216; &#44368;&#52404; &#51060;&#47141;<br><small style="font-weight:400;color:var(--g600);">&#49884;&#44036;&#50640; &#47924;&#44288;</small></div>
+      </div>
+    </div>
+    <p style="margin-top:10px;margin-bottom:0;font-size:12px;color:var(--g600);">Prophet/LSTM&#51008; &#44284;&#44144;&#47564; &#49324;&#50857;. TFT&#45716; <strong>3&#44032;&#51648; &#47784;&#46160;</strong> &#54876;&#50857;!</p>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card"><div class="value">1.15&deg;C</div><div class="label">MAE (24h &#54980; &#50696;&#52769; &#50724;&#52264;)</div></div>
+    <div class="metric-card"><div class="value">47&#44060;</div><div class="label">&#53945;&#51669;(Feature) &#49688;</div></div>
+    <div class="metric-card"><div class="value">75.6%</div><div class="label">&#49884;&#44036; &#51221;&#48372; &#51473;&#50836;&#46020;</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="graph-card">
+    <div class="graph-num">&#44536;&#47000;&#54532; 1</div>
+    <h3>24&#49884;&#44036; &#54980; &#50728;&#46020; &#50696;&#52769;</h3>
+    <div class="img-wrap"><img src="tft_result.png"><div class="caption">&#50812;&#51901; &#50948; &#44536;&#47000;&#54532;</div></div>
+    <div class="info-card blue">
+      <div class="card-title">&#128065;&#65039; &#51069;&#45716; &#48169;&#48277;</div>
+      <p style="margin-bottom:4px;"><strong>&#54028;&#46976; &#49892;&#49440;</strong> = &#49892;&#51228; &#50728;&#46020; (24&#49884;&#44036; &#54980;) / <strong>&#48736;&#44036; &#51216;&#49440;</strong> = TFT &#50696;&#52769;</p>
+      <p style="margin-bottom:0;">&#46160; &#49440;&#51060; &#44144;&#51032; &#44217;&#52824;&#47732; &#50696;&#52769;&#51060; &#51221;&#54869;&#54620; &#44163;. MAE 1.15&deg;C&#45716; Prophet(1.52&deg;C)&#48372;&#45796; <strong>&#45908; &#51221;&#54869;</strong>&#54633;&#45768;&#45796;!</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="graph-card" style="border-color:var(--d);border-width:3px;">
+    <div class="graph-num" style="background:var(--d);">&#44536;&#47000;&#54532; 2 &#9733;</div>
+    <h3 style="color:var(--d);">Variable Selection &mdash; "&#50612;&#46500; &#49468;&#49436; &#44536;&#47353;&#51060; &#44032;&#51109; &#51473;&#50836;&#54620;&#44032;?"</h3>
+    <div class="info-card red">
+      <div class="card-title">&#128293; TFT&#47564;&#51032; &#54645;&#49900; &#44592;&#45733;!</div>
+      <p style="margin-bottom:0;">&#54028;&#51060; &#52264;&#53944;&#47484; &#48372;&#49464;&#50836;. <strong>&#49884;&#44036; &#51221;&#48372;(75.6%)</strong>&#44032; &#50517;&#46020;&#51201;&#51004;&#47196; &#51473;&#50836;&#54633;&#45768;&#45796;. "24&#49884;&#44036; &#54980; &#50728;&#46020;&#47484; &#50696;&#52769;&#54624; &#46412;, &#51648;&#44552;&#51060; &#47751; &#49884;&#51064;&#51648;(&#49884;&#44036; &#51221;&#48372;)&#44032; &#44032;&#51109; &#51473;&#50836;&#54616;&#45796;"&#45716; &#46907;&#51077;&#45768;&#45796;.</p>
+    </div>
+    <div class="code-box"><span class="yw">&#48320;&#49688; &#44536;&#47353;&#48324; &#51473;&#50836;&#46020;:</span>
+
+  <span class="yw">&#49884;&#44036; &#51221;&#48372;</span> (hour, day_of_week, &#46321;): <span class="yw">75.6%</span> &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;
+  <span class="hl">&#44592;&#53440;</span> (rpm, throughput &#46321;):    <span class="hl">11.2%</span> &#9608;&#9608;
+  <span class="pk">&#50728;&#46020; &#44288;&#47144;</span>:                       <span class="pk"> 6.8%</span> &#9608;
+  <span class="gr">&#51652;&#46041; &#44288;&#47144;</span>:                       <span class="gr"> 3.7%</span>
+  <span class="dm">&#51204;&#47448; &#44288;&#47144;</span>:                       <span class="dm"> 2.8%</span>
+
+  <span class="dm">&#51032;&#48120;: "&#45236;&#51068; &#50724;&#51204; 10&#49884;&#51032; &#50728;&#46020;&#47484; &#50696;&#52769;&#54624; &#46412;,
+  &#44032;&#51109; &#51473;&#50836;&#54620; &#44163;&#51008; '&#44536;&#46412;&#44032; &#50724;&#51204; 10&#49884;&#46972;&#45716; &#49324;&#49892;'&#51060;&#45796;.
+  &#50780;&#45264;&#54616;&#47732; &#47588;&#51068; &#50724;&#51204;&#50640;&#45716; &#44032;&#46041;&#54616;&#47732;&#49436; &#50728;&#46020;&#44032; &#50724;&#47476;&#45716; &#54056;&#53556;&#51060; &#48152;&#48373;&#46104;&#44592; &#46412;&#47928;."</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="graph-card" style="border-color:#7c3aed;border-width:3px;">
+    <div class="graph-num" style="background:#7c3aed;">&#44536;&#47000;&#54532; 3 &#9733;</div>
+    <h3 style="color:#7c3aed;">Attention &mdash; "&#50612;&#46500; &#44284;&#44144; &#49884;&#51216;&#51060; &#48120;&#47000;&#50640; &#51473;&#50836;&#54620;&#44032;?"</h3>
+    <div class="info-card purple">
+      <div class="card-title">&#128161; TFT vs LSTM&#51032; &#54645;&#49900; &#52264;&#51060;</div>
+      <p style="margin-bottom:4px;"><strong>LSTM</strong> = &#52293;&#51012; &#52376;&#51020;&#48512;&#53552; &#45149;&#44620;&#51648; <strong>&#49692;&#49436;&#45824;&#47196;</strong> &#51069;&#51020;</p>
+      <p style="margin-bottom:0;"><strong>TFT</strong> = &#47785;&#52264;&#47484; &#48372;&#44256; <strong>&#51473;&#50836;&#54620; &#52309;&#53552;&#47484; &#47676;&#51200;</strong> &#51069;&#51020; (Attention!)</p>
+    </div>
+    <div class="code-box"><span class="yw">&#44284;&#44144; &#49884;&#51216;&#48324; &#51473;&#50836;&#46020;:</span>
+
+  <span class="hl">24&#49884;&#44036; &#51204;</span>: <span class="hl">0.0565</span> &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; &#8592; <span class="yw">&#44032;&#51109; &#51473;&#50836;!</span>
+   <span class="hl">6&#49884;&#44036; &#51204;</span>: <span class="hl">0.0359</span> &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;
+   <span class="hl">3&#49884;&#44036; &#51204;</span>: <span class="hl">0.0322</span> &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;
+  <span class="dm">12&#49884;&#44036; &#51204;</span>: <span class="dm">0.0132</span> &#9608;&#9608;
+   <span class="dm">1&#49884;&#44036; &#51204;</span>: <span class="dm">0.0083</span> &#9608;
+
+  <span class="dm">&#51032;&#48120;: "24&#49884;&#44036; &#54980;&#47484; &#50696;&#52769;&#54624; &#46412;, &#51221;&#54869;&#55176; 24&#49884;&#44036; &#51204; &#45936;&#51060;&#53552;&#44032; &#44032;&#51109; &#51473;&#50836;&#54616;&#45796;"
+  &#50780;? &#50612;&#51228; &#44057;&#51008; &#49884;&#44036;&#51032; &#50728;&#46020; = &#45236;&#51068; &#44057;&#51008; &#49884;&#44036;&#51032; &#50728;&#46020;&#50752; &#44032;&#51109; &#48708;&#49847;&#54616;&#45768;&#44620;!</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="graph-card">
+    <div class="graph-num">&#44536;&#47000;&#54532; 4</div>
+    <h3>&#47784;&#45944; &#44036; &#49345;&#45824;&#51201; &#49457;&#45733; &#48708;&#44368;</h3>
+    <div class="code-box"><span class="yw">&#47561;&#45824; &#44536;&#47000;&#54532; &#51069;&#44592;:</span>
+
+  ARIMA(&#53685;&#44228;)     <span class="dm">&#9608;&#9608;</span>             &#51216;&#49688; 2 &mdash; &#44032;&#51109; &#45800;&#49692;, Baseline
+  Prophet(Meta)    <span class="yw">&#9608;&#9608;&#9608;</span>            &#51216;&#49688; 3 &mdash; &#49781;&#44256; &#54644;&#49437; &#44032;&#45733;
+  XGBoost(&#53944;&#47532;)    <span class="hl">&#9608;&#9608;&#9608;&#9608;</span>           &#51216;&#49688; 4 &mdash; &#47564;&#45733;, Edge &#52572;&#51201;
+  LSTM(&#46373;&#47084;&#45789;)     <span class="pk">&#9608;&#9608;&#9608;&#9608;&#9608;</span>          &#51216;&#49688; 4.5 &mdash; &#44592;&#50613;&#47141;, &#51060;&#49345; &#53456;&#51648;
+  <span class="gr">TFT(Transformer)</span>  <span class="gr">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span>         <span class="gr">&#51216;&#49688; 5 &mdash; &#52572;&#44256; &#49457;&#45733;!</span>
+
+  <span class="dm">&#45800;, TFT&#45716; &#45936;&#51060;&#53552; &#47566;&#51060; &#54596;&#50836; + &#47924;&#44144;&#50880; + Edge &#48176;&#54252; &#50612;&#47140;&#50880;</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">vs</span> 5&#44060; &#47784;&#45944; &#52509;&#51221;&#47532;</h2>
+  <div class="score-table">
+    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead><tr><th></th><th>Prophet</th><th>LSTM</th><th style="background:#d1fae5;">TFT &#9733;</th><th>XGBoost</th><th>ARIMA</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700;background:var(--g100);">&#47785;&#51201;</td><td>&#50696;&#52769;</td><td>&#51060;&#49345; &#53456;&#51648;</td><td style="background:#ecfdf5;font-weight:700;">&#45796;&#48320;&#47049; &#50696;&#52769;</td><td>&#47560;&#47784; &#50696;&#52769;</td><td>Baseline</td></tr>
+        <tr><td style="font-weight:700;background:var(--g100);">&#51077;&#47141;</td><td>1&#44060;</td><td>3&#44060;</td><td style="background:#ecfdf5;font-weight:700;">47&#44060; (3&#51333;&#47448;)</td><td>30&#44060;</td><td>1&#44060;</td></tr>
+        <tr><td style="font-weight:700;background:var(--g100);">&#54645;&#49900; &#44592;&#45733;</td><td>&#48516;&#54644;</td><td>&#44592;&#50613;+&#53456;&#51648;</td><td style="background:#ecfdf5;font-weight:700;">Attention+&#48320;&#49688;&#49440;&#53469;</td><td>&#53945;&#51669; &#51473;&#50836;&#46020;</td><td>&#53685;&#44228;</td></tr>
+        <tr><td style="font-weight:700;background:var(--g100);">Edge &#48176;&#54252;</td><td>&#44032;&#45733;</td><td>&#44032;&#45733;</td><td style="background:#fee2e2;">&#50612;&#47140;&#50880;</td><td style="background:#d1fae5;">&#52572;&#51201;</td><td>&#44032;&#45733;</td></tr>
+        <tr><td style="font-weight:700;background:var(--g100);">&#49836;&#47112;&#45908; &#51201;&#50857;</td><td>&#53944;&#47116;&#46300;</td><td>&#48288;&#50612;&#47553;</td><td style="background:#ecfdf5;font-weight:700;">&#53685;&#54633; &#51109;&#44592; &#50696;&#52769;</td><td>&#52860;&#45216; &#47560;&#47784;</td><td>&#44592;&#51456;&#49440;</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="info-card green">
+    <div class="card-title">&#128073; &#44208;&#47200;</div>
+    <p style="margin-bottom:0;">TFT&#45716; <strong>&#52572;&#44256; &#49457;&#45733;+&#54644;&#49437; &#44032;&#45733;</strong>&#51060;&#51648;&#47564;, &#45936;&#51060;&#53552;&#44032; &#47566;&#51060; &#54596;&#50836;&#54616;&#44256; &#47924;&#44161;&#49845;&#45768;&#45796;. &#49836;&#47112;&#45908;&#50640;&#49436;&#45716; <strong>&#49436;&#48260;&#50640;&#49436; &#51109;&#44592; &#50696;&#52769;</strong>&#50640; &#49324;&#50857;&#54616;&#44256;, Edge&#50640;&#49436;&#45716; XGBoost/LSTM&#51012; &#49324;&#50857;&#54633;&#45768;&#45796;.</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

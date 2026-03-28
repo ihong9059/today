@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>슈레더 AI 시스템 구축 상세 계획서 — UTTEC</title>
+<style>
+:root{--p:#2563eb;--pl:#dbeafe;--pd:#1e40af;--a:#7c3aed;--al:#ede9fe;--s:#059669;--sl:#d1fae5;--w:#d97706;--wl:#fef3c7;--d:#dc2626;--dl:#fee2e2;--i:#0891b2;--il:#cffafe;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;--g900:#111827;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Pretendard',-apple-system,'Segoe UI','Malgun Gothic',sans-serif;background:var(--g50);color:var(--g800);line-height:1.8;font-size:15px;}
+
+/* SIDEBAR */
+.sidebar{position:fixed;left:0;top:0;width:270px;height:100vh;background:linear-gradient(180deg,#0f172a 0%,#1e293b 100%);color:#fff;overflow-y:auto;z-index:100;padding:0;transition:transform .3s;}
+.sidebar-logo{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sidebar-logo .logo-main{font-size:18px;font-weight:800;color:#60a5fa;letter-spacing:-0.5px;}
+.sidebar-logo .logo-sub{font-size:11px;color:#94a3b8;margin-top:2px;}
+.sidebar-logo .logo-tag{display:inline-block;background:rgba(96,165,250,.15);color:#60a5fa;font-size:10px;padding:2px 8px;border-radius:4px;margin-top:6px;font-weight:600;}
+.sidebar .nav-group{padding:14px 0 6px;font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1.5px;padding-left:20px;}
+.sidebar a{display:block;padding:6px 20px;color:#94a3b8;text-decoration:none;font-size:12px;transition:.2s;border-left:3px solid transparent;}
+.sidebar a:hover,.sidebar a.active{color:#fff;background:rgba(255,255,255,.05);border-left-color:#60a5fa;}
+.sidebar a .num{display:inline-block;width:20px;color:#60a5fa;font-weight:600;font-size:11px;}
+.sidebar .divider{height:1px;background:rgba(255,255,255,.06);margin:6px 16px;}
+
+.menu-toggle{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--g900);color:#fff;border:none;border-radius:8px;width:42px;height:42px;font-size:20px;cursor:pointer;align-items:center;justify-content:center;}
+.main{margin-left:270px;max-width:960px;padding:32px 48px 80px;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 40%,#1e40af 70%,#7c3aed 100%);color:#fff;border-radius:20px;padding:52px 44px;margin-bottom:44px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;background:rgba(96,165,250,.08);border-radius:50%;}
+.hero::after{content:'';position:absolute;bottom:-50px;left:20%;width:200px;height:200px;background:rgba(124,58,237,.08);border-radius:50%;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.12);backdrop-filter:blur(4px);padding:4px 16px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:16px;letter-spacing:.5px;border:1px solid rgba(255,255,255,.1);position:relative;}
+.hero h1{font-size:30px;font-weight:800;margin-bottom:10px;line-height:1.35;position:relative;}
+.hero .subtitle{font-size:15px;opacity:.85;line-height:1.7;position:relative;}
+.hero-info{display:flex;gap:24px;margin-top:24px;font-size:12px;position:relative;}
+.hero-info-item{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 16px;backdrop-filter:blur(4px);}
+.hero-info-item .label{color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:.5px;}
+.hero-info-item .val{color:#fff;font-weight:700;font-size:16px;margin-top:2px;}
+
+/* SECTIONS */
+.section{margin-bottom:52px;scroll-margin-top:20px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:10px;border-bottom:2px solid var(--pl);}
+.section-num{display:flex;align-items:center;justify-content:center;width:38px;height:38px;background:var(--p);color:#fff;border-radius:10px;font-weight:800;font-size:16px;flex-shrink:0;}
+.section-header h2{font-size:20px;font-weight:700;color:var(--g900);}
+h3{font-size:16px;font-weight:700;color:var(--g900);margin:24px 0 12px;}
+p{margin-bottom:12px;}
+
+/* CARDS */
+.info-card{border-radius:12px;padding:20px 24px;margin:16px 0;border-left:4px solid;}
+.info-card.blue{background:var(--pl);border-color:var(--p);}
+.info-card.green{background:var(--sl);border-color:var(--s);}
+.info-card.yellow{background:var(--wl);border-color:var(--w);}
+.info-card.red{background:var(--dl);border-color:var(--d);}
+.info-card.purple{background:var(--al);border-color:var(--a);}
+.info-card .card-title{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.info-card p,.info-card li{font-size:13px;line-height:1.7;}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;margin:16px 0;border-radius:12px;border:1px solid var(--g200);box-shadow:0 1px 3px rgba(0,0,0,.04);}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead{background:var(--g100);}
+th{text-align:left;padding:10px 14px;font-weight:700;color:var(--g700);font-size:12px;border-bottom:2px solid var(--g200);white-space:nowrap;}
+td{padding:9px 14px;border-bottom:1px solid var(--g100);vertical-align:top;line-height:1.6;}
+tr:last-child td{border-bottom:none;}
+tr:hover{background:var(--g50);}
+.code-cell{font-family:'Consolas',monospace;font-weight:700;color:var(--pd);}
+
+/* CODE */
+.code-card{background:linear-gradient(135deg,#1e293b,#0f172a);color:#e2e8f0;border-radius:12px;padding:24px 26px;margin:16px 0;font-family:'Consolas','Monaco',monospace;font-size:12px;line-height:1.7;overflow-x:auto;position:relative;white-space:pre;}
+.code-card .badge{position:absolute;top:10px;right:14px;background:rgba(96,165,250,.2);color:#60a5fa;font-size:10px;padding:2px 10px;border-radius:10px;font-family:-apple-system,sans-serif;}
+.code-card .hl{color:#60a5fa;font-weight:600;}
+.code-card .gr{color:#4ade80;}
+.code-card .yw{color:#fbbf24;}
+.code-card .pk{color:#f472b6;}
+.code-card .dm{color:#64748b;}
+
+/* METRICS */
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0;}
+.metric-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:18px;text-align:center;transition:transform .2s,box-shadow .2s;}
+.metric-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08);}
+.metric-card .value{font-size:26px;font-weight:800;line-height:1.2;}
+.metric-card .value.blue{color:var(--p);}
+.metric-card .value.green{color:var(--s);}
+.metric-card .value.purple{color:var(--a);}
+.metric-card .value.orange{color:var(--w);}
+.metric-card .value.red{color:var(--d);}
+.metric-card .label{font-size:11px;color:var(--g500);margin-top:4px;line-height:1.4;}
+
+/* FLOW */
+.flow{display:flex;align-items:stretch;gap:0;margin:16px 0;overflow-x:auto;}
+.flow-step{flex:1;min-width:120px;background:#fff;border:1px solid var(--g200);border-radius:12px;padding:14px 10px;text-align:center;transition:transform .2s;}
+.flow-step:hover{transform:translateY(-2px);}
+.flow-step .step-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:var(--p);color:#fff;border-radius:50%;font-size:12px;font-weight:700;margin-bottom:6px;}
+.flow-step h4{font-size:11px;font-weight:700;color:var(--g800);margin-bottom:3px;}
+.flow-step p{font-size:10px;color:var(--g500);margin-bottom:0;line-height:1.4;}
+.flow-arrow{display:flex;align-items:center;padding:0 3px;color:var(--p);font-size:18px;flex-shrink:0;}
+
+/* TIMELINE */
+.timeline{margin:16px 0;position:relative;}
+.timeline::before{content:'';position:absolute;left:18px;top:0;bottom:0;width:3px;background:linear-gradient(var(--p),var(--a),var(--s),var(--w));}
+.tl-item{position:relative;padding:0 0 26px 52px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-dot{position:absolute;left:8px;top:4px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;z-index:1;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.tl-dot.p1{background:var(--p);}
+.tl-dot.p2{background:var(--a);}
+.tl-dot.p3{background:var(--s);}
+.tl-dot.p4{background:var(--w);}
+.tl-dot.p5{background:var(--i);}
+.tl-content{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px 20px;transition:box-shadow .2s;}
+.tl-content:hover{box-shadow:0 4px 12px rgba(0,0,0,.06);}
+.tl-content h4{font-size:14px;font-weight:700;color:var(--g900);margin-bottom:3px;}
+.tl-content .tl-period{font-size:11px;color:var(--g500);margin-bottom:8px;}
+.tl-content ul{padding-left:16px;font-size:12px;color:var(--g700);}
+.tl-content li{margin-bottom:3px;line-height:1.5;}
+
+/* COMPARE */
+.compare-box{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--g200);margin:16px 0;}
+.compare-side{padding:20px 24px;}
+.compare-side.before{background:#fef2f2;border-right:2px solid var(--g200);}
+.compare-side.after{background:#f0fdf4;}
+.compare-side h4{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.compare-side.before h4{color:var(--d);}
+.compare-side.after h4{color:var(--s);}
+.compare-side li{font-size:12px;line-height:1.7;}
+
+/* AI MODEL CARDS */
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+.ai-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:18px;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;}
+.ai-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.08);}
+.ai-card .ai-num{position:absolute;top:12px;right:14px;background:var(--g100);color:var(--g500);font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;}
+.ai-card .ai-icon{font-size:24px;margin-bottom:8px;}
+.ai-card h4{font-size:14px;font-weight:700;color:var(--g900);margin-bottom:4px;}
+.ai-card .ai-algo{font-size:11px;color:var(--a);font-weight:600;margin-bottom:6px;}
+.ai-card .ai-desc{font-size:12px;color:var(--g600);line-height:1.5;}
+.ai-card .ai-meta{display:flex;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid var(--g100);font-size:11px;color:var(--g500);}
+.ai-card .ai-meta span{display:flex;align-items:center;gap:4px;}
+
+/* SENSOR MAP */
+.sensor-map{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:16px;padding:32px;margin:16px 0;color:#e2e8f0;font-family:'Consolas',monospace;font-size:12px;line-height:1.6;overflow-x:auto;white-space:pre;position:relative;}
+.sensor-map .map-badge{position:absolute;top:14px;right:18px;background:rgba(96,165,250,.15);color:#60a5fa;font-size:10px;padding:3px 12px;border-radius:8px;font-family:-apple-system,sans-serif;font-weight:600;}
+
+/* ROI CARD */
+.roi-hero{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:2px solid #6ee7b7;border-radius:16px;padding:32px;margin:16px 0;}
+.roi-hero h3{color:#065f46;margin-top:0;font-size:18px;}
+.roi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;}
+.roi-item{background:#fff;border-radius:12px;padding:18px;text-align:center;border:1px solid #a7f3d0;}
+.roi-item .roi-label{font-size:11px;color:var(--g500);margin-bottom:4px;}
+.roi-item .roi-value{font-size:24px;font-weight:800;color:#065f46;}
+.roi-item .roi-sub{font-size:11px;color:var(--s);margin-top:2px;}
+
+/* EXPAND ROADMAP */
+.expand-flow{display:flex;align-items:center;gap:0;margin:16px 0;overflow-x:auto;}
+.expand-phase{flex:1;min-width:160px;padding:20px;border-radius:12px;text-align:center;transition:transform .2s;}
+.expand-phase:hover{transform:translateY(-3px);}
+.expand-phase.current{background:var(--pl);border:2px solid var(--p);box-shadow:0 4px 12px rgba(37,99,235,.15);}
+.expand-phase.future{background:#fff;border:1px solid var(--g200);}
+.expand-phase h4{font-size:13px;font-weight:700;margin-bottom:4px;}
+.expand-phase.current h4{color:var(--pd);}
+.expand-phase.future h4{color:var(--g700);}
+.expand-phase p{font-size:11px;margin-bottom:0;color:var(--g600);}
+
+/* FOOTER */
+.footer{background:var(--g900);color:#94a3b8;border-radius:16px;padding:32px;margin-top:40px;text-align:center;font-size:12px;line-height:1.8;}
+.footer .footer-brand{font-size:18px;font-weight:800;color:#60a5fa;margin-bottom:4px;}
+
+/* HEALTH BAR */
+.health-bar-wrap{margin:4px 0;}
+.health-bar-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;}
+.health-bar{height:8px;background:var(--g200);border-radius:4px;overflow:hidden;}
+.health-bar-fill{height:100%;border-radius:4px;transition:width .5s;}
+
+@media(max-width:960px){
+.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}
+.menu-toggle{display:flex;}
+.main{margin-left:0;padding:20px 16px 60px;}
+.hero{padding:28px 22px;}.hero h1{font-size:22px;}
+.metric-grid{grid-template-columns:1fr 1fr;}
+.ai-grid{grid-template-columns:1fr;}
+.compare-box{grid-template-columns:1fr;}
+.compare-side.before{border-right:none;border-bottom:2px solid var(--g200);}
+.flow,.expand-flow{flex-direction:column;}
+.flow-arrow{transform:rotate(90deg);justify-content:center;}
+.hero-info{flex-direction:column;gap:8px;}
+.roi-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-main">UTTEC</div>
+    <div class="logo-sub">AI/IoT System Integration</div>
+    <div class="logo-tag">PROPOSAL FOR HANKOOK P.M ENG</div>
+  </div>
+  <div class="nav-group">Overview</div>
+  <a href="#sec1"><span class="num">1</span> &#54532;&#47196;&#51229;&#53944; &#44060;&#50836;</a>
+  <a href="#sec2"><span class="num">2</span> &#45824;&#49345; &#49444;&#48708; &#48516;&#49437;</a>
+  <a href="#sec3"><span class="num">3</span> &#54788;&#51116; &#47928;&#51228;&#51216;</a>
+  <a href="#sec4"><span class="num">4</span> &#49884;&#49828;&#53596; &#47785;&#54364;</a>
+  <div class="divider"></div>
+  <div class="nav-group">System Design</div>
+  <a href="#sec5"><span class="num">5</span> &#49884;&#49828;&#53596; &#50500;&#53412;&#53581;&#52376;</a>
+  <a href="#sec6"><span class="num">6</span> &#49468;&#49436; &#49444;&#44228; (14&#44060;)</a>
+  <a href="#sec7"><span class="num">7</span> AI &#47784;&#45944; (10&#51333;)</a>
+  <a href="#sec8"><span class="num">8</span> HW / SW &#49444;&#44228;</a>
+  <a href="#sec9"><span class="num">9</span> &#45824;&#49884;&#48372;&#46300; / &#50508;&#47548;</a>
+  <div class="divider"></div>
+  <div class="nav-group">Execution</div>
+  <a href="#sec10"><span class="num">10</span> &#44396;&#52629; &#51068;&#51221; (4&#44060;&#50900;)</a>
+  <a href="#sec11"><span class="num">11</span> &#53804;&#51088; &#48708;&#50857; / ROI</a>
+  <a href="#sec12"><span class="num">12</span> &#54869;&#51109; &#44228;&#54925;</a>
+  <a href="#sec13"><span class="num">13</span> UTTEC &#50669;&#47049;</a>
+</nav>
+
+<div class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">EDGE AI SYSTEM PROPOSAL v1.0</div>
+  <h1>&#51060;&#52629; &#51204;&#45800; &#54028;&#49604;&#44592;(Shredder)<br>AI &#51648;&#45733;&#54868; &#49884;&#49828;&#53596; &#44396;&#52629; &#49345;&#49464; &#44228;&#54925;&#49436;</h1>
+  <p class="subtitle">&#44256;&#51109; &#50696;&#51648; + &#49324;&#44256; &#50696;&#48169; + &#54028;&#49604; &#54408;&#51656; &#44288;&#47532;&#47484; &#50948;&#54620; Edge AI &#49884;&#49828;&#53596;</p>
+  <div class="hero-info">
+    <div class="hero-info-item"><div class="label">&#51228;&#50504;&#49324;</div><div class="val">UTTEC</div></div>
+    <div class="hero-info-item"><div class="label">&#51032;&#47280;&#49324;</div><div class="val">(&#51452;)&#54620;&#44397;&#44592;&#44228;&#50644;&#51648;&#45768;&#50612;&#47553;</div></div>
+    <div class="hero-info-item"><div class="label">&#44396;&#52629; &#44592;&#44036;</div><div class="val">4&#44060;&#50900;</div></div>
+    <div class="hero-info-item"><div class="label">&#53804;&#51088; &#54924;&#49688;</div><div class="val">4.9&#44060;&#50900;</div></div>
+  </div>
+</div>
+
+<!-- KEY METRICS -->
+<div class="metric-grid">
+  <div class="metric-card"><div class="value blue">14&#44060;</div><div class="label">&#49468;&#49436; &#49688;&#47049;</div></div>
+  <div class="metric-card"><div class="value purple">10&#51333;</div><div class="label">AI &#47784;&#45944;</div></div>
+  <div class="metric-card"><div class="value orange">8,500&#47564;</div><div class="label">&#52509; &#53804;&#51088;&#50529; (&#50896;)</div></div>
+  <div class="metric-card"><div class="value green">2.1&#50613;</div><div class="label">&#50672;&#44036; &#51208;&#44048; (&#50896;)</div></div>
+</div>
+
+<!-- SEC 1 -->
+<div class="section" id="sec1">
+  <div class="section-header"><div class="section-num">1</div><h2>&#54532;&#47196;&#51229;&#53944; &#44060;&#50836; &mdash; &#50780;, &#47924;&#50631;&#51012;, &#50612;&#46523;&#44172;</h2></div>
+
+  <h3>&#50780; &#49836;&#47112;&#45908; AI &#49884;&#49828;&#53596;&#51060; &#54596;&#50836;&#54620;&#44032;</h3>
+  <div class="compare-box">
+    <div class="compare-side before">
+      <h4>&#10060; &#54788;&#51116; &#49345;&#54889;</h4>
+      <ul style="padding-left:16px;">
+        <li><strong>&#52860;&#45216; &#47560;&#47784;</strong> &mdash; &#50977;&#50504; &#51216;&#44160;, &#44221;&#54744; &#44592;&#48152; &#44368;&#52404;</li>
+        <li><strong>&#54868;&#51116;/&#54253;&#48156;</strong> &mdash; IR &#49468;&#49436; &#45800;&#51068;, &#49688;&#46041; &#45824;&#51025;</li>
+        <li><strong>&#54028;&#49604; &#54408;&#51656;</strong> &mdash; &#49688;&#49884;&#44036; &#44036;&#44201; &#49368;&#54540;&#47553;</li>
+      </ul>
+      <p style="font-size:12px;color:var(--d);margin-top:10px;margin-bottom:0;font-weight:700;">&#48708;&#44228;&#54925; &#51221;&#51648; &#50672; 40&#49884;&#44036;+, &#49552;&#49892; &#50672; 1&#50613;&#50896;+</p>
+    </div>
+    <div class="compare-side after">
+      <h4>&#9989; AI &#49884;&#49828;&#53596; &#46020;&#51077; &#54980;</h4>
+      <ul style="padding-left:16px;">
+        <li><strong>&#52860;&#45216; RUL &#50696;&#52769;</strong> &mdash; &#47560;&#47784;&#50984;(%) + &#51092;&#50668;&#49688;&#47749;(h) &#51088;&#46041; &#50696;&#52769;</li>
+        <li><strong>&#48156;&#54868; &#44048;&#51648; &lt;1&#52488;</strong> &mdash; &#51060;&#51473;&#54868; IR + &#45796;&#51473; &#54032;&#45800; + &#51088;&#46041; &#45824;&#51025;</li>
+        <li><strong>&#54028;&#49604; &#53356;&#44592; &#49892;&#49884;&#44036;</strong> &mdash; AI &#44592;&#48152; &#44036;&#51217; &#52628;&#51221; + RPM &#52572;&#51201;&#54868;</li>
+      </ul>
+      <p style="font-size:12px;color:var(--s);margin-top:10px;margin-bottom:0;font-weight:700;">&#48708;&#44228;&#54925; &#51221;&#51648; 70%&#8595;, &#48156;&#54868; &#44048;&#51648; &lt;1&#52488;, &#54408;&#51656; &#54200;&#52264; &plusmn;5%</p>
+    </div>
+  </div>
+
+  <h3>&#50780; &#49836;&#47112;&#45908;&#48512;&#53552; &#49884;&#51089;&#54616;&#45716;&#44032;</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>&#51060;&#50976;</th><th>&#49444;&#47749;</th></tr></thead>
+      <tbody>
+        <tr><td><strong>&#44032;&#51109; &#45458;&#51008; &#50948;&#54744;</strong></td><td>&#48176;&#53552;&#47532; &#50676;&#54253;&#51452;&middot;&#54868;&#51116;&middot;&#54253;&#48156;&#51060; &#44032;&#51109; &#47676;&#51200; &#48156;&#49373;&#54616;&#45716; &#44277;&#51221;</td></tr>
+        <tr><td><strong>&#44032;&#51109; &#53360; &#50689;&#54693;</strong></td><td>1&#52264; &#44277;&#51221;&#51060; &#47704;&#52628;&#47732; &#51204;&#52404; &#46972;&#51064; &#51221;&#51648; (&#48337;&#47785;)</td></tr>
+        <tr><td><strong>&#51593;&#44033;&#51201; &#54952;&#44284;</strong></td><td>&#49468;&#49436; 14&#44060; + Edge 1&#45824;&#47196; &#48736;&#47476;&#44172; &#44396;&#52629;, &#54952;&#44284; &#51077;&#51613; &#44032;&#45733;</td></tr>
+        <tr><td><strong>&#54869;&#51109; &#44592;&#48152;</strong></td><td>&#49836;&#47112;&#45908;&#50640;&#49436; &#44160;&#51613;&#46108; &#49884;&#49828;&#53596;&#51012; 2&#52264;&rarr;3&#52264;&rarr;&#48516;&#44553;&#51004;&#47196; &#54869;&#51109;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEC 2 -->
+<div class="section" id="sec2">
+  <div class="section-header"><div class="section-num">2</div><h2>&#45824;&#49345; &#49444;&#48708; &#48516;&#49437; &mdash; &#51060;&#52629; &#51204;&#45800; &#54028;&#49604;&#44592;</h2></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>&#54637;&#47785;</th><th>&#49324;&#50577;</th><th>&#48708;&#44256;</th></tr></thead>
+      <tbody>
+        <tr><td><strong>&#51228;&#51312;&#49324;</strong></td><td>(&#51452;)&#54620;&#44397;&#44592;&#44228;&#50644;&#51648;&#45768;&#50612;&#47553;</td><td>www.topcrusher.co.kr</td></tr>
+        <tr><td><strong>&#54805;&#49885;</strong></td><td>&#51060;&#52629; &#51204;&#45800; &#54028;&#49604;&#44592; (Twin-Shaft Shear Shredder)</td><td></td></tr>
+        <tr><td><strong>&#47784;&#53552;</strong></td><td>2 &times; 55kW (&#44033; &#52629; &#46021;&#47549;)</td><td>&#52509; 110kW</td></tr>
+        <tr><td><strong>&#54924;&#51204;&#49549;&#46020;</strong></td><td>15~25 RPM</td><td>&#51200;&#49549;&middot;&#44256;&#53664;&#53356;</td></tr>
+        <tr><td><strong>&#54028;&#49604; &#53356;&#44592;</strong></td><td>50~100mm</td><td>1&#52264; &#54028;&#49604;</td></tr>
+        <tr><td><strong>&#53804;&#51077;&#47932;</strong></td><td>&#54224;&#48176;&#53552;&#47532; (&#48169;&#51204; &#52376;&#47532; &#50756;&#47308;)</td><td>EV/LIB</td></tr>
+        <tr><td><strong>&#50504;&#51204;</strong></td><td>N&#8322; &#54140;&#51648;, &#48169;&#54253;, &#48128;&#54224;, &#51088;&#46041; &#49548;&#54868;</td><td>ATEX</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>&#44256;&#51109; &#47784;&#46300; &#48516;&#49437; (FMEA) &mdash; RPN &#49345;&#50948; 3&#44060;&#44032; AI &#50864;&#49440; &#51201;&#50857; &#45824;&#49345;</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>&#44256;&#51109; &#47784;&#46300;</th><th>&#48712;&#46020;</th><th>&#49900;&#44033;&#46020;</th><th>&#44048;&#51648; &#45212;&#51060;&#46020;</th><th>RPN</th><th>&#54788;&#51116; &#45824;&#51025;</th></tr></thead>
+      <tbody>
+        <tr style="background:#fef2f2;"><td><strong>&#52860;&#45216; &#47560;&#47784;</strong></td><td>3</td><td>2</td><td>3</td><td style="color:var(--d);font-weight:800;">18</td><td>&#50977;&#50504; &#51216;&#44160;</td></tr>
+        <tr style="background:#fef2f2;"><td><strong>&#48288;&#50612;&#47553; &#49552;&#49345;</strong></td><td>2</td><td>3</td><td>3</td><td style="color:var(--d);font-weight:800;">18</td><td>&#51221;&#44592; &#44368;&#52404; (&#44284;&#51081;)</td></tr>
+        <tr style="background:#fef2f2;"><td><strong>&#51204;&#54644;&#50529; &#45572;&#52636;</strong></td><td>2</td><td>3</td><td>3</td><td style="color:var(--d);font-weight:800;">18</td><td>1&#51068; 1&#54924; &#51216;&#44160;</td></tr>
+        <tr><td>&#44048;&#49549;&#44592; &#51060;&#49345;</td><td>1</td><td>3</td><td>3</td><td>9</td><td>&#51221;&#44592; &#50724;&#51068; &#51216;&#44160;</td></tr>
+        <tr><td>&#50676;&#54253;&#51452;/&#54868;&#51116;</td><td>1</td><td>4</td><td>2</td><td>8</td><td>IR+&#49688;&#46041; &#49548;&#54868;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEC 3 -->
+<div class="section" id="sec3">
+  <div class="section-header"><div class="section-num">3</div><h2>&#54788;&#51116; &#47928;&#51228;&#51216; &#48143; 3&#45824; &#44284;&#51228;</h2></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;">
+    <div style="background:var(--pl);border:2px solid var(--p);border-radius:12px;padding:20px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">&#9881;&#65039;</div>
+      <div style="font-weight:800;font-size:15px;color:var(--pd);margin-bottom:6px;">&#44284;&#51228; 1: &#44256;&#51109; &#50696;&#51648;</div>
+      <div style="font-size:12px;color:var(--g600);line-height:1.6;">&#52860;&#45216; &#47560;&#47784; &#51088;&#46041; &#44048;&#51648;<br>&#48288;&#50612;&#47553; RUL &#50696;&#52769;<br><strong>&#48708;&#44228;&#54925; &#51221;&#51648; 40h &rarr; 12h</strong></div>
+    </div>
+    <div style="background:var(--dl);border:2px solid var(--d);border-radius:12px;padding:20px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">&#128293;</div>
+      <div style="font-weight:800;font-size:15px;color:var(--d);margin-bottom:6px;">&#44284;&#51228; 2: &#49324;&#44256; &#50696;&#48169;</div>
+      <div style="font-size:12px;color:var(--g600);line-height:1.6;">&#48156;&#54868; &#44048;&#51648; &lt;1&#52488; + &#51088;&#46041; &#45824;&#51025;<br>&#51204;&#54644;&#50529; &#49892;&#49884;&#44036; &#44048;&#49884;<br><strong>&#44144;&#51667; &#44221;&#48372; 5% &#51060;&#54616;</strong></div>
+    </div>
+    <div style="background:var(--al);border:2px solid var(--a);border-radius:12px;padding:20px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">&#128200;</div>
+      <div style="font-weight:800;font-size:15px;color:var(--a);margin-bottom:6px;">&#44284;&#51228; 3: &#54028;&#49604; &#54408;&#51656;</div>
+      <div style="font-size:12px;color:var(--g600);line-height:1.6;">&#54028;&#49604; &#53356;&#44592; &#49892;&#49884;&#44036; &#47784;&#45768;&#53552;&#47553;<br>AI &#44592;&#48152; RPM &#52572;&#51201;&#54868;<br><strong>&#54408;&#51656; &#54200;&#52264; &plusmn;15% &rarr; &plusmn;5%</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEC 4 -->
+<div class="section" id="sec4">
+  <div class="section-header"><div class="section-num">4</div><h2>&#49884;&#49828;&#53596; &#47785;&#54364; (&#51221;&#47049; KPI)</h2></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>KPI</th><th>&#54788;&#51116;</th><th>&#44396;&#52629; &#54980; (4&#44060;&#50900;)</th><th>&#50504;&#51221;&#54868; (6&#44060;&#50900;)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>&#48708;&#44228;&#54925; &#51221;&#51648;</strong></td><td>&#50672; 40&#49884;&#44036;</td><td>20&#49884;&#44036; (50%&#8595;)</td><td style="color:var(--s);font-weight:700;">12&#49884;&#44036; (70%&#8595;)</td></tr>
+        <tr><td><strong>&#52860;&#45216; RUL &#50696;&#52769; &#50724;&#52264;</strong></td><td>&#50630;&#51020;</td><td>&plusmn;25%</td><td style="color:var(--s);font-weight:700;">&plusmn;15%</td></tr>
+        <tr><td><strong>&#48288;&#50612;&#47553; &#51060;&#49345; &#44048;&#51648;&#50984;</strong></td><td>30%</td><td>80%</td><td style="color:var(--s);font-weight:700;">95%+</td></tr>
+        <tr><td><strong>&#48156;&#54868; &#44048;&#51648; &rarr; &#45824;&#51025;</strong></td><td>&#49688;&#49901; &#52488;</td><td>3&#52488;</td><td style="color:var(--s);font-weight:700;">&lt;1&#52488;</td></tr>
+        <tr><td><strong>&#44144;&#51667; &#44221;&#48372;&#50984;</strong></td><td>30%+</td><td>10%</td><td style="color:var(--s);font-weight:700;">5% &#51060;&#54616;</td></tr>
+        <tr><td><strong>&#54028;&#49604; &#53356;&#44592; &#54200;&#52264;</strong></td><td>&plusmn;15%</td><td>&plusmn;8%</td><td style="color:var(--s);font-weight:700;">&plusmn;5%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEC 5 -->
+<div class="section" id="sec5">
+  <div class="section-header"><div class="section-num">5</div><h2>&#49884;&#49828;&#53596; &#50500;&#53412;&#53581;&#52376;</h2></div>
+  <div class="sensor-map"><span class="map-badge">4-LEVEL ARCHITECTURE</span>
+<span style="color:#60a5fa;font-weight:700;">&#9552;&#9552;&#9552; Level 3: &#49436;&#48260;/&#53364;&#46972;&#50864;&#46300; (&#51109;&#44592; &#48516;&#49437; &middot; &#47784;&#45944; &#54617;&#49845;) &#9552;&#9552;&#9552;</span>
+  &#45936;&#51060;&#53552; &#47112;&#51060;&#53356; (S3)  &#9474;  AI &#54617;&#49845; &#49436;&#48260; (GPU)  &#9474;  &#45824;&#49884;&#48372;&#46300; (Grafana)
+                          <span style="color:#475569;">&#9474; 1GbE / MQTT</span>
+<span style="color:#a78bfa;font-weight:700;">&#9552;&#9552;&#9552; Level 2: Edge AI (&#49892;&#49884;&#44036; &#52628;&#47200; &middot; &#54788;&#51109; &#54032;&#45800;) &#9552;&#9552;&#9552;</span>
+  <span style="color:#fbbf24;">NVIDIA Jetson Orin NX 16GB</span>
+  &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488; &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488; &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488; &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+  &#9474;<span style="color:#4ade80;">&#44256;&#51109; &#50696;&#51648;</span>&#9474; &#9474;<span style="color:#f87171;">&#49324;&#44256; &#50696;&#48169;</span>&#9474; &#9474;<span style="color:#a78bfa;">&#54408;&#51656; &#44288;&#47532;</span>&#9474; &#9474;<span style="color:#fbbf24;">&#50672;&#44228; &#48516;&#49437;</span>&#9474;
+  &#9474; 4&#47784;&#45944;   &#9474; &#9474; 3&#47784;&#45944;   &#9474; &#9474; 2&#47784;&#45944;   &#9474; &#9474; 1&#47784;&#45944;   &#9474;
+  &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496; &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496; &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496; &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;
+  TimescaleDB &#8212; 30&#51068; &#47196;&#52972; &#51200;&#51109;
+                          <span style="color:#475569;">&#9474; OPC UA / Modbus</span>
+<span style="color:#4ade80;font-weight:700;">&#9552;&#9552;&#9552; Level 1: &#51228;&#50612; (Safety PLC &#46021;&#47549;) &#9552;&#9552;&#9552;</span>
+  <span style="color:#f87171;">Safety PLC</span> (&#48708;&#49345;&#51221;&#51648;/&#49548;&#54868;/N&#8322;)  &#9474;  <span style="color:#60a5fa;">Process PLC</span> (RPM/&#54588;&#45908;)
+
+<span style="color:#fbbf24;font-weight:700;">&#9552;&#9552;&#9552; Level 0: &#49468;&#49436; &middot; &#51060;&#52629; &#51204;&#45800; &#54028;&#49604;&#44592; &#9552;&#9552;&#9552;</span>
+  &#51652;&#46041;&times;2 &#9474; &#50728;&#46020;&times;3 &#9474; &#51204;&#47448;&times;2 &#9474; &#49549;&#46020;&times;2 &#9474; &#50504;&#51204;&times;4 &#9474; &#54408;&#51656;&times;1  = <span style="color:#fbbf24;font-weight:700;">14&#44060;</span>
+  &#9556;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9559;
+  &#9553; SHREDDER &#8212; 2&times;55kW &#9474; 15~25RPM &#9474; N&#8322; &#48169;&#54253;  &#9553;
+  &#9562;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9565;</div>
+
+  <div class="info-card green">
+    <div class="card-title">&#128274; &#54645;&#49900; &#49444;&#44228; &#50896;&#52825;: Safety PLC &#46021;&#47549;</div>
+    <p style="margin-bottom:0;">Edge AI&#44032; &#45796;&#50868;&#46104;&#50612;&#46020; &#48708;&#49345;&#51221;&#51648;&middot;&#49548;&#54868;&#45716; Safety PLC&#44032; <strong>&#46021;&#47549;&#51201;&#51004;&#47196; &#51089;&#46041;</strong>&#54633;&#45768;&#45796;. &#48176;&#53552;&#47532; &#48156;&#54868;&#45716; AI &#50724;&#47448;&#50752; &#47924;&#44288;&#54616;&#44172; &#45824;&#51025; &#54596;&#49688;&#51077;&#45768;&#45796;.</p>
+  </div>
+</div>
+
+<!-- SEC 6 -->
+<div class="section" id="sec6">
+  <div class="section-header"><div class="section-num">6</div><h2>&#49468;&#49436; &#49444;&#44228; &mdash; 14&#44060; &#49345;&#49464;</h2></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>&#49468;&#49436; ID</th><th>&#50976;&#54805;</th><th>&#49444;&#52824; &#50948;&#52824;</th><th>&#49368;&#54540;&#47553;</th><th>&#47785;&#51201;</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td class="code-cell">VIB-A</td><td>3&#52629; &#51652;&#46041;</td><td>&#52629;A &#48288;&#50612;&#47553;</td><td>1ms</td><td>&#48288;&#50612;&#47553; &#47560;&#47784;, &#52860;&#45216; &#48520;&#44512;&#54805;</td></tr>
+        <tr><td>2</td><td class="code-cell">VIB-B</td><td>3&#52629; &#51652;&#46041;</td><td>&#52629;B &#48288;&#50612;&#47553;</td><td>1ms</td><td>&#48288;&#50612;&#47553; &#47560;&#47784;, &#52860;&#45216; &#48520;&#44512;&#54805;</td></tr>
+        <tr><td>3</td><td class="code-cell">TMP-A</td><td>PT100</td><td>&#52629;A &#48288;&#50612;&#47553;</td><td>1s</td><td>&#48288;&#50612;&#47553; &#44284;&#50676;, &#50980;&#54876;</td></tr>
+        <tr><td>4</td><td class="code-cell">TMP-B</td><td>PT100</td><td>&#52629;B &#48288;&#50612;&#47553;</td><td>1s</td><td>&#48288;&#50612;&#47553; &#44284;&#50676;, &#50980;&#54876;</td></tr>
+        <tr style="background:#fef2f2;"><td>5</td><td class="code-cell">TMP-IR</td><td>&#51201;&#50808;&#49440; &#50728;&#46020;</td><td>&#54028;&#49604; &#52432;&#48260; &#49345;&#48512;</td><td>100ms</td><td><strong>&#48156;&#54868; &#44048;&#51648; (&#51452;)</strong></td></tr>
+        <tr><td>6</td><td class="code-cell">CUR-A</td><td>CT &#51204;&#47448;</td><td>&#52629;A &#47784;&#53552;</td><td>10ms</td><td>&#48512;&#54616; &#48320;&#46041;, &#52860;&#45216; &#47560;&#47784;</td></tr>
+        <tr><td>7</td><td class="code-cell">CUR-B</td><td>CT &#51204;&#47448;</td><td>&#52629;B &#47784;&#53552;</td><td>10ms</td><td>&#48512;&#54616; &#48320;&#46041;, &#52860;&#45216; &#47560;&#47784;</td></tr>
+        <tr><td>8</td><td class="code-cell">SPD-A</td><td>&#50644;&#53076;&#45908;</td><td>&#52629;A</td><td>10ms</td><td>&#54924;&#51204;&#49549;&#46020;, &#49836;&#47549;</td></tr>
+        <tr><td>9</td><td class="code-cell">SPD-B</td><td>&#50644;&#53076;&#45908;</td><td>&#52629;B</td><td>10ms</td><td>&#54924;&#51204;&#49549;&#46020;, &#49836;&#47549;</td></tr>
+        <tr style="background:#fef2f2;"><td>10</td><td class="code-cell">TMP-IR2</td><td>&#51201;&#50808;&#49440; <strong>(&#51060;&#51473;&#54868;)</strong></td><td>&#54028;&#49604; &#52432;&#48260; &#52769;&#47732;</td><td>100ms</td><td><strong>&#48156;&#54868; &#44048;&#51648; &#48177;&#50629;</strong></td></tr>
+        <tr><td>11</td><td class="code-cell">DST-1</td><td>&#47112;&#51060;&#51200; &#48516;&#51652;</td><td>&#52432;&#48260; &#49345;&#48512;</td><td>1s</td><td>&#48516;&#51652; &#45453;&#46020;, &#54253;&#48156; &#50948;&#54744;</td></tr>
+        <tr><td>12</td><td class="code-cell">GAS-1</td><td>&#48373;&#54633;&#44032;&#49828; (VOC/H&#8322;/CO)</td><td>&#48176;&#52636;&#48512;</td><td>1s</td><td><strong>&#51204;&#54644;&#50529; &#45572;&#52636; &#44048;&#51648;</strong></td></tr>
+        <tr><td>13</td><td class="code-cell">PS-1</td><td>&#52488;&#51020;&#54028; &#44540;&#51217;</td><td>&#48176;&#52636; &#49800;&#53944;</td><td>100ms</td><td>&#48176;&#52636;&#47932; &#55120;&#47492;, &#47561;&#55192;</td></tr>
+        <tr><td>14</td><td class="code-cell">SCL-1</td><td>&#52968;&#48288;&#51060;&#50612; &#49828;&#52992;&#51068;</td><td>&#48176;&#52636; &#52968;&#48288;&#51060;&#50612;</td><td>1s</td><td>&#52376;&#47532;&#47049; &#47784;&#45768;&#53552;&#47553;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEC 7 -->
+<div class="section" id="sec7">
+  <div class="section-header"><div class="section-num">7</div><h2>AI &#47784;&#45944; &#49444;&#44228; &mdash; 10&#51333;</h2></div>
+
+  <h3>A. &#44256;&#51109; &#50696;&#51648; (4&#51333;)</h3>
+  <div class="ai-grid">
+    <div class="ai-card"><div class="ai-num">#1</div><div class="ai-icon">&#128200;</div><h4>&#48288;&#50612;&#47553; &#51060;&#49345; &#53456;&#51648;</h4><div class="ai-algo">LSTM Autoencoder</div><div class="ai-desc">VIB-A/B FFT(1024 bins) &rarr; &#51221;&#49345; &#54056;&#53556; &#54617;&#49845; &rarr; &#51116;&#44396;&#49457; &#50724;&#52264; = &#51060;&#49345; &#51216;&#49688; (0~1)</div><div class="ai-meta"><span>&#9201; &lt;10ms</span><span>&#127919; 95%+</span></div></div>
+    <div class="ai-card"><div class="ai-num">#2</div><div class="ai-icon">&#128296;</div><h4>&#52860;&#45216; &#47560;&#47784; &#50696;&#52769;</h4><div class="ai-algo">Gradient Boosting (XGBoost)</div><div class="ai-desc">&#51204;&#47448;+&#49549;&#46020;+&#51652;&#46041; 24&#44060; &#53945;&#51669; &rarr; &#47560;&#47784;&#50984;(%) + &#51092;&#50668;&#49688;&#47749; RUL(h)</div><div class="ai-meta"><span>&#9201; &lt;5ms</span><span>&#127919; 92%+</span></div></div>
+    <div class="ai-card"><div class="ai-num">#3</div><div class="ai-icon">&#9854;</div><h4>&#52629; &#48520;&#44512;&#54805; &#51652;&#45800;</h4><div class="ai-algo">Classical DSP (FFT 1X)</div><div class="ai-desc">VIB-A/B 1X &#49457;&#48516; &rarr; &#48520;&#44512;&#54805; &#47112;&#48296; (mm/s)</div><div class="ai-meta"><span>&#9201; &lt;1ms</span><span>&#127919; 98%+</span></div></div>
+    <div class="ai-card"><div class="ai-num">#4</div><div class="ai-icon">&#9888;&#65039;</div><h4>&#51060;&#47932;&#51656; &#45180;&#51076; &#44048;&#51648;</h4><div class="ai-algo">&#49892;&#49884;&#44036; &#54056;&#53556; &#51064;&#49885;</div><div class="ai-desc">CUR &#49828;&#54028;&#51060;&#53356; + SPD &#44553;&#48320; &rarr; &#45180;&#51076; &#54869;&#47456;</div><div class="ai-meta"><span>&#9201; &lt;5ms</span><span>&#127919; 95%+</span></div></div>
+  </div>
+
+  <h3>B. &#49324;&#44256; &#50696;&#48169; (3&#51333;)</h3>
+  <div class="ai-grid">
+    <div class="ai-card" style="border-color:var(--d);border-width:2px;"><div class="ai-num" style="background:var(--dl);color:var(--d);">#5</div><div class="ai-icon">&#128293;</div><h4>&#48156;&#54868; &#44048;&#51648;</h4><div class="ai-algo">Rate-of-Change + Anomaly Detection</div><div class="ai-desc">TMP-IR &#51060;&#51473;&#54868; + &#45796;&#51473; &#54032;&#45800; &#52404;&#44228; &rarr; &#48156;&#54868; &#54869;&#47456; + &#50948;&#52824;<br><strong>Safety PLC &#46021;&#47549; &#51060;&#51473;&#54868;</strong></div><div class="ai-meta"><span>&#9201; <strong>&lt;100ms</strong></span><span>&#128293; &#44596;&#44553;</span></div></div>
+    <div class="ai-card"><div class="ai-num">#6</div><div class="ai-icon">&#128168;</div><h4>&#48516;&#51652; &#54253;&#48156; &#50696;&#52769;</h4><div class="ai-algo">CUSUM + &#53944;&#47116;&#46300;</div><div class="ai-desc">DST-1 &#45572;&#51201; &#54200;&#52264; &#44048;&#49884; &rarr; &#54253;&#48156; &#50948;&#54744;&#46020; (0~1)</div><div class="ai-meta"><span>&#9201; &lt;500ms</span></div></div>
+    <div class="ai-card"><div class="ai-num">#7</div><div class="ai-icon">&#129514;</div><h4>&#51204;&#54644;&#50529; &#45572;&#52636; &#44048;&#51648;</h4><div class="ai-algo">Multi-gas Fusion</div><div class="ai-desc">GAS-1 (VOC/H&#8322;/CO) &#48373;&#54633; &#54056;&#53556; &rarr; &#45572;&#52636; &#54869;&#47456; + &#44032;&#49828; &#51333;&#47448;</div><div class="ai-meta"><span>&#9201; &lt;1s</span></div></div>
+  </div>
+
+  <h3>C. &#54408;&#51656; &#44288;&#47532; (2&#51333;) + &#50672;&#44228; &#48516;&#49437; (1&#51333;)</h3>
+  <div class="ai-grid">
+    <div class="ai-card"><div class="ai-num">#8</div><div class="ai-icon">&#128207;</div><h4>&#54028;&#49604; &#53356;&#44592; &#50696;&#52769;</h4><div class="ai-algo">Random Forest</div><div class="ai-desc">&#51204;&#47448;+&#49549;&#46020;+&#52376;&#47532;&#47049; 12&#44060; &#53945;&#51669; &rarr; &#50696;&#49345; &#53356;&#44592;(mm), &#44512;&#51068;&#46020;(%)</div><div class="ai-meta"><span>&#9201; &lt;5ms</span></div></div>
+    <div class="ai-card"><div class="ai-num">#9</div><div class="ai-icon">&#9881;&#65039;</div><h4>RPM &#52572;&#51201;&#54868;</h4><div class="ai-algo">PID &#51228;&#50612; + &#47344; &#44592;&#48152;</div><div class="ai-desc">&#54028;&#49604; &#53356;&#44592; &#50696;&#52769;&#44050; &#44592;&#48152; &rarr; &#52572;&#51201; RPM &#44428;&#44256; (&plusmn;1~2)</div><div class="ai-meta"><span>&#9201; &lt;100ms</span></div></div>
+    <div class="ai-card" style="grid-column:1/-1;"><div class="ai-num">#10</div><div class="ai-icon">&#128202;</div><h4>&#53685;&#54633; &#44148;&#44053; &#51216;&#49688; (Ensemble)</h4><div class="ai-algo">&#44032;&#51473; &#54217;&#44512; &mdash; &#49444;&#48708;(40%) + &#50504;&#51204;(35%) + &#54408;&#51656;(25%)</div><div class="ai-desc">&#51204;&#52404; 9&#44060; &#47784;&#45944; &#52636;&#47141;&#51012; &#51333;&#54633;&#54616;&#50668; &#49836;&#47112;&#45908; &#44148;&#44053; &#51216;&#49688; (0~100) &#49328;&#52636;. 90~100: &#52572;&#51201;(Green) / 70~89: &#50577;&#54840;(Blue) / 50~69: &#51452;&#51032;(Yellow) / 30~49: &#44221;&#44256;(Orange) / 0~29: &#50948;&#54744;(Red)</div><div class="ai-meta"><span>&#9201; &lt;100ms</span><span>&#128202; &#45824;&#49884;&#48372;&#46300; &#47700;&#51064; &#51648;&#54364;</span></div></div>
+  </div>
+</div>
+
+<!-- SEC 8 -->
+<div class="section" id="sec8">
+  <div class="section-header"><div class="section-num">8</div><h2>HW / SW &#49444;&#44228;</h2></div>
+  <h3>Edge AI Gateway</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>&#44396;&#49457;</th><th>&#49324;&#50577;</th><th>&#50857;&#46020;</th></tr></thead>
+      <tbody>
+        <tr><td><strong>&#54532;&#47196;&#49464;&#49436;</strong></td><td>NVIDIA Jetson Orin NX 16GB</td><td>AI &#52628;&#47200; (100 TOPS)</td></tr>
+        <tr><td><strong>&#49828;&#53664;&#47532;&#51648;</strong></td><td>512GB NVMe SSD</td><td>&#47196;&#52972; 30&#51068; &#51200;&#51109;</td></tr>
+        <tr><td><strong>ADC</strong></td><td>16ch 24bit (100kHz)</td><td>VIB, TMP, CUR, PS</td></tr>
+        <tr><td><strong>RS485</strong></td><td>2&#54252;&#53944; Modbus RTU</td><td>DST, GAS, SCL</td></tr>
+        <tr><td><strong>&#54872;&#44221;</strong></td><td>IP65, -40~70&deg;C</td><td>&#54788;&#51109; &#52880;&#48708;&#45787;</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>SW &#49828;&#53469;</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>&#47112;&#51060;&#50612;</th><th>&#44592;&#49696;</th><th>&#50669;&#54624;</th></tr></thead>
+      <tbody>
+        <tr><td>OS</td><td>Ubuntu 22.04 + JetPack 6</td><td>Edge &#50868;&#50689;</td></tr>
+        <tr><td>&#52968;&#53580;&#51060;&#45320;</td><td>Docker + NVIDIA Runtime</td><td>AI &#47784;&#45944; &#44201;&#47532; &#48176;&#54252;</td></tr>
+        <tr><td>AI &#52628;&#47200;</td><td>TensorRT + scikit-learn</td><td>10&#51333; &#47784;&#45944;</td></tr>
+        <tr><td>&#53685;&#49888;</td><td>ZeroMQ / MQTT</td><td>&#45236;&#48512;/&#53364;&#46972;&#50864;&#46300;</td></tr>
+        <tr><td>DB</td><td>TimescaleDB</td><td>&#49884;&#44228;&#50676; 30&#51068;</td></tr>
+        <tr><td>&#45824;&#49884;&#48372;&#46300;</td><td>Grafana + Flutter</td><td>&#50937; + &#47784;&#48148;&#51068; &#50545;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEC 9 -->
+<div class="section" id="sec9">
+  <div class="section-header"><div class="section-num">9</div><h2>&#45824;&#49884;&#48372;&#46300; &#48143; &#50508;&#47548; &#52404;&#44228;</h2></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>&#46321;&#44553;</th><th>&#51312;&#44148;</th><th>&#52292;&#45328;</th><th>&#45824;&#51025;</th></tr></thead>
+      <tbody>
+        <tr><td style="background:#d1fae5;text-align:center;font-weight:700;">&#51221;&#48372;</td><td>RUL &lt;500h</td><td>&#45824;&#49884;&#48372;&#46300;</td><td>24&#49884;&#44036; &#45236;</td></tr>
+        <tr><td style="background:#fef3c7;text-align:center;font-weight:700;">&#44221;&#44256;</td><td>&#51060;&#49345; &gt;0.5, RUL &lt;200h</td><td>&#51060;&#47700;&#51068; + SMS</td><td>4&#49884;&#44036; &#45236;</td></tr>
+        <tr><td style="background:#fed7aa;text-align:center;font-weight:700;">&#50948;&#54744;</td><td>&#51060;&#49345; &gt;0.7, RUL &lt;100h</td><td>&#51204;&#54868; + &#49324;&#51060;&#47116;</td><td>1&#49884;&#44036; &#45236;</td></tr>
+        <tr><td style="background:#fee2e2;text-align:center;font-weight:700;color:var(--d);">&#44596;&#44553;</td><td>&#48156;&#54868;/&#54253;&#48156;, &#51060;&#49345; &gt;0.9</td><td><strong>&#51088;&#46041; &#45824;&#51025; + &#51204;&#54868; + &#48708;&#49345; &#48169;&#49569;</strong></td><td><strong>&#51593;&#49884;</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEC 10 -->
+<div class="section" id="sec10">
+  <div class="section-header"><div class="section-num">10</div><h2>&#44396;&#52629; &#51068;&#51221; &mdash; 4&#44060;&#50900; (16&#51452;)</h2></div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot p1">1</div>
+      <div class="tl-content" style="border-left:3px solid var(--p);">
+        <h4>1&#45800;&#44228;: &#49468;&#49436; + Edge &#49444;&#52824;</h4><div class="tl-period">1~4&#51452;</div>
+        <ul><li>14&#44060; &#49468;&#49436; &#49444;&#52824; &#48143; &#48176;&#49440;</li><li>Edge Gateway &#52880;&#48708;&#45787; &#49444;&#52824;</li><li>Safety PLC &#50672;&#46041; + &#53685;&#49888; &#49884;&#50868;&#51204;</li></ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot p2">2</div>
+      <div class="tl-content" style="border-left:3px solid var(--a);">
+        <h4>2&#45800;&#44228;: &#45936;&#51060;&#53552; &#49688;&#51665; + &#44592;&#48376; &#47784;&#45768;&#53552;&#47553;</h4><div class="tl-period">3~6&#51452;</div>
+        <ul><li>&#51221;&#49345; &#50868;&#51204; &#45936;&#51060;&#53552; &#49688;&#51665; (AI &#54617;&#49845;&#50857;)</li><li>&#44592;&#48376; &#45824;&#49884;&#48372;&#46300; &#44396;&#52629;</li><li>Safety PLC &#50504;&#51204; &#44592;&#45733; &#44160;&#51613;</li></ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot p3">3</div>
+      <div class="tl-content" style="border-left:3px solid var(--s);">
+        <h4>3&#45800;&#44228;: AI &#47784;&#45944; &#54617;&#49845; + &#48176;&#54252;</h4><div class="tl-period">7~12&#51452;</div>
+        <ul><li>10&#51333; AI &#47784;&#45944; &#54617;&#49845;</li><li><strong>Shadow Mode</strong> &#48176;&#54252; (&#44592;&#51316; &#49884;&#49828;&#53596;&#44284; &#48337;&#54665;)</li><li>AI &#54032;&#45800; vs &#49892;&#51228; &#44208;&#44284; &#48708;&#44368; &#44160;&#51613;</li></ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot p4">4</div>
+      <div class="tl-content" style="border-left:3px solid var(--w);">
+        <h4>4&#45800;&#44228;: &#49892;&#50868;&#50689; &#51204;&#54872;</h4><div class="tl-period">13~16&#51452;</div>
+        <ul><li>AI &#44592;&#48152; &#50508;&#47548; &#54876;&#49457;&#54868;</li><li>&#50868;&#51204;&#51088; &#44368;&#50977; (8&#49884;&#44036;)</li><li>&#49457;&#44284; &#52769;&#51221; + &#48372;&#44256;&#49436;</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <h3>UTTEC / &#54620;&#44397;&#44592;&#44228; &#50669;&#54624; &#48516;&#45812;</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>&#45800;&#44228;</th><th>UTTEC</th><th>&#54620;&#44397;&#44592;&#44228; &#54801;&#51312;</th></tr></thead>
+      <tbody>
+        <tr><td>1&#45800;&#44228;</td><td>HW &#50644;&#51648;&#45768;&#50612; 2&#47749;</td><td>&#49444;&#48708; &#51221;&#51648; &#51068;&#51221; &#51312;&#50984;</td></tr>
+        <tr><td>2&#45800;&#44228;</td><td>SW &#50644;&#51648;&#45768;&#50612; 1&#47749;</td><td>&#51221;&#49345; &#50868;&#51204; &#50976;&#51648;, &#51060;&#49345; &#51060;&#48292;&#53944; &#44592;&#47197;</td></tr>
+        <tr><td>3&#45800;&#44228;</td><td>AI &#50644;&#51648;&#45768;&#50612; 2&#47749;</td><td>&#51060;&#49345;/&#51221;&#48708; &#51060;&#47141; &#44277;&#50976;</td></tr>
+        <tr><td>4&#45800;&#44228;</td><td>PM + &#44368;&#50977; &#45812;&#45817;</td><td>&#50868;&#51204;&#51088; &#44368;&#50977; &#52280;&#49437;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEC 11 -->
+<div class="section" id="sec11">
+  <div class="section-header"><div class="section-num">11</div><h2>&#53804;&#51088; &#48708;&#50857; &#48143; ROI &#48516;&#49437;</h2></div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>&#44396;&#48516;</th><th>&#54637;&#47785;</th><th>&#44552;&#50529; (&#47564;&#50896;)</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="5"><strong>&#54616;&#46300;&#50920;&#50612;</strong></td><td>Edge AI Gateway (Jetson Orin NX + DAQ)</td><td style="text-align:right;">800</td></tr>
+        <tr><td>Safety PLC + &#51060;&#51473;&#54868; I/O</td><td style="text-align:right;">600</td></tr>
+        <tr><td>&#49468;&#49436; 14&#44060; &#51068;&#52404;</td><td style="text-align:right;">965</td></tr>
+        <tr><td>&#52880;&#48708;&#45787; + UPS + &#48176;&#49440; + HMI</td><td style="text-align:right;">700</td></tr>
+        <tr style="background:var(--g100);"><td><strong>HW &#49548;&#44228;</strong></td><td style="text-align:right;font-weight:700;">2,785</td></tr>
+        <tr><td rowspan="4"><strong>&#49548;&#54532;&#53944;&#50920;&#50612;</strong></td><td>Edge AI &#54540;&#47019;&#54268;</td><td style="text-align:right;">1,500</td></tr>
+        <tr><td>AI &#47784;&#45944; 10&#51333; &#44060;&#48156;&middot;&#54617;&#49845;</td><td style="text-align:right;">1,500</td></tr>
+        <tr><td>&#45824;&#49884;&#48372;&#46300; + &#47784;&#48148;&#51068; &#50545;</td><td style="text-align:right;">800</td></tr>
+        <tr style="background:var(--g100);"><td><strong>SW &#49548;&#44228;</strong></td><td style="text-align:right;font-weight:700;">3,800</td></tr>
+        <tr><td rowspan="2"><strong>&#49436;&#48708;&#49828;</strong></td><td>&#49444;&#52824; + &#49884;&#50868;&#51204; + &#44368;&#50977; + Shadow Mode</td><td style="text-align:right;">1,400</td></tr>
+        <tr style="background:var(--g100);"><td><strong>&#49436;&#48708;&#49828; &#49548;&#44228;</strong></td><td style="text-align:right;font-weight:700;">1,400</td></tr>
+        <tr style="background:var(--pl);font-weight:700;font-size:14px;"><td colspan="2">&#52509; &#53804;&#51088;&#50529; (&#50696;&#48708;&#48708; 7% &#54252;&#54632;)</td><td style="text-align:right;">&#50557; 8,500</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="roi-hero">
+    <h3>&#128176; ROI &#48516;&#49437;</h3>
+    <div class="roi-grid">
+      <div class="roi-item"><div class="roi-label">&#52509; &#53804;&#51088;&#50529;</div><div class="roi-value">8,500&#47564;</div><div class="roi-sub">&#50896;</div></div>
+      <div class="roi-item"><div class="roi-label">&#50672;&#44036; &#51208;&#44048;</div><div class="roi-value">2.07&#50613;</div><div class="roi-sub">&#50896;</div></div>
+      <div class="roi-item"><div class="roi-label">&#53804;&#51088; &#54924;&#49688;</div><div class="roi-value">4.9&#44060;&#50900;</div><div class="roi-sub">Payback Period</div></div>
+    </div>
+    <div style="display:flex;gap:14px;margin-top:16px;">
+      <div style="flex:1;background:#fff;border-radius:10px;padding:14px;text-align:center;border:1px solid #a7f3d0;"><div style="font-size:11px;color:var(--g500);">3&#45380; ROI</div><div style="font-size:22px;font-weight:800;color:#065f46;">630%</div></div>
+      <div style="flex:1;background:#fff;border-radius:10px;padding:14px;text-align:center;border:1px solid #a7f3d0;"><div style="font-size:11px;color:var(--g500);">5&#45380; ROI</div><div style="font-size:22px;font-weight:800;color:#065f46;">1,117%</div></div>
+    </div>
+  </div>
+
+  <h3>&#50672;&#44036; &#51208;&#44048; &#45236;&#50669;</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>&#54637;&#47785;</th><th>&#54788;&#51116;</th><th>AI &#51201;&#50857; &#54980;</th><th>&#50672;&#44036; &#51208;&#44048;</th></tr></thead>
+      <tbody>
+        <tr><td>&#48708;&#44228;&#54925; &#51221;&#51648;</td><td>1.0&#50613;</td><td>0.3&#50613;</td><td style="color:var(--s);font-weight:700;">0.7&#50613;</td></tr>
+        <tr><td>&#51221;&#48708; &#48708;&#50857;</td><td>0.5&#50613;</td><td>0.3&#50613;</td><td style="color:var(--s);font-weight:700;">0.2&#50613;</td></tr>
+        <tr><td>&#48512;&#54408; &#51116;&#44256;</td><td>0.2&#50613;</td><td>0.08&#50613;</td><td style="color:var(--s);font-weight:700;">0.12&#50613;</td></tr>
+        <tr><td>&#50504;&#51204;&#49324;&#44256;</td><td>0.3&#50613;</td><td>0.05&#50613;</td><td style="color:var(--s);font-weight:700;">0.25&#50613;</td></tr>
+        <tr><td>&#48516;&#51652; &#49552;&#49892; &#54924;&#49688;&#50984;</td><td>-</td><td>-</td><td style="color:var(--s);font-weight:700;">0.5&#50613;</td></tr>
+        <tr><td>&#54980;&#49549; &#44277;&#51221; &#54952;&#50984;</td><td>-</td><td>-</td><td style="color:var(--s);font-weight:700;">0.3&#50613;</td></tr>
+        <tr style="background:var(--sl);font-weight:700;"><td colspan="3">&#50672;&#44036; &#52509; &#51208;&#44048;</td><td style="color:#065f46;font-size:16px;">&#50557; 2.07&#50613;&#50896;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SEC 12 -->
+<div class="section" id="sec12">
+  <div class="section-header"><div class="section-num">12</div><h2>&#54869;&#51109; &#44228;&#54925; &mdash; &#49836;&#47112;&#45908; &rarr; &#51204;&#52404; &#46972;&#51064;</h2></div>
+  <div class="expand-flow">
+    <div class="expand-phase current">
+      <h4>Phase 0 (&#54788;&#51116;)</h4>
+      <p><strong>&#49836;&#47112;&#45908;</strong><br>14&#49468;&#49436; / 10AI<br>8,500&#47564;&#50896;</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="expand-phase future">
+      <h4>Phase 1</h4>
+      <p>+ &#54644;&#47672; &#53356;&#47084;&#49492;<br>+11&#49468;&#49436;<br>~4,000&#47564;</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="expand-phase future">
+      <h4>Phase 2</h4>
+      <p>+ &#54592;&#48128; + ACM<br>+17&#49468;&#49436;<br>~6,000&#47564;</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="expand-phase future">
+      <h4>Phase 3</h4>
+      <p>&#53685;&#54633; + Digital Twin<br>&#51204; &#44277;&#51221; &#49345;&#44288;&#48516;&#49437;<br>~5,000&#47564;</p>
+    </div>
+  </div>
+  <div class="info-card blue">
+    <div class="card-title">&#128161; Edge Gateway &#51116;&#54876;&#50857;</div>
+    <p style="margin-bottom:0;">Edge AI Gateway&#45716; &#52376;&#51020;&#48512;&#53552; &#51204;&#52404; &#46972;&#51064; &#54869;&#51109;&#51012; &#44256;&#47140;&#54620; &#49324;&#50577;&#51004;&#47196; &#49440;&#51221;. <strong>&#52628;&#44032; HW &#53804;&#51088; &#50630;&#51060;</strong> &#49468;&#49436;&#50752; &#47784;&#45944;&#47564; &#52628;&#44032;&#54616;&#47732; &#46121;&#45768;&#45796;. &#51204;&#52404; &#54869;&#51109; &#49884;: 42&#49468;&#49436;, 18&#51333;+ AI, &#52509; ~2.4&#50613;&#50896;.</p>
+  </div>
+</div>
+
+<!-- SEC 13 -->
+<div class="section" id="sec13">
+  <div class="section-header"><div class="section-num">13</div><h2>UTTEC &#44396;&#52629; &#50669;&#47049;</h2></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;">
+    <div class="metric-card" style="text-align:left;"><div style="font-size:22px;margin-bottom:6px;">&#128268;</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">IoT / Edge</div><div style="font-size:12px;color:var(--g600);">BLE Mesh, &#51200;&#51204;&#47141; &#49468;&#49436;, Edge Computing</div></div>
+    <div class="metric-card" style="text-align:left;"><div style="font-size:22px;margin-bottom:6px;">&#129302;</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">AI / ML</div><div style="font-size:12px;color:var(--g600);">&#50696;&#51648;&#48372;&#51204;, &#51060;&#49345; &#53456;&#51648;, &#49884;&#44228;&#50676; &#48516;&#49437;</div></div>
+    <div class="metric-card" style="text-align:left;"><div style="font-size:22px;margin-bottom:6px;">&#128187;</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">&#49884;&#49828;&#53596; &#53685;&#54633;</div><div style="font-size:12px;color:var(--g600);">OPC UA, Modbus, &#45824;&#49884;&#48372;&#46300;, &#47784;&#48148;&#51068;</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>&#54637;&#47785;</th><th>&#45236;&#50857;</th></tr></thead>
+      <tbody>
+        <tr><td><strong>&#48372;&#51613; &#44592;&#44036;</strong></td><td>&#44396;&#52629; &#50756;&#47308; &#54980; <strong>12&#44060;&#50900; &#47924;&#49345;</strong> &#50976;&#51648;&#48372;&#49688;</td></tr>
+        <tr><td><strong>&#50896;&#44201; &#47784;&#45768;&#53552;&#47553;</strong></td><td>UTTEC&#50640;&#49436; Edge AI &#49345;&#53468; &#50896;&#44201; &#47784;&#45768;&#53552;&#47553; (&#46041;&#51032; &#54616;&#50640;)</td></tr>
+        <tr><td><strong>&#47784;&#45944; &#50629;&#45936;&#51060;&#53944;</strong></td><td>&#50672; 2&#54924; AI &#47784;&#45944; &#49457;&#45733; &#54217;&#44032; + &#51116;&#54617;&#49845; (&#48372;&#51613; &#45236; &#47924;&#49345;)</td></tr>
+        <tr><td><strong>&#44596;&#44553; &#45824;&#51025;</strong></td><td>24&#49884;&#44036; &#45236; &#50896;&#44201;, 48&#49884;&#44036; &#45236; &#54788;&#51109; &#48169;&#47928;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">UTTEC</div>
+  <div>AI/IoT System Integration</div>
+  <div style="margin-top:12px;color:#64748b;font-size:11px;">
+    &#48376; &#44228;&#54925;&#49436;&#45716; 2026&#45380; 3&#50900; 28&#51068; &#44592;&#51456;&#51004;&#47196; &#51089;&#49457;&#46104;&#50632;&#49845;&#45768;&#45796;.<br>
+    &#49892;&#51228; &#44396;&#52629; &#49884; &#54788;&#51109; &#49892;&#49324; &#48143; &#49345;&#49464; &#49444;&#44228;&#47484; &#53685;&#54644; &#49324;&#50577;&middot;&#48708;&#50857;&#51060; &#51312;&#51221;&#46112; &#49688; &#51080;&#49845;&#45768;&#45796;.
+  </div>
+</div>
+
+</div>
+
+<script>
+const sections=document.querySelectorAll('.section');const navLinks=document.querySelectorAll('.sidebar a');
+const observer=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector(`.sidebar a[href="#${en.target.id}"]`);if(a)a.classList.add('active');}});},{rootMargin:'-15% 0px -75% 0px'});
+sections.forEach(s=>observer.observe(s));
+document.querySelectorAll('.sidebar a').forEach(l=>l.addEventListener('click',()=>{if(window.innerWidth<=960)document.querySelector('.sidebar').classList.remove('open');}));
+</script>
+</body>
+</html>

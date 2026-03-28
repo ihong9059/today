@@ -1,0 +1,16 @@
+# 시계열 모델 시뮬레이션 필수 패키지
+numpy>=1.26
+pandas>=2.0
+matplotlib>=3.8
+scikit-learn>=1.4
+
+# 개별 모델별 패키지
+statsmodels>=0.14      # ARIMA
+prophet>=1.1           # Prophet
+
+# 선택 (LSTM 실제 모델 실행 시)
+# tensorflow>=2.15
+
+# 선택 (TFT 실제 모델 실행 시)
+# pytorch-forecasting>=1.0
+# pytorch-lightning>=2.0

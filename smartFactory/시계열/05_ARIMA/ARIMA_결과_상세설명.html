@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARIMA 시뮬레이션 결과 상세 설명</title>
+<style>
+:root{--p:#6b7280;--pl:#f3f4f6;--pd:#374151;--s:#059669;--sl:#d1fae5;--w:#d97706;--wl:#fef3c7;--d:#dc2626;--dl:#fee2e2;--b:#2563eb;--bl:#dbeafe;--a:#7c3aed;--al:#ede9fe;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;--g900:#111827;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Pretendard',-apple-system,'Segoe UI','Malgun Gothic',sans-serif;background:var(--g50);color:var(--g800);line-height:1.8;font-size:15px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.hero{background:linear-gradient(135deg,#374151 0%,#6b7280 50%,#9ca3af 100%);color:#fff;border-radius:16px;padding:40px 36px;margin-bottom:36px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%;}
+.hero h1{font-size:26px;font-weight:800;margin-bottom:8px;position:relative;}
+.hero .sub{font-size:14px;opacity:.85;position:relative;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.15);padding:3px 14px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:14px;}
+.section{margin-bottom:44px;}
+h2{font-size:20px;font-weight:800;color:var(--g900);margin-bottom:18px;padding-bottom:8px;border-bottom:3px solid var(--pl);display:flex;align-items:center;gap:10px;}
+h2 .num{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--p);color:#fff;border-radius:8px;font-size:15px;flex-shrink:0;}
+h3{font-size:16px;font-weight:700;color:var(--g900);margin:20px 0 10px;}
+p{margin-bottom:12px;font-size:14px;}
+.img-wrap{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;margin:16px 0;text-align:center;}
+.img-wrap img{max-width:100%;border-radius:8px;}
+.img-wrap .caption{font-size:12px;color:var(--g500);margin-top:8px;}
+.info-card{border-radius:12px;padding:20px 24px;margin:16px 0;border-left:4px solid;}
+.info-card.blue{background:var(--bl);border-color:var(--b);}
+.info-card.green{background:var(--sl);border-color:var(--s);}
+.info-card.yellow{background:var(--wl);border-color:var(--w);}
+.info-card.red{background:var(--dl);border-color:var(--d);}
+.info-card.purple{background:var(--al);border-color:var(--a);}
+.info-card.gray{background:var(--pl);border-color:var(--p);}
+.info-card .card-title{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.info-card p,.info-card li{font-size:13px;line-height:1.7;}
+.analogy{background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde047;border-radius:12px;padding:20px 24px;margin:16px 0;}
+.analogy .title{font-size:14px;font-weight:700;color:var(--w);margin-bottom:8px;}
+.code-box{background:#1e293b;color:#e2e8f0;border-radius:12px;padding:20px 24px;margin:16px 0;font-family:'Consolas',monospace;font-size:12px;line-height:1.7;overflow-x:auto;white-space:pre;}
+.code-box .hl{color:#60a5fa;font-weight:600;}.code-box .gr{color:#4ade80;}.code-box .yw{color:#fbbf24;}.code-box .pk{color:#f472b6;}.code-box .dm{color:#64748b;}
+.graph-card{background:#fff;border:2px solid var(--p);border-radius:16px;padding:24px;margin:20px 0;position:relative;}
+.graph-card .graph-num{position:absolute;top:-12px;left:20px;background:var(--p);color:#fff;padding:2px 14px;border-radius:8px;font-size:12px;font-weight:700;}
+.graph-card h3{margin-top:8px;color:var(--pd);}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.metric-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;text-align:center;}
+.metric-card .value{font-size:24px;font-weight:800;color:var(--p);}
+.metric-card .label{font-size:11px;color:var(--g500);margin-top:4px;}
+.score-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+.score-table th,.score-table td{padding:8px 12px;border:1px solid var(--g200);text-align:center;}
+.score-table th{background:var(--g100);font-weight:700;}
+@media(max-width:768px){.metric-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="main">
+
+<div class="hero">
+  <div class="hero-badge">TIME SERIES MODEL #5 &mdash; BASELINE</div>
+  <h1>ARIMA &#49884;&#48044;&#47112;&#51060;&#49496; &#44208;&#44284; &#49345;&#49464; &#49444;&#47749;</h1>
+  <p class="sub">&#49692;&#49688; &#53685;&#44228; &#47784;&#45944; &mdash; AI &#46020;&#51077;&#51032; &#44592;&#51456;&#49440;(Baseline)</p>
+</div>
+
+<div class="section">
+  <h2><span class="num">0</span> ARIMA&#46976;?</h2>
+  <div class="analogy">
+    <div class="title">&#128161; ARIMA = AI&#44032; &#50500;&#45772; &#49692;&#49688; &#49688;&#54617; &#47784;&#45944;</div>
+    <p style="font-size:13px;margin-bottom:4px;">&#46389;&#47084;&#45789;&#51060;&#45208; &#47672;&#49888;&#47084;&#45789;&#51060; &#50500;&#45785;&#45768;&#45796;. <strong>&#53685;&#44228;&#54617;</strong>&#51032; &#49688;&#49885;&#51004;&#47196; &#50696;&#52769;&#54633;&#45768;&#45796;.</p>
+    <p style="font-size:13px;margin-bottom:0;">&#50669;&#54624;: &#45796;&#47480; AI &#47784;&#45944;&#51032; <strong>"&#44592;&#51456;&#49440;"</strong>. "ARIMA&#48372;&#45796; X% &#45908; &#51221;&#54869;&#54633;&#45768;&#45796;" &rarr; AI &#46020;&#51077; &#44540;&#44144;!</p>
+  </div>
+
+  <div class="info-card gray">
+    <div class="card-title">&#128202; ARIMA(p,d,q) = (2,1,1)&#51032; &#51032;&#48120;</div>
+    <div class="code-box" style="margin:8px 0 0;"><span class="yw">ARIMA(2, 1, 1):</span>
+
+  <span class="hl">p=2 (Auto-Regressive)</span>
+  &rarr; "&#50612;&#51228;&#50752; &#44536;&#51228;&#51032; &#50728;&#46020;"&#47484; &#52280;&#44256;&#54616;&#50668; &#50724;&#45720; &#50696;&#52769;
+  &rarr; <span class="dm">&#48708;&#50976;: "&#50612;&#51228; 28&deg;C, &#44536;&#51228; 27&deg;C&#50688;&#51004;&#45768;&#44620; &#50724;&#45720;&#51008; 29&deg;C&#51068; &#44163;"</span>
+
+  <span class="hl">d=1 (Integrated)</span>
+  &rarr; 1&#52264; &#52264;&#48516; &mdash; "&#50728;&#46020; &#51088;&#52404;"&#44032; &#50500;&#45772; "&#50728;&#46020;&#51032; &#48320;&#54868;&#47049;"&#51012; &#49324;&#50857;
+  &rarr; <span class="dm">&#48708;&#50976;: "28&deg;C"&#44032; &#50500;&#45768;&#46972; "&#50612;&#51228; &#45824;&#48708; +1&deg;C"&#47484; &#48388;</span>
+  &rarr; &#53944;&#47116;&#46300;(&#51109;&#44592; &#49345;&#49849;/&#54616;&#44053;)&#47484; &#51228;&#44144;&#54616;&#45716; &#54952;&#44284;
+
+  <span class="hl">q=1 (Moving Average)</span>
+  &rarr; "&#50612;&#51228;&#51032; &#50696;&#52769; &#50724;&#52264;"&#47484; &#48372;&#51221;&#50640; &#54876;&#50857;
+  &rarr; <span class="dm">&#48708;&#50976;: "&#50612;&#51228; 1&deg;C &#53560;&#47160;&#51004;&#45768;&#44620; &#50724;&#45720;&#51008; &#51312;&#44552; &#48372;&#51221;"</span></div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card"><div class="value">1.59&deg;C</div><div class="label">MAE (&#54217;&#44512; &#50724;&#52264;)</div></div>
+    <div class="metric-card"><div class="value">90&#51068;</div><div class="label">&#45936;&#51060;&#53552; (&#51068; &#45800;&#50948; &#54217;&#44512;)</div></div>
+    <div class="metric-card"><div class="value">236.8</div><div class="label">AIC (&#45230;&#51012;&#49688;&#47197; &#51339;&#51008; &#47784;&#45944;)</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="graph-card">
+    <div class="graph-num">&#44536;&#47000;&#54532; 1</div>
+    <h3>ARIMA &#50696;&#52769; &mdash; &#51068;&#54217;&#44512; &#48288;&#50612;&#47553; &#50728;&#46020;</h3>
+    <div class="img-wrap"><img src="arima_result.png"><div class="caption">&#50948; &#44536;&#47000;&#54532;</div></div>
+    <div class="info-card blue">
+      <div class="card-title">&#128065;&#65039; &#51069;&#45716; &#48169;&#48277;</div>
+      <p style="margin-bottom:4px;"><strong>&#54028;&#46976; &#49440;</strong> = Train (&#49892;&#51228;) / <strong>&#52488;&#47197; &#49440;</strong> = Test (&#49892;&#51228;) / <strong>&#48736;&#44036; &#51216;&#49440;</strong> = ARIMA &#50696;&#52769;</p>
+      <p style="margin-bottom:4px;"><strong>&#48516;&#54861; &#50689;&#50669;</strong> = &#48520;&#54869;&#49892;&#49457; &#44396;&#44036; (&plusmn;2&sigma;)</p>
+      <p style="margin-bottom:0;">&#48736;&#44036; &#51216;&#49440;(&#50696;&#52769;)&#51060; &#52488;&#47197; &#49440;(&#49892;&#51228;)&#50640; &#44032;&#44620;&#50872;&#49688;&#47197; &#51221;&#54869;. ARIMA&#45716; &#51109;&#44592; &#50696;&#52769;&#51060; &#44144;&#51032; <strong>&#49688;&#54217;&#49440;&#51004;&#47196; &#49688;&#47156;</strong>&#54616;&#45716; &#44163;&#51060; &#53945;&#51669;! (&larr; ARIMA&#51032; &#54620;&#44228;)</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="graph-card" style="border-color:var(--b);border-width:3px;">
+    <div class="graph-num" style="background:var(--b);">&#44536;&#47000;&#54532; 2 &#9733;</div>
+    <h3 style="color:var(--b);">&#51088;&#44592;&#49345;&#44288; &#54632;&#49688; (ACF) &mdash; "&#44284;&#44144; &#47751; &#51068; &#51204; &#45936;&#51060;&#53552;&#44032; &#54788;&#51116;&#50752; &#44288;&#47144; &#51080;&#45716;&#44032;?"</h3>
+    <div class="info-card blue">
+      <div class="card-title">&#128161; ARIMA&#47484; &#51060;&#54644;&#54616;&#45716; &#54645;&#49900; &#44060;&#45392;!</div>
+      <p style="margin-bottom:0;">"&#51088;&#44592;&#49345;&#44288;"&#51060;&#46976; <strong>"&#44284;&#44144;&#51032; &#45208;&#50752; &#54788;&#51116;&#51032; &#45208;&#51032; &#44288;&#44228;"</strong>&#51077;&#45768;&#45796;. &#50612;&#51228; &#50728;&#46020;&#44032; &#45458;&#50520;&#51004;&#47732; &#50724;&#45720;&#46020; &#45458;&#51012; &#54869;&#47456;&#51060; &#51080;&#45716;&#44032;?</p>
+    </div>
+    <div class="code-box"><span class="yw">&#47561;&#45824; &#44536;&#47000;&#54532; &#51069;&#44592;:</span>
+
+  X&#52629;: Lag (&#51068;) &mdash; 1 = 1&#51068; &#51204;, 7 = 7&#51068; &#51204;(1&#51452;&#51068; &#51204;), 14 = 2&#51452;&#51068; &#51204;
+  Y&#52629;: &#51088;&#44592;&#49345;&#44288; &#44228;&#49688; (-1 ~ +1)
+
+  <span class="gr">&#47561;&#45824;&#44032; &#45458;&#51004;&#47732; (+1&#50640; &#44032;&#44620;&#50864;&#47732;):</span>
+  &rarr; "&#44536; &#49884;&#51216;&#51032; &#45936;&#51060;&#53552;&#50752; &#54788;&#51116;&#44032; &#44288;&#47144;&#51060; &#45458;&#45796;"
+  &rarr; &#50696;: 1&#51068; &#51204; &#45458;&#51004;&#47732; &#50724;&#45720;&#46020; &#45458;&#51012; &#44032;&#45733;&#49457; &#53372;
+
+  <span class="pk">&#47561;&#45824;&#44032; &#48736;&#44036; &#51216;&#49440;(&#49888;&#47280; &#44396;&#44036;) &#50504;&#50640; &#51080;&#51004;&#47732;:</span>
+  &rarr; "&#53685;&#44228;&#51201;&#51004;&#47196; &#51032;&#48120; &#50630;&#45716; &#49345;&#44288;"
+  &rarr; &#44536; &#49884;&#51216;&#51032; &#45936;&#51060;&#53552;&#45716; &#50696;&#52769;&#50640; &#46020;&#50880; &#50504; &#46120;
+
+  <span class="yw">&#51060; &#44536;&#47000;&#54532;&#50640;&#49436; &#44288;&#52272;:</span>
+  <span class="gr">Lag 1~3&#51068;: &#47561;&#45824;&#44032; &#45458;&#51020;</span> &rarr; &#52572;&#44540; 1~3&#51068; &#45936;&#51060;&#53552;&#44032; &#50696;&#52769;&#50640; &#50976;&#50857;
+  <span class="dm">Lag 7&#51068;: &#47561;&#45824;&#44032; &#50557;&#44036; &#45458;&#51020;</span> &rarr; &#51452;&#44036; &#54056;&#53556; &#51316;&#51116; &#44032;&#45733;&#49457;
+  <span class="dm">Lag 10&#51068;+: &#47561;&#45824;&#44032; &#45230;&#50500;&#51664;</span> &rarr; &#50724;&#47000;&#51204; &#45936;&#51060;&#53552;&#45716; &#50696;&#52769;&#50640; &#46020;&#50880; &#50504; &#46120;</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="graph-card">
+    <div class="graph-num">&#44536;&#47000;&#54532; 3</div>
+    <h3>1&#52264; &#52264;&#48516; (d=1) &mdash; &#53944;&#47116;&#46300; &#51228;&#44144;</h3>
+    <div class="info-card yellow">
+      <div class="card-title">&#128161; "&#52264;&#48516;"&#51060;&#46976;?</div>
+      <p style="margin-bottom:4px;"><strong>"&#50728;&#46020; &#51088;&#52404;"</strong>&#44032; &#50500;&#45768;&#46972; <strong>"&#50612;&#51228; &#45824;&#48708; &#50728;&#46020; &#48320;&#54868;&#47049;"</strong>&#51012; &#49324;&#50857;&#54616;&#45716; &#44163;&#51077;&#45768;&#45796;.</p>
+      <p style="margin-bottom:0;">&#50896;&#48376;: [25, 26, 28, 27, 30] &rarr; &#52264;&#48516;: [<strong>+1, +2, -1, +3</strong>]<br>&#53944;&#47116;&#46300;(&#51216;&#51216; &#50732;&#46972;&#44032;&#45716; &#44163;)&#47484; &#51228;&#44144;&#54616;&#47732; "&#49692;&#49688;&#54620; &#48320;&#46041;"&#47564; &#45765;&#44172; &#46104;&#50612; &#53685;&#44228; &#48169;&#48277;&#51060; &#51089;&#46041;&#54633;&#45768;&#45796;.</p>
+    </div>
+    <div class="code-box"><span class="yw">&#44536;&#47000;&#54532; &#51069;&#44592;:</span>
+
+  <span class="hl">&#48372;&#46972;&#49353; &#49440;</span>: &#51068;&#44036; &#50728;&#46020; &#48320;&#54868;&#47049; (&deg;C/&#51068;)
+  <span class="dm">&#44160;&#51008; &#44032;&#47196;&#49440;</span>: 0 (&#48320;&#54868; &#50630;&#51020;)
+  <span class="pk">&#48736;&#44036; &#51216;&#49440;</span>: &#54217;&#44512; (-0.01&deg;C/&#51068;)
+
+  <span class="gr">&#45824;&#48512;&#48516;&#51060; 0 &#51452;&#48320;&#50640;&#49436; &#50948;&#50500;&#47000;&#47196; &#54596;&#46301;&#51060;&#47732;:</span>
+  &rarr; &#53944;&#47116;&#46300;&#44032; &#51228;&#44144;&#46104;&#50612; "&#51221;&#49345; &#49884;&#44228;&#50676;"&#51060; &#46104;&#50632;&#45796;&#45716; &#46907;
+  &rarr; ARIMA&#44032; &#51096; &#51089;&#46041;&#54624; &#49688; &#51080;&#45716; &#51312;&#44148;
+
+  <span class="pk">&#54217;&#44512;&#51060; 0&#51060; &#50500;&#45784;&#47732; (-0.01):</span>
+  &rarr; &#50557;&#44036;&#51032; &#51092;&#50668; &#53944;&#47116;&#46300;&#44032; &#51080;&#51020; (&#50756;&#48317;&#55176; &#51228;&#44144;&#46104;&#51648; &#50506;&#51020;)</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">&#9733;</span> ARIMA&#51032; &#50669;&#54624;: Baseline (&#44592;&#51456;&#49440;)</h2>
+
+  <div class="info-card green">
+    <div class="card-title">&#128161; "Baseline"&#51060;&#46976;?</div>
+    <p style="margin-bottom:0;">&#49352; AI &#47784;&#45944;&#51012; &#46020;&#51077;&#54624; &#46412;, <strong>"&#44592;&#48376;&#51201;&#51064; &#48169;&#48277;&#48372;&#45796; &#50620;&#47560;&#45208; &#45908; &#51339;&#51008;&#44032;?"</strong>&#47484; &#48708;&#44368;&#54616;&#45716; &#44592;&#51456;&#49440;&#51077;&#45768;&#45796;.<br>
+    "ARIMA MAE=1.59&deg;C&#51064;&#45936;, &#50864;&#47532; AI&#45716; MAE=1.15&deg;C&#51077;&#45768;&#45796;" &rarr; <strong>AI &#46020;&#51077; &#44540;&#44144;!</strong></p>
+  </div>
+
+  <div class="code-box"><span class="yw">5&#44060; &#47784;&#45944; &#49457;&#45733; &#48708;&#44368; (&#51060; &#49884;&#48044;&#47112;&#51060;&#49496; &#44208;&#44284;):</span>
+
+  &#47784;&#45944;       &#9474; MAE     &#9474; &#50669;&#54624;
+  &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9516;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9516;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
+  <span class="dm">ARIMA</span>      &#9474; <span class="dm">1.59&deg;C</span>  &#9474; <span class="dm">Baseline (&#44592;&#51456;&#49440;)</span>
+  <span class="yw">Prophet</span>    &#9474; <span class="yw">1.52&deg;C</span>  &#9474; &#53944;&#47116;&#46300;/&#44228;&#51208;&#49457; &#48516;&#54644;
+  <span class="gr">TFT</span>        &#9474; <span class="gr">1.15&deg;C</span>  &#9474; &#52572;&#44256; &#49457;&#45733; (&#45796;&#48320;&#47049;)
+  <span class="hl">XGBoost</span>    &#9474; <span class="hl">4.53%</span>   &#9474; &#47560;&#47784;&#50984; &#50696;&#52769; (&#45796;&#47480; &#53440;&#44191;)
+  <span class="pk">LSTM</span>       &#9474; <span class="pk">130&#44148;</span>   &#9474; &#51060;&#49345; &#53456;&#51648; (&#45796;&#47480; &#53440;&#44191;)
+
+  <span class="yw">ARIMA &#45824;&#48708;:
+  Prophet: 0.07&deg;C &#45908; &#51221;&#54869; (&#49548;&#54253;)
+  TFT:     0.44&deg;C &#45908; &#51221;&#54869; (&#49345;&#45817;&#54620; &#44060;&#49440;!) &larr; AI &#46020;&#51077; &#44540;&#44144;</span></div>
+
+  <div class="info-card purple">
+    <div class="card-title">&#128073; &#44208;&#47200;</div>
+    <p style="margin-bottom:0;">ARIMA&#45716; <strong>"&#44032;&#51109; &#45800;&#49692;&#54620; &#48169;&#48277;&#51004;&#47196; &#50620;&#47560;&#45208; &#54624; &#49688; &#51080;&#45716;&#44032;"</strong>&#47484; &#48372;&#50668;&#51469;&#45768;&#45796;. &#51060;&#44163;&#48372;&#45796; &#45908; &#51339;&#51008; &#49457;&#45733;&#51012; &#45236;&#45716; AI &#47784;&#45944;&#47564; &#46020;&#51077;&#54624; &#44032;&#52824;&#44032; &#51080;&#49845;&#45768;&#45796;.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">vs</span> 5&#44060; &#47784;&#45944; &#52509;&#51221;&#47532;</h2>
+  <table class="score-table" style="font-size:12px;">
+    <thead><tr><th></th><th>ARIMA</th><th>Prophet</th><th>XGBoost</th><th>LSTM</th><th>TFT</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:700;background:var(--g100);">&#50976;&#54805;</td><td>&#53685;&#44228;</td><td>&#53685;&#44228;+</td><td>&#53944;&#47532;</td><td>&#46373;&#47084;&#45789;</td><td>Transformer</td></tr>
+      <tr><td style="font-weight:700;background:var(--g100);">&#45212;&#51060;&#46020;</td><td style="background:#d1fae5;">&#9733;&#9734;&#9734;&#9734;&#9734;</td><td>&#9733;&#9734;&#9734;&#9734;&#9734;</td><td>&#9733;&#9733;&#9734;&#9734;&#9734;</td><td>&#9733;&#9733;&#9733;&#9734;&#9734;</td><td>&#9733;&#9733;&#9733;&#9733;&#9734;</td></tr>
+      <tr><td style="font-weight:700;background:var(--g100);">&#51077;&#47141;</td><td>1&#44060;</td><td>1&#44060;</td><td>30&#44060;</td><td>3&#44060;</td><td>47&#44060;</td></tr>
+      <tr><td style="font-weight:700;background:var(--g100);">&#47785;&#51201;</td><td style="background:#f3f4f6;">Baseline</td><td>&#53944;&#47116;&#46300;</td><td>&#47560;&#47784;(RUL)</td><td>&#51060;&#49345; &#53456;&#51648;</td><td>&#51109;&#44592; &#50696;&#52769;</td></tr>
+      <tr><td style="font-weight:700;background:var(--g100);">&#49836;&#47112;&#45908;</td><td style="background:#f3f4f6;">&#44592;&#51456;&#49440;</td><td>&#52376;&#47532;&#47049;</td><td>&#52860;&#45216;</td><td>&#48288;&#50612;&#47553;</td><td>&#53685;&#54633; &#50696;&#52769;</td></tr>
+    </tbody>
+  </table>
+  <div class="info-card gray">
+    <div class="card-title">&#128218; &#54645;&#49900; &#44368;&#54984;</div>
+    <p style="margin-bottom:0;"><strong>"&#52572;&#49888;&#51060; &#52572;&#49440;&#51060; &#50500;&#45768;&#45796;"</strong> &mdash; &#44033; &#47784;&#45944;&#51008; &#49436;&#47196; &#45796;&#47480; &#47785;&#51201;&#50640; &#52572;&#51201;&#54868;&#46104;&#50612; &#51080;&#49845;&#45768;&#45796;. ARIMA&#45716; &#44036;&#45800;&#54616;&#44256; &#48736;&#47476;&#51648;&#47564; &#45800;&#49692;&#54616;&#44256;, TFT&#45716; &#44053;&#47141;&#54616;&#51648;&#47564; &#47924;&#44161;&#49845;&#45768;&#45796;. <strong>&#51201;&#51116;&#51201;&#49548;&#47196; &#49440;&#53469;</strong>&#54616;&#45716; &#44163;&#51060; &#51221;&#45813;&#51077;&#45768;&#45796;.</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
