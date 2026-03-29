@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-gas Fusion 전해액 누출 감지 — 상세 설명</title>
+<style>
+:root{--p:#7c3aed;--pl:#ede9fe;--pd:#5b21b6;--a:#2563eb;--al:#dbeafe;--s:#059669;--sl:#d1fae5;--w:#d97706;--wl:#fef3c7;--d:#dc2626;--dl:#fee2e2;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;--g900:#111827;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Pretendard',-apple-system,'Segoe UI','Malgun Gothic',sans-serif;background:var(--g50);color:var(--g800);line-height:1.8;font-size:15px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.hero{background:linear-gradient(135deg,#5b21b6 0%,#dc2626 50%,#d97706 100%);color:#fff;border-radius:16px;padding:40px 36px;margin-bottom:36px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%;}
+.hero::after{content:'';position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;background:rgba(255,255,255,.04);border-radius:50%;}
+.hero h1{font-size:26px;font-weight:800;margin-bottom:8px;position:relative;}
+.hero .sub{font-size:14px;opacity:.85;position:relative;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.15);padding:3px 14px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:14px;}
+.section{margin-bottom:44px;}
+h2{font-size:20px;font-weight:800;color:var(--g900);margin-bottom:18px;padding-bottom:8px;border-bottom:3px solid var(--pl);display:flex;align-items:center;gap:10px;}
+h2 .num{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--p);color:#fff;border-radius:8px;font-size:15px;flex-shrink:0;}
+h3{font-size:16px;font-weight:700;color:var(--g900);margin:20px 0 10px;}
+p{margin-bottom:12px;font-size:14px;}
+ul,ol{padding-left:20px;margin-bottom:12px;}
+li{font-size:14px;line-height:1.8;margin-bottom:4px;}
+.img-wrap{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;margin:16px 0;text-align:center;}
+.img-wrap img{max-width:100%;border-radius:8px;}
+.img-wrap .caption{font-size:12px;color:var(--g500);margin-top:8px;}
+.info-card{border-radius:12px;padding:20px 24px;margin:16px 0;border-left:4px solid;}
+.info-card.blue{background:var(--al);border-color:var(--a);}
+.info-card.green{background:var(--sl);border-color:var(--s);}
+.info-card.yellow{background:var(--wl);border-color:var(--w);}
+.info-card.red{background:var(--dl);border-color:var(--d);}
+.info-card.purple{background:var(--pl);border-color:var(--p);}
+.info-card .card-title{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.info-card p,.info-card li{font-size:13px;line-height:1.7;}
+.analogy{background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde047;border-radius:12px;padding:20px 24px;margin:16px 0;}
+.analogy .title{font-size:14px;font-weight:700;color:var(--w);margin-bottom:8px;}
+.code-box{background:#1e293b;color:#e2e8f0;border-radius:12px;padding:20px 24px;margin:16px 0;font-family:'Consolas','Courier New',monospace;font-size:12px;line-height:1.7;overflow-x:auto;white-space:pre;}
+.code-box .hl{color:#60a5fa;font-weight:600;}
+.code-box .gr{color:#4ade80;}
+.code-box .yw{color:#fbbf24;}
+.code-box .pk{color:#f472b6;}
+.code-box .dm{color:#64748b;}
+.formula-box{background:var(--g900);color:#fff;border-radius:12px;padding:24px;margin:16px 0;text-align:center;}
+.formula-box .formula{font-size:20px;font-weight:800;color:#60a5fa;margin:12px 0;}
+.formula-box .desc{font-size:13px;color:#94a3b8;}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.metric-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;text-align:center;}
+.metric-card .value{font-size:24px;font-weight:800;color:var(--p);}
+.metric-card .label{font-size:11px;color:var(--g500);margin-top:4px;}
+.step-list{counter-reset:step;}
+.step-item{counter-increment:step;display:flex;gap:14px;margin:12px 0;padding:14px 18px;background:#fff;border:1px solid var(--g200);border-radius:10px;}
+.step-item::before{content:counter(step);display:flex;align-items:center;justify-content:center;min-width:28px;height:28px;background:var(--p);color:#fff;border-radius:50%;font-size:13px;font-weight:700;margin-top:2px;}
+.step-item .content{font-size:13px;line-height:1.6;}
+.step-item .content strong{color:var(--pd);}
+.compare-box{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--g200);margin:16px 0;}
+.compare-side{padding:20px 22px;}
+.compare-side.left{background:#fef2f2;border-right:2px solid var(--g200);}
+.compare-side.right{background:#f0fdf4;}
+.compare-side h4{font-size:13px;font-weight:700;margin-bottom:10px;}
+.compare-side.left h4{color:var(--d);}
+.compare-side.right h4{color:var(--s);}
+.compare-side li{font-size:12px;line-height:1.7;}
+.graph-card{background:#fff;border:2px solid var(--p);border-radius:16px;padding:24px;margin:20px 0;position:relative;}
+.graph-card .graph-num{position:absolute;top:-12px;left:20px;background:var(--p);color:#fff;padding:2px 14px;border-radius:8px;font-size:12px;font-weight:700;}
+.graph-card h3{margin-top:8px;color:var(--pd);}
+.styled-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+.styled-table th{background:var(--g900);color:#fff;padding:10px 14px;text-align:left;font-weight:600;}
+.styled-table td{padding:10px 14px;border-bottom:1px solid var(--g200);}
+.styled-table tr:nth-child(even){background:var(--g100);}
+.styled-table tr:hover{background:var(--pl);}
+.tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600;margin:2px;}
+.tag-voc{background:#fecaca;color:#991b1b;}
+.tag-h2{background:#bfdbfe;color:#1e40af;}
+.tag-co{background:#bbf7d0;color:#166534;}
+.tag-fusion{background:#e9d5ff;color:#5b21b6;}
+.pros-cons{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0;}
+.pros-cons>div{padding:18px;border-radius:12px;font-size:13px;}
+.pros-cons .feat{background:#ede9fe;border:1px solid #c4b5fd;}
+.pros-cons .pros{background:#d1fae5;border:1px solid #6ee7b7;}
+.pros-cons .cons{background:#fee2e2;border:1px solid #fca5a5;}
+.pros-cons h4{font-size:14px;font-weight:700;margin-bottom:8px;}
+.pros-cons .feat h4{color:var(--p);}
+.pros-cons .pros h4{color:var(--s);}
+.pros-cons .cons h4{color:var(--d);}
+@media(max-width:768px){.compare-box{grid-template-columns:1fr;}.compare-side.left{border-right:none;border-bottom:2px solid var(--g200);}.metric-grid{grid-template-columns:1fr;}.pros-cons{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="main">
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-badge">SHREDDER AI MODEL #07</div>
+  <h1>Multi-gas Fusion 전해액 누출 감지</h1>
+  <p class="sub">VOC, H&#8322;, CO 다중 가스 센서 융합 &mdash; Bayesian 추론 기반 전해액 누출 판정</p>
+</div>
+
+<!-- ===== 0. Multi-gas Fusion이란? ===== -->
+<div class="section">
+  <h2><span class="num">0</span> Multi-gas Fusion이란?</h2>
+
+  <p><strong>Multi-gas Fusion(다중 가스 융합)</strong>은 여러 종류의 가스 센서에서 동시에 수집한 데이터를 <strong>하나의 통합된 판단</strong>으로 결합하는 센서 융합(Sensor Fusion) 기법입니다.</p>
+
+  <div class="formula-box">
+    <div class="desc">Multi-gas Fusion의 핵심 원리</div>
+    <div class="formula">P(누출) = Bayesian( w&#8321;&middot;S<sub>VOC</sub> + w&#8322;&middot;S<sub>H2</sub> + w&#8323;&middot;S<sub>CO</sub> )</div>
+    <div class="desc">누출 확률 = 베이지안 갱신( 가중치 &times; 개별 가스 점수의 합 )</div>
+  </div>
+
+  <div class="analogy">
+    <div class="title">비유: 의사의 종합 진단</div>
+    <p style="font-size:13px;margin-bottom:4px;">혈압만 높다고 바로 입원하지 않습니다. 혈당, 심전도, 혈액검사를 <strong>종합</strong>해서 판단합니다.</p>
+    <p style="font-size:13px;margin-bottom:0;">마찬가지로, VOC 하나만 높다고 전해액 누출이라 단정하지 않고 — H&#8322;, CO까지 <strong>함께</strong> 보고 최종 판단합니다.</p>
+  </div>
+
+  <div class="info-card purple">
+    <div class="card-title">왜 단일 가스 센서로는 부족한가?</div>
+    <ul>
+      <li>VOC만 측정하면: 도장 작업, 세척제 등으로 오경보 발생</li>
+      <li>CO만 측정하면: 용접, 엔진 배기가스와 구분 불가</li>
+      <li>H&#8322;만 측정하면: 배터리 충전 시에도 미량 발생 &rarr; 혼동</li>
+      <li><strong>3가지를 함께 보면:</strong> 전해액 특유의 가스 패턴(VOC 급등 + H&#8322; 증가 + CO 소폭 상승)을 정확히 식별 가능</li>
+    </ul>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card"><div class="value">3종</div><div class="label">가스 센서 (VOC, H&#8322;, CO)</div></div>
+    <div class="metric-card"><div class="value">F1 0.853</div><div class="label">감지 성능 (Precision 96.2%)</div></div>
+    <div class="metric-card"><div class="value">84.4%</div><div class="label">가스 종류 판별 정확도</div></div>
+  </div>
+</div>
+
+<!-- ===== 1. 전해액 누출 시 가스 특성 ===== -->
+<div class="section">
+  <h2><span class="num">1</span> 전해액 누출 시 가스 특성</h2>
+
+  <p>리튬이온 배터리의 전해액은 주로 <strong>에틸렌카보네이트(EC)</strong>, <strong>디메틸카보네이트(DMC)</strong> 등의 유기 용매와 <strong>LiPF&#8326;</strong> 리튬염으로 구성됩니다. 누출 또는 열분해 시 특징적인 가스 조합이 발생합니다.</p>
+
+  <table class="styled-table">
+    <thead>
+      <tr><th>가스</th><th>정상 범위</th><th>전해액 누출 시</th><th>특성</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="tag tag-voc">VOC</span></td>
+        <td>10~50 ppm</td>
+        <td>80~300+ ppm</td>
+        <td>전해액 용매 증발의 주요 지표. EC, DMC 분해산물</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-h2">H&#8322;</span></td>
+        <td>0~5 ppm</td>
+        <td>10~50+ ppm</td>
+        <td>전해액-리튬 반응 부산물. SEI 층 분해 시 발생</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-co">CO</span></td>
+        <td>0~10 ppm</td>
+        <td>15~40 ppm</td>
+        <td>유기 용매 불완전 연소. 단독으로는 판별력 낮음</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-card red">
+    <div class="card-title">전해액 가스 시그니처 (Signature)</div>
+    <p>전해액 누출의 핵심 패턴: <strong>VOC가 주도적으로 급등</strong>하고, H&#8322;가 함께 증가하며, CO는 소폭 상승합니다.</p>
+    <p style="margin-bottom:0;">이 비율 패턴(VOC:H&#8322;:CO &asymp; 65:25:10)이 전해액을 다른 가스 원인과 구별하는 열쇠입니다.</p>
+  </div>
+
+  <div class="compare-box">
+    <div class="compare-side left">
+      <h4>전해액 누출 패턴</h4>
+      <ul>
+        <li>VOC: <strong>급등</strong> (정상의 3~10배)</li>
+        <li>H&#8322;: <strong>상승</strong> (정상의 2~5배)</li>
+        <li>CO: <strong>소폭 증가</strong> (1.5~3배)</li>
+        <li>패턴: VOC 주도 + H&#8322; 동반</li>
+      </ul>
+    </div>
+    <div class="compare-side right">
+      <h4>기타 원인 패턴</h4>
+      <ul>
+        <li>용접: CO만 급등, VOC/H&#8322; 정상</li>
+        <li>도장: VOC만 상승, H&#8322;/CO 정상</li>
+        <li>배터리 충전: H&#8322; 미량, VOC/CO 정상</li>
+        <li>패턴: 단일 가스 편중</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 2. 개별 가스 분석 ===== -->
+<div class="section">
+  <h2><span class="num">2</span> 개별 가스 분석 &mdash; 임계값 기반 감지</h2>
+
+  <p>Multi-gas Fusion의 첫 단계는 각 가스 센서를 <strong>개별적으로</strong> 평가하는 것입니다. 3단계 임계값(정상/경고/위험)을 통해 0~1 사이의 이상 점수를 산출합니다.</p>
+
+  <table class="styled-table">
+    <thead>
+      <tr><th>가스</th><th>정상 (&le;)</th><th>경고 (&le;)</th><th>위험 (&gt;)</th><th>가중치</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="tag tag-voc">VOC</span></td><td>12 ppm</td><td>30 ppm</td><td>60 ppm</td><td>0.50</td></tr>
+      <tr><td><span class="tag tag-h2">H&#8322;</span></td><td>3 ppm</td><td>10 ppm</td><td>25 ppm</td><td>0.30</td></tr>
+      <tr><td><span class="tag tag-co">CO</span></td><td>5 ppm</td><td>12 ppm</td><td>25 ppm</td><td>0.20</td></tr>
+    </tbody>
+  </table>
+
+  <h3>개별 점수 산출 로직</h3>
+  <div class="code-box"><span class="dm"># 개별 가스 이상 점수 (0 ~ 1)</span>
+<span class="hl">def</span> <span class="gr">individual_score</span>(value, normal, warning, critical):
+    <span class="yw">if</span> value &lt;= normal:
+        <span class="yw">return</span> <span class="pk">0.0</span>          <span class="dm"># 정상 범위</span>
+    <span class="yw">elif</span> value &lt;= warning:
+        <span class="yw">return</span> (value - normal) / (warning - normal) * <span class="pk">0.5</span>
+    <span class="yw">elif</span> value &lt;= critical:
+        <span class="yw">return</span> <span class="pk">0.5</span> + (value - warning) / (critical - warning) * <span class="pk">0.4</span>
+    <span class="yw">else</span>:
+        <span class="yw">return</span> min(<span class="pk">0.9</span> + (value - critical) / critical * <span class="pk">0.1</span>, <span class="pk">1.0</span>)</div>
+
+  <div class="info-card blue">
+    <div class="card-title">점수 해석</div>
+    <ul>
+      <li><strong>0.0</strong>: 완전 정상 &mdash; 임계값 이내</li>
+      <li><strong>0.0~0.5</strong>: 주의 &mdash; 정상 초과, 경고 이내</li>
+      <li><strong>0.5~0.9</strong>: 경고 &mdash; 경고 초과, 위험 이내</li>
+      <li><strong>0.9~1.0</strong>: 위험 &mdash; 위험 임계값 초과</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== 3. 다중 가스 융합 ===== -->
+<div class="section">
+  <h2><span class="num">3</span> 다중 가스 융합 &mdash; 가중 결합 + Bayesian 갱신</h2>
+
+  <p>개별 점수를 구한 후, 두 단계의 융합을 수행합니다: <strong>(1) 가중 결합</strong>으로 통합 점수를 만들고, <strong>(2) Bayesian 갱신</strong>으로 최종 누출 확률을 산출합니다.</p>
+
+  <h3>Step 1: 가중 융합 점수</h3>
+  <div class="formula-box">
+    <div class="desc">가중 결합 (Weighted Combination)</div>
+    <div class="formula">F = 0.50 &times; S<sub>VOC</sub> + 0.30 &times; S<sub>H2</sub> + 0.20 &times; S<sub>CO</sub></div>
+    <div class="desc">VOC에 가장 높은 가중치 &mdash; 전해액 누출의 가장 강력한 지표이므로</div>
+  </div>
+
+  <div class="analogy">
+    <div class="title">비유: 시험 과목별 가중치</div>
+    <p style="font-size:13px;margin-bottom:0;">대학 입시에서 수학 50%, 영어 30%, 탐구 20%로 가중치를 줘서 총점을 내는 것과 같습니다. 전해액 감지에서는 VOC가 "수학"에 해당합니다.</p>
+  </div>
+
+  <h3>Step 2: Bayesian 누출 확률 갱신</h3>
+
+  <div class="formula-box">
+    <div class="desc">베이즈 정리 (Bayes' Theorem)</div>
+    <div class="formula">P(누출|증거) = P(증거|누출) &times; P(누출) / P(증거)</div>
+    <div class="desc">사후확률 = 우도 &times; 사전확률 / 증거확률</div>
+  </div>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="content"><strong>사전 확률(Prior) 설정</strong><br>P(누출) = 0.02 (2%). 일반적으로 누출이 드문 이벤트임을 반영합니다.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>우도(Likelihood) 계산</strong><br>P(증거|누출) = 융합점수 &times; 전해액 유사도. 융합점수가 높고 전해액 가스 패턴과 유사할수록 우도가 높아집니다.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>사후 확률(Posterior) 계산</strong><br>베이즈 정리로 갱신. 융합점수 &gt; 0.7이면 추가 부스트를 적용합니다.</div>
+    </div>
+  </div>
+
+  <div class="code-box"><span class="dm"># Bayesian 누출 확률 갱신</span>
+<span class="hl">prior</span> = <span class="pk">0.02</span>  <span class="dm"># 사전 누출 확률 2%</span>
+
+<span class="dm"># 우도 계산</span>
+<span class="hl">p_evidence_given_leak</span>    = fusion_score * electrolyte_likelihood
+<span class="hl">p_evidence_given_no_leak</span> = (1 - fusion_score) * 0.3 + fusion_score * other_likelihood * 0.5
+
+<span class="dm"># 사후확률 = 베이즈 정리</span>
+<span class="hl">posterior</span> = (p_evidence_given_leak * prior) /
+           (p_evidence_given_leak * prior + p_evidence_given_no_leak * (1 - prior))
+
+<span class="dm"># 강한 증거에 부스트</span>
+<span class="yw">if</span> fusion_score > <span class="pk">0.7</span>:
+    posterior = min(posterior * <span class="pk">1.5</span>, <span class="pk">1.0</span>)</div>
+
+  <div class="info-card green">
+    <div class="card-title">Bayesian 갱신의 핵심 효과</div>
+    <ul>
+      <li>사전 확률이 낮아(2%) 약한 증거만으로는 확률이 크게 오르지 않음 &rarr; <strong>오경보 감소</strong></li>
+      <li>강한 증거(융합점수 높음 + 전해액 패턴 일치)가 있으면 확률이 급격히 상승 &rarr; <strong>실제 누출 포착</strong></li>
+      <li>단일 가스만 높은 경우(용접 등)에는 전해액 유사도가 낮아 확률 상승 제한</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== 4. 가스 종류 판별 ===== -->
+<div class="section">
+  <h2><span class="num">4</span> 가스 종류 판별 &mdash; 전해액 vs 주변 vs 기타</h2>
+
+  <p>누출 감지뿐 아니라 <strong>어떤 종류의 가스인지</strong>를 판별하는 것이 운영자에게 중요한 정보입니다. 코사인 유사도(Cosine Similarity)를 사용하여 관측된 가스 비율을 기준 프로필과 비교합니다.</p>
+
+  <h3>가스 종류별 기준 프로필</h3>
+  <table class="styled-table">
+    <thead>
+      <tr><th>프로필</th><th>VOC 비율</th><th>H&#8322; 비율</th><th>CO 비율</th><th>특성</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>전해액 누출</strong></td><td>0.65</td><td>0.25</td><td>0.10</td><td>VOC 주도, H&#8322; 동반</td></tr>
+      <tr><td><strong>기타 원인</strong></td><td>0.15</td><td>0.05</td><td>0.80</td><td>CO 주도 (용접, 연소 등)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="formula-box">
+    <div class="desc">코사인 유사도 (Cosine Similarity)</div>
+    <div class="formula">sim(A, B) = (A &middot; B) / (|A| &times; |B|)</div>
+    <div class="desc">관측된 가스 비율 벡터와 기준 프로필 벡터 간의 방향 유사도</div>
+  </div>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="content"><strong>개별 점수를 비율로 정규화</strong><br>obs = [S<sub>VOC</sub>/total, S<sub>H2</sub>/total, S<sub>CO</sub>/total]. 각 가스 점수의 상대적 비중을 구합니다.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>각 프로필과 코사인 유사도 계산</strong><br>전해액 프로필과의 유사도, 기타 프로필과의 유사도를 각각 계산합니다.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>분류 규칙 적용</strong><br>융합점수 &lt; 0.15 &rarr; 정상 | 전해액 유사도 &gt; 기타 유사도 AND VOC 점수 &gt; 0.3 &rarr; 전해액 | 그 외 &rarr; 기타</div>
+    </div>
+  </div>
+
+  <div class="info-card yellow">
+    <div class="card-title">가스 종류 판별이 중요한 이유</div>
+    <p>"가스가 감지됐다"는 것만으로는 부족합니다. <strong>전해액 누출</strong>이면 즉시 슈레더 정지 + 환기가 필요하지만, <strong>용접 작업</strong>이면 정상 운영입니다.</p>
+    <p style="margin-bottom:0;">종류를 알아야 적절한 대응이 가능합니다.</p>
+  </div>
+</div>
+
+<!-- ===== 5. 시뮬레이션 결과 분석 ===== -->
+<div class="section">
+  <h2><span class="num">5</span> 시뮬레이션 결과 분석</h2>
+
+  <div class="img-wrap">
+    <img src="multi_gas_result.png" alt="Multi-gas Fusion 결과">
+    <div class="caption">simulation.py 실행 결과 &mdash; 4개 패널로 전체 과정을 시각화</div>
+  </div>
+
+  <!-- 그래프 1 -->
+  <div class="graph-card">
+    <div class="graph-num">그래프 1</div>
+    <h3>개별 가스 센서 판독값 (VOC, H&#8322;, CO)</h3>
+    <div class="info-card blue">
+      <div class="card-title">읽는 법</div>
+      <ul>
+        <li><strong>빨간선 (VOC)</strong>: 평상시 20~40 ppm. 전해액 누출 시 100~200 ppm까지 급등</li>
+        <li><strong>파란선 (H&#8322;)</strong>: 평상시 1~5 ppm. 누출 시 10~30 ppm으로 상승</li>
+        <li><strong>초록선 (CO)</strong>: 평상시 3~12 ppm. 기타 이벤트(용접)에서 CO만 급등하는 구간 주목</li>
+        <li><strong>빨간 음영</strong>: 실제 전해액 누출 구간 (Ground Truth)</li>
+      </ul>
+    </div>
+    <p>핵심 관찰: 전해액 누출 구간에서는 3가지 가스가 <strong>동시에</strong> 상승하지만, 기타 이벤트에서는 CO만 돌출됩니다.</p>
+  </div>
+
+  <!-- 그래프 2 -->
+  <div class="graph-card">
+    <div class="graph-num">그래프 2</div>
+    <h3>다중 가스 가중 융합 점수</h3>
+    <div class="info-card purple">
+      <div class="card-title">읽는 법</div>
+      <ul>
+        <li><strong>보라색 영역</strong>: 가중 융합 점수 (0~1). VOC 50% + H&#8322; 30% + CO 20% 반영</li>
+        <li><strong>주황 점선</strong>: 경고 기준 (0.5). 이를 초과하면 "뭔가 이상하다"는 신호</li>
+        <li>전해액 누출 시 0.6~0.9까지 상승, 기타 이벤트 시 0.2~0.4 수준</li>
+      </ul>
+    </div>
+    <p>가중 융합의 효과: CO만 높은 기타 이벤트는 CO 가중치(20%)만 반영되므로 점수가 크게 오르지 않습니다.</p>
+  </div>
+
+  <!-- 그래프 3 -->
+  <div class="graph-card">
+    <div class="graph-num">그래프 3</div>
+    <h3>Bayesian 누출 확률</h3>
+    <div class="info-card red">
+      <div class="card-title">읽는 법</div>
+      <ul>
+        <li><strong>파란 막대</strong>: 누출 확률 낮음 (정상)</li>
+        <li><strong>빨간 막대</strong>: 누출 확률이 임계값(0.3)을 초과한 지점</li>
+        <li><strong>빨간 점선</strong>: 판정 임계값 (0.3) &mdash; 이를 넘으면 "누출 감지" 판정</li>
+      </ul>
+    </div>
+    <p>Bayesian 갱신 덕분에 사전 확률 2%가 강한 증거 시에만 크게 상승합니다. 기타 이벤트에서는 확률이 낮게 유지됩니다.</p>
+  </div>
+
+  <!-- 그래프 4 -->
+  <div class="graph-card">
+    <div class="graph-num">그래프 4</div>
+    <h3>가스 종류 판별 결과</h3>
+    <div class="info-card green">
+      <div class="card-title">읽는 법</div>
+      <ul>
+        <li><strong>초록 (0=정상)</strong>: 정상 운전 구간. 모든 가스가 정상 범위</li>
+        <li><strong>빨강 (1=전해액)</strong>: 전해액 누출로 분류된 구간. VOC 주도 패턴</li>
+        <li><strong>주황 (2=기타)</strong>: 기타 가스 원인. CO 주도 패턴 (용접 등)</li>
+      </ul>
+    </div>
+    <p>가스 종류까지 판별함으로써 운영자는 어떤 대응을 해야 하는지 즉시 알 수 있습니다.</p>
+  </div>
+</div>
+
+<!-- ===== 6. 알고리즘 특징/장점/단점 ===== -->
+<div class="section">
+  <h2><span class="num">6</span> 알고리즘 특징 / 장점 / 단점</h2>
+
+  <div class="pros-cons">
+    <div class="feat">
+      <h4>특징</h4>
+      <ul>
+        <li>다중 센서 융합(Multi-sensor Fusion) &mdash; 3종 가스 동시 분석</li>
+        <li>Bayesian 추론 &mdash; 사전 확률 기반 확률적 판단</li>
+        <li>가스 프로필 매칭 &mdash; 코사인 유사도로 종류 판별</li>
+        <li>3단계 임계값 &mdash; 세밀한 이상 수준 구분</li>
+        <li>가중치 기반 결합 &mdash; 도메인 지식 반영</li>
+      </ul>
+    </div>
+    <div class="pros">
+      <h4>장점</h4>
+      <ul>
+        <li><strong>오경보 감소</strong>: 교차 검증으로 단일 센서 오동작에 강건</li>
+        <li><strong>가스 종류 식별</strong>: 전해액/기타를 구분하여 적절한 대응 가능</li>
+        <li><strong>강건성</strong>: 1개 센서 고장 시에도 나머지 2개로 판단 가능</li>
+        <li><strong>확률 출력</strong>: 0~1 연속값으로 위험도 정량화</li>
+        <li><strong>해석 가능</strong>: 어떤 가스가 기여했는지 추적 용이</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>단점</h4>
+      <ul>
+        <li><strong>센서 교정 필요</strong>: 가스 센서 주기적 캘리브레이션 필수 (6개월~1년)</li>
+        <li><strong>응답 지연</strong>: 가스 확산 + 센서 응답 시간 (~1초) 존재</li>
+        <li><strong>가스 혼합 혼동</strong>: 복합 오염 시 패턴이 변형될 수 있음</li>
+        <li><strong>고정 가중치</strong>: 환경 변화 시 가중치 재설정 필요</li>
+        <li><strong>온습도 영향</strong>: 가스 센서는 온도/습도에 민감하여 보정 필요</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="compare-box">
+    <div class="compare-side left">
+      <h4>단일 센서 방식 (기존)</h4>
+      <ul>
+        <li>VOC 센서 1개만 사용</li>
+        <li>고정 임계값 초과 시 경보</li>
+        <li>오경보율 높음 (30~50%)</li>
+        <li>가스 종류 판별 불가</li>
+        <li>1개 센서 고장 = 전체 실패</li>
+      </ul>
+    </div>
+    <div class="compare-side right">
+      <h4>Multi-gas Fusion (본 모델)</h4>
+      <ul>
+        <li>3종 센서 융합 분석</li>
+        <li>Bayesian 확률 기반 판단</li>
+        <li>오경보율 대폭 감소 (&lt;10%)</li>
+        <li>전해액/기타 가스 구분</li>
+        <li>센서 이중화로 고장 내성 확보</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 7. 슈레더 적용 시나리오 ===== -->
+<div class="section">
+  <h2><span class="num">7</span> 슈레더 적용 시나리오</h2>
+
+  <p>폐배터리 파쇄 슈레더에서는 전해액 누출이 <strong>화재 및 폭발의 직접적 원인</strong>이 될 수 있습니다. Multi-gas Fusion 모델을 적용한 실제 운영 시나리오입니다.</p>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="content"><strong>센서 배치</strong><br>슈레더 투입구, 파쇄실 내부, 배출구에 각각 VOC/H&#8322;/CO 센서 세트를 설치합니다. 총 3개 지점 &times; 3종 = 9개 센서.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>실시간 모니터링</strong><br>10초 주기로 가스 농도를 수집하여 Edge AI가 Multi-gas Fusion 알고리즘을 실행합니다. 연산 부하가 낮아 라즈베리파이급으로도 충분합니다.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>전해액 누출 감지</strong><br>융합 점수가 경고 기준을 넘고, 가스 프로필이 전해액 패턴과 일치하면 "전해액 누출 경보"를 발령합니다.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>자동 대응</strong><br>누출 확률 &ge; 0.3: 경고 알림 + 환기 팬 가동. 누출 확률 &ge; 0.7: 슈레더 자동 정지 + 소화 시스템 대기 + 운영자 긴급 호출.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>가스 종류별 차별 대응</strong><br>전해액 감지 &rarr; 즉시 정지 + 질소 퍼지. 기타 가스(CO) &rarr; 환기 강화 후 계속 운전. 불필요한 정지를 줄여 생산성을 유지합니다.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>이력 관리 및 트렌드 분석</strong><br>모든 가스 데이터와 감지 이력을 저장하여 장기 트렌드(전해액 잔류량 증가 등)를 파악하고 정비 주기를 최적화합니다.</div>
+    </div>
+  </div>
+
+  <div class="info-card red">
+    <div class="card-title">실제 효과 기대치</div>
+    <ul>
+      <li><strong>화재 예방</strong>: 전해액 누출 감지 시간 60초 &rarr; 10초 이내로 단축</li>
+      <li><strong>오경보 감소</strong>: 단일센서 대비 오경보율 70% 이상 감소</li>
+      <li><strong>불필요한 정지 감소</strong>: 가스 종류 판별로 비누출 이벤트 구분 &rarr; 가동률 향상</li>
+      <li><strong>안전 등급 향상</strong>: 다중 센서 융합은 SIL(Safety Integrity Level) 인증에 유리</li>
+    </ul>
+  </div>
+
+  <div class="analogy">
+    <div class="title">비유: 공항 보안 검색</div>
+    <p style="font-size:13px;margin-bottom:0;">X-ray 하나만으로 판단하지 않고, 금속탐지기 + X-ray + 폭발물 탐지기를 <strong>종합</strong>해서 판단합니다. 하나만 반응하면 재검사, 여러 개가 동시 반응하면 위험 확정 &mdash; Multi-gas Fusion도 같은 원리입니다.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:30px 0 10px;border-top:1px solid var(--g200);margin-top:40px;">
+  <p style="font-size:12px;color:var(--g500);">Model 07: Multi-gas Fusion 전해액 누출 감지 &mdash; 슈레더 AI 시스템</p>
+  <p style="font-size:11px;color:var(--g500);">생성일: 2026-03-29</p>
+</div>
+
+</div>
+</body>
+</html>

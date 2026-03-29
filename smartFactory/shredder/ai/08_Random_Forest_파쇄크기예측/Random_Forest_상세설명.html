@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Forest 파쇄 크기 예측 상세 설명</title>
+<style>
+:root{--p:#2563eb;--pl:#dbeafe;--pd:#1e40af;--s:#059669;--sl:#d1fae5;--w:#d97706;--wl:#fef3c7;--d:#dc2626;--dl:#fee2e2;--a:#7c3aed;--al:#ede9fe;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;--g900:#111827;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Pretendard',-apple-system,'Segoe UI','Malgun Gothic',sans-serif;background:var(--g50);color:var(--g800);line-height:1.8;font-size:15px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.hero{background:linear-gradient(135deg,#1e40af 0%,#2563eb 50%,#059669 100%);color:#fff;border-radius:16px;padding:40px 36px;margin-bottom:36px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%;}
+.hero h1{font-size:26px;font-weight:800;margin-bottom:8px;position:relative;}
+.hero .sub{font-size:14px;opacity:.85;position:relative;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.15);padding:3px 14px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:14px;}
+.section{margin-bottom:44px;}
+h2{font-size:20px;font-weight:800;color:var(--g900);margin-bottom:18px;padding-bottom:8px;border-bottom:3px solid var(--pl);display:flex;align-items:center;gap:10px;}
+h2 .num{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--p);color:#fff;border-radius:8px;font-size:15px;flex-shrink:0;}
+h3{font-size:16px;font-weight:700;color:var(--g900);margin:20px 0 10px;}
+p{margin-bottom:12px;font-size:14px;}
+.img-wrap{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;margin:16px 0;text-align:center;}
+.img-wrap img{max-width:100%;border-radius:8px;}
+.img-wrap .caption{font-size:12px;color:var(--g500);margin-top:8px;}
+.info-card{border-radius:12px;padding:20px 24px;margin:16px 0;border-left:4px solid;}
+.info-card.blue{background:var(--pl);border-color:var(--p);}
+.info-card.green{background:var(--sl);border-color:var(--s);}
+.info-card.yellow{background:var(--wl);border-color:var(--w);}
+.info-card.red{background:var(--dl);border-color:var(--d);}
+.info-card.purple{background:var(--al);border-color:var(--a);}
+.info-card .card-title{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.info-card p,.info-card li{font-size:13px;line-height:1.7;}
+.analogy{background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde047;border-radius:12px;padding:20px 24px;margin:16px 0;}
+.analogy .title{font-size:14px;font-weight:700;color:var(--w);margin-bottom:8px;}
+.code-box{background:#1e293b;color:#e2e8f0;border-radius:12px;padding:20px 24px;margin:16px 0;font-family:'Consolas',monospace;font-size:12px;line-height:1.7;overflow-x:auto;white-space:pre;}
+.code-box .hl{color:#60a5fa;font-weight:600;}.code-box .gr{color:#4ade80;}.code-box .yw{color:#fbbf24;}.code-box .pk{color:#f472b6;}.code-box .dm{color:#64748b;}
+.graph-card{background:#fff;border:2px solid var(--p);border-radius:16px;padding:24px;margin:20px 0;position:relative;}
+.graph-card .graph-num{position:absolute;top:-12px;left:20px;background:var(--p);color:#fff;padding:2px 14px;border-radius:8px;font-size:12px;font-weight:700;}
+.graph-card h3{margin-top:8px;color:var(--pd);}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.metric-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;text-align:center;}
+.metric-card .value{font-size:24px;font-weight:800;color:var(--p);}
+.metric-card .label{font-size:11px;color:var(--g500);margin-top:4px;}
+.score-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+.score-table th,.score-table td{padding:8px 12px;border:1px solid var(--g200);text-align:center;}
+.score-table th{background:var(--g100);font-weight:700;}
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+.pros-cons .col{border-radius:12px;padding:20px;}
+.pros-cons .col.pros{background:var(--sl);border:1px solid var(--s);}
+.pros-cons .col.cons{background:var(--dl);border:1px solid var(--d);}
+.pros-cons .col h4{font-size:14px;margin-bottom:10px;}
+.pros-cons .col li{font-size:13px;margin-bottom:6px;}
+.tree-diagram{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0;text-align:center;}
+.tree-diagram .tree-box{background:#fff;border:2px solid var(--p);border-radius:10px;padding:12px 8px;font-size:11px;font-weight:600;}
+.tree-diagram .tree-box.active{background:var(--pl);border-color:var(--pd);}
+@media(max-width:768px){.metric-grid{grid-template-columns:1fr;}.pros-cons{grid-template-columns:1fr;}.tree-diagram{grid-template-columns:repeat(3,1fr);}}
+</style>
+</head>
+<body>
+<div class="main">
+
+<div class="hero">
+  <div class="hero-badge">AI MODEL #08 - 슈레더 파쇄 크기 예측</div>
+  <h1>Random Forest 파쇄 크기 예측 상세 설명</h1>
+  <p class="sub">앙상블 학습으로 파쇄 크기(mm)와 균일도(%)를 정밀 예측하고, 핵심 센서를 파악합니다</p>
+</div>
+
+<!-- ===== Section 0: Random Forest란? ===== -->
+<div class="section" id="s0">
+  <h2><span class="num">0</span> Random Forest란?</h2>
+  <div class="analogy">
+    <div class="title">비유: 100명의 전문가 투표</div>
+    <p style="font-size:13px;margin-bottom:4px;">한 명의 전문가(Decision Tree)에게 물어보면 틀릴 수 있습니다. 하지만 <strong>200명의 독립적인 전문가</strong>에게 각각 물어본 뒤 <strong>평균</strong>을 내면? 개인의 실수가 상쇄되어 훨씬 정확해집니다.</p>
+    <p style="font-size:13px;margin-bottom:0;">이것이 바로 Random Forest입니다: <strong>여러 Decision Tree를 만들고, 결과를 평균</strong>내는 앙상블(Ensemble) 기법입니다.</p>
+  </div>
+
+  <div class="info-card blue">
+    <div class="card-title">Random Forest = Bagging + Decision Tree 앙상블</div>
+    <ul style="margin:0;padding-left:20px;">
+      <li><strong>Bagging</strong> (Bootstrap Aggregating): 원본 데이터에서 <strong>복원 추출</strong>로 여러 부분집합을 만들어 각 트리에 독립 학습</li>
+      <li><strong>Random Feature Selection</strong>: 각 분기(split)마다 전체 특징 중 <strong>일부만 무작위 선택</strong>하여 트리 다양성 확보</li>
+      <li><strong>Averaging</strong>: 모든 트리의 예측값을 <strong>평균</strong> (회귀) 또는 <strong>다수결 투표</strong> (분류)</li>
+    </ul>
+  </div>
+
+  <div class="code-box"><span class="yw">Random Forest 구조:</span>
+
+  <span class="hl">원본 데이터 (2000건)</span>
+       |
+       ├─ Bootstrap 샘플 1 → <span class="gr">Decision Tree 1</span> → 예측 24.3mm
+       ├─ Bootstrap 샘플 2 → <span class="gr">Decision Tree 2</span> → 예측 25.1mm
+       ├─ Bootstrap 샘플 3 → <span class="gr">Decision Tree 3</span> → 예측 24.8mm
+       │  ...
+       └─ Bootstrap 샘플 200 → <span class="gr">Decision Tree 200</span> → 예측 24.5mm
+                                                          |
+                                              <span class="pk">최종 예측 = 평균 = 24.7mm</span></div>
+
+  <div class="metric-grid">
+    <div class="metric-card"><div class="value">200</div><div class="label">Decision Tree 수<br><small>n_estimators</small></div></div>
+    <div class="metric-card"><div class="value">12</div><div class="label">입력 특징 수<br><small>4센서 x 3통계</small></div></div>
+    <div class="metric-card"><div class="value">2</div><div class="label">예측 대상<br><small>파쇄 크기 + 균일도</small></div></div>
+  </div>
+</div>
+
+<!-- ===== Section 1: 특징 추출 ===== -->
+<div class="section" id="s1">
+  <h2><span class="num">1</span> 특징 추출 - 12개 센서 특징</h2>
+
+  <p>슈레더에 설치된 <strong>4종 센서</strong>에서 각 <strong>3개 통계값</strong>을 추출하여 총 <strong>12개 특징</strong>을 구성합니다.</p>
+
+  <table class="score-table">
+    <thead>
+      <tr><th>센서</th><th>설명</th><th>평균 (mean)</th><th>표준편차 (std)</th><th>최대값 (max)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td style="font-weight:700;background:var(--pl);">CUR</td><td>모터 전류 (A)</td><td>CUR_mean</td><td>CUR_std</td><td>CUR_max</td></tr>
+      <tr><td style="font-weight:700;background:var(--sl);">SPD</td><td>회전 속도 (RPM)</td><td>SPD_mean</td><td>SPD_std</td><td>SPD_max</td></tr>
+      <tr><td style="font-weight:700;background:var(--wl);">VIB</td><td>진동 RMS (mm/s)</td><td>VIB_mean</td><td>VIB_std</td><td>VIB_max</td></tr>
+      <tr><td style="font-weight:700;background:var(--al);">SCL</td><td>스케일/무게 (kg)</td><td>SCL_mean</td><td>SCL_std</td><td>SCL_max</td></tr>
+    </tbody>
+  </table>
+
+  <div class="code-box"><span class="yw">특징 추출 과정:</span>
+
+  <span class="hl">CUR 센서 (A축 + B축)</span>
+    CUR_mean = (CUR_A + CUR_B) / 2     <span class="dm">→ 평균 전류</span>
+    CUR_std  = |CUR_A - CUR_B| + noise  <span class="dm">→ 전류 불균형 (축간 차이)</span>
+    CUR_max  = max(CUR_A, CUR_B)        <span class="dm">→ 최대 전류</span>
+
+  <span class="hl">SPD 센서 (A축 + B축)</span>
+    SPD_mean = (SPD_A + SPD_B) / 2      <span class="dm">→ 평균 속도</span>
+    SPD_std  = |SPD_A - SPD_B| + noise  <span class="dm">→ 속도 불균형</span>
+    SPD_max  = max(SPD_A, SPD_B)        <span class="dm">→ 최대 속도</span>
+
+  <span class="hl">VIB 센서 (A축 + B축)</span>
+    VIB_mean = (VIB_A + VIB_B) / 2      <span class="dm">→ 평균 진동</span>
+    VIB_std  = |VIB_A - VIB_B| + noise  <span class="dm">→ 진동 불균형</span>
+    VIB_max  = max(VIB_A, VIB_B)        <span class="dm">→ 최대 진동</span>
+
+  <span class="hl">SCL 센서 (전류/속도 기반 간접 추정)</span>
+    SCL_mean = CUR_A * 0.4 + SPD_A * 0.8 <span class="dm">→ 부하 추정 (무게)</span>
+    SCL_std  = CUR_std * 0.3 + SPD_std * 0.5
+    SCL_max  = SCL_mean + offset
+
+  <span class="gr">→ 총 12개 특징 → Random Forest 입력</span></div>
+
+  <div class="info-card green">
+    <div class="card-title">왜 12개 특징인가?</div>
+    <p style="margin-bottom:0;">파쇄 크기는 단일 센서로 결정되지 않습니다. <strong>전류(힘)</strong>, <strong>속도(회전력)</strong>, <strong>진동(안정성)</strong>, <strong>무게(투입량)</strong>가 복합적으로 작용합니다. 각 센서의 평균/편차/최대값은 서로 다른 물리적 의미를 가집니다.</p>
+  </div>
+</div>
+
+<!-- ===== Section 2: 알고리즘 원리 ===== -->
+<div class="section" id="s2">
+  <h2><span class="num">2</span> 알고리즘 원리</h2>
+
+  <h3>Step 1: Bootstrap Sampling (복원 추출)</h3>
+  <div class="code-box"><span class="yw">원본 데이터: 2000건</span>
+
+  Bootstrap 샘플 1: [#5, #12, #5, #88, #12, #301, ...]  <span class="dm">← 중복 허용, 2000건 추출</span>
+  Bootstrap 샘플 2: [#1, #45, #673, #1, #99, #45, ...]   <span class="dm">← 매번 다른 조합</span>
+  Bootstrap 샘플 3: [#200, #8, #555, #200, #42, ...]
+  ...
+  Bootstrap 샘플 200: [#77, #3, #999, #77, #3, ...]
+
+  <span class="gr">각 샘플은 원본의 약 63.2%를 포함 (나머지 36.8%는 OOB: Out-of-Bag)</span>
+  <span class="dm">→ 각 트리가 서로 다른 데이터로 학습 → 다양성 확보!</span></div>
+
+  <h3>Step 2: Random Feature Selection (무작위 특징 선택)</h3>
+  <div class="code-box"><span class="yw">각 분기(split)에서:</span>
+
+  전체 특징: [CUR_mean, CUR_std, CUR_max, SPD_mean, SPD_std, SPD_max,
+             VIB_mean, VIB_std, VIB_max, SCL_mean, SCL_std, SCL_max]
+             <span class="dm">→ 12개 중 sqrt(12) ≈ 3~4개만 무작위 선택</span>
+
+  Tree 1, Node 3: <span class="hl">[CUR_mean, VIB_std, SCL_max]</span> 중 최적 분기점 선택
+  Tree 1, Node 7: <span class="hl">[SPD_mean, CUR_max, VIB_mean]</span> 중 최적 분기점 선택
+  Tree 2, Node 3: <span class="hl">[VIB_max, SCL_mean, SPD_std]</span> 중 최적 분기점 선택
+
+  <span class="gr">→ 같은 특징이 항상 선택되는 것을 방지 → 트리 간 상관성 감소!</span>
+  <span class="pk">★ 이것이 "Random" Forest의 핵심!</span></div>
+
+  <h3>Step 3: Averaging (평균 투표)</h3>
+  <div class="code-box"><span class="yw">회귀 문제 (파쇄 크기 예측):</span>
+
+  입력: CUR_mean=92A, SPD_mean=17.5RPM, VIB_mean=3.1mm/s, ...
+
+  Tree   1: 24.3mm
+  Tree   2: 25.1mm     <span class="dm">← 각 트리가 독립적으로 예측</span>
+  Tree   3: 23.8mm
+  ...
+  Tree 200: 24.7mm
+
+  <span class="pk">최종 예측 = (24.3 + 25.1 + 23.8 + ... + 24.7) / 200 = 24.5mm</span>
+
+  <span class="gr">→ 개별 트리의 오차가 상쇄되어 정확도 향상!</span>
+  <span class="dm">→ "군중의 지혜" (Wisdom of Crowds) 효과</span></div>
+</div>
+
+<!-- ===== Section 3: Decision Tree vs Random Forest ===== -->
+<div class="section" id="s3">
+  <h2><span class="num">3</span> Decision Tree vs Random Forest 비교</h2>
+
+  <table class="score-table">
+    <thead>
+      <tr><th>항목</th><th>Decision Tree (단일 트리)</th><th style="background:var(--pl);">Random Forest (앙상블)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">트리 수</td>
+        <td>1개</td>
+        <td style="background:var(--pl);font-weight:700;">200개</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">학습 데이터</td>
+        <td>전체 데이터 1벌</td>
+        <td style="background:var(--pl);">Bootstrap 샘플 200벌</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">특징 선택</td>
+        <td>매 분기마다 전체 특징</td>
+        <td style="background:var(--pl);">매 분기마다 sqrt(n) 무작위</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">과적합</td>
+        <td style="color:var(--d);">쉽게 과적합 (학습 데이터 암기)</td>
+        <td style="background:var(--sl);font-weight:700;">강건 (Bagging이 분산 감소)</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">정확도</td>
+        <td>보통</td>
+        <td style="background:var(--sl);font-weight:700;">높음 (앙상블 효과)</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">해석성</td>
+        <td style="color:var(--s);">매우 높음 (트리 시각화 가능)</td>
+        <td>중간 (특징 중요도로 해석)</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">속도</td>
+        <td style="color:var(--s);">매우 빠름</td>
+        <td>트리 수에 비례 (병렬 가능)</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">모델 크기</td>
+        <td>극소</td>
+        <td>트리 수 x 단일 트리</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="code-box"><span class="yw">비유:</span>
+
+  <span class="hl">Decision Tree</span> = 한 명의 의사에게 진단 받기
+    → 빠르지만, 그 의사가 틀리면 끝
+
+  <span class="gr">Random Forest</span> = 200명의 의사에게 각각 진단 받고 다수결
+    → 개인의 오진이 상쇄 → 더 정확하고 안정적!
+
+  <span class="dm">핵심: 각 의사(트리)가 서로 다른 환자 기록(Bootstrap)과
+        서로 다른 검사 항목(Random Feature)을 보고 판단</span></div>
+</div>
+
+<!-- ===== Section 4: 파쇄 크기 예측 & 균일도 ===== -->
+<div class="section" id="s4">
+  <h2><span class="num">4</span> 파쇄 크기 예측 & 균일도 계산</h2>
+
+  <h3>파쇄 크기 결정 요인</h3>
+  <div class="info-card blue">
+    <div class="card-title">파쇄 크기(mm)에 영향을 주는 물리적 요인</div>
+    <ul style="margin:0;padding-left:20px;">
+      <li><strong>전류(CUR) 높음</strong> → 칼날에 가해지는 힘 증가 → 파쇄 크기 <strong>감소</strong></li>
+      <li><strong>속도(SPD) 높음</strong> → 회전 빈도 증가 → 파쇄 크기 <strong>감소</strong></li>
+      <li><strong>진동(VIB) 높음</strong> → 불규칙 운전 → 파쇄 크기 <strong>불균일</strong></li>
+      <li><strong>무게(SCL) 높음</strong> → 투입량 과다 → 파쇄 크기 <strong>증가</strong></li>
+    </ul>
+  </div>
+
+  <div class="code-box"><span class="yw">파쇄 크기 계산식 (시뮬레이션):</span>
+
+  shred_size = 25.0                         <span class="dm">← 기본 파쇄 크기 (mm)</span>
+             <span class="pk">- 0.04 * (CUR_mean - 80)</span>     <span class="dm">← 전류 높으면 감소</span>
+             <span class="hl">- 0.15 * (SPD_mean - 17)</span>     <span class="dm">← 속도 높으면 감소</span>
+             <span class="yw">+ 0.80 * (VIB_mean - 2.5)</span>    <span class="dm">← 진동 높으면 증가 (불규칙)</span>
+             <span class="gr">+ 0.03 * (SCL_mean - 50)</span>     <span class="dm">← 무게 높으면 증가</span>
+             + noise                        <span class="dm">← 랜덤 변동</span>
+
+  <span class="dm">→ 진동(VIB)의 계수가 가장 크므로 파쇄 크기에 가장 큰 영향!</span></div>
+
+  <h3>균일도 계산</h3>
+  <div class="code-box"><span class="yw">균일도 계산식 (시뮬레이션):</span>
+
+  uniformity = 88.0                         <span class="dm">← 기본 균일도 (%)</span>
+             <span class="yw">- 1.5 * VIB_std</span>              <span class="dm">← 진동 편차 크면 균일도 감소</span>
+             <span class="hl">- 0.3 * SPD_std</span>              <span class="dm">← 속도 편차 크면 균일도 감소</span>
+             <span class="pk">- 0.2 * CUR_std</span>              <span class="dm">← 전류 편차 크면 균일도 감소</span>
+             + noise
+
+  <span class="gr">균일도 = "파쇄된 조각들이 얼마나 고르게 같은 크기인가"</span>
+  <span class="dm">→ 센서값의 표준편차(std)가 핵심! 편차가 작을수록 균일!</span></div>
+</div>
+
+<!-- ===== Section 5: 시뮬레이션 결과 분석 ===== -->
+<div class="section" id="s5">
+  <h2><span class="num">5</span> 시뮬레이션 결과 분석</h2>
+
+  <div class="graph-card">
+    <div class="graph-num">그래프 1</div>
+    <h3>실제 vs 예측 파쇄 크기</h3>
+    <div class="img-wrap"><img src="random_forest_result.png"><div class="caption">simulation.py 실행 결과 (4개 서브플롯)</div></div>
+    <div class="info-card blue">
+      <div class="card-title">읽는 방법</div>
+      <p style="margin-bottom:4px;"><strong>파란 실선</strong> = 실제 파쇄 크기(mm) / <strong>빨간 점선</strong> = Random Forest 예측</p>
+      <p style="margin-bottom:0;">두 선이 겹칠수록 예측이 정확합니다. R²가 1에 가까울수록 모델이 데이터 패턴을 잘 학습한 것입니다.</p>
+    </div>
+  </div>
+
+  <div class="graph-card" style="border-color:var(--d);border-width:3px;">
+    <div class="graph-num" style="background:var(--d);">그래프 2</div>
+    <h3 style="color:var(--d);">특징 중요도 (Feature Importance)</h3>
+    <div class="info-card red">
+      <div class="card-title">Random Forest의 핵심 가치: 어떤 센서가 가장 중요한가?</div>
+      <p style="margin-bottom:4px;">12개 특징의 <strong>중요도 순위</strong>를 막대 그래프로 보여줍니다.</p>
+      <p style="margin-bottom:0;">빨간 막대 = 높은 중요도, 파란 막대 = 중간, 회색 = 낮은 중요도. Random Forest는 각 특징이 분기(split)에 사용될 때의 <strong>불순도 감소량</strong>을 합산하여 중요도를 계산합니다.</p>
+    </div>
+    <div class="code-box"><span class="yw">특징 중요도 해석:</span>
+
+  <span class="pk">VIB_mean (진동 평균)</span>  ████████████████████  <span class="dm">← 가장 중요!</span>
+  <span class="hl">CUR_mean (전류 평균)</span>  ████████████         <span class="dm">← 2위</span>
+  <span class="hl">SPD_mean (속도 평균)</span>  ██████████           <span class="dm">← 3위</span>
+  <span class="dm">SCL_mean (무게 평균)</span>  ████                 <span class="dm">← 보조 역할</span>
+  ...
+
+  <span class="yw">해석:</span>
+  <span class="gr">"파쇄 크기에 가장 큰 영향을 주는 것은 진동(VIB)이다"</span>
+  <span class="dm">→ 진동이 불안정하면 파쇄 크기가 들쭉날쭉해진다</span>
+  <span class="dm">→ 따라서 진동 관리가 파쇄 품질 향상의 핵심!</span></div>
+  </div>
+
+  <div class="graph-card">
+    <div class="graph-num">그래프 3</div>
+    <h3>예측 오차 산점도 (Scatter Plot)</h3>
+    <div class="info-card blue">
+      <div class="card-title">읽는 방법</div>
+      <p style="margin-bottom:4px;">X축 = 실제 값, Y축 = 예측 값. <strong>검은 대각선(완벽 예측선)</strong> 위에 점이 모이면 예측이 정확합니다.</p>
+      <p style="margin-bottom:0;">점의 색상이 빨갈수록 오차가 크고, 녹색에 가까울수록 오차가 작습니다. 대각선에서 멀리 떨어진 점은 모델이 틀린 케이스입니다.</p>
+    </div>
+  </div>
+
+  <div class="graph-card">
+    <div class="graph-num">그래프 4</div>
+    <h3>파쇄 크기 분포 히스토그램</h3>
+    <div class="info-card blue">
+      <div class="card-title">읽는 방법</div>
+      <p style="margin-bottom:4px;"><strong>파란 막대</strong> = 실제 분포 / <strong>빨간 막대</strong> = 예측 분포. 두 분포가 겹칠수록 모델이 전체 분포를 잘 학습한 것입니다.</p>
+      <p style="margin-bottom:0;">점선은 각각의 평균을 나타냅니다. 실제 평균과 예측 평균이 가까울수록 편향(bias)이 적습니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Section 6: 알고리즘 특징/장점/단점 ===== -->
+<div class="section" id="s6">
+  <h2><span class="num">6</span> 알고리즘 특징 / 장점 / 단점</h2>
+
+  <h3>핵심 특징</h3>
+  <div class="info-card purple">
+    <div class="card-title">Random Forest의 3가지 핵심 특징</div>
+    <ul style="margin:0;padding-left:20px;">
+      <li><strong>Bagging 앙상블</strong>: Bootstrap 복원 추출로 200개의 독립적인 학습 데이터셋을 생성. 각 트리는 원본의 약 63.2%만 보고 학습하여 과적합 방지</li>
+      <li><strong>병렬 트리 (Parallel Trees)</strong>: 각 트리가 독립적이므로 <strong>병렬 학습/추론 가능</strong> (n_jobs=-1). Gradient Boosting과 달리 순차적이지 않음</li>
+      <li><strong>평균 투표 (Averaging)</strong>: 회귀 문제에서 200개 트리의 예측값을 평균내어 개별 트리의 분산(variance)을 효과적으로 감소</li>
+    </ul>
+  </div>
+
+  <div class="pros-cons">
+    <div class="col pros">
+      <h4 style="color:var(--s);">장점</h4>
+      <ul style="padding-left:18px;">
+        <li><strong>비선형 관계 학습</strong>: 센서 간 복잡한 상호작용을 트리 구조로 자연스럽게 포착</li>
+        <li><strong>Feature Importance</strong>: "어떤 센서가 파쇄 크기에 가장 중요한가"를 수치로 제시 → 현장 운영 가이드</li>
+        <li><strong>과적합 강건</strong>: Bagging + Random Feature Selection으로 단일 트리 대비 과적합 크게 감소</li>
+        <li><strong>전처리 최소</strong>: 정규화/표준화 불필요, 결측치에 상대적으로 강건</li>
+        <li><strong>OOB Score</strong>: 별도 검증셋 없이도 Out-of-Bag 데이터로 성능 추정 가능</li>
+      </ul>
+    </div>
+    <div class="col cons">
+      <h4 style="color:var(--d);">단점</h4>
+      <ul style="padding-left:18px;">
+        <li><strong>큰 모델 크기</strong>: 200개 트리를 모두 저장해야 하므로 단일 트리보다 약 200배 메모리 소요</li>
+        <li><strong>단일 트리보다 느림</strong>: 추론 시 200개 트리를 모두 순회해야 하므로 단일 Decision Tree보다 느림</li>
+        <li><strong>선형 모델보다 해석 어려움</strong>: 개별 트리 시각화는 가능하지만, 200개 트리의 종합 판단 과정을 설명하기 어려움</li>
+        <li><strong>외삽(Extrapolation) 불가</strong>: 학습 데이터 범위를 벗어난 값 예측 불가 (트리의 한계)</li>
+        <li><strong>Gradient Boosting 대비</strong>: 동일 조건에서 GBM/XGBoost보다 정확도가 약간 낮을 수 있음</li>
+      </ul>
+    </div>
+  </div>
+
+  <table class="score-table">
+    <thead>
+      <tr><th>비교 항목</th><th>Linear Regression</th><th>Decision Tree</th><th style="background:var(--pl);">Random Forest</th><th>XGBoost</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">앙상블</td>
+        <td>아니오</td><td>아니오</td>
+        <td style="background:var(--pl);font-weight:700;">Bagging</td>
+        <td>Boosting</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">트리 관계</td>
+        <td>-</td><td>1개</td>
+        <td style="background:var(--pl);font-weight:700;">독립 (병렬)</td>
+        <td>순차 (직렬)</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">비선형</td>
+        <td style="color:var(--d);">불가</td><td>가능</td>
+        <td style="background:var(--sl);font-weight:700;">가능</td>
+        <td>가능</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">과적합 방지</td>
+        <td>높음</td><td style="color:var(--d);">약함</td>
+        <td style="background:var(--sl);font-weight:700;">강함</td>
+        <td>중간</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">속도</td>
+        <td>매우 빠름</td><td>매우 빠름</td>
+        <td style="background:var(--pl);">보통 (병렬 가능)</td>
+        <td>느림 (순차)</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;background:var(--g100);">해석성</td>
+        <td>매우 높음</td><td>매우 높음</td>
+        <td style="background:var(--pl);">중간 (Importance)</td>
+        <td>중간</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== Section 7: 슈레더 적용 시나리오 ===== -->
+<div class="section" id="s7">
+  <h2><span class="num">7</span> 슈레더 적용 시나리오</h2>
+
+  <div class="info-card green">
+    <div class="card-title">시나리오 1: 실시간 파쇄 크기 예측</div>
+    <p style="margin-bottom:4px;">10분마다 CUR, SPD, VIB, SCL 센서에서 12개 특징을 추출하여 Random Forest에 입력. 예측된 파쇄 크기가 <strong>목표 범위(20~30mm)를 벗어나면</strong> 자동으로 RPM 또는 투입량을 조절합니다.</p>
+    <p style="margin-bottom:0;">Feature Importance를 통해 <strong>"왜 파쇄 크기가 커졌는가"</strong>를 파악: 진동이 원인이면 칼날 점검, 무게가 원인이면 투입량 조절.</p>
+  </div>
+
+  <div class="code-box"><span class="yw">실시간 파쇄 크기 모니터링 흐름:</span>
+
+  <span class="hl">[센서 수집]</span>                    <span class="hl">[특징 추출]</span>              <span class="hl">[RF 예측]</span>
+  CUR_A: 92A, CUR_B: 89A    →   CUR_mean: 90.5A       →   파쇄 크기: 26.3mm
+  SPD_A: 17.2, SPD_B: 16.8  →   SPD_mean: 17.0RPM         균일도: 87.2%
+  VIB_A: 3.5, VIB_B: 3.1    →   VIB_mean: 3.3mm/s
+  SCL (간접추정)             →   SCL_mean: 48.2kg       →   <span class="gr">정상 범위</span>
+
+  <span class="dm">10분 후...</span>
+
+  CUR_A: 95A, CUR_B: 88A    →   CUR_mean: 91.5A       →   파쇄 크기: <span class="pk">32.1mm</span>
+  SPD_A: 16.5, SPD_B: 16.0  →   SPD_mean: 16.3RPM         균일도: <span class="pk">72.5%</span>
+  VIB_A: 5.8, VIB_B: 4.9    →   VIB_mean: <span class="pk">5.35mm/s</span>
+  SCL (간접추정)             →   SCL_mean: 52.1kg       →   <span class="pk">경고! 목표 초과!</span>
+
+  <span class="yw">Feature Importance 기반 원인 분석:</span>
+  → VIB_mean 급증 (3.3 → 5.35) = <span class="pk">진동 이상이 주 원인!</span>
+  → 조치: 칼날 마모 점검, RPM 조절</div>
+
+  <div class="info-card yellow">
+    <div class="card-title">시나리오 2: 파쇄 품질 최적화</div>
+    <p style="margin-bottom:4px;">Feature Importance 분석 결과, 진동(VIB_mean)이 파쇄 크기의 가장 큰 결정 요인임을 발견했다면:</p>
+    <ul style="margin:0;padding-left:20px;">
+      <li>진동 감소를 위한 <strong>칼날 교체 주기 단축</strong></li>
+      <li>진동이 낮은 <strong>최적 RPM 범위</strong>를 Random Forest로 탐색</li>
+      <li>투입량(SCL)과 진동의 관계를 분석하여 <strong>최적 투입량</strong> 결정</li>
+    </ul>
+  </div>
+
+  <div class="info-card blue">
+    <div class="card-title">시나리오 3: 균일도 기반 품질 등급 분류</div>
+    <ul style="margin:0;padding-left:20px;">
+      <li><strong>A등급</strong> (균일도 90% 이상): 고부가가치 재활용 원료로 출하</li>
+      <li><strong>B등급</strong> (균일도 75~90%): 일반 재활용 원료</li>
+      <li><strong>C등급</strong> (균일도 75% 미만): 재파쇄 필요 → 자동 재투입</li>
+    </ul>
+    <p style="margin-bottom:0;margin-top:8px;">Random Forest가 균일도를 실시간 예측하여 <strong>자동 품질 등급 분류</strong>를 수행합니다.</p>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card"><div class="value" style="font-size:18px;">200 Trees</div><div class="label">앙상블 크기<br><small>n_estimators</small></div></div>
+    <div class="metric-card"><div class="value" style="font-size:18px;">12 Features</div><div class="label">입력 특징<br><small>4센서 x 3통계</small></div></div>
+    <div class="metric-card"><div class="value" style="font-size:18px;">10분</div><div class="label">예측 주기<br><small>실시간 모니터링</small></div></div>
+  </div>
+
+  <div class="info-card purple">
+    <div class="card-title">Random Forest가 슈레더 파쇄 크기 예측에 적합한 이유</div>
+    <ul style="margin:0;padding-left:20px;">
+      <li><strong>비선형 관계</strong>: 전류/속도/진동/무게와 파쇄 크기의 복잡한 관계를 트리 구조로 자연스럽게 모델링</li>
+      <li><strong>Feature Importance</strong>: "왜 파쇄 크기가 변했는가"를 센서 단위로 설명 가능 → 현장 의사결정 지원</li>
+      <li><strong>강건성</strong>: 센서 노이즈, 결측치에 상대적으로 강건하여 실제 공장 환경에 적합</li>
+      <li><strong>병렬 추론</strong>: n_jobs=-1로 모든 CPU 코어 활용 → Edge 장비에서도 빠른 예측</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

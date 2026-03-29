@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모델 04: 이물질 끼임 감지 — 패턴 인식 상세 설명</title>
+<style>
+:root{--p:#0f2b46;--p2:#1a4a7a;--p3:#2563eb;--acc:#e65100;--acc2:#ff8f00;--bg:#f4f6f9;--card:#fff;--tx:#1e293b;--txl:#64748b;--bdr:#e2e8f0;--ok:#16a34a;--warn:#ca8a04;--err:#dc2626;--info:#2563eb}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Malgun Gothic','Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--tx);line-height:1.72;font-size:15.5px}
+.hero{background:linear-gradient(135deg,var(--p) 0%,var(--p2) 60%,var(--p3) 100%);color:#fff;padding:56px 24px 40px;text-align:center}
+.hero h1{font-size:2em;font-weight:800;margin-bottom:8px}
+.hero .sub{font-size:1.05em;opacity:.88;margin-bottom:20px}
+.hero .tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hero .tag{background:rgba(255,255,255,.14);padding:4px 14px;border-radius:20px;font-size:.82em}
+.kpi-strip{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;max-width:860px;margin:-22px auto 24px;position:relative;z-index:2}
+.kpi{background:#fff;border-radius:10px;padding:14px 18px;text-align:center;min-width:120px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.kpi .val{font-size:1.6em;font-weight:800;color:var(--p3)}
+.kpi .lbl{font-size:.78em;color:var(--txl)}
+.toc{max-width:860px;margin:0 auto 24px;background:#fff;border-radius:12px;padding:20px 28px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.toc h2{font-size:1.1em;color:var(--p);margin-bottom:10px}
+.toc ol{columns:2;column-gap:28px;padding-left:18px;font-size:.9em}
+.toc li{margin-bottom:3px;break-inside:avoid}
+.toc a{color:var(--p2);text-decoration:none}
+.toc a:hover{color:var(--acc);text-decoration:underline}
+.ct{max-width:880px;margin:0 auto;padding:0 16px 60px}
+.sec{background:var(--card);border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.05);margin-bottom:24px;overflow:hidden}
+.sec-h{background:var(--p);color:#fff;padding:14px 22px;font-size:1.2em;font-weight:700;display:flex;align-items:center;gap:10px}
+.sec-h .n{background:var(--acc);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.82em;flex-shrink:0}
+.sec-b{padding:22px 24px}
+.sec-b h3{color:var(--p);font-size:1.1em;margin:22px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--bdr)}
+.sec-b h3:first-child{margin-top:0}
+.sec-b h4{color:var(--p2);font-size:1em;margin:16px 0 6px}
+.sec-b p{margin-bottom:10px}
+.sec-b ul,.sec-b ol{margin:6px 0 10px 18px}.sec-b li{margin-bottom:3px}
+table{width:100%;border-collapse:collapse;margin:10px 0 16px;font-size:.9em}
+th{background:var(--p);color:#fff;padding:9px 10px;text-align:left;font-weight:600;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--bdr)}
+tr:nth-child(even){background:#f8fafc}tr:hover{background:#eef2f7}
+.hl{background:#fff3e0!important;font-weight:600}
+.co{padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.93em;border-left:4px solid var(--info);background:#eff6ff}
+.co.ok{border-color:var(--ok);background:#f0fdf4}
+.co.warn{border-color:var(--warn);background:#fefce8}
+.co.err{border-color:var(--err);background:#fef2f2}
+.co strong{color:var(--p)}
+.bd{display:inline-block;padding:2px 9px;border-radius:10px;font-size:.75em;font-weight:700;color:#fff}
+.bd-p{background:var(--p2)}.bd-a{background:var(--acc)}.bd-ok{background:var(--ok)}.bd-err{background:var(--err)}.bd-warn{background:var(--warn)}
+.flow{display:flex;flex-direction:column;align-items:center;gap:0;margin:14px 0}
+.flow-h{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.fb{background:#fff;border:2px solid var(--p);border-radius:10px;padding:10px 18px;text-align:center;min-width:130px;font-weight:600;font-size:.9em}
+.fb.act{background:var(--acc);border-color:var(--acc);color:#fff}
+.fb.pri{background:var(--p);border-color:var(--p);color:#fff}
+.fb.ok{border-color:var(--ok);background:#f0fdf4}
+.fb.err{border-color:var(--err);background:#fef2f2}
+.fb small{display:block;font-weight:400;font-size:.84em;color:var(--txl);margin-top:2px}
+.fb.act small,.fb.pri small{color:rgba(255,255,255,.78)}
+.fa{font-size:1.4em;color:var(--p);padding:3px 0;line-height:1}
+.fah{font-size:1.3em;color:var(--p);padding:0 5px}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}
+.cd{background:#fff;border:1px solid var(--bdr);border-radius:10px;padding:14px;text-align:center;transition:transform .15s}
+.cd:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.cd .ic{font-size:1.8em;margin-bottom:6px}
+.cd h5{color:var(--p);margin-bottom:4px;font-size:.95em}
+.cd p{font-size:.82em;color:var(--txl);line-height:1.5}
+.cd.feat{border-color:var(--acc);border-width:2px;background:#fffaf0}
+pre{background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;font-size:.85em;line-height:1.6;margin:10px 0 14px}
+code{font-family:'Consolas','Courier New',monospace}
+.keyword{color:#c084fc}.string{color:#86efac}.comment{color:#64748b}.number{color:#fbbf24}.func{color:#67e8f9}
+.img-wrap{text-align:center;margin:16px 0}
+.img-wrap img{max-width:100%;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.1)}
+.img-wrap .caption{font-size:.82em;color:var(--txl);margin-top:6px}
+.formula{background:#f0f4ff;border:1px solid #c7d2fe;border-radius:8px;padding:14px 18px;margin:10px 0;font-family:'Consolas',monospace;font-size:.92em;text-align:center;line-height:1.8}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.cmp-b{background:#fff;border:2px solid var(--bdr);border-radius:10px;padding:14px;text-align:center}
+.cmp-b h5{color:var(--p);margin-bottom:6px}
+.cmp-b.right{border-color:var(--acc)}
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.pros-cons>div{padding:14px;border-radius:10px}
+.pros-cons .pros{background:#f0fdf4;border:1px solid #bbf7d0}
+.pros-cons .cons{background:#fef2f2;border:1px solid #fecaca}
+.pros-cons h5{margin-bottom:8px;font-size:.95em}
+.pros-cons ul{margin-left:14px;font-size:.9em}
+.pros-cons li{margin-bottom:4px}
+@media(max-width:640px){
+    .toc ol{columns:1}
+    .cg{grid-template-columns:1fr}
+    .cmp,.pros-cons{grid-template-columns:1fr}
+    .hero h1{font-size:1.4em}
+    .kpi-strip{gap:6px}
+    .kpi{min-width:90px;padding:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== Hero ========== -->
+<div class="hero">
+    <h1>모델 04: 이물질 끼임 감지</h1>
+    <div class="sub">Rule-based + Statistical Pattern Recognition</div>
+    <div class="tags">
+        <span class="tag">고장예지</span>
+        <span class="tag">패턴 인식</span>
+        <span class="tag">실시간 10ms</span>
+        <span class="tag">전류 + 속도 복합 분석</span>
+    </div>
+</div>
+
+<!-- ========== KPI ========== -->
+<div class="kpi-strip">
+    <div class="kpi"><div class="val">&lt;5ms</div><div class="lbl">추론 시간</div></div>
+    <div class="kpi"><div class="val">10ms</div><div class="lbl">실행 주기</div></div>
+    <div class="kpi"><div class="val">95%+</div><div class="lbl">목표 정확도</div></div>
+    <div class="kpi"><div class="val">0~1</div><div class="lbl">끼임 확률</div></div>
+    <div class="kpi"><div class="val">2ch</div><div class="lbl">입력 센서 쌍</div></div>
+</div>
+
+<!-- ========== TOC ========== -->
+<div class="toc">
+    <h2>목차</h2>
+    <ol>
+        <li><a href="#s0">패턴 인식이란?</a></li>
+        <li><a href="#s1">이물질 끼임의 물리 현상</a></li>
+        <li><a href="#s2">감지 알고리즘</a></li>
+        <li><a href="#s3">확률 계산 로직</a></li>
+        <li><a href="#s4">대응 조치</a></li>
+        <li><a href="#s5">시뮬레이션 결과 분석</a></li>
+        <li><a href="#s6">알고리즘 특징 / 장점 / 단점</a></li>
+        <li><a href="#s7">슈레더 적용 시나리오</a></li>
+    </ol>
+</div>
+
+<div class="ct">
+
+<!-- ========== Section 0 ========== -->
+<div class="sec" id="s0">
+    <div class="sec-h"><span class="n">0</span>패턴 인식이란?</div>
+    <div class="sec-b">
+        <h3>Rule-based + Statistical Pattern Detection</h3>
+        <p>패턴 인식(Pattern Recognition)은 센서 데이터에서 <strong>미리 정의된 특정 패턴</strong>을 실시간으로 탐색하는 기법입니다. 이 모델에서는 딥러닝이 아닌 <strong>규칙 기반(Rule-based) + 통계적(Statistical)</strong> 접근 방식을 사용합니다.</p>
+
+        <div class="cmp">
+            <div class="cmp-b">
+                <h5>규칙 기반 (Rule-based)</h5>
+                <p>도메인 전문가가 정의한 물리적 규칙</p>
+                <ul style="text-align:left;font-size:.88em">
+                    <li>전류 > 기준값 x 1.5배 = 스파이크</li>
+                    <li>속도 < 기준값 x 0.7 = 급감</li>
+                    <li>전류&uarr; + 속도&darr; = 끼임</li>
+                </ul>
+            </div>
+            <div class="cmp-b right">
+                <h5>통계적 (Statistical)</h5>
+                <p>데이터 분포 기반 이상 탐지</p>
+                <ul style="text-align:left;font-size:.88em">
+                    <li>Z-score > 2.5&sigma; = 주의</li>
+                    <li>Z-score > 4.0&sigma; = 경보</li>
+                    <li>슬라이딩 윈도우 기준선 갱신</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="co ok">
+            <strong>왜 딥러닝이 아닌가?</strong> 이물질 끼임은 패턴이 매우 명확합니다(전류 급등 + 속도 급감). 규칙 기반으로도 95% 이상 정확도를 달성할 수 있으며, 5ms 미만의 초고속 응답과 완전한 해석 가능성(Explainability)을 보장합니다.
+        </div>
+
+        <h3>핵심 개념 요약</h3>
+        <table>
+            <tr><th>용어</th><th>설명</th><th>본 모델 적용</th></tr>
+            <tr><td><strong>슬라이딩 윈도우</strong></td><td>최근 N개 데이터로 기준선을 계속 갱신</td><td>최근 3초(300 samples) 윈도우</td></tr>
+            <tr><td><strong>Z-score</strong></td><td>(현재값 - 평균) / 표준편차</td><td>전류/속도 각각 Z-score 계산</td></tr>
+            <tr><td><strong>변화율(Rate)</strong></td><td>단위 시간당 값의 변화량</td><td>A/s, RPM/s 계산</td></tr>
+            <tr><td><strong>증거 융합</strong></td><td>다중 증거를 결합하여 최종 확률 산출</td><td>6개 증거의 가중합</td></tr>
+            <tr><td><strong>상태 머신</strong></td><td>감지 상태를 단계적으로 전이</td><td>정상&rarr;주의&rarr;경고&rarr;끼임</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- ========== Section 1 ========== -->
+<div class="sec" id="s1">
+    <div class="sec-h"><span class="n">1</span>이물질 끼임의 물리 현상</div>
+    <div class="sec-b">
+        <h3>끼임 발생 메커니즘</h3>
+        <p>이축 전단 파쇄기에서 이물질(금속 덩어리, 과대 투입물 등)이 칼날 사이에 끼이면 다음과 같은 <strong>물리적 연쇄 반응</strong>이 발생합니다.</p>
+
+        <div class="flow">
+            <div class="fb pri">이물질 투입<small>금속, 대형 재료, 이물</small></div>
+            <div class="fa">&darr;</div>
+            <div class="fb">칼날 사이 끼임<small>회전 저항 급증</small></div>
+            <div class="fa">&darr;</div>
+            <div class="flow-h">
+                <div class="fb err">전류 급등<small>모터 부하 &uarr;&uarr;</small></div>
+                <div class="fah">+</div>
+                <div class="fb err">속도 급감<small>회전 저항 &uarr;&uarr;</small></div>
+            </div>
+            <div class="fa">&darr;</div>
+            <div class="fb act">패턴 감지!<small>전류&uarr; + 속도&darr; = 끼임</small></div>
+        </div>
+
+        <h3>전류 스파이크 (Current Spike)</h3>
+        <p>끼임이 발생하면 모터는 칼날을 돌리기 위해 더 많은 전류를 끌어옵니다.</p>
+        <table>
+            <tr><th>상태</th><th>전류 (A)</th><th>기준 대비</th><th>상승 속도</th></tr>
+            <tr><td>정상 운전</td><td>55~65 A</td><td>1.0x (기준)</td><td>안정</td></tr>
+            <tr class="hl"><td>경미한 끼임</td><td>85~100 A</td><td>1.5~1.7x</td><td>200~300 A/s</td></tr>
+            <tr class="hl"><td>심각한 끼임</td><td>130~180 A</td><td>2.2~3.0x</td><td>500+ A/s</td></tr>
+            <tr><td>모터 보호 한계</td><td>200 A</td><td>3.3x</td><td>즉시 차단</td></tr>
+        </table>
+
+        <h3>속도 급감 (Speed Drop)</h3>
+        <p>끼임으로 인한 부하 증가는 축 회전 속도를 급격히 떨어뜨립니다.</p>
+        <table>
+            <tr><th>상태</th><th>속도 (RPM)</th><th>기준 대비</th><th>감소 속도</th></tr>
+            <tr><td>정상 운전</td><td>117~123 RPM</td><td>100% (기준)</td><td>안정</td></tr>
+            <tr class="hl"><td>경미한 끼임</td><td>80~90 RPM</td><td>65~75%</td><td>-150~-200 RPM/s</td></tr>
+            <tr class="hl"><td>심각한 끼임</td><td>20~50 RPM</td><td>17~42%</td><td>-300+ RPM/s</td></tr>
+            <tr><td>완전 정지</td><td>0 RPM</td><td>0%</td><td>급정지</td></tr>
+        </table>
+
+        <div class="co warn">
+            <strong>핵심 패턴:</strong> <code>전류 급등</code>과 <code>속도 급감</code>이 <strong>동시에(500ms 이내)</strong> 발생하는 것이 끼임의 결정적 증거입니다. 둘 중 하나만 발생하면 다른 원인(재료 투입, 부하 변동 등)일 가능성이 높습니다.
+        </div>
+
+        <h3>유사 패턴과의 구분</h3>
+        <table>
+            <tr><th>현상</th><th>전류</th><th>속도</th><th>지속 시간</th><th>판정</th></tr>
+            <tr><td>이물질 끼임</td><td>&uarr;&uarr; (2x+)</td><td>&darr;&darr; (50%-)</td><td>1~10초</td><td><span class="bd bd-err">끼임</span></td></tr>
+            <tr><td>재료 투입 충격</td><td>&uarr; (1.2x)</td><td>&darr; (90%)</td><td>0.1~0.5초</td><td><span class="bd bd-ok">정상</span></td></tr>
+            <tr><td>칼날 마모</td><td>&uarr; (서서히)</td><td>유지</td><td>수일</td><td><span class="bd bd-ok">정상</span></td></tr>
+            <tr><td>전원 변동</td><td>변동</td><td>변동</td><td>0.05~0.2초</td><td><span class="bd bd-ok">정상</span></td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- ========== Section 2 ========== -->
+<div class="sec" id="s2">
+    <div class="sec-h"><span class="n">2</span>감지 알고리즘</div>
+    <div class="sec-b">
+        <h3>전체 알고리즘 흐름</h3>
+        <div class="flow">
+            <div class="fb pri">센서 입력<small>CUR-A/B, SPD-A/B (10ms)</small></div>
+            <div class="fa">&darr;</div>
+            <div class="fb">슬라이딩 윈도우 기준선 계산<small>최근 3초 평균/표준편차</small></div>
+            <div class="fa">&darr;</div>
+            <div class="flow-h">
+                <div class="fb">전류 분석<small>Z-score, 비율, 변화율</small></div>
+                <div class="fah">&amp;</div>
+                <div class="fb">속도 분석<small>Z-score, 비율, 변화율</small></div>
+            </div>
+            <div class="fa">&darr;</div>
+            <div class="fb act">결합 규칙 판정<small>전류&uarr; + 속도&darr; = 끼임</small></div>
+            <div class="fa">&darr;</div>
+            <div class="fb">확률 계산 (다중 증거 융합)<small>0.0 ~ 1.0</small></div>
+            <div class="fa">&darr;</div>
+            <div class="fb ok">상태 머신<small>정상&rarr;주의&rarr;경고&rarr;끼임</small></div>
+        </div>
+
+        <h3>2.1 슬라이딩 윈도우 (Sliding Window)</h3>
+        <p>기준선(baseline)을 실시간으로 갱신하는 핵심 메커니즘입니다.</p>
+
+        <div class="formula">
+            윈도우 크기 = 300 samples (3초)<br>
+            가드 구간 = 30 samples (0.3초) &larr; 최근 데이터 제외<br><br>
+            baseline_mean = mean(buffer[0 : -30])<br>
+            baseline_std = max(std(buffer[0 : -30]), 0.1)
+        </div>
+
+        <div class="co">
+            <strong>가드 구간(Guard Band):</strong> 최근 0.3초 데이터를 기준선 계산에서 제외합니다. 이미 이상이 시작된 데이터가 기준선을 오염시키는 것을 방지하기 위함입니다.
+        </div>
+
+        <h3>2.2 Z-score 기반 감지</h3>
+        <p>현재 값이 기준선에서 얼마나 떨어져 있는지를 표준편차 단위로 측정합니다.</p>
+
+        <div class="formula">
+            Z-score = (현재값 - 기준선 평균) / 기준선 표준편차
+        </div>
+
+        <table>
+            <tr><th>감지 대상</th><th>Z-score 주의</th><th>Z-score 경보</th><th>의미</th></tr>
+            <tr><td>전류 스파이크</td><td>&ge; 2.5&sigma;</td><td>&ge; 4.0&sigma;</td><td>기준 대비 비정상적 상승</td></tr>
+            <tr><td>속도 급감</td><td>&le; -2.5&sigma;</td><td>&le; -4.0&sigma;</td><td>기준 대비 비정상적 하락</td></tr>
+        </table>
+
+        <h3>2.3 비율 기반 감지</h3>
+        <p>Z-score와 독립적으로, 절대적인 비율 변화도 확인합니다.</p>
+
+        <div class="formula">
+            전류 스파이크: 현재 전류 > 기준 평균 &times; 1.5<br>
+            속도 급감: 현재 속도 < 기준 평균 &times; 0.7
+        </div>
+
+        <h3>2.4 변화율 (Rate of Change) 감지</h3>
+        <p>최근 50ms(5 samples) 동안의 값 변화 속도를 계산합니다.</p>
+
+        <div class="formula">
+            변화율 = (최근값 - 5 samples 전 값) / (4 &times; 0.01초)
+        </div>
+
+        <table>
+            <tr><th>감지 대상</th><th>주의 임계값</th><th>경보 임계값</th></tr>
+            <tr><td>전류 상승률</td><td>&ge; 200 A/s</td><td>&ge; 500 A/s</td></tr>
+            <tr><td>속도 감소율</td><td>&le; -150 RPM/s</td><td>&le; -300 RPM/s</td></tr>
+        </table>
+
+        <h3>2.5 결합 규칙 (Combined Rules)</h3>
+        <p>단독 증거는 최대 0.4의 확률만 부여하며, <strong>전류 스파이크 + 속도 급감이 동시에 감지</strong>될 때만 0.6 이상의 높은 확률이 산출됩니다.</p>
+
+        <div class="co err">
+            <strong>결합 조건:</strong> <code>전류 스파이크 감지 = True</code> <strong>AND</strong> <code>속도 급감 감지 = True</code> &rarr; 결합 보너스 x1.2 적용, 끼임 확률 최대 1.0
+        </div>
+    </div>
+</div>
+
+<!-- ========== Section 3 ========== -->
+<div class="sec" id="s3">
+    <div class="sec-h"><span class="n">3</span>확률 계산 로직</div>
+    <div class="sec-b">
+        <h3>다중 증거 융합 (Multi-Evidence Fusion)</h3>
+        <p>6개의 독립적인 증거를 가중합하여 최종 끼임 확률을 산출합니다.</p>
+
+        <table>
+            <tr><th>#</th><th>증거</th><th>기여도</th><th>조건</th></tr>
+            <tr><td>1</td><td>전류 Z-score &ge; 경보</td><td>+0.4</td><td>Z &ge; 4.0&sigma;</td></tr>
+            <tr><td>2</td><td>전류 Z-score &ge; 주의</td><td>+0.2</td><td>2.5&sigma; &le; Z &lt; 4.0&sigma;</td></tr>
+            <tr><td>3</td><td>전류 비율 초과</td><td>+0.2</td><td>현재 &gt; 기준 &times; 1.5</td></tr>
+            <tr><td>4</td><td>전류 변화율</td><td>+0.1~0.2</td><td>&ge; 200 또는 500 A/s</td></tr>
+            <tr><td>5</td><td>속도 Z-score &le; 경보</td><td>+0.4</td><td>Z &le; -4.0&sigma;</td></tr>
+            <tr><td>6</td><td>속도 Z-score &le; 주의</td><td>+0.2</td><td>-4.0&sigma; &lt; Z &le; -2.5&sigma;</td></tr>
+            <tr><td>7</td><td>속도 비율 미달</td><td>+0.2</td><td>현재 &lt; 기준 &times; 0.7</td></tr>
+            <tr><td>8</td><td>속도 변화율</td><td>+0.1~0.2</td><td>&le; -150 또는 -300 RPM/s</td></tr>
+        </table>
+
+        <h3>확률 계산 공식</h3>
+        <div class="formula">
+            spike_score = Z-score 기여 + 비율 기여 + 변화율 기여 (전류)<br>
+            drop_score = Z-score 기여 + 비율 기여 + 변화율 기여 (속도)<br><br>
+            <strong>결합 감지 시:</strong> P = min(1.0, (spike_score + drop_score) &times; 1.2)<br>
+            <strong>전류만 감지:</strong> P = min(0.4, spike_score &times; 0.7)<br>
+            <strong>속도만 감지:</strong> P = min(0.4, drop_score &times; 0.7)<br>
+            <strong>미감지:</strong> P = 0.0
+        </div>
+
+        <h3>상태 머신 (State Machine)</h3>
+        <p>확률값을 누적 카운터로 변환하여 일시적 노이즈를 필터링합니다.</p>
+
+        <table>
+            <tr><th>상태</th><th>조건</th><th>의미</th><th>색상</th></tr>
+            <tr><td><span class="bd bd-ok">NORMAL</span></td><td>jam_counter = 0</td><td>정상 운전</td><td>초록</td></tr>
+            <tr><td><span class="bd bd-warn">CAUTION</span></td><td>0 &lt; jam_counter &lt; 10</td><td>주의 관찰</td><td>노랑</td></tr>
+            <tr><td><span class="bd bd-a">WARNING</span></td><td>10 &le; jam_counter &lt; 20</td><td>경고, 대비</td><td>주황</td></tr>
+            <tr><td><span class="bd bd-err">JAMMING</span></td><td>jam_counter &ge; 20</td><td>끼임 확인, 즉시 조치</td><td>빨강</td></tr>
+        </table>
+
+        <div class="co">
+            <strong>카운터 로직:</strong> P &ge; 0.6이면 +1, 0.3~0.6이면 -1 (감쇠), P &lt; 0.3이면 -3 (빠른 복귀). 이 비대칭적 감쇠로 False Positive를 빠르게 해소하면서도 실제 끼임은 놓치지 않습니다.
+        </div>
+    </div>
+</div>
+
+<!-- ========== Section 4 ========== -->
+<div class="sec" id="s4">
+    <div class="sec-h"><span class="n">4</span>대응 조치</div>
+    <div class="sec-b">
+        <h3>자동 대응 시퀀스</h3>
+        <p>끼임 확인(JAMMING) 상태 진입 시, PLC를 통해 자동 대응 시퀀스가 실행됩니다.</p>
+
+        <div class="flow">
+            <div class="fb err">끼임 확인 (JAMMING)<small>P &ge; 0.6, 200ms+ 지속</small></div>
+            <div class="fa">&darr;</div>
+            <div class="fb act">1. 즉시 정지<small>0.5초 이내 모터 정지</small></div>
+            <div class="fa">&darr;</div>
+            <div class="fb">2. 3초 대기<small>관성 소멸, 안전 확인</small></div>
+            <div class="fa">&darr;</div>
+            <div class="fb">3. 저속 역회전<small>10 RPM, 5초간</small></div>
+            <div class="fa">&darr;</div>
+            <div class="fb">4. 전류 모니터링<small>전류 &lt; 80A 이면 성공</small></div>
+            <div class="fa">&darr;</div>
+            <div class="flow-h">
+                <div class="fb ok">해소 성공<small>정방향 재시작</small></div>
+                <div class="fah">or</div>
+                <div class="fb err">3회 실패<small>완전 정지 + 수동 알람</small></div>
+            </div>
+        </div>
+
+        <h3>상태별 권고 조치</h3>
+        <table>
+            <tr><th>상태</th><th>확률 범위</th><th>조치</th><th>자동/수동</th></tr>
+            <tr><td><span class="bd bd-ok">NORMAL</span></td><td>0.0 ~ 0.3</td><td>정상 운전 유지</td><td>-</td></tr>
+            <tr><td><span class="bd bd-warn">CAUTION</span></td><td>0.3 ~ 0.5</td><td>감시 강화, 로그 기록</td><td>자동</td></tr>
+            <tr><td><span class="bd bd-a">WARNING</span></td><td>0.5 ~ 0.7</td><td>투입 일시 중단, 감속 운전</td><td>자동</td></tr>
+            <tr><td><span class="bd bd-err">JAMMING</span></td><td>0.7 ~ 1.0</td><td>즉시 정지 &rarr; 역회전 시도</td><td>자동</td></tr>
+        </table>
+
+        <h3>안전 인터록 조건</h3>
+        <div class="co err">
+            <strong>역회전 전 필수 확인 사항:</strong>
+            <ul style="margin-top:6px">
+                <li>투입구 도어 잠금 상태 확인 (Door Interlock)</li>
+                <li>작업자 접근 감지 센서 (Laser Scanner) 클리어</li>
+                <li>비상정지 버튼 미작동 확인</li>
+                <li>역회전 속도 제한: 최대 10 RPM (정상의 1/12)</li>
+                <li>역회전 시간 제한: 최대 5초</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ========== Section 5 ========== -->
+<div class="sec" id="s5">
+    <div class="sec-h"><span class="n">5</span>시뮬레이션 결과 분석</div>
+    <div class="sec-b">
+        <h3>시뮬레이션 조건</h3>
+        <table>
+            <tr><th>항목</th><th>설정값</th></tr>
+            <tr><td>시뮬레이션 시간</td><td>60초</td></tr>
+            <tr><td>샘플링 간격</td><td>10ms (100Hz)</td></tr>
+            <tr><td>총 샘플 수</td><td>6,000개</td></tr>
+            <tr><td>정상 전류</td><td>60A &plusmn; 2A</td></tr>
+            <tr><td>정상 속도</td><td>120 RPM &plusmn; 0.8 RPM</td></tr>
+            <tr><td>삽입 이벤트</td><td>3건 (경미/심각/순간충격)</td></tr>
+        </table>
+
+        <h3>삽입된 이벤트</h3>
+        <table>
+            <tr><th>#</th><th>이벤트</th><th>시간</th><th>전류 피크</th><th>속도 최저</th><th>기대 결과</th></tr>
+            <tr class="hl"><td>1</td><td>경미한 끼임</td><td>12~14초</td><td>90A (1.5x)</td><td>84 RPM (70%)</td><td><span class="bd bd-a">WARNING</span></td></tr>
+            <tr class="hl"><td>2</td><td>심각한 끼임</td><td>28~33초</td><td>170A (2.8x)</td><td>24 RPM (20%)</td><td><span class="bd bd-err">JAMMING</span></td></tr>
+            <tr><td>3</td><td>순간 충격 (정상)</td><td>45~45.5초</td><td>78A (1.3x)</td><td>108 RPM (90%)</td><td><span class="bd bd-ok">NORMAL</span></td></tr>
+        </table>
+
+        <h3>결과 그래프</h3>
+        <div class="img-wrap">
+            <img src="pattern_recognition_result.png" alt="패턴 인식 시뮬레이션 결과">
+            <div class="caption">4패널 시각화: (1) 전류 + 스파이크 감지, (2) 속도 + 급감 감지, (3) 끼임 확률, (4) 이벤트 타임라인</div>
+        </div>
+
+        <h3>그래프 해석</h3>
+        <h4>패널 1: 전류 신호 및 스파이크 감지</h4>
+        <ul>
+            <li>파란색 선: 실시간 전류값 (A), 정상 시 60A 부근 안정</li>
+            <li>빨간 점: 스파이크 감지 포인트 (Z-score 또는 비율 초과)</li>
+            <li>주황색 선(보조축): 전류 Z-score, 점선은 주의(2.5) 및 경보(4.0) 임계값</li>
+            <li>12~14초, 28~33초 구간에서 뚜렷한 전류 스파이크 관찰</li>
+        </ul>
+
+        <h4>패널 2: 속도 신호 및 급감 감지</h4>
+        <ul>
+            <li>초록색 선: 실시간 속도값 (RPM), 정상 시 120RPM 부근</li>
+            <li>빨간 점: 급감 감지 포인트</li>
+            <li>보라색 선(보조축): 속도 Z-score, 음수 방향으로 큰 값 = 급감</li>
+            <li>전류 스파이크와 동기화된 속도 급감 패턴 확인</li>
+        </ul>
+
+        <h4>패널 3: 끼임 확률 (다중 증거 융합)</h4>
+        <ul>
+            <li>빨간 영역: 끼임 확률 (0~1), 높을수록 끼임 가능성 높음</li>
+            <li>이벤트 1 (12~14초): 확률 0.5~0.7 수준 &rarr; WARNING</li>
+            <li>이벤트 2 (28~33초): 확률 0.9~1.0 수준 &rarr; JAMMING</li>
+            <li>이벤트 3 (45초): 확률 < 0.3 &rarr; 정상 (순간 충격 올바르게 무시)</li>
+        </ul>
+
+        <h4>패널 4: 이벤트 감지 타임라인</h4>
+        <ul>
+            <li>상태 전이 시각화: 정상(0) &rarr; 주의(1) &rarr; 경고(2) &rarr; 끼임(3)</li>
+            <li>색상: 초록(정상), 노랑(주의), 주황(경고), 빨강(끼임)</li>
+            <li>이벤트 2에서 JAMMING 상태까지 도달, 이벤트 3에서는 정상 유지</li>
+        </ul>
+
+        <div class="co ok">
+            <strong>검증 결과:</strong> 경미한 끼임은 WARNING으로 감지, 심각한 끼임은 JAMMING으로 확인, 순간 충격(정상)은 올바르게 무시하여 <strong>오탐(False Positive) 없이 정확한 감지</strong>를 시연합니다.
+        </div>
+    </div>
+</div>
+
+<!-- ========== Section 6 ========== -->
+<div class="sec" id="s6">
+    <div class="sec-h"><span class="n">6</span>알고리즘 특징 / 장점 / 단점</div>
+    <div class="sec-b">
+        <h3>특징 (Characteristics)</h3>
+        <div class="cg">
+            <div class="cd feat">
+                <div class="ic">&#9881;</div>
+                <h5>규칙 기반</h5>
+                <p>도메인 전문가의 물리적 지식을 직접 규칙으로 인코딩. 학습 데이터 불필요.</p>
+            </div>
+            <div class="cd feat">
+                <div class="ic">&#9889;</div>
+                <h5>실시간 처리</h5>
+                <p>10ms 주기로 입력, 5ms 미만으로 판정 완료. 임베디드 시스템에 최적.</p>
+            </div>
+            <div class="cd feat">
+                <div class="ic">&#128269;</div>
+                <h5>해석 가능</h5>
+                <p>모든 판정에 대해 "왜?"를 명확히 설명. Z-score, 비율, 변화율 수치 제공.</p>
+            </div>
+            <div class="cd feat">
+                <div class="ic">&#128200;</div>
+                <h5>다중 증거 융합</h5>
+                <p>6개 독립 증거의 가중합으로 단일 지표 의존 위험 제거.</p>
+            </div>
+        </div>
+
+        <div class="pros-cons">
+            <div class="pros">
+                <h5>장점 (Advantages)</h5>
+                <ul>
+                    <li><strong>초고속 응답 (5ms 미만):</strong> 복잡한 연산 없이 사칙연산과 비교 연산만으로 처리</li>
+                    <li><strong>학습 불필요 (No Training):</strong> 별도의 학습 데이터 수집/모델 학습 과정이 없어 즉시 배포 가능</li>
+                    <li><strong>결정론적 (Deterministic):</strong> 동일 입력에 항상 동일 출력. 재현성 100%</li>
+                    <li><strong>완전한 해석 가능성 (Explainable):</strong> 매 판정마다 근거(Z-score, 비율 등)를 수치로 제시</li>
+                    <li><strong>저사양 하드웨어 가능:</strong> MCU(마이크로컨트롤러)에서도 실행 가능, GPU 불필요</li>
+                    <li><strong>인증 용이:</strong> 규칙이 명확하여 안전 인증 심사에 유리</li>
+                </ul>
+            </div>
+            <div class="cons">
+                <h5>단점 (Limitations)</h5>
+                <ul>
+                    <li><strong>수동 임계값 튜닝:</strong> 설치 환경, 재료, 계절 등에 따라 임계값을 수동 조정해야 함</li>
+                    <li><strong>미지 패턴 대응 불가:</strong> 사전 정의하지 않은 새로운 유형의 이상 감지 불가능</li>
+                    <li><strong>센서 드리프트에 취약:</strong> 센서 노후화/교정 오차 시 기준선이 왜곡되어 오탐/미탐 발생 가능</li>
+                    <li><strong>점진적 변화 감지 어려움:</strong> 서서히 진행되는 끼임(점착성 재료)은 급변 패턴과 달라 감지 지연 가능</li>
+                    <li><strong>규칙 관리 복잡도:</strong> 조건이 늘어날수록 규칙 간 충돌/중복 관리 부담 증가</li>
+                    <li><strong>일반화 한계:</strong> 한 슈레더에서 튜닝한 파라미터가 다른 기종에 바로 적용 불가</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>다른 방법론과의 비교</h3>
+        <table>
+            <tr><th>항목</th><th>패턴 인식 (본 모델)</th><th>LSTM / CNN</th><th>Random Forest</th></tr>
+            <tr><td>추론 속도</td><td><strong>&lt; 5ms</strong></td><td>10~50ms</td><td>5~10ms</td></tr>
+            <tr><td>학습 필요</td><td><strong>불필요</strong></td><td>수천 건 필요</td><td>수백 건 필요</td></tr>
+            <tr><td>해석 가능성</td><td><strong>완전</strong></td><td>제한적</td><td>중간</td></tr>
+            <tr><td>미지 패턴</td><td>불가</td><td><strong>부분 가능</strong></td><td>제한적</td></tr>
+            <tr><td>센서 드리프트</td><td>취약</td><td><strong>적응 가능</strong></td><td>중간</td></tr>
+            <tr><td>하드웨어 요구</td><td><strong>MCU 가능</strong></td><td>GPU 권장</td><td>CPU 충분</td></tr>
+            <tr class="hl"><td>끼임 감지 적합도</td><td><strong>최적</strong></td><td>과잉</td><td>적합</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- ========== Section 7 ========== -->
+<div class="sec" id="s7">
+    <div class="sec-h"><span class="n">7</span>슈레더 적용 시나리오</div>
+    <div class="sec-b">
+        <h3>이축 전단 파쇄기 센서 구성</h3>
+        <table>
+            <tr><th>센서 ID</th><th>유형</th><th>측정 범위</th><th>샘플링</th><th>위치</th></tr>
+            <tr><td>CUR-A</td><td>CT 전류센서</td><td>0~200A</td><td>10ms</td><td>축A 모터</td></tr>
+            <tr><td>CUR-B</td><td>CT 전류센서</td><td>0~200A</td><td>10ms</td><td>축B 모터</td></tr>
+            <tr><td>SPD-A</td><td>인코더</td><td>0~200 RPM</td><td>10ms</td><td>축A 샤프트</td></tr>
+            <tr><td>SPD-B</td><td>인코더</td><td>0~200 RPM</td><td>10ms</td><td>축B 샤프트</td></tr>
+        </table>
+
+        <h3>배치 재활용 공정 끼임 시나리오</h3>
+
+        <h4>시나리오 1: 금속 이물질 끼임</h4>
+        <div class="co err">
+            <strong>상황:</strong> 폐배터리 파쇄 중 분리되지 않은 대형 알루미늄 케이스 조각이 칼날 사이에 끼임<br>
+            <strong>전류 변화:</strong> 60A &rarr; 160A (2.7배, 0.3초 내)<br>
+            <strong>속도 변화:</strong> 120 RPM &rarr; 35 RPM (71% 감소)<br>
+            <strong>감지 시간:</strong> 끼임 발생 후 약 150ms<br>
+            <strong>자동 대응:</strong> 즉시 정지 &rarr; 3초 대기 &rarr; 역회전 10 RPM &rarr; 해소 확인<br>
+            <strong>결과:</strong> 1차 역회전에서 해소, 총 대응 시간 약 12초
+        </div>
+
+        <h4>시나리오 2: 점착성 재료 축적</h4>
+        <div class="co warn">
+            <strong>상황:</strong> 전해액이 묻은 재료가 칼날에 점착, 점진적으로 회전 저항 증가<br>
+            <strong>전류 변화:</strong> 60A &rarr; 85A (30분에 걸쳐 서서히 증가)<br>
+            <strong>속도 변화:</strong> 120 RPM &rarr; 105 RPM (서서히 감소)<br>
+            <strong>감지:</strong> 슬라이딩 윈도우가 기준선을 지속 갱신하므로 급변이 아닌 점진적 변화는 <strong>감지 지연</strong> 발생 가능<br>
+            <strong>보완:</strong> 모델 02(칼날 마모 예측) 및 모델 10(통합 분석)과 연계하여 장기 트렌드 모니터링 필요
+        </div>
+
+        <h4>시나리오 3: 재료 투입 충격 (정상)</h4>
+        <div class="co ok">
+            <strong>상황:</strong> 대형 폐배터리 묶음이 호퍼에서 한꺼번에 투입<br>
+            <strong>전류 변화:</strong> 60A &rarr; 78A (1.3배, 0.3초간)<br>
+            <strong>속도 변화:</strong> 120 RPM &rarr; 108 RPM (10% 감소)<br>
+            <strong>감지 결과:</strong> 확률 0.15 미만, NORMAL 상태 유지<br>
+            <strong>이유:</strong> 전류 상승폭이 임계값(1.5배) 미만, 속도 감소폭도 임계값(70%) 이상 유지, 지속 시간도 0.5초 미만
+        </div>
+
+        <h3>운영 파라미터 튜닝 가이드</h3>
+        <table>
+            <tr><th>파라미터</th><th>기본값</th><th>조정 지침</th></tr>
+            <tr><td>baseline_window</td><td>300 (3초)</td><td>부하 변동이 크면 늘림 (500~1000), 빠른 응답 필요 시 줄임 (100~200)</td></tr>
+            <tr><td>current_zscore_warn</td><td>2.5</td><td>오탐 많으면 3.0으로 상향, 미탐 있으면 2.0으로 하향</td></tr>
+            <tr><td>current_spike_ratio</td><td>1.5</td><td>재료별 정상 전류 변동폭 측정 후 조정</td></tr>
+            <tr><td>confirm_samples</td><td>20 (200ms)</td><td>순간 충격 오탐 빈번하면 30~50으로 상향</td></tr>
+        </table>
+
+        <h3>다른 AI 모델과의 연계</h3>
+        <div class="flow-h" style="margin:14px 0">
+            <div class="fb">모델 02<small>칼날 마모 예측</small></div>
+            <div class="fah">&rarr;</div>
+            <div class="fb act">모델 04<small>이물질 끼임 감지</small></div>
+            <div class="fah">&rarr;</div>
+            <div class="fb">모델 10<small>통합 분석</small></div>
+        </div>
+        <ul>
+            <li><strong>모델 02 &rarr; 04:</strong> 칼날 마모 상태에 따라 끼임 감지 임계값 자동 보정 (마모 심할수록 정상 전류 높음)</li>
+            <li><strong>모델 04 &rarr; 10:</strong> 끼임 이벤트 이력을 통합 건강 점수에 반영</li>
+            <li><strong>모델 01 &rarr; 04:</strong> 베어링 이상 시 진동 증가가 속도 센서에 영향을 줄 수 있으므로 교차 검증</li>
+        </ul>
+
+        <div class="co">
+            <strong>배포 환경:</strong> Jetson Orin Nano 또는 산업용 PLC에서 직접 실행 가능합니다. GPU가 필요 없으므로 MCU급 하드웨어에서도 10ms 이내 처리가 보장됩니다. PLC Modbus RTU 통신 지연(~50ms)을 감안하면 전체 루프 타임은 약 60ms입니다.
+        </div>
+    </div>
+</div>
+
+</div><!-- .ct -->
+
+<div style="text-align:center;padding:24px;color:var(--txl);font-size:.82em">
+    &copy; 2026 슈레더 AI 시스템 | 모델 04: 이물질 끼임 감지 (패턴 인식)
+</div>
+
+</body>
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모델 10: Ensemble 통합 분석 상세설명</title>
+<style>
+:root{--p:#2563eb;--pl:#dbeafe;--pd:#1e40af;--a:#7c3aed;--al:#ede9fe;--s:#059669;--sl:#d1fae5;--w:#d97706;--wl:#fef3c7;--d:#dc2626;--dl:#fee2e2;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.75;overflow-x:hidden;}
+a{color:#60a5fa;text-decoration:none;}a:hover{text-decoration:underline;}
+
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:#1e293b;}
+::-webkit-scrollbar-thumb{background:#475569;border-radius:4px;}
+
+.layout{display:flex;min-height:100vh;}
+.sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:#1e293b;border-right:1px solid #334155;overflow-y:auto;padding:20px 0;z-index:100;transition:transform .3s;}
+.sidebar-header{padding:10px 20px 20px;border-bottom:1px solid #334155;text-align:center;}
+.sidebar-header .logo{font-size:1.3rem;font-weight:800;color:#a78bfa;margin-bottom:4px;}
+.sidebar-header h2{font-size:.85rem;color:#94a3b8;font-weight:600;}
+.sidebar nav{padding:10px 0;}
+.sidebar nav a{display:block;padding:8px 20px;font-size:.84rem;color:#94a3b8;border-left:3px solid transparent;transition:all .2s;}
+.sidebar nav a:hover,.sidebar nav a.active{background:#0f172a;color:#f1f5f9;border-left-color:#8b5cf6;text-decoration:none;}
+.main-content{margin-left:260px;flex:1;padding:40px 50px;max-width:1000px;}
+
+.menu-toggle{display:none;position:fixed;top:15px;left:15px;z-index:200;background:#8b5cf6;border:none;color:#fff;width:44px;height:44px;border-radius:8px;font-size:1.4rem;cursor:pointer;}
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main-content{margin-left:0;padding:20px;}
+  .menu-toggle{display:flex;align-items:center;justify-content:center;}
+}
+
+.page-header{text-align:center;padding:30px 0 40px;border-bottom:1px solid #334155;margin-bottom:40px;}
+.page-header h1{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#a78bfa,#60a5fa,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;}
+.page-header .subtitle{color:#94a3b8;font-size:.95rem;}
+.page-header .meta{margin-top:14px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.page-header .meta span{background:#1e293b;padding:4px 12px;border-radius:20px;font-size:.8rem;color:#94a3b8;}
+
+.section{margin-bottom:50px;}
+.section-title{font-size:1.4rem;font-weight:800;margin-bottom:20px;padding:16px 24px;border-radius:12px;color:#fff;display:flex;align-items:center;gap:10px;cursor:pointer;transition:transform .2s;}
+.section-title:hover{transform:translateY(-2px);}
+.section-title .num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.2);font-size:1rem;font-weight:900;}
+.bg-purple{background:linear-gradient(135deg,#5b21b6,#8b5cf6);}
+.bg-blue{background:linear-gradient(135deg,#1e3a8a,#3b82f6);}
+.bg-green{background:linear-gradient(135deg,#065f46,#10b981);}
+.bg-orange{background:linear-gradient(135deg,#92400e,#f59e0b);}
+.bg-red{background:linear-gradient(135deg,#991b1b,#ef4444);}
+.bg-cyan{background:linear-gradient(135deg,#155e75,#06b6d4);}
+.bg-teal{background:linear-gradient(135deg,#134e4a,#14b8a6);}
+.bg-indigo{background:linear-gradient(135deg,#312e81,#6366f1);}
+
+.card{background:#1e293b;border-radius:14px;padding:24px;margin-bottom:20px;border:1px solid #334155;transition:border-color .2s,box-shadow .2s;}
+.card:hover{border-color:#475569;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+.card h3{font-size:1.1rem;margin-bottom:14px;color:#f1f5f9;display:flex;align-items:center;gap:8px;}
+.card h4{font-size:.95rem;margin:16px 0 8px;color:#cbd5e1;}
+.card p,.card li{font-size:.9rem;color:#cbd5e1;margin-bottom:6px;}
+.card ul,.card ol{padding-left:20px;}
+
+.summary-box{border-left:4px solid var(--a);border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:16px;font-size:.92rem;background:linear-gradient(135deg,rgba(139,92,246,.1),rgba(59,130,246,.08));}
+.summary-box strong{color:#f1f5f9;}
+
+.math-block{background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:20px;margin:16px 0;font-family:'Consolas','Monaco',monospace;font-size:.92rem;color:#c9d1d9;text-align:center;line-height:2;}
+.math-inline{font-family:'Consolas',monospace;color:#a5d6ff;background:rgba(165,214,255,.1);padding:1px 6px;border-radius:4px;font-size:.88rem;}
+
+.code-block{position:relative;background:#0d1117;border-radius:10px;margin:16px 0;overflow:hidden;border:1px solid #21262d;}
+.code-block .code-header{display:flex;justify-content:space-between;align-items:center;background:#161b22;padding:8px 16px;font-size:.78rem;color:#8b949e;}
+.code-block pre{padding:16px;overflow-x:auto;font-family:'Consolas','Monaco',monospace;font-size:.82rem;line-height:1.6;color:#c9d1d9;}
+.code-block .kw{color:#ff7b72;}.code-block .str{color:#a5d6ff;}.code-block .fn{color:#d2a8ff;}.code-block .cm{color:#8b949e;font-style:italic;}.code-block .num{color:#79c0ff;}.code-block .var{color:#ffa657;}
+
+.styled-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:10px;overflow:hidden;margin:16px 0;font-size:.86rem;}
+.styled-table thead th{background:linear-gradient(135deg,#334155,#475569);color:#f1f5f9;padding:11px 14px;text-align:left;font-weight:600;}
+.styled-table tbody td{padding:10px 14px;border-bottom:1px solid #2d3748;}
+.styled-table tbody tr{transition:background .2s;}
+.styled-table tbody tr:nth-child(even){background:rgba(51,65,85,.3);}
+.styled-table tbody tr:hover{background:rgba(59,130,246,.1);}
+
+.highlight-box{border-radius:10px;padding:14px 18px;margin:14px 0;font-size:.9rem;}
+.hl-blue{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);}
+.hl-green{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);}
+.hl-red{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);}
+.hl-yellow{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);}
+.hl-purple{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);}
+
+.diagram{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:20px;margin:18px 0;text-align:center;overflow-x:auto;}
+.diagram svg{max-width:100%;height:auto;}
+
+.badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:.75rem;font-weight:600;margin-right:4px;}
+.badge-blue{background:rgba(59,130,246,.2);color:#60a5fa;}
+.badge-green{background:rgba(16,185,129,.2);color:#34d399;}
+.badge-red{background:rgba(239,68,68,.2);color:#f87171;}
+.badge-purple{background:rgba(139,92,246,.2);color:#a78bfa;}
+.badge-orange{background:rgba(249,115,22,.2);color:#fb923c;}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0;}
+@media(max-width:768px){.pros-cons{grid-template-columns:1fr;}}
+.pros-cons .col{border-radius:10px;padding:16px;}
+.pros-cons .col h4{margin-bottom:10px;font-size:.95rem;}
+.pros-cons .col li{font-size:.86rem;margin-bottom:4px;}
+.col-feature{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);}
+.col-pros{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);}
+.col-cons{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);}
+
+/* Domain score bars */
+.domain-bar{display:flex;align-items:center;margin:8px 0;gap:10px;}
+.domain-bar .label{width:80px;font-size:.85rem;font-weight:600;text-align:right;}
+.domain-bar .bar-bg{flex:1;height:24px;background:#334155;border-radius:6px;overflow:hidden;position:relative;}
+.domain-bar .bar-fill{height:100%;border-radius:6px;transition:width .5s;}
+.domain-bar .bar-value{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.78rem;font-weight:700;color:#fff;}
+
+/* Causal chain */
+.chain-step{display:inline-flex;align-items:center;background:#1e293b;border:1px solid #475569;border-radius:10px;padding:8px 16px;margin:4px;font-size:.85rem;font-weight:600;}
+.chain-arrow{display:inline-block;margin:0 2px;font-size:1.1rem;color:#64748b;}
+
+.back-to-top{position:fixed;bottom:30px;right:30px;width:46px;height:46px;background:#8b5cf6;border:none;border-radius:50%;color:#fff;font-size:1.2rem;cursor:pointer;opacity:0;visibility:hidden;transition:all .3s;z-index:100;box-shadow:0 4px 12px rgba(139,92,246,.4);}
+.back-to-top.visible{opacity:1;visibility:visible;}
+
+.result-img{width:100%;border-radius:12px;margin:16px 0;border:1px solid #334155;}
+</style>
+</head>
+<body>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<div class="layout">
+<aside class="sidebar">
+<div class="sidebar-header">
+  <div class="logo">모델 10</div>
+  <h2>Ensemble 통합 분석</h2>
+</div>
+<nav>
+  <a href="#sec0">0. Ensemble 통합분석이란?</a>
+  <a href="#sec1">1. 개별 모델 출력 통합</a>
+  <a href="#sec2">2. 가중 평균 건강 점수</a>
+  <a href="#sec3">3. 상관관계 분석</a>
+  <a href="#sec4">4. 인과관계 체인</a>
+  <a href="#sec5">5. 시뮬레이션 결과</a>
+  <a href="#sec6">6. 특징 / 장점 / 단점</a>
+  <a href="#sec7">7. 슈레더 적용</a>
+</nav>
+</aside>
+
+<main class="main-content">
+
+<div class="page-header">
+  <h1>Ensemble 통합 분석</h1>
+  <p class="subtitle">모델 1~9의 출력을 융합하여 설비-품질-안전을 하나의 건강 점수로 통합</p>
+  <div class="meta">
+    <span>모델 10 / 10</span>
+    <span>영역: 연계분석</span>
+    <span>알고리즘: Ensemble (RF + LSTM + XGBoost)</span>
+    <span>추론 < 500ms</span>
+    <span>주기: 5분</span>
+  </div>
+</div>
+
+<!-- ======================== Section 0 ======================== -->
+<div class="section" id="sec0">
+<div class="section-title bg-purple"><span class="num">0</span> Ensemble 통합분석이란?</div>
+
+<div class="card">
+<h3>왜 통합 분석이 필요한가?</h3>
+<div class="summary-box">
+개별 모델(1~9)은 각자의 영역만 봅니다. 하지만 실제 슈레더에서는 영역 간 <strong>상호 영향</strong>이 존재합니다. 칼날 마모가 전류 증가를 유발하고, 이것이 온도 상승으로 이어져 발화 위험을 높이는 <strong>연쇄 관계</strong>를 개별 모델만으로는 파악할 수 없습니다.
+</div>
+
+<h4>연쇄 영향의 예</h4>
+<div class="highlight-box hl-red">
+<p><strong>칼날 마모 증가</strong>가 유발하는 연쇄 영향:</p>
+<ul>
+<li>전류 증가 → 모터 과열 → <strong>발화 위험 상승</strong> (안전)</li>
+<li>파쇄 크기 증가 → <strong>품질 저하</strong> (품질)</li>
+<li>진동 증가 → <strong>베어링 손상 가속</strong> (고장예지)</li>
+</ul>
+<p>이 3가지 영향이 동시에 발생하지만, 모델 2(마모), 모델 5(발화), 모델 8(품질), 모델 1(베어링)은 각자 별개로 판단합니다.</p>
+</div>
+
+<h4>통합 분석의 역할</h4>
+<p>모델 10은 이 모든 정보를 하나로 모아 <strong>통합 건강 점수(0~100)</strong>를 산출하고, <strong>영역 간 상관관계 맵</strong>을 제공합니다.</p>
+</div>
+
+<div class="card">
+<h3>Ensemble 구조</h3>
+<div class="diagram">
+<svg width="750" height="260" viewBox="0 0 750 260">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#a78bfa"/></marker>
+  </defs>
+  <!-- 입력 그룹 -->
+  <rect x="10" y="10" width="160" height="50" rx="10" fill="#1e3a8a" stroke="#3b82f6" stroke-width="2"/>
+  <text x="90" y="30" fill="#e2e8f0" text-anchor="middle" font-size="11" font-weight="700">모델 1~4 (고장예지)</text>
+  <text x="90" y="48" fill="#94a3b8" text-anchor="middle" font-size="10">가중치 40%</text>
+
+  <rect x="10" y="75" width="160" height="50" rx="10" fill="#991b1b" stroke="#ef4444" stroke-width="2"/>
+  <text x="90" y="95" fill="#e2e8f0" text-anchor="middle" font-size="11" font-weight="700">모델 5~7 (사고예방)</text>
+  <text x="90" y="113" fill="#94a3b8" text-anchor="middle" font-size="10">가중치 35%</text>
+
+  <rect x="10" y="140" width="160" height="50" rx="10" fill="#065f46" stroke="#10b981" stroke-width="2"/>
+  <text x="90" y="160" fill="#e2e8f0" text-anchor="middle" font-size="11" font-weight="700">모델 8~9 (품질관리)</text>
+  <text x="90" y="178" fill="#94a3b8" text-anchor="middle" font-size="10">가중치 25%</text>
+
+  <!-- 화살표 -->
+  <line x1="170" y1="35" x2="230" y2="100" stroke="#a78bfa" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="170" y1="100" x2="230" y2="100" stroke="#a78bfa" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="170" y1="165" x2="230" y2="100" stroke="#a78bfa" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 앙상블 박스 -->
+  <rect x="230" y="30" width="270" height="150" rx="14" fill="#312e81" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="365" y="55" fill="#e2e8f0" text-anchor="middle" font-size="13" font-weight="800">Ensemble 통합 분석</text>
+  <text x="365" y="80" fill="#c4b5fd" text-anchor="middle" font-size="10">Random Forest (0.3) — 정적 상관관계</text>
+  <text x="365" y="100" fill="#c4b5fd" text-anchor="middle" font-size="10">LSTM (0.4) — 시간적 패턴</text>
+  <text x="365" y="120" fill="#c4b5fd" text-anchor="middle" font-size="10">XGBoost (0.3) — 비선형 교호작용</text>
+  <text x="365" y="150" fill="#fbbf24" text-anchor="middle" font-size="11" font-weight="700">가중 평균 앙상블</text>
+  <text x="365" y="170" fill="#94a3b8" text-anchor="middle" font-size="9">RF:0.3 + LSTM:0.4 + XGB:0.3</text>
+
+  <!-- 출력 화살표 -->
+  <line x1="500" y1="100" x2="560" y2="100" stroke="#a78bfa" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 출력 -->
+  <rect x="560" y="20" width="170" height="60" rx="10" fill="#065f46" stroke="#10b981" stroke-width="2"/>
+  <text x="645" y="43" fill="#e2e8f0" text-anchor="middle" font-size="11" font-weight="700">통합 건강 점수</text>
+  <text x="645" y="63" fill="#94a3b8" text-anchor="middle" font-size="10">0 ~ 100</text>
+
+  <rect x="560" y="95" width="170" height="40" rx="10" fill="#92400e" stroke="#f59e0b" stroke-width="2"/>
+  <text x="645" y="120" fill="#e2e8f0" text-anchor="middle" font-size="11" font-weight="700">상관관계 맵</text>
+
+  <rect x="560" y="150" width="170" height="40" rx="10" fill="#1e3a8a" stroke="#3b82f6" stroke-width="2"/>
+  <text x="645" y="175" fill="#e2e8f0" text-anchor="middle" font-size="11" font-weight="700">권고 사항</text>
+</svg>
+</div>
+</div>
+</div>
+
+<!-- ======================== Section 1 ======================== -->
+<div class="section" id="sec1">
+<div class="section-title bg-blue"><span class="num">1</span> 개별 모델 출력 통합</div>
+
+<div class="card">
+<h3>모델 1~9 출력값</h3>
+<div class="summary-box">
+모델 10은 9개 개별 모델의 출력과 12개 센서 집계 데이터, 총 <strong>21개 특징</strong>을 입력으로 받습니다.
+</div>
+
+<table class="styled-table">
+<thead><tr><th>번호</th><th>모델</th><th>출력 변수</th><th>범위</th><th>영역</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>베어링 이상 탐지</td><td>bearing_anomaly_score</td><td>0 ~ 1</td><td><span class="badge badge-blue">고장예지</span></td></tr>
+<tr><td>2</td><td>칼날 마모 예측</td><td>blade_wear_pct</td><td>0 ~ 100%</td><td><span class="badge badge-blue">고장예지</span></td></tr>
+<tr><td>3</td><td>축 불균형 진단</td><td>imbalance_level</td><td>0 ~ 20 mm/s</td><td><span class="badge badge-blue">고장예지</span></td></tr>
+<tr><td>4</td><td>이물질 끼임 감지</td><td>jamming_probability</td><td>0 ~ 1</td><td><span class="badge badge-blue">고장예지</span></td></tr>
+<tr><td>5</td><td>발화 감지</td><td>fire_probability</td><td>0 ~ 1</td><td><span class="badge badge-red">사고예방</span></td></tr>
+<tr><td>6</td><td>분진 폭발 예측</td><td>dust_risk</td><td>0 ~ 1</td><td><span class="badge badge-red">사고예방</span></td></tr>
+<tr><td>7</td><td>전해액 누출 감지</td><td>leak_probability</td><td>0 ~ 1</td><td><span class="badge badge-red">사고예방</span></td></tr>
+<tr><td>8</td><td>파쇄 크기 예측</td><td>predicted_size_mm</td><td>20 ~ 120 mm</td><td><span class="badge badge-green">품질관리</span></td></tr>
+<tr><td>9</td><td>RPM 최적화</td><td>quality_grade</td><td>0(우수) ~ 3(불량)</td><td><span class="badge badge-green">품질관리</span></td></tr>
+</tbody>
+</table>
+
+<h4>3개 서브 모델의 역할</h4>
+<table class="styled-table">
+<thead><tr><th>서브 모델</th><th>역할</th><th>포착하는 패턴</th><th>가중치</th></tr></thead>
+<tbody>
+<tr><td><strong>Random Forest</strong></td><td>현재 상태의 정적 관계</td><td>"마모 80% + 진동 높음 = 위험"</td><td>0.3</td></tr>
+<tr><td><strong>LSTM</strong></td><td>시간에 따른 동적 패턴</td><td>"전류가 3일간 서서히 올랐다 = 악화 추세"</td><td>0.4</td></tr>
+<tr><td><strong>XGBoost</strong></td><td>복합 교호작용</td><td>"마모+고온+과부하 동시 = 개별 합보다 위험"</td><td>0.3</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ======================== Section 2 ======================== -->
+<div class="section" id="sec2">
+<div class="section-title bg-green"><span class="num">2</span> 가중 평균 건강 점수</div>
+
+<div class="card">
+<h3>영역별 점수 산출</h3>
+<div class="summary-box">
+9개 모델 출력을 3개 영역으로 그룹화하고, 각 영역의 건강 점수(0~100)를 산출합니다. <strong>점수가 높을수록 양호</strong>합니다.
+</div>
+
+<div class="code-block">
+<div class="code-header"><span>영역별 점수 산출 공식</span></div>
+<pre><span class="cm"># 고장예지 (모델 1~4)</span>
+고장예지 = <span class="num">100</span> - (베어링이상 × <span class="num">30</span> + 칼날마모 × <span class="num">0.3</span> + 불균형 × <span class="num">3</span> + 끼임확률 × <span class="num">20</span>)
+
+<span class="cm"># 사고예방 (모델 5~7)</span>
+사고예방 = <span class="num">100</span> - (발화확률 × <span class="num">40</span> + 분진위험 × <span class="num">35</span> + 누출확률 × <span class="num">25</span>)
+
+<span class="cm"># 품질관리 (모델 8~9)</span>
+품질관리 = <span class="num">100</span> - (품질등급 × <span class="num">20</span> + |파쇄크기 - 목표| × <span class="num">0.5</span>)</pre>
+</div>
+
+<h4>통합 건강 점수</h4>
+<div class="math-block">
+통합 건강 점수 = 고장예지 × 0.40 + 사고예방 × 0.35 + 품질관리 × 0.25
+</div>
+
+<h4>등급 판정</h4>
+<table class="styled-table">
+<thead><tr><th>통합 점수</th><th>최저 영역</th><th>등급</th><th>조치</th></tr></thead>
+<tbody>
+<tr><td>80 이상</td><td>60 이상</td><td><span class="badge badge-green">양호</span></td><td>정상 운전 — 모니터링 유지</td></tr>
+<tr><td>60~79</td><td>40 이상</td><td><span class="badge badge-blue">주의</span></td><td>점검 계획 수립 권고</td></tr>
+<tr><td>40~59</td><td>20 이상</td><td><span class="badge badge-orange">경고</span></td><td>조기 정비 필요 — 운전 조건 완화</td></tr>
+<tr><td>40 미만</td><td>20 미만</td><td><span class="badge badge-red">위험</span></td><td>즉시 정비 또는 운전 중지 검토</td></tr>
+</tbody>
+</table>
+
+<div class="highlight-box hl-yellow">
+<strong>약점 기반 판정</strong>: 통합 점수가 높더라도 개별 영역 중 하나라도 위험 수준이면 전체를 위험으로 판정합니다. 예를 들어, 고장예지=90, 사고예방=90이더라도 품질관리=15이면 전체 등급은 "위험"입니다.
+</div>
+</div>
+</div>
+
+<!-- ======================== Section 3 ======================== -->
+<div class="section" id="sec3">
+<div class="section-title bg-orange"><span class="num">3</span> 상관관계 분석</div>
+
+<div class="card">
+<h3>교차 영역 상관관계</h3>
+<div class="summary-box">
+Random Forest의 Feature Importance와 피어슨 상관계수를 이용하여 모델 출력 간의 관계를 분석합니다.
+</div>
+
+<h4>주요 상관관계 패턴</h4>
+<table class="styled-table">
+<thead><tr><th>원인 변수</th><th>결과 변수</th><th>강도</th><th>설명</th></tr></thead>
+<tbody>
+<tr><td>칼날 마모 (모델 2)</td><td>파쇄 크기 (모델 8)</td><td><span class="badge badge-red">강함</span></td><td>마모율 70% 이상 시 파쇄 크기 증가 경향</td></tr>
+<tr><td>칼날 마모 (모델 2)</td><td>발화 확률 (모델 5)</td><td><span class="badge badge-red">강함</span></td><td>마모 → 과부하 → 과열 → 발화 위험</td></tr>
+<tr><td>베어링 이상 (모델 1)</td><td>축 불균형 (모델 3)</td><td><span class="badge badge-orange">중간</span></td><td>베어링 손상 → 축 정렬 불량</td></tr>
+<tr><td>분진 위험 (모델 6)</td><td>발화 확률 (모델 5)</td><td><span class="badge badge-red">위험</span></td><td>분진 + 열원 = 분진 폭발 위험</td></tr>
+<tr><td>베어링 이상 (모델 1)</td><td>파쇄 균일도 (모델 8)</td><td><span class="badge badge-orange">중간</span></td><td>축 진동 → 파쇄 불균일</td></tr>
+</tbody>
+</table>
+
+<h4>Random Forest Feature Importance</h4>
+<p>통합 건강 점수에 대한 각 입력 변수의 기여도를 Random Forest로 분석합니다. 기여도가 높은 변수는 건강 점수에 큰 영향을 미치는 핵심 지표입니다.</p>
+<div class="highlight-box hl-blue">
+기여도가 가장 높은 변수는 일반적으로 <strong>칼날 마모</strong>와 <strong>베어링 이상</strong>입니다. 이 두 가지가 다른 모든 영역에 연쇄적으로 영향을 미치기 때문입니다.
+</div>
+</div>
+</div>
+
+<!-- ======================== Section 4 ======================== -->
+<div class="section" id="sec4">
+<div class="section-title bg-red"><span class="num">4</span> 인과관계 체인</div>
+
+<div class="card">
+<h3>주요 인과관계 체인</h3>
+<div class="summary-box">
+상관관계(동시 발생)를 넘어 <strong>인과관계(원인 → 결과)</strong>를 파악하면 근본 원인을 찾아 선제 대응할 수 있습니다.
+</div>
+
+<h4>체인 1: 칼날 마모 → 발화 위험</h4>
+<div style="text-align:center;margin:16px 0;">
+<span class="chain-step" style="background:rgba(37,99,235,.15);border-color:rgba(37,99,235,.4);color:#60a5fa;">칼날 마모 ↑</span>
+<span class="chain-arrow">→</span>
+<span class="chain-step" style="background:rgba(124,58,237,.15);border-color:rgba(124,58,237,.4);color:#a78bfa;">전류 증가 ↑</span>
+<span class="chain-arrow">→</span>
+<span class="chain-step" style="background:rgba(217,119,6,.15);border-color:rgba(217,119,6,.4);color:#fbbf24;">모터 과열 ↑</span>
+<span class="chain-arrow">→</span>
+<span class="chain-step" style="background:rgba(220,38,38,.15);border-color:rgba(220,38,38,.4);color:#f87171;">발화 위험 ↑</span>
+</div>
+
+<h4>체인 2: 칼날 마모 → 품질 저하</h4>
+<div style="text-align:center;margin:16px 0;">
+<span class="chain-step" style="background:rgba(37,99,235,.15);border-color:rgba(37,99,235,.4);color:#60a5fa;">칼날 마모 ↑</span>
+<span class="chain-arrow">→</span>
+<span class="chain-step" style="background:rgba(5,150,105,.15);border-color:rgba(5,150,105,.4);color:#34d399;">절삭력 저하</span>
+<span class="chain-arrow">→</span>
+<span class="chain-step" style="background:rgba(217,119,6,.15);border-color:rgba(217,119,6,.4);color:#fbbf24;">파쇄 크기 ↑</span>
+<span class="chain-arrow">→</span>
+<span class="chain-step" style="background:rgba(220,38,38,.15);border-color:rgba(220,38,38,.4);color:#f87171;">품질 등급 저하</span>
+</div>
+
+<h4>체인 3: 칼날 마모 → 베어링 손상</h4>
+<div style="text-align:center;margin:16px 0;">
+<span class="chain-step" style="background:rgba(37,99,235,.15);border-color:rgba(37,99,235,.4);color:#60a5fa;">칼날 마모 ↑</span>
+<span class="chain-arrow">→</span>
+<span class="chain-step" style="background:rgba(124,58,237,.15);border-color:rgba(124,58,237,.4);color:#a78bfa;">진동 증가 ↑</span>
+<span class="chain-arrow">→</span>
+<span class="chain-step" style="background:rgba(217,119,6,.15);border-color:rgba(217,119,6,.4);color:#fbbf24;">베어링 부하 ↑</span>
+<span class="chain-arrow">→</span>
+<span class="chain-step" style="background:rgba(220,38,38,.15);border-color:rgba(220,38,38,.4);color:#f87171;">베어링 손상 가속</span>
+</div>
+
+<h4>체인 4: 분진 + 발화 복합 위험</h4>
+<div style="text-align:center;margin:16px 0;">
+<span class="chain-step" style="background:rgba(220,38,38,.15);border-color:rgba(220,38,38,.4);color:#f87171;">분진 농도 ↑</span>
+<span style="font-size:1.4rem;color:#fbbf24;margin:0 8px;">+</span>
+<span class="chain-step" style="background:rgba(220,38,38,.15);border-color:rgba(220,38,38,.4);color:#f87171;">온도 상승 ↑</span>
+<span class="chain-arrow">→</span>
+<span class="chain-step" style="background:rgba(220,38,38,.25);border-color:rgba(220,38,38,.6);color:#fff;">분진 폭발 위험!</span>
+</div>
+
+<div class="highlight-box hl-yellow">
+<strong>주의:</strong> 상관관계 분석은 동시 발생 패턴을 보여줄 뿐, 반드시 인과관계를 의미하지는 않습니다. 인과관계 체인은 공학적 지식(도메인 전문가)의 검증을 거쳐 정의됩니다.
+</div>
+</div>
+</div>
+
+<!-- ======================== Section 5 ======================== -->
+<div class="section" id="sec5">
+<div class="section-title bg-cyan"><span class="num">5</span> 시뮬레이션 결과</div>
+
+<div class="card">
+<h3>시뮬레이션 설정</h3>
+<table class="styled-table">
+<thead><tr><th>항목</th><th>설정값</th></tr></thead>
+<tbody>
+<tr><td>시뮬레이션 기간</td><td>24시간 (5분 간격, 288 데이터 포인트)</td></tr>
+<tr><td>시나리오</td><td>칼날 마모 40%에서 시작, 점진적 악화</td></tr>
+<tr><td>모델 출력</td><td>9개 모델 Mock 출력 (인과관계 반영)</td></tr>
+<tr><td>영역 가중치</td><td>고장예지 40%, 사고예방 35%, 품질관리 25%</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<h3>결과 플롯</h3>
+<p>아래 그래프는 <span class="math-inline">simulation.py</span> 실행 시 생성되는 결과입니다.</p>
+<img class="result-img" src="ensemble_result.png" alt="Ensemble 통합 분석 시뮬레이션 결과" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+<div style="display:none;" class="highlight-box hl-yellow">이미지를 보려면 simulation.py를 먼저 실행하여 ensemble_result.png를 생성하세요.</div>
+
+<h4>그래프 해석</h4>
+<ol>
+<li><strong>좌상단 — 통합 건강 점수 타임라인</strong>: 24시간에 걸쳐 통합 건강 점수와 3개 영역별 점수의 변화를 보여줍니다. 칼날 마모가 진행됨에 따라 전체 점수가 서서히 하락합니다.</li>
+<li><strong>우상단 — 모델 1~9 히트맵</strong>: 각 모델의 정규화된 출력을 히트맵으로 표현합니다. 빨간색이 짙을수록 위험 수준이 높습니다.</li>
+<li><strong>좌하단 — 상관관계 행렬</strong>: 9개 모델 출력 간의 피어슨 상관계수입니다. 칼날 마모와 발화 확률의 강한 양의 상관관계를 확인할 수 있습니다.</li>
+<li><strong>우하단 — 인과관계 체인</strong>: 칼날 마모를 시작점으로 한 연쇄 영향 관계를 시각적으로 보여줍니다.</li>
+</ol>
+</div>
+
+<div class="card">
+<h3>대시보드 출력 예시</h3>
+<div class="code-block">
+<div class="code-header"><span>통합 건강 대시보드</span></div>
+<pre>╔══════════════════════════════════════════════════════╗
+║          통합 건강 점수: 72.3 / 100  [주의]          ║
+╠══════════════════════════════════════════════════════╣
+║                                                      ║
+║  영역별 점수:                                         ║
+║  ■■■■■■■■□□ 고장예지: 78.5  (주의)                   ║
+║  ■■■■■■■□□□ 사고예방: 68.2  (경고 — 분진 상승)      ║
+║  ■■■■■■■□□□ 품질관리: 71.0  (보통)                   ║
+║                                                      ║
+║  주요 상관관계:                                       ║
+║  ⚠ 칼날 마모(82%) → 파쇄 크기 증가(+8mm)            ║
+║  ⚠ 분진 농도 상승 → 환기 강화 필요                   ║
+║                                                      ║
+║  추세: 서서히 악화 ↓                                  ║
+║  권고: 칼날 교체 계획 수립 + 환기 점검                ║
+╚══════════════════════════════════════════════════════╝</pre>
+</div>
+</div>
+</div>
+
+<!-- ======================== Section 6 ======================== -->
+<div class="section" id="sec6">
+<div class="section-title bg-indigo"><span class="num">6</span> 특징 / 장점 / 단점</div>
+
+<div class="card">
+<div class="pros-cons">
+<div class="col col-feature">
+  <h4>특징</h4>
+  <ul>
+    <li><strong>Meta-model</strong>: 9개 개별 모델 위에 위치한 상위 모델</li>
+    <li><strong>Cross-domain</strong>: 고장예지, 사고예방, 품질관리 3개 영역을 교차 분석</li>
+    <li><strong>Multi-algorithm Ensemble</strong>: RF + LSTM + XGBoost 3개 알고리즘 결합</li>
+    <li><strong>단일 점수</strong>: 복잡한 상태를 0~100 하나의 숫자로 요약</li>
+  </ul>
+</div>
+<div class="col col-pros">
+  <h4>장점</h4>
+  <ul>
+    <li><strong>Holistic View</strong>: 개별 모델이 놓치는 영역 간 연관성을 포착</li>
+    <li><strong>Cascading Failure 감지</strong>: 연쇄 고장을 사전에 경고</li>
+    <li><strong>Single Dashboard Score</strong>: 경영진/현장 모두 직관적으로 이해 가능</li>
+    <li><strong>정비 우선순위 결정</strong>: 어떤 영역을 먼저 조치할지 명확</li>
+    <li><strong>추세 분석</strong>: 악화/개선 경향을 시간축으로 파악</li>
+  </ul>
+</div>
+<div class="col col-cons">
+  <h4>단점</h4>
+  <ul>
+    <li><strong>복잡성</strong>: 3개 서브 모델 + 9개 입력 모델의 유지보수 부담</li>
+    <li><strong>하위 모델 의존</strong>: 개별 모델(1~9)이 부정확하면 통합 결과도 부정확</li>
+    <li><strong>Latency</strong>: 모든 모델의 출력을 수집 후 분석하므로 시간 지연 발생 (< 500ms)</li>
+    <li><strong>초기 데이터 부족</strong>: 6개월 이상 운영 데이터 필요</li>
+    <li><strong>과적합 위험</strong>: 이벤트 데이터가 적으면 앙상블이 노이즈를 학습할 수 있음</li>
+  </ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ======================== Section 7 ======================== -->
+<div class="section" id="sec7">
+<div class="section-title bg-teal"><span class="num">7</span> 슈레더 적용</div>
+
+<div class="card">
+<h3>도입 단계</h3>
+
+<h4>Phase 1 — 룰 기반 (데이터 부족 시)</h4>
+<div class="highlight-box hl-blue">
+데이터가 부족한 초기에는 가중 합산 룰로 통합 점수를 산출합니다. AI 모델 없이도 즉시 적용 가능합니다.
+</div>
+<div class="code-block">
+<div class="code-header"><span>Python — 초기 룰 기반</span></div>
+<pre><span class="kw">def</span> <span class="fn">rule_based_health_score</span>(domain_scores, weights):
+    <span class="str">"""초기 룰 기반 통합 점수"""</span>
+    <span class="kw">return</span> <span class="fn">sum</span>(domain_scores[k] * weights[k] <span class="kw">for</span> k <span class="kw">in</span> weights)</pre>
+</div>
+
+<h4>Phase 2 — 하이브리드 (6개월~)</h4>
+<p>실제 고장/사고/품질 이벤트 데이터가 축적되면 RF + LSTM + XGBoost를 학습시키고, 룰 기반과 <strong>병행 운영</strong>하여 결과를 비교합니다.</p>
+
+<h4>Phase 3 — 완전 앙상블 (12개월~)</h4>
+<p>충분한 데이터 축적 후 앙상블 모델로 전환합니다. 룰 기반은 백업/검증 용도로 유지합니다.</p>
+</div>
+
+<div class="card">
+<h3>재학습 주기</h3>
+<table class="styled-table">
+<thead><tr><th>유형</th><th>주기</th><th>트리거</th></tr></thead>
+<tbody>
+<tr><td>정기 재학습</td><td>3개월</td><td>이벤트 데이터 축적</td></tr>
+<tr><td>비정기 재학습</td><td>즉시</td><td>대규모 이벤트(고장, 사고) 발생 후</td></tr>
+<tr><td>가중치 조정</td><td>자동</td><td>검증 세트 성능 기준으로 RF/LSTM/XGB 가중치 자동 최적화</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<h3>운영 시 주의사항</h3>
+<div class="highlight-box hl-red">
+<ul>
+<li><strong>개별 모델 우선 안정화</strong>: 모델 1~9가 정확해야 통합 분석도 의미가 있습니다. 개별 모델의 정확도를 먼저 검증하세요.</li>
+<li><strong>상관관계 ≠ 인과관계</strong>: 분석 결과는 동시 발생 패턴이므로 운전자의 공학적 판단이 반드시 필요합니다.</li>
+<li><strong>건강 점수의 용도</strong>: 즉시 정지 판단이 아니라 <strong>정비 우선순위 결정</strong> 지표로 활용합니다.</li>
+<li><strong>초기 병행 운영</strong>: 룰 기반과 앙상블을 병행하여 모델 신뢰도를 검증하세요.</li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<h3>전체 시스템 연계도</h3>
+<div class="diagram">
+<svg width="720" height="200" viewBox="0 0 720 200">
+  <defs>
+    <marker id="arr2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#a78bfa"/></marker>
+  </defs>
+  <!-- 센서 -->
+  <rect x="10" y="80" width="100" height="40" rx="8" fill="#155e75" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="60" y="105" fill="#e2e8f0" text-anchor="middle" font-size="11" font-weight="600">센서 데이터</text>
+
+  <!-- 모델 1~9 -->
+  <rect x="150" y="20" width="120" height="35" rx="8" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="210" y="42" fill="#e2e8f0" text-anchor="middle" font-size="10" font-weight="600">모델 1~4</text>
+  <rect x="150" y="70" width="120" height="35" rx="8" fill="#991b1b" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="210" y="92" fill="#e2e8f0" text-anchor="middle" font-size="10" font-weight="600">모델 5~7</text>
+  <rect x="150" y="120" width="120" height="35" rx="8" fill="#065f46" stroke="#10b981" stroke-width="1.5"/>
+  <text x="210" y="142" fill="#e2e8f0" text-anchor="middle" font-size="10" font-weight="600">모델 8~9</text>
+
+  <!-- 화살표 -->
+  <line x1="110" y1="100" x2="150" y2="37" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="110" y1="100" x2="150" y2="87" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="110" y1="100" x2="150" y2="137" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <line x1="270" y1="37" x2="340" y2="90" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="270" y1="87" x2="340" y2="90" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="270" y1="137" x2="340" y2="90" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <!-- 모델 10 -->
+  <rect x="340" y="55" width="140" height="70" rx="12" fill="#312e81" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="410" y="82" fill="#e2e8f0" text-anchor="middle" font-size="12" font-weight="800">모델 10</text>
+  <text x="410" y="100" fill="#c4b5fd" text-anchor="middle" font-size="10">Ensemble 통합</text>
+
+  <!-- 출력 -->
+  <line x1="480" y1="75" x2="540" y2="45" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="480" y1="90" x2="540" y2="90" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="480" y1="105" x2="540" y2="140" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <rect x="540" y="25" width="160" height="35" rx="8" fill="#065f46" stroke="#10b981" stroke-width="1.5"/>
+  <text x="620" y="47" fill="#e2e8f0" text-anchor="middle" font-size="10" font-weight="600">건강 점수 0~100</text>
+  <rect x="540" y="75" width="160" height="35" rx="8" fill="#92400e" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="620" y="97" fill="#e2e8f0" text-anchor="middle" font-size="10" font-weight="600">상관관계 맵</text>
+  <rect x="540" y="125" width="160" height="35" rx="8" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="620" y="147" fill="#e2e8f0" text-anchor="middle" font-size="10" font-weight="600">권고 사항</text>
+
+  <!-- 라벨 -->
+  <text x="60" y="190" fill="#64748b" text-anchor="middle" font-size="9">6채널 센서</text>
+  <text x="210" y="178" fill="#64748b" text-anchor="middle" font-size="9">개별 AI 모델</text>
+  <text x="410" y="178" fill="#64748b" text-anchor="middle" font-size="9">Meta 앙상블</text>
+  <text x="620" y="178" fill="#64748b" text-anchor="middle" font-size="9">의사결정 지원</text>
+</svg>
+</div>
+</div>
+</div>
+
+</main>
+</div>
+
+<button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+window.addEventListener('scroll',()=>{document.querySelector('.back-to-top').classList.toggle('visible',window.scrollY>300);});
+document.querySelectorAll('.sidebar nav a').forEach(a=>{a.addEventListener('click',()=>{document.querySelector('.sidebar').classList.remove('open');});});
+</script>
+</body>
+</html>

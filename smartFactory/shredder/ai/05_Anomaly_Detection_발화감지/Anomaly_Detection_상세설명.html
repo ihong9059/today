@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rate-of-Change + Anomaly Detection 발화 감지 상세 설명</title>
+<style>
+:root{--p:#2563eb;--pl:#dbeafe;--pd:#1e40af;--a:#7c3aed;--al:#ede9fe;--s:#059669;--sl:#d1fae5;--w:#d97706;--wl:#fef3c7;--d:#dc2626;--dl:#fee2e2;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;--g900:#111827;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Pretendard',-apple-system,'Segoe UI','Malgun Gothic',sans-serif;background:var(--g50);color:var(--g800);line-height:1.8;font-size:15px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.hero{background:linear-gradient(135deg,#b71c1c 0%,#e65100 50%,#ff6f00 100%);color:#fff;border-radius:16px;padding:40px 36px;margin-bottom:36px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%;}
+.hero::after{content:'';position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;background:rgba(255,255,255,.04);border-radius:50%;}
+.hero h1{font-size:26px;font-weight:800;margin-bottom:8px;position:relative;}
+.hero .sub{font-size:14px;opacity:.85;position:relative;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.18);padding:3px 14px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:14px;}
+.section{margin-bottom:44px;}
+h2{font-size:20px;font-weight:800;color:var(--g900);margin-bottom:18px;padding-bottom:8px;border-bottom:3px solid var(--dl);display:flex;align-items:center;gap:10px;}
+h2 .num{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--d);color:#fff;border-radius:8px;font-size:15px;flex-shrink:0;}
+h3{font-size:16px;font-weight:700;color:var(--g900);margin:20px 0 10px;}
+p{margin-bottom:12px;font-size:14px;}
+.img-wrap{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;margin:16px 0;text-align:center;}
+.img-wrap img{max-width:100%;border-radius:8px;}
+.img-wrap .caption{font-size:12px;color:var(--g500);margin-top:8px;}
+.info-card{border-radius:12px;padding:20px 24px;margin:16px 0;border-left:4px solid;}
+.info-card.blue{background:var(--pl);border-color:var(--p);}
+.info-card.green{background:var(--sl);border-color:var(--s);}
+.info-card.yellow{background:var(--wl);border-color:var(--w);}
+.info-card.red{background:var(--dl);border-color:var(--d);}
+.info-card.purple{background:var(--al);border-color:var(--a);}
+.info-card .card-title{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.info-card p,.info-card li{font-size:13px;line-height:1.7;}
+.analogy{background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde047;border-radius:12px;padding:20px 24px;margin:16px 0;}
+.analogy .title{font-size:14px;font-weight:700;color:var(--w);margin-bottom:8px;}
+.code-box{background:#1e293b;color:#e2e8f0;border-radius:12px;padding:20px 24px;margin:16px 0;font-family:'Consolas',monospace;font-size:12px;line-height:1.7;overflow-x:auto;white-space:pre;}
+.code-box .hl{color:#60a5fa;font-weight:600;}
+.code-box .gr{color:#4ade80;}
+.code-box .yw{color:#fbbf24;}
+.code-box .pk{color:#f472b6;}
+.code-box .dm{color:#64748b;}
+.graph-card{background:#fff;border:2px solid var(--d);border-radius:16px;padding:24px;margin:20px 0;position:relative;}
+.graph-card .graph-num{position:absolute;top:-12px;left:20px;background:var(--d);color:#fff;padding:2px 14px;border-radius:8px;font-size:12px;font-weight:700;}
+.graph-card h3{margin-top:8px;color:#b71c1c;}
+.compare-box{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--g200);margin:16px 0;}
+.compare-side{padding:20px 22px;}
+.compare-side.left{background:#fef2f2;border-right:2px solid var(--g200);}
+.compare-side.right{background:#f0fdf4;}
+.compare-side h4{font-size:13px;font-weight:700;margin-bottom:10px;}
+.compare-side.left h4{color:var(--d);}
+.compare-side.right h4{color:var(--s);}
+.compare-side li{font-size:12px;line-height:1.7;}
+.formula-box{background:var(--g900);color:#fff;border-radius:12px;padding:24px;margin:16px 0;text-align:center;}
+.formula-box .formula{font-size:22px;font-weight:800;color:#ef5350;margin:12px 0;}
+.formula-box .desc{font-size:13px;color:#94a3b8;}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.metric-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px;text-align:center;}
+.metric-card .value{font-size:24px;font-weight:800;color:var(--d);}
+.metric-card .label{font-size:11px;color:var(--g500);margin-top:4px;}
+.step-list{counter-reset:step;}
+.step-item{counter-increment:step;display:flex;gap:14px;margin:12px 0;padding:14px 18px;background:#fff;border:1px solid var(--g200);border-radius:10px;}
+.step-item::before{content:counter(step);display:flex;align-items:center;justify-content:center;min-width:28px;height:28px;background:var(--d);color:#fff;border-radius:50%;font-size:13px;font-weight:700;margin-top:2px;}
+.step-item .content{font-size:13px;line-height:1.6;}
+.step-item .content strong{color:#b71c1c;}
+.timeline{position:relative;padding-left:30px;margin:16px 0;}
+.timeline::before{content:'';position:absolute;left:12px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,#4caf50,#ffa000,#d32f2f,#d32f2f,#2196f3);}
+.timeline-item{position:relative;margin-bottom:18px;padding:14px 18px;background:#fff;border:1px solid var(--g200);border-radius:10px;}
+.timeline-item::before{content:'';position:absolute;left:-24px;top:18px;width:12px;height:12px;border-radius:50%;border:2px solid #fff;}
+.timeline-item.green::before{background:#4caf50;}
+.timeline-item.yellow::before{background:#ffa000;}
+.timeline-item.orange::before{background:#e65100;}
+.timeline-item.red::before{background:#d32f2f;}
+.timeline-item.blue::before{background:#2196f3;}
+.timeline-item .time{font-size:11px;font-weight:700;color:var(--g500);}
+.timeline-item .event{font-size:13px;font-weight:600;margin:4px 0 2px;}
+.timeline-item .detail{font-size:12px;color:var(--g600);}
+table.data-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+table.data-table th{background:var(--g900);color:#fff;padding:10px 14px;text-align:left;font-weight:600;}
+table.data-table td{padding:8px 14px;border-bottom:1px solid var(--g200);}
+table.data-table tr:nth-child(even){background:var(--g100);}
+.alert-box{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.alert-card{border-radius:12px;padding:18px;text-align:center;border:2px solid;}
+.alert-card.normal{background:#e8f5e9;border-color:#4caf50;color:#2e7d32;}
+.alert-card.warning{background:#fff3e0;border-color:#ff9800;color:#e65100;}
+.alert-card.emergency{background:#ffebee;border-color:#f44336;color:#b71c1c;}
+.alert-card .alert-level{font-size:18px;font-weight:800;margin-bottom:4px;}
+.alert-card .alert-desc{font-size:11px;line-height:1.5;}
+@media(max-width:768px){.compare-box{grid-template-columns:1fr;}.compare-side.left{border-right:none;border-bottom:2px solid var(--g200);}.metric-grid{grid-template-columns:1fr;}.alert-box{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="main">
+
+<div class="hero">
+  <div class="hero-badge">SHREDDER AI MODEL #05</div>
+  <h1>Rate-of-Change + Anomaly Detection 발화 감지</h1>
+  <p class="sub">배터리 열폭주를 100ms 이내에 감지하고 1초 이내에 대응하는 물리 기반 알고리즘</p>
+</div>
+
+<!-- ────────────────────────────────────── -->
+<!-- SECTION 0 -->
+<!-- ────────────────────────────────────── -->
+<div class="section">
+  <h2><span class="num">0</span> Rate-of-Change + Anomaly Detection이란?</h2>
+
+  <div class="formula-box">
+    <div class="desc">핵심 원리</div>
+    <div class="formula">dT/dt = (T<sub>now</sub> - T<sub>prev</sub>) / &Delta;t</div>
+    <div class="desc">온도의 "변화 속도"를 감시 &rarr; 절대값보다 변화율이 발화를 더 빨리 알려줌</div>
+  </div>
+
+  <div class="analogy">
+    <div class="title">비유: 자동차 속도 vs 가속도</div>
+    <p style="font-size:13px;margin-bottom:4px;">현재 속도가 60km/h라면 위험하지 않습니다. 하지만 <strong>0에서 60까지 3초 만에</strong> 올랐다면? 그건 사고 직전입니다.</p>
+    <p style="font-size:13px;margin-bottom:0;">온도도 마찬가지입니다. 80&deg;C 자체는 높지만 즉각 위험은 아닐 수 있습니다. 그러나 <strong>40&deg;C에서 80&deg;C로 5초 만에</strong> 올랐다면? 그것은 열폭주(Thermal Runaway)의 시작입니다.</p>
+  </div>
+
+  <div class="info-card blue">
+    <div class="card-title">이 모델이 하는 일</div>
+    <ul>
+      <li>이중 IR 센서 + 열전대 4채널 온도를 <strong>100ms 간격</strong>으로 모니터링</li>
+      <li>온도 변화율(dT/dt)을 실시간 계산하여 <strong>열폭주 전조를 수 초 전에 감지</strong></li>
+      <li>이중화 센서 교차검증으로 <strong>오경보를 필터링</strong></li>
+      <li>3단계 경보(Normal/Warning/Emergency)로 <strong>단계별 자동 대응</strong></li>
+    </ul>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card"><div class="value">&lt;100ms</div><div class="label">감지 시간</div></div>
+    <div class="metric-card"><div class="value">&lt;1초</div><div class="label">대응 완료</div></div>
+    <div class="metric-card"><div class="value">4채널</div><div class="label">센서 이중화</div></div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────── -->
+<!-- SECTION 1 -->
+<!-- ────────────────────────────────────── -->
+<div class="section">
+  <h2><span class="num">1</span> 배터리 열폭주 물리 현상</h2>
+
+  <p>리튬이온 배터리가 파쇄될 때, 내부 단락이 발생하면 <strong>열폭주(Thermal Runaway)</strong>가 시작됩니다. 이것은 4단계로 진행되며, 한 번 시작되면 외부 개입 없이는 멈출 수 없습니다.</p>
+
+  <div class="timeline">
+    <div class="timeline-item green">
+      <div class="time">Stage 0 &mdash; 정상 상태 (25~60&deg;C)</div>
+      <div class="event">파쇄 중 마찰열 발생, 정상 범위</div>
+      <div class="detail">dT/dt &asymp; 0.05~0.1&deg;C/s | 배터리 셀 구조 유지, 전해액 안정</div>
+    </div>
+    <div class="timeline-item yellow">
+      <div class="time">Stage 1 &mdash; SEI 분해 (60~120&deg;C)</div>
+      <div class="event">SEI(고체전해질계면) 층 분해 시작</div>
+      <div class="detail">dT/dt &asymp; 1~5&deg;C/s | 내부 발열 반응 시작, 아직 외부에서 감지 어려움. 이 단계에서 감지해야 진압 가능!</div>
+    </div>
+    <div class="timeline-item orange">
+      <div class="time">Stage 2 &mdash; 분리막 용융 (130~200&deg;C)</div>
+      <div class="event">양극-음극 사이 분리막이 녹으며 내부 단락 확대</div>
+      <div class="detail">dT/dt &asymp; 5~50&deg;C/s | 전해액 분해, 가연성 가스 발생. 비상정지 필수!</div>
+    </div>
+    <div class="timeline-item red">
+      <div class="time">Stage 3 &mdash; 열폭주 (200~800&deg;C+)</div>
+      <div class="event">양극 활물질 분해 &rarr; 산소 방출 &rarr; 발화/폭발</div>
+      <div class="detail">dT/dt &gt; 50&deg;C/s | 수 초 만에 수백도 상승, 질소 퍼지 + 소화 시스템 즉시 작동</div>
+    </div>
+    <div class="timeline-item blue">
+      <div class="time">대응 &mdash; 질소 퍼지 + 소화</div>
+      <div class="event">N&sub2; 불활성 가스로 산소 차단, 소화액 분사</div>
+      <div class="detail">비상정지 후 100ms 이내 질소 퍼지 시작, 500ms 이내 소화 시스템 작동</div>
+    </div>
+  </div>
+
+  <div class="info-card red">
+    <div class="card-title">핵심 포인트: 시간과의 싸움</div>
+    <p>Stage 1에서 Stage 3까지 진행되는 시간은 <strong>수 초~수십 초</strong>에 불과합니다. 사람이 인지하고 판단하기에는 너무 빠릅니다. 따라서 <strong>100ms 단위 자동 감지</strong>가 반드시 필요합니다.</p>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────── -->
+<!-- SECTION 2 -->
+<!-- ────────────────────────────────────── -->
+<div class="section">
+  <h2><span class="num">2</span> 변화율(dT/dt) 분석</h2>
+
+  <h3>왜 절대 온도보다 변화율이 중요한가?</h3>
+
+  <div class="compare-box">
+    <div class="compare-side left">
+      <h4>절대값 감시만 할 때</h4>
+      <ul>
+        <li>임계값 80&deg;C 설정</li>
+        <li>정상 운전 중 70&deg;C &rarr; "안전"</li>
+        <li>열폭주 시작 70&deg;C &rarr; "안전" (같은 온도!)</li>
+        <li>80&deg;C 도달 시 이미 Stage 2 진행 중</li>
+        <li><strong>감지 시점이 너무 늦음</strong></li>
+      </ul>
+    </div>
+    <div class="compare-side right">
+      <h4>변화율(dT/dt) 감시할 때</h4>
+      <ul>
+        <li>임계값 5&deg;C/s 설정</li>
+        <li>정상 운전 70&deg;C (변화율 0.1) &rarr; "안전"</li>
+        <li>열폭주 시작 70&deg;C (<strong>변화율 5.0</strong>) &rarr; "경보!"</li>
+        <li><strong>같은 온도에서도 위험을 감지</strong></li>
+        <li>Stage 1 초기에 포착 가능</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <div class="desc">변화율 계산 공식</div>
+    <div class="formula">dT/dt = (T[i] - T[i-w]) / (w &times; &Delta;t)</div>
+    <div class="desc">w: 윈도우 크기 (10 = 1초), &Delta;t: 샘플링 간격 (0.1초)</div>
+  </div>
+
+  <table class="data-table">
+    <tr><th>상태</th><th>변화율 (dT/dt)</th><th>의미</th><th>판정</th></tr>
+    <tr><td>정상 운전</td><td>&asymp; 0.05~0.1&deg;C/s</td><td>마찰열에 의한 완만한 상승</td><td style="color:#4caf50;font-weight:700;">Normal</td></tr>
+    <tr><td>부하 변동</td><td>&asymp; 0.5~1.5&deg;C/s</td><td>재료 투입량 변화, 정상 범위</td><td style="color:#4caf50;font-weight:700;">Normal</td></tr>
+    <tr><td>전조 감지</td><td>&asymp; 2~5&deg;C/s</td><td>배터리 내부 발열 반응 시작</td><td style="color:#ff9800;font-weight:700;">Warning</td></tr>
+    <tr><td>발화 진행</td><td>&asymp; 5~20&deg;C/s</td><td>분리막 용융, 내부 단락 확대</td><td style="color:#d32f2f;font-weight:700;">Emergency</td></tr>
+    <tr><td>열폭주</td><td>&gt; 50&deg;C/s</td><td>양극 분해, 산소 방출, 발화/폭발</td><td style="color:#b71c1c;font-weight:700;">Emergency</td></tr>
+  </table>
+
+  <div class="info-card yellow">
+    <div class="card-title">다층 감시 전략</div>
+    <p>실제 시스템에서는 변화율만 보는 것이 아니라 <strong>4개 Layer를 동시에</strong> 감시합니다:</p>
+    <ul>
+      <li><strong>Layer 1 &mdash; 절대값:</strong> T &gt; 80&deg;C 즉시 알람 (마지노선)</li>
+      <li><strong>Layer 2 &mdash; 1차 변화율 (dT/dt):</strong> 열폭주 전조 감지 (핵심)</li>
+      <li><strong>Layer 3 &mdash; 2차 변화율 (d&sup2;T/dt&sup2;):</strong> "변화율이 가속 중" 확인</li>
+      <li><strong>Layer 4 &mdash; 이중화 교차검증:</strong> 센서 고장 vs 실제 발화 구분</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────── -->
+<!-- SECTION 3 -->
+<!-- ────────────────────────────────────── -->
+<div class="section">
+  <h2><span class="num">3</span> 이중화 센서 교차검증</h2>
+
+  <p>단일 센서에 의존하면 <strong>센서 고장 = 시스템 사각지대</strong>가 됩니다. 배터리 파쇄처럼 생명과 직결된 공정에서는 이중화(Redundancy)가 필수입니다.</p>
+
+  <h3>센서 배치 구조</h3>
+  <div class="code-box"><span class="dm">/* 슈레더 챔버 단면도 (위에서 본 모습) */</span>
+
+    <span class="yw">TMP-IR1</span> ──────── 챔버 상부 ──────── <span class="yw">TMP-IR2</span>
+      (적외선)        [ 파쇄 영역 ]         (적외선)
+        |                                      |
+    <span class="hl">TMP-A</span> ─── 축A 베어링 ─────── 축B 베어링 ─── <span class="hl">TMP-B</span>
+    (PT100)                                  (PT100)</div>
+
+  <h3>교차검증 로직</h3>
+  <table class="data-table">
+    <tr><th>IR1</th><th>IR2</th><th>차이</th><th>판정</th></tr>
+    <tr><td>높음</td><td>높음</td><td>작음 (&lt;15&deg;C)</td><td style="color:#d32f2f;font-weight:700;">실제 발화 (양쪽 모두 감지)</td></tr>
+    <tr><td>높음</td><td>정상</td><td>큼 (&gt;15&deg;C)</td><td style="color:#ff9800;font-weight:700;">편측 이상 또는 센서 오류 가능성</td></tr>
+    <tr><td>정상</td><td>높음</td><td>큼 (&gt;15&deg;C)</td><td style="color:#ff9800;font-weight:700;">편측 이상 또는 센서 오류 가능성</td></tr>
+    <tr><td>정상</td><td>정상</td><td>작음</td><td style="color:#4caf50;font-weight:700;">정상</td></tr>
+  </table>
+
+  <div class="info-card green">
+    <div class="card-title">이중화의 가치</div>
+    <ul>
+      <li><strong>센서 1개 고장해도</strong> 나머지 1개로 감지 지속 (가용성 향상)</li>
+      <li><strong>오경보 감소:</strong> 한쪽만 높으면 확률을 50% 감소시켜 불필요한 비상정지 방지</li>
+      <li><strong>위치 추정:</strong> 두 센서의 온도 차이로 발화 위치(좌/우)를 추정 가능</li>
+      <li><strong>렌즈 오염 감지:</strong> 한쪽 IR 센서 렌즈에 분진이 쌓이면 판독 차이 발생 &rarr; 점검 알림</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────── -->
+<!-- SECTION 4 -->
+<!-- ────────────────────────────────────── -->
+<div class="section">
+  <h2><span class="num">4</span> 3단계 경보 시스템</h2>
+
+  <div class="alert-box">
+    <div class="alert-card normal">
+      <div class="alert-level">Normal</div>
+      <div class="alert-desc">
+        온도 &lt; 60&deg;C<br>
+        변화율 &lt; 2&deg;C/s<br>
+        <strong>정상 운전 유지</strong>
+      </div>
+    </div>
+    <div class="alert-card warning">
+      <div class="alert-level">Warning</div>
+      <div class="alert-desc">
+        온도 60~80&deg;C 또는<br>
+        변화율 2~5&deg;C/s<br>
+        <strong>투입 감속 + 감시 강화</strong>
+      </div>
+    </div>
+    <div class="alert-card emergency">
+      <div class="alert-level">Emergency</div>
+      <div class="alert-desc">
+        온도 &gt; 80&deg;C 또는<br>
+        변화율 &gt; 5&deg;C/s<br>
+        <strong>비상정지 + N&sub2; 퍼지</strong>
+      </div>
+    </div>
+  </div>
+
+  <h3>Emergency 대응 시퀀스</h3>
+  <div class="step-list">
+    <div class="step-item">
+      <div class="content"><strong>0ms</strong> &mdash; 비상정지: 전체 라인 즉시 정지. 슈레더, 컨베이어, 투입장치 일괄 정지.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>100ms</strong> &mdash; N&sub2; 퍼지 시작. 질소 가스를 파쇄 챔버에 주입하여 산소를 차단합니다.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>500ms</strong> &mdash; 소화 시스템 작동 + 배기 팬 정지. 소화액 분사와 동시에 분진 확산 방지를 위해 배기를 차단합니다.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>1,000ms</strong> &mdash; 119 자동 신고 + 전 직원 대피 알림. 비상정지 후 1초 이내에 외부 통보까지 완료됩니다.</div>
+    </div>
+  </div>
+
+  <div class="info-card red">
+    <div class="card-title">왜 1초 이내인가?</div>
+    <p>배터리 열폭주는 Stage 2(분리막 용융)에서 Stage 3(발화)까지 <strong>수 초</strong>밖에 걸리지 않습니다. 사람이 화면을 보고 판단하고 버튼을 누르는 데 최소 3~5초가 걸립니다. 따라서 감지부터 1차 대응(질소 퍼지)까지 <strong>반드시 자동화</strong>되어야 하며, 목표는 <strong>100ms 감지 + 100ms 질소 퍼지 = 200ms 이내 1차 대응</strong>입니다.</p>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────── -->
+<!-- SECTION 5 -->
+<!-- ────────────────────────────────────── -->
+<div class="section">
+  <h2><span class="num">5</span> 시뮬레이션 결과 분석</h2>
+
+  <div class="img-wrap">
+    <img src="anomaly_detection_result.png" alt="Anomaly Detection 시뮬레이션 결과">
+    <div class="caption">simulation.py 실행 결과 &mdash; 300초 발화 시나리오 4-panel 분석</div>
+  </div>
+
+  <p>시뮬레이션은 300초(5분) 동안의 발화 시나리오를 재현합니다. 4개의 그래프를 하나씩 살펴보겠습니다.</p>
+
+  <!-- Graph 1 -->
+  <div class="graph-card">
+    <div class="graph-num">그래프 1</div>
+    <h3>4채널 센서 온도 모니터링</h3>
+    <p><strong>X축:</strong> 시간 (초) | <strong>Y축:</strong> 온도 (&deg;C, 대수 스케일)</p>
+    <ul style="font-size:13px;line-height:1.8;">
+      <li><strong>빨간선 (IR1):</strong> 챔버 좌측 IR 센서 &mdash; 발화 지점에 가장 가까워 가장 먼저, 가장 높이 올라감</li>
+      <li><strong>주황선 (IR2):</strong> 챔버 우측 IR 센서 &mdash; 반대편이므로 지연 상승, 열 전파를 확인</li>
+      <li><strong>파란선 (TMP-A):</strong> 축A 베어링 열전대 &mdash; 챔버보다 느리게 상승 (열 전도 시간)</li>
+      <li><strong>청록선 (TMP-B):</strong> 축B 베어링 열전대 &mdash; 가장 먼 곳, 가장 느린 반응</li>
+    </ul>
+    <div class="info-card yellow">
+      <div class="card-title">읽는 법</div>
+      <p>0~120초(녹색 구간)에서 35~40&deg;C 정상 범위를 유지하다가, 120초부터 점선 경고선(60&deg;C)을 돌파하고, 180초 이후 급격히 상승하여 열폭주 시 800&deg;C까지 치솟습니다. Y축이 대수 스케일인 이유는 열폭주 온도가 정상의 20배 이상이기 때문입니다.</p>
+    </div>
+  </div>
+
+  <!-- Graph 2 -->
+  <div class="graph-card">
+    <div class="graph-num">그래프 2</div>
+    <h3>온도 변화율 (dT/dt)</h3>
+    <p><strong>X축:</strong> 시간 (초) | <strong>Y축:</strong> 변화율 (&deg;C/s, 대수 스케일)</p>
+    <ul style="font-size:13px;line-height:1.8;">
+      <li><strong>초록 점선 (0.1&deg;C/s):</strong> 정상 기준선</li>
+      <li><strong>노란 점선 (2&deg;C/s):</strong> Warning 임계값 &mdash; 이 선을 넘으면 "뭔가 이상하다"</li>
+      <li><strong>주황 점선 (5&deg;C/s):</strong> Alarm 임계값 &mdash; 발화 전조</li>
+      <li><strong>빨간 점선 (20&deg;C/s):</strong> Emergency 임계값 &mdash; 열폭주 확정</li>
+    </ul>
+    <div class="info-card blue">
+      <div class="card-title">핵심 관찰</div>
+      <p>정상 구간(0~120초)에서 변화율은 0.1&deg;C/s 근처에서 안정적입니다. 120초 이후 변화율이 서서히 올라가기 시작하고, 180초에서 5&deg;C/s를 돌파합니다. 열폭주 구간(210초~)에서는 50&deg;C/s를 훌쩍 넘깁니다. <strong>변화율 그래프는 절대 온도보다 수십 초 일찍 이상 징후를 보여줍니다.</strong></p>
+    </div>
+  </div>
+
+  <!-- Graph 3 -->
+  <div class="graph-card">
+    <div class="graph-num">그래프 3</div>
+    <h3>실시간 발화 확률</h3>
+    <p><strong>X축:</strong> 시간 (초) | <strong>Y축:</strong> 확률 (0~1)</p>
+    <ul style="font-size:13px;line-height:1.8;">
+      <li><strong>0.0:</strong> 발화 가능성 없음 (정상)</li>
+      <li><strong>0.3 (노란 점선):</strong> Warning 임계 &mdash; 전조 감지 시작</li>
+      <li><strong>0.7 (빨간 점선):</strong> Emergency 임계 &mdash; 비상정지 발동</li>
+      <li><strong>1.0:</strong> 발화/열폭주 확정</li>
+    </ul>
+    <div class="info-card green">
+      <div class="card-title">해석</div>
+      <p>정상 구간에서 0.0을 유지하다가, 전조 단계에서 0.3~0.4로 상승(Warning), 발화 단계에서 0.7~0.8로 상승(Emergency), 열폭주에서 1.0에 도달합니다. 냉각/대응 후에도 온도가 높으므로 확률이 서서히 감소합니다.</p>
+    </div>
+  </div>
+
+  <!-- Graph 4 -->
+  <div class="graph-card">
+    <div class="graph-num">그래프 4</div>
+    <h3>3단계 경보 시스템 타임라인</h3>
+    <p><strong>X축:</strong> 시간 (초) | 색상 바로 경보 상태를 직관적으로 표시</p>
+    <ul style="font-size:13px;line-height:1.8;">
+      <li><strong style="color:#4caf50;">초록 (Normal):</strong> 정상 운전, 모든 지표 안전</li>
+      <li><strong style="color:#ffa000;">주황 (Warning):</strong> 전조 감지, 투입 감속 + 감시 강화</li>
+      <li><strong style="color:#d32f2f;">빨강 (Emergency):</strong> 비상정지 + 질소 퍼지 + 소화 작동</li>
+    </ul>
+    <div class="info-card purple">
+      <div class="card-title">판단 기준</div>
+      <p>Warning은 <strong>온도 60&deg;C 이상 또는 변화율 2&deg;C/s 이상</strong>일 때 발동됩니다. Emergency는 <strong>온도 80&deg;C 이상 또는 변화율 5&deg;C/s 이상</strong>일 때 발동됩니다. 두 조건 중 하나만 만족해도 해당 레벨로 상향됩니다 &mdash; "놓치는 것보다 과잉 반응이 낫다"는 안전 원칙입니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────── -->
+<!-- SECTION 6 -->
+<!-- ────────────────────────────────────── -->
+<div class="section">
+  <h2><span class="num">6</span> 알고리즘 특징 / 장점 / 단점</h2>
+
+  <h3>특징</h3>
+  <div class="info-card blue">
+    <div class="card-title">물리 기반 변화율 분석 (Physics-Based Rate Analysis)</div>
+    <ul>
+      <li>딥러닝이 아닌 <strong>물리 법칙(열역학)</strong>에 기반 &mdash; 배터리 열폭주의 본질인 "급격한 온도 변화"를 직접 감시</li>
+      <li>학습 데이터가 없어도 동작 가능 (실제 발화 데이터 불필요)</li>
+      <li>해석이 명확: "왜 경보가 울렸는가?"를 dT/dt 수치로 즉시 설명 가능</li>
+    </ul>
+  </div>
+  <div class="info-card blue">
+    <div class="card-title">이중 센서 검증 (Dual Sensor Validation)</div>
+    <ul>
+      <li>IR 센서 2개 교차검증으로 <strong>센서 고장</strong>과 <strong>실제 발화</strong>를 구분</li>
+      <li>열전대(PT100) 2개는 베어링 온도를 보조적으로 확인</li>
+      <li>4채널 중 1개가 고장나도 나머지 3개로 판단 지속</li>
+    </ul>
+  </div>
+
+  <h3>장점 vs 단점</h3>
+  <div class="compare-box">
+    <div class="compare-side right">
+      <h4>장점</h4>
+      <ul>
+        <li><strong>초고속 응답 (&lt;100ms):</strong> 단순 산술 연산만 필요, GPU 불필요</li>
+        <li><strong>단순하고 신뢰성 높음:</strong> 코드 수백 줄이면 충분, 버그 가능성 낮음</li>
+        <li><strong>열폭주 특화:</strong> 배터리 열폭주의 물리적 특성(급격한 온도 상승)에 최적화</li>
+        <li><strong>설명 가능:</strong> "dT/dt가 5.2&deg;C/s로 임계값 초과" &mdash; 누구나 이해 가능</li>
+        <li><strong>학습 불필요:</strong> 임계값만 설정하면 바로 운용, 발화 사고 이력 데이터 필요 없음</li>
+        <li><strong>PLC 직접 구현:</strong> 엣지 컴퓨터 없이 PLC에서도 실행 가능</li>
+      </ul>
+    </div>
+    <div class="compare-side left">
+      <h4>단점</h4>
+      <ul>
+        <li><strong>센서 노이즈 민감:</strong> 순간적인 노이즈가 높은 dT/dt로 계산될 수 있음 &rarr; 이동평균 필터 필요</li>
+        <li><strong>오경보 가능:</strong> 재료 투입 시 급격한 온도 변화가 발화로 오인될 수 있음</li>
+        <li><strong>예측 불가:</strong> "앞으로 발화할 것인가?"는 판단 불가, 현재 상태만 감지</li>
+        <li><strong>고정 임계값:</strong> 재료/계절/환경에 따라 임계값 수동 조정 필요</li>
+        <li><strong>느린 발화 감지 어려움:</strong> 수 분에 걸쳐 서서히 올라가는 발화는 변화율이 낮아 놓칠 수 있음</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card"><div class="value" style="color:#4caf50;">&lt;100ms</div><div class="label">감지 지연</div></div>
+    <div class="metric-card"><div class="value" style="color:var(--p);">0줄</div><div class="label">학습 데이터 필요량</div></div>
+    <div class="metric-card"><div class="value" style="color:var(--d);">4층</div><div class="label">다층 감시 레이어</div></div>
+  </div>
+</div>
+
+<!-- ────────────────────────────────────── -->
+<!-- SECTION 7 -->
+<!-- ────────────────────────────────────── -->
+<div class="section">
+  <h2><span class="num">7</span> 슈레더 적용 시나리오</h2>
+
+  <p>실제 배터리 파쇄 슈레더에 이 알고리즘을 적용할 때의 구체적인 시나리오입니다.</p>
+
+  <h3>목표: 1초 이내 대응 완료</h3>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="content"><strong>IR 센서 설치 (0일차):</strong> 파쇄 챔버 상부 양쪽에 IR 온도센서 2개 설치. 측정 범위 -20~500&deg;C, 응답속도 50ms. 렌즈 보호용 에어퍼지 노즐 설치.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>기준선 학습 (1~14일차):</strong> 다양한 재료(플라스틱, 금속, 배터리)를 파쇄하며 정상 온도 프로파일을 수집. 재료별 정상 변화율 범위를 확정합니다.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>임계값 설정 (14일차):</strong> 수집된 정상 데이터의 최대 변화율 + 안전 마진(2배)으로 Warning 임계값 설정. Emergency는 물리 계산 기반 고정값(5&deg;C/s) 사용.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>실시간 운용:</strong> 100ms마다 4채널 온도 읽기 &rarr; dT/dt 계산 &rarr; 4개 Layer 판정 &rarr; 경보/비상정지 자동 실행. 전체 사이클 &lt;50ms로 처리.</div>
+    </div>
+    <div class="step-item">
+      <div class="content"><strong>비상 대응 자동화:</strong> Emergency 감지 시 PLC가 100ms 이내에 질소 퍼지 밸브를 열고, 500ms 이내에 소화 시스템을 작동시킵니다. 사람의 개입 없이 1초 이내에 1차 대응이 완료됩니다.</div>
+    </div>
+  </div>
+
+  <h3>타임라인 요약: 감지부터 대응까지</h3>
+  <div class="code-box"><span class="dm">/* 발화 감지 → 대응 타임라인 */</span>
+
+  <span class="yw">t = 0ms</span>   센서에서 온도 급상승 시작
+  <span class="yw">t = 100ms</span>  다음 샘플링 → <span class="pk">dT/dt 계산 완료</span>
+  <span class="yw">t = 110ms</span>  4개 Layer 판정 → <span class="pk">Emergency 확정</span>
+  <span class="yw">t = 120ms</span>  PLC 비상정지 명령 전송
+  <span class="yw">t = 150ms</span>  <span class="gr">전체 라인 정지</span>
+  <span class="yw">t = 220ms</span>  <span class="gr">N₂ 퍼지 밸브 개방</span>
+  <span class="yw">t = 620ms</span>  <span class="gr">소화 시스템 작동</span>
+  <span class="yw">t = 1000ms</span> <span class="gr">119 자동 신고 + 대피 알림</span>
+  ─────────────────────────────────────
+  <span class="hl">총 소요: 감지 100ms + 대응 900ms = 1초 이내</span></div>
+
+  <div class="info-card green">
+    <div class="card-title">이 모델의 위치</div>
+    <p>모델 05(발화 감지)는 10개 AI 모델 중 <strong>가장 중요한 안전 모델</strong>입니다. 다른 모델들(베어링 이상, 칼날 마모 등)은 예방적 유지보수를 위한 것이지만, 이 모델은 <strong>인명과 시설을 보호하는 최후의 방어선</strong>입니다. 단순하지만 확실한 물리 기반 접근법이 생명을 지킵니다.</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

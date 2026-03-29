@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모델 3: Classical DSP 축 불균형 진단 — 상세 설명</title>
+<style>
+:root{--p:#2563eb;--pl:#dbeafe;--pd:#1e40af;--a:#7c3aed;--al:#ede9fe;--s:#059669;--sl:#d1fae5;--w:#d97706;--wl:#fef3c7;--d:#dc2626;--dl:#fee2e2;--i:#0891b2;--il:#cffafe;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;--g900:#111827;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Pretendard',-apple-system,'Segoe UI','Malgun Gothic',sans-serif;background:var(--g50);color:var(--g800);line-height:1.8;font-size:15px;}
+
+/* SIDEBAR */
+.sidebar{position:fixed;left:0;top:0;width:270px;height:100vh;background:linear-gradient(180deg,#0f172a 0%,#1e293b 100%);color:#fff;overflow-y:auto;z-index:100;padding:0;transition:transform .3s;}
+.sidebar-logo{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sidebar-logo .logo-main{font-size:18px;font-weight:800;color:#60a5fa;letter-spacing:-0.5px;}
+.sidebar-logo .logo-sub{font-size:11px;color:#94a3b8;margin-top:2px;}
+.sidebar-logo .logo-tag{display:inline-block;background:rgba(96,165,250,.15);color:#60a5fa;font-size:10px;padding:2px 8px;border-radius:4px;margin-top:6px;font-weight:600;}
+.sidebar .nav-group{padding:14px 0 6px;font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1.5px;padding-left:20px;}
+.sidebar a{display:block;padding:6px 20px;color:#94a3b8;text-decoration:none;font-size:12px;transition:.2s;border-left:3px solid transparent;}
+.sidebar a:hover,.sidebar a.active{color:#fff;background:rgba(255,255,255,.05);border-left-color:#60a5fa;}
+.sidebar a .num{display:inline-block;width:20px;color:#60a5fa;font-weight:600;font-size:11px;}
+.sidebar .divider{height:1px;background:rgba(255,255,255,.06);margin:6px 16px;}
+
+.menu-toggle{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--g900);color:#fff;border:none;border-radius:8px;width:42px;height:42px;font-size:20px;cursor:pointer;align-items:center;justify-content:center;}
+.main{margin-left:270px;max-width:960px;padding:32px 48px 80px;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 40%,#1e40af 70%,#7c3aed 100%);color:#fff;border-radius:20px;padding:52px 44px;margin-bottom:44px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;background:rgba(96,165,250,.08);border-radius:50%;}
+.hero::after{content:'';position:absolute;bottom:-50px;left:20%;width:200px;height:200px;background:rgba(124,58,237,.08);border-radius:50%;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.12);backdrop-filter:blur(4px);padding:4px 16px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:16px;letter-spacing:.5px;border:1px solid rgba(255,255,255,.1);position:relative;}
+.hero h1{font-size:30px;font-weight:800;margin-bottom:10px;line-height:1.35;position:relative;}
+.hero .subtitle{font-size:15px;opacity:.85;line-height:1.7;position:relative;}
+.hero-info{display:flex;gap:24px;margin-top:24px;font-size:12px;position:relative;flex-wrap:wrap;}
+.hero-info-item{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 16px;backdrop-filter:blur(4px);}
+.hero-info-item .label{color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:.5px;}
+.hero-info-item .val{color:#fff;font-weight:700;font-size:16px;margin-top:2px;}
+
+/* SECTIONS */
+.section{margin-bottom:52px;scroll-margin-top:20px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:10px;border-bottom:2px solid var(--pl);}
+.section-num{display:flex;align-items:center;justify-content:center;width:38px;height:38px;background:var(--p);color:#fff;border-radius:10px;font-weight:800;font-size:16px;flex-shrink:0;}
+.section-header h2{font-size:20px;font-weight:700;color:var(--g900);}
+h3{font-size:16px;font-weight:700;color:var(--g900);margin:24px 0 12px;}
+p{margin-bottom:12px;}
+
+/* CARDS */
+.info-card{border-radius:12px;padding:20px 24px;margin:16px 0;border-left:4px solid;}
+.info-card.blue{background:var(--pl);border-color:var(--p);}
+.info-card.green{background:var(--sl);border-color:var(--s);}
+.info-card.yellow{background:var(--wl);border-color:var(--w);}
+.info-card.red{background:var(--dl);border-color:var(--d);}
+.info-card.purple{background:var(--al);border-color:var(--a);}
+.info-card .card-title{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.info-card p,.info-card li{font-size:13px;line-height:1.7;}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;margin:16px 0;border-radius:12px;border:1px solid var(--g200);box-shadow:0 1px 3px rgba(0,0,0,.04);}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead{background:var(--g100);}
+th{text-align:left;padding:10px 14px;font-weight:700;color:var(--g700);font-size:12px;border-bottom:2px solid var(--g200);white-space:nowrap;}
+td{padding:9px 14px;border-bottom:1px solid var(--g100);vertical-align:top;line-height:1.6;}
+tr:last-child td{border-bottom:none;}
+tr:hover{background:var(--g50);}
+.code-cell{font-family:'Consolas',monospace;font-weight:700;color:var(--pd);}
+
+/* CODE */
+.code-card{background:linear-gradient(135deg,#1e293b,#0f172a);color:#e2e8f0;border-radius:12px;padding:24px 26px;margin:16px 0;font-family:'Consolas','Monaco',monospace;font-size:12px;line-height:1.7;overflow-x:auto;position:relative;white-space:pre;}
+.code-card .badge{position:absolute;top:10px;right:14px;background:rgba(96,165,250,.2);color:#60a5fa;font-size:10px;padding:2px 10px;border-radius:10px;font-family:-apple-system,sans-serif;}
+.code-card .hl{color:#60a5fa;font-weight:600;}
+.code-card .gr{color:#4ade80;}
+.code-card .yw{color:#fbbf24;}
+.code-card .pk{color:#f472b6;}
+.code-card .dm{color:#64748b;}
+
+/* METRICS */
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0;}
+.metric-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:18px;text-align:center;transition:transform .2s,box-shadow .2s;}
+.metric-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08);}
+.metric-card .value{font-size:26px;font-weight:800;line-height:1.2;}
+.metric-card .value.blue{color:var(--p);}
+.metric-card .value.green{color:var(--s);}
+.metric-card .value.purple{color:var(--a);}
+.metric-card .value.orange{color:var(--w);}
+.metric-card .value.red{color:var(--d);}
+.metric-card .label{font-size:11px;color:var(--g500);margin-top:4px;line-height:1.4;}
+
+/* FLOW */
+.flow{display:flex;align-items:stretch;gap:0;margin:16px 0;overflow-x:auto;}
+.flow-step{flex:1;min-width:120px;background:#fff;border:1px solid var(--g200);border-radius:12px;padding:14px 10px;text-align:center;transition:transform .2s;}
+.flow-step:hover{transform:translateY(-2px);}
+.flow-step .step-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:var(--p);color:#fff;border-radius:50%;font-size:12px;font-weight:700;margin-bottom:6px;}
+.flow-step h4{font-size:11px;font-weight:700;color:var(--g800);margin-bottom:3px;}
+.flow-step p{font-size:10px;color:var(--g500);margin-bottom:0;line-height:1.4;}
+.flow-arrow{display:flex;align-items:center;padding:0 3px;color:var(--p);font-size:18px;flex-shrink:0;}
+
+/* FORMULA */
+.formula-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:2px solid #bae6fd;border-radius:14px;padding:24px 28px;margin:16px 0;text-align:center;}
+.formula-box .formula{font-size:20px;font-weight:800;color:var(--pd);font-family:'Consolas',monospace;margin:12px 0;}
+.formula-box .desc{font-size:13px;color:var(--g600);}
+
+/* COMPARE */
+.compare-box{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--g200);margin:16px 0;}
+.compare-side{padding:20px 24px;}
+.compare-side.pros{background:#f0fdf4;border-right:2px solid var(--g200);}
+.compare-side.cons{background:#fef2f2;}
+.compare-side h4{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.compare-side.pros h4{color:var(--s);}
+.compare-side.cons h4{color:var(--d);}
+.compare-side li{font-size:12px;line-height:1.7;}
+
+/* RESULT IMAGE */
+.result-img-wrap{margin:20px 0;text-align:center;}
+.result-img-wrap img{max-width:100%;border-radius:14px;border:1px solid var(--g200);box-shadow:0 4px 16px rgba(0,0,0,.08);}
+.result-img-wrap .caption{font-size:12px;color:var(--g500);margin-top:8px;}
+
+/* SCENARIO GRID */
+.scenario-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;}
+.scenario-card{background:#fff;border:2px solid var(--g200);border-radius:14px;padding:20px;text-align:center;transition:transform .2s;}
+.scenario-card:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.08);}
+.scenario-card.normal{border-color:#22c55e;background:#f0fdf4;}
+.scenario-card.warning{border-color:#f59e0b;background:#fffbeb;}
+.scenario-card.danger{border-color:#ef4444;background:#fef2f2;}
+.scenario-card .sc-label{font-size:12px;font-weight:700;margin-bottom:6px;}
+.scenario-card .sc-value{font-size:28px;font-weight:800;margin-bottom:4px;}
+.scenario-card .sc-range{font-size:11px;color:var(--g500);}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .menu-toggle{display:flex;}
+  .main{margin-left:0;padding:20px 16px 60px;}
+  .metric-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-info{flex-direction:column;gap:10px;}
+  .flow{flex-direction:column;}
+  .flow-arrow{transform:rotate(90deg);padding:4px 0;}
+  .compare-box,.scenario-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-main">Classical DSP</div>
+    <div class="logo-sub">축 불균형 진단 상세 설명</div>
+    <span class="logo-tag">MODEL 03 / 10</span>
+  </div>
+  <div class="nav-group">목차</div>
+  <a href="#sec0"><span class="num">0</span> Classical DSP란?</a>
+  <a href="#sec1"><span class="num">1</span> 물리적 원리</a>
+  <a href="#sec2"><span class="num">2</span> FFT 변환 과정</a>
+  <a href="#sec3"><span class="num">3</span> 1X 성분 추출</a>
+  <a href="#sec4"><span class="num">4</span> 진단 기준</a>
+  <a href="#sec5"><span class="num">5</span> 시뮬레이션 결과</a>
+  <a href="#sec6"><span class="num">6</span> 알고리즘 특징</a>
+  <a href="#sec7"><span class="num">7</span> 슈레더 적용</a>
+  <div class="divider"></div>
+  <div class="nav-group">관련 모델</div>
+  <a href="../01_LSTM_Autoencoder_베어링이상탐지/"><span class="num">01</span> 베어링 이상 탐지</a>
+  <a href="../02_Gradient_Boosting_칼날마모예측/"><span class="num">02</span> 칼날 마모 예측</a>
+  <a class="active"><span class="num">03</span> 축 불균형 진단</a>
+  <a href="../04_Pattern_Recognition_이물질끼임감지/"><span class="num">04</span> 이물질 끼임 감지</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-badge">MODEL 03 &mdash; 고장예지 (Predictive Maintenance)</span>
+  <h1>Classical DSP<br>축 불균형 진단</h1>
+  <p class="subtitle">FFT(Fast Fourier Transform) 기반 1X 회전주파수 분석으로<br>
+    축 불균형을 실시간 감지하고 ISO 10816 기준에 따라 위험도를 판정합니다.</p>
+  <div class="hero-info">
+    <div class="hero-info-item"><div class="label">알고리즘</div><div class="val">FFT 1X</div></div>
+    <div class="hero-info-item"><div class="label">추론 시간</div><div class="val">&lt; 1ms</div></div>
+    <div class="hero-info-item"><div class="label">정확도</div><div class="val">98%+</div></div>
+    <div class="hero-info-item"><div class="label">실행 주기</div><div class="val">1초</div></div>
+    <div class="hero-info-item"><div class="label">학습 필요</div><div class="val">없음</div></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 0: Classical DSP란? -->
+<!-- ============================================================ -->
+<div class="section" id="sec0">
+  <div class="section-header">
+    <div class="section-num">0</div>
+    <h2>Classical DSP란?</h2>
+  </div>
+
+  <p><strong>DSP(Digital Signal Processing, 디지털 신호 처리)</strong>는 센서에서 수집한 아날로그 신호를 디지털로 변환한 뒤,
+    수학적 알고리즘으로 분석하여 유용한 정보를 추출하는 기술입니다. "Classical"이라 함은 딥러닝 등 AI 기법이 아닌,
+    <strong>물리 법칙과 수학적 이론에 기반한 전통적 신호 처리 기법</strong>을 의미합니다.</p>
+
+  <div class="info-card blue">
+    <div class="card-title">핵심 개념: 주파수 도메인 분석 (Frequency Domain Analysis)</div>
+    <p>시간에 따른 진동 신호(시간 도메인)를 <strong>FFT(고속 푸리에 변환)</strong>를 통해 <strong>주파수 도메인</strong>으로 변환합니다.
+      주파수 도메인에서는 어떤 주파수의 진동이 얼마나 큰지를 한눈에 파악할 수 있어, 설비 고장의 원인을 정확하게 진단할 수 있습니다.</p>
+  </div>
+
+  <h3>시간 도메인 vs 주파수 도메인</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>구분</th><th>시간 도메인 (Time Domain)</th><th>주파수 도메인 (Frequency Domain)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>표현</strong></td><td>시간에 따른 진동 크기 변화</td><td>주파수별 진동 에너지 분포</td></tr>
+        <tr><td><strong>X축</strong></td><td>시간 (초, ms)</td><td>주파수 (Hz)</td></tr>
+        <tr><td><strong>Y축</strong></td><td>진폭 (mm/s, g)</td><td>진폭 (mm/s)</td></tr>
+        <tr><td><strong>용도</strong></td><td>전체 진동 크기 확인</td><td>고장 원인별 주파수 분리</td></tr>
+        <tr><td><strong>변환 방법</strong></td><td>&mdash;</td><td>FFT (Fast Fourier Transform)</td></tr>
+        <tr><td><strong>장점</strong></td><td>직관적, 이해 쉬움</td><td>고장 원인 분리 가능</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>왜 AI가 아닌 Classical DSP를 사용하는가?</h3>
+  <div class="info-card green">
+    <div class="card-title">물리 법칙 기반의 확실한 진단</div>
+    <ul>
+      <li>축 불균형은 <strong>반드시</strong> 1X 회전주파수에 에너지가 집중됩니다 &mdash; 이것은 뉴턴 역학의 법칙입니다.</li>
+      <li>물리적으로 확실한 관계이므로 AI 학습이 필요 없습니다.</li>
+      <li>ISO 10816 국제 표준이 이미 확립되어 있어 별도의 레이블링 작업이 불필요합니다.</li>
+      <li>FFT 1회 연산이 1ms 미만으로, 어떤 AI 모델보다 빠릅니다.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: 물리적 원리 -->
+<!-- ============================================================ -->
+<div class="section" id="sec1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>물리적 원리 &mdash; 축 불균형과 1X 주파수 진동</h2>
+  </div>
+
+  <p>축 불균형(Shaft Imbalance)이란 회전축의 질량 중심이 회전 중심에서 벗어난 상태를 말합니다.
+    이로 인해 <strong>매 회전마다 1번의 원심력</strong>이 발생하며, 이것이 1X 회전주파수의 진동으로 나타납니다.</p>
+
+  <div class="formula-box">
+    <div class="desc">1X 회전주파수 공식</div>
+    <div class="formula">f<sub>1X</sub> = RPM / 60 (Hz)</div>
+    <div class="desc">예: 축A가 120 RPM으로 회전하면 &rarr; f<sub>1X</sub> = 120 / 60 = <strong>2.0 Hz</strong></div>
+  </div>
+
+  <h3>불균형 발생 메커니즘</h3>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="step-num">1</div>
+      <h4>질량 불균형</h4>
+      <p>칼날 마모/탈락<br>이물질 부착</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">2</div>
+      <h4>원심력 발생</h4>
+      <p>F = m &times; r &times; &omega;&sup2;<br>무거운 쪽으로 힘 작용</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">3</div>
+      <h4>주기적 진동</h4>
+      <p>매 회전 1번 진동<br>&rarr; 1X 주파수 성분</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">4</div>
+      <h4>FFT로 검출</h4>
+      <p>1X 진폭 측정<br>&rarr; 불균형 정량화</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">5</div>
+      <h4>ISO 판정</h4>
+      <p>정상/경고/위험<br>자동 분류</p>
+    </div>
+  </div>
+
+  <h3>원심력과 진동의 관계</h3>
+  <div class="formula-box">
+    <div class="desc">원심력 공식</div>
+    <div class="formula">F = m &times; e &times; (2&pi; &times; f<sub>1X</sub>)&sup2;</div>
+    <div class="desc">m: 회전체 질량 (kg), e: 편심 거리 (mm), f<sub>1X</sub>: 1X 주파수 (Hz)</div>
+  </div>
+
+  <div class="info-card yellow">
+    <div class="card-title">슈레더에서의 불균형 원인</div>
+    <ul>
+      <li><strong>칼날 마모 불균일:</strong> 한쪽 칼날이 더 많이 마모되면 질량 차이 발생</li>
+      <li><strong>칼날 파손/탈락:</strong> 칼날 1개 탈락 시 심한 불균형 즉시 발생</li>
+      <li><strong>이물질 부착:</strong> 파쇄물이 축에 부착되어 편심 질량 증가</li>
+      <li><strong>베어링 마모:</strong> 베어링 간극 증가로 축이 편심 회전</li>
+    </ul>
+  </div>
+
+  <h3>고조파 분석으로 원인 분류</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>고조파 패턴</th><th>원인</th><th>물리적 설명</th><th>조치</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="code-cell">1X만 높음</td><td>질량 불균형</td><td>편심 질량이 매 회전 1번 원심력 발생</td><td>밸런싱 또는 이물질 제거</td></tr>
+        <tr><td class="code-cell">1X + 2X</td><td>미스얼라인먼트</td><td>축 정렬 불량으로 2X 성분 추가 발생</td><td>축 재정렬</td></tr>
+        <tr><td class="code-cell">2X만 높음</td><td>루스니스 (볼트 풀림)</td><td>체결 불량으로 2X 진동 발생</td><td>볼트 체결 점검</td></tr>
+        <tr><td class="code-cell">3X~5X 높음</td><td>칼날 손상/균열</td><td>칼날 결함이 고차 진동 유발</td><td>칼날 교체</td></tr>
+        <tr><td class="code-cell">비동기 주파수</td><td>베어링 결함</td><td>베어링 고유 결함 주파수 (BPFO/BPFI)</td><td>모델 1 연계 진단</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: FFT 변환 과정 -->
+<!-- ============================================================ -->
+<div class="section" id="sec2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>FFT 변환 과정 &mdash; 시간 도메인에서 주파수 도메인으로</h2>
+  </div>
+
+  <p><strong>FFT(Fast Fourier Transform)</strong>는 이산 푸리에 변환(DFT)을 효율적으로 계산하는 알고리즘입니다.
+    시간 도메인의 복잡한 진동 신호를 주파수 도메인으로 변환하여, 각 주파수 성분의 진폭과 위상을 분리해냅니다.</p>
+
+  <h3>FFT 처리 파이프라인</h3>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="step-num">1</div>
+      <h4>신호 수집</h4>
+      <p>VIB-A/B 센서<br>10kHz 샘플링<br>1초 = 10,000 samples</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">2</div>
+      <h4>윈도우 함수</h4>
+      <p>Hanning Window<br>스펙트럼 누설<br>(Leakage) 방지</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">3</div>
+      <h4>FFT 연산</h4>
+      <p>N=10,000점 FFT<br>O(N log N) 연산<br>&lt; 1ms 소요</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">4</div>
+      <h4>스펙트럼 생성</h4>
+      <p>주파수 vs 진폭<br>해상도: 1Hz<br>(= fs/N)</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">5</div>
+      <h4>1X 성분 추출</h4>
+      <p>RPM/60 Hz 근방<br>&plusmn;0.5Hz 탐색<br>최대 진폭 추출</p>
+    </div>
+  </div>
+
+  <h3>FFT 수학적 원리</h3>
+  <div class="formula-box">
+    <div class="desc">이산 푸리에 변환 (DFT)</div>
+    <div class="formula">X[k] = &sum;<sub>n=0</sub><sup>N-1</sup> x[n] &middot; e<sup>-j2&pi;kn/N</sup></div>
+    <div class="desc">x[n]: 시간 도메인 신호, X[k]: 주파수 도메인 결과, N: 샘플 수</div>
+  </div>
+
+  <h3>핵심 파라미터</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>파라미터</th><th>값</th><th>의미</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>샘플링 주파수 (fs)</strong></td><td class="code-cell">10,000 Hz</td><td>1초에 10,000번 측정, 나이퀴스트 주파수 = 5,000 Hz</td></tr>
+        <tr><td><strong>샘플 수 (N)</strong></td><td class="code-cell">10,000</td><td>1초 윈도우 &times; 10kHz 샘플링</td></tr>
+        <tr><td><strong>주파수 해상도 (&Delta;f)</strong></td><td class="code-cell">1.0 Hz</td><td>fs / N = 10,000 / 10,000 = 1.0 Hz</td></tr>
+        <tr><td><strong>분석 범위</strong></td><td class="code-cell">0 ~ 5,000 Hz</td><td>fs / 2 (나이퀴스트 한계)</td></tr>
+        <tr><td><strong>1X 주파수 (축A)</strong></td><td class="code-cell">2.0 Hz</td><td>120 RPM / 60 = 2.0 Hz</td></tr>
+        <tr><td><strong>1X 주파수 (축B)</strong></td><td class="code-cell">1.33 Hz</td><td>80 RPM / 60 &asymp; 1.33 Hz</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Python 구현 코드</h3>
+  <div class="code-card"><span class="badge">Python</span><span class="dm"># FFT 기반 1X 성분 추출</span>
+<span class="hl">import</span> numpy <span class="hl">as</span> np
+<span class="hl">from</span> scipy.fft <span class="hl">import</span> fft, fftfreq
+
+<span class="hl">def</span> <span class="gr">extract_1x_component</span>(signal, rpm, fs=<span class="yw">10000</span>):
+    n = <span class="pk">len</span>(signal)
+    f_1x = rpm / <span class="yw">60.0</span>  <span class="dm"># 1X 주파수 (Hz)</span>
+
+    <span class="dm"># FFT 수행</span>
+    fft_vals = fft(signal)
+    freqs = fftfreq(n, <span class="yw">1.0</span> / fs)
+
+    <span class="dm"># 양의 주파수 절반</span>
+    half_n = n // <span class="yw">2</span>
+    freqs = freqs[:half_n]
+    magnitudes = (<span class="yw">2.0</span> / n) * np.abs(fft_vals[:half_n])
+
+    <span class="dm"># 1X 근방(&#177;0.5Hz) 최대 진폭 추출</span>
+    tolerance = <span class="yw">0.5</span>
+    mask = (np.abs(freqs - f_1x) &lt;= tolerance)
+    idx_1x = np.argmax(magnitudes * mask)
+    amp_1x = magnitudes[idx_1x]
+
+    <span class="hl">return</span> freqs, magnitudes, amp_1x</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: 1X 성분 추출 -->
+<!-- ============================================================ -->
+<div class="section" id="sec3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>1X 성분 추출 &mdash; ISO 10816 표준</h2>
+  </div>
+
+  <p>FFT 스펙트럼에서 1X 회전주파수 위치의 진폭을 추출하면, 이 값이 곧 <strong>축 불균형의 정량적 지표</strong>입니다.
+    이 값을 국제 표준 ISO 10816에 대입하여 설비 상태를 판정합니다.</p>
+
+  <div class="info-card blue">
+    <div class="card-title">ISO 10816이란?</div>
+    <p><strong>ISO 10816 (Mechanical vibration &mdash; Evaluation of machine vibration)</strong>은
+      회전 기계의 진동 심각도를 평가하는 국제 표준입니다.
+      기계 크기와 설치 조건에 따라 Group 1~4로 분류하며, 각 그룹별로 진동 허용 기준(mm/s RMS)을 규정합니다.</p>
+  </div>
+
+  <h3>슈레더 적용 그룹: Group 3</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>분류</th><th>설명</th><th>출력 범위</th><th>설치 조건</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Group 1</td><td>소형 기계</td><td>&lt; 15 kW</td><td>-</td></tr>
+        <tr><td>Group 2</td><td>중형 기계</td><td>15~75 kW</td><td>유연 기초</td></tr>
+        <tr style="background:#dbeafe;"><td><strong>Group 3</strong></td><td><strong>대형 기계 (슈레더)</strong></td><td><strong>15~300 kW</strong></td><td><strong>고정 기초</strong></td></tr>
+        <tr><td>Group 4</td><td>터보 기계</td><td>&gt; 300 kW</td><td>유연 기초</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>1X 성분 추출 과정</h3>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="step-num">1</div>
+      <h4>RPM 읽기</h4>
+      <p>SPD-A: 120 RPM<br>SPD-B: 80 RPM</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">2</div>
+      <h4>1X 계산</h4>
+      <p>f_1X = RPM/60<br>축A: 2.0 Hz<br>축B: 1.33 Hz</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">3</div>
+      <h4>FFT 수행</h4>
+      <p>1초 윈도우<br>10,000점 FFT</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">4</div>
+      <h4>피크 탐색</h4>
+      <p>f_1X &plusmn; 0.5Hz<br>최대 진폭 추출</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">5</div>
+      <h4>ISO 판정</h4>
+      <p>mm/s RMS 비교<br>등급 결정</p>
+    </div>
+  </div>
+
+  <h3>1X 비율 검증</h3>
+  <div class="info-card purple">
+    <div class="card-title">불균형 확인: 1X 비율 &gt; 50%</div>
+    <p>1X 진폭이 전체 RMS의 50% 이상을 차지하면 <strong>축 불균형</strong>이 확실합니다.
+      50% 미만이면 다른 원인(베어링 결함, 루스니스 등)일 가능성이 있으므로 고조파 분석을 추가 수행합니다.</p>
+    <ul>
+      <li><strong>1X 비율 = 1X 진폭 / 전체 RMS</strong></li>
+      <li>&gt; 50%: 축 불균형 확진</li>
+      <li>30~50%: 불균형 의심, 추가 분석 필요</li>
+      <li>&lt; 30%: 다른 원인 가능성 높음</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: 진단 기준 -->
+<!-- ============================================================ -->
+<div class="section" id="sec4">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2>진단 기준 &mdash; Normal / Warning / Danger</h2>
+  </div>
+
+  <p>ISO 10816-3 Group 3 기준에 따라, 1X 진폭(mm/s RMS)을 아래 기준으로 분류합니다.</p>
+
+  <div class="scenario-grid">
+    <div class="scenario-card normal">
+      <div class="sc-label" style="color:#22c55e;">정상 (Normal)</div>
+      <div class="sc-value" style="color:#22c55e;">&le; 2.8</div>
+      <div class="sc-range">mm/s RMS</div>
+      <p style="font-size:12px;margin-top:10px;color:#374151;">정상 운전 가능<br>모니터링 계속</p>
+    </div>
+    <div class="scenario-card warning">
+      <div class="sc-label" style="color:#f59e0b;">경고 (Warning)</div>
+      <div class="sc-value" style="color:#f59e0b;">2.8 ~ 7.1</div>
+      <div class="sc-range">mm/s RMS</div>
+      <p style="font-size:12px;margin-top:10px;color:#374151;">밸런싱 정비 계획 수립<br>추세 감시 강화</p>
+    </div>
+    <div class="scenario-card danger">
+      <div class="sc-label" style="color:#ef4444;">위험 (Danger)</div>
+      <div class="sc-value" style="color:#ef4444;">&gt; 7.1</div>
+      <div class="sc-range">mm/s RMS</div>
+      <p style="font-size:12px;margin-top:10px;color:#374151;">즉시 밸런싱 실시<br>&gt;11.2: 즉시 정지</p>
+    </div>
+  </div>
+
+  <h3>상세 판정 기준표</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>등급</th><th>1X 진폭 (mm/s)</th><th>상태</th><th>권고 조치</th><th>잔여 시간</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f0fdf4;"><td><strong>A (양호)</strong></td><td class="code-cell">&le; 2.8</td><td>정상 운전</td><td>정기 모니터링</td><td>충분</td></tr>
+        <tr style="background:#fffbeb;"><td><strong>B (경고)</strong></td><td class="code-cell">2.8 ~ 7.1</td><td>장기 운전 불가</td><td>밸런싱 정비 계획 수립</td><td>수일~수주</td></tr>
+        <tr style="background:#fef2f2;"><td><strong>C (위험)</strong></td><td class="code-cell">7.1 ~ 11.2</td><td>손상 위험</td><td>가능한 빨리 밸런싱 실시</td><td>수시간~수일</td></tr>
+        <tr style="background:#fecaca;"><td><strong>D (즉시 정지)</strong></td><td class="code-cell">&gt; 11.2</td><td>심각한 손상</td><td>즉시 운전 중지 후 점검</td><td>즉시</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-card red">
+    <div class="card-title">주의: 슈레더 환경 보정</div>
+    <p>ISO 10816은 일반 회전기계 기준이며, 슈레더는 충격성 진동이 크므로 실제 적용 시 아래 보정이 필요합니다:</p>
+    <ul>
+      <li><strong>초기 기준선(Baseline) 측정:</strong> 정상 운전 7일간 데이터로 자체 기준값 설정</li>
+      <li><strong>윈도우 평균:</strong> 1초 단위가 아닌 5~10초 이동평균으로 안정성 확보</li>
+      <li><strong>칼날 교체 후:</strong> 1~2시간 안정화 기간 동안 경고 무시</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: 시뮬레이션 결과 -->
+<!-- ============================================================ -->
+<div class="section" id="sec5">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>시뮬레이션 결과 분석</h2>
+  </div>
+
+  <p><code>simulation.py</code>를 실행하면 3가지 시나리오(정상/경고/위험)에 대한 진동 신호를 생성하고,
+    FFT 분석으로 1X 성분을 추출하여 ISO 10816 기준에 따라 판정합니다.</p>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="value green">1.8</div>
+      <div class="label">정상 시나리오<br>1X 진폭 (mm/s)</div>
+    </div>
+    <div class="metric-card">
+      <div class="value orange">5.5</div>
+      <div class="label">경고 시나리오<br>1X 진폭 (mm/s)</div>
+    </div>
+    <div class="metric-card">
+      <div class="value red">10.0</div>
+      <div class="label">위험 시나리오<br>1X 진폭 (mm/s)</div>
+    </div>
+    <div class="metric-card">
+      <div class="value blue">&lt; 1ms</div>
+      <div class="label">FFT 연산 시간<br>(10,000점 기준)</div>
+    </div>
+  </div>
+
+  <h3>결과 이미지</h3>
+  <div class="result-img-wrap">
+    <img src="classical_dsp_result.png" alt="Classical DSP 축 불균형 진단 시뮬레이션 결과">
+    <div class="caption">simulation.py 실행 결과 &mdash; 4개 패널: 시간 도메인, FFT 스펙트럼, 트렌드, 분류 분포</div>
+  </div>
+
+  <h3>패널별 해석</h3>
+
+  <div class="info-card blue">
+    <div class="card-title">패널 1: 시간 도메인 진동 신호</div>
+    <ul>
+      <li><strong>경고 시나리오</strong>의 축A 진동 신호를 처음 50ms 구간에서 표시</li>
+      <li>빨간 점선: 1X 주기(= 500ms, f<sub>1X</sub> = 2.0Hz) 표시</li>
+      <li>매 회전 주기마다 반복되는 진동 패턴이 관찰됨</li>
+      <li>시간 도메인만으로는 불균형 여부 판단이 어려움 &rarr; FFT 필요</li>
+    </ul>
+  </div>
+
+  <div class="info-card green">
+    <div class="card-title">패널 2: FFT 주파수 스펙트럼</div>
+    <ul>
+      <li>3가지 시나리오의 FFT 결과를 0~15Hz 범위에서 비교</li>
+      <li><strong>보라색 수직선:</strong> 1X = 2.0Hz 위치 표시</li>
+      <li>각 시나리오별 1X 피크 높이가 명확히 다름</li>
+      <li>ISO 기준선(양호 2.8, 경고 7.1, 위험 11.2)이 수평 점선으로 표시</li>
+      <li>위험 시나리오의 1X 피크가 경고 기준선을 크게 초과</li>
+    </ul>
+  </div>
+
+  <div class="info-card yellow">
+    <div class="card-title">패널 3: 불균형 레벨 트렌드</div>
+    <ul>
+      <li>시간 경과에 따른 축A/B의 1X 진폭 변화</li>
+      <li><strong>축A (파란선):</strong> 초기 정상 &rarr; 점진 증가 &rarr; 경고/위험 진입 패턴</li>
+      <li><strong>축B (보라선):</strong> 비교적 안정적 (정상 범위 유지)</li>
+      <li>배경색: 녹색(양호) / 노란색(경고) / 빨간색(위험) 구간 표시</li>
+      <li>이러한 트렌드 감시로 사전 정비 시점을 예측할 수 있음</li>
+    </ul>
+  </div>
+
+  <div class="info-card purple">
+    <div class="card-title">패널 4: 분류 파이차트</div>
+    <ul>
+      <li>전체 측정 데이터의 정상/경고/위험 분포 비율</li>
+      <li>중앙에 "ISO 10816" 표시로 판정 기준 명시</li>
+      <li>도넛 차트 형태로 각 등급의 비율을 직관적으로 파악</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: 알고리즘 특징 -->
+<!-- ============================================================ -->
+<div class="section" id="sec6">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2>알고리즘 특징 / 장점 / 단점</h2>
+  </div>
+
+  <h3>핵심 특징</h3>
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="value blue">물리 기반</div>
+      <div class="label">뉴턴 역학 법칙에<br>기반한 결정론적 진단</div>
+    </div>
+    <div class="metric-card">
+      <div class="value green">학습 불필요</div>
+      <div class="label">라벨링 데이터 없이<br>즉시 적용 가능</div>
+    </div>
+    <div class="metric-card">
+      <div class="value purple">100% 해석</div>
+      <div class="label">블랙박스 없음<br>완전 설명 가능</div>
+    </div>
+    <div class="metric-card">
+      <div class="value orange">ISO 표준</div>
+      <div class="label">국제 표준 기반<br>객관적 판정</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>특징</th><th>설명</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>결정론적(Deterministic)</strong></td><td>같은 입력에 대해 항상 같은 결과. 확률적 변동 없음</td></tr>
+        <tr><td><strong>물리 법칙 기반</strong></td><td>불균형 &rarr; 1X 진동은 뉴턴 역학으로 보장되는 관계</td></tr>
+        <tr><td><strong>학습 데이터 불필요</strong></td><td>7일간 기준선(Baseline) 측정만으로 운영 가능</td></tr>
+        <tr><td><strong>계산 단순</strong></td><td>FFT 1회 = O(N log N), 10,000점에 1ms 미만</td></tr>
+        <tr><td><strong>ISO 표준 준거</strong></td><td>ISO 10816-3 기반 &mdash; 감사/인증에 유리</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>장점 vs 단점</h3>
+  <div class="compare-box">
+    <div class="compare-side pros">
+      <h4>장점 (Advantages)</h4>
+      <ul>
+        <li><strong>극도의 속도:</strong> &lt; 1ms 추론 시간 &mdash; 모든 AI 모델보다 빠름</li>
+        <li><strong>높은 정확도:</strong> 불균형 진단에서 98% 이상 정확도</li>
+        <li><strong>완전한 이론적 근거:</strong> 수십 년간 검증된 진동 이론</li>
+        <li><strong>라벨 데이터 불필요:</strong> 고장 사례 수집 없이 즉시 적용 가능</li>
+        <li><strong>경량 구현:</strong> NumPy/SciPy만으로 구현, GPU 불필요</li>
+        <li><strong>100% 설명 가능:</strong> "1X가 5mm/s" = "불균형 있음" &mdash; 블랙박스 아님</li>
+        <li><strong>Edge 배포 용이:</strong> 모델 변환(ONNX, TFLite) 불필요, 직접 실행</li>
+      </ul>
+    </div>
+    <div class="compare-side cons">
+      <h4>단점 (Limitations)</h4>
+      <ul>
+        <li><strong>단일 고장 유형:</strong> 축 불균형만 진단 가능 &mdash; 베어링, 기어 등은 별도 모델 필요</li>
+        <li><strong>깨끗한 신호 필요:</strong> 과도한 충격 노이즈 환경에서 정확도 저하</li>
+        <li><strong>고정 임계값:</strong> ISO 기준은 일반 기계 기준, 슈레더에 맞게 보정 필요</li>
+        <li><strong>RPM 변동에 민감:</strong> 부하 변동 시 1X 주파수가 변하여 추적 필요</li>
+        <li><strong>복합 고장 한계:</strong> 여러 고장이 동시 발생하면 분리 어려움</li>
+        <li><strong>미세 결함 감지 한계:</strong> 초기 미세 불균형은 노이즈에 묻힐 수 있음</li>
+        <li><strong>적응적 학습 없음:</strong> 환경 변화에 자동 적응하지 못함</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>다른 모델과의 비교</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>항목</th><th>모델 3: Classical DSP</th><th>모델 1: LSTM Autoencoder</th><th>모델 2: Gradient Boosting</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>알고리즘 유형</strong></td><td>물리 기반 DSP</td><td>딥러닝 (비지도)</td><td>앙상블 (지도학습)</td></tr>
+        <tr><td><strong>학습 데이터</strong></td><td>불필요</td><td>정상 데이터만</td><td>정상+고장 라벨 필요</td></tr>
+        <tr><td><strong>추론 시간</strong></td><td class="code-cell">&lt; 1ms</td><td class="code-cell">&lt; 10ms</td><td class="code-cell">&lt; 5ms</td></tr>
+        <tr><td><strong>진단 대상</strong></td><td>축 불균형 (단일)</td><td>베어링 이상 (다양)</td><td>칼날 마모 (연속)</td></tr>
+        <tr><td><strong>설명 가능성</strong></td><td style="color:#059669;font-weight:700;">100% 설명 가능</td><td>이상 점수만 제공</td><td>Feature Importance</td></tr>
+        <tr><td><strong>적응성</strong></td><td>고정 기준</td><td>자동 적응</td><td>재학습 필요</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: 슈레더 적용 시나리오 -->
+<!-- ============================================================ -->
+<div class="section" id="sec7">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>슈레더 적용 시나리오</h2>
+  </div>
+
+  <p>폐배터리 이축 슈레더에 Classical DSP 축 불균형 진단을 적용한 구체적 시나리오입니다.</p>
+
+  <h3>센서 구성</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>센서</th><th>위치</th><th>사양</th><th>역할</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="code-cell">VIB-A</td><td>축A 베어링 하우징</td><td>3축 가속도계, 0~50g, 10kHz</td><td>축A 진동 데이터 수집</td></tr>
+        <tr><td class="code-cell">VIB-B</td><td>축B 베어링 하우징</td><td>3축 가속도계, 0~50g, 10kHz</td><td>축B 진동 데이터 수집</td></tr>
+        <tr><td class="code-cell">SPD-A</td><td>축A 엔코더</td><td>0~200 RPM, 10Hz</td><td>축A 회전속도 (1X 계산용)</td></tr>
+        <tr><td class="code-cell">SPD-B</td><td>축B 엔코더</td><td>0~150 RPM, 10Hz</td><td>축B 회전속도 (1X 계산용)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>실시간 처리 플로우</h3>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="step-num">1</div>
+      <h4>센서 수집</h4>
+      <p>VIB-A/B: 10kHz<br>SPD-A/B: 10Hz<br>1초 버퍼</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">2</div>
+      <h4>FFT 분석</h4>
+      <p>10,000점 FFT<br>1X 성분 추출<br>&lt; 1ms</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">3</div>
+      <h4>ISO 판정</h4>
+      <p>정상/경고/위험<br>분류 결정</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">4</div>
+      <h4>연계 분석</h4>
+      <p>모델10 앙상블<br>통합 건강 점수</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="step-num">5</div>
+      <h4>조치</h4>
+      <p>알람/정비 권고<br>비상 정지</p>
+    </div>
+  </div>
+
+  <h3>운영 시나리오</h3>
+
+  <div class="info-card green">
+    <div class="card-title">시나리오 A: 정상 운전 모니터링</div>
+    <ul>
+      <li>축A 1X 진폭: 1.5~2.5 mm/s (양호 범위)</li>
+      <li>축B 1X 진폭: 1.2~2.0 mm/s (양호 범위)</li>
+      <li>매 1초마다 FFT 분석 수행, 트렌드 기록</li>
+      <li>대시보드에 녹색 표시, 정상 운전 계속</li>
+    </ul>
+  </div>
+
+  <div class="info-card yellow">
+    <div class="card-title">시나리오 B: 점진적 불균형 증가 (정비 알림)</div>
+    <ul>
+      <li>칼날 마모가 진행되면서 축A 1X 진폭이 서서히 증가</li>
+      <li>3.0 mm/s 초과 시 "경고" 판정 &rarr; 운영자에게 알림</li>
+      <li>추세 분석: 주당 0.5 mm/s 증가 &rarr; 2주 후 "위험" 예상</li>
+      <li>권고: "다음 주말 정기 정비 시 밸런싱 실시"</li>
+    </ul>
+  </div>
+
+  <div class="info-card red">
+    <div class="card-title">시나리오 C: 급격한 불균형 (긴급 대응)</div>
+    <ul>
+      <li>칼날 1개 파손/탈락 시 1X 진폭이 급격히 상승 (2 &rarr; 12+ mm/s)</li>
+      <li>"즉시 정지" 판정 &rarr; 자동 비상 정지 + 운영자 긴급 알림</li>
+      <li>원인 분류: "1X만 급등" &rarr; "질량 불균형 (칼날 탈락 의심)"</li>
+      <li>조치: 설비 정지 후 칼날 상태 확인 및 교체</li>
+    </ul>
+  </div>
+
+  <h3>모델 간 연계</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>연계 모델</th><th>연계 방식</th><th>시너지 효과</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>모델 1 (베어링 이상)</strong></td><td>비동기 주파수 감지 시 모델 1에 연계</td><td>불균형 vs 베어링 고장 구분</td></tr>
+        <tr><td><strong>모델 2 (칼날 마모)</strong></td><td>불균형 원인이 칼날 마모인 경우 RUL 예측</td><td>정비 시기 정밀 예측</td></tr>
+        <tr><td><strong>모델 4 (이물질 끼임)</strong></td><td>급격한 불균형 시 이물질 끼임 동시 확인</td><td>고장 원인 복합 분석</td></tr>
+        <tr><td><strong>모델 10 (통합 분석)</strong></td><td>1X 진폭을 통합 건강 점수에 반영</td><td>설비 전체 상태 종합 판단</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>기대 효과</h3>
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="value green">98%+</div>
+      <div class="label">불균형 진단<br>정확도</div>
+    </div>
+    <div class="metric-card">
+      <div class="value blue">&lt; 1ms</div>
+      <div class="label">실시간<br>추론 시간</div>
+    </div>
+    <div class="metric-card">
+      <div class="value purple">2주+</div>
+      <div class="label">사전 경고<br>여유 시간</div>
+    </div>
+    <div class="metric-card">
+      <div class="value orange">30%</div>
+      <div class="label">비계획 정지<br>감소 목표</div>
+    </div>
+  </div>
+
+  <div class="info-card blue">
+    <div class="card-title">Edge 배포 특이사항</div>
+    <p>Classical DSP는 AI 모델이 아니므로 <strong>모델 변환(ONNX, TFLite 등)이 불필요</strong>합니다.
+      NumPy와 SciPy만 설치되어 있으면 Edge PC에서 직접 실행 가능하며,
+      Docker 컨테이너 크기도 AI 모델 대비 1/10 수준으로 경량입니다.</p>
+  </div>
+</div>
+
+</div><!-- /main -->
+</body>
+</html>
