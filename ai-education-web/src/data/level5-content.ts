@@ -145,10 +145,10 @@ fig, axes = plt.subplots(1, 3, figsize=(12, 4))
 channels = ['Red', 'Green', 'Blue']
 for i, (ax, name) in enumerate(zip(axes, channels)):
     ax.imshow(image_numpy[:, :, i], cmap='gray')
-    ax.set_title(f'{name} 채널')
+    ax.set_title(f'{name} Channel')
     ax.axis('off')
 
-plt.suptitle('컬러 이미지의 RGB 채널 분리', fontsize=14, fontweight='bold')
+plt.suptitle('RGB Channel Separation of Color Image', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 
@@ -214,7 +214,7 @@ print(f"             mean={standardized.mean():>6.3f}, std={standardized.std():>
 # 시각화
 fig, axes = plt.subplots(1, 4, figsize=(14, 3))
 
-titles = ['원본 (0-255)', '[0, 1] 정규화', '[-1, 1] 정규화', '표준화']
+titles = ['Original (0-255)', '[0, 1] Norm', '[-1, 1] Norm', 'Standardized']
 images = [original, norm_01, norm_11, standardized]
 
 for ax, img, title in zip(axes, images, titles):
@@ -223,7 +223,7 @@ for ax, img, title in zip(axes, images, titles):
     ax.axis('off')
     plt.colorbar(im, ax=ax, fraction=0.046)
 
-plt.suptitle('이미지 정규화 방법 비교', fontsize=14, fontweight='bold')
+plt.suptitle('Image Normalization Methods Comparison', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 
@@ -362,18 +362,18 @@ print(f"\\n출력 특성 맵:\\n{output}")
 fig, axes = plt.subplots(1, 3, figsize=(12, 4))
 
 axes[0].imshow(image, cmap='gray')
-axes[0].set_title('입력 이미지 (5×5)', fontsize=12)
+axes[0].set_title('Input Image (5x5)', fontsize=12)
 axes[0].axis('off')
 
 axes[1].imshow(kernel, cmap='RdBu', vmin=-1, vmax=1)
-axes[1].set_title('커널 (수직 엣지 검출)', fontsize=12)
+axes[1].set_title('Kernel (Vertical Edge)', fontsize=12)
 axes[1].axis('off')
 
 axes[2].imshow(output, cmap='gray')
-axes[2].set_title('출력 특성 맵 (3×3)', fontsize=12)
+axes[2].set_title('Output Feature Map (3x3)', fontsize=12)
 axes[2].axis('off')
 
-plt.suptitle('합성곱 연산 과정', fontsize=14, fontweight='bold')
+plt.suptitle('Convolution Operation', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 
@@ -655,7 +655,7 @@ print(f"\\n출력 (2×2):\\n{output.squeeze().numpy().astype(int)}")
 fig, axes = plt.subplots(1, 2, figsize=(10, 4))
 
 im1 = axes[0].imshow(input_data, cmap='Blues', vmin=0, vmax=9)
-axes[0].set_title('입력 (4×4)', fontsize=12)
+axes[0].set_title('Input (4x4)', fontsize=12)
 for i in range(4):
     for j in range(4):
         axes[0].text(j, i, int(input_data[i, j]), ha='center', va='center', fontsize=12)
@@ -663,7 +663,7 @@ axes[0].set_xticks([])
 axes[0].set_yticks([])
 
 im2 = axes[1].imshow(output.squeeze().numpy(), cmap='Blues', vmin=0, vmax=9)
-axes[1].set_title('Max Pooling 출력 (2×2)', fontsize=12)
+axes[1].set_title('Max Pooling Output (2x2)', fontsize=12)
 out_np = output.squeeze().numpy()
 for i in range(2):
     for j in range(2):
@@ -671,7 +671,7 @@ for i in range(2):
 axes[1].set_xticks([])
 axes[1].set_yticks([])
 
-plt.suptitle('Max Pooling: 각 2×2 영역에서 최댓값 선택', fontsize=14, fontweight='bold')
+plt.suptitle('Max Pooling: Select max value from each 2x2 region', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 
@@ -786,19 +786,19 @@ fig, axes = plt.subplots(1, 2, figsize=(12, 4))
 
 # 정규화 전
 axes[0].boxplot([data[:, i].numpy() for i in range(features)])
-axes[0].set_xticklabels(['특성1', '특성2', '특성3', '특성4'])
-axes[0].set_title('Batch Norm 전: 범위가 제각각', fontsize=12)
-axes[0].set_ylabel('값')
+axes[0].set_xticklabels(['Feat1', 'Feat2', 'Feat3', 'Feat4'])
+axes[0].set_title('Before Batch Norm: Different ranges', fontsize=12)
+axes[0].set_ylabel('Value')
 axes[0].grid(True, alpha=0.3)
 
 # 정규화 후
 axes[1].boxplot([normalized[:, i].detach().numpy() for i in range(features)])
-axes[1].set_xticklabels(['특성1', '특성2', '특성3', '특성4'])
-axes[1].set_title('Batch Norm 후: 범위가 일정', fontsize=12)
-axes[1].set_ylabel('값')
+axes[1].set_xticklabels(['Feat1', 'Feat2', 'Feat3', 'Feat4'])
+axes[1].set_title('After Batch Norm: Uniform range', fontsize=12)
+axes[1].set_ylabel('Value')
 axes[1].grid(True, alpha=0.3)
 
-plt.suptitle('Batch Normalization 효과', fontsize=14, fontweight='bold')
+plt.suptitle('Batch Normalization Effect', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 
@@ -1148,7 +1148,7 @@ for i, ax in enumerate(axes.flat):
     ax.imshow(img.squeeze(), cmap='gray')
     ax.set_title(f'Label: {label}')
     ax.axis('off')
-plt.suptitle('MNIST 샘플 이미지', fontsize=14, fontweight='bold')
+plt.suptitle('MNIST Sample Images', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 \`\`\`
@@ -1334,18 +1334,18 @@ fig, axes = plt.subplots(1, 2, figsize=(12, 4))
 axes[0].plot(train_losses, 'b-', linewidth=2)
 axes[0].set_xlabel('Epoch')
 axes[0].set_ylabel('Loss')
-axes[0].set_title('학습 손실')
+axes[0].set_title('Training Loss')
 axes[0].grid(True, alpha=0.3)
 
 axes[1].plot(train_accs, 'b-', label='Train', linewidth=2)
 axes[1].plot(test_accs, 'r--', label='Test', linewidth=2)
 axes[1].set_xlabel('Epoch')
 axes[1].set_ylabel('Accuracy (%)')
-axes[1].set_title('정확도')
+axes[1].set_title('Accuracy')
 axes[1].legend()
 axes[1].grid(True, alpha=0.3)
 
-plt.suptitle('CNN 학습 결과 (MNIST)', fontsize=14, fontweight='bold')
+plt.suptitle('CNN Training Results (MNIST)', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 \`\`\`
@@ -1387,10 +1387,10 @@ for i, ax in enumerate(axes.flat):
     ax.imshow(img, cmap='gray')
 
     color = 'green' if true_label == pred_label else 'red'
-    ax.set_title(f'예측: {pred_label} (정답: {true_label})', color=color)
+    ax.set_title(f'Pred: {pred_label} (True: {true_label})', color=color)
     ax.axis('off')
 
-plt.suptitle('CNN 예측 결과 (초록=정답, 빨강=오답)', fontsize=14, fontweight='bold')
+plt.suptitle('CNN Predictions (Green=Correct, Red=Wrong)', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 
@@ -1513,7 +1513,7 @@ for i, ax in enumerate(axes.flat):
     ax.imshow(img)
     ax.set_title(classes[label])
     ax.axis('off')
-plt.suptitle('CIFAR-10 샘플 이미지', fontsize=14, fontweight='bold')
+plt.suptitle('CIFAR-10 Sample Images', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 \`\`\`
@@ -1691,16 +1691,16 @@ fig, axes = plt.subplots(1, 2, figsize=(12, 4))
 axes[0].plot(train_losses, 'b-', linewidth=2)
 axes[0].set_xlabel('Epoch')
 axes[0].set_ylabel('Loss')
-axes[0].set_title('학습 손실')
+axes[0].set_title('Training Loss')
 axes[0].grid(True, alpha=0.3)
 
 axes[1].plot(test_accs, 'r-', linewidth=2)
 axes[1].set_xlabel('Epoch')
 axes[1].set_ylabel('Accuracy (%)')
-axes[1].set_title('테스트 정확도')
+axes[1].set_title('Test Accuracy')
 axes[1].grid(True, alpha=0.3)
 
-plt.suptitle('CIFAR-10 CNN 학습 결과', fontsize=14, fontweight='bold')
+plt.suptitle('CIFAR-10 CNN Training Results', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 \`\`\`
@@ -2112,25 +2112,25 @@ original = create_sample_image()
 
 # 다양한 증강 기법
 augmentations = {
-    '원본': transforms.Compose([transforms.ToTensor()]),
-    '좌우 반전': transforms.Compose([
+    'Original': transforms.Compose([transforms.ToTensor()]),
+    'H-Flip': transforms.Compose([
         transforms.RandomHorizontalFlip(p=1.0),
         transforms.ToTensor()
     ]),
-    '회전 (45°)': transforms.Compose([
+    'Rotation (45)': transforms.Compose([
         transforms.RandomRotation([45, 45]),
         transforms.ToTensor()
     ]),
-    '랜덤 크롭': transforms.Compose([
+    'Random Crop': transforms.Compose([
         transforms.RandomCrop(48),
         transforms.Resize(64),
         transforms.ToTensor()
     ]),
-    '색상 변환': transforms.Compose([
+    'Color Jitter': transforms.Compose([
         transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5),
         transforms.ToTensor()
     ]),
-    '종합 증강': transforms.Compose([
+    'Combined': transforms.Compose([
         transforms.RandomHorizontalFlip(),
         transforms.RandomRotation(15),
         transforms.ColorJitter(0.2, 0.2, 0.2),
@@ -2149,7 +2149,7 @@ for ax, (name, transform) in zip(axes.flat, augmentations.items()):
     ax.set_title(name, fontsize=12)
     ax.axis('off')
 
-plt.suptitle('데이터 증강 기법 비교', fontsize=14, fontweight='bold')
+plt.suptitle('Data Augmentation Techniques', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 \`\`\`
@@ -2246,27 +2246,27 @@ with_aug_test = [82 - 15*np.exp(-e/10) + np.random.randn()*2 for e in epochs]
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # 훈련 정확도
-axes[0].plot(epochs, no_aug_train, 'b-', label='증강 없음', linewidth=2)
-axes[0].plot(epochs, with_aug_train, 'g-', label='증강 있음', linewidth=2)
+axes[0].plot(epochs, no_aug_train, 'b-', label='No Augmentation', linewidth=2)
+axes[0].plot(epochs, with_aug_train, 'g-', label='With Augmentation', linewidth=2)
 axes[0].set_xlabel('Epoch')
 axes[0].set_ylabel('Train Accuracy (%)')
-axes[0].set_title('훈련 정확도')
+axes[0].set_title('Train Accuracy')
 axes[0].legend()
 axes[0].grid(True, alpha=0.3)
 axes[0].set_ylim(50, 95)
 
 # 테스트 정확도
-axes[1].plot(epochs, no_aug_test, 'b-', label='증강 없음', linewidth=2)
-axes[1].plot(epochs, with_aug_test, 'g-', label='증강 있음', linewidth=2)
-axes[1].axhline(y=80, color='r', linestyle='--', alpha=0.5, label='목표 정확도')
+axes[1].plot(epochs, no_aug_test, 'b-', label='No Augmentation', linewidth=2)
+axes[1].plot(epochs, with_aug_test, 'g-', label='With Augmentation', linewidth=2)
+axes[1].axhline(y=80, color='r', linestyle='--', alpha=0.5, label='Target Accuracy')
 axes[1].set_xlabel('Epoch')
 axes[1].set_ylabel('Test Accuracy (%)')
-axes[1].set_title('테스트 정확도')
+axes[1].set_title('Test Accuracy')
 axes[1].legend()
 axes[1].grid(True, alpha=0.3)
 axes[1].set_ylim(50, 95)
 
-plt.suptitle('데이터 증강 효과 비교', fontsize=14, fontweight='bold')
+plt.suptitle('Data Augmentation Effect Comparison', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 

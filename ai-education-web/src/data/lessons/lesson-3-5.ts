@@ -72,7 +72,7 @@ y_true = np.sin(x_test)                   # 실제 함수 (sin)
 
 # 📐 세 가지 복잡도로 실험
 degrees = [1, 4, 14]
-titles = ["❌ 과소적합 (1차)", "✅ 적절한 적합 (4차)", "❌ 과적합 (14차)"]
+titles = ["Underfitting (deg=1)", "Good Fit (deg=4)", "Overfitting (deg=14)"]
 
 fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
@@ -87,18 +87,18 @@ for i, deg in enumerate(degrees):
     test_error = np.mean((y_true - y_pred) ** 2)
 
     # 그래프 그리기
-    axes[i].scatter(x_train, y_train, color="blue", s=80, label="🔵 훈련 데이터", zorder=5)
-    axes[i].plot(x_test, y_true, "g--", linewidth=2, label="🟢 실제 함수 (sin)", alpha=0.7)
-    axes[i].plot(x_test, y_pred, "r-", label=f"🔴 {deg}차 다항식", linewidth=2)
+    axes[i].scatter(x_train, y_train, color="blue", s=80, label="Train data", zorder=5)
+    axes[i].plot(x_test, y_true, "g--", linewidth=2, label="True function (sin)", alpha=0.7)
+    axes[i].plot(x_test, y_pred, "r-", label=f"Polynomial (deg={deg})", linewidth=2)
     axes[i].set_title(titles[i], fontsize=14, fontweight='bold')
     axes[i].set_ylim(-2.5, 2.5)
     axes[i].legend(fontsize=9, loc='upper right')
     axes[i].grid(True, alpha=0.3)
 
     # 오차 표시
-    axes[i].text(0.3, -1.8, f"📊 훈련 오차: {train_error:.3f}", fontsize=11,
+    axes[i].text(0.3, -1.8, f"Train error: {train_error:.3f}", fontsize=11,
                  bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-    axes[i].text(0.3, -2.2, f"📊 테스트 오차: {test_error:.3f}", fontsize=11,
+    axes[i].text(0.3, -2.2, f"Test error: {test_error:.3f}", fontsize=11,
                  bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
 
 plt.tight_layout()
@@ -225,20 +225,20 @@ y_l2_pred = X_test @ w_l2
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # 왼쪽: 정규화 없음
-axes[0].scatter(x_train, y_train, color="blue", s=80, zorder=5, label="🔵 훈련 데이터")
-axes[0].plot(x_test, y_true, "g--", linewidth=2, alpha=0.7, label="🟢 실제 함수")
-axes[0].plot(x_test, y_no_reg, "r-", linewidth=2, label="🔴 10차 다항식")
+axes[0].scatter(x_train, y_train, color="blue", s=80, zorder=5, label="Train data")
+axes[0].plot(x_test, y_true, "g--", linewidth=2, alpha=0.7, label="True function")
+axes[0].plot(x_test, y_no_reg, "r-", linewidth=2, label="Polynomial (deg=10)")
 axes[0].set_ylim(-2.5, 2.5)
-axes[0].set_title("❌ 정규화 없음 → 과적합!", fontsize=14, fontweight='bold')
+axes[0].set_title("No Regularization -> Overfitting!", fontsize=14, fontweight='bold')
 axes[0].legend(fontsize=10)
 axes[0].grid(True, alpha=0.3)
 
 # 오른쪽: L2 정규화
-axes[1].scatter(x_train, y_train, color="blue", s=80, zorder=5, label="🔵 훈련 데이터")
-axes[1].plot(x_test, y_true, "g--", linewidth=2, alpha=0.7, label="🟢 실제 함수")
-axes[1].plot(x_test, y_l2_pred, "purple", linewidth=2, label="🟣 L2 정규화")
+axes[1].scatter(x_train, y_train, color="blue", s=80, zorder=5, label="Train data")
+axes[1].plot(x_test, y_true, "g--", linewidth=2, alpha=0.7, label="True function")
+axes[1].plot(x_test, y_l2_pred, "purple", linewidth=2, label="L2 Regularized")
 axes[1].set_ylim(-2.5, 2.5)
-axes[1].set_title("✅ L2 정규화 적용 → 부드러운 곡선!", fontsize=14, fontweight='bold')
+axes[1].set_title("L2 Regularization -> Smooth curve!", fontsize=14, fontweight='bold')
 axes[1].legend(fontsize=10)
 axes[1].grid(True, alpha=0.3)
 
@@ -307,21 +307,21 @@ for e in range(epochs):
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-axes[0].plot(train_loss, "b-", alpha=0.7, label="훈련 손실")
-axes[0].plot(val_loss, "r-", alpha=0.7, label="검증 손실")
+axes[0].plot(train_loss, "b-", alpha=0.7, label="Train Loss")
+axes[0].plot(val_loss, "r-", alpha=0.7, label="Val Loss")
 axes[0].set_xlabel("Epoch")
 axes[0].set_ylabel("Loss")
-axes[0].set_title("Early Stopping 없이 200 에폭 훈련")
+axes[0].set_title("Without Early Stopping (200 epochs)")
 axes[0].legend(fontsize=11)
 axes[0].set_ylim(0, 2.5)
 
-axes[1].plot(range(early_stop_epoch + 1), train_loss[:early_stop_epoch + 1], "b-", alpha=0.7, label="훈련 손실")
-axes[1].plot(range(early_stop_epoch + 1), val_loss[:early_stop_epoch + 1], "r-", alpha=0.7, label="검증 손실")
-axes[1].axvline(x=best_epoch, color="green", linestyle="--", linewidth=2, label=f"최적 (에폭 {best_epoch})")
-axes[1].axvline(x=early_stop_epoch, color="orange", linestyle="--", linewidth=2, label=f"중단 (에폭 {early_stop_epoch})")
+axes[1].plot(range(early_stop_epoch + 1), train_loss[:early_stop_epoch + 1], "b-", alpha=0.7, label="Train Loss")
+axes[1].plot(range(early_stop_epoch + 1), val_loss[:early_stop_epoch + 1], "r-", alpha=0.7, label="Val Loss")
+axes[1].axvline(x=best_epoch, color="green", linestyle="--", linewidth=2, label=f"Best (epoch {best_epoch})")
+axes[1].axvline(x=early_stop_epoch, color="orange", linestyle="--", linewidth=2, label=f"Stop (epoch {early_stop_epoch})")
 axes[1].set_xlabel("Epoch")
 axes[1].set_ylabel("Loss")
-axes[1].set_title("Early Stopping 적용")
+axes[1].set_title("With Early Stopping")
 axes[1].legend(fontsize=10)
 axes[1].set_ylim(0, 2.5)
 

@@ -122,19 +122,19 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # 왼쪽: 정규화 전
 axes[0].boxplot([raw_values[:, i] for i in range(features)],
-                labels=["특성1\\n(평균~50)", "특성2\\n(평균~-2)", "특성3\\n(평균~0)", "특성4\\n(평균~20)"])
-axes[0].set_title("❌ 배치 정규화 전: 특성마다 범위가 제각각!", fontsize=13, fontweight='bold')
-axes[0].set_ylabel("값", fontsize=12)
-axes[0].axhline(y=0, color="red", linestyle="--", alpha=0.5, label="기준선 (0)")
+                labels=["Feat1\\n(mean~50)", "Feat2\\n(mean~-2)", "Feat3\\n(mean~0)", "Feat4\\n(mean~20)"])
+axes[0].set_title("Before Batch Norm: Different ranges!", fontsize=13, fontweight='bold')
+axes[0].set_ylabel("Value", fontsize=12)
+axes[0].axhline(y=0, color="red", linestyle="--", alpha=0.5, label="Baseline (0)")
 axes[0].legend()
 axes[0].grid(True, alpha=0.3)
 
 # 오른쪽: 정규화 후
 axes[1].boxplot([normalized[:, i] for i in range(features)],
-                labels=["특성1", "특성2", "특성3", "특성4"])
-axes[1].set_title("✅ 배치 정규화 후: 모든 특성이 동일한 범위!", fontsize=13, fontweight='bold')
-axes[1].set_ylabel("값", fontsize=12)
-axes[1].axhline(y=0, color="green", linestyle="--", alpha=0.7, label="평균 = 0")
+                labels=["Feat1", "Feat2", "Feat3", "Feat4"])
+axes[1].set_title("After Batch Norm: Uniform range!", fontsize=13, fontweight='bold')
+axes[1].set_ylabel("Value", fontsize=12)
+axes[1].axhline(y=0, color="green", linestyle="--", alpha=0.7, label="Mean = 0")
 axes[1].legend()
 axes[1].grid(True, alpha=0.3)
 
@@ -291,14 +291,14 @@ for _ in range(n_trials):
 
 fig, ax = plt.subplots(figsize=(12, 5))
 ax.hist(sums_with_dropout, bins=30, alpha=0.7, color="steelblue", edgecolor="white",
-        label="🎲 드롭아웃 출력 합계 분포")
+        label="Dropout output sum distribution")
 ax.axvline(x=np.sum(x), color="red", linewidth=3, linestyle="--",
-           label=f"🔴 원본 합계: {np.sum(x):.2f}")
+           label=f"Original sum: {np.sum(x):.2f}")
 ax.axvline(x=np.mean(sums_with_dropout), color="green", linewidth=3, linestyle="--",
-           label=f"🟢 드롭아웃 평균: {np.mean(sums_with_dropout):.2f}")
-ax.set_xlabel("출력 합계", fontsize=12)
-ax.set_ylabel("빈도", fontsize=12)
-ax.set_title("📊 드롭아웃의 앙상블 효과: 1000번 시행 시 평균이 원본과 일치!", fontsize=14, fontweight='bold')
+           label=f"Dropout mean: {np.mean(sums_with_dropout):.2f}")
+ax.set_xlabel("Output Sum", fontsize=12)
+ax.set_ylabel("Frequency", fontsize=12)
+ax.set_title("Dropout Ensemble Effect: Mean matches original after 1000 trials", fontsize=14, fontweight='bold')
 ax.legend(fontsize=11)
 ax.grid(True, alpha=0.3)
 plt.tight_layout()
@@ -402,19 +402,19 @@ losses_with_drop = train_network(X_train, y_train, X_val, y_val, drop_rate=0.4)
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-axes[0].plot(losses_no_drop[0], "b-", alpha=0.7, label="훈련 손실")
-axes[0].plot(losses_no_drop[1], "r-", alpha=0.7, label="검증 손실")
+axes[0].plot(losses_no_drop[0], "b-", alpha=0.7, label="Train Loss")
+axes[0].plot(losses_no_drop[1], "r-", alpha=0.7, label="Val Loss")
 axes[0].set_xlabel("Epoch")
 axes[0].set_ylabel("Loss")
-axes[0].set_title("드롭아웃 없음", fontsize=13)
+axes[0].set_title("Without Dropout", fontsize=13)
 axes[0].legend(fontsize=11)
 axes[0].set_ylim(0, 1.5)
 
-axes[1].plot(losses_with_drop[0], "b-", alpha=0.7, label="훈련 손실")
-axes[1].plot(losses_with_drop[1], "r-", alpha=0.7, label="검증 손실")
+axes[1].plot(losses_with_drop[0], "b-", alpha=0.7, label="Train Loss")
+axes[1].plot(losses_with_drop[1], "r-", alpha=0.7, label="Val Loss")
 axes[1].set_xlabel("Epoch")
 axes[1].set_ylabel("Loss")
-axes[1].set_title("드롭아웃 적용 (rate=0.4)", fontsize=13)
+axes[1].set_title("With Dropout (rate=0.4)", fontsize=13)
 axes[1].legend(fontsize=11)
 axes[1].set_ylim(0, 1.5)
 

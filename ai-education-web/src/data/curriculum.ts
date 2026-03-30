@@ -3142,9 +3142,9 @@ y2 = 0.5 * x - 1   # 기울기 0.5, 절편 -1
 y3 = -1 * x + 3    # 기울기 -1, 절편 3
 
 plt.figure(figsize=(8, 5))
-plt.plot(x, y1, label=\'y = 2x + 1 (가파른 상승)\', linewidth=2)
-plt.plot(x, y2, label=\'y = 0.5x - 1 (완만한 상승)\', linewidth=2)
-plt.plot(x, y3, label=\'y = -x + 3 (하강)\', linewidth=2)
+plt.plot(x, y1, label=\'y = 2x + 1 (steep rise)\', linewidth=2)
+plt.plot(x, y2, label=\'y = 0.5x - 1 (gentle rise)\', linewidth=2)
+plt.plot(x, y3, label=\'y = -x + 3 (descent)\', linewidth=2)
 
 plt.axhline(y=0, color=\'gray\', linewidth=0.5)
 plt.axvline(x=0, color=\'gray\', linewidth=0.5)
@@ -3774,14 +3774,14 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # 📊 왼쪽 그래프: 손실 곡선 위의 이동 경로
 w_range = np.linspace(-5, 5, 200)
-axes[0].plot(w_range, loss(w_range), \'b-\', linewidth=2, label=\'손실 함수 L(w) = w²\')
+axes[0].plot(w_range, loss(w_range), \'b-\', linewidth=2, label=\'Loss function L(w) = w²\')
 history_arr = np.array(history)
-axes[0].plot(history_arr, loss(history_arr), \'ro-\', markersize=8, label=\'학습 경로\')
-axes[0].plot(history_arr[0], loss(history_arr[0]), \'g*\', markersize=20, label=\'시작점\')
-axes[0].plot(0, 0, \'b*\', markersize=15, label=\'목표 (최솟값)\')
-axes[0].set_xlabel(\'가중치 w\', fontsize=12)
-axes[0].set_ylabel(\'손실 (Loss)\', fontsize=12)
-axes[0].set_title(\'🏔️ 손실 곡선 위에서 내려오는 모습\', fontsize=14)
+axes[0].plot(history_arr, loss(history_arr), \'ro-\', markersize=8, label=\'Learning path\')
+axes[0].plot(history_arr[0], loss(history_arr[0]), \'g*\', markersize=20, label=\'Start point\')
+axes[0].plot(0, 0, \'b*\', markersize=15, label=\'Target (minimum)\')
+axes[0].set_xlabel(\'Weight w\', fontsize=12)
+axes[0].set_ylabel(\'Loss\', fontsize=12)
+axes[0].set_title(\'Loss Curve: Descending to Minimum\', fontsize=14)
 axes[0].legend(fontsize=10)
 axes[0].grid(True, alpha=0.3)
 
@@ -3789,9 +3789,9 @@ axes[0].grid(True, alpha=0.3)
 loss_history = [loss(w) for w in history]
 axes[1].plot(range(len(history)), loss_history, \'r-o\', markersize=6, linewidth=2)
 axes[1].fill_between(range(len(history)), loss_history, alpha=0.3, color=\'red\')
-axes[1].set_xlabel(\'학습 단계 (Step)\', fontsize=12)
-axes[1].set_ylabel(\'손실 (Loss)\', fontsize=12)
-axes[1].set_title(\'📉 학습할수록 손실이 줄어드는 모습\', fontsize=14)
+axes[1].set_xlabel(\'Training Step\', fontsize=12)
+axes[1].set_ylabel(\'Loss\', fontsize=12)
+axes[1].set_title(\'Loss Decreases During Training\', fontsize=14)
 axes[1].grid(True, alpha=0.3)
 
 plt.tight_layout()
@@ -6747,24 +6747,24 @@ mse_values = (y_preds - y_true) ** 2
 # 그래프 그리기
 # ─────────────────────────────────────────────────────────────────
 plt.figure(figsize=(10, 6))
-plt.plot(y_preds, mse_values, linewidth=3, color='royalblue', label='MSE 손실')
-plt.axvline(x=y_true, color='red', linestyle='--', linewidth=2, label='정답 = 5.0')
+plt.plot(y_preds, mse_values, linewidth=3, color='royalblue', label='MSE Loss')
+plt.axvline(x=y_true, color='red', linestyle='--', linewidth=2, label='Answer = 5.0')
 plt.scatter([y_true], [0], color='red', s=100, zorder=5)  # 정답 지점 표시
 
 # 그래프 꾸미기
-plt.xlabel('예측값 (Prediction)', fontsize=14)
-plt.ylabel('MSE 손실 (Loss)', fontsize=14)
-plt.title('🎯 MSE 손실 곡선: 정답에서 멀어질수록 손실이 제곱으로 증가!', fontsize=15)
+plt.xlabel('Prediction', fontsize=14)
+plt.ylabel('MSE Loss', fontsize=14)
+plt.title('MSE Loss Curve: Loss Increases Quadratically with Distance', fontsize=15)
 plt.legend(fontsize=12, loc='upper right')
 plt.grid(True, alpha=0.3)
 
 # 핵심 포인트 표시
-plt.annotate('정답! 손실=0', xy=(5, 0), xytext=(6.5, 5),
+plt.annotate('Correct! Loss=0', xy=(5, 0), xytext=(6.5, 5),
              fontsize=11, arrowprops=dict(arrowstyle='->', color='red'),
              color='red', fontweight='bold')
-plt.annotate('오차 2 → 손실 4', xy=(7, 4), xytext=(8, 8),
+plt.annotate('Error 2 -> Loss 4', xy=(7, 4), xytext=(8, 8),
              fontsize=10, arrowprops=dict(arrowstyle='->', color='gray'))
-plt.annotate('오차 3 → 손실 9', xy=(8, 9), xytext=(9, 15),
+plt.annotate('Error 3 -> Loss 9', xy=(8, 9), xytext=(9, 15),
              fontsize=10, arrowprops=dict(arrowstyle='->', color='gray'))
 
 plt.tight_layout()
@@ -6896,24 +6896,24 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # 왼쪽 그래프: 정답이 고양이(1)인 경우
 axes[0].plot(p, ce_loss_1, linewidth=3, color='crimson')
-axes[0].set_xlabel('모델의 예측: P(고양이)', fontsize=12)
-axes[0].set_ylabel('손실 (Loss)', fontsize=12)
-axes[0].set_title('🐱 정답이 고양이일 때', fontsize=14)
+axes[0].set_xlabel('Prediction: P(cat)', fontsize=12)
+axes[0].set_ylabel('Loss', fontsize=12)
+axes[0].set_title('When answer is Cat', fontsize=14)
 axes[0].grid(True, alpha=0.3)
-axes[0].annotate('확률 높으면\\n손실 낮음 ✅', xy=(0.9, 0.1), fontsize=10,
+axes[0].annotate('High prob\\nLow loss', xy=(0.9, 0.1), fontsize=10,
                  ha='center', color='green', fontweight='bold')
-axes[0].annotate('확률 낮으면\\n손실 폭발! ❌', xy=(0.1, 2.3), fontsize=10,
+axes[0].annotate('Low prob\\nLoss explodes!', xy=(0.1, 2.3), fontsize=10,
                  ha='center', color='red', fontweight='bold')
 
 # 오른쪽 그래프: 정답이 강아지(0)인 경우
 axes[1].plot(p, ce_loss_0, linewidth=3, color='teal')
-axes[1].set_xlabel('모델의 예측: P(고양이)', fontsize=12)
-axes[1].set_ylabel('손실 (Loss)', fontsize=12)
-axes[1].set_title('🐕 정답이 강아지일 때', fontsize=14)
+axes[1].set_xlabel('Prediction: P(cat)', fontsize=12)
+axes[1].set_ylabel('Loss', fontsize=12)
+axes[1].set_title('When answer is Dog', fontsize=14)
 axes[1].grid(True, alpha=0.3)
-axes[1].annotate('확률 낮으면\\n손실 낮음 ✅', xy=(0.1, 0.1), fontsize=10,
+axes[1].annotate('Low prob\\nLow loss', xy=(0.1, 0.1), fontsize=10,
                  ha='center', color='green', fontweight='bold')
-axes[1].annotate('확률 높으면\\n손실 폭발! ❌', xy=(0.9, 2.3), fontsize=10,
+axes[1].annotate('High prob\\nLoss explodes!', xy=(0.9, 2.3), fontsize=10,
                  ha='center', color='red', fontweight='bold')
 
 plt.tight_layout()
