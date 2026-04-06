@@ -1,4 +1,5 @@
 import { Composition, Still } from "remotion";
+import { BleOtaPitchVideo, BLE_OTA_DURATION } from "./BleOtaPitchVideo";
 import { WallRobotVideo, WALL_ROBOT_VIDEO_DURATION } from "./WallRobotVideo";
 import { MyComposition } from "./Composition";
 import { EconomyNews } from "./EconomyNews";
@@ -168,6 +169,14 @@ import { TurboMillVideo, TURBO_MILL_DURATION } from "./TurboMillVideo";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="BleOtaPitch"
+        component={BleOtaPitchVideo}
+        durationInFrames={BLE_OTA_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
       <Composition
         id="Lesson0-1"
         component={Lesson0_1Video}
