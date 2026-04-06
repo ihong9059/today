@@ -1,0 +1,7 @@
+claude, web server를 만드는데, ai에게 질문하는 창을 만들고,
+이 질문창에 질문한 내용을 claude에게 보내고, 답변을 받아서,
+claude로부터 받은 답변을, 수신창에 나타내도록 하고,
+끝나면, claude의 연결을 종료하고, 
+완료를 나타내는 web server를 만드는 계획서를 만들어 주세요.
+이것은 aiHardStudy folder에 추가해 주세요.
+ 

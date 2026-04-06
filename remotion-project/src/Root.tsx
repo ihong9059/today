@@ -1,4 +1,5 @@
 import { Composition, Still } from "remotion";
+import { WallRobotVideo, WALL_ROBOT_VIDEO_DURATION } from "./WallRobotVideo";
 import { MyComposition } from "./Composition";
 import { EconomyNews } from "./EconomyNews";
 import { DumulmeoriTravel } from "./DumulmeoriTravel";
@@ -1326,6 +1327,14 @@ export const RemotionRoot: React.FC = () => {
         id="UttecVideoEN"
         component={UttecVideoEN}
         durationInFrames={UTTEC_VIDEO_EN_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="WallRobotVideo"
+        component={WallRobotVideo}
+        durationInFrames={WALL_ROBOT_VIDEO_DURATION}
         fps={30}
         width={1920}
         height={1080}
