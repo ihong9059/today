@@ -165,6 +165,8 @@ import { RecoveryVideo, TOTAL_DURATION as RECOVERY_DURATION } from "./RecoveryVi
 import { UttecVideoKO, UTTEC_VIDEO_DURATION } from "./UttecVideoKO";
 import { UttecVideoEN, UTTEC_VIDEO_EN_DURATION } from "./UttecVideoEN";
 import { TurboMillVideo, TURBO_MILL_DURATION } from "./TurboMillVideo";
+import { XerixProposalVideoKO, XERIX_VIDEO_DURATION } from "./XerixProposalVideoKO";
+import { XerixProposalVideoEN, XERIX_VIDEO_EN_DURATION } from "./XerixProposalVideoEN";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -1344,6 +1346,23 @@ export const RemotionRoot: React.FC = () => {
         id="WallRobotVideo"
         component={WallRobotVideo}
         durationInFrames={WALL_ROBOT_VIDEO_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      {/* XERIX XPR Enhancement Proposal Videos */}
+      <Composition
+        id="XerixProposalKO"
+        component={XerixProposalVideoKO}
+        durationInFrames={XERIX_VIDEO_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="XerixProposalEN"
+        component={XerixProposalVideoEN}
+        durationInFrames={XERIX_VIDEO_EN_DURATION}
         fps={30}
         width={1920}
         height={1080}
