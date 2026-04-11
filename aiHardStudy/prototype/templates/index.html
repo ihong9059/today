@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Vibe Firmware</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563EB">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VibeFW">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<style>
+:root {
+  --primary: #2563EB;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --bg: #0F172A;
+  --surface: #1E293B;
+  --surface2: #334155;
+  --text: #F1F5F9;
+  --text2: #94A3B8;
+  --border: #475569;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Tab Bar */
+.tab-bar {
+  position: fixed; bottom:0; left:50%; transform:translateX(-50%);
+  width: 100%; max-width:480px;
+  display:flex; background:var(--surface);
+  border-top:1px solid var(--border);
+  z-index:100; padding:6px 0 env(safe-area-inset-bottom, 8px);
+}
+.tab-item {
+  flex:1; text-align:center; padding:8px 0; cursor:pointer;
+  font-size:11px; color:var(--text2); transition:color 0.2s;
+}
+.tab-item.active { color:var(--primary); }
+.tab-item .icon { font-size:20px; display:block; margin-bottom:2px; }
+
+/* Pages */
+.page { display:none; flex:1; overflow-y:auto; padding:16px 16px 80px; }
+.page.active { display:block; }
+
+/* Header */
+.header {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:8px 0 16px; font-size:18px; font-weight:700;
+}
+
+/* Cards */
+.card {
+  background:var(--surface); border-radius:12px;
+  padding:16px; margin-bottom:12px; border:1px solid var(--border);
+}
+.card-title {
+  font-size:13px; color:var(--text2); margin-bottom:8px;
+  text-transform:uppercase; letter-spacing:0.5px;
+}
+
+/* Status Badge */
+.status-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:13px; padding:4px 10px; border-radius:20px;
+  background:rgba(16,185,129,0.15); color:var(--success);
+}
+.status-dot { width:8px;height:8px;border-radius:50%;background:var(--success); }
+
+/* Buttons */
+.btn-primary {
+  width:100%; padding:16px; border:none; border-radius:12px;
+  background:var(--primary); color:#fff; font-size:16px; font-weight:700;
+  cursor:pointer; transition:opacity 0.2s;
+}
+.btn-primary:active { opacity:0.8; }
+textarea {
+  width:100%; padding:14px; background:var(--surface2); border:1px solid var(--border);
+  border-radius:10px; color:var(--text); font-size:15px; resize:none;
+  font-family:inherit; min-height:80px;
+}
+textarea:focus { outline:none; border-color:var(--primary); }
+textarea::placeholder { color:var(--text2); }
+
+/* ====== HW Tab ====== */
+.hw-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:10px;
+}
+.hw-card {
+  background:var(--surface); border-radius:12px; padding:16px;
+  text-align:center; cursor:pointer; border:1px solid var(--border);
+  transition:border-color 0.2s, transform 0.1s;
+}
+.hw-card:active { transform:scale(0.96); border-color:var(--primary); }
+.hw-card .hw-icon { font-size:32px; margin-bottom:6px; }
+.hw-card .hw-name { font-size:12px; color:var(--text2); }
+
+/* HW Detail */
+.hw-detail { display:none; }
+.hw-detail.active { display:block; }
+.hw-back { cursor:pointer; font-size:14px; color:var(--primary); margin-bottom:12px; }
+.circuit-box {
+  background:#0D1117; border-radius:8px; padding:14px;
+  font-family:'Courier New',monospace; font-size:13px;
+  color:#7EE787; line-height:1.6; overflow-x:auto;
+}
+.info-table { width:100%; font-size:13px; }
+.info-table td { padding:6px 8px; border-bottom:1px solid var(--border); }
+.info-table td:first-child { color:var(--text2); width:40%; }
+.tip-box {
+  background:rgba(37,99,235,0.1); border-left:3px solid var(--primary);
+  padding:10px 12px; border-radius:0 8px 8px 0; margin:10px 0;
+  font-size:13px; line-height:1.5;
+}
+.link-btn {
+  display:block; padding:12px; margin-top:8px; text-align:center;
+  border-radius:10px; background:var(--surface2); border:1px solid var(--border);
+  color:var(--primary); font-size:14px; font-weight:600; cursor:pointer;
+  text-decoration:none;
+}
+.link-btn:active { opacity:0.7; }
+
+/* ====== SW Tab ====== */
+.lesson-item {
+  display:flex; align-items:center; gap:12px;
+  padding:14px; background:var(--surface); border-radius:10px;
+  margin-bottom:8px; cursor:pointer; border:1px solid var(--border);
+}
+.lesson-item:active { border-color:var(--primary); }
+.lesson-icon { font-size:20px; width:32px; text-align:center; }
+.lesson-info { flex:1; }
+.lesson-title { font-size:14px; font-weight:600; }
+.lesson-sub { font-size:12px; color:var(--text2); margin-top:2px; }
+.stars { color:var(--warning); font-size:12px; letter-spacing:1px; }
+.code-block {
+  background:#0D1117; border-radius:8px; padding:14px;
+  font-family:'Courier New',monospace; font-size:12px;
+  color:#E6EDF3; line-height:1.8; overflow-x:auto; margin:8px 0;
+}
+.code-line { cursor:pointer; padding:2px 4px; border-radius:4px; transition:background 0.2s; }
+.code-line:hover { background:rgba(37,99,235,0.2); }
+.code-line.active { background:rgba(37,99,235,0.3); }
+.code-explain {
+  display:none; background:rgba(37,99,235,0.1); padding:10px 12px;
+  border-radius:8px; margin:4px 0 8px 20px; font-size:12px;
+  font-family:'Segoe UI',sans-serif; line-height:1.6; color:var(--text);
+  border-left:3px solid var(--primary);
+}
+.code-explain.show { display:block; }
+.code-kw { color:#FF7B72; }
+.code-fn { color:#D2A8FF; }
+.code-str { color:#A5D6FF; }
+.code-cm { color:#8B949E; }
+.code-num { color:#79C0FF; }
+.code-def { color:#FFA657; }
+
+/* ====== Pad Tab ====== */
+.pad-section-title { font-size:13px; color:var(--text2); margin:16px 0 8px; font-weight:600; }
+.pad-row { display:flex; gap:8px; margin-bottom:8px; }
+.pad-btn {
+  flex:1; padding:16px 8px; background:var(--surface); border:2px solid var(--border);
+  border-radius:12px; text-align:center; cursor:pointer;
+  transition: border-color 0.15s, transform 0.1s, background 0.15s;
+  min-height:70px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:4px;
+}
+.pad-btn:active { transform:scale(0.94); }
+.pad-btn.on { border-color:var(--success); background:rgba(16,185,129,0.1); }
+.pad-btn .pad-icon { font-size:28px; }
+.pad-btn .pad-label { font-size:11px; color:var(--text2); }
+.pad-btn .pad-state { font-size:10px; font-weight:700; }
+
+.piano-row { display:flex; gap:4px; margin:8px 0; }
+.piano-key {
+  flex:1; padding:20px 2px 12px; background:var(--surface2); border:1px solid var(--border);
+  border-radius:0 0 8px 8px; text-align:center; cursor:pointer;
+  font-size:11px; color:var(--text2); transition:background 0.1s;
+}
+.piano-key:active { background:var(--primary); color:#fff; }
+
+.combo-btn {
+  flex:1; padding:14px; background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; text-align:center; cursor:pointer;
+}
+.combo-btn:active { border-color:var(--warning); background:rgba(245,158,11,0.1); }
+.combo-btn .combo-icon { font-size:24px; }
+.combo-btn .combo-label { font-size:12px; margin-top:4px; }
+.combo-btn .combo-desc { font-size:10px; color:var(--text2); margin-top:2px; }
+
+/* Toast */
+.toast {
+  position:fixed; bottom:90px; left:50%; transform:translateX(-50%);
+  background:var(--surface2); color:var(--text); padding:10px 20px;
+  border-radius:20px; font-size:13px; opacity:0; transition:opacity 0.3s;
+  z-index:200; pointer-events:none; border:1px solid var(--border);
+}
+.toast.show { opacity:1; }
+
+/* Progress */
+.progress-bar { height:6px; background:var(--surface2); border-radius:3px; margin:8px 0; overflow:hidden; }
+.progress-fill { height:100%; background:var(--primary); border-radius:3px; transition:width 0.3s; }
+
+/* History items in home */
+.history-item {
+  display:flex; align-items:center; gap:10px; padding:10px 0;
+  border-bottom:1px solid var(--border); cursor:pointer;
+}
+.history-item:last-child { border-bottom:none; }
+.history-status { font-size:16px; }
+.history-text { flex:1; font-size:13px; }
+.history-time { font-size:11px; color:var(--text2); }
+
+/* Quiz */
+.quiz-option {
+  display:block; padding:12px; margin:6px 0; background:var(--surface2);
+  border:1px solid var(--border); border-radius:8px; cursor:pointer;
+  font-size:13px; transition:border-color 0.2s;
+}
+.quiz-option:active { border-color:var(--primary); }
+.quiz-option.correct { border-color:var(--success); background:rgba(16,185,129,0.1); }
+.quiz-option.wrong { border-color:var(--error); background:rgba(239,68,68,0.1); }
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+</style>
+</head>
+<body>
+
+<!-- ==================== HOME TAB ==================== -->
+<div class="page active" id="page-home">
+  <div class="header">
+    <span>Vibe Firmware</span>
+    <span style="font-size:13px;color:var(--text2)">v1.0</span>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:15px;font-weight:600">ESP32-WROOM</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:2px">78:1C:3C:F4:AD:00</div>
+      </div>
+      <div class="status-badge"><div class="status-dot"></div>연결됨</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">프롬프트 입력</div>
+    <textarea id="prompt" placeholder="ESP32에게 시킬 일을 자연어로 입력하세요...&#10;예: LED를 0.5초마다 깜빡여줘"></textarea>
+    <div style="height:10px"></div>
+    <button class="btn-primary" onclick="runPrompt()">실행하기</button>
+  </div>
+
+  <div class="card" id="progress-card" style="display:none">
+    <div class="card-title">진행 상태</div>
+    <div id="progress-steps"></div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div id="progress-time" style="font-size:12px;color:var(--text2);text-align:right"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">최근 이력 (탭하면 재실행)</div>
+    <div id="history-list"></div>
+  </div>
+</div>
+
+<!-- ==================== HW TAB ==================== -->
+<div class="page" id="page-hw">
+  <div id="hw-list">
+    <div class="header"><span>하드웨어 학습</span></div>
+    <div class="card">
+      <div style="text-align:center;font-size:15px;font-weight:600;margin-bottom:4px">ESP32-WROOM-32 DevKitC</div>
+      <div style="text-align:center;font-size:12px;color:var(--text2)">38핀 · Xtensa 듀얼코어 240MHz · 4MB Flash</div>
+    </div>
+    <div class="card-title" style="padding:0 4px">부품 카드 (탭하여 학습)</div>
+    <div class="hw-grid">
+      <div class="hw-card" onclick="showHwDetail('led')"><div class="hw-icon">🔴</div><div class="hw-name">LED</div></div>
+      <div class="hw-card" onclick="showHwDetail('buzzer')"><div class="hw-icon">🔔</div><div class="hw-name">부저</div></div>
+      <div class="hw-card" onclick="showHwDetail('switch')"><div class="hw-icon">🔘</div><div class="hw-name">스위치</div></div>
+      <div class="hw-card" onclick="showHwDetail('oled')"><div class="hw-icon">📺</div><div class="hw-name">OLED</div></div>
+      <div class="hw-card" onclick="showHwDetail('sensor')"><div class="hw-icon">🌡</div><div class="hw-name">온습도</div></div>
+      <div class="hw-card" onclick="showHwDetail('lora')"><div class="hw-icon">📡</div><div class="hw-name">LoRa</div></div>
+      <div class="hw-card" onclick="showHwDetail('neopixel')"><div class="hw-icon">🌈</div><div class="hw-name">NeoPixel</div></div>
+      <div class="hw-card" onclick="showHwDetail('spi')"><div class="hw-icon">🔌</div><div class="hw-name">SPI</div></div>
+      <div class="hw-card" onclick="showHwDetail('power')"><div class="hw-icon">⚡</div><div class="hw-name">전원</div></div>
+    </div>
+  </div>
+
+  <!-- LED Detail -->
+  <div class="hw-detail" id="hw-led">
+    <div class="hw-back" onclick="hideHwDetail()">← 부품 목록</div>
+    <div class="header"><span>🔴 LED (발광다이오드)</span></div>
+    <div class="card">
+      <div class="card-title">이게 뭐야?</div>
+      <p style="font-size:14px;line-height:1.7">LED는 전기를 흘리면 빛나는 작은 전구예요.<br>이 보드에는 <b>3개</b>가 달려 있어요:</p>
+      <div style="font-size:28px;margin:12px 0;text-align:center">🔴 빨강 &nbsp; 🟡 노랑 &nbsp; 🔵 파랑</div>
+    </div>
+    <div class="card">
+      <div class="card-title">어떻게 연결돼 있어?</div>
+      <div class="circuit-box">ESP32         저항       LED<br>GPIO33 ──[100Ω]──▶|── GND<br>GPIO25 ──[100Ω]──▶|── GND<br>GPIO26 ──[100Ω]──▶|── GND</div>
+      <div class="tip-box">💡 <b>저항이 왜 필요해?</b><br>LED에 전류가 너무 많이 흐르면 타버려요.<br>저항이 전류를 적당히(13mA) 줄여줍니다.<br><br>계산: (3.3V - 2.0V) / 100Ω = <b>13mA</b> ✅ 안전</div>
+    </div>
+    <div class="card">
+      <div class="card-title">어떻게 켜고 꺼?</div>
+      <p style="font-size:14px;line-height:1.7">GPIO33에 <b style="color:var(--success)">HIGH (3.3V)</b>를 주면<br>→ 전류가 흘러 → LED가 켜짐 💡</p>
+      <p style="font-size:14px;line-height:1.7;margin-top:8px">GPIO33에 <b style="color:var(--error)">LOW (0V)</b>를 주면<br>→ 전류가 안 흘러 → LED가 꺼짐 ⚫</p>
+      <div class="tip-box">이것을 <b>"Active HIGH"</b>라고 해요<br>(HIGH 신호 = 켜짐)</div>
+    </div>
+    <div class="card">
+      <div class="card-title">핀 정보</div>
+      <table class="info-table">
+        <tr><td>빨강 LED</td><td><b>GPIO33</b></td></tr>
+        <tr><td>노랑 LED</td><td><b>GPIO25</b></td></tr>
+        <tr><td>파랑 LED</td><td><b>GPIO26</b></td></tr>
+        <tr><td>방향</td><td>출력 (Output)</td></tr>
+        <tr><td>극성</td><td>Active HIGH</td></tr>
+        <tr><td>저항</td><td>100Ω (직렬)</td></tr>
+        <tr><td>전류</td><td>13mA</td></tr>
+        <tr><td>board.h</td><td style="font-family:monospace;color:var(--warning)">PIN_LED_RED</td></tr>
+      </table>
+    </div>
+    <a class="link-btn" onclick="switchTab('pad')">🎮 지금 바로 켜보기 →</a>
+    <a class="link-btn" onclick="switchTab('sw')">💻 코드로 보기 →</a>
+  </div>
+
+  <!-- Buzzer Detail -->
+  <div class="hw-detail" id="hw-buzzer">
+    <div class="hw-back" onclick="hideHwDetail()">← 부품 목록</div>
+    <div class="header"><span>🔔 부저 (Buzzer)</span></div>
+    <div class="card">
+      <div class="card-title">이게 뭐야?</div>
+      <p style="font-size:14px;line-height:1.7">부저는 전기 신호를 소리로 바꿔주는 부품이에요.<br>이 보드에는 <b>2개</b>가 있어요:</p>
+      <div style="margin:12px 0;font-size:14px">
+        <b>🔔 BEEP 부저</b> — 단순 삐~ 소리 (능동 부저)<br>
+        <b>🎵 MELODY 부저</b> — 음계 연주 가능 (수동 부저)
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">BEEP — 직접 구동 (Active LOW)</div>
+      <div class="circuit-box">VCC ──[BUZ1 +]──[BUZ1 -]── GPIO27<br><br>GPIO27 = LOW  → 전류 흐름 → 소리 남 🔔<br>GPIO27 = HIGH → 전류 안흐름 → 소리 안남</div>
+      <div class="tip-box">💡 <b>Active LOW</b>: LOW 신호가 "켜짐"이에요.<br>LED(Active HIGH)와 반대!</div>
+    </div>
+    <div class="card">
+      <div class="card-title">MELODY — 트랜지스터 구동 (PWM)</div>
+      <div class="circuit-box">GPIO32 ──[R4=10KΩ]── Q1(BCX56) Base<br>VCC ──[BUZ2]── Q1 Collector<br>              Q1 Emitter ── GND<br><br>GPIO32에 PWM 주파수를 주면<br>→ 그 주파수의 음이 납니다<br>→ 262Hz = 도, 440Hz = 라</div>
+    </div>
+    <div class="card">
+      <div class="card-title">핀 정보</div>
+      <table class="info-table">
+        <tr><td>BEEP 부저</td><td><b>GPIO27</b> (Active LOW)</td></tr>
+        <tr><td>MELODY 부저</td><td><b>GPIO32</b> (PWM, Active HIGH)</td></tr>
+        <tr><td>board.h</td><td style="font-family:monospace;color:var(--warning)">PIN_BUZZER_BEEP<br>PIN_BUZZER_MELODY</td></tr>
+      </table>
+    </div>
+    <a class="link-btn" onclick="switchTab('pad')">🎮 피아노 건반 연주하기 →</a>
+  </div>
+
+  <!-- Generic detail for other components -->
+  <div class="hw-detail" id="hw-switch">
+    <div class="hw-back" onclick="hideHwDetail()">← 부품 목록</div>
+    <div class="header"><span>🔘 스위치 (Switch)</span></div>
+    <div class="card"><div class="card-title">이게 뭐야?</div><p style="font-size:14px;line-height:1.7">버튼을 누르면 신호가 바뀌는 부품이에요.<br>문 초인종 버튼과 같아요.</p></div>
+    <div class="card"><div class="card-title">회로</div><div class="circuit-box">GPIO35 ──[SW1]── GND<br>         ──[C1=100nF]── GND (디바운스)<br><br>누르면 → GPIO35 = LOW (0V)<br>안 누르면 → GPIO35 = HIGH (3.3V)</div><div class="tip-box">💡 <b>Active LOW</b>: 버튼을 누르면 LOW!<br>C1 캐패시터가 버튼의 떨림(바운스)을 잡아줘요.</div></div>
+    <div class="card"><div class="card-title">핀 정보</div><table class="info-table"><tr><td>핀</td><td><b>GPIO35</b> (입력 전용)</td></tr><tr><td>극성</td><td>Active LOW (누름=LOW)</td></tr><tr><td>board.h</td><td style="font-family:monospace;color:var(--warning)">PIN_SWITCH</td></tr></table></div>
+    <a class="link-btn" onclick="switchTab('pad')">🎮 버튼 상태 모니터 →</a>
+  </div>
+
+  <div class="hw-detail" id="hw-oled"><div class="hw-back" onclick="hideHwDetail()">← 부품 목록</div><div class="header"><span>📺 OLED 디스플레이</span></div><div class="card"><div class="card-title">이게 뭐야?</div><p style="font-size:14px;line-height:1.7">0.96인치 작은 화면이에요. 128x64 픽셀.<br>I2C 통신으로 데이터를 보내면 화면에 표시됩니다.</p></div><div class="card"><div class="card-title">연결</div><div class="circuit-box">SDA: GPIO21 (데이터) ──[10KΩ 풀업]── VCC<br>SCL: GPIO22 (클럭)  ──[10KΩ 풀업]── VCC<br><br>I2C 주소: 0x3C<br>컨트롤러: SSD1306</div></div></div>
+  <div class="hw-detail" id="hw-sensor"><div class="hw-back" onclick="hideHwDetail()">← 부품 목록</div><div class="header"><span>🌡 AHT20 온습도 센서</span></div><div class="card"><div class="card-title">이게 뭐야?</div><p style="font-size:14px;line-height:1.7">공기의 온도와 습도를 측정하는 디지털 센서예요.<br>정밀도: 온도 ±0.3°C, 습도 ±2%RH</p></div><div class="card"><div class="card-title">연결</div><div class="circuit-box">OLED과 같은 I2C 버스 공유!<br>SDA: GPIO21 / SCL: GPIO22<br>I2C 주소: 0x38<br><br>측정 명령 전송 → 80ms 대기 → 데이터 읽기</div></div></div>
+  <div class="hw-detail" id="hw-lora"><div class="hw-back" onclick="hideHwDetail()">← 부품 목록</div><div class="header"><span>📡 LoRa 무선 모듈</span></div><div class="card"><div class="card-title">이게 뭐야?</div><p style="font-size:14px;line-height:1.7">수 km까지 데이터를 보낼 수 있는 무전기예요.<br>UART(TX/RX)로 ESP32와 대화합니다.</p></div><div class="card"><div class="card-title">연결</div><div class="circuit-box">TXD: GPIO17 (ESP32 → LoRa)<br>RXD: GPIO16 (LoRa → ESP32)<br>M0:  GPIO2  (모드 선택)<br>M1:  GPIO4  (모드 선택)<br>AUX: GPIO39 (상태)</div></div></div>
+  <div class="hw-detail" id="hw-neopixel"><div class="hw-back" onclick="hideHwDetail()">← 부품 목록</div><div class="header"><span>🌈 NeoPixel (WS2812)</span></div><div class="card"><p style="font-size:14px;line-height:1.7">RGB LED를 데이터 1핀으로 제어하는 마법 LED!<br>색상(R,G,B)을 숫자로 지정할 수 있어요.</p></div></div>
+  <div class="hw-detail" id="hw-spi"><div class="hw-back" onclick="hideHwDetail()">← 부품 목록</div><div class="header"><span>🔌 SPI 버스</span></div><div class="card"><p style="font-size:14px;line-height:1.7">고속 데이터 전송용 4핀 통신 버스예요.<br>MOSI(IO23), MISO(IO19), SCK(IO18), SS(IO5)</p></div></div>
+  <div class="hw-detail" id="hw-power"><div class="hw-back" onclick="hideHwDetail()">← 부품 목록</div><div class="header"><span>⚡ 전원</span></div><div class="card"><p style="font-size:14px;line-height:1.7">USB 5V 입력 → 내장 레귤레이터 → 3.3V 출력<br>GPIO는 3.3V 레벨, LED/센서 모두 3.3V로 동작</p></div></div>
+</div>
+
+<!-- ==================== SW TAB ==================== -->
+<div class="page" id="page-sw">
+  <div class="header"><span>소프트웨어 학습</span></div>
+
+  <div class="card">
+    <div class="card-title">학습 경로</div>
+    <div class="lesson-item" onclick="showCodeViewer()">
+      <div class="lesson-icon">✅</div>
+      <div class="lesson-info"><div class="lesson-title">1. C언어 기초</div><div class="lesson-sub">app_main, 변수, #include, #define</div></div>
+      <div class="stars">★★★★★</div>
+    </div>
+    <div class="lesson-item" onclick="showCodeViewer()">
+      <div class="lesson-icon">✅</div>
+      <div class="lesson-info"><div class="lesson-title">2. GPIO 제어</div><div class="lesson-sub">핀 모드, 디지털 입출력, Active HIGH/LOW</div></div>
+      <div class="stars">★★★☆☆</div>
+    </div>
+    <div class="lesson-item" onclick="showCodeViewer()">
+      <div class="lesson-icon">⏳</div>
+      <div class="lesson-info"><div class="lesson-title">3. 반복과 조건</div><div class="lesson-sub">while, for, if, vTaskDelay</div></div>
+      <div class="stars">★★☆☆☆</div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-icon">🔒</div>
+      <div class="lesson-info"><div class="lesson-title">4. 함수</div><div class="lesson-sub">함수 만들기, 매개변수, 반환값</div></div>
+      <div class="stars">☆☆☆☆☆</div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-icon">🔒</div>
+      <div class="lesson-info"><div class="lesson-title">5. I2C 통신</div><div class="lesson-sub">SDA/SCL, 센서 읽기, OLED 표시</div></div>
+      <div class="stars">☆☆☆☆☆</div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-icon">🔒</div>
+      <div class="lesson-info"><div class="lesson-title">6. PWM과 타이머</div><div class="lesson-sub">밝기 조절, 음계, 멜로디</div></div>
+      <div class="stars">☆☆☆☆☆</div>
+    </div>
+  </div>
+
+  <div class="card" id="code-viewer" style="display:none">
+    <div class="card-title">코드 분석: LED 깜빡이기 <span style="float:right;cursor:pointer" onclick="document.getElementById('code-viewer').style.display='none'">✕</span></div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:8px">코드를 한 줄씩 탭하면 설명이 나와요!</div>
+    <div class="code-block" id="code-area">
+      <div class="code-line" onclick="toggleExplain(this)"><span class="code-kw">#include</span> <span class="code-str">"board.h"</span></div>
+      <div class="code-explain">📎 board.h 파일을 가져와요. PIN_LED_RED=33 같은 이름들을 쓸 수 있게 됩니다.</div>
+
+      <div class="code-line" onclick="toggleExplain(this)">&nbsp;</div>
+
+      <div class="code-line" onclick="toggleExplain(this)"><span class="code-kw">void</span> <span class="code-fn">app_main</span>(<span class="code-kw">void</span>) {</div>
+      <div class="code-explain">🚀 프로그램이 여기서 시작돼요! ESP32가 켜지면 이 함수를 제일 먼저 실행합니다.</div>
+
+      <div class="code-line" onclick="toggleExplain(this)">&nbsp;&nbsp;<span class="code-fn">gpio_set_direction</span>(</div>
+      <div class="code-line" onclick="toggleExplain(this)">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-def">PIN_LED_RED</span>, <span class="code-def">GPIO_MODE_OUTPUT</span>);</div>
+      <div class="code-explain">⚡ GPIO33번 핀을 "출력" 모드로 설정해요. LED를 제어하려면 출력이어야 해요!<br><br><a class="link-btn" onclick="switchTab('hw');showHwDetail('led')" style="margin:4px 0;padding:8px;font-size:12px">🔧 LED 하드웨어 보기 →</a></div>
+
+      <div class="code-line" onclick="toggleExplain(this)">&nbsp;</div>
+
+      <div class="code-line" onclick="toggleExplain(this)">&nbsp;&nbsp;<span class="code-kw">while</span> (<span class="code-num">1</span>) {</div>
+      <div class="code-explain">🔄 "계속 반복해!" while(1)은 "영원히"라는 뜻이에요. 이 안의 코드가 계속 반복됩니다.</div>
+
+      <div class="code-line" onclick="toggleExplain(this)">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-fn">gpio_set_level</span>(<span class="code-def">PIN_LED_RED</span>, <span class="code-def">LED_ON</span>);</div>
+      <div class="code-explain">💡 빨간 LED를 켜요! PIN_LED_RED=33, LED_ON=1(HIGH=3.3V)</div>
+
+      <div class="code-line" onclick="toggleExplain(this)">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-fn">vTaskDelay</span>(<span class="code-num">500</span> / <span class="code-def">portTICK_PERIOD_MS</span>);</div>
+      <div class="code-explain">⏱️ 500밀리초(0.5초) 동안 기다려요. 이 시간이 깜빡이는 속도를 결정해요!<br><br><a class="link-btn" onclick="switchTab('pad')" style="margin:4px 0;padding:8px;font-size:12px">🎮 숫자를 바꿔 실행해보기 →</a></div>
+
+      <div class="code-line" onclick="toggleExplain(this)">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-fn">gpio_set_level</span>(<span class="code-def">PIN_LED_RED</span>, <span class="code-def">LED_OFF</span>);</div>
+      <div class="code-explain">⚫ 빨간 LED를 꺼요! LED_OFF=0(LOW=0V)</div>
+
+      <div class="code-line" onclick="toggleExplain(this)">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-fn">vTaskDelay</span>(<span class="code-num">500</span> / <span class="code-def">portTICK_PERIOD_MS</span>);</div>
+      <div class="code-explain">⏱️ 또 0.5초 기다리고, 다시 while 맨 위로!</div>
+
+      <div class="code-line">&nbsp;&nbsp;}</div>
+      <div class="code-line">}</div>
+    </div>
+    <div class="card" style="margin-top:8px;padding:12px;background:var(--surface2)">
+      <div style="font-size:12px;font-weight:600;margin-bottom:6px">코드 구조 요약</div>
+      <div style="font-size:12px;font-family:monospace;line-height:1.8;color:var(--text2)">
+        ┌── #include (준비물)<br>
+        ├── app_main() {<br>
+        │&nbsp;&nbsp;&nbsp;├── 핀 설정 (1회)<br>
+        │&nbsp;&nbsp;&nbsp;└── while(1) {<br>
+        │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── LED 켜기<br>
+        │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 기다리기<br>
+        │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── LED 끄기<br>
+        │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 기다리기<br>
+        │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} ← 반복!<br>
+        └── }
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">오늘의 퀴즈</div>
+    <p style="font-size:14px;margin-bottom:10px"><b>Q:</b> gpio_set_level(33, 1)은 무엇을 할까요?</p>
+    <div class="quiz-option" onclick="checkQuiz(this,false)">GPIO33을 입력으로 설정</div>
+    <div class="quiz-option" onclick="checkQuiz(this,true)">GPIO33에 HIGH(3.3V) 전압 출력 ✅</div>
+    <div class="quiz-option" onclick="checkQuiz(this,false)">GPIO33의 값을 읽기</div>
+    <div class="quiz-option" onclick="checkQuiz(this,false)">33밀리초 대기</div>
+  </div>
+</div>
+
+<!-- ==================== PAD TAB ==================== -->
+<div class="page" id="page-pad">
+  <div class="header"><span>실행 패드</span></div>
+
+  <div class="pad-section-title">LED 제어</div>
+  <div class="pad-row">
+    <div class="pad-btn" id="pad-red" onclick="togglePad('red')">
+      <div class="pad-icon">🔴</div>
+      <div class="pad-label">RED</div>
+      <div class="pad-state" style="color:var(--text2)">OFF</div>
+    </div>
+    <div class="pad-btn" id="pad-yellow" onclick="togglePad('yellow')">
+      <div class="pad-icon">🟡</div>
+      <div class="pad-label">YELLOW</div>
+      <div class="pad-state" style="color:var(--text2)">OFF</div>
+    </div>
+    <div class="pad-btn" id="pad-blue" onclick="togglePad('blue')">
+      <div class="pad-icon">🔵</div>
+      <div class="pad-label">BLUE</div>
+      <div class="pad-state" style="color:var(--text2)">OFF</div>
+    </div>
+  </div>
+  <div class="pad-row">
+    <div class="pad-btn" onclick="runPadAction('blink')">
+      <div class="pad-icon">🚦</div>
+      <div class="pad-label">전체 점멸</div>
+    </div>
+    <div class="pad-btn" onclick="runPadAction('chase')">
+      <div class="pad-icon">🌈</div>
+      <div class="pad-label">순차 돌리기</div>
+    </div>
+  </div>
+
+  <div class="pad-section-title">부저 제어</div>
+  <div class="pad-row">
+    <div class="pad-btn" onclick="runPadAction('beep')">
+      <div class="pad-icon">🔔</div>
+      <div class="pad-label">삐!</div>
+    </div>
+    <div class="pad-btn" onclick="runPadAction('melody')">
+      <div class="pad-icon">🎵</div>
+      <div class="pad-label">멜로디</div>
+    </div>
+  </div>
+  <div class="piano-row">
+    <div class="piano-key" onclick="playNote('도')">도</div>
+    <div class="piano-key" onclick="playNote('레')">레</div>
+    <div class="piano-key" onclick="playNote('미')">미</div>
+    <div class="piano-key" onclick="playNote('파')">파</div>
+    <div class="piano-key" onclick="playNote('솔')">솔</div>
+    <div class="piano-key" onclick="playNote('라')">라</div>
+    <div class="piano-key" onclick="playNote('시')">시</div>
+    <div class="piano-key" onclick="playNote('도\'')">도'</div>
+  </div>
+
+  <div class="pad-section-title">센서 / 디스플레이</div>
+  <div class="pad-row">
+    <div class="pad-btn" onclick="runPadAction('temp')">
+      <div class="pad-icon">🌡</div>
+      <div class="pad-label">온도 읽기</div>
+      <div class="pad-state" id="temp-val" style="color:var(--success)">--°C</div>
+    </div>
+    <div class="pad-btn" onclick="runPadAction('oled')">
+      <div class="pad-icon">📺</div>
+      <div class="pad-label">OLED 표시</div>
+      <div class="pad-state" style="color:var(--text2)">"Hello!"</div>
+    </div>
+  </div>
+
+  <div class="pad-section-title">스위치 상태</div>
+  <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+    <div>🔘 스위치: <b id="sw-state">해제 (HIGH)</b></div>
+    <div class="pad-btn" style="flex:none;width:auto;min-height:auto;padding:8px 16px" onclick="toggleSwMonitor()">모니터</div>
+  </div>
+
+  <div class="pad-section-title">조합 동작 (숏컷)</div>
+  <div class="pad-row">
+    <div class="combo-btn" onclick="runPadAction('party')">
+      <div class="combo-icon">🎪</div>
+      <div class="combo-label">파티 모드</div>
+      <div class="combo-desc">LED 전체 + 부저</div>
+    </div>
+    <div class="combo-btn" onclick="runPadAction('alarm')">
+      <div class="combo-icon">🚨</div>
+      <div class="combo-label">경보 모드</div>
+      <div class="combo-desc">빨강 점멸 + 비프</div>
+    </div>
+  </div>
+  <div class="pad-row">
+    <div class="combo-btn" onclick="runPadAction('thermometer')">
+      <div class="combo-icon">🌡</div>
+      <div class="combo-label">온도계</div>
+      <div class="combo-desc">측정 → OLED 표시</div>
+    </div>
+    <div class="combo-btn" onclick="runPadAction('lora-send')">
+      <div class="combo-icon">📡</div>
+      <div class="combo-label">LoRa 전송</div>
+      <div class="combo-desc">"Hello" 송신</div>
+    </div>
+  </div>
+
+  <div style="margin-top:12px;text-align:center">
+    <a class="link-btn" style="display:inline-block;width:auto;padding:10px 20px;font-size:12px" onclick="showToast('💻 실행된 코드를 확인해보세요!');setTimeout(()=>switchTab('sw'),1000)">💻 방금 실행된 코드 보기</a>
+  </div>
+</div>
+
+<!-- ==================== SETTINGS TAB ==================== -->
+<div class="page" id="page-settings">
+  <div class="header"><span>설정</span></div>
+  <div class="card">
+    <div class="card-title">서버 설정</div>
+    <table class="info-table">
+      <tr><td>서버 주소</td><td>http://localhost:8000</td></tr>
+      <tr><td>연결 상태</td><td style="color:var(--success)">● 정상</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">보드 설정</div>
+    <table class="info-table">
+      <tr><td>보드</td><td>ESP32-WROOM 38핀</td></tr>
+      <tr><td>프레임워크</td><td>ESP-IDF v5.5</td></tr>
+      <tr><td>COM 포트</td><td>COM20</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">교육 모드</div>
+    <table class="info-table">
+      <tr><td>코드 자동 표시</td><td style="color:var(--success)">ON</td></tr>
+      <tr><td>프롬프트 힌트</td><td style="color:var(--success)">ON</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">디바이스 관리</div>
+    <div class="history-item">
+      <span class="history-status">📱</span>
+      <span class="history-text">ESP32-WROOM (78:1C:3C:F4:AD:00)</span>
+      <span class="history-time" style="color:var(--success)">연결됨</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">앱 정보</div>
+    <table class="info-table">
+      <tr><td>버전</td><td>1.0.0 (프로토타입)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Tab Bar -->
+<div class="tab-bar">
+  <div class="tab-item active" onclick="switchTab('home')"><span class="icon">🏠</span>홈</div>
+  <div class="tab-item" onclick="switchTab('hw')"><span class="icon">🔧</span>HW</div>
+  <div class="tab-item" onclick="switchTab('sw')"><span class="icon">💻</span>SW</div>
+  <div class="tab-item" onclick="switchTab('pad')"><span class="icon">🎮</span>패드</div>
+  <div class="tab-item" onclick="switchTab('settings')"><span class="icon">⚙️</span>설정</div>
+</div>
+
+<script>
+// Tab switching
+function switchTab(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  const tabs = ['home','hw','sw','pad','settings'];
+  document.querySelectorAll('.tab-item')[tabs.indexOf(name)].classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// 이력 관리 (localStorage, 최대 5개)
+const HISTORY_KEY = 'vibe_history';
+function getHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+function addHistory(prompt, success) {
+  let hist = getHistory();
+  // 중복 제거
+  hist = hist.filter(h => h.prompt !== prompt);
+  // 맨 앞에 추가
+  hist.unshift({prompt, success, time: Date.now()});
+  // 최대 5개
+  if (hist.length > 5) hist = hist.slice(0, 5);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(hist));
+  renderHistory();
+}
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  const hist = getHistory();
+  if (hist.length === 0) {
+    list.innerHTML = '<div style="font-size:13px;color:var(--text2);padding:8px 0">아직 이력이 없습니다</div>';
+    return;
+  }
+  list.innerHTML = hist.map(h => {
+    const ago = getTimeAgo(h.time);
+    const icon = h.success ? '✅' : '❌';
+    return '<div class="history-item" onclick="rerunPrompt(\'' + h.prompt.replace(/'/g, "\\'") + '\')">'
+      + '<span class="history-status">' + icon + '</span>'
+      + '<span class="history-text">' + h.prompt + '</span>'
+      + '<span class="history-time">' + ago + '</span>'
+      + '</div>';
+  }).join('');
+}
+function getTimeAgo(ts) {
+  const sec = Math.floor((Date.now() - ts) / 1000);
+  if (sec < 60) return '방금';
+  if (sec < 3600) return Math.floor(sec/60) + '분 전';
+  if (sec < 86400) return Math.floor(sec/3600) + '시간 전';
+  return Math.floor(sec/86400) + '일 전';
+}
+function rerunPrompt(text) {
+  resetForNew();
+  document.getElementById('prompt').value = text;
+  showToast('이전 명령을 다시 실행합니다');
+  runPrompt();
+}
+
+// Home - fill prompt from history
+function fillPrompt(text) {
+  resetForNew();
+  document.getElementById('prompt').value = text;
+  showToast('프롬프트가 입력되었습니다');
+}
+
+// 새 명령을 위해 초기화
+function resetForNew() {
+  document.getElementById('prompt').value = '';
+  document.getElementById('progress-card').style.display = 'none';
+  document.getElementById('progress-steps').innerHTML = '';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('progress-fill').style.background = 'var(--primary)';
+  document.getElementById('progress-time').textContent = '';
+  if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+  // 서버 상태도 초기화
+  fetch('/api/reset', {method:'POST'});
+  document.getElementById('prompt').focus();
+  window.scrollTo(0,0);
+}
+
+// Home - run prompt (실제 빌드)
+let pollTimer = null;
+function runPrompt() {
+  const prompt = document.getElementById('prompt').value.trim();
+  if (!prompt) { showToast('프롬프트를 입력해주세요'); return; }
+
+  const card = document.getElementById('progress-card');
+  const steps = document.getElementById('progress-steps');
+  const fill = document.getElementById('progress-fill');
+  const ptime = document.getElementById('progress-time');
+  card.style.display = 'block';
+  steps.innerHTML = '<div style="font-size:13px;padding:3px 0">⏳ 서버에 전송 중...</div>';
+  fill.style.width = '5%';
+  fill.style.background = 'var(--primary)';
+  card.scrollIntoView({behavior:'smooth'});
+
+  const startTime = Date.now();
+
+  fetch('/api/run', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({prompt})
+  }).then(r => r.json()).then(data => {
+    if (data.error) {
+      showToast(data.error);
+      card.style.display = 'none';
+      return;
+    }
+    steps.innerHTML = '<div style="font-size:13px;padding:3px 0">⏳ 요청 접수 완료, 워커 대기 중...</div>';
+    fill.style.width = '10%';
+
+    // 상태 폴링 시작
+    if (pollTimer) clearInterval(pollTimer);
+    let lastState = '';
+    pollTimer = setInterval(() => {
+      fetch('/api/status?t='+Date.now()).then(r => r.json()).then(st => {
+        const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+        ptime.textContent = elapsed + '초 경과';
+
+        // 상태 변화 없으면 UI 갱신 스킵 (깜빡임 방지)
+        if (st.state === lastState && st.state !== 'done' && st.state !== 'error') return;
+        lastState = st.state;
+
+        const stateMap = {
+          idle:       {icon:'⏳', text:'워커 대기 중...', pct:5},
+          queued:     {icon:'⏳', text:'요청 접수됨...', pct:10},
+          generating: {icon:'🤖', text:'AI 코드 생성 중...', pct:30},
+          building:   {icon:'🔨', text:'빌드 + 플래싱 중...', pct:60},
+          done:       {icon:'✅', text:'완료!', pct:100},
+          error:      {icon:'❌', text:'오류: ' + (st.message||''), pct:100},
+        };
+        const info = stateMap[st.state] || {icon:'⏳', text:st.state, pct:10};
+        steps.innerHTML = '';
+
+        // 완료된 단계
+        if (['building','done','error'].includes(st.state))
+          steps.innerHTML += '<div style="font-size:13px;padding:3px 0">✅ AI 코드 생성 완료</div>';
+        if (st.state === 'done')
+          steps.innerHTML += '<div style="font-size:13px;padding:3px 0">✅ 빌드 + 플래싱 완료</div>';
+
+        // 현재 단계
+        if (!['done','error'].includes(st.state))
+          steps.innerHTML += '<div style="font-size:13px;padding:3px 0">' + info.icon + ' ' + info.text + '</div>';
+
+        fill.style.width = info.pct + '%';
+
+        if (st.state === 'done') {
+          fill.style.background = 'var(--success)';
+          steps.innerHTML += '<div style="font-size:14px;padding:8px 0;color:var(--success);font-weight:700">🎉 ' + (st.message||'완료!') + '</div>';
+          if (st.code) {
+            lastCode = st.code;
+            steps.innerHTML += '<div style="margin-top:8px">'
+              + '<div style="font-size:12px;color:var(--text2);margin-bottom:4px;cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display===\'none\'?\'block\':\'none\'">📝 생성된 코드 보기 ▾</div>'
+              + '<pre style="display:none;background:#0D1117;padding:10px;border-radius:8px;font-size:11px;color:#E6EDF3;overflow-x:auto;max-height:250px;white-space:pre-wrap">' + st.code.replace(/</g,'&lt;') + '</pre></div>';
+          }
+          addHistory(prompt, true);
+          steps.innerHTML += '<div id="explain-area"></div>';
+          steps.innerHTML += '<div style="margin-top:12px;display:flex;gap:8px">'
+            + '<button class="btn-primary" style="flex:1;padding:12px;font-size:14px;background:var(--surface2);color:var(--primary);border:1px solid var(--primary)" onclick="explainCode()">🤖 코드 설명</button>'
+            + '<button class="btn-primary" style="flex:1;padding:12px;font-size:14px" onclick="resetForNew()">🔄 새 명령</button>'
+            + '</div>';
+          clearInterval(pollTimer); pollTimer = null;
+          showToast('🎉 동작합니다!');
+        }
+        if (st.state === 'error') {
+          fill.style.background = 'var(--error)';
+          steps.innerHTML += '<div style="font-size:13px;padding:4px 0;color:var(--error)">' + (st.message||'오류 발생') + '</div>';
+          if (st.error) {
+            steps.innerHTML += '<div style="margin-top:4px;font-size:11px;color:var(--error);background:#1a1a2e;padding:8px;border-radius:6px;max-height:80px;overflow:auto">' + st.error.replace(/</g,'&lt;').substring(0,300) + '</div>';
+          }
+          addHistory(prompt, false);
+          steps.innerHTML += '<div style="margin-top:12px;display:flex;gap:8px">'
+            + '<button class="btn-primary" style="flex:1;padding:12px;font-size:14px" onclick="resetForNew()">🔄 다시 시도</button></div>';
+          clearInterval(pollTimer); pollTimer = null;
+        }
+      }).catch(() => {
+        // 네트워크 에러 시 폴링 유지 (일시적 끊김 대비)
+      });
+    }, 2000);  // 2초마다 폴링
+  }).catch(e => {
+    showToast('서버 연결 실패');
+    card.style.display = 'none';
+  });
+}
+
+// HW tab
+function showHwDetail(id) {
+  document.getElementById('hw-list').style.display = 'none';
+  document.querySelectorAll('.hw-detail').forEach(d => d.classList.remove('active'));
+  const detail = document.getElementById('hw-'+id);
+  if (detail) detail.classList.add('active');
+  window.scrollTo(0,0);
+}
+function hideHwDetail() {
+  document.querySelectorAll('.hw-detail').forEach(d => d.classList.remove('active'));
+  document.getElementById('hw-list').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+// SW tab - code viewer
+function showCodeViewer() {
+  document.getElementById('code-viewer').style.display = 'block';
+  document.getElementById('code-viewer').scrollIntoView({behavior:'smooth'});
+}
+function toggleExplain(el) {
+  const explain = el.nextElementSibling;
+  if (!explain || !explain.classList.contains('code-explain')) return;
+  el.classList.toggle('active');
+  explain.classList.toggle('show');
+}
+function checkQuiz(el, correct) {
+  document.querySelectorAll('.quiz-option').forEach(o => {
+    o.style.pointerEvents = 'none';
+  });
+  el.classList.add(correct ? 'correct' : 'wrong');
+  if (correct) showToast('🎉 정답! GPIO33에 HIGH 전압을 출력합니다');
+  else showToast('❌ 다시 생각해보세요!');
+}
+
+// PAD tab
+const padState = {red:false, yellow:false, blue:false};
+function togglePad(color) {
+  padState[color] = !padState[color];
+  const btn = document.getElementById('pad-'+color);
+  const state = btn.querySelector('.pad-state');
+  if (padState[color]) {
+    btn.classList.add('on');
+    state.textContent = 'ON';
+    state.style.color = 'var(--success)';
+    showToast((color==='red'?'🔴':color==='yellow'?'🟡':'🔵')+' LED '+color.toUpperCase()+' ON!');
+  } else {
+    btn.classList.remove('on');
+    state.textContent = 'OFF';
+    state.style.color = 'var(--text2)';
+  }
+}
+
+function runPadAction(action) {
+  const msgs = {
+    blink: '🚦 전체 LED 점멸 시작!',
+    chase: '🌈 빨강→노랑→파랑 순차 점등!',
+    beep: '🔔 삐! (GPIO27 LOW 0.1초)',
+    melody: '🎵 도레미파솔라시도 ♪',
+    temp: '🌡 온도: 26.3°C / 습도: 45%',
+    oled: '📺 OLED에 "Hello!" 표시!',
+    party: '🎪 파티 모드! LED+부저 동시 동작!',
+    alarm: '🚨 경보! 빨강 점멸+비프음!',
+    thermometer: '🌡 온도계: 측정 → OLED 표시!',
+    'lora-send': '📡 LoRa "Hello" 송신 완료!',
+  };
+  showToast(msgs[action] || '실행!');
+  if (action==='temp') {
+    document.getElementById('temp-val').textContent = '26.3°C';
+  }
+}
+
+function playNote(note) {
+  const freqs = {'도':'262Hz','레':'294Hz','미':'330Hz','파':'349Hz','솔':'392Hz','라':'440Hz','시':'494Hz',"도'":'523Hz'};
+  showToast('♪ '+note+' ('+( freqs[note]||'')+')');
+}
+
+function toggleSwMonitor() {
+  const el = document.getElementById('sw-state');
+  if (el.textContent.includes('해제')) {
+    el.textContent = '눌림 (LOW)';
+    el.style.color = 'var(--success)';
+  } else {
+    el.textContent = '해제 (HIGH)';
+    el.style.color = '';
+  }
+}
+
+// Toast
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// PWA Service Worker 등록
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then(() => {
+    console.log('SW registered');
+  });
+}
+// 코드 설명 요청
+let lastCode = '';
+function explainCode() {
+  if (!lastCode) { showToast('설명할 코드가 없습니다'); return; }
+  const area = document.getElementById('explain-area');
+  area.innerHTML = '<div style="margin-top:12px;padding:16px;background:var(--surface2);border-radius:10px;border:1px solid var(--border)">'
+    + '<div style="font-size:13px;color:var(--warning);margin-bottom:8px">🤖 AI 선생님이 설명을 준비하고 있어요...</div>'
+    + '<div class="progress-bar"><div class="progress-fill" style="width:30%;animation:pulse 1.5s infinite"></div></div>'
+    + '</div>';
+
+  fetch('/api/explain', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({code: lastCode})
+  }).then(r => r.json()).then(data => {
+    if (data.explanation) {
+      const lines = data.explanation.replace(/</g,'&lt;').split('\n');
+      area.innerHTML = '<div style="margin-top:12px;padding:16px;background:var(--surface2);border-radius:10px;border:1px solid var(--border)">'
+        + '<div style="font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px">🤖 AI 선생님의 설명</div>'
+        + '<div style="font-size:13px;line-height:1.8;color:var(--text);white-space:pre-wrap">' + lines.join('\n') + '</div>'
+        + '</div>';
+    } else {
+      area.innerHTML = '<div style="margin-top:8px;font-size:13px;color:var(--error)">설명 생성 실패: ' + (data.error||'') + '</div>';
+    }
+  }).catch(e => {
+    area.innerHTML = '<div style="margin-top:8px;font-size:13px;color:var(--error)">연결 실패</div>';
+  });
+}
+
+// 페이지 로드 시 이력 표시
+renderHistory();
+</script>
+</body>
+</html>

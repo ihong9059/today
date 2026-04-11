@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WiFi 연결 + 앱 설치</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',sans-serif; background:#0F172A; color:#F1F5F9; min-height:100vh; padding:20px; text-align:center; }
+h1 { font-size:22px; margin:20px 0 8px; }
+h2 { font-size:16px; color:#94A3B8; margin-bottom:20px; }
+.step { background:#1E293B; border-radius:16px; padding:20px; margin:16px 0; border:1px solid #334155; }
+.step-num { display:inline-block; width:32px; height:32px; line-height:32px; border-radius:50%; background:#2563EB; font-weight:700; font-size:14px; margin-bottom:10px; }
+.step-title { font-size:16px; font-weight:700; margin-bottom:12px; }
+.step-desc { font-size:13px; color:#94A3B8; line-height:1.6; }
+img.qr { width:200px; height:200px; border-radius:12px; margin:12px 0; background:white; padding:8px; }
+.info-box { background:#334155; border-radius:8px; padding:10px; margin:10px 0; font-size:13px; text-align:left; }
+.info-row { display:flex; justify-content:space-between; padding:4px 0; }
+.info-label { color:#94A3B8; }
+.highlight { color:#10B981; font-weight:700; }
+.btn { display:inline-block; padding:14px 28px; background:#2563EB; color:white; border:none; border-radius:12px; font-size:15px; font-weight:700; cursor:pointer; margin:8px; text-decoration:none; }
+.btn:active { opacity:0.8; }
+</style>
+</head>
+<body>
+
+<h1>Vibe Firmware</h1>
+<h2>AI 바이브 코딩 교육 앱 설치</h2>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-title">WiFi 연결</div>
+  <div class="step-desc">아래 QR 코드를 카메라로 스캔하면<br>WiFi에 자동으로 연결됩니다</div>
+  <img class="qr" src="/wifi-qr.png" alt="WiFi QR">
+  <div class="info-box">
+    <div class="info-row"><span class="info-label">SSID</span><span>ihong</span></div>
+    <div class="info-row"><span class="info-label">Password</span><span>hongks@6063</span></div>
+    <div class="info-row"><span class="info-label">보안</span><span>WPA/WPA2</span></div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-title">앱 접속</div>
+  <div class="step-desc">WiFi 연결 후 아래 QR을 스캔하거나<br>브라우저에 주소를 입력하세요</div>
+  <img class="qr" src="/app-qr.png" alt="App QR">
+  <div class="info-box">
+    <div class="info-row"><span class="info-label">주소</span><span class="highlight">http://192.168.0.20:5050</span></div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-title">홈 화면에 설치</div>
+  <div class="step-desc">앱처럼 사용하려면:</div>
+  <div class="info-box" style="text-align:center; line-height:2">
+    Chrome 메뉴 (⋮) 탭<br>
+    ↓<br>
+    <b>"홈 화면에 추가"</b> 탭<br>
+    ↓<br>
+    <b>"추가"</b> 탭<br>
+    ↓<br>
+    홈 화면에 <span class="highlight">Vibe Firmware</span> 아이콘 생성!
+  </div>
+</div>
+
+<a class="btn" href="/">앱 바로가기 →</a>
+
+</body>
+</html>

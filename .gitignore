@@ -33,3 +33,6 @@ sam/prompt.txt
 ubuntu-s-2vcpu-4gb-sgp1-01/
 kaggle.json
 !ai-practice/docs/kaggle.json
+aiHardStudy/firmware/*/build/
+aiHardStudy/prototype/__pycache__/
+aiHardStudy/prototype/_*.json
