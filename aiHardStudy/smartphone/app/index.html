@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Vibe Firmware</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2563EB">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VibeFW">
+<style>
+:root {
+  --primary: #2563EB;
+  --primary-glow: rgba(37,99,235,0.25);
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --bg: #0F172A;
+  --surface: #1E293B;
+  --surface2: #334155;
+  --text: #F1F5F9;
+  --text2: #94A3B8;
+  --border: #475569;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Header */
+.header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 16px 8px; position: sticky; top: 0;
+  background: var(--bg); z-index: 50;
+}
+.header-title {
+  font-size: 20px; font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), #818CF8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.ble-indicator {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; padding: 5px 12px; border-radius: 20px;
+  background: var(--surface); border: 1px solid var(--border);
+  cursor: pointer; color: var(--text2);
+}
+.ble-indicator .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--error); transition: background 0.3s;
+}
+.ble-indicator.connected .dot { background: var(--success); }
+.ble-indicator.connecting .dot {
+  background: var(--warning);
+  animation: pulse 1s infinite;
+}
+
+/* Main Content */
+.content { flex: 1; padding: 8px 16px 24px; overflow-y: auto; }
+
+/* Cards */
+.card {
+  background: var(--surface); border-radius: 14px;
+  padding: 18px; margin-bottom: 14px;
+  border: 1px solid var(--border);
+  transition: border-color 0.3s;
+}
+.card.active-card { border-color: var(--primary); box-shadow: 0 0 20px var(--primary-glow); }
+.card-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.card-title {
+  font-size: 13px; color: var(--text2);
+  text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;
+}
+.card-badge {
+  font-size: 11px; padding: 3px 10px; border-radius: 12px;
+  font-weight: 600;
+}
+.badge-idle { background: rgba(148,163,184,0.15); color: var(--text2); }
+.badge-active { background: rgba(37,99,235,0.2); color: var(--primary); }
+.badge-success { background: rgba(16,185,129,0.15); color: var(--success); }
+.badge-error { background: rgba(239,68,68,0.15); color: var(--error); }
+
+/* BLE Card */
+.device-info {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px; background: var(--surface2); border-radius: 10px;
+  margin-bottom: 14px;
+}
+.device-icon {
+  width: 42px; height: 42px; border-radius: 10px;
+  background: var(--primary-glow); display: flex;
+  align-items: center; justify-content: center; font-size: 20px;
+}
+.device-name { font-size: 15px; font-weight: 600; }
+.device-detail { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+/* Buttons */
+.btn {
+  width: 100%; padding: 14px; border: none; border-radius: 12px;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s; display: flex; align-items: center;
+  justify-content: center; gap: 8px;
+}
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.btn-danger { background: rgba(239,68,68,0.15); color: var(--error); border: 1px solid rgba(239,68,68,0.3); }
+.btn-success { background: rgba(16,185,129,0.15); color: var(--success); border: 1px solid rgba(16,185,129,0.3); }
+.btn-sm { width: auto; padding: 8px 16px; font-size: 13px; }
+
+/* Textarea */
+textarea {
+  width: 100%; padding: 14px; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 10px;
+  color: var(--text); font-size: 15px; resize: none;
+  font-family: inherit; min-height: 90px; line-height: 1.5;
+}
+textarea:focus { outline: none; border-color: var(--primary); }
+textarea::placeholder { color: var(--text2); }
+.char-count { text-align: right; font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+/* Progress */
+.progress-section { margin-top: 14px; }
+.progress-bar-bg {
+  width: 100%; height: 8px; background: var(--surface2);
+  border-radius: 4px; overflow: hidden; margin: 8px 0;
+}
+.progress-bar-fill {
+  height: 100%; border-radius: 4px; transition: width 0.4s ease;
+  background: linear-gradient(90deg, var(--primary), #818CF8);
+}
+.progress-bar-fill.success { background: linear-gradient(90deg, var(--success), #34D399); }
+.progress-bar-fill.error { background: var(--error); }
+.progress-label {
+  display: flex; justify-content: space-between;
+  font-size: 13px; color: var(--text2);
+}
+.progress-pct { font-weight: 700; color: var(--text); }
+
+/* Steps */
+.steps { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+.step {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--text2);
+}
+.step-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+  background: var(--surface2); border: 1px solid var(--border);
+}
+.step.active .step-icon { background: var(--primary-glow); border-color: var(--primary); color: var(--primary); }
+.step.done .step-icon { background: rgba(16,185,129,0.2); border-color: var(--success); color: var(--success); }
+.step.error .step-icon { background: rgba(239,68,68,0.15); border-color: var(--error); color: var(--error); }
+.step.active .step-text { color: var(--text); font-weight: 600; }
+.step.done .step-text { color: var(--success); }
+.step.error .step-text { color: var(--error); }
+
+/* History */
+.history-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px; background: var(--surface2); border-radius: 10px;
+  margin-bottom: 8px; cursor: pointer; transition: background 0.2s;
+}
+.history-item:active { background: var(--border); }
+.history-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+.history-icon.h-success { background: rgba(16,185,129,0.15); color: var(--success); }
+.history-icon.h-fail { background: rgba(239,68,68,0.15); color: var(--error); }
+.history-icon.h-pending { background: rgba(245,158,11,0.15); color: var(--warning); }
+.history-prompt {
+  font-size: 13px; color: var(--text);
+  overflow: hidden; text-overflow: ellipsis;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.history-time { font-size: 11px; color: var(--text2); margin-top: 3px; }
+.history-empty { text-align: center; color: var(--text2); font-size: 14px; padding: 24px 0; }
+
+/* Settings row */
+.settings-row {
+  display: flex; gap: 8px; margin-bottom: 12px; align-items: center;
+}
+.settings-row input {
+  flex: 1; padding: 10px 12px; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); font-size: 13px; font-family: monospace;
+}
+.settings-row input:focus { outline: none; border-color: var(--primary); }
+
+/* Toast */
+.toast-container {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  width: calc(100% - 32px); max-width: 448px; z-index: 200;
+  display: flex; flex-direction: column; gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  padding: 12px 16px; border-radius: 10px; font-size: 13px;
+  font-weight: 600; animation: toastIn 0.3s ease;
+  pointer-events: auto; display: flex; align-items: center; gap: 8px;
+}
+.toast-info { background: var(--primary); color: #fff; }
+.toast-success { background: var(--success); color: #fff; }
+.toast-error { background: var(--error); color: #fff; }
+.toast-warning { background: var(--warning); color: #1a1a1a; }
+
+/* Section visibility */
+.hidden { display: none !important; }
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff; border-radius: 50%;
+  animation: spin 0.8s linear infinite; flex-shrink: 0;
+}
+
+/* Divider */
+.divider { height: 1px; background: var(--border); margin: 14px 0; }
+</style>
+</head>
+<body>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-title">Vibe Firmware</div>
+  <div class="ble-indicator" id="bleIndicator" onclick="toggleBLE()">
+    <div class="dot"></div>
+    <span id="bleStatusText">BLE 연결 안됨</span>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- BLE Connection Card -->
+  <div class="card" id="bleCard">
+    <div class="card-header">
+      <div class="card-title">BLE 연결</div>
+      <span class="card-badge badge-idle" id="bleBadge">대기</span>
+    </div>
+    <div class="device-info" id="deviceInfo">
+      <div class="device-icon">&#x1F4E1;</div>
+      <div>
+        <div class="device-name" id="deviceName">ESP32-OTA</div>
+        <div class="device-detail" id="deviceDetail">연결 대기 중</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="bleBtn" onclick="toggleBLE()">
+      &#x1F50D; 디바이스 검색
+    </button>
+  </div>
+
+  <!-- Prompt Input Card -->
+  <div class="card" id="promptCard">
+    <div class="card-header">
+      <div class="card-title">펌웨어 프롬프트</div>
+      <span class="card-badge badge-idle" id="promptBadge">입력</span>
+    </div>
+    <textarea id="promptInput" placeholder="원하는 펌웨어 동작을 자연어로 설명하세요.&#10;예: LED를 1초 간격으로 깜빡이게 해줘" maxlength="2000"></textarea>
+    <div class="char-count"><span id="charCount">0</span>/2000</div>
+    <div style="margin-top:12px">
+      <button class="btn btn-primary" id="executeBtn" onclick="executePrompt()">
+        &#x26A1; 실행
+      </button>
+    </div>
+  </div>
+
+  <!-- Build Progress Card -->
+  <div class="card hidden" id="buildCard">
+    <div class="card-header">
+      <div class="card-title">빌드 진행</div>
+      <span class="card-badge badge-active" id="buildBadge">진행 중</span>
+    </div>
+    <div class="steps" id="buildSteps">
+      <div class="step" id="stepGenerate">
+        <div class="step-icon">1</div>
+        <div class="step-text">Claude 코드 생성 중...</div>
+      </div>
+      <div class="step" id="stepBuild">
+        <div class="step-icon">2</div>
+        <div class="step-text">ESP-IDF 빌드 중...</div>
+      </div>
+      <div class="step" id="stepComplete">
+        <div class="step-icon">3</div>
+        <div class="step-text">빌드 완료</div>
+      </div>
+    </div>
+    <div class="progress-section">
+      <div class="progress-label">
+        <span id="buildStatusText">대기 중...</span>
+        <span class="progress-pct" id="buildPct">0%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="buildProgressBar" style="width:0%"></div>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <button class="btn btn-danger btn-sm" onclick="abortBuild()" id="abortBuildBtn">취소</button>
+    </div>
+  </div>
+
+  <!-- OTA Transfer Card -->
+  <div class="card hidden" id="otaCard">
+    <div class="card-header">
+      <div class="card-title">OTA 전송</div>
+      <span class="card-badge badge-active" id="otaBadge">준비</span>
+    </div>
+    <div class="steps" id="otaSteps">
+      <div class="step" id="stepDownload">
+        <div class="step-icon">1</div>
+        <div class="step-text">펌웨어 다운로드</div>
+      </div>
+      <div class="step" id="stepTransfer">
+        <div class="step-icon">2</div>
+        <div class="step-text">BLE OTA 전송</div>
+      </div>
+      <div class="step" id="stepVerify">
+        <div class="step-icon">3</div>
+        <div class="step-text">검증 및 재부팅</div>
+      </div>
+    </div>
+    <div class="progress-section">
+      <div class="progress-label">
+        <span id="otaStatusText">대기 중...</span>
+        <span class="progress-pct" id="otaPct">0%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="otaProgressBar" style="width:0%"></div>
+      </div>
+    </div>
+    <div id="otaActions" style="margin-top:12px" class="hidden">
+      <button class="btn btn-primary" id="otaStartBtn" onclick="startOTA()">
+        &#x1F4E4; OTA 전송 시작
+      </button>
+    </div>
+  </div>
+
+  <!-- History Card -->
+  <div class="card" id="historyCard">
+    <div class="card-header">
+      <div class="card-title">최근 기록</div>
+      <span class="card-badge badge-idle" id="historyCount">0건</span>
+    </div>
+    <div id="historyList">
+      <div class="history-empty">아직 기록이 없습니다</div>
+    </div>
+  </div>
+
+  <!-- Settings Card -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">서버 설정</div>
+    </div>
+    <div class="settings-row">
+      <input type="text" id="serverUrl" placeholder="http://server:port">
+      <button class="btn btn-secondary btn-sm" onclick="saveServerUrl()" style="width:auto;padding:10px 14px;font-size:13px;">저장</button>
+    </div>
+    <div style="font-size:11px;color:var(--text2)">빌드 서버 API 주소를 입력하세요</div>
+  </div>
+
+</div>
+
+<script>
+// ──────────────────────────────────────────
+// Configuration
+// ──────────────────────────────────────────
+const DEFAULT_SERVER = window.location.origin || 'http://localhost:8091';
+const OTA_SERVICE_UUID   = '0000fe00-0000-1000-8000-00805f9b34fb';
+const OTA_CONTROL_UUID   = '0000fe01-0000-1000-8000-00805f9b34fb';
+const OTA_DATA_UUID      = '0000fe02-0000-1000-8000-00805f9b34fb';
+const OTA_STATUS_UUID    = '0000fe03-0000-1000-8000-00805f9b34fb';
+const OTA_CHUNK_SIZE = 240;
+const OTA_CMD_START = 0x01;
+const OTA_CMD_END   = 0x02;
+const OTA_CMD_ABORT = 0x03;
+const POLL_INTERVAL = 2000;
+
+// OTA status codes
+const OTA_STATUS_IDLE      = 0x00;
+const OTA_STATUS_READY     = 0x01;
+const OTA_STATUS_RECEIVING = 0x02;
+const OTA_STATUS_VERIFYING = 0x03;
+const OTA_STATUS_SUCCESS   = 0x04;
+const OTA_STATUS_CRC_FAIL  = 0x05;
+const OTA_STATUS_WRITE_FAIL= 0x06;
+const OTA_STATUS_ABORT_OK  = 0x07;
+
+// ──────────────────────────────────────────
+// State
+// ──────────────────────────────────────────
+let bleDevice = null;
+let bleServer = null;
+let otaService = null;
+let otaControlChar = null;
+let otaDataChar = null;
+let otaStatusChar = null;
+let currentJobId = null;
+let pollTimer = null;
+let firmwareData = null;
+let otaInProgress = false;
+let otaStatusValue = OTA_STATUS_IDLE;
+
+// ──────────────────────────────────────────
+// Init
+// ──────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const savedUrl = localStorage.getItem('vibe_server_url');
+  document.getElementById('serverUrl').value = savedUrl || DEFAULT_SERVER;
+  document.getElementById('promptInput').addEventListener('input', e => {
+    document.getElementById('charCount').textContent = e.target.value.length;
+  });
+  renderHistory();
+  registerSW();
+});
+
+function getServerUrl() {
+  return (localStorage.getItem('vibe_server_url') || DEFAULT_SERVER).replace(/\/+$/, '');
+}
+
+function saveServerUrl() {
+  const url = document.getElementById('serverUrl').value.trim();
+  if (!url) return;
+  localStorage.setItem('vibe_server_url', url);
+  toast('서버 주소 저장됨', 'success');
+}
+
+function registerSW() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+}
+
+// ──────────────────────────────────────────
+// Toast
+// ──────────────────────────────────────────
+function toast(msg, type = 'info', duration = 3000) {
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = `toast toast-${type}`;
+  el.innerHTML = msg;
+  container.appendChild(el);
+  setTimeout(() => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(-12px)';
+    el.style.transition = 'all 0.3s';
+    setTimeout(() => el.remove(), 300);
+  }, duration);
+}
+
+// ──────────────────────────────────────────
+// BLE Connection
+// ──────────────────────────────────────────
+async function toggleBLE() {
+  if (bleDevice && bleDevice.gatt.connected) {
+    disconnectBLE();
+  } else {
+    await connectBLE();
+  }
+}
+
+async function connectBLE() {
+  if (!navigator.bluetooth) {
+    toast('Web Bluetooth API가 지원되지 않는 브라우저입니다', 'error');
+    return;
+  }
+  try {
+    updateBLEState('connecting');
+    bleDevice = await navigator.bluetooth.requestDevice({
+      filters: [{ name: 'ESP32-OTA' }],
+      optionalServices: [OTA_SERVICE_UUID]
+    });
+    bleDevice.addEventListener('gattserverdisconnected', onBLEDisconnect);
+    bleServer = await bleDevice.gatt.connect();
+    otaService = await bleServer.getPrimaryService(OTA_SERVICE_UUID);
+    otaControlChar = await otaService.getCharacteristic(OTA_CONTROL_UUID);
+    otaDataChar    = await otaService.getCharacteristic(OTA_DATA_UUID);
+    otaStatusChar  = await otaService.getCharacteristic(OTA_STATUS_UUID);
+
+    // Subscribe to OTA status notifications
+    await otaStatusChar.startNotifications();
+    otaStatusChar.addEventListener('characteristicvaluechanged', onOTAStatusNotify);
+
+    updateBLEState('connected');
+    toast('ESP32-OTA 연결 성공', 'success');
+  } catch (err) {
+    updateBLEState('disconnected');
+    if (err.name !== 'NotFoundError') {
+      toast('BLE 연결 실패: ' + err.message, 'error');
+    }
+  }
+}
+
+function disconnectBLE() {
+  if (bleDevice && bleDevice.gatt.connected) {
+    bleDevice.gatt.disconnect();
+  }
+  updateBLEState('disconnected');
+}
+
+function onBLEDisconnect() {
+  updateBLEState('disconnected');
+  toast('BLE 연결이 끊어졌습니다', 'warning');
+}
+
+function updateBLEState(state) {
+  const indicator = document.getElementById('bleIndicator');
+  const statusText = document.getElementById('bleStatusText');
+  const badge = document.getElementById('bleBadge');
+  const btn = document.getElementById('bleBtn');
+  const detail = document.getElementById('deviceDetail');
+
+  indicator.className = 'ble-indicator';
+  if (state === 'connected') {
+    indicator.classList.add('connected');
+    statusText.textContent = '연결됨';
+    badge.className = 'card-badge badge-success'; badge.textContent = '연결됨';
+    btn.innerHTML = '&#x274C; 연결 해제';
+    btn.className = 'btn btn-danger';
+    detail.textContent = 'GATT 연결 완료';
+  } else if (state === 'connecting') {
+    indicator.classList.add('connecting');
+    statusText.textContent = '연결 중...';
+    badge.className = 'card-badge badge-active'; badge.textContent = '연결 중';
+    btn.innerHTML = '<div class="spinner"></div> 연결 중...';
+    btn.disabled = true;
+    detail.textContent = '디바이스 검색 중...';
+  } else {
+    statusText.textContent = 'BLE 연결 안됨';
+    badge.className = 'card-badge badge-idle'; badge.textContent = '대기';
+    btn.innerHTML = '&#x1F50D; 디바이스 검색';
+    btn.className = 'btn btn-primary';
+    btn.disabled = false;
+    detail.textContent = '연결 대기 중';
+    bleDevice = null; bleServer = null; otaService = null;
+    otaControlChar = null; otaDataChar = null; otaStatusChar = null;
+  }
+}
+
+function onOTAStatusNotify(event) {
+  const val = new Uint8Array(event.target.value.buffer);
+  if (val.length >= 1) otaStatusValue = val[0];
+  const progress = val.length >= 2 ? val[1] : 0;
+
+  const labels = {
+    [OTA_STATUS_IDLE]: '대기',
+    [OTA_STATUS_READY]: '준비 완료',
+    [OTA_STATUS_RECEIVING]: '수신 중',
+    [OTA_STATUS_VERIFYING]: '검증 중',
+    [OTA_STATUS_SUCCESS]: '성공',
+    [OTA_STATUS_CRC_FAIL]: 'CRC 오류',
+    [OTA_STATUS_WRITE_FAIL]: '쓰기 오류',
+    [OTA_STATUS_ABORT_OK]: '중단됨'
+  };
+
+  console.log(`OTA Status: ${labels[otaStatusValue] || otaStatusValue}, progress: ${progress}%`);
+
+  if (otaStatusValue === OTA_STATUS_SUCCESS) {
+    finishOTASuccess();
+  } else if (otaStatusValue === OTA_STATUS_CRC_FAIL || otaStatusValue === OTA_STATUS_WRITE_FAIL) {
+    finishOTAError(labels[otaStatusValue]);
+  }
+}
+
+// ──────────────────────────────────────────
+// Build Flow
+// ──────────────────────────────────────────
+async function executePrompt() {
+  const prompt = document.getElementById('promptInput').value.trim();
+  if (!prompt) { toast('프롬프트를 입력해주세요', 'warning'); return; }
+
+  const execBtn = document.getElementById('executeBtn');
+  execBtn.disabled = true;
+  execBtn.innerHTML = '<div class="spinner"></div> 전송 중...';
+
+  // Show build card
+  showCard('buildCard');
+  resetBuildSteps();
+  setStep('stepGenerate', 'active');
+  updateBuildProgress(0, 'Claude에 프롬프트 전송 중...');
+
+  try {
+    const resp = await fetch(`${getServerUrl()}/api/v1/generate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+    if (!resp.ok) throw new Error(`서버 오류 (${resp.status})`);
+    const data = await resp.json();
+    currentJobId = data.job_id;
+    addHistory(prompt, 'pending', currentJobId);
+    startPolling();
+  } catch (err) {
+    toast('빌드 요청 실패: ' + err.message, 'error');
+    hideCard('buildCard');
+    addHistory(prompt, 'fail');
+  } finally {
+    execBtn.disabled = false;
+    execBtn.innerHTML = '&#x26A1; 실행';
+  }
+}
+
+function startPolling() {
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(pollStatus, POLL_INTERVAL);
+  pollStatus();
+}
+
+async function pollStatus() {
+  if (!currentJobId) return;
+  try {
+    const resp = await fetch(`${getServerUrl()}/api/v1/status/${currentJobId}`);
+    if (!resp.ok) throw new Error(`상태 조회 실패 (${resp.status})`);
+    const data = await resp.json();
+    handleBuildStatus(data);
+  } catch (err) {
+    console.error('Poll error:', err);
+  }
+}
+
+function handleBuildStatus(data) {
+  const { status, progress, message, firmware_size } = data;
+  const pct = progress || 0;
+
+  if (status === 'generating' || status === 'queued') {
+    setStep('stepGenerate', 'active');
+    updateBuildProgress(Math.min(pct, 40), message || 'Claude 코드 생성 중...');
+  } else if (status === 'building') {
+    setStep('stepGenerate', 'done');
+    setStep('stepBuild', 'active');
+    updateBuildProgress(40 + Math.min(pct * 0.5, 50), message || 'ESP-IDF 빌드 중...');
+  } else if (status === 'completed' || status === 'success' || status === 'done') {
+    stopPolling();
+    setStep('stepGenerate', 'done');
+    setStep('stepBuild', 'done');
+    setStep('stepComplete', 'done');
+    updateBuildProgress(100, '빌드 완료!');
+    document.getElementById('buildBadge').className = 'card-badge badge-success';
+    document.getElementById('buildBadge').textContent = '완료';
+    document.getElementById('buildProgressBar').classList.add('success');
+    document.getElementById('abortBuildBtn').classList.add('hidden');
+
+    const sizeKB = firmware_size ? (firmware_size / 1024).toFixed(1) + ' KB' : '';
+    toast(`빌드 성공! ${sizeKB}`, 'success');
+    updateHistoryStatus(currentJobId, 'success');
+
+    // Show OTA card
+    setTimeout(() => showOTACard(), 500);
+  } else if (status === 'failed' || status === 'error') {
+    stopPolling();
+    setStep('stepGenerate', 'error');
+    updateBuildProgress(pct, message || '빌드 실패');
+    document.getElementById('buildBadge').className = 'card-badge badge-error';
+    document.getElementById('buildBadge').textContent = '실패';
+    document.getElementById('buildProgressBar').classList.add('error');
+    toast('빌드 실패: ' + (message || ''), 'error');
+    updateHistoryStatus(currentJobId, 'fail');
+  }
+}
+
+function abortBuild() {
+  stopPolling();
+  hideCard('buildCard');
+  currentJobId = null;
+  toast('빌드가 취소되었습니다', 'warning');
+}
+
+function stopPolling() {
+  if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+}
+
+function updateBuildProgress(pct, text) {
+  document.getElementById('buildPct').textContent = Math.round(pct) + '%';
+  document.getElementById('buildProgressBar').style.width = pct + '%';
+  document.getElementById('buildStatusText').textContent = text;
+}
+
+function resetBuildSteps() {
+  ['stepGenerate','stepBuild','stepComplete'].forEach(id => setStep(id, ''));
+  document.getElementById('buildBadge').className = 'card-badge badge-active';
+  document.getElementById('buildBadge').textContent = '진행 중';
+  document.getElementById('buildProgressBar').className = 'progress-bar-fill';
+  document.getElementById('buildProgressBar').style.width = '0%';
+  document.getElementById('abortBuildBtn').classList.remove('hidden');
+}
+
+// ──────────────────────────────────────────
+// OTA Flow
+// ──────────────────────────────────────────
+function showOTACard() {
+  showCard('otaCard');
+  resetOTASteps();
+  setStep('stepDownload', 'active');
+  updateOTAProgress(0, '펌웨어 다운로드 준비...');
+
+  // Auto download
+  downloadFirmware();
+}
+
+async function downloadFirmware() {
+  try {
+    updateOTAProgress(10, '펌웨어 다운로드 중...');
+    const resp = await fetch(`${getServerUrl()}/api/v1/download/${currentJobId}`);
+    if (!resp.ok) throw new Error(`다운로드 실패 (${resp.status})`);
+    const buffer = await resp.arrayBuffer();
+    firmwareData = new Uint8Array(buffer);
+    setStep('stepDownload', 'done');
+    updateOTAProgress(30, `다운로드 완료 (${(firmwareData.length / 1024).toFixed(1)} KB)`);
+    toast(`펌웨어 다운로드 완료: ${(firmwareData.length / 1024).toFixed(1)} KB`, 'success');
+
+    // Show OTA start button
+    const actions = document.getElementById('otaActions');
+    actions.classList.remove('hidden');
+
+    // Check BLE
+    if (!bleDevice || !bleDevice.gatt.connected) {
+      document.getElementById('otaStartBtn').disabled = true;
+      toast('OTA 전송을 위해 BLE를 먼저 연결하세요', 'warning');
+    } else {
+      document.getElementById('otaStartBtn').disabled = false;
+    }
+  } catch (err) {
+    setStep('stepDownload', 'error');
+    updateOTAProgress(0, '다운로드 실패');
+    document.getElementById('otaBadge').className = 'card-badge badge-error';
+    document.getElementById('otaBadge').textContent = '실패';
+    toast('펌웨어 다운로드 실패: ' + err.message, 'error');
+  }
+}
+
+async function startOTA() {
+  if (!firmwareData) { toast('펌웨어 데이터가 없습니다', 'error'); return; }
+  if (!bleDevice || !bleDevice.gatt.connected) {
+    toast('BLE 연결이 필요합니다', 'error'); return;
+  }
+  if (otaInProgress) return;
+  otaInProgress = true;
+
+  const btn = document.getElementById('otaStartBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> 전송 중...';
+
+  setStep('stepTransfer', 'active');
+  updateOTAProgress(30, 'OTA 시작 명령 전송...');
+  document.getElementById('otaBadge').className = 'card-badge badge-active';
+  document.getElementById('otaBadge').textContent = '전송 중';
+
+  try {
+    // Send OTA_CMD_START with firmware size (4 bytes LE)
+    const startCmd = new Uint8Array(5);
+    startCmd[0] = OTA_CMD_START;
+    const size = firmwareData.length;
+    startCmd[1] = size & 0xFF;
+    startCmd[2] = (size >> 8) & 0xFF;
+    startCmd[3] = (size >> 16) & 0xFF;
+    startCmd[4] = (size >> 24) & 0xFF;
+    await otaControlChar.writeValue(startCmd);
+
+    // Wait a moment for device to prepare
+    await delay(200);
+
+    // Send firmware chunks
+    const totalChunks = Math.ceil(firmwareData.length / OTA_CHUNK_SIZE);
+    for (let i = 0; i < totalChunks; i++) {
+      const offset = i * OTA_CHUNK_SIZE;
+      const end = Math.min(offset + OTA_CHUNK_SIZE, firmwareData.length);
+      const chunk = firmwareData.slice(offset, end);
+
+      await otaDataChar.writeValueWithoutResponse(chunk);
+
+      const progress = 30 + ((i + 1) / totalChunks) * 60;
+      const pctDone = ((i + 1) / totalChunks * 100).toFixed(1);
+      updateOTAProgress(progress, `전송 중... ${pctDone}% (${i+1}/${totalChunks})`);
+
+      // Small delay every 10 chunks to avoid BLE congestion
+      if ((i + 1) % 10 === 0) await delay(20);
+    }
+
+    // Send OTA_CMD_END
+    updateOTAProgress(92, '전송 완료, 검증 대기...');
+    setStep('stepTransfer', 'done');
+    setStep('stepVerify', 'active');
+    const endCmd = new Uint8Array([OTA_CMD_END]);
+    await otaControlChar.writeValue(endCmd);
+
+    updateOTAProgress(95, 'ESP32 검증 중...');
+
+    // Wait for OTA_STATUS notification (SUCCESS or FAIL)
+    // Timeout after 30s
+    const result = await waitForOTAResult(30000);
+    if (result === 'success') {
+      finishOTASuccess();
+    }
+    // Error cases handled by onOTAStatusNotify
+
+  } catch (err) {
+    finishOTAError(err.message);
+  }
+}
+
+function waitForOTAResult(timeout) {
+  return new Promise((resolve) => {
+    const start = Date.now();
+    const check = () => {
+      if (otaStatusValue === OTA_STATUS_SUCCESS) { resolve('success'); return; }
+      if (otaStatusValue === OTA_STATUS_CRC_FAIL || otaStatusValue === OTA_STATUS_WRITE_FAIL) {
+        resolve('error'); return;
+      }
+      if (Date.now() - start > timeout) {
+        // Timeout — assume success if we got all data sent
+        resolve('success'); return;
+      }
+      setTimeout(check, 200);
+    };
+    check();
+  });
+}
+
+function finishOTASuccess() {
+  if (!otaInProgress) return;
+  otaInProgress = false;
+  setStep('stepVerify', 'done');
+  updateOTAProgress(100, 'OTA 완료! ESP32 재부팅 중...');
+  document.getElementById('otaProgressBar').classList.add('success');
+  document.getElementById('otaBadge').className = 'card-badge badge-success';
+  document.getElementById('otaBadge').textContent = '완료';
+  document.getElementById('otaActions').classList.add('hidden');
+  toast('OTA 성공! ESP32가 재부팅됩니다', 'success', 5000);
+}
+
+function finishOTAError(reason) {
+  otaInProgress = false;
+  setStep('stepTransfer', 'error');
+  updateOTAProgress(0, 'OTA 실패: ' + reason);
+  document.getElementById('otaProgressBar').classList.add('error');
+  document.getElementById('otaBadge').className = 'card-badge badge-error';
+  document.getElementById('otaBadge').textContent = '실패';
+  toast('OTA 실패: ' + reason, 'error');
+
+  const btn = document.getElementById('otaStartBtn');
+  btn.disabled = false;
+  btn.innerHTML = '&#x1F504; 재시도';
+}
+
+function resetOTASteps() {
+  ['stepDownload','stepTransfer','stepVerify'].forEach(id => setStep(id, ''));
+  document.getElementById('otaBadge').className = 'card-badge badge-active';
+  document.getElementById('otaBadge').textContent = '준비';
+  document.getElementById('otaProgressBar').className = 'progress-bar-fill';
+  document.getElementById('otaProgressBar').style.width = '0%';
+  document.getElementById('otaActions').classList.add('hidden');
+  firmwareData = null;
+  otaInProgress = false;
+}
+
+function updateOTAProgress(pct, text) {
+  document.getElementById('otaPct').textContent = Math.round(pct) + '%';
+  document.getElementById('otaProgressBar').style.width = pct + '%';
+  document.getElementById('otaStatusText').textContent = text;
+}
+
+// ──────────────────────────────────────────
+// UI Helpers
+// ──────────────────────────────────────────
+function setStep(id, state) {
+  const el = document.getElementById(id);
+  el.className = 'step' + (state ? ' ' + state : '');
+  const icon = el.querySelector('.step-icon');
+  if (state === 'done') icon.innerHTML = '&#x2713;';
+  else if (state === 'error') icon.innerHTML = '&#x2717;';
+  else if (state === 'active') icon.innerHTML = '<div class="spinner" style="width:14px;height:14px;border-width:2px;border-color:rgba(37,99,235,0.3);border-top-color:var(--primary);"></div>';
+}
+
+function showCard(id) {
+  document.getElementById(id).classList.remove('hidden');
+  document.getElementById(id).classList.add('active-card');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function hideCard(id) {
+  document.getElementById(id).classList.add('hidden');
+  document.getElementById(id).classList.remove('active-card');
+}
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ──────────────────────────────────────────
+// History
+// ──────────────────────────────────────────
+function getHistory() {
+  try { return JSON.parse(localStorage.getItem('vibe_history') || '[]'); }
+  catch { return []; }
+}
+
+function addHistory(prompt, status, jobId) {
+  const history = getHistory();
+  history.unshift({
+    prompt: prompt.substring(0, 200),
+    status, jobId,
+    time: new Date().toISOString()
+  });
+  if (history.length > 5) history.length = 5;
+  localStorage.setItem('vibe_history', JSON.stringify(history));
+  renderHistory();
+}
+
+function updateHistoryStatus(jobId, status) {
+  const history = getHistory();
+  const item = history.find(h => h.jobId === jobId);
+  if (item) {
+    item.status = status;
+    localStorage.setItem('vibe_history', JSON.stringify(history));
+    renderHistory();
+  }
+}
+
+function renderHistory() {
+  const history = getHistory();
+  const container = document.getElementById('historyList');
+  document.getElementById('historyCount').textContent = history.length + '건';
+
+  if (history.length === 0) {
+    container.innerHTML = '<div class="history-empty">아직 기록이 없습니다</div>';
+    return;
+  }
+
+  container.innerHTML = history.map(h => {
+    const iconClass = h.status === 'success' ? 'h-success' : h.status === 'fail' ? 'h-fail' : 'h-pending';
+    const iconChar = h.status === 'success' ? '&#x2713;' : h.status === 'fail' ? '&#x2717;' : '&#x23F3;';
+    const timeStr = formatTime(h.time);
+    return `
+      <div class="history-item" onclick="reusePrompt('${escapeAttr(h.prompt)}')">
+        <div class="history-icon ${iconClass}">${iconChar}</div>
+        <div style="flex:1;min-width:0">
+          <div class="history-prompt">${escapeHtml(h.prompt)}</div>
+          <div class="history-time">${timeStr}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function reusePrompt(prompt) {
+  document.getElementById('promptInput').value = prompt;
+  document.getElementById('charCount').textContent = prompt.length;
+  document.getElementById('promptCard').scrollIntoView({ behavior: 'smooth' });
+}
+
+function formatTime(iso) {
+  try {
+    const d = new Date(iso);
+    const now = new Date();
+    const diff = now - d;
+    if (diff < 60000) return '방금 전';
+    if (diff < 3600000) return Math.floor(diff/60000) + '분 전';
+    if (diff < 86400000) return Math.floor(diff/3600000) + '시간 전';
+    return d.toLocaleDateString('ko-KR', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+  } catch { return ''; }
+}
+
+function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escapeAttr(s) { return s.replace(/'/g,"\\'").replace(/\\/g,'\\\\'); }
+</script>
+</body>
+</html>

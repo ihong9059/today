@@ -74,7 +74,7 @@ static void oled_show_status(const char *line1, const char *line2,
     ssd1306_flush(I2C_NUM_0);
 }
 
-// LED 깜빡임 태스크
+// LED 깜빡임 태스크 — v1: 파랑 느린 깜빡임
 static void led_task(void *arg)
 {
     while (1) {

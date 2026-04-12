@@ -34,6 +34,23 @@ static uint32_t ota_received = 0;
 static uint16_t ota_status_handle;
 static uint16_t conn_handle = BLE_HS_CONN_HANDLE_NONE;
 
+// No-op store 콜백 (IRK 크래시 방지 — NimBLE이 NULL 콜백 호출 시 크래시)
+static int store_read_noop(int obj_type, const union ble_store_key *key,
+                            union ble_store_value *val)
+{
+    return BLE_HS_ENOENT;  // "없음" 반환
+}
+
+static int store_write_noop(int obj_type, const union ble_store_value *val)
+{
+    return 0;  // 성공 (버림)
+}
+
+static int store_delete_noop(int obj_type, const union ble_store_key *key)
+{
+    return 0;
+}
+
 // UUID 정의
 static const ble_uuid128_t ota_svc_uuid =
     BLE_UUID128_INIT(0xFB, 0x34, 0x9B, 0x5F, 0x80, 0x00, 0x00, 0x80,
@@ -302,7 +319,12 @@ static void nimble_host_task(void *param)
 // BLE sync 콜백
 static void on_sync(void)
 {
-    ble_hs_id_infer_auto(0, NULL);
+    uint8_t own_addr_type;
+    int rc = ble_hs_id_infer_auto(0, &own_addr_type);
+    if (rc != 0) {
+        ESP_LOGE(TAG, "ble_hs_id_infer_auto failed: %d", rc);
+        return;
+    }
     start_advertising();
 }
 
@@ -325,6 +347,19 @@ void ble_ota_init(void)
 
         ble_gatts_count_cfg(ota_svcs);
         ble_gatts_add_svcs(ota_svcs);
+
+        // No-op store 콜백 설정 (IRK 크래시 방지 — NULL 대신 빈 함수)
+        ble_hs_cfg.store_read_cb = store_read_noop;
+        ble_hs_cfg.store_write_cb = store_write_noop;
+        ble_hs_cfg.store_delete_cb = store_delete_noop;
+        ble_hs_cfg.store_status_cb = NULL;  // status는 optional, NULL 허용
+
+        // Security/Bonding 비활성화 (OTA에 불필요)
+        ble_hs_cfg.sm_bonding = 0;
+        ble_hs_cfg.sm_mitm = 0;
+        ble_hs_cfg.sm_sc = 0;
+        ble_hs_cfg.sm_our_key_dist = 0;
+        ble_hs_cfg.sm_their_key_dist = 0;
 
         ble_hs_cfg.sync_cb = on_sync;
 
