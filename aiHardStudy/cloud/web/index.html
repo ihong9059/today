@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>UTTEC Firmware</title>
+<link rel="manifest" href="/firmware/manifest.json">
+<meta name="theme-color" content="#0F172A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/firmware/icon-192.png">
+<style>
+:root {
+  --bg: #0F172A;
+  --surface: #1E293B;
+  --surface2: #334155;
+  --primary: #2563EB;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --text: #F1F5F9;
+  --text2: #94A3B8;
+  --border: #475569;
+  --codeBg: #0D1117;
+  --codeGreen: #7EE787;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+  font-family: -apple-system, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header ─── */
+.header {
+  background: var(--bg);
+  padding: 14px 16px;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ble-badge {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.ble-badge .dot { width:8px; height:8px; border-radius:50%; }
+.ble-badge.disconnected { background: rgba(239,68,68,0.15); color: var(--text2); }
+.ble-badge.disconnected .dot { background: var(--error); }
+.ble-badge.connected { background: rgba(16,185,129,0.15); color: var(--success); }
+.ble-badge.connected .dot { background: var(--success); }
+.ble-badge.connecting { background: rgba(245,158,11,0.15); color: var(--warning); }
+.ble-badge.connecting .dot { background: var(--warning); }
+
+/* ─── Tab Bar ─── */
+.tab-bar {
+  display: flex;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  z-index: 10;
+  height: 56px;
+}
+.tab-bar button {
+  flex: 1; padding: 6px 0;
+  border: none; background: transparent;
+  font-size: 10px; color: var(--text2);
+  cursor: pointer; display: flex;
+  flex-direction: column; align-items: center;
+  justify-content: center; gap: 2px;
+}
+.tab-bar button.active { color: var(--primary); font-weight: 700; }
+.tab-bar button .icon { font-size: 20px; }
+
+/* ─── Content ─── */
+.content { flex:1; overflow-y:auto; padding-bottom: 64px; }
+.tab-page { display:none; padding:16px; }
+.tab-page.active { display:block; }
+
+/* ─── Styled Card ─── */
+.scard {
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.scard-header {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text2);
+  font-weight: 600; letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.scard-header .hi { font-size: 16px; }
+
+/* ─── Home: Prompt ─── */
+.prompt-input {
+  width: 100%; min-height: 70px;
+  background: var(--surface2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px; font-size: 14px; resize: none;
+  font-family: inherit; line-height: 1.5;
+}
+.prompt-input:focus { outline: none; border-color: var(--primary); }
+.prompt-input::placeholder { color: #64748B; }
+
+.chip-row { display:flex; gap:6px; overflow-x:auto; margin:10px 0; padding-bottom:4px; }
+.chip {
+  flex-shrink: 0;
+  padding: 6px 10px; background: var(--surface2);
+  color: var(--text2); border-radius: 16px;
+  font-size: 12px; cursor: pointer;
+  border: 1px solid var(--border); white-space: nowrap;
+}
+.chip:active { background: var(--primary); color: white; border-color: var(--primary); }
+
+.btn-primary {
+  width: 100%; padding: 14px;
+  background: var(--primary); color: white;
+  border: none; border-radius: 10px;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer; display: flex;
+  align-items: center; justify-content: center; gap: 8px;
+}
+.btn-primary:disabled { background: var(--surface2); color: var(--text2); cursor: not-allowed; }
+.btn-success {
+  width: 100%; padding: 14px;
+  background: var(--success); color: white;
+  border: none; border-radius: 10px;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer;
+}
+
+/* ─── Progress ─── */
+.progress-bar { height:6px; background:var(--surface2); border-radius:3px; overflow:hidden; }
+.progress-fill { height:100%; width:0%; transition:width 0.5s; border-radius:3px; }
+
+.status-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.status-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.status-text { flex:1; font-size:13px; font-weight:500; }
+.elapsed { font-size:12px; color:var(--text2); }
+
+/* ─── OTA Success ─── */
+.ota-success {
+  background: rgba(16,185,129,0.15);
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 10px; padding: 20px;
+  text-align: center;
+}
+.ota-success .icon { font-size: 36px; color: var(--success); }
+.ota-error { background: rgba(239,68,68,0.15); border-radius:10px; padding:16px; color:var(--error); }
+
+/* ─── Code Card ─── */
+.code-toggle {
+  display:flex; align-items:center; gap:4px;
+  cursor:pointer; font-size:13px; color:var(--primary); font-weight:600;
+}
+.code-block {
+  background: var(--codeBg); padding:14px; border-radius:8px;
+  font-family: 'Cascadia Code','Fira Code',monospace;
+  font-size: 12px; line-height:1.5; overflow-x:auto;
+  white-space:pre-wrap; max-height:300px; overflow-y:auto;
+  margin-top: 10px;
+}
+.code-line { padding:1px 4px; border-radius:4px; cursor:pointer; }
+.code-line:hover { background: rgba(37,99,235,0.15); }
+.code-line.active { background: rgba(37,99,235,0.2); }
+.code-explain {
+  margin: 4px 0 8px 20px; padding:10px;
+  background: rgba(37,99,235,0.1);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  font-size:12px; line-height:1.6; font-family: 'Segoe UI', sans-serif;
+}
+.learn-card {
+  background: rgba(37,99,235,0.1);
+  border-left: 3px solid var(--warning);
+  border-radius: 0 8px 8px 0;
+  padding:8px 12px; margin-top:6px;
+  font-size:12px; display:flex; align-items:flex-start; gap:6px;
+}
+.learn-title { font-weight:600; color:#FFA000; }
+
+/* ─── HW Tab: Grid ─── */
+.hw-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.hw-card {
+  background: var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:16px 8px;
+  text-align:center; cursor:pointer;
+  transition: border-color 0.2s;
+}
+.hw-card:active { border-color: var(--primary); }
+.hw-card .emoji { font-size:32px; }
+.hw-card .label { font-size:12px; color:var(--text2); margin-top:6px; }
+
+.hw-detail { display:none; }
+.hw-detail.active { display:block; }
+
+.board-info {
+  display:flex; align-items:center; gap:12px;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:16px; margin-bottom:16px;
+}
+.board-icon { background:rgba(37,99,235,0.2); border-radius:8px; padding:8px; font-size:24px; }
+.board-title { font-size:15px; font-weight:700; }
+.board-sub { font-size:12px; color:var(--text2); margin-top:2px; }
+
+.circuit-block {
+  background:var(--codeBg); padding:14px; border-radius:8px;
+  font-family:'Courier New',monospace; font-size:13px;
+  color:var(--codeGreen); line-height:1.6; white-space:pre;
+}
+.tip-box {
+  background:rgba(37,99,235,0.1);
+  border-left:3px solid var(--primary);
+  border-radius:0 8px 8px 0;
+  padding:12px; margin-bottom:12px;
+  font-size:13px; line-height:1.5;
+}
+.pin-table { width:100%; }
+.pin-table td {
+  padding:8px; font-size:13px;
+  border-bottom:1px solid rgba(71,85,105,0.5);
+}
+.pin-table td:first-child { color:var(--text2); width:40%; }
+
+/* ─── SW Tab: Lessons ─── */
+.lesson-item {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; margin-bottom:8px; overflow:hidden;
+}
+.lesson-item.expanded { border-color:var(--primary); }
+.lesson-header {
+  display:flex; align-items:center; gap:12px;
+  padding:14px; cursor:pointer;
+}
+.lesson-icon { width:32px; text-align:center; font-size:20px; }
+.lesson-info { flex:1; }
+.lesson-title { font-size:14px; font-weight:600; }
+.lesson-sub { font-size:12px; color:var(--text2); margin-top:2px; }
+.lesson-stars { font-size:12px; color:var(--warning); letter-spacing:1px; }
+.lesson-content {
+  padding:0 16px 16px;
+  background:var(--codeBg); margin:0 16px 16px;
+  border-radius:8px; padding:14px;
+  font-family:monospace; font-size:12px;
+  color:#E6EDF3; line-height:1.7; white-space:pre-wrap;
+}
+.quiz-opt {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; padding:12px; margin-bottom:8px;
+  font-size:14px; cursor:pointer;
+}
+.quiz-opt:active { border-color:var(--primary); }
+
+/* ─── Pad Tab ─── */
+.section-title {
+  font-size:13px; color:var(--text2); font-weight:600;
+  padding:16px 0 8px;
+}
+.led-row { display:flex; gap:8px; }
+.led-btn {
+  flex:1; padding:16px 0;
+  background:var(--surface); border:2px solid var(--border);
+  border-radius:12px; text-align:center; cursor:pointer;
+}
+.led-btn.on { background:rgba(16,185,129,0.1); border-color:var(--success); }
+.led-btn .emoji { font-size:28px; }
+.led-btn .lbl { font-size:11px; color:var(--text2); margin-top:4px; }
+.led-btn .state { font-size:10px; font-weight:700; margin-top:2px; }
+
+.action-row { display:flex; gap:8px; margin-top:8px; }
+.action-btn {
+  flex:1; padding:16px 0;
+  background:var(--surface); border:2px solid var(--border);
+  border-radius:12px; text-align:center; cursor:pointer;
+}
+.action-btn:active { border-color:var(--primary); }
+.action-btn .emoji { font-size:28px; }
+.action-btn .lbl { font-size:11px; color:var(--text2); margin-top:4px; }
+
+.piano-row { display:flex; gap:4px; margin-top:4px; }
+.piano-key {
+  flex:1; padding:20px 0 12px;
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:0 0 8px 8px;
+  font-size:11px; color:var(--text2);
+  text-align:center; cursor:pointer;
+}
+.piano-key:active { background:var(--primary); color:white; border-color:var(--primary); }
+
+.switch-monitor {
+  display:flex; align-items:center; gap:12px;
+  padding:16px; border-radius:12px;
+  background:var(--surface); border:2px solid var(--border);
+}
+.switch-monitor.pressed { background:rgba(16,185,129,0.1); border-color:var(--success); }
+.switch-badge {
+  padding:4px 12px; border-radius:20px;
+  font-size:12px; font-weight:700;
+}
+
+.combo-row { display:flex; gap:8px; margin-bottom:8px; }
+.combo-btn {
+  flex:1; padding:14px;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; text-align:center; cursor:pointer;
+}
+.combo-btn .emoji { font-size:24px; }
+.combo-btn .lbl { font-size:12px; margin-top:4px; }
+.combo-btn .desc { font-size:10px; color:var(--text2); margin-top:2px; }
+
+/* OLED input */
+.oled-row { display:flex; gap:8px; margin-top:8px; }
+.oled-input {
+  flex:1; padding:10px; background:var(--surface2);
+  color:var(--text); border:1px solid var(--border);
+  border-radius:8px; font-size:14px;
+}
+.oled-input:focus { outline:none; border-color:var(--primary); }
+.oled-btn {
+  padding:10px 16px; background:var(--primary);
+  color:white; border:none; border-radius:8px;
+  font-weight:600; cursor:pointer;
+}
+
+/* ─── Settings Tab ─── */
+.info-row { display:flex; padding:6px 0; }
+.info-label { flex:2; font-size:13px; color:var(--text2); }
+.info-value { flex:3; font-size:13px; }
+
+.setting-input {
+  width:100%; padding:10px 12px;
+  background:var(--surface2); color:var(--text);
+  border:1px solid var(--border); border-radius:8px;
+  font-size:13px;
+}
+.setting-input:focus { outline:none; border-color:var(--primary); }
+
+.btn-scan {
+  width:100%; padding:12px;
+  background:var(--surface2); color:var(--text);
+  border:none; border-radius:8px;
+  font-size:14px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+}
+
+.scan-item {
+  display:flex; align-items:center; gap:8px;
+  padding:8px 12px; margin-bottom:4px;
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; cursor:pointer;
+}
+.scan-item.selected { background:rgba(37,99,235,0.15); border-color:var(--primary); }
+
+/* ─── OTA Overlay ─── */
+.ota-overlay {
+  display:none; position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.7);
+  z-index:100; justify-content:center; align-items:center;
+}
+.ota-overlay.show { display:flex; }
+.ota-box {
+  background:var(--surface); border-radius:16px;
+  padding:32px; text-align:center;
+  max-width:320px; width:90%;
+  border:1px solid var(--border);
+}
+.ota-box h3 { margin-bottom:16px; }
+
+/* ─── History ─── */
+.history-item {
+  display:flex; align-items:center; gap:8px;
+  padding:10px 12px; margin-bottom:6px;
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; cursor:pointer;
+}
+.history-item:active { border-color:var(--primary); }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <span>UTTEC Firmware</span>
+  <div class="ble-badge disconnected" id="bleBadge" onclick="toggleBLE()">
+    <span class="dot"></span>
+    <span id="bleLabel">BLE 연결</span>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- ═══ HOME TAB ═══ -->
+  <div class="tab-page active" id="page-home">
+    <div class="scard">
+      <div class="scard-header"><span class="hi">&#x2728;</span> UTTEC 보드에 명령하기</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:6px;">예시 프롬프트 (터치하면 자동 입력)</div>
+      <div class="chip-row">
+        <span class="chip" onclick="setPrompt('LED 깜빡이기')">LED 깜빡이기</span>
+        <span class="chip" onclick="setPrompt('부저 5회 울리고 멈추기')">부저 5회</span>
+        <span class="chip" onclick="setPrompt('학교종 멜로디 연주')">학교종 멜로디</span>
+        <span class="chip" onclick="setPrompt('OLED에 글자 표시')">OLED 표시</span>
+        <span class="chip" onclick="setPrompt('온도 측정하기')">온도 측정</span>
+      </div>
+      <textarea class="prompt-input" id="promptInput" placeholder="예: 빨간 LED를 0.5초마다 깜빡이고,&#10;OLED에 &quot;Hello!&quot;를 표시해줘"></textarea>
+      <button class="btn-primary" id="btnBuild" onclick="startBuild()" style="margin-top:12px;">
+        <span>&#x1F680;</span> 위 명령을 UTTEC 펌웨어로 만들기
+      </button>
+    </div>
+
+    <div id="progressCard" style="display:none;"></div>
+    <div id="codeCard" style="display:none;"></div>
+    <div id="historyCard" style="display:none;"></div>
+
+    <!-- 코딩 질문 카드 -->
+    <div class="scard">
+      <div class="scard-header"><span class="hi">&#x1F4AC;</span> 코딩 질문하기</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:6px;">Arduino/ESP32/C언어 등 코딩에 대해 질문하세요</div>
+      <div class="chip-row">
+        <span class="chip" onclick="setQuestion('for문이 뭐야?')">for문이 뭐야?</span>
+        <span class="chip" onclick="setQuestion('digitalWrite와 analogWrite 차이')">digital vs analog</span>
+        <span class="chip" onclick="setQuestion('I2C 통신이 뭐야?')">I2C 통신</span>
+        <span class="chip" onclick="setQuestion('FreeRTOS 태스크 만드는 법')">FreeRTOS 태스크</span>
+      </div>
+      <textarea class="prompt-input" id="questionInput" placeholder="코딩에 대해 궁금한 것을 물어보세요...&#10;예: for문과 while문의 차이가 뭐야?" style="min-height:60px;"></textarea>
+      <button class="btn-primary" id="btnAsk" onclick="askQuestion()" style="margin-top:12px;background:#7C3AED;">
+        <span>&#x1F4AC;</span> 질문하기
+      </button>
+    </div>
+    <div id="answerCard" style="display:none;"></div>
+  </div>
+
+  <!-- ═══ HW TAB ═══ -->
+  <div class="tab-page" id="page-hw">
+    <div id="hwGrid">
+      <div class="board-info">
+        <div class="board-icon">&#x1F9E0;</div>
+        <div>
+          <div class="board-title">ESP32-WROOM-32 DevKitC</div>
+          <div class="board-sub">38핀 · Xtensa 듀얼코어 240MHz · 4MB Flash</div>
+        </div>
+      </div>
+      <div class="hw-grid" id="hwGridItems"></div>
+    </div>
+    <div class="hw-detail" id="hwDetail"></div>
+  </div>
+
+  <!-- ═══ SW TAB ═══ -->
+  <div class="tab-page" id="page-sw">
+    <div id="lessonList"></div>
+    <div class="scard" style="margin-top:12px;">
+      <div class="scard-header"><span class="hi">&#x1F4DD;</span> 코드 뷰어 — LED Blink</div>
+      <div id="codeViewer"></div>
+    </div>
+    <div class="scard">
+      <div class="scard-header"><span class="hi">&#x2753;</span> 퀴즈</div>
+      <div style="font-size:14px;line-height:1.5;margin-bottom:12px;">Q. LED를 켜려면 gpio_set_level의 두 번째 인자로 무엇을 넣어야 할까요?</div>
+      <div class="quiz-opt" onclick="quiz(this,false)">A. 0 (LOW)</div>
+      <div class="quiz-opt" onclick="quiz(this,true)">B. 1 (HIGH)</div>
+      <div class="quiz-opt" onclick="quiz(this,false)">C. "on"</div>
+      <div class="quiz-opt" onclick="quiz(this,false)">D. true</div>
+    </div>
+  </div>
+
+  <!-- ═══ PAD TAB ═══ -->
+  <div class="tab-page" id="page-pad">
+    <div class="section-title">LED 컨트롤</div>
+    <div class="led-row">
+      <div class="led-btn" id="ledR" onclick="toggleLed('RED')">
+        <div class="emoji">&#x1F534;</div><div class="lbl">RED</div>
+        <div class="state" id="ledRState" style="color:var(--text2)">OFF</div>
+      </div>
+      <div class="led-btn" id="ledY" onclick="toggleLed('YELLOW')">
+        <div class="emoji">&#x1F7E1;</div><div class="lbl">YELLOW</div>
+        <div class="state" id="ledYState" style="color:var(--text2)">OFF</div>
+      </div>
+      <div class="led-btn" id="ledB" onclick="toggleLed('BLUE')">
+        <div class="emoji">&#x1F535;</div><div class="lbl">BLUE</div>
+        <div class="state" id="ledBState" style="color:var(--text2)">OFF</div>
+      </div>
+    </div>
+    <div class="action-row">
+      <div class="action-btn" onclick="flashAll()"><div class="emoji">&#x2728;</div><div class="lbl">전체점멸</div></div>
+      <div class="action-btn" onclick="allOff()"><div class="emoji">&#x1F504;</div><div class="lbl">전체 끄기</div></div>
+    </div>
+
+    <div class="section-title">부저</div>
+    <div class="action-row">
+      <div class="action-btn" onclick="sendCmd('BEEP')"><div class="emoji">&#x1F514;</div><div class="lbl">삐!</div></div>
+      <div class="action-btn" onclick="playMelody()"><div class="emoji">&#x1F3B5;</div><div class="lbl">멜로디</div></div>
+    </div>
+
+    <div class="section-title">피아노</div>
+    <div class="piano-row">
+      <div class="piano-key" onclick="sendCmd('NOTE_0')">도</div>
+      <div class="piano-key" onclick="sendCmd('NOTE_1')">레</div>
+      <div class="piano-key" onclick="sendCmd('NOTE_2')">미</div>
+      <div class="piano-key" onclick="sendCmd('NOTE_3')">파</div>
+      <div class="piano-key" onclick="sendCmd('NOTE_4')">솔</div>
+      <div class="piano-key" onclick="sendCmd('NOTE_5')">라</div>
+      <div class="piano-key" onclick="sendCmd('NOTE_6')">시</div>
+      <div class="piano-key" onclick="sendCmd('NOTE_7')">도'</div>
+    </div>
+
+    <div class="section-title">센서 / 디스플레이</div>
+    <div class="action-row">
+      <div class="action-btn" onclick="sendCmd('TEMP')"><div class="emoji">&#x1F321;</div><div class="lbl">온도읽기</div></div>
+      <div class="action-btn" onclick="sendCmd('OLED:Hello Vibe!')"><div class="emoji">&#x1F4FA;</div><div class="lbl">OLED표시</div></div>
+    </div>
+    <div class="oled-row">
+      <input class="oled-input" id="oledText" placeholder="OLED 텍스트..." maxlength="20">
+      <button class="oled-btn" onclick="sendCmd('OLED:'+document.getElementById('oledText').value)">전송</button>
+    </div>
+
+    <div class="section-title">스위치 모니터</div>
+    <div class="switch-monitor" id="switchMonitor">
+      <span style="font-size:24px" id="switchIcon">&#x1F518;</span>
+      <span style="font-size:14px;flex:1">스위치 상태 (GPIO32)</span>
+      <span class="switch-badge" id="switchBadge" style="background:rgba(148,163,184,0.15);color:var(--text2)">미연결</span>
+    </div>
+
+    <div class="section-title">콤보</div>
+    <div class="combo-row">
+      <div class="combo-btn" onclick="toast('준비 중')"><div class="emoji">&#x1F389;</div><div class="lbl">파티모드</div><div class="desc">LED+부저+NeoPixel</div></div>
+      <div class="combo-btn" onclick="toast('준비 중')"><div class="emoji">&#x1F6A8;</div><div class="lbl">경보모드</div><div class="desc">LED점멸+부저</div></div>
+    </div>
+    <div class="combo-row">
+      <div class="combo-btn" onclick="toast('준비 중')"><div class="emoji">&#x1F321;</div><div class="lbl">온도계</div><div class="desc">센서+OLED</div></div>
+      <div class="combo-btn" onclick="toast('준비 중')"><div class="emoji">&#x1F4E1;</div><div class="lbl">LoRa전송</div><div class="desc">센서+LoRa</div></div>
+    </div>
+  </div>
+
+  <!-- ═══ SETTINGS TAB ═══ -->
+  <div class="tab-page" id="page-settings">
+    <div class="scard">
+      <div class="scard-header"><span class="hi">&#x1F5A5;</span> 서버 설정</div>
+      <input class="setting-input" id="serverUrl" value="" onchange="saveServerUrl()">
+    </div>
+
+    <div class="scard">
+      <div class="scard-header"><span class="hi">&#x1F4F6;</span> BLE 기기 설정</div>
+      <div class="info-row"><span class="info-label">저장된 기기</span><span class="info-value" id="infoBleName">-</span></div>
+      <div class="info-row"><span class="info-label">연결 상태</span><span class="info-value" id="infoBleStatus">미연결</span></div>
+      <div style="font-size:12px;color:var(--text2);margin:10px 0 4px;">기기 이름 변경</div>
+      <div style="display:flex;gap:8px;">
+        <input class="setting-input" id="newDeviceName" placeholder="UTTEC-OTA" style="flex:1">
+        <button style="padding:10px 16px;background:var(--primary);color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;" onclick="renameDevice()">저장</button>
+      </div>
+      <button class="btn-scan" onclick="scanBLE()" style="margin-top:12px;">&#x1F50D; 주변 BLE 기기 스캔</button>
+      <div id="scanResults"></div>
+    </div>
+
+    <div class="scard">
+      <div class="scard-header"><span class="hi">&#x1F4CB;</span> 보드 설정</div>
+      <div class="info-row"><span class="info-label">보드</span><span class="info-value">ESP32-WROOM 38핀</span></div>
+      <div class="info-row"><span class="info-label">프레임워크</span><span class="info-value">Arduino + NimBLE</span></div>
+      <div class="info-row"><span class="info-label">Flash</span><span class="info-value">4MB</span></div>
+      <div class="info-row"><span class="info-label">CPU</span><span class="info-value">Xtensa LX6 Dual 240MHz</span></div>
+    </div>
+
+    <div class="scard">
+      <div class="scard-header"><span class="hi">&#x2139;</span> 앱 정보</div>
+      <div class="info-row"><span class="info-label">버전</span><span class="info-value">Web 1.0</span></div>
+      <div class="info-row"><span class="info-label">Web Bluetooth</span><span class="info-value" id="webBleSupport">-</span></div>
+      <div class="info-row"><span class="info-label">빌드 서버</span><span class="info-value" id="serverHealthStatus">확인 중...</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Tab Bar (Bottom) -->
+<div class="tab-bar">
+  <button class="active" onclick="switchTab('home',this)"><span class="icon">&#x1F3E0;</span>홈</button>
+  <button onclick="switchTab('hw',this)"><span class="icon">&#x1F527;</span>HW</button>
+  <button onclick="switchTab('sw',this)"><span class="icon">&#x1F4BB;</span>SW</button>
+  <button onclick="switchTab('pad',this)"><span class="icon">&#x1F3AE;</span>패드</button>
+  <button onclick="switchTab('settings',this)"><span class="icon">&#x2699;</span>설정</button>
+</div>
+
+<!-- OTA Overlay -->
+<div class="ota-overlay" id="otaOverlay">
+  <div class="ota-box">
+    <h3>펌웨어 전송 중</h3>
+    <div class="progress-bar"><div class="progress-fill" id="otaProgressFill" style="background:var(--success)"></div></div>
+    <div style="font-size:14px;color:var(--text2);margin-top:12px" id="otaText">BLE OTA 전송 중...</div>
+  </div>
+</div>
+
+<script>
+// ═══ State ═══
+let bleDevice=null,bleServer=null,cmdChar=null,otaCtrlChar=null,otaDataChar=null,otaStatusChar=null,sensorChar=null;
+let buildHistory=JSON.parse(localStorage.getItem('uttec_history')||'[]');
+let elapsedTimer=null,ledState={RED:false,YELLOW:false,BLUE:false};
+
+const OTA_SVC='0000fe00-0000-1000-8000-00805f9b34fb';
+const OTA_CTRL='0000fe01-0000-1000-8000-00805f9b34fb';
+const OTA_DATA='0000fe02-0000-1000-8000-00805f9b34fb';
+const OTA_STATUS='0000fe03-0000-1000-8000-00805f9b34fb';
+const OTA_CMD='0000fe04-0000-1000-8000-00805f9b34fb';
+const OTA_SENSOR='0000fe05-0000-1000-8000-00805f9b34fb';
+
+// ═══ Tabs ═══
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.querySelectorAll('.tab-page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+}
+
+// ═══ Server ═══
+function getApiBase(){return localStorage.getItem('uttec_server')||location.origin}
+function saveServerUrl(){const u=document.getElementById('serverUrl').value.trim();if(u){localStorage.setItem('uttec_server',u);checkHealth();}}
+
+// ═══ Build Flow ═══
+function setPrompt(t){document.getElementById('promptInput').value=t;}
+
+async function startBuild(){
+  const prompt=document.getElementById('promptInput').value.trim();
+  if(!prompt){toast('프롬프트를 입력해주세요');return;}
+  const btn=document.getElementById('btnBuild');
+  btn.disabled=true;btn.innerHTML='<span>&#x231B;</span> AI가 펌웨어를 만들고 있어요...';
+
+  const pc=document.getElementById('progressCard');
+  document.getElementById('codeCard').style.display='none';
+  let startTime=Date.now(),elapsed=0;
+  elapsedTimer=setInterval(()=>{elapsed=((Date.now()-startTime)/1000)|0;},1000);
+
+  try{
+    showProgress(10,'AI 코드 생성 중...',false);
+    const resp=await fetch(getApiBase()+'/api/v1/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,retry_on_fail:true,max_retries:3})});
+    const data=await resp.json();const jobId=data.job_id;
+    let status='pending',lastTiming={};
+    while(status!=='success'&&status!=='failed'){
+      await sleep(2000);
+      const sr=await fetch(getApiBase()+'/api/v1/status/'+jobId);
+      const sd=await sr.json();status=sd.status;
+      if(sd.timing)lastTiming=sd.timing;
+      showStepProgress(sd.status,sd.progress,sd.message,elapsed,lastTiming);
+    }
+    clearInterval(elapsedTimer);
+    if(status==='failed'){const sr=await fetch(getApiBase()+'/api/v1/status/'+jobId);const sd=await sr.json();showError(sd.message);return;}
+
+    // code
+    const cr=await fetch(getApiBase()+'/api/v1/code/'+jobId);const cd=await cr.json();
+    if(cd.code)showCodeCard(cd.code);
+
+    // 최종 timing 저장
+    const finalSr=await fetch(getApiBase()+'/api/v1/status/'+jobId);
+    const finalSd=await finalSr.json();
+    if(finalSd.timing)lastTiming=finalSd.timing;
+    showStepProgress('success',100,'빌드 완료!',elapsed,lastTiming);
+
+    // download bin
+    showStepProgress('success',100,'펌웨어 다운로드 중...',elapsed,lastTiming);
+    const br=await fetch(getApiBase()+'/api/v1/download/'+jobId);
+    const blob=await br.blob();const binData=new Uint8Array(await blob.arrayBuffer());
+
+    // timing 요약 문자열
+    const timingSummary=buildTimingSummary(lastTiming,binData.length);
+
+    // OTA
+    if(bleServer&&bleServer.connected){await performOTA(binData,timingSummary);}
+    else{
+      const ok=await connectBLE();
+      if(ok)await performOTA(binData,timingSummary);
+      else showSuccess('빌드 성공! ('+binData.length+' bytes)'+timingSummary+'<br><span style="font-size:13px;color:var(--text2)">BLE 미연결 — 설정에서 연결 후 다시 시도하세요</span>');
+    }
+    addHistory(prompt,jobId);
+  }catch(e){clearInterval(elapsedTimer);showError('오류: '+e.message);}
+  finally{btn.disabled=false;btn.innerHTML='<span>&#x1F680;</span> 위 명령을 UTTEC 펌웨어로 만들기';}
+}
+
+function showStepProgress(status,pct,msg,sec,timing){
+  const pc=document.getElementById('progressCard');
+  pc.style.display='block';
+
+  // Step 상태 계산
+  const steps=[
+    {label:'AI 코드 생성 (Claude)',key:'2b_claude',icon:'&#x1F916;'},
+    {label:'Arduino 빌드',key:'4_build',icon:'&#x1F528;'},
+  ];
+
+  let currentStep=0;
+  if(status==='generating')currentStep=0;
+  else if(status==='building')currentStep=1;
+  else if(status==='success')currentStep=2;
+
+  // timing에서 시간 추출 (tryN 포함)
+  function getTime(prefix){
+    for(const k in timing){if(k.startsWith(prefix))return timing[k];}
+    return null;
+  }
+
+  let stepsHtml='<div style="margin-bottom:14px;">';
+  for(let i=0;i<steps.length;i++){
+    const s=steps[i];
+    const t=getTime(s.key);
+    const done=i<currentStep||(i===currentStep-1&&status==='success');
+    const active=i===currentStep&&(status==='generating'||status==='building');
+    const future=i>currentStep;
+
+    const dotColor=done?'var(--success)':active?'var(--primary)':'var(--surface2)';
+    const textColor=done?'var(--success)':active?'var(--text)':'var(--text2)';
+    const timeStr=t!==null?t+'초':'';
+    const statusIcon=done?'&#x2705;':active?'&#x23F3;':'&#x2B1C;';
+
+    stepsHtml+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;${i<2?'border-bottom:1px solid var(--border);':''}">
+      <span style="font-size:16px;width:24px;text-align:center">${statusIcon}</span>
+      <span style="font-size:14px;width:24px;text-align:center">${s.icon}</span>
+      <span style="flex:1;font-size:13px;color:${textColor};font-weight:${active?'600':'400'}">Step ${i+1}. ${s.label}</span>
+      <span style="font-size:13px;font-weight:600;color:${done?'var(--success)':active?'var(--warning)':'var(--text2)'}">
+        ${done&&timeStr?timeStr:active?'진행 중...':'-'}
+      </span>
+    </div>`;
+  }
+  stepsHtml+='</div>';
+
+  // Total timing
+  const totalTime=timing.total?timing.total+'초':sec+'초 (경과)';
+  const isActive=status==='generating'||status==='building';
+  const barColor=status==='success'?'var(--success)':'var(--primary)';
+
+  pc.innerHTML=`<div class="scard"><div class="scard-header"><span class="hi">&#x1F680;</span> 진행 상태
+    <span style="margin-left:auto;font-size:12px;color:var(--text2)">총 ${totalTime}</span></div>
+    ${stepsHtml}
+    <div class="progress-bar"><div class="progress-fill" style="width:${isActive?'100%':pct+'%'};background:${barColor};${isActive?'animation:pulse 1.5s infinite':''}"></div></div>
+    <div style="margin-top:8px;font-size:12px;color:var(--text2)">${msg}</div></div>`;
+}
+
+function showProgress(pct,msg,indeterminate,sec){
+  showStepProgress(pct>=100?'success':'generating',pct,msg,sec||0,{});
+}
+function showSuccess(msg){
+  const pc=document.getElementById('progressCard');
+  pc.style.display='block';
+  pc.innerHTML=`<div class="scard"><div class="ota-success">
+    <div class="icon">&#x2705;</div>
+    <div style="margin-top:8px;font-size:16px;font-weight:700;color:var(--success)">전송 완료!</div>
+    <div style="margin-top:4px;font-size:13px;color:var(--text2);line-height:1.5">${msg}</div></div>
+    <button class="btn-primary" style="margin-top:12px" onclick="resetHome()">&#x1F504; 새로운 명령 입력하기</button></div>`;
+}
+function showError(msg){
+  const pc=document.getElementById('progressCard');pc.style.display='block';
+  pc.innerHTML=`<div class="scard"><div class="ota-error"><strong>빌드 실패</strong><div style="margin-top:8px;font-size:13px">${msg}</div></div></div>`;
+}
+function resetHome(){document.getElementById('progressCard').style.display='none';document.getElementById('codeCard').style.display='none';document.getElementById('promptInput').value='';}
+
+function buildTimingSummary(timing,binSize){
+  function getTime(prefix){for(const k in timing){if(k.startsWith(prefix))return timing[k];}return null;}
+  const t2b=getTime('2b_claude'),t3=getTime('4_build'),total=timing.total;
+  if(!t2b&&!t3)return '';
+  const row=(icon,label,val)=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;color:var(--text2)"><span>${icon} ${label}</span><span style="color:var(--text)">${val}</span></div>`;
+  return `<div style="margin-top:12px;background:var(--surface2);border-radius:8px;padding:12px;text-align:left;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:6px;font-weight:600">&#x23F1; 단계별 소요 시간</div>
+    ${row('&#x1F916;','Step 1. AI 코드 생성 (Claude)',t2b!==null?t2b+'초':'-')}
+    ${row('&#x1F528;','Step 2. Arduino 빌드',t3!==null?t3+'초':'-')}
+    <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0 0;border-top:1px solid var(--border);margin-top:4px;color:var(--text2)"><span>&#x1F4E6; 펌웨어 크기</span><span style="color:var(--text)">${binSize?(binSize/1024).toFixed(0)+'KB':'-'}</span></div>
+    ${total?`<div style="display:flex;justify-content:space-between;font-size:13px;padding:3px 0;font-weight:700;color:var(--success)"><span>합계</span><span>${total}초</span></div>`:''}
+  </div>`;
+}
+
+function showCodeCard(code){
+  const card=document.getElementById('codeCard');card.style.display='block';
+  const lines=code.split('\n');let codeHtml='',learnHtml='';
+  const re=/\/\/\s*\[(.+?)\]\s*(.+)/;
+  for(const line of lines){
+    const m=line.match(re);
+    if(m){learnHtml+=`<div class="learn-card"><span class="learn-title">${m[1]}</span> — ${m[2]}</div>`;}
+  }
+  const esc=code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  card.innerHTML=`<div class="scard"><div class="scard-header"><span class="hi">&#x1F393;</span> 생성된 코드 학습하기</div>
+    <div class="code-toggle" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">&#x25B6; 코드와 설명 보기 &nbsp;<span style="font-size:11px;color:var(--text2)">&#x1F4A1; 주석에 설명이 있어요</span></div>
+    <div style="display:none"><div class="code-block">${esc}</div>${learnHtml}</div></div>`;
+}
+
+// ═══ Chat ═══
+function setQuestion(t){document.getElementById('questionInput').value=t;}
+
+async function askQuestion(){
+  const q=document.getElementById('questionInput').value.trim();
+  if(!q){toast('질문을 입력해주세요');return;}
+  const btn=document.getElementById('btnAsk');
+  btn.disabled=true;btn.innerHTML='<span>&#x231B;</span> AI가 답변을 생각하고 있어요...';
+  const ac=document.getElementById('answerCard');
+  ac.style.display='block';
+  ac.innerHTML=`<div class="scard"><div class="scard-header"><span class="hi">&#x1F916;</span> AI 답변</div><div style="color:var(--text2);font-size:13px;">답변 생성 중...</div></div>`;
+
+  try{
+    const resp=await fetch(getApiBase()+'/api/v1/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});
+    if(!resp.ok){const t=await resp.text();throw new Error(t);}
+    const data=await resp.json();
+    const answer=data.answer.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const formatted=formatAnswer(answer);
+    ac.innerHTML=`<div class="scard"><div class="scard-header"><span class="hi">&#x1F916;</span> AI 답변 <span style="margin-left:auto;font-size:11px;color:var(--text2)">${data.elapsed}초</span></div><div style="font-size:14px;line-height:1.7;color:var(--text)">${formatted}</div></div>`;
+  }catch(e){
+    ac.innerHTML=`<div class="scard"><div class="ota-error">답변 실패: ${e.message}</div></div>`;
+  }finally{
+    btn.disabled=false;btn.innerHTML='<span>&#x1F4AC;</span> 질문하기';
+  }
+}
+
+function formatAnswer(text){
+  // 코드 블록 처리
+  let result=text;
+  // ```code``` 블록
+  result=result.replace(/```(\w*)\n([\s\S]*?)```/g,(_,lang,code)=>`<div style="background:var(--codeBg);border-radius:8px;padding:12px;margin:8px 0;font-family:monospace;font-size:12px;color:#E6EDF3;white-space:pre-wrap;overflow-x:auto">${code.trim()}</div>`);
+  // 인라인 `code`
+  result=result.replace(/`([^`]+)`/g,'<code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px;color:var(--codeGreen)">$1</code>');
+  // **bold**
+  result=result.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  // 줄바꿈
+  result=result.replace(/\n/g,'<br>');
+  return result;
+}
+
+// ═══ BLE ═══
+async function toggleBLE(){
+  if(bleServer&&bleServer.connected){bleDevice.gatt.disconnect();updateBLE(false);}
+  else await connectBLE();
+}
+async function scanBLE(){await connectBLE();}
+
+async function connectBLE(){
+  if(!navigator.bluetooth){toast('Web Bluetooth 미지원 — Chrome Android를 사용하세요');return false;}
+  try{
+    bleDevice=await navigator.bluetooth.requestDevice({acceptAllDevices:true,optionalServices:[OTA_SVC]});
+    bleDevice.addEventListener('gattserverdisconnected',()=>updateBLE(false));
+    updateBLE('connecting');
+    bleServer=await bleDevice.gatt.connect();
+    const svc=await bleServer.getPrimaryService(OTA_SVC);
+    otaCtrlChar=await svc.getCharacteristic(OTA_CTRL);
+    otaDataChar=await svc.getCharacteristic(OTA_DATA);
+    otaStatusChar=await svc.getCharacteristic(OTA_STATUS);
+    cmdChar=await svc.getCharacteristic(OTA_CMD);
+    try{sensorChar=await svc.getCharacteristic(OTA_SENSOR);await sensorChar.startNotifications();sensorChar.addEventListener('characteristicvaluechanged',onSensor);}catch(e){}
+    await otaStatusChar.startNotifications();
+    updateBLE(true);
+    document.getElementById('infoBleName').textContent=bleDevice.name||'Unknown';
+    document.getElementById('infoBleStatus').textContent='연결됨';
+    return true;
+  }catch(e){console.error(e);if(e.name!=='NotFoundError')toast('BLE 연결 실패: '+e.message);updateBLE(false);return false;}
+}
+
+function updateBLE(state){
+  const b=document.getElementById('bleBadge'),l=document.getElementById('bleLabel');
+  b.className='ble-badge '+(state===true?'connected':state==='connecting'?'connecting':'disconnected');
+  l.textContent=state===true?(bleDevice?.name||'연결됨'):state==='connecting'?'스캔 중...':'BLE 연결';
+  if(state===false){bleServer=null;cmdChar=null;otaCtrlChar=null;otaDataChar=null;otaStatusChar=null;sensorChar=null;
+    document.getElementById('infoBleStatus').textContent='미연결';}
+}
+
+async function sendCmd(cmd){
+  if(!cmdChar){const ok=await connectBLE();if(!ok)return;}
+  try{await cmdChar.writeValue(new TextEncoder().encode(cmd));}
+  catch(e){toast('명령 전송 실패');}
+}
+
+function onSensor(ev){
+  const d=new Uint8Array(ev.target.value.buffer);
+  if(d[0]===0x01){
+    const pressed=d[1]===1;
+    const m=document.getElementById('switchMonitor');
+    m.className='switch-monitor'+(pressed?' pressed':'');
+    document.getElementById('switchIcon').innerHTML=pressed?'&#x1F7E2;':'&#x1F518;';
+    document.getElementById('switchBadge').textContent=pressed?'PRESSED':'RELEASED';
+    document.getElementById('switchBadge').style.background=pressed?'rgba(16,185,129,0.2)':'rgba(148,163,184,0.15)';
+    document.getElementById('switchBadge').style.color=pressed?'var(--success)':'var(--text2)';
+  }
+}
+
+// ═══ OTA ═══
+async function performOTA(bin,timingSummary=''){
+  const ov=document.getElementById('otaOverlay');ov.classList.add('show');
+  try{
+    const sc=new Uint8Array(5);sc[0]=0x01;sc[1]=bin.length&0xFF;sc[2]=(bin.length>>8)&0xFF;sc[3]=(bin.length>>16)&0xFF;sc[4]=(bin.length>>24)&0xFF;
+    await otaCtrlChar.writeValue(sc);await sleep(500);
+    const cs=240,tc=Math.ceil(bin.length/cs);
+    for(let i=0;i<tc;i++){
+      const s=i*cs,e=Math.min(s+cs,bin.length);
+      await otaDataChar.writeValueWithoutResponse(bin.slice(s,e));
+      const p=Math.floor((i+1)/tc*100);
+      document.getElementById('otaProgressFill').style.width=p+'%';
+      document.getElementById('otaText').textContent=p+'% ('+Math.floor(e/1024)+'/'+Math.floor(bin.length/1024)+' KB)';
+      if(i%8===7)await sleep(20);
+    }
+    await sleep(300);await otaCtrlChar.writeValue(new Uint8Array([0x02]));
+    document.getElementById('otaText').textContent='전송 완료! ESP32 재부팅 중...';
+    await sleep(3000);ov.classList.remove('show');
+    showSuccess('OTA 성공! ('+(bin.length/1024).toFixed(1)+' KB)<br>UTTEC 보드를 확인하세요!'+timingSummary);
+  }catch(e){
+    ov.classList.remove('show');
+    const p=parseInt(document.getElementById('otaProgressFill').style.width)||0;
+    if(p>=95)showSuccess('OTA 완료! (전송 중 재부팅됨)'+timingSummary);
+    else{showError('OTA 전송 실패: '+e.message);try{await otaCtrlChar.writeValue(new Uint8Array([0x03]));}catch(x){}}
+  }
+}
+
+// ═══ Pad helpers ═══
+function toggleLed(color){
+  ledState[color]=!ledState[color];
+  sendCmd('LED_'+color+'_'+(ledState[color]?'ON':'OFF'));
+  const ids={RED:['ledR','ledRState'],YELLOW:['ledY','ledYState'],BLUE:['ledB','ledBState']};
+  const[bid,sid]=ids[color];
+  document.getElementById(bid).className='led-btn'+(ledState[color]?' on':'');
+  const se=document.getElementById(sid);se.textContent=ledState[color]?'ON':'OFF';
+  se.style.color=ledState[color]?'var(--success)':'var(--text2)';
+}
+function flashAll(){sendCmd('LED_RED_ON');sendCmd('LED_YELLOW_ON');sendCmd('LED_BLUE_ON');
+  setTimeout(()=>{sendCmd('LED_ALL_OFF');ledState={RED:false,YELLOW:false,BLUE:false};
+  ['ledR','ledY','ledB'].forEach(id=>document.getElementById(id).className='led-btn');
+  ['ledRState','ledYState','ledBState'].forEach(id=>{const e=document.getElementById(id);e.textContent='OFF';e.style.color='var(--text2)';});},500);}
+function allOff(){sendCmd('LED_ALL_OFF');ledState={RED:false,YELLOW:false,BLUE:false};
+  ['ledR','ledY','ledB'].forEach(id=>document.getElementById(id).className='led-btn');
+  ['ledRState','ledYState','ledBState'].forEach(id=>{const e=document.getElementById(id);e.textContent='OFF';e.style.color='var(--text2)';});}
+async function playMelody(){for(let i=0;i<8;i++){sendCmd('NOTE_'+i);await sleep(350);}}
+
+function renameDevice(){const n=document.getElementById('newDeviceName').value.trim();if(!n){toast('이름을 입력하세요');return;}sendCmd('SETNAME:'+n);toast('이름 변경됨 — 보드 재부팅됩니다');}
+
+// ═══ History ═══
+function addHistory(prompt,jobId){buildHistory.unshift({prompt,jobId,time:new Date().toLocaleTimeString()});if(buildHistory.length>10)buildHistory.pop();localStorage.setItem('uttec_history',JSON.stringify(buildHistory));renderHistory();}
+function renderHistory(){
+  if(!buildHistory.length){document.getElementById('historyCard').style.display='none';return;}
+  document.getElementById('historyCard').style.display='block';
+  document.getElementById('historyCard').innerHTML=`<div class="scard"><div class="scard-header"><span class="hi">&#x1F4DC;</span> 최근 기록 (${buildHistory.length}개)</div>`+
+    buildHistory.map(h=>`<div class="history-item" onclick="setPrompt('${h.prompt.replace(/'/g,"\\'")}')"><span style="color:var(--primary)">&#x25B6;</span><span style="flex:1;font-size:13px">${h.prompt}</span><span style="font-size:11px;color:var(--text2)">${h.time}</span></div>`).join('')+'</div>';
+}
+
+// ═══ HW Tab ═══
+const hwData=[
+  {id:'led',icon:'\uD83D\uDD34',name:'LED',desc:'LED(발광 다이오드)는 전기를 흘리면 빛을 내는 반도체 소자입니다.',circuit:'ESP32         LED         GND\nGPIO25 ---[■]---[100Ω]--- GND  (RED)\nGPIO26 ---[■]---[100Ω]--- GND  (YELLOW)\nGPIO27 ---[■]---[100Ω]--- GND  (BLUE)',tip:'Active LOW 방식: GPIO가 LOW이면 LED ON. 저항 100Ω으로 전류 제한.',pins:[['RED LED','GPIO25'],['YELLOW LED','GPIO26'],['BLUE LED','GPIO27'],['방식','Active LOW'],['저항','100Ω']]},
+  {id:'buzzer',icon:'\uD83D\uDD14',name:'부저',desc:'부저는 전기 신호를 소리로 변환하는 소자입니다. 단순 삐 소리(BEEP)와 PWM으로 멜로디를 연주할 수 있습니다.',circuit:'ESP32          BUZZER\nGPIO14 ---[♬ BEEP ]--- GND  (Active LOW)\nGPIO33 ---[♫ MELODY]--- GND  (PWM)',tip:'BEEP은 Active LOW: GPIO LOW일 때 소리가 납니다. MELODY는 PWM 주파수로 음정을 조절합니다.',pins:[['BEEP','GPIO14 (Active LOW)'],['MELODY','GPIO33 (PWM)']]},
+  {id:'switch',icon:'\uD83D\uDD18',name:'스위치',desc:'스위치는 사용자 입력을 받는 가장 기본적인 입력 장치입니다.',circuit:'ESP32          SWITCH\nGPIO32 ---[○ SW ]--- GND\n  │\n  └--- 10kΩ --- 3.3V (Pull-up)',tip:'Active LOW 방식: 내부 풀업 저항 사용. 누르면 GPIO=LOW.',pins:[['SWITCH','GPIO32'],['방식','Active LOW'],['풀업','내부 Pull-up']]},
+  {id:'oled',icon:'\uD83D\uDCFA',name:'OLED',desc:'OLED는 자체 발광 디스플레이입니다. SSD1306 컨트롤러로 I2C 통신을 통해 텍스트와 그래픽을 표시합니다.',circuit:'ESP32         OLED (SSD1306)\nGPIO21 (SDA) --- SDA\nGPIO22 (SCL) --- SCL\n3.3V         --- VCC\nGND          --- GND',tip:'I2C 주소 0x3C. SDA/SCL에 4.7kΩ 풀업 저항 권장.',pins:[['컨트롤러','SSD1306'],['I2C 주소','0x3C'],['SDA','GPIO21'],['SCL','GPIO22']]},
+  {id:'sensor',icon:'\uD83C\uDF21',name:'온습도',desc:'AHT20 온습도 센서는 I2C 통신으로 온도와 습도를 정밀하게 측정합니다.',circuit:'ESP32         AHT20\nGPIO21 (SDA) --- SDA\nGPIO22 (SCL) --- SCL\n3.3V         --- VCC\nGND          --- GND',tip:'I2C 주소 0x38. OLED와 같은 I2C 버스 공유 가능 (주소가 다름).',pins:[['센서','AHT20'],['I2C 주소','0x38'],['SDA','GPIO21'],['SCL','GPIO22']]},
+  {id:'lora',icon:'\uD83D\uDCE1',name:'LoRa',desc:'LoRa는 장거리(1~10km) 무선 통신 모듈입니다.',circuit:'ESP32         LoRa Module\nGPIO17 (TX) --- RX\nGPIO16 (RX) --- TX\nGPIO15      --- M0\nGPIO4       --- M1',tip:'M0=LOW, M1=LOW: 일반 모드. M0=HIGH, M1=HIGH: 설정 모드.',pins:[['UART TX','GPIO17'],['UART RX','GPIO16'],['M0','GPIO15'],['M1','GPIO4']]},
+  {id:'neopixel',icon:'\uD83C\uDF08',name:'NeoPixel',desc:'NeoPixel(WS2812B)은 RGB LED 스트립입니다. 하나의 GPIO 핀으로 여러 개의 LED를 개별 제어할 수 있습니다.',circuit:'ESP32         NeoPixel Strip\nGPIO xx  --- DIN\n5V       --- VCC\nGND      --- GND',tip:'데이터 신호선에 330Ω 저항, 전원에 1000µF 컨덴서 권장.',pins:[['DATA','확장 GPIO'],['프로토콜','WS2812B'],['전원','5V']]},
+  {id:'spi',icon:'\uD83D\uDD0C',name:'SPI',desc:'SPI는 고속 동기 시리얼 통신입니다. MOSI, MISO, CLK, CS 4개 선을 사용합니다.',circuit:'ESP32         SPI Device\nGPIO23 (MOSI) --- MOSI\nGPIO19 (MISO) --- MISO\nGPIO18 (CLK)  --- CLK\nGPIO5  (CS)   --- CS',tip:'I2C보다 빠르지만 핀이 더 많이 필요합니다.',pins:[['MOSI','GPIO23'],['MISO','GPIO19'],['CLK','GPIO18'],['CS','GPIO5']]},
+  {id:'power',icon:'⚡',name:'전원',desc:'ESP32 DevKitC는 USB(5V)로 전원을 공급받으며, 내부 3.3V 레귤레이터로 변환합니다.',circuit:'USB 5V --- AMS1117 --- 3.3V\n                       │\n                    ESP32 Core\n                       │\n                      GND',tip:'GPIO 출력 전압은 3.3V입니다. 5V 장치 연결 시 레벨 변환이 필요합니다.',pins:[['USB 입력','5V'],['MCU 동작 전압','3.3V'],['레귤레이터','AMS1117']]},
+];
+
+function initHW(){
+  const g=document.getElementById('hwGridItems');
+  g.innerHTML=hwData.map(h=>`<div class="hw-card" onclick="showHWDetail('${h.id}')"><div class="emoji">${h.icon}</div><div class="label">${h.name}</div></div>`).join('');
+}
+function showHWDetail(id){
+  const h=hwData.find(x=>x.id===id);if(!h)return;
+  document.getElementById('hwGrid').style.display='none';
+  const d=document.getElementById('hwDetail');d.className='hw-detail active';
+  let pinsHtml=h.pins?'<table class="pin-table">'+h.pins.map(p=>`<tr><td>${p[0]}</td><td>${p[1]}</td></tr>`).join('')+'</table>':'';
+  d.innerHTML=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;cursor:pointer" onclick="backToHWGrid()">
+    <span style="font-size:20px">&#x2B05;</span><span style="font-size:16px;font-weight:700">${h.icon} ${h.name}</span></div>
+    <div class="scard"><div class="scard-header"><span class="hi">&#x2753;</span> 이게 뭐야?</div><div style="font-size:14px;line-height:1.6">${h.desc}</div></div>
+    ${h.circuit?`<div class="scard"><div class="scard-header"><span class="hi">&#x1F50C;</span> 회로 연결</div><div class="circuit-block">${h.circuit}</div></div>`:''}
+    ${h.tip?`<div class="tip-box">&#x1F4A1; ${h.tip}</div>`:''}
+    ${pinsHtml?`<div class="scard"><div class="scard-header"><span class="hi">&#x1F4CC;</span> 핀 정보</div>${pinsHtml}</div>`:''}`;
+}
+function backToHWGrid(){document.getElementById('hwGrid').style.display='block';document.getElementById('hwDetail').className='hw-detail';}
+
+// ═══ SW Tab ═══
+const lessons=[
+  {title:'C언어 기초',sub:'변수, 타입, printf',icon:'✅',stars:'★★★★★',locked:false,content:"C언어는 ESP32 프로그래밍의 기본 언어입니다.\n\n■ 변수 — 데이터를 저장하는 상자\n  int count = 0;        // 정수 (숫자)\n  float temp = 25.3;    // 소수점 숫자\n  char name[] = \"Hi\";   // 문자열\n\n■ 타입 — 변수의 종류\n  int    → 정수\n  float  → 소수\n  bool   → 참/거짓\n  void   → 반환값 없음\n\n■ 함수 — 코드 묶음\n  void setup() { }   // 시작할 때 한 번 실행\n  void loop() { }    // 계속 반복 실행"},
+  {title:'GPIO 제어',sub:'LED 켜고 끄기',icon:'✅',stars:'★★★☆☆',locked:false,content:"GPIO(General Purpose Input/Output)는 ESP32의 핀을 제어하는 방법입니다.\n\n■ 핀 모드 설정\n  pinMode(25, OUTPUT);\n\n■ 출력 (LED 켜기/끄기)\n  digitalWrite(25, HIGH);  // LED 켜짐!\n  digitalWrite(25, LOW);   // LED 꺼짐!\n\n■ 이 보드의 LED 핀\n  빨강 = GPIO 25\n  노랑 = GPIO 26\n  파랑 = GPIO 27\n\n■ Active LOW\n  이 보드는 LOW → ON, HIGH → OFF"},
+  {title:'반복과 조건',sub:'for, while, if',icon:'⏳',stars:'★★☆☆☆',locked:false,content:"프로그램의 흐름을 제어하는 방법입니다.\n\n■ if문 — 조건에 따라 실행\n  if (temperature > 30) {\n    printf(\"더워요!\\n\");\n  }\n\n■ for문 — 정해진 횟수만큼 반복\n  for (int i = 0; i < 5; i++) {\n    digitalWrite(25, HIGH);\n    delay(500);\n    digitalWrite(25, LOW);\n    delay(500);\n  }\n\n■ delay() — 시간 대기\n  delay(1000);  // 1초"},
+  {title:'함수',sub:'코드 분리와 재사용',icon:'🔒',stars:'',locked:true,content:''},
+  {title:'I2C 통신',sub:'센서, 디스플레이',icon:'🔒',stars:'',locked:true,content:''},
+  {title:'PWM과 타이머',sub:'부저 멜로디, 페이드',icon:'🔒',stars:'',locked:true,content:''},
+];
+let expandedLesson=-1;
+function initSW(){
+  renderLessons();initCodeViewer();
+}
+function renderLessons(){
+  const el=document.getElementById('lessonList');
+  el.innerHTML=lessons.map((l,i)=>{
+    const exp=expandedLesson===i;
+    return `<div class="lesson-item${exp?' expanded':''}">
+      <div class="lesson-header" onclick="${l.locked?'':(`toggleLesson(${i})`)}">
+        <div class="lesson-icon">${l.icon}</div>
+        <div class="lesson-info"><div class="lesson-title" style="color:${l.locked?'var(--text2)':'var(--text)'}">${l.title}</div><div class="lesson-sub">${l.sub}</div></div>
+        ${l.stars?`<span class="lesson-stars">${l.stars}</span>`:''}
+        <span style="font-size:14px;color:var(--text2)">${l.locked?'&#x1F512;':exp?'&#x25B2;':'&#x25BC;'}</span>
+      </div>
+      ${exp&&!l.locked?`<div class="lesson-content">${l.content}</div>`:''}
+    </div>`;
+  }).join('');
+}
+function toggleLesson(i){expandedLesson=expandedLesson===i?-1:i;renderLessons();}
+
+const codeLines=[
+  {code:'#include <stdio.h>',type:'preprocessor',explain:'#include는 다른 파일의 코드를 가져오는 명령입니다.'},
+  {code:'#include "driver/gpio.h"',type:'preprocessor',explain:'ESP-IDF의 GPIO 드라이버 헤더입니다.'},
+  {code:'',type:'empty',explain:''},
+  {code:'#define LED_PIN 25',type:'define',explain:'LED_PIN을 25로 정의합니다. 코드에서 LED_PIN을 쓸 때마다 25로 바뀝니다.'},
+  {code:'',type:'empty',explain:''},
+  {code:'void app_main(void) {',type:'function',explain:'ESP32 프로그램의 시작점입니다.'},
+  {code:'    // GPIO 초기화',type:'comment',explain:'// 뒤의 내용은 주석입니다. 사람이 읽기 위한 설명입니다.'},
+  {code:'    gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);',type:'call',explain:'GPIO25번 핀을 출력 모드로 설정합니다.'},
+  {code:'',type:'empty',explain:''},
+  {code:'    while (1) {',type:'loop',explain:'무한 반복문입니다.'},
+  {code:'        gpio_set_level(LED_PIN, 1);',type:'call',explain:'LED_PIN을 HIGH(1)로 설정합니다. LED가 켜집니다.'},
+  {code:'        vTaskDelay(500 / portTICK_PERIOD_MS);',type:'call',explain:'500ms(0.5초) 동안 대기합니다.'},
+  {code:'        gpio_set_level(LED_PIN, 0);',type:'call',explain:'LED_PIN을 LOW(0)로 설정합니다. LED가 꺼집니다.'},
+  {code:'        vTaskDelay(500 / portTICK_PERIOD_MS);',type:'call',explain:'다시 0.5초 대기. LED가 1초 주기로 깜빡입니다.'},
+  {code:'    }',type:'bracket',explain:'while 반복문의 끝입니다.'},
+  {code:'}',type:'bracket',explain:'app_main 함수의 끝입니다.'},
+];
+let expandedCodeLine=-1;
+function initCodeViewer(){
+  const el=document.getElementById('codeViewer');
+  const colors={preprocessor:'#FF7B72',define:'#FF7B72',comment:'#8B949E',function:'#D2A8FF',loop:'#FF7B72',call:'#FFA657',bracket:'#E6EDF3',empty:''};
+  el.innerHTML='<div style="background:var(--codeBg);border-radius:8px;padding:14px;">'+
+    codeLines.map((l,i)=>{
+      if(!l.code)return '<div style="height:8px"></div>';
+      return `<div class="code-line${expandedCodeLine===i?' active':''}" onclick="toggleCodeLine(${i})" style="font-family:'Courier New',monospace;font-size:12px;color:${colors[l.type]||'#E6EDF3'};line-height:1.8">${l.code.replace(/</g,'&lt;')}</div>
+        ${expandedCodeLine===i&&l.explain?`<div class="code-explain">${l.explain}</div>`:''}`;
+    }).join('')+'</div>';
+}
+function toggleCodeLine(i){expandedCodeLine=expandedCodeLine===i?-1:i;initCodeViewer();}
+function quiz(el,correct){toast(correct?'정답! HIGH(1)를 보내면 LED가 켜집니다.':'틀렸어요. 다시 생각해보세요!');}
+
+// ═══ Utils ═══
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+function toast(msg){const t=document.createElement('div');t.style.cssText='position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:var(--surface);color:var(--text);padding:10px 20px;border-radius:8px;font-size:13px;z-index:200;border:1px solid var(--border);max-width:90%;text-align:center';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2500);}
+
+async function checkHealth(){
+  try{const r=await fetch(getApiBase()+'/api/v1/health');const d=await r.json();
+    document.getElementById('serverHealthStatus').textContent=d.status==='ok'?'OK':'ERROR';
+    document.getElementById('serverHealthStatus').style.color=d.status==='ok'?'var(--success)':'var(--error)';
+  }catch(e){document.getElementById('serverHealthStatus').textContent='연결 실패';document.getElementById('serverHealthStatus').style.color='var(--error)';}
+}
+
+// ═══ Init ═══
+window.addEventListener('load',()=>{
+  document.getElementById('webBleSupport').textContent=navigator.bluetooth?'지원됨':'미지원';
+  document.getElementById('webBleSupport').style.color=navigator.bluetooth?'var(--success)':'var(--error)';
+  const saved=localStorage.getItem('uttec_server');
+  document.getElementById('serverUrl').value=saved||location.origin;
+  checkHealth();renderHistory();initHW();initSW();
+});
+</script>
+<style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}</style>
+</body>
+</html>

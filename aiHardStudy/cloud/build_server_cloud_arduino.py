@@ -104,13 +104,17 @@ class JobStatus(BaseModel):
     elapsed: float = 0
 
 
-def generate_code_with_claude(prompt: str, work_dir: Path) -> str:
-    """Claude CLI로 Arduino 코드 생성 (Linux) — stdin 파이프 방식"""
+def prepare_prompt(prompt: str, work_dir: Path) -> str:
+    """시스템 프롬프트 + 사용자 프롬프트 합성"""
     full_prompt = f"{SYSTEM_PROMPT}\n\nUser request: {prompt}"
-
-    claude_cmd = shutil.which("claude") or "claude"
     prompt_file = work_dir / "_prompt.txt"
     prompt_file.write_text(full_prompt, encoding="utf-8")
+    return full_prompt
+
+
+def call_claude(full_prompt: str, work_dir: Path) -> str:
+    """Claude CLI 호출 → 코드 생성"""
+    claude_cmd = shutil.which("claude") or "claude"
 
     try:
         result = subprocess.run(
@@ -210,13 +214,21 @@ async def process_job(job_id: str, prompt: str, retry_on_fail: bool, max_retries
         while attempts < max_retries:
             attempts += 1
             try:
-                # ── Step 1: Claude 코드 생성 ──
-                job["message"] = f"① AI 코드 생성 중 (시도 {attempts}/{max_retries})..."
+                # ── Step 1: ��스템 프롬프트 합성 ──
+                job["message"] = f"① 시스템 프롬프트 합성 중..."
                 job["progress"] = 10 + (attempts - 1) * 5
 
-                t1 = time.time()
-                code = await asyncio.to_thread(generate_code_with_claude, prompt, job_dir)
-                timing[f"2_claude_gen(try{attempts})"] = round(time.time() - t1, 1)
+                t1a = time.time()
+                full_prompt = await asyncio.to_thread(prepare_prompt, prompt, job_dir)
+                timing[f"2a_prompt(try{attempts})"] = round(time.time() - t1a, 2)
+
+                # ── Step 2: Claude AI 코드 생성 ──
+                job["message"] = f"② AI 코드 생성 중 (시도 {attempts}/{max_retries})..."
+                job["progress"] = 15 + (attempts - 1) * 5
+
+                t1b = time.time()
+                code = await asyncio.to_thread(call_claude, full_prompt, job_dir)
+                timing[f"2b_claude(try{attempts})"] = round(time.time() - t1b, 1)
 
                 (job_dir / "generated_code.ino").write_text(code, encoding="utf-8")
                 job["generated_code"] = code
@@ -344,6 +356,60 @@ async def download(job_id: str):
 async def get_code(job_id: str):
     if job_id not in jobs: raise HTTPException(404, "Job not found")
     return {"code": jobs[job_id].get("generated_code", ""), "status": jobs[job_id]["status"]}
+
+
+# ─── 코딩 질문 API ───
+
+CHAT_PROMPT = """You are a friendly coding tutor for beginners learning ESP32/Arduino programming.
+The student is using an ESP32-WROOM-32 board with: LED (GPIO25,26,27), Buzzer (GPIO14,33), OLED SSD1306 (I2C), AHT20 sensor, Switch (GPIO32).
+Framework: Arduino (setup/loop), NimBLE for BLE.
+
+Rules:
+1. Answer in Korean
+2. Use simple, beginner-friendly explanations
+3. Include code examples when relevant (Arduino C/C++)
+4. Keep answers concise but educational
+5. If the question is about this specific board, reference the actual pin numbers and components
+"""
+
+
+class ChatRequest(BaseModel):
+    question: str
+
+
+def call_claude_chat(question: str) -> str:
+    """Claude CLI로 코딩 질문 답변"""
+    full_prompt = f"{CHAT_PROMPT}\n\nStudent question: {question}"
+    claude_cmd = shutil.which("claude") or "claude"
+
+    try:
+        result = subprocess.run(
+            [claude_cmd, "-p", "-", "--output-format", "text",
+             "--model", "claude-sonnet-4-6", "--tools", ""],
+            input=full_prompt,
+            capture_output=True, text=True, timeout=120,
+        )
+    except Exception as e:
+        raise RuntimeError(f"Claude error: {e}")
+
+    answer = result.stdout.strip()
+    if not answer:
+        raise RuntimeError(f"Empty response. stderr: {result.stderr[:300]}")
+    return answer
+
+
+@app.post("/api/v1/chat")
+async def chat(req: ChatRequest):
+    if not req.question.strip():
+        raise HTTPException(400, "Question is empty")
+    try:
+        t0 = time.time()
+        answer = await asyncio.to_thread(call_claude_chat, req.question.strip())
+        elapsed = round(time.time() - t0, 1)
+        return {"answer": answer, "elapsed": elapsed}
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
 
 if __name__ == "__main__":
     import uvicorn
