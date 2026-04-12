@@ -46,9 +46,11 @@ char bleName[32] = "UTTEC-OTA";
 #define OTA_DATA_UUID    "0000fe02-0000-1000-8000-00805f9b34fb"
 #define OTA_STATUS_UUID  "0000fe03-0000-1000-8000-00805f9b34fb"
 #define CMD_UUID         "0000fe04-0000-1000-8000-00805f9b34fb"
+#define SENSOR_UUID      "0000fe05-0000-1000-8000-00805f9b34fb"
 
 // ─── Globals ───
 static NimBLECharacteristic* statusChar = nullptr;
+static NimBLECharacteristic* sensorChar = nullptr;
 static bool deviceConnected = false;
 static bool otaInProgress = false;
 static uint32_t otaTotalSize = 0;
@@ -144,6 +146,123 @@ extern SSD1306 oled;
 // ─── Note frequencies ───
 static const int NOTES[] = {262, 294, 330, 349, 392, 440, 494, 523}; // 도레미파솔라시도
 
+// ─── AHT20 Temperature/Humidity Sensor (I2C addr 0x38) ───
+#define AHT20_ADDR 0x38
+static bool _aht20_inited = false;
+
+void aht20_init() {
+  // 소프트 리셋
+  Wire.beginTransmission(AHT20_ADDR);
+  Wire.write(0xBA);
+  Wire.endTransmission();
+  delay(20);
+
+  // 초기화 명령 (calibration)
+  Wire.beginTransmission(AHT20_ADDR);
+  Wire.write(0xBE);
+  Wire.write(0x08);
+  Wire.write(0x00);
+  Wire.endTransmission();
+  delay(10);
+
+  _aht20_inited = true;
+  Serial.println("AHT20 initialized");
+}
+
+// 에러 코드: 0=성공, 1=I2C없음, 2=응답없음, 3=busy, 4=init실패
+int aht20_err = 0;
+
+bool aht20_read(float &temp, float &humi) {
+  if (!_aht20_inited) aht20_init();
+
+  // I2C 스캔 — 센서가 있는지 확인
+  Wire.beginTransmission(AHT20_ADDR);
+  uint8_t ack = Wire.endTransmission();
+  if (ack != 0) {
+    aht20_err = 1; // I2C 장치 없음
+    Serial.printf("AHT20: I2C NACK (err=%d)\n", ack);
+    return false;
+  }
+
+  // 측정 시작 명령
+  Wire.beginTransmission(AHT20_ADDR);
+  Wire.write(0xAC);
+  Wire.write(0x33);
+  Wire.write(0x00);
+  Wire.endTransmission();
+
+  delay(80); // 측정 대기
+
+  uint8_t n = Wire.requestFrom((uint8_t)AHT20_ADDR, (uint8_t)7);
+  if (n < 7) {
+    aht20_err = 2; // 응답 바이트 부족
+    Serial.printf("AHT20: only %d bytes\n", n);
+    return false;
+  }
+
+  uint8_t data[7];
+  for (int i = 0; i < 7; i++) data[i] = Wire.read();
+  Serial.printf("AHT20 raw: %02X %02X %02X %02X %02X %02X %02X\n",
+    data[0],data[1],data[2],data[3],data[4],data[5],data[6]);
+
+  // busy 재시도
+  if (data[0] & 0x80) {
+    delay(100);
+    Wire.requestFrom((uint8_t)AHT20_ADDR, (uint8_t)7);
+    for (int i = 0; i < 7; i++) data[i] = Wire.read();
+    if (data[0] & 0x80) {
+      aht20_err = 3;
+      return false;
+    }
+  }
+
+  // calibration bit 체크 (bit3 of status)
+  if (!(data[0] & 0x08)) {
+    // 캘리브레이션 안 됨 — 재초기화
+    _aht20_inited = false;
+    aht20_init();
+    aht20_err = 4;
+    return false;
+  }
+
+  uint32_t rawHumi = ((uint32_t)data[1] << 12) | ((uint32_t)data[2] << 4) | (data[3] >> 4);
+  uint32_t rawTemp = (((uint32_t)(data[3] & 0x0F)) << 16) | ((uint32_t)data[4] << 8) | data[5];
+
+  humi = (float)rawHumi / 1048576.0f * 100.0f;
+  temp = (float)rawTemp / 1048576.0f * 200.0f - 50.0f;
+  aht20_err = 0;
+  return true;
+}
+
+// ─── Hardware Init (항상 모든 핀 초기화) ───
+void initHardware() {
+  // LED (active LOW: LOW=ON, HIGH=OFF)
+  pinMode(LED_RED, OUTPUT);
+  pinMode(LED_YELLOW, OUTPUT);
+  pinMode(LED_BLUE, OUTPUT);
+  digitalWrite(LED_RED, HIGH);
+  digitalWrite(LED_YELLOW, HIGH);
+  digitalWrite(LED_BLUE, HIGH);
+
+  // Buzzer OFF (active LOW)
+  pinMode(BUZZER, OUTPUT);
+  digitalWrite(BUZZER, HIGH);
+
+  // Switch (INPUT_PULLUP, active LOW: 누르면 LOW)
+  pinMode(32, INPUT_PULLUP);
+
+  // I2C + OLED
+  Wire.begin(I2C_SDA, I2C_SCL);
+  oled.init();
+  oled.clear();
+  oled.drawString(0, 0, "UTTEC Firmware");
+  oled.drawString(0, 16, "BLE OTA Ready!");
+  oled.drawString(0, 32, "Waiting...");
+  oled.display();
+
+  Serial.println("Hardware initialized");
+}
+
 // ─── Command Callback (패드 제어) ───
 class CmdCallbacks : public NimBLECharacteristicCallbacks {
   void onWrite(NimBLECharacteristic* pChar, NimBLEConnInfo& connInfo) override {
@@ -153,16 +272,16 @@ class CmdCallbacks : public NimBLECharacteristicCallbacks {
     cmd.trim();
     Serial.printf("CMD: %s\n", cmd.c_str());
 
-    if (cmd == "LED_RED_ON")    { digitalWrite(LED_RED, HIGH); }
-    else if (cmd == "LED_RED_OFF")   { digitalWrite(LED_RED, LOW); }
-    else if (cmd == "LED_YELLOW_ON") { digitalWrite(LED_YELLOW, HIGH); }
-    else if (cmd == "LED_YELLOW_OFF"){ digitalWrite(LED_YELLOW, LOW); }
-    else if (cmd == "LED_BLUE_ON")   { digitalWrite(LED_BLUE, HIGH); }
-    else if (cmd == "LED_BLUE_OFF")  { digitalWrite(LED_BLUE, LOW); }
+    if (cmd == "LED_RED_ON")    { digitalWrite(LED_RED, LOW); }
+    else if (cmd == "LED_RED_OFF")   { digitalWrite(LED_RED, HIGH); }
+    else if (cmd == "LED_YELLOW_ON") { digitalWrite(LED_YELLOW, LOW); }
+    else if (cmd == "LED_YELLOW_OFF"){ digitalWrite(LED_YELLOW, HIGH); }
+    else if (cmd == "LED_BLUE_ON")   { digitalWrite(LED_BLUE, LOW); }
+    else if (cmd == "LED_BLUE_OFF")  { digitalWrite(LED_BLUE, HIGH); }
     else if (cmd == "LED_ALL_OFF") {
-      digitalWrite(LED_RED, LOW);
-      digitalWrite(LED_YELLOW, LOW);
-      digitalWrite(LED_BLUE, LOW);
+      digitalWrite(LED_RED, HIGH);
+      digitalWrite(LED_YELLOW, HIGH);
+      digitalWrite(LED_BLUE, HIGH);
     }
     else if (cmd == "BEEP") {
       digitalWrite(BUZZER, LOW); delay(100); digitalWrite(BUZZER, HIGH);
@@ -180,8 +299,24 @@ class CmdCallbacks : public NimBLECharacteristicCallbacks {
       oled.display();
     }
     else if (cmd == "TEMP") {
-      // TODO: AHT20 읽기
-      Serial.println("TEMP: not implemented");
+      float temp, humi;
+      if (aht20_read(temp, humi)) {
+        char buf1[32], buf2[32];
+        snprintf(buf1, sizeof(buf1), "Temp: %.1f C", temp);
+        snprintf(buf2, sizeof(buf2), "Humi: %.1f %%", humi);
+        oled.clear();
+        oled.drawString(0, 0, "AHT20 Sensor");
+        oled.drawString(0, 20, buf1);
+        oled.drawString(0, 40, buf2);
+        oled.display();
+        Serial.printf("TEMP: %.1fC, HUMI: %.1f%%\n", temp, humi);
+      } else {
+        oled.clear();
+        oled.drawString(0, 0, "AHT20 Error");
+        oled.drawString(0, 20, "Check sensor!");
+        oled.display();
+        Serial.println("TEMP: AHT20 read failed");
+      }
     }
     else if (cmd.startsWith("SETNAME:")) {
       // BLE 이름 변경 + NVS 영구 저장
@@ -264,6 +399,10 @@ void initBLE() {
     CMD_UUID, NIMBLE_PROPERTY::WRITE);
   cmdChar->setCallbacks(new CmdCallbacks());
 
+  // SENSOR — 센서/스위치 데이터 (Notify + Read)
+  sensorChar = pService->createCharacteristic(
+    SENSOR_UUID, NIMBLE_PROPERTY::NOTIFY | NIMBLE_PROPERTY::READ);
+
   pService->start();
 
   // Advertising — 디바이스 이름 포함
@@ -281,6 +420,25 @@ void initBLE() {
 // ─── OLED ───
 SSD1306 oled(I2C_SDA, I2C_SCL);
 
+// ─── Switch Monitor Task ───
+// FE05 Notify 프로토콜: [0]=타입(0x01=스위치), [1]=값(0=OFF,1=ON)
+void switchMonitorTask(void* param) {
+  int lastState = HIGH; // INPUT_PULLUP: 기본 HIGH
+  while (1) {
+    int state = digitalRead(32);
+    if (state != lastState) {
+      lastState = state;
+      if (deviceConnected && sensorChar) {
+        uint8_t data[2] = {0x01, (uint8_t)(state == LOW ? 1 : 0)};
+        sensorChar->setValue(data, 2);
+        sensorChar->notify();
+        Serial.printf("SWITCH: %s\n", state == LOW ? "PRESSED" : "RELEASED");
+      }
+    }
+    delay(50); // 50ms 디바운스
+  }
+}
+
 // ─── LED Task ───
 void ledTask(void* param) {
   while (1) {
@@ -296,32 +454,17 @@ void setup() {
   Serial.begin(115200);
   Serial.println("UTTEC Firmware — Arduino BLE OTA");
 
-  // LED
-  pinMode(LED_RED, OUTPUT);
-  pinMode(LED_YELLOW, OUTPUT);
-  pinMode(LED_BLUE, OUTPUT);
-  digitalWrite(LED_RED, LOW);
-  digitalWrite(LED_YELLOW, LOW);
-  digitalWrite(LED_BLUE, LOW);
-
-  // Buzzer OFF
-  pinMode(BUZZER, OUTPUT);
-  digitalWrite(BUZZER, HIGH);  // Active LOW
-
-  // OLED
-  Wire.begin(I2C_SDA, I2C_SCL);
-  oled.init();
-  oled.clear();
-  oled.drawString(0, 0, "UTTEC Firmware");
-  oled.drawString(0, 16, "BLE OTA Ready!");
-  oled.drawString(0, 32, "Waiting...");
-  oled.display();
+  // 모든 핀 + OLED 초기화
+  initHardware();
 
   // BLE OTA
   initBLE();
 
   // LED blink task
   xTaskCreate(ledTask, "led", 2048, NULL, 3, NULL);
+
+  // Switch monitor task
+  xTaskCreate(switchMonitorTask, "sw", 2048, NULL, 2, NULL);
 
   Serial.println("Setup complete. Waiting for BLE connection...");
 }

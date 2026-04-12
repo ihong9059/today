@@ -1,14 +1,15 @@
 """
-UTTEC Firmware — Arduino Build Server (Windows)
-프롬프트 → Claude 코드 생성 → Arduino-CLI 빌드 → .bin 다운로드 + BLE OTA
+UTTEC Firmware — Cloud Arduino Build Server (Linux/DO)
+프롬프트 → Claude 코드 생성 → Arduino-CLI 빌드 → .bin 다운로드
 
-API: 동일 (build_server_local.py와 호환)
+API: build_server_arduino.py와 호환
 """
 
 import asyncio
 import hashlib
 import os
 import platform
+import re
 import shutil
 import subprocess
 import time
@@ -21,25 +22,24 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-app = FastAPI(title="UTTEC Firmware Arduino Build Server", version="2.0")
+app = FastAPI(title="UTTEC Firmware Cloud Arduino Build Server", version="2.0")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], allow_methods=["*"], allow_headers=["*"],
 )
 
-# ─── 경로 설정 ───
-ACLI = Path.home() / "bin" / "arduino-cli.exe"
+# ─── 경로 설정 (Linux) ───
+ACLI = Path("/usr/local/bin/arduino-cli")
 FQBN = "esp32:esp32:esp32"
-TEMPLATE_DIR = Path(r"C:\todo\today\aiHardStudy\firmware\ble_ota_arduino")
-JOBS_DIR = Path(r"C:\todo\today\aiHardStudy\cloud\jobs_arduino")
+TEMPLATE_DIR = Path.home() / "vibe-firmware" / "arduino" / "ble_ota_arduino"
+JOBS_DIR = Path.home() / "vibe-firmware" / "jobs_arduino"
 JOBS_DIR.mkdir(parents=True, exist_ok=True)
-SHARED_BUILD_DIR = Path(r"C:\todo\today\aiHardStudy\cloud\ble_ota_arduino")
-BLEAK_PYTHON = r"C:\Users\lenovo\AppData\Local\Programs\Python\Python313\python.exe"
-OTA_CLIENT = Path(r"C:\todo\today\aiHardStudy\firmware\ble_ota\ota_test_client.py")
+# 폴더명 = .ino 파일명과 일치해야 함
+SHARED_BUILD_DIR = Path.home() / "vibe-firmware" / "ble_ota_arduino"
 
-# 앱 정적 파일
-APP_DIR = Path(r"C:\todo\today\aiHardStudy\smartphone\app")
+# 웹 앱 정적 파일
+APP_DIR = Path.home() / "vibe-firmware" / "app"
 if APP_DIR.exists():
     app.mount("/app", StaticFiles(directory=str(APP_DIR), html=True), name="app")
 
@@ -84,16 +84,8 @@ IMPORTANT RULES:
 8. The 'oled' object (SSD1306 class) is already declared globally
 9. After initBLE() call, the loop() should just have delay(10000)
 10. Pin definitions are already available: LED_RED=25, LED_YELLOW=26, LED_BLUE=27, BUZZER=14
-11. VERY IMPORTANT: Add Korean comments explaining every important line for beginners.
-    Use this format: // [주제] 쉬운 설명
-    Examples:
-      // [LED 켜기] GPIO25에 HIGH(3.3V)를 보내면 빨간 LED가 켜집니다
-      // [대기] 500밀리초(0.5초) 동안 기다립니다. 이 시간이 깜빡이는 속도를 결정해요
-      // [반복 작업] 이 함수는 별도 스레드에서 무한 반복됩니다
-      // [핀 설정] LED 핀을 출력(OUTPUT) 모드로 설정합니다. 전압을 내보내려면 출력이어야 해요
-      // [OLED 표시] 화면의 (0,0) 위치에 텍스트를 그립니다
-      // [BLE 시작] 블루투스 무선 통신을 시작합니다. 다음에도 무선으로 프로그램을 보낼 수 있어요
-    Every function and every important line MUST have a Korean comment above it.
+11. For melody/sound on GPIO33, ONLY use tone(33, freq, duration) and noTone(33). Do NOT use ledcSetup/ledcAttach/ledcWriteTone or any LEDC API. tone() works on ESP32 Arduino.
+12. Add brief Korean comments: // [주제] 설명 (keep comments short, 1 line each)
 """
 
 
@@ -113,37 +105,29 @@ class JobStatus(BaseModel):
 
 
 def generate_code_with_claude(prompt: str, work_dir: Path) -> str:
-    """Claude CLI로 Arduino 코드 생성"""
-    import json as _json
+    """Claude CLI로 Arduino 코드 생성 (Linux) — stdin 파이프 방식"""
     full_prompt = f"{SYSTEM_PROMPT}\n\nUser request: {prompt}"
 
-    claude_cmd = shutil.which("claude") or "claude.cmd"
+    claude_cmd = shutil.which("claude") or "claude"
     prompt_file = work_dir / "_prompt.txt"
     prompt_file.write_text(full_prompt, encoding="utf-8")
 
     try:
-        cmd_str = f'type "{prompt_file}" | claude -p - --output-format stream-json --verbose'
         result = subprocess.run(
-            cmd_str, capture_output=True, text=True, timeout=120,
-            cwd=str(work_dir), shell=True,
+            [claude_cmd, "-p", "-", "--output-format", "text",
+             "--model", "claude-sonnet-4-6", "--tools", ""],
+            input=full_prompt,
+            capture_output=True, text=True, timeout=180,
+            cwd=str(work_dir),
         )
     except Exception as e:
         raise RuntimeError(f"Claude error: {e}")
 
-    code_parts = []
-    for line in result.stdout.splitlines():
-        line = line.strip()
-        if not line: continue
-        try:
-            obj = _json.loads(line)
-            if obj.get("type") == "assistant":
-                for block in obj.get("message", {}).get("content", []):
-                    if block.get("type") == "text":
-                        code_parts.append(block["text"])
-        except _json.JSONDecodeError:
-            continue
+    code = result.stdout.strip()
+    if not code:
+        raise RuntimeError(f"Claude returned empty. stderr: {result.stderr[:300]}")
 
-    code = "".join(code_parts).strip()
+    # 마크다운 코드블록 제거
     if "```c" in code: code = code.split("```c", 1)[1]
     elif "```cpp" in code: code = code.split("```cpp", 1)[1]
     elif "```" in code: code = code.split("```", 1)[1]
@@ -161,21 +145,18 @@ def _init_shared_build():
     if SHARED_BUILD_DIR.exists() and (SHARED_BUILD_DIR / "ble_ota_arduino.ino").exists():
         return
     SHARED_BUILD_DIR.mkdir(parents=True, exist_ok=True)
-    # 템플릿 복사
     for f in TEMPLATE_DIR.iterdir():
         shutil.copy2(f, SHARED_BUILD_DIR / f.name)
 
 
 def build_firmware(work_dir: Path) -> Path:
-    """Arduino-CLI 빌드"""
+    """Arduino-CLI 빌드 (Linux)"""
     out_dir = work_dir / "output"
     out_dir.mkdir(exist_ok=True)
-    # 이전 .bin 삭제하여 새 빌드 결과 확인
     for old_bin in out_dir.glob("*.bin"):
         old_bin.unlink()
-    build_cache = work_dir / "build"
     # 캐시의 .ino.cpp 삭제하여 재컴파일 강제
-    for cached in (work_dir).rglob("*.ino.cpp"):
+    for cached in work_dir.rglob("*.ino.cpp"):
         cached.unlink(missing_ok=True)
     result = subprocess.run(
         [str(ACLI), "compile", "--fqbn", FQBN,
@@ -193,7 +174,6 @@ def build_firmware(work_dir: Path) -> Path:
     if result.returncode != 0:
         raise RuntimeError(f"Build failed:\n{result.stderr[-500:]}")
 
-    # output 디렉토리에서 .bin 찾기
     bin_path = out_dir / "ble_ota_arduino.ino.bin"
     if not bin_path.exists():
         for f in out_dir.glob("*.bin"):
@@ -212,13 +192,17 @@ async def process_job(job_id: str, prompt: str, retry_on_fail: bool, max_retries
     job["message"] = "AI가 코드를 생성하고 있어요..."
     job["progress"] = 10
     t_start = time.time()
+    timing = {}
+    job["timing"] = timing
 
     job_dir = JOBS_DIR / job_id
     job_dir.mkdir(exist_ok=True)
 
     try:
+        t0 = time.time()
         await asyncio.to_thread(_init_shared_build)
         work_dir = SHARED_BUILD_DIR
+        timing["1_init"] = round(time.time() - t0, 1)
 
         attempts = 0
         last_error = None
@@ -226,45 +210,46 @@ async def process_job(job_id: str, prompt: str, retry_on_fail: bool, max_retries
         while attempts < max_retries:
             attempts += 1
             try:
-                job["message"] = f"AI 코드 생성 중 (시도 {attempts}/{max_retries})..."
+                # ── Step 1: Claude 코드 생성 ──
+                job["message"] = f"① AI 코드 생성 중 (시도 {attempts}/{max_retries})..."
                 job["progress"] = 10 + (attempts - 1) * 5
 
+                t1 = time.time()
                 code = await asyncio.to_thread(generate_code_with_claude, prompt, job_dir)
+                timing[f"2_claude_gen(try{attempts})"] = round(time.time() - t1, 1)
+
                 (job_dir / "generated_code.ino").write_text(code, encoding="utf-8")
                 job["generated_code"] = code
 
-                # 베이스 코드에서 ledTask/setup/loop 부분을 Claude 코드로 교체
+                # ── Step 2: 코드 병합 ──
+                t2 = time.time()
                 base_ino = TEMPLATE_DIR / "ble_ota_arduino.ino"
                 base_code = base_ino.read_text(encoding="utf-8")
 
-                # "// ─── LED Task ───" 이후를 모두 제거 (BLE+OLED 선언까지만 유지)
                 marker = "// ─── LED Task ───"
                 if marker in base_code:
                     ble_base = base_code.split(marker)[0]
                 else:
                     ble_base = base_code.rsplit("void setup()", 1)[0]
 
-                # 사용자 코드 정제
                 user_code = code.strip()
-                # 코드 시작점(void/static/const/#) 이전의 쓰레기 텍스트 제거
-                import re
                 match = re.search(r'^(void |static |const |//|#)', user_code, re.MULTILINE)
                 if match and match.start() > 0:
                     user_code = user_code[match.start():]
-                # include 제거 (베이스에 이미 있음)
                 lines = user_code.split("\n")
                 clean_lines = [l for l in lines if not l.strip().startswith("#include")]
                 user_code = "\n".join(clean_lines)
 
-                # 합침
                 merged = ble_base + "\n" + marker + "\n" + user_code + "\n"
                 (work_dir / "ble_ota_arduino.ino").write_text(merged, encoding="utf-8")
+                timing["3_merge"] = round(time.time() - t2, 1)
 
-                # 빌드
+                # ── Step 3: Arduino 빌드 ──
                 job["status"] = "building"
-                job["message"] = f"펌웨어 빌드 중 (시도 {attempts}/{max_retries})..."
+                job["message"] = f"③ 펌웨어 빌드 중 (시도 {attempts}/{max_retries})..."
                 job["progress"] = 40 + (attempts - 1) * 10
 
+                t3 = time.time()
                 while _build_lock:
                     await asyncio.sleep(1)
                 _build_lock = True
@@ -272,35 +257,42 @@ async def process_job(job_id: str, prompt: str, retry_on_fail: bool, max_retries
                     bin_path = await asyncio.to_thread(build_firmware, work_dir)
                 finally:
                     _build_lock = False
+                timing[f"4_build(try{attempts})"] = round(time.time() - t3, 1)
 
-                # 성공
+                # ── Step 4: 결과 복사 ──
+                t4 = time.time()
                 job_bin = job_dir / "firmware.bin"
                 shutil.copy2(bin_path, job_bin)
                 fw_data = job_bin.read_bytes()
                 fw_sha256 = hashlib.sha256(fw_data).hexdigest()
+                timing["5_copy_hash"] = round(time.time() - t4, 1)
+
+                total = round(time.time() - t_start, 1)
+                timing["total"] = total
 
                 job["status"] = "success"
-                job["message"] = "빌드 성공!"
+                job["message"] = f"빌드 성공! (총 {total}초)"
                 job["progress"] = 100
                 job["firmware_size"] = len(fw_data)
                 job["firmware_sha256"] = fw_sha256
                 job["bin_path"] = str(job_bin)
-                job["elapsed"] = time.time() - t_start
+                job["elapsed"] = total
                 return
 
             except Exception as e:
                 last_error = f"{type(e).__name__}: {e}"
+                timing[f"error_try{attempts}"] = last_error[:100]
                 job["message"] = f"시도 {attempts} 실패: {last_error[:100]}"
                 if not retry_on_fail or attempts >= max_retries:
                     break
 
         job["status"] = "failed"
         job["message"] = f"빌드 실패 ({attempts}회): {last_error[:200]}"
-        job["elapsed"] = time.time() - t_start
+        job["elapsed"] = round(time.time() - t_start, 1)
     except Exception as e:
         job["status"] = "failed"
         job["message"] = f"오류: {str(e)[:200]}"
-        job["elapsed"] = time.time() - t_start
+        job["elapsed"] = round(time.time() - t_start, 1)
 
 
 @app.get("/health")
@@ -329,11 +321,12 @@ async def generate(req: GenerateRequest):
 async def get_status(job_id: str):
     if job_id not in jobs: raise HTTPException(404, "Job not found")
     job = jobs[job_id]
-    return JobStatus(
-        job_id=job["job_id"], status=job["status"], progress=job["progress"],
-        message=job["message"], firmware_size=job.get("firmware_size", 0),
-        firmware_sha256=job.get("firmware_sha256", ""), elapsed=job.get("elapsed", 0),
-    )
+    return {
+        "job_id": job["job_id"], "status": job["status"], "progress": job["progress"],
+        "message": job["message"], "firmware_size": job.get("firmware_size", 0),
+        "firmware_sha256": job.get("firmware_sha256", ""), "elapsed": job.get("elapsed", 0),
+        "timing": job.get("timing", {}),
+    }
 
 @app.get("/api/v1/download/{job_id}")
 async def download(job_id: str):
@@ -346,19 +339,6 @@ async def download(job_id: str):
         media_type="application/octet-stream",
         headers={"X-Firmware-Size": str(job["firmware_size"]),
                  "X-Firmware-SHA256": job["firmware_sha256"]})
-
-@app.post("/api/v1/ota/{job_id}")
-async def ota_send(job_id: str):
-    if job_id not in jobs: raise HTTPException(404, "Job not found")
-    job = jobs[job_id]
-    if job["status"] != "success": raise HTTPException(400, f"Not ready: {job['status']}")
-    bin_path = Path(job["bin_path"])
-    result = await asyncio.to_thread(subprocess.run,
-        [BLEAK_PYTHON, str(OTA_CLIENT), str(bin_path)],
-        capture_output=True, text=True, timeout=120)
-    if "SUCCESS" in result.stdout or "OTA 성공" in result.stdout:
-        return {"status": "ota_success", "output": result.stdout[-500:]}
-    return {"status": "ota_failed", "output": result.stdout[-500:] + result.stderr[-500:]}
 
 @app.get("/api/v1/code/{job_id}")
 async def get_code(job_id: str):
