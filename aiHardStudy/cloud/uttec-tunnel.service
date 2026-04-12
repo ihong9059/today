@@ -1,0 +1,12 @@
+[Unit]
+Description=UTTEC Cloudflare Tunnel
+After=network.target uttec-webui.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/cloudflared tunnel --url http://localhost:8094
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
