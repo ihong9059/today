@@ -1,0 +1,14 @@
+[Unit]
+Description=UTTEC Web UI Server (port 8094)
+After=network.target uttec-arduino.service
+
+[Service]
+Type=simple
+WorkingDirectory=/root/vibe-firmware
+ExecStart=/usr/bin/python3 /root/vibe-firmware/web_ui_server.py
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

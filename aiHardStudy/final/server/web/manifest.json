@@ -1,0 +1,22 @@
+{
+  "name": "UTTEC Firmware",
+  "short_name": "UTTEC",
+  "description": "UTTEC 바이브코딩 교육 플랫폼",
+  "start_url": "/firmware",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#0F172A",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/firmware/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/firmware/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

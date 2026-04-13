@@ -1,0 +1,15 @@
+[Unit]
+Description=UTTEC Arduino Build Server
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/vibe-firmware
+ExecStart=/usr/bin/python3 -m uvicorn build_server_cloud_arduino:app --host 0.0.0.0 --port 8092
+Restart=always
+RestartSec=5
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+
+[Install]
+WantedBy=multi-user.target
