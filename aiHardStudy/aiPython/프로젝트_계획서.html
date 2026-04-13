@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>aiPython - 프로젝트 계획서</title>
+<style>
+  :root {
+    --bg: #0F172A; --surface: #1E293B; --surface2: #334155; --border: #475569;
+    --text: #F1F5F9; --text2: #94A3B8; --text3: #64748B;
+    --blue: #3B82F6; --cyan: #06B6D4; --green: #10B981; --purple: #8B5CF6;
+    --orange: #F59E0B; --red: #EF4444; --pink: #EC4899; --yellow: #EAB308;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Pretendard',-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.7; font-size:15px; }
+  .container { max-width:1100px; margin:0 auto; padding:0 32px; }
+  .section { padding:60px 0; }
+  .divider { height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); }
+
+  /* Hero */
+  .hero { text-align:center; padding:80px 40px 60px; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 50%,rgba(16,185,129,0.2),transparent 50%),radial-gradient(ellipse at 70% 50%,rgba(6,182,212,0.2),transparent 50%); }
+  .hero>*{position:relative;z-index:1;}
+  .hero h1 { font-size:48px; font-weight:800; background:linear-gradient(135deg,var(--green),var(--cyan),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:12px; }
+  .hero p { color:var(--text2); font-size:18px; max-width:700px; margin:0 auto 24px; }
+  .hero-badges { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .hero-badge { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:6px 16px; font-size:13px; color:var(--text2); }
+
+  /* Section title */
+  .stitle { font-size:28px; font-weight:800; margin-bottom:8px; display:flex; align-items:center; gap:12px; }
+  .stitle .icon { font-size:32px; }
+  .ssub { color:var(--text2); margin-bottom:32px; }
+
+  /* Comparison */
+  .vs-grid { display:grid; grid-template-columns:1fr 60px 1fr; gap:0; margin:24px 0; align-items:stretch; }
+  .vs-box { border:2px solid var(--border); border-radius:16px; padding:24px; background:var(--surface); }
+  .vs-box.old { border-color:var(--orange); }
+  .vs-box.new { border-color:var(--green); }
+  .vs-box h3 { font-size:18px; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .vs-box ul { list-style:none; font-size:13px; color:var(--text2); }
+  .vs-box li { padding:6px 0; border-bottom:1px solid rgba(71,85,105,0.3); display:flex; align-items:center; gap:8px; }
+  .vs-box li::before { content:''; width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .vs-box.old li::before { background:var(--orange); }
+  .vs-box.new li::before { background:var(--green); }
+  .vs-mid { display:flex; align-items:center; justify-content:center; font-size:28px; color:var(--text3); }
+
+  /* Flow */
+  .flow { display:flex; align-items:stretch; gap:0; margin:32px 0; }
+  .flow-step { flex:1; text-align:center; padding:20px 12px; border-radius:14px; border:1px solid var(--border); background:var(--surface); }
+  .flow-step .fi { font-size:36px; margin-bottom:4px; }
+  .flow-step .fl { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text3); }
+  .flow-step .ft { font-size:14px; font-weight:700; margin:4px 0; }
+  .flow-step .fd { font-size:11px; color:var(--text2); }
+  .flow-step .ftime { display:inline-block; margin-top:6px; padding:2px 8px; border-radius:8px; font-size:10px; font-weight:700; }
+  .flow-arr { display:flex; align-items:center; padding:0 3px; font-size:20px; color:var(--text3); }
+
+  /* Sensor grid */
+  .sensor-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:24px 0; }
+  .sensor-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; gap:12px; align-items:flex-start; }
+  .sensor-card .si { font-size:32px; flex-shrink:0; }
+  .sensor-card h4 { font-size:14px; font-weight:700; margin-bottom:4px; }
+  .sensor-card p { font-size:12px; color:var(--text2); margin:0; }
+  .sensor-card .stag { display:inline-block; font-size:10px; font-weight:700; padding:1px 6px; border-radius:4px; margin-top:4px; }
+
+  /* Prompt examples */
+  .prompt-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; margin:24px 0; }
+  .prompt-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; }
+  .prompt-card .pq { font-size:14px; font-weight:700; color:var(--cyan); margin-bottom:8px; }
+  .prompt-card .pr { display:flex; gap:8px; flex-wrap:wrap; font-size:11px; }
+  .prompt-card .pr span { background:var(--surface2); padding:2px 8px; border-radius:6px; color:var(--text2); }
+
+  /* Architecture */
+  .arch-flow { display:flex; gap:0; align-items:center; margin:32px 0; justify-content:center; flex-wrap:wrap; }
+  .arch-node { padding:16px 20px; border-radius:12px; text-align:center; min-width:130px; color:#fff; }
+  .arch-node .ai { font-size:24px; margin-bottom:4px; }
+  .arch-node .al { font-size:13px; font-weight:700; }
+  .arch-node .ad { font-size:10px; opacity:0.8; }
+  .arch-arr { padding:0 4px; display:flex; flex-direction:column; align-items:center; }
+  .arch-arr .aa { font-size:16px; color:var(--text3); }
+  .arch-arr .at { font-size:9px; color:var(--text3); white-space:nowrap; }
+
+  /* Perf comparison */
+  .perf-compare { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0; }
+  .perf-col { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; }
+  .perf-col h4 { font-size:14px; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  .perf-bar-row { display:flex; align-items:center; gap:8px; margin:6px 0; }
+  .perf-label { width:80px; font-size:11px; color:var(--text2); text-align:right; flex-shrink:0; }
+  .perf-track { flex:1; height:20px; background:var(--bg); border-radius:4px; overflow:hidden; position:relative; }
+  .perf-fill { height:100%; border-radius:4px; display:flex; align-items:center; padding-left:6px; font-size:10px; font-weight:700; color:#fff; }
+
+  /* Curriculum */
+  .curriculum { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin:24px 0; }
+  .lesson { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; display:flex; align-items:flex-start; gap:10px; }
+  .lesson .ln { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#fff; flex-shrink:0; }
+  .lesson .ln.open { background:var(--green); }
+  .lesson .ln.lock { background:var(--surface2); color:var(--text3); }
+  .lesson h4 { font-size:13px; font-weight:700; margin-bottom:2px; }
+  .lesson p { font-size:11px; color:var(--text2); margin:0; }
+
+  /* Decision table */
+  .decisions { margin:24px 0; }
+  .decision { background:var(--surface); border:1px solid var(--border); border-radius:12px; margin:10px 0; padding:16px 20px; display:flex; align-items:flex-start; gap:16px; }
+  .decision .dn { width:32px; height:32px; border-radius:8px; background:var(--purple); color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; flex-shrink:0; }
+  .decision h4 { font-size:14px; font-weight:700; margin-bottom:4px; }
+  .decision p { font-size:13px; color:var(--text2); margin:0; }
+  .decision .rec { display:inline-block; margin-top:6px; padding:2px 10px; border-radius:6px; font-size:11px; font-weight:700; background:rgba(16,185,129,0.2); color:var(--green); }
+
+  /* Advantages */
+  .adv-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:24px 0; }
+  .adv { text-align:center; padding:20px 14px; background:var(--surface); border:1px solid var(--border); border-radius:12px; }
+  .adv .aicon { font-size:32px; margin-bottom:8px; }
+  .adv h4 { font-size:14px; font-weight:700; margin-bottom:4px; }
+  .adv p { font-size:12px; color:var(--text2); margin:0; }
+
+  /* Synergy */
+  .synergy { background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(139,92,246,0.1)); border:1px solid var(--border); border-radius:16px; padding:32px; margin:24px 0; text-align:center; }
+  .synergy h3 { font-size:20px; margin-bottom:16px; }
+  .synergy-flow { display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap; }
+  .synergy-box { padding:16px 24px; border-radius:12px; text-align:center; color:#fff; min-width:180px; }
+  .synergy-box h4 { font-size:14px; margin-bottom:4px; }
+  .synergy-box p { font-size:12px; opacity:0.8; margin:0; }
+  .synergy-arr { font-size:24px; color:var(--text3); }
+
+  @media(max-width:900px) {
+    .vs-grid { grid-template-columns:1fr; gap:8px; }
+    .vs-mid { display:none; }
+    .flow { flex-direction:column; gap:6px; }
+    .flow-arr { transform:rotate(90deg); padding:4px; }
+    .perf-compare { grid-template-columns:1fr; }
+    .arch-flow { flex-direction:column; }
+    .arch-arr .aa { transform:rotate(90deg); }
+    .hero h1 { font-size:32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>aiPython<br>바이브코딩 Python 교육</h1>
+  <p>한국어로 명령하면 AI가 Python 코드를 만들고,<br>스마트폰 카메라와 센서 데이터를 처리해서 결과를 보여줍니다</p>
+  <div class="hero-badges">
+    <span class="hero-badge">&#x1F4F1; 스마트폰만으로 완결</span>
+    <span class="hero-badge">&#x1F40D; Python 학습</span>
+    <span class="hero-badge">&#x1F4F7; 카메라/센서 활용</span>
+    <span class="hero-badge">&#x1F4CA; 즉시 시각적 결과</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- 1. 기존 vs 신규 -->
+<div class="section">
+  <div class="stitle"><span class="icon">&#x1F504;</span> aiHardStudy vs aiPython</div>
+  <div class="ssub">기존 시스템을 기반으로 무엇이 바뀌는지 한눈에 비교</div>
+  <div class="vs-grid">
+    <div class="vs-box old">
+      <h3 style="color:var(--orange);">&#x1F4A1; aiHardStudy (기존)</h3>
+      <ul>
+        <li><strong>C / Arduino</strong> 코드 생성</li>
+        <li><strong>ESP32 보드</strong> 필요 (추가 구매)</li>
+        <li>LED, 부저, OLED 물리 제어</li>
+        <li>BLE OTA 무선 전송 (~14초)</li>
+        <li>Arduino 빌드 필요 (~25초)</li>
+        <li>보드에서 결과 확인 (LED 깜빡임)</li>
+        <li>총 35~120초 소요</li>
+        <li>USB 케이블 + 충전기 필요</li>
+      </ul>
+    </div>
+    <div class="vs-mid">VS</div>
+    <div class="vs-box new">
+      <h3 style="color:var(--green);">&#x1F40D; aiPython (신규)</h3>
+      <ul>
+        <li><strong>Python</strong> 코드 생성</li>
+        <li><strong>스마트폰만</strong>으로 완결 (추가 장비 제로)</li>
+        <li>카메라, 센서, GPS 활용</li>
+        <li>HTTP로 결과 수신 (즉시)</li>
+        <li>Python 실행만 (1~10초)</li>
+        <li>스마트폰 화면에 차트/이미지 표시</li>
+        <li><strong>총 15~45초 소요 (50~70% 단축)</strong></li>
+        <li>스마트폰만 있으면 됨</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 2. 동작 흐름 -->
+<div class="section">
+  <div class="stitle"><span class="icon">&#x26A1;</span> 전체 동작 흐름</div>
+  <div class="ssub">프롬프트 입력부터 결과 표시까지 6단계 (총 15~45초)</div>
+  <div class="flow">
+    <div class="flow-step" style="border-color:var(--blue);">
+      <div class="fi">&#x1F4AC;</div><div class="fl">Step 1</div>
+      <div class="ft">명령 입력</div><div class="fd">한국어로 입력</div>
+      <div class="ftime" style="background:rgba(59,130,246,0.2);color:var(--blue);">사용자</div>
+    </div>
+    <div class="flow-arr">&#x27A1;</div>
+    <div class="flow-step" style="border-color:var(--cyan);">
+      <div class="fi">&#x1F4F7;</div><div class="fl">Step 2</div>
+      <div class="ft">센서 수집</div><div class="fd">카메라/가속도/GPS</div>
+      <div class="ftime" style="background:rgba(6,182,212,0.2);color:var(--cyan);">~2초</div>
+    </div>
+    <div class="flow-arr">&#x27A1;</div>
+    <div class="flow-step" style="border-color:var(--purple);">
+      <div class="fi">&#x1F9E0;</div><div class="fl">Step 3</div>
+      <div class="ft">AI 코드 생성</div><div class="fd">Claude &rarr; Python</div>
+      <div class="ftime" style="background:rgba(139,92,246,0.2);color:var(--purple);">12~30초</div>
+    </div>
+    <div class="flow-arr">&#x27A1;</div>
+    <div class="flow-step" style="border-color:var(--orange);">
+      <div class="fi">&#x1F40D;</div><div class="fl">Step 4</div>
+      <div class="ft">Python 실행</div><div class="fd">Docker 샌드박스</div>
+      <div class="ftime" style="background:rgba(245,158,11,0.2);color:var(--orange);">1~10초</div>
+    </div>
+    <div class="flow-arr">&#x27A1;</div>
+    <div class="flow-step" style="border-color:var(--green);background:rgba(16,185,129,0.1);">
+      <div class="fi">&#x1F4CA;</div><div class="fl">완료!</div>
+      <div class="ft">결과 표시</div><div class="fd">차트/이미지/텍스트</div>
+      <div class="ftime" style="background:var(--green);color:#fff;">즉시</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 3. 데이터 흐름 -->
+<div class="section">
+  <div class="stitle"><span class="icon">&#x1F3D7;</span> 시스템 아키텍처</div>
+  <div class="ssub">스마트폰 &harr; 클라우드 서버 간 데이터 흐름</div>
+  <div class="arch-flow">
+    <div class="arch-node" style="background:var(--blue);">
+      <div class="ai">&#x1F4F1;</div>
+      <div class="al">스마트폰</div>
+      <div class="ad">Web App (PWA)</div>
+      <div class="ad" style="margin-top:4px;">카메라 / 센서</div>
+    </div>
+    <div class="arch-arr">
+      <div class="at">프롬프트</div>
+      <div class="at">+ 센서 데이터</div>
+      <div class="aa">&#x27A1;&#x27A1;&#x27A1;</div>
+      <div class="at">HTTPS</div>
+    </div>
+    <div class="arch-node" style="background:var(--surface2);border:2px solid var(--border);">
+      <div class="ai">&#x1F512;</div>
+      <div class="al">Nginx</div>
+      <div class="ad">HTTPS :443</div>
+    </div>
+    <div class="arch-arr">
+      <div class="aa">&#x27A1;</div>
+    </div>
+    <div class="arch-node" style="background:var(--purple);">
+      <div class="ai">&#x1F9E0;</div>
+      <div class="al">Claude AI</div>
+      <div class="ad">Python 코드 생성</div>
+    </div>
+    <div class="arch-arr">
+      <div class="aa">&#x27A1;</div>
+    </div>
+    <div class="arch-node" style="background:var(--orange);">
+      <div class="ai">&#x1F40D;</div>
+      <div class="al">Python 실행</div>
+      <div class="ad">Docker 샌드박스</div>
+      <div class="ad" style="margin-top:2px;">numpy/OpenCV/matplotlib</div>
+    </div>
+    <div class="arch-arr">
+      <div class="at">결과</div>
+      <div class="at">(이미지/JSON)</div>
+      <div class="aa">&#x27A1;&#x27A1;&#x27A1;</div>
+    </div>
+    <div class="arch-node" style="background:var(--green);">
+      <div class="ai">&#x1F4CA;</div>
+      <div class="al">결과 표시</div>
+      <div class="ad">차트 / 이미지</div>
+      <div class="ad" style="margin-top:2px;">코드 + 설명</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 4. 센서 활용 -->
+<div class="section">
+  <div class="stitle"><span class="icon">&#x1F4F1;</span> 스마트폰 센서 활용</div>
+  <div class="ssub">별도 장비 없이 스마트폰 내장 하드웨어로 실험</div>
+  <div class="sensor-grid">
+    <div class="sensor-card" style="border-left:3px solid var(--blue);">
+      <div class="si">&#x1F4F7;</div>
+      <div><h4>카메라</h4><p>사진 촬영 → 이미지 처리, 얼굴 인식, 색상 분석, 필터</p>
+      <span class="stag" style="background:rgba(59,130,246,0.2);color:var(--blue);">초~중급</span></div>
+    </div>
+    <div class="sensor-card" style="border-left:3px solid var(--green);">
+      <div class="si">&#x1F4F3;</div>
+      <div><h4>가속도계</h4><p>흔들기 감지, 기울기 측정, 만보기, 운동 분석</p>
+      <span class="stag" style="background:rgba(16,185,129,0.2);color:var(--green);">초급</span></div>
+    </div>
+    <div class="sensor-card" style="border-left:3px solid var(--cyan);">
+      <div class="si">&#x1F9ED;</div>
+      <div><h4>자이로스코프</h4><p>3D 회전 추적, 나침반, 기울기 게임</p>
+      <span class="stag" style="background:rgba(6,182,212,0.2);color:var(--cyan);">중급</span></div>
+    </div>
+    <div class="sensor-card" style="border-left:3px solid var(--orange);">
+      <div class="si">&#x1F4CD;</div>
+      <div><h4>GPS 위치</h4><p>현재 위치 지도 표시, 거리 계산, 경로 추적</p>
+      <span class="stag" style="background:rgba(245,158,11,0.2);color:var(--orange);">초급</span></div>
+    </div>
+    <div class="sensor-card" style="border-left:3px solid var(--pink);">
+      <div class="si">&#x1F3A4;</div>
+      <div><h4>마이크</h4><p>음성 녹음, 주파수 분석, 음량 측정, 파형 시각화</p>
+      <span class="stag" style="background:rgba(236,72,153,0.2);color:var(--pink);">중급</span></div>
+    </div>
+    <div class="sensor-card" style="border-left:3px solid var(--yellow);">
+      <div class="si">&#x2600;</div>
+      <div><h4>밝기 센서</h4><p>조도(lux) 측정, 시간별 밝기 변화 그래프</p>
+      <span class="stag" style="background:rgba(234,179,8,0.2);color:var(--yellow);">초급</span></div>
+    </div>
+    <div class="sensor-card" style="border-left:3px solid var(--purple);">
+      <div class="si">&#x270B;</div>
+      <div><h4>터치 스크린</h4><p>그림 그리기, 터치 좌표 수집, 손글씨 인식</p>
+      <span class="stag" style="background:rgba(139,92,246,0.2);color:var(--purple);">초급</span></div>
+    </div>
+    <div class="sensor-card" style="border-left:3px solid var(--red);">
+      <div class="si">&#x1F4F3;</div>
+      <div><h4>진동 모터</h4><p>패턴 진동 출력, 모스 부호 게임</p>
+      <span class="stag" style="background:rgba(239,68,68,0.2);color:var(--red);">초급</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 5. 예시 프롬프트 -->
+<div class="section">
+  <div class="stitle"><span class="icon">&#x1F4AC;</span> 예시 프롬프트와 결과</div>
+  <div class="ssub">한국어로 명령하면 이런 결과를 얻습니다</div>
+  <div class="prompt-grid">
+    <div class="prompt-card">
+      <div class="pq">"카메라로 사진 찍어서 흑백으로 바꿔줘"</div>
+      <div class="pr"><span>&#x1F4F7; 카메라</span><span>OpenCV</span><span>&#x1F5BC; 흑백 이미지 표시</span></div>
+    </div>
+    <div class="prompt-card">
+      <div class="pq">"내 얼굴을 찾아서 네모로 표시해줘"</div>
+      <div class="pr"><span>&#x1F4F7; 카메라</span><span>Haar Cascade</span><span>&#x1F5BC; 얼굴 박스 이미지</span></div>
+    </div>
+    <div class="prompt-card">
+      <div class="pq">"사진에서 가장 많은 색상 5개 알려줘"</div>
+      <div class="pr"><span>&#x1F4F7; 카메라</span><span>K-means</span><span>&#x1F4CA; 색상 팔레트 + 파이차트</span></div>
+    </div>
+    <div class="prompt-card">
+      <div class="pq">"폰을 흔들어서 만보기 만들어줘"</div>
+      <div class="pr"><span>&#x1F4F3; 가속도</span><span>numpy</span><span>&#x1F4CA; 걸음수 + 그래프</span></div>
+    </div>
+    <div class="prompt-card">
+      <div class="pq">"현재 위치를 지도에 표시해줘"</div>
+      <div class="pr"><span>&#x1F4CD; GPS</span><span>folium</span><span>&#x1F5FA; 인터랙티브 지도</span></div>
+    </div>
+    <div class="prompt-card">
+      <div class="pq">"3초간 소리 녹음해서 파형 보여줘"</div>
+      <div class="pr"><span>&#x1F3A4; 마이크</span><span>librosa</span><span>&#x1F4CA; 파형 그래프</span></div>
+    </div>
+    <div class="prompt-card">
+      <div class="pq">"주사위 3개 1000번 굴려서 통계 보여줘"</div>
+      <div class="pr"><span>센서 없음</span><span>random+matplotlib</span><span>&#x1F4CA; 히스토그램</span></div>
+    </div>
+    <div class="prompt-card">
+      <div class="pq">"구구단 7단을 예쁘게 출력해줘"</div>
+      <div class="pr"><span>센서 없음</span><span>기본 Python</span><span>&#x1F4DD; 포맷된 텍스트</span></div>
+    </div>
+    <div class="prompt-card">
+      <div class="pq">"손으로 그린 숫자를 인식해줘"</div>
+      <div class="pr"><span>&#x270B; 터치</span><span>MNIST 모델</span><span>&#x1F4CA; 인식 결과 + 확률</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 6. 성능 비교 -->
+<div class="section">
+  <div class="stitle"><span class="icon">&#x1F680;</span> 성능 비교</div>
+  <div class="ssub">Arduino 빌드 제거로 응답 속도 50~70% 개선</div>
+  <div class="perf-compare">
+    <div class="perf-col">
+      <h4 style="color:var(--orange);">&#x1F4A1; aiHardStudy (35~120초)</h4>
+      <div class="perf-bar-row">
+        <div class="perf-label">AI 생성</div>
+        <div class="perf-track"><div class="perf-fill" style="width:58%;background:var(--purple);">12~70초</div></div>
+      </div>
+      <div class="perf-bar-row">
+        <div class="perf-label">Arduino 빌드</div>
+        <div class="perf-track"><div class="perf-fill" style="width:22%;background:var(--orange);">24~26초</div></div>
+      </div>
+      <div class="perf-bar-row">
+        <div class="perf-label">BLE OTA</div>
+        <div class="perf-track"><div class="perf-fill" style="width:12%;background:var(--cyan);">~14초</div></div>
+      </div>
+      <div class="perf-bar-row">
+        <div class="perf-label">재부팅</div>
+        <div class="perf-track"><div class="perf-fill" style="width:3%;background:var(--green);">~3초</div></div>
+      </div>
+    </div>
+    <div class="perf-col">
+      <h4 style="color:var(--green);">&#x1F40D; aiPython (15~45초)</h4>
+      <div class="perf-bar-row">
+        <div class="perf-label">AI 생성</div>
+        <div class="perf-track"><div class="perf-fill" style="width:67%;background:var(--purple);">12~30초</div></div>
+      </div>
+      <div class="perf-bar-row">
+        <div class="perf-label">Python 실행</div>
+        <div class="perf-track"><div class="perf-fill" style="width:22%;background:var(--green);">1~10초</div></div>
+      </div>
+      <div class="perf-bar-row">
+        <div class="perf-label" style="color:var(--text3);text-decoration:line-through;">BLE 전송</div>
+        <div class="perf-track"><div class="perf-fill" style="width:0%;"></div></div>
+      </div>
+      <div class="perf-bar-row">
+        <div class="perf-label" style="color:var(--text3);text-decoration:line-through;">재부팅</div>
+        <div class="perf-track"><div class="perf-fill" style="width:0%;"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 7. Python 커리큘럼 -->
+<div class="section">
+  <div class="stitle"><span class="icon">&#x1F4DA;</span> Python 학습 커리큘럼</div>
+  <div class="ssub">10개 레슨 &mdash; 기초부터 AI/ML 맛보기까지</div>
+  <div class="curriculum">
+    <div class="lesson"><div class="ln open">1</div><div><h4>변수와 데이터 타입</h4><p>int, float, str, list, print()</p></div></div>
+    <div class="lesson"><div class="ln open">2</div><div><h4>조건문</h4><p>if / elif / else, 비교 연산자</p></div></div>
+    <div class="lesson"><div class="ln open">3</div><div><h4>반복문</h4><p>for, while, range()</p></div></div>
+    <div class="lesson"><div class="ln open">4</div><div><h4>함수</h4><p>def, return, 매개변수</p></div></div>
+    <div class="lesson"><div class="ln open">5</div><div><h4>리스트와 딕셔너리</h4><p>인덱싱, 반복, 메서드</p></div></div>
+    <div class="lesson"><div class="ln open">6</div><div><h4>라이브러리 활용</h4><p>import, numpy, matplotlib</p></div></div>
+    <div class="lesson"><div class="ln lock">7</div><div><h4>이미지 처리</h4><p>PIL, OpenCV 기초</p></div></div>
+    <div class="lesson"><div class="ln lock">8</div><div><h4>데이터 시각화</h4><p>matplotlib 심화, 차트</p></div></div>
+    <div class="lesson"><div class="ln lock">9</div><div><h4>파일 입출력</h4><p>open, CSV, JSON</p></div></div>
+    <div class="lesson"><div class="ln lock">10</div><div><h4>AI/ML 맛보기</h4><p>분류, 예측, MNIST</p></div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 8. 장점 -->
+<div class="section">
+  <div class="stitle"><span class="icon">&#x2728;</span> 핵심 장점</div>
+  <div class="adv-grid">
+    <div class="adv"><div class="aicon">&#x1F4B0;</div><h4>추가 장비 제로</h4><p>ESP32 보드 구매 불필요<br>스마트폰만으로 완결</p></div>
+    <div class="adv"><div class="aicon">&#x1F680;</div><h4>배포 즉시</h4><p>URL 공유만으로 시작<br>APK 설치도 불필요</p></div>
+    <div class="adv"><div class="aicon">&#x1F40D;</div><h4>Python 학습</h4><p>취업/입시에 필요한<br>실용적 언어</p></div>
+    <div class="adv"><div class="aicon">&#x26A1;</div><h4>50~70% 빠름</h4><p>Arduino 빌드 24초 제거<br>15~45초 완료</p></div>
+    <div class="adv"><div class="aicon">&#x1F4E1;</div><h4>BLE 문제 없음</h4><p>연결/페어링 문제<br>완전 제거</p></div>
+    <div class="adv"><div class="aicon">&#x1F4CA;</div><h4>풍부한 시각화</h4><p>matplotlib, OpenCV<br>Python 생태계 활용</p></div>
+    <div class="adv"><div class="aicon">&#x1F9E0;</div><h4>AI/ML 입문</h4><p>얼굴 인식, 데이터 분석<br>실용적 AI 체험</p></div>
+    <div class="adv"><div class="aicon">&#x1F3D7;</div><h4>기존 인프라</h4><p>같은 서버, 같은 AI<br>같은 UI 프레임워크</p></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 9. 시너지 -->
+<div class="section">
+  <div class="stitle"><span class="icon">&#x1F91D;</span> aiHardStudy와의 시너지</div>
+  <div class="synergy">
+    <h3>1년 커리큘럼으로 확장 가능</h3>
+    <div class="synergy-flow">
+      <div class="synergy-box" style="background:var(--green);">
+        <h4>1학기: aiPython</h4>
+        <p>Python 기초 + 스마트폰 센서<br>추가 장비 없이 즉시 시작</p>
+      </div>
+      <div class="synergy-arr">&#x27A1;</div>
+      <div class="synergy-box" style="background:var(--orange);">
+        <h4>2학기: aiHardStudy</h4>
+        <p>C/Arduino + ESP32 보드<br>물리적 하드웨어 제어</p>
+      </div>
+    </div>
+    <p style="margin-top:16px;color:var(--text2);font-size:14px;">
+      같은 Web App UI, 같은 클라우드 서버, 같은 AI &mdash; 학생이 이미 익숙한 환경에서 바로 확장
+    </p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 10. 의사결정 -->
+<div class="section">
+  <div class="stitle"><span class="icon">&#x2753;</span> 검토 필요 사항</div>
+  <div class="ssub">다음 5가지 사항에 대해 방향을 정해야 합니다</div>
+  <div class="decisions">
+    <div class="decision">
+      <div class="dn">1</div>
+      <div><h4>클라이언트 타입</h4><p>Web App만 할지, Flutter 앱도 병행할지?<br>BLE가 필요 없으므로 Web App만으로 충분합니다.</p><span class="rec">추천: Web App만</span></div>
+    </div>
+    <div class="decision">
+      <div class="dn">2</div>
+      <div><h4>Python 실행 방식</h4><p>Docker 컨테이너 / RestrictedPython / Pyodide(브라우저 내) 중 선택<br>보안과 라이브러리 호환성 면에서 Docker가 최적.</p><span class="rec">추천: Docker 컨테이너</span></div>
+    </div>
+    <div class="decision">
+      <div class="dn">3</div>
+      <div><h4>서버 업그레이드</h4><p>현재 2vCPU/4GB로는 Docker+Python 실행에 부족할 수 있습니다.</p><span class="rec">추천: 4vCPU / 8GB ($48/월)</span></div>
+    </div>
+    <div class="decision">
+      <div class="dn">4</div>
+      <div><h4>MVP 범위</h4><p>순수 계산만 / 카메라 포함 / 전체 센서 중 첫 단계 범위?<br>카메라가 가장 임팩트 크고 시각적입니다.</p><span class="rec">추천: 순수 계산 + 카메라</span></div>
+    </div>
+    <div class="decision">
+      <div class="dn">5</div>
+      <div><h4>aiHardStudy와 통합</h4><p>같은 앱에서 모드 전환? 별도 앱(경로)?<br>별도 경로(/python)로 분리하면 개발/유지보수가 깔끔합니다.</p><span class="rec">추천: 별도 경로 (/python)</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div style="text-align:center;padding:40px;color:var(--text3);font-size:12px;border-top:1px solid rgba(71,85,105,0.3);">
+  aiPython 바이브코딩 Python 교육 플랫폼 &mdash; 프로젝트 계획서 v0.1 (검토용 초안) | 2026.04.13
+</div>
+
+</body>
+</html>

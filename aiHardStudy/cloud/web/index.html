@@ -417,7 +417,10 @@ body {
         <span class="chip" onclick="setPrompt('OLED에 글자 표시')">OLED 표시</span>
         <span class="chip" onclick="setPrompt('온도 측정하기')">온도 측정</span>
       </div>
-      <textarea class="prompt-input" id="promptInput" placeholder="예: 빨간 LED를 0.5초마다 깜빡이고,&#10;OLED에 &quot;Hello!&quot;를 표시해줘"></textarea>
+      <div style="position:relative;">
+        <textarea class="prompt-input" id="promptInput" placeholder="예: 빨간 LED를 0.5초마다 깜빡이고,&#10;OLED에 &quot;Hello!&quot;를 표시해줘"></textarea>
+        <button onclick="document.getElementById('promptInput').value='';document.getElementById('promptInput').focus();" style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.1);border:none;color:var(--text2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">&times;</button>
+      </div>
       <button class="btn-primary" id="btnBuild" onclick="startBuild()" style="margin-top:12px;">
         <span>&#x1F680;</span> 위 명령을 UTTEC 펌웨어로 만들기
       </button>
@@ -437,7 +440,10 @@ body {
         <span class="chip" onclick="setQuestion('I2C 통신이 뭐야?')">I2C 통신</span>
         <span class="chip" onclick="setQuestion('FreeRTOS 태스크 만드는 법')">FreeRTOS 태스크</span>
       </div>
-      <textarea class="prompt-input" id="questionInput" placeholder="코딩에 대해 궁금한 것을 물어보세요...&#10;예: for문과 while문의 차이가 뭐야?" style="min-height:60px;"></textarea>
+      <div style="position:relative;">
+        <textarea class="prompt-input" id="questionInput" placeholder="코딩에 대해 궁금한 것을 물어보세요...&#10;예: for문과 while문의 차이가 뭐야?" style="min-height:60px;"></textarea>
+        <button onclick="document.getElementById('questionInput').value='';document.getElementById('questionInput').focus();" style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.1);border:none;color:var(--text2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">&times;</button>
+      </div>
       <button class="btn-primary" id="btnAsk" onclick="askQuestion()" style="margin-top:12px;background:#7C3AED;">
         <span>&#x1F4AC;</span> 질문하기
       </button>

@@ -223,6 +223,14 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   String _otaMessage = '';
   int _elapsedSeconds = 0;
 
+  // Timing (빌드 단계별 시간)
+  Map<String, dynamic> _timing = {};
+
+  // 코딩 질문 AI
+  final TextEditingController _questionController = TextEditingController();
+  String _chatAnswer = '';
+  bool _chatLoading = false;
+
   // History
   final List<Map<String, String>> _history = [];
 
@@ -244,8 +252,33 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   @override
   void dispose() {
     _promptController.dispose();
+    _questionController.dispose();
     _elapsedTimer?.cancel();
     super.dispose();
+  }
+
+  // ─── 코딩 질문 AI ───
+
+  Future<void> _askQuestion() async {
+    String q = _questionController.text.trim();
+    if (q.isEmpty) return;
+    setState(() { _chatLoading = true; _chatAnswer = ''; });
+    try {
+      final resp = await http.post(
+        Uri.parse('${_s.serverUrl}/api/v1/chat'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'question': q}),
+      );
+      if (resp.statusCode == 200) {
+        final data = jsonDecode(resp.body);
+        setState(() => _chatAnswer = data['answer'] ?? '응답 없음');
+      } else {
+        setState(() => _chatAnswer = '서버 오류: ${resp.statusCode}');
+      }
+    } catch (e) {
+      setState(() => _chatAnswer = '연결 실패: $e');
+    }
+    setState(() => _chatLoading = false);
   }
 
   _MainShellState get _s => widget.shell;
@@ -473,6 +506,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
           _buildMessage = data['message'];
           _buildProgress = data['progress'];
           _firmwareSize = data['firmware_size'] ?? 0;
+          if (data['timing'] != null) _timing = Map<String, dynamic>.from(data['timing']);
         });
 
         if (data['status'] == 'success') {
@@ -748,7 +782,9 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
         child: Column(children: [
           _buildPromptCard(),
           if (_buildStatus != 'idle') _buildProgressCard(),
+          if (_timing.isNotEmpty && _buildStatus == 'success') _buildTimingCard(),
           if (_generatedCode != null && _generatedCode!.isNotEmpty && _buildStatus == 'success') _buildCodeCard(),
+          _buildChatCard(),
           if (_history.isNotEmpty) _buildHistoryCard(),
         ]),
       ),
@@ -864,6 +900,10 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
             hintStyle: const TextStyle(color: Color(0xFF64748B), fontSize: 14, height: 1.5),
             filled: true,
             fillColor: C.surface2,
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.clear, size: 18, color: C.text2),
+              onPressed: () => _promptController.clear(),
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(color: C.border),
@@ -945,7 +985,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
       statusText = '준비 완료! (${(_firmwareSize / 1024).toStringAsFixed(0)} KB)';
     } else if (isBuilding) {
       totalProgress = (_buildProgress / 100) * 0.7;
-      statusText = _buildStatus == 'generating' ? 'AI가 코드 생성 중...' : '펌웨어 빌드 중...';
+      statusText = _buildStatus == 'generating' ? 'Step 1: AI 코드 생성 중... (${_elapsedSeconds}s)' : 'Step 2: Arduino 빌드 중... (${_elapsedSeconds}s)';
     } else if (hasFailed) {
       totalProgress = 0;
       statusText = _otaStatus == 'failed' ? _otaMessage : _buildMessage;
@@ -1131,6 +1171,133 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
       }
     }
     return widgets;
+  }
+
+  // ─── 빌드 단계별 시간 카드 ───
+  Widget _buildTimingCard() {
+    final steps = <Map<String, String>>[];
+    if (_timing.containsKey('2b_claude')) {
+      steps.add({'name': 'Step 1: AI 코드 생성', 'time': '${((_timing['2b_claude'] as num?)?.toStringAsFixed(1) ?? '?')}초'});
+    }
+    if (_timing.containsKey('4_build')) {
+      steps.add({'name': 'Step 2: Arduino 빌드', 'time': '${((_timing['4_build'] as num?)?.toStringAsFixed(1) ?? '?')}초'});
+    }
+    if (_timing.containsKey('total')) {
+      steps.add({'name': '전체 소요 시간', 'time': '${((_timing['total'] as num?)?.toStringAsFixed(1) ?? '?')}초'});
+    }
+    if (steps.isEmpty) return const SizedBox.shrink();
+
+    return styledCard(
+      title: '빌드 단계별 시간',
+      icon: Icons.timer,
+      child: Column(children: steps.map((s) {
+        final isTotal = s['name']!.contains('전체');
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: Row(children: [
+            Icon(isTotal ? Icons.check_circle : Icons.play_circle_outline,
+              size: 16, color: isTotal ? C.success : C.primary),
+            const SizedBox(width: 8),
+            Expanded(child: Text(s['name']!, style: TextStyle(
+              fontSize: 13, color: C.text,
+              fontWeight: isTotal ? FontWeight.bold : FontWeight.normal))),
+            Text(s['time']!, style: TextStyle(
+              fontSize: 13, color: isTotal ? C.success : C.text2,
+              fontWeight: isTotal ? FontWeight.bold : FontWeight.normal)),
+          ]),
+        );
+      }).toList()),
+    );
+  }
+
+  // ─── 코딩 질문 AI 카드 ───
+  Widget _buildChatCard() {
+    return styledCard(
+      title: '코딩 질문 AI',
+      icon: Icons.school,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const Text('ESP32/Arduino 코딩 질문에 AI가 답변합니다', style: TextStyle(fontSize: 11, color: C.text2)),
+        const SizedBox(height: 6),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(children: [
+            _questionChip('for문이 뭐야?'),
+            _questionChip('digital vs analog'),
+            _questionChip('I2C 통신 원리'),
+            _questionChip('tone() 사용법'),
+          ]),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: _questionController,
+          maxLines: 2,
+          decoration: InputDecoration(
+            hintText: '예: LED를 깜빡이는 코드에서 delay()는 뭐야?',
+            hintStyle: const TextStyle(color: Color(0xFF64748B), fontSize: 14),
+            filled: true,
+            fillColor: C.surface2,
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.clear, size: 18, color: C.text2),
+              onPressed: () => _questionController.clear(),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: C.border),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Color(0xFF7C3AED)),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton.icon(
+            onPressed: _chatLoading ? null : _askQuestion,
+            icon: Icon(_chatLoading ? Icons.hourglass_top : Icons.send),
+            label: Text(_chatLoading ? 'AI가 답변 중...' : '질문하기',
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white)),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              backgroundColor: const Color(0xFF7C3AED),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+          ),
+        ),
+        if (_chatAnswer.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: C.surface2,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: const Color(0xFF7C3AED).withValues(alpha: 0.3)),
+            ),
+            child: SelectableText(_chatAnswer,
+              style: const TextStyle(fontSize: 13, color: C.text, height: 1.5)),
+          ),
+        ],
+      ]),
+    );
+  }
+
+  Widget _questionChip(String text) {
+    return GestureDetector(
+      onTap: () => _questionController.text = text,
+      child: Container(
+        margin: const EdgeInsets.only(right: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          color: const Color(0xFF7C3AED).withValues(alpha: 0.15),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: const Color(0xFF7C3AED).withValues(alpha: 0.3)),
+        ),
+        child: Text(text, style: const TextStyle(fontSize: 12, color: Color(0xFFB794F4))),
+      ),
+    );
   }
 
   Widget _buildHistoryCard() {
