@@ -1,0 +1,14 @@
+[Unit]
+Description=UTTEC Mini Web UI Server (ESP32-C3, port 8098)
+After=network.target uttec-mini-arduino.service
+
+[Service]
+Type=simple
+WorkingDirectory=/root/vibe-mini
+ExecStart=/usr/bin/python3 /root/vibe-mini/web_ui_server.py
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

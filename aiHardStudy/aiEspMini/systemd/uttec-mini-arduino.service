@@ -1,0 +1,15 @@
+[Unit]
+Description=UTTEC Mini Arduino Build Server (ESP32-C3, port 8096)
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/vibe-mini
+ExecStart=/usr/bin/python3 -m uvicorn build_server_cloud_arduino:app --host 0.0.0.0 --port 8096
+Restart=always
+RestartSec=5
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+
+[Install]
+WantedBy=multi-user.target
