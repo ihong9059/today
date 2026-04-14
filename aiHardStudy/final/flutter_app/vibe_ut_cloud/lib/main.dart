@@ -217,6 +217,18 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   bool _showCode = false;
   bool _showHistory = false;
 
+  // Example prompts
+  bool _showExPrompts = false;
+  int _exPromptCat = -1;
+
+  // Coding question
+  final _questionController = TextEditingController();
+  bool _showExQuestions = false;
+  int _exQuestionCat = -1;
+  String _questionStatus = 'idle'; // idle, asking, done, failed
+  String _questionAnswer = '';
+  double _questionElapsed = 0;
+
   // OTA
   String _otaStatus = 'idle';
   int _otaProgress = 0;
@@ -225,6 +237,26 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
 
   // History
   final List<Map<String, String>> _history = [];
+
+  // Example prompt data
+  static const _exPromptData = [
+    {'cat': 'LED 기초', 'items': ['빨간 LED 켜기','빨간 LED 1초마다 깜빡이기','빨간 LED 5번 깜빡이고 멈추기','노란 LED 0.5초마다 깜빡이기','파란 LED 2초마다 깜빡이기']},
+    {'cat': '다중 LED', 'items': ['빨강, 노랑, 파랑 LED 모두 켜기','신호등 만들기: 빨강 3초, 노랑 1초, 파랑 3초 반복','빨강 → 노랑 → 파랑 순서대로 켜고 끄기','비상등처럼 빨강, 파랑 번갈아 깜빡이기']},
+    {'cat': '부저', 'items': ['부저 한번 울리기','부저 5번 울리고 멈추기','SOS 모스부호 울리기']},
+    {'cat': '멜로디', 'items': ['도레미파솔라시도 연주하기','학교종 멜로디 연주하기','반짝반짝 작은별 연주하기','생일 축하 노래 연주하기','경찰차 사이렌 소리 만들기']},
+    {'cat': 'OLED', 'items': ['OLED에 "Hello" 표시하기','OLED에 1부터 10까지 숫자 세기','OLED에 카운트다운 5, 4, 3, 2, 1, 0 표시하기']},
+    {'cat': '온습도 센서', 'items': ['현재 온도 측정해서 시리얼에 출력하기','온도와 습도를 OLED에 같이 표시하기','온도가 30도 넘으면 빨간 LED 켜기']},
+    {'cat': '스위치', 'items': ['스위치 누르면 빨간 LED 켜기','스위치 누를 때마다 LED 토글하기','스위치 누른 횟수 OLED에 표시하기']},
+    {'cat': '종합', 'items': ['LED 순서대로 켜면서 음계 도레미 연주하기','10초 타이머: OLED 카운트다운 후 부저 울리기','라면 타이머: 3분 카운트다운 OLED에 표시하고 끝나면 부저 울리기']},
+  ];
+
+  // Example question data
+  static const _exQuestionData = [
+    {'cat': '기초 개념', 'items': ['변수란 무엇인가요?','함수란 무엇이고 왜 사용하나요?','for문과 while문의 차이가 뭔가요?','if문은 어떻게 사용하나요?']},
+    {'cat': 'Arduino', 'items': ['setup() 함수와 loop() 함수의 역할은 무엇인가요?','digitalWrite()는 어떻게 사용하나요?','delay()와 millis()의 차이는 무엇인가요?','tone() 함수로 소리를 내는 방법을 알려주세요']},
+    {'cat': '하드웨어', 'items': ['LED를 켜려면 어떤 코드를 써야 하나요?','Active LOW 방식이란 무엇인가요?','I2C 통신이란 무엇인가요?','GPIO 핀이란 무엇인가요?']},
+    {'cat': '심화', 'items': ['FreeRTOS 태스크란 무엇이고 왜 필요한가요?','xTaskCreate() 함수는 어떻게 사용하나요?','OLED 디스플레이에 글자를 표시하는 원리가 뭔가요?','BLE 통신이란 무엇인가요?']},
+  ];
 
   // UUIDs
   static const otaServiceUuid = '0000fe00-0000-1000-8000-00805f9b34fb';
@@ -750,6 +782,8 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
           if (_buildStatus != 'idle') _buildProgressCard(),
           if (_generatedCode != null && _generatedCode!.isNotEmpty && _buildStatus == 'success') _buildCodeCard(),
           if (_history.isNotEmpty) _buildHistoryCard(),
+          _buildQuestionCard(),
+          if (_questionStatus != 'idle') _buildAnswerCard(),
         ]),
       ),
     );
@@ -838,22 +872,26 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _buildPromptCard() {
+    final totalCount = _exPromptData.fold<int>(0, (s, c) => s + (c['items'] as List).length);
     return styledCard(
       title: 'UTTEC 보드에 명령하기',
       icon: Icons.auto_awesome,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        // 예시 프롬프트 (터치하면 입력됨)
-        const Text('예시 프롬프트 (터치하면 자동 입력)', style: TextStyle(fontSize: 11, color: C.text2)),
-        const SizedBox(height: 6),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(children: [
-            _exampleChip('LED 깜빡이기'),
-            _exampleChip('부저 5회 울리고 멈추기'),
-            _exampleChip('학교종 멜로디 연주'),
-            _exampleChip('OLED에 글자 표시'),
-            _exampleChip('온도 측정하기'),
-          ]),
+        // 예시 프롬프트 (접기/펼치기)
+        _buildCollapsibleExamples(
+          expanded: _showExPrompts,
+          onToggle: () => setState(() { _showExPrompts = !_showExPrompts; _exPromptCat = -1; }),
+          label: '예시 프롬프트 ($totalCount개)',
+          icon: Icons.list_alt,
+          selectedCat: _exPromptCat,
+          data: _exPromptData,
+          accentColor: C.primary,
+          onCatSelect: (i) => setState(() => _exPromptCat = _exPromptCat == i ? -1 : i),
+          onItemSelect: (t) => setState(() {
+            _promptController.text = t;
+            _showExPrompts = false;
+            _exPromptCat = -1;
+          }),
         ),
         const SizedBox(height: 10),
         TextField(
@@ -902,24 +940,189 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  Widget _exampleChip(String text) {
-    return GestureDetector(
-      onTap: () => _promptController.text = text,
-      child: Container(
-        margin: const EdgeInsets.only(right: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        decoration: BoxDecoration(
-          color: C.surface2,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: C.border),
+  // ─── 공통: 접기/펼치기 예시 목록 위젯 ───
+  Widget _buildCollapsibleExamples({
+    required bool expanded,
+    required VoidCallback onToggle,
+    required String label,
+    required IconData icon,
+    required int selectedCat,
+    required List<Map<String, dynamic>> data,
+    required Color accentColor,
+    required void Function(int) onCatSelect,
+    required void Function(String) onItemSelect,
+  }) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      GestureDetector(
+        onTap: onToggle,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Row(children: [
+            Icon(icon, size: 16, color: C.text2),
+            const SizedBox(width: 6),
+            Expanded(child: Text(
+              expanded ? '$label — 카테고리를 선택하세요' : '$label — 터치하면 펼침',
+              style: const TextStyle(fontSize: 12, color: C.text2, fontWeight: FontWeight.w600),
+            )),
+            Icon(expanded ? Icons.expand_less : Icons.expand_more, size: 18, color: C.text2),
+          ]),
         ),
-        child: Text(text, style: const TextStyle(fontSize: 12, color: C.text2)),
       ),
+      if (expanded) ...[
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(children: List.generate(data.length, (i) {
+            final cat = data[i];
+            final sel = selectedCat == i;
+            return GestureDetector(
+              onTap: () => onCatSelect(i),
+              child: Container(
+                margin: const EdgeInsets.only(right: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: sel ? accentColor : C.surface2,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Text('${cat['cat']} (${(cat['items'] as List).length})',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600,
+                    color: sel ? Colors.white : C.text2)),
+              ),
+            );
+          })),
+        ),
+        if (selectedCat >= 0) ...[
+          const SizedBox(height: 8),
+          ...((data[selectedCat]['items'] as List).cast<String>()).map((t) =>
+            GestureDetector(
+              onTap: () => onItemSelect(t),
+              child: Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(bottom: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                decoration: BoxDecoration(
+                  color: C.surface2,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: C.border),
+                ),
+                child: Row(children: [
+                  Icon(Icons.play_arrow, size: 14, color: accentColor),
+                  const SizedBox(width: 8),
+                  Expanded(child: Text(t, style: const TextStyle(fontSize: 13))),
+                ]),
+              ),
+            ),
+          ),
+        ],
+      ],
+    ]);
+  }
+
+  // ─── 코딩 질문 API 호출 ───
+  Future<void> _askQuestion() async {
+    final q = _questionController.text.trim();
+    if (q.isEmpty) return;
+    setState(() { _questionStatus = 'asking'; _questionAnswer = ''; });
+    final t0 = DateTime.now();
+    try {
+      final resp = await http.post(
+        Uri.parse('${_s.serverUrl}/api/v1/chat'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'question': q}),
+      ).timeout(const Duration(seconds: 120));
+      if (resp.statusCode == 200) {
+        final data = jsonDecode(resp.body);
+        setState(() {
+          _questionStatus = 'done';
+          _questionAnswer = data['answer'] ?? '';
+          _questionElapsed = (data['elapsed'] ?? 0).toDouble();
+        });
+      } else {
+        setState(() { _questionStatus = 'failed'; _questionAnswer = '오류: ${resp.body}'; });
+      }
+    } catch (e) {
+      setState(() { _questionStatus = 'failed'; _questionAnswer = '연결 실패: $e'; });
+    }
+  }
+
+  // ─── 코딩 질문 카드 ───
+  Widget _buildQuestionCard() {
+    final totalCount = _exQuestionData.fold<int>(0, (s, c) => s + (c['items'] as List).length);
+    return styledCard(
+      title: '코딩 질문하기',
+      icon: Icons.chat_bubble_outline,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        _buildCollapsibleExamples(
+          expanded: _showExQuestions,
+          onToggle: () => setState(() { _showExQuestions = !_showExQuestions; _exQuestionCat = -1; }),
+          label: '예시 질문 ($totalCount개)',
+          icon: Icons.help_outline,
+          selectedCat: _exQuestionCat,
+          data: _exQuestionData,
+          accentColor: const Color(0xFF7C3AED),
+          onCatSelect: (i) => setState(() => _exQuestionCat = _exQuestionCat == i ? -1 : i),
+          onItemSelect: (t) => setState(() {
+            _questionController.text = t;
+            _showExQuestions = false;
+            _exQuestionCat = -1;
+          }),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: _questionController,
+          maxLines: 2,
+          decoration: InputDecoration(
+            hintText: '코딩에 대해 궁금한 것을 물어보세요...\n예: for문과 while문의 차이가 뭐야?',
+            hintStyle: const TextStyle(color: Color(0xFF64748B), fontSize: 14, height: 1.5),
+            filled: true, fillColor: C.surface2,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: C.border)),
+            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFF7C3AED))),
+          ),
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton.icon(
+            onPressed: _questionStatus == 'asking' ? null : _askQuestion,
+            icon: Icon(_questionStatus == 'asking' ? Icons.hourglass_top : Icons.chat),
+            label: Text(
+              _questionStatus == 'asking' ? 'AI가 답변을 생각하고 있어요...' : '질문하기',
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              backgroundColor: const Color(0xFF7C3AED),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+          ),
+        ),
+      ]),
+    );
+  }
+
+  // ─── 답변 카드 ───
+  Widget _buildAnswerCard() {
+    return styledCard(
+      title: 'AI 답변${_questionElapsed > 0 ? ' (${_questionElapsed}초)' : ''}',
+      icon: Icons.smart_toy,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        if (_questionStatus == 'asking')
+          const Center(child: Padding(
+            padding: EdgeInsets.all(20),
+            child: CircularProgressIndicator(color: Color(0xFF7C3AED)),
+          ))
+        else
+          SelectableText(_questionAnswer,
+            style: TextStyle(
+              fontSize: 14, height: 1.7,
+              color: _questionStatus == 'failed' ? C.error : C.text,
+            ),
+          ),
+      ]),
     );
   }
 
   Widget _buildProgressCard() {
-    // 통합 상태: 빌드 → 다운로드 → OTA
     final bool isBuilding = _buildStatus == 'generating' || _buildStatus == 'building';
     final bool buildDone = _buildStatus == 'success';
     final bool otaDone = _otaStatus == 'success';
@@ -931,58 +1134,124 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                        : isBuilding ? C.primary
                        : buildDone ? C.success : C.primary;
 
-    // 전체 진행률 계산 (빌드 0-70%, OTA 70-100%)
+    // 전체 진행률 계산
     double totalProgress;
     String statusText;
+    String statusIcon;
+    String statusSub;
     if (otaDone) {
       totalProgress = 1.0;
-      statusText = 'UTTEC 보드가 새 펌웨어로 동작 중!';
+      statusText = '전송 완료!';
+      statusSub = 'UTTEC 보드가 새 펌웨어로 동작 중';
+      statusIcon = '✅';
     } else if (otaInProgress) {
       totalProgress = 0.7 + (_otaProgress / 100) * 0.3;
-      statusText = 'UTTEC 보드에 전송 중... $_otaProgress%';
+      statusText = 'BLE 전송 중...';
+      statusSub = 'UTTEC 보드에 펌웨어 전송';
+      statusIcon = '📡';
     } else if (buildDone && _firmware != null) {
       totalProgress = 0.7;
-      statusText = '준비 완료! (${(_firmwareSize / 1024).toStringAsFixed(0)} KB)';
-    } else if (isBuilding) {
-      totalProgress = (_buildProgress / 100) * 0.7;
-      statusText = _buildStatus == 'generating' ? 'AI가 코드 생성 중...' : '펌웨어 빌드 중...';
+      statusText = '빌드 완료!';
+      statusSub = '${(_firmwareSize / 1024).toStringAsFixed(0)} KB 준비됨';
+      statusIcon = '✅';
+    } else if (_buildStatus == 'generating') {
+      totalProgress = (_buildProgress / 100) * 0.35;
+      statusText = 'AI 코드 생성 중...';
+      statusSub = 'Claude가 코드를 작성합니다';
+      statusIcon = '🤖';
+    } else if (_buildStatus == 'building') {
+      totalProgress = 0.35 + (_buildProgress / 100) * 0.35;
+      statusText = '펌웨어 빌드 중...';
+      statusSub = 'Arduino로 컴파일합니다';
+      statusIcon = '🔨';
     } else if (hasFailed) {
       totalProgress = 0;
-      statusText = _otaStatus == 'failed' ? _otaMessage : _buildMessage;
+      statusText = '실패';
+      statusSub = _otaStatus == 'failed' ? _otaMessage : _buildMessage;
+      statusIcon = '❌';
     } else {
       totalProgress = 0;
       statusText = _buildMessage;
+      statusSub = '';
+      statusIcon = '⏳';
     }
+
+    int pct = (totalProgress * 100).round();
+
+    // 3단계 타임라인 데이터
+    int currentStep = 0;
+    if (_buildStatus == 'generating') currentStep = 0;
+    else if (_buildStatus == 'building') currentStep = 1;
+    else if (buildDone || otaInProgress || otaDone) currentStep = 2;
+    final timelineSteps = [
+      {'label': 'AI 생성', 'done': currentStep > 0 || buildDone || otaDone},
+      {'label': '빌드', 'done': currentStep > 1 || buildDone || otaDone},
+      {'label': '완료', 'done': buildDone || otaDone},
+    ];
 
     return styledCard(
       title: '진행 상태',
       icon: Icons.rocket_launch,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        // 상태 메시지 + 경과 시간
-        Row(children: [
-          if (isBuilding)
-            SizedBox(width: 18, height: 18, child: CircularProgressIndicator(
-              strokeWidth: 2, color: C.primary))
-          else
-            Icon(hasFailed ? Icons.error : otaDone ? Icons.check_circle : Icons.check_circle,
-              color: statusColor, size: 18),
-          const SizedBox(width: 8),
-          Expanded(child: Text(statusText,
-            style: TextStyle(fontSize: 13, color: statusColor, fontWeight: FontWeight.w500))),
-          if (isBuilding)
-            Text('${_elapsedSeconds}s', style: const TextStyle(fontSize: 12, color: C.text2)),
-        ]),
-        const SizedBox(height: 10),
-        // 통합 프로그레스 바
+      child: Column(children: [
+        // 큰 아이콘 + 상태
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Column(children: [
+            Text(statusIcon, style: const TextStyle(fontSize: 40)),
+            const SizedBox(height: 8),
+            Text(statusText, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: statusColor)),
+            if (statusSub.isNotEmpty)
+              Padding(padding: const EdgeInsets.only(top: 4),
+                child: Text(statusSub, style: const TextStyle(fontSize: 12, color: C.text2))),
+          ]),
+        ),
+        // 프로그레스 바 + 퍼센트
         ClipRRect(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(5),
           child: LinearProgressIndicator(
-            value: isBuilding ? null : totalProgress, // 빌드 중엔 무한 애니메이션
+            value: isBuilding ? null : totalProgress,
             backgroundColor: C.surface2,
             valueColor: AlwaysStoppedAnimation(statusColor),
-            minHeight: 6,
+            minHeight: 10,
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(top: 6, bottom: 8),
+          child: Text('$pct%', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: statusColor)),
+        ),
+        // 3단계 타임라인
+        Row(children: List.generate(3, (i) {
+          final step = timelineSteps[i];
+          final done = step['done'] as bool;
+          final active = i == currentStep && isBuilding;
+          return Expanded(child: Container(
+            margin: EdgeInsets.only(left: i > 0 ? 4 : 0),
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            decoration: BoxDecoration(
+              color: done ? C.success.withValues(alpha: 0.15)
+                   : active ? C.primary.withValues(alpha: 0.12) : C.surface2,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: done ? C.success : active ? C.primary : C.border),
+            ),
+            child: Column(children: [
+              Container(width: 22, height: 22,
+                decoration: BoxDecoration(shape: BoxShape.circle,
+                  color: done ? C.success : active ? C.primary : C.surface2),
+                child: Center(child: done
+                  ? const Icon(Icons.check, size: 14, color: Colors.white)
+                  : Text('${i + 1}', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold,
+                      color: active ? Colors.white : C.text2))),
+              ),
+              const SizedBox(height: 4),
+              Text(step['label'] as String,
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600,
+                  color: done ? C.success : active ? C.text : C.text2)),
+              Text(active ? '${_elapsedSeconds}초' : done ? '✓' : '-',
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600,
+                  color: done ? C.success : active ? C.warning : C.text2)),
+            ]),
+          ));
+        })),
         const SizedBox(height: 10),
         // 빌드 완료 후 — 자동 진행 또는 수동 재시도
         if (buildDone && _firmware != null && !otaDone && !otaInProgress)
@@ -1155,7 +1424,6 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
               onTap: () {
                 _promptController.text = h['prompt'] ?? '';
                 setState(() => _showHistory = false);
-                _startBuild();
               },
               child: Container(
                 margin: const EdgeInsets.only(bottom: 6),

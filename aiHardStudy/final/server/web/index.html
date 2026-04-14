@@ -409,14 +409,7 @@ body {
   <div class="tab-page active" id="page-home">
     <div class="scard">
       <div class="scard-header"><span class="hi">&#x2728;</span> UTTEC 보드에 명령하기</div>
-      <div style="font-size:11px;color:var(--text2);margin-bottom:6px;">예시 프롬프트 (터치하면 자동 입력)</div>
-      <div class="chip-row">
-        <span class="chip" onclick="setPrompt('LED 깜빡이기')">LED 깜빡이기</span>
-        <span class="chip" onclick="setPrompt('부저 5회 울리고 멈추기')">부저 5회</span>
-        <span class="chip" onclick="setPrompt('학교종 멜로디 연주')">학교종 멜로디</span>
-        <span class="chip" onclick="setPrompt('OLED에 글자 표시')">OLED 표시</span>
-        <span class="chip" onclick="setPrompt('온도 측정하기')">온도 측정</span>
-      </div>
+      <div id="examplePromptCard"></div>
       <textarea class="prompt-input" id="promptInput" placeholder="예: 빨간 LED를 0.5초마다 깜빡이고,&#10;OLED에 &quot;Hello!&quot;를 표시해줘"></textarea>
       <button class="btn-primary" id="btnBuild" onclick="startBuild()" style="margin-top:12px;">
         <span>&#x1F680;</span> 위 명령을 UTTEC 펌웨어로 만들기
@@ -430,13 +423,7 @@ body {
     <!-- 코딩 질문 카드 -->
     <div class="scard">
       <div class="scard-header"><span class="hi">&#x1F4AC;</span> 코딩 질문하기</div>
-      <div style="font-size:11px;color:var(--text2);margin-bottom:6px;">Arduino/ESP32/C언어 등 코딩에 대해 질문하세요</div>
-      <div class="chip-row">
-        <span class="chip" onclick="setQuestion('for문이 뭐야?')">for문이 뭐야?</span>
-        <span class="chip" onclick="setQuestion('digitalWrite와 analogWrite 차이')">digital vs analog</span>
-        <span class="chip" onclick="setQuestion('I2C 통신이 뭐야?')">I2C 통신</span>
-        <span class="chip" onclick="setQuestion('FreeRTOS 태스크 만드는 법')">FreeRTOS 태스크</span>
-      </div>
+      <div id="exampleQuestionCard"></div>
       <textarea class="prompt-input" id="questionInput" placeholder="코딩에 대해 궁금한 것을 물어보세요...&#10;예: for문과 while문의 차이가 뭐야?" style="min-height:60px;"></textarea>
       <button class="btn-primary" id="btnAsk" onclick="askQuestion()" style="margin-top:12px;background:#7C3AED;">
         <span>&#x1F4AC;</span> 질문하기
@@ -625,6 +612,104 @@ function switchTab(name,btn){
 function getApiBase(){return localStorage.getItem('uttec_server')||location.origin}
 function saveServerUrl(){const u=document.getElementById('serverUrl').value.trim();if(u){localStorage.setItem('uttec_server',u);checkHealth();}}
 
+// ═══ Example Prompts ═══
+const examplePrompts=[
+  {cat:'LED 기초',items:['빨간 LED 켜기','빨간 LED 1초마다 깜빡이기','빨간 LED 5번 깜빡이고 멈추기','노란 LED 0.5초마다 깜빡이기','파란 LED 2초마다 깜빡이기']},
+  {cat:'다중 LED',items:['빨강, 노랑, 파랑 LED 모두 켜기','빨강, 노랑, 파랑 LED 동시에 깜빡이기','신호등 만들기: 빨강 3초, 노랑 1초, 파랑 3초 반복','빨강 → 노랑 → 파랑 순서대로 켜고 끄기','비상등처럼 빨강, 파랑 번갈아 깜빡이기','LED 3개로 이진수 0부터 7까지 세기']},
+  {cat:'부저',items:['부저 한번 울리기','부저 5번 울리고 멈추기','SOS 모스부호 울리기']},
+  {cat:'멜로디',items:['도레미파솔라시도 연주하기','학교종 멜로디 연주하기','반짝반짝 작은별 연주하기','생일 축하 노래 연주하기','경찰차 사이렌 소리 만들기','점점 높아지는 소리 내기']},
+  {cat:'OLED',items:['OLED에 "Hello" 표시하기','OLED에 1부터 10까지 숫자 세기','OLED에 카운트다운 5, 4, 3, 2, 1, 0 표시하기','OLED에 "빨강 LED ON" 표시 후 빨간 LED 켜기']},
+  {cat:'온습도 센서',items:['현재 온도 측정해서 시리얼에 출력하기','온도와 습도를 OLED에 같이 표시하기','온도가 30도 넘으면 빨간 LED 켜기','온도에 따라 LED 색 바꾸기']},
+  {cat:'스위치',items:['스위치 누르면 빨간 LED 켜기','스위치 누를 때마다 LED 토글하기','스위치 누른 횟수 OLED에 표시하기','스위치 누를 때마다 LED 색 바꾸기']},
+  {cat:'종합',items:['LED 순서대로 켜면서 음계 도레미 연주하기','10초 타이머: OLED 카운트다운 후 부저 울리기','반응속도 테스트: 랜덤 시간 후 LED 켜지면 스위치 누르기','라면 타이머: 3분 카운트다운 OLED에 표시하고 끝나면 부저 울리기','교실 온도 모니터: 5초마다 온습도 OLED 표시하고 이상하면 LED 경고']},
+];
+let exPromptExpanded=false,exPromptCat=-1;
+function toggleExPrompt(){exPromptExpanded=!exPromptExpanded;exPromptCat=-1;renderExPrompts();}
+function selectExCat(i){exPromptCat=exPromptCat===i?-1:i;renderExPrompts();}
+function selectExPrompt(t){document.getElementById('promptInput').value=t;exPromptExpanded=false;exPromptCat=-1;renderExPrompts();}
+function renderExPrompts(){
+  const el=document.getElementById('examplePromptCard');
+  const arrow=exPromptExpanded?'&#x25B2;':'&#x25BC;';
+  if(!exPromptExpanded){
+    el.innerHTML=`<div onclick="toggleExPrompt()" style="display:flex;align-items:center;gap:6px;padding:8px 0;cursor:pointer;margin-bottom:8px;">
+      <span style="font-size:14px">&#x1F4CB;</span>
+      <span style="flex:1;font-size:12px;color:var(--text2);font-weight:600;">예시 프롬프트 (${examplePrompts.reduce((a,c)=>a+c.items.length,0)}개) — 터치하면 펼침</span>
+      <span style="font-size:12px;color:var(--text2)">${arrow}</span>
+    </div>`;
+    return;
+  }
+  let catHtml=examplePrompts.map((c,i)=>{
+    const sel=exPromptCat===i;
+    const bg=sel?'var(--primary)':'var(--surface2)';
+    const color=sel?'white':'var(--text2)';
+    return `<span style="flex-shrink:0;padding:6px 12px;background:${bg};color:${color};border-radius:16px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;" onclick="selectExCat(${i})">${c.cat} (${c.items.length})</span>`;
+  }).join('');
+  let itemsHtml='';
+  if(exPromptCat>=0){
+    const items=examplePrompts[exPromptCat].items;
+    itemsHtml='<div style="margin-top:8px;">'+items.map(t=>
+      `<div onclick="selectExPrompt('${t.replace(/'/g,"\\'")}')" style="display:flex;align-items:center;gap:8px;padding:10px 12px;margin-bottom:4px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:13px;color:var(--text);">
+        <span style="color:var(--primary);font-size:12px;">&#x25B6;</span>${t}</div>`
+    ).join('')+'</div>';
+  }
+  el.innerHTML=`<div>
+    <div onclick="toggleExPrompt()" style="display:flex;align-items:center;gap:6px;padding:8px 0;cursor:pointer;">
+      <span style="font-size:14px">&#x1F4CB;</span>
+      <span style="flex:1;font-size:12px;color:var(--text2);font-weight:600;">예시 프롬프트 — 카테고리를 선택하세요</span>
+      <span style="font-size:12px;color:var(--text2)">${arrow}</span>
+    </div>
+    <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;">${catHtml}</div>
+    ${itemsHtml}
+  </div>`;
+}
+
+// ═══ Example Questions ═══
+const exampleQuestions=[
+  {cat:'기초 개념',items:['변수란 무엇인가요?','함수란 무엇이고 왜 사용하나요?','for문과 while문의 차이가 뭔가요?','if문은 어떻게 사용하나요?','배열이란 무엇인가요?']},
+  {cat:'Arduino',items:['setup() 함수와 loop() 함수의 역할은 무엇인가요?','digitalWrite()는 어떻게 사용하나요?','delay()와 millis()의 차이는 무엇인가요?','analogRead()로 센서 값을 읽는 방법을 알려주세요','tone() 함수로 소리를 내는 방법을 알려주세요']},
+  {cat:'하드웨어',items:['LED를 켜려면 어떤 코드를 써야 하나요?','Active LOW 방식이란 무엇인가요?','I2C 통신이란 무엇인가요?','PWM이란 무엇이고 어디에 쓰나요?','GPIO 핀이란 무엇인가요?']},
+  {cat:'심화',items:['FreeRTOS 태스크란 무엇이고 왜 필요한가요?','xTaskCreate() 함수는 어떻게 사용하나요?','인터럽트란 무엇인가요?','OLED 디스플레이에 글자를 표시하는 원리가 뭔가요?','BLE 통신이란 무엇인가요?']},
+];
+let exQExpanded=false,exQCat=-1;
+function toggleExQ(){exQExpanded=!exQExpanded;exQCat=-1;renderExQuestions();}
+function selectExQCat(i){exQCat=exQCat===i?-1:i;renderExQuestions();}
+function selectExQ(t){document.getElementById('questionInput').value=t;exQExpanded=false;exQCat=-1;renderExQuestions();}
+function renderExQuestions(){
+  const el=document.getElementById('exampleQuestionCard');
+  const arrow=exQExpanded?'&#x25B2;':'&#x25BC;';
+  if(!exQExpanded){
+    el.innerHTML=`<div onclick="toggleExQ()" style="display:flex;align-items:center;gap:6px;padding:8px 0;cursor:pointer;margin-bottom:8px;">
+      <span style="font-size:14px">&#x2753;</span>
+      <span style="flex:1;font-size:12px;color:var(--text2);font-weight:600;">예시 질문 (${exampleQuestions.reduce((a,c)=>a+c.items.length,0)}개) — 터치하면 펼침</span>
+      <span style="font-size:12px;color:var(--text2)">${arrow}</span>
+    </div>`;
+    return;
+  }
+  let catHtml=exampleQuestions.map((c,i)=>{
+    const sel=exQCat===i;
+    const bg=sel?'#7C3AED':'var(--surface2)';
+    const color=sel?'white':'var(--text2)';
+    return `<span style="flex-shrink:0;padding:6px 12px;background:${bg};color:${color};border-radius:16px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;" onclick="selectExQCat(${i})">${c.cat} (${c.items.length})</span>`;
+  }).join('');
+  let itemsHtml='';
+  if(exQCat>=0){
+    const items=exampleQuestions[exQCat].items;
+    itemsHtml='<div style="margin-top:8px;">'+items.map(t=>
+      `<div onclick="selectExQ('${t.replace(/'/g,"\\'")}')" style="display:flex;align-items:center;gap:8px;padding:10px 12px;margin-bottom:4px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:13px;color:var(--text);">
+        <span style="color:#7C3AED;font-size:12px;">&#x25B6;</span>${t}</div>`
+    ).join('')+'</div>';
+  }
+  el.innerHTML=`<div>
+    <div onclick="toggleExQ()" style="display:flex;align-items:center;gap:6px;padding:8px 0;cursor:pointer;">
+      <span style="font-size:14px">&#x2753;</span>
+      <span style="flex:1;font-size:12px;color:var(--text2);font-weight:600;">예시 질문 — 카테고리를 선택하세요</span>
+      <span style="font-size:12px;color:var(--text2)">${arrow}</span>
+    </div>
+    <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;">${catHtml}</div>
+    ${itemsHtml}
+  </div>`;
+}
+
 // ═══ Build Flow ═══
 function setPrompt(t){document.getElementById('promptInput').value=t;}
 
@@ -688,10 +773,10 @@ function showStepProgress(status,pct,msg,sec,timing){
   const pc=document.getElementById('progressCard');
   pc.style.display='block';
 
-  // Step 상태 계산
   const steps=[
-    {label:'AI 코드 생성 (Claude)',key:'2b_claude',icon:'&#x1F916;'},
-    {label:'Arduino 빌드',key:'4_build',icon:'&#x1F528;'},
+    {label:'AI 코드 생성',sub:'Claude가 코드를 작성합니다',key:'2b_claude',icon:'&#x1F916;'},
+    {label:'펌웨어 빌드',sub:'Arduino로 컴파일합니다',key:'4_build',icon:'&#x1F528;'},
+    {label:'완료',sub:'BLE로 전송 준비',key:'',icon:'&#x2705;'},
   ];
 
   let currentStep=0;
@@ -699,46 +784,69 @@ function showStepProgress(status,pct,msg,sec,timing){
   else if(status==='building')currentStep=1;
   else if(status==='success')currentStep=2;
 
-  // timing에서 시간 추출 (tryN 포함)
   function getTime(prefix){
+    if(!prefix)return null;
     for(const k in timing){if(k.startsWith(prefix))return timing[k];}
     return null;
   }
 
-  let stepsHtml='<div style="margin-bottom:14px;">';
+  // 전체 진행률 계산
+  let totalPct=0;
+  if(status==='generating')totalPct=Math.min(40,10+sec*2);
+  else if(status==='building')totalPct=Math.min(90,45+sec);
+  else if(status==='success')totalPct=100;
+  const isActive=status==='generating'||status==='building';
+
+  // 현재 단계 큰 표시
+  const cur=steps[Math.min(currentStep,steps.length-1)];
+  const statusColor=status==='success'?'var(--success)':'var(--primary)';
+  const statusBg=status==='success'?'rgba(16,185,129,0.12)':'rgba(37,99,235,0.12)';
+  const elapsedStr=timing.total?timing.total+'초':sec+'초';
+
+  let currentHtml=`<div style="text-align:center;padding:16px 0 12px;">
+    <div style="font-size:40px;${isActive?'animation:bounce 1s infinite':''};">${cur.icon}</div>
+    <div style="font-size:16px;font-weight:700;margin-top:8px;color:${statusColor}">${isActive?cur.label+' 중...':status==='success'?'빌드 완료!':'대기 중'}</div>
+    <div style="font-size:12px;color:var(--text2);margin-top:4px">${cur.sub}</div>
+  </div>`;
+
+  // 프로그레스 바 (퍼센트 표시)
+  const barColor=status==='success'?'var(--success)':'var(--primary)';
+  let progressHtml=`<div style="position:relative;margin:4px 0 12px;">
+    <div class="progress-bar" style="height:10px;border-radius:5px;">
+      <div class="progress-fill" style="width:${totalPct}%;background:${barColor};height:100%;border-radius:5px;${isActive?'animation:pulse 1.5s infinite':''}"></div>
+    </div>
+    <div style="text-align:center;margin-top:6px;font-size:13px;font-weight:700;color:${statusColor}">${totalPct}%</div>
+  </div>`;
+
+  // 단계별 타임라인
+  let timelineHtml='<div style="display:flex;gap:4px;margin:8px 0 4px;">';
   for(let i=0;i<steps.length;i++){
     const s=steps[i];
     const t=getTime(s.key);
-    const done=i<currentStep||(i===currentStep-1&&status==='success');
-    const active=i===currentStep&&(status==='generating'||status==='building');
-    const future=i>currentStep;
+    const done=status==='success'?i<=2:(i<currentStep);
+    const active=i===currentStep&&isActive;
 
-    const dotColor=done?'var(--success)':active?'var(--primary)':'var(--surface2)';
-    const textColor=done?'var(--success)':active?'var(--text)':'var(--text2)';
-    const timeStr=t!==null?t+'초':'';
-    const statusIcon=done?'&#x2705;':active?'&#x23F3;':'&#x2B1C;';
+    const bg=done?'rgba(16,185,129,0.15)':active?statusBg:'var(--surface2)';
+    const border=done?'var(--success)':active?'var(--primary)':'var(--border)';
+    const txtColor=done?'var(--success)':active?'var(--text)':'var(--text2)';
+    const numBg=done?'var(--success)':active?'var(--primary)':'var(--surface2)';
+    const numColor=done||active?'white':'var(--text2)';
 
-    stepsHtml+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;${i<2?'border-bottom:1px solid var(--border);':''}">
-      <span style="font-size:16px;width:24px;text-align:center">${statusIcon}</span>
-      <span style="font-size:14px;width:24px;text-align:center">${s.icon}</span>
-      <span style="flex:1;font-size:13px;color:${textColor};font-weight:${active?'600':'400'}">Step ${i+1}. ${s.label}</span>
-      <span style="font-size:13px;font-weight:600;color:${done?'var(--success)':active?'var(--warning)':'var(--text2)'}">
-        ${done&&timeStr?timeStr:active?'진행 중...':'-'}
-      </span>
+    timelineHtml+=`<div style="flex:1;background:${bg};border:1px solid ${border};border-radius:10px;padding:10px 6px;text-align:center;">
+      <div style="width:22px;height:22px;border-radius:50%;background:${numBg};color:${numColor};font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto">${done?'&#x2713;':i+1}</div>
+      <div style="font-size:11px;font-weight:600;color:${txtColor};margin-top:6px">${s.label}</div>
+      <div style="font-size:11px;color:${done?'var(--success)':active?'var(--warning)':'var(--text2)'};margin-top:2px;font-weight:600">
+        ${done&&t!==null?t+'초':active?elapsedStr:'-'}
+      </div>
     </div>`;
   }
-  stepsHtml+='</div>';
+  timelineHtml+='</div>';
 
-  // Total timing
-  const totalTime=timing.total?timing.total+'초':sec+'초 (경과)';
-  const isActive=status==='generating'||status==='building';
-  const barColor=status==='success'?'var(--success)':'var(--primary)';
+  // 메시지
+  let msgHtml=msg?`<div style="text-align:center;font-size:12px;color:var(--text2);margin-top:8px">${msg}</div>`:'';
 
-  pc.innerHTML=`<div class="scard"><div class="scard-header"><span class="hi">&#x1F680;</span> 진행 상태
-    <span style="margin-left:auto;font-size:12px;color:var(--text2)">총 ${totalTime}</span></div>
-    ${stepsHtml}
-    <div class="progress-bar"><div class="progress-fill" style="width:${isActive?'100%':pct+'%'};background:${barColor};${isActive?'animation:pulse 1.5s infinite':''}"></div></div>
-    <div style="margin-top:8px;font-size:12px;color:var(--text2)">${msg}</div></div>`;
+  pc.innerHTML=`<div class="scard" style="border-color:${isActive?'var(--primary)':status==='success'?'var(--success)':'var(--border)'}">
+    ${currentHtml}${progressHtml}${timelineHtml}${msgHtml}</div>`;
 }
 
 function showProgress(pct,msg,indeterminate,sec){
@@ -931,12 +1039,22 @@ async function playMelody(){for(let i=0;i<8;i++){sendCmd('NOTE_'+i);await sleep(
 function renameDevice(){const n=document.getElementById('newDeviceName').value.trim();if(!n){toast('이름을 입력하세요');return;}sendCmd('SETNAME:'+n);toast('이름 변경됨 — 보드 재부팅됩니다');}
 
 // ═══ History ═══
+let historyExpanded=false;
 function addHistory(prompt,jobId){buildHistory.unshift({prompt,jobId,time:new Date().toLocaleTimeString()});if(buildHistory.length>10)buildHistory.pop();localStorage.setItem('uttec_history',JSON.stringify(buildHistory));renderHistory();}
+function toggleHistory(){historyExpanded=!historyExpanded;renderHistory();}
 function renderHistory(){
   if(!buildHistory.length){document.getElementById('historyCard').style.display='none';return;}
   document.getElementById('historyCard').style.display='block';
-  document.getElementById('historyCard').innerHTML=`<div class="scard"><div class="scard-header"><span class="hi">&#x1F4DC;</span> 최근 기록 (${buildHistory.length}개)</div>`+
-    buildHistory.map(h=>`<div class="history-item" onclick="setPrompt('${h.prompt.replace(/'/g,"\\'")}')"><span style="color:var(--primary)">&#x25B6;</span><span style="flex:1;font-size:13px">${h.prompt}</span><span style="font-size:11px;color:var(--text2)">${h.time}</span></div>`).join('')+'</div>';
+  const arrow=historyExpanded?'&#x25B2;':'&#x25BC;';
+  const items=historyExpanded?buildHistory:[];
+  document.getElementById('historyCard').innerHTML=`<div class="scard" style="padding:0;overflow:hidden;">
+    <div onclick="toggleHistory()" style="display:flex;align-items:center;gap:8px;padding:14px 16px;cursor:pointer;">
+      <span style="font-size:16px">&#x1F4DC;</span>
+      <span style="flex:1;font-size:13px;font-weight:600;color:var(--text2)">최근 기록 (${buildHistory.length}개)</span>
+      <span style="font-size:12px;color:var(--text2)">${arrow}</span>
+    </div>
+    ${historyExpanded?'<div style="padding:0 12px 12px;">'+buildHistory.map(h=>`<div class="history-item" onclick="event.stopPropagation();setPrompt('${h.prompt.replace(/'/g,"\\'")}')"><span style="color:var(--primary)">&#x25B6;</span><span style="flex:1;font-size:13px">${h.prompt}</span><span style="font-size:11px;color:var(--text2)">${h.time}</span></div>`).join('')+'</div>':''}
+  </div>`;
 }
 
 // ═══ HW Tab ═══
@@ -1049,9 +1167,12 @@ window.addEventListener('load',()=>{
   document.getElementById('webBleSupport').style.color=navigator.bluetooth?'var(--success)':'var(--error)';
   const saved=localStorage.getItem('uttec_server');
   document.getElementById('serverUrl').value=saved||location.origin;
-  checkHealth();renderHistory();initHW();initSW();
+  checkHealth();renderHistory();initHW();initSW();renderExPrompts();renderExQuestions();
 });
 </script>
-<style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}</style>
+<style>
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+</style>
 </body>
 </html>
