@@ -38,7 +38,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,7 +65,7 @@ private const val TEXT_CHAR_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a9"
 
 // Server URLs - 원격 Mac 서버 사용
 private const val AI_SERVER_URL = "http://100.79.180.64:8081"
-private const val CONTROL_CENTER_WS_URL = "ws://100.79.180.64:8090/ws"
+private const val CONTROL_CENTER_WS_URL = "ws://100.79.180.64:8091/ws"
 
 class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
 
@@ -106,6 +109,9 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
     // AI Response
     private val _aiResponse = mutableStateOf("")
     private val _isAiLoading = mutableStateOf(false)
+
+    // Text Input
+    private val _textInput = mutableStateOf("")
 
     // Winner/Message
     private val _isWinner = mutableStateOf(false)
@@ -455,6 +461,59 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
                         Spacer(modifier = Modifier.height(16.dp))
                     }
 
+                    // 텍스트 입력 (시끄러운 환경용)
+                    var textInput by remember { _textInput }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        OutlinedTextField(
+                            value = textInput,
+                            onValueChange = { textInput = it },
+                            modifier = Modifier.weight(1f),
+                            placeholder = { Text("질문을 입력하세요", color = Color.Gray) },
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White,
+                                focusedBorderColor = Color(0xFF9C27B0),
+                                unfocusedBorderColor = Color.Gray,
+                                cursorColor = Color(0xFF9C27B0)
+                            ),
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+                            keyboardActions = KeyboardActions(
+                                onSend = {
+                                    if (textInput.isNotBlank()) {
+                                        _recognizedText.value = textInput
+                                        askAI(textInput)
+                                        textInput = ""
+                                    }
+                                }
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        IconButton(
+                            onClick = {
+                                if (textInput.isNotBlank()) {
+                                    _recognizedText.value = textInput
+                                    askAI(textInput)
+                                    textInput = ""
+                                }
+                            },
+                            modifier = Modifier
+                                .size(48.dp)
+                                .background(Color(0xFF9C27B0), CircleShape)
+                        ) {
+                            Icon(
+                                Icons.Default.Send,
+                                contentDescription = "전송",
+                                tint = Color.White
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
                     // 마이크 버튼
                     FloatingActionButton(
                         onClick = { startListening() },
@@ -761,8 +820,18 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
 
     // ===== Control Center WebSocket =====
 
+    private var controlAutoReconnect = false
+    private var reconnectAttempt = 0
+    private val maxReconnectDelay = 30_000L // 최대 30초
+
     private fun connectControlCenter() {
-        _statusMessage.value = "본부 연결 중..."
+        controlAutoReconnect = true
+        reconnectAttempt = 0
+        doConnectControlCenter()
+    }
+
+    private fun doConnectControlCenter() {
+        _statusMessage.value = if (reconnectAttempt == 0) "본부 연결 중..." else "본부 재연결 중... (${reconnectAttempt}회)"
 
         val request = Request.Builder()
             .url("$CONTROL_CENTER_WS_URL/$deviceId")
@@ -770,6 +839,7 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
 
         controlWebSocket = httpClient.newWebSocket(request, object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
+                reconnectAttempt = 0
                 // 연결 직후 디바이스 정보 전송 (서버에서 이 데이터를 수신해야 등록됨)
                 val deviceInfo = JSONObject().apply {
                     put("type", "fanstick")
@@ -795,8 +865,8 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                 handler.post {
                     _controlConnected.value = false
-                    _statusMessage.value = "본부 연결 실패: ${t.message}"
                     Log.e(TAG, "WebSocket failure", t)
+                    scheduleReconnect()
                 }
             }
 
@@ -804,15 +874,35 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
                 handler.post {
                     _controlConnected.value = false
                     _statusMessage.value = "본부 연결 종료"
+                    scheduleReconnect()
                 }
             }
         })
     }
 
+    private fun scheduleReconnect() {
+        if (!controlAutoReconnect) return
+
+        reconnectAttempt++
+        // 지수 백오프: 3초, 6초, 12초, 24초, 30초(최대)
+        val delay = minOf(3000L * (1L shl minOf(reconnectAttempt - 1, 4)), maxReconnectDelay)
+        _statusMessage.value = "본부 연결 끊김 — ${delay / 1000}초 후 재연결 (${reconnectAttempt}회)"
+        Log.d(TAG, "Scheduling reconnect in ${delay}ms (attempt $reconnectAttempt)")
+
+        handler.postDelayed({
+            if (controlAutoReconnect && !_controlConnected.value) {
+                doConnectControlCenter()
+            }
+        }, delay)
+    }
+
     private fun disconnectControlCenter() {
+        controlAutoReconnect = false
+        handler.removeCallbacksAndMessages(null)
         controlWebSocket?.close(1000, "User disconnect")
         controlWebSocket = null
         _controlConnected.value = false
+        _statusMessage.value = "본부 연결 해제"
     }
 
     private fun sendReactionToControlCenter(reactionType: String, action: String) {

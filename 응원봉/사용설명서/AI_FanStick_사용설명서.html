@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI FanStick 사용설명서</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --primary: #6C5CE7;
+    --primary-light: #A29BFE;
+    --primary-bg: #F8F7FF;
+    --accent: #00B894;
+    --accent-light: #55EFC4;
+    --warning: #FDCB6E;
+    --danger: #E17055;
+    --dark: #2D3436;
+    --gray: #636E72;
+    --light-gray: #DFE6E9;
+    --bg: #FAFAFA;
+    --white: #FFFFFF;
+    --shadow: 0 2px 12px rgba(108,92,231,0.08);
+    --shadow-hover: 0 4px 20px rgba(108,92,231,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 30px;
+  }
+
+  /* Header */
+  .doc-header {
+    text-align: center;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, var(--primary) 0%, #8B7CF6 50%, var(--primary-light) 100%);
+    border-radius: 20px;
+    color: white;
+    margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .doc-header h1 {
+    font-size: 2.4em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .doc-header .subtitle {
+    font-size: 1.1em;
+    opacity: 0.9;
+    font-weight: 300;
+  }
+  .doc-header .version {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 6px 18px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    font-size: 0.85em;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 30px 35px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--primary);
+  }
+  .toc h2 {
+    font-size: 1.2em;
+    color: var(--primary);
+    margin-bottom: 15px;
+  }
+  .toc ol {
+    list-style: none;
+    counter-reset: toc-counter;
+    padding: 0;
+  }
+  .toc li {
+    counter-increment: toc-counter;
+    padding: 6px 0;
+    border-bottom: 1px solid #F0F0F0;
+  }
+  .toc li:last-child { border-bottom: none; }
+  .toc li::before {
+    content: counter(toc-counter, decimal-leading-zero);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.85em;
+    margin-right: 12px;
+  }
+  .toc a {
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: var(--primary); }
+
+  /* Section */
+  .section {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 35px 35px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+  }
+
+  h2 {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 25px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--primary-bg);
+  }
+  h2 .num {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 0.7em;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+
+  h3 {
+    font-size: 1.15em;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 25px 0 12px;
+    padding-left: 12px;
+    border-left: 3px solid var(--primary-light);
+  }
+
+  h4 {
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--gray);
+    margin: 18px 0 8px;
+  }
+
+  p { margin-bottom: 12px; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0 20px;
+    font-size: 0.92em;
+  }
+  th {
+    background: var(--primary-bg);
+    color: var(--primary);
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 2px solid var(--primary-light);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #F0F0F0;
+    vertical-align: top;
+  }
+  tr:hover td { background: #FAFAFF; }
+
+  /* Code */
+  pre {
+    background: #2D3436;
+    color: #DFE6E9;
+    padding: 18px 22px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    line-height: 1.6;
+    margin: 12px 0 18px;
+  }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--primary-bg);
+    color: var(--primary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.88em;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+  }
+
+  /* Architecture diagram */
+  .arch-diagram {
+    background: linear-gradient(135deg, #2D3436 0%, #3D4A4D 100%);
+    color: #DFE6E9;
+    padding: 25px;
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82em;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 15px 0 20px;
+  }
+
+  /* Step cards */
+  .step-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+  .step-card {
+    background: var(--primary-bg);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .step-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+  .step-num {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+  }
+  .step-card h4 {
+    color: var(--dark);
+    margin: 8px 0 4px;
+    border: none;
+    padding: 0;
+  }
+  .step-card p { font-size: 0.85em; color: var(--gray); margin: 0; }
+
+  /* Feature cards */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 15px 0;
+  }
+  .feature-card {
+    background: var(--primary-bg);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .feature-card .icon { font-size: 2em; margin-bottom: 8px; }
+  .feature-card .label { font-weight: 600; font-size: 0.9em; }
+  .feature-card .desc { font-size: 0.8em; color: var(--gray); margin-top: 4px; }
+
+  /* Info box */
+  .info-box {
+    background: #E8F5E9;
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0;
+    font-size: 0.92em;
+  }
+  .warn-box {
+    background: #FFF8E1;
+    border-left: 4px solid var(--warning);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0;
+    font-size: 0.92em;
+  }
+  .danger-box {
+    background: #FDECEA;
+    border-left: 4px solid var(--danger);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0;
+    font-size: 0.92em;
+  }
+
+  /* Flow diagram */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    font-size: 0.9em;
+  }
+  .flow-item {
+    background: var(--primary);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .flow-arrow { color: var(--primary); font-weight: 700; font-size: 1.2em; }
+
+  /* Troubleshooting */
+  .trouble-item {
+    border: 1px solid var(--light-gray);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 10px 0;
+  }
+  .trouble-item .symptom {
+    font-weight: 600;
+    color: var(--danger);
+    margin-bottom: 6px;
+  }
+  .trouble-item .cause { color: var(--gray); font-size: 0.9em; }
+  .trouble-item .fix {
+    background: #E8F5E9;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 8px;
+    font-size: 0.9em;
+  }
+
+  /* Footer */
+  .doc-footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--gray);
+    font-size: 0.85em;
+    border-top: 1px solid var(--light-gray);
+    margin-top: 40px;
+  }
+
+  /* Print */
+  @media print {
+    body { font-size: 12px; background: white; }
+    .container { padding: 0; max-width: 100%; }
+    .doc-header { break-after: avoid; }
+    .section { break-inside: avoid; box-shadow: none; border: 1px solid #eee; }
+    pre { background: #f5f5f5; color: #333; border: 1px solid #ddd; }
+    .arch-diagram { background: #f5f5f5; color: #333; border: 1px solid #ddd; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Header -->
+<div class="doc-header">
+  <h1>AI FanStick 사용설명서</h1>
+  <div class="subtitle">K-POP 콘서트 AI 스마트 응원봉 시스템</div>
+  <div class="version">v2.1 | 2026-04-17 | UTTEC</div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h2>목차</h2>
+  <ol>
+    <li><a href="#sec1">시스템 개요</a></li>
+    <li><a href="#sec2">구성 요소</a></li>
+    <li><a href="#sec3">시스템 아키텍처</a></li>
+    <li><a href="#sec4">서버 설정 및 실행</a></li>
+    <li><a href="#sec5">응원봉(ESP32) 준비</a></li>
+    <li><a href="#sec6">스마트폰 앱 설치</a></li>
+    <li><a href="#sec7">연결 순서 (Step by Step)</a></li>
+    <li><a href="#sec8">기능별 사용법</a></li>
+    <li><a href="#sec9">본부 관제 (Control Center)</a></li>
+    <li><a href="#sec10">문제 해결 (Troubleshooting)</a></li>
+    <li><a href="#sec11">포트 및 주소 정리</a></li>
+  </ol>
+</div>
+
+<!-- Section 1 -->
+<div class="section" id="sec1">
+  <h2><span class="num">01</span> 시스템 개요</h2>
+  <p>AI FanStick은 K-POP 콘서트에서 사용하는 <strong>AI 기반 스마트 응원봉</strong> 시스템입니다.</p>
+  <p>관객이 스마트폰에 대고 "다음 곡 뭐야?"라고 물으면, AI가 셋리스트를 참고하여 응답하고 응원봉의 LED 색상을 자동으로 바꿔줍니다. 콘서트 본부에서는 수천 개의 응원봉을 동시에 제어할 수 있습니다.</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="icon">🎤</div>
+      <div class="label">AI 음성 대화</div>
+      <div class="desc">음성으로 콘서트 정보 안내</div>
+    </div>
+    <div class="feature-card">
+      <div class="icon">⌨️</div>
+      <div class="label">AI 텍스트 입력</div>
+      <div class="desc">시끄러운 환경에서 문자 질문</div>
+    </div>
+    <div class="feature-card">
+      <div class="icon">💡</div>
+      <div class="label">자동 LED</div>
+      <div class="desc">곡에 맞는 응원색 자동 변경</div>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📡</div>
+      <div class="label">본부 연동</div>
+      <div class="desc">전체 응원봉 동시 제어</div>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🎫</div>
+      <div class="label">추첨 이벤트</div>
+      <div class="desc">당첨자 응원봉 특수 효과</div>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📶</div>
+      <div class="label">BLE 통신</div>
+      <div class="desc">저전력 블루투스 연결</div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 2 -->
+<div class="section" id="sec2">
+  <h2><span class="num">02</span> 구성 요소</h2>
+  <p>시스템은 <strong>4가지 요소</strong>로 구성됩니다.</p>
+  <table>
+    <tr><th>요소</th><th>구성</th><th>역할</th></tr>
+    <tr><td><strong>응원봉</strong></td><td>ESP32-C3 + WS2812 LED + OLED + Buzzer</td><td>실물 응원봉, BLE로 스마트폰과 연결</td></tr>
+    <tr><td><strong>스마트폰 앱</strong></td><td>Android (Kotlin, Jetpack Compose)</td><td>사용자 인터페이스, 음성 입출력</td></tr>
+    <tr><td><strong>AI 서버</strong></td><td>Python FastAPI + Gemini AI</td><td>음성 질문 처리, 콘서트 데이터 AI 응답</td></tr>
+    <tr><td><strong>본부 관제</strong></td><td>Python FastAPI + WebSocket</td><td>전체 응원봉 실시간 제어, 추첨</td></tr>
+  </table>
+</div>
+
+<!-- Section 3 -->
+<div class="section" id="sec3">
+  <h2><span class="num">03</span> 시스템 아키텍처</h2>
+  <h3>전체 연결 구조</h3>
+  <div class="arch-diagram">                 ┌──────── 클라우드 서버 (100.79.180.64) ────────┐
+                 │                                               │
+                 │    ┌─────────────┐     ┌─────────────┐       │
+                 │    │  AI Server  │     │  Control    │       │
+                 │    │  Port 8081  │     │  Center     │       │
+                 │    │  Gemini AI  │     │  Port 8091  │       │
+                 │    │  콘서트 DB  │     │  WebSocket  │       │
+                 │    └──────┬──────┘     └──────┬──────┘       │
+                 └───────────┼───────────────────┼──────────────┘
+                             │ HTTP              │ WebSocket
+                             │                   │
+                 ┌───────────┴───────────────────┴──────────────┐
+                 │              스마트폰 앱                       │
+                 │          (AI FanStick App)                    │
+                 │   STT(음성) / 텍스트 → AI질문 → TTS 응답      │
+                 │   본부 명령 수신                               │
+                 └──────────────────┬───────────────────────────┘
+                                    │ BLE (Bluetooth)
+                 ┌──────────────────┴───────────────────────────┐
+                 │           응원봉 (ESP32-C3 SuperMini)          │
+                 │    WS2812 LED  │  SSD1306 OLED  │  Buzzer    │
+                 └──────────────────────────────────────────────┘</div>
+
+  <h3>네트워크 (Tailscale VPN)</h3>
+  <div class="info-box">모든 기기는 <strong>Tailscale VPN</strong>으로 연결됩니다. 인터넷이 되는 곳이면 어디서든 서버에 접속할 수 있습니다.</div>
+  <table>
+    <tr><th>기기</th><th>Tailscale IP</th><th>역할</th></tr>
+    <tr><td>클라우드 서버</td><td><code>100.79.180.64</code></td><td>AI 서버 + 본부 관제</td></tr>
+    <tr><td>스마트폰</td><td>동적 할당</td><td>앱 실행</td></tr>
+  </table>
+</div>
+
+<!-- Section 4 -->
+<div class="section" id="sec4">
+  <h2><span class="num">04</span> 서버 설정 및 실행</h2>
+
+  <h3>SSH 접속</h3>
+  <pre><code>ssh uttec@100.79.180.64
+# 비밀번호: uttec</code></pre>
+
+  <h3>AI 서버 실행 (Port 8081)</h3>
+  <pre><code>cd ~/ai_fanstick_server
+source venv/bin/activate
+python main.py</code></pre>
+
+  <h3>Control Center 실행 (Port 8091)</h3>
+  <pre><code>cd ~/control_center
+source venv/bin/activate
+python server.py</code></pre>
+
+  <h3>서버 상태 확인</h3>
+  <table>
+    <tr><th>서비스</th><th>URL</th><th>정상 응답</th></tr>
+    <tr><td>AI 서버</td><td><code>http://100.79.180.64:8081/</code></td><td><code>{"status":"running"}</code></td></tr>
+    <tr><td>API 문서</td><td><code>http://100.79.180.64:8081/docs</code></td><td>Swagger UI</td></tr>
+    <tr><td>본부 관제</td><td><code>http://100.79.180.64:8091/</code></td><td>관리자 대시보드</td></tr>
+    <tr><td>디바이스 확인</td><td><code>http://100.79.180.64:8091/api/devices</code></td><td>연결된 기기 JSON</td></tr>
+  </table>
+
+  <div class="warn-box"><strong>주의:</strong> 포트 8090은 aiGeneral 서비스가 사용 중입니다. Control Center는 <strong>8091</strong> 포트를 사용합니다.</div>
+</div>
+
+<!-- Section 5 -->
+<div class="section" id="sec5">
+  <h2><span class="num">05</span> 응원봉(ESP32) 준비</h2>
+
+  <h3>하드웨어 GPIO 맵</h3>
+  <table>
+    <tr><th>부품</th><th>GPIO</th><th>역할</th></tr>
+    <tr><td>WS2812 RGB LED</td><td>GPIO 1</td><td>응원 색상 표시</td></tr>
+    <tr><td>Buzzer</td><td>GPIO 2</td><td>멜로디/알림음</td></tr>
+    <tr><td>Button</td><td>GPIO 5</td><td>사용자 입력</td></tr>
+    <tr><td>OLED SDA</td><td>GPIO 6</td><td>I2C 데이터</td></tr>
+    <tr><td>OLED SCL</td><td>GPIO 7</td><td>I2C 클럭</td></tr>
+  </table>
+
+  <h3>펌웨어 업로드</h3>
+  <pre><code>arduino-cli compile --fqbn esp32:esp32:nologo_esp32c3_super_mini FanStick_BLE_KR
+arduino-cli upload -p [포트] --fqbn esp32:esp32:nologo_esp32c3_super_mini FanStick_BLE_KR</code></pre>
+
+  <h3>전원 ON 확인</h3>
+  <div class="info-box">전원을 넣으면: LED 짧게 점등 → OLED "AI FanStick" 표시 → BLE 광고 시작</div>
+</div>
+
+<!-- Section 6 -->
+<div class="section" id="sec6">
+  <h2><span class="num">06</span> 스마트폰 앱 설치</h2>
+
+  <h3>빌드 및 설치</h3>
+  <pre><code># 빌드 (Windows)
+cd 응원봉/mvp/FanStickApp
+JAVA_HOME="C:/Program Files/Android/Android Studio/jbr" ./gradlew assembleDebug
+
+# USB 연결 후 설치
+adb install -r app/build/outputs/apk/debug/app-debug.apk</code></pre>
+
+  <h3>필요 권한</h3>
+  <table>
+    <tr><th>권한</th><th>용도</th></tr>
+    <tr><td>블루투스</td><td>BLE 응원봉 연결</td></tr>
+    <tr><td>위치</td><td>BLE 스캔에 필요 (Android 요구사항)</td></tr>
+    <tr><td>마이크</td><td>음성 입력 (STT)</td></tr>
+  </table>
+
+  <div class="warn-box"><strong>서명 불일치 시:</strong> 기존 앱을 먼저 삭제하세요 → <code>adb uninstall com.uttec.fanstick</code></div>
+</div>
+
+<!-- Section 7 -->
+<div class="section" id="sec7">
+  <h2><span class="num">07</span> 연결 순서 (Step by Step)</h2>
+
+  <div class="step-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h4>서버 실행</h4>
+      <p>SSH 접속 후 AI 서버 + Control Center 시작</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h4>Tailscale 확인</h4>
+      <p>스마트폰 Tailscale 앱에서 VPN 연결</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h4>앱 실행</h4>
+      <p>AI FanStick 앱 실행, 서버 연결 확인</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <h4>응원봉 연결</h4>
+      <p>BLE 스캔 → 응원봉 선택 → LED 점등</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">5</div>
+      <h4>본부 연결</h4>
+      <p>"본부 연결" 버튼 → WebSocket 연결</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">6</div>
+      <h4>사용 시작!</h4>
+      <p>AI 대화, LED 제어, 본부 명령 수신</p>
+    </div>
+  </div>
+
+  <div class="info-box"><strong>연결 확인 포인트:</strong><br>
+    - 서버 연결: 앱 하단 "서버 연결됨"<br>
+    - BLE 연결: "응원봉 연결됨" + LED 녹색<br>
+    - 본부 연결: "본부 연결됨 (ID: xxxxxxxx)"
+  </div>
+</div>
+
+<!-- Section 8 -->
+<div class="section" id="sec8">
+  <h2><span class="num">08</span> 기능별 사용법</h2>
+
+  <h3>AI 대화 — 두 가지 입력 방식</h3>
+  <p>앱은 <strong>음성 입력</strong>과 <strong>텍스트 입력</strong> 두 가지 방식을 모두 지원합니다. 상황에 따라 편한 방식을 선택하세요.</p>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin:20px 0;">
+    <div style="background:#F3E5F5; border-radius:12px; padding:20px; text-align:center;">
+      <div style="font-size:2em; margin-bottom:8px;">🎤</div>
+      <div style="font-weight:700; margin-bottom:6px;">방법 A: 음성 입력</div>
+      <div style="font-size:0.85em; color:#666;">조용한 환경에서 추천</div>
+      <div style="font-size:0.85em; margin-top:8px; text-align:left;">
+        1. 마이크 버튼 터치<br>
+        2. 질문 말하기<br>
+        3. 버튼에서 손 떼기<br>
+        4. AI 음성 응답 + LED 변경
+      </div>
+    </div>
+    <div style="background:#E8EAF6; border-radius:12px; padding:20px; text-align:center;">
+      <div style="font-size:2em; margin-bottom:8px;">⌨️</div>
+      <div style="font-weight:700; margin-bottom:6px;">방법 B: 텍스트 입력</div>
+      <div style="font-size:0.85em; color:#666;">시끄러운 공연장에서 추천</div>
+      <div style="font-size:0.85em; margin-top:8px; text-align:left;">
+        1. 입력창에 질문 타이핑<br>
+        2. 보라색 전송 버튼 또는 Send 키<br>
+        3. AI 응답 표시 + LED 변경<br>
+        4. 소음 환경에서도 정확한 전달
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box"><strong>앱 UI 배치:</strong> 텍스트 입력창 + 전송 버튼이 위, 마이크 버튼이 아래에 위치합니다. 어떤 방식이든 동일한 AI 응답을 받습니다.</div>
+
+  <h4>예시 질문 (음성/텍스트 공통)</h4>
+  <table>
+    <tr><th>질문</th><th>AI 응답</th><th>LED</th></tr>
+    <tr><td>"다음 곡 뭐야?"</td><td>"다음 곡은 '좋아좋아'야!"</td><td>파란색</td></tr>
+    <tr><td>"이 곡 응원법 알려줘"</td><td>"후렴구에서 'BTS!' 외치고 점프!"</td><td>유지</td></tr>
+    <tr><td>"보라색으로 바꿔줘"</td><td>"알겠어! 보라색으로 바꿔줄게!"</td><td>보라색</td></tr>
+    <tr><td>"무지개 패턴 보여줘"</td><td>"무지개 패턴 시작!"</td><td>무지개 순환</td></tr>
+    <tr><td>"멤버 알려줘"</td><td>"BTS는 RM, 진, 슈가, ... 7명이야!"</td><td>골드색</td></tr>
+  </table>
+
+  <h3>LED 패턴</h3>
+  <table>
+    <tr><th>패턴</th><th>설명</th></tr>
+    <tr><td><code>solid</code></td><td>단색 고정</td></tr>
+    <tr><td><code>rainbow</code></td><td>무지개 색상 순환</td></tr>
+    <tr><td><code>pulse</code></td><td>페이드 인/아웃</td></tr>
+    <tr><td><code>blink</code></td><td>깜빡임</td></tr>
+    <tr><td><code>wave</code></td><td>파도 효과</td></tr>
+  </table>
+
+  <h3>BLE 명령어 프로토콜</h3>
+  <table>
+    <tr><th>명령</th><th>형식</th><th>예시</th><th>설명</th></tr>
+    <tr><td>색상</td><td><code>C:R,G,B</code></td><td><code>C:255,0,128</code></td><td>LED 색상</td></tr>
+    <tr><td>패턴</td><td><code>P:이름</code></td><td><code>P:rainbow</code></td><td>LED 패턴</td></tr>
+    <tr><td>텍스트</td><td><code>T:텍스트</code></td><td><code>T:BTS</code></td><td>OLED 표시</td></tr>
+    <tr><td>멜로디</td><td><code>B:이름</code></td><td><code>B:winner</code></td><td>멜로디 재생</td></tr>
+    <tr><td>밝기</td><td><code>L:값</code></td><td><code>L:128</code></td><td>0-255</td></tr>
+  </table>
+</div>
+
+<!-- Section 9 -->
+<div class="section" id="sec9">
+  <h2><span class="num">09</span> 본부 관제 (Control Center)</h2>
+
+  <h3>관리자 대시보드</h3>
+  <pre><code>브라우저에서 접속: http://100.79.180.64:8091</code></pre>
+
+  <table>
+    <tr><th>기능</th><th>설명</th><th>사용 방법</th></tr>
+    <tr><td>실시간 현황</td><td>연결된 응원봉 수</td><td>자동 갱신</td></tr>
+    <tr><td>LED 제어</td><td>전체 색상 변경</td><td>색상 버튼 클릭</td></tr>
+    <tr><td>패턴 제어</td><td>Rainbow, Pulse, Blink</td><td>패턴 버튼 클릭</td></tr>
+    <tr><td>멜로디</td><td>전체 동시 재생</td><td>멜로디 버튼 클릭</td></tr>
+    <tr><td>추첨</td><td>랜덤 당첨자 선정</td><td>인원 입력 후 추첨</td></tr>
+    <tr><td>메시지</td><td>전체 OLED 표시</td><td>텍스트 입력 후 전송</td></tr>
+  </table>
+
+  <h3>추첨 이벤트 진행</h3>
+  <div class="flow">
+    <span class="flow-item">관객 본부 연결</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-item">인원 입력</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-item">추첨 실행</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-item">당첨 응원봉 반짝!</span>
+  </div>
+  <p>당첨자 응원봉: LED 무지개 효과 + 축하 멜로디 + OLED "축하합니다!"</p>
+
+  <h3>REST API</h3>
+  <table>
+    <tr><th>Method</th><th>Endpoint</th><th>설명</th></tr>
+    <tr><td>GET</td><td><code>/api/devices</code></td><td>연결된 디바이스 목록</td></tr>
+    <tr><td>POST</td><td><code>/api/lottery</code></td><td>추첨 실행</td></tr>
+    <tr><td>POST</td><td><code>/api/broadcast/led?r=128&g=0&b=128</code></td><td>전체 LED 변경</td></tr>
+    <tr><td>POST</td><td><code>/api/broadcast/melody?melody=ack</code></td><td>전체 멜로디</td></tr>
+    <tr><td>POST</td><td><code>/api/broadcast/message?message=Hello</code></td><td>전체 메시지</td></tr>
+  </table>
+</div>
+
+<!-- Section 10 -->
+<div class="section" id="sec10">
+  <h2><span class="num">10</span> 문제 해결 (Troubleshooting)</h2>
+
+  <h3>서버 연결 실패</h3>
+  <div class="trouble-item">
+    <div class="symptom">앱에서 "서버 연결 실패"</div>
+    <div class="cause">원인: Tailscale VPN이 꺼져 있음</div>
+    <div class="fix">해결: 스마트폰 Tailscale 앱 실행 → VPN 연결 → 앱 재시작</div>
+  </div>
+  <div class="trouble-item">
+    <div class="symptom">서버 ping은 되지만 접속 불가</div>
+    <div class="cause">원인: 서버 프로세스가 중단됨</div>
+    <div class="fix">해결: SSH 접속 후 서버 재시작 → <code>ss -tlnp | grep -E '8081|8091'</code> 로 확인</div>
+  </div>
+
+  <h3>본부 연결 실패</h3>
+  <div class="trouble-item">
+    <div class="symptom">"expected 101 but was 404"</div>
+    <div class="cause">원인: 다른 서비스가 해당 포트를 점유 중</div>
+    <div class="fix">해결: 포트 확인 → Control Center 재시작 → <code>curl http://100.79.180.64:8091/api/devices</code></div>
+  </div>
+
+  <h3>BLE 연결 문제</h3>
+  <div class="trouble-item">
+    <div class="symptom">스캔에서 장치가 안 보임</div>
+    <div class="cause">원인: ESP32 전원 꺼짐 또는 BLE 비활성</div>
+    <div class="fix">해결: ESP32 리셋 → 스마트폰 블루투스 재시작 → 3m 이내 접근</div>
+  </div>
+
+  <h3>음성 인식 문제</h3>
+  <div class="trouble-item">
+    <div class="symptom">음성이 인식되지 않음 / 인식률이 낮음</div>
+    <div class="cause">원인: 주변 소음이 크거나 마이크 권한 미허용</div>
+    <div class="fix">해결: <strong>텍스트 입력으로 전환</strong>하세요. 마이크 버튼 위 입력창에 질문을 타이핑하면 동일한 AI 응답을 받을 수 있습니다. 마이크 권한은 설정 → 앱 → 권한에서 허용.</div>
+  </div>
+
+  <h3>앱 설치 실패</h3>
+  <div class="trouble-item">
+    <div class="symptom">INSTALL_FAILED_UPDATE_INCOMPATIBLE</div>
+    <div class="cause">원인: 서명 키가 다른 APK</div>
+    <div class="fix">해결: <code>adb uninstall com.uttec.fanstick</code> → 재설치</div>
+  </div>
+</div>
+
+<!-- Section 11 -->
+<div class="section" id="sec11">
+  <h2><span class="num">11</span> 포트 및 주소 정리</h2>
+
+  <h3>서버 포트</h3>
+  <table>
+    <tr><th>서비스</th><th>포트</th><th>프로토콜</th><th>설명</th></tr>
+    <tr><td>AI Server</td><td><strong>8081</strong></td><td>HTTP REST</td><td>AI 질문/응답, 콘서트 데이터</td></tr>
+    <tr><td>Control Center</td><td><strong>8091</strong></td><td>HTTP + WebSocket</td><td>본부 관제, 추첨, LED 제어</td></tr>
+    <tr><td>aiGeneral</td><td>8090</td><td>HTTP</td><td>일반 질문 답변 (별도 서비스)</td></tr>
+  </table>
+
+  <h3>BLE UUID</h3>
+  <table>
+    <tr><th>항목</th><th>UUID</th></tr>
+    <tr><td>Service</td><td><code>4fafc201-1fb5-459e-8fcc-c5c9c331914b</code></td></tr>
+    <tr><td>LED (Write)</td><td><code>beb5483e-36e1-4688-b7f5-ea07361b26a8</code></td></tr>
+    <tr><td>Notify (Read)</td><td><code>beb5483e-36e1-4688-b7f5-ea07361b26a9</code></td></tr>
+  </table>
+
+  <h3>앱 설정값</h3>
+  <table>
+    <tr><th>항목</th><th>값</th></tr>
+    <tr><td>AI Server URL</td><td><code>http://100.79.180.64:8081</code></td></tr>
+    <tr><td>Control Center WS</td><td><code>ws://100.79.180.64:8091/ws</code></td></tr>
+    <tr><td>앱 패키지명</td><td><code>com.uttec.fanstick</code></td></tr>
+  </table>
+
+  <h3>서버 디렉토리</h3>
+  <table>
+    <tr><th>서비스</th><th>경로</th></tr>
+    <tr><td>AI Server</td><td><code>/home/uttec/ai_fanstick_server/</code></td></tr>
+    <tr><td>Control Center</td><td><code>/home/uttec/control_center/</code></td></tr>
+  </table>
+</div>
+
+<!-- Footer -->
+<div class="doc-footer">
+  <p><strong>AI FanStick 사용설명서</strong> v2.1</p>
+  <p>2026-04-17 | UTTEC</p>
+</div>
+
+</div>
+</body>
+</html>
