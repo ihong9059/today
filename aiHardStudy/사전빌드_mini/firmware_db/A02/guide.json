@@ -1,0 +1,54 @@
+{
+  "result_description": "RGB LED가 초록색으로 켜집니다.",
+  "what_happens": [
+    "아두이노가 켜지면서 LED와 블루투스를 준비해요",
+    "pixel.Color(0, 255, 0)으로 초록색을 만들어요",
+    "pixel.show()로 LED에 초록빛을 켜요"
+  ],
+  "concepts": [
+    {
+      "term": "RGB",
+      "explanation": "빨강(R), 초록(G), 파랑(B) 세 가지 색을 섞어서 다양한 색을 만드는 방법이에요. 물감처럼 섞는 거예요!"
+    },
+    {
+      "term": "pixel.Color(0, 255, 0)",
+      "explanation": "빨강 0, 초록 255, 파랑 0이라는 뜻이에요. 숫자가 클수록 그 색이 밝아져요. 0은 꺼진 것, 255는 가장 밝은 것이에요."
+    },
+    {
+      "term": "pixel.show()",
+      "explanation": "색을 정했다고 바로 켜지지 않아요. show()를 불러야 '자, 이제 켜!' 하고 LED에게 알려줄 수 있어요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "pixel.Color(0, 255, 0)",
+      "comment": "빨강=0, 초록=255, 파랑=0 → 초록색을 만드는 코드예요"
+    },
+    {
+      "line": "pixel.show()",
+      "comment": "설정한 색을 실제 LED에 보여주는 코드예요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "pixel.Color(255, 0, 0)으로 바꿔서 빨간색을 켜보세요!"
+    },
+    {
+      "reason": "pixel.Color(255, 0, 255)처럼 두 색을 동시에 켜면 어떤 색이 될까요? 도전해보세요!"
+    },
+    {
+      "reason": "delay(1000) 후에 pixel.Color(0, 0, 0)으로 끄는 코드를 추가해서 1초마다 깜빡이게 만들어보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "초록색 LED를 켜려면 pixel.Color( )에 숫자를 어떻게 넣어야 할까요?",
+    "options": [
+      "pixel.Color(255, 0, 0)",
+      "pixel.Color(0, 0, 255)",
+      "pixel.Color(0, 255, 0)",
+      "pixel.Color(255, 255, 0)"
+    ],
+    "answer": 2,
+    "explanation": "RGB에서 초록은 가운데 숫자예요. (0, 255, 0)은 빨강=0, 초록=255, 파랑=0이라서 초록색이 나와요!"
+  }
+}

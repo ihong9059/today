@@ -1,0 +1,70 @@
+{
+  "result_description": "스마트폰에서 'SPIN'을 보내면 LED가 무지개색으로 빙글빙글 돌다가 랜덤 색상에 멈추고, 결과를 다시 스마트폰으로 전송하는 LED 룰렛 게임이에요.",
+  "what_happens": [
+    "스마트폰 앱에서 'SPIN'을 보내면 아두이노가 BLE로 메시지를 받아요",
+    "LED가 빨강→초록→파랑→노랑→보라→청록→주황→흰색 순서로 빠르게 빙글빙글 돌다가 점점 느려져요",
+    "룰렛이 멈추면 OLED 화면에 결과 색상이 표시되고, 그 결과가 BLE로 스마트폰에 전송돼요"
+  ],
+  "concepts": [
+    {
+      "term": "BLE (블루투스)",
+      "explanation": "스마트폰과 아두이노가 선 없이 대화하는 방법이에요. 마치 귓속말처럼 가까운 거리에서 신호를 주고받아요."
+    },
+    {
+      "term": "struct (구조체)",
+      "explanation": "여러 정보를 하나로 묶어 저장하는 상자예요. 색상 이름과 빨강·초록·파랑 숫자를 한 세트로 묶었어요."
+    },
+    {
+      "term": "volatile",
+      "explanation": "BLE처럼 언제든 갑자기 바뀔 수 있는 변수에 붙이는 표시예요. '이 값은 갑자기 바뀔 수 있으니 항상 확인해!'라는 뜻이에요."
+    },
+    {
+      "term": "random()",
+      "explanation": "주사위를 굴리듯 컴퓨터가 임의의 숫자를 고르는 함수예요. 룰렛 결과를 예측할 수 없게 만들어줘요."
+    },
+    {
+      "term": "onBleReceive",
+      "explanation": "스마트폰에서 메시지가 도착했을 때 자동으로 실행되는 함수예요. 편지가 오면 자동으로 열어보는 우편함 같은 역할이에요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "if (cmd == \"SPIN\") { spinRequested = true; }",
+      "comment": "스마트폰에서 'SPIN'이라는 문자가 오면 룰렛을 돌려달라고 신청(flag)을 켜요"
+    },
+    {
+      "line": "int delayMs = 200 + (i - 20) * 30;",
+      "comment": "룰렛이 후반부로 갈수록 기다리는 시간을 늘려서 점점 느려지는 효과를 만들어요"
+    },
+    {
+      "line": "int result = random(0, COLOR_COUNT);",
+      "comment": "0~7 중에서 임의의 숫자를 골라 최종 색상을 결정해요 — 진짜 룰렛처럼요!"
+    },
+    {
+      "line": "sensorChar->notify();",
+      "comment": "결과 색상 이름을 BLE로 스마트폰에 알림(push)으로 보내줘요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "COLOR_COUNT를 늘려서 색상을 더 많이 추가해 보세요. 핑크, 라임, 스카이블루 같은 나만의 색을 넣으면 더 재미있는 룰렛이 돼요!"
+    },
+    {
+      "reason": "totalSteps 숫자를 바꿔서 룰렛이 도는 시간을 조절해 보세요. 숫자가 클수록 더 오래 돌아요."
+    },
+    {
+      "reason": "'STOP' 명령을 추가해서 스마트폰에서 룰렛을 강제로 멈출 수 있게 만들어 보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "스마트폰에서 'SPIN'을 보냈을 때, 아두이노 코드에서 가장 먼저 일어나는 일은 무엇일까요?",
+    "options": [
+      "LED가 바로 켜진다",
+      "spinRequested 값이 true로 바뀐다",
+      "랜덤 숫자가 바로 결정된다",
+      "OLED에 RESULT가 표시된다"
+    ],
+    "answer": 1,
+    "explanation": "onBleReceive 함수가 'SPIN' 명령을 받으면 spinRequested = true 로 신청 표시를 켜요. 그러면 loop()에서 이 표시를 보고 doSpin()을 실행해서 룰렛이 시작돼요!"
+  }
+}

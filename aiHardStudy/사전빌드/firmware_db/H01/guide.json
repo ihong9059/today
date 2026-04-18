@@ -1,0 +1,71 @@
+{
+  "result_description": "빨강→노랑→파랑 LED가 신호등처럼 순서대로 켜지고 꺼지는 동작을 계속 반복합니다.",
+  "what_happens": [
+    "빨간 LED가 켜지고 3초 동안 기다립니다",
+    "노란 LED가 켜지고 1초 동안 기다립니다",
+    "파란 LED가 켜지고 3초 동안 기다립니다",
+    "다시 처음으로 돌아가서 계속 반복합니다"
+  ],
+  "concepts": [
+    {
+      "term": "digitalWrite",
+      "explanation": "LED 전구의 스위치를 켜고(HIGH) 끄는(LOW) 명령어예요. 전등 스위치를 누르는 것과 같아요."
+    },
+    {
+      "term": "delay",
+      "explanation": "아무것도 안 하고 기다리는 명령어예요. delay(3000)은 3초 동안 멈추는 것이에요 (1000 = 1초)."
+    },
+    {
+      "term": "while (true)",
+      "explanation": "괄호 안의 코드를 영원히 반복하라는 뜻이에요. 신호등이 계속 바뀌는 것처럼요!"
+    },
+    {
+      "term": "xTaskCreate",
+      "explanation": "ESP32에게 '이 일을 따로 처리해줘!'라고 부탁하는 명령어예요. 반장에게 역할을 맡기는 것과 같아요."
+    },
+    {
+      "term": "void setup",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번만 실행되는 준비 공간이에요. 학교 오면 가방 정리하는 것과 같아요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "digitalWrite(LED_RED, LOW);",
+      "comment": "빨간 LED를 켭니다. LOW는 '켜짐'이에요 (신호등 LED는 반대로 동작해요!)"
+    },
+    {
+      "line": "delay(3000);",
+      "comment": "3000밀리초 = 3초 동안 기다립니다. 숫자를 바꾸면 시간이 달라져요!"
+    },
+    {
+      "line": "while (true) { ... }",
+      "comment": "이 안의 코드를 끝없이 반복합니다. 실제 신호등처럼 멈추지 않아요."
+    },
+    {
+      "line": "xTaskCreate(trafficLightTask, \"traffic\", 2048, NULL, 1, NULL);",
+      "comment": "신호등 함수를 독립적인 일꾼으로 만들어서 혼자 계속 일하게 해요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "노란불 시간을 2초로 늘려보세요! delay(1000)을 delay(2000)으로 바꾸면 돼요."
+    },
+    {
+      "reason": "파란불이 깜빡이게 만들어보세요! 끄고 켜기를 빠르게 반복하면 깜빡여요."
+    },
+    {
+      "reason": "버튼을 눌렀을 때만 신호가 바뀌게 해보세요. 실제 횡단보도 버튼처럼요!"
+    }
+  ],
+  "quiz": {
+    "question": "delay(3000)은 몇 초 동안 기다리는 것일까요?",
+    "options": [
+      "0.3초",
+      "30초",
+      "3초",
+      "300초"
+    ],
+    "answer": 2,
+    "explanation": "delay()의 숫자 단위는 밀리초(ms)예요. 1000밀리초 = 1초이므로 3000밀리초 = 3초예요!"
+  }
+}

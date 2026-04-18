@@ -1,0 +1,74 @@
+{
+  "result_description": "빨간 LED가 0.3초 간격으로 10번 깜빡인 뒤 멈춥니다.",
+  "what_happens": [
+    "아두이노가 켜지면 빨간 LED 깜빡임 준비를 합니다.",
+    "빨간 LED가 0.3초 켜졌다가 0.3초 꺼지는 동작을 10번 반복합니다.",
+    "10번이 끝나면 LED는 꺼진 채로 멈춥니다."
+  ],
+  "concepts": [
+    {
+      "term": "for 반복문",
+      "explanation": "같은 동작을 정해진 횟수만큼 자동으로 반복하는 명령이에요. 마치 '팔굽혀펴기 10번 해!'처럼요."
+    },
+    {
+      "term": "digitalWrite",
+      "explanation": "LED 같은 부품에 전기를 켜거나 끄는 명령이에요. LOW는 켜기, HIGH는 끄기예요."
+    },
+    {
+      "term": "delay",
+      "explanation": "아두이노가 잠깐 기다리게 하는 명령이에요. delay(300)은 0.3초 기다리는 거예요."
+    },
+    {
+      "term": "태스크(Task)",
+      "explanation": "아두이노가 동시에 여러 일을 할 수 있도록 일을 나눠 맡기는 방법이에요. 마치 반 친구들한테 역할을 나눠주는 것과 같아요."
+    },
+    {
+      "term": "setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번 실행되는 준비 구역이에요. 시작 버튼을 누르는 것과 같아요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "for (int i = 0; i < 10; i++)",
+      "comment": "i가 0부터 시작해서 10보다 작을 때까지 반복해요. 즉 10번 반복!"
+    },
+    {
+      "line": "digitalWrite(LED_RED, LOW);",
+      "comment": "빨간 LED에 전기를 흘려보내서 불을 켜요."
+    },
+    {
+      "line": "delay(300);",
+      "comment": "300밀리초(0.3초) 동안 기다려요. 이 덕분에 LED가 켜진 상태가 눈에 보여요."
+    },
+    {
+      "line": "vTaskDelete(NULL);",
+      "comment": "LED 깜빡임 임무가 끝났으니 이 태스크를 스스로 삭제해요."
+    },
+    {
+      "line": "xTaskCreate(blinkRedTask, \"blinkRed\", 2048, NULL, 1, NULL);",
+      "comment": "blinkRedTask라는 일을 새로운 태스크로 만들어서 시작시켜요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "깜빡이는 횟수를 10번에서 20번으로 바꿔보세요. for문의 숫자만 바꾸면 돼요!"
+    },
+    {
+      "reason": "delay 숫자를 100으로 줄이면 LED가 더 빠르게 깜빡여요. 어떻게 다른지 관찰해보세요."
+    },
+    {
+      "reason": "파란 LED도 똑같이 깜빡이게 만들어보세요. blinkRedTask를 복사해서 LED_RED를 LED_BLUE로 바꿔보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 빨간 LED는 총 몇 번 깜빡일까요?",
+    "options": [
+      "3번",
+      "5번",
+      "10번",
+      "무한히 깜빡인다"
+    ],
+    "answer": 2,
+    "explanation": "for문에서 i가 0부터 9까지 반복되니까 총 10번 깜빡여요. 10번이 끝나면 vTaskDelete로 태스크가 종료되어 멈춰요!"
+  }
+}

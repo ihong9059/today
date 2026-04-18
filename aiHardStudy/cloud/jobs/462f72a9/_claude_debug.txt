@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 12309
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"3822f87d-2c25-41f2-9c25-e46edc455c72","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"05d5cecc-57fc-4b1c-ba41-c194dcad9874","session_id":"844162ab-90c9-4342-ba19-1b45c5c3c39a"}
+{"type":"system","subtype":"hook_response","hook_id":"3822f87d-2c25-41f2-9c25-e46edc455c72","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"bebf8f1a-0ba4-47bc-a666-4e440597a6c0","session_id":"844162ab-90c9-4342-ba19-1b45c5c3c39a"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\462f72a9","session_id":"844162ab-90c9-4342-ba19-1b45c5c3c39a","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:add-todo","gsd:add-tests","gsd:add-phase","gsd:add-backlog","gsd:autonomous","gsd:audit-uat","gsd:audit-milestone","gsd:cleanup","gsd:check-todos","gsd:complete-milestone","gsd:debug","gsd:discuss-phase","gsd:note","gsd:review-backlog","gsd:resume-work","gsd:next","gsd:research-phase","gsd:new-workspace","gsd:

@@ -1,0 +1,66 @@
+{
+  "result_description": "작은 화면(OLED)에 'Hello'라는 글자를 보여줍니다.",
+  "what_happens": [
+    "아두이노가 켜지면서 하드웨어와 블루투스를 준비합니다",
+    "OLED 화면을 깨끗하게 지운 뒤 'Hello' 글자를 그립니다",
+    "글자가 화면에 나타나고, 이후에는 아무것도 하지 않고 기다립니다"
+  ],
+  "concepts": [
+    {
+      "term": "OLED",
+      "explanation": "스마트워치나 이어폰 케이스에서 볼 수 있는 아주 작고 밝은 화면이에요. 전기를 조금만 써서 오래 쓸 수 있어요."
+    },
+    {
+      "term": "setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번만 실행되는 준비 구역이에요. 학교 시작 전 책상 정리하는 것과 같아요."
+    },
+    {
+      "term": "loop()",
+      "explanation": "setup()이 끝난 뒤 계속 반복되는 구역이에요. 지금은 10초씩 기다리기만 해요."
+    },
+    {
+      "term": "oled.clear()",
+      "explanation": "화면에 있던 내용을 모두 지워서 빈 화면으로 만드는 명령이에요. 칠판을 지우개로 닦는 것과 같아요."
+    },
+    {
+      "term": "oled.display()",
+      "explanation": "그린 내용을 실제로 화면에 보여주는 명령이에요. 그림을 다 그린 뒤 친구들에게 보여주는 것과 같아요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "oled.clear();",
+      "comment": "화면을 깨끗하게 지워서 새로 쓸 준비를 해요"
+    },
+    {
+      "line": "oled.drawString(0, 0, \"Hello\");",
+      "comment": "화면의 맨 왼쪽 위(0, 0) 위치에 'Hello' 글자를 그려요"
+    },
+    {
+      "line": "oled.display();",
+      "comment": "그린 글자를 화면에 실제로 나타나게 해요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "'Hello' 대신 내 이름을 넣어서 화면에 표시해 보세요!"
+    },
+    {
+      "reason": "oled.drawString(0, 0, ...) 에서 숫자를 바꿔서 글자 위치를 이동시켜 보세요!"
+    },
+    {
+      "reason": "두 번째 줄에 oled.drawString(0, 16, \"World\"); 를 추가해서 Hello World를 만들어 보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "oled.display()를 호출하지 않으면 어떻게 될까요?",
+    "options": [
+      "화면이 폭발해요",
+      "글자가 화면에 나타나지 않아요",
+      "아두이노가 꺼져요",
+      "'Hello' 대신 'Bye'가 표시돼요"
+    ],
+    "answer": 1,
+    "explanation": "drawString()은 화면에 그릴 내용을 메모리에만 저장해요. display()를 호출해야 비로소 실제 화면에 나타납니다. 그림을 그려도 공개하지 않으면 아무도 못 보는 것과 같아요!"
+  }
+}

@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 12275
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"aeddec96-a58f-4fd7-a3ce-a1be8060b825","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"6c5ee65c-2759-462a-aa7a-161df9cd564d","session_id":"776e2314-28aa-4d87-84e3-8cbafac6c8e7"}
+{"type":"system","subtype":"hook_response","hook_id":"aeddec96-a58f-4fd7-a3ce-a1be8060b825","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"a245d50c-415b-4715-ad36-1ba241e1224e","session_id":"776e2314-28aa-4d87-84e3-8cbafac6c8e7"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\ee92cd06","session_id":"776e2314-28aa-4d87-84e3-8cbafac6c8e7","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:add-backlog","gsd:audit-uat","gsd:audit-milestone","gsd:add-todo","gsd:add-tests","gsd:add-phase","gsd:cleanup","gsd:check-todos","gsd:autonomous","gsd:debug","gsd:complete-milestone","gsd:discuss-phase","gsd:list-phase-assumptions","gsd:join-discord","gsd:insert-phase","gsd:help","gsd:health","gsd:forensics",

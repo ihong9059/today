@@ -1,0 +1,62 @@
+{
+  "result_description": "OLED 화면에 5, 4, 3, 2, 1, 0을 1초씩 표시한 뒤 빨강·노랑·파랑 LED 세 개를 모두 켭니다.",
+  "what_happens": [
+    "아두이노가 시작되면 OLED 화면에 숫자 5가 나타납니다.",
+    "1초마다 숫자가 4 → 3 → 2 → 1 → 0 으로 줄어듭니다.",
+    "0이 된 순간 빨강, 노랑, 파랑 LED가 동시에 켜지고 화면에 'ALL LED ON!'이 표시됩니다."
+  ],
+  "concepts": [
+    {
+      "term": "for 반복문",
+      "explanation": "같은 일을 여러 번 반복할 때 사용해요. 여기서는 숫자를 5에서 0까지 하나씩 줄이면서 화면에 보여주는 일을 6번 반복했어요."
+    },
+    {
+      "term": "delay(1000)",
+      "explanation": "아두이노에게 '1초 동안 기다려!'라고 말하는 코드예요. 1000은 1000밀리초, 즉 정확히 1초를 뜻해요."
+    },
+    {
+      "term": "active LOW",
+      "explanation": "보통 HIGH(전기 켜기)가 '켜진' 상태인데, 이 회로는 반대로 LOW(전기 끄기)를 보내야 LED가 켜져요. 마치 스위치를 눌러야 불이 들어오는 것과 같아요."
+    },
+    {
+      "term": "OLED 디스플레이",
+      "explanation": "아주 작은 화면이에요. oled.clear()로 화면을 지우고, oled.drawString()으로 글자를 쓰고, oled.display()로 화면에 실제로 보여줘요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "for (int i = 5; i >= 0; i--)",
+      "comment": "i를 5에서 시작해서 0이 될 때까지 1씩 줄이며 반복해요. 카운트다운의 핵심이에요!"
+    },
+    {
+      "line": "oled.drawString(50, 20, String(i).c_str())",
+      "comment": "숫자 i를 화면의 (50, 20) 위치에 글자로 그려요. 숫자를 글자로 바꿔서 화면에 보여주는 거예요."
+    },
+    {
+      "line": "digitalWrite(LED_RED, LOW)",
+      "comment": "빨간 LED에 LOW 신호를 보내서 불을 켜요. 이 회로는 LOW가 '켜짐'이에요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "카운트다운 숫자를 5가 아니라 10에서 시작하도록 바꿔보세요! for문에서 숫자 하나만 고치면 돼요."
+    },
+    {
+      "reason": "LED를 빨강 → 노랑 → 파랑 순서로 하나씩 켜지도록 delay를 넣어 순서를 바꿔보세요."
+    },
+    {
+      "reason": "'ALL LED ON!' 대신 자기 이름을 화면에 출력해보세요. drawString 안의 글자를 바꾸면 돼요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 LED가 켜지는 시점은 언제인가요?",
+    "options": [
+      "아두이노가 켜지자마자 바로",
+      "숫자가 3이 됐을 때",
+      "카운트다운이 0이 된 직후",
+      "loop() 함수가 실행될 때"
+    ],
+    "answer": 2,
+    "explanation": "for 반복문이 i=5부터 i=0까지 모두 끝난 뒤, digitalWrite로 LED를 켜는 코드가 실행돼요. 그래서 카운트다운이 0이 된 직후에 LED가 켜집니다!"
+  }
+}

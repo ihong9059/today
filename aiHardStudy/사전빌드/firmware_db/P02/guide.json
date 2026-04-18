@@ -1,0 +1,70 @@
+{
+  "result_description": "버튼을 한 번 누르면 빨간 불이 켜지고, 빠르게 두 번 누르면 파란 불이 켜집니다.",
+  "what_happens": [
+    "버튼을 누르면 아두이노가 '몇 번 눌렸는지' 세기 시작해요.",
+    "300ms(0.3초) 동안 기다린 뒤, 1번만 눌렸으면 빨간 LED를 켜요.",
+    "300ms 안에 2번 이상 눌렸으면 더블클릭으로 판단하고 파란 LED를 켜요."
+  ],
+  "concepts": [
+    {
+      "term": "더블클릭",
+      "explanation": "짧은 시간 안에 버튼을 빠르게 두 번 누르는 것이에요. 컴퓨터 마우스를 두 번 클릭하는 것과 같아요!"
+    },
+    {
+      "term": "디바운스(Debounce)",
+      "explanation": "버튼을 한 번 눌러도 전기 신호가 여러 번 튀는 것처럼 보일 수 있어요. 이걸 막으려고 50ms 동안 기다리며 '진짜 누름인지' 확인하는 기술이에요."
+    },
+    {
+      "term": "타임아웃(Timeout)",
+      "explanation": "정해진 시간(300ms) 안에 일어난 일만 인정해요. 시간이 지나면 '이번 클릭은 끝났다'고 판단해요."
+    },
+    {
+      "term": "FreeRTOS 태스크",
+      "explanation": "아두이노가 여러 가지 일을 동시에 할 수 있도록 나눠 맡기는 방법이에요. 마치 학교에서 역할을 나눠 청소하는 것과 같아요."
+    },
+    {
+      "term": "Active LOW",
+      "explanation": "LED가 LOW(0) 신호를 받았을 때 켜지는 방식이에요. 보통과 반대라서 헷갈릴 수 있어요!"
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "clickCount++;",
+      "comment": "버튼이 눌릴 때마다 클릭 횟수를 1씩 늘려요."
+    },
+    {
+      "line": "if (clickCount >= 2) { setLed(2); }",
+      "comment": "클릭 횟수가 2번 이상이면 파란 LED를 켜요. 더블클릭 성공!"
+    },
+    {
+      "line": "(millis() - lastClickTime) > DOUBLE_CLICK_MS",
+      "comment": "마지막 클릭 이후 300ms가 지났는지 확인해요. 이 시간이 지나야 '클릭 판정'을 내려요."
+    },
+    {
+      "line": "vTaskDelay(10 / portTICK_PERIOD_MS);",
+      "comment": "10ms마다 버튼 상태를 확인해요. 너무 자주 확인하면 아두이노가 힘들어하거든요!"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "트리플클릭(3번 빠르게 누르기)을 추가해서 노란 LED도 켜보세요! clickCount >= 3 조건을 먼저 확인하면 돼요."
+    },
+    {
+      "reason": "DOUBLE_CLICK_MS 값을 500으로 바꿔보세요. 더블클릭 인식 시간이 길어져서 더 여유롭게 누를 수 있어요."
+    },
+    {
+      "reason": "클릭 횟수를 시리얼 모니터에 실시간으로 출력해보세요. Serial.println(clickCount) 한 줄로 확인할 수 있어요!"
+    }
+  ],
+  "quiz": {
+    "question": "버튼을 빠르게 2번 눌렀을 때 어떤 LED가 켜지나요?",
+    "options": [
+      "빨간 LED",
+      "파란 LED",
+      "노란 LED",
+      "아무것도 켜지지 않아요"
+    ],
+    "answer": 1,
+    "explanation": "300ms 안에 2번 이상 누르면 더블클릭으로 판단해서 파란 LED(mode == 2)가 켜져요. 1번만 누르면 빨간 LED가 켜진답니다!"
+  }
+}

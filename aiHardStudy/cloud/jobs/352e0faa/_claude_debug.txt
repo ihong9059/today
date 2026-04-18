@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 13733
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"0e29f9ef-faed-4c5c-a7a7-d149dbde4e63","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"d43fb313-9adc-4ccf-bd72-541ba88cd4e1","session_id":"cfde5a69-0786-44d8-93ba-f8b1ace896c3"}
+{"type":"system","subtype":"hook_response","hook_id":"0e29f9ef-faed-4c5c-a7a7-d149dbde4e63","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"f85dbd95-4b4b-4dba-954c-fb910e02112f","session_id":"cfde5a69-0786-44d8-93ba-f8b1ace896c3"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\352e0faa","session_id":"cfde5a69-0786-44d8-93ba-f8b1ace896c3","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:workstreams","gsd:new-workspace","gsd:research-phase","gsd:remove-workspace","gsd:remove-phase","gsd:reapply-patches","gsd:quick","gsd:progress","gsd:profile-user","gsd:pr-branch","gsd:plant-seed","gsd:plan-phase","gsd:plan-milestone-gaps","gsd:pause-work","gsd:note","gsd:next","gsd:ship","gsd:settings","gsd:s

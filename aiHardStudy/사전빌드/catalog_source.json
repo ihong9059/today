@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "board": "ESP32-WROOM-32",
+  "board": "UTTEC Board",
   "created": "2026-04-17",
-  "total": 178,
+  "total": 155,
   "difficulty_levels": {
     "1": "기초 ★",
     "2": "중급 ★★",
@@ -11,1088 +11,3377 @@
   },
   "items": [
     {
-      "no": "A01", "user_prompt": "빨간 LED 켜기",
-      "tags": ["빨간", "빨강", "red", "LED", "켜", "on", "켜기"],
-      "difficulty": 1, "components": ["led_red"],
-      "category": "A", "category_name": "LED 단일 제어",
+      "no": "A01",
+      "user_prompt": "빨간 LED 켜기",
+      "tags": [
+        "빨간",
+        "빨강",
+        "red",
+        "LED",
+        "켜",
+        "on",
+        "켜기"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red"
+      ],
+      "category": "A",
+      "category_name": "LED 단일 제어",
       "description": "빨간 LED가 계속 켜져 있습니다"
     },
     {
-      "no": "A02", "user_prompt": "빨간 LED 끄기",
-      "tags": ["빨간", "빨강", "red", "LED", "끄", "off", "끄기"],
-      "difficulty": 1, "components": ["led_red"],
-      "category": "A", "category_name": "LED 단일 제어",
+      "no": "A02",
+      "user_prompt": "빨간 LED 끄기",
+      "tags": [
+        "빨간",
+        "빨강",
+        "red",
+        "LED",
+        "끄",
+        "off",
+        "끄기"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red"
+      ],
+      "category": "A",
+      "category_name": "LED 단일 제어",
       "description": "모든 LED 끄기"
     },
     {
-      "no": "A03", "user_prompt": "노란 LED 켜기",
-      "tags": ["노란", "노랑", "yellow", "LED", "켜", "on"],
-      "difficulty": 1, "components": ["led_yellow"],
-      "category": "A", "category_name": "LED 단일 제어",
+      "no": "A03",
+      "user_prompt": "노란 LED 켜기",
+      "tags": [
+        "노란",
+        "노랑",
+        "yellow",
+        "LED",
+        "켜",
+        "on"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_yellow"
+      ],
+      "category": "A",
+      "category_name": "LED 단일 제어",
       "description": "노란 LED가 켜집니다"
     },
     {
-      "no": "A04", "user_prompt": "파란 LED 켜기",
-      "tags": ["파란", "파랑", "blue", "LED", "켜", "on"],
-      "difficulty": 1, "components": ["led_blue"],
-      "category": "A", "category_name": "LED 단일 제어",
+      "no": "A04",
+      "user_prompt": "파란 LED 켜기",
+      "tags": [
+        "파란",
+        "파랑",
+        "blue",
+        "LED",
+        "켜",
+        "on"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_blue"
+      ],
+      "category": "A",
+      "category_name": "LED 단일 제어",
       "description": "파란 LED가 켜집니다"
     },
     {
-      "no": "A05", "user_prompt": "빨간 LED 1초마다 깜빡이기",
-      "tags": ["빨간", "빨강", "red", "LED", "깜빡", "blink", "1초", "점멸"],
-      "difficulty": 1, "components": ["led_red"],
-      "category": "A", "category_name": "LED 단일 제어",
+      "no": "A05",
+      "user_prompt": "빨간 LED 1초마다 깜빡이기",
+      "tags": [
+        "빨간",
+        "빨강",
+        "red",
+        "LED",
+        "깜빡",
+        "blink",
+        "1초",
+        "점멸"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red"
+      ],
+      "category": "A",
+      "category_name": "LED 단일 제어",
       "description": "1초 간격으로 깜빡입니다"
     },
     {
-      "no": "A06", "user_prompt": "빨간 LED 0.5초마다 빠르게 깜빡이기",
-      "tags": ["빨간", "빨강", "red", "LED", "깜빡", "blink", "0.5초", "빠르게", "fast"],
-      "difficulty": 1, "components": ["led_red"],
-      "category": "A", "category_name": "LED 단일 제어",
+      "no": "A06",
+      "user_prompt": "빨간 LED 0.5초마다 빠르게 깜빡이기",
+      "tags": [
+        "빨간",
+        "빨강",
+        "red",
+        "LED",
+        "깜빡",
+        "blink",
+        "0.5초",
+        "빠르게",
+        "fast"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red"
+      ],
+      "category": "A",
+      "category_name": "LED 단일 제어",
       "description": "빠른 점멸"
     },
     {
-      "no": "A07", "user_prompt": "빨간 LED 3초마다 느리게 깜빡이기",
-      "tags": ["빨간", "빨강", "red", "LED", "깜빡", "blink", "3초", "느리게", "slow"],
-      "difficulty": 1, "components": ["led_red"],
-      "category": "A", "category_name": "LED 단일 제어",
+      "no": "A07",
+      "user_prompt": "빨간 LED 3초마다 느리게 깜빡이기",
+      "tags": [
+        "빨간",
+        "빨강",
+        "red",
+        "LED",
+        "깜빡",
+        "blink",
+        "3초",
+        "느리게",
+        "slow"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red"
+      ],
+      "category": "A",
+      "category_name": "LED 단일 제어",
       "description": "느린 점멸"
     },
     {
-      "no": "A08", "user_prompt": "빨간 LED 5번 깜빡이고 멈추기",
-      "tags": ["빨간", "빨강", "red", "LED", "깜빡", "blink", "5번", "멈추기", "stop", "횟수"],
-      "difficulty": 1, "components": ["led_red"],
-      "category": "A", "category_name": "LED 단일 제어",
+      "no": "A08",
+      "user_prompt": "빨간 LED 5번 깜빡이고 멈추기",
+      "tags": [
+        "빨간",
+        "빨강",
+        "red",
+        "LED",
+        "깜빡",
+        "blink",
+        "5번",
+        "멈추기",
+        "stop",
+        "횟수"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red"
+      ],
+      "category": "A",
+      "category_name": "LED 단일 제어",
       "description": "5회 후 정지"
     },
     {
-      "no": "A09", "user_prompt": "빨간 LED 10번 깜빡이고 멈추기",
-      "tags": ["빨간", "빨강", "red", "LED", "깜빡", "blink", "10번", "멈추기", "stop"],
-      "difficulty": 1, "components": ["led_red"],
-      "category": "A", "category_name": "LED 단일 제어",
+      "no": "A09",
+      "user_prompt": "빨간 LED 10번 깜빡이고 멈추기",
+      "tags": [
+        "빨간",
+        "빨강",
+        "red",
+        "LED",
+        "깜빡",
+        "blink",
+        "10번",
+        "멈추기",
+        "stop"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red"
+      ],
+      "category": "A",
+      "category_name": "LED 단일 제어",
       "description": "10회 후 정지"
     },
     {
-      "no": "A10", "user_prompt": "파란 LED 0.2초마다 20번 깜빡이고 멈추기",
-      "tags": ["파란", "파랑", "blue", "LED", "깜빡", "blink", "0.2초", "20번", "빠르게"],
-      "difficulty": 1, "components": ["led_blue"],
-      "category": "A", "category_name": "LED 단일 제어",
+      "no": "A10",
+      "user_prompt": "파란 LED 0.2초마다 20번 깜빡이고 멈추기",
+      "tags": [
+        "파란",
+        "파랑",
+        "blue",
+        "LED",
+        "깜빡",
+        "blink",
+        "0.2초",
+        "20번",
+        "빠르게"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_blue"
+      ],
+      "category": "A",
+      "category_name": "LED 단일 제어",
       "description": "빠른 20회 점멸"
     },
     {
-      "no": "B01", "user_prompt": "빨강, 노랑, 파랑 LED 모두 켜기",
-      "tags": ["빨강", "노랑", "파랑", "LED", "모두", "전체", "켜기", "all", "on"],
-      "difficulty": 1, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "B", "category_name": "LED 다중 제어",
+      "no": "B01",
+      "user_prompt": "빨강, 노랑, 파랑 LED 모두 켜기",
+      "tags": [
+        "빨강",
+        "노랑",
+        "파랑",
+        "LED",
+        "모두",
+        "전체",
+        "켜기",
+        "all",
+        "on"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "B",
+      "category_name": "LED 다중 제어",
       "description": "3개 동시 ON"
     },
     {
-      "no": "B02", "user_prompt": "빨강, 노랑, 파랑 LED 동시에 깜빡이기",
-      "tags": ["빨강", "노랑", "파랑", "LED", "동시", "깜빡", "blink", "전체"],
-      "difficulty": 1, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "B", "category_name": "LED 다중 제어",
+      "no": "B02",
+      "user_prompt": "빨강, 노랑, 파랑 LED 동시에 깜빡이기",
+      "tags": [
+        "빨강",
+        "노랑",
+        "파랑",
+        "LED",
+        "동시",
+        "깜빡",
+        "blink",
+        "전체"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "B",
+      "category_name": "LED 다중 제어",
       "description": "3개 동시 점멸"
     },
     {
-      "no": "B03", "user_prompt": "빨강 → 노랑 → 파랑 순서대로 1초씩 켜기",
-      "tags": ["빨강", "노랑", "파랑", "LED", "순서", "순차", "1초", "sequence"],
-      "difficulty": 1, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "B", "category_name": "LED 다중 제어",
+      "no": "B03",
+      "user_prompt": "빨강 → 노랑 → 파랑 순서대로 1초씩 켜기",
+      "tags": [
+        "빨강",
+        "노랑",
+        "파랑",
+        "LED",
+        "순서",
+        "순차",
+        "1초",
+        "sequence"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "B",
+      "category_name": "LED 다중 제어",
       "description": "순차 점등"
     },
     {
-      "no": "B04", "user_prompt": "빨강 → 노랑 → 파랑 순서대로 켜졌다 꺼지기 반복",
-      "tags": ["빨강", "노랑", "파랑", "LED", "순서", "순차", "반복", "loop"],
-      "difficulty": 1, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "B", "category_name": "LED 다중 제어",
+      "no": "B04",
+      "user_prompt": "빨강 → 노랑 → 파랑 순서대로 켜졌다 꺼지기 반복",
+      "tags": [
+        "빨강",
+        "노랑",
+        "파랑",
+        "LED",
+        "순서",
+        "순차",
+        "반복",
+        "loop"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "B",
+      "category_name": "LED 다중 제어",
       "description": "순차 점멸 반복"
     },
     {
-      "no": "B05", "user_prompt": "LED 3개로 이진수 0부터 7까지 세기",
-      "tags": ["LED", "이진수", "binary", "세기", "count", "0", "7", "숫자"],
-      "difficulty": 1, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "B", "category_name": "LED 다중 제어",
+      "no": "B05",
+      "user_prompt": "LED 3개로 이진수 0부터 7까지 세기",
+      "tags": [
+        "LED",
+        "이진수",
+        "binary",
+        "세기",
+        "count",
+        "0",
+        "7",
+        "숫자"
+      ],
+      "difficulty": 1,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "B",
+      "category_name": "LED 다중 제어",
       "description": "000→001→010→...→111"
     },
     {
-      "no": "C01", "user_prompt": "부저 한번 울리기",
-      "tags": ["부저", "buzzer", "beep", "울리기", "한번", "소리"],
-      "difficulty": 1, "components": ["buzzer"],
-      "category": "C", "category_name": "부저 (BEEP)",
+      "no": "C01",
+      "user_prompt": "부저 한번 울리기",
+      "tags": [
+        "부저",
+        "buzzer",
+        "beep",
+        "울리기",
+        "한번",
+        "소리"
+      ],
+      "difficulty": 1,
+      "components": [
+        "buzzer"
+      ],
+      "category": "C",
+      "category_name": "부저 (BEEP)",
       "description": "삐! 1회"
     },
     {
-      "no": "C02", "user_prompt": "부저 3번 울리기",
-      "tags": ["부저", "buzzer", "beep", "울리기", "3번", "반복"],
-      "difficulty": 1, "components": ["buzzer"],
-      "category": "C", "category_name": "부저 (BEEP)",
+      "no": "C02",
+      "user_prompt": "부저 3번 울리기",
+      "tags": [
+        "부저",
+        "buzzer",
+        "beep",
+        "울리기",
+        "3번",
+        "반복"
+      ],
+      "difficulty": 1,
+      "components": [
+        "buzzer"
+      ],
+      "category": "C",
+      "category_name": "부저 (BEEP)",
       "description": "삐! 삐! 삐!"
     },
     {
-      "no": "C03", "user_prompt": "부저 짧게 5번, 길게 1번 울리기",
-      "tags": ["부저", "buzzer", "beep", "짧게", "길게", "5번", "패턴"],
-      "difficulty": 1, "components": ["buzzer"],
-      "category": "C", "category_name": "부저 (BEEP)",
+      "no": "C03",
+      "user_prompt": "부저 짧게 5번, 길게 1번 울리기",
+      "tags": [
+        "부저",
+        "buzzer",
+        "beep",
+        "짧게",
+        "길게",
+        "5번",
+        "패턴"
+      ],
+      "difficulty": 1,
+      "components": [
+        "buzzer"
+      ],
+      "category": "C",
+      "category_name": "부저 (BEEP)",
       "description": "짧3+긴1"
     },
     {
-      "no": "C04", "user_prompt": "SOS 모스부호 울리기 (짧3 긴3 짧3)",
-      "tags": ["SOS", "모스부호", "morse", "부저", "buzzer", "짧", "긴", "구조"],
-      "difficulty": 1, "components": ["buzzer"],
-      "category": "C", "category_name": "부저 (BEEP)",
+      "no": "C04",
+      "user_prompt": "SOS 모스부호 울리기 (짧3 긴3 짧3)",
+      "tags": [
+        "SOS",
+        "모스부호",
+        "morse",
+        "부저",
+        "buzzer",
+        "짧",
+        "긴",
+        "구조"
+      ],
+      "difficulty": 1,
+      "components": [
+        "buzzer"
+      ],
+      "category": "C",
+      "category_name": "부저 (BEEP)",
       "description": "···---···"
     },
     {
-      "no": "C05", "user_prompt": "부저 점점 빠르게 10번 울리기",
-      "tags": ["부저", "buzzer", "beep", "점점", "빠르게", "10번", "가속"],
-      "difficulty": 1, "components": ["buzzer"],
-      "category": "C", "category_name": "부저 (BEEP)",
+      "no": "C05",
+      "user_prompt": "부저 점점 빠르게 10번 울리기",
+      "tags": [
+        "부저",
+        "buzzer",
+        "beep",
+        "점점",
+        "빠르게",
+        "10번",
+        "가속"
+      ],
+      "difficulty": 1,
+      "components": [
+        "buzzer"
+      ],
+      "category": "C",
+      "category_name": "부저 (BEEP)",
       "description": "간격이 줄어듦"
     },
     {
-      "no": "D01", "user_prompt": "도레미파솔라시도 연주하기",
-      "tags": ["도레미", "음계", "scale", "melody", "멜로디", "연주", "tone", "피아노"],
-      "difficulty": 1, "components": ["melody_buzzer"],
-      "category": "D", "category_name": "멜로디 부저",
+      "no": "D01",
+      "user_prompt": "도레미파솔라시도 연주하기",
+      "tags": [
+        "도레미",
+        "음계",
+        "scale",
+        "melody",
+        "멜로디",
+        "연주",
+        "tone",
+        "피아노"
+      ],
+      "difficulty": 1,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "D",
+      "category_name": "멜로디 부저",
       "description": "8음 순차 재생"
     },
     {
-      "no": "D02", "user_prompt": "도레미파솔라시도 역순으로 연주하기",
-      "tags": ["도레미", "역순", "reverse", "melody", "멜로디", "연주"],
-      "difficulty": 1, "components": ["melody_buzzer"],
-      "category": "D", "category_name": "멜로디 부저",
+      "no": "D02",
+      "user_prompt": "도레미파솔라시도 역순으로 연주하기",
+      "tags": [
+        "도레미",
+        "역순",
+        "reverse",
+        "melody",
+        "멜로디",
+        "연주"
+      ],
+      "difficulty": 1,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "D",
+      "category_name": "멜로디 부저",
       "description": "높은음→낮은음"
     },
     {
-      "no": "D03", "user_prompt": "도 음만 1초간 울리기",
-      "tags": ["도", "음", "tone", "1초", "262Hz", "단일음"],
-      "difficulty": 1, "components": ["melody_buzzer"],
-      "category": "D", "category_name": "멜로디 부저",
+      "no": "D03",
+      "user_prompt": "도 음만 1초간 울리기",
+      "tags": [
+        "도",
+        "음",
+        "tone",
+        "1초",
+        "262Hz",
+        "단일음"
+      ],
+      "difficulty": 1,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "D",
+      "category_name": "멜로디 부저",
       "description": "262Hz 1초"
     },
     {
-      "no": "D04", "user_prompt": "솔 음만 2초간 울리기",
-      "tags": ["솔", "음", "tone", "2초", "392Hz", "단일음"],
-      "difficulty": 1, "components": ["melody_buzzer"],
-      "category": "D", "category_name": "멜로디 부저",
+      "no": "D04",
+      "user_prompt": "솔 음만 2초간 울리기",
+      "tags": [
+        "솔",
+        "음",
+        "tone",
+        "2초",
+        "392Hz",
+        "단일음"
+      ],
+      "difficulty": 1,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "D",
+      "category_name": "멜로디 부저",
       "description": "392Hz 2초"
     },
     {
-      "no": "D05", "user_prompt": "점점 높아지는 소리 내기 (100Hz~1000Hz)",
-      "tags": ["점점", "높아지는", "소리", "사이렌", "상승", "frequency", "주파수"],
-      "difficulty": 1, "components": ["melody_buzzer"],
-      "category": "D", "category_name": "멜로디 부저",
+      "no": "D05",
+      "user_prompt": "점점 높아지는 소리 내기 (100Hz~1000Hz)",
+      "tags": [
+        "점점",
+        "높아지는",
+        "소리",
+        "사이렌",
+        "상승",
+        "frequency",
+        "주파수"
+      ],
+      "difficulty": 1,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "D",
+      "category_name": "멜로디 부저",
       "description": "사이렌 상승"
     },
     {
-      "no": "D06", "user_prompt": "점점 낮아지는 소리 내기 (1000Hz~100Hz)",
-      "tags": ["점점", "낮아지는", "소리", "사이렌", "하강", "frequency", "주파수"],
-      "difficulty": 1, "components": ["melody_buzzer"],
-      "category": "D", "category_name": "멜로디 부저",
+      "no": "D06",
+      "user_prompt": "점점 낮아지는 소리 내기 (1000Hz~100Hz)",
+      "tags": [
+        "점점",
+        "낮아지는",
+        "소리",
+        "사이렌",
+        "하강",
+        "frequency",
+        "주파수"
+      ],
+      "difficulty": 1,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "D",
+      "category_name": "멜로디 부저",
       "description": "사이렌 하강"
     },
     {
-      "no": "E01", "user_prompt": "OLED에 \"Hello\" 표시하기",
-      "tags": ["OLED", "Hello", "텍스트", "text", "표시", "display", "화면"],
-      "difficulty": 1, "components": ["oled"],
-      "category": "E", "category_name": "OLED 기초",
+      "no": "E01",
+      "user_prompt": "OLED에 \"Hello\" 표시하기",
+      "tags": [
+        "OLED",
+        "Hello",
+        "텍스트",
+        "text",
+        "표시",
+        "display",
+        "화면"
+      ],
+      "difficulty": 1,
+      "components": [
+        "oled"
+      ],
+      "category": "E",
+      "category_name": "OLED 기초",
       "description": "화면에 Hello"
     },
     {
-      "no": "E02", "user_prompt": "OLED에 \"UTTEC\" 크게 표시하기",
-      "tags": ["OLED", "UTTEC", "크게", "big", "표시", "중앙"],
-      "difficulty": 1, "components": ["oled"],
-      "category": "E", "category_name": "OLED 기초",
+      "no": "E02",
+      "user_prompt": "OLED에 \"UTTEC\" 크게 표시하기",
+      "tags": [
+        "OLED",
+        "UTTEC",
+        "크게",
+        "big",
+        "표시",
+        "중앙"
+      ],
+      "difficulty": 1,
+      "components": [
+        "oled"
+      ],
+      "category": "E",
+      "category_name": "OLED 기초",
       "description": "중앙 배치"
     },
     {
-      "no": "E03", "user_prompt": "OLED에 1줄, 2줄, 3줄 텍스트 표시하기",
-      "tags": ["OLED", "여러줄", "multi", "line", "텍스트", "표시"],
-      "difficulty": 1, "components": ["oled"],
-      "category": "E", "category_name": "OLED 기초",
+      "no": "E03",
+      "user_prompt": "OLED에 1줄, 2줄, 3줄 텍스트 표시하기",
+      "tags": [
+        "OLED",
+        "여러줄",
+        "multi",
+        "line",
+        "텍스트",
+        "표시"
+      ],
+      "difficulty": 1,
+      "components": [
+        "oled"
+      ],
+      "category": "E",
+      "category_name": "OLED 기초",
       "description": "다중 줄"
     },
     {
-      "no": "E04", "user_prompt": "OLED에 1부터 10까지 숫자 세기",
-      "tags": ["OLED", "숫자", "number", "세기", "count", "1", "10"],
-      "difficulty": 1, "components": ["oled"],
-      "category": "E", "category_name": "OLED 기초",
+      "no": "E04",
+      "user_prompt": "OLED에 1부터 10까지 숫자 세기",
+      "tags": [
+        "OLED",
+        "숫자",
+        "number",
+        "세기",
+        "count",
+        "1",
+        "10"
+      ],
+      "difficulty": 1,
+      "components": [
+        "oled"
+      ],
+      "category": "E",
+      "category_name": "OLED 기초",
       "description": "1~10 순차 표시"
     },
     {
-      "no": "E05", "user_prompt": "OLED에 카운트다운 5, 4, 3, 2, 1, 0 표시하기",
-      "tags": ["OLED", "카운트다운", "countdown", "5", "4", "3", "2", "1"],
-      "difficulty": 1, "components": ["oled"],
-      "category": "E", "category_name": "OLED 기초",
+      "no": "E05",
+      "user_prompt": "OLED에 카운트다운 5, 4, 3, 2, 1, 0 표시하기",
+      "tags": [
+        "OLED",
+        "카운트다운",
+        "countdown",
+        "5",
+        "4",
+        "3",
+        "2",
+        "1"
+      ],
+      "difficulty": 1,
+      "components": [
+        "oled"
+      ],
+      "category": "E",
+      "category_name": "OLED 기초",
       "description": "역순 카운트"
     },
     {
-      "no": "E06", "user_prompt": "OLED 화면 깜빡이기 (1초 보이고 1초 지우기)",
-      "tags": ["OLED", "깜빡", "blink", "화면", "1초", "점멸"],
-      "difficulty": 1, "components": ["oled"],
-      "category": "E", "category_name": "OLED 기초",
+      "no": "E06",
+      "user_prompt": "OLED 화면 깜빡이기 (1초 보이고 1초 지우기)",
+      "tags": [
+        "OLED",
+        "깜빡",
+        "blink",
+        "화면",
+        "1초",
+        "점멸"
+      ],
+      "difficulty": 1,
+      "components": [
+        "oled"
+      ],
+      "category": "E",
+      "category_name": "OLED 기초",
       "description": "화면 점멸"
     },
     {
-      "no": "F01", "user_prompt": "현재 온도 측정해서 시리얼에 출력하기",
-      "tags": ["온도", "temperature", "측정", "시리얼", "serial", "센서", "sensor", "AHT20"],
-      "difficulty": 1, "components": ["aht20"],
-      "category": "F", "category_name": "센서 기초",
+      "no": "F01",
+      "user_prompt": "현재 온도 측정해서 시리얼에 출력하기",
+      "tags": [
+        "온도",
+        "temperature",
+        "측정",
+        "시리얼",
+        "serial",
+        "센서",
+        "sensor",
+        "AHT20"
+      ],
+      "difficulty": 1,
+      "components": [
+        "aht20"
+      ],
+      "category": "F",
+      "category_name": "센서 기초",
       "description": "Serial에 온도 표시"
     },
     {
-      "no": "F02", "user_prompt": "온도와 습도를 같이 시리얼에 출력하기",
-      "tags": ["온도", "습도", "temperature", "humidity", "시리얼", "serial", "센서"],
-      "difficulty": 1, "components": ["aht20"],
-      "category": "F", "category_name": "센서 기초",
+      "no": "F02",
+      "user_prompt": "온도와 습도를 같이 시리얼에 출력하기",
+      "tags": [
+        "온도",
+        "습도",
+        "temperature",
+        "humidity",
+        "시리얼",
+        "serial",
+        "센서"
+      ],
+      "difficulty": 1,
+      "components": [
+        "aht20"
+      ],
+      "category": "F",
+      "category_name": "센서 기초",
       "description": "두 값 동시 출력"
     },
     {
-      "no": "F03", "user_prompt": "온도를 OLED에 표시하기",
-      "tags": ["온도", "temperature", "OLED", "표시", "display", "센서"],
-      "difficulty": 1, "components": ["aht20", "oled"],
-      "category": "F", "category_name": "센서 기초",
+      "no": "F03",
+      "user_prompt": "온도를 OLED에 표시하기",
+      "tags": [
+        "온도",
+        "temperature",
+        "OLED",
+        "표시",
+        "display",
+        "센서"
+      ],
+      "difficulty": 1,
+      "components": [
+        "aht20",
+        "oled"
+      ],
+      "category": "F",
+      "category_name": "센서 기초",
       "description": "화면에 온도 숫자"
     },
     {
-      "no": "F04", "user_prompt": "온도와 습도를 OLED에 같이 표시하기",
-      "tags": ["온도", "습도", "temperature", "humidity", "OLED", "표시"],
-      "difficulty": 1, "components": ["aht20", "oled"],
-      "category": "F", "category_name": "센서 기초",
+      "no": "F04",
+      "user_prompt": "온도와 습도를 OLED에 같이 표시하기",
+      "tags": [
+        "온도",
+        "습도",
+        "temperature",
+        "humidity",
+        "OLED",
+        "표시"
+      ],
+      "difficulty": 1,
+      "components": [
+        "aht20",
+        "oled"
+      ],
+      "category": "F",
+      "category_name": "센서 기초",
       "description": "2줄 표시"
     },
     {
-      "no": "F05", "user_prompt": "3초마다 온도 측정해서 OLED에 업데이트하기",
-      "tags": ["온도", "temperature", "OLED", "3초", "주기", "업데이트", "갱신"],
-      "difficulty": 1, "components": ["aht20", "oled"],
-      "category": "F", "category_name": "센서 기초",
+      "no": "F05",
+      "user_prompt": "3초마다 온도 측정해서 OLED에 업데이트하기",
+      "tags": [
+        "온도",
+        "temperature",
+        "OLED",
+        "3초",
+        "주기",
+        "업데이트",
+        "갱신"
+      ],
+      "difficulty": 1,
+      "components": [
+        "aht20",
+        "oled"
+      ],
+      "category": "F",
+      "category_name": "센서 기초",
       "description": "주기적 갱신"
     },
     {
-      "no": "G01", "user_prompt": "스위치 누르면 빨간 LED 켜기",
-      "tags": ["스위치", "switch", "button", "빨간", "LED", "켜기", "누르면"],
-      "difficulty": 1, "components": ["switch", "led_red"],
-      "category": "G", "category_name": "스위치 기초",
+      "no": "G01",
+      "user_prompt": "스위치 누르면 빨간 LED 켜기",
+      "tags": [
+        "스위치",
+        "switch",
+        "button",
+        "빨간",
+        "LED",
+        "켜기",
+        "누르면"
+      ],
+      "difficulty": 1,
+      "components": [
+        "switch",
+        "led_red"
+      ],
+      "category": "G",
+      "category_name": "스위치 기초",
       "description": "누르는 동안 ON"
     },
     {
-      "no": "G02", "user_prompt": "스위치 누르면 LED 켜고 떼면 끄기",
-      "tags": ["스위치", "switch", "button", "LED", "켜고", "끄기", "누르면", "떼면"],
-      "difficulty": 1, "components": ["switch", "led_red"],
-      "category": "G", "category_name": "스위치 기초",
+      "no": "G02",
+      "user_prompt": "스위치 누르면 LED 켜고 떼면 끄기",
+      "tags": [
+        "스위치",
+        "switch",
+        "button",
+        "LED",
+        "켜고",
+        "끄기",
+        "누르면",
+        "떼면"
+      ],
+      "difficulty": 1,
+      "components": [
+        "switch",
+        "led_red"
+      ],
+      "category": "G",
+      "category_name": "스위치 기초",
       "description": "실시간 반응"
     },
     {
-      "no": "G03", "user_prompt": "스위치 누르면 부저 울리기",
-      "tags": ["스위치", "switch", "button", "부저", "buzzer", "울리기", "누르면"],
-      "difficulty": 1, "components": ["switch", "buzzer"],
-      "category": "G", "category_name": "스위치 기초",
+      "no": "G03",
+      "user_prompt": "스위치 누르면 부저 울리기",
+      "tags": [
+        "스위치",
+        "switch",
+        "button",
+        "부저",
+        "buzzer",
+        "울리기",
+        "누르면"
+      ],
+      "difficulty": 1,
+      "components": [
+        "switch",
+        "buzzer"
+      ],
+      "category": "G",
+      "category_name": "스위치 기초",
       "description": "버튼→소리"
     },
     {
-      "no": "G04", "user_prompt": "스위치 누르면 OLED에 \"PRESSED!\" 표시하기",
-      "tags": ["스위치", "switch", "button", "OLED", "PRESSED", "표시", "누르면"],
-      "difficulty": 1, "components": ["switch", "oled"],
-      "category": "G", "category_name": "스위치 기초",
+      "no": "G04",
+      "user_prompt": "스위치 누르면 OLED에 \"PRESSED!\" 표시하기",
+      "tags": [
+        "스위치",
+        "switch",
+        "button",
+        "OLED",
+        "PRESSED",
+        "표시",
+        "누르면"
+      ],
+      "difficulty": 1,
+      "components": [
+        "switch",
+        "oled"
+      ],
+      "category": "G",
+      "category_name": "스위치 기초",
       "description": "버튼→화면"
     },
     {
-      "no": "H01", "user_prompt": "신호등 만들기: 빨강 3초, 노랑 1초, 파랑 3초 반복",
-      "tags": ["신호등", "traffic", "빨강", "노랑", "파랑", "LED", "3초", "1초", "반복"],
-      "difficulty": 2, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "H", "category_name": "LED 패턴",
+      "no": "H01",
+      "user_prompt": "신호등 만들기: 빨강 3초, 노랑 1초, 파랑 3초 반복",
+      "tags": [
+        "신호등",
+        "traffic",
+        "빨강",
+        "노랑",
+        "파랑",
+        "LED",
+        "3초",
+        "1초",
+        "반복"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "H",
+      "category_name": "LED 패턴",
       "description": "신호등 패턴"
     },
     {
-      "no": "H02", "user_prompt": "비상등: 빨강+파랑 번갈아 0.2초마다 깜빡이기",
-      "tags": ["비상등", "경찰차", "빨강", "파랑", "LED", "번갈아", "0.2초", "emergency"],
-      "difficulty": 2, "components": ["led_red", "led_blue"],
-      "category": "H", "category_name": "LED 패턴",
+      "no": "H02",
+      "user_prompt": "비상등: 빨강+파랑 번갈아 0.2초마다 깜빡이기",
+      "tags": [
+        "비상등",
+        "경찰차",
+        "빨강",
+        "파랑",
+        "LED",
+        "번갈아",
+        "0.2초",
+        "emergency"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "led_blue"
+      ],
+      "category": "H",
+      "category_name": "LED 패턴",
       "description": "경찰차 패턴"
     },
     {
-      "no": "H03", "user_prompt": "빨강 → 노랑 → 파랑 → 노랑 왕복 반복",
-      "tags": ["빨강", "노랑", "파랑", "LED", "왕복", "bounce", "반복"],
-      "difficulty": 2, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "H", "category_name": "LED 패턴",
+      "no": "H03",
+      "user_prompt": "빨강 → 노랑 → 파랑 → 노랑 왕복 반복",
+      "tags": [
+        "빨강",
+        "노랑",
+        "파랑",
+        "LED",
+        "왕복",
+        "bounce",
+        "반복"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "H",
+      "category_name": "LED 패턴",
       "description": "왕복 패턴"
     },
     {
-      "no": "H04", "user_prompt": "LED 하나씩 누적: 빨강 → 빨+노 → 빨+노+파 → 전체 끄기",
-      "tags": ["LED", "누적", "accumulate", "빨강", "노랑", "파랑", "순차"],
-      "difficulty": 2, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "H", "category_name": "LED 패턴",
+      "no": "H04",
+      "user_prompt": "LED 하나씩 누적: 빨강 → 빨+노 → 빨+노+파 → 전체 끄기",
+      "tags": [
+        "LED",
+        "누적",
+        "accumulate",
+        "빨강",
+        "노랑",
+        "파랑",
+        "순차"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "H",
+      "category_name": "LED 패턴",
       "description": "누적 점등"
     },
     {
-      "no": "H05", "user_prompt": "랜덤하게 LED 하나씩 켜기 (0.5초마다)",
-      "tags": ["랜덤", "random", "LED", "하나씩", "0.5초"],
-      "difficulty": 2, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "H", "category_name": "LED 패턴",
+      "no": "H05",
+      "user_prompt": "랜덤하게 LED 하나씩 켜기 (0.5초마다)",
+      "tags": [
+        "랜덤",
+        "random",
+        "LED",
+        "하나씩",
+        "0.5초"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "H",
+      "category_name": "LED 패턴",
       "description": "랜덤 점등"
     },
     {
-      "no": "H06", "user_prompt": "빨강 빠르게(0.2초), 파랑 느리게(2초) 동시에 깜빡이기",
-      "tags": ["빨강", "파랑", "LED", "빠르게", "느리게", "동시", "멀티태스크"],
-      "difficulty": 2, "components": ["led_red", "led_blue"],
-      "category": "H", "category_name": "LED 패턴",
+      "no": "H06",
+      "user_prompt": "빨강 빠르게(0.2초), 파랑 느리게(2초) 동시에 깜빡이기",
+      "tags": [
+        "빨강",
+        "파랑",
+        "LED",
+        "빠르게",
+        "느리게",
+        "동시",
+        "멀티태스크"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "led_blue"
+      ],
+      "category": "H",
+      "category_name": "LED 패턴",
       "description": "독립 속도 점멸"
     },
     {
-      "no": "H07", "user_prompt": "LED 3개로 숨쉬기 효과: 천천히 켜졌다 꺼지기 반복",
-      "tags": ["LED", "숨쉬기", "breathe", "무드등", "천천히", "페이드"],
-      "difficulty": 2, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "H", "category_name": "LED 패턴",
+      "no": "H07",
+      "user_prompt": "LED 3개로 숨쉬기 효과: 천천히 켜졌다 꺼지기 반복",
+      "tags": [
+        "LED",
+        "숨쉬기",
+        "breathe",
+        "무드등",
+        "천천히",
+        "페이드"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "H",
+      "category_name": "LED 패턴",
       "description": "무드등 효과"
     },
     {
-      "no": "H08", "user_prompt": "하트비트: 빨간 LED 빠르게 2번 + 1초 쉬기 반복",
-      "tags": ["하트비트", "heartbeat", "빨간", "LED", "심장", "2번", "패턴"],
-      "difficulty": 2, "components": ["led_red"],
-      "category": "H", "category_name": "LED 패턴",
+      "no": "H08",
+      "user_prompt": "하트비트: 빨간 LED 빠르게 2번 + 1초 쉬기 반복",
+      "tags": [
+        "하트비트",
+        "heartbeat",
+        "빨간",
+        "LED",
+        "심장",
+        "2번",
+        "패턴"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red"
+      ],
+      "category": "H",
+      "category_name": "LED 패턴",
       "description": "심장박동 패턴"
     },
     {
-      "no": "I01", "user_prompt": "학교종 멜로디 연주하기",
-      "tags": ["학교종", "멜로디", "melody", "동요", "연주", "노래"],
-      "difficulty": 2, "components": ["melody_buzzer"],
-      "category": "I", "category_name": "멜로디 응용",
+      "no": "I01",
+      "user_prompt": "학교종 멜로디 연주하기",
+      "tags": [
+        "학교종",
+        "멜로디",
+        "melody",
+        "동요",
+        "연주",
+        "노래"
+      ],
+      "difficulty": 2,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "I",
+      "category_name": "멜로디 응용",
       "description": "학교종이 땡땡땡"
     },
     {
-      "no": "I02", "user_prompt": "반짝반짝 작은별 연주하기",
-      "tags": ["작은별", "twinkle", "멜로디", "melody", "동요", "연주"],
-      "difficulty": 2, "components": ["melody_buzzer"],
-      "category": "I", "category_name": "멜로디 응용",
+      "no": "I02",
+      "user_prompt": "반짝반짝 작은별 연주하기",
+      "tags": [
+        "작은별",
+        "twinkle",
+        "멜로디",
+        "melody",
+        "동요",
+        "연주"
+      ],
+      "difficulty": 2,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "I",
+      "category_name": "멜로디 응용",
       "description": "도도솔솔라라솔~"
     },
     {
-      "no": "I03", "user_prompt": "비행기 멜로디 연주하기",
-      "tags": ["비행기", "멜로디", "melody", "동요", "연주"],
-      "difficulty": 2, "components": ["melody_buzzer"],
-      "category": "I", "category_name": "멜로디 응용",
+      "no": "I03",
+      "user_prompt": "비행기 멜로디 연주하기",
+      "tags": [
+        "비행기",
+        "멜로디",
+        "melody",
+        "동요",
+        "연주"
+      ],
+      "difficulty": 2,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "I",
+      "category_name": "멜로디 응용",
       "description": "미레도레미미미~"
     },
     {
-      "no": "I04", "user_prompt": "곰 세 마리 멜로디 연주하기",
-      "tags": ["곰", "세마리", "멜로디", "melody", "동요", "연주"],
-      "difficulty": 2, "components": ["melody_buzzer"],
-      "category": "I", "category_name": "멜로디 응용",
+      "no": "I04",
+      "user_prompt": "곰 세 마리 멜로디 연주하기",
+      "tags": [
+        "곰",
+        "세마리",
+        "멜로디",
+        "melody",
+        "동요",
+        "연주"
+      ],
+      "difficulty": 2,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "I",
+      "category_name": "멜로디 응용",
       "description": "솔미미 파레레~"
     },
     {
-      "no": "I05", "user_prompt": "생일 축하 노래 연주하기",
-      "tags": ["생일", "축하", "birthday", "멜로디", "melody", "연주", "happy"],
-      "difficulty": 2, "components": ["melody_buzzer"],
-      "category": "I", "category_name": "멜로디 응용",
+      "no": "I05",
+      "user_prompt": "생일 축하 노래 연주하기",
+      "tags": [
+        "생일",
+        "축하",
+        "birthday",
+        "멜로디",
+        "melody",
+        "연주",
+        "happy"
+      ],
+      "difficulty": 2,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "I",
+      "category_name": "멜로디 응용",
       "description": "Happy Birthday"
     },
     {
-      "no": "I06", "user_prompt": "경찰차 사이렌: 높은음↔낮은음 반복",
-      "tags": ["경찰차", "사이렌", "siren", "높은음", "낮은음", "반복", "멜로디"],
-      "difficulty": 2, "components": ["melody_buzzer"],
-      "category": "I", "category_name": "멜로디 응용",
+      "no": "I06",
+      "user_prompt": "경찰차 사이렌: 높은음↔낮은음 반복",
+      "tags": [
+        "경찰차",
+        "사이렌",
+        "siren",
+        "높은음",
+        "낮은음",
+        "반복",
+        "멜로디"
+      ],
+      "difficulty": 2,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "I",
+      "category_name": "멜로디 응용",
       "description": "삐용삐용"
     },
     {
-      "no": "I07", "user_prompt": "구급차 사이렌: 점점 높아졌다 낮아지기 반복",
-      "tags": ["구급차", "사이렌", "ambulance", "점점", "높아졌다", "낮아지기"],
-      "difficulty": 2, "components": ["melody_buzzer"],
-      "category": "I", "category_name": "멜로디 응용",
+      "no": "I07",
+      "user_prompt": "구급차 사이렌: 점점 높아졌다 낮아지기 반복",
+      "tags": [
+        "구급차",
+        "사이렌",
+        "ambulance",
+        "점점",
+        "높아졌다",
+        "낮아지기"
+      ],
+      "difficulty": 2,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "I",
+      "category_name": "멜로디 응용",
       "description": "에에엥~"
     },
     {
-      "no": "I08", "user_prompt": "게임 시작 효과음: 낮은음→높은음 빠르게",
-      "tags": ["게임", "시작", "효과음", "start", "sound", "상승"],
-      "difficulty": 2, "components": ["melody_buzzer"],
-      "category": "I", "category_name": "멜로디 응용",
+      "no": "I08",
+      "user_prompt": "게임 시작 효과음: 낮은음→높은음 빠르게",
+      "tags": [
+        "게임",
+        "시작",
+        "효과음",
+        "start",
+        "sound",
+        "상승"
+      ],
+      "difficulty": 2,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "I",
+      "category_name": "멜로디 응용",
       "description": "삐삐삐빅!"
     },
     {
-      "no": "I09", "user_prompt": "게임 오버 효과음: 높은음→낮은음 느리게",
-      "tags": ["게임", "오버", "gameover", "효과음", "하강", "실패"],
-      "difficulty": 2, "components": ["melody_buzzer"],
-      "category": "I", "category_name": "멜로디 응용",
+      "no": "I09",
+      "user_prompt": "게임 오버 효과음: 높은음→낮은음 느리게",
+      "tags": [
+        "게임",
+        "오버",
+        "gameover",
+        "효과음",
+        "하강",
+        "실패"
+      ],
+      "difficulty": 2,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "I",
+      "category_name": "멜로디 응용",
       "description": "뿌우웅~"
     },
     {
-      "no": "I10", "user_prompt": "레벨업 효과음: 도미솔도(높은) 빠르게",
-      "tags": ["레벨업", "levelup", "효과음", "도미솔", "상승", "성공"],
-      "difficulty": 2, "components": ["melody_buzzer"],
-      "category": "I", "category_name": "멜로디 응용",
+      "no": "I10",
+      "user_prompt": "레벨업 효과음: 도미솔도(높은) 빠르게",
+      "tags": [
+        "레벨업",
+        "levelup",
+        "효과음",
+        "도미솔",
+        "상승",
+        "성공"
+      ],
+      "difficulty": 2,
+      "components": [
+        "melody_buzzer"
+      ],
+      "category": "I",
+      "category_name": "멜로디 응용",
       "description": "띠리링!"
     },
     {
-      "no": "J01", "user_prompt": "빨간 LED 켜면서 부저 한번 울리기",
-      "tags": ["빨간", "LED", "부저", "buzzer", "동시", "켜면서", "울리기"],
-      "difficulty": 2, "components": ["led_red", "buzzer"],
-      "category": "J", "category_name": "LED + 소리 조합",
+      "no": "J01",
+      "user_prompt": "빨간 LED 켜면서 부저 한번 울리기",
+      "tags": [
+        "빨간",
+        "LED",
+        "부저",
+        "buzzer",
+        "동시",
+        "켜면서",
+        "울리기"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "buzzer"
+      ],
+      "category": "J",
+      "category_name": "LED + 소리 조합",
       "description": "시각+청각 동시"
     },
     {
-      "no": "J02", "user_prompt": "LED 깜빡일 때마다 부저 울리기",
-      "tags": ["LED", "깜빡", "부저", "buzzer", "동기화", "때마다"],
-      "difficulty": 2, "components": ["led_red", "buzzer"],
-      "category": "J", "category_name": "LED + 소리 조합",
+      "no": "J02",
+      "user_prompt": "LED 깜빡일 때마다 부저 울리기",
+      "tags": [
+        "LED",
+        "깜빡",
+        "부저",
+        "buzzer",
+        "동기화",
+        "때마다"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "buzzer"
+      ],
+      "category": "J",
+      "category_name": "LED + 소리 조합",
       "description": "점멸+소리 동기화"
     },
     {
-      "no": "J03", "user_prompt": "LED 순서대로 켜면서 도레미 연주하기",
-      "tags": ["LED", "순서", "도레미", "멜로디", "매핑", "연주"],
-      "difficulty": 2, "components": ["led_red", "led_yellow", "led_blue", "melody_buzzer"],
-      "category": "J", "category_name": "LED + 소리 조합",
+      "no": "J03",
+      "user_prompt": "LED 순서대로 켜면서 도레미 연주하기",
+      "tags": [
+        "LED",
+        "순서",
+        "도레미",
+        "멜로디",
+        "매핑",
+        "연주"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "melody_buzzer"
+      ],
+      "category": "J",
+      "category_name": "LED + 소리 조합",
       "description": "빨→도, 노→레, 파→미"
     },
     {
-      "no": "J04", "user_prompt": "알람: LED 전체 빠르게 깜빡 + 부저 빠르게 반복",
-      "tags": ["알람", "alarm", "LED", "부저", "buzzer", "빠르게", "긴급", "경보"],
-      "difficulty": 2, "components": ["led_red", "led_yellow", "led_blue", "buzzer"],
-      "category": "J", "category_name": "LED + 소리 조합",
+      "no": "J04",
+      "user_prompt": "알람: LED 전체 빠르게 깜빡 + 부저 빠르게 반복",
+      "tags": [
+        "알람",
+        "alarm",
+        "LED",
+        "부저",
+        "buzzer",
+        "빠르게",
+        "긴급",
+        "경보"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "buzzer"
+      ],
+      "category": "J",
+      "category_name": "LED + 소리 조합",
       "description": "긴급 알람"
     },
     {
-      "no": "J05", "user_prompt": "크리스마스: LED 랜덤 + 징글벨 멜로디",
-      "tags": ["크리스마스", "christmas", "LED", "랜덤", "징글벨", "멜로디", "파티"],
-      "difficulty": 2, "components": ["led_red", "led_yellow", "led_blue", "melody_buzzer"],
-      "category": "J", "category_name": "LED + 소리 조합",
+      "no": "J05",
+      "user_prompt": "크리스마스: LED 랜덤 + 징글벨 멜로디",
+      "tags": [
+        "크리스마스",
+        "christmas",
+        "LED",
+        "랜덤",
+        "징글벨",
+        "멜로디",
+        "파티"
+      ],
+      "difficulty": 2,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "melody_buzzer"
+      ],
+      "category": "J",
+      "category_name": "LED + 소리 조합",
       "description": "파티 효과"
     },
     {
-      "no": "K01", "user_prompt": "온도 25도 이하면 파란 LED, 넘으면 빨간 LED",
-      "tags": ["온도", "temperature", "25도", "파란", "빨간", "LED", "조건", "센서"],
-      "difficulty": 2, "components": ["aht20", "led_red", "led_blue"],
-      "category": "K", "category_name": "센서 + 조건",
+      "no": "K01",
+      "user_prompt": "온도 25도 이하면 파란 LED, 넘으면 빨간 LED",
+      "tags": [
+        "온도",
+        "temperature",
+        "25도",
+        "파란",
+        "빨간",
+        "LED",
+        "조건",
+        "센서"
+      ],
+      "difficulty": 2,
+      "components": [
+        "aht20",
+        "led_red",
+        "led_blue"
+      ],
+      "category": "K",
+      "category_name": "센서 + 조건",
       "description": "온도별 LED 변경"
     },
     {
-      "no": "K02", "user_prompt": "온도에 따라 LED 색 바꾸기 (낮으면 파랑, 보통 노랑, 높으면 빨강)",
-      "tags": ["온도", "temperature", "LED", "색", "파랑", "노랑", "빨강", "3단계"],
-      "difficulty": 2, "components": ["aht20", "led_red", "led_yellow", "led_blue"],
-      "category": "K", "category_name": "센서 + 조건",
+      "no": "K02",
+      "user_prompt": "온도에 따라 LED 색 바꾸기 (낮으면 파랑, 보통 노랑, 높으면 빨강)",
+      "tags": [
+        "온도",
+        "temperature",
+        "LED",
+        "색",
+        "파랑",
+        "노랑",
+        "빨강",
+        "3단계"
+      ],
+      "difficulty": 2,
+      "components": [
+        "aht20",
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "K",
+      "category_name": "센서 + 조건",
       "description": "3단계 분기"
     },
     {
-      "no": "K03", "user_prompt": "온도 28도 넘으면 부저 울리기",
-      "tags": ["온도", "temperature", "28도", "부저", "buzzer", "경보", "alarm"],
-      "difficulty": 2, "components": ["aht20", "buzzer"],
-      "category": "K", "category_name": "센서 + 조건",
+      "no": "K03",
+      "user_prompt": "온도 28도 넘으면 부저 울리기",
+      "tags": [
+        "온도",
+        "temperature",
+        "28도",
+        "부저",
+        "buzzer",
+        "경보",
+        "alarm"
+      ],
+      "difficulty": 2,
+      "components": [
+        "aht20",
+        "buzzer"
+      ],
+      "category": "K",
+      "category_name": "센서 + 조건",
       "description": "온도 경보"
     },
     {
-      "no": "K04", "user_prompt": "습도 70% 넘으면 노란 LED 깜빡이기",
-      "tags": ["습도", "humidity", "70%", "노란", "LED", "깜빡", "경고"],
-      "difficulty": 2, "components": ["aht20", "led_yellow"],
-      "category": "K", "category_name": "센서 + 조건",
+      "no": "K04",
+      "user_prompt": "습도 70% 넘으면 노란 LED 깜빡이기. aht20_read(temp,humi)로 습도 측정. OLED에 습도 표시 시 snprintf로 char 배열에 변환 후 oled.drawString(x,y,buf)로 표시. String을 drawString에 직접 전달하지 말 것.",
+      "tags": [
+        "습도",
+        "humidity",
+        "70%",
+        "노란",
+        "LED",
+        "깜빡",
+        "경고"
+      ],
+      "difficulty": 2,
+      "components": [
+        "aht20",
+        "led_yellow"
+      ],
+      "category": "K",
+      "category_name": "센서 + 조건",
       "description": "습도 경고"
     },
     {
-      "no": "K05", "user_prompt": "온도를 OLED에 표시하고 30도 넘으면 \"HOT!\" 표시",
-      "tags": ["온도", "temperature", "OLED", "30도", "HOT", "표시", "조건"],
-      "difficulty": 2, "components": ["aht20", "oled"],
-      "category": "K", "category_name": "센서 + 조건",
+      "no": "K05",
+      "user_prompt": "온도를 OLED에 표시하고 30도 넘으면 \"HOT!\" 표시",
+      "tags": [
+        "온도",
+        "temperature",
+        "OLED",
+        "30도",
+        "HOT",
+        "표시",
+        "조건"
+      ],
+      "difficulty": 2,
+      "components": [
+        "aht20",
+        "oled"
+      ],
+      "category": "K",
+      "category_name": "센서 + 조건",
       "description": "조건부 메시지"
     },
     {
-      "no": "L01", "user_prompt": "스위치 누를 때마다 LED 토글 (켜짐↔꺼짐)",
-      "tags": ["스위치", "switch", "LED", "토글", "toggle", "켜짐", "꺼짐"],
-      "difficulty": 2, "components": ["switch", "led_red"],
-      "category": "L", "category_name": "스위치 + 제어",
+      "no": "L01",
+      "user_prompt": "스위치 누를 때마다 LED 토글 (켜짐↔꺼짐)",
+      "tags": [
+        "스위치",
+        "switch",
+        "LED",
+        "토글",
+        "toggle",
+        "켜짐",
+        "꺼짐"
+      ],
+      "difficulty": 2,
+      "components": [
+        "switch",
+        "led_red"
+      ],
+      "category": "L",
+      "category_name": "스위치 + 제어",
       "description": "토글 동작"
     },
     {
-      "no": "L02", "user_prompt": "스위치 누를 때마다 LED 색 바꾸기 (빨→노→파 순환)",
-      "tags": ["스위치", "switch", "LED", "색", "바꾸기", "순환", "cycle"],
-      "difficulty": 2, "components": ["switch", "led_red", "led_yellow", "led_blue"],
-      "category": "L", "category_name": "스위치 + 제어",
+      "no": "L02",
+      "user_prompt": "스위치 누를 때마다 LED 색 바꾸기 (빨→노→파 순환)",
+      "tags": [
+        "스위치",
+        "switch",
+        "LED",
+        "색",
+        "바꾸기",
+        "순환",
+        "cycle"
+      ],
+      "difficulty": 2,
+      "components": [
+        "switch",
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "L",
+      "category_name": "스위치 + 제어",
       "description": "색 순환"
     },
     {
-      "no": "L03", "user_prompt": "스위치 누른 횟수 OLED에 표시하기",
-      "tags": ["스위치", "switch", "횟수", "count", "OLED", "표시", "카운터"],
-      "difficulty": 2, "components": ["switch", "oled"],
-      "category": "L", "category_name": "스위치 + 제어",
+      "no": "L03",
+      "user_prompt": "스위치 누른 횟수 OLED에 표시하기",
+      "tags": [
+        "스위치",
+        "switch",
+        "횟수",
+        "count",
+        "OLED",
+        "표시",
+        "카운터"
+      ],
+      "difficulty": 2,
+      "components": [
+        "switch",
+        "oled"
+      ],
+      "category": "L",
+      "category_name": "스위치 + 제어",
       "description": "카운터"
     },
     {
-      "no": "L04", "user_prompt": "스위치 3번 누르면 멜로디 재생하기",
-      "tags": ["스위치", "switch", "3번", "멜로디", "melody", "재생", "트리거"],
-      "difficulty": 2, "components": ["switch", "melody_buzzer"],
-      "category": "L", "category_name": "스위치 + 제어",
+      "no": "L04",
+      "user_prompt": "스위치 3번 누르면 멜로디 재생하기",
+      "tags": [
+        "스위치",
+        "switch",
+        "3번",
+        "멜로디",
+        "melody",
+        "재생",
+        "트리거"
+      ],
+      "difficulty": 2,
+      "components": [
+        "switch",
+        "melody_buzzer"
+      ],
+      "category": "L",
+      "category_name": "스위치 + 제어",
       "description": "카운트 트리거"
     },
     {
-      "no": "L05", "user_prompt": "스위치 길게 누르면(2초) 모든 LED 끄기",
-      "tags": ["스위치", "switch", "길게", "long", "press", "2초", "LED", "끄기"],
-      "difficulty": 2, "components": ["switch", "led_red", "led_yellow", "led_blue"],
-      "category": "L", "category_name": "스위치 + 제어",
+      "no": "L05",
+      "user_prompt": "스위치 길게 누르면(2초) 모든 LED 끄기",
+      "tags": [
+        "스위치",
+        "switch",
+        "길게",
+        "long",
+        "press",
+        "2초",
+        "LED",
+        "끄기"
+      ],
+      "difficulty": 2,
+      "components": [
+        "switch",
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "L",
+      "category_name": "스위치 + 제어",
       "description": "롱프레스 감지"
     },
     {
-      "no": "M01", "user_prompt": "OLED에 \"빨강!\" 표시하고 빨간 LED 켜기",
-      "tags": ["OLED", "빨강", "LED", "표시", "텍스트", "연동"],
-      "difficulty": 2, "components": ["oled", "led_red"],
-      "category": "M", "category_name": "OLED + 데이터 표시",
+      "no": "M01",
+      "user_prompt": "OLED에 \"빨강!\" 표시하고 빨간 LED 켜기",
+      "tags": [
+        "OLED",
+        "빨강",
+        "LED",
+        "표시",
+        "텍스트",
+        "연동"
+      ],
+      "difficulty": 2,
+      "components": [
+        "oled",
+        "led_red"
+      ],
+      "category": "M",
+      "category_name": "OLED + 데이터 표시",
       "description": "안내+동작"
     },
     {
-      "no": "M02", "user_prompt": "OLED에 현재 켜진 LED 이름 표시하기",
-      "tags": ["OLED", "LED", "이름", "상태", "표시", "모니터"],
-      "difficulty": 2, "components": ["oled", "led_red", "led_yellow", "led_blue"],
-      "category": "M", "category_name": "OLED + 데이터 표시",
+      "no": "M02",
+      "user_prompt": "OLED에 현재 켜진 LED 이름 표시하기",
+      "tags": [
+        "OLED",
+        "LED",
+        "이름",
+        "상태",
+        "표시",
+        "모니터"
+      ],
+      "difficulty": 2,
+      "components": [
+        "oled",
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "M",
+      "category_name": "OLED + 데이터 표시",
       "description": "상태 모니터"
     },
     {
-      "no": "M03", "user_prompt": "OLED에 카운트다운 5초 후 LED 전체 켜기",
-      "tags": ["OLED", "카운트다운", "countdown", "5초", "LED", "타이머"],
-      "difficulty": 2, "components": ["oled", "led_red", "led_yellow", "led_blue"],
-      "category": "M", "category_name": "OLED + 데이터 표시",
+      "no": "M03",
+      "user_prompt": "OLED에 카운트다운 5초 후 LED 전체 켜기",
+      "tags": [
+        "OLED",
+        "카운트다운",
+        "countdown",
+        "5초",
+        "LED",
+        "타이머"
+      ],
+      "difficulty": 2,
+      "components": [
+        "oled",
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "M",
+      "category_name": "OLED + 데이터 표시",
       "description": "타이머"
     },
     {
-      "no": "M04", "user_prompt": "OLED에 초시계 표시 (0.0, 0.1, 0.2...)",
-      "tags": ["OLED", "초시계", "stopwatch", "타이머", "시간"],
-      "difficulty": 2, "components": ["oled"],
-      "category": "M", "category_name": "OLED + 데이터 표시",
+      "no": "M04",
+      "user_prompt": "OLED에 초시계 표시 (0.0, 0.1, 0.2...)",
+      "tags": [
+        "OLED",
+        "초시계",
+        "stopwatch",
+        "타이머",
+        "시간"
+      ],
+      "difficulty": 2,
+      "components": [
+        "oled"
+      ],
+      "category": "M",
+      "category_name": "OLED + 데이터 표시",
       "description": "스톱워치"
     },
     {
-      "no": "M05", "user_prompt": "OLED에 현재 동작 시간(초) 계속 표시하기",
-      "tags": ["OLED", "동작시간", "uptime", "초", "millis"],
-      "difficulty": 2, "components": ["oled"],
-      "category": "M", "category_name": "OLED + 데이터 표시",
+      "no": "M05",
+      "user_prompt": "OLED에 현재 동작 시간(초) 계속 표시하기",
+      "tags": [
+        "OLED",
+        "동작시간",
+        "uptime",
+        "초",
+        "millis"
+      ],
+      "difficulty": 2,
+      "components": [
+        "oled"
+      ],
+      "category": "M",
+      "category_name": "OLED + 데이터 표시",
       "description": "업타임 표시"
     },
     {
-      "no": "N01", "user_prompt": "신호등 + 파란불일 때 \"WALK\" OLED 표시 + 보행 알림음",
-      "tags": ["신호등", "traffic", "WALK", "OLED", "알림음", "보행", "종합"],
-      "difficulty": 3, "components": ["led_red", "led_yellow", "led_blue", "oled", "buzzer"],
-      "category": "N", "category_name": "종합 출력 시스템",
+      "no": "N01",
+      "user_prompt": "신호등 + 파란불일 때 \"WALK\" OLED 표시 + 보행 알림음",
+      "tags": [
+        "신호등",
+        "traffic",
+        "WALK",
+        "OLED",
+        "알림음",
+        "보행",
+        "종합"
+      ],
+      "difficulty": 3,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "oled",
+        "buzzer"
+      ],
+      "category": "N",
+      "category_name": "종합 출력 시스템",
       "description": "완전한 신호등"
     },
     {
-      "no": "N02", "user_prompt": "LED 순서대로 켜면서 음계+OLED에 음 이름 표시",
-      "tags": ["LED", "순서", "음계", "OLED", "음이름", "도레미", "종합"],
-      "difficulty": 3, "components": ["led_red", "led_yellow", "led_blue", "melody_buzzer", "oled"],
-      "category": "N", "category_name": "종합 출력 시스템",
+      "no": "N02",
+      "user_prompt": "LED 순서대로 켜면서 음계+OLED에 음 이름 표시",
+      "tags": [
+        "LED",
+        "순서",
+        "음계",
+        "OLED",
+        "음이름",
+        "도레미",
+        "종합"
+      ],
+      "difficulty": 3,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "melody_buzzer",
+        "oled"
+      ],
+      "category": "N",
+      "category_name": "종합 출력 시스템",
       "description": "빨=도, 노=레, 파=미 + 화면"
     },
     {
-      "no": "N03", "user_prompt": "모스부호 SOS: LED+부저+OLED에 ···---··· 동시 표시",
-      "tags": ["모스부호", "SOS", "morse", "LED", "부저", "OLED", "종합"],
-      "difficulty": 3, "components": ["led_red", "buzzer", "oled"],
-      "category": "N", "category_name": "종합 출력 시스템",
+      "no": "N03",
+      "user_prompt": "모스부호 SOS: LED+부저+OLED에 ···---··· 동시 표시",
+      "tags": [
+        "모스부호",
+        "SOS",
+        "morse",
+        "LED",
+        "부저",
+        "OLED",
+        "종합"
+      ],
+      "difficulty": 3,
+      "components": [
+        "led_red",
+        "buzzer",
+        "oled"
+      ],
+      "category": "N",
+      "category_name": "종합 출력 시스템",
       "description": "모스부호 종합"
     },
     {
-      "no": "N04", "user_prompt": "무드등: LED 3개 랜덤 패턴 + 오르골 멜로디",
-      "tags": ["무드등", "mood", "LED", "랜덤", "오르골", "멜로디", "인테리어"],
-      "difficulty": 3, "components": ["led_red", "led_yellow", "led_blue", "melody_buzzer"],
-      "category": "N", "category_name": "종합 출력 시스템",
+      "no": "N04",
+      "user_prompt": "무드등: LED 3개 랜덤 패턴 + 오르골 멜로디",
+      "tags": [
+        "무드등",
+        "mood",
+        "LED",
+        "랜덤",
+        "오르골",
+        "멜로디",
+        "인테리어"
+      ],
+      "difficulty": 3,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "melody_buzzer"
+      ],
+      "category": "N",
+      "category_name": "종합 출력 시스템",
       "description": "인테리어 조명"
     },
     {
-      "no": "N05", "user_prompt": "기상 알람: 카운트다운 OLED → 멜로디 → LED 전체 점멸",
-      "tags": ["기상", "알람", "alarm", "카운트다운", "OLED", "멜로디", "LED"],
-      "difficulty": 3, "components": ["oled", "melody_buzzer", "led_red", "led_yellow", "led_blue"],
-      "category": "N", "category_name": "종합 출력 시스템",
+      "no": "N05",
+      "user_prompt": "기상 알람: 카운트다운 OLED → 멜로디 → LED 전체 점멸",
+      "tags": [
+        "기상",
+        "알람",
+        "alarm",
+        "카운트다운",
+        "OLED",
+        "멜로디",
+        "LED"
+      ],
+      "difficulty": 3,
+      "components": [
+        "oled",
+        "melody_buzzer",
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "N",
+      "category_name": "종합 출력 시스템",
       "description": "알람시계"
     },
     {
-      "no": "O01", "user_prompt": "온도계: OLED에 온도+막대그래프 표시",
-      "tags": ["온도계", "thermometer", "OLED", "막대그래프", "bar", "그래픽"],
-      "difficulty": 3, "components": ["aht20", "oled"],
-      "category": "O", "category_name": "센서 기반 자동화",
+      "no": "O01",
+      "user_prompt": "온도계: OLED에 온도+막대그래프 표시",
+      "tags": [
+        "온도계",
+        "thermometer",
+        "OLED",
+        "막대그래프",
+        "bar",
+        "그래픽"
+      ],
+      "difficulty": 3,
+      "components": [
+        "aht20",
+        "oled"
+      ],
+      "category": "O",
+      "category_name": "센서 기반 자동화",
       "description": "그래픽 온도계"
     },
     {
-      "no": "O02", "user_prompt": "열사병 경보: 35도 이상 → LED 전체 점멸+사이렌+OLED \"DANGER\"",
-      "tags": ["열사병", "경보", "35도", "DANGER", "사이렌", "LED", "OLED", "alarm"],
-      "difficulty": 3, "components": ["aht20", "led_red", "led_yellow", "led_blue", "buzzer", "oled"],
-      "category": "O", "category_name": "센서 기반 자동화",
+      "no": "O02",
+      "user_prompt": "열사병 경보: 35도 이상 → LED 전체 점멸+사이렌+OLED \"DANGER\"",
+      "tags": [
+        "열사병",
+        "경보",
+        "35도",
+        "DANGER",
+        "사이렌",
+        "LED",
+        "OLED",
+        "alarm"
+      ],
+      "difficulty": 3,
+      "components": [
+        "aht20",
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "buzzer",
+        "oled"
+      ],
+      "category": "O",
+      "category_name": "센서 기반 자동화",
       "description": "안전 시스템"
     },
     {
-      "no": "O03", "user_prompt": "쾌적도 표시: 온습도 조합 → OLED에 상태 표시 (Good/Bad/Danger)",
-      "tags": ["쾌적도", "comfort", "온습도", "OLED", "Good", "Bad", "Danger", "상태"],
-      "difficulty": 3, "components": ["aht20", "oled"],
-      "category": "O", "category_name": "센서 기반 자동화",
+      "no": "O03",
+      "user_prompt": "쾌적도 표시: 온습도 조합 → OLED에 상태 표시 (Good/Bad/Danger)",
+      "tags": [
+        "쾌적도",
+        "comfort",
+        "온습도",
+        "OLED",
+        "Good",
+        "Bad",
+        "Danger",
+        "상태"
+      ],
+      "difficulty": 3,
+      "components": [
+        "aht20",
+        "oled"
+      ],
+      "category": "O",
+      "category_name": "센서 기반 자동화",
       "description": "복합 판단"
     },
     {
-      "no": "O04", "user_prompt": "5초마다 온도 측정 + 최고/최저/평균 OLED 표시",
-      "tags": ["온도", "5초", "최고", "최저", "평균", "OLED", "통계", "min", "max", "avg"],
-      "difficulty": 3, "components": ["aht20", "oled"],
-      "category": "O", "category_name": "센서 기반 자동화",
+      "no": "O04",
+      "user_prompt": "5초마다 온도 측정 + 최고/최저/평균 OLED 표시",
+      "tags": [
+        "온도",
+        "5초",
+        "최고",
+        "최저",
+        "평균",
+        "OLED",
+        "통계",
+        "min",
+        "max",
+        "avg"
+      ],
+      "difficulty": 3,
+      "components": [
+        "aht20",
+        "oled"
+      ],
+      "category": "O",
+      "category_name": "센서 기반 자동화",
       "description": "통계 처리"
     },
     {
-      "no": "O05", "user_prompt": "온도 변화 감지: 1도 이상 변하면 부저 알림 + OLED 표시",
-      "tags": ["온도", "변화", "감지", "1도", "부저", "OLED", "알림", "변화량"],
-      "difficulty": 3, "components": ["aht20", "buzzer", "oled"],
-      "category": "O", "category_name": "센서 기반 자동화",
+      "no": "O05",
+      "user_prompt": "온도 변화 감지: 1도 이상 변하면 부저 알림 + OLED 표시",
+      "tags": [
+        "온도",
+        "변화",
+        "감지",
+        "1도",
+        "부저",
+        "OLED",
+        "알림",
+        "변화량"
+      ],
+      "difficulty": 3,
+      "components": [
+        "aht20",
+        "buzzer",
+        "oled"
+      ],
+      "category": "O",
+      "category_name": "센서 기반 자동화",
       "description": "변화 감지"
     },
     {
-      "no": "O06", "user_prompt": "온도 이력 그래프: OLED에 최근 20개 온도를 점으로 표시",
-      "tags": ["온도", "이력", "그래프", "graph", "OLED", "20개", "점", "시계열"],
-      "difficulty": 3, "components": ["aht20", "oled"],
-      "category": "O", "category_name": "센서 기반 자동화",
+      "no": "O06",
+      "user_prompt": "온도 이력 그래프: OLED에 최근 20개 온도를 점으로 표시",
+      "tags": [
+        "온도",
+        "이력",
+        "그래프",
+        "graph",
+        "OLED",
+        "20개",
+        "점",
+        "시계열"
+      ],
+      "difficulty": 3,
+      "components": [
+        "aht20",
+        "oled"
+      ],
+      "category": "O",
+      "category_name": "센서 기반 자동화",
       "description": "시계열 그래프"
     },
     {
-      "no": "P01", "user_prompt": "스위치로 모드 전환: 1번=LED 깜빡, 2번=멜로디, 3번=온도",
-      "tags": ["스위치", "모드", "mode", "전환", "LED", "멜로디", "온도", "상태머신"],
-      "difficulty": 3, "components": ["switch", "led_red", "melody_buzzer", "aht20", "oled"],
-      "category": "P", "category_name": "스위치 고급 활용",
+      "no": "P01",
+      "user_prompt": "스위치로 모드 전환: 1번=LED 깜빡, 2번=멜로디, 3번=온도",
+      "tags": [
+        "스위치",
+        "모드",
+        "mode",
+        "전환",
+        "LED",
+        "멜로디",
+        "온도",
+        "상태머신"
+      ],
+      "difficulty": 3,
+      "components": [
+        "switch",
+        "led_red",
+        "melody_buzzer",
+        "aht20",
+        "oled"
+      ],
+      "category": "P",
+      "category_name": "스위치 고급 활용",
       "description": "3모드 전환"
     },
     {
-      "no": "P02", "user_prompt": "스위치 더블클릭 감지: 1번 누르면 빨강, 빠르게 2번 누르면 파랑",
-      "tags": ["스위치", "더블클릭", "double", "click", "빨강", "파랑", "감지"],
-      "difficulty": 3, "components": ["switch", "led_red", "led_blue"],
-      "category": "P", "category_name": "스위치 고급 활용",
+      "no": "P02",
+      "user_prompt": "스위치 더블클릭 감지: 1번 누르면 빨강, 빠르게 2번 누르면 파랑",
+      "tags": [
+        "스위치",
+        "더블클릭",
+        "double",
+        "click",
+        "빨강",
+        "파랑",
+        "감지"
+      ],
+      "difficulty": 3,
+      "components": [
+        "switch",
+        "led_red",
+        "led_blue"
+      ],
+      "category": "P",
+      "category_name": "스위치 고급 활용",
       "description": "클릭 구분"
     },
     {
-      "no": "P03", "user_prompt": "스위치로 OLED 메뉴 네비게이션: 누를 때마다 메뉴 항목 이동",
-      "tags": ["스위치", "OLED", "메뉴", "menu", "네비게이션", "navigation"],
-      "difficulty": 3, "components": ["switch", "oled"],
-      "category": "P", "category_name": "스위치 고급 활용",
+      "no": "P03",
+      "user_prompt": "스위치로 OLED 메뉴 네비게이션: 누를 때마다 메뉴 항목 이동",
+      "tags": [
+        "스위치",
+        "OLED",
+        "메뉴",
+        "menu",
+        "네비게이션",
+        "navigation"
+      ],
+      "difficulty": 3,
+      "components": [
+        "switch",
+        "oled"
+      ],
+      "category": "P",
+      "category_name": "스위치 고급 활용",
       "description": "메뉴 시스템"
     },
     {
-      "no": "P04", "user_prompt": "스위치 누른 시간 측정: OLED에 \"0.5초\", \"1.2초\" 표시",
-      "tags": ["스위치", "시간", "측정", "OLED", "millis", "누른시간"],
-      "difficulty": 3, "components": ["switch", "oled"],
-      "category": "P", "category_name": "스위치 고급 활용",
+      "no": "P04",
+      "user_prompt": "스위치 누른 시간 측정: OLED에 \"0.5초\", \"1.2초\" 표시",
+      "tags": [
+        "스위치",
+        "시간",
+        "측정",
+        "OLED",
+        "millis",
+        "누른시간"
+      ],
+      "difficulty": 3,
+      "components": [
+        "switch",
+        "oled"
+      ],
+      "category": "P",
+      "category_name": "스위치 고급 활용",
       "description": "누름 시간 측정"
     },
     {
-      "no": "P05", "user_prompt": "스위치 패턴 입력: 짧-짧-긴 패턴으로 특정 동작 실행",
-      "tags": ["스위치", "패턴", "pattern", "짧", "긴", "입력", "시퀀스"],
-      "difficulty": 3, "components": ["switch", "led_red", "buzzer"],
-      "category": "P", "category_name": "스위치 고급 활용",
+      "no": "P05",
+      "user_prompt": "스위치 패턴 입력: 짧-짧-긴 패턴으로 특정 동작 실행",
+      "tags": [
+        "스위치",
+        "패턴",
+        "pattern",
+        "짧",
+        "긴",
+        "입력",
+        "시퀀스"
+      ],
+      "difficulty": 3,
+      "components": [
+        "switch",
+        "led_red",
+        "buzzer"
+      ],
+      "category": "P",
+      "category_name": "스위치 고급 활용",
       "description": "패턴 인식"
     },
     {
-      "no": "Q01", "user_prompt": "라면 타이머: 3분 카운트다운 OLED + 끝나면 멜로디+LED",
-      "tags": ["라면", "타이머", "timer", "3분", "카운트다운", "OLED", "멜로디"],
-      "difficulty": 3, "components": ["oled", "melody_buzzer", "led_red"],
-      "category": "Q", "category_name": "타이머/게임",
+      "no": "Q01",
+      "user_prompt": "라면 타이머: 3분 카운트다운 OLED + 끝나면 멜로디+LED",
+      "tags": [
+        "라면",
+        "타이머",
+        "timer",
+        "3분",
+        "카운트다운",
+        "OLED",
+        "멜로디"
+      ],
+      "difficulty": 3,
+      "components": [
+        "oled",
+        "melody_buzzer",
+        "led_red"
+      ],
+      "category": "Q",
+      "category_name": "타이머/게임",
       "description": "실생활 타이머"
     },
     {
-      "no": "Q02", "user_prompt": "발표 타이머: OLED에 남은 시간, 1분전 노랑, 끝나면 빨강+부저",
-      "tags": ["발표", "타이머", "timer", "OLED", "남은시간", "노랑", "빨강"],
-      "difficulty": 3, "components": ["oled", "led_yellow", "led_red", "buzzer"],
-      "category": "Q", "category_name": "타이머/게임",
+      "no": "Q02",
+      "user_prompt": "발표 타이머: OLED에 남은 시간, 1분전 노랑, 끝나면 빨강+부저",
+      "tags": [
+        "발표",
+        "타이머",
+        "timer",
+        "OLED",
+        "남은시간",
+        "노랑",
+        "빨강"
+      ],
+      "difficulty": 3,
+      "components": [
+        "oled",
+        "led_yellow",
+        "led_red",
+        "buzzer"
+      ],
+      "category": "Q",
+      "category_name": "타이머/게임",
       "description": "단계별 알림"
     },
     {
-      "no": "Q03", "user_prompt": "반응속도 테스트: 랜덤 시간 후 LED → 스위치 누르기 → 시간 표시",
-      "tags": ["반응속도", "reaction", "테스트", "랜덤", "LED", "스위치", "게임"],
-      "difficulty": 3, "components": ["led_red", "switch", "oled"],
-      "category": "Q", "category_name": "타이머/게임",
+      "no": "Q03",
+      "user_prompt": "반응속도 테스트: 랜덤 시간 후 LED → 스위치 누르기 → 시간 표시",
+      "tags": [
+        "반응속도",
+        "reaction",
+        "테스트",
+        "랜덤",
+        "LED",
+        "스위치",
+        "게임"
+      ],
+      "difficulty": 3,
+      "components": [
+        "led_red",
+        "switch",
+        "oled"
+      ],
+      "category": "Q",
+      "category_name": "타이머/게임",
       "description": "게임!"
     },
     {
-      "no": "Q04", "user_prompt": "주사위: 스위치 누르면 OLED에 1~6 랜덤 숫자 표시",
-      "tags": ["주사위", "dice", "스위치", "OLED", "랜덤", "random", "숫자"],
-      "difficulty": 3, "components": ["switch", "oled"],
-      "category": "Q", "category_name": "타이머/게임",
+      "no": "Q04",
+      "user_prompt": "주사위: 스위치 누르면 OLED에 1~6 랜덤 숫자 표시",
+      "tags": [
+        "주사위",
+        "dice",
+        "스위치",
+        "OLED",
+        "랜덤",
+        "random",
+        "숫자"
+      ],
+      "difficulty": 3,
+      "components": [
+        "switch",
+        "oled"
+      ],
+      "category": "Q",
+      "category_name": "타이머/게임",
       "description": "랜덤 게임"
     },
     {
-      "no": "Q05", "user_prompt": "룰렛: LED 빠르게 순환 후 점점 느려지며 하나에 멈추기",
-      "tags": ["룰렛", "roulette", "LED", "순환", "느려지며", "멈추기", "게임"],
-      "difficulty": 3, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "Q", "category_name": "타이머/게임",
+      "no": "Q05",
+      "user_prompt": "룰렛: LED 빠르게 순환 후 점점 느려지며 하나에 멈추기",
+      "tags": [
+        "룰렛",
+        "roulette",
+        "LED",
+        "순환",
+        "느려지며",
+        "멈추기",
+        "게임"
+      ],
+      "difficulty": 3,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "Q",
+      "category_name": "타이머/게임",
       "description": "시각적 게임"
     },
     {
-      "no": "Q06", "user_prompt": "가위바위보: 스위치 → OLED에 랜덤 결과 + 승패 카운트",
-      "tags": ["가위바위보", "rock", "paper", "scissors", "OLED", "랜덤", "게임"],
-      "difficulty": 3, "components": ["switch", "oled"],
-      "category": "Q", "category_name": "타이머/게임",
+      "no": "Q06",
+      "user_prompt": "가위바위보: 스위치 → OLED에 랜덤 결과 + 승패 카운트",
+      "tags": [
+        "가위바위보",
+        "rock",
+        "paper",
+        "scissors",
+        "OLED",
+        "랜덤",
+        "게임"
+      ],
+      "difficulty": 3,
+      "components": [
+        "switch",
+        "oled"
+      ],
+      "category": "Q",
+      "category_name": "타이머/게임",
       "description": "연속 게임"
     },
     {
-      "no": "Q07", "user_prompt": "스톱워치: 스위치 1번=시작, 2번=정지, 3번=리셋",
-      "tags": ["스톱워치", "stopwatch", "스위치", "시작", "정지", "리셋", "타이머"],
-      "difficulty": 3, "components": ["switch", "oled"],
-      "category": "Q", "category_name": "타이머/게임",
+      "no": "Q07",
+      "user_prompt": "스톱워치: 스위치 1번=시작, 2번=정지, 3번=리셋",
+      "tags": [
+        "스톱워치",
+        "stopwatch",
+        "스위치",
+        "시작",
+        "정지",
+        "리셋",
+        "타이머"
+      ],
+      "difficulty": 3,
+      "components": [
+        "switch",
+        "oled"
+      ],
+      "category": "Q",
+      "category_name": "타이머/게임",
       "description": "정밀 스톱워치"
     },
     {
-      "no": "Q08", "user_prompt": "퀴즈 타이머: 10초 카운트다운 + LED 색으로 남은 시간 표시",
-      "tags": ["퀴즈", "quiz", "타이머", "10초", "카운트다운", "LED"],
-      "difficulty": 3, "components": ["oled", "led_red", "led_yellow", "led_blue"],
-      "category": "Q", "category_name": "타이머/게임",
+      "no": "Q08",
+      "user_prompt": "퀴즈 타이머: 10초 카운트다운 + LED 색으로 남은 시간 표시",
+      "tags": [
+        "퀴즈",
+        "quiz",
+        "타이머",
+        "10초",
+        "카운트다운",
+        "LED"
+      ],
+      "difficulty": 3,
+      "components": [
+        "oled",
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "Q",
+      "category_name": "타이머/게임",
       "description": "시각적 타이머"
     },
     {
-      "no": "R01", "user_prompt": "5초마다 온도를 BLE로 스마트폰에 전송 + OLED 표시",
-      "tags": ["온도", "BLE", "스마트폰", "전송", "notify", "5초", "OLED"],
-      "difficulty": 3, "components": ["aht20", "oled", "ble"],
-      "category": "R", "category_name": "BLE 스마트폰 연동 (단방향)",
+      "no": "R01",
+      "user_prompt": "5초마다 온도를 BLE로 스마트폰에 전송 + OLED 표시",
+      "tags": [
+        "온도",
+        "BLE",
+        "스마트폰",
+        "전송",
+        "notify",
+        "5초",
+        "OLED"
+      ],
+      "difficulty": 3,
+      "components": [
+        "aht20",
+        "oled",
+        "ble"
+      ],
+      "category": "R",
+      "category_name": "BLE 스마트폰 연동 (단방향)",
       "description": "원격 온도 모니터링"
     },
     {
-      "no": "R02", "user_prompt": "5초마다 온도+습도 둘 다 BLE로 스마트폰에 전송",
-      "tags": ["온도", "습도", "BLE", "스마트폰", "전송", "notify", "5초"],
-      "difficulty": 3, "components": ["aht20", "ble"],
-      "category": "R", "category_name": "BLE 스마트폰 연동 (단방향)",
+      "no": "R02",
+      "user_prompt": "5초마다 온도+습도 둘 다 BLE로 스마트폰에 전송",
+      "tags": [
+        "온도",
+        "습도",
+        "BLE",
+        "스마트폰",
+        "전송",
+        "notify",
+        "5초"
+      ],
+      "difficulty": 3,
+      "components": [
+        "aht20",
+        "ble"
+      ],
+      "category": "R",
+      "category_name": "BLE 스마트폰 연동 (단방향)",
       "description": "원격 온습도"
     },
     {
-      "no": "R03", "user_prompt": "스위치 누르면 BLE로 \"눌림\" 전송 + 카운트를 스마트폰에 전송",
-      "tags": ["스위치", "BLE", "스마트폰", "전송", "notify", "카운트", "눌림"],
-      "difficulty": 3, "components": ["switch", "ble"],
-      "category": "R", "category_name": "BLE 스마트폰 연동 (단방향)",
+      "no": "R03",
+      "user_prompt": "스위치 누르면 BLE로 \"눌림\" 전송 + 카운트를 스마트폰에 전송",
+      "tags": [
+        "스위치",
+        "BLE",
+        "스마트폰",
+        "전송",
+        "notify",
+        "카운트",
+        "눌림"
+      ],
+      "difficulty": 3,
+      "components": [
+        "switch",
+        "ble"
+      ],
+      "category": "R",
+      "category_name": "BLE 스마트폰 연동 (단방향)",
       "description": "원격 버튼 카운터"
     },
     {
-      "no": "R04", "user_prompt": "LED 상태 변경할 때마다 현재 LED 상태를 BLE로 전송",
-      "tags": ["LED", "상태", "BLE", "전송", "notify", "변경", "동기화"],
-      "difficulty": 3, "components": ["led_red", "led_yellow", "led_blue", "ble"],
-      "category": "R", "category_name": "BLE 스마트폰 연동 (단방향)",
+      "no": "R04",
+      "user_prompt": "LED 상태를 1초마다 변경(빨→노→파 순환)하면서, 변경할 때마다 현재 LED 상태를 sensorChar->setValue()/notify()로 BLE 전송. OLED에 현재 LED 이름 표시. char 배열과 snprintf 사용.",
+      "tags": [
+        "LED",
+        "상태",
+        "BLE",
+        "전송",
+        "notify",
+        "변경",
+        "동기화"
+      ],
+      "difficulty": 3,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "ble"
+      ],
+      "category": "R",
+      "category_name": "BLE 스마트폰 연동 (단방향)",
       "description": "상태 동기화"
     },
     {
-      "no": "R05", "user_prompt": "온도 28도 이상이면 BLE로 경고 알림 전송 + 보드 LED 경보",
-      "tags": ["온도", "28도", "BLE", "경고", "알림", "전송", "LED", "경보"],
-      "difficulty": 3, "components": ["aht20", "led_red", "ble"],
-      "category": "R", "category_name": "BLE 스마트폰 연동 (단방향)",
+      "no": "R05",
+      "user_prompt": "온도 28도 이상이면 BLE로 경고 알림 전송 + 보드 LED 경보",
+      "tags": [
+        "온도",
+        "28도",
+        "BLE",
+        "경고",
+        "알림",
+        "전송",
+        "LED",
+        "경보"
+      ],
+      "difficulty": 3,
+      "components": [
+        "aht20",
+        "led_red",
+        "ble"
+      ],
+      "category": "R",
+      "category_name": "BLE 스마트폰 연동 (단방향)",
       "description": "원격 경보"
     },
     {
-      "no": "S01", "user_prompt": "현관 벨: 스위치 → 딩동 멜로디+OLED \"Visitor!\" + BLE 알림",
-      "tags": ["현관벨", "doorbell", "스위치", "딩동", "멜로디", "OLED", "BLE", "알림"],
-      "difficulty": 4, "components": ["switch", "melody_buzzer", "oled", "ble"],
-      "category": "S", "category_name": "실생활 시스템",
+      "no": "S01",
+      "user_prompt": "현관 벨: 스위치 → 딩동 멜로디+OLED \"Visitor!\" + BLE 알림",
+      "tags": [
+        "현관벨",
+        "doorbell",
+        "스위치",
+        "딩동",
+        "멜로디",
+        "OLED",
+        "BLE",
+        "알림"
+      ],
+      "difficulty": 4,
+      "components": [
+        "switch",
+        "melody_buzzer",
+        "oled",
+        "ble"
+      ],
+      "category": "S",
+      "category_name": "실생활 시스템",
       "description": "스마트 도어벨"
     },
     {
-      "no": "S02", "user_prompt": "방범 알람: 스위치 떼면 사이렌+LED 점멸+OLED \"ALERT\"+BLE 경보",
-      "tags": ["방범", "알람", "security", "사이렌", "LED", "OLED", "ALERT", "BLE"],
-      "difficulty": 4, "components": ["switch", "buzzer", "led_red", "oled", "ble"],
-      "category": "S", "category_name": "실생활 시스템",
+      "no": "S02",
+      "user_prompt": "방범 알람: 스위치 떼면 사이렌+LED 점멸+OLED \"ALERT\"+BLE 경보",
+      "tags": [
+        "방범",
+        "알람",
+        "security",
+        "사이렌",
+        "LED",
+        "OLED",
+        "ALERT",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [
+        "switch",
+        "buzzer",
+        "led_red",
+        "oled",
+        "ble"
+      ],
+      "category": "S",
+      "category_name": "실생활 시스템",
       "description": "보안 시스템"
     },
     {
-      "no": "S03", "user_prompt": "교실 환경 모니터: 온습도 OLED+LED 신호등+BLE 전송",
-      "tags": ["교실", "환경", "모니터", "온습도", "OLED", "LED", "BLE", "IoT"],
-      "difficulty": 4, "components": ["aht20", "oled", "led_red", "led_yellow", "led_blue", "ble"],
-      "category": "S", "category_name": "실생활 시스템",
+      "no": "S03",
+      "user_prompt": "교실 환경 모니터: 온습도 OLED+LED 신호등+BLE 전송",
+      "tags": [
+        "교실",
+        "환경",
+        "모니터",
+        "온습도",
+        "OLED",
+        "LED",
+        "BLE",
+        "IoT"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "oled",
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "ble"
+      ],
+      "category": "S",
+      "category_name": "실생활 시스템",
       "description": "환경 모니터링"
     },
     {
-      "no": "S04", "user_prompt": "스마트 알람시계: OLED 시계(초) → 설정시간에 멜로디+LED+스위치로 끄기",
-      "tags": ["알람시계", "alarm", "clock", "OLED", "멜로디", "LED", "스위치"],
-      "difficulty": 4, "components": ["oled", "melody_buzzer", "led_red", "switch"],
-      "category": "S", "category_name": "실생활 시스템",
+      "no": "S04",
+      "user_prompt": "스마트 알람시계: OLED 시계(초) → 설정시간에 멜로디+LED+스위치로 끄기",
+      "tags": [
+        "알람시계",
+        "alarm",
+        "clock",
+        "OLED",
+        "멜로디",
+        "LED",
+        "스위치"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled",
+        "melody_buzzer",
+        "led_red",
+        "switch"
+      ],
+      "category": "S",
+      "category_name": "실생활 시스템",
       "description": "알람시계"
     },
     {
-      "no": "S05", "user_prompt": "세탁기 알림: 카운트다운(OLED)+남은시간 BLE 전송+끝나면 멜로디+LED",
-      "tags": ["세탁기", "알림", "카운트다운", "OLED", "BLE", "멜로디", "LED", "타이머"],
-      "difficulty": 4, "components": ["oled", "ble", "melody_buzzer", "led_red"],
-      "category": "S", "category_name": "실생활 시스템",
+      "no": "S05",
+      "user_prompt": "세탁기 알림: 카운트다운(OLED)+남은시간 BLE 전송+끝나면 멜로디+LED",
+      "tags": [
+        "세탁기",
+        "알림",
+        "카운트다운",
+        "OLED",
+        "BLE",
+        "멜로디",
+        "LED",
+        "타이머"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled",
+        "ble",
+        "melody_buzzer",
+        "led_red"
+      ],
+      "category": "S",
+      "category_name": "실생활 시스템",
       "description": "타이머+원격"
     },
     {
-      "no": "T01", "user_prompt": "스마트폰에서 \"RED\", \"YELLOW\", \"BLUE\" 문자 보내면 해당 LED 켜기 + 현재 LED 상태를 BLE로 응답",
-      "tags": ["스마트폰", "RED", "YELLOW", "BLUE", "LED", "BLE", "양방향", "CMD"],
-      "difficulty": 4, "components": ["led_red", "led_yellow", "led_blue", "ble"],
-      "category": "T", "category_name": "BLE 양방향 통신",
+      "no": "T01",
+      "user_prompt": "스마트폰에서 BLE로 \"RED\",\"YELLOW\",\"BLUE\" 문자를 보내면 해당 LED 켜기(나머지 끄기) + 현재 LED 상태를 sensorChar로 BLE 응답. onBleReceive(String cmd) 함수를 정의하여 명령 처리. OLED에 현재 LED 표시.",
+      "tags": [
+        "스마트폰",
+        "RED",
+        "YELLOW",
+        "BLUE",
+        "LED",
+        "BLE",
+        "양방향",
+        "CMD"
+      ],
+      "difficulty": 4,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "ble"
+      ],
+      "category": "T",
+      "category_name": "BLE 양방향 통신",
       "description": "양방향 LED 제어"
     },
     {
-      "no": "T02", "user_prompt": "스마트폰에서 \"MELODY:학교종\" 보내면 학교종 연주, \"MELODY:생일\" 보내면 생일축하 연주 + 연주 상태 BLE 전송",
-      "tags": ["스마트폰", "MELODY", "학교종", "생일", "멜로디", "BLE", "양방향"],
-      "difficulty": 4, "components": ["melody_buzzer", "ble"],
-      "category": "T", "category_name": "BLE 양방향 통신",
+      "no": "T02",
+      "user_prompt": "스마트폰에서 \"MELODY:학교종\" 보내면 학교종 연주, \"MELODY:생일\" 보내면 생일축하 연주 + 연주 상태 BLE 전송",
+      "tags": [
+        "스마트폰",
+        "MELODY",
+        "학교종",
+        "생일",
+        "멜로디",
+        "BLE",
+        "양방향"
+      ],
+      "difficulty": 4,
+      "components": [
+        "melody_buzzer",
+        "ble"
+      ],
+      "category": "T",
+      "category_name": "BLE 양방향 통신",
       "description": "원격 음악 선택"
     },
     {
-      "no": "T03", "user_prompt": "스마트폰에서 \"SPEED:500\" 보내면 LED 깜빡 속도 변경 + 현재 속도를 BLE로 응답",
-      "tags": ["스마트폰", "SPEED", "속도", "LED", "깜빡", "BLE", "양방향", "파라미터"],
-      "difficulty": 4, "components": ["led_red", "ble"],
-      "category": "T", "category_name": "BLE 양방향 통신",
+      "no": "T03",
+      "user_prompt": "스마트폰에서 \"SPEED:500\" 보내면 LED 깜빡 속도 변경 + 현재 속도를 BLE로 응답",
+      "tags": [
+        "스마트폰",
+        "SPEED",
+        "속도",
+        "LED",
+        "깜빡",
+        "BLE",
+        "양방향",
+        "파라미터"
+      ],
+      "difficulty": 4,
+      "components": [
+        "led_red",
+        "ble"
+      ],
+      "category": "T",
+      "category_name": "BLE 양방향 통신",
       "description": "원격 속도 제어"
     },
     {
-      "no": "T04", "user_prompt": "스마트폰에서 \"MODE:1\" \"MODE:2\" \"MODE:3\" 보내면 모드 전환 + OLED에 모드명 표시 + 현재 모드 BLE 응답",
-      "tags": ["스마트폰", "MODE", "모드", "전환", "OLED", "BLE", "양방향"],
-      "difficulty": 4, "components": ["oled", "led_red", "ble"],
-      "category": "T", "category_name": "BLE 양방향 통신",
+      "no": "T04",
+      "user_prompt": "스마트폰에서 \"MODE:1\" \"MODE:2\" \"MODE:3\" 보내면 모드 전환 + OLED에 모드명 표시 + 현재 모드 BLE 응답",
+      "tags": [
+        "스마트폰",
+        "MODE",
+        "모드",
+        "전환",
+        "OLED",
+        "BLE",
+        "양방향"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled",
+        "led_red",
+        "ble"
+      ],
+      "category": "T",
+      "category_name": "BLE 양방향 통신",
       "description": "원격 모드 전환"
     },
     {
-      "no": "T05", "user_prompt": "스마트폰에서 \"READ\" 보내면 온습도 측정 + 결과를 BLE로 전송 + OLED 표시",
-      "tags": ["스마트폰", "READ", "온습도", "측정", "BLE", "OLED", "양방향", "요청"],
-      "difficulty": 4, "components": ["aht20", "oled", "ble"],
-      "category": "T", "category_name": "BLE 양방향 통신",
+      "no": "T05",
+      "user_prompt": "스마트폰에서 \"READ\" 보내면 온습도 측정 + 결과를 BLE로 전송 + OLED 표시",
+      "tags": [
+        "스마트폰",
+        "READ",
+        "온습도",
+        "측정",
+        "BLE",
+        "OLED",
+        "양방향",
+        "요청"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "oled",
+        "ble"
+      ],
+      "category": "T",
+      "category_name": "BLE 양방향 통신",
       "description": "온디맨드 센서 읽기"
     },
     {
-      "no": "T06", "user_prompt": "스마트폰에서 \"DISPLAY:Hello World\" 보내면 OLED에 표시 + 확인 응답 BLE 전송",
-      "tags": ["스마트폰", "DISPLAY", "Hello", "OLED", "표시", "BLE", "양방향"],
-      "difficulty": 4, "components": ["oled", "ble"],
-      "category": "T", "category_name": "BLE 양방향 통신",
+      "no": "T06",
+      "user_prompt": "스마트폰에서 \"DISPLAY:Hello World\" 보내면 OLED에 표시 + 확인 응답 BLE 전송",
+      "tags": [
+        "스마트폰",
+        "DISPLAY",
+        "Hello",
+        "OLED",
+        "표시",
+        "BLE",
+        "양방향"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled",
+        "ble"
+      ],
+      "category": "T",
+      "category_name": "BLE 양방향 통신",
       "description": "원격 디스플레이"
     },
     {
-      "no": "T07", "user_prompt": "스마트폰에서 \"BLINK:3:500\" 보내면 LED 3번, 500ms 간격으로 깜빡 + 완료 후 BLE 응답",
-      "tags": ["스마트폰", "BLINK", "LED", "깜빡", "BLE", "양방향", "파라미터"],
-      "difficulty": 4, "components": ["led_red", "ble"],
-      "category": "T", "category_name": "BLE 양방향 통신",
+      "no": "T07",
+      "user_prompt": "스마트폰에서 \"BLINK:3:500\" 보내면 LED 3번, 500ms 간격으로 깜빡 + 완료 후 BLE 응답",
+      "tags": [
+        "스마트폰",
+        "BLINK",
+        "LED",
+        "깜빡",
+        "BLE",
+        "양방향",
+        "파라미터"
+      ],
+      "difficulty": 4,
+      "components": [
+        "led_red",
+        "ble"
+      ],
+      "category": "T",
+      "category_name": "BLE 양방향 통신",
       "description": "파라미터화된 명령"
     },
     {
-      "no": "T08", "user_prompt": "스마트폰에서 \"ALARM:60\" 보내면 60초 타이머 시작 + 매초 남은 시간 BLE 전송 + 끝나면 멜로디",
-      "tags": ["스마트폰", "ALARM", "타이머", "60초", "BLE", "멜로디", "양방향"],
-      "difficulty": 4, "components": ["oled", "melody_buzzer", "ble"],
-      "category": "T", "category_name": "BLE 양방향 통신",
+      "no": "T08",
+      "user_prompt": "스마트폰에서 \"ALARM:60\" 보내면 60초 타이머 시작 + 매초 남은 시간 BLE 전송 + 끝나면 멜로디",
+      "tags": [
+        "스마트폰",
+        "ALARM",
+        "타이머",
+        "60초",
+        "BLE",
+        "멜로디",
+        "양방향"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled",
+        "melody_buzzer",
+        "ble"
+      ],
+      "category": "T",
+      "category_name": "BLE 양방향 통신",
       "description": "원격 타이머"
     },
     {
-      "no": "T09", "user_prompt": "스마트폰에서 \"PIANO:0\" ~ \"PIANO:7\" 보내면 해당 음 재생 + 연주 중 표시를 BLE 전송",
-      "tags": ["스마트폰", "PIANO", "피아노", "음", "BLE", "양방향", "연주"],
-      "difficulty": 4, "components": ["melody_buzzer", "ble"],
-      "category": "T", "category_name": "BLE 양방향 통신",
+      "no": "T09",
+      "user_prompt": "스마트폰에서 \"PIANO:0\" ~ \"PIANO:7\" 보내면 해당 음 재생 + 연주 중 표시를 BLE 전송",
+      "tags": [
+        "스마트폰",
+        "PIANO",
+        "피아노",
+        "음",
+        "BLE",
+        "양방향",
+        "연주"
+      ],
+      "difficulty": 4,
+      "components": [
+        "melody_buzzer",
+        "ble"
+      ],
+      "category": "T",
+      "category_name": "BLE 양방향 통신",
       "description": "원격 피아노"
     },
     {
-      "no": "T10", "user_prompt": "스마트폰에서 \"STATUS\" 보내면 온도+습도+LED상태+스위치 상태를 한 번에 BLE로 전송",
-      "tags": ["스마트폰", "STATUS", "상태", "온도", "습도", "LED", "스위치", "BLE", "종합"],
-      "difficulty": 4, "components": ["aht20", "led_red", "led_yellow", "led_blue", "switch", "ble"],
-      "category": "T", "category_name": "BLE 양방향 통신",
+      "no": "T10",
+      "user_prompt": "스마트폰에서 \"STATUS\" 보내면 온도+습도+LED상태+스위치 상태를 한 번에 BLE로 전송",
+      "tags": [
+        "스마트폰",
+        "STATUS",
+        "상태",
+        "온도",
+        "습도",
+        "LED",
+        "스위치",
+        "BLE",
+        "종합"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "switch",
+        "ble"
+      ],
+      "category": "T",
+      "category_name": "BLE 양방향 통신",
       "description": "종합 상태 조회"
     },
     {
-      "no": "U01", "user_prompt": "반응속도 게임 (BLE): 랜덤 시간 후 LED → 스위치 누르기 → 반응시간을 BLE로 전송",
-      "tags": ["반응속도", "게임", "BLE", "랜덤", "LED", "스위치", "시간"],
-      "difficulty": 4, "components": ["led_red", "switch", "oled", "ble"],
-      "category": "U", "category_name": "BLE 인터랙티브 게임",
+      "no": "U01",
+      "user_prompt": "반응속도 게임 (BLE): 랜덤 시간 후 LED → 스위치 누르기 → 반응시간을 BLE로 전송",
+      "tags": [
+        "반응속도",
+        "게임",
+        "BLE",
+        "랜덤",
+        "LED",
+        "스위치",
+        "시간"
+      ],
+      "difficulty": 4,
+      "components": [
+        "led_red",
+        "switch",
+        "oled",
+        "ble"
+      ],
+      "category": "U",
+      "category_name": "BLE 인터랙티브 게임",
       "description": "반응 게임+기록"
     },
     {
-      "no": "U02", "user_prompt": "주사위 게임 (BLE): 스위치 → OLED에 숫자 + 결과를 BLE로 전송",
-      "tags": ["주사위", "dice", "게임", "BLE", "스위치", "OLED", "랜덤"],
-      "difficulty": 4, "components": ["switch", "oled", "ble"],
-      "category": "U", "category_name": "BLE 인터랙티브 게임",
+      "no": "U02",
+      "user_prompt": "주사위 게임 (BLE): 스위치 → OLED에 숫자 + 결과를 BLE로 전송",
+      "tags": [
+        "주사위",
+        "dice",
+        "게임",
+        "BLE",
+        "스위치",
+        "OLED",
+        "랜덤"
+      ],
+      "difficulty": 4,
+      "components": [
+        "switch",
+        "oled",
+        "ble"
+      ],
+      "category": "U",
+      "category_name": "BLE 인터랙티브 게임",
       "description": "주사위+누적"
     },
     {
-      "no": "U03", "user_prompt": "기억력 게임: 보드가 LED 패턴 보여줌 → 스마트폰에서 순서대로 입력 → 맞으면 다음 레벨",
-      "tags": ["기억력", "시몬", "simon", "게임", "LED", "패턴", "BLE", "레벨"],
-      "difficulty": 4, "components": ["led_red", "led_yellow", "led_blue", "oled", "ble"],
-      "category": "U", "category_name": "BLE 인터랙티브 게임",
+      "no": "U03",
+      "user_prompt": "기억력 게임: 보드가 LED 패턴 보여줌 → 스마트폰에서 순서대로 입력 → 맞으면 다음 레벨",
+      "tags": [
+        "기억력",
+        "시몬",
+        "simon",
+        "게임",
+        "LED",
+        "패턴",
+        "BLE",
+        "레벨"
+      ],
+      "difficulty": 4,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "oled",
+        "ble"
+      ],
+      "category": "U",
+      "category_name": "BLE 인터랙티브 게임",
       "description": "시몬 게임"
     },
     {
-      "no": "U04", "user_prompt": "온도 맞추기 게임: OLED에 \"몇 도일까?\" → 스마트폰에서 입력 → 높/낮 힌트 → 맞추면 멜로디",
-      "tags": ["온도", "맞추기", "게임", "OLED", "BLE", "힌트", "멜로디"],
-      "difficulty": 4, "components": ["aht20", "oled", "melody_buzzer", "ble"],
-      "category": "U", "category_name": "BLE 인터랙티브 게임",
+      "no": "U04",
+      "user_prompt": "온도 맞추기 게임: OLED에 \"몇 도일까?\" → 스마트폰에서 입력 → 높/낮 힌트 → 맞추면 멜로디",
+      "tags": [
+        "온도",
+        "맞추기",
+        "게임",
+        "OLED",
+        "BLE",
+        "힌트",
+        "멜로디"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "oled",
+        "melody_buzzer",
+        "ble"
+      ],
+      "category": "U",
+      "category_name": "BLE 인터랙티브 게임",
       "description": "추측 게임"
     },
     {
-      "no": "U05", "user_prompt": "모스부호 번역기: 스위치 짧게/길게 입력 → OLED에 점/선 표시 → 해석된 글자를 BLE로 전송",
-      "tags": ["모스부호", "morse", "번역", "스위치", "OLED", "BLE", "점", "선"],
-      "difficulty": 4, "components": ["switch", "oled", "ble"],
-      "category": "U", "category_name": "BLE 인터랙티브 게임",
+      "no": "U05",
+      "user_prompt": "모스부호 번역기: 스위치 짧게/길게 입력 → OLED에 점/선 표시 → 해석된 글자를 BLE로 전송",
+      "tags": [
+        "모스부호",
+        "morse",
+        "번역",
+        "스위치",
+        "OLED",
+        "BLE",
+        "점",
+        "선"
+      ],
+      "difficulty": 4,
+      "components": [
+        "switch",
+        "oled",
+        "ble"
+      ],
+      "category": "U",
+      "category_name": "BLE 인터랙티브 게임",
       "description": "모스부호 디코더"
     },
     {
-      "no": "U06", "user_prompt": "빨리 누르기 대결: 10초 동안 스위치 누른 횟수 세기 → 최종 점수 BLE 전송",
-      "tags": ["빨리누르기", "대결", "게임", "10초", "스위치", "횟수", "BLE", "점수"],
-      "difficulty": 4, "components": ["switch", "oled", "ble"],
-      "category": "U", "category_name": "BLE 인터랙티브 게임",
+      "no": "U06",
+      "user_prompt": "빨리 누르기 대결: 10초 동안 스위치 누른 횟수 세기 → 최종 점수 BLE 전송",
+      "tags": [
+        "빨리누르기",
+        "대결",
+        "게임",
+        "10초",
+        "스위치",
+        "횟수",
+        "BLE",
+        "점수"
+      ],
+      "difficulty": 4,
+      "components": [
+        "switch",
+        "oled",
+        "ble"
+      ],
+      "category": "U",
+      "category_name": "BLE 인터랙티브 게임",
       "description": "속도 게임"
     },
     {
-      "no": "U07", "user_prompt": "LED 룰렛 게임 (BLE): 스마트폰에서 \"SPIN\" → LED 순환 후 감속 → 멈춘 색을 BLE로 전송",
-      "tags": ["룰렛", "roulette", "게임", "LED", "SPIN", "BLE", "감속"],
-      "difficulty": 4, "components": ["led_red", "led_yellow", "led_blue", "ble"],
-      "category": "U", "category_name": "BLE 인터랙티브 게임",
+      "no": "U07",
+      "user_prompt": "LED 룰렛 게임 (BLE): 스마트폰에서 \"SPIN\" → LED 순환 후 감속 → 멈춘 색을 BLE로 전송",
+      "tags": [
+        "룰렛",
+        "roulette",
+        "게임",
+        "LED",
+        "SPIN",
+        "BLE",
+        "감속"
+      ],
+      "difficulty": 4,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "ble"
+      ],
+      "category": "U",
+      "category_name": "BLE 인터랙티브 게임",
       "description": "원격 룰렛"
     },
     {
-      "no": "U08", "user_prompt": "타이핑 게임: OLED에 랜덤 알파벳 표시 → 스마트폰에서 입력 → 맞으면 점수+1 → 점수 BLE 전송",
-      "tags": ["타이핑", "typing", "게임", "OLED", "알파벳", "BLE", "점수"],
-      "difficulty": 4, "components": ["oled", "buzzer", "led_red", "ble"],
-      "category": "U", "category_name": "BLE 인터랙티브 게임",
+      "no": "U08",
+      "user_prompt": "타이핑 게임: OLED에 랜덤 알파벳 표시 → 스마트폰에서 입력 → 맞으면 점수+1 → 점수 BLE 전송",
+      "tags": [
+        "타이핑",
+        "typing",
+        "게임",
+        "OLED",
+        "알파벳",
+        "BLE",
+        "점수"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled",
+        "buzzer",
+        "led_red",
+        "ble"
+      ],
+      "category": "U",
+      "category_name": "BLE 인터랙티브 게임",
       "description": "타이핑 게임"
     },
     {
-      "no": "V01", "user_prompt": "10초마다 온습도 측정 → OLED에 현재값+최고+최저 → BLE로 실시간 전송",
-      "tags": ["온습도", "10초", "OLED", "최고", "최저", "BLE", "실시간", "모니터"],
-      "difficulty": 4, "components": ["aht20", "oled", "ble"],
-      "category": "V", "category_name": "데이터 로깅 & 모니터링",
+      "no": "V01",
+      "user_prompt": "10초마다 온습도 측정 → OLED에 현재값+최고+최저 → BLE로 실시간 전송",
+      "tags": [
+        "온습도",
+        "10초",
+        "OLED",
+        "최고",
+        "최저",
+        "BLE",
+        "실시간",
+        "모니터"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "oled",
+        "ble"
+      ],
+      "category": "V",
+      "category_name": "데이터 로깅 & 모니터링",
       "description": "환경 모니터"
     },
     {
-      "no": "V02", "user_prompt": "스위치 이벤트 로그: 누를 때마다 시간+카운트 OLED 표시 + BLE 전송",
-      "tags": ["스위치", "이벤트", "로그", "시간", "카운트", "OLED", "BLE"],
-      "difficulty": 4, "components": ["switch", "oled", "ble"],
-      "category": "V", "category_name": "데이터 로깅 & 모니터링",
+      "no": "V02",
+      "user_prompt": "스위치 이벤트 로그: 누를 때마다 시간+카운트 OLED 표시 + BLE 전송",
+      "tags": [
+        "스위치",
+        "이벤트",
+        "로그",
+        "시간",
+        "카운트",
+        "OLED",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [
+        "switch",
+        "oled",
+        "ble"
+      ],
+      "category": "V",
+      "category_name": "데이터 로깅 & 모니터링",
       "description": "이벤트 로깅"
     },
     {
-      "no": "V03", "user_prompt": "온도 경고 시스템: 정상(파LED+BLE \"OK\") / 주의(노LED+BLE \"WARN\") / 위험(빨LED+사이렌+BLE \"DANGER\")",
-      "tags": ["온도", "경고", "OK", "WARN", "DANGER", "LED", "BLE", "사이렌", "3단계"],
-      "difficulty": 4, "components": ["aht20", "led_red", "led_yellow", "led_blue", "buzzer", "ble"],
-      "category": "V", "category_name": "데이터 로깅 & 모니터링",
+      "no": "V03",
+      "user_prompt": "온도 경고 시스템: 정상(파LED+BLE \"OK\") / 주의(노LED+BLE \"WARN\") / 위험(빨LED+사이렌+BLE \"DANGER\")",
+      "tags": [
+        "온도",
+        "경고",
+        "OK",
+        "WARN",
+        "DANGER",
+        "LED",
+        "BLE",
+        "사이렌",
+        "3단계"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "buzzer",
+        "ble"
+      ],
+      "category": "V",
+      "category_name": "데이터 로깅 & 모니터링",
       "description": "3단계 경보"
     },
     {
-      "no": "V04", "user_prompt": "환경 대시보드: OLED 4줄(온도, 습도, LED상태, 업타임) + 5초마다 전체 BLE 전송",
-      "tags": ["환경", "대시보드", "dashboard", "OLED", "온도", "습도", "LED", "BLE"],
-      "difficulty": 4, "components": ["aht20", "oled", "led_red", "ble"],
-      "category": "V", "category_name": "데이터 로깅 & 모니터링",
+      "no": "V04",
+      "user_prompt": "환경 대시보드: OLED 4줄(온도, 습도, LED상태, 업타임) + 5초마다 전체 BLE 전송",
+      "tags": [
+        "환경",
+        "대시보드",
+        "dashboard",
+        "OLED",
+        "온도",
+        "습도",
+        "LED",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "oled",
+        "led_red",
+        "ble"
+      ],
+      "category": "V",
+      "category_name": "데이터 로깅 & 모니터링",
       "description": "종합 대시보드"
     },
     {
-      "no": "V05", "user_prompt": "온도 변화 추적: 직전 대비 상승↑/하강↓/유지= OLED 표시 + 트렌드를 BLE 전송",
-      "tags": ["온도", "변화", "추적", "트렌드", "상승", "하강", "OLED", "BLE"],
-      "difficulty": 4, "components": ["aht20", "oled", "ble"],
-      "category": "V", "category_name": "데이터 로깅 & 모니터링",
+      "no": "V05",
+      "user_prompt": "온도 변화 추적: 직전 대비 상승↑/하강↓/유지= OLED 표시 + 트렌드를 BLE 전송",
+      "tags": [
+        "온도",
+        "변화",
+        "추적",
+        "트렌드",
+        "상승",
+        "하강",
+        "OLED",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "oled",
+        "ble"
+      ],
+      "category": "V",
+      "category_name": "데이터 로깅 & 모니터링",
       "description": "트렌드 분석"
     },
     {
-      "no": "W01", "user_prompt": "OLED에 애니메이션: 점이 왼쪽→오른쪽 이동 반복",
-      "tags": ["OLED", "애니메이션", "animation", "점", "이동", "pixel"],
-      "difficulty": 4, "components": ["oled"],
-      "category": "W", "category_name": "고급 OLED 활용",
+      "no": "W01",
+      "user_prompt": "OLED에 애니메이션: 점이 왼쪽→오른쪽 이동 반복",
+      "tags": [
+        "OLED",
+        "애니메이션",
+        "animation",
+        "점",
+        "이동",
+        "pixel"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled"
+      ],
+      "category": "W",
+      "category_name": "고급 OLED 활용",
       "description": "도트 애니메이션"
     },
     {
-      "no": "W02", "user_prompt": "OLED 프로그레스바: 0%→100% 천천히 차오르기",
-      "tags": ["OLED", "프로그레스바", "progress", "bar", "0%", "100%"],
-      "difficulty": 4, "components": ["oled"],
-      "category": "W", "category_name": "고급 OLED 활용",
+      "no": "W02",
+      "user_prompt": "OLED 프로그레스바: 0%→100% 천천히 차오르기",
+      "tags": [
+        "OLED",
+        "프로그레스바",
+        "progress",
+        "bar",
+        "0%",
+        "100%"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled"
+      ],
+      "category": "W",
+      "category_name": "고급 OLED 활용",
       "description": "진행률 표시"
     },
     {
-      "no": "W03", "user_prompt": "OLED에 디지털 시계: MM:SS 형식으로 초 단위 업데이트",
-      "tags": ["OLED", "시계", "clock", "디지털", "MM:SS", "시간"],
-      "difficulty": 4, "components": ["oled"],
-      "category": "W", "category_name": "고급 OLED 활용",
+      "no": "W03",
+      "user_prompt": "OLED에 디지털 시계: MM:SS 형식으로 초 단위 업데이트",
+      "tags": [
+        "OLED",
+        "시계",
+        "clock",
+        "디지털",
+        "MM:SS",
+        "시간"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled"
+      ],
+      "category": "W",
+      "category_name": "고급 OLED 활용",
       "description": "시계 표시"
     },
     {
-      "no": "W04", "user_prompt": "OLED에 온도 막대그래프: 최근 16개 측정값을 세로 막대로 표시",
-      "tags": ["OLED", "온도", "막대그래프", "bar", "16개", "히스토리"],
-      "difficulty": 4, "components": ["aht20", "oled"],
-      "category": "W", "category_name": "고급 OLED 활용",
+      "no": "W04",
+      "user_prompt": "OLED에 온도 막대그래프: 2초마다 온도 측정하여 최근 16개 값을 세로 막대로 표시. 온도 범위 15~40도. oled.drawString에는 char 배열만 전달(c_str() 사용). 코드에 ASCII 문자만 사용하고 특수문자(도기호, 곱하기기호 등) 사용 금지.",
+      "tags": [
+        "OLED",
+        "온도",
+        "막대그래프",
+        "bar",
+        "16개",
+        "히스토리"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "oled"
+      ],
+      "category": "W",
+      "category_name": "고급 OLED 활용",
       "description": "히스토리 그래프"
     },
     {
-      "no": "W05", "user_prompt": "OLED에 미니 게임: 점이 위에서 떨어지고 스위치로 피하기",
-      "tags": ["OLED", "게임", "미니", "점", "떨어지기", "스위치", "피하기"],
-      "difficulty": 4, "components": ["oled", "switch"],
-      "category": "W", "category_name": "고급 OLED 활용",
+      "no": "W05",
+      "user_prompt": "OLED에 미니 게임: 점이 위에서 떨어지고 스위치로 피하기",
+      "tags": [
+        "OLED",
+        "게임",
+        "미니",
+        "점",
+        "떨어지기",
+        "스위치",
+        "피하기"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled",
+        "switch"
+      ],
+      "category": "W",
+      "category_name": "고급 OLED 활용",
       "description": "피하기 게임"
     },
     {
-      "no": "W06", "user_prompt": "OLED 스크롤 텍스트: 긴 문장이 오른쪽→왼쪽으로 흐르기",
-      "tags": ["OLED", "스크롤", "scroll", "텍스트", "전광판", "흐르기"],
-      "difficulty": 4, "components": ["oled"],
-      "category": "W", "category_name": "고급 OLED 활용",
+      "no": "W06",
+      "user_prompt": "OLED 스크롤 텍스트: 긴 문장이 오른쪽→왼쪽으로 흐르기",
+      "tags": [
+        "OLED",
+        "스크롤",
+        "scroll",
+        "텍스트",
+        "전광판",
+        "흐르기"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled"
+      ],
+      "category": "W",
+      "category_name": "고급 OLED 활용",
       "description": "전광판 효과"
     },
     {
-      "no": "W07", "user_prompt": "OLED 부팅 화면: \"UTTEC\" 로고 표시 → 로딩바 → 메인 화면 전환",
-      "tags": ["OLED", "부팅", "boot", "UTTEC", "로고", "로딩바", "시퀀스"],
-      "difficulty": 4, "components": ["oled"],
-      "category": "W", "category_name": "고급 OLED 활용",
+      "no": "W07",
+      "user_prompt": "OLED 부팅 화면: \"UTTEC\" 로고 표시 → 로딩바 → 메인 화면 전환",
+      "tags": [
+        "OLED",
+        "부팅",
+        "boot",
+        "UTTEC",
+        "로고",
+        "로딩바",
+        "시퀀스"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled"
+      ],
+      "category": "W",
+      "category_name": "고급 OLED 활용",
       "description": "부팅 시퀀스"
     },
     {
-      "no": "X01", "user_prompt": "동시 실행: 빨강 0.3초 깜빡 + 노랑 0.7초 깜빡 + 파랑 1.5초 깜빡",
-      "tags": ["동시", "멀티태스크", "multitask", "빨강", "노랑", "파랑", "LED", "독립"],
-      "difficulty": 4, "components": ["led_red", "led_yellow", "led_blue"],
-      "category": "X", "category_name": "멀티태스크 & 고급 제어",
+      "no": "X01",
+      "user_prompt": "동시 실행: 빨강 0.3초 깜빡 + 노랑 0.7초 깜빡 + 파랑 1.5초 깜빡",
+      "tags": [
+        "동시",
+        "멀티태스크",
+        "multitask",
+        "빨강",
+        "노랑",
+        "파랑",
+        "LED",
+        "독립"
+      ],
+      "difficulty": 4,
+      "components": [
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "X",
+      "category_name": "멀티태스크 & 고급 제어",
       "description": "3개 독립 속도"
     },
     {
-      "no": "X02", "user_prompt": "동시 실행: LED 깜빡이기 + OLED 온도 표시 + BLE 데이터 전송 (각각 다른 주기)",
-      "tags": ["동시", "멀티태스크", "LED", "OLED", "온도", "BLE", "주기"],
-      "difficulty": 4, "components": ["led_red", "oled", "aht20", "ble"],
-      "category": "X", "category_name": "멀티태스크 & 고급 제어",
+      "no": "X02",
+      "user_prompt": "동시 실행: LED 깜빡이기 + OLED 온도 표시 + BLE 데이터 전송 (각각 다른 주기)",
+      "tags": [
+        "동시",
+        "멀티태스크",
+        "LED",
+        "OLED",
+        "온도",
+        "BLE",
+        "주기"
+      ],
+      "difficulty": 4,
+      "components": [
+        "led_red",
+        "oled",
+        "aht20",
+        "ble"
+      ],
+      "category": "X",
+      "category_name": "멀티태스크 & 고급 제어",
       "description": "3종 독립 태스크"
     },
     {
-      "no": "X03", "user_prompt": "배경 음악 + LED 쇼: 멜로디 연주하면서 LED 패턴 동시 실행",
-      "tags": ["배경음악", "LED", "쇼", "멜로디", "동시", "멀티태스크", "패턴"],
-      "difficulty": 4, "components": ["melody_buzzer", "led_red", "led_yellow", "led_blue"],
-      "category": "X", "category_name": "멀티태스크 & 고급 제어",
+      "no": "X03",
+      "user_prompt": "배경 음악 + LED 쇼: 멜로디 연주하면서 LED 패턴 동시 실행",
+      "tags": [
+        "배경음악",
+        "LED",
+        "쇼",
+        "멜로디",
+        "동시",
+        "멀티태스크",
+        "패턴"
+      ],
+      "difficulty": 4,
+      "components": [
+        "melody_buzzer",
+        "led_red",
+        "led_yellow",
+        "led_blue"
+      ],
+      "category": "X",
+      "category_name": "멀티태스크 & 고급 제어",
       "description": "음악+조명 쇼"
     },
     {
-      "no": "X04", "user_prompt": "워치독: OLED에 업타임 표시 + 30초마다 BLE로 \"alive\" 전송 + 스위치로 리셋",
-      "tags": ["워치독", "watchdog", "업타임", "OLED", "BLE", "alive", "스위치", "리셋"],
-      "difficulty": 4, "components": ["oled", "ble", "switch"],
-      "category": "X", "category_name": "멀티태스크 & 고급 제어",
+      "no": "X04",
+      "user_prompt": "워치독: OLED에 업타임 표시 + 30초마다 BLE로 \"alive\" 전송 + 스위치로 리셋",
+      "tags": [
+        "워치독",
+        "watchdog",
+        "업타임",
+        "OLED",
+        "BLE",
+        "alive",
+        "스위치",
+        "리셋"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled",
+        "ble",
+        "switch"
+      ],
+      "category": "X",
+      "category_name": "멀티태스크 & 고급 제어",
       "description": "시스템 모니터링"
     },
     {
-      "no": "Y01", "user_prompt": "디지털 애완동물: OLED에 표정 표시, 스위치로 먹이주기, 온도로 기분 변화, 기분 상태 BLE 전송",
-      "tags": ["애완동물", "pet", "OLED", "표정", "스위치", "온도", "기분", "BLE"],
-      "difficulty": 4, "components": ["oled", "switch", "aht20", "ble"],
-      "category": "Y", "category_name": "종합 프로젝트",
+      "no": "Y01",
+      "user_prompt": "디지털 애완동물: OLED에 표정 문자열 표시(행복=^^, 보통=--, 슬픔=TT), 스위치 누르면 먹이주기(행복으로), 온도 25도 이하면 추움, 30도 이상이면 더움으로 기분 변화. 기분 상태를 sensorChar로 BLE 전송. 변수명과 함수명이 겹치지 않도록 주의. const char* 배열 사용.",
+      "tags": [
+        "애완동물",
+        "pet",
+        "OLED",
+        "표정",
+        "스위치",
+        "온도",
+        "기분",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled",
+        "switch",
+        "aht20",
+        "ble"
+      ],
+      "category": "Y",
+      "category_name": "종합 프로젝트",
       "description": "가상 펫"
     },
     {
-      "no": "Y02", "user_prompt": "스마트 교실: 온습도 모니터+쾌적도 LED+경보+OLED 대시보드+BLE 실시간 전송",
-      "tags": ["스마트", "교실", "온습도", "모니터", "LED", "경보", "OLED", "BLE", "IoT"],
-      "difficulty": 4, "components": ["aht20", "led_red", "led_yellow", "led_blue", "buzzer", "oled", "ble"],
-      "category": "Y", "category_name": "종합 프로젝트",
+      "no": "Y02",
+      "user_prompt": "스마트 교실: 온습도 모니터+쾌적도 LED+경보+OLED 대시보드+BLE 실시간 전송",
+      "tags": [
+        "스마트",
+        "교실",
+        "온습도",
+        "모니터",
+        "LED",
+        "경보",
+        "OLED",
+        "BLE",
+        "IoT"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "buzzer",
+        "oled",
+        "ble"
+      ],
+      "category": "Y",
+      "category_name": "종합 프로젝트",
       "description": "IoT 교실"
     },
     {
-      "no": "Y03", "user_prompt": "나만의 악기: 스위치 누를 때마다 다음 멜로디 재생(3곡 순환) + LED 쇼 + 곡명 OLED + 곡 정보 BLE 전송",
-      "tags": ["악기", "instrument", "스위치", "멜로디", "순환", "LED", "OLED", "BLE"],
-      "difficulty": 4, "components": ["switch", "melody_buzzer", "led_red", "led_yellow", "led_blue", "oled", "ble"],
-      "category": "Y", "category_name": "종합 프로젝트",
+      "no": "Y03",
+      "user_prompt": "나만의 악기: 스위치 누를 때마다 다음 멜로디 재생(3곡 순환) + LED 쇼 + 곡명 OLED + 곡 정보 BLE 전송",
+      "tags": [
+        "악기",
+        "instrument",
+        "스위치",
+        "멜로디",
+        "순환",
+        "LED",
+        "OLED",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [
+        "switch",
+        "melody_buzzer",
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "oled",
+        "ble"
+      ],
+      "category": "Y",
+      "category_name": "종합 프로젝트",
       "description": "뮤직 플레이어"
     },
     {
-      "no": "Y04", "user_prompt": "미니 기상 스테이션: 온습도+쾌적도 판단+히스토리 그래프(OLED)+통계+BLE 주기적 전송",
-      "tags": ["기상", "스테이션", "weather", "온습도", "그래프", "OLED", "통계", "BLE"],
-      "difficulty": 4, "components": ["aht20", "oled", "ble"],
-      "category": "Y", "category_name": "종합 프로젝트",
+      "no": "Y04",
+      "user_prompt": "미니 기상 스테이션: 온습도+쾌적도 판단+히스토리 그래프(OLED)+통계+BLE 주기적 전송",
+      "tags": [
+        "기상",
+        "스테이션",
+        "weather",
+        "온습도",
+        "그래프",
+        "OLED",
+        "통계",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "oled",
+        "ble"
+      ],
+      "category": "Y",
+      "category_name": "종합 프로젝트",
       "description": "기상 관측소"
     },
     {
-      "no": "Y05", "user_prompt": "게임 센터: 스위치로 게임 선택(OLED 메뉴) → 1.반응속도 2.주사위 3.빨리누르기 → 점수 BLE 전송",
-      "tags": ["게임", "센터", "메뉴", "반응속도", "주사위", "빨리누르기", "BLE", "점수"],
-      "difficulty": 4, "components": ["switch", "oled", "led_red", "buzzer", "ble"],
-      "category": "Y", "category_name": "종합 프로젝트",
+      "no": "Y05",
+      "user_prompt": "게임 센터: 스위치로 게임 선택(OLED 메뉴) → 1.반응속도 2.주사위 3.빨리누르기 → 점수 BLE 전송",
+      "tags": [
+        "게임",
+        "센터",
+        "메뉴",
+        "반응속도",
+        "주사위",
+        "빨리누르기",
+        "BLE",
+        "점수"
+      ],
+      "difficulty": 4,
+      "components": [
+        "switch",
+        "oled",
+        "led_red",
+        "buzzer",
+        "ble"
+      ],
+      "category": "Y",
+      "category_name": "종합 프로젝트",
       "description": "멀티 게임"
     },
     {
-      "no": "Y06", "user_prompt": "보안 시스템: 스위치 패턴 비밀번호(짧-짧-긴) → 맞으면 LED 초록+멜로디 → 틀리면 사이렌+BLE 경보",
-      "tags": ["보안", "security", "패턴", "비밀번호", "스위치", "LED", "멜로디", "사이렌", "BLE"],
-      "difficulty": 4, "components": ["switch", "led_red", "led_yellow", "melody_buzzer", "buzzer", "oled", "ble"],
-      "category": "Y", "category_name": "종합 프로젝트",
+      "no": "Y06",
+      "user_prompt": "보안 시스템: 스위치 패턴 비밀번호(짧-짧-긴) → 맞으면 LED 초록+멜로디 → 틀리면 사이렌+BLE 경보",
+      "tags": [
+        "보안",
+        "security",
+        "패턴",
+        "비밀번호",
+        "스위치",
+        "LED",
+        "멜로디",
+        "사이렌",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [
+        "switch",
+        "led_red",
+        "led_yellow",
+        "melody_buzzer",
+        "buzzer",
+        "oled",
+        "ble"
+      ],
+      "category": "Y",
+      "category_name": "종합 프로젝트",
       "description": "패턴 잠금장치"
     },
     {
-      "no": "Y07", "user_prompt": "스마트 화분: 온습도+쾌적도→OLED에 식물 상태 표시+LED 신호+BLE로 관리자 알림",
-      "tags": ["화분", "plant", "온습도", "식물", "OLED", "LED", "BLE", "알림"],
-      "difficulty": 4, "components": ["aht20", "oled", "led_red", "led_yellow", "led_blue", "ble"],
-      "category": "Y", "category_name": "종합 프로젝트",
+      "no": "Y07",
+      "user_prompt": "스마트 화분: 3초마다 온습도 측정. 온도 18~28도 + 습도 40~70%면 Good(파란LED), 범위 밖이면 Bad(노란LED), 극단적이면 Danger(빨간LED+부저). OLED에 온습도+상태 텍스트 표시. 10초마다 sensorChar로 BLE 전송. 상태를 const char* 변수로 관리하고 함수명과 겹치지 않게 할 것.",
+      "tags": [
+        "화분",
+        "plant",
+        "온습도",
+        "식물",
+        "OLED",
+        "LED",
+        "BLE",
+        "알림"
+      ],
+      "difficulty": 4,
+      "components": [
+        "aht20",
+        "oled",
+        "led_red",
+        "led_yellow",
+        "led_blue",
+        "ble"
+      ],
+      "category": "Y",
+      "category_name": "종합 프로젝트",
       "description": "식물 관리"
     },
     {
-      "no": "Y08", "user_prompt": "인터랙티브 퀴즈쇼: OLED에 문제 표시 → 스마트폰에서 답 입력 → 맞으면 멜로디+LED+점수 → 오답 부저+빨간LED → 총 점수 BLE",
-      "tags": ["퀴즈", "quiz", "인터랙티브", "OLED", "스마트폰", "BLE", "점수", "멜로디"],
-      "difficulty": 4, "components": ["oled", "melody_buzzer", "buzzer", "led_red", "led_yellow", "ble"],
-      "category": "Y", "category_name": "종합 프로젝트",
+      "no": "Y08",
+      "user_prompt": "인터랙티브 퀴즈쇼: OLED에 문제 표시 → 스마트폰에서 답 입력 → 맞으면 멜로디+LED+점수 → 오답 부저+빨간LED → 총 점수 BLE",
+      "tags": [
+        "퀴즈",
+        "quiz",
+        "인터랙티브",
+        "OLED",
+        "스마트폰",
+        "BLE",
+        "점수",
+        "멜로디"
+      ],
+      "difficulty": 4,
+      "components": [
+        "oled",
+        "melody_buzzer",
+        "buzzer",
+        "led_red",
+        "led_yellow",
+        "ble"
+      ],
+      "category": "Y",
+      "category_name": "종합 프로젝트",
       "description": "교육용 게임"
     }
   ]

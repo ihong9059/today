@@ -1,0 +1,10 @@
+returncode: 0
+stdout_len: 1
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+

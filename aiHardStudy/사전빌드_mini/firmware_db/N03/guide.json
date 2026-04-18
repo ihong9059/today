@@ -1,0 +1,74 @@
+{
+  "result_description": "스마트폰에서 'SPEED:500' 명령을 보내면 LED 깜빡임 속도가 바뀌고, OLED 화면과 소리로 알려줍니다.",
+  "what_happens": [
+    "스마트폰이 블루투스로 'SPEED:500' 같은 명령을 보냅니다",
+    "ESP32가 명령을 받아 숫자(500)를 읽고 LED 깜빡임 속도를 바꿉니다",
+    "OLED 화면에 바뀐 속도를 보여주고, 삐 소리를 내고, 스마트폰에 'OK:SPEED=500'으로 답장합니다"
+  ],
+  "concepts": [
+    {
+      "term": "volatile",
+      "explanation": "두 친구가 같은 칠판을 동시에 보는 것처럼, 여러 작업이 같은 변수를 함께 사용할 때 항상 최신 값을 읽도록 해주는 약속이에요"
+    },
+    {
+      "term": "BLE(블루투스 저에너지)",
+      "explanation": "스마트폰과 아두이노가 무선으로 쪽지를 주고받을 수 있게 해주는 기술이에요. 배터리를 아주 조금만 써서 '저에너지'라고 불러요"
+    },
+    {
+      "term": "startsWith",
+      "explanation": "편지가 '받는사람:' 으로 시작하는지 확인하는 것처럼, 받은 문자열이 특정 글자로 시작하는지 확인하는 명령이에요"
+    },
+    {
+      "term": "Task(태스크)",
+      "explanation": "사람이 걸으면서 노래를 동시에 하듯, 컴퓨터가 여러 일을 동시에 할 수 있도록 나눠 맡긴 작업 단위예요"
+    },
+    {
+      "term": "notify(알림)",
+      "explanation": "선생님이 학생에게 '숙제 다 됐어요!'라고 문자를 보내는 것처럼, 아두이노가 스마트폰에 결과를 자동으로 보내주는 기능이에요"
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "volatile int blinkSpeed = 500;",
+      "comment": "LED가 깜빡이는 속도(0.5초)를 저장하는 변수를 만들고, 여러 작업이 함께 쓸 수 있도록 volatile로 선언해요"
+    },
+    {
+      "line": "if (cmd.startsWith(\"SPEED:\"))",
+      "comment": "받은 명령이 'SPEED:'로 시작하는지 확인해요. 맞아야만 속도를 바꿔요"
+    },
+    {
+      "line": "int val = cmd.substring(6).toInt();",
+      "comment": "'SPEED:500'에서 앞 6글자('SPEED:')를 떼어내고, 남은 '500'을 숫자로 바꿔요"
+    },
+    {
+      "line": "vTaskDelay(pdMS_TO_TICKS(blinkSpeed));",
+      "comment": "LED를 켜거나 끈 뒤, blinkSpeed 만큼 기다려요. 이 숫자가 작을수록 더 빠르게 깜빡여요"
+    },
+    {
+      "line": "sensorChar->notify();",
+      "comment": "스마트폰에 'OK:SPEED=500' 답장을 자동으로 보내서 속도가 잘 바뀌었다고 알려줘요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "'COLOR:RED' 명령을 보내면 LED 색이 빨간색으로 바뀌도록 onBleReceive 안에 조건을 하나 더 추가해보세요!"
+    },
+    {
+      "reason": "속도가 너무 빠르거나(50ms 이하) 너무 느리면(3000ms 이상) 스마트폰에 경고 메시지를 보내도록 만들어 보세요!"
+    },
+    {
+      "reason": "blinkTask를 참고해서 버저(비프음)도 별도 태스크로 분리해, LED와 소리가 동시에 실행되도록 도전해보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "'SPEED:200'을 보냈을 때 LED는 어떻게 바뀔까요?",
+    "options": [
+      "LED가 꺼진다",
+      "LED가 더 빠르게 깜빡인다",
+      "LED가 더 느리게 깜빡인다",
+      "LED 색이 바뀐다"
+    ],
+    "answer": 1,
+    "explanation": "blinkSpeed가 500에서 200으로 줄어들면 기다리는 시간이 짧아져요. 기다리는 시간이 짧을수록 LED가 더 빠르게 깜빡입니다!"
+  }
+}

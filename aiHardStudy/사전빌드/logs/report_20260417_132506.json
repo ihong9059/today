@@ -1,0 +1,79 @@
+{
+  "timestamp": "2026-04-17T13:25:06.895034",
+  "total": 10,
+  "success": 0,
+  "failed": 10,
+  "elapsed_minutes": 9.1,
+  "results": [
+    {
+      "no": "A01",
+      "prompt": "빨간 LED 켜기",
+      "success": false,
+      "error": "Claude returned empty. stderr: ",
+      "elapsed": 56.72179841995239
+    },
+    {
+      "no": "A02",
+      "prompt": "빨간 LED 끄기",
+      "success": false,
+      "error": "Claude returned empty. stderr: ",
+      "elapsed": 50.64283275604248
+    },
+    {
+      "no": "A03",
+      "prompt": "노란 LED 켜기",
+      "success": false,
+      "error": "Claude returned empty. stderr: ",
+      "elapsed": 50.346622943878174
+    },
+    {
+      "no": "A04",
+      "prompt": "파란 LED 켜기",
+      "success": false,
+      "error": "Claude returned empty. stderr: ",
+      "elapsed": 49.612202882766724
+    },
+    {
+      "no": "A05",
+      "prompt": "빨간 LED 1초마다 깜빡이기",
+      "success": false,
+      "error": "Claude returned empty. stderr: ",
+      "elapsed": 62.18737721443176
+    },
+    {
+      "no": "A06",
+      "prompt": "빨간 LED 0.5초마다 빠르게 깜빡이기",
+      "success": false,
+      "error": "Claude returned empty. stderr: ",
+      "elapsed": 54.05149698257446
+    },
+    {
+      "no": "A07",
+      "prompt": "빨간 LED 3초마다 느리게 깜빡이기",
+      "success": false,
+      "error": "Claude returned empty. stderr: ",
+      "elapsed": 53.22765898704529
+    },
+    {
+      "no": "A08",
+      "prompt": "빨간 LED 5번 깜빡이고 멈추기",
+      "success": false,
+      "error": "Claude returned empty. stderr: ",
+      "elapsed": 57.00487661361694
+    },
+    {
+      "no": "A09",
+      "prompt": "빨간 LED 10번 깜빡이고 멈추기",
+      "success": false,
+      "error": "Claude returned empty. stderr: ",
+      "elapsed": 52.89488124847412
+    },
+    {
+      "no": "A10",
+      "prompt": "파란 LED 0.2초마다 20번 깜빡이고 멈추기",
+      "success": false,
+      "error": "Claude returned empty. stderr: ",
+      "elapsed": 58.17019248008728
+    }
+  ]
+}

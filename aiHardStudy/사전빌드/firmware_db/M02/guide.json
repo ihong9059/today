@@ -1,0 +1,70 @@
+{
+  "result_description": "빨강, 노랑, 파랑 LED가 1.5초마다 차례로 켜지고, 켜진 LED 이름이 OLED 화면에 표시됩니다.",
+  "what_happens": [
+    "프로그램이 시작되면 OLED 화면에 'LED Monitor Starting...' 메시지가 나타납니다.",
+    "ledCycleTask가 실행되면서 RED → YELLOW → BLUE 순서로 LED가 1.5초마다 하나씩 켜집니다.",
+    "LED가 바뀔 때마다 OLED 화면에 'ON: RED' 처럼 현재 켜진 LED 이름이 업데이트됩니다."
+  ],
+  "concepts": [
+    {
+      "term": "배열(Array)",
+      "explanation": "여러 개의 값을 하나의 이름으로 묶어 저장하는 방법이에요. 서랍장처럼 번호로 꺼내 쓸 수 있어요."
+    },
+    {
+      "term": "volatile 변수",
+      "explanation": "여러 작업이 동시에 실행될 때, 항상 최신 값을 읽도록 보장해주는 특별한 변수예요."
+    },
+    {
+      "term": "FreeRTOS 태스크(Task)",
+      "explanation": "컴퓨터가 여러 일을 동시에 할 수 있도록 나눠주는 작업 단위예요. 마치 학교에서 선생님과 청소 당번이 동시에 다른 일을 하는 것과 같아요."
+    },
+    {
+      "term": "Active LOW",
+      "explanation": "LOW(0) 신호를 줄 때 LED가 켜지고, HIGH(1) 신호를 줄 때 꺼지는 방식이에요. 일반적인 생각과 반대라서 주의해야 해요."
+    },
+    {
+      "term": "나머지 연산(% 모듈로)",
+      "explanation": "숫자를 나눴을 때 남는 나머지를 구해요. 1→2→3→1처럼 숫자가 계속 반복되도록 만들 때 써요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "state = (state % 3) + 1;",
+      "comment": "state가 1, 2, 3을 계속 반복하도록 순환시켜요. 3 다음에 자동으로 1로 돌아옵니다."
+    },
+    {
+      "line": "oled.drawString(30, 20, name);",
+      "comment": "OLED 화면의 가로 30, 세로 20 위치에 LED 이름 글자를 그립니다."
+    },
+    {
+      "line": "digitalWrite(ledPins[state], LOW);",
+      "comment": "배열에서 현재 state 번호에 해당하는 LED 핀을 LOW로 설정해 켭니다."
+    },
+    {
+      "line": "xTaskCreate(ledCycleTask, \"ledCycle\", 2048, NULL, 1, NULL);",
+      "comment": "LED를 순환시키는 작업을 독립적으로 실행하도록 새 태스크를 만듭니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "LED 전환 속도를 500ms, 3000ms 등으로 바꿔서 어떻게 달라지는지 관찰해보세요."
+    },
+    {
+      "reason": "OLED에 이름뿐만 아니라 LED가 켜진 횟수(카운터)도 함께 표시해보세요."
+    },
+    {
+      "reason": "버튼을 추가해서 버튼을 누를 때만 다음 LED로 넘어가도록 바꿔보세요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 LED가 켜지는 순서로 올바른 것은 무엇인가요?",
+    "options": [
+      "BLUE → YELLOW → RED → BLUE",
+      "RED → YELLOW → BLUE → RED",
+      "YELLOW → RED → BLUE → YELLOW",
+      "RED → BLUE → YELLOW → RED"
+    ],
+    "answer": 1,
+    "explanation": "state는 1(RED)부터 시작하고, (state % 3) + 1 공식으로 1→2→3→1 순서로 반복됩니다. ledNames 배열에서 1=RED, 2=YELLOW, 3=BLUE이므로 RED → YELLOW → BLUE → RED 순서로 켜집니다."
+  }
+}

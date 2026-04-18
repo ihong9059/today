@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 10460
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"6441908b-ab16-4447-869c-ea603cd42b48","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"6a5dc280-0c7c-4b91-a503-ddcb30d14fad","session_id":"7c8d227b-c1d1-4fe6-bc01-aba56526cfae"}
+{"type":"system","subtype":"hook_response","hook_id":"6441908b-ab16-4447-869c-ea603cd42b48","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"43c6a0ea-494d-431f-8437-f02e621e0f82","session_id":"7c8d227b-c1d1-4fe6-bc01-aba56526cfae"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\2c4bf620","session_id":"7c8d227b-c1d1-4fe6-bc01-aba56526cfae","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:audit-milestone","gsd:add-todo","gsd:add-tests","gsd:add-phase","gsd:add-backlog","gsd:debug","gsd:complete-milestone","gsd:cleanup","gsd:check-todos","gsd:autonomous","gsd:audit-uat","gsd:execute-phase","gsd:do","gsd:discuss-phase","gsd:forensics","gsd:fast","gsd:health","gsd:help","gsd:profile-user","gsd:pr-

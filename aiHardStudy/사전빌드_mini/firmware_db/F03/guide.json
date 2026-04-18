@@ -1,0 +1,70 @@
+{
+  "result_description": "3초마다 온도와 습도를 자동으로 재어서 OLED 화면에 보여줍니다.",
+  "what_happens": [
+    "아두이노가 켜지면 센서 읽기 임무(태스크)를 시작합니다.",
+    "3초마다 AHT20 센서에서 온도와 습도를 읽어옵니다.",
+    "읽은 값을 OLED 화면에 표시하고, 실패하면 'Sensor Error'를 보여줍니다."
+  ],
+  "concepts": [
+    {
+      "term": "전역 변수 (g_temp, g_humi)",
+      "explanation": "프로그램 어디서나 꺼내 쓸 수 있는 공용 보관함이에요. 온도와 습도를 저장해두고 여러 곳에서 함께 씁니다."
+    },
+    {
+      "term": "태스크 (Task)",
+      "explanation": "컴퓨터가 동시에 여러 일을 할 수 있도록 나눠 맡기는 '미니 프로그램'이에요. 선생님이 여러 학생에게 각각 다른 숙제를 맡기는 것과 같아요."
+    },
+    {
+      "term": "vTaskDelay (대기)",
+      "explanation": "정해진 시간 동안 기다리게 하는 명령이에요. 3000밀리초 = 3초를 쉬었다가 다시 센서를 읽습니다."
+    },
+    {
+      "term": "snprintf",
+      "explanation": "숫자를 화면에 보여줄 수 있는 글자로 바꿔주는 명령이에요. 예를 들어 25.3이라는 숫자를 'Temp: 25.3 C'라는 문장으로 만들어 줍니다."
+    },
+    {
+      "term": "OLED 디스플레이",
+      "explanation": "아주 작고 선명한 화면이에요. oled.clear()로 화면을 지우고, drawString으로 글자를 쓴 뒤, oled.display()로 화면에 나타냅니다."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "vTaskDelay(pdMS_TO_TICKS(3000));",
+      "comment": "3초(3000밀리초) 동안 기다렸다가 다시 센서를 읽습니다. 이 한 줄이 '3초마다 반복'을 만들어요."
+    },
+    {
+      "line": "bool ok = aht20_read(g_temp, g_humi);",
+      "comment": "센서에서 온도와 습도를 읽습니다. 성공하면 ok가 true, 실패하면 false가 됩니다."
+    },
+    {
+      "line": "xTaskCreate(sensorTask, \"sensor\", 4096, NULL, 1, NULL);",
+      "comment": "센서 읽기 태스크를 시작시킵니다. 'sensorTask'라는 이름의 임무를 따로 만들어 독립적으로 실행합니다."
+    },
+    {
+      "line": "snprintf(buf, sizeof(buf), \"Temp: %.1f C\", g_temp);",
+      "comment": "온도 숫자를 'Temp: 25.3 C' 형태의 글자로 변환합니다. %.1f는 소수점 한 자리까지 보여달라는 표시예요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "측정 간격을 1초, 5초로 바꿔보세요 — vTaskDelay 안의 숫자만 바꾸면 됩니다!"
+    },
+    {
+      "reason": "온도가 30도 이상이면 'HOT!'라는 글자를 추가로 표시해 보세요. if문을 활용해 보세요."
+    },
+    {
+      "reason": "측정한 온도와 습도를 시리얼 모니터에도 함께 출력해 보세요. Serial.println()을 써보세요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 온도와 습도를 3초마다 반복해서 읽게 만드는 핵심 명령어는 무엇인가요?",
+    "options": [
+      "oled.display()",
+      "vTaskDelay(pdMS_TO_TICKS(3000))",
+      "Serial.begin(115200)",
+      "aht20_read(g_temp, g_humi)"
+    ],
+    "answer": 1,
+    "explanation": "vTaskDelay(pdMS_TO_TICKS(3000))가 3초(3000밀리초) 동안 기다리게 합니다. while(true) 반복문 안에 있어서 기다렸다가 → 읽고 → 또 기다렸다가 → 읽는 동작이 계속 반복됩니다."
+  }
+}

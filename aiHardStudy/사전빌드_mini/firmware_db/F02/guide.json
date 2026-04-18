@@ -1,0 +1,74 @@
+{
+  "result_description": "1초마다 온도와 습도 센서를 읽어서 OLED 화면에 숫자로 표시합니다.",
+  "what_happens": [
+    "아두이노가 켜지면 AHT20 센서와 OLED 화면을 준비합니다",
+    "1초마다 센서에서 온도(Temp)와 습도(Humi) 값을 읽습니다",
+    "읽은 값을 OLED 화면 위쪽에는 온도, 아래쪽에는 습도로 나누어 보여줍니다"
+  ],
+  "concepts": [
+    {
+      "term": "센서(Sensor)",
+      "explanation": "온도나 습도처럼 주변 환경을 느끼고 숫자로 알려주는 부품이에요. 사람의 피부처럼 주변을 느낀다고 생각하면 돼요!"
+    },
+    {
+      "term": "OLED",
+      "explanation": "아주 작은 화면이에요. 스마트워치처럼 글자나 그림을 보여줄 수 있어요."
+    },
+    {
+      "term": "태스크(Task)",
+      "explanation": "컴퓨터가 동시에 여러 일을 할 수 있도록 나눠 놓은 일의 단위예요. 사람이 밥 먹으면서 TV 보는 것처럼요!"
+    },
+    {
+      "term": "vTaskDelay",
+      "explanation": "잠깐 기다리는 명령이에요. 여기서는 1000밀리초(1초) 동안 쉬고 다시 센서를 읽어요."
+    },
+    {
+      "term": "float",
+      "explanation": "소수점이 있는 숫자를 저장하는 상자예요. 예를 들어 온도 25.3도처럼 .1 같은 소수점 값을 담을 수 있어요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "bool ok = aht20_read(g_temp, g_humi);",
+      "comment": "센서에서 온도와 습도를 읽어서 각각 g_temp, g_humi 변수에 저장해요. 잘 읽혔으면 ok가 true가 돼요."
+    },
+    {
+      "line": "snprintf(buf, sizeof(buf), \"Temp: %.1f C\", g_temp);",
+      "comment": "온도 숫자를 '소수점 한 자리'로 예쁘게 글자로 만들어요. 예: Temp: 25.3 C"
+    },
+    {
+      "line": "oled.drawString(0, 16, buf);",
+      "comment": "OLED 화면의 왼쪽에서 0, 위에서 16픽셀 아래 위치에 습도 글자를 그려요."
+    },
+    {
+      "line": "vTaskDelay(pdMS_TO_TICKS(1000));",
+      "comment": "1초(1000밀리초) 동안 기다렸다가 다시 센서를 읽어요."
+    },
+    {
+      "line": "oled.drawString(0, 0, \"Sensor Error\");",
+      "comment": "센서 읽기가 실패하면 화면에 'Sensor Error'라고 경고 문구를 보여줘요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "온도가 30도 이상이면 화면에 '너무 더워요!'라고 경고 메시지를 추가해보세요!"
+    },
+    {
+      "reason": "습도 값에 따라 '건조', '보통', '습함' 중 하나를 글자로 표시해보세요!"
+    },
+    {
+      "reason": "업데이트 주기를 1초에서 3초로 바꿔보고 어떻게 달라지는지 확인해보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 센서 읽기가 실패했을 때 OLED 화면에 표시되는 글자는 무엇인가요?",
+    "options": [
+      "No Data",
+      "Sensor Error",
+      "Try Again",
+      "Loading..."
+    ],
+    "answer": 1,
+    "explanation": "센서 읽기가 실패하면 ok 값이 false가 되어 else 블록이 실행됩니다. 이때 oled.drawString(0, 0, \"Sensor Error\")가 실행되어 화면에 'Sensor Error'가 표시돼요!"
+  }
+}

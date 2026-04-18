@@ -1,0 +1,74 @@
+{
+  "result_description": "ESP32가 '반짝반짝 작은별' 멜로디를 연주하는 동시에 빨강·노랑·파랑 LED가 8가지 패턴으로 춤을 춥니다.",
+  "what_happens": [
+    "setup()에서 OLED 화면에 'Music LED Show / Twinkle Star / Playing...' 메시지를 표시합니다.",
+    "ledTask와 melodyTask, 두 개의 '일꾼(태스크)'이 동시에 시작되어 LED 패턴과 멜로디가 함께 실행됩니다.",
+    "멜로디가 끝나면 0.6초 쉬었다가 다시 반복되고, LED는 8가지 패턴(순차 점등, 전체 점등, 깜박임 등)을 계속 순환합니다."
+  ],
+  "concepts": [
+    {
+      "term": "멀티태스킹(Multitasking)",
+      "explanation": "음악을 연주하면서 동시에 LED도 켜고 끄는 것처럼, 컴퓨터가 여러 일을 동시에 하는 것을 멀티태스킹이라고 해요. 마치 우리가 노래를 부르면서 손뼉을 치는 것과 같아요!"
+    },
+    {
+      "term": "태스크(Task)",
+      "explanation": "ESP32에게 시키는 하나의 '역할'이에요. 여기서는 LED를 담당하는 일꾼과 멜로디를 담당하는 일꾼, 두 명이 동시에 일하고 있어요."
+    },
+    {
+      "term": "주파수(Hz)",
+      "explanation": "소리의 높낮이를 숫자로 나타낸 거예요. 숫자가 클수록 높은 소리가 나요. 예를 들어 NOTE_C4(도)는 262Hz, NOTE_A4(라)는 440Hz예요."
+    },
+    {
+      "term": "tone() 함수",
+      "explanation": "스피커(부저)에서 소리를 내는 명령어예요. 어떤 핀에, 몇 Hz로, 얼마 동안 소리를 낼지 알려줄 수 있어요."
+    },
+    {
+      "term": "#define (매크로 정의)",
+      "explanation": "자주 쓰는 숫자에 이름표를 붙이는 방법이에요. NOTE_C4라고 쓰면 262를 직접 쓰는 것보다 훨씬 이해하기 쉽죠!"
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "xTaskCreatePinnedToCore(ledTask, \"LED_Show\", 2048, NULL, 1, NULL, 1);",
+      "comment": "LED 패턴을 담당하는 일꾼(태스크)을 ESP32의 코어1에 만들어 시작시키는 명령이에요."
+    },
+    {
+      "line": "tone(33, melody[i], (int)(noteDur[i] * 0.9));",
+      "comment": "33번 핀에 연결된 스피커로 melody[i] 음표를 noteDur[i]의 90% 시간만큼 소리 내요. 10%는 무음이라 음표가 또렷하게 끊겨 들려요."
+    },
+    {
+      "line": "vTaskDelay(noteDur[i] / portTICK_PERIOD_MS);",
+      "comment": "한 음표를 연주하는 동안 기다리는 명령이에요. 이 시간 동안 다른 태스크(LED)가 계속 실행될 수 있어요."
+    },
+    {
+      "line": "switch (step % 8)",
+      "comment": "step을 8로 나눈 나머지(0~7)로 8가지 LED 패턴 중 하나를 골라요. 8번 다 돌면 처음 패턴부터 다시 시작해요."
+    },
+    {
+      "line": "setLeds(LOW, HIGH, HIGH);",
+      "comment": "빨강 LED만 켜고(LOW=켜짐), 노랑과 파랑은 끄는(HIGH=꺼짐) 함수예요. LOW와 HIGH가 반대라서 헷갈리지 않도록 주의해요!"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "melody[] 배열에 다른 동요(예: '학교 종이 땡땡땡')의 음표를 넣어서 다른 노래를 연주해 보세요!"
+    },
+    {
+      "reason": "noteDur[] 배열의 숫자를 절반(200)으로 줄이면 노래가 2배 빨라져요. 빠른 버전과 느린 버전을 비교해 보세요!"
+    },
+    {
+      "reason": "switch 문에 case 8을 추가해서 나만의 새로운 LED 패턴을 만들어 보세요. 예를 들어 빨강-파랑-노랑 순서로 번갈아 깜박이기!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 멜로디와 LED가 동시에 실행될 수 있는 이유는 무엇인가요?",
+    "options": [
+      "loop() 함수가 매우 빠르게 반복되기 때문에",
+      "xTaskCreatePinnedToCore로 두 개의 태스크를 따로 만들었기 때문에",
+      "tone() 함수가 LED도 같이 제어하기 때문에",
+      "delay()를 쓰지 않았기 때문에"
+    ],
+    "answer": 1,
+    "explanation": "xTaskCreatePinnedToCore() 명령으로 LED 일꾼(ledTask)과 멜로디 일꾼(melodyTask)을 각각 따로 만들었기 때문이에요. 두 일꾼이 동시에 일하므로 음악과 LED가 함께 실행됩니다!"
+  }
+}

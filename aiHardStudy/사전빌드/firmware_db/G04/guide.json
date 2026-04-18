@@ -1,0 +1,70 @@
+{
+  "result_description": "스위치를 누르면 OLED 화면에 'PRESSED!'가 나타나고, 손을 떼면 'Ready...'로 돌아옵니다.",
+  "what_happens": [
+    "아두이노가 켜지면 32번 핀에 연결된 스위치를 계속 확인합니다",
+    "스위치를 누르면 OLED 화면이 깨끗이 지워지고 'PRESSED!'라는 글자가 나타납니다",
+    "스위치에서 손을 떼면 화면이 다시 'Ready...'로 바뀌어 기다립니다"
+  ],
+  "concepts": [
+    {
+      "term": "INPUT_PULLUP",
+      "explanation": "핀을 입력으로 쓰되, 아무것도 연결 안 했을 때 자동으로 '켜짐(HIGH)' 상태를 유지하는 설정이에요. 스위치를 누르면 반대인 'LOW'가 됩니다."
+    },
+    {
+      "term": "digitalRead",
+      "explanation": "핀의 상태를 읽는 명령이에요. 마치 '문이 열렸어? 닫혔어?'를 확인하는 것처럼, HIGH(열림) 또는 LOW(닫힘)를 알려줍니다."
+    },
+    {
+      "term": "active LOW",
+      "explanation": "스위치를 눌렀을 때 신호가 LOW(0)가 되는 방식이에요. 보통은 반대라고 생각하기 쉽지만, 안전하고 안정적으로 작동하기 위해 이렇게 설계되어 있어요."
+    },
+    {
+      "term": "oled.clear()",
+      "explanation": "OLED 화면을 깨끗이 지우는 명령이에요. 칠판에 새 글씨를 쓰기 전에 지우개로 닦는 것과 같아요."
+    },
+    {
+      "term": "delay(10000)",
+      "explanation": "10,000밀리초(= 10초) 동안 기다리는 명령이에요. 아두이노가 너무 빨리 반복하지 않도록 잠깐 쉬게 하는 거예요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "pinMode(32, INPUT_PULLUP);",
+      "comment": "32번 핀을 스위치 입력으로 설정하고, 눌리지 않았을 때는 자동으로 HIGH 상태를 유지하게 합니다"
+    },
+    {
+      "line": "if (digitalRead(32) == LOW)",
+      "comment": "32번 핀의 상태를 읽어서 LOW(스위치 눌림)인지 확인합니다"
+    },
+    {
+      "line": "oled.drawString(24, 28, \"PRESSED!\");",
+      "comment": "OLED 화면의 가로 24, 세로 28 위치에 'PRESSED!' 글자를 그립니다"
+    },
+    {
+      "line": "oled.display();",
+      "comment": "준비해 둔 화면 내용을 실제로 OLED에 보여줍니다. 이 명령 없이는 화면이 바뀌지 않아요!"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "스위치를 누른 횟수를 세어서 화면에 숫자로 표시해 보세요. 변수를 하나 만들어서 누를 때마다 +1 해보면 됩니다!"
+    },
+    {
+      "reason": "delay 값을 100으로 줄여보세요. 화면이 얼마나 빠르게 반응하는지 차이를 느낄 수 있어요."
+    },
+    {
+      "reason": "'PRESSED!' 대신 여러분이 좋아하는 단어나 이모지로 바꿔보세요. drawString 안의 글자를 수정하면 됩니다!"
+    }
+  ],
+  "quiz": {
+    "question": "스위치를 누르지 않았을 때 digitalRead(32)의 값은 무엇일까요?",
+    "options": [
+      "LOW (0)",
+      "HIGH (1)",
+      "MIDDLE (2)",
+      "NONE (없음)"
+    ],
+    "answer": 1,
+    "explanation": "pinMode를 INPUT_PULLUP으로 설정했기 때문에, 스위치를 누르지 않으면 자동으로 HIGH(1) 상태가 됩니다. 스위치를 누를 때만 LOW(0)가 되어요!"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "result_description": "온도와 습도를 측정해서 쾌적한지 판단하고, OLED 화면과 LED 색깔로 상태를 알려주는 장치입니다.",
+  "what_happens": [
+    "AHT20 센서가 현재 온도와 습도를 측정합니다.",
+    "온도와 습도 값을 보고 'Good(좋음)', 'Bad(나쁨)', 'Danger(위험)' 중 하나를 결정합니다.",
+    "OLED 화면에 온도, 습도, 상태 메시지를 표시하고, 상태에 맞는 LED(파랑/노랑/빨강)를 켭니다."
+  ],
+  "concepts": [
+    {
+      "term": "쾌적도",
+      "explanation": "사람이 얼마나 편안하게 느끼는지를 숫자로 나타낸 것이에요. 너무 덥거나 습하면 불편하죠?"
+    },
+    {
+      "term": "조건문 (if/else if/else)",
+      "explanation": "만약 ~라면 이렇게 해! 아니라면 저렇게 해! 처럼, 상황에 따라 다르게 행동하도록 만드는 코드예요."
+    },
+    {
+      "term": "함수 (Function)",
+      "explanation": "자주 쓰는 일을 하나의 이름으로 묶어 놓은 것이에요. getComfortLevel()은 '쾌적도 알려줘!'라고 부르면 바로 답해주는 기능이에요."
+    },
+    {
+      "term": "OLED 디스플레이",
+      "explanation": "아주 작은 화면이에요. 글자나 숫자를 표시해서 센서 값을 눈으로 볼 수 있게 해줘요."
+    },
+    {
+      "term": "태스크 (Task)",
+      "explanation": "컴퓨터가 여러 일을 동시에 할 수 있도록 나눠 맡긴 작은 일감이에요. LED 깜빡이는 것과 센서 읽기를 동시에 할 수 있어요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "if (temp >= 18.0 && temp <= 26.0 && humi >= 40.0 && humi <= 60.0)",
+      "comment": "온도가 18~26도이고 습도가 40~60% 사이일 때만 'Good(쾌적)'이라고 판단해요."
+    },
+    {
+      "line": "String level = getComfortLevel(temp, humi);",
+      "comment": "측정한 온도와 습도를 함수에 넣으면, 'Good', 'Bad', 'Danger' 중 하나를 돌려줘요."
+    },
+    {
+      "line": "oled.drawString(0, 32, statusLine.c_str());",
+      "comment": "OLED 화면의 세 번째 줄에 현재 쾌적도 상태(Good/Bad/Danger)를 글자로 표시해요."
+    },
+    {
+      "line": "xTaskCreate(ledComfortTask, \"ledComfort\", 2048, (void*)&currentLevel, 1, NULL);",
+      "comment": "상태가 바뀔 때만 LED 태스크를 새로 만들어서 알맞은 색의 LED를 켜요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "Good일 때 OLED에 웃는 얼굴 😊, Danger일 때 찡그린 얼굴 😨 이모지를 추가해 보세요!"
+    },
+    {
+      "reason": "Danger 상태일 때 부저(Buzzer)로 경고음도 울리게 만들어 보세요!"
+    },
+    {
+      "reason": "쾌적도 기준 온도를 바꿔서 여름용 기준과 겨울용 기준을 따로 만들어 보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "온도가 20도이고 습도가 55%일 때, OLED 화면에 표시되는 상태는 무엇일까요?",
+    "options": [
+      "Danger",
+      "Bad",
+      "Good",
+      "Error"
+    ],
+    "answer": 2,
+    "explanation": "온도 20도는 18~26도 사이이고, 습도 55%는 40~60% 사이이므로 두 조건을 모두 만족해서 'Good'이 표시돼요!"
+  }
+}

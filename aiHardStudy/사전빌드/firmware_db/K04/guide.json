@@ -1,0 +1,74 @@
+{
+  "result_description": "공기 습도가 70%를 넘으면 노란 LED가 자동으로 깜빡이고, OLED 화면에 온도·습도·경고 메시지를 표시합니다.",
+  "what_happens": [
+    "2초마다 AHT20 센서로 온도와 습도를 측정합니다.",
+    "측정값을 OLED 화면에 줄 단위로 표시하고, 습도가 70%를 넘으면 '! HIGH HUMIDITY' 경고 문구도 함께 보여줍니다.",
+    "습도가 70% 초과이면 노란 LED 깜빡임 태스크를 만들어 켜고, 다시 정상 범위로 돌아오면 태스크를 삭제해 LED를 끕니다."
+  ],
+  "concepts": [
+    {
+      "term": "FreeRTOS 태스크(Task)",
+      "explanation": "컴퓨터가 여러 일을 동시에 하듯, 마이크로컨트롤러도 여러 작은 '일꾼'을 만들어 동시에 실행할 수 있어요. 여기서는 LED를 깜빡이는 일꾼(태스크)을 따로 만들어서 센서 읽기와 동시에 돌립니다."
+    },
+    {
+      "term": "xTaskCreate / vTaskDelete",
+      "explanation": "일꾼(태스크)을 고용하거나 해고하는 명령이에요. 습도가 높아지면 고용(xTaskCreate), 정상으로 돌아오면 해고(vTaskDelete)합니다."
+    },
+    {
+      "term": "snprintf",
+      "explanation": "숫자를 글자로 바꿔 저장하는 도구예요. 예를 들어 숫자 72.3을 'Humi: 72.3%' 라는 글자로 만들어 화면에 표시할 수 있게 해줍니다."
+    },
+    {
+      "term": "TaskHandle_t",
+      "explanation": "일꾼(태스크)에게 달아주는 이름표예요. 나중에 그 일꾼을 멈추거나 확인하려면 이 이름표가 필요합니다."
+    },
+    {
+      "term": "vTaskDelay",
+      "explanation": "일꾼이 잠깐 기다리는 명령이에요. delay()와 비슷하지만, 기다리는 동안 다른 일꾼들은 계속 일할 수 있어서 더 똑똑합니다."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "snprintf(buf, sizeof(buf), \"Humi: %.1f%%\", humi);",
+      "comment": "습도 숫자를 'Humi: 72.3%' 형태의 글자로 변환해서 buf 배열에 저장합니다."
+    },
+    {
+      "line": "oled.drawString(0, 0, buf);",
+      "comment": "변환해 놓은 글자(buf)를 OLED 화면의 가장 왼쪽 위(0,0)에 표시합니다."
+    },
+    {
+      "line": "if (humi > 70.0f) {",
+      "comment": "습도가 70%보다 크면 아래의 깜빡임 코드를 실행하라는 조건 판단입니다."
+    },
+    {
+      "line": "xTaskCreate(blinkYellowTask, \"blinkY\", 1024, NULL, 1, &blinkTaskHandle);",
+      "comment": "노란 LED를 깜빡이는 일꾼(태스크)을 새로 만들어서 동시에 실행되게 합니다."
+    },
+    {
+      "line": "vTaskDelete(blinkTaskHandle); blinkTaskHandle = NULL;",
+      "comment": "깜빡임 일꾼을 삭제하고 이름표를 지워서, 다음에 다시 만들 수 있게 준비합니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "습도가 90%를 넘으면 빨간 LED도 함께 켜도록 조건을 하나 더 추가해 보세요. 단계별 경고 시스템을 만들 수 있어요!"
+    },
+    {
+      "reason": "깜빡이는 속도(300ms)를 습도에 따라 바꿔보세요. 습도가 높을수록 더 빠르게 깜빡이면 더 위급한 느낌이 납니다."
+    },
+    {
+      "reason": "부저(버저)를 연결해서 습도가 높을 때 경고음도 나도록 새 태스크를 추가해 보세요."
+    }
+  ],
+  "quiz": {
+    "question": "습도가 72%일 때 노란 LED 깜빡임 태스크가 이미 실행 중입니다. 다음 loop()에서 어떤 일이 일어날까요?",
+    "options": [
+      "태스크를 삭제하고 새로 만든다",
+      "blinkTaskHandle이 NULL이 아니므로 태스크를 새로 만들지 않고 그냥 둔다",
+      "태스크를 삭제하고 LED를 끈다",
+      "센서 오류로 처리된다"
+    ],
+    "answer": 1,
+    "explanation": "if (blinkTaskHandle == NULL) 조건 덕분에, 이미 태스크가 실행 중이면(NULL이 아니면) 새로 만들지 않고 기존 태스크를 그대로 유지합니다. 덕분에 같은 태스크가 여러 개 생기는 문제를 막을 수 있어요."
+  }
+}

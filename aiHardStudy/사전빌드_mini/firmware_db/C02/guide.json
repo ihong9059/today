@@ -1,0 +1,74 @@
+{
+  "result_description": "RGB LED가 0.5초마다 빨강, 초록, 파랑 색상을 무작위로 섞어 새로운 색깔로 반짝입니다.",
+  "what_happens": [
+    "아두이노가 켜지면 LED와 블루투스를 준비하고 랜덤 색상 기능을 시작해요.",
+    "0.5초마다 빨강(r), 초록(g), 파랑(b) 숫자를 0~255 사이에서 랜덤으로 뽑아요.",
+    "뽑은 세 숫자를 섞어 LED를 그 색깔로 바꾸고, 또 0.5초를 기다렸다가 다시 반복해요."
+  ],
+  "concepts": [
+    {
+      "term": "random()",
+      "explanation": "주사위를 던지듯이 컴퓨터가 정해진 범위 안에서 숫자를 마음대로 골라주는 마법 함수예요."
+    },
+    {
+      "term": "RGB",
+      "explanation": "빨강(Red), 초록(Green), 파랑(Blue) 세 가지 빛을 섞어서 모든 색깔을 만들 수 있어요. 물감 대신 빛으로 색을 섞는 거예요!"
+    },
+    {
+      "term": "Task(태스크)",
+      "explanation": "컴퓨터가 동시에 여러 일을 할 수 있도록 각각의 일을 따로 나눠놓은 것이에요. 마치 여러 친구가 각자 다른 심부름을 하는 것과 같아요."
+    },
+    {
+      "term": "vTaskDelay()",
+      "explanation": "정해진 시간만큼 기다리는 함수예요. 500이면 0.5초 동안 잠깐 쉬었다가 다음 동작을 해요."
+    },
+    {
+      "term": "randomSeed()",
+      "explanation": "랜덤 숫자가 매번 다르게 나오도록 시작점을 정해주는 역할이에요. 씨앗(seed)을 다르게 심으면 다른 꽃이 피는 것처럼요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "uint8_t r = random(0, 256);",
+      "comment": "빨간빛의 밝기를 0(꺼짐)부터 255(최대)까지 중에서 랜덤으로 골라요."
+    },
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(r, g, b));",
+      "comment": "뽑은 r, g, b 숫자를 합쳐서 LED의 색깔을 정해요."
+    },
+    {
+      "line": "pixel.show();",
+      "comment": "정해진 색깔을 실제 LED에 적용해서 빛이 나오게 해요."
+    },
+    {
+      "line": "vTaskDelay(500 / portTICK_PERIOD_MS);",
+      "comment": "0.5초(500밀리초) 동안 기다렸다가 다시 색을 바꿔요."
+    },
+    {
+      "line": "randomSeed(esp_random());",
+      "comment": "전원을 켤 때마다 다른 랜덤 패턴이 나오도록 씨앗 숫자를 새로 정해요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "vTaskDelay의 숫자를 1000으로 바꿔서 1초마다 색이 바뀌게 해보세요. 숫자가 클수록 느려져요!"
+    },
+    {
+      "reason": "r, g, b 중 하나를 항상 0으로 고정하면 어떤 색만 남는지 실험해 보세요."
+    },
+    {
+      "reason": "버튼을 누를 때만 색이 바뀌도록 버튼 입력을 추가해 보세요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 LED 색이 바뀌는 시간 간격은 얼마인가요?",
+    "options": [
+      "0.1초",
+      "0.5초",
+      "1초",
+      "5초"
+    ],
+    "answer": 1,
+    "explanation": "vTaskDelay(500 / portTICK_PERIOD_MS)에서 500밀리초 = 0.5초를 기다리기 때문에, LED는 0.5초마다 색이 바뀌어요!"
+  }
+}

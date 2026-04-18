@@ -8,11 +8,13 @@ UTTEC 사전빌드 펌웨어 서버
 
 import json
 import hashlib
+import shutil
 from pathlib import Path
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 
 app = FastAPI(title="UTTEC Prebuilt Firmware Server", version="1.0")
 app.add_middleware(
@@ -122,6 +124,111 @@ async def reload_catalog():
     """카탈로그 리로드"""
     load_catalog()
     return {"total": _catalog["total"], "message": "Catalog reloaded"}
+
+
+# ─── 커스텀 빌드 결과 저장 ───
+
+class SaveCustomRequest(BaseModel):
+    user_prompt: str
+    code: str
+    tags: list[str] = []
+
+def _next_custom_no() -> str:
+    """Z01, Z02, ... Z99, ZA01, ... 순서로 번호 생성"""
+    existing = sorted([d.name for d in FIRMWARE_DB.iterdir()
+                       if d.is_dir() and d.name.startswith("Z")])
+    if not existing:
+        return "Z01"
+    last = existing[-1]
+    num = int(last[1:]) + 1
+    return f"Z{num:02d}" if num < 100 else f"Z{num:03d}"
+
+@app.post("/api/save-custom")
+async def save_custom(req: SaveCustomRequest, request: Request):
+    """커스텀 빌드 결과를 사전빌드 DB에 저장"""
+    # 펌웨어 바이너리는 body에서 별도로 받지 않고, 빌드 서버에서 다운로드
+    no = _next_custom_no()
+    item_dir = FIRMWARE_DB / no
+    item_dir.mkdir(parents=True, exist_ok=True)
+
+    # 코드 저장
+    (item_dir / "code.ino").write_text(req.code, encoding="utf-8")
+
+    # 태그 자동 생성 (프롬프트에서 키워드 추출)
+    tags = req.tags if req.tags else []
+    if not tags:
+        for kw in req.user_prompt.replace(",", " ").split():
+            if len(kw) >= 2:
+                tags.append(kw)
+
+    return {"no": no, "item_dir": str(item_dir), "tags": tags}
+
+
+@app.post("/api/save-custom-firmware/{no}")
+async def save_custom_firmware(no: str, request: Request):
+    """커스텀 빌드 펌웨어 바이너리 저장 + 카탈로그 등록"""
+    item_dir = FIRMWARE_DB / no.upper()
+    if not item_dir.exists():
+        raise HTTPException(404, f"Item dir {no} not found")
+
+    # 바이너리 저장
+    body = await request.body()
+    if len(body) < 1000:
+        raise HTTPException(400, "Invalid firmware data")
+
+    bin_path = item_dir / "firmware.bin"
+    bin_path.write_bytes(body)
+
+    fw_sha256 = hashlib.sha256(body).hexdigest()
+
+    # catalog.json에 추가
+    code_path = item_dir / "code.ino"
+    code = code_path.read_text(encoding="utf-8") if code_path.exists() else ""
+
+    # 메타 파일에서 정보 읽기
+    meta_path = item_dir / "meta.json"
+    if meta_path.exists():
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    else:
+        meta = {}
+
+    new_item = {
+        "no": no.upper(),
+        "user_prompt": meta.get("user_prompt", "커스텀 빌드"),
+        "tags": meta.get("tags", []),
+        "difficulty": meta.get("difficulty", 2),
+        "components": meta.get("components", []),
+        "category": "Z",
+        "category_name": "커스텀 빌드",
+        "description": meta.get("user_prompt", "사용자가 AI로 생성한 펌웨어"),
+        "firmware_size": len(body),
+        "firmware_sha256": fw_sha256,
+    }
+
+    # 기존 카탈로그에 추가 (중복 방지)
+    _catalog["items"] = [i for i in _catalog["items"] if i["no"] != no.upper()]
+    _catalog["items"].append(new_item)
+    _catalog["total"] = len(_catalog["items"])
+
+    # 파일 저장
+    cat_path = FIRMWARE_DB / "catalog.json"
+    cat_path.write_text(json.dumps(_catalog, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    return {"no": no, "firmware_size": len(body), "sha256": fw_sha256, "total": _catalog["total"]}
+
+
+@app.post("/api/save-custom-meta/{no}")
+async def save_custom_meta(no: str, request: Request):
+    """커스텀 빌드 메타 정보 저장"""
+    item_dir = FIRMWARE_DB / no.upper()
+    item_dir.mkdir(parents=True, exist_ok=True)
+    body = await request.json()
+    meta_path = item_dir / "meta.json"
+    meta_path.write_text(json.dumps(body, ensure_ascii=False, indent=2), encoding="utf-8")
+    # 코드도 함께 저장
+    if "code" in body:
+        (item_dir / "code.ino").write_text(body["code"], encoding="utf-8")
+    return {"no": no, "saved": True}
 
 # ─── 웹 UI ───
 

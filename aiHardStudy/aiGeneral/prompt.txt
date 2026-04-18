@@ -1,0 +1,10 @@
+claude, ssh uttec@100.79.180.64, pw: uttec에 접속해서,
+aiPython과 같은 구조로, 일반 질문을 할수있는 prompt를 만들고,
+그 내용을 보내면 claude의 답변을 받아서 display하는 web service를 만들어 주세요.
+tablet이나, smartphone에서 한글 입력이 되지않고,
+display가 보기 좋지않아서, web에서 입력하고 display하도록 할려고합니다.
+외출했을때 필요해서 그래요.
+port는 현재 운영하지않는 port를 설정해주시고,
+duck dns로 domain을 만들려고 합니다.
+domain이름도 정해주세요.
+

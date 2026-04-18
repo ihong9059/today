@@ -1,0 +1,58 @@
+{
+  "result_description": "RGB LED의 불빛을 완전히 꺼서 아무 색도 나오지 않게 합니다.",
+  "what_happens": [
+    "아두이노가 켜지면서 BLE와 하드웨어를 준비해요",
+    "pixel.clear()로 LED에 저장된 색깔 정보를 모두 지워요",
+    "pixel.show()로 '꺼진 상태'를 LED에 실제로 적용해서 불이 꺼져요"
+  ],
+  "concepts": [
+    {
+      "term": "RGB LED",
+      "explanation": "빨간색(Red), 초록색(Green), 파란색(Blue) 세 가지 빛을 섞어서 여러 색을 만들 수 있는 특별한 전구예요. 세 색을 모두 끄면 빛이 나오지 않아요."
+    },
+    {
+      "term": "pixel.clear()",
+      "explanation": "LED에 칠해진 색깔을 지우개로 지우듯이 모두 없애는 명령이에요. 그림판에서 '전체 지우기'를 누르는 것과 같아요."
+    },
+    {
+      "term": "pixel.show()",
+      "explanation": "clear()로 지운 내용을 LED에 실제로 보여주는 명령이에요. 그림을 그린 뒤 '저장하기'를 눌러야 반영되는 것처럼, show()를 해야 LED가 바뀌어요."
+    },
+    {
+      "term": "setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번만 실행되는 준비 구역이에요. 학교 수업 시작 전 준비물을 챙기는 것과 같아요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "pixel.clear();",
+      "comment": "LED에 저장된 모든 색깔 정보를 0(꺼짐)으로 초기화해요"
+    },
+    {
+      "line": "pixel.show();",
+      "comment": "clear()로 바꾼 내용을 LED에 실제로 반영해서 불을 꺼요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "pixel.setPixelColor(0, 255, 0, 0)와 pixel.show()를 써서 LED를 빨간색으로 켜보세요!"
+    },
+    {
+      "reason": "delay()의 숫자를 바꿔가며 잠깐 켰다가 꺼지는 깜빡이는 LED를 만들어보세요!"
+    },
+    {
+      "reason": "loop() 안에서 clear()와 show()를 반복해서 LED가 계속 꺼진 상태를 유지하도록 만들어보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "pixel.clear()를 실행한 후 반드시 해야 LED 불이 꺼지는 명령은 무엇인가요?",
+    "options": [
+      "pixel.start()",
+      "pixel.show()",
+      "pixel.off()",
+      "pixel.reset()"
+    ],
+    "answer": 1,
+    "explanation": "pixel.clear()는 색깔 정보를 지우기만 하고, pixel.show()를 호출해야 그 변경 내용이 LED에 실제로 적용돼요. show() 없이는 LED가 바뀌지 않아요!"
+  }
+}

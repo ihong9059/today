@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-04-18T17:56:17.437994",
+  "total": 1,
+  "success": 1,
+  "failed": 0,
+  "elapsed_minutes": 1.4,
+  "results": [
+    {
+      "no": "T01",
+      "prompt": "스마트폰에서 BLE로 \"RED\",\"YELLOW\",\"BLUE\" 문자를 보내면 해당 LED 켜기(나머지 끄기) + 현재 LED 상태를 sensorChar로 BLE 응답. onBleReceive(String cmd) 함수를 정의하여 명령 처리. OLED에 현재 LED 표시.",
+      "success": true,
+      "error": "",
+      "elapsed": 85.63644981384277,
+      "firmware_size": 651184,
+      "firmware_sha256": "b29dd6286c91e2d61678190e6dcb3825aad3518040f5e9d796bd9890a22ba193"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "result_description": "부저가 0.5초 동안 한 번 울리고 멈춥니다.",
+  "what_happens": [
+    "아두이노가 켜지면서 부저 준비를 합니다",
+    "부저에 LOW 신호를 보내서 소리가 납니다 (0.5초 동안)",
+    "부저에 HIGH 신호를 보내서 소리가 멈춥니다"
+  ],
+  "concepts": [
+    {
+      "term": "digitalWrite",
+      "explanation": "부품에 전기를 켜거나 끄는 명령이에요. 전등 스위치처럼 ON(HIGH)과 OFF(LOW) 두 가지 상태만 있어요."
+    },
+    {
+      "term": "delay",
+      "explanation": "아두이노가 잠깐 기다리게 하는 명령이에요. 숫자는 밀리초 단위로, 1000이면 1초예요. 500은 0.5초랍니다!"
+    },
+    {
+      "term": "setup 함수",
+      "explanation": "아두이노가 켜질 때 딱 한 번만 실행되는 코드 공간이에요. 준비 동작을 여기에 넣어요."
+    },
+    {
+      "term": "LOW / HIGH",
+      "explanation": "LOW는 전기를 흘려보내는 것(소리 켜기), HIGH는 전기를 끊는 것(소리 끄기)이에요. 이 부저는 반대로 작동해요!"
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "digitalWrite(BUZZER, LOW);",
+      "comment": "부저에 LOW 신호를 보내서 소리를 켭니다"
+    },
+    {
+      "line": "delay(500);",
+      "comment": "500밀리초(0.5초) 동안 기다립니다 — 이 시간만큼 소리가 납니다"
+    },
+    {
+      "line": "digitalWrite(BUZZER, HIGH);",
+      "comment": "부저에 HIGH 신호를 보내서 소리를 끕니다"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "delay(500)의 숫자를 1000으로 바꿔서 소리가 1초 동안 나도록 해보세요!"
+    },
+    {
+      "reason": "LOW → delay → HIGH → delay → LOW → delay → HIGH 순서로 반복해서 '삐삐' 두 번 울려보세요!"
+    },
+    {
+      "reason": "loop() 안에 같은 코드를 넣으면 부저가 계속 반복해서 울려요. 경보기처럼 만들 수 있어요!"
+    }
+  ],
+  "quiz": {
+    "question": "부저 소리가 나는 시간을 2초로 늘리려면 delay() 안의 숫자를 얼마로 바꿔야 할까요?",
+    "options": [
+      "200",
+      "500",
+      "1000",
+      "2000"
+    ],
+    "answer": 3,
+    "explanation": "delay()의 숫자는 밀리초(ms) 단위예요. 1초 = 1000ms 이므로, 2초는 2000ms랍니다!"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "result_description": "스마트폰에서 'SPEED:500' 같은 명령을 보내면 LED 깜빡이는 속도가 바뀌고, 바뀐 속도를 스마트폰으로 다시 알려줘요.",
+  "what_happens": [
+    "스마트폰이 블루투스로 'SPEED:300' 같은 명령을 아두이노에 보내요",
+    "아두이노가 명령에서 숫자(300)만 뽑아내서 LED 깜빡 속도를 바꿔요",
+    "아두이노가 'SPEED_OK:300'이라고 스마트폰에 답장을 보내고, 화면(OLED)에도 새 속도를 보여줘요"
+  ],
+  "concepts": [
+    {
+      "term": "BLE (블루투스 저전력)",
+      "explanation": "스마트폰과 아두이노가 무선으로 대화하는 방법이에요. 이어폰처럼 선 없이 가까운 거리에서 신호를 주고받아요."
+    },
+    {
+      "term": "volatile 변수",
+      "explanation": "여러 일꾼(태스크)이 동시에 같은 변수를 쓸 때, 항상 최신 값을 정확하게 읽도록 해주는 특별한 표시예요."
+    },
+    {
+      "term": "문자열 파싱(substring, toInt)",
+      "explanation": "'SPEED:300'처럼 긴 글에서 필요한 숫자 부분만 잘라내는 작업이에요. 마치 쿠폰에서 할인 금액 숫자만 오려내는 것과 같아요."
+    },
+    {
+      "term": "FreeRTOS 태스크(xTaskCreate)",
+      "explanation": "아두이노가 여러 일을 동시에 할 수 있도록 '일꾼'을 만드는 방법이에요. LED 깜빡이기와 화면 표시를 동시에 할 수 있어요."
+    },
+    {
+      "term": "notify (알림 전송)",
+      "explanation": "아두이노가 스마트폰에게 '나 이렇게 됐어!'라고 먼저 말을 걸어서 알려주는 기능이에요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "String valStr = cmd.substring(6);",
+      "comment": "'SPEED:300'에서 앞의 'SPEED:' 6글자를 건너뛰고 '300'만 잘라내요"
+    },
+    {
+      "line": "int newSpeed = valStr.toInt();",
+      "comment": "문자 '300'을 숫자 300으로 바꿔요. 문자와 숫자는 컴퓨터 속에서 다르게 저장돼요"
+    },
+    {
+      "line": "String reply = \"SPEED_OK:\" + String(blinkSpeed);",
+      "comment": "숫자를 다시 글자로 바꿔서 '바뀌었어요!'라는 답장 메시지를 만들어요"
+    },
+    {
+      "line": "sensorChar->notify();",
+      "comment": "만들어진 답장을 블루투스로 스마트폰에게 바로 전송해요"
+    },
+    {
+      "line": "xTaskCreate(ledBlinkTask, \"ledBlink\", 2048, NULL, 1, NULL);",
+      "comment": "LED를 깜빡이는 일꾼(태스크)을 만들어서 다른 일과 동시에 돌아가게 해요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "'COLOR:RED' 또는 'COLOR:BLUE' 명령으로 켜지는 LED 색깔도 바꿔보세요!"
+    },
+    {
+      "reason": "속도가 100ms보다 빠르거나 5000ms보다 느리면 무시하는 안전장치를 넣어보세요"
+    },
+    {
+      "reason": "OLED 화면에 깜빡 횟수도 세어서 함께 표시해보세요"
+    }
+  ],
+  "quiz": {
+    "question": "스마트폰에서 'SPEED:200'을 보냈을 때, 아두이노가 스마트폰으로 돌려보내는 답장은 무엇일까요?",
+    "options": [
+      "SPEED:200",
+      "SPEED_OK:200",
+      "OK:SPEED:200",
+      "200:SPEED_OK"
+    ],
+    "answer": 1,
+    "explanation": "코드에서 reply = \"SPEED_OK:\" + String(blinkSpeed) 로 답장을 만들기 때문에, 속도가 200으로 바뀌면 'SPEED_OK:200'이라고 답장을 보내요!"
+  }
+}

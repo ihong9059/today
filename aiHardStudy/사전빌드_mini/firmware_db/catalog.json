@@ -1,0 +1,2047 @@
+{
+  "version": "1.0",
+  "board": "ESP32-WROOM-32",
+  "total": 117,
+  "items": [
+    {
+      "no": "A01",
+      "user_prompt": "RGB LED 빨간색으로 켜기",
+      "tags": [
+        "빨간",
+        "빨강",
+        "red",
+        "LED",
+        "켜",
+        "on",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 빨간색으로 켜집니다",
+      "firmware_size": 624528,
+      "firmware_sha256": "f3e3984b8225936ccd18f853040ef584aaf83fe93e00f9042beabeec905a13eb"
+    },
+    {
+      "no": "A02",
+      "user_prompt": "RGB LED 초록색으로 켜기",
+      "tags": [
+        "초록",
+        "녹색",
+        "green",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 초록색으로 켜집니다",
+      "firmware_size": 624528,
+      "firmware_sha256": "f49217b40bd6f3209784ae352f8e45a41cd93b23308949203dc614670fac428f"
+    },
+    {
+      "no": "A03",
+      "user_prompt": "RGB LED 파란색으로 켜기",
+      "tags": [
+        "파란",
+        "파랑",
+        "blue",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 파란색으로 켜집니다",
+      "firmware_size": 624528,
+      "firmware_sha256": "13b46a48f49ba8fd0eca8d02b537655354993c1a4a9df4d1f85857f3e73f9d3f"
+    },
+    {
+      "no": "A04",
+      "user_prompt": "RGB LED 노란색으로 켜기",
+      "tags": [
+        "노란",
+        "노랑",
+        "yellow",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 노란색으로 켜집니다",
+      "firmware_size": 624528,
+      "firmware_sha256": "9dd0b25d03c73d23520612745465333c8538f8f6977dc869e6d6f6336c4c3fff"
+    },
+    {
+      "no": "A05",
+      "user_prompt": "RGB LED 빨간색으로 1초마다 깜빡이기",
+      "tags": [
+        "빨간",
+        "빨강",
+        "red",
+        "LED",
+        "깜빡",
+        "blink",
+        "1초",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "빨간색 RGB LED가 1초 간격으로 깜빡입니다",
+      "firmware_size": 624560,
+      "firmware_sha256": "c1bf6ab90b0d52b623adf71301098af93d618568f08caba0d2b6eab0283670f8"
+    },
+    {
+      "no": "A06",
+      "user_prompt": "RGB LED 무지개 색상 순환하기 (빨→주→노→초→파→남→보)",
+      "tags": [
+        "무지개",
+        "rainbow",
+        "순환",
+        "LED",
+        "RGB",
+        "색상"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "RGB LED가 무지개 7색을 순서대로 바꿉니다",
+      "firmware_size": 624896,
+      "firmware_sha256": "b072c01ea5c85663bb52edcee928af7345d9725cf015f49d1c8b4ce790515ad6"
+    },
+    {
+      "no": "A07",
+      "user_prompt": "RGB LED 흰색으로 켜기",
+      "tags": [
+        "흰",
+        "하얀",
+        "white",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 흰색으로 켜집니다",
+      "firmware_size": 624528,
+      "firmware_sha256": "ee829ce06437ba8a7ea719144c5c357fd9d4fc5427a2d69a7b6943e53c142e5d"
+    },
+    {
+      "no": "A08",
+      "user_prompt": "RGB LED 끄기",
+      "tags": [
+        "끄기",
+        "off",
+        "LED",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED를 끕니다",
+      "firmware_size": 624512,
+      "firmware_sha256": "c75d79e499ac855407aafba7efd6b756f3be35cabbf0169017f8569abae9440c"
+    },
+    {
+      "no": "A09",
+      "user_prompt": "RGB LED 빨간색 5번 깜빡이고 멈추기",
+      "tags": [
+        "빨간",
+        "red",
+        "LED",
+        "깜빡",
+        "5번",
+        "멈추기",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "빨간색으로 5번 깜빡인 후 멈춥니다",
+      "firmware_size": 624576,
+      "firmware_sha256": "5958ee267d463e5885a469592049990674c00101cf6aa4a5cdd96bce07028c9a"
+    },
+    {
+      "no": "A10",
+      "user_prompt": "RGB LED 천천히 밝아졌다 어두워지기 반복 (빨간색 숨쉬기 효과)",
+      "tags": [
+        "숨쉬기",
+        "breathing",
+        "fade",
+        "LED",
+        "빨간",
+        "RGB",
+        "밝기"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "빨간색 LED가 천천히 밝아졌다 어두워지는 것을 반복합니다",
+      "firmware_size": 624640,
+      "firmware_sha256": "34640eb8ed9af6d94cd6b6a936496d6030cdf772431f90f69bdb59f6f12bbe11"
+    },
+    {
+      "no": "B01",
+      "user_prompt": "도레미파솔라시도 연주하기",
+      "tags": [
+        "도레미",
+        "음계",
+        "멜로디",
+        "연주",
+        "tone"
+      ],
+      "difficulty": 1,
+      "components": [
+        "speaker"
+      ],
+      "category": "B",
+      "category_name": "멜로디 연주",
+      "description": "스피커로 도레미파솔라시도 음계를 연주합니다",
+      "firmware_size": 624960,
+      "firmware_sha256": "3a768be5a6be43d153fed880605417e4b347b5134165052b5e87dcb764af7cc5"
+    },
+    {
+      "no": "B02",
+      "user_prompt": "도레미파솔라시도 역순으로 연주하기",
+      "tags": [
+        "도레미",
+        "역순",
+        "음계",
+        "연주"
+      ],
+      "difficulty": 1,
+      "components": [
+        "speaker"
+      ],
+      "category": "B",
+      "category_name": "멜로디 연주",
+      "description": "높은 도부터 낮은 도까지 역순으로 연주합니다",
+      "firmware_size": 624592,
+      "firmware_sha256": "98a39c7883cb53a79ed6501083f5b7ae77c936b029228f64b6521f50712e54ce"
+    },
+    {
+      "no": "B03",
+      "user_prompt": "반짝반짝 작은별 연주하기",
+      "tags": [
+        "작은별",
+        "멜로디",
+        "노래",
+        "연주"
+      ],
+      "difficulty": 1,
+      "components": [
+        "speaker"
+      ],
+      "category": "B",
+      "category_name": "멜로디 연주",
+      "description": "반짝반짝 작은별 멜로디를 연주합니다",
+      "firmware_size": 625888,
+      "firmware_sha256": "fe1e1a101f5d4c24d24b52a5ca29e7f09ebcd0f39f1915dc43c61148d372e383"
+    },
+    {
+      "no": "B04",
+      "user_prompt": "학교종 멜로디 연주하기",
+      "tags": [
+        "학교종",
+        "멜로디",
+        "노래",
+        "연주"
+      ],
+      "difficulty": 1,
+      "components": [
+        "speaker"
+      ],
+      "category": "B",
+      "category_name": "멜로디 연주",
+      "description": "학교종이 땡땡땡 멜로디를 연주합니다",
+      "firmware_size": 625024,
+      "firmware_sha256": "c14f6614a860376fc3069a7c17307258f574d8f9174b1508ee3c7b05216aa2a6"
+    },
+    {
+      "no": "B05",
+      "user_prompt": "생일 축하 노래 연주하기",
+      "tags": [
+        "생일",
+        "축하",
+        "멜로디",
+        "노래"
+      ],
+      "difficulty": 1,
+      "components": [
+        "speaker"
+      ],
+      "category": "B",
+      "category_name": "멜로디 연주",
+      "description": "생일 축하 노래를 연주합니다",
+      "firmware_size": 625920,
+      "firmware_sha256": "31ce11fea4c9848a87d0a6f45e45063783adaff3c0a9d3f1a80e6e5347958ad7"
+    },
+    {
+      "no": "B06",
+      "user_prompt": "경찰차 사이렌 소리 내기",
+      "tags": [
+        "사이렌",
+        "경찰",
+        "소리",
+        "효과음"
+      ],
+      "difficulty": 1,
+      "components": [
+        "speaker"
+      ],
+      "category": "B",
+      "category_name": "멜로디 연주",
+      "description": "경찰차 사이렌처럼 높낮이가 반복됩니다",
+      "firmware_size": 624848,
+      "firmware_sha256": "754ae5cad9abee422156af319343f37235fb2cfd25b15082a9905f7b701e66d9"
+    },
+    {
+      "no": "B07",
+      "user_prompt": "비프음 3번 울리기",
+      "tags": [
+        "비프",
+        "beep",
+        "소리",
+        "울리기"
+      ],
+      "difficulty": 1,
+      "components": [
+        "speaker"
+      ],
+      "category": "B",
+      "category_name": "멜로디 연주",
+      "description": "짧은 비프음을 3번 울립니다",
+      "firmware_size": 624528,
+      "firmware_sha256": "3776a977dc0c7ad1c8583b3841f6d2704c3b296c3334079ef1715d5f6e062bde"
+    },
+    {
+      "no": "B08",
+      "user_prompt": "게임 시작 효과음 만들기 (낮은음에서 높은음으로)",
+      "tags": [
+        "게임",
+        "효과음",
+        "시작",
+        "소리"
+      ],
+      "difficulty": 1,
+      "components": [
+        "speaker"
+      ],
+      "category": "B",
+      "category_name": "멜로디 연주",
+      "description": "낮은 음에서 높은 음으로 올라가는 효과음입니다",
+      "firmware_size": 624880,
+      "firmware_sha256": "f0dd3e7996e7481b46ecd13423bc7b74cca75d7f7131f84d6e42b5c362d40b5e"
+    },
+    {
+      "no": "B09",
+      "user_prompt": "SOS 모스부호 소리 내기 (짧3 긴3 짧3)",
+      "tags": [
+        "SOS",
+        "모스부호",
+        "소리",
+        "비상"
+      ],
+      "difficulty": 1,
+      "components": [
+        "speaker"
+      ],
+      "category": "B",
+      "category_name": "멜로디 연주",
+      "description": "SOS 모스부호를 소리로 표현합니다",
+      "firmware_size": 624896,
+      "firmware_sha256": "cff0af4d05945d2e02a0410818f6a0cedf240c8be1e04a4162bca74cbb189a82"
+    },
+    {
+      "no": "B10",
+      "user_prompt": "점점 빨라지는 비프음 10번 울리기",
+      "tags": [
+        "비프",
+        "빨라지기",
+        "소리",
+        "가속"
+      ],
+      "difficulty": 1,
+      "components": [
+        "speaker"
+      ],
+      "category": "B",
+      "category_name": "멜로디 연주",
+      "description": "비프음이 점점 빨라지며 10번 울립니다",
+      "firmware_size": 624576,
+      "firmware_sha256": "75a4f211ed1c35b3d577927d470fd926272926738b5ac63d09a2e81e6386c0b7"
+    },
+    {
+      "no": "C01",
+      "user_prompt": "RGB LED 빨→초→파 순서대로 바꾸기",
+      "tags": [
+        "순서",
+        "색상",
+        "변경",
+        "RGB"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "빨강→초록→파랑 순서로 바뀝니다",
+      "firmware_size": 624608,
+      "firmware_sha256": "0071c8b0634b4871f02dc150142370ace30b313d1f1696c1facf64bd7d09cf7b"
+    },
+    {
+      "no": "C02",
+      "user_prompt": "RGB LED 0.5초마다 랜덤 색상 바꾸기",
+      "tags": [
+        "랜덤",
+        "색상",
+        "빠르게",
+        "RGB"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "랜덤한 색상으로 빠르게 바뀝니다",
+      "firmware_size": 624928,
+      "firmware_sha256": "b87ec2aa7e1eea3a979dff11cd4dc26294abd8c1e061a66f8e1018c20a465736"
+    },
+    {
+      "no": "C03",
+      "user_prompt": "RGB LED 빨간색+파란색 번갈아 깜빡이기 (비상등)",
+      "tags": [
+        "비상등",
+        "빨강",
+        "파랑",
+        "번갈아"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "비상등처럼 빨강↔파랑 깜빡입니다",
+      "firmware_size": 624816,
+      "firmware_sha256": "a1c9770447a9a095e1765eceb13bbd30d8c88b82317d9105356850b6f93ec9a1"
+    },
+    {
+      "no": "C04",
+      "user_prompt": "RGB LED 무지개 그라데이션 효과 (색상 서서히 변화)",
+      "tags": [
+        "무지개",
+        "그라데이션",
+        "fade",
+        "smooth"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "색상이 부드럽게 변합니다",
+      "firmware_size": 625232,
+      "firmware_sha256": "cfe7987b5fce9cd06f2e128f19d645bb1e430f18d4ca2c7b01ff9c2d6b28b4b8"
+    },
+    {
+      "no": "C05",
+      "user_prompt": "RGB LED 초록색 숨쉬기 효과",
+      "tags": [
+        "초록",
+        "숨쉬기",
+        "breathing",
+        "fade"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "초록색이 천천히 밝아졌다 어두워집니다",
+      "firmware_size": 624592,
+      "firmware_sha256": "990778e338df34baaf3ef5769d55b8ea462a2fd179ad42fcc8cc8454013b6ef0"
+    },
+    {
+      "no": "C06",
+      "user_prompt": "RGB LED 3색 깜빡이기 (빨강1초→초록1초→파랑1초)",
+      "tags": [
+        "3색",
+        "깜빡",
+        "순환",
+        "RGB"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "3색이 1초씩 번갈아 깜빡입니다",
+      "firmware_size": 624608,
+      "firmware_sha256": "c8d49e034aacda2da508b3c001db79bb3adc45ee3d28cd8c0817c58d7c9ccc1a"
+    },
+    {
+      "no": "C07",
+      "user_prompt": "RGB LED 파란색 3번 깜빡이고 빨간색 3번 깜빡이기",
+      "tags": [
+        "파랑",
+        "빨강",
+        "3번",
+        "교대"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "파랑 3번 후 빨강 3번 반복합니다",
+      "firmware_size": 624656,
+      "firmware_sha256": "b5f24dc478e1f93e8a32cbf1590fdc937a3aee874a4e5134f67190e05b762564"
+    },
+    {
+      "no": "C08",
+      "user_prompt": "RGB LED 색상 서서히 흰색으로 변했다가 꺼지기",
+      "tags": [
+        "흰색",
+        "fade",
+        "꺼지기",
+        "효과"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "밝아졌다 서서히 꺼집니다",
+      "firmware_size": 624656,
+      "firmware_sha256": "6153947b18d41f41913c175a3685dd24b51f5e309baa5670b70a9fdbfda67dcd"
+    },
+    {
+      "no": "D01",
+      "user_prompt": "비행기 멜로디 연주하기",
+      "tags": [
+        "비행기",
+        "멜로디",
+        "노래"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "D",
+      "category_name": "스피커 응용",
+      "description": "비행기 동요를 연주합니다",
+      "firmware_size": 626704,
+      "firmware_sha256": "159a2bfd78ef6e390a086c071e31dbade43f2b1e311d499c2254c9a8e96fc197"
+    },
+    {
+      "no": "D02",
+      "user_prompt": "곰 세 마리 멜로디 연주하기",
+      "tags": [
+        "곰세마리",
+        "멜로디",
+        "노래"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "D",
+      "category_name": "스피커 응용",
+      "description": "곰 세 마리 동요를 연주합니다",
+      "firmware_size": 626064,
+      "firmware_sha256": "51363d8ffa1588c548b201de4e3c7d3023cde69f02cb5c0b058deaaf7781de2c"
+    },
+    {
+      "no": "D03",
+      "user_prompt": "구급차 사이렌 소리 내기",
+      "tags": [
+        "구급차",
+        "사이렌",
+        "소리"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "D",
+      "category_name": "스피커 응용",
+      "description": "구급차 사이렌처럼 점점 높아졌다 낮아집니다",
+      "firmware_size": 624848,
+      "firmware_sha256": "cf4ae7c4817f255b22f16269b4d8ebe7f15dc5fbd8ab3c5b6ac3f038f68cfe5b"
+    },
+    {
+      "no": "D04",
+      "user_prompt": "게임 오버 효과음 (높은음에서 낮은음으로)",
+      "tags": [
+        "게임오버",
+        "효과음",
+        "소리"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "D",
+      "category_name": "스피커 응용",
+      "description": "높은 음에서 낮은 음으로 내려갑니다",
+      "firmware_size": 624800,
+      "firmware_sha256": "ee3be0bf0a6f9987bcc84ca18379dd507895ec6ae4bf9a31c6f7fe75de8c5536"
+    },
+    {
+      "no": "D05",
+      "user_prompt": "레벨업 효과음 (도미솔도 빠르게)",
+      "tags": [
+        "레벨업",
+        "효과음",
+        "소리"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "D",
+      "category_name": "스피커 응용",
+      "description": "도미솔도를 빠르게 연주합니다",
+      "firmware_size": 624720,
+      "firmware_sha256": "c8c83f19e5aa9d92fe37990bb888fe4abca591d9281daedab3302fe66a3d9f7c"
+    },
+    {
+      "no": "D06",
+      "user_prompt": "알람 소리: 짧은 비프 5번 + 긴 비프 1번",
+      "tags": [
+        "알람",
+        "비프",
+        "경고"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "D",
+      "category_name": "스피커 응용",
+      "description": "짧은 소리 5번 후 긴 소리 1번",
+      "firmware_size": 624592,
+      "firmware_sha256": "1707a1c5b010e2a7a3d7e3d3ac4634cdcba2a762e00de47d51eca70b1d0f08f1"
+    },
+    {
+      "no": "D07",
+      "user_prompt": "점점 높아지는 소리 내기 (100Hz에서 1000Hz)",
+      "tags": [
+        "높아지는",
+        "주파수",
+        "소리"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "D",
+      "category_name": "스피커 응용",
+      "description": "소리가 점점 높아집니다",
+      "firmware_size": 624544,
+      "firmware_sha256": "c5de7e45e9cd37d72e92be4c23868c0f73edbdf4bc57ab202bb4130585b99b83"
+    },
+    {
+      "no": "E01",
+      "user_prompt": "OLED에 \"Hello\" 표시하기",
+      "tags": [
+        "Hello",
+        "OLED",
+        "텍스트",
+        "표시"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "E",
+      "category_name": "OLED 기초",
+      "description": "OLED에 Hello가 표시됩니다",
+      "firmware_size": 624544,
+      "firmware_sha256": "494dc81e81ad2ac0119c15ed54e70b5ecd2354b54a899bbd7169d971399bc9f6"
+    },
+    {
+      "no": "E02",
+      "user_prompt": "OLED에 \"UTTEC Mini\" 표시하기",
+      "tags": [
+        "UTTEC",
+        "OLED",
+        "텍스트"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "E",
+      "category_name": "OLED 기초",
+      "description": "OLED에 UTTEC Mini가 표시됩니다",
+      "firmware_size": 624544,
+      "firmware_sha256": "b113d7d38f2c98a8e29bbbabb89fc08fe5c606ed8b2a03f5923d7f8d8d148954"
+    },
+    {
+      "no": "E03",
+      "user_prompt": "OLED에 3줄 텍스트 표시하기",
+      "tags": [
+        "3줄",
+        "OLED",
+        "텍스트",
+        "여러줄"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "E",
+      "category_name": "OLED 기초",
+      "description": "OLED에 3줄의 텍스트가 표시됩니다",
+      "firmware_size": 624640,
+      "firmware_sha256": "1016a2cddcb2fdfe767bc3fbf71f0c5213f4ddbdf8fb7536fe74aa96f68f62f1"
+    },
+    {
+      "no": "E04",
+      "user_prompt": "OLED에 1부터 10까지 숫자 세기",
+      "tags": [
+        "숫자",
+        "카운트",
+        "OLED",
+        "세기"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "E",
+      "category_name": "OLED 기초",
+      "description": "1부터 10까지 숫자가 바뀝니다",
+      "firmware_size": 624848,
+      "firmware_sha256": "6585e8dcafc7cf0f6444d360386d03e6f89ed07de25dedaa06902f7de26e778a"
+    },
+    {
+      "no": "E05",
+      "user_prompt": "OLED에 카운트다운 5,4,3,2,1,0 표시하기",
+      "tags": [
+        "카운트다운",
+        "OLED",
+        "숫자"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "E",
+      "category_name": "OLED 기초",
+      "description": "5부터 0까지 카운트다운합니다",
+      "firmware_size": 624880,
+      "firmware_sha256": "166d0a6c62e1855eca3b469dee026bdbb19b63a92cd20be23cc1cbd6f7799b17"
+    },
+    {
+      "no": "E06",
+      "user_prompt": "OLED 화면 깜빡이기 (1초 보이고 1초 지우기)",
+      "tags": [
+        "깜빡",
+        "OLED",
+        "화면"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "E",
+      "category_name": "OLED 기초",
+      "description": "OLED 화면이 깜빡입니다",
+      "firmware_size": 624592,
+      "firmware_sha256": "d2ac951513f1b41f2e9497a8115be958590ec3ea8e333fb1b920b09d747a4a5a"
+    },
+    {
+      "no": "E07",
+      "user_prompt": "OLED에 초시계 표시하기. millis()로 경과 시간 계산, snprintf로 char 배열에 포맷팅 후 oled.drawString으로 표시. 코드에 ASCII 문자만 사용하고 특수문자(화살표, 대시 등) 사용 금지.",
+      "tags": [
+        "초시계",
+        "타이머",
+        "OLED"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "E",
+      "category_name": "OLED 기초",
+      "description": "초 단위로 시간이 올라갑니다",
+      "firmware_size": 624848,
+      "firmware_sha256": "207e06b6e5142ee9146217b4095e7249f294fa019c62c532504b8d599eaea59e"
+    },
+    {
+      "no": "E08",
+      "user_prompt": "OLED에 동작 시간(초) 계속 표시하기",
+      "tags": [
+        "업타임",
+        "시간",
+        "OLED"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "E",
+      "category_name": "OLED 기초",
+      "description": "보드가 켜진 후 경과 시간을 표시합니다",
+      "firmware_size": 624704,
+      "firmware_sha256": "8324b2c51ad82a712725783c16fd6d3a0e7c69f99595eed0b1458f1ecca51bd9"
+    },
+    {
+      "no": "F01",
+      "user_prompt": "현재 온도 측정해서 OLED에 표시하기",
+      "tags": [
+        "온도",
+        "OLED",
+        "센서",
+        "측정"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "F",
+      "category_name": "센서 기초",
+      "description": "현재 온도를 OLED에 표시합니다",
+      "firmware_size": 624992,
+      "firmware_sha256": "5f9db39e8ad5b0bc872d8a2f4d4643f55be0de3c0ba6a321d71048fedfa41fd8"
+    },
+    {
+      "no": "F02",
+      "user_prompt": "온도와 습도를 OLED에 같이 표시하기",
+      "tags": [
+        "온도",
+        "습도",
+        "OLED",
+        "센서"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "F",
+      "category_name": "센서 기초",
+      "description": "온도와 습도를 함께 표시합니다",
+      "firmware_size": 624768,
+      "firmware_sha256": "b72284bdc902c1bc24e08a963e5379bdd033a266a61de9d0ca5498ed2689a042"
+    },
+    {
+      "no": "F03",
+      "user_prompt": "3초마다 온도 측정해서 OLED에 업데이트하기",
+      "tags": [
+        "온도",
+        "3초",
+        "업데이트",
+        "센서"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "F",
+      "category_name": "센서 기초",
+      "description": "3초마다 온도가 갱신됩니다",
+      "firmware_size": 624768,
+      "firmware_sha256": "be5a09fdfd688f7df10a27c1d35a2610491279805562395adf4dfd2ff1e7ca99"
+    },
+    {
+      "no": "F04",
+      "user_prompt": "온도 25도 넘으면 RGB LED 빨간색, 이하면 파란색",
+      "tags": [
+        "온도",
+        "조건",
+        "LED",
+        "센서"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "F",
+      "category_name": "센서 기초",
+      "description": "온도에 따라 LED 색이 바뀝니다",
+      "firmware_size": 624704,
+      "firmware_sha256": "cbd2a163760bc6eb37f8e0ec418ccdc2b51e8dc4ef21dbd04da183dc500d1ff1"
+    },
+    {
+      "no": "F05",
+      "user_prompt": "온도 28도 넘으면 스피커 경고음 울리기",
+      "tags": [
+        "온도",
+        "경고",
+        "스피커",
+        "알림"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "F",
+      "category_name": "센서 기초",
+      "description": "온도가 높으면 경고음이 울립니다",
+      "firmware_size": 625088,
+      "firmware_sha256": "a468d74bcefe6217124bca8188c10c440219fef508c7a6b1d92011a0afea7b44"
+    },
+    {
+      "no": "F06",
+      "user_prompt": "OLED에 온도+습도+쾌적도(Good/Bad) 표시하기",
+      "tags": [
+        "쾌적도",
+        "온습도",
+        "OLED",
+        "상태"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "F",
+      "category_name": "센서 기초",
+      "description": "온습도와 쾌적도를 표시합니다",
+      "firmware_size": 625728,
+      "firmware_sha256": "0e0aa65fb77910360e058a7af6f5900ce650e42e9c25c0e39035e9d7e5d7001c"
+    },
+    {
+      "no": "G01",
+      "user_prompt": "스위치 누르면 RGB LED 빨간색 켜기",
+      "tags": [
+        "스위치",
+        "LED",
+        "빨간",
+        "버튼"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "G",
+      "category_name": "스위치 기초",
+      "description": "버튼을 누르면 빨간색이 켜집니다",
+      "firmware_size": 624608,
+      "firmware_sha256": "6ff936fd5d17b989b1e4c8ec2bc9f5e1958b971e0963f1ea23a0ee4a7f174b12"
+    },
+    {
+      "no": "G02",
+      "user_prompt": "스위치 누르면 LED 켜고 떼면 끄기",
+      "tags": [
+        "스위치",
+        "LED",
+        "켜기",
+        "끄기"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "G",
+      "category_name": "스위치 기초",
+      "description": "버튼을 누르고 있는 동안 LED가 켜집니다",
+      "firmware_size": 624592,
+      "firmware_sha256": "758917e2d1c93559006d10bd1a022d713b1aa85a9ecf91b9e4e7e62fd76d4492"
+    },
+    {
+      "no": "G03",
+      "user_prompt": "스위치 누르면 비프음 울리기",
+      "tags": [
+        "스위치",
+        "비프",
+        "소리",
+        "버튼"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "G",
+      "category_name": "스위치 기초",
+      "description": "버튼을 누르면 비프음이 울립니다",
+      "firmware_size": 624576,
+      "firmware_sha256": "99e29f328e78f6f9a0c000641fcfcb2ec4e05e9e571c41049bdab4224f70c8cd"
+    },
+    {
+      "no": "G04",
+      "user_prompt": "스위치 누르면 OLED에 \"PRESSED!\" 표시하기",
+      "tags": [
+        "스위치",
+        "OLED",
+        "표시",
+        "버튼"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "G",
+      "category_name": "스위치 기초",
+      "description": "버튼을 누르면 PRESSED!가 표시됩니다",
+      "firmware_size": 624736,
+      "firmware_sha256": "12e63dd2910ee0aa69987da1466f1bc381526e8c53cbce56873157ae16d2ec33"
+    },
+    {
+      "no": "G05",
+      "user_prompt": "스위치 누를 때마다 RGB LED 색상 바꾸기 (빨→초→파 순환)",
+      "tags": [
+        "스위치",
+        "색상",
+        "순환",
+        "LED"
+      ],
+      "difficulty": 1,
+      "components": [],
+      "category": "G",
+      "category_name": "스위치 기초",
+      "description": "누를 때마다 LED 색이 바뀝니다",
+      "firmware_size": 624960,
+      "firmware_sha256": "eb9655379f31e53b9b8d4e7a0df1507752c3329afa8c2cf67d92aa0a95a36c60"
+    },
+    {
+      "no": "H01",
+      "user_prompt": "RGB LED 빨간색 켜면서 비프음 울리기",
+      "tags": [
+        "LED",
+        "비프",
+        "소리",
+        "빨강"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "H",
+      "category_name": "LED + 소리 조합",
+      "description": "빨간 LED와 함께 비프음이 울립니다",
+      "firmware_size": 624544,
+      "firmware_sha256": "c95cd85090b8d1eaef524e57da52d7f1ad2694b37571d8d136f86c63667bda71"
+    },
+    {
+      "no": "H02",
+      "user_prompt": "LED 색상 바꿀 때마다 도레미 연주하기",
+      "tags": [
+        "LED",
+        "도레미",
+        "색상",
+        "소리"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "H",
+      "category_name": "LED + 소리 조합",
+      "description": "색이 바뀔 때마다 음이 바뀝니다",
+      "firmware_size": 624944,
+      "firmware_sha256": "9a38c368b312a83beda9162fe25249779a7105c74ad428c180fb60996e888e56"
+    },
+    {
+      "no": "H03",
+      "user_prompt": "알람: LED 빠르게 깜빡 + 비프 빠르게 반복",
+      "tags": [
+        "알람",
+        "LED",
+        "비프",
+        "경고"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "H",
+      "category_name": "LED + 소리 조합",
+      "description": "알람처럼 LED와 소리가 빠르게 반복됩니다",
+      "firmware_size": 624768,
+      "firmware_sha256": "e93383d10376a042e6a42e4dc4c075b7f02cc4e5e9ef9b2b5d36ec4c920e96d1"
+    },
+    {
+      "no": "H04",
+      "user_prompt": "크리스마스: LED 랜덤 색상 + 징글벨 멜로디",
+      "tags": [
+        "크리스마스",
+        "징글벨",
+        "랜덤",
+        "멜로디"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "H",
+      "category_name": "LED + 소리 조합",
+      "description": "크리스마스 분위기를 연출합니다",
+      "firmware_size": 625936,
+      "firmware_sha256": "5001e76c9be05aedafcf16a36bf81cd8589715cc5e12b353ef133f32812dc8a8"
+    },
+    {
+      "no": "H05",
+      "user_prompt": "신호등: 빨강3초→노랑1초→초록3초 + 초록일 때 비프음",
+      "tags": [
+        "신호등",
+        "빨강",
+        "노랑",
+        "초록"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "H",
+      "category_name": "LED + 소리 조합",
+      "description": "신호등처럼 동작합니다",
+      "firmware_size": 624752,
+      "firmware_sha256": "35e7e81cbae931f05e17d009094ed39a948e839e2b8aeb47186b8056c9d983ab"
+    },
+    {
+      "no": "H06",
+      "user_prompt": "LED 무지개 순환 + 도레미파솔라시도 동시 연주",
+      "tags": [
+        "무지개",
+        "도레미",
+        "동시",
+        "LED"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "H",
+      "category_name": "LED + 소리 조합",
+      "description": "무지개 색과 음계를 동시에 재생합니다",
+      "firmware_size": 625520,
+      "firmware_sha256": "c425bb00cfe54e20ee53157dee9a698b85c3256106c92221386ea69b605a708a"
+    },
+    {
+      "no": "I01",
+      "user_prompt": "온도에 따라 LED 색 바꾸기 (낮으면 파랑, 보통 초록, 높으면 빨강)",
+      "tags": [
+        "온도",
+        "LED",
+        "색상",
+        "조건"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "I",
+      "category_name": "센서 + LED + 소리",
+      "description": "온도에 따라 3단계 색이 바뀝니다",
+      "firmware_size": 625584,
+      "firmware_sha256": "14cab53035f1150a6016560c7672b68c52f57acba57e7493240ab83a9f507b2e"
+    },
+    {
+      "no": "I02",
+      "user_prompt": "열사병 경보: 35도 이상이면 빨간LED+사이렌+OLED에 DANGER",
+      "tags": [
+        "열사병",
+        "경보",
+        "사이렌",
+        "DANGER"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "I",
+      "category_name": "센서 + LED + 소리",
+      "description": "고온 경보 시스템입니다",
+      "firmware_size": 625552,
+      "firmware_sha256": "4088e22582393afa796590dfe01c17cab8e3ba8158b1c0d763ea785bd43639ef"
+    },
+    {
+      "no": "I03",
+      "user_prompt": "습도 70% 넘으면 노란LED 깜빡이기 + OLED에 습도 표시. snprintf로 char 배열 변환 후 drawString 사용.",
+      "tags": [
+        "습도",
+        "LED",
+        "경고",
+        "노랑"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "I",
+      "category_name": "센서 + LED + 소리",
+      "description": "습도 높으면 노란LED가 깜빡입니다",
+      "firmware_size": 625072,
+      "firmware_sha256": "fc36d20c42a68c238f51a616a14550090d4165a36a6c81d7bc85b1445401291d"
+    },
+    {
+      "no": "I04",
+      "user_prompt": "5초마다 온도 측정 + 최고/최저/평균 OLED 표시",
+      "tags": [
+        "온도",
+        "최고",
+        "최저",
+        "평균"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "I",
+      "category_name": "센서 + LED + 소리",
+      "description": "온도 통계를 표시합니다",
+      "firmware_size": 626080,
+      "firmware_sha256": "48f16fcf0fda1e09c294b5204605cdb5017f5708ffeb49466a52d95e98588769"
+    },
+    {
+      "no": "I05",
+      "user_prompt": "온도 변화 감지: 1도 이상 변하면 비프음 + OLED 표시",
+      "tags": [
+        "온도",
+        "변화",
+        "감지",
+        "알림"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "I",
+      "category_name": "센서 + LED + 소리",
+      "description": "온도가 급변하면 알립니다",
+      "firmware_size": 625792,
+      "firmware_sha256": "cb266a144f32a1faf8b4adfdd149ccd1bc954ff6ea92de1e15af8ad558ab3e02"
+    },
+    {
+      "no": "I06",
+      "user_prompt": "교실 환경 모니터: 온습도+쾌적도 LED 신호등+OLED",
+      "tags": [
+        "교실",
+        "환경",
+        "모니터",
+        "쾌적도"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "I",
+      "category_name": "센서 + LED + 소리",
+      "description": "교실 환경을 모니터링합니다",
+      "firmware_size": 626784,
+      "firmware_sha256": "90f4cda921b1622aa9a808294b9cfc08963c5d19addbf8c7db534640610ffb12"
+    },
+    {
+      "no": "J01",
+      "user_prompt": "스위치 누를 때마다 LED 토글 (켜짐↔꺼짐)",
+      "tags": [
+        "스위치",
+        "토글",
+        "LED",
+        "켜기"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "J",
+      "category_name": "스위치 + 제어",
+      "description": "누를 때마다 켜짐/꺼짐이 바뀝니다",
+      "firmware_size": 624656,
+      "firmware_sha256": "566145b95e258491b9c559c5c639503146d5d7e4ec939529b120bfd814b413a6"
+    },
+    {
+      "no": "J02",
+      "user_prompt": "스위치 누른 횟수 OLED에 표시하기",
+      "tags": [
+        "스위치",
+        "횟수",
+        "카운트",
+        "OLED"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "J",
+      "category_name": "스위치 + 제어",
+      "description": "누른 횟수를 세어 표시합니다",
+      "firmware_size": 624912,
+      "firmware_sha256": "649b0469b0141f578eba4cfbdea0c020b83293fa8d7d1c785fbdc4640dd14273"
+    },
+    {
+      "no": "J03",
+      "user_prompt": "스위치 3번 누르면 멜로디 재생하기",
+      "tags": [
+        "스위치",
+        "3번",
+        "멜로디",
+        "재생"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "J",
+      "category_name": "스위치 + 제어",
+      "description": "3번 누르면 멜로디가 나옵니다",
+      "firmware_size": 625728,
+      "firmware_sha256": "ef3e374038a0fed5f45d98c6a9dbac4ae677c557b4ef4e6c62bfe8427bb31e05"
+    },
+    {
+      "no": "J04",
+      "user_prompt": "스위치 길게 누르면(2초) LED 끄기 + 짧게 누르면 색상 변경",
+      "tags": [
+        "스위치",
+        "길게",
+        "짧게",
+        "LED"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "J",
+      "category_name": "스위치 + 제어",
+      "description": "누르는 시간에 따라 다르게 동작합니다",
+      "firmware_size": 625152,
+      "firmware_sha256": "c4c04521c04bf83dce6e9382489ae12e758971067635c67c36725407ec1431f9"
+    },
+    {
+      "no": "J05",
+      "user_prompt": "스위치로 모드 전환: 1번=LED, 2번=멜로디, 3번=온도",
+      "tags": [
+        "스위치",
+        "모드",
+        "전환",
+        "선택"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "J",
+      "category_name": "스위치 + 제어",
+      "description": "누를 때마다 모드가 바뀝니다",
+      "firmware_size": 626816,
+      "firmware_sha256": "03982e0258105600f245d4c2d51faa1c1fa4aa26f00067f1a45abb987c942fdb"
+    },
+    {
+      "no": "J06",
+      "user_prompt": "스위치 더블클릭 감지: 1번=빨강, 빠르게 2번=파랑",
+      "tags": [
+        "스위치",
+        "더블클릭",
+        "감지",
+        "LED"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "J",
+      "category_name": "스위치 + 제어",
+      "description": "1번과 2번 클릭을 구분합니다",
+      "firmware_size": 624832,
+      "firmware_sha256": "84dfc3835383fd3fa1a6bab8c72a3380d671ae133d724f0d484f2058906f012d"
+    },
+    {
+      "no": "K01",
+      "user_prompt": "OLED에 현재 LED 색상 이름 표시하기",
+      "tags": [
+        "OLED",
+        "LED",
+        "색상",
+        "표시"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "K",
+      "category_name": "OLED + 데이터",
+      "description": "현재 LED 색을 OLED에 표시합니다",
+      "firmware_size": 625008,
+      "firmware_sha256": "29e8d0798405af37b36c25ee67df252d78ff0679e36ab93f8dc36125128e15d9"
+    },
+    {
+      "no": "K02",
+      "user_prompt": "OLED에 카운트다운 5초 후 LED 무지개 시작",
+      "tags": [
+        "카운트다운",
+        "OLED",
+        "무지개",
+        "LED"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "K",
+      "category_name": "OLED + 데이터",
+      "description": "카운트다운 후 무지개가 시작됩니다",
+      "firmware_size": 625392,
+      "firmware_sha256": "e339984824d357bd90a24ba0bf5543ad7ac28b4b87a3c5ca29ea12ac56a28744"
+    },
+    {
+      "no": "K03",
+      "user_prompt": "OLED에 디지털 시계 (MM:SS) 표시",
+      "tags": [
+        "시계",
+        "OLED",
+        "시간",
+        "디지털"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "K",
+      "category_name": "OLED + 데이터",
+      "description": "초 단위 시계를 표시합니다",
+      "firmware_size": 624752,
+      "firmware_sha256": "2715d1457fc95af8321493d473430a75ce1735d463138fae53bd90f597140fce"
+    },
+    {
+      "no": "K04",
+      "user_prompt": "OLED에 프로그레스바 0%에서 100% 표시. oled.drawString만 사용하여 = 문자를 반복하여 바 형태로 표시. setPixel/drawPixel 사용 금지 (SSD1306 클래스에 없음).",
+      "tags": [
+        "프로그레스바",
+        "OLED",
+        "진행률",
+        "바"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "K",
+      "category_name": "OLED + 데이터",
+      "description": "진행률이 차오르는 효과입니다",
+      "firmware_size": 624816,
+      "firmware_sha256": "3443dce8f712125bbf9a352d26165c8d9b8dc549c8a47d67335c6897f2ded325"
+    },
+    {
+      "no": "K05",
+      "user_prompt": "OLED에 스크롤 텍스트: 긴 문장이 오른쪽에서 왼쪽으로",
+      "tags": [
+        "스크롤",
+        "텍스트",
+        "OLED",
+        "이동"
+      ],
+      "difficulty": 2,
+      "components": [],
+      "category": "K",
+      "category_name": "OLED + 데이터",
+      "description": "텍스트가 흐르듯 이동합니다",
+      "firmware_size": 624800,
+      "firmware_sha256": "e2d592bfb9993ed37ca3badc0829d35d3732cb92888efded6e4f80b2e78195db"
+    },
+    {
+      "no": "L01",
+      "user_prompt": "라면 타이머: 3분 카운트다운 OLED + 끝나면 멜로디+LED",
+      "tags": [
+        "라면",
+        "타이머",
+        "카운트다운",
+        "멜로디"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "L",
+      "category_name": "타이머/게임",
+      "description": "3분 타이머 후 알림이 울립니다",
+      "firmware_size": 625824,
+      "firmware_sha256": "29deb701e3313d39407040de6af914fd699b58e701016e4b5e77706134739f8c"
+    },
+    {
+      "no": "L02",
+      "user_prompt": "반응속도 테스트: 랜덤 시간 후 LED 변경 -> 스위치 누르기 -> 시간 표시",
+      "tags": [
+        "반응속도",
+        "게임",
+        "테스트",
+        "스위치"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "L",
+      "category_name": "타이머/게임",
+      "description": "반응 속도를 측정합니다",
+      "firmware_size": 626464,
+      "firmware_sha256": "485c96f5aae88b657a1ed506b813c8ae1889713e43bd73207d0bb6c434e3c3d5"
+    },
+    {
+      "no": "L03",
+      "user_prompt": "주사위: 스위치 누르면 OLED에 1~6 랜덤 숫자 표시",
+      "tags": [
+        "주사위",
+        "랜덤",
+        "숫자",
+        "게임"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "L",
+      "category_name": "타이머/게임",
+      "description": "랜덤 주사위를 굴립니다",
+      "firmware_size": 626192,
+      "firmware_sha256": "7f07ff1197bb476e8759f02b5b4e18b50e4ffd20571b082f2dbf3c578db69324"
+    },
+    {
+      "no": "L04",
+      "user_prompt": "가위바위보: 스위치 -> OLED에 랜덤 결과 + 승패 카운트",
+      "tags": [
+        "가위바위보",
+        "게임",
+        "랜덤",
+        "OLED"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "L",
+      "category_name": "타이머/게임",
+      "description": "가위바위보 게임입니다",
+      "firmware_size": 625872,
+      "firmware_sha256": "8fdcea58d24645b9cbe0b6ad6dda28411d580089cf63faffdefddb45bad1f9a3"
+    },
+    {
+      "no": "L05",
+      "user_prompt": "스톱워치: 스위치 1번=시작, 2번=정지, 3번=리셋",
+      "tags": [
+        "스톱워치",
+        "시간",
+        "측정",
+        "스위치"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "L",
+      "category_name": "타이머/게임",
+      "description": "스톱워치 기능입니다",
+      "firmware_size": 625248,
+      "firmware_sha256": "2130b448cac88d3433ff7b94874ef51cdb48d1d9e0d08952317524f3695d41d4"
+    },
+    {
+      "no": "L06",
+      "user_prompt": "룰렛: LED 무지개 빠르게 순환 후 점점 느려지며 멈추기",
+      "tags": [
+        "룰렛",
+        "LED",
+        "게임",
+        "랜덤"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "L",
+      "category_name": "타이머/게임",
+      "description": "LED 룰렛 게임입니다",
+      "firmware_size": 625536,
+      "firmware_sha256": "2af89d353755c1dcdbb5d36a373eab3833679a99998e4e5ddf8e5e4631183083"
+    },
+    {
+      "no": "L07",
+      "user_prompt": "퀴즈 타이머: 10초 카운트다운 + LED 색으로 남은 시간 표시",
+      "tags": [
+        "퀴즈",
+        "타이머",
+        "LED",
+        "카운트다운"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "L",
+      "category_name": "타이머/게임",
+      "description": "10초 퀴즈 타이머입니다",
+      "firmware_size": 626112,
+      "firmware_sha256": "f94dce30624324fca23462678d2fd4aa537d89915ac63cc3d2254e6bfa14618a"
+    },
+    {
+      "no": "L08",
+      "user_prompt": "발표 타이머: OLED에 남은 시간, 1분전 노랑, 끝나면 빨강+비프",
+      "tags": [
+        "발표",
+        "타이머",
+        "OLED",
+        "알림"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "L",
+      "category_name": "타이머/게임",
+      "description": "발표 시간을 관리합니다",
+      "firmware_size": 626000,
+      "firmware_sha256": "f3923184854ac3ec44ae3e09cb37ef2f45de710c3a566c80979bfde195895845"
+    },
+    {
+      "no": "M01",
+      "user_prompt": "5초마다 온도를 BLE로 스마트폰에 전송 + OLED 표시",
+      "tags": [
+        "BLE",
+        "온도",
+        "전송",
+        "스마트폰"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "M",
+      "category_name": "BLE 단방향",
+      "description": "온도를 BLE로 전송합니다",
+      "firmware_size": 625408,
+      "firmware_sha256": "c05e3988443a47d79cbad869e119934ed682bff3ff0a4a12604bad0df2ed651b"
+    },
+    {
+      "no": "M02",
+      "user_prompt": "5초마다 온도+습도 BLE 전송. sensorChar->setValue()/notify() 사용.",
+      "tags": [
+        "BLE",
+        "온습도",
+        "전송"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "M",
+      "category_name": "BLE 단방향",
+      "description": "온습도를 BLE로 전송합니다",
+      "firmware_size": 625328,
+      "firmware_sha256": "889d27b294b817403add11081b0fd94ff04d888aa3a1423c0943abecfdfe9fb3"
+    },
+    {
+      "no": "M03",
+      "user_prompt": "스위치 누르면 BLE로 카운트 전송",
+      "tags": [
+        "BLE",
+        "스위치",
+        "카운트",
+        "전송"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "M",
+      "category_name": "BLE 단방향",
+      "description": "누른 횟수를 BLE로 전송합니다",
+      "firmware_size": 625328,
+      "firmware_sha256": "c0610a26bc96d45ca1233e7c30763baee017f8fa0e3162cb0c138349c1b147a5"
+    },
+    {
+      "no": "M04",
+      "user_prompt": "온도 28도 이상이면 BLE로 경고 전송 + LED 빨강",
+      "tags": [
+        "BLE",
+        "온도",
+        "경고",
+        "LED"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "M",
+      "category_name": "BLE 단방향",
+      "description": "고온 시 BLE 경고를 보냅니다",
+      "firmware_size": 625568,
+      "firmware_sha256": "32679a647706d6f989c560f11f8fb68a2cadda17bc1bbc753199bffe26eeb24e"
+    },
+    {
+      "no": "M05",
+      "user_prompt": "LED 색상 변경할 때마다 현재 색을 sensorChar->setValue()/notify()로 BLE 전송 + OLED 표시",
+      "tags": [
+        "BLE",
+        "LED",
+        "상태",
+        "전송"
+      ],
+      "difficulty": 3,
+      "components": [],
+      "category": "M",
+      "category_name": "BLE 단방향",
+      "description": "LED 상태를 BLE로 전송합니다",
+      "firmware_size": 625552,
+      "firmware_sha256": "8e43ca85324fb350b20b53aba0f435046efc89a7c0df51107436c53408e9b7de"
+    },
+    {
+      "no": "N01",
+      "user_prompt": "스마트폰에서 BLE로 \"RED\",\"GREEN\",\"BLUE\" 보내면 해당 색 LED 켜기. onBleReceive(String cmd) 함수 정의하여 처리. sensorChar로 현재 색 응답.",
+      "tags": [
+        "BLE",
+        "LED",
+        "양방향",
+        "제어"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "N",
+      "category_name": "BLE 양방향",
+      "description": "스마트폰에서 LED 색을 제어합니다",
+      "firmware_size": 624976,
+      "firmware_sha256": "fc6416f06e52298eb13b2abf2b6d8d07959c333a91182aa2d304d9a37e487c9e"
+    },
+    {
+      "no": "N02",
+      "user_prompt": "스마트폰에서 \"MELODY:학교종\" 보내면 학교종 연주. onBleReceive로 수신.",
+      "tags": [
+        "BLE",
+        "멜로디",
+        "양방향",
+        "연주"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "N",
+      "category_name": "BLE 양방향",
+      "description": "스마트폰에서 멜로디를 선택합니다",
+      "firmware_size": 624624,
+      "firmware_sha256": "e2d669b482eac965587f3f069e5a927032500b969a7358881f787928ee3b892d"
+    },
+    {
+      "no": "N03",
+      "user_prompt": "스마트폰에서 \"SPEED:500\" 보내면 LED 깜빡 속도 변경 + BLE 응답. onBleReceive로 수신.",
+      "tags": [
+        "BLE",
+        "속도",
+        "양방향",
+        "LED"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "N",
+      "category_name": "BLE 양방향",
+      "description": "스마트폰에서 속도를 조절합니다",
+      "firmware_size": 624768,
+      "firmware_sha256": "2cdfb4ee815eeda594e15c482e3ca5d7e4fb328cbb757cf868f64a6ab9f72f84"
+    },
+    {
+      "no": "N04",
+      "user_prompt": "스마트폰에서 \"READ\" 보내면 온습도 측정 + BLE 전송 + OLED 표시. onBleReceive로 수신.",
+      "tags": [
+        "BLE",
+        "온도",
+        "양방향",
+        "READ"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "N",
+      "category_name": "BLE 양방향",
+      "description": "스마트폰에서 온도 요청합니다",
+      "firmware_size": 624832,
+      "firmware_sha256": "2476f88093dae57d99c8ebb99101882d53b789f4764740084dc4a1ee66e33abd"
+    },
+    {
+      "no": "N05",
+      "user_prompt": "스마트폰에서 \"DISPLAY:Hello\" 보내면 OLED에 표시 + BLE 확인. onBleReceive로 수신.",
+      "tags": [
+        "BLE",
+        "OLED",
+        "양방향",
+        "표시"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "N",
+      "category_name": "BLE 양방향",
+      "description": "스마트폰에서 OLED 메시지를 보냅니다",
+      "firmware_size": 624736,
+      "firmware_sha256": "2d0db725e9f5b47d160ee48c193795f27995578ede997cd930b54c4517a432bc"
+    },
+    {
+      "no": "N06",
+      "user_prompt": "스마트폰에서 \"COLOR:255,0,128\" 보내면 RGB LED를 해당 색으로. onBleReceive로 수신.",
+      "tags": [
+        "BLE",
+        "RGB",
+        "색상",
+        "양방향"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "N",
+      "category_name": "BLE 양방향",
+      "description": "스마트폰에서 정확한 RGB 색을 지정합니다",
+      "firmware_size": 624576,
+      "firmware_sha256": "0ec1d8035e7561a69bc5304e36c1e15059afb19dc55120ae2e71b6b2adeaae62"
+    },
+    {
+      "no": "N07",
+      "user_prompt": "스마트폰에서 \"ALARM:30\" 보내면 30초 타이머+매초 BLE 전송+끝나면 멜로디. onBleReceive로 수신.",
+      "tags": [
+        "BLE",
+        "타이머",
+        "양방향",
+        "알람"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "N",
+      "category_name": "BLE 양방향",
+      "description": "스마트폰에서 타이머를 설정합니다",
+      "firmware_size": 627520,
+      "firmware_sha256": "344e6a1974f3a75d00039df9b0fd147bc53a10dad188b9c8bbb3cee910a14798"
+    },
+    {
+      "no": "N08",
+      "user_prompt": "스마트폰에서 \"STATUS\" 보내면 온도+습도+LED색+스위치 상태를 BLE로 전송. onBleReceive로 수신.",
+      "tags": [
+        "BLE",
+        "상태",
+        "양방향",
+        "전체"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "N",
+      "category_name": "BLE 양방향",
+      "description": "전체 상태를 요청합니다",
+      "firmware_size": 624864,
+      "firmware_sha256": "b935ded8bff1c0626ed7bd7fed5a00836d3e5072e59c963c588bb08b545584e0"
+    },
+    {
+      "no": "O01",
+      "user_prompt": "현관 벨: 스위치 누르면 딩동 멜로디+OLED \"Visitor!\"+BLE 알림. sensorChar로 전송.",
+      "tags": [
+        "현관벨",
+        "스위치",
+        "멜로디",
+        "알림"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "O",
+      "category_name": "실생활 시스템",
+      "description": "현관 벨 시스템입니다",
+      "firmware_size": 625728,
+      "firmware_sha256": "5fdc50f1f6c6712211db3079c751ad6bc53c70ec48c34d407210305114044430"
+    },
+    {
+      "no": "O02",
+      "user_prompt": "방범 알람: 스위치 떼면 사이렌+LED 빨강 깜빡+OLED ALERT+BLE 경보",
+      "tags": [
+        "방범",
+        "알람",
+        "사이렌",
+        "경보"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "O",
+      "category_name": "실생활 시스템",
+      "description": "방범 알람 시스템입니다",
+      "firmware_size": 625856,
+      "firmware_sha256": "46bde24000a3e86102344a16cbe08433f17cd7e8e29ac125c79e183e1a924376"
+    },
+    {
+      "no": "O03",
+      "user_prompt": "스마트 알람시계: OLED 초시계 -> 설정시간에 멜로디+LED+스위치로 끄기",
+      "tags": [
+        "알람시계",
+        "OLED",
+        "멜로디",
+        "스위치"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "O",
+      "category_name": "실생활 시스템",
+      "description": "알람시계 기능입니다",
+      "firmware_size": 626176,
+      "firmware_sha256": "025898557263e1c702afba2adbf55b2d1d8f165f55622173756a956511cb51fe"
+    },
+    {
+      "no": "O04",
+      "user_prompt": "세탁기 알림: 카운트다운 OLED+BLE 전송+끝나면 멜로디+LED",
+      "tags": [
+        "세탁기",
+        "카운트다운",
+        "알림",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "O",
+      "category_name": "실생활 시스템",
+      "description": "세탁기 완료 알림입니다",
+      "firmware_size": 626336,
+      "firmware_sha256": "4e404add5e1124b09741a341160372f37583a08ebe947e895cac41b8e990968a"
+    },
+    {
+      "no": "O05",
+      "user_prompt": "기상 알람: 카운트다운 OLED -> 멜로디 -> LED 무지개 점멸",
+      "tags": [
+        "기상",
+        "알람",
+        "카운트다운",
+        "무지개"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "O",
+      "category_name": "실생활 시스템",
+      "description": "기상 알람 시스템입니다",
+      "firmware_size": 625120,
+      "firmware_sha256": "11071dc4ede233589684abf36e6b492bdc061a10a1f66fea1318132a52d09fc4"
+    },
+    {
+      "no": "P01",
+      "user_prompt": "반응속도 게임 BLE: 랜덤 시간 후 LED -> 스위치 -> 반응시간을 sensorChar로 BLE 전송",
+      "tags": [
+        "반응속도",
+        "BLE",
+        "게임",
+        "전송"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "P",
+      "category_name": "BLE 게임",
+      "description": "반응속도를 BLE로 전송합니다",
+      "firmware_size": 633488,
+      "firmware_sha256": "004d18d61684e68a728fbcb46d7692fd403cd66e312ae22c06690d02af591398"
+    },
+    {
+      "no": "P02",
+      "user_prompt": "주사위 게임 BLE: 스위치 -> OLED에 숫자 + 결과를 sensorChar로 BLE 전송",
+      "tags": [
+        "주사위",
+        "BLE",
+        "게임",
+        "전송"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "P",
+      "category_name": "BLE 게임",
+      "description": "주사위 결과를 BLE로 전송합니다",
+      "firmware_size": 626304,
+      "firmware_sha256": "93984c3833c8f7f18b3ddbd5037acc91e0a7b71a071d76a78703635f3252e5b2"
+    },
+    {
+      "no": "P03",
+      "user_prompt": "기억력 게임: LED 색상 패턴 보여줌 -> 스마트폰에서 순서 입력 -> 맞으면 다음 레벨. onBleReceive로 수신.",
+      "tags": [
+        "기억력",
+        "게임",
+        "패턴",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "P",
+      "category_name": "BLE 게임",
+      "description": "기억력 게임입니다",
+      "firmware_size": 628512,
+      "firmware_sha256": "1ba435bf2ae1732fe1f2b141239c2bccd99f2ea18e67e7ea90f4c021cdc820fd"
+    },
+    {
+      "no": "P04",
+      "user_prompt": "빨리 누르기: 10초 동안 스위치 누른 횟수 -> 점수 sensorChar로 BLE 전송",
+      "tags": [
+        "빨리누르기",
+        "게임",
+        "점수",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "P",
+      "category_name": "BLE 게임",
+      "description": "10초 빨리누르기 게임입니다",
+      "firmware_size": 626432,
+      "firmware_sha256": "8c14e9b2933b408a4dfbdc73eadeafefa9b7857921acb31ea02fcebdec70c725"
+    },
+    {
+      "no": "P05",
+      "user_prompt": "LED 룰렛 BLE: 스마트폰에서 \"SPIN\" -> LED 색상 순환 후 멈춤 -> 결과 BLE 전송. onBleReceive로 수신.",
+      "tags": [
+        "룰렛",
+        "BLE",
+        "게임",
+        "LED"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "P",
+      "category_name": "BLE 게임",
+      "description": "LED 룰렛 게임입니다",
+      "firmware_size": 626288,
+      "firmware_sha256": "b3174e7605a98b290e1d198eb0f5d7e85b6a882f8c96ff605643fa2d739da2b0"
+    },
+    {
+      "no": "P06",
+      "user_prompt": "온도 맞추기: OLED에 \"몇도?\" -> 스마트폰 입력 -> 높/낮 힌트 -> 맞추면 멜로디. onBleReceive로 수신.",
+      "tags": [
+        "온도",
+        "맞추기",
+        "게임",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "P",
+      "category_name": "BLE 게임",
+      "description": "온도 맞추기 게임입니다",
+      "firmware_size": 625280,
+      "firmware_sha256": "f0903952bdb9a1de4d60b7637dccafd82bd833ebace9e0084d1ce106a827cfdc"
+    },
+    {
+      "no": "Q01",
+      "user_prompt": "스마트 교실: 온습도+쾌적도 LED+OLED 대시보드+sensorChar로 BLE 전송",
+      "tags": [
+        "스마트교실",
+        "온습도",
+        "LED",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "Q",
+      "category_name": "종합 프로젝트",
+      "description": "스마트 교실 모니터입니다",
+      "firmware_size": 627696,
+      "firmware_sha256": "5649c1e5920e73eb8cf9de0bf5d711ca5c827d7dac891952306809a092c6f3ab"
+    },
+    {
+      "no": "Q02",
+      "user_prompt": "나만의 악기: 스위치 누를 때마다 다음 멜로디(3곡: 학교종, 작은별, 생일축하) 순환 재생 + LED 색 변경 + OLED에 곡명 표시. 코드에 ASCII 문자만 사용, 특수문자(대시, 화살표 등) 금지.",
+      "tags": [
+        "악기",
+        "멜로디",
+        "스위치",
+        "LED"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "Q",
+      "category_name": "종합 프로젝트",
+      "description": "3곡을 순환하는 악기입니다",
+      "firmware_size": 626608,
+      "firmware_sha256": "0932cd7516cd9b97171568db9001dc3ed99f1d403a66cfe9250011c095eec0c0"
+    },
+    {
+      "no": "Q03",
+      "user_prompt": "미니 기상 스테이션: 온습도+쾌적도+최고최저+sensorChar로 BLE 주기적 전송",
+      "tags": [
+        "기상",
+        "스테이션",
+        "온습도",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "Q",
+      "category_name": "종합 프로젝트",
+      "description": "미니 기상 스테이션입니다",
+      "firmware_size": 626912,
+      "firmware_sha256": "2d3465c42c95a5ad657366511ee936ec30fd3d2525c5e51c0538c045ca3c509b"
+    },
+    {
+      "no": "Q04",
+      "user_prompt": "게임 센터: 스위치로 게임 선택(OLED 메뉴) -> 반응속도/주사위/빨리누르기 -> 점수 BLE",
+      "tags": [
+        "게임센터",
+        "메뉴",
+        "스위치",
+        "OLED"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "Q",
+      "category_name": "종합 프로젝트",
+      "description": "3가지 게임을 선택합니다",
+      "firmware_size": 637184,
+      "firmware_sha256": "c0ff710c97147b8a672a5c8045db546815745daa091d0949f71a8162f815ae2b"
+    },
+    {
+      "no": "Q05",
+      "user_prompt": "보안 시스템: 스위치 패턴 비밀번호(짧-짧-긴) -> 맞으면 초록LED+멜로디 -> 틀리면 사이렌+BLE 경보",
+      "tags": [
+        "보안",
+        "비밀번호",
+        "패턴",
+        "스위치"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "Q",
+      "category_name": "종합 프로젝트",
+      "description": "패턴 비밀번호 보안 시스템입니다",
+      "firmware_size": 626336,
+      "firmware_sha256": "124c1b587009d66e351f3a230e13b310d8d480f3cdb43cc7c369fc2ac2251853"
+    },
+    {
+      "no": "Q06",
+      "user_prompt": "OLED 부팅 화면: UTTEC Mini 텍스트 표시 후 = 문자로 로딩바 표시(0%에서100%), 완료 후 온습도 화면 전환. oled.drawString만 사용, drawPixel/setPixel 사용 금지.",
+      "tags": [
+        "부팅",
+        "로고",
+        "로딩바",
+        "OLED"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "Q",
+      "category_name": "종합 프로젝트",
+      "description": "부팅 애니메이션입니다",
+      "firmware_size": 625184,
+      "firmware_sha256": "47ea536809134beeb8442dbaf8f9e6786de3d8b0effac269a713e2974c4cfbf0"
+    },
+    {
+      "no": "Q07",
+      "user_prompt": "동시 실행: LED 무지개 순환 + OLED 온도 표시 + BLE 데이터 전송 (각각 다른 주기)",
+      "tags": [
+        "동시실행",
+        "멀티태스크",
+        "LED",
+        "OLED"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "Q",
+      "category_name": "종합 프로젝트",
+      "description": "여러 작업을 동시에 실행합니다",
+      "firmware_size": 626112,
+      "firmware_sha256": "8b4ee8c9a9d9193c78d07d271c98f0a9f2e8bec263e6a802518562b855e5b922"
+    },
+    {
+      "no": "Q08",
+      "user_prompt": "인터랙티브 퀴즈: OLED에 문제 -> 스마트폰에서 답 입력 -> 맞으면 멜로디+LED+점수 -> BLE. onBleReceive로 수신.",
+      "tags": [
+        "퀴즈",
+        "게임",
+        "OLED",
+        "BLE"
+      ],
+      "difficulty": 4,
+      "components": [],
+      "category": "Q",
+      "category_name": "종합 프로젝트",
+      "description": "인터랙티브 퀴즈 게임입니다",
+      "firmware_size": 625440,
+      "firmware_sha256": "4ee5c9a499be98d817e8206ae3fcec97bc5bba95739b81d7a505a7a08d8311ab"
+    }
+  ]
+}

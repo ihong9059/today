@@ -1,0 +1,74 @@
+{
+  "result_description": "스위치에서 손을 떼면 사이렌이 울리고 LED가 빨강→노랑→파랑으로 번쩍이며 화면에 'ALERT!'가 표시됩니다.",
+  "what_happens": [
+    "스위치에서 손을 떼면 ESP32가 '침입자 발견!'으로 인식해 경보를 시작합니다",
+    "LED가 빨강→노랑→파랑 순서로 빠르게 반짝이고, 버저에서 낮은 음과 높은 음이 번갈아 사이렌처럼 울립니다",
+    "OLED 화면에 'ALERT!'와 'SECURITY BREACH'가 나타나고, 스위치를 다시 누르면 모든 경보가 멈춥니다"
+  ],
+  "concepts": [
+    {
+      "term": "volatile 변수",
+      "explanation": "여러 작업이 동시에 같은 변수를 쓸 때, 값이 항상 최신 상태로 유지되도록 컴퓨터에게 알려주는 표시예요. 마치 '이 메모는 언제든 바뀔 수 있으니 항상 새로 확인해!'라고 하는 것과 같아요."
+    },
+    {
+      "term": "태스크(Task)",
+      "explanation": "ESP32가 여러 일을 동시에 할 수 있도록 나눠 맡기는 작업 단위예요. 사람으로 치면 왼손은 LED를 켜고 오른손은 사이렌을 울리는 것처럼요!"
+    },
+    {
+      "term": "INPUT_PULLUP",
+      "explanation": "스위치를 누르지 않았을 때 자동으로 HIGH(1) 신호가 나오도록 내부에서 전압을 올려두는 설정이에요. 스위치를 누르면 LOW(0)가 돼요."
+    },
+    {
+      "term": "tone() 함수",
+      "explanation": "버저에서 특정 높이의 소리를 내는 명령이에요. 숫자가 클수록 높은 소리가 나요. 880은 낮은 '삐', 1760은 높은 '삐삐' 소리예요!"
+    },
+    {
+      "term": "xTaskCreate",
+      "explanation": "ESP32에게 '이 일을 계속 반복해줘!'라고 시키는 명령이에요. LED 깜빡임과 경보 감시를 동시에 돌릴 수 있어요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "volatile bool alarmActive = false;",
+      "comment": "경보가 켜졌는지(true) 꺼졌는지(false) 기억하는 신호등 변수예요"
+    },
+    {
+      "line": "bool swReleased = (digitalRead(32) == HIGH);",
+      "comment": "스위치 32번 핀이 HIGH면 손을 뗀 것(경보 발동!)으로 판단해요"
+    },
+    {
+      "line": "tone(33, 880, 300); delay(300); tone(33, 1760, 300);",
+      "comment": "낮은 음(880Hz)과 높은 음(1760Hz)을 번갈아 내서 사이렌 소리를 만들어요"
+    },
+    {
+      "line": "xTaskCreate(ledBlinkTask, \"ledBlink\", 2048, NULL, 2, NULL);",
+      "comment": "LED 깜빡임 작업을 우선순위 2로 따로 실행시켜 경보 감시와 동시에 돌려요"
+    },
+    {
+      "line": "oled.drawString(18, 0, \"!! ALERT !!\");",
+      "comment": "OLED 화면의 (18, 0) 위치에 '!! ALERT !!' 경고 문자를 표시해요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "경보가 울리면 BLE로 스마트폰 앱에 알림을 보내도록 코드를 추가해 보세요!"
+    },
+    {
+      "reason": "비밀번호(숫자 버튼 3개 조합)를 맞춰야만 경보가 해제되도록 만들어 보세요!"
+    },
+    {
+      "reason": "경보 횟수를 세어서 OLED에 '침입 시도 3회'처럼 카운트를 표시해 보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 스위치에서 손을 떼면(HIGH 신호) 어떤 일이 가장 먼저 일어날까요?",
+    "options": [
+      "LED가 꺼지고 버저도 멈춘다",
+      "alarmActive 변수가 true로 바뀌고 경보가 시작된다",
+      "OLED 화면이 꺼진다",
+      "ESP32가 재시작된다"
+    ],
+    "answer": 1,
+    "explanation": "스위치에서 손을 떼면 swReleased가 true가 되고, alarmActive를 true로 바꿔 LED 점멸·사이렌·OLED 경고가 모두 시작돼요!"
+  }
+}

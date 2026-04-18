@@ -1,0 +1,70 @@
+{
+  "result_description": "빨강, 노랑, 파랑 LED 중 하나가 0.5초마다 랜덤으로 반짝이며, 같은 LED가 연속으로 켜지지 않아요.",
+  "what_happens": [
+    "아두이노가 켜지면 LED 3개(빨강, 노랑, 파랑)를 준비해요",
+    "주사위를 굴리듯 0~2 중 숫자를 랜덤으로 골라요 (단, 바로 전에 켰던 것은 다시 고르지 않아요)",
+    "3개 LED를 모두 끈 다음, 고른 번호의 LED만 켜고 0.5초 기다려요"
+  ],
+  "concepts": [
+    {
+      "term": "랜덤(random)",
+      "explanation": "주사위처럼 컴퓨터가 알아서 숫자를 골라주는 것이에요. 어떤 숫자가 나올지 미리 알 수 없어요!"
+    },
+    {
+      "term": "배열(array)",
+      "explanation": "여러 개의 값을 한 줄로 줄 세운 상자예요. leds[] 배열에는 LED 핀 번호 3개가 나란히 들어 있어요."
+    },
+    {
+      "term": "태스크(Task)",
+      "explanation": "아두이노가 동시에 여러 일을 할 수 있도록 따로 만들어 놓은 작업 단위예요. 마치 친구에게 심부름을 맡기는 것과 같아요."
+    },
+    {
+      "term": "delay(500)",
+      "explanation": "500밀리초, 즉 0.5초 동안 잠깐 기다리라는 명령이에요. 1000밀리초가 1초예요."
+    },
+    {
+      "term": "do-while 반복",
+      "explanation": "일단 한 번 해보고, 조건이 맞지 않으면 다시 반복하는 구조예요. 여기서는 '이전과 같은 LED가 나오면 다시 골라'라고 알려줘요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "idx = random(3);",
+      "comment": "0, 1, 2 중 하나를 랜덤으로 골라요. 이 숫자가 어떤 LED를 켤지 결정해요."
+    },
+    {
+      "line": "} while (idx == prev);",
+      "comment": "방금 켰던 LED와 같은 번호가 나오면 다시 뽑아요. 덕분에 같은 LED가 두 번 연속 켜지지 않아요."
+    },
+    {
+      "line": "digitalWrite(leds[idx], LOW);",
+      "comment": "배열에서 고른 번호의 LED만 켜요. LOW는 '전기를 흘려서 켜라'는 뜻이에요."
+    },
+    {
+      "line": "xTaskCreate(ledTask, \"ledTask\", 2048, NULL, 1, NULL);",
+      "comment": "LED를 깜빡이는 작업을 별도의 태스크로 시작해요. 다른 작업(BLE 등)과 동시에 실행될 수 있어요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "delay(500)을 200이나 1000으로 바꿔서 LED가 더 빠르게 또는 느리게 바뀌게 해보세요!"
+    },
+    {
+      "reason": "LED를 4개로 늘리고 random(4)로 바꾸면 어떻게 될까요? 직접 코드를 고쳐 보세요."
+    },
+    {
+      "reason": "모두 끄고 선택된 LED만 켜는 대신, 켜진 LED를 하나씩 쌓아가는 방식으로 바꿔보세요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 같은 LED가 연속으로 두 번 켜지지 않도록 막는 코드는 무엇인가요?",
+    "options": [
+      "delay(500);",
+      "} while (idx == prev);",
+      "digitalWrite(leds[idx], LOW);",
+      "xTaskCreate(ledTask, ...);"
+    ],
+    "answer": 1,
+    "explanation": "do-while 반복문이 새로 고른 숫자(idx)가 이전 숫자(prev)와 같으면 다시 뽑도록 해요. 그래서 같은 LED가 연속으로 켜지지 않아요!"
+  }
+}

@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 10100
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"93115eb4-10fc-48fd-81f0-41edf9e10714","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"7b312d20-fd59-4bb6-8380-655df6699a95","session_id":"8b6d07b8-6d0b-4ccb-8100-794e203cf807"}
+{"type":"system","subtype":"hook_response","hook_id":"93115eb4-10fc-48fd-81f0-41edf9e10714","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"6130cd86-6608-4341-907a-e58aef32788c","session_id":"8b6d07b8-6d0b-4ccb-8100-794e203cf807"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\cf9183e9","session_id":"8b6d07b8-6d0b-4ccb-8100-794e203cf807","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:fast","gsd:autonomous","gsd:audit-uat","gsd:execute-phase","gsd:audit-milestone","gsd:do","gsd:add-todo","gsd:discuss-phase","gsd:add-tests","gsd:debug","gsd:complete-milestone","gsd:add-phase","gsd:cleanup","gsd:check-todos","gsd:add-backlog","gsd:new-workspace","gsd:new-project","gsd:new-milestone","gsd:mile

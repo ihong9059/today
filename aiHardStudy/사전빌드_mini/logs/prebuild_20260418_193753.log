@@ -1,0 +1,692 @@
+2026-04-18 19:37:53,492 [INFO] ============================================================
+2026-04-18 19:37:53,492 [INFO] UTTEC Pre-built Firmware Generator
+2026-04-18 19:37:53,492 [INFO] ============================================================
+2026-04-18 19:37:53,507 [INFO] 카탈로그 로드: 117개 항목
+2026-04-18 19:37:53,510 [INFO] 빌드 대상: 97개
+2026-04-18 19:37:53,510 [INFO] FIRMWARE_DB: C:\todo\today\aiHardStudy\사전빌드_mini\firmware_db
+2026-04-18 19:37:53,510 [INFO] TEMPLATE_DIR: C:\todo\today\aiHardStudy\aiEspMini\firmware
+2026-04-18 19:37:53,510 [INFO] BUILD_DIR: C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino
+2026-04-18 19:37:53,518 [INFO] Build dir initialized: C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino
+2026-04-18 19:37:53,518 [INFO] [1/97] C01: RGB LED 빨→초→파 순서대로 바꾸기
+2026-04-18 19:37:53,519 [INFO]   [C01] 시도 1/3: RGB LED 빨→초→파 순서대로 바꾸기
+2026-04-18 19:38:32,713 [INFO]   [C01] 빌드 성공 (610KB, 39.2초)
+2026-04-18 19:38:55,459 [INFO]   [C01] guide.json 생성 완료
+2026-04-18 19:38:55,460 [INFO]   진행: 1/97 (성공:1 실패:0) ETA: 99.1분
+2026-04-18 19:38:55,460 [INFO] [2/97] C02: RGB LED 0.5초마다 랜덤 색상 바꾸기
+2026-04-18 19:38:55,461 [INFO]   [C02] 시도 1/3: RGB LED 0.5초마다 랜덤 색상 바꾸기
+2026-04-18 19:39:44,537 [INFO]   [C02] 빌드 성공 (610KB, 49.1초)
+2026-04-18 19:40:12,716 [INFO]   [C02] guide.json 생성 완료
+2026-04-18 19:40:12,717 [INFO]   진행: 2/97 (성공:2 실패:0) ETA: 110.2분
+2026-04-18 19:40:12,717 [INFO] [3/97] C03: RGB LED 빨간색+파란색 번갈아 깜빡이기 (비상등)
+2026-04-18 19:40:12,718 [INFO]   [C03] 시도 1/3: RGB LED 빨간색+파란색 번갈아 깜빡이기 (비상등)
+2026-04-18 19:41:02,367 [INFO]   [C03] 빌드 성공 (610KB, 49.6초)
+2026-04-18 19:41:35,500 [INFO]   [C03] guide.json 생성 완료
+2026-04-18 19:41:35,501 [INFO]   진행: 3/97 (성공:3 실패:0) ETA: 115.9분
+2026-04-18 19:41:35,501 [INFO] [4/97] C04: RGB LED 무지개 그라데이션 효과 (색상 서서히 변화)
+2026-04-18 19:41:35,501 [INFO]   [C04] 시도 1/3: RGB LED 무지개 그라데이션 효과 (색상 서서히 변화)
+2026-04-18 19:42:39,032 [INFO]   [C04] 빌드 성공 (611KB, 63.5초)
+2026-04-18 19:43:14,848 [INFO]   [C04] guide.json 생성 완료
+2026-04-18 19:43:14,849 [INFO]   진행: 4/97 (성공:4 실패:0) ETA: 124.5분
+2026-04-18 19:43:14,849 [INFO] [5/97] C05: RGB LED 초록색 숨쉬기 효과
+2026-04-18 19:43:14,851 [INFO]   [C05] 시도 1/3: RGB LED 초록색 숨쉬기 효과
+2026-04-18 19:44:04,495 [INFO]   [C05] 빌드 성공 (610KB, 49.6초)
+2026-04-18 19:44:29,483 [INFO]   [C05] guide.json 생성 완료
+2026-04-18 19:44:29,484 [INFO]   진행: 5/97 (성공:5 실패:0) ETA: 121.4분
+2026-04-18 19:44:29,484 [INFO] [6/97] C06: RGB LED 3색 깜빡이기 (빨강1초→초록1초→파랑1초)
+2026-04-18 19:44:29,485 [INFO]   [C06] 시도 1/3: RGB LED 3색 깜빡이기 (빨강1초→초록1초→파랑1초)
+2026-04-18 19:45:18,743 [INFO]   [C06] 빌드 성공 (610KB, 49.3초)
+2026-04-18 19:45:45,161 [INFO]   [C06] guide.json 생성 완료
+2026-04-18 19:45:45,162 [INFO]   진행: 6/97 (성공:6 실패:0) ETA: 119.2분
+2026-04-18 19:45:45,162 [INFO] [7/97] C07: RGB LED 파란색 3번 깜빡이고 빨간색 3번 깜빡이기
+2026-04-18 19:45:45,162 [INFO]   [C07] 시도 1/3: RGB LED 파란색 3번 깜빡이고 빨간색 3번 깜빡이기
+2026-04-18 19:46:30,596 [INFO]   [C07] 빌드 성공 (610KB, 45.4초)
+2026-04-18 19:46:58,367 [INFO]   [C07] guide.json 생성 완료
+2026-04-18 19:46:58,368 [INFO]   진행: 7/97 (성공:7 실패:0) ETA: 116.8분
+2026-04-18 19:46:58,368 [INFO] [8/97] C08: RGB LED 색상 서서히 흰색으로 변했다가 꺼지기
+2026-04-18 19:46:58,369 [INFO]   [C08] 시도 1/3: RGB LED 색상 서서히 흰색으로 변했다가 꺼지기
+2026-04-18 19:47:44,386 [INFO]   [C08] 빌드 성공 (610KB, 46.0초)
+2026-04-18 19:48:12,860 [INFO]   [C08] guide.json 생성 완료
+2026-04-18 19:48:12,861 [INFO]   진행: 8/97 (성공:8 실패:0) ETA: 114.8분
+2026-04-18 19:48:12,861 [INFO] [9/97] D01: 비행기 멜로디 연주하기
+2026-04-18 19:48:12,862 [INFO]   [D01] 시도 1/3: 비행기 멜로디 연주하기
+2026-04-18 19:49:26,722 [WARNING]   [D01] 시도 1 실패: Build failed:
+\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:585:1: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:585:2: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:585:3: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:587:10: error: expected constructor, destructor, or type conversion before '구성'
+Error during build: exit status 1
+
+2026-04-18 19:49:28,723 [INFO]   [D01] 시도 2/3: 비행기 멜로디 연주하기
+2026-04-18 19:50:41,470 [INFO]   [D01] 빌드 성공 (612KB, 148.6초)
+2026-04-18 19:51:13,786 [INFO]   [D01] guide.json 생성 완료
+2026-04-18 19:51:13,787 [INFO]   진행: 9/97 (성공:9 실패:0) ETA: 130.4분
+2026-04-18 19:51:13,787 [INFO] [10/97] D02: 곰 세 마리 멜로디 연주하기
+2026-04-18 19:51:13,788 [INFO]   [D02] 시도 1/3: 곰 세 마리 멜로디 연주하기
+2026-04-18 19:52:34,689 [INFO]   [D02] 빌드 성공 (611KB, 80.9초)
+2026-04-18 19:53:08,862 [INFO]   [D02] guide.json 생성 완료
+2026-04-18 19:53:08,863 [INFO]   진행: 10/97 (성공:10 실패:0) ETA: 132.7분
+2026-04-18 19:53:08,863 [INFO] [11/97] D03: 구급차 사이렌 소리 내기
+2026-04-18 19:53:08,864 [INFO]   [D03] 시도 1/3: 구급차 사이렌 소리 내기
+2026-04-18 19:53:57,894 [INFO]   [D03] 빌드 성공 (610KB, 49.0초)
+2026-04-18 19:54:29,444 [INFO]   [D03] guide.json 생성 완료
+2026-04-18 19:54:29,445 [INFO]   진행: 11/97 (성공:11 실패:0) ETA: 129.8분
+2026-04-18 19:54:29,445 [INFO] [12/97] D04: 게임 오버 효과음 (높은음에서 낮은음으로)
+2026-04-18 19:54:29,446 [INFO]   [D04] 시도 1/3: 게임 오버 효과음 (높은음에서 낮은음으로)
+2026-04-18 19:55:15,069 [INFO]   [D04] 빌드 성공 (610KB, 45.6초)
+2026-04-18 19:55:43,498 [INFO]   [D04] guide.json 생성 완료
+2026-04-18 19:55:43,499 [INFO]   진행: 12/97 (성공:12 실패:0) ETA: 126.3분
+2026-04-18 19:55:43,499 [INFO] [13/97] D05: 레벨업 효과음 (도미솔도 빠르게)
+2026-04-18 19:55:43,500 [INFO]   [D05] 시도 1/3: 레벨업 효과음 (도미솔도 빠르게)
+2026-04-18 19:56:29,908 [INFO]   [D05] 빌드 성공 (610KB, 46.4초)
+2026-04-18 19:56:57,085 [INFO]   [D05] guide.json 생성 완료
+2026-04-18 19:56:57,086 [INFO]   진행: 13/97 (성공:13 실패:0) ETA: 123.2분
+2026-04-18 19:56:57,086 [INFO] [14/97] D06: 알람 소리: 짧은 비프 5번 + 긴 비프 1번
+2026-04-18 19:56:57,087 [INFO]   [D06] 시도 1/3: 알람 소리: 짧은 비프 5번 + 긴 비프 1번
+2026-04-18 19:57:41,722 [INFO]   [D06] 빌드 성공 (610KB, 44.6초)
+2026-04-18 19:58:09,145 [INFO]   [D06] guide.json 생성 완료
+2026-04-18 19:58:09,145 [INFO]   진행: 14/97 (성공:14 실패:0) ETA: 120.1분
+2026-04-18 19:58:09,145 [INFO] [15/97] D07: 점점 높아지는 소리 내기 (100Hz에서 1000Hz)
+2026-04-18 19:58:09,146 [INFO]   [D07] 시도 1/3: 점점 높아지는 소리 내기 (100Hz에서 1000Hz)
+2026-04-18 19:58:54,037 [INFO]   [D07] 빌드 성공 (610KB, 44.9초)
+2026-04-18 19:59:20,336 [INFO]   [D07] guide.json 생성 완료
+2026-04-18 19:59:20,337 [INFO]   진행: 15/97 (성공:15 실패:0) ETA: 117.2분
+2026-04-18 19:59:20,337 [INFO] [16/97] E01: OLED에 "Hello" 표시하기
+2026-04-18 19:59:20,338 [INFO]   [E01] 시도 1/3: OLED에 "Hello" 표시하기
+2026-04-18 19:59:56,964 [INFO]   [E01] 빌드 성공 (610KB, 36.6초)
+2026-04-18 20:00:24,789 [INFO]   [E01] guide.json 생성 완료
+2026-04-18 20:00:24,790 [INFO]   진행: 16/97 (성공:16 실패:0) ETA: 114.0분
+2026-04-18 20:00:24,790 [INFO] [17/97] E02: OLED에 "UTTEC Mini" 표시하기
+2026-04-18 20:00:24,791 [INFO]   [E02] 시도 1/3: OLED에 "UTTEC Mini" 표시하기
+2026-04-18 20:01:21,019 [INFO]   [E02] 빌드 성공 (610KB, 56.2초)
+2026-04-18 20:01:49,893 [INFO]   [E02] guide.json 생성 완료
+2026-04-18 20:01:49,894 [INFO]   진행: 17/97 (성공:17 실패:0) ETA: 112.7분
+2026-04-18 20:01:49,894 [INFO] [18/97] E03: OLED에 3줄 텍스트 표시하기
+2026-04-18 20:01:49,899 [INFO]   [E03] 시도 1/3: OLED에 3줄 텍스트 표시하기
+2026-04-18 20:02:35,056 [INFO]   [E03] 빌드 성공 (610KB, 45.2초)
+2026-04-18 20:03:03,434 [INFO]   [E03] guide.json 생성 완료
+2026-04-18 20:03:03,436 [INFO]   진행: 18/97 (성공:18 실패:0) ETA: 110.4분
+2026-04-18 20:03:03,436 [INFO] [19/97] E04: OLED에 1부터 10까지 숫자 세기
+2026-04-18 20:03:03,436 [INFO]   [E04] 시도 1/3: OLED에 1부터 10까지 숫자 세기
+2026-04-18 20:03:46,934 [INFO]   [E04] 빌드 성공 (610KB, 43.5초)
+2026-04-18 20:04:16,134 [INFO]   [E04] guide.json 생성 완료
+2026-04-18 20:04:16,135 [INFO]   진행: 19/97 (성공:19 실패:0) ETA: 108.3분
+2026-04-18 20:04:16,135 [INFO] [20/97] E05: OLED에 카운트다운 5,4,3,2,1,0 표시하기
+2026-04-18 20:04:16,136 [INFO]   [E05] 시도 1/3: OLED에 카운트다운 5,4,3,2,1,0 표시하기
+2026-04-18 20:05:01,146 [INFO]   [E05] 빌드 성공 (610KB, 45.0초)
+2026-04-18 20:05:26,606 [INFO]   [E05] guide.json 생성 완료
+2026-04-18 20:05:26,607 [INFO]   진행: 20/97 (성공:20 실패:0) ETA: 106.1분
+2026-04-18 20:05:26,607 [INFO] [21/97] E06: OLED 화면 깜빡이기 (1초 보이고 1초 지우기)
+2026-04-18 20:05:26,608 [INFO]   [E06] 시도 1/3: OLED 화면 깜빡이기 (1초 보이고 1초 지우기)
+2026-04-18 20:06:14,157 [INFO]   [E06] 빌드 성공 (610KB, 47.5초)
+2026-04-18 20:06:40,995 [INFO]   [E06] guide.json 생성 완료
+2026-04-18 20:06:40,996 [INFO]   진행: 21/97 (성공:21 실패:0) ETA: 104.2분
+2026-04-18 20:06:40,996 [INFO] [22/97] E07: OLED에 초시계 표시 (0.0, 0.1, 0.2...)
+2026-04-18 20:06:40,997 [INFO]   [E07] 시도 1/3: OLED에 초시계 표시 (0.0, 0.1, 0.2...)
+2026-04-18 20:07:32,955 [WARNING]   [E07] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:558:21: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:559:26: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 20:07:34,956 [INFO]   [E07] 시도 2/3: OLED에 초시계 표시 (0.0, 0.1, 0.2...)
+2026-04-18 20:08:46,035 [WARNING]   [E07] 시도 2 실패: Build failed:
+\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:564:1: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:564:2: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:564:3: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:566:10: error: expected constructor, destructor, or type conversion before '요약'
+Error during build: exit status 1
+
+2026-04-18 20:08:48,036 [INFO]   [E07] 시도 3/3: OLED에 초시계 표시 (0.0, 0.1, 0.2...)
+2026-04-18 20:09:33,299 [WARNING]   [E07] 시도 3 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:556:22: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:557:22: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:558:22: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 20:09:33,299 [ERROR]   [E07] 최종 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:556:22: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:557:22: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:558:22: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 20:09:33,299 [INFO]   진행: 22/97 (성공:21 실패:1) ETA: 107.9분
+2026-04-18 20:09:33,299 [INFO] [23/97] E08: OLED에 동작 시간(초) 계속 표시하기
+2026-04-18 20:09:33,300 [INFO]   [E08] 시도 1/3: OLED에 동작 시간(초) 계속 표시하기
+2026-04-18 20:10:13,192 [INFO]   [E08] 빌드 성공 (610KB, 39.9초)
+2026-04-18 20:10:40,168 [INFO]   [E08] guide.json 생성 완료
+2026-04-18 20:10:40,168 [INFO]   진행: 23/97 (성공:22 실패:1) ETA: 105.5분
+2026-04-18 20:10:40,168 [INFO] [24/97] F01: 현재 온도 측정해서 OLED에 표시하기
+2026-04-18 20:10:40,169 [INFO]   [F01] 시도 1/3: 현재 온도 측정해서 OLED에 표시하기
+2026-04-18 20:11:22,333 [INFO]   [F01] 빌드 성공 (610KB, 42.2초)
+2026-04-18 20:11:50,909 [INFO]   [F01] guide.json 생성 완료
+2026-04-18 20:11:50,910 [INFO]   진행: 24/97 (성공:23 실패:1) ETA: 103.3분
+2026-04-18 20:11:50,910 [INFO] [25/97] F02: 온도와 습도를 OLED에 같이 표시하기
+2026-04-18 20:11:50,910 [INFO]   [F02] 시도 1/3: 온도와 습도를 OLED에 같이 표시하기
+2026-04-18 20:12:33,314 [INFO]   [F02] 빌드 성공 (610KB, 42.4초)
+2026-04-18 20:13:00,782 [INFO]   [F02] guide.json 생성 완료
+2026-04-18 20:13:00,782 [INFO]   진행: 25/97 (성공:24 실패:1) ETA: 101.1분
+2026-04-18 20:13:00,782 [INFO] [26/97] F03: 3초마다 온도 측정해서 OLED에 업데이트하기
+2026-04-18 20:13:00,783 [INFO]   [F03] 시도 1/3: 3초마다 온도 측정해서 OLED에 업데이트하기
+2026-04-18 20:13:38,787 [INFO]   [F03] 빌드 성공 (610KB, 38.0초)
+2026-04-18 20:14:09,373 [INFO]   [F03] guide.json 생성 완료
+2026-04-18 20:14:09,374 [INFO]   진행: 26/97 (성공:25 실패:1) ETA: 99.0분
+2026-04-18 20:14:09,374 [INFO] [27/97] F04: 온도 25도 넘으면 RGB LED 빨간색, 이하면 파란색
+2026-04-18 20:14:09,374 [INFO]   [F04] 시도 1/3: 온도 25도 넘으면 RGB LED 빨간색, 이하면 파란색
+2026-04-18 20:14:53,350 [INFO]   [F04] 빌드 성공 (610KB, 44.0초)
+2026-04-18 20:15:18,641 [INFO]   [F04] guide.json 생성 완료
+2026-04-18 20:15:18,642 [INFO]   진행: 27/97 (성공:26 실패:1) ETA: 97.0분
+2026-04-18 20:15:18,642 [INFO] [28/97] F05: 온도 28도 넘으면 스피커 경고음 울리기
+2026-04-18 20:15:18,642 [INFO]   [F05] 시도 1/3: 온도 28도 넘으면 스피커 경고음 울리기
+2026-04-18 20:16:02,270 [INFO]   [F05] 빌드 성공 (610KB, 43.6초)
+2026-04-18 20:16:30,321 [INFO]   [F05] guide.json 생성 완료
+2026-04-18 20:16:30,322 [INFO]   진행: 28/97 (성공:27 실패:1) ETA: 95.2분
+2026-04-18 20:16:30,322 [INFO] [29/97] F06: OLED에 온도+습도+쾌적도(Good/Bad) 표시하기
+2026-04-18 20:16:30,322 [INFO]   [F06] 시도 1/3: OLED에 온도+습도+쾌적도(Good/Bad) 표시하기
+2026-04-18 20:17:20,716 [INFO]   [F06] 빌드 성공 (611KB, 50.4초)
+2026-04-18 20:17:51,897 [INFO]   [F06] guide.json 생성 완료
+2026-04-18 20:17:51,898 [INFO]   진행: 29/97 (성공:28 실패:1) ETA: 93.7분
+2026-04-18 20:17:51,898 [INFO] [30/97] G01: 스위치 누르면 RGB LED 빨간색 켜기
+2026-04-18 20:17:51,898 [INFO]   [G01] 시도 1/3: 스위치 누르면 RGB LED 빨간색 켜기
+2026-04-18 20:18:32,542 [INFO]   [G01] 빌드 성공 (610KB, 40.6초)
+2026-04-18 20:19:04,665 [INFO]   [G01] guide.json 생성 완료
+2026-04-18 20:19:04,665 [INFO]   진행: 30/97 (성공:29 실패:1) ETA: 92.0분
+2026-04-18 20:19:04,665 [INFO] [31/97] G02: 스위치 누르면 LED 켜고 떼면 끄기
+2026-04-18 20:19:04,665 [INFO]   [G02] 시도 1/3: 스위치 누르면 LED 켜고 떼면 끄기
+2026-04-18 20:19:43,186 [INFO]   [G02] 빌드 성공 (610KB, 38.5초)
+2026-04-18 20:20:09,904 [INFO]   [G02] guide.json 생성 완료
+2026-04-18 20:20:09,905 [INFO]   진행: 31/97 (성공:30 실패:1) ETA: 90.0분
+2026-04-18 20:20:09,905 [INFO] [32/97] G03: 스위치 누르면 비프음 울리기
+2026-04-18 20:20:09,905 [INFO]   [G03] 시도 1/3: 스위치 누르면 비프음 울리기
+2026-04-18 20:20:47,309 [INFO]   [G03] 빌드 성공 (610KB, 37.4초)
+2026-04-18 20:21:16,377 [INFO]   [G03] guide.json 생성 완료
+2026-04-18 20:21:16,377 [INFO]   진행: 32/97 (성공:31 실패:1) ETA: 88.1분
+2026-04-18 20:21:16,377 [INFO] [33/97] G04: 스위치 누르면 OLED에 "PRESSED!" 표시하기
+2026-04-18 20:21:16,378 [INFO]   [G04] 시도 1/3: 스위치 누르면 OLED에 "PRESSED!" 표시하기
+2026-04-18 20:21:56,700 [INFO]   [G04] 빌드 성공 (610KB, 40.3초)
+2026-04-18 20:22:23,610 [INFO]   [G04] guide.json 생성 완료
+2026-04-18 20:22:23,611 [INFO]   진행: 33/97 (성공:32 실패:1) ETA: 86.3분
+2026-04-18 20:22:23,611 [INFO] [34/97] G05: 스위치 누를 때마다 RGB LED 색상 바꾸기 (빨→초→파 순환)
+2026-04-18 20:22:23,611 [INFO]   [G05] 시도 1/3: 스위치 누를 때마다 RGB LED 색상 바꾸기 (빨→초→파 순환)
+2026-04-18 20:23:06,283 [INFO]   [G05] 빌드 성공 (610KB, 42.7초)
+2026-04-18 20:23:39,388 [WARNING]   [G05] guide.json 실패 (빌드는 성공): Extra data: line 58 column 1 (char 1922)
+2026-04-18 20:23:39,388 [INFO]   진행: 34/97 (성공:33 실패:1) ETA: 84.8분
+2026-04-18 20:23:39,388 [INFO] [35/97] H01: RGB LED 빨간색 켜면서 비프음 울리기
+2026-04-18 20:23:39,388 [INFO]   [H01] 시도 1/3: RGB LED 빨간색 켜면서 비프음 울리기
+2026-04-18 20:24:26,915 [INFO]   [H01] 빌드 성공 (610KB, 47.5초)
+2026-04-18 20:24:54,010 [INFO]   [H01] guide.json 생성 완료
+2026-04-18 20:24:54,010 [INFO]   진행: 35/97 (성공:34 실패:1) ETA: 83.3분
+2026-04-18 20:24:54,010 [INFO] [36/97] H02: LED 색상 바꿀 때마다 도레미 연주하기
+2026-04-18 20:24:54,010 [INFO]   [H02] 시도 1/3: LED 색상 바꿀 때마다 도레미 연주하기
+2026-04-18 20:25:39,505 [INFO]   [H02] 빌드 성공 (610KB, 45.5초)
+2026-04-18 20:26:05,110 [INFO]   [H02] guide.json 생성 완료
+2026-04-18 20:26:05,111 [INFO]   진행: 36/97 (성공:35 실패:1) ETA: 81.7분
+2026-04-18 20:26:05,111 [INFO] [37/97] H03: 알람: LED 빠르게 깜빡 + 비프 빠르게 반복
+2026-04-18 20:26:05,111 [INFO]   [H03] 시도 1/3: 알람: LED 빠르게 깜빡 + 비프 빠르게 반복
+2026-04-18 20:26:44,136 [INFO]   [H03] 빌드 성공 (610KB, 39.0초)
+2026-04-18 20:27:10,207 [INFO]   [H03] guide.json 생성 완료
+2026-04-18 20:27:10,208 [INFO]   진행: 37/97 (성공:36 실패:1) ETA: 79.9분
+2026-04-18 20:27:10,208 [INFO] [38/97] H04: 크리스마스: LED 랜덤 색상 + 징글벨 멜로디
+2026-04-18 20:27:10,208 [INFO]   [H04] 시도 1/3: 크리스마스: LED 랜덤 색상 + 징글벨 멜로디
+2026-04-18 20:28:01,316 [INFO]   [H04] 빌드 성공 (611KB, 51.1초)
+2026-04-18 20:28:29,499 [INFO]   [H04] guide.json 생성 완료
+2026-04-18 20:28:29,499 [INFO]   진행: 38/97 (성공:37 실패:1) ETA: 78.6분
+2026-04-18 20:28:29,499 [INFO] [39/97] H05: 신호등: 빨강3초→노랑1초→초록3초 + 초록일 때 비프음
+2026-04-18 20:28:29,500 [INFO]   [H05] 시도 1/3: 신호등: 빨강3초→노랑1초→초록3초 + 초록일 때 비프음
+2026-04-18 20:29:14,288 [INFO]   [H05] 빌드 성공 (610KB, 44.8초)
+2026-04-18 20:29:51,305 [INFO]   [H05] guide.json 생성 완료
+2026-04-18 20:29:51,306 [INFO]   진행: 39/97 (성공:38 실패:1) ETA: 77.3분
+2026-04-18 20:29:51,306 [INFO] [40/97] H06: LED 무지개 순환 + 도레미파솔라시도 동시 연주
+2026-04-18 20:29:51,307 [INFO]   [H06] 시도 1/3: LED 무지개 순환 + 도레미파솔라시도 동시 연주
+2026-04-18 20:30:46,347 [WARNING]   [H06] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:517:11: error: redefinition of 'const int NOTES []'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:33:18: note: 'const int NOTES [8]' previously defined here
+Error during build: exit status 1
+
+2026-04-18 20:30:48,348 [INFO]   [H06] 시도 2/3: LED 무지개 순환 + 도레미파솔라시도 동시 연주
+2026-04-18 20:31:49,052 [INFO]   [H06] 빌드 성공 (611KB, 117.7초)
+2026-04-18 20:32:35,953 [INFO]   [H06] guide.json 생성 완료
+2026-04-18 20:32:35,954 [INFO]   진행: 40/97 (성공:39 실패:1) ETA: 78.0분
+2026-04-18 20:32:35,954 [INFO] [41/97] I01: 온도에 따라 LED 색 바꾸기 (낮으면 파랑, 보통 초록, 높으면 빨강)
+2026-04-18 20:32:35,954 [INFO]   [I01] 시도 1/3: 온도에 따라 LED 색 바꾸기 (낮으면 파랑, 보통 초록, 높으면 빨강)
+2026-04-18 20:33:16,947 [WARNING]   [I01] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:563:3: error: extended character ° is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:564:6: error: extended character ° is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:565:3: error: extended character ° is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 20:33:18,948 [INFO]   [I01] 시도 2/3: 온도에 따라 LED 색 바꾸기 (낮으면 파랑, 보통 초록, 높으면 빨강)
+2026-04-18 20:34:01,848 [INFO]   [I01] 빌드 성공 (611KB, 85.9초)
+2026-04-18 20:34:29,945 [INFO]   [I01] guide.json 생성 완료
+2026-04-18 20:34:29,946 [INFO]   진행: 41/97 (성공:40 실패:1) ETA: 77.3분
+2026-04-18 20:34:29,946 [INFO] [42/97] I02: 열사병 경보: 35도 이상이면 빨간LED+사이렌+OLED에 DANGER
+2026-04-18 20:34:29,946 [INFO]   [I02] 시도 1/3: 열사병 경보: 35도 이상이면 빨간LED+사이렌+OLED에 DANGER
+2026-04-18 20:35:19,961 [INFO]   [I02] 빌드 성공 (611KB, 50.0초)
+2026-04-18 20:35:52,170 [INFO]   [I02] guide.json 생성 완료
+2026-04-18 20:35:52,171 [INFO]   진행: 42/97 (성공:41 실패:1) ETA: 75.9분
+2026-04-18 20:35:52,171 [INFO] [43/97] I03: 습도 70% 넘으면 노란LED 깜빡이기 + OLED에 습도 표시. snprintf로 char 배열 변환 후 drawString 사용.
+2026-04-18 20:35:52,171 [INFO]   [I03] 시도 1/3: 습도 70% 넘으면 노란LED 깜빡이기 + OLED에 습도 표시. snprintf로 char 배열 변환 후 drawString 사용.
+2026-04-18 20:36:33,846 [INFO]   [I03] 빌드 성공 (610KB, 41.7초)
+2026-04-18 20:37:03,207 [INFO]   [I03] guide.json 생성 완료
+2026-04-18 20:37:03,207 [INFO]   진행: 43/97 (성공:42 실패:1) ETA: 74.3분
+2026-04-18 20:37:03,207 [INFO] [44/97] I04: 5초마다 온도 측정 + 최고/최저/평균 OLED 표시
+2026-04-18 20:37:03,208 [INFO]   [I04] 시도 1/3: 5초마다 온도 측정 + 최고/최저/평균 OLED 표시
+2026-04-18 20:37:49,127 [INFO]   [I04] 빌드 성공 (611KB, 45.9초)
+2026-04-18 20:38:22,657 [INFO]   [I04] guide.json 생성 완료
+2026-04-18 20:38:22,657 [INFO]   진행: 44/97 (성공:43 실패:1) ETA: 72.9분
+2026-04-18 20:38:22,658 [INFO] [45/97] I05: 온도 변화 감지: 1도 이상 변하면 비프음 + OLED 표시
+2026-04-18 20:38:22,658 [INFO]   [I05] 시도 1/3: 온도 변화 감지: 1도 이상 변하면 비프음 + OLED 표시
+2026-04-18 20:39:09,869 [INFO]   [I05] 빌드 성공 (611KB, 47.2초)
+2026-04-18 20:39:40,436 [INFO]   [I05] guide.json 생성 완료
+2026-04-18 20:39:40,437 [INFO]   진행: 45/97 (성공:44 실패:1) ETA: 71.4분
+2026-04-18 20:39:40,437 [INFO] [46/97] I06: 교실 환경 모니터: 온습도+쾌적도 LED 신호등+OLED
+2026-04-18 20:39:40,437 [INFO]   [I06] 시도 1/3: 교실 환경 모니터: 온습도+쾌적도 LED 신호등+OLED
+2026-04-18 20:41:08,148 [INFO]   [I06] 빌드 성공 (612KB, 87.7초)
+2026-04-18 20:41:41,639 [INFO]   [I06] guide.json 생성 완료
+2026-04-18 20:41:41,640 [INFO]   진행: 46/97 (성공:45 실패:1) ETA: 70.7분
+2026-04-18 20:41:41,640 [INFO] [47/97] J01: 스위치 누를 때마다 LED 토글 (켜짐↔꺼짐)
+2026-04-18 20:41:41,640 [INFO]   [J01] 시도 1/3: 스위치 누를 때마다 LED 토글 (켜짐↔꺼짐)
+2026-04-18 20:42:22,349 [INFO]   [J01] 빌드 성공 (610KB, 40.7초)
+2026-04-18 20:42:49,625 [INFO]   [J01] guide.json 생성 완료
+2026-04-18 20:42:49,625 [INFO]   진행: 47/97 (성공:46 실패:1) ETA: 69.1분
+2026-04-18 20:42:49,625 [INFO] [48/97] J02: 스위치 누른 횟수 OLED에 표시하기
+2026-04-18 20:42:49,625 [INFO]   [J02] 시도 1/3: 스위치 누른 횟수 OLED에 표시하기
+2026-04-18 20:43:28,453 [INFO]   [J02] 빌드 성공 (610KB, 38.8초)
+2026-04-18 20:43:57,345 [INFO]   [J02] guide.json 생성 완료
+2026-04-18 20:43:57,345 [INFO]   진행: 48/97 (성공:47 실패:1) ETA: 67.4분
+2026-04-18 20:43:57,346 [INFO] [49/97] J03: 스위치 3번 누르면 멜로디 재생하기
+2026-04-18 20:43:57,346 [INFO]   [J03] 시도 1/3: 스위치 3번 누르면 멜로디 재생하기
+2026-04-18 20:44:47,076 [INFO]   [J03] 빌드 성공 (611KB, 49.7초)
+2026-04-18 20:45:17,353 [INFO]   [J03] guide.json 생성 완료
+2026-04-18 20:45:17,354 [INFO]   진행: 49/97 (성공:48 실패:1) ETA: 66.0분
+2026-04-18 20:45:17,354 [INFO] [50/97] J04: 스위치 길게 누르면(2초) LED 끄기 + 짧게 누르면 색상 변경
+2026-04-18 20:45:17,354 [INFO]   [J04] 시도 1/3: 스위치 길게 누르면(2초) LED 끄기 + 짧게 누르면 색상 변경
+2026-04-18 20:46:04,087 [INFO]   [J04] 빌드 성공 (610KB, 46.7초)
+2026-04-18 20:46:33,879 [INFO]   [J04] guide.json 생성 완료
+2026-04-18 20:46:33,880 [INFO]   진행: 50/97 (성공:49 실패:1) ETA: 64.6분
+2026-04-18 20:46:33,880 [INFO] [51/97] J05: 스위치로 모드 전환: 1번=LED, 2번=멜로디, 3번=온도
+2026-04-18 20:46:33,881 [INFO]   [J05] 시도 1/3: 스위치로 모드 전환: 1번=LED, 2번=멜로디, 3번=온도
+2026-04-18 20:47:28,089 [INFO]   [J05] 빌드 성공 (612KB, 54.2초)
+2026-04-18 20:47:59,479 [INFO]   [J05] guide.json 생성 완료
+2026-04-18 20:47:59,479 [INFO]   진행: 51/97 (성공:50 실패:1) ETA: 63.2분
+2026-04-18 20:47:59,479 [INFO] [52/97] J06: 스위치 더블클릭 감지: 1번=빨강, 빠르게 2번=파랑
+2026-04-18 20:47:59,480 [INFO]   [J06] 시도 1/3: 스위치 더블클릭 감지: 1번=빨강, 빠르게 2번=파랑
+2026-04-18 20:48:38,962 [WARNING]   [J06] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:565:21: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:565:59: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:566:37: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 20:48:40,963 [INFO]   [J06] 시도 2/3: 스위치 더블클릭 감지: 1번=빨강, 빠르게 2번=파랑
+2026-04-18 20:49:24,041 [INFO]   [J06] 빌드 성공 (610KB, 84.6초)
+2026-04-18 20:49:52,215 [INFO]   [J06] guide.json 생성 완료
+2026-04-18 20:49:52,215 [INFO]   진행: 52/97 (성공:51 실패:1) ETA: 62.3분
+2026-04-18 20:49:52,216 [INFO] [53/97] K01: OLED에 현재 LED 색상 이름 표시하기
+2026-04-18 20:49:52,216 [INFO]   [K01] 시도 1/3: OLED에 현재 LED 색상 이름 표시하기
+2026-04-18 20:50:34,518 [INFO]   [K01] 빌드 성공 (610KB, 42.3초)
+2026-04-18 20:51:00,406 [INFO]   [K01] guide.json 생성 완료
+2026-04-18 20:51:00,406 [INFO]   진행: 53/97 (성공:52 실패:1) ETA: 60.7분
+2026-04-18 20:51:00,406 [INFO] [54/97] K02: OLED에 카운트다운 5초 후 LED 무지개 시작
+2026-04-18 20:51:00,407 [INFO]   [K02] 시도 1/3: OLED에 카운트다운 5초 후 LED 무지개 시작
+2026-04-18 20:51:43,476 [INFO]   [K02] 빌드 성공 (611KB, 43.1초)
+2026-04-18 20:52:12,574 [INFO]   [K02] guide.json 생성 완료
+2026-04-18 20:52:12,575 [INFO]   진행: 54/97 (성공:53 실패:1) ETA: 59.2분
+2026-04-18 20:52:12,575 [INFO] [55/97] K03: OLED에 디지털 시계 (MM:SS) 표시
+2026-04-18 20:52:12,575 [INFO]   [K03] 시도 1/3: OLED에 디지털 시계 (MM:SS) 표시
+2026-04-18 20:52:54,809 [INFO]   [K03] 빌드 성공 (610KB, 42.2초)
+2026-04-18 20:53:24,968 [INFO]   [K03] guide.json 생성 완료
+2026-04-18 20:53:24,969 [INFO]   진행: 55/97 (성공:54 실패:1) ETA: 57.7분
+2026-04-18 20:53:24,969 [INFO] [56/97] K04: OLED에 프로그레스바 0%에서 100% 표시
+2026-04-18 20:53:24,969 [INFO]   [K04] 시도 1/3: OLED에 프로그레스바 0%에서 100% 표시
+2026-04-18 20:54:06,078 [WARNING]   [K04] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino: In function 'void drawProgressBar(int)':
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:503:8: error: 'class SSD1306' has no member named 'drawRect'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:508:10: error: 'class SSD1306' has no member named 'fillRect'
+Error during build: exit status 1
+
+2026-04-18 20:54:08,079 [INFO]   [K04] 시도 2/3: OLED에 프로그레스바 0%에서 100% 표시
+2026-04-18 20:54:52,088 [WARNING]   [K04] 시도 2 실패: Build failed:
+5:10: error: 'class SSD1306' has no member named 'drawPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:508:10: error: 'class SSD1306' has no member named 'drawPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:509:10: error: 'class SSD1306' has no member named 'drawPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:516:12: error: 'class SSD1306' has no member named 'drawPixel'
+Error during build: exit status 1
+
+2026-04-18 20:54:54,088 [INFO]   [K04] 시도 3/3: OLED에 프로그레스바 0%에서 100% 표시
+2026-04-18 20:55:35,290 [WARNING]   [K04] 시도 3 실패: Build failed:
+o:511:14: error: 'class SSD1306' has no member named 'setPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:514:14: error: 'class SSD1306' has no member named 'setPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:515:14: error: 'class SSD1306' has no member named 'setPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:522:18: error: 'class SSD1306' has no member named 'setPixel'
+Error during build: exit status 1
+
+2026-04-18 20:55:35,290 [ERROR]   [K04] 최종 실패: Build failed:
+o:511:14: error: 'class SSD1306' has no member named 'setPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:514:14: error: 'class SSD1306' has no member named 'setPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:515:14: error: 'class SSD1306' has no member named 'setPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:522:18: error: 'class SSD1306' has no member named 'setPixel'
+Error during build: exit status 1
+
+2026-04-18 20:55:35,290 [INFO]   진행: 56/97 (성공:54 실패:2) ETA: 56.9분
+2026-04-18 20:55:35,290 [INFO] [57/97] K05: OLED에 스크롤 텍스트: 긴 문장이 오른쪽에서 왼쪽으로
+2026-04-18 20:55:35,291 [INFO]   [K05] 시도 1/3: OLED에 스크롤 텍스트: 긴 문장이 오른쪽에서 왼쪽으로
+2026-04-18 20:56:21,885 [INFO]   [K05] 빌드 성공 (610KB, 46.6초)
+2026-04-18 20:56:49,452 [INFO]   [K05] guide.json 생성 완료
+2026-04-18 20:56:49,453 [INFO]   진행: 57/97 (성공:55 실패:2) ETA: 55.4분
+2026-04-18 20:56:49,453 [INFO] [58/97] L01: 라면 타이머: 3분 카운트다운 OLED + 끝나면 멜로디+LED
+2026-04-18 20:56:49,453 [INFO]   [L01] 시도 1/3: 라면 타이머: 3분 카운트다운 OLED + 끝나면 멜로디+LED
+2026-04-18 20:57:46,513 [INFO]   [L01] 빌드 성공 (611KB, 57.1초)
+2026-04-18 20:58:25,062 [INFO]   [L01] guide.json 생성 완료
+2026-04-18 20:58:25,063 [INFO]   진행: 58/97 (성공:56 실패:2) ETA: 54.1분
+2026-04-18 20:58:25,063 [INFO] [59/97] L02: 반응속도 테스트: 랜덤 시간 후 LED 변경 -> 스위치 누르기 -> 시간 표시
+2026-04-18 20:58:25,063 [INFO]   [L02] 시도 1/3: 반응속도 테스트: 랜덤 시간 후 LED 변경 -> 스위치 누르기 -> 시간 표시
+2026-04-18 20:59:42,853 [INFO]   [L02] 빌드 성공 (612KB, 77.8초)
+2026-04-18 21:00:15,294 [INFO]   [L02] guide.json 생성 완료
+2026-04-18 21:00:15,295 [INFO]   진행: 59/97 (성공:57 실패:2) ETA: 53.0분
+2026-04-18 21:00:15,295 [INFO] [60/97] L03: 주사위: 스위치 누르면 OLED에 1~6 랜덤 숫자 표시
+2026-04-18 21:00:15,295 [INFO]   [L03] 시도 1/3: 주사위: 스위치 누르면 OLED에 1~6 랜덤 숫자 표시
+2026-04-18 21:00:59,692 [INFO]   [L03] 빌드 성공 (612KB, 44.4초)
+2026-04-18 21:01:29,442 [INFO]   [L03] guide.json 생성 완료
+2026-04-18 21:01:29,442 [INFO]   진행: 60/97 (성공:58 실패:2) ETA: 51.6분
+2026-04-18 21:01:29,442 [INFO] [61/97] L04: 가위바위보: 스위치 -> OLED에 랜덤 결과 + 승패 카운트
+2026-04-18 21:01:29,443 [INFO]   [L04] 시도 1/3: 가위바위보: 스위치 -> OLED에 랜덤 결과 + 승패 카운트
+2026-04-18 21:03:01,955 [WARNING]   [L04] 시도 1 실패: Build failed:
+ extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:593:38: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:605:21: error: extended character ← is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:607:21: error: extended character ← is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 21:03:03,956 [INFO]   [L04] 시도 2/3: 가위바위보: 스위치 -> OLED에 랜덤 결과 + 승패 카운트
+2026-04-18 21:05:01,634 [INFO]   [L04] 빌드 성공 (611KB, 212.2초)
+2026-04-18 21:05:34,504 [INFO]   [L04] guide.json 생성 완료
+2026-04-18 21:05:34,505 [INFO]   진행: 61/97 (성공:59 실패:2) ETA: 51.7분
+2026-04-18 21:05:34,505 [INFO] [62/97] L05: 스톱워치: 스위치 1번=시작, 2번=정지, 3번=리셋
+2026-04-18 21:05:34,505 [INFO]   [L05] 시도 1/3: 스톱워치: 스위치 1번=시작, 2번=정지, 3번=리셋
+2026-04-18 21:06:48,873 [INFO]   [L05] 빌드 성공 (611KB, 74.4초)
+2026-04-18 21:07:23,503 [INFO]   [L05] guide.json 생성 완료
+2026-04-18 21:07:23,503 [INFO]   진행: 62/97 (성공:60 실패:2) ETA: 50.5분
+2026-04-18 21:07:23,504 [INFO] [63/97] L06: 룰렛: LED 무지개 빠르게 순환 후 점점 느려지며 멈추기
+2026-04-18 21:07:23,504 [INFO]   [L06] 시도 1/3: 룰렛: LED 무지개 빠르게 순환 후 점점 느려지며 멈추기
+2026-04-18 21:08:15,088 [INFO]   [L06] 빌드 성공 (611KB, 51.6초)
+2026-04-18 21:08:44,128 [INFO]   [L06] guide.json 생성 완료
+2026-04-18 21:08:44,129 [INFO]   진행: 63/97 (성공:61 실패:2) ETA: 49.0분
+2026-04-18 21:08:44,129 [INFO] [64/97] L07: 퀴즈 타이머: 10초 카운트다운 + LED 색으로 남은 시간 표시
+2026-04-18 21:08:44,129 [INFO]   [L07] 시도 1/3: 퀴즈 타이머: 10초 카운트다운 + LED 색으로 남은 시간 표시
+2026-04-18 21:09:42,174 [INFO]   [L07] 빌드 성공 (611KB, 58.0초)
+2026-04-18 21:10:11,944 [INFO]   [L07] guide.json 생성 완료
+2026-04-18 21:10:11,944 [INFO]   진행: 64/97 (성공:62 실패:2) ETA: 47.6분
+2026-04-18 21:10:11,944 [INFO] [65/97] L08: 발표 타이머: OLED에 남은 시간, 1분전 노랑, 끝나면 빨강+비프
+2026-04-18 21:10:11,945 [INFO]   [L08] 시도 1/3: 발표 타이머: OLED에 남은 시간, 1분전 노랑, 끝나면 빨강+비프
+2026-04-18 21:11:04,298 [WARNING]   [L08] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:646:10: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:647:14: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:648:14: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 21:11:06,299 [INFO]   [L08] 시도 2/3: 발표 타이머: OLED에 남은 시간, 1분전 노랑, 끝나면 빨강+비프
+2026-04-18 21:11:54,230 [WARNING]   [L08] 시도 2 실패: Build failed:
+505:8: error: 'class SSD1306' has no member named 'setFont'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:505:16: error: 'ArialMT_Plain_24' was not declared in this scope
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:507:8: error: 'class SSD1306' has no member named 'setFont'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:507:16: error: 'ArialMT_Plain_10' was not declared in this scope
+Error during build: exit status 1
+
+2026-04-18 21:11:56,231 [INFO]   [L08] 시도 3/3: 발표 타이머: OLED에 남은 시간, 1분전 노랑, 끝나면 빨강+비프
+2026-04-18 21:13:09,564 [INFO]   [L08] 빌드 성공 (611KB, 177.6초)
+2026-04-18 21:13:43,211 [INFO]   [L08] guide.json 생성 완료
+2026-04-18 21:13:43,211 [INFO]   진행: 65/97 (성공:63 실패:2) ETA: 47.2분
+2026-04-18 21:13:43,211 [INFO] [66/97] M01: 5초마다 온도를 BLE로 스마트폰에 전송 + OLED 표시
+2026-04-18 21:13:43,212 [INFO]   [M01] 시도 1/3: 5초마다 온도를 BLE로 스마트폰에 전송 + OLED 표시
+2026-04-18 21:14:23,679 [WARNING]   [M01] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino: In function 'void loop()':
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:546:22: error: 'bleMsg' was not declared in this scope
+Error during build: exit status 1
+
+2026-04-18 21:14:25,680 [INFO]   [M01] 시도 2/3: 5초마다 온도를 BLE로 스마트폰에 전송 + OLED 표시
+2026-04-18 21:15:06,641 [INFO]   [M01] 빌드 성공 (611KB, 83.4초)
+2026-04-18 21:15:32,126 [INFO]   [M01] guide.json 생성 완료
+2026-04-18 21:15:32,127 [INFO]   진행: 66/97 (성공:64 실패:2) ETA: 45.9분
+2026-04-18 21:15:32,127 [INFO] [67/97] M02: 5초마다 온도+습도 BLE 전송. sensorChar->setValue()/notify() 사용.
+2026-04-18 21:15:32,127 [INFO]   [M02] 시도 1/3: 5초마다 온도+습도 BLE 전송. sensorChar->setValue()/notify() 사용.
+2026-04-18 21:16:13,635 [INFO]   [M02] 빌드 성공 (611KB, 41.5초)
+2026-04-18 21:16:44,311 [INFO]   [M02] guide.json 생성 완료
+2026-04-18 21:16:44,311 [INFO]   진행: 67/97 (성공:65 실패:2) ETA: 44.3분
+2026-04-18 21:16:44,311 [INFO] [68/97] M03: 스위치 누르면 BLE로 카운트 전송
+2026-04-18 21:16:44,312 [INFO]   [M03] 시도 1/3: 스위치 누르면 BLE로 카운트 전송
+2026-04-18 21:17:26,098 [INFO]   [M03] 빌드 성공 (611KB, 41.8초)
+2026-04-18 21:17:52,187 [INFO]   [M03] guide.json 생성 완료
+2026-04-18 21:17:52,187 [INFO]   진행: 68/97 (성공:66 실패:2) ETA: 42.6분
+2026-04-18 21:17:52,187 [INFO] [69/97] M04: 온도 28도 이상이면 BLE로 경고 전송 + LED 빨강
+2026-04-18 21:17:52,187 [INFO]   [M04] 시도 1/3: 온도 28도 이상이면 BLE로 경고 전송 + LED 빨강
+2026-04-18 21:18:35,517 [INFO]   [M04] 빌드 성공 (611KB, 43.3초)
+2026-04-18 21:19:05,014 [INFO]   [M04] guide.json 생성 완료
+2026-04-18 21:19:05,015 [INFO]   진행: 69/97 (성공:67 실패:2) ETA: 41.1분
+2026-04-18 21:19:05,015 [INFO] [70/97] M05: LED 색상 변경할 때마다 현재 색을 sensorChar->setValue()/notify()로 BLE 전송 + OLED 표시
+2026-04-18 21:19:05,015 [INFO]   [M05] 시도 1/3: LED 색상 변경할 때마다 현재 색을 sensorChar->setValue()/notify()로 BLE 전송 + OLED 표시
+2026-04-18 21:19:44,854 [WARNING]   [M05] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:560:36: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 21:19:46,855 [INFO]   [M05] 시도 2/3: LED 색상 변경할 때마다 현재 색을 sensorChar->setValue()/notify()로 BLE 전송 + OLED 표시
+2026-04-18 21:20:32,386 [WARNING]   [M05] 시도 2 실패: Build failed:
+day\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:592:13: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:594:26: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:594:50: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:585:10: error: expected constructor, destructor, or type conversion before '설명'
+Error during build: exit status 1
+
+2026-04-18 21:20:34,387 [INFO]   [M05] 시도 3/3: LED 색상 변경할 때마다 현재 색을 sensorChar->setValue()/notify()로 BLE 전송 + OLED 표시
+2026-04-18 21:21:21,313 [INFO]   [M05] 빌드 성공 (611KB, 136.3초)
+2026-04-18 21:21:57,838 [INFO]   [M05] guide.json 생성 완료
+2026-04-18 21:21:57,839 [INFO]   진행: 70/97 (성공:68 실패:2) ETA: 40.1분
+2026-04-18 21:21:57,839 [INFO] [71/97] N01: 스마트폰에서 BLE로 "RED","GREEN","BLUE" 보내면 해당 색 LED 켜기. onBleReceive(String cmd) 함수 정의하여 처리. sensorChar로 현재 색 응답.
+2026-04-18 21:21:57,839 [INFO]   [N01] 시도 1/3: 스마트폰에서 BLE로 "RED","GREEN","BLUE" 보내면 해당 색 LED 켜기. onBleReceive(String cmd) 함수 정의하여 처리. sensorChar로 현재 색 응답.
+2026-04-18 21:22:40,560 [INFO]   [N01] 빌드 성공 (610KB, 42.7초)
+2026-04-18 21:23:11,464 [INFO]   [N01] guide.json 생성 완료
+2026-04-18 21:23:11,465 [INFO]   진행: 71/97 (성공:69 실패:2) ETA: 38.6분
+2026-04-18 21:23:11,465 [INFO] [72/97] N02: 스마트폰에서 "MELODY:학교종" 보내면 학교종 연주. onBleReceive로 수신.
+2026-04-18 21:23:11,466 [INFO]   [N02] 시도 1/3: 스마트폰에서 "MELODY:학교종" 보내면 학교종 연주. onBleReceive로 수신.
+2026-04-18 21:24:01,131 [INFO]   [N02] 빌드 성공 (610KB, 49.7초)
+2026-04-18 21:24:36,480 [INFO]   [N02] guide.json 생성 완료
+2026-04-18 21:24:36,481 [INFO]   진행: 72/97 (성공:70 실패:2) ETA: 37.1분
+2026-04-18 21:24:36,481 [INFO] [73/97] N03: 스마트폰에서 "SPEED:500" 보내면 LED 깜빡 속도 변경 + BLE 응답. onBleReceive로 수신.
+2026-04-18 21:24:36,481 [INFO]   [N03] 시도 1/3: 스마트폰에서 "SPEED:500" 보내면 LED 깜빡 속도 변경 + BLE 응답. onBleReceive로 수신.
+2026-04-18 21:25:21,003 [INFO]   [N03] 빌드 성공 (610KB, 44.5초)
+2026-04-18 21:25:51,659 [INFO]   [N03] guide.json 생성 완료
+2026-04-18 21:25:51,660 [INFO]   진행: 73/97 (성공:71 실패:2) ETA: 35.5분
+2026-04-18 21:25:51,660 [INFO] [74/97] N04: 스마트폰에서 "READ" 보내면 온습도 측정 + BLE 전송 + OLED 표시. onBleReceive로 수신.
+2026-04-18 21:25:51,660 [INFO]   [N04] 시도 1/3: 스마트폰에서 "READ" 보내면 온습도 측정 + BLE 전송 + OLED 표시. onBleReceive로 수신.
+2026-04-18 21:26:36,225 [INFO]   [N04] 빌드 성공 (610KB, 44.6초)
+2026-04-18 21:27:04,582 [INFO]   [N04] guide.json 생성 완료
+2026-04-18 21:27:04,582 [INFO]   진행: 74/97 (성공:72 실패:2) ETA: 33.9분
+2026-04-18 21:27:04,582 [INFO] [75/97] N05: 스마트폰에서 "DISPLAY:Hello" 보내면 OLED에 표시 + BLE 확인. onBleReceive로 수신.
+2026-04-18 21:27:04,582 [INFO]   [N05] 시도 1/3: 스마트폰에서 "DISPLAY:Hello" 보내면 OLED에 표시 + BLE 확인. onBleReceive로 수신.
+2026-04-18 21:27:45,743 [INFO]   [N05] 빌드 성공 (610KB, 41.2초)
+2026-04-18 21:28:18,840 [INFO]   [N05] guide.json 생성 완료
+2026-04-18 21:28:18,841 [INFO]   진행: 75/97 (성공:73 실패:2) ETA: 32.4분
+2026-04-18 21:28:18,841 [INFO] [76/97] N06: 스마트폰에서 "COLOR:255,0,128" 보내면 RGB LED를 해당 색으로. onBleReceive로 수신.
+2026-04-18 21:28:18,841 [INFO]   [N06] 시도 1/3: 스마트폰에서 "COLOR:255,0,128" 보내면 RGB LED를 해당 색으로. onBleReceive로 수신.
+2026-04-18 21:29:00,498 [INFO]   [N06] 빌드 성공 (610KB, 41.7초)
+2026-04-18 21:29:27,654 [INFO]   [N06] guide.json 생성 완료
+2026-04-18 21:29:27,655 [INFO]   진행: 76/97 (성공:74 실패:2) ETA: 30.8분
+2026-04-18 21:29:27,655 [INFO] [77/97] N07: 스마트폰에서 "ALARM:30" 보내면 30초 타이머+매초 BLE 전송+끝나면 멜로디. onBleReceive로 수신.
+2026-04-18 21:29:27,655 [INFO]   [N07] 시도 1/3: 스마트폰에서 "ALARM:30" 보내면 30초 타이머+매초 BLE 전송+끝나면 멜로디. onBleReceive로 수신.
+2026-04-18 21:30:20,783 [INFO]   [N07] 빌드 성공 (613KB, 53.1초)
+2026-04-18 21:30:52,310 [INFO]   [N07] guide.json 생성 완료
+2026-04-18 21:30:52,310 [INFO]   진행: 77/97 (성공:75 실패:2) ETA: 29.3분
+2026-04-18 21:30:52,310 [INFO] [78/97] N08: 스마트폰에서 "STATUS" 보내면 온도+습도+LED색+스위치 상태를 BLE로 전송. onBleReceive로 수신.
+2026-04-18 21:30:52,311 [INFO]   [N08] 시도 1/3: 스마트폰에서 "STATUS" 보내면 온도+습도+LED색+스위치 상태를 BLE로 전송. onBleReceive로 수신.
+2026-04-18 21:31:37,967 [INFO]   [N08] 빌드 성공 (610KB, 45.7초)
+2026-04-18 21:32:09,915 [INFO]   [N08] guide.json 생성 완료
+2026-04-18 21:32:09,915 [INFO]   진행: 78/97 (성공:76 실패:2) ETA: 27.8분
+2026-04-18 21:32:09,915 [INFO] [79/97] O01: 현관 벨: 스위치 누르면 딩동 멜로디+OLED "Visitor!"+BLE 알림. sensorChar로 전송.
+2026-04-18 21:32:09,916 [INFO]   [O01] 시도 1/3: 현관 벨: 스위치 누르면 딩동 멜로디+OLED "Visitor!"+BLE 알림. sensorChar로 전송.
+2026-04-18 21:32:56,961 [INFO]   [O01] 빌드 성공 (611KB, 47.0초)
+2026-04-18 21:33:27,520 [INFO]   [O01] guide.json 생성 완료
+2026-04-18 21:33:27,521 [INFO]   진행: 79/97 (성공:77 실패:2) ETA: 26.3분
+2026-04-18 21:33:27,521 [INFO] [80/97] O02: 방범 알람: 스위치 떼면 사이렌+LED 빨강 깜빡+OLED ALERT+BLE 경보
+2026-04-18 21:33:27,521 [INFO]   [O02] 시도 1/3: 방범 알람: 스위치 떼면 사이렌+LED 빨강 깜빡+OLED ALERT+BLE 경보
+2026-04-18 21:34:15,687 [INFO]   [O02] 빌드 성공 (611KB, 48.2초)
+2026-04-18 21:34:52,637 [INFO]   [O02] guide.json 생성 완료
+2026-04-18 21:34:52,637 [INFO]   진행: 80/97 (성공:78 실패:2) ETA: 24.9분
+2026-04-18 21:34:52,637 [INFO] [81/97] O03: 스마트 알람시계: OLED 초시계 -> 설정시간에 멜로디+LED+스위치로 끄기
+2026-04-18 21:34:52,637 [INFO]   [O03] 시도 1/3: 스마트 알람시계: OLED 초시계 -> 설정시간에 멜로디+LED+스위치로 끄기
+2026-04-18 21:37:14,783 [INFO]   [O03] 빌드 성공 (612KB, 142.1초)
+2026-04-18 21:37:51,762 [INFO]   [O03] guide.json 생성 완료
+2026-04-18 21:37:51,762 [INFO]   진행: 81/97 (성공:79 실패:2) ETA: 23.7분
+2026-04-18 21:37:51,763 [INFO] [82/97] O04: 세탁기 알림: 카운트다운 OLED+BLE 전송+끝나면 멜로디+LED
+2026-04-18 21:37:51,763 [INFO]   [O04] 시도 1/3: 세탁기 알림: 카운트다운 OLED+BLE 전송+끝나면 멜로디+LED
+2026-04-18 21:39:39,656 [INFO]   [O04] 빌드 성공 (612KB, 107.9초)
+2026-04-18 21:40:18,265 [INFO]   [O04] guide.json 생성 완료
+2026-04-18 21:40:18,265 [INFO]   진행: 82/97 (성공:80 실패:2) ETA: 22.4분
+2026-04-18 21:40:18,266 [INFO] [83/97] O05: 기상 알람: 카운트다운 OLED -> 멜로디 -> LED 무지개 점멸
+2026-04-18 21:40:18,266 [INFO]   [O05] 시도 1/3: 기상 알람: 카운트다운 OLED -> 멜로디 -> LED 무지개 점멸
+2026-04-18 21:41:32,979 [INFO]   [O05] 빌드 성공 (610KB, 74.7초)
+2026-04-18 21:42:10,102 [INFO]   [O05] guide.json 생성 완료
+2026-04-18 21:42:10,103 [INFO]   진행: 83/97 (성공:81 실패:2) ETA: 21.0분
+2026-04-18 21:42:10,103 [INFO] [84/97] P01: 반응속도 게임 BLE: 랜덤 시간 후 LED -> 스위치 -> 반응시간을 sensorChar로 BLE 전송
+2026-04-18 21:42:10,103 [INFO]   [P01] 시도 1/3: 반응속도 게임 BLE: 랜덤 시간 후 LED -> 스위치 -> 반응시간을 sensorChar로 BLE 전송
+2026-04-18 21:43:21,687 [INFO]   [P01] 빌드 성공 (619KB, 71.6초)
+2026-04-18 21:43:53,977 [INFO]   [P01] guide.json 생성 완료
+2026-04-18 21:43:53,977 [INFO]   진행: 84/97 (성공:82 실패:2) ETA: 19.5분
+2026-04-18 21:43:53,977 [INFO] [85/97] P02: 주사위 게임 BLE: 스위치 -> OLED에 숫자 + 결과를 sensorChar로 BLE 전송
+2026-04-18 21:43:53,978 [INFO]   [P02] 시도 1/3: 주사위 게임 BLE: 스위치 -> OLED에 숫자 + 결과를 sensorChar로 BLE 전송
+2026-04-18 21:44:48,167 [INFO]   [P02] 빌드 성공 (612KB, 54.2초)
+2026-04-18 21:45:23,673 [INFO]   [P02] guide.json 생성 완료
+2026-04-18 21:45:23,674 [INFO]   진행: 85/97 (성공:83 실패:2) ETA: 18.0분
+2026-04-18 21:45:23,674 [INFO] [86/97] P03: 기억력 게임: LED 색상 패턴 보여줌 -> 스마트폰에서 순서 입력 -> 맞으면 다음 레벨. onBleReceive로 수신.
+2026-04-18 21:45:23,674 [INFO]   [P03] 시도 1/3: 기억력 게임: LED 색상 패턴 보여줌 -> 스마트폰에서 순서 입력 -> 맞으면 다음 레벨. onBleReceive로 수신.
+2026-04-18 21:47:45,659 [INFO]   [P03] 빌드 성공 (614KB, 142.0초)
+2026-04-18 21:48:16,195 [INFO]   [P03] guide.json 생성 완료
+2026-04-18 21:48:16,196 [INFO]   진행: 86/97 (성공:84 실패:2) ETA: 16.7분
+2026-04-18 21:48:16,196 [INFO] [87/97] P04: 빨리 누르기: 10초 동안 스위치 누른 횟수 -> 점수 sensorChar로 BLE 전송
+2026-04-18 21:48:16,196 [INFO]   [P04] 시도 1/3: 빨리 누르기: 10초 동안 스위치 누른 횟수 -> 점수 sensorChar로 BLE 전송
+2026-04-18 21:49:12,036 [INFO]   [P04] 빌드 성공 (612KB, 55.8초)
+2026-04-18 21:49:42,860 [INFO]   [P04] guide.json 생성 완료
+2026-04-18 21:49:42,861 [INFO]   진행: 87/97 (성공:85 실패:2) ETA: 15.2분
+2026-04-18 21:49:42,861 [INFO] [88/97] P05: LED 룰렛 BLE: 스마트폰에서 "SPIN" -> LED 색상 순환 후 멈춤 -> 결과 BLE 전송. onBleReceive로 수신.
+2026-04-18 21:49:42,862 [INFO]   [P05] 시도 1/3: LED 룰렛 BLE: 스마트폰에서 "SPIN" -> LED 색상 순환 후 멈춤 -> 결과 BLE 전송. onBleReceive로 수신.
+2026-04-18 21:50:34,823 [INFO]   [P05] 빌드 성공 (612KB, 52.0초)
+2026-04-18 21:51:05,648 [INFO]   [P05] guide.json 생성 완료
+2026-04-18 21:51:05,649 [INFO]   진행: 88/97 (성공:86 실패:2) ETA: 13.6분
+2026-04-18 21:51:05,649 [INFO] [89/97] P06: 온도 맞추기: OLED에 "몇도?" -> 스마트폰 입력 -> 높/낮 힌트 -> 맞추면 멜로디. onBleReceive로 수신.
+2026-04-18 21:51:05,650 [INFO]   [P06] 시도 1/3: 온도 맞추기: OLED에 "몇도?" -> 스마트폰 입력 -> 높/낮 힌트 -> 맞추면 멜로디. onBleReceive로 수신.
+2026-04-18 21:52:03,699 [INFO]   [P06] 빌드 성공 (611KB, 58.0초)
+2026-04-18 21:52:38,709 [INFO]   [P06] guide.json 생성 완료
+2026-04-18 21:52:38,710 [INFO]   진행: 89/97 (성공:87 실패:2) ETA: 12.1분
+2026-04-18 21:52:38,710 [INFO] [90/97] Q01: 스마트 교실: 온습도+쾌적도 LED+OLED 대시보드+sensorChar로 BLE 전송
+2026-04-18 21:52:38,710 [INFO]   [Q01] 시도 1/3: 스마트 교실: 온습도+쾌적도 LED+OLED 대시보드+sensorChar로 BLE 전송
+2026-04-18 21:53:38,653 [INFO]   [Q01] 빌드 성공 (613KB, 59.9초)
+2026-04-18 21:54:10,902 [INFO]   [Q01] guide.json 생성 완료
+2026-04-18 21:54:10,902 [INFO]   진행: 90/97 (성공:88 실패:2) ETA: 10.6분
+2026-04-18 21:54:10,902 [INFO] [91/97] Q02: 나만의 악기: 스위치 누를 때마다 다음 멜로디(3곡 순환)+LED 색 변경+OLED 곡명
+2026-04-18 21:54:10,903 [INFO]   [Q02] 시도 1/3: 나만의 악기: 스위치 누를 때마다 다음 멜로디(3곡 순환)+LED 색 변경+OLED 곡명
+2026-04-18 21:56:28,428 [WARNING]   [Q02] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:610:39: error: extended character — is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:610:45: error: extended character — is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:613:56: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 21:56:30,429 [INFO]   [Q02] 시도 2/3: 나만의 악기: 스위치 누를 때마다 다음 멜로디(3곡 순환)+LED 색 변경+OLED 곡명
+2026-04-18 21:58:17,540 [WARNING]   [Q02] 시도 2 실패: Build failed:
+day\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:634:12: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:634:16: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:634:28: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:623:10: error: expected constructor, destructor, or type conversion before '설명'
+Error during build: exit status 1
+
+2026-04-18 21:58:19,540 [INFO]   [Q02] 시도 3/3: 나만의 악기: 스위치 누를 때마다 다음 멜로디(3곡 순환)+LED 색 변경+OLED 곡명
+2026-04-18 22:01:03,370 [WARNING]   [Q02] 시도 3 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:629:27: error: extended character — is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:629:33: error: extended character — is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:632:16: error: extended character — is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 22:01:03,370 [ERROR]   [Q02] 최종 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:629:27: error: extended character — is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:629:33: error: extended character — is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:632:16: error: extended character — is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 22:01:03,371 [INFO]   진행: 91/97 (성공:88 실패:3) ETA: 9.4분
+2026-04-18 22:01:03,371 [INFO] [92/97] Q03: 미니 기상 스테이션: 온습도+쾌적도+최고최저+sensorChar로 BLE 주기적 전송
+2026-04-18 22:01:03,371 [INFO]   [Q03] 시도 1/3: 미니 기상 스테이션: 온습도+쾌적도+최고최저+sensorChar로 BLE 주기적 전송
+2026-04-18 22:02:19,785 [INFO]   [Q03] 빌드 성공 (612KB, 76.4초)
+2026-04-18 22:02:58,080 [INFO]   [Q03] guide.json 생성 완료
+2026-04-18 22:02:58,081 [INFO]   진행: 92/97 (성공:89 실패:3) ETA: 7.9분
+2026-04-18 22:02:58,081 [INFO] [93/97] Q04: 게임 센터: 스위치로 게임 선택(OLED 메뉴) -> 반응속도/주사위/빨리누르기 -> 점수 BLE
+2026-04-18 22:02:58,082 [INFO]   [Q04] 시도 1/3: 게임 센터: 스위치로 게임 선택(OLED 메뉴) -> 반응속도/주사위/빨리누르기 -> 점수 BLE
+2026-04-18 22:06:13,297 [WARNING]   [Q04] 시도 1 실패: Command '['bash', '-c', 'cat "C:\\Users\\lenovo\\AppData\\Local\\Temp\\tmpq56bsskm.txt" | "C:\\Users\\lenovo\\AppData\\Roaming\\npm\\claude.CMD" -p - --output-format stream-json --verbose --model claude-sonnet-4-6']' timed out after 180 seconds
+2026-04-18 22:06:15,298 [INFO]   [Q04] 시도 2/3: 게임 센터: 스위치로 게임 선택(OLED 메뉴) -> 반응속도/주사위/빨리누르기 -> 점수 BLE
+2026-04-18 22:09:58,157 [WARNING]   [Q04] 시도 2 실패: Command '['bash', '-c', 'cat "C:\\Users\\lenovo\\AppData\\Local\\Temp\\tmpmrkcz9i0.txt" | "C:\\Users\\lenovo\\AppData\\Roaming\\npm\\claude.CMD" -p - --output-format stream-json --verbose --model claude-sonnet-4-6']' timed out after 180 seconds
+2026-04-18 22:10:00,158 [INFO]   [Q04] 시도 3/3: 게임 센터: 스위치로 게임 선택(OLED 메뉴) -> 반응속도/주사위/빨리누르기 -> 점수 BLE
+2026-04-18 22:13:16,576 [INFO]   [Q04] 빌드 성공 (622KB, 618.5초)
+2026-04-18 22:13:54,549 [INFO]   [Q04] guide.json 생성 완료
+2026-04-18 22:13:54,549 [INFO]   진행: 93/97 (성공:90 실패:3) ETA: 6.7분
+2026-04-18 22:13:54,549 [INFO] [94/97] Q05: 보안 시스템: 스위치 패턴 비밀번호(짧-짧-긴) -> 맞으면 초록LED+멜로디 -> 틀리면 사이렌+BLE 경보
+2026-04-18 22:13:54,550 [INFO]   [Q05] 시도 1/3: 보안 시스템: 스위치 패턴 비밀번호(짧-짧-긴) -> 맞으면 초록LED+멜로디 -> 틀리면 사이렌+BLE 경보
+2026-04-18 22:15:28,550 [INFO]   [Q05] 빌드 성공 (612KB, 94.0초)
+2026-04-18 22:16:02,784 [INFO]   [Q05] guide.json 생성 완료
+2026-04-18 22:16:02,785 [INFO]   진행: 94/97 (성공:91 실패:3) ETA: 5.0분
+2026-04-18 22:16:02,785 [INFO] [95/97] Q06: OLED 부팅 화면: UTTEC Mini 로고 -> 로딩바 -> 메인 화면(온습도) 전환
+2026-04-18 22:16:02,786 [INFO]   [Q06] 시도 1/3: OLED 부팅 화면: UTTEC Mini 로고 -> 로딩바 -> 메인 화면(온습도) 전환
+2026-04-18 22:16:50,097 [WARNING]   [Q06] 시도 1 실패: Build failed:
+o:510:51: error: 'class SSD1306' has no member named 'setPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:512:52: error: 'class SSD1306' has no member named 'setPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:514:52: error: 'class SSD1306' has no member named 'setPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:519:14: error: 'class SSD1306' has no member named 'setPixel'
+Error during build: exit status 1
+
+2026-04-18 22:16:52,098 [INFO]   [Q06] 시도 2/3: OLED 부팅 화면: UTTEC Mini 로고 -> 로딩바 -> 메인 화면(온습도) 전환
+2026-04-18 22:17:41,982 [WARNING]   [Q06] 시도 2 실패: Build failed:
+5:10: error: 'class SSD1306' has no member named 'drawPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:508:10: error: 'class SSD1306' has no member named 'drawPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:509:10: error: 'class SSD1306' has no member named 'drawPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:516:12: error: 'class SSD1306' has no member named 'drawPixel'
+Error during build: exit status 1
+
+2026-04-18 22:17:43,983 [INFO]   [Q06] 시도 3/3: OLED 부팅 화면: UTTEC Mini 로고 -> 로딩바 -> 메인 화면(온습도) 전환
+2026-04-18 22:18:43,966 [WARNING]   [Q06] 시도 3 실패: Build failed:
+ni\ble_ota_arduino\ble_ota_arduino.ino: In function 'void showMainScreen(float, float)':
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:543:10: error: 'class SSD1306' has no member named 'drawPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino: At global scope:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:602:10: error: expected constructor, destructor, or type conversion before '흐름'
+Error during build: exit status 1
+
+2026-04-18 22:18:43,967 [ERROR]   [Q06] 최종 실패: Build failed:
+ni\ble_ota_arduino\ble_ota_arduino.ino: In function 'void showMainScreen(float, float)':
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:543:10: error: 'class SSD1306' has no member named 'drawPixel'
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino: At global scope:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:602:10: error: expected constructor, destructor, or type conversion before '흐름'
+Error during build: exit status 1
+
+2026-04-18 22:18:43,967 [INFO]   진행: 95/97 (성공:91 실패:4) ETA: 3.4분
+2026-04-18 22:18:43,967 [INFO] [96/97] Q07: 동시 실행: LED 무지개 순환 + OLED 온도 표시 + BLE 데이터 전송 (각각 다른 주기)
+2026-04-18 22:18:43,968 [INFO]   [Q07] 시도 1/3: 동시 실행: LED 무지개 순환 + OLED 온도 표시 + BLE 데이터 전송 (각각 다른 주기)
+2026-04-18 22:19:38,643 [INFO]   [Q07] 빌드 성공 (611KB, 54.7초)
+2026-04-18 22:20:15,193 [INFO]   [Q07] guide.json 생성 완료
+2026-04-18 22:20:15,194 [INFO]   진행: 96/97 (성공:92 실패:4) ETA: 1.7분
+2026-04-18 22:20:15,194 [INFO] [97/97] Q08: 인터랙티브 퀴즈: OLED에 문제 -> 스마트폰에서 답 입력 -> 맞으면 멜로디+LED+점수 -> BLE. onBleReceive로 수신.
+2026-04-18 22:20:15,195 [INFO]   [Q08] 시도 1/3: 인터랙티브 퀴즈: OLED에 문제 -> 스마트폰에서 답 입력 -> 맞으면 멜로디+LED+점수 -> BLE. onBleReceive로 수신.
+2026-04-18 22:21:28,459 [INFO]   [Q08] 빌드 성공 (611KB, 73.3초)
+2026-04-18 22:22:06,206 [INFO]   [Q08] guide.json 생성 완료
+2026-04-18 22:22:06,207 [INFO]   진행: 97/97 (성공:93 실패:4) ETA: 0.0분
+2026-04-18 22:22:08,185 [INFO] catalog.json generated: 113 items (C:\todo\today\aiHardStudy\사전빌드_mini\firmware_db\catalog.json)
+2026-04-18 22:22:08,186 [INFO] 
+2026-04-18 22:22:08,186 [INFO] ============================================================
+2026-04-18 22:22:08,186 [INFO] 빌드 완료 리포트
+2026-04-18 22:22:08,186 [INFO] ============================================================
+2026-04-18 22:22:08,186 [INFO] 총 소요: 164.2분
+2026-04-18 22:22:08,186 [INFO] 성공: 93/97 (96%)
+2026-04-18 22:22:08,186 [INFO] 실패: 4/97
+2026-04-18 22:22:08,186 [INFO] 
+2026-04-18 22:22:08,187 [INFO] 실패 목록:
+2026-04-18 22:22:08,187 [INFO]   E07: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:556:22: error:
+2026-04-18 22:22:08,187 [INFO]   K04: Build failed:
+o:511:14: error: 'class SSD1306' has no member named 'setPixel'
+C:\todo\today\aiHardSt
+2026-04-18 22:22:08,187 [INFO]   Q02: Build failed:
+C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino\ble_ota_arduino.ino:629:27: error:
+2026-04-18 22:22:08,187 [INFO]   Q06: Build failed:
+ni\ble_ota_arduino\ble_ota_arduino.ino: In function 'void showMainScreen(float, float)
+2026-04-18 22:22:08,189 [INFO] 리포트 저장: C:\todo\today\aiHardStudy\사전빌드_mini\logs\report_20260418_222208.json

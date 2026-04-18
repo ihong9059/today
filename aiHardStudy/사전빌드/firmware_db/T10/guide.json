@@ -1,0 +1,74 @@
+{
+  "result_description": "스마트폰에서 'STATUS'를 보내면 아두이노가 온도, 습도, LED 3개, 스위치 상태를 한꺼번에 블루투스로 알려줘요.",
+  "what_happens": [
+    "스마트폰이 블루투스로 'STATUS' 문자를 아두이노에 보내요.",
+    "아두이노가 온도·습도 센서, LED 3개, 스위치를 모두 읽어서 하나의 문자열로 합쳐요.",
+    "합친 상태 정보를 블루투스로 스마트폰에 전송하고, OLED 화면에도 보여줘요."
+  ],
+  "concepts": [
+    {
+      "term": "BLE (블루투스)",
+      "explanation": "무선으로 스마트폰과 아두이노가 대화하는 방법이에요. 마치 귓속말처럼 가까운 거리에서 정보를 주고받아요."
+    },
+    {
+      "term": "digitalRead",
+      "explanation": "핀이 켜져 있는지(HIGH) 꺼져 있는지(LOW) 읽는 명령이에요. 전등 스위치가 올라가 있는지 내려가 있는지 확인하는 것과 같아요."
+    },
+    {
+      "term": "PULLUP (풀업)",
+      "explanation": "스위치를 누르지 않았을 때 자동으로 HIGH(켜짐) 상태를 유지하게 해줘요. 아무도 누르지 않으면 '안 눌림', 누르면 LOW(꺼짐)로 바뀌어요."
+    },
+    {
+      "term": "notify (알림 전송)",
+      "explanation": "아두이노가 스마트폰에게 '데이터가 바뀌었어!' 하고 먼저 알려주는 방식이에요. 스마트폰이 물어볼 때까지 기다리지 않아도 돼요."
+    },
+    {
+      "term": "문자열 합치기 (+=)",
+      "explanation": "여러 정보를 하나의 긴 문장으로 이어붙이는 거예요. 'TEMP:25.3C HUMI:60.0% LED_R:ON SW:RELEASED' 처럼요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "if (cmd == \"STATUS\") { ... }",
+      "comment": "스마트폰이 보낸 문자가 정확히 'STATUS'일 때만 동작해요. 대소문자도 구분해요!"
+    },
+    {
+      "line": "return digitalRead(pin) == LOW ? \"ON\" : \"OFF\";",
+      "comment": "핀 상태가 LOW면 'ON', 아니면 'OFF'를 돌려줘요. LED가 켜진 것과 꺼진 것을 구분해요."
+    },
+    {
+      "line": "msg += \"TEMP:\" + String(temp, 1) + \"C \";",
+      "comment": "온도 숫자를 문자로 바꿔서 메시지에 붙여요. '1'은 소수점 아래 1자리만 보여달라는 뜻이에요."
+    },
+    {
+      "line": "sensorChar->notify();",
+      "comment": "블루투스로 스마트폰에게 상태 정보를 보내는 핵심 코드예요!"
+    },
+    {
+      "line": "oled.drawString(0, 32, (\"SW:\" + swState).c_str());",
+      "comment": "OLED 화면 세 번째 줄(y=32)에 스위치 상태를 표시해요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "'STATUS' 외에 'LED_ON', 'LED_OFF' 같은 다른 명령도 추가해서 스마트폰으로 LED를 켜고 꺼보세요!"
+    },
+    {
+      "reason": "온도가 30도를 넘으면 자동으로 STATUS를 스마트폰에 보내는 '자동 경보' 기능을 만들어보세요."
+    },
+    {
+      "reason": "스위치를 누를 때마다 아두이노가 먼저 스마트폰에 알림을 보내도록 loop() 함수를 바꿔보세요."
+    }
+  ],
+  "quiz": {
+    "question": "스위치를 눌렀을 때 digitalRead(32)의 값은 무엇인가요?",
+    "options": [
+      "HIGH",
+      "LOW",
+      "PRESSED",
+      "1"
+    ],
+    "answer": 1,
+    "explanation": "PULLUP 방식에서는 스위치를 누르면 LOW(0)가 돼요. 그래서 코드에서 'LOW이면 PRESSED'라고 판단해요. 누르지 않으면 HIGH(1)이에요."
+  }
+}

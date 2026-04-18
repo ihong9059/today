@@ -1,0 +1,66 @@
+{
+  "result_description": "스위치를 누르면 OLED 화면에 'PRESSED!'가 나타나고 파란 LED가 켜지며 삐 소리가 납니다.",
+  "what_happens": [
+    "스위치를 누르는 순간 OLED 화면에 'PRESSED!' 글자가 표시됩니다.",
+    "동시에 파란색 LED가 켜지고 짧은 삐 소리가 납니다.",
+    "스위치에서 손을 떼면 화면이 꺼지고 LED도 꺼집니다."
+  ],
+  "concepts": [
+    {
+      "term": "INPUT_PULLUP",
+      "explanation": "스위치가 눌리지 않았을 때 자동으로 HIGH(켜짐) 상태를 유지해주는 기능이에요. 스위치를 누르면 LOW(꺼짐)로 바뀝니다."
+    },
+    {
+      "term": "lastSwitchState",
+      "explanation": "스위치의 이전 상태를 기억하는 변수예요. 이전 상태와 현재 상태를 비교해서 '방금 눌렸다!'를 알아챌 수 있어요."
+    },
+    {
+      "term": "if / else if",
+      "explanation": "조건에 따라 다른 일을 하도록 나누는 명령이에요. '만약 누르면 이걸 해라, 아니면 저걸 해라'처럼 선택을 할 수 있어요."
+    },
+    {
+      "term": "delay(20)",
+      "explanation": "20밀리초(0.02초) 동안 잠깐 기다리는 명령이에요. 너무 빠르게 반복하면 스위치가 여러 번 눌린 것처럼 오작동할 수 있어서 넣어줘요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "bool currentState = digitalRead(SWITCH_PIN);",
+      "comment": "스위치가 지금 눌려 있는지 아닌지 읽어서 currentState 변수에 저장해요."
+    },
+    {
+      "line": "if (currentState == LOW && lastSwitchState == HIGH)",
+      "comment": "이전엔 안 눌려 있다가 지금 눌렸을 때만 실행해요. 꾹 누르고 있어도 딱 한 번만 반응해요."
+    },
+    {
+      "line": "oled.drawString(20, 24, \"PRESSED!\");",
+      "comment": "OLED 화면의 가로 20, 세로 24 위치에 'PRESSED!' 글자를 그려요."
+    },
+    {
+      "line": "tone(2, 1000, 150);",
+      "comment": "핀 2번에서 1000Hz 주파수의 소리를 150밀리초(0.15초) 동안 내요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "스위치를 누를 때마다 숫자가 1씩 올라가도록 카운터를 만들어 OLED에 표시해 보세요!"
+    },
+    {
+      "reason": "LED 색깔을 빨간색, 초록색, 파란색 순서로 누를 때마다 바꿔보세요."
+    },
+    {
+      "reason": "'PRESSED!' 대신 자기 이름이나 좋아하는 단어가 나오도록 바꿔보세요."
+    }
+  ],
+  "quiz": {
+    "question": "스위치를 꾹 누르고 있을 때 'PRESSED!'는 몇 번 표시될까요?",
+    "options": [
+      "누르고 있는 동안 계속 여러 번 표시된다",
+      "딱 1번만 표시된다",
+      "아무것도 표시되지 않는다",
+      "화면이 깜빡인다"
+    ],
+    "answer": 1,
+    "explanation": "currentState == LOW && lastSwitchState == HIGH 조건 덕분에, 이전에 HIGH였다가 지금 LOW로 바뀌는 순간에만 실행돼요. 계속 누르고 있으면 둘 다 LOW라서 조건이 맞지 않아 딱 1번만 표시됩니다."
+  }
+}

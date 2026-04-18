@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 10708
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"9347ac4b-a090-4ab5-86ef-6efbc7b1633c","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"f33e9865-495c-41e5-883c-bcbe8a2eb7ec","session_id":"7f51200d-c221-4658-a268-8aaec6fbf67b"}
+{"type":"system","subtype":"hook_response","hook_id":"9347ac4b-a090-4ab5-86ef-6efbc7b1633c","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"f5c513ec-b403-405d-9606-bcacf90b574a","session_id":"7f51200d-c221-4658-a268-8aaec6fbf67b"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\7c266d17","session_id":"7f51200d-c221-4658-a268-8aaec6fbf67b","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:cleanup","gsd:check-todos","gsd:autonomous","gsd:audit-uat","gsd:audit-milestone","gsd:add-todo","gsd:add-tests","gsd:add-phase","gsd:add-backlog","gsd:insert-phase","gsd:help","gsd:health","gsd:forensics","gsd:fast","gsd:execute-phase","gsd:do","gsd:discuss-phase","gsd:debug","gsd:complete-milestone","gsd:map

@@ -1,0 +1,70 @@
+{
+  "result_description": "버튼을 누를 때마다 LED 색상이 바뀌고, OLED 화면에 현재 색상 이름이 표시됩니다.",
+  "what_happens": [
+    "처음 켜지면 LED가 빨간색(Red)으로 빛나고, OLED에 'Red'라고 표시됩니다.",
+    "버튼을 누르면 다음 색상으로 바뀌고 '삐' 소리가 납니다.",
+    "Red → Green → Blue → Yellow → Cyan → Magenta → White → Off 순서로 계속 반복됩니다."
+  ],
+  "concepts": [
+    {
+      "term": "구조체(struct)",
+      "explanation": "색상 이름과 RGB 숫자를 하나로 묶어서 보관하는 상자예요. 이름표와 색 번호를 함께 넣어두는 서랍 같은 거예요."
+    },
+    {
+      "term": "배열(array)",
+      "explanation": "같은 종류의 상자를 여러 개 줄 세워 놓은 것이에요. colors[] 배열에는 8가지 색상이 순서대로 담겨 있어요."
+    },
+    {
+      "term": "인덱스(index)",
+      "explanation": "배열에서 몇 번째 항목인지 가리키는 번호예요. 0번이 첫 번째, 1번이 두 번째예요."
+    },
+    {
+      "term": "나머지 연산(%)",
+      "explanation": "숫자를 나눈 나머지를 구해요. (colorIndex + 1) % 8 은 8이 되면 다시 0으로 돌아가게 해서 색상이 빙글빙글 반복되게 만들어요."
+    },
+    {
+      "term": "디바운스(debounce)",
+      "explanation": "버튼을 한 번 눌렀을 때 여러 번 눌린 것처럼 인식되는 문제를 막기 위해 잠깐 기다리는 것이에요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "colorIndex = (colorIndex + 1) % COLOR_COUNT;",
+      "comment": "색상 번호를 하나 늘리되, 마지막 색상을 지나면 다시 처음(0)으로 돌아가게 합니다."
+    },
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(colors[idx].r, colors[idx].g, colors[idx].b));",
+      "comment": "배열에서 꺼낸 RGB 숫자로 LED 색상을 설정합니다."
+    },
+    {
+      "line": "oled.drawString(0, 16, name);",
+      "comment": "OLED 화면 왼쪽에 색상 이름 글자를 출력합니다."
+    },
+    {
+      "line": "if (lastState == HIGH && curState == LOW)",
+      "comment": "버튼이 눌리는 순간(HIGH→LOW로 바뀌는 찰나)만 감지해서 딱 한 번만 동작하게 합니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "색상 목록에 새 색상(예: Orange 255,128,0)을 추가하고 COLOR_COUNT도 바꿔보세요!"
+    },
+    {
+      "reason": "OLED에 색상 번호(1/8, 2/8…)도 함께 표시해보세요."
+    },
+    {
+      "reason": "버튼을 길게 누르면 반대 방향으로 색상이 바뀌도록 만들어 보세요."
+    }
+  ],
+  "quiz": {
+    "question": "버튼을 누를 때마다 colorIndex가 0→1→2…→7→? 로 바뀝니다. 7 다음에는 무엇이 될까요?",
+    "options": [
+      "8",
+      "7",
+      "0",
+      "-1"
+    ],
+    "answer": 2,
+    "explanation": "(7 + 1) % 8 = 8 % 8 = 0 이 됩니다. 나머지 연산 덕분에 색상이 처음부터 다시 반복돼요!"
+  }
+}

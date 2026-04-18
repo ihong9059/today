@@ -1,0 +1,78 @@
+{
+  "result_description": "버튼을 누를 때마다 LED 색깔이 바뀌고, 바뀐 색 이름과 RGB 값이 OLED 화면과 스마트폰 앱에 동시에 전달됩니다.",
+  "what_happens": [
+    "버튼을 누르면 colorIndex(색 번호)가 1씩 올라가서 다음 색으로 바뀝니다",
+    "applyColor()가 NeoPixel LED에 새 색을 켜고, sendColorInfo()가 OLED 화면에 색 이름과 RGB 값을 표시합니다",
+    "BLE로 연결된 스마트폰에 'COLOR:Red R:255 G:0 B:0' 같은 문자 메시지가 전송됩니다"
+  ],
+  "concepts": [
+    {
+      "term": "구조체(struct)",
+      "explanation": "여러 정보를 하나의 이름표로 묶는 상자예요. Color 상자 안에는 빨강(r), 초록(g), 파랑(b) 숫자와 색 이름이 함께 들어 있어요."
+    },
+    {
+      "term": "배열(Array)",
+      "explanation": "같은 종류의 물건을 순서대로 줄 세운 것이에요. colors[] 배열에는 Red, Green, Blue 등 8가지 색이 번호 0~7로 줄 서 있어요."
+    },
+    {
+      "term": "나머지 연산(%)",
+      "explanation": "(colorIndex + 1) % 8 은 숫자가 8이 되면 자동으로 0으로 돌아가게 해요. 마치 8칸짜리 회전목마처럼 끝에 오면 다시 처음으로 돌아오죠."
+    },
+    {
+      "term": "BLE 알림(notify)",
+      "explanation": "BLE로 연결된 기기에 '새 정보가 생겼어!'라고 자동으로 알려주는 기능이에요. 카카오톡 알림처럼 앱이 직접 받아 보게 됩니다."
+    },
+    {
+      "term": "디바운스(debounce)",
+      "explanation": "버튼을 한 번 눌렀는데 여러 번 눌린 것처럼 인식되는 문제를 막기 위해 잠깐(50ms) 기다리는 것이에요. 버튼 표면이 살짝 떨리기 때문에 필요해요."
+    },
+    {
+      "term": "snprintf",
+      "explanation": "여러 정보를 합쳐서 하나의 문자열로 만들어주는 함수예요. 'COLOR:Red R:255 G:0 B:0' 같은 메시지를 조립할 때 사용해요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "colorIndex = (colorIndex + 1) % COLOR_COUNT;",
+      "comment": "색 번호를 하나 올리되, 마지막(7번)을 지나면 0번(Red)으로 자동으로 되돌아가요"
+    },
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(c.r, c.g, c.b));",
+      "comment": "NeoPixel의 0번 LED에 c.r, c.g, c.b 값으로 색을 섞어서 켜요. 빛의 삼원색을 이용한 혼합이에요"
+    },
+    {
+      "line": "sensorChar->setValue(s); sensorChar->notify();",
+      "comment": "BLE 특성값에 색 정보를 저장하고, 연결된 스마트폰에 즉시 알림을 보내요"
+    },
+    {
+      "line": "if (cmd.startsWith(\"COLOR:\")) { ... }",
+      "comment": "스마트폰에서 'COLOR:Blue'처럼 보내면 그 이름과 일치하는 색으로 바로 바꿀 수 있어요"
+    },
+    {
+      "line": "tone(2, 1000, 80);",
+      "comment": "2번 핀 스피커로 1000Hz 소리를 80밀리초 동안 짧게 '삑!' 울려서 색이 바뀐 것을 알려줘요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "colors[] 배열에 새 색을 추가해 보세요! {128, 0, 128, \"Purple\"} 처럼 RGB 값을 직접 조합하면 나만의 색을 만들 수 있어요"
+    },
+    {
+      "reason": "BLE로 'COLOR:Green'을 보내면 바로 초록색으로 바뀌는데, 스마트폰 앱에서 버튼을 만들어 색을 원격으로 제어해 보세요"
+    },
+    {
+      "reason": "색이 바뀔 때 딜레이를 넣어 Red → Green → Blue가 천천히 페이드처럼 바뀌도록 도전해 보세요"
+    }
+  ],
+  "quiz": {
+    "question": "colors[] 배열에 색이 8개 있고, colorIndex가 현재 7(Off)일 때 버튼을 누르면 colorIndex는 어떤 값이 될까요?",
+    "options": [
+      "8",
+      "7",
+      "0",
+      "1"
+    ],
+    "answer": 2,
+    "explanation": "(7 + 1) % 8 = 8 % 8 = 0 이에요! 나머지(%) 연산 덕분에 8개짜리 배열의 끝에 도달하면 자동으로 0번(Red)으로 돌아갑니다. 회전목마처럼 끝없이 빙글빙글 돌아요!"
+  }
+}

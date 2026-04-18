@@ -1,0 +1,62 @@
+{
+  "result_description": "빨간 LED가 0.5초 켜졌다가 0.5초 꺼지는 것을 반복하여 1초 간격으로 깜빡입니다.",
+  "what_happens": [
+    "setup()이 실행되면서 하드웨어와 BLE를 준비합니다.",
+    "ledTask라는 별도의 작업(태스크)이 만들어져 동시에 실행됩니다.",
+    "ledTask 안에서 LED를 켜고(0.5초) → 끄고(0.5초) → 켜고 → 끄고… 를 영원히 반복합니다."
+  ],
+  "concepts": [
+    {
+      "term": "digitalWrite",
+      "explanation": "핀에 전기를 보내거나(HIGH) 끊는(LOW) 명령이에요. 전등 스위치를 올리고 내리는 것과 같아요."
+    },
+    {
+      "term": "delay",
+      "explanation": "정해진 시간(밀리초) 동안 기다리는 명령이에요. delay(500)은 0.5초를 기다리는 거예요."
+    },
+    {
+      "term": "while(true)",
+      "explanation": "조건이 항상 참이라 그 안의 명령들을 끝없이 반복해요. 숙제를 '다 할 때까지' 하는 것처럼요!"
+    },
+    {
+      "term": "xTaskCreate (태스크)",
+      "explanation": "여러 일을 동시에 처리하도록 새 일꾼을 만드는 명령이에요. 게임하면서 음악도 듣는 것처럼 동시에 여러 일을 할 수 있어요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "digitalWrite(LED_RED, LOW);",
+      "comment": "LED_RED 핀에 LOW(낮은 전압)를 보내서 LED를 켭니다. (LOW가 켜짐인 이유는 회로 연결 방식 때문이에요!)"
+    },
+    {
+      "line": "delay(500);",
+      "comment": "500밀리초, 즉 0.5초 동안 기다립니다. 이 대기가 두 번 있어서 전체 깜빡임 주기가 1초가 돼요."
+    },
+    {
+      "line": "xTaskCreate(ledTask, \"ledTask\", 1024, NULL, 1, NULL);",
+      "comment": "ledTask 함수를 독립적인 작업으로 실행시켜, loop()와 동시에 LED 깜빡임을 처리하게 합니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "delay 값을 바꿔서 더 빠르게(예: 100ms) 또는 더 느리게(예: 2000ms) 깜빡이게 해보세요!"
+    },
+    {
+      "reason": "LED_RED 대신 다른 색 LED(LED_GREEN, LED_BLUE)도 똑같이 깜빡이게 만들어 보세요."
+    },
+    {
+      "reason": "켜는 시간과 끄는 시간을 다르게 해서 SOS 신호(···---···)처럼 깜빡이게 도전해 보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 LED가 1초에 몇 번 깜빡일까요?",
+    "options": [
+      "1번 깜빡인다",
+      "2번 깜빡인다",
+      "0.5번 깜빡인다",
+      "깜빡이지 않는다"
+    ],
+    "answer": 0,
+    "explanation": "켜지는 데 0.5초, 꺼지는 데 0.5초 → 합계 1초가 한 번의 깜빡임이에요. 그래서 1초에 1번 깜빡입니다!"
+  }
+}

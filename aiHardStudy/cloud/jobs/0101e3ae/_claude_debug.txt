@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 10138
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"b441e3cf-f749-4945-a656-4f5cbd219dd1","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"515e95dc-5605-41f2-851e-a01e52b11ef1","session_id":"d3ce31e5-6bff-4bde-9074-eae78900513b"}
+{"type":"system","subtype":"hook_response","hook_id":"b441e3cf-f749-4945-a656-4f5cbd219dd1","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"6b98f890-ac54-4633-addb-5076a08a02e9","session_id":"d3ce31e5-6bff-4bde-9074-eae78900513b"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\0101e3ae","session_id":"d3ce31e5-6bff-4bde-9074-eae78900513b","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:add-tests","gsd:add-phase","gsd:add-backlog","gsd:check-todos","gsd:autonomous","gsd:audit-uat","gsd:audit-milestone","gsd:add-todo","gsd:debug","gsd:complete-milestone","gsd:cleanup","gsd:do","gsd:discuss-phase","gsd:execute-phase","gsd:list-workspaces","gsd:list-phase-assumptions","gsd:join-discord","gsd:ins

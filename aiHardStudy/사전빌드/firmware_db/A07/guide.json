@@ -1,0 +1,70 @@
+{
+  "result_description": "빨간 LED가 0.5초 켜졌다가 2.5초 꺼지는 방식으로 3초마다 한 번씩 느리게 깜빡입니다.",
+  "what_happens": [
+    "아두이노가 켜지면 빨간 LED를 깜빡이는 일꾼(태스크)을 만듭니다.",
+    "일꾼은 빨간 LED를 0.5초 동안 켜고, 2.5초 동안 끄는 일을 반복합니다.",
+    "이 동작이 계속 반복되어 빨간 LED가 3초마다 천천히 깜빡입니다."
+  ],
+  "concepts": [
+    {
+      "term": "digitalWrite",
+      "explanation": "아두이노가 핀에 전기를 보내거나 끊는 명령이에요. LOW는 전기를 보내서 LED를 켜고, HIGH는 전기를 끊어서 LED를 끕니다."
+    },
+    {
+      "term": "delay",
+      "explanation": "아두이노가 잠깐 기다리는 명령이에요. delay(500)은 0.5초, delay(2500)은 2.5초를 기다립니다."
+    },
+    {
+      "term": "xTaskCreate (태스크)",
+      "explanation": "여러 가지 일을 동시에 할 수 있도록 일꾼을 새로 만드는 명령이에요. 마치 반에서 역할을 나눠서 각자 맡은 일을 하는 것과 같아요."
+    },
+    {
+      "term": "while (true)",
+      "explanation": "같은 동작을 계속 반복하라는 명령이에요. 전원이 꺼지기 전까지 멈추지 않고 LED를 깜빡입니다."
+    },
+    {
+      "term": "setup / loop",
+      "explanation": "setup은 아두이노가 처음 켜질 때 딱 한 번 실행되고, loop는 계속 반복 실행되는 구역이에요. 이 코드에서는 loop 대신 태스크가 반복 역할을 합니다."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "digitalWrite(LED_RED, LOW);",
+      "comment": "빨간 LED에 전기를 보내서 불을 켭니다."
+    },
+    {
+      "line": "delay(500);",
+      "comment": "0.5초 동안 기다립니다. 이 시간 동안 LED가 켜져 있어요."
+    },
+    {
+      "line": "delay(2500);",
+      "comment": "2.5초 동안 기다립니다. 이 시간 동안 LED가 꺼져 있어요."
+    },
+    {
+      "line": "xTaskCreate(redLedTask, \"RedLED\", 1024, NULL, 1, NULL);",
+      "comment": "빨간 LED를 깜빡이는 일꾼(태스크)을 만들어서 일을 시작하게 합니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "delay(500)과 delay(2500) 숫자를 바꿔서 LED가 더 빠르게 또는 더 느리게 깜빡이도록 만들어 보세요!"
+    },
+    {
+      "reason": "파란 LED나 초록 LED도 같은 방법으로 깜빡이게 만들고, 두 LED가 번갈아 켜지도록 도전해 보세요!"
+    },
+    {
+      "reason": "LED가 켜질 때 OLED 화면에 '켜짐!'이라는 글자를 표시해 보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 빨간 LED가 한 번 깜빡이는 데 걸리는 시간은 총 몇 초인가요?",
+    "options": [
+      "0.5초",
+      "2.5초",
+      "3초",
+      "5초"
+    ],
+    "answer": 2,
+    "explanation": "LED가 켜져 있는 시간(0.5초) + 꺼져 있는 시간(2.5초) = 3초입니다. 그래서 3초마다 한 번씩 깜빡이는 것처럼 보입니다!"
+  }
+}

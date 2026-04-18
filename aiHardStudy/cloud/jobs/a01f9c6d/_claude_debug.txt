@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 10054
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"9a383b97-4348-4768-8503-e88ee37a3188","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"3e55ad69-2861-4b59-8fb9-7f3d4e116c93","session_id":"68c80a72-7e1b-4512-889c-22996fc06b24"}
+{"type":"system","subtype":"hook_response","hook_id":"9a383b97-4348-4768-8503-e88ee37a3188","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"c2326f65-11e1-4aa5-b67f-f4d80157cc72","session_id":"68c80a72-7e1b-4512-889c-22996fc06b24"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\a01f9c6d","session_id":"68c80a72-7e1b-4512-889c-22996fc06b24","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:fast","gsd:execute-phase","gsd:do","gsd:discuss-phase","gsd:debug","gsd:complete-milestone","gsd:cleanup","gsd:check-todos","gsd:autonomous","gsd:audit-uat","gsd:audit-milestone","gsd:add-todo","gsd:add-tests","gsd:add-phase","gsd:add-backlog","gsd:list-workspaces","gsd:list-phase-assumptions","gsd:join-discor

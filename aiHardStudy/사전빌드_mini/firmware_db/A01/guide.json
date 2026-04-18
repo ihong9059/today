@@ -1,0 +1,58 @@
+{
+  "result_description": "RGB LED가 빨간색으로 켜집니다.",
+  "what_happens": [
+    "아두이노가 시작되면서 LED와 블루투스를 준비해요.",
+    "LED에게 '빨간색(255, 0, 0)으로 빛나라!'고 명령을 내려요.",
+    "LED가 빨간색으로 환하게 켜지고, 그 상태를 계속 유지해요."
+  ],
+  "concepts": [
+    {
+      "term": "RGB",
+      "explanation": "빨강(Red), 초록(Green), 파랑(Blue) 세 가지 색 빛을 섞어서 다양한 색을 만드는 방법이에요. 마치 물감을 섞는 것처럼요!"
+    },
+    {
+      "term": "pixel.Color(255, 0, 0)",
+      "explanation": "LED에게 색을 알려주는 명령이에요. 첫 번째 숫자가 빨강, 두 번째가 초록, 세 번째가 파랑 밝기예요. 255는 '최대로 밝게', 0은 '끄기'를 뜻해요."
+    },
+    {
+      "term": "pixel.show()",
+      "explanation": "색을 정했으면 'LED야, 이제 보여줘!'라고 명령하는 코드예요. 이 코드가 없으면 LED가 켜지지 않아요."
+    },
+    {
+      "term": "setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번만 실행되는 준비 구역이에요. 여기서 LED를 어떤 색으로 켤지 설정해요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(255, 0, 0));",
+      "comment": "0번 LED를 빨간색(빨강 255, 초록 0, 파랑 0)으로 설정해요."
+    },
+    {
+      "line": "pixel.show();",
+      "comment": "설정한 색을 실제로 LED에 보여주는 명령이에요. 이 줄이 있어야 LED가 켜져요!"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "pixel.Color(0, 255, 0)으로 바꿔서 초록색 LED를 켜보세요!"
+    },
+    {
+      "reason": "pixel.Color(0, 0, 255)로 바꾸면 파란색이 돼요. 직접 해보세요!"
+    },
+    {
+      "reason": "세 숫자를 모두 255로 하면 어떤 색이 될까요? pixel.Color(255, 255, 255)를 시도해보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "LED를 빨간색으로 켜려면 pixel.Color( )에 어떤 숫자를 넣어야 할까요?",
+    "options": [
+      "pixel.Color(0, 255, 0)",
+      "pixel.Color(255, 0, 0)",
+      "pixel.Color(0, 0, 255)",
+      "pixel.Color(0, 0, 0)"
+    ],
+    "answer": 1,
+    "explanation": "RGB에서 첫 번째 숫자가 빨강(Red)이에요. 빨강을 255(최대)로, 나머지 초록과 파랑을 0으로 하면 순수한 빨간색이 나와요!"
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "version": "1.0",
+  "total": 5,
+  "items": [
+    {
+      "no": "A01",
+      "title": "화면에 Hello Python! 표시하기",
+      "category": "화면 출력",
+      "difficulty": "기초",
+      "hardware": "화면",
+      "description": "Python의 가장 기본인 print()를 배우고, 화면에 텍스트를 표시합니다.",
+      "python_code": "# 화면에 인사말 표시하기\nprint('Hello Python!')\nprint('안녕하세요!')\nprint('UTTEC 바이브 코딩!')\n\n# 변수 사용하기\nname = '학생'\nprint(f'{name}님, 환영합니다!')\n\n# 숫자 계산\nprint(f'1 + 2 = {1 + 2}')\nprint(f'10 * 5 = {10 * 5}')",
+      "web_code": "output('Hello Python!');\noutput('안녕하세요!');\noutput('UTTEC 바이브 코딩!');\n\nlet name = '학생';\noutput(`${name}님, 환영합니다!`);\n\noutput(`1 + 2 = ${1 + 2}`);\noutput(`10 * 5 = ${10 * 5}`);",
+      "guide": {
+        "what_happens": [
+          "화면에 텍스트가 순서대로 표시됩니다",
+          "변수에 이름을 저장하고 출력합니다",
+          "간단한 덧셈과 곱셈 결과를 보여줍니다"
+        ],
+        "concepts": [
+          {
+            "term": "print()",
+            "explanation": "화면에 글자를 보여주는 명령이에요. 괄호 안에 보여줄 내용을 넣으면 돼요."
+          },
+          {
+            "term": "변수 (variable)",
+            "explanation": "데이터를 담는 상자예요. name = '학생'은 name이라는 상자에 '학생'을 넣는 거예요."
+          },
+          {
+            "term": "f-string",
+            "explanation": "f'...'는 문자열 안에 변수를 {중괄호}로 넣을 수 있는 편리한 방법이에요."
+          }
+        ],
+        "quiz": {
+          "question": "print('Hello')를 실행하면 무엇이 화면에 나타날까요?",
+          "options": [
+            "Hello",
+            "print",
+            "print('Hello')",
+            "아무것도 안 나옴"
+          ],
+          "answer": 0,
+          "explanation": "print()는 괄호 안의 내용을 화면에 보여주는 명령이에요. 따옴표 안의 Hello가 표시됩니다!"
+        }
+      }
+    },
+    {
+      "no": "A02",
+      "title": "스마트폰 흔들면 주사위 굴리기",
+      "category": "센서 활용",
+      "difficulty": "기초",
+      "hardware": "가속도 센서",
+      "description": "스마트폰의 가속도 센서를 사용하여, 흔들면 1~6 랜덤 주사위를 굴립니다.",
+      "python_code": "# 스마트폰 흔들기 감지 → 주사위\nimport random\n\ndef on_shake():\n    dice = random.randint(1, 6)\n    print(f'주사위: {dice}')\n    show_dice(dice)\n\n# 가속도 센서로 흔들기 감지\n# 가속도 합이 15 이상이면 흔든 것으로 판단\naccel = get_accelerometer()\nif accel['total'] > 15:\n    on_shake()",
+      "web_code": "let lastShake = 0;\nconst diceEmoji = ['⚀','⚁','⚂','⚃','⚄','⚅'];\n\noutput('스마트폰을 흔들어보세요!');\noutput('');\n\nfunction handleMotion(event) {\n  const a = event.accelerationIncludingGravity || event.acceleration;\n  if (!a) return;\n  const total = Math.abs(a.x) + Math.abs(a.y) + Math.abs(a.z);\n  const now = Date.now();\n  if (total > 20 && now - lastShake > 1000) {\n    lastShake = now;\n    const dice = Math.floor(Math.random() * 6) + 1;\n    clearOutput();\n    setBigText(diceEmoji[dice-1]);\n    output('주사위: ' + dice);\n    vibrate(200);\n  }\n}\n\nif (addMotionListener(handleMotion)) {\n  output('가속도 센서 활성화!');\n} else {\n  output('센서를 지원하지 않습니다. 앱에서 실행해주세요.');\n}",
+      "guide": {
+        "what_happens": [
+          "스마트폰의 가속도 센서가 활성화됩니다",
+          "스마트폰을 흔들면 진동과 함께 주사위 숫자가 나타납니다",
+          "1~6 사이의 랜덤 숫자가 표시됩니다"
+        ],
+        "concepts": [
+          {
+            "term": "가속도 센서",
+            "explanation": "스마트폰이 얼마나 빠르게 움직이는지 측정하는 센서예요. X(좌우), Y(앞뒤), Z(위아래) 3방향을 측정해요."
+          },
+          {
+            "term": "random.randint(1, 6)",
+            "explanation": "1부터 6까지 중 하나를 랜덤으로 골라주는 함수예요. 주사위와 똑같죠!"
+          },
+          {
+            "term": "이벤트 (Event)",
+            "explanation": "흔들기처럼 '뭔가 일어났을 때' 실행되는 코드예요. '지진이 나면 대피해라'처럼 조건이 맞으면 실행돼요."
+          }
+        ],
+        "quiz": {
+          "question": "random.randint(1, 6)은 어떤 숫자를 만들 수 있나요?",
+          "options": [
+            "0부터 6",
+            "1부터 6",
+            "1부터 5",
+            "0부터 5"
+          ],
+          "answer": 1,
+          "explanation": "randint(1, 6)은 1, 2, 3, 4, 5, 6 중 하나를 랜덤으로 선택해요. 양쪽 끝 숫자가 모두 포함돼요!"
+        }
+      }
+    },
+    {
+      "no": "A03",
+      "title": "진동으로 모스부호 SOS 보내기",
+      "category": "출력 제어",
+      "difficulty": "기초",
+      "hardware": "진동 모터",
+      "description": "스마트폰 진동 모터를 제어하여 SOS 모스부호(···---···)를 보냅니다.",
+      "python_code": "# 모스부호 SOS: ··· --- ···\n# 짧은 진동(·) = 200ms, 긴 진동(—) = 600ms\n\ndef dot():\n    vibrate(200)   # 짧은 진동\n    sleep(200)     # 대기\n\ndef dash():\n    vibrate(600)   # 긴 진동\n    sleep(200)     # 대기\n\ndef letter_gap():\n    sleep(400)     # 글자 사이 간격\n\nprint('SOS 모스부호 전송 시작!')\n\n# S: ···\ndot(); dot(); dot()\nletter_gap()\n\n# O: ---\ndash(); dash(); dash()\nletter_gap()\n\n# S: ···\ndot(); dot(); dot()\n\nprint('SOS 전송 완료!')",
+      "web_code": "output('SOS 모스부호 전송 시작!');\noutput('');\n\nconst dot = 200, dash = 600, gap = 200, letterGap = 600;\n\n// SOS 순차 실행\nconst steps = [\n  {type:'dot',sym:'·'},{type:'gap'},{type:'dot',sym:'·'},{type:'gap'},{type:'dot',sym:'·'},\n  {type:'letterGap',sym:'  '},\n  {type:'dash',sym:'—'},{type:'gap'},{type:'dash',sym:'—'},{type:'gap'},{type:'dash',sym:'—'},\n  {type:'letterGap',sym:'  '},\n  {type:'dot',sym:'·'},{type:'gap'},{type:'dot',sym:'·'},{type:'gap'},{type:'dot',sym:'·'}\n];\n\nlet morse = '';\nlet i = 0;\n\nfunction playNext() {\n  if (i >= steps.length) {\n    output('');\n    output('SOS 전송 완료!');\n    return;\n  }\n  const s = steps[i];\n  if (s.sym) morse += s.sym;\n  \n  if (s.type === 'dot') {\n    vibrate(dot);\n    updateOutput(1, '모스부호: ' + morse);\n    setTimeout(playNext, dot + gap);\n  } else if (s.type === 'dash') {\n    vibrate(dash);\n    updateOutput(1, '모스부호: ' + morse);\n    setTimeout(playNext, dash + gap);\n  } else if (s.type === 'gap') {\n    setTimeout(playNext, 50);\n  } else {\n    setTimeout(playNext, letterGap);\n  }\n  i++;\n}\nplayNext();",
+      "guide": {
+        "what_happens": [
+          "스마트폰이 짧은 진동(·)과 긴 진동(—)으로 SOS를 보냅니다",
+          "S = ··· (짧게 3번), O = --- (길게 3번)",
+          "화면에 모스부호가 실시간으로 표시됩니다"
+        ],
+        "concepts": [
+          {
+            "term": "모스부호",
+            "explanation": "짧은 신호(·)와 긴 신호(—)의 조합으로 글자를 표현하는 방법이에요. SOS는 국제 구조 신호예요."
+          },
+          {
+            "term": "함수 (function)",
+            "explanation": "dot()과 dash()처럼 반복되는 동작을 이름을 붙여 묶어놓은 거예요. 한 번 만들면 여러 번 사용할 수 있어요."
+          },
+          {
+            "term": "sleep()",
+            "explanation": "정해진 시간 동안 기다리는 명령이에요. 진동 사이에 쉬는 시간을 만들어줘요."
+          }
+        ],
+        "quiz": {
+          "question": "모스부호에서 SOS는 어떻게 표현하나요?",
+          "options": [
+            "--- ··· ---",
+            "··· --- ···",
+            "··· ··· ···",
+            "--- --- ---"
+          ],
+          "answer": 1,
+          "explanation": "S는 짧게 3번(···), O는 길게 3번(---), 다시 S는 짧게 3번(···). 합치면 ··· --- ··· 입니다!"
+        }
+      }
+    },
+    {
+      "no": "A04",
+      "title": "카메라로 사진 찍기",
+      "category": "카메라",
+      "difficulty": "중급",
+      "hardware": "카메라",
+      "description": "스마트폰 카메라를 활성화하고 사진을 찍어 화면에 표시합니다.",
+      "python_code": "# 카메라로 사진 찍기\nfrom camera import Camera\n\ncam = Camera()\ncam.open()          # 카메라 열기\n\nprint('카메라가 켜졌습니다!')\nprint('촬영 버튼을 누르세요')\n\nphoto = cam.capture()   # 사진 촬영\nshow_image(photo)       # 화면에 표시\n\nprint(f'사진 크기: {photo.width}x{photo.height}')\nprint('촬영 완료!')",
+      "web_code": "output('카메라를 준비합니다...');\n\nconst resultArea = document.getElementById('resultArea');\n\n// input[type=file]로 카메라 접근 (WebView 호환)\nconst fileInput = document.createElement('input');\nfileInput.type = 'file';\nfileInput.accept = 'image/*';\nfileInput.capture = 'environment';\nfileInput.style.display = 'none';\n\nconst captureBtn = document.createElement('button');\ncaptureBtn.textContent = '📸 카메라 열기';\ncaptureBtn.style.cssText = 'display:block;margin:8px auto;padding:14px 36px;background:#2563EB;color:white;border:none;border-radius:10px;font-size:16px;cursor:pointer;';\n\nresultArea.appendChild(captureBtn);\nresultArea.appendChild(fileInput);\n\ncaptureBtn.onclick = () => fileInput.click();\n\nfileInput.onchange = (e) => {\n  const file = e.target.files[0];\n  if (!file) return;\n  \n  const reader = new FileReader();\n  reader.onload = (ev) => {\n    const img = document.createElement('img');\n    img.src = ev.target.result;\n    img.style.cssText = 'width:100%;max-width:320px;border-radius:12px;margin:8px 0;';\n    resultArea.appendChild(img);\n    output('촬영 완료! (' + file.name + ', ' + (file.size/1024).toFixed(0) + 'KB)');\n    vibrate(100);\n  };\n  reader.readAsDataURL(file);\n};\n\noutput('촬영 버튼을 눌러주세요!');",
+      "guide": {
+        "what_happens": [
+          "스마트폰 카메라가 활성화되어 화면에 미리보기가 나타납니다",
+          "촬영 버튼을 누르면 사진이 찍힙니다",
+          "찍은 사진이 화면 아래에 표시됩니다"
+        ],
+        "concepts": [
+          {
+            "term": "카메라 API",
+            "explanation": "스마트폰의 카메라를 프로그램으로 제어할 수 있는 도구예요. 켜기, 촬영, 끄기를 코드로 할 수 있어요."
+          },
+          {
+            "term": "getUserMedia()",
+            "explanation": "웹 브라우저에서 카메라나 마이크에 접근하는 명령이에요. 사용자에게 허용을 물어봐요."
+          },
+          {
+            "term": "Canvas",
+            "explanation": "그림을 그릴 수 있는 도화지예요. 카메라 영상을 캡처해서 이미지로 저장할 때 사용해요."
+          }
+        ],
+        "quiz": {
+          "question": "카메라를 사용하려면 왜 사용자 허용이 필요할까요?",
+          "options": [
+            "배터리를 많이 써서",
+            "개인정보 보호를 위해",
+            "인터넷이 필요해서",
+            "화면이 작아서"
+          ],
+          "answer": 1,
+          "explanation": "카메라는 개인의 모습을 촬영할 수 있으므로, 앱이 몰래 카메라를 켜지 못하도록 반드시 사용자 허용이 필요해요!"
+        }
+      }
+    },
+    {
+      "no": "A05",
+      "title": "기울기로 공 굴리기 게임",
+      "category": "센서 게임",
+      "difficulty": "중급",
+      "hardware": "자이로스코프",
+      "description": "스마트폰을 기울이면 화면의 공이 기울기 방향으로 움직이는 게임입니다.",
+      "python_code": "# 기울기로 공 굴리기\nfrom sensor import Gyroscope\nfrom graphics import Canvas\n\ncanvas = Canvas(320, 320)\nball_x, ball_y = 160, 160\nball_r = 15\n\ndef update(gyro):\n    global ball_x, ball_y\n    ball_x += gyro.x * 3\n    ball_y += gyro.y * 3\n    # 화면 경계 체크\n    ball_x = max(ball_r, min(320-ball_r, ball_x))\n    ball_y = max(ball_r, min(320-ball_r, ball_y))\n    \n    canvas.clear()\n    canvas.draw_circle(ball_x, ball_y, ball_r, 'red')\n    canvas.draw_text(10, 20, f'X:{gyro.x:.1f} Y:{gyro.y:.1f}')\n\ngyro = Gyroscope()\ngyro.on_update(update)\ngyro.start()",
+      "web_code": "const canvas = document.createElement('canvas');\ncanvas.width = 300; canvas.height = 300;\ncanvas.style.cssText = 'display:block;margin:8px auto;border:2px solid #334155;border-radius:12px;background:#0F172A;';\ndocument.getElementById('resultArea').appendChild(canvas);\nconst ctx = canvas.getContext('2d');\n\nlet bx = 150, by = 150;\nconst br = 12;\nlet score = 0;\nlet tx = Math.random()*260+20, ty = Math.random()*260+20;\n\noutput('스마트폰을 기울여서 빨간 공을 움직이세요!');\noutput('노란 목표물을 잡으세요!');\n\nfunction draw() {\n  ctx.fillStyle = '#0F172A';\n  ctx.fillRect(0, 0, 300, 300);\n  ctx.beginPath();\n  ctx.arc(tx, ty, 10, 0, Math.PI*2);\n  ctx.fillStyle = '#F59E0B';\n  ctx.fill();\n  ctx.beginPath();\n  ctx.arc(bx, by, br, 0, Math.PI*2);\n  ctx.fillStyle = '#EF4444';\n  ctx.fill();\n  ctx.fillStyle = 'white';\n  ctx.font = '14px sans-serif';\n  ctx.fillText('Score: ' + score, 10, 20);\n  if (Math.hypot(bx-tx, by-ty) < 22) {\n    score++;\n    tx = Math.random()*260+20;\n    ty = Math.random()*260+20;\n    vibrate(100);\n    updateOutput(0, '기울여서 공을 움직이세요! Score: ' + score);\n  }\n}\n\nfunction handleOrientation(e) {\n  let x = e.gamma || 0;\n  let y = e.beta || 0;\n  bx += x * 0.3;\n  by += (y - 45) * 0.3;\n  bx = Math.max(br, Math.min(300-br, bx));\n  by = Math.max(br, Math.min(300-br, by));\n}\n\nif (addOrientationListener(handleOrientation)) {\n  output('자이로 센서 활성화!');\n} else {\n  output('센서를 지원하지 않습니다. 앱에서 실행해주세요.');\n}\n\nsetInterval(draw, 30);",
+      "guide": {
+        "what_happens": [
+          "화면에 빨간 공과 노란 목표물이 나타납니다",
+          "스마트폰을 기울이면 공이 기울기 방향으로 움직입니다",
+          "노란 목표물에 닿으면 점수가 올라가고 진동이 울립니다"
+        ],
+        "concepts": [
+          {
+            "term": "자이로스코프",
+            "explanation": "스마트폰이 어느 방향으로 기울어졌는지 측정하는 센서예요. beta(앞뒤)와 gamma(좌우) 값을 알려줘요."
+          },
+          {
+            "term": "Canvas (그래픽)",
+            "explanation": "그림을 그릴 수 있는 도화지예요. 공, 원, 텍스트 등을 그리고 지우고를 반복하면 애니메이션이 돼요."
+          },
+          {
+            "term": "충돌 감지",
+            "explanation": "두 점 사이의 거리를 계산해서, 가까우면 '부딪혔다'고 판단하는 거예요. Math.hypot()을 사용해요."
+          }
+        ],
+        "quiz": {
+          "question": "공이 화면 밖으로 나가지 않게 하려면 어떻게 하나요?",
+          "options": [
+            "공을 멈추게 한다",
+            "화면 크기와 비교해서 위치를 제한한다",
+            "센서를 끈다",
+            "화면을 키운다"
+          ],
+          "answer": 1,
+          "explanation": "ball_x = max(0, min(300, ball_x))처럼 공의 위치를 0~300 사이로 제한하면 화면 밖으로 나가지 않아요!"
+        }
+      }
+    }
+  ]
+}

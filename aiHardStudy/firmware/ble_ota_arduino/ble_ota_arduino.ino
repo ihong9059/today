@@ -263,6 +263,11 @@ void initHardware() {
   Serial.println("Hardware initialized");
 }
 
+// ─── User BLE Receive Handler ───
+// 사용자 코드에서 onBleReceive를 정의하면 자동 호출됨
+// 정의하지 않으면 기본(빈) 구현 사용
+__attribute__((weak)) void onBleReceive(String cmd) { }
+
 // ─── Command Callback (패드 제어) ───
 class CmdCallbacks : public NimBLECharacteristicCallbacks {
   void onWrite(NimBLECharacteristic* pChar, NimBLEConnInfo& connInfo) override {
@@ -271,6 +276,9 @@ class CmdCallbacks : public NimBLECharacteristicCallbacks {
     String cmd = String(val.c_str());
     cmd.trim();
     Serial.printf("CMD: %s\n", cmd.c_str());
+
+    // 사용자 정의 핸들러 호출
+    onBleReceive(cmd);
 
     if (cmd == "LED_RED_ON")    { digitalWrite(LED_RED, LOW); }
     else if (cmd == "LED_RED_OFF")   { digitalWrite(LED_RED, HIGH); }

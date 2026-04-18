@@ -1,0 +1,66 @@
+{
+  "result_description": "스위치를 누르면 빨강·노랑·파랑 LED가 동시에 켜지고, 손을 떼면 모두 꺼집니다.",
+  "what_happens": [
+    "아두이노가 켜지면 32번 핀을 스위치 입력으로 준비합니다.",
+    "loop()가 계속 돌면서 스위치가 눌렸는지 10ms마다 확인합니다.",
+    "눌렸으면 세 개의 LED를 모두 켜고, 떼면 모두 끕니다."
+  ],
+  "concepts": [
+    {
+      "term": "INPUT_PULLUP",
+      "explanation": "스위치를 안 눌렀을 때 핀이 HIGH(1)가 되도록 내부에서 전기를 살짝 당겨주는 설정이에요. 덕분에 외부 저항 없이도 스위치가 잘 작동해요."
+    },
+    {
+      "term": "digitalRead",
+      "explanation": "핀의 전기 신호가 켜져 있는지(HIGH) 꺼져 있는지(LOW) 읽는 명령이에요. 스위치를 눌렀는지 확인할 때 씁니다."
+    },
+    {
+      "term": "digitalWrite",
+      "explanation": "LED나 다른 부품에 전기를 보내거나(LOW=켜기) 끊는(HIGH=끄기) 명령이에요."
+    },
+    {
+      "term": "삼항 연산자 (? :)",
+      "explanation": "'pressed ? LOW : HIGH'는 '눌렸으면 LOW, 아니면 HIGH'라는 뜻이에요. 마치 '배고프면 밥, 아니면 패스' 같은 선택이에요."
+    },
+    {
+      "term": "delay(10)",
+      "explanation": "아두이노가 10ms(0.01초) 기다리게 해요. 너무 빠르게 반복하면 오작동할 수 있어서 잠깐 쉬게 하는 거예요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "pinMode(32, INPUT_PULLUP);",
+      "comment": "32번 핀을 '풀업 입력'으로 설정해요. 스위치가 연결된 핀을 읽을 준비를 합니다."
+    },
+    {
+      "line": "bool pressed = (digitalRead(32) == LOW);",
+      "comment": "32번 핀이 LOW이면 스위치가 눌린 것! pressed 변수에 true 또는 false를 저장해요."
+    },
+    {
+      "line": "digitalWrite(LED_RED, pressed ? LOW : HIGH);",
+      "comment": "pressed가 true면 LED를 켜고(LOW), false면 끄는(HIGH) 한 줄 코드예요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "스위치를 누를 때마다 LED가 켜졌다 꺼졌다 토글되도록 바꿔보세요! (toggle 기능)"
+    },
+    {
+      "reason": "스위치를 누른 횟수를 세어서 Serial Monitor에 출력해 보세요."
+    },
+    {
+      "reason": "세 개의 LED가 순서대로 하나씩 켜지도록 순차 점등 코드를 만들어 보세요."
+    }
+  ],
+  "quiz": {
+    "question": "INPUT_PULLUP으로 설정된 핀에 연결된 스위치를 누르면 핀의 값은 무엇이 될까요?",
+    "options": [
+      "HIGH (1)",
+      "LOW (0)",
+      "항상 0과 1을 반복한다",
+      "아무 값도 없다"
+    ],
+    "answer": 1,
+    "explanation": "INPUT_PULLUP은 평소에 핀을 HIGH로 유지해요. 스위치를 누르면 핀이 GND(땅)에 연결되어 LOW(0)가 됩니다. 그래서 코드에서 LOW일 때 '눌렸다'고 판단해요!"
+  }
+}

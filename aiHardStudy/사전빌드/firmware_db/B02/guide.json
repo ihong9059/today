@@ -1,0 +1,74 @@
+{
+  "result_description": "빨강, 노랑, 파랑 LED 3개가 동시에 0.5초마다 깜빡입니다.",
+  "what_happens": [
+    "아두이노가 켜지면 빨강, 노랑, 파랑 LED를 사용할 준비를 합니다.",
+    "LED 깜빡임 태스크가 시작되어 세 LED가 동시에 켜졌다 꺼졌다를 반복합니다.",
+    "0.5초 켜지고 → 0.5초 꺼지는 동작을 전원이 꺼질 때까지 계속 반복합니다."
+  ],
+  "concepts": [
+    {
+      "term": "digitalWrite",
+      "explanation": "LED에 전기를 보내거나 끊어서 불을 켜고 끄는 명령어예요. LOW는 켜기, HIGH는 끄기예요."
+    },
+    {
+      "term": "delay(500)",
+      "explanation": "500밀리초, 즉 0.5초 동안 아무것도 하지 말고 기다리라는 명령어예요."
+    },
+    {
+      "term": "while(true)",
+      "explanation": "'계속 반복해!'라는 뜻이에요. 전원이 꺼질 때까지 안에 있는 동작을 멈추지 않고 되풀이해요."
+    },
+    {
+      "term": "xTaskCreate",
+      "explanation": "아두이노에게 '이 일을 따로 맡아서 계속 해줘!'라고 부탁하는 명령어예요. 마치 심부름꾼을 새로 만드는 것과 같아요."
+    },
+    {
+      "term": "void setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번만 실행되는 준비 구역이에요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "digitalWrite(LED_RED, LOW);",
+      "comment": "빨강 LED를 켭니다. LOW는 '불 켜!'를 의미해요."
+    },
+    {
+      "line": "delay(500);",
+      "comment": "0.5초 동안 기다립니다. 이 시간 동안 LED는 켜진 상태를 유지해요."
+    },
+    {
+      "line": "digitalWrite(LED_RED, HIGH);",
+      "comment": "빨강 LED를 끕니다. HIGH는 '불 꺼!'를 의미해요."
+    },
+    {
+      "line": "while (true) { ... }",
+      "comment": "중괄호 안의 동작을 영원히 반복합니다. 신호등처럼 계속 동작해요."
+    },
+    {
+      "line": "xTaskCreate(ledBlinkTask, \"ledBlink\", 2048, NULL, 1, NULL);",
+      "comment": "LED 깜빡임 담당 심부름꾼(태스크)을 만들어 일을 시작시켜요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "delay 숫자를 100으로 바꿔보세요. LED가 훨씬 빠르게 깜빡이는 것을 볼 수 있어요!"
+    },
+    {
+      "reason": "세 LED가 순서대로 켜지도록 바꿔보세요. 빨강 → 노랑 → 파랑 순서로 깜빡이는 신호등을 만들 수 있어요!"
+    },
+    {
+      "reason": "LED 하나만 꺼보세요. digitalWrite(LED_YELLOW, LOW) 줄을 지우면 노랑만 안 켜져요. 어떤 일이 생기는지 확인해보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 LED가 켜진 채로 유지되는 시간은 얼마인가요?",
+    "options": [
+      "0.1초",
+      "0.5초",
+      "1초",
+      "5초"
+    ],
+    "answer": 1,
+    "explanation": "delay(500)은 500밀리초를 기다리라는 뜻이에요. 1000밀리초가 1초이니까, 500밀리초는 0.5초예요!"
+  }
+}

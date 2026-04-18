@@ -1,0 +1,70 @@
+{
+  "result_description": "빨간색 LED가 숨을 쉬듯 천천히 밝아졌다가 어두워지기를 반복합니다.",
+  "what_happens": [
+    "brightness(밝기) 변수가 0에서 시작해서 1씩 커집니다.",
+    "밝기가 255(최대)에 도달하면 이번엔 1씩 작아지기 시작합니다.",
+    "밝기가 다시 0(최소)이 되면 또 커지기를 반복해서 숨쉬는 것처럼 보입니다."
+  ],
+  "concepts": [
+    {
+      "term": "변수(Variable)",
+      "explanation": "숫자나 값을 저장해두는 이름표예요. brightness는 지금 LED가 얼마나 밝은지 기억하는 상자입니다."
+    },
+    {
+      "term": "fadeStep(방향 조절)",
+      "explanation": "밝기를 올릴지 내릴지 결정하는 변수예요. +1이면 밝아지고, -1이면 어두워집니다."
+    },
+    {
+      "term": "millis()",
+      "explanation": "아두이노가 켜진 뒤 얼마나 시간이 지났는지 밀리초(1000분의 1초) 단위로 알려주는 시계예요."
+    },
+    {
+      "term": "if-else 조건문",
+      "explanation": "만약 ~이라면 이렇게 해! 아니라면 저렇게 해! 처럼 상황에 따라 다르게 행동하도록 만드는 명령입니다."
+    },
+    {
+      "term": "RGB LED",
+      "explanation": "빨강(Red), 초록(Green), 파랑(Blue) 세 가지 색을 섞어서 다양한 색을 만들 수 있는 특별한 전구예요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(brightness, 0, 0));",
+      "comment": "LED의 색을 빨간색으로 설정하는데, 밝기(brightness) 값에 따라 빨간색의 진하기가 달라집니다."
+    },
+    {
+      "line": "brightness += fadeStep;",
+      "comment": "현재 밝기에 fadeStep을 더해서 밝기를 바꿉니다. fadeStep이 1이면 밝아지고, -1이면 어두워져요."
+    },
+    {
+      "line": "if (brightness >= 255) { fadeStep = -1; }",
+      "comment": "밝기가 최대(255)에 도달하면 방향을 바꿔서 이제부터 어두워지게 만듭니다."
+    },
+    {
+      "line": "if (now - lastUpdate >= FADE_INTERVAL)",
+      "comment": "15밀리초(0.015초)마다 한 번씩만 밝기를 바꿔서 너무 빠르지 않게 천천히 변하도록 합니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "fadeStep 값을 1 대신 5로 바꿔보세요. 밝기가 변하는 속도가 어떻게 달라지는지 관찰할 수 있어요!"
+    },
+    {
+      "reason": "빨간색 대신 파란색(0, 0, brightness) 또는 초록색(0, brightness, 0) 숨쉬기 효과를 만들어 보세요."
+    },
+    {
+      "reason": "FADE_INTERVAL 값을 15에서 50으로 늘려보세요. LED가 더 천천히 숨을 쉬는 것처럼 바뀝니다."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 LED가 최대로 밝아졌을 때 brightness 값은 얼마일까요?",
+    "options": [
+      "0",
+      "100",
+      "255",
+      "1000"
+    ],
+    "answer": 2,
+    "explanation": "brightness가 255에 도달하면 if문이 fadeStep을 -1로 바꿔서 그 다음부터는 어두워지기 시작합니다. RGB LED에서 255는 가장 밝은 값이에요!"
+  }
+}

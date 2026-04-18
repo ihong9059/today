@@ -1,0 +1,70 @@
+{
+  "result_description": "RGB LED가 빨간색과 파란색을 번갈아 깜빡이며 경찰차 비상등처럼 작동합니다.",
+  "what_happens": [
+    "빨간색 LED가 300밀리초(0.3초) 동안 켜집니다.",
+    "LED가 꺼지고 100밀리초(0.1초) 잠깐 쉽니다.",
+    "파란색 LED가 300밀리초(0.3초) 동안 켜지고, 다시 꺼졌다가 이 과정을 계속 반복합니다."
+  ],
+  "concepts": [
+    {
+      "term": "RGB LED",
+      "explanation": "빨강(Red), 초록(Green), 파랑(Blue) 세 가지 색을 섞어서 어떤 색이든 만들 수 있는 특별한 LED 전구예요."
+    },
+    {
+      "term": "vTaskDelay",
+      "explanation": "컴퓨터에게 '잠깐 기다려!'라고 말하는 명령이에요. 괄호 안의 숫자만큼 밀리초 동안 멈춥니다. 1000밀리초가 1초예요."
+    },
+    {
+      "term": "while(true)",
+      "explanation": "'계속해서 반복해!'라는 뜻이에요. 전원이 꺼지기 전까지 같은 동작을 영원히 반복합니다."
+    },
+    {
+      "term": "xTaskCreate (태스크)",
+      "explanation": "LED 깜빡임을 따로 분리된 일꾼에게 맡기는 거예요. 이 일꾼은 다른 일과 동시에 혼자 LED를 계속 깜빡일 수 있어요."
+    },
+    {
+      "term": "pixel.clear()",
+      "explanation": "LED를 완전히 끄는 명령이에요. 색을 없애고 깜깜하게 만들어요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(255, 0, 0));",
+      "comment": "첫 번째 LED(0번)를 빨간색으로 설정해요. 숫자 255, 0, 0은 빨강 최대, 초록 없음, 파랑 없음을 뜻해요."
+    },
+    {
+      "line": "vTaskDelay(pdMS_TO_TICKS(300));",
+      "comment": "300밀리초(0.3초) 동안 기다려요. 이 시간 동안 LED가 켜진 채로 유지돼요."
+    },
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(0, 0, 255));",
+      "comment": "첫 번째 LED를 파란색으로 바꿔요. 파랑 숫자만 255로 올라갔어요."
+    },
+    {
+      "line": "xTaskCreate(emergencyLightTask, \"EmgLight\", 2048, NULL, 1, NULL);",
+      "comment": "비상등 깜빡임 일꾼(태스크)을 만들고 백그라운드에서 혼자 일하게 시작시켜요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "vTaskDelay의 숫자를 100으로 바꿔보세요! LED가 훨씬 빠르게 깜빡이면서 더 긴박한 느낌이 나요."
+    },
+    {
+      "reason": "파란색 대신 초록색(0, 255, 0)으로 바꿔보면 어떤 느낌일까요? 구급차 불빛처럼 만들어볼 수 있어요!"
+    },
+    {
+      "reason": "빨강→파랑 사이에 흰색(255, 255, 255)을 추가해서 3가지 색이 번갈아 깜빡이도록 도전해보세요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 LED가 빨간색으로 켜져 있는 시간은 몇 초일까요?",
+    "options": [
+      "0.1초",
+      "0.3초",
+      "1초",
+      "3초"
+    ],
+    "answer": 1,
+    "explanation": "vTaskDelay(pdMS_TO_TICKS(300))에서 300밀리초 = 0.3초예요. 1000밀리초가 1초이니까 300밀리초는 0.3초랍니다!"
+  }
+}

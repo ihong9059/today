@@ -1,0 +1,1272 @@
+{
+  "timestamp": "2026-04-18T16:29:37.044232",
+  "total": 145,
+  "success": 124,
+  "failed": 21,
+  "elapsed_minutes": 398.6,
+  "results": [
+    {
+      "no": "B01",
+      "prompt": "빨강, 노랑, 파랑 LED 모두 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 77.72475576400757,
+      "firmware_size": 650336,
+      "firmware_sha256": "f913ba79d2214da62b848d797720fdc6cf1eaa9447098d63581dc10d33c6e51f"
+    },
+    {
+      "no": "B02",
+      "prompt": "빨강, 노랑, 파랑 LED 동시에 깜빡이기",
+      "success": true,
+      "error": "",
+      "elapsed": 68.53611207008362,
+      "firmware_size": 650448,
+      "firmware_sha256": "e370eb4f761cb08bb17e59e6fb9705095a539d8124def0d376253be55a911859"
+    },
+    {
+      "no": "B03",
+      "prompt": "빨강 → 노랑 → 파랑 순서대로 1초씩 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 70.5219795703888,
+      "firmware_size": 650464,
+      "firmware_sha256": "de95cfceac92c92e0357518fda4d85a4a0048e8f274596c41fed7ddade7ff536"
+    },
+    {
+      "no": "B04",
+      "prompt": "빨강 → 노랑 → 파랑 순서대로 켜졌다 꺼지기 반복",
+      "success": true,
+      "error": "",
+      "elapsed": 69.34121465682983,
+      "firmware_size": 650480,
+      "firmware_sha256": "de455221204ffaeb8432173c4368d709ccbb6658d6c9a55642428c5b8d5dd5c0"
+    },
+    {
+      "no": "B05",
+      "prompt": "LED 3개로 이진수 0부터 7까지 세기",
+      "success": true,
+      "error": "",
+      "elapsed": 85.97442889213562,
+      "firmware_size": 651008,
+      "firmware_sha256": "2b307edd1ee2756b472b70f98d41c3c5645c8492596f2923c4bc69a47a828f0c"
+    },
+    {
+      "no": "C01",
+      "prompt": "부저 한번 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 73.6904923915863,
+      "firmware_size": 650336,
+      "firmware_sha256": "66b3d4ad9f48b7a0b63c730b4da22dec03e6b80f72c82ff8d8a8430a3cde3cca"
+    },
+    {
+      "no": "C02",
+      "prompt": "부저 3번 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 66.81235647201538,
+      "firmware_size": 650352,
+      "firmware_sha256": "4d5029c9fe0592522457612bd478382fe02b9c6837aa2d8a26340c44e9c0f831"
+    },
+    {
+      "no": "C03",
+      "prompt": "부저 짧게 5번, 길게 1번 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 80.65718030929565,
+      "firmware_size": 650416,
+      "firmware_sha256": "2a0ae4ac1a4eee34ea7150170114db273ea30857659f73b445dc930333412f71"
+    },
+    {
+      "no": "C04",
+      "prompt": "SOS 모스부호 울리기 (짧3 긴3 짧3)",
+      "success": true,
+      "error": "",
+      "elapsed": 91.10830736160278,
+      "firmware_size": 650752,
+      "firmware_sha256": "1f5233cccb2b12ce31ce79cca4edf3486598c7994bba18bbec856692332eceac"
+    },
+    {
+      "no": "C05",
+      "prompt": "부저 점점 빠르게 10번 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 73.01407265663147,
+      "firmware_size": 650352,
+      "firmware_sha256": "ebe680bcc0873942d09fe959613836909d83a8ec12d21542791972e39ad061ba"
+    },
+    {
+      "no": "D01",
+      "prompt": "도레미파솔라시도 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 79.789146900177,
+      "firmware_size": 650464,
+      "firmware_sha256": "fa218f1b44d37667411929798c78f097f1bfc6729d3e9c3db5444ccbbe3dc2a8"
+    },
+    {
+      "no": "D02",
+      "prompt": "도레미파솔라시도 역순으로 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 86.75270581245422,
+      "firmware_size": 650640,
+      "firmware_sha256": "708bc632740eb1f73e9f2109956a876f99ffaeee7310bc79e82d6df13db16c4c"
+    },
+    {
+      "no": "D03",
+      "prompt": "도 음만 1초간 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 68.58834600448608,
+      "firmware_size": 650320,
+      "firmware_sha256": "bc46273c4c72b6eae876f6e17e789820c5b0eff0ffa1806ebb84e6cabac46751"
+    },
+    {
+      "no": "D04",
+      "prompt": "솔 음만 2초간 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 74.97011399269104,
+      "firmware_size": 650320,
+      "firmware_sha256": "7aa18a9bcc8f75068d1035a49a759595178d6cfaca6b0c4915b10f60215ad44f"
+    },
+    {
+      "no": "D05",
+      "prompt": "점점 높아지는 소리 내기 (100Hz~1000Hz)",
+      "success": true,
+      "error": "",
+      "elapsed": 85.4792971611023,
+      "firmware_size": 650464,
+      "firmware_sha256": "4f893ae2a64a16d965f96aef9abc4393f47cd7ca7152932a02b8c3a60872d43e"
+    },
+    {
+      "no": "D06",
+      "prompt": "점점 낮아지는 소리 내기 (1000Hz~100Hz)",
+      "success": true,
+      "error": "",
+      "elapsed": 78.20961117744446,
+      "firmware_size": 650464,
+      "firmware_sha256": "84e5ba9d2ce9a6eb556e8c51264b9eb4b48f86483ef858dcee24cb5155e408c7"
+    },
+    {
+      "no": "E01",
+      "prompt": "OLED에 \"Hello\" 표시하기",
+      "success": true,
+      "error": "",
+      "elapsed": 67.37983679771423,
+      "firmware_size": 650368,
+      "firmware_sha256": "9ec474bd8126ad7e9448e232f72e52aa54043ee36d4418fb9e7b9911b40dc4f6"
+    },
+    {
+      "no": "E02",
+      "prompt": "OLED에 \"UTTEC\" 크게 표시하기",
+      "success": true,
+      "error": "",
+      "elapsed": 79.59294176101685,
+      "firmware_size": 650400,
+      "firmware_sha256": "ac0fc07aaf1ecd14927ad0d4653ed762cdfdc201a88e1b86bef6c66934b3b500"
+    },
+    {
+      "no": "E03",
+      "prompt": "OLED에 1줄, 2줄, 3줄 텍스트 표시하기",
+      "success": true,
+      "error": "",
+      "elapsed": 83.43720960617065,
+      "firmware_size": 650768,
+      "firmware_sha256": "e3487eb11823c75bb4308b1343c25430798a0fb545b9cee5279cfdcfc23a4f48"
+    },
+    {
+      "no": "E04",
+      "prompt": "OLED에 1부터 10까지 숫자 세기",
+      "success": true,
+      "error": "",
+      "elapsed": 65.72731876373291,
+      "firmware_size": 650544,
+      "firmware_sha256": "ed71c21b16845d320a5f539470dd8c42cd8e26d5f19658649e68a7900eb2fca1"
+    },
+    {
+      "no": "E05",
+      "prompt": "OLED에 카운트다운 5, 4, 3, 2, 1, 0 표시하기",
+      "success": true,
+      "error": "",
+      "elapsed": 73.29029369354248,
+      "firmware_size": 650512,
+      "firmware_sha256": "08b358b3d3a9c4d198f604a1d906f372736f209b11818988a048b91bac741f99"
+    },
+    {
+      "no": "E06",
+      "prompt": "OLED 화면 깜빡이기 (1초 보이고 1초 지우기)",
+      "success": true,
+      "error": "",
+      "elapsed": 67.64902710914612,
+      "firmware_size": 650384,
+      "firmware_sha256": "f4e903b9a27329de8668338c54a40437d3359d70a1e7001d4ff7c04de6b24ddb"
+    },
+    {
+      "no": "F01",
+      "prompt": "현재 온도 측정해서 시리얼에 출력하기",
+      "success": true,
+      "error": "",
+      "elapsed": 68.0022566318512,
+      "firmware_size": 651120,
+      "firmware_sha256": "14c744b266e6dc74ee54431323958cd8dca236867362d0f97b99368abd83a54f"
+    },
+    {
+      "no": "F02",
+      "prompt": "온도와 습도를 같이 시리얼에 출력하기",
+      "success": true,
+      "error": "",
+      "elapsed": 76.15309071540833,
+      "firmware_size": 651120,
+      "firmware_sha256": "3f922ab7a9b924aa6ed554ebf93c7ff49f625638ed01dfb93c941c1733cc32f5"
+    },
+    {
+      "no": "F03",
+      "prompt": "온도를 OLED에 표시하기",
+      "success": true,
+      "error": "",
+      "elapsed": 124.32341003417969,
+      "firmware_size": 650512,
+      "firmware_sha256": "9831798e7dbe0bf34c30d72fde8165bc3f1b47de679f9b632676d8f7ac834901"
+    },
+    {
+      "no": "F04",
+      "prompt": "온도와 습도를 OLED에 같이 표시하기",
+      "success": true,
+      "error": "",
+      "elapsed": 161.31030344963074,
+      "firmware_size": 650368,
+      "firmware_sha256": "4fea62c10af254ffc4fee82a3d6ff9cf230a1a8c809f257414035875485e3e39"
+    },
+    {
+      "no": "F05",
+      "prompt": "3초마다 온도 측정해서 OLED에 업데이트하기",
+      "success": true,
+      "error": "",
+      "elapsed": 71.82245802879333,
+      "firmware_size": 650576,
+      "firmware_sha256": "a8df6036a8971d95ed07ceb661e3be24e72017dbeca4bf4d1555e6c7e5cb6536"
+    },
+    {
+      "no": "G01",
+      "prompt": "스위치 누르면 빨간 LED 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 72.29891300201416,
+      "firmware_size": 650352,
+      "firmware_sha256": "7e9294709209e0abcc8b2f9ca6725c424fb2ddbca6ae586181995bc37123a27c"
+    },
+    {
+      "no": "G02",
+      "prompt": "스위치 누르면 LED 켜고 떼면 끄기",
+      "success": true,
+      "error": "",
+      "elapsed": 70.39460968971252,
+      "firmware_size": 650368,
+      "firmware_sha256": "5aadf642d7966c3adba4d8e7c0ed6650c1d397b53d9f2df0b63c9c4da923952a"
+    },
+    {
+      "no": "G03",
+      "prompt": "스위치 누르면 부저 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 70.39233422279358,
+      "firmware_size": 650352,
+      "firmware_sha256": "db1acc5aaf6f9744ac162e3a97e969d21fd6245d6c662e7af8a888b7814ec07a"
+    },
+    {
+      "no": "G04",
+      "prompt": "스위치 누르면 OLED에 \"PRESSED!\" 표시하기",
+      "success": true,
+      "error": "",
+      "elapsed": 79.63596081733704,
+      "firmware_size": 650416,
+      "firmware_sha256": "22e749e89ba2792ce4b77a0ca5ad20732a80deef462977622ead4d72d09dc459"
+    },
+    {
+      "no": "H01",
+      "prompt": "신호등 만들기: 빨강 3초, 노랑 1초, 파랑 3초 반복",
+      "success": true,
+      "error": "",
+      "elapsed": 92.63685631752014,
+      "firmware_size": 650480,
+      "firmware_sha256": "c6ed11f726fce7c1d2d8b18ee9bfff5e9e98f5148a113b18701de9e27e1d5dd4"
+    },
+    {
+      "no": "H02",
+      "prompt": "비상등: 빨강+파랑 번갈아 0.2초마다 깜빡이기",
+      "success": true,
+      "error": "",
+      "elapsed": 74.33776021003723,
+      "firmware_size": 650448,
+      "firmware_sha256": "dddceea0f505e4d03942af6627d486be2d53df8918191b77f423b089b53028de"
+    },
+    {
+      "no": "H03",
+      "prompt": "빨강 → 노랑 → 파랑 → 노랑 왕복 반복",
+      "success": true,
+      "error": "",
+      "elapsed": 80.88874340057373,
+      "firmware_size": 650496,
+      "firmware_sha256": "17a81426f481bb6f2ba02039942217fa6f70098589996c1de3939f229e6b9200"
+    },
+    {
+      "no": "H04",
+      "prompt": "LED 하나씩 누적: 빨강 → 빨+노 → 빨+노+파 → 전체 끄기",
+      "success": true,
+      "error": "",
+      "elapsed": 75.62320232391357,
+      "firmware_size": 650480,
+      "firmware_sha256": "6c768ede232e1c02e48ac5b37277fc878ed083dee0a8c783090d969a14eb6246"
+    },
+    {
+      "no": "H05",
+      "prompt": "랜덤하게 LED 하나씩 켜기 (0.5초마다)",
+      "success": true,
+      "error": "",
+      "elapsed": 80.06685018539429,
+      "firmware_size": 650960,
+      "firmware_sha256": "12a5d3543378e9b7abf40b8f27bf014097e1ef717941a2a1636067c6e67102e7"
+    },
+    {
+      "no": "H06",
+      "prompt": "빨강 빠르게(0.2초), 파랑 느리게(2초) 동시에 깜빡이기",
+      "success": true,
+      "error": "",
+      "elapsed": 79.7486801147461,
+      "firmware_size": 650512,
+      "firmware_sha256": "8c3c63cd839f74d166293fc9c11190d278ae93fbf79edf88c7ddb7fd8000ca5e"
+    },
+    {
+      "no": "H07",
+      "prompt": "LED 3개로 숨쉬기 효과: 천천히 켜졌다 꺼지기 반복",
+      "success": true,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void breathingTask(void*)':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:446:5: error: 'ledcSetup' was not declared in this scope\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:449:5: error: 'ledcAttachPin' was not declared in this scope; did you mean 'ledcAttach'?\nError during build: exit status 1\n",
+      "elapsed": 195.9307999610901,
+      "firmware_size": 650560,
+      "firmware_sha256": "1014936236d63de861410609980b7150410406993805095e54a34624a8b72db6"
+    },
+    {
+      "no": "H08",
+      "prompt": "하트비트: 빨간 LED 빠르게 2번 + 1초 쉬기 반복",
+      "success": true,
+      "error": "",
+      "elapsed": 75.68796062469482,
+      "firmware_size": 650448,
+      "firmware_sha256": "6b6ba4c82c16ae9388499578fd878be2e28820876947db76686a589f7787ec14"
+    },
+    {
+      "no": "I01",
+      "prompt": "학교종 멜로디 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 90.30739974975586,
+      "firmware_size": 650848,
+      "firmware_sha256": "af118f079ca84f8f7ebc05cdac4a8d7b1e879e1743f44926f6f64cfd48656b23"
+    },
+    {
+      "no": "I02",
+      "prompt": "반짝반짝 작은별 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 94.49326801300049,
+      "firmware_size": 651056,
+      "firmware_sha256": "ef3f109ec747694314dc4b32216322ead784ee249294c0f51ad50b80a9b4f8cf"
+    },
+    {
+      "no": "I03",
+      "prompt": "비행기 멜로디 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 167.31942534446716,
+      "firmware_size": 651456,
+      "firmware_sha256": "7b49591c11674f9ad47b86ae608a6ad27b3a4f38914ab38623b089db0fc22a2e"
+    },
+    {
+      "no": "I04",
+      "prompt": "곰 세 마리 멜로디 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 150.66207003593445,
+      "firmware_size": 651120,
+      "firmware_sha256": "d05e8a416e6a03b97c6c55172e5f3e4d4b5cdbcd73c21bbfb0d495db3f689c5c"
+    },
+    {
+      "no": "I05",
+      "prompt": "생일 축하 노래 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 98.99529266357422,
+      "firmware_size": 651200,
+      "firmware_sha256": "d1ba96c46eb2e18e2703e8f1de1c3286db46c7de5287e83b35a7bd45c1f7c00c"
+    },
+    {
+      "no": "I06",
+      "prompt": "경찰차 사이렌: 높은음↔낮은음 반복",
+      "success": true,
+      "error": "",
+      "elapsed": 75.26383471488953,
+      "firmware_size": 650624,
+      "firmware_sha256": "6605d59cc7ce56c22f76b4e22694f6e93d8236f331a1deececeefb281fd2164e"
+    },
+    {
+      "no": "I07",
+      "prompt": "구급차 사이렌: 점점 높아졌다 낮아지기 반복",
+      "success": true,
+      "error": "",
+      "elapsed": 79.01444983482361,
+      "firmware_size": 650464,
+      "firmware_sha256": "6d43ef57749bb33ab32a411d662f6aa9a22883c3c84d2591541ed7ab4965f0ea"
+    },
+    {
+      "no": "I08",
+      "prompt": "게임 시작 효과음: 낮은음→높은음 빠르게",
+      "success": true,
+      "error": "",
+      "elapsed": 68.85860013961792,
+      "firmware_size": 650464,
+      "firmware_sha256": "a4473918b5e5feb6b16f961d6b705faf9a06721f37ce5d6a0527282e08fb2fe1"
+    },
+    {
+      "no": "I09",
+      "prompt": "게임 오버 효과음: 높은음→낮은음 느리게",
+      "success": true,
+      "error": "",
+      "elapsed": 70.76874732971191,
+      "firmware_size": 650544,
+      "firmware_sha256": "a989a2d6bfabf807f8cd775732176c7df98cf2466f1c826d4fc8d73fc53f78a0"
+    },
+    {
+      "no": "I10",
+      "prompt": "레벨업 효과음: 도미솔도(높은) 빠르게",
+      "success": true,
+      "error": "",
+      "elapsed": 67.68229341506958,
+      "firmware_size": 650352,
+      "firmware_sha256": "b5f6d2ca16ac3d1dd33a458f6b05ab1bb0fadb228a41d8a1e64a698135c801d7"
+    },
+    {
+      "no": "J01",
+      "prompt": "빨간 LED 켜면서 부저 한번 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 68.94636797904968,
+      "firmware_size": 650336,
+      "firmware_sha256": "0056010de5fc3bca9e1699953d53fcd27f42493c2bee4d9100d8540f898ef8a2"
+    },
+    {
+      "no": "J02",
+      "prompt": "LED 깜빡일 때마다 부저 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 70.82135319709778,
+      "firmware_size": 650544,
+      "firmware_sha256": "c2446f243a87c595b5cd6316c21613ef68532993c174ed74bfbf9af331f53d66"
+    },
+    {
+      "no": "J03",
+      "prompt": "LED 순서대로 켜면서 도레미 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 79.78561234474182,
+      "firmware_size": 650576,
+      "firmware_sha256": "6146339f49547922d083078fb4f0276f45cac9957ace9d6e3b924b6d3c20d77b"
+    },
+    {
+      "no": "J04",
+      "prompt": "알람: LED 전체 빠르게 깜빡 + 부저 빠르게 반복",
+      "success": true,
+      "error": "",
+      "elapsed": 73.42495584487915,
+      "firmware_size": 650528,
+      "firmware_sha256": "3d0353c12d74f33a91a894a1f5c07d17f9ef0b6cbf9c49196280ca1ac720c1cc"
+    },
+    {
+      "no": "J05",
+      "prompt": "크리스마스: LED 랜덤 + 징글벨 멜로디",
+      "success": true,
+      "error": "",
+      "elapsed": 116.23913025856018,
+      "firmware_size": 651664,
+      "firmware_sha256": "fc5f5e38715921f5cc7a0524b30cdc1608d516192c80571ae4732e8b34997a16"
+    },
+    {
+      "no": "K01",
+      "prompt": "온도 25도 이하면 파란 LED, 넘으면 빨간 LED",
+      "success": true,
+      "error": "Build failed:\nota_arduino\\ble_ota_arduino.ino:472:9: error: 'currentTemp' was not declared in this scope\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:476:58: error: cannot convert 'StringSumHelper' to 'const char*'\nIn file included from C:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:15:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'\nError during build: exit status 1\n",
+      "elapsed": 160.01464080810547,
+      "firmware_size": 650608,
+      "firmware_sha256": "11b842000648a5cc452fb41d117992e85d227eba7b9e2c4b9e035a4fbf82326a"
+    },
+    {
+      "no": "K02",
+      "prompt": "온도에 따라 LED 색 바꾸기 (낮으면 파랑, 보통 노랑, 높으면 빨강)",
+      "success": true,
+      "error": "",
+      "elapsed": 84.4594886302948,
+      "firmware_size": 650864,
+      "firmware_sha256": "daad2ce0d1ac567477083e86d164cc4ca2f06ba336b834a0041f6cc125fb8834"
+    },
+    {
+      "no": "K03",
+      "prompt": "온도 28도 넘으면 부저 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 88.59447026252747,
+      "firmware_size": 651568,
+      "firmware_sha256": "fa76290733a8196bb3a83ffe1b4a705777f45cde09cb2c179c9df52e1a0e2def"
+    },
+    {
+      "no": "K04",
+      "prompt": "습도 70% 넘으면 노란 LED 깜빡이기",
+      "success": false,
+      "error": "Build failed:\na_arduino\\ble_ota_arduino.ino:15:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:485:55: error: cannot convert 'StringSumHelper' to 'const char*'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'\nError during build: exit status 1\n",
+      "elapsed": 140.7571976184845
+    },
+    {
+      "no": "K05",
+      "prompt": "온도를 OLED에 표시하고 30도 넘으면 \"HOT!\" 표시",
+      "success": true,
+      "error": "",
+      "elapsed": 84.29747295379639,
+      "firmware_size": 650656,
+      "firmware_sha256": "e4e3dc46f1c38761d4a5b2038dd759db32d6eeb5861cfdf6dd47db0e0b71cfb3"
+    },
+    {
+      "no": "L01",
+      "prompt": "스위치 누를 때마다 LED 토글 (켜짐↔꺼짐)",
+      "success": true,
+      "error": "",
+      "elapsed": 82.75372838973999,
+      "firmware_size": 650704,
+      "firmware_sha256": "20f4cc855705762b08f91242eb19481703bb8da6313f86e09ce20aa668ad462f"
+    },
+    {
+      "no": "L02",
+      "prompt": "스위치 누를 때마다 LED 색 바꾸기 (빨→노→파 순환)",
+      "success": true,
+      "error": "",
+      "elapsed": 77.98112964630127,
+      "firmware_size": 650608,
+      "firmware_sha256": "80e37591b595ff29b1c6b561f365b79f6b92f5855302e5ab2e319c99c9b17abb"
+    },
+    {
+      "no": "L03",
+      "prompt": "스위치 누른 횟수 OLED에 표시하기",
+      "success": true,
+      "error": "",
+      "elapsed": 76.77762770652771,
+      "firmware_size": 650736,
+      "firmware_sha256": "36831ef9f34b9f0e4fd57ecb01ce7205940aa18ad3c54919958832ac97c981ee"
+    },
+    {
+      "no": "L04",
+      "prompt": "스위치 3번 누르면 멜로디 재생하기",
+      "success": true,
+      "error": "Build failed:\nota_arduino\\ble_ota_arduino.ino: In function 'void loop()':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:487:19: error: 'lastState' was not declared in this scope; did you mean 'eTaskState'?\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:488:20: error: 'lastDebounce' was not declared in this scope\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:493:9: error: 'pressCount' was not declared in this scope\nError during build: exit status 1\n",
+      "elapsed": 127.65945529937744,
+      "firmware_size": 650896,
+      "firmware_sha256": "cce98b53631234dd457cfc26b7c1dfb79756bcf4c909ad4c4f9d423eded9989c"
+    },
+    {
+      "no": "L05",
+      "prompt": "스위치 길게 누르면(2초) 모든 LED 끄기",
+      "success": true,
+      "error": "",
+      "elapsed": 84.38182330131531,
+      "firmware_size": 650512,
+      "firmware_sha256": "e6f003d20287dbce34f829321dd6d34b2dc7238ca9bef6b3cdea353ff5e5b8e7"
+    },
+    {
+      "no": "M01",
+      "prompt": "OLED에 \"빨강!\" 표시하고 빨간 LED 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 68.44606137275696,
+      "firmware_size": 650368,
+      "firmware_sha256": "374bc46d8ab84ff7876b29382fda5077de4d85bea53938956ec86888b29bfdfc"
+    },
+    {
+      "no": "M02",
+      "prompt": "OLED에 현재 켜진 LED 이름 표시하기",
+      "success": true,
+      "error": "",
+      "elapsed": 84.52806258201599,
+      "firmware_size": 650784,
+      "firmware_sha256": "bed568a2b98d0915f83b46f1b656a6e435325cc88f568f781880b152aff5bd3a"
+    },
+    {
+      "no": "M03",
+      "prompt": "OLED에 카운트다운 5초 후 LED 전체 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 75.34058833122253,
+      "firmware_size": 650576,
+      "firmware_sha256": "6cc976d3f53932b46d13af381c2641fd20b0ee57523b3daf40e8bd83ea65ea95"
+    },
+    {
+      "no": "M04",
+      "prompt": "OLED에 초시계 표시 (0.0, 0.1, 0.2...)",
+      "success": true,
+      "error": "",
+      "elapsed": 78.37643098831177,
+      "firmware_size": 650544,
+      "firmware_sha256": "c7e418afcf480c4e7645375c8ada6c731ad2a73974853406988105b8e84a1567"
+    },
+    {
+      "no": "M05",
+      "prompt": "OLED에 현재 동작 시간(초) 계속 표시하기",
+      "success": true,
+      "error": "",
+      "elapsed": 68.09506058692932,
+      "firmware_size": 650800,
+      "firmware_sha256": "6d5090f1822152721c667fa3530f83c314ed8f8837601a12379668b261adfe66"
+    },
+    {
+      "no": "N01",
+      "prompt": "신호등 + 파란불일 때 \"WALK\" OLED 표시 + 보행 알림음",
+      "success": true,
+      "error": "",
+      "elapsed": 102.27532911300659,
+      "firmware_size": 650752,
+      "firmware_sha256": "7fe98f65ce8d392dae3d5e919de66fd1c86091b98b310ada186cbec7d659b489"
+    },
+    {
+      "no": "N02",
+      "prompt": "LED 순서대로 켜면서 음계+OLED에 음 이름 표시",
+      "success": true,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:445:11: error: redefinition of 'const int NOTES []'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:147:18: note: 'const int NOTES [8]' previously defined here\nError during build: exit status 1\n",
+      "elapsed": 173.8270399570465,
+      "firmware_size": 650864,
+      "firmware_sha256": "349f7d61d75a3a9a47dd8129c2ed61b13ed831a4c95d3ffe9aee61c529fc446d"
+    },
+    {
+      "no": "N03",
+      "prompt": "모스부호 SOS: LED+부저+OLED에 ···---··· 동시 표시",
+      "success": true,
+      "error": "",
+      "elapsed": 113.91627812385559,
+      "firmware_size": 650896,
+      "firmware_sha256": "37a35455373477389f7c2f53c1174b63d9dfaf609e25880ad2cea0fb567341d5"
+    },
+    {
+      "no": "N04",
+      "prompt": "무드등: LED 3개 랜덤 패턴 + 오르골 멜로디",
+      "success": true,
+      "error": "",
+      "elapsed": 123.12836241722107,
+      "firmware_size": 651456,
+      "firmware_sha256": "a36a8ef9386287c014aa5f474a28bd38a65354180cde73749627740d2c5d2298"
+    },
+    {
+      "no": "N05",
+      "prompt": "기상 알람: 카운트다운 OLED → 멜로디 → LED 전체 점멸",
+      "success": true,
+      "error": "",
+      "elapsed": 113.82667899131775,
+      "firmware_size": 650912,
+      "firmware_sha256": "58a435b491549694da3ee956b50859b2ed67b9346b3e9bbefe424ff2720a3633"
+    },
+    {
+      "no": "O01",
+      "prompt": "온도계: OLED에 온도+막대그래프 표시",
+      "success": true,
+      "error": "",
+      "elapsed": 106.51733708381653,
+      "firmware_size": 650688,
+      "firmware_sha256": "82126ed9bb4f9acde7da3c6eec475aff24083caa9ffdc541e4ae8a25452a996f"
+    },
+    {
+      "no": "O02",
+      "prompt": "열사병 경보: 35도 이상 → LED 전체 점멸+사이렌+OLED \"DANGER\"",
+      "success": true,
+      "error": "",
+      "elapsed": 91.4842643737793,
+      "firmware_size": 652176,
+      "firmware_sha256": "904338a6bd9619cf4959eddbe945e0840ac0d5dbb3250306244068d756168d00"
+    },
+    {
+      "no": "O03",
+      "prompt": "쾌적도 표시: 온습도 조합 → OLED에 상태 표시 (Good/Bad/Danger)",
+      "success": true,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:456:1: error: 'ComfortLevel' does not name a type\nError during build: exit status 1\n",
+      "elapsed": 138.22802186012268,
+      "firmware_size": 651456,
+      "firmware_sha256": "fbca682880c2a1db9069d3ad159cdaaa01fdbce9589fefdc0235f9cd750ac334"
+    },
+    {
+      "no": "O04",
+      "prompt": "5초마다 온도 측정 + 최고/최저/평균 OLED 표시",
+      "success": true,
+      "error": "",
+      "elapsed": 78.82408404350281,
+      "firmware_size": 650336,
+      "firmware_sha256": "22ac0a0d5a72b28fb874aee953bc9f8b6ce86499796403869168118d5cb4891d"
+    },
+    {
+      "no": "O05",
+      "prompt": "온도 변화 감지: 1도 이상 변하면 부저 알림 + OLED 표시",
+      "success": true,
+      "error": "",
+      "elapsed": 83.33057808876038,
+      "firmware_size": 651184,
+      "firmware_sha256": "23593b676738948f526246b131396eda42cfad93ccbf63b469497481ce6c7384"
+    },
+    {
+      "no": "O06",
+      "prompt": "온도 이력 그래프: OLED에 최근 20개 온도를 점으로 표시",
+      "success": true,
+      "error": "Build failed:\n_arduino.ino:507:14: error: 'class SSD1306' has no member named 'drawPixel'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:508:14: error: 'class SSD1306' has no member named 'drawPixel'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:509:14: error: 'class SSD1306' has no member named 'drawPixel'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:510:14: error: 'class SSD1306' has no member named 'drawPixel'\nError during build: exit status 1\n",
+      "elapsed": 224.6431155204773,
+      "firmware_size": 651072,
+      "firmware_sha256": "32aefaa2b6e7413b50bee8e859dc737ef605910ccb6ec029a5bc85d93e37b631"
+    },
+    {
+      "no": "P01",
+      "prompt": "스위치로 모드 전환: 1번=LED 깜빡, 2번=멜로디, 3번=온도",
+      "success": false,
+      "error": "Build failed:\nStringSumHelper' to 'const char*'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:518:64: error: cannot convert 'StringSumHelper' to 'const char*'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'\nError during build: exit status 1\n",
+      "elapsed": 243.47559452056885
+    },
+    {
+      "no": "P02",
+      "prompt": "스위치 더블클릭 감지: 1번 누르면 빨강, 빠르게 2번 누르면 파랑",
+      "success": true,
+      "error": "",
+      "elapsed": 87.5207941532135,
+      "firmware_size": 650736,
+      "firmware_sha256": "609929feb1cf262b407da1cf5eff3e3098bc1d4e988d86f69e88c565be400412"
+    },
+    {
+      "no": "P03",
+      "prompt": "스위치로 OLED 메뉴 네비게이션: 누를 때마다 메뉴 항목 이동",
+      "success": true,
+      "error": "",
+      "elapsed": 75.51536011695862,
+      "firmware_size": 650736,
+      "firmware_sha256": "9737bf9f96b9e366fb506c25aab54723fd535880a109aa273dbd433e92a6cb1d"
+    },
+    {
+      "no": "P04",
+      "prompt": "스위치 누른 시간 측정: OLED에 \"0.5초\", \"1.2초\" 표시",
+      "success": true,
+      "error": "",
+      "elapsed": 81.96564221382141,
+      "firmware_size": 650720,
+      "firmware_sha256": "47734274ec1336344407fd6e4e594d69114567a69a7da4961aa1e01dc854a761"
+    },
+    {
+      "no": "P05",
+      "prompt": "스위치 패턴 입력: 짧-짧-긴 패턴으로 특정 동작 실행",
+      "success": true,
+      "error": "",
+      "elapsed": 116.09300923347473,
+      "firmware_size": 651680,
+      "firmware_sha256": "67b903135908f321a6f210b255e02eefd159fd71772691611202b7a680232c70"
+    },
+    {
+      "no": "Q01",
+      "prompt": "라면 타이머: 3분 카운트다운 OLED + 끝나면 멜로디+LED",
+      "success": true,
+      "error": "",
+      "elapsed": 98.11803865432739,
+      "firmware_size": 651072,
+      "firmware_sha256": "0661e867f57feb632cb6b47420c22b3ed254080bd3c44950b866deb899ae3a18"
+    },
+    {
+      "no": "Q02",
+      "prompt": "발표 타이머: OLED에 남은 시간, 1분전 노랑, 끝나면 빨강+부저",
+      "success": true,
+      "error": "",
+      "elapsed": 117.99987602233887,
+      "firmware_size": 651152,
+      "firmware_sha256": "1ce7fdc2d1803183e20b1d5a250e2a4bc97c428fae5d8649b3df309ebb05b808"
+    },
+    {
+      "no": "Q03",
+      "prompt": "반응속도 테스트: 랜덤 시간 후 LED → 스위치 누르기 → 시간 표시",
+      "success": true,
+      "error": "",
+      "elapsed": 108.59873223304749,
+      "firmware_size": 658160,
+      "firmware_sha256": "02d9a57117c554a737b950c1bf43d0dddac30cfc63773b244132d77efd9c3a2a"
+    },
+    {
+      "no": "Q04",
+      "prompt": "주사위: 스위치 누르면 OLED에 1~6 랜덤 숫자 표시",
+      "success": true,
+      "error": "",
+      "elapsed": 76.37084698677063,
+      "firmware_size": 651376,
+      "firmware_sha256": "784651cbb6903dbb3f8298cc7cdcc3892def3a40629340f64eb944392b24a2b0"
+    },
+    {
+      "no": "Q05",
+      "prompt": "룰렛: LED 빠르게 순환 후 점점 느려지며 하나에 멈추기",
+      "success": true,
+      "error": "",
+      "elapsed": 135.7614016532898,
+      "firmware_size": 651728,
+      "firmware_sha256": "bbcf756e0e7ab6db332d996cead8dd2403520613465e7f4ab414ca3a7377d4d1"
+    },
+    {
+      "no": "Q06",
+      "prompt": "가위바위보: 스위치 → OLED에 랜덤 결과 + 승패 카운트",
+      "success": true,
+      "error": "",
+      "elapsed": 130.81061816215515,
+      "firmware_size": 651760,
+      "firmware_sha256": "afc2586717abf78a918ab5ce7975dd2b1270db2e1966d1383b55b31bcd0d8f87"
+    },
+    {
+      "no": "Q07",
+      "prompt": "스톱워치: 스위치 1번=시작, 2번=정지, 3번=리셋",
+      "success": true,
+      "error": "",
+      "elapsed": 117.8524181842804,
+      "firmware_size": 650896,
+      "firmware_sha256": "2b87910ec20ce2b4a22a7b3df68fe7b5f6dac946a9846ac151ae477c6ec249da"
+    },
+    {
+      "no": "Q08",
+      "prompt": "퀴즈 타이머: 10초 카운트다운 + LED 색으로 남은 시간 표시",
+      "success": true,
+      "error": "",
+      "elapsed": 109.9700403213501,
+      "firmware_size": 651136,
+      "firmware_sha256": "ede3306220343b0c87ee19ec654e0b8521063e0de78ac97fa7ab7c50e3a32049"
+    },
+    {
+      "no": "R01",
+      "prompt": "5초마다 온도를 BLE로 스마트폰에 전송 + OLED 표시",
+      "success": true,
+      "error": "",
+      "elapsed": 114.73012590408325,
+      "firmware_size": 650880,
+      "firmware_sha256": "de4afe44da18015d2e3b9e6118a288dfa5cb0d117b222c3dd3ea55613af45322"
+    },
+    {
+      "no": "R02",
+      "prompt": "5초마다 온도+습도 둘 다 BLE로 스마트폰에 전송",
+      "success": false,
+      "error": "Build failed:\nC:/Users/lenovo/AppData/Local/Arduino15/packages/esp32/tools/esp-x32/2411/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld.exe: C:\\Users\\lenovo\\AppData\\Local\\arduino\\sketches\\DC307C44AEC3B4BEB58A2C8200D7CA6F\\sketch\\ble_ota_arduino.ino.cpp.o:(.literal._Z10sensorTaskPv+0x20): undefined reference to `pDataChar'\ncollect2.exe: error: ld returned 1 exit status\nError during build: exit status 1\n",
+      "elapsed": 313.4808497428894
+    },
+    {
+      "no": "R03",
+      "prompt": "스위치 누르면 BLE로 \"눌림\" 전송 + 카운트를 스마트폰에 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 109.70477843284607,
+      "firmware_size": 650784,
+      "firmware_sha256": "363fa8aec24caf3a9083fe3102ef5590b83750e47b3347dec949d9054a6d19f7"
+    },
+    {
+      "no": "R04",
+      "prompt": "LED 상태 변경할 때마다 현재 LED 상태를 BLE로 전송",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:530:38: error: extended character → is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:532:70: error: extended character → is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 351.6446623802185
+    },
+    {
+      "no": "R05",
+      "prompt": "온도 28도 이상이면 BLE로 경고 알림 전송 + 보드 LED 경보",
+      "success": true,
+      "error": "Build failed:\n:536:12: error: extended character ° is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:536:46: error: extended character — is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:537:10: error: extended character ≥ is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:537:14: error: extended character ° is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 284.55939269065857,
+      "firmware_size": 651280,
+      "firmware_sha256": "8128fa42d4092defa7c482e89f3618833f1dde7e7ef6b0f5702193ed22f7a989"
+    },
+    {
+      "no": "S01",
+      "prompt": "현관 벨: 스위치 → 딩동 멜로디+OLED \"Visitor!\" + BLE 알림",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void setup()':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:480:11: error: 'SWITCH_PIN' was not declared in this scope\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void loop()':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:487:30: error: 'SWITCH_PIN' was not declared in this scope\nError during build: exit status 1\n",
+      "elapsed": 236.30041027069092
+    },
+    {
+      "no": "S02",
+      "prompt": "방범 알람: 스위치 떼면 사이렌+LED 점멸+OLED \"ALERT\"+BLE 경보",
+      "success": true,
+      "error": "Build failed:\nC:/Users/lenovo/AppData/Local/Arduino15/packages/esp32/tools/esp-x32/2411/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld.exe: C:\\Users\\lenovo\\AppData\\Local\\arduino\\sketches\\DC307C44AEC3B4BEB58A2C8200D7CA6F\\sketch\\ble_ota_arduino.ino.cpp.o:(.literal._Z4loopv+0x4): undefined reference to `pCharacteristic'\ncollect2.exe: error: ld returned 1 exit status\nError during build: exit status 1\n",
+      "elapsed": 175.22080659866333,
+      "firmware_size": 651184,
+      "firmware_sha256": "fb17a594c39970c9b72d7ad79ac9ad91a3585113e6ab36381e3d6718d1ac03ce"
+    },
+    {
+      "no": "S03",
+      "prompt": "교실 환경 모니터: 온습도 OLED+LED 신호등+BLE 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 150.0767285823822,
+      "firmware_size": 651312,
+      "firmware_sha256": "63225ea7003f7fc5ec73272c9e5f59484a554811b8a08673214e8b4d29b556ff"
+    },
+    {
+      "no": "S04",
+      "prompt": "스마트 알람시계: OLED 시계(초) → 설정시간에 멜로디+LED+스위치로 끄기",
+      "success": true,
+      "error": "",
+      "elapsed": 130.8584954738617,
+      "firmware_size": 651408,
+      "firmware_sha256": "93278bf68357911dc362669e4bea1a5172e70573671b43a693efb50ca1b94520"
+    },
+    {
+      "no": "S05",
+      "prompt": "세탁기 알림: 카운트다운(OLED)+남은시간 BLE 전송+끝나면 멜로디+LED",
+      "success": true,
+      "error": "",
+      "elapsed": 225.51434445381165,
+      "firmware_size": 652096,
+      "firmware_sha256": "27f6059a9802e2491eafb6d2b985528237273c6c87d000a1ae2e4f7e4fd13755"
+    },
+    {
+      "no": "T01",
+      "prompt": "스마트폰에서 \"RED\", \"YELLOW\", \"BLUE\" 문자 보내면 해당 LED 켜기 + 현재 LED 상태를 BLE로 응답",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:533:17: error: extended character → is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:534:28: error: extended character → is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:535:16: error: extended character → is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 318.06132984161377
+    },
+    {
+      "no": "T02",
+      "prompt": "스마트폰에서 \"MELODY:학교종\" 보내면 학교종 연주, \"MELODY:생일\" 보내면 생일축하 연주 + 연주 상태 BLE 전송",
+      "success": false,
+      "error": "Build failed:\n\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void onBleWrite(String)':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:511:5: error: 'notifyBLE' was not declared in this scope\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:515:5: error: 'notifyBLE' was not declared in this scope\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:519:5: error: 'notifyBLE' was not declared in this scope\nError during build: exit status 1\n",
+      "elapsed": 404.5476200580597
+    },
+    {
+      "no": "T03",
+      "prompt": "스마트폰에서 \"SPEED:500\" 보내면 LED 깜빡 속도 변경 + 현재 속도를 BLE로 응답",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:507:48: error: extended character — is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 257.9843227863312
+    },
+    {
+      "no": "T04",
+      "prompt": "스마트폰에서 \"MODE:1\" \"MODE:2\" \"MODE:3\" 보내면 모드 전환 + OLED에 모드명 표시 + 현재 모드 BLE 응답",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void onBleReceived(String)':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:491:5: error: 'bleNotify' was not declared in this scope\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:500:3: error: 'bleNotify' was not declared in this scope\nError during build: exit status 1\n",
+      "elapsed": 496.38850259780884
+    },
+    {
+      "no": "T05",
+      "prompt": "스마트폰에서 \"READ\" 보내면 온습도 측정 + 결과를 BLE로 전송 + OLED 표시",
+      "success": false,
+      "error": "Build failed:\n:504:33: error: extended character → is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:506:43: error: extended character → is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:509:42: error: extended character → is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:511:45: error: extended character → is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 379.2771441936493
+    },
+    {
+      "no": "T06",
+      "prompt": "스마트폰에서 \"DISPLAY:Hello World\" 보내면 OLED에 표시 + 확인 응답 BLE 전송",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void onBleReceive(String)':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:458:5: error: 'bleSend' was not declared in this scope\nError during build: exit status 1\n",
+      "elapsed": 373.05926752090454
+    },
+    {
+      "no": "T07",
+      "prompt": "스마트폰에서 \"BLINK:3:500\" 보내면 LED 3번, 500ms 간격으로 깜빡 + 완료 후 BLE 응답",
+      "success": true,
+      "error": "Build failed:\n:511:37: error: extended character ↓ is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:512:15: error: extended character ← is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:512:32: error: extended character ← is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:515:33: error: extended character → is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 457.96656346321106,
+      "firmware_size": 650512,
+      "firmware_sha256": "d45e425394fe00293dd8dbcb771ebfc82f6be5dd1e5b170de94b8dde98f67ff1"
+    },
+    {
+      "no": "T08",
+      "prompt": "스마트폰에서 \"ALARM:60\" 보내면 60초 타이머 시작 + 매초 남은 시간 BLE 전송 + 끝나면 멜로디",
+      "success": false,
+      "error": "Build failed:\niHardStudy\\사전빌드\\ble_ota_arduino/ble_ota_arduino.ino:539:(.text._Z4loopv+0x1c3): undefined reference to `bleSendNotify(String)'\nC:/Users/lenovo/AppData/Local/Arduino15/packages/esp32/tools/esp-x32/2411/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld.exe: C:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino/ble_ota_arduino.ino:546:(.text._Z4loopv+0x24f): undefined reference to `bleSendNotify(String)'\ncollect2.exe: error: ld returned 1 exit status\nError during build: exit status 1\n",
+      "elapsed": 503.46087098121643
+    },
+    {
+      "no": "T09",
+      "prompt": "스마트폰에서 \"PIANO:0\" ~ \"PIANO:7\" 보내면 해당 음 재생 + 연주 중 표시를 BLE 전송",
+      "success": true,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:544:37: error: extended character → is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 359.63700795173645,
+      "firmware_size": 650592,
+      "firmware_sha256": "077e8fbc7adb719944076a301cba9a9fd1e71d2dc7215ed3006f3c7009be7d87"
+    },
+    {
+      "no": "T10",
+      "prompt": "스마트폰에서 \"STATUS\" 보내면 온도+습도+LED상태+스위치 상태를 한 번에 BLE로 전송",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:509:26: error: extended character ° is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 319.4360797405243
+    },
+    {
+      "no": "U01",
+      "prompt": "반응속도 게임 (BLE): 랜덤 시간 후 LED → 스위치 누르기 → 반응시간을 BLE로 전송",
+      "success": true,
+      "error": "Build failed:\n빌드\\ble_ota_arduino\\ble_ota_arduino.ino:15:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:545:36: error: cannot convert 'String' to 'const char*'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'\nError during build: exit status 1\n",
+      "elapsed": 406.4744474887848,
+      "firmware_size": 652176,
+      "firmware_sha256": "e6a7e39cd42a8bbd3ff561286af6e5fe89c6243777ae975bd7718f70a8a9cc7a"
+    },
+    {
+      "no": "U02",
+      "prompt": "주사위 게임 (BLE): 스위치 → OLED에 숫자 + 결과를 BLE로 전송",
+      "success": true,
+      "error": "Build failed:\ndStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void showDice(int)':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:489:14: error: 'class SSD1306' has no member named 'drawPixel'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void sendBLE(int)':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:498:46: error: 'class NimBLECharacteristic' has no member named 'getSubscribedCount'\nError during build: exit status 1\n",
+      "elapsed": 219.01586937904358,
+      "firmware_size": 652080,
+      "firmware_sha256": "6e99883ac354a580f6b580f139b4392361429c860870a63b85974fdefc1f215a"
+    },
+    {
+      "no": "U03",
+      "prompt": "기억력 게임: 보드가 LED 패턴 보여줌 → 스마트폰에서 순서대로 입력 → 맞으면 다음 레벨",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:714:16: error: extended character → is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 513.1227679252625
+    },
+    {
+      "no": "U04",
+      "prompt": "온도 맞추기 게임: OLED에 \"몇 도일까?\" → 스마트폰에서 입력 → 높/낮 힌트 → 맞추면 멜로디",
+      "success": false,
+      "error": "Command '['bash', '-c', 'cat \"C:\\\\Users\\\\lenovo\\\\AppData\\\\Local\\\\Temp\\\\tmp48tgj3oa.txt\" | \"C:\\\\Users\\\\lenovo\\\\AppData\\\\Roaming\\\\npm\\\\claude.CMD\" -p - --output-format stream-json --verbose --model claude-sonnet-4-6']' timed out after 180 seconds",
+      "elapsed": 954.6177997589111
+    },
+    {
+      "no": "U05",
+      "prompt": "모스부호 번역기: 스위치 짧게/길게 입력 → OLED에 점/선 표시 → 해석된 글자를 BLE로 전송",
+      "success": false,
+      "error": "Build failed:\nC:/Users/lenovo/AppData/Local/Arduino15/packages/esp32/tools/esp-x32/2411/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld.exe: C:\\Users\\lenovo\\AppData\\Local\\arduino\\sketches\\DC307C44AEC3B4BEB58A2C8200D7CA6F\\sketch\\ble_ota_arduino.ino.cpp.o:(.literal._Z7bleSendc+0x0): undefined reference to `pCharacteristic'\ncollect2.exe: error: ld returned 1 exit status\nError during build: exit status 1\n",
+      "elapsed": 490.60360288619995
+    },
+    {
+      "no": "U06",
+      "prompt": "빨리 누르기 대결: 10초 동안 스위치 누른 횟수 세기 → 최종 점수 BLE 전송",
+      "success": true,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:606:43: error: extended character → is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:614:1: error: extended character → is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 411.4847991466522,
+      "firmware_size": 652240,
+      "firmware_sha256": "bdafc63e9027e722e402ee146cf47275eef015f03595d892659967aa9956930e"
+    },
+    {
+      "no": "U07",
+      "prompt": "LED 룰렛 게임 (BLE): 스마트폰에서 \"SPIN\" → LED 순환 후 감속 → 멈춘 색을 BLE로 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 150.24214053153992,
+      "firmware_size": 650992,
+      "firmware_sha256": "aee11bf530f8918d6e0e5ebf53fa409b9d08427a176530644851cf4d621169d9"
+    },
+    {
+      "no": "U08",
+      "prompt": "타이핑 게임: OLED에 랜덤 알파벳 표시 → 스마트폰에서 입력 → 맞으면 점수+1 → 점수 BLE 전송",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void onBLECommand(String)':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:497:9: error: 'bleSend' was not declared in this scope\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:502:9: error: 'bleSend' was not declared in this scope\nError during build: exit status 1\n",
+      "elapsed": 810.3064165115356
+    },
+    {
+      "no": "V01",
+      "prompt": "10초마다 온습도 측정 → OLED에 현재값+최고+최저 → BLE로 실시간 전송",
+      "success": true,
+      "error": "Command '['bash', '-c', 'cat \"C:\\\\Users\\\\lenovo\\\\AppData\\\\Local\\\\Temp\\\\tmpskl9syiq.txt\" | \"C:\\\\Users\\\\lenovo\\\\AppData\\\\Roaming\\\\npm\\\\claude.CMD\" -p - --output-format stream-json --verbose --model claude-sonnet-4-6']' timed out after 180 seconds",
+      "elapsed": 481.76372623443604,
+      "firmware_size": 651200,
+      "firmware_sha256": "3336c47e2e539b84f88ccca003f7000a665706fbcdcb8276f82cd2195035be8d"
+    },
+    {
+      "no": "V02",
+      "prompt": "스위치 이벤트 로그: 누를 때마다 시간+카운트 OLED 표시 + BLE 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 120.47134208679199,
+      "firmware_size": 650992,
+      "firmware_sha256": "88b251ceadeb56beb0a449edf9bed1ba4a97eb8936b2849130cab6644c961731"
+    },
+    {
+      "no": "V03",
+      "prompt": "온도 경고 시스템: 정상(파LED+BLE \"OK\") / 주의(노LED+BLE \"WARN\") / 위험(빨LED+사이렌+BLE \"DANGER\")",
+      "success": true,
+      "error": "",
+      "elapsed": 160.98427271842957,
+      "firmware_size": 651472,
+      "firmware_sha256": "ff379081194d6093fadfee10502ff43933f1ef3374377c99e88c5845b554609c"
+    },
+    {
+      "no": "V04",
+      "prompt": "환경 대시보드: OLED 4줄(온도, 습도, LED상태, 업타임) + 5초마다 전체 BLE 전송",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:545:52: error: extended character — is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 272.42451095581055
+    },
+    {
+      "no": "V05",
+      "prompt": "온도 변화 추적: 직전 대비 상승↑/하강↓/유지= OLED 표시 + 트렌드를 BLE 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 141.11913228034973,
+      "firmware_size": 651312,
+      "firmware_sha256": "6845617d68958ccd64403556395ff346b52c6a6152d8175b2cf707b15244c270"
+    },
+    {
+      "no": "W01",
+      "prompt": "OLED에 애니메이션: 점이 왼쪽→오른쪽 이동 반복",
+      "success": true,
+      "error": "",
+      "elapsed": 100.43216061592102,
+      "firmware_size": 650448,
+      "firmware_sha256": "e5e51ef429b38b160fe4ac7416e157a64400e2335bbab0b0becdf4a9f2f7c1ac"
+    },
+    {
+      "no": "W02",
+      "prompt": "OLED 프로그레스바: 0%→100% 천천히 차오르기",
+      "success": true,
+      "error": "",
+      "elapsed": 98.0132474899292,
+      "firmware_size": 650672,
+      "firmware_sha256": "60b1ca76f6aafa37c29cb02b6a155a906f579048928a13ce23d611f9bf689753"
+    },
+    {
+      "no": "W03",
+      "prompt": "OLED에 디지털 시계: MM:SS 형식으로 초 단위 업데이트",
+      "success": true,
+      "error": "",
+      "elapsed": 71.27439165115356,
+      "firmware_size": 650512,
+      "firmware_sha256": "1420d1b60a3ef9b6d51768affab86a5b891948fbf6e66d51f82626287bed06aa"
+    },
+    {
+      "no": "W04",
+      "prompt": "OLED에 온도 막대그래프: 최근 16개 측정값을 세로 막대로 표시",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void drawBarGraph()':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:507:22: error: 'class SSD1306' has no member named 'drawPixel'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:514:14: error: 'class SSD1306' has no member named 'drawPixel'\nError during build: exit status 1\n",
+      "elapsed": 299.0680978298187
+    },
+    {
+      "no": "W05",
+      "prompt": "OLED에 미니 게임: 점이 위에서 떨어지고 스위치로 피하기",
+      "success": true,
+      "error": "",
+      "elapsed": 186.5424931049347,
+      "firmware_size": 651968,
+      "firmware_sha256": "dd86ecaf2314f95c09a3e46de0581f0b17f28d3e65b763c41e64a516b17f6db3"
+    },
+    {
+      "no": "W06",
+      "prompt": "OLED 스크롤 텍스트: 긴 문장이 오른쪽→왼쪽으로 흐르기",
+      "success": true,
+      "error": "",
+      "elapsed": 103.20043778419495,
+      "firmware_size": 650528,
+      "firmware_sha256": "05dc168a0903b7a34567f1f2ecf9aa1481e0af547a9495306135ceb9d8d6ceea"
+    },
+    {
+      "no": "W07",
+      "prompt": "OLED 부팅 화면: \"UTTEC\" 로고 표시 → 로딩바 → 메인 화면 전환",
+      "success": true,
+      "error": "",
+      "elapsed": 107.90034484863281,
+      "firmware_size": 652384,
+      "firmware_sha256": "23d45ea78c75a5fe0ea344eb547ae04f03a2bca1e6a610080166015ed5191e40"
+    },
+    {
+      "no": "X01",
+      "prompt": "동시 실행: 빨강 0.3초 깜빡 + 노랑 0.7초 깜빡 + 파랑 1.5초 깜빡",
+      "success": true,
+      "error": "",
+      "elapsed": 71.68689155578613,
+      "firmware_size": 650608,
+      "firmware_sha256": "9d46c7a5e184d01d8f2e950419846515d3a74b960b4f072472eb3c76175db9db"
+    },
+    {
+      "no": "X02",
+      "prompt": "동시 실행: LED 깜빡이기 + OLED 온도 표시 + BLE 데이터 전송 (각각 다른 주기)",
+      "success": true,
+      "error": "",
+      "elapsed": 122.67038345336914,
+      "firmware_size": 651008,
+      "firmware_sha256": "0013097cbf066e9a8366b5c5e5afd53bd2bafb2cd1a43463964c402fb6fe5360"
+    },
+    {
+      "no": "X03",
+      "prompt": "배경 음악 + LED 쇼: 멜로디 연주하면서 LED 패턴 동시 실행",
+      "success": true,
+      "error": "",
+      "elapsed": 124.91368889808655,
+      "firmware_size": 651472,
+      "firmware_sha256": "fa9924414f5a391497fcaa9ab98f3783272ed0ffa190464d9489453b2176915a"
+    },
+    {
+      "no": "X04",
+      "prompt": "워치독: OLED에 업타임 표시 + 30초마다 BLE로 \"alive\" 전송 + 스위치로 리셋",
+      "success": true,
+      "error": "Build failed:\n8:18: error: stray '`' in program\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:538:29: error: stray '`' in program\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:538:74: error: stray '`' in program\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:538:90: error: stray '`' in program\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:528:1: error: expected unqualified-id before '--' token\nError during build: exit status 1\n",
+      "elapsed": 374.6746115684509,
+      "firmware_size": 650944,
+      "firmware_sha256": "0ec4c6316065e68db1580257e2e6e82ea39a51afe1a669d5e5df4d630ea55425"
+    },
+    {
+      "no": "Y01",
+      "prompt": "디지털 애완동물: OLED에 표정 표시, 스위치로 먹이주기, 온도로 기분 변화, 기분 상태 BLE 전송",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:461:6: error: variable or field 'drawFace' declared void\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:461:15: error: 'Mood' was not declared in this scope\nError during build: exit status 1\n",
+      "elapsed": 415.7133791446686
+    },
+    {
+      "no": "Y02",
+      "prompt": "스마트 교실: 온습도 모니터+쾌적도 LED+경보+OLED 대시보드+BLE 실시간 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 130.77305793762207,
+      "firmware_size": 651440,
+      "firmware_sha256": "0e9f60175dacd5e7e90f82ce0391dc8d982c4094cb3a30e657e6ee852f618a9b"
+    },
+    {
+      "no": "Y03",
+      "prompt": "나만의 악기: 스위치 누를 때마다 다음 멜로디 재생(3곡 순환) + LED 쇼 + 곡명 OLED + 곡 정보 BLE 전송",
+      "success": true,
+      "error": "Command '['bash', '-c', 'cat \"C:\\\\Users\\\\lenovo\\\\AppData\\\\Local\\\\Temp\\\\tmpo5l5byah.txt\" | \"C:\\\\Users\\\\lenovo\\\\AppData\\\\Roaming\\\\npm\\\\claude.CMD\" -p - --output-format stream-json --verbose --model claude-sonnet-4-6']' timed out after 180 seconds",
+      "elapsed": 433.47052478790283,
+      "firmware_size": 652208,
+      "firmware_sha256": "1a78aba7be2e35253491dd40f885e0bb2ecb4e89ab47716c8a6b44e2440d8e8f"
+    },
+    {
+      "no": "Y04",
+      "prompt": "미니 기상 스테이션: 온습도+쾌적도 판단+히스토리 그래프(OLED)+통계+BLE 주기적 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 206.27197575569153,
+      "firmware_size": 652256,
+      "firmware_sha256": "d161e15c8d84894eab7791c655d594ac7af5810bcaeafafed85f7aa2727577c7"
+    },
+    {
+      "no": "Y05",
+      "prompt": "게임 센터: 스위치로 게임 선택(OLED 메뉴) → 1.반응속도 2.주사위 3.빨리누르기 → 점수 BLE 전송",
+      "success": true,
+      "error": "Command '['bash', '-c', 'cat \"C:\\\\Users\\\\lenovo\\\\AppData\\\\Local\\\\Temp\\\\tmp85rje0tl.txt\" | \"C:\\\\Users\\\\lenovo\\\\AppData\\\\Roaming\\\\npm\\\\claude.CMD\" -p - --output-format stream-json --verbose --model claude-sonnet-4-6']' timed out after 180 seconds",
+      "elapsed": 430.3718316555023,
+      "firmware_size": 661200,
+      "firmware_sha256": "8d561b2f5e46abc995c508c32a816a12499119acf97ad9394c09d73c62c87a88"
+    },
+    {
+      "no": "Y06",
+      "prompt": "보안 시스템: 스위치 패턴 비밀번호(짧-짧-긴) → 맞으면 LED 초록+멜로디 → 틀리면 사이렌+BLE 경보",
+      "success": true,
+      "error": "",
+      "elapsed": 162.59392762184143,
+      "firmware_size": 651840,
+      "firmware_sha256": "510634db7414f1a9c09b32f1e67ebc6531f9a229a35ae3b8c4d0319de0278033"
+    },
+    {
+      "no": "Y07",
+      "prompt": "스마트 화분: 온습도+쾌적도→OLED에 식물 상태 표시+LED 신호+BLE로 관리자 알림",
+      "success": false,
+      "error": "Build failed:\nble_ota_arduino.ino:577:37: error: 'const char* statusStr(PlantStatus)' redeclared as different kind of entity\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:577:14: note: previous declaration 'const char* statusStr'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void sensorTask(void*)':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:610:27: error: 'statusStr' cannot be used as a function\nError during build: exit status 1\n",
+      "elapsed": 367.37313532829285
+    },
+    {
+      "no": "Y08",
+      "prompt": "인터랙티브 퀴즈쇼: OLED에 문제 표시 → 스마트폰에서 답 입력 → 맞으면 멜로디+LED+점수 → 오답 부저+빨간LED → 총 점수 BLE",
+      "success": true,
+      "error": "",
+      "elapsed": 191.7387557029724,
+      "firmware_size": 653136,
+      "firmware_sha256": "51d8ac51900365e96db3a5a0dc41e15a99d1ffcf127131eb79682df874bac90e"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "result_description": "빨강, 노랑, 파랑 LED 세 개가 동시에 모두 켜집니다.",
+  "what_happens": [
+    "아두이노가 시작되면 LED 핀들을 출력 모드로 준비합니다.",
+    "빨강, 노랑, 파랑 LED에 LOW 신호를 보내 세 개를 동시에 켭니다.",
+    "이후 10초마다 반복하지만 LED는 계속 켜진 상태를 유지합니다."
+  ],
+  "concepts": [
+    {
+      "term": "setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번만 실행되는 준비 구역이에요. 방에 들어가서 불을 켜는 것처럼 처음에 할 일을 여기에 써요."
+    },
+    {
+      "term": "loop()",
+      "explanation": "setup() 이후에 계속 반복해서 실행되는 구역이에요. 시계가 계속 돌아가듯이 끝없이 반복돼요."
+    },
+    {
+      "term": "digitalWrite()",
+      "explanation": "핀에 전기를 켜거나 끄는 명령이에요. 스위치를 올리거나 내리는 것과 같아요."
+    },
+    {
+      "term": "active LOW",
+      "explanation": "보통은 HIGH가 켜는 것이지만, 이 LED들은 반대로 LOW 신호를 받아야 켜지는 특별한 방식이에요. 마치 '아니오'라고 해야 작동하는 신기한 스위치예요."
+    },
+    {
+      "term": "delay()",
+      "explanation": "아두이노를 잠깐 기다리게 하는 명령이에요. delay(10000)은 10초 동안 기다리라는 뜻이에요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "digitalWrite(LED_RED, LOW);",
+      "comment": "빨강 LED 핀에 LOW 신호를 보내서 빨강 LED를 켭니다."
+    },
+    {
+      "line": "digitalWrite(LED_YELLOW, LOW);",
+      "comment": "노랑 LED 핀에 LOW 신호를 보내서 노랑 LED를 켭니다."
+    },
+    {
+      "line": "digitalWrite(LED_BLUE, LOW);",
+      "comment": "파랑 LED 핀에 LOW 신호를 보내서 파랑 LED를 켭니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "LED를 하나씩 차례대로 켜보세요. 빨강 → 노랑 → 파랑 순서로 delay()를 사용해서 신호등처럼 만들 수 있어요!"
+    },
+    {
+      "reason": "HIGH를 써서 LED를 꺼보세요. LOW가 켜지고 HIGH가 꺼진다는 active LOW 규칙을 직접 확인해보세요."
+    },
+    {
+      "reason": "loop() 안에서 LED를 켰다 껐다 반복해서 깜빡이는 LED를 만들어보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 LED를 켜려면 digitalWrite()에 어떤 값을 써야 할까요?",
+    "options": [
+      "HIGH",
+      "LOW",
+      "ON",
+      "1"
+    ],
+    "answer": 1,
+    "explanation": "이 LED들은 active LOW 방식이라서 LOW 신호를 받아야 켜집니다. 보통과 반대라서 헷갈릴 수 있지만, LOW = 켜짐이라고 기억하세요!"
+  }
+}

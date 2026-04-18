@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -72,8 +73,8 @@ class _MainShellState extends State<MainShell> {
   String savedBleMac = '78:1C:3C:F4:AD:02';
 
   // Shared state — Server
-  String serverUrl = 'http://178.128.90.37:8092';
-  String prebuiltServerUrl = 'http://100.82.193.50:8095';
+  String serverUrl = 'http://192.168.0.20:8092';
+  String prebuiltServerUrl = 'http://192.168.0.20:8095';
 
   @override
   void initState() {
@@ -86,8 +87,8 @@ class _MainShellState extends State<MainShell> {
     setState(() {
       savedBleName = p.getString('bleName') ?? 'UTTEC-OTA';
       savedBleMac = p.getString('bleMac') ?? '78:1C:3C:F4:AD:02';
-      serverUrl = p.getString('serverUrl') ?? 'http://100.82.193.50:8095';
-      prebuiltServerUrl = p.getString('prebuiltServerUrl') ?? 'http://100.82.193.50:8095';
+      serverUrl = p.getString('serverUrl') ?? 'http://192.168.0.20:8092';
+      prebuiltServerUrl = p.getString('prebuiltServerUrl') ?? 'http://192.168.0.20:8095';
     });
   }
 
@@ -96,6 +97,7 @@ class _MainShellState extends State<MainShell> {
     await p.setString('bleName', savedBleName);
     await p.setString('bleMac', savedBleMac);
     await p.setString('serverUrl', serverUrl);
+    await p.setString('prebuiltServerUrl', prebuiltServerUrl);
   }
 
   // BLE 명령 전송
@@ -751,21 +753,32 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
         }
       }
 
+      // 마지막 데이터 전송 후 보드가 처리할 시간 확보
+      await Future.delayed(const Duration(seconds: 1));
+
       setState(() {
         _otaProgress = 100;
         _otaMessage = '전송 완료! END 명령 전송 중...';
       });
 
-      // OTA END 전송 — 보드가 재부팅하면서 BLE가 끊길 수 있음
+      // OTA END 전송 — withoutResponse: false로 확실한 전달 보장
+      // 보드가 END 수신 후 Update.end() → 2초 대기 → ESP.restart() 순서
       try {
         await _s.ctrlChar!.write(Uint8List.fromList([0x02]), withoutResponse: false);
         debugPrint('OTA END sent successfully');
       } catch (e) {
-        debugPrint('OTA END write error (board may have rebooted): $e');
+        // GATT_ERROR(133)는 보드가 재부팅하면서 발생 — 정상
+        debugPrint('OTA END write error (expected if board rebooted): $e');
       }
 
-      // 보드 재부팅 대기
-      await Future.delayed(const Duration(seconds: 3));
+      // 전송 완료 알림음
+      _playSound('notification');
+
+      // 보드 재부팅 대기 (펌웨어: delay(2000) + ESP.restart())
+      await Future.delayed(const Duration(seconds: 5));
+
+      // 완료 알림음
+      _playSound('notification');
 
       setState(() {
         _otaStatus = 'success';
@@ -774,25 +787,41 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
         _s.bleStatus = 'disconnected';
       });
       _s.setState(() {});
-      _showSnackBar('OTA 성공! 5초 후 자동 재연결...');
-      // 5초 후 자동 재연결
-      Future.delayed(const Duration(seconds: 5), () => _connectBLE());
+      _showSnackBar('OTA 성공! 8초 후 자동 재연결...');
+      // 8초 후 자동 재연결 (보드 재부팅 완료 대기)
+      Future.delayed(const Duration(seconds: 8), () => _connectBLE());
     } catch (e) {
       if (_otaProgress >= 95) {
+        // 95% 이상 전송 후 에러 = 보드 재부팅으로 인한 BLE 끊김 (정상)
+        _playSound('notification');
         setState(() {
           _otaStatus = 'success';
-          _otaMessage = 'OTA \uC644\uB8CC! ESP32\uAC00 \uC7AC\uBD80\uD305\uD588\uC2B5\uB2C8\uB2E4.';
+          _otaMessage = 'OTA 완료! UTTEC 보드가 재부팅했습니다.';
           _otaProgress = 100;
           _s.bleStatus = 'disconnected';
         });
         _s.setState(() {});
-        _showSnackBar('OTA \uC131\uACF5!');
+        _showSnackBar('OTA 성공! 8초 후 자동 재연결...');
+        Future.delayed(const Duration(seconds: 8), () => _connectBLE());
       } else {
+        _playSound('alarm');
         setState(() {
           _otaStatus = 'failed';
-          _otaMessage = 'OTA \uC2E4\uD328: $e';
+          _otaMessage = 'OTA 실패: $e';
         });
       }
+    }
+  }
+
+  // ─── Sound ───
+
+  static const _soundChannel = MethodChannel('com.uttec.cloud/sound');
+
+  Future<void> _playSound(String type) async {
+    try {
+      await _soundChannel.invokeMethod(type == 'alarm' ? 'playAlarm' : 'playNotification');
+    } catch (e) {
+      debugPrint('Sound error: $e');
     }
   }
 
@@ -811,7 +840,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
 
   // ─── Prebuilt Catalog Widget ───
   Widget _buildPrebuiltCatalog() {
-    final diffLabels = {0: '전체', 1: '★ 기초', 2: '★★ 중급', 3: '★★★ 고급', 4: '★★★★ 프로'};
+    final diffLabels = {0: '전체', 1: '기초', 2: '중급', 3: '고급', 4: '프로'};
     final diffColors = {1: C.success, 2: C.warning, 3: C.error, 4: const Color(0xFFD63031)};
     final filtered = _catalogFilter == 0
       ? _catalogItems
@@ -842,17 +871,17 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
         child: Row(children: diffLabels.entries.map((e) {
           final active = _catalogFilter == e.key;
           return Padding(
-            padding: const EdgeInsets.only(right: 6),
+            padding: const EdgeInsets.only(right: 8),
             child: GestureDetector(
               onTap: () => setState(() => _catalogFilter = e.key),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 decoration: BoxDecoration(
                   color: active ? (diffColors[e.key] ?? C.primary) : Colors.transparent,
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: diffColors[e.key] ?? C.primary, width: 1),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: diffColors[e.key] ?? C.primary, width: 1.5),
                 ),
-                child: Text(e.value, style: TextStyle(fontSize: 11, color: active ? Colors.white : C.text2)),
+                child: Text(e.value, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: active ? Colors.white : C.text2)),
               ),
             ),
           );
@@ -866,24 +895,36 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
     ]);
   }
 
-  // 이 부분은 위의 ...groups 대신 올바르게 렌더링
+  // 카탈로그 목록 — 5개 항목 높이로 제한, 스크롤 가능
   Widget _buildCatalogGroups(Map<String, List<Map<String, dynamic>>> groups) {
-    return Column(children: groups.entries.map((e) {
-      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 6, bottom: 4),
-          child: Text('${e.key}. ${e.value.first['category_name']}',
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: C.primary)),
+    final allWidgets = <Widget>[];
+    for (var e in groups.entries) {
+      allWidgets.add(Padding(
+        padding: const EdgeInsets.only(top: 6, bottom: 4),
+        child: Text('${e.key}. ${e.value.first['category_name']}',
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: C.primary)),
+      ));
+      for (var item in e.value) {
+        allWidgets.add(_buildCatalogItem(item));
+      }
+    }
+    // 항목 높이 약 44px * 5개 = 220px
+    return SizedBox(
+      height: 220,
+      child: Scrollbar(
+        thumbVisibility: true,
+        child: ListView(
+          children: allWidgets,
         ),
-        ...e.value.map((item) => _buildCatalogItem(item)),
-      ]);
-    }).toList());
+      ),
+    );
   }
 
   Widget _buildCatalogItem(Map<String, dynamic> item) {
-    final stars = {1: '★', 2: '★★', 3: '★★★', 4: '★★★★'};
+    final diffLabel = {1: '기초', 2: '중급', 3: '고급', 4: '프로'};
     final colors = {1: C.success, 2: C.warning, 3: C.error, 4: const Color(0xFFD63031)};
     final isSelected = _selectedPrebuilt?['no'] == item['no'];
+    final diff = item['difficulty'] as int;
     return GestureDetector(
       onTap: () => _selectPrebuilt(item),
       child: Container(
@@ -895,10 +936,17 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
           border: isSelected ? Border.all(color: C.primary, width: 1) : null,
         ),
         child: Row(children: [
-          Text(stars[item['difficulty']] ?? '', style: TextStyle(fontSize: 11, color: colors[item['difficulty']])),
-          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            decoration: BoxDecoration(
+              color: (colors[diff] ?? C.primary).withOpacity(0.2),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(diffLabel[diff] ?? '', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: colors[diff])),
+          ),
+          const SizedBox(width: 6),
           Text(item['no'], style: const TextStyle(fontSize: 11, color: C.text2, fontFamily: 'monospace')),
-          const SizedBox(width: 8),
+          const SizedBox(width: 6),
           Expanded(child: Text(item['user_prompt'], style: const TextStyle(fontSize: 13, color: C.text))),
           const Text('⚡', style: TextStyle(fontSize: 13)),
         ]),
@@ -1523,8 +1571,8 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
               onPressed: _autoConnectAndSend,
               icon: const Icon(Icons.send),
               label: Text(_s.bleStatus == 'connected'
-                  ? 'ESP32에 무선 전송하기'
-                  : 'ESP32 연결 + 전송하기'),
+                  ? 'UTTEC 보드에 무선 전송하기'
+                  : 'UTTEC 보드 연결 + 전송하기'),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 backgroundColor: C.success,
@@ -1539,7 +1587,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
             child: Row(children: [
               SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: C.success)),
               SizedBox(width: 8),
-              Text('ESP32에 펌웨어 전송 중...', style: TextStyle(fontSize: 13, color: C.success)),
+              Text('UTTEC 보드에 펌웨어 전송 중...', style: TextStyle(fontSize: 13, color: C.success)),
             ]),
           ),
         // 완료 표시 + 새 명령 버튼
@@ -1792,9 +1840,9 @@ class _HWTabState extends State<HWTab> with AutomaticKeepAliveClientMixin {
               ),
               const SizedBox(width: 12),
               const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('ESP32-WROOM-32 DevKitC', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
+                Text('UTTEC Board', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
                 SizedBox(height: 2),
-                Text('38\uD540 \u00B7 Xtensa \uB4C0\uC5BC\uCF54\uC5B4 240MHz \u00B7 4MB Flash',
+                Text('38핀 · Xtensa 듀얼코어 240MHz · 4MB Flash',
                   style: TextStyle(fontSize: 12, color: C.text2)),
               ])),
             ]),
@@ -1912,7 +1960,7 @@ class _HWTabState extends State<HWTab> with AutomaticKeepAliveClientMixin {
 final Map<String, Map<String, String>> _hwDetailData = {
   'led': {
     'desc': 'LED(\uBC1C\uAD11 \uB2E4\uC774\uC624\uB4DC)\uB294 \uC804\uAE30\uB97C \uD750\uB9AC\uBA74 \uBE5B\uC744 \uB0B4\uB294 \uBC18\uB3C4\uCCB4 \uC18C\uC790\uC785\uB2C8\uB2E4. GPIO \uD540\uC5D0\uC11C HIGH(3.3V) \uC2E0\uD638\uB97C \uBCF4\uB0B4\uBA74 LED\uAC00 \uCF1C\uC9D1\uB2C8\uB2E4.',
-    'circuit': 'ESP32         LED         GND\n'
+    'circuit': 'UTTEC Board   LED         GND\n'
         'GPIO25 ---[\u25A0]---[100\u03A9]--- GND  (RED)\n'
         'GPIO26 ---[\u25A0]---[100\u03A9]--- GND  (YELLOW)\n'
         'GPIO27 ---[\u25A0]---[100\u03A9]--- GND  (BLUE)',
@@ -1921,7 +1969,7 @@ final Map<String, Map<String, String>> _hwDetailData = {
   },
   'buzzer': {
     'desc': '\uBD80\uC800\uB294 \uC804\uAE30 \uC2E0\uD638\uB97C \uC18C\uB9AC\uB85C \uBCC0\uD658\uD558\uB294 \uC18C\uC790\uC785\uB2C8\uB2E4. \uB2E8\uC21C \uBE14 \uC18C\uB9AC(BEEP)\uC640 PWM\uC73C\uB85C \uBA5C\uB85C\uB514\uB97C \uC5F0\uC8FC\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.',
-    'circuit': 'ESP32          BUZZER\n'
+    'circuit': 'UTTEC Board    BUZZER\n'
         'GPIO14 ---[\u266C BEEP ]--- GND  (Active LOW)\n'
         'GPIO33 ---[\u266B MELODY]--- GND  (PWM)',
     'tip': 'BEEP\uC740 Active LOW: GPIO LOW\uC77C \uB54C \uC18C\uB9AC\uAC00 \uB0A9\uB2C8\uB2E4. MELODY\uB294 PWM \uC8FC\uD30C\uC218\uB85C \uC74C\uC815\uC744 \uC870\uC808\uD569\uB2C8\uB2E4.',
@@ -1929,7 +1977,7 @@ final Map<String, Map<String, String>> _hwDetailData = {
   },
   'switch': {
     'desc': '\uC2A4\uC704\uCE58\uB294 \uC0AC\uC6A9\uC790 \uC785\uB825\uC744 \uBC1B\uB294 \uAC00\uC7A5 \uAE30\uBCF8\uC801\uC778 \uC785\uB825 \uC7A5\uCE58\uC785\uB2C8\uB2E4. \uB204\uB974\uBA74 LOW, \uC548 \uB204\uB974\uBA74 HIGH\uAC00 \uB429\uB2C8\uB2E4.',
-    'circuit': 'ESP32          SWITCH\n'
+    'circuit': 'UTTEC Board    SWITCH\n'
         'GPIO32 ---[\u25CB SW ]--- GND\n'
         '  \u2502\n'
         '  \u2514--- 10k\u03A9 --- 3.3V (Pull-up)',
@@ -1938,7 +1986,7 @@ final Map<String, Map<String, String>> _hwDetailData = {
   },
   'oled': {
     'desc': 'OLED\uB294 \uC790\uCCB4 \uBC1C\uAD11 \uB514\uC2A4\uD50C\uB808\uC774\uC785\uB2C8\uB2E4. SSD1306 \uCEE8\uD2B8\uB864\uB7EC\uB85C I2C \uD1B5\uC2E0\uC744 \uD1B5\uD574 \uD14D\uC2A4\uD2B8\uC640 \uADF8\uB798\uD53D\uC744 \uD45C\uC2DC\uD569\uB2C8\uB2E4.',
-    'circuit': 'ESP32         OLED (SSD1306)\n'
+    'circuit': 'UTTEC Board   OLED (SSD1306)\n'
         'GPIO21 (SDA) --- SDA\n'
         'GPIO22 (SCL) --- SCL\n'
         '3.3V         --- VCC\n'
@@ -1948,7 +1996,7 @@ final Map<String, Map<String, String>> _hwDetailData = {
   },
   'sensor': {
     'desc': 'AHT20 \uC628\uC2B5\uB3C4 \uC13C\uC11C\uB294 I2C \uD1B5\uC2E0\uC73C\uB85C \uC628\uB3C4\uC640 \uC2B5\uB3C4\uB97C \uC815\uBC00\uD558\uAC8C \uCE21\uC815\uD569\uB2C8\uB2E4.',
-    'circuit': 'ESP32         AHT20\n'
+    'circuit': 'UTTEC Board   AHT20\n'
         'GPIO21 (SDA) --- SDA\n'
         'GPIO22 (SCL) --- SCL\n'
         '3.3V         --- VCC\n'
@@ -1957,8 +2005,8 @@ final Map<String, Map<String, String>> _hwDetailData = {
     'pins': '\uC13C\uC11C|AHT20\nI2C \uC8FC\uC18C|0x38\nSDA|GPIO21\nSCL|GPIO22',
   },
   'lora': {
-    'desc': 'LoRa\uB294 \uC7A5\uAC70\uB9AC(1~10km) \uBB34\uC120 \uD1B5\uC2E0 \uBAA8\uB4C8\uC785\uB2C8\uB2E4. UART\uB85C ESP32\uC640 \uD1B5\uC2E0\uD558\uBA70, M0/M1 \uD540\uC73C\uB85C \uBAA8\uB4DC\uB97C \uC124\uC815\uD569\uB2C8\uB2E4.',
-    'circuit': 'ESP32         LoRa Module\n'
+    'desc': 'LoRa는 장거리(1~10km) 무선 통신 모듈입니다. UART로 UTTEC Board와 통신하며, M0/M1 핀으로 모드를 설정합니다.',
+    'circuit': 'UTTEC Board   LoRa Module\n'
         'GPIO17 (TX) --- RX\n'
         'GPIO16 (RX) --- TX\n'
         'GPIO15      --- M0\n'
@@ -1971,7 +2019,7 @@ final Map<String, Map<String, String>> _hwDetailData = {
   },
   'neopixel': {
     'desc': 'NeoPixel(WS2812B)\uC740 RGB LED \uC2A4\uD2B8\uB9BD\uC785\uB2C8\uB2E4. \uD558\uB098\uC758 GPIO \uD540\uC73C\uB85C \uC5EC\uB7EC \uAC1C\uC758 LED\uB97C \uAC1C\uBCC4 \uC81C\uC5B4\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.',
-    'circuit': 'ESP32         NeoPixel Strip\n'
+    'circuit': 'UTTEC Board   NeoPixel Strip\n'
         'GPIO xx  --- DIN\n'
         '5V       --- VCC\n'
         'GND      --- GND',
@@ -1980,7 +2028,7 @@ final Map<String, Map<String, String>> _hwDetailData = {
   },
   'spi': {
     'desc': 'SPI\uB294 \uACE0\uC18D \uB3D9\uAE30 \uC2DC\uB9AC\uC5BC \uD1B5\uC2E0\uC785\uB2C8\uB2E4. MOSI, MISO, CLK, CS 4\uAC1C \uC120\uC744 \uC0AC\uC6A9\uD569\uB2C8\uB2E4.',
-    'circuit': 'ESP32         SPI Device\n'
+    'circuit': 'UTTEC Board   SPI Device\n'
         'GPIO23 (MOSI) --- MOSI\n'
         'GPIO19 (MISO) --- MISO\n'
         'GPIO18 (CLK)  --- CLK\n'
@@ -1989,10 +2037,10 @@ final Map<String, Map<String, String>> _hwDetailData = {
     'pins': 'MOSI|GPIO23\nMISO|GPIO19\nCLK|GPIO18\nCS|GPIO5',
   },
   'power': {
-    'desc': 'ESP32 DevKitC\uB294 USB(5V)\uB85C \uC804\uC6D0\uC744 \uACF5\uAE09\uBC1B\uC73C\uBA70, \uB0B4\uBD80 3.3V \uB808\uADC0\uB808\uC774\uD130\uB85C \uBCC0\uD658\uD569\uB2C8\uB2E4.',
+    'desc': 'UTTEC Board는 USB(5V)로 전원을 공급받으며, 내부 3.3V 레귤레이터로 변환합니다.',
     'circuit': 'USB 5V --- AMS1117 --- 3.3V\n'
         '                       \u2502\n'
-        '                    ESP32 Core\n'
+        '                    UTTEC Core\n'
         '                       \u2502\n'
         '                      GND',
     'tip': 'GPIO \uCD9C\uB825 \uC804\uC555\uC740 3.3V\uC785\uB2C8\uB2E4. 5V \uC7A5\uCE58 \uC5F0\uACB0 \uC2DC \uB808\uBCA8 \uBCC0\uD658\uC774 \uD544\uC694\uD569\uB2C8\uB2E4.',
@@ -2021,7 +2069,7 @@ class _SWTabState extends State<SWTab> with AutomaticKeepAliveClientMixin {
     {
       'title': 'C언어 기초', 'sub': '변수, 타입, printf', 'icon': '✅',
       'stars': '★★★★★', 'locked': false,
-      'content': '''C언어는 ESP32 프로그래밍의 기본 언어입니다.
+      'content': '''C언어는 UTTEC Board 프로그래밍의 기본 언어입니다.
 
 ■ 변수 — 데이터를 저장하는 상자
   int count = 0;        // 정수 (숫자)
@@ -2046,7 +2094,7 @@ class _SWTabState extends State<SWTab> with AutomaticKeepAliveClientMixin {
     {
       'title': 'GPIO 제어', 'sub': 'LED 켜고 끄기', 'icon': '✅',
       'stars': '★★★☆☆', 'locked': false,
-      'content': '''GPIO(General Purpose Input/Output)는 ESP32의 핀을 제어하는 방법입니다.
+      'content': '''GPIO(General Purpose Input/Output)는 UTTEC Board의 핀을 제어하는 방법입니다.
 
 ■ 핀 모드 설정
   pinMode(25, OUTPUT);   // 25번 핀을 출력으로 설정
@@ -2123,7 +2171,7 @@ class _SWTabState extends State<SWTab> with AutomaticKeepAliveClientMixin {
     {'code': '', 'type': 'empty', 'explain': ''},
     {'code': '#define LED_PIN 25', 'type': 'define', 'explain': '#define\uC740 \uC0C1\uC218\uB97C \uC815\uC758\uD569\uB2C8\uB2E4. LED_PIN\uC744 25\uB85C \uC815\uC758\uD558\uBA74 \uCF54\uB4DC\uC5D0\uC11C LED_PIN\uC744 \uC4F8 \uB54C\uB9C8\uB2E4 25\uB85C \uBC14\uB014\uB2C8\uB2E4.'},
     {'code': '', 'type': 'empty', 'explain': ''},
-    {'code': 'void app_main(void) {', 'type': 'function', 'explain': 'ESP32 \uD504\uB85C\uADF8\uB7A8\uC758 \uC2DC\uC791\uC810\uC785\uB2C8\uB2E4. C\uC5B8\uC5B4\uC758 main() \uB300\uC2E0 ESP-IDF\uB294 app_main()\uC744 \uC0AC\uC6A9\uD569\uB2C8\uB2E4.'},
+    {'code': 'void app_main(void) {', 'type': 'function', 'explain': 'UTTEC Board 프로그램의 시작점입니다. C언어의 main() 대신 ESP-IDF는 app_main()을 사용합니다.'},
     {'code': '    // GPIO \uCD08\uAE30\uD654', 'type': 'comment', 'explain': '// \uB4A4\uC758 \uB0B4\uC6A9\uC740 \uC8FC\uC11D\uC785\uB2C8\uB2E4. \uCEF4\uD4E8\uD130\uB294 \uBB34\uC2DC\uD558\uACE0, \uC0AC\uB78C\uC774 \uC77D\uAE30 \uC704\uD55C \uC124\uBA85\uC785\uB2C8\uB2E4.'},
     {'code': '    gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);', 'type': 'call', 'explain': 'GPIO25\uBC88 \uD540\uC744 \uCD9C\uB825 \uBAA8\uB4DC\uB85C \uC124\uC815\uD569\uB2C8\uB2E4. \uCD9C\uB825 \uBAA8\uB4DC\uC5EC\uC57C LED\uB97C \uCF1C\uACE0 \uB04C \uC218 \uC788\uC2B5\uB2C8\uB2E4.'},
     {'code': '', 'type': 'empty', 'explain': ''},
@@ -2692,7 +2740,7 @@ class _SettingsTabState extends State<SettingsTab> with AutomaticKeepAliveClient
             title: '\uBCF4\uB4DC \uC124\uC815',
             icon: Icons.memory,
             child: Column(children: [
-              _infoRow('\uBCF4\uB4DC', 'ESP32-WROOM 38\uD540'),
+              _infoRow('보드', 'UTTEC Board 38핀'),
               _infoRow('\uD504\uB808\uC784\uC6CC\uD06C', 'ESP-IDF v5.5'),
               _infoRow('Flash', '4MB'),
               _infoRow('CPU', 'Xtensa LX6 Dual-core 240MHz'),
@@ -2732,15 +2780,15 @@ class _SettingsTabState extends State<SettingsTab> with AutomaticKeepAliveClient
                     if (newName.isNotEmpty) {
                       _s.savedBleName = newName;
                       await _s.saveSettings();
-                      // ESP32에도 이름 변경 명령 전송 (연결 중이면)
+                      // UTTEC 보드에도 이름 변경 명령 전송 (연결 중이면)
                       if (_s.bleStatus == 'connected') {
                         await _s.sendCommand('SETNAME:$newName');
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('기기 이름 "$newName" 저장 + ESP32 적용 (재부팅됨)'), duration: const Duration(seconds: 3)),
+                          SnackBar(content: Text('기기 이름 "$newName" 저장 + UTTEC 보드 적용 (재부팅됨)'), duration: const Duration(seconds: 3)),
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('앱 이름 "$newName" 저장됨 (BLE 연결 후 ESP32에도 적용됩니다)'), duration: const Duration(seconds: 3)),
+                          SnackBar(content: Text('앱 이름 "$newName" 저장됨 (BLE 연결 후 UTTEC 보드에도 적용됩니다)'), duration: const Duration(seconds: 3)),
                         );
                       }
                       _s.setState(() {});

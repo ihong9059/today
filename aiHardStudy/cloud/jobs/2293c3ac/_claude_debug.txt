@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 10149
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"f2ed17d7-75eb-4e5b-87fc-263930a32814","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"86031927-0045-4e98-8821-021a7d5d679f","session_id":"b893f535-df3c-4239-85a9-22f10fd6b448"}
+{"type":"system","subtype":"hook_response","hook_id":"f2ed17d7-75eb-4e5b-87fc-263930a32814","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"bcd14118-b028-4c05-98df-38938ed1f1c0","session_id":"b893f535-df3c-4239-85a9-22f10fd6b448"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\2293c3ac","session_id":"b893f535-df3c-4239-85a9-22f10fd6b448","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:debug","gsd:complete-milestone","gsd:cleanup","gsd:check-todos","gsd:autonomous","gsd:audit-uat","gsd:audit-milestone","gsd:add-todo","gsd:add-tests","gsd:add-phase","gsd:add-backlog","gsd:join-discord","gsd:insert-phase","gsd:help","gsd:health","gsd:forensics","gsd:fast","gsd:execute-phase","gsd:do","gsd:disc

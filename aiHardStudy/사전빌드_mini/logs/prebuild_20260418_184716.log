@@ -1,0 +1,8 @@
+2026-04-18 18:47:16,004 [INFO] ============================================================
+2026-04-18 18:47:16,005 [INFO] UTTEC Pre-built Firmware Generator
+2026-04-18 18:47:16,005 [INFO] ============================================================
+2026-04-18 18:47:16,005 [INFO] 카탈로그 로드: 10개 항목
+2026-04-18 18:47:16,005 [INFO] 빌드 대상: 10개
+2026-04-18 18:47:16,005 [INFO] FIRMWARE_DB: C:\todo\today\aiHardStudy\사전빌드_mini\firmware_db
+2026-04-18 18:47:16,006 [INFO] TEMPLATE_DIR: C:\todo\today\aiHardStudy\aiEspMini\firmware
+2026-04-18 18:47:16,006 [INFO] BUILD_DIR: C:\todo\today\aiHardStudy\사전빌드_mini\ble_ota_arduino

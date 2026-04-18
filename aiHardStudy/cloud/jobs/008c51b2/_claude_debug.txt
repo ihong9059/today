@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 10785
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"60a23677-5b04-478a-a702-351eca49c72d","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"6d6253c4-7c49-4cc8-9595-b9882d19aecb","session_id":"48131b68-bb74-4d3e-a0f6-d77c28ab4119"}
+{"type":"system","subtype":"hook_response","hook_id":"60a23677-5b04-478a-a702-351eca49c72d","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"bfc74a7b-54f5-4fea-a478-4e97a7b42fdb","session_id":"48131b68-bb74-4d3e-a0f6-d77c28ab4119"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\008c51b2","session_id":"48131b68-bb74-4d3e-a0f6-d77c28ab4119","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:list-workspaces","gsd:list-phase-assumptions","gsd:join-discord","gsd:insert-phase","gsd:help","gsd:health","gsd:forensics","gsd:fast","gsd:execute-phase","gsd:do","gsd:discuss-phase","gsd:debug","gsd:complete-milestone","gsd:cleanup","gsd:check-todos","gsd:autonomous","gsd:audit-uat","gsd:audit-milestone","gs

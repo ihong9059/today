@@ -57,6 +57,30 @@ OLED API (from ssd1306.h — already included in project):
   oled.drawString(x, y, "text");  // draw at pixel position
   oled.display();          // flush to screen
 
+BLE SEND/RECEIVE API (already declared globally — just use them):
+  // sensorChar is a global NimBLECharacteristic* for sending data to smartphone
+  // To send string data to smartphone via BLE:
+  extern NimBLECharacteristic* sensorChar;
+  extern bool deviceConnected;
+  if (deviceConnected && sensorChar) {
+    sensorChar->setValue((uint8_t*)msg, len);  // set byte data
+    sensorChar->notify();                       // send notification
+  }
+  // To send a String:
+  if (deviceConnected && sensorChar) {
+    std::string s = "Hello";
+    sensorChar->setValue(s);
+    sensorChar->notify();
+  }
+
+  // To receive commands from smartphone:
+  // The base firmware has a weak onBleReceive(String cmd) function.
+  // To handle BLE commands, just define your own onBleReceive — it overrides the weak default:
+  //   void onBleReceive(String cmd) {
+  //     if (cmd == "RED") { digitalWrite(LED_RED, LOW); }
+  //   }
+  // If you don't need BLE receive, do NOT define onBleReceive at all.
+
 IMPORTANT RULES:
 1. Output ONLY the code — no explanation, no markdown, no code fences
 2. Define ONLY setup() and loop() functions, plus any helper functions you need
@@ -69,12 +93,14 @@ IMPORTANT RULES:
    DO NOT call pinMode for LED_RED/LED_YELLOW/LED_BLUE/BUZZER — initHardware() already does this.
    DO NOT call Wire.begin or oled.init — initHardware() already does this.
 6. For LED tasks use xTaskCreate with separate function
-7. Do NOT define or redeclare: initBLE, initHardware, OTA callbacks, oled, SSD1306, NimBLE code, aht20_read
+7. Do NOT define or redeclare: initBLE, initHardware, OTA callbacks, oled, SSD1306, NimBLE code, aht20_read, CmdCallbacks, sensorChar, deviceConnected
 8. The 'oled' object (SSD1306 class) is already declared globally
-9. After initBLE() call, the loop() should just have delay(10000)
+9. After initBLE() call, the loop() should just have delay(10000) unless you need periodic updates
 10. Pin definitions are already available: LED_RED=25, LED_YELLOW=26, LED_BLUE=27, BUZZER=14
 11. For melody/sound on GPIO33, ONLY use tone(33, freq, duration) and noTone(33). Do NOT use ledcSetup/ledcAttach/ledcWriteTone or any LEDC API. tone() works on ESP32 Arduino.
 12. Add brief Korean comments: // [주제] 설명 (keep comments short, 1 line each)
+13. For BLE two-way communication: use sensorChar->setValue()/notify() to SEND, and define onBleReceive(String cmd) to RECEIVE
+14. Do NOT create your own BLE service, server, characteristics, or callbacks — they already exist
 """
 
 GUIDE_PROMPT_TEMPLATE = """당신은 초등학생을 위한 코딩 교육 콘텐츠 작성자입니다.
@@ -200,6 +226,13 @@ def merge_code(user_code: str) -> str:
         base_part = base.split(marker)[0]
     else:
         base_part = base.rsplit("void setup()", 1)[0]
+
+    # 사용자 코드에 onBleReceive가 있으면 베이스의 weak 선언 제거 (재정의 충돌 방지)
+    if "onBleReceive" in user_code:
+        base_part = base_part.replace(
+            '__attribute__((weak)) void onBleReceive(String cmd) { }',
+            '// onBleReceive: user code provides implementation'
+        )
 
     return base_part + "\n" + marker + "\n" + user_code + "\n"
 

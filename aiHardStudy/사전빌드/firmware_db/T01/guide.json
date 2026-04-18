@@ -1,0 +1,70 @@
+{
+  "result_description": "스마트폰에서 색깔 이름을 보내면 아두이노가 해당 LED를 켜고 OLED 화면과 스마트폰에 현재 상태를 알려줍니다.",
+  "what_happens": [
+    "스마트폰이 블루투스(BLE)로 'RED', 'YELLOW', 'BLUE' 중 하나를 아두이노에 보냅니다.",
+    "아두이노는 먼저 모든 LED를 끄고, 받은 명령에 해당하는 LED만 켭니다.",
+    "OLED 화면에 현재 켜진 LED 이름을 표시하고, 스마트폰에도 'LED:RED' 같은 응답을 다시 보냅니다."
+  ],
+  "concepts": [
+    {
+      "term": "BLE(블루투스 저전력)",
+      "explanation": "스마트폰과 아두이노가 무선으로 짧은 거리에서 데이터를 주고받는 방법이에요. 이어폰이나 스마트워치처럼 배터리를 조금만 써서 통신해요."
+    },
+    {
+      "term": "active LOW",
+      "explanation": "LED 핀에 LOW(0)를 주면 불이 켜지고, HIGH(1)를 주면 불이 꺼지는 특별한 연결 방식이에요. 스위치를 반대로 생각하면 돼요!"
+    },
+    {
+      "term": "notify(알림 전송)",
+      "explanation": "아두이노가 스마트폰에게 '지금 이렇게 됐어!'라고 먼저 알려주는 기능이에요. 스마트폰이 물어보지 않아도 자동으로 소식을 보내줘요."
+    },
+    {
+      "term": "trim()",
+      "explanation": "받은 문자의 앞뒤에 붙어있는 눈에 안 보이는 빈 칸이나 줄바꿈을 깨끗하게 지워주는 함수예요. 편지 봉투를 뜯고 안에 내용만 꺼내는 것과 같아요."
+    },
+    {
+      "term": "함수(Function)",
+      "explanation": "자주 쓰는 명령들을 묶어서 이름을 붙여둔 것이에요. onBleReceive처럼 이름만 부르면 안에 있는 명령들이 한꺼번에 실행돼요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "void allLedsOff() { digitalWrite(LED_RED, HIGH); ... }",
+      "comment": "세 LED를 한 번에 끄는 함수예요. 새 LED를 켜기 전에 항상 이걸 먼저 불러서 LED가 두 개 동시에 켜지는 일을 막아요."
+    },
+    {
+      "line": "cmd.trim();",
+      "comment": "받은 명령 문자열의 앞뒤 빈 칸을 제거해요. 이게 없으면 'RED '(뒤에 공백)처럼 들어왔을 때 명령이 동작하지 않을 수 있어요."
+    },
+    {
+      "line": "sensorChar->setValue(s); sensorChar->notify();",
+      "comment": "BLE를 통해 스마트폰에 현재 LED 상태를 응답으로 돌려보내요. 스마트폰 앱이 결과를 바로 확인할 수 있게 해줘요."
+    },
+    {
+      "line": "currentLed = \"RED\";",
+      "comment": "지금 켜진 LED 이름을 변수에 저장해요. 이 변수 덕분에 OLED 화면과 BLE 응답에서 어떤 LED가 켜져 있는지 알 수 있어요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "'GREEN'이나 'WHITE' 같은 새로운 색깔 명령어를 추가해서 LED를 더 연결해보세요!"
+    },
+    {
+      "reason": "'ALL'을 받으면 세 LED를 모두 켜고, 'OFF'를 받으면 모두 끄는 명령어를 만들어 보세요."
+    },
+    {
+      "reason": "LED가 켜질 때 부저(Buzzer)로 짧은 소리도 함께 나게 만들어 보세요. 색깔마다 다른 소리를 내면 재미있을 거예요!"
+    }
+  ],
+  "quiz": {
+    "question": "스마트폰에서 'YELLOW'를 보냈을 때 아두이노가 가장 먼저 하는 일은 무엇인가요?",
+    "options": [
+      "노란 LED를 바로 켠다",
+      "모든 LED를 먼저 끈다",
+      "OLED 화면을 먼저 업데이트한다",
+      "스마트폰에 응답을 먼저 보낸다"
+    ],
+    "answer": 1,
+    "explanation": "onBleReceive 함수에서 'YELLOW' 명령을 받으면 allLedsOff()를 먼저 호출해서 모든 LED를 끕니다. 그 다음에 노란 LED만 켜요. 이렇게 해야 여러 LED가 동시에 켜지지 않아요!"
+  }
+}

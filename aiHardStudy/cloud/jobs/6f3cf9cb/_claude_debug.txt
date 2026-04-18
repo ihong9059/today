@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 10204
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"3603313f-1afb-445f-bd7e-3b2d176721b8","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"5d5e2040-d2aa-4155-9c76-60289ccfe4a5","session_id":"2d802e92-9ef1-4767-a617-ab45ee2beadd"}
+{"type":"system","subtype":"hook_response","hook_id":"3603313f-1afb-445f-bd7e-3b2d176721b8","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"351ceb03-94f3-401e-84fd-94432da92993","session_id":"2d802e92-9ef1-4767-a617-ab45ee2beadd"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\6f3cf9cb","session_id":"2d802e92-9ef1-4767-a617-ab45ee2beadd","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:workstreams","gsd:verify-work","gsd:validate-phase","gsd:update","gsd:ui-review","gsd:ui-phase","gsd:thread","gsd:stats","gsd:ship","gsd:settings","gsd:set-profile","gsd:session-report","gsd:review","gsd:review-backlog","gsd:resume-work","gsd:research-phase","gsd:remove-workspace","gsd:remove-phase","gsd:reapp

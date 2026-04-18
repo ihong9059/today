@@ -1,0 +1,9 @@
+
+
+# Load bootloader symbols
+set confirm off
+    add-symbol-file C:/todo/today/aiHardStudy/cloud/jobs/2293c3ac/build/bootloader/bootloader.elf
+set confirm on
+
+# Load application symbols
+file C:/todo/today/aiHardStudy/cloud/jobs/2293c3ac/build/ble_ota.elf

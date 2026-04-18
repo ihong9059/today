@@ -1,0 +1,340 @@
+2026-04-18 16:32:20,404 [INFO] ============================================================
+2026-04-18 16:32:20,404 [INFO] UTTEC Pre-built Firmware Generator
+2026-04-18 16:32:20,404 [INFO] ============================================================
+2026-04-18 16:32:20,405 [INFO] 카탈로그 로드: 155개 항목
+2026-04-18 16:32:20,409 [INFO] 빌드 대상: 21개
+2026-04-18 16:32:20,410 [INFO] FIRMWARE_DB: C:\todo\today\aiHardStudy\사전빌드\firmware_db
+2026-04-18 16:32:20,410 [INFO] TEMPLATE_DIR: C:\todo\today\aiHardStudy\firmware\ble_ota_arduino
+2026-04-18 16:32:20,410 [INFO] BUILD_DIR: C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino
+2026-04-18 16:32:20,414 [INFO] Build dir initialized: C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino
+2026-04-18 16:32:20,414 [INFO] [1/21] K04: 습도 70% 넘으면 노란 LED 깜빡이기
+2026-04-18 16:32:20,414 [INFO]   [K04] 시도 1/3: 습도 70% 넘으면 노란 LED 깜빡이기
+2026-04-18 16:32:58,516 [WARNING]   [K04] 시도 1 실패: Build failed:
+a_arduino\ble_ota_arduino.ino:15:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:491:55: error: cannot convert 'StringSumHelper' to 'const char*'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'
+Error during build: exit status 1
+
+2026-04-18 16:33:00,517 [INFO]   [K04] 시도 2/3: 습도 70% 넘으면 노란 LED 깜빡이기
+2026-04-18 16:33:52,918 [WARNING]   [K04] 시도 2 실패: Build failed:
+a_arduino\ble_ota_arduino.ino:15:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:488:55: error: cannot convert 'StringSumHelper' to 'const char*'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'
+Error during build: exit status 1
+
+2026-04-18 16:33:54,919 [INFO]   [K04] 시도 3/3: 습도 70% 넘으면 노란 LED 깜빡이기
+2026-04-18 16:34:35,069 [WARNING]   [K04] 시도 3 실패: Build failed:
+a_arduino\ble_ota_arduino.ino:15:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:490:55: error: cannot convert 'StringSumHelper' to 'const char*'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'
+Error during build: exit status 1
+
+2026-04-18 16:34:35,070 [ERROR]   [K04] 최종 실패: Build failed:
+a_arduino\ble_ota_arduino.ino:15:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:490:55: error: cannot convert 'StringSumHelper' to 'const char*'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'
+Error during build: exit status 1
+
+2026-04-18 16:34:35,070 [INFO]   진행: 1/21 (성공:0 실패:1) ETA: 44.9분
+2026-04-18 16:34:35,070 [INFO] [2/21] P01: 스위치로 모드 전환: 1번=LED 깜빡, 2번=멜로디, 3번=온도
+2026-04-18 16:34:35,071 [INFO]   [P01] 시도 1/3: 스위치로 모드 전환: 1번=LED 깜빡, 2번=멜로디, 3번=온도
+2026-04-18 16:35:54,327 [INFO]   [P01] 빌드 성공 (637KB, 79.3초)
+2026-04-18 16:36:24,572 [INFO]   [P01] guide.json 생성 완료
+2026-04-18 16:36:24,574 [INFO]   진행: 2/21 (성공:1 실패:1) ETA: 38.7분
+2026-04-18 16:36:24,574 [INFO] [3/21] R02: 5초마다 온도+습도 둘 다 BLE로 스마트폰에 전송
+2026-04-18 16:36:24,575 [INFO]   [R02] 시도 1/3: 5초마다 온도+습도 둘 다 BLE로 스마트폰에 전송
+2026-04-18 16:37:15,095 [INFO]   [R02] 빌드 성공 (636KB, 50.5초)
+2026-04-18 16:37:43,309 [INFO]   [R02] guide.json 생성 완료
+2026-04-18 16:37:43,310 [INFO]   진행: 3/21 (성공:2 실패:1) ETA: 32.3분
+2026-04-18 16:37:43,310 [INFO] [4/21] R04: LED 상태 변경할 때마다 현재 LED 상태를 BLE로 전송
+2026-04-18 16:37:43,310 [INFO]   [R04] 시도 1/3: LED 상태 변경할 때마다 현재 LED 상태를 BLE로 전송
+2026-04-18 16:38:31,355 [WARNING]   [R04] 시도 1 실패: Build failed:
+uino\ble_ota_arduino.ino:528:72: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:479:6: error: redefinition of 'void onBleReceive(String)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:267:28: note: 'void onBleReceive(String)' previously defined here
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:513:7: error: expected constructor, destructor, or type conversion before '명령어'
+Error during build: exit status 1
+
+2026-04-18 16:38:33,355 [INFO]   [R04] 시도 2/3: LED 상태 변경할 때마다 현재 LED 상태를 BLE로 전송
+2026-04-18 16:39:25,779 [WARNING]   [R04] 시도 2 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:480:6: error: redefinition of 'void onBleReceive(String)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:267:28: note: 'void onBleReceive(String)' previously defined here
+Error during build: exit status 1
+
+2026-04-18 16:39:27,780 [INFO]   [R04] 시도 3/3: LED 상태 변경할 때마다 현재 LED 상태를 BLE로 전송
+2026-04-18 16:40:16,902 [WARNING]   [R04] 시도 3 실패: Build failed:
+duino\ble_ota_arduino.ino:550:3: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:489:6: error: redefinition of 'void onBleReceive(String)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:267:28: note: 'void onBleReceive(String)' previously defined here
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:537:10: error: expected constructor, destructor, or type conversion before '요약'
+Error during build: exit status 1
+
+2026-04-18 16:40:16,903 [ERROR]   [R04] 최종 실패: Build failed:
+duino\ble_ota_arduino.ino:550:3: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:489:6: error: redefinition of 'void onBleReceive(String)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:267:28: note: 'void onBleReceive(String)' previously defined here
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:537:10: error: expected constructor, destructor, or type conversion before '요약'
+Error during build: exit status 1
+
+2026-04-18 16:40:16,903 [INFO]   진행: 4/21 (성공:2 실패:2) ETA: 33.8분
+2026-04-18 16:40:16,903 [INFO] [5/21] S01: 현관 벨: 스위치 → 딩동 멜로디+OLED "Visitor!" + BLE 알림
+2026-04-18 16:40:16,903 [INFO]   [S01] 시도 1/3: 현관 벨: 스위치 → 딩동 멜로디+OLED "Visitor!" + BLE 알림
+2026-04-18 16:41:08,260 [INFO]   [S01] 빌드 성공 (636KB, 51.4초)
+2026-04-18 16:41:43,281 [INFO]   [S01] guide.json 생성 완료
+2026-04-18 16:41:43,282 [INFO]   진행: 5/21 (성공:3 실패:2) ETA: 30.0분
+2026-04-18 16:41:43,282 [INFO] [6/21] T01: 스마트폰에서 "RED", "YELLOW", "BLUE" 문자 보내면 해당 LED 켜기 + 현재 LED 상태를 BLE로 응답
+2026-04-18 16:41:43,283 [INFO]   [T01] 시도 1/3: 스마트폰에서 "RED", "YELLOW", "BLUE" 문자 보내면 해당 LED 켜기 + 현재 LED 상태를 BLE로 응답
+2026-04-18 16:42:26,015 [WARNING]   [T01] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:456:6: error: redefinition of 'void onBleReceive(String)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:267:28: note: 'void onBleReceive(String)' previously defined here
+Error during build: exit status 1
+
+2026-04-18 16:42:28,016 [INFO]   [T01] 시도 2/3: 스마트폰에서 "RED", "YELLOW", "BLUE" 문자 보내면 해당 LED 켜기 + 현재 LED 상태를 BLE로 응답
+2026-04-18 16:43:08,585 [WARNING]   [T01] 시도 2 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:456:6: error: redefinition of 'void onBleReceive(String)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:267:28: note: 'void onBleReceive(String)' previously defined here
+Error during build: exit status 1
+
+2026-04-18 16:43:10,586 [INFO]   [T01] 시도 3/3: 스마트폰에서 "RED", "YELLOW", "BLUE" 문자 보내면 해당 LED 켜기 + 현재 LED 상태를 BLE로 응답
+2026-04-18 16:43:50,057 [WARNING]   [T01] 시도 3 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:463:6: error: redefinition of 'void onBleReceive(String)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:267:28: note: 'void onBleReceive(String)' previously defined here
+Error during build: exit status 1
+
+2026-04-18 16:43:50,058 [ERROR]   [T01] 최종 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:463:6: error: redefinition of 'void onBleReceive(String)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:267:28: note: 'void onBleReceive(String)' previously defined here
+Error during build: exit status 1
+
+2026-04-18 16:43:50,058 [INFO]   진행: 6/21 (성공:3 실패:3) ETA: 28.7분
+2026-04-18 16:43:50,058 [INFO] [7/21] T02: 스마트폰에서 "MELODY:학교종" 보내면 학교종 연주, "MELODY:생일" 보내면 생일축하 연주 + 연주 상태 BLE 전송
+2026-04-18 16:43:50,058 [INFO]   [T02] 시도 1/3: 스마트폰에서 "MELODY:학교종" 보내면 학교종 연주, "MELODY:생일" 보내면 생일축하 연주 + 연주 상태 BLE 전송
+2026-04-18 16:44:47,651 [INFO]   [T02] 빌드 성공 (636KB, 57.6초)
+2026-04-18 16:45:23,013 [INFO]   [T02] guide.json 생성 완료
+2026-04-18 16:45:23,014 [INFO]   진행: 7/21 (성공:4 실패:3) ETA: 26.1분
+2026-04-18 16:45:23,014 [INFO] [8/21] T03: 스마트폰에서 "SPEED:500" 보내면 LED 깜빡 속도 변경 + 현재 속도를 BLE로 응답
+2026-04-18 16:45:23,014 [INFO]   [T03] 시도 1/3: 스마트폰에서 "SPEED:500" 보내면 LED 깜빡 속도 변경 + 현재 속도를 BLE로 응답
+2026-04-18 16:46:13,421 [WARNING]   [T03] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:523:28: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 16:46:15,422 [INFO]   [T03] 시도 2/3: 스마트폰에서 "SPEED:500" 보내면 LED 깜빡 속도 변경 + 현재 속도를 BLE로 응답
+2026-04-18 16:47:08,417 [INFO]   [T03] 빌드 성공 (636KB, 105.4초)
+2026-04-18 16:47:38,303 [INFO]   [T03] guide.json 생성 완료
+2026-04-18 16:47:38,304 [INFO]   진행: 8/21 (성공:5 실패:3) ETA: 24.9분
+2026-04-18 16:47:38,304 [INFO] [9/21] T04: 스마트폰에서 "MODE:1" "MODE:2" "MODE:3" 보내면 모드 전환 + OLED에 모드명 표시 + 현재 모드 BLE 응답
+2026-04-18 16:47:38,305 [INFO]   [T04] 시도 1/3: 스마트폰에서 "MODE:1" "MODE:2" "MODE:3" 보내면 모드 전환 + OLED에 모드명 표시 + 현재 모드 BLE 응답
+2026-04-18 16:48:26,180 [WARNING]   [T04] 시도 1 실패: Build failed:
+\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:536:3: error: 'modeChanged' was not declared in this scope
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void loop()':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:556:7: error: 'modeChanged' was not declared in this scope
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:561:9: error: 'currentMode' was not declared in this scope
+Error during build: exit status 1
+
+2026-04-18 16:48:28,180 [INFO]   [T04] 시도 2/3: 스마트폰에서 "MODE:1" "MODE:2" "MODE:3" 보내면 모드 전환 + OLED에 모드명 표시 + 현재 모드 BLE 응답
+2026-04-18 16:49:25,033 [INFO]   [T04] 빌드 성공 (637KB, 106.7초)
+2026-04-18 16:49:51,858 [INFO]   [T04] guide.json 생성 완료
+2026-04-18 16:49:51,859 [INFO]   진행: 9/21 (성공:6 실패:3) ETA: 23.4분
+2026-04-18 16:49:51,859 [INFO] [10/21] T05: 스마트폰에서 "READ" 보내면 온습도 측정 + 결과를 BLE로 전송 + OLED 표시
+2026-04-18 16:49:51,860 [INFO]   [T05] 시도 1/3: 스마트폰에서 "READ" 보내면 온습도 측정 + 결과를 BLE로 전송 + OLED 표시
+2026-04-18 16:50:41,997 [INFO]   [T05] 빌드 성공 (636KB, 50.1초)
+2026-04-18 16:51:15,042 [INFO]   [T05] guide.json 생성 완료
+2026-04-18 16:51:15,043 [INFO]   진행: 10/21 (성공:7 실패:3) ETA: 20.8분
+2026-04-18 16:51:15,043 [INFO] [11/21] T06: 스마트폰에서 "DISPLAY:Hello World" 보내면 OLED에 표시 + 확인 응답 BLE 전송
+2026-04-18 16:51:15,044 [INFO]   [T06] 시도 1/3: 스마트폰에서 "DISPLAY:Hello World" 보내면 OLED에 표시 + 확인 응답 BLE 전송
+2026-04-18 16:52:03,223 [INFO]   [T06] 빌드 성공 (636KB, 48.2초)
+2026-04-18 16:52:31,673 [INFO]   [T06] guide.json 생성 완료
+2026-04-18 16:52:31,674 [INFO]   진행: 11/21 (성공:8 실패:3) ETA: 18.4분
+2026-04-18 16:52:31,674 [INFO] [12/21] T08: 스마트폰에서 "ALARM:60" 보내면 60초 타이머 시작 + 매초 남은 시간 BLE 전송 + 끝나면 멜로디
+2026-04-18 16:52:31,675 [INFO]   [T08] 시도 1/3: 스마트폰에서 "ALARM:60" 보내면 60초 타이머 시작 + 매초 남은 시간 BLE 전송 + 끝나면 멜로디
+2026-04-18 16:53:24,743 [WARNING]   [T08] 시도 1 실패: Build failed:
+45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void loop()':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:525:49: error: cannot convert 'StringSumHelper' to 'const char*'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'
+Error during build: exit status 1
+
+2026-04-18 16:53:26,745 [INFO]   [T08] 시도 2/3: 스마트폰에서 "ALARM:60" 보내면 60초 타이머 시작 + 매초 남은 시간 BLE 전송 + 끝나면 멜로디
+2026-04-18 16:54:30,568 [INFO]   [T08] 빌드 성공 (637KB, 118.9초)
+2026-04-18 16:55:06,368 [INFO]   [T08] guide.json 생성 완료
+2026-04-18 16:55:06,369 [INFO]   진행: 12/21 (성공:9 실패:3) ETA: 17.1분
+2026-04-18 16:55:06,369 [INFO] [13/21] T10: 스마트폰에서 "STATUS" 보내면 온도+습도+LED상태+스위치 상태를 한 번에 BLE로 전송
+2026-04-18 16:55:06,370 [INFO]   [T10] 시도 1/3: 스마트폰에서 "STATUS" 보내면 온도+습도+LED상태+스위치 상태를 한 번에 BLE로 전송
+2026-04-18 16:55:54,231 [WARNING]   [T10] 시도 1 실패: Build failed:
+ble_ota_arduino.ino:515:158: error: stray '`' in program
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:505:10: error: expected constructor, destructor, or type conversion before '요약'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:515:143: error: expected constructor, destructor, or type conversion before '(' token
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:515:160: error: '처럼' does not name a type
+Error during build: exit status 1
+
+2026-04-18 16:55:56,232 [INFO]   [T10] 시도 2/3: 스마트폰에서 "STATUS" 보내면 온도+습도+LED상태+스위치 상태를 한 번에 BLE로 전송
+2026-04-18 16:56:39,202 [WARNING]   [T10] 시도 2 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:526:11: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 16:56:41,203 [INFO]   [T10] 시도 3/3: 스마트폰에서 "STATUS" 보내면 온도+습도+LED상태+스위치 상태를 한 번에 BLE로 전송
+2026-04-18 16:57:36,572 [INFO]   [T10] 빌드 성공 (638KB, 150.2초)
+2026-04-18 16:58:04,963 [INFO]   [T10] guide.json 생성 완료
+2026-04-18 16:58:04,963 [INFO]   진행: 13/21 (성공:10 실패:3) ETA: 15.8분
+2026-04-18 16:58:04,963 [INFO] [14/21] U03: 기억력 게임: 보드가 LED 패턴 보여줌 → 스마트폰에서 순서대로 입력 → 맞으면 다음 레벨
+2026-04-18 16:58:04,964 [INFO]   [U03] 시도 1/3: 기억력 게임: 보드가 LED 패턴 보여줌 → 스마트폰에서 순서대로 입력 → 맞으면 다음 레벨
+2026-04-18 17:00:02,866 [INFO]   [U03] 빌드 성공 (638KB, 117.9초)
+2026-04-18 17:00:32,585 [INFO]   [U03] guide.json 생성 완료
+2026-04-18 17:00:32,586 [INFO]   진행: 14/21 (성공:11 실패:3) ETA: 14.1분
+2026-04-18 17:00:32,586 [INFO] [15/21] U04: 온도 맞추기 게임: OLED에 "몇 도일까?" → 스마트폰에서 입력 → 높/낮 힌트 → 맞추면 멜로디
+2026-04-18 17:00:32,587 [INFO]   [U04] 시도 1/3: 온도 맞추기 게임: OLED에 "몇 도일까?" → 스마트폰에서 입력 → 높/낮 힌트 → 맞추면 멜로디
+2026-04-18 17:01:42,962 [INFO]   [U04] 빌드 성공 (647KB, 70.4초)
+2026-04-18 17:02:16,827 [INFO]   [U04] guide.json 생성 완료
+2026-04-18 17:02:16,827 [INFO]   진행: 15/21 (성공:12 실패:3) ETA: 12.0분
+2026-04-18 17:02:16,828 [INFO] [16/21] U05: 모스부호 번역기: 스위치 짧게/길게 입력 → OLED에 점/선 표시 → 해석된 글자를 BLE로 전송
+2026-04-18 17:02:16,828 [INFO]   [U05] 시도 1/3: 모스부호 번역기: 스위치 짧게/길게 입력 → OLED에 점/선 표시 → 해석된 글자를 BLE로 전송
+2026-04-18 17:03:43,358 [WARNING]   [U05] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:737:25: error: extended character ≥ is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:738:53: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 17:03:45,359 [INFO]   [U05] 시도 2/3: 모스부호 번역기: 스위치 짧게/길게 입력 → OLED에 점/선 표시 → 해석된 글자를 BLE로 전송
+2026-04-18 17:05:00,633 [WARNING]   [U05] 시도 2 실패: Build failed:
+sketches\DC307C44AEC3B4BEB58A2C8200D7CA6F\sketch\ble_ota_arduino.ino.cpp.o: in function `CmdCallbacks::onWrite(NimBLECharacteristic*, NimBLEConnInfo&)':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino/ble_ota_arduino.ino:279:(.text._ZN12CmdCallbacks7onWriteEP20NimBLECharacteristicR14NimBLEConnInfo[_ZN12CmdCallbacks7onWriteEP20NimBLECharacteristicR14NimBLEConnInfo]+0xab): undefined reference to `onBleReceive(String)'
+collect2.exe: error: ld returned 1 exit status
+Error during build: exit status 1
+
+2026-04-18 17:05:02,634 [INFO]   [U05] 시도 3/3: 모스부호 번역기: 스위치 짧게/길게 입력 → OLED에 점/선 표시 → 해석된 글자를 BLE로 전송
+2026-04-18 17:06:44,802 [INFO]   [U05] 빌드 성공 (638KB, 268.0초)
+2026-04-18 17:07:13,828 [INFO]   [U05] guide.json 생성 완료
+2026-04-18 17:07:13,830 [INFO]   진행: 16/21 (성공:13 실패:3) ETA: 10.9분
+2026-04-18 17:07:13,830 [INFO] [17/21] U08: 타이핑 게임: OLED에 랜덤 알파벳 표시 → 스마트폰에서 입력 → 맞으면 점수+1 → 점수 BLE 전송
+2026-04-18 17:07:13,831 [INFO]   [U08] 시도 1/3: 타이핑 게임: OLED에 랜덤 알파벳 표시 → 스마트폰에서 입력 → 맞으면 점수+1 → 점수 BLE 전송
+2026-04-18 17:08:14,731 [INFO]   [U08] 빌드 성공 (637KB, 60.9초)
+2026-04-18 17:08:54,769 [INFO]   [U08] guide.json 생성 완료
+2026-04-18 17:08:54,770 [INFO]   진행: 17/21 (성공:14 실패:3) ETA: 8.6분
+2026-04-18 17:08:54,771 [INFO] [18/21] V04: 환경 대시보드: OLED 4줄(온도, 습도, LED상태, 업타임) + 5초마다 전체 BLE 전송
+2026-04-18 17:08:54,772 [INFO]   [V04] 시도 1/3: 환경 대시보드: OLED 4줄(온도, 습도, LED상태, 업타임) + 5초마다 전체 BLE 전송
+2026-04-18 17:09:48,623 [INFO]   [V04] 빌드 성공 (636KB, 53.9초)
+2026-04-18 17:10:24,328 [INFO]   [V04] guide.json 생성 완료
+2026-04-18 17:10:24,329 [INFO]   진행: 18/21 (성공:15 실패:3) ETA: 6.3분
+2026-04-18 17:10:24,329 [INFO] [19/21] W04: OLED에 온도 막대그래프: 최근 16개 측정값을 세로 막대로 표시
+2026-04-18 17:10:24,330 [INFO]   [W04] 시도 1/3: OLED에 온도 막대그래프: 최근 16개 측정값을 세로 막대로 표시
+2026-04-18 17:12:09,451 [WARNING]   [W04] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void drawTempBarGraph()':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:501:10: error: 'class SSD1306' has no member named 'fillRect'
+Error during build: exit status 1
+
+2026-04-18 17:12:11,452 [INFO]   [W04] 시도 2/3: OLED에 온도 막대그래프: 최근 16개 측정값을 세로 막대로 표시
+2026-04-18 17:13:41,569 [WARNING]   [W04] 시도 2 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void drawBarGraph()':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:500:14: error: 'class SSD1306' has no member named 'drawPixel'
+Error during build: exit status 1
+
+2026-04-18 17:13:43,570 [INFO]   [W04] 시도 3/3: OLED에 온도 막대그래프: 최근 16개 측정값을 세로 막대로 표시
+2026-04-18 17:15:16,662 [WARNING]   [W04] 시도 3 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:589:63: error: extended character ° is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:591:23: error: extended character × is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 17:15:16,663 [ERROR]   [W04] 최종 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:589:63: error: extended character ° is not valid in an identifier
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:591:23: error: extended character × is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-18 17:15:16,664 [INFO]   진행: 19/21 (성공:15 실패:4) ETA: 4.5분
+2026-04-18 17:15:16,664 [INFO] [20/21] Y01: 디지털 애완동물: OLED에 표정 표시, 스위치로 먹이주기, 온도로 기분 변화, 기분 상태 BLE 전송
+2026-04-18 17:15:16,664 [INFO]   [Y01] 시도 1/3: 디지털 애완동물: OLED에 표정 표시, 스위치로 먹이주기, 온도로 기분 변화, 기분 상태 BLE 전송
+2026-04-18 17:16:52,235 [WARNING]   [Y01] 시도 1 실패: Build failed:
+tring getMoodStr'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void onBleReceive(String)':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:556:40: error: no match for call to '(String) (Mood&)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void loop()':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:635:40: error: no match for call to '(String) (Mood&)'
+Error during build: exit status 1
+
+2026-04-18 17:16:54,236 [INFO]   [Y01] 시도 2/3: 디지털 애완동물: OLED에 표정 표시, 스위치로 먹이주기, 온도로 기분 변화, 기분 상태 BLE 전송
+2026-04-18 17:19:22,365 [WARNING]   [Y01] 시도 2 실패: Build failed:
+y
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:490:8: note: previous declaration 'String moodName'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void loop()':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:617:27: error: no match for call to '(String) (PetMood&)'
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:624:40: error: no match for call to '(String) (PetMood&)'
+Error during build: exit status 1
+
+2026-04-18 17:19:24,366 [INFO]   [Y01] 시도 3/3: 디지털 애완동물: OLED에 표정 표시, 스위치로 먹이주기, 온도로 기분 변화, 기분 상태 BLE 전송
+2026-04-18 17:21:08,125 [WARNING]   [Y01] 시도 3 실패: Build failed:
+ a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void onBleReceive(String)':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:588:27: error: 'getMoodName' cannot be used as a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void loop()':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:648:27: error: 'getMoodName' cannot be used as a function
+Error during build: exit status 1
+
+2026-04-18 17:21:08,125 [ERROR]   [Y01] 최종 실패: Build failed:
+ a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void onBleReceive(String)':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:588:27: error: 'getMoodName' cannot be used as a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void loop()':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:648:27: error: 'getMoodName' cannot be used as a function
+Error during build: exit status 1
+
+2026-04-18 17:21:08,125 [INFO]   진행: 20/21 (성공:15 실패:5) ETA: 2.4분
+2026-04-18 17:21:08,125 [INFO] [21/21] Y07: 스마트 화분: 온습도+쾌적도→OLED에 식물 상태 표시+LED 신호+BLE로 관리자 알림
+2026-04-18 17:21:08,126 [INFO]   [Y07] 시도 1/3: 스마트 화분: 온습도+쾌적도→OLED에 식물 상태 표시+LED 신호+BLE로 관리자 알림
+2026-04-18 17:23:07,676 [WARNING]   [Y07] 시도 1 실패: Build failed:
+사전빌드\ble_ota_arduino\ble_ota_arduino.ino:595:26: error: 'statusKor' cannot be used as a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:595:47: error: 'statusKor' cannot be used as a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:612:70: error: 'statusEng' cannot be used as a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:621:38: error: 'statusKor' cannot be used as a function
+Error during build: exit status 1
+
+2026-04-18 17:23:09,677 [INFO]   [Y07] 시도 2/3: 스마트 화분: 온습도+쾌적도→OLED에 식물 상태 표시+LED 신호+BLE로 관리자 알림
+2026-04-18 17:24:31,270 [WARNING]   [Y07] 시도 2 실패: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:488:41: error: 'PlantStatus' has not been declared
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:503:1: error: 'PlantStatus' does not name a type
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:514:44: error: 'PlantStatus' has not been declared
+Error during build: exit status 1
+
+2026-04-18 17:24:33,272 [INFO]   [Y07] 시도 3/3: 스마트 화분: 온습도+쾌적도→OLED에 식물 상태 표시+LED 신호+BLE로 관리자 알림
+2026-04-18 17:26:02,847 [WARNING]   [Y07] 시도 3 실패: Build failed:
+todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:496:36: error: 'statusIcon' cannot be used as a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:497:37: error: 'statusLabel' cannot be used as a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void loop()':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:602:38: error: 'statusLabel' cannot be used as a function
+Error during build: exit status 1
+
+2026-04-18 17:26:02,848 [ERROR]   [Y07] 최종 실패: Build failed:
+todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:496:36: error: 'statusIcon' cannot be used as a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:497:37: error: 'statusLabel' cannot be used as a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In function 'void loop()':
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:602:38: error: 'statusLabel' cannot be used as a function
+Error during build: exit status 1
+
+2026-04-18 17:26:02,848 [INFO]   진행: 21/21 (성공:15 실패:6) ETA: 0.0분
+2026-04-18 17:26:03,352 [INFO] catalog.json generated: 149 items (C:\todo\today\aiHardStudy\사전빌드\firmware_db\catalog.json)
+2026-04-18 17:26:03,352 [INFO] 
+2026-04-18 17:26:03,352 [INFO] ============================================================
+2026-04-18 17:26:03,353 [INFO] 빌드 완료 리포트
+2026-04-18 17:26:03,353 [INFO] ============================================================
+2026-04-18 17:26:03,353 [INFO] 총 소요: 53.7분
+2026-04-18 17:26:03,353 [INFO] 성공: 15/21 (71%)
+2026-04-18 17:26:03,353 [INFO] 실패: 6/21
+2026-04-18 17:26:03,354 [INFO] 
+2026-04-18 17:26:03,354 [INFO] 실패 목록:
+2026-04-18 17:26:03,354 [INFO]   K04: Build failed:
+a_arduino\ble_ota_arduino.ino:15:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ssd13
+2026-04-18 17:26:03,354 [INFO]   R04: Build failed:
+duino\ble_ota_arduino.ino:550:3: error: stray '`' in program
+C:\todo\today\aiHardStudy
+2026-04-18 17:26:03,354 [INFO]   T01: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:463:6: error: redef
+2026-04-18 17:26:03,354 [INFO]   W04: Build failed:
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:589:63: error: exte
+2026-04-18 17:26:03,355 [INFO]   Y01: Build failed:
+ a function
+C:\todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino: In fun
+2026-04-18 17:26:03,355 [INFO]   Y07: Build failed:
+todo\today\aiHardStudy\사전빌드\ble_ota_arduino\ble_ota_arduino.ino:496:36: error: 'status
+2026-04-18 17:26:03,356 [INFO] 리포트 저장: C:\todo\today\aiHardStudy\사전빌드\logs\report_20260418_172603.json

@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-04-18T17:51:02.451446",
+  "total": 6,
+  "success": 5,
+  "failed": 1,
+  "elapsed_minutes": 12.5,
+  "results": [
+    {
+      "no": "K04",
+      "prompt": "습도 70% 넘으면 노란 LED 깜빡이기. aht20_read(temp,humi)로 습도 측정. OLED에 습도 표시 시 snprintf로 char 배열에 변환 후 oled.drawString(x,y,buf)로 표시. String을 drawString에 직접 전달하지 말 것.",
+      "success": true,
+      "error": "",
+      "elapsed": 89.5056083202362,
+      "firmware_size": 650848,
+      "firmware_sha256": "ad0d61807653b594decac098f2e70e8a0cc9aa6d23ec1f6088068da6760d93ce"
+    },
+    {
+      "no": "R04",
+      "prompt": "LED 상태를 1초마다 변경(빨→노→파 순환)하면서, 변경할 때마다 현재 LED 상태를 sensorChar->setValue()/notify()로 BLE 전송. OLED에 현재 LED 이름 표시. char 배열과 snprintf 사용.",
+      "success": true,
+      "error": "",
+      "elapsed": 89.4388976097107,
+      "firmware_size": 650848,
+      "firmware_sha256": "1ad523eebe579f3d6a81c92d8a76224e3c6929aa6ca3f35a387bcb9ebe407bb5"
+    },
+    {
+      "no": "T01",
+      "prompt": "스마트폰에서 BLE로 \"RED\",\"YELLOW\",\"BLUE\" 문자를 보내면 해당 LED 켜기(나머지 끄기) + 현재 LED 상태를 sensorChar로 BLE 응답. onBleReceive(String cmd) 함수를 정의하여 명령 처리. OLED에 현재 LED 표시.",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:471:6: error: redefinition of 'void onBleReceive(String)'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:269:28: note: 'void onBleReceive(String)' previously defined here\nError during build: exit status 1\n",
+      "elapsed": 126.13325786590576
+    },
+    {
+      "no": "W04",
+      "prompt": "OLED에 온도 막대그래프: 2초마다 온도 측정하여 최근 16개 값을 세로 막대로 표시. 온도 범위 15~40도. oled.drawString에는 char 배열만 전달(c_str() 사용). 코드에 ASCII 문자만 사용하고 특수문자(도기호, 곱하기기호 등) 사용 금지.",
+      "success": true,
+      "error": "",
+      "elapsed": 183.45343708992004,
+      "firmware_size": 650976,
+      "firmware_sha256": "74e281bf7b7c56b2ea7e1d7233568df98d9d5375e798ca10e02f5163681f8eba"
+    },
+    {
+      "no": "Y01",
+      "prompt": "디지털 애완동물: OLED에 표정 문자열 표시(행복=^^, 보통=--, 슬픔=TT), 스위치 누르면 먹이주기(행복으로), 온도 25도 이하면 추움, 30도 이상이면 더움으로 기분 변화. 기분 상태를 sensorChar로 BLE 전송. 변수명과 함수명이 겹치지 않도록 주의. const char* 배열 사용.",
+      "success": true,
+      "error": "",
+      "elapsed": 138.72373414039612,
+      "firmware_size": 651552,
+      "firmware_sha256": "ac9becd37d6d96cdf7131838dab202526a517ffa902c85c0b82e2883012e337b"
+    },
+    {
+      "no": "Y07",
+      "prompt": "스마트 화분: 3초마다 온습도 측정. 온도 18~28도 + 습도 40~70%면 Good(파란LED), 범위 밖이면 Bad(노란LED), 극단적이면 Danger(빨간LED+부저). OLED에 온습도+상태 텍스트 표시. 10초마다 sensorChar로 BLE 전송. 상태를 const char* 변수로 관리하고 함수명과 겹치지 않게 할 것.",
+      "success": true,
+      "error": "",
+      "elapsed": 121.98457670211792,
+      "firmware_size": 651664,
+      "firmware_sha256": "5db7f85098030e0a6ad89561dacf2d3fdd765ae3e281a98337a5b73810f33836"
+    }
+  ]
+}

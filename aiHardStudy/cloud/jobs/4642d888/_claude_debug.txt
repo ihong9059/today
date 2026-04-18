@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 11041
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"74456e19-0277-4dac-a1b8-3cef9db28802","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"e159bb9d-161d-49bb-8b9b-993195c0fb4a","session_id":"fff2e13b-81cc-407d-a945-d44828b26da2"}
+{"type":"system","subtype":"hook_response","hook_id":"74456e19-0277-4dac-a1b8-3cef9db28802","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"67bae840-fd88-4dab-a5c1-96c3bb4115ab","session_id":"fff2e13b-81cc-407d-a945-d44828b26da2"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\4642d888","session_id":"fff2e13b-81cc-407d-a945-d44828b26da2","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:next","gsd:workstreams","gsd:new-workspace","gsd:verify-work","gsd:new-project","gsd:validate-phase","gsd:new-milestone","gsd:update","gsd:milestone-summary","gsd:ui-review","gsd:ui-phase","gsd:map-codebase","gsd:thread","gsd:manager","gsd:stats","gsd:list-workspaces","gsd:ship","gsd:list-phase-assumptions","g

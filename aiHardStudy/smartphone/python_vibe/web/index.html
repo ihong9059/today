@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>UTTEC 바이브 Python</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',sans-serif; background:#0F172A; color:#E2E8F0; min-height:100vh; }
+
+  .header {
+    background:linear-gradient(135deg,#1E293B,#312E81);
+    padding:16px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:2px solid #6366F1;
+  }
+  .header h1 { font-size:1.3em; color:#A5B4FC; }
+
+  .main { padding:12px 16px; max-width:480px; margin:0 auto; }
+
+  .example-list { margin-bottom:16px; }
+  .example-item {
+    padding:12px 14px; margin:6px 0;
+    background:#1E293B; border-radius:10px; cursor:pointer;
+    border:1px solid #334155; transition:all 0.2s;
+    display:flex; align-items:center; gap:10px;
+  }
+  .example-item:hover { border-color:#6366F1; }
+  .example-item.active { border-color:#6366F1; background:#312E81; }
+  .example-item .hw { font-size:0.7em; background:#6366F120; color:#A5B4FC; padding:2px 8px; border-radius:10px; }
+  .example-item .diff { font-size:0.7em; background:#10B98120; color:#10B981; padding:2px 8px; border-radius:10px; }
+  .example-item .title { flex:1; font-size:0.95em; }
+
+  .detail { display:none; }
+  .detail.show { display:block; }
+
+  .card {
+    background:#1E293B; border-radius:12px; padding:16px; margin-bottom:12px;
+    border:1px solid #334155;
+  }
+  .card h3 { color:#A5B4FC; margin-bottom:10px; font-size:1.05em; }
+
+  .code-block {
+    background:#0D1117; border:1px solid #334155; border-radius:8px;
+    padding:12px; font-family:'JetBrains Mono',monospace; font-size:0.8em;
+    line-height:1.6; overflow-x:auto; white-space:pre-wrap; color:#A5B4FC;
+    max-height:250px; overflow-y:auto;
+  }
+
+  .run-btn {
+    display:block; width:100%; padding:14px;
+    background:linear-gradient(135deg,#6366F1,#8B5CF6);
+    color:white; border:none; border-radius:10px;
+    font-size:1.1em; font-weight:700; cursor:pointer;
+    margin:12px 0; transition:transform 0.1s;
+  }
+  .run-btn:active { transform:scale(0.97); }
+
+  .back-btn {
+    background:none; border:1px solid #475569; color:#94A3B8;
+    padding:8px 16px; border-radius:8px; cursor:pointer; font-size:0.9em;
+    margin-bottom:12px;
+  }
+
+  .output-area {
+    background:#0D1117; border:1px solid #334155; border-radius:8px;
+    padding:12px; min-height:60px; font-family:monospace; font-size:0.85em;
+    color:#10B981; line-height:1.6; white-space:pre-wrap;
+  }
+
+  #resultArea { margin-top:8px; text-align:center; }
+
+  .guide-list { list-style:none; padding:0; }
+  .guide-list li { padding:6px 0; border-bottom:1px solid #1E293B; color:#CBD5E1; font-size:0.9em; }
+  .guide-list li::before { content:"▸ "; color:#6366F1; }
+
+  .concept-item {
+    padding:8px 12px; margin:4px 0; background:#0F172A;
+    border-radius:6px; border-left:3px solid #6366F1; font-size:0.85em;
+  }
+  .concept-item .term { font-weight:600; color:#A5B4FC; }
+
+  .quiz-card { background:#0F172A; border:1px solid #334155; border-radius:8px; padding:14px; margin-top:8px; }
+  .quiz-q { font-weight:600; margin-bottom:10px; }
+  .quiz-opt {
+    display:block; width:100%; text-align:left; padding:10px 14px; margin:4px 0;
+    background:#1E293B; border:1px solid #334155; border-radius:6px;
+    color:#CBD5E1; cursor:pointer; font-size:0.9em;
+  }
+  .quiz-opt:hover { border-color:#6366F1; }
+  .quiz-opt.correct { background:#10B981; color:white; border-color:#10B981; }
+  .quiz-opt.wrong { background:#EF4444; color:white; border-color:#EF4444; }
+  .quiz-explain { margin-top:8px; padding:8px 12px; background:#10B98115; border-radius:6px; font-size:0.85em; color:#6EE7B7; display:none; }
+
+  .big-text { font-size:80px; text-align:center; margin:20px 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🐍 UTTEC 바이브 Python</h1>
+  <span style="font-size:0.8em; color:#94A3B8;" id="countLabel">0개</span>
+</div>
+
+<div class="main">
+  <!-- 예시 목록 -->
+  <div id="listView">
+    <div class="example-list" id="exampleList"></div>
+  </div>
+
+  <!-- 상세 보기 -->
+  <div id="detailView" class="detail">
+    <button class="back-btn" onclick="showList()">← 목록으로</button>
+
+    <div class="card">
+      <h3 id="detailTitle"></h3>
+      <div style="display:flex; gap:6px; margin-bottom:10px;">
+        <span class="hw" id="detailHW"></span>
+        <span class="diff" id="detailDiff"></span>
+      </div>
+      <p style="color:#94A3B8; font-size:0.85em;" id="detailDesc"></p>
+    </div>
+
+    <div class="card">
+      <h3>Python 코드</h3>
+      <div class="code-block" id="pythonCode"></div>
+    </div>
+
+    <button class="run-btn" onclick="runExample()">▶ 실행하기</button>
+
+    <div class="card">
+      <h3>실행 결과</h3>
+      <div class="output-area" id="outputArea"></div>
+      <div id="resultArea"></div>
+    </div>
+
+    <div class="card" id="guideCard" style="display:none;">
+      <h3>학습 가이드</h3>
+      <div id="guideContent"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let examples = [];
+let currentExample = null;
+let outputLines = [];
+
+async function loadExamples() {
+  const res = await fetch('/api/examples');
+  const data = await res.json();
+  examples = data.items || [];
+  document.getElementById('countLabel').textContent = `${examples.length}개`;
+  renderList();
+}
+
+function renderList() {
+  const el = document.getElementById('exampleList');
+  el.innerHTML = examples.map(ex => `
+    <div class="example-item" onclick="selectExample('${ex.no}')">
+      <span class="diff">${ex.difficulty}</span>
+      <span class="title">${ex.title}</span>
+      <span class="hw">${ex.hardware}</span>
+    </div>
+  `).join('');
+}
+
+function selectExample(no) {
+  currentExample = examples.find(e => e.no === no);
+  if (!currentExample) return;
+
+  document.getElementById('detailTitle').textContent = currentExample.title;
+  document.getElementById('detailHW').textContent = currentExample.hardware;
+  document.getElementById('detailDiff').textContent = currentExample.difficulty;
+  document.getElementById('detailDesc').textContent = currentExample.description;
+  document.getElementById('pythonCode').textContent = currentExample.python_code;
+  document.getElementById('outputArea').textContent = '';
+  document.getElementById('resultArea').innerHTML = '';
+  document.getElementById('guideCard').style.display = 'none';
+
+  document.getElementById('listView').style.display = 'none';
+  document.getElementById('detailView').className = 'detail show';
+}
+
+function showList() {
+  document.getElementById('listView').style.display = 'block';
+  document.getElementById('detailView').className = 'detail';
+  // 센서 리스너 정리
+  window.removeEventListener('devicemotion', () => {});
+  window.removeEventListener('deviceorientation', () => {});
+}
+
+function runExample() {
+  if (!currentExample) return;
+  outputLines = [];
+  document.getElementById('outputArea').textContent = '';
+  document.getElementById('resultArea').innerHTML = '';
+
+  try {
+    const fn = new Function('output', 'clearOutput', 'updateOutput', 'setBigText', 'vibrate',
+      currentExample.web_code);
+    fn(output, clearOutput, updateOutput, setBigText, vibrate);
+  } catch(e) {
+    output('오류: ' + e.message);
+  }
+
+  // 가이드 표시
+  showGuide();
+}
+
+function output(text) {
+  outputLines.push(text);
+  document.getElementById('outputArea').textContent = outputLines.join('\n');
+}
+
+function clearOutput() {
+  outputLines = [];
+  document.getElementById('outputArea').textContent = '';
+}
+
+function updateOutput(lineIdx, text) {
+  if (lineIdx < outputLines.length) {
+    outputLines[lineIdx] = text;
+  } else {
+    outputLines.push(text);
+  }
+  document.getElementById('outputArea').textContent = outputLines.join('\n');
+}
+
+function setBigText(text) {
+  document.getElementById('resultArea').innerHTML = `<div class="big-text">${text}</div>`;
+}
+
+function vibrate(ms) {
+  if (window.nativeVibrate) { window.nativeVibrate(ms); return; }
+  if (navigator.vibrate) navigator.vibrate(ms);
+}
+
+// 센서 헬퍼 — Flutter 브릿지 또는 네이티브 Web API 자동 감지
+function addMotionListener(handler) {
+  if (window._motionHandlers) {
+    // Flutter 브릿지 모드
+    window._motionHandlers.push(handler);
+    if (window.startNativeSensors) window.startNativeSensors();
+    return true;
+  }
+  if (window.DeviceMotionEvent) {
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      DeviceMotionEvent.requestPermission().then(p => {
+        if (p === 'granted') window.addEventListener('devicemotion', handler);
+      });
+    } else {
+      window.addEventListener('devicemotion', handler);
+    }
+    return true;
+  }
+  return false;
+}
+
+function addOrientationListener(handler) {
+  if (window._orientHandlers) {
+    window._orientHandlers.push(handler);
+    if (window.startNativeSensors) window.startNativeSensors();
+    return true;
+  }
+  if (window.DeviceOrientationEvent) {
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission().then(p => {
+        if (p === 'granted') window.addEventListener('deviceorientation', handler);
+      });
+    } else {
+      window.addEventListener('deviceorientation', handler);
+    }
+    return true;
+  }
+  return false;
+}
+
+function showGuide() {
+  if (!currentExample.guide) return;
+  const guide = currentExample.guide;
+  const card = document.getElementById('guideCard');
+  card.style.display = 'block';
+
+  let html = '';
+
+  if (guide.what_happens) {
+    html += '<h4 style="color:#6366F1;margin:8px 0;">동작 순서</h4><ul class="guide-list">';
+    guide.what_happens.forEach(s => html += `<li>${s}</li>`);
+    html += '</ul>';
+  }
+
+  if (guide.concepts) {
+    html += '<h4 style="color:#6366F1;margin:12px 0 8px;">학습 개념</h4>';
+    guide.concepts.forEach(c => {
+      html += `<div class="concept-item"><span class="term">${c.term}</span> — ${c.explanation}</div>`;
+    });
+  }
+
+  if (guide.quiz) {
+    const q = guide.quiz;
+    html += `<h4 style="color:#6366F1;margin:12px 0 8px;">퀴즈</h4>
+      <div class="quiz-card">
+        <div class="quiz-q">${q.question}</div>`;
+    q.options.forEach((opt, idx) => {
+      html += `<button class="quiz-opt" onclick="checkQuiz(this,${idx},${q.answer})">${opt}</button>`;
+    });
+    html += `<div class="quiz-explain" id="quizExplain">${q.explanation}</div></div>`;
+  }
+
+  document.getElementById('guideContent').innerHTML = html;
+}
+
+function checkQuiz(btn, selected, answer) {
+  document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+  btn.classList.add(selected === answer ? 'correct' : 'wrong');
+  document.getElementById('quizExplain').style.display = 'block';
+  if (selected === answer) vibrate(200);
+}
+
+loadExamples();
+</script>
+</body>
+</html>

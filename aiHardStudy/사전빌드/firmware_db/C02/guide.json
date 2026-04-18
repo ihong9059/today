@@ -1,0 +1,66 @@
+{
+  "result_description": "부저가 삐- 삐- 삐- 하고 3번 울립니다.",
+  "what_happens": [
+    "아두이노가 켜지면 부저 준비를 합니다",
+    "부저를 켜고 0.3초 기다렸다가 끄고 0.3초 기다리는 동작을 3번 반복합니다",
+    "3번 울린 뒤에는 아무것도 하지 않고 계속 기다립니다"
+  ],
+  "concepts": [
+    {
+      "term": "for 반복문",
+      "explanation": "똑같은 일을 여러 번 반복할 때 쓰는 명령이에요. '3번 해!' 라고 말하는 것과 같아요."
+    },
+    {
+      "term": "digitalWrite",
+      "explanation": "핀에 전기를 켜거나 끄는 명령이에요. LOW는 켜기, HIGH는 끄기예요 (부저는 반대로 동작해요)."
+    },
+    {
+      "term": "delay",
+      "explanation": "잠깐 기다리는 명령이에요. delay(300)은 0.3초 동안 멈추는 거예요."
+    },
+    {
+      "term": "setup / loop",
+      "explanation": "setup은 처음 한 번만 실행되는 준비 구간이고, loop는 계속 반복되는 구간이에요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "for (int i = 0; i < 3; i++)",
+      "comment": "i가 0, 1, 2로 바뀌면서 안쪽 코드를 총 3번 실행해요"
+    },
+    {
+      "line": "digitalWrite(BUZZER, LOW);",
+      "comment": "부저 핀에 LOW 신호를 보내서 부저를 켜요"
+    },
+    {
+      "line": "delay(300);",
+      "comment": "0.3초 동안 기다려요. 이 시간만큼 삐~ 소리가 나요"
+    },
+    {
+      "line": "digitalWrite(BUZZER, HIGH);",
+      "comment": "부저 핀에 HIGH 신호를 보내서 부저를 꺼요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "delay 숫자를 500이나 1000으로 바꿔서 소리가 더 길어지는지 확인해보세요!"
+    },
+    {
+      "reason": "for 문의 3을 5로 바꿔서 5번 울리게 만들어보세요!"
+    },
+    {
+      "reason": "울리는 횟수와 쉬는 시간을 다르게 해서 나만의 신호음을 만들어보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 부저가 몇 번 울릴까요?",
+    "options": [
+      "1번",
+      "2번",
+      "3번",
+      "10번"
+    ],
+    "answer": 2,
+    "explanation": "for 반복문에서 i < 3 이기 때문에 i가 0, 1, 2일 때 총 3번 실행돼요. 그래서 부저도 3번 울려요!"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "timestamp": "2026-04-17T13:42:13.823378",
+  "total": 10,
+  "success": 0,
+  "failed": 10,
+  "elapsed_minutes": 8.0,
+  "results": [
+    {
+      "no": "A01",
+      "prompt": "빨간 LED 켜기",
+      "success": false,
+      "error": "Claude returned empty stdout. stderr: ",
+      "elapsed": 44.103373289108276
+    },
+    {
+      "no": "A02",
+      "prompt": "빨간 LED 끄기",
+      "success": false,
+      "error": "Claude returned empty stdout. stderr: ",
+      "elapsed": 47.06490898132324
+    },
+    {
+      "no": "A03",
+      "prompt": "노란 LED 켜기",
+      "success": false,
+      "error": "Claude returned empty stdout. stderr: ",
+      "elapsed": 49.419992446899414
+    },
+    {
+      "no": "A04",
+      "prompt": "파란 LED 켜기",
+      "success": false,
+      "error": "Claude returned empty stdout. stderr: ",
+      "elapsed": 47.878437757492065
+    },
+    {
+      "no": "A05",
+      "prompt": "빨간 LED 1초마다 깜빡이기",
+      "success": false,
+      "error": "Claude returned empty stdout. stderr: ",
+      "elapsed": 44.483575105667114
+    },
+    {
+      "no": "A06",
+      "prompt": "빨간 LED 0.5초마다 빠르게 깜빡이기",
+      "success": false,
+      "error": "Claude returned empty stdout. stderr: ",
+      "elapsed": 49.69955134391785
+    },
+    {
+      "no": "A07",
+      "prompt": "빨간 LED 3초마다 느리게 깜빡이기",
+      "success": false,
+      "error": "Claude returned empty stdout. stderr: ",
+      "elapsed": 49.12082648277283
+    },
+    {
+      "no": "A08",
+      "prompt": "빨간 LED 5번 깜빡이고 멈추기",
+      "success": false,
+      "error": "Claude returned empty stdout. stderr: ",
+      "elapsed": 45.82788419723511
+    },
+    {
+      "no": "A09",
+      "prompt": "빨간 LED 10번 깜빡이고 멈추기",
+      "success": false,
+      "error": "Claude returned empty stdout. stderr: ",
+      "elapsed": 48.436461448669434
+    },
+    {
+      "no": "A10",
+      "prompt": "파란 LED 0.2초마다 20번 깜빡이고 멈추기",
+      "success": false,
+      "error": "Claude returned empty stdout. stderr: ",
+      "elapsed": 52.581275939941406
+    }
+  ]
+}

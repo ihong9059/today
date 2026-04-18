@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 42408
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"2db9978e-c688-4ad9-ab42-cae4251dc2a3","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"7302240d-db9e-4113-bd3e-03ef2e7d6fdf","session_id":"5b8b898d-13f5-4fef-8e08-57639b515f84"}
+{"type":"system","subtype":"hook_response","hook_id":"2db9978e-c688-4ad9-ab42-cae4251dc2a3","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"989410eb-8eba-4967-8d3d-b988157e5b9b","session_id":"5b8b898d-13f5-4fef-8e08-57639b515f84"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\f8aa6dba","session_id":"5b8b898d-13f5-4fef-8e08-57639b515f84","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:autonomous","gsd:audit-uat","gsd:audit-milestone","gsd:add-todo","gsd:add-tests","gsd:add-phase","gsd:add-backlog","gsd:help","gsd:health","gsd:forensics","gsd:fast","gsd:execute-phase","gsd:do","gsd:discuss-phase","gsd:debug","gsd:complete-milestone","gsd:cleanup","gsd:check-todos","gsd:map-codebase","gsd:man

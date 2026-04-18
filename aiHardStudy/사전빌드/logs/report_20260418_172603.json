@@ -1,0 +1,186 @@
+{
+  "timestamp": "2026-04-18T17:26:03.355223",
+  "total": 21,
+  "success": 15,
+  "failed": 6,
+  "elapsed_minutes": 53.7,
+  "results": [
+    {
+      "no": "K04",
+      "prompt": "습도 70% 넘으면 노란 LED 깜빡이기",
+      "success": false,
+      "error": "Build failed:\na_arduino\\ble_ota_arduino.ino:15:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:490:55: error: cannot convert 'StringSumHelper' to 'const char*'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'\nError during build: exit status 1\n",
+      "elapsed": 134.6552448272705
+    },
+    {
+      "no": "P01",
+      "prompt": "스위치로 모드 전환: 1번=LED 깜빡, 2번=멜로디, 3번=온도",
+      "success": true,
+      "error": "",
+      "elapsed": 109.50211548805237,
+      "firmware_size": 652336,
+      "firmware_sha256": "1f3848476093ad7693061fd493168ca705bd8c63db41525d519a798f52b07dff"
+    },
+    {
+      "no": "R02",
+      "prompt": "5초마다 온도+습도 둘 다 BLE로 스마트폰에 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 78.73438620567322,
+      "firmware_size": 651552,
+      "firmware_sha256": "772bc6eb1e53fe816483ea41fe1fe1197972e53abbba88a35922c9654a545e48"
+    },
+    {
+      "no": "R04",
+      "prompt": "LED 상태 변경할 때마다 현재 LED 상태를 BLE로 전송",
+      "success": false,
+      "error": "Build failed:\nduino\\ble_ota_arduino.ino:550:3: error: stray '`' in program\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:489:6: error: redefinition of 'void onBleReceive(String)'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:267:28: note: 'void onBleReceive(String)' previously defined here\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:537:10: error: expected constructor, destructor, or type conversion before '요약'\nError during build: exit status 1\n",
+      "elapsed": 153.59256267547607
+    },
+    {
+      "no": "S01",
+      "prompt": "현관 벨: 스위치 → 딩동 멜로디+OLED \"Visitor!\" + BLE 알림",
+      "success": true,
+      "error": "",
+      "elapsed": 86.37842345237732,
+      "firmware_size": 651280,
+      "firmware_sha256": "d0d3f69e8e8a85c8fb950c7ced83913b155c42ec0ef7735a9d36533d0e6efec7"
+    },
+    {
+      "no": "T01",
+      "prompt": "스마트폰에서 \"RED\", \"YELLOW\", \"BLUE\" 문자 보내면 해당 LED 켜기 + 현재 LED 상태를 BLE로 응답",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:463:6: error: redefinition of 'void onBleReceive(String)'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:267:28: note: 'void onBleReceive(String)' previously defined here\nError during build: exit status 1\n",
+      "elapsed": 126.77482891082764
+    },
+    {
+      "no": "T02",
+      "prompt": "스마트폰에서 \"MELODY:학교종\" 보내면 학교종 연주, \"MELODY:생일\" 보내면 생일축하 연주 + 연주 상태 BLE 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 92.95525527000427,
+      "firmware_size": 651664,
+      "firmware_sha256": "451c89cb6caaa5edbe79a7558f8bba5fd9ee7793f341f97b0ae6b20ed3b23d22"
+    },
+    {
+      "no": "T03",
+      "prompt": "스마트폰에서 \"SPEED:500\" 보내면 LED 깜빡 속도 변경 + 현재 속도를 BLE로 응답",
+      "success": true,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:523:28: error: extended character → is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 135.28920817375183,
+      "firmware_size": 651680,
+      "firmware_sha256": "340bc2bb565dbbb60140913b59e31f3064056cfa3f988b786d36a9a35e0f3cb5"
+    },
+    {
+      "no": "T04",
+      "prompt": "스마트폰에서 \"MODE:1\" \"MODE:2\" \"MODE:3\" 보내면 모드 전환 + OLED에 모드명 표시 + 현재 모드 BLE 응답",
+      "success": true,
+      "error": "Build failed:\n\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:536:3: error: 'modeChanged' was not declared in this scope\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void loop()':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:556:7: error: 'modeChanged' was not declared in this scope\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:561:9: error: 'currentMode' was not declared in this scope\nError during build: exit status 1\n",
+      "elapsed": 133.55358338356018,
+      "firmware_size": 652256,
+      "firmware_sha256": "1b693faa1a36df4c824b66e6f1f9cb46af8cae6ba34e77d5211d1d5ec75a3d8d"
+    },
+    {
+      "no": "T05",
+      "prompt": "스마트폰에서 \"READ\" 보내면 온습도 측정 + 결과를 BLE로 전송 + OLED 표시",
+      "success": true,
+      "error": "",
+      "elapsed": 83.18228363990784,
+      "firmware_size": 651568,
+      "firmware_sha256": "e490646288520ad2fb1b80d48e9453ac554da9f7d71f30956436b6bd539eac34"
+    },
+    {
+      "no": "T06",
+      "prompt": "스마트폰에서 \"DISPLAY:Hello World\" 보내면 OLED에 표시 + 확인 응답 BLE 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 76.62889242172241,
+      "firmware_size": 650912,
+      "firmware_sha256": "1c2f9c0847db786116571287f80ad5d8f87c4ad6d737f71c40c8612ec8ceb999"
+    },
+    {
+      "no": "T08",
+      "prompt": "스마트폰에서 \"ALARM:60\" 보내면 60초 타이머 시작 + 매초 남은 시간 BLE 전송 + 끝나면 멜로디",
+      "success": true,
+      "error": "Build failed:\n45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void loop()':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:525:49: error: cannot convert 'StringSumHelper' to 'const char*'\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ssd1306.h:131:45: note:   initializing argument 3 of 'void SSD1306::drawString(int, int, const char*)'\nError during build: exit status 1\n",
+      "elapsed": 154.69269585609436,
+      "firmware_size": 652560,
+      "firmware_sha256": "3ac6fd9d4e39c64be8c0eafdafbd60f5602c28572be006fcb1ae9af17657c94c"
+    },
+    {
+      "no": "T10",
+      "prompt": "스마트폰에서 \"STATUS\" 보내면 온도+습도+LED상태+스위치 상태를 한 번에 BLE로 전송",
+      "success": true,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:526:11: error: extended character → is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 178.5930814743042,
+      "firmware_size": 653248,
+      "firmware_sha256": "ff811380e08885b141846dd03406e20368374ce773e0cfde8d8dc3c6513f776d"
+    },
+    {
+      "no": "U03",
+      "prompt": "기억력 게임: 보드가 LED 패턴 보여줌 → 스마트폰에서 순서대로 입력 → 맞으면 다음 레벨",
+      "success": true,
+      "error": "",
+      "elapsed": 147.62116718292236,
+      "firmware_size": 653168,
+      "firmware_sha256": "8e153ac1a69a2435e4d8726bf219a8a53852deccb0d6237940e059eea73ffd22"
+    },
+    {
+      "no": "U04",
+      "prompt": "온도 맞추기 게임: OLED에 \"몇 도일까?\" → 스마트폰에서 입력 → 높/낮 힌트 → 맞추면 멜로디",
+      "success": true,
+      "error": "",
+      "elapsed": 104.24028992652893,
+      "firmware_size": 662608,
+      "firmware_sha256": "764503181cfb6d628680fd37e0c4a0f5eeda1708de624c2b813cbd2ed28ffbcb"
+    },
+    {
+      "no": "U05",
+      "prompt": "모스부호 번역기: 스위치 짧게/길게 입력 → OLED에 점/선 표시 → 해석된 글자를 BLE로 전송",
+      "success": true,
+      "error": "Build failed:\nsketches\\DC307C44AEC3B4BEB58A2C8200D7CA6F\\sketch\\ble_ota_arduino.ino.cpp.o: in function `CmdCallbacks::onWrite(NimBLECharacteristic*, NimBLEConnInfo&)':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino/ble_ota_arduino.ino:279:(.text._ZN12CmdCallbacks7onWriteEP20NimBLECharacteristicR14NimBLEConnInfo[_ZN12CmdCallbacks7onWriteEP20NimBLECharacteristicR14NimBLEConnInfo]+0xab): undefined reference to `onBleReceive(String)'\ncollect2.exe: error: ld returned 1 exit status\nError during build: exit status 1\n",
+      "elapsed": 297.0007960796356,
+      "firmware_size": 653216,
+      "firmware_sha256": "0ee6031e18501e549204ea54a0e31ffa022bcb46c2592caa8267cb49f4637d7b"
+    },
+    {
+      "no": "U08",
+      "prompt": "타이핑 게임: OLED에 랜덤 알파벳 표시 → 스마트폰에서 입력 → 맞으면 점수+1 → 점수 BLE 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 100.93859529495239,
+      "firmware_size": 652512,
+      "firmware_sha256": "f55058d07bc420e647e345164148e4bf102a7540ac7d13eb2eae036c30d3e85c"
+    },
+    {
+      "no": "V04",
+      "prompt": "환경 대시보드: OLED 4줄(온도, 습도, LED상태, 업타임) + 5초마다 전체 BLE 전송",
+      "success": true,
+      "error": "",
+      "elapsed": 89.55639624595642,
+      "firmware_size": 651504,
+      "firmware_sha256": "f982a733a6995ae9cd2970ab826a74b0d64f3be32507bae5e0284dcc9a33a31b"
+    },
+    {
+      "no": "W04",
+      "prompt": "OLED에 온도 막대그래프: 최근 16개 측정값을 세로 막대로 표시",
+      "success": false,
+      "error": "Build failed:\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:589:63: error: extended character ° is not valid in an identifier\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:591:23: error: extended character × is not valid in an identifier\nError during build: exit status 1\n",
+      "elapsed": 292.333598613739
+    },
+    {
+      "no": "Y01",
+      "prompt": "디지털 애완동물: OLED에 표정 표시, 스위치로 먹이주기, 온도로 기분 변화, 기분 상태 BLE 전송",
+      "success": false,
+      "error": "Build failed:\n a function\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void onBleReceive(String)':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:588:27: error: 'getMoodName' cannot be used as a function\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void loop()':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:648:27: error: 'getMoodName' cannot be used as a function\nError during build: exit status 1\n",
+      "elapsed": 351.4610607624054
+    },
+    {
+      "no": "Y07",
+      "prompt": "스마트 화분: 온습도+쾌적도→OLED에 식물 상태 표시+LED 신호+BLE로 관리자 알림",
+      "success": false,
+      "error": "Build failed:\ntodo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:496:36: error: 'statusIcon' cannot be used as a function\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:497:37: error: 'statusLabel' cannot be used as a function\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino: In function 'void loop()':\nC:\\todo\\today\\aiHardStudy\\사전빌드\\ble_ota_arduino\\ble_ota_arduino.ino:602:38: error: 'statusLabel' cannot be used as a function\nError during build: exit status 1\n",
+      "elapsed": 294.7217357158661
+    }
+  ]
+}

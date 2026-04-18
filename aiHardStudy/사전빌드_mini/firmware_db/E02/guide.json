@@ -1,0 +1,66 @@
+{
+  "result_description": "아두이노가 켜지면 OLED 화면에 'UTTEC Mini' 글자를 표시합니다.",
+  "what_happens": [
+    "아두이노가 전원을 받아 시작(setup)합니다",
+    "OLED 화면을 깨끗하게 지우고 'UTTEC Mini' 글자를 화면에 씁니다",
+    "글자가 화면에 나타난 뒤 계속 그 상태를 유지합니다"
+  ],
+  "concepts": [
+    {
+      "term": "setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번 실행되는 준비 구역이에요. 사람으로 치면 아침에 일어나서 세수하고 준비하는 것과 같아요."
+    },
+    {
+      "term": "loop()",
+      "explanation": "setup이 끝난 뒤 계속 반복되는 구역이에요. 여기서는 10초마다 아무것도 안 하고 쉬어요."
+    },
+    {
+      "term": "OLED",
+      "explanation": "작고 얇은 화면이에요. 글자나 그림을 표시할 수 있어서 스마트워치나 소형 기기에 많이 쓰여요."
+    },
+    {
+      "term": "oled.clear()",
+      "explanation": "OLED 화면을 지우개로 깨끗이 지우는 명령이에요."
+    },
+    {
+      "term": "oled.display()",
+      "explanation": "화면에 실제로 글자를 보이게 해주는 명령이에요. 이걸 써야 비로소 화면에 나타나요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "oled.clear();",
+      "comment": "화면에 남아있던 내용을 모두 지워서 깨끗하게 만들어요"
+    },
+    {
+      "line": "oled.drawString(0, 0, \"UTTEC Mini\");",
+      "comment": "화면의 가장 왼쪽 위(0, 0) 위치부터 'UTTEC Mini' 글자를 써요"
+    },
+    {
+      "line": "oled.display();",
+      "comment": "써 놓은 글자를 화면에 실제로 띄워요 — 이 줄이 없으면 아무것도 안 보여요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "글자 위치를 바꿔보세요! drawString(20, 10, \"UTTEC Mini\") 처럼 숫자를 바꾸면 글자가 다른 곳에 나타나요"
+    },
+    {
+      "reason": "'UTTEC Mini' 대신 자기 이름을 넣어서 내 이름이 화면에 뜨게 만들어 보세요"
+    },
+    {
+      "reason": "두 번째 줄에도 글자를 추가해 보세요! drawString(0, 16, \"Hello!\") 를 추가하면 두 줄이 나타나요"
+    }
+  ],
+  "quiz": {
+    "question": "oled.display()를 코드에서 빼면 어떻게 될까요?",
+    "options": [
+      "화면이 더 밝아진다",
+      "화면에 아무것도 나타나지 않는다",
+      "'UTTEC Mini' 글자가 깜빡인다",
+      "아두이노가 꺼진다"
+    ],
+    "answer": 1,
+    "explanation": "oled.drawString()은 화면에 보낼 글자를 준비만 해요. 실제로 화면에 나타나게 하려면 반드시 oled.display()를 불러야 해요. 이 줄이 없으면 글자가 준비만 되고 화면에는 보이지 않아요."
+  }
+}

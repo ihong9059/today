@@ -1,0 +1,66 @@
+{
+  "result_description": "스위치를 누를 때마다 횟수를 세어 OLED 화면에 표시하고, 파란 LED와 소리로 눌림을 알려줍니다.",
+  "what_happens": [
+    "스위치를 누르면 아두이노가 버튼이 눌렸는지 계속 확인합니다.",
+    "버튼이 눌릴 때마다 횟수(pressCount)가 1씩 늘어납니다.",
+    "OLED 화면에 'Count: 숫자'가 업데이트되고, 파란 LED가 잠깐 켜지며 '삐' 소리가 납니다."
+  ],
+  "concepts": [
+    {
+      "term": "변수(Variable)",
+      "explanation": "숫자나 정보를 기억하는 상자예요. pressCount는 버튼을 누른 횟수를 기억하는 상자입니다."
+    },
+    {
+      "term": "디바운스(Debounce)",
+      "explanation": "버튼을 한 번 눌러도 기계는 여러 번 눌렸다고 느낄 수 있어요. 잠깐 기다려서 딱 한 번만 세도록 하는 방법입니다."
+    },
+    {
+      "term": "엣지 감지(Edge Detection)",
+      "explanation": "버튼이 눌리는 순간만 감지하는 방법이에요. '전에는 안 눌렸는데 지금 눌렸다!'를 알아채는 것입니다."
+    },
+    {
+      "term": "함수(Function)",
+      "explanation": "자주 쓰는 명령들을 하나로 묶어 이름을 붙인 것이에요. updateDisplay()는 화면을 새로 그리는 명령 묶음입니다."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "if (lastSwitchState == HIGH && currentState == LOW)",
+      "comment": "이전에는 안 눌려 있었는데(HIGH) 지금 눌렸을 때(LOW)만 횟수를 셉니다. 누르는 순간만 잡아냅니다!"
+    },
+    {
+      "line": "pressCount++;",
+      "comment": "pressCount에 저장된 숫자를 1 올립니다. ++는 '1 더하기'를 짧게 쓴 것입니다."
+    },
+    {
+      "line": "sprintf(buf, \"Count: %d\", pressCount);",
+      "comment": "%d 자리에 pressCount 숫자를 끼워 넣어 'Count: 5'처럼 글자를 만듭니다."
+    },
+    {
+      "line": "delay(50);",
+      "comment": "버튼 눌림을 세고 0.05초 기다립니다. 짧은 대기로 같은 누름이 여러 번 세지지 않게 합니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "pressCount가 10이 되면 LED 색을 빨간색으로 바꿔 보세요. if문으로 숫자 조건을 다루는 연습이 됩니다!"
+    },
+    {
+      "reason": "버튼을 두 번 누르면 카운터를 0으로 초기화하는 기능을 추가해 보세요. 리셋 기능을 직접 만들 수 있어요!"
+    },
+    {
+      "reason": "횟수 대신 경과 시간(초)을 화면에 표시해 보세요. millis() 함수를 사용하면 됩니다."
+    }
+  ],
+  "quiz": {
+    "question": "버튼을 딱 한 번 눌렀을 때만 횟수가 올라가도록 하려면 어떤 상태 변화를 확인해야 할까요?",
+    "options": [
+      "현재 상태가 LOW일 때마다 센다",
+      "이전이 HIGH이고 현재가 LOW일 때 센다",
+      "현재 상태가 HIGH일 때마다 센다",
+      "이전이 LOW이고 현재가 HIGH일 때 센다"
+    ],
+    "answer": 1,
+    "explanation": "버튼이 눌리는 '순간'은 HIGH(안 눌림)에서 LOW(눌림)로 바뀌는 때입니다. 이미 눌려 있는 동안은 계속 LOW이므로, 이전 상태(HIGH)와 현재 상태(LOW)를 함께 확인해야 딱 한 번만 셀 수 있어요!"
+  }
+}

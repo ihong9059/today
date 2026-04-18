@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-04-18T19:28:05.478697",
+  "total": 10,
+  "success": 10,
+  "failed": 0,
+  "elapsed_minutes": 13.7,
+  "results": [
+    {
+      "no": "B01",
+      "prompt": "도레미파솔라시도 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 86.14269948005676,
+      "firmware_size": 624960,
+      "firmware_sha256": "3a768be5a6be43d153fed880605417e4b347b5134165052b5e87dcb764af7cc5"
+    },
+    {
+      "no": "B02",
+      "prompt": "도레미파솔라시도 역순으로 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 69.66367626190186,
+      "firmware_size": 624592,
+      "firmware_sha256": "98a39c7883cb53a79ed6501083f5b7ae77c936b029228f64b6521f50712e54ce"
+    },
+    {
+      "no": "B03",
+      "prompt": "반짝반짝 작은별 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 89.46522831916809,
+      "firmware_size": 625888,
+      "firmware_sha256": "fe1e1a101f5d4c24d24b52a5ca29e7f09ebcd0f39f1915dc43c61148d372e383"
+    },
+    {
+      "no": "B04",
+      "prompt": "학교종 멜로디 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 94.35820007324219,
+      "firmware_size": 625024,
+      "firmware_sha256": "c14f6614a860376fc3069a7c17307258f574d8f9174b1508ee3c7b05216aa2a6"
+    },
+    {
+      "no": "B05",
+      "prompt": "생일 축하 노래 연주하기",
+      "success": true,
+      "error": "",
+      "elapsed": 108.42742919921875,
+      "firmware_size": 625920,
+      "firmware_sha256": "31ce11fea4c9848a87d0a6f45e45063783adaff3c0a9d3f1a80e6e5347958ad7"
+    },
+    {
+      "no": "B06",
+      "prompt": "경찰차 사이렌 소리 내기",
+      "success": true,
+      "error": "",
+      "elapsed": 79.88446044921875,
+      "firmware_size": 624848,
+      "firmware_sha256": "754ae5cad9abee422156af319343f37235fb2cfd25b15082a9905f7b701e66d9"
+    },
+    {
+      "no": "B07",
+      "prompt": "비프음 3번 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 62.34687113761902,
+      "firmware_size": 624528,
+      "firmware_sha256": "3776a977dc0c7ad1c8583b3841f6d2704c3b296c3334079ef1715d5f6e062bde"
+    },
+    {
+      "no": "B08",
+      "prompt": "게임 시작 효과음 만들기 (낮은음에서 높은음으로)",
+      "success": true,
+      "error": "",
+      "elapsed": 79.16406512260437,
+      "firmware_size": 624880,
+      "firmware_sha256": "f0dd3e7996e7481b46ecd13423bc7b74cca75d7f7131f84d6e42b5c362d40b5e"
+    },
+    {
+      "no": "B09",
+      "prompt": "SOS 모스부호 소리 내기 (짧3 긴3 짧3)",
+      "success": true,
+      "error": "",
+      "elapsed": 80.42252659797668,
+      "firmware_size": 624896,
+      "firmware_sha256": "cff0af4d05945d2e02a0410818f6a0cedf240c8be1e04a4162bca74cbb189a82"
+    },
+    {
+      "no": "B10",
+      "prompt": "점점 빨라지는 비프음 10번 울리기",
+      "success": true,
+      "error": "",
+      "elapsed": 74.59484314918518,
+      "firmware_size": 624576,
+      "firmware_sha256": "75a4f211ed1c35b3d577927d470fd926272926738b5ac63d09a2e81e6386c0b7"
+    }
+  ]
+}

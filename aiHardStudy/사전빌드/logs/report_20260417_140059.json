@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-04-17T14:00:59.767604",
+  "total": 10,
+  "success": 10,
+  "failed": 0,
+  "elapsed_minutes": 11.4,
+  "results": [
+    {
+      "no": "A01",
+      "prompt": "빨간 LED 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 68.01870036125183,
+      "firmware_size": 650320,
+      "firmware_sha256": "48adb9fe312ad14f693bd37a4c63f84bdfd5b3a6a6f154cc9e8bfba761e8aca9"
+    },
+    {
+      "no": "A02",
+      "prompt": "빨간 LED 끄기",
+      "success": true,
+      "error": "",
+      "elapsed": 62.773791551589966,
+      "firmware_size": 650320,
+      "firmware_sha256": "decfe4ef377422cd53cbc78e9c804df11615854739588919b637d78d341904ea"
+    },
+    {
+      "no": "A03",
+      "prompt": "노란 LED 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 65.89685773849487,
+      "firmware_size": 650320,
+      "firmware_sha256": "b7b65d602a2edf53164a2cd0bb14f6e91b8486e325c6634ac4e62e7dd64de7c2"
+    },
+    {
+      "no": "A04",
+      "prompt": "파란 LED 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 63.55520725250244,
+      "firmware_size": 650320,
+      "firmware_sha256": "1fa51bbfebefdf2d26047eb76b84dd5eea0c7cd6acc32df0da98abc50b3adc81"
+    },
+    {
+      "no": "A05",
+      "prompt": "빨간 LED 1초마다 깜빡이기",
+      "success": true,
+      "error": "",
+      "elapsed": 72.78585529327393,
+      "firmware_size": 650432,
+      "firmware_sha256": "c35ae04dfd2ff1ab88aef56fac4d75a6086fbd76913418fc1468f69a7668ad83"
+    },
+    {
+      "no": "A06",
+      "prompt": "빨간 LED 0.5초마다 빠르게 깜빡이기",
+      "success": true,
+      "error": "",
+      "elapsed": 70.91028475761414,
+      "firmware_size": 650432,
+      "firmware_sha256": "4cf9aea40a97908dd1112845fa4fd54601a23128dd6c2ca27cb0bdd17500d374"
+    },
+    {
+      "no": "A07",
+      "prompt": "빨간 LED 3초마다 느리게 깜빡이기",
+      "success": true,
+      "error": "",
+      "elapsed": 73.4871563911438,
+      "firmware_size": 650432,
+      "firmware_sha256": "670f8194aba8b1c2418f4bd6c8da21e108128e536a7adef1d9d7ed67116e4c38"
+    },
+    {
+      "no": "A08",
+      "prompt": "빨간 LED 5번 깜빡이고 멈추기",
+      "success": true,
+      "error": "",
+      "elapsed": 74.07670760154724,
+      "firmware_size": 650448,
+      "firmware_sha256": "e03b5d161eff2797000bf50f212683b8e0b073763be0a4adf8b8eafb629924f7"
+    },
+    {
+      "no": "A09",
+      "prompt": "빨간 LED 10번 깜빡이고 멈추기",
+      "success": true,
+      "error": "",
+      "elapsed": 68.09170293807983,
+      "firmware_size": 650448,
+      "firmware_sha256": "febca685be79ed71cb271d1b13d65ba36aa7a056b1a913a2bfced849ab839f15"
+    },
+    {
+      "no": "A10",
+      "prompt": "파란 LED 0.2초마다 20번 깜빡이고 멈추기",
+      "success": true,
+      "error": "",
+      "elapsed": 66.29335618019104,
+      "firmware_size": 650448,
+      "firmware_sha256": "60fcfa2ad51bc5abe9ebf936c6d8ab31ba0ff881ef33b549f7c7053fd00a3d40"
+    }
+  ]
+}

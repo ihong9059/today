@@ -1,0 +1,58 @@
+{
+  "result_description": "ESP32의 RGB LED가 파란색으로 켜집니다.",
+  "what_happens": [
+    "보드가 켜지면서 LED와 블루투스 준비를 마칩니다.",
+    "LED에게 '파란색(0, 0, 255)으로 빛나!'라고 명령합니다.",
+    "명령한 색깔이 실제 LED에 반짝 나타납니다."
+  ],
+  "concepts": [
+    {
+      "term": "RGB",
+      "explanation": "빨강(Red), 초록(Green), 파랑(Blue) 세 가지 색 빛을 섞어서 여러 색을 만드는 방법이에요. 마치 물감을 섞는 것처럼요!"
+    },
+    {
+      "term": "pixel.Color(0, 0, 255)",
+      "explanation": "빨강 0, 초록 0, 파랑 255로 설정해서 순수한 파란색을 만드는 명령이에요. 숫자가 클수록 그 색이 밝아져요."
+    },
+    {
+      "term": "pixel.show()",
+      "explanation": "설정한 색을 실제 LED에 반영해서 빛이 나오도록 하는 명령이에요. 이걸 써야 LED가 실제로 켜져요!"
+    },
+    {
+      "term": "setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번만 실행되는 준비 코드예요. 사람으로 치면 아침에 일어나서 세수하는 것과 같아요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(0, 0, 255));",
+      "comment": "0번 LED의 색을 파란색(파랑=255)으로 설정해요."
+    },
+    {
+      "line": "pixel.show();",
+      "comment": "설정한 색을 실제 LED에 나타나게 해요. 이 줄이 없으면 LED가 켜지지 않아요!"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "pixel.Color(255, 0, 0)으로 바꿔서 빨간색을 켜보세요!"
+    },
+    {
+      "reason": "pixel.Color(255, 255, 0)처럼 두 색을 섞으면 노란색이 나와요. 직접 해보세요!"
+    },
+    {
+      "reason": "delay(1000) 후에 pixel.Color(0, 255, 0)을 추가해서 1초마다 색이 바뀌게 만들어보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "파란색 LED를 켜려면 pixel.Color() 안에 숫자를 어떻게 넣어야 할까요?",
+    "options": [
+      "pixel.Color(255, 0, 0)",
+      "pixel.Color(0, 255, 0)",
+      "pixel.Color(0, 0, 255)",
+      "pixel.Color(255, 255, 255)"
+    ],
+    "answer": 2,
+    "explanation": "RGB에서 세 번째 숫자가 파랑(Blue)이에요. pixel.Color(0, 0, 255)는 빨강 0, 초록 0, 파랑 255로 순수한 파란색을 만들어요!"
+  }
+}

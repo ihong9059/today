@@ -1,0 +1,9 @@
+
+
+# Load bootloader symbols
+set confirm off
+    # Bootloader elf was not found
+set confirm on
+
+# Load application symbols
+file C:/todo/today/aiHardStudy/cloud/jobs/2293c3ac/build/bootloader/bootloader.elf

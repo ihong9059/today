@@ -1,0 +1,58 @@
+{
+  "result_description": "아두이노가 켜지면 빨간 LED가 자동으로 켜집니다.",
+  "what_happens": [
+    "아두이노에 전원이 들어오면 setup() 함수가 딱 한 번 실행돼요",
+    "initHardware()가 LED 핀을 '출력 모드'로 준비해요",
+    "digitalWrite(LED_RED, LOW) 명령으로 빨간 LED에 불이 켜져요"
+  ],
+  "concepts": [
+    {
+      "term": "setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번만 실행되는 준비 구역이에요. 방에 들어가기 전에 신발 벗는 것처럼요!"
+    },
+    {
+      "term": "loop()",
+      "explanation": "setup()이 끝난 뒤 계속 반복해서 실행되는 구역이에요. 심장이 쉬지 않고 뛰는 것처럼 계속 돌아가요."
+    },
+    {
+      "term": "digitalWrite",
+      "explanation": "특정 핀에 전기를 켜거나 끄는 명령어예요. 스위치를 올리고 내리는 것과 같아요."
+    },
+    {
+      "term": "active LOW",
+      "explanation": "보통은 HIGH(높음)가 켜는 것 같지만, 이 LED는 반대로 LOW(낮음)일 때 켜져요. 마치 어떤 버튼은 누를 때 꺼지는 것처럼요!"
+    },
+    {
+      "term": "delay(10000)",
+      "explanation": "10000밀리초, 즉 10초 동안 아무것도 안 하고 기다리는 명령이에요. 잠깐 멈춰 있는 거예요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "digitalWrite(LED_RED, LOW);",
+      "comment": "빨간 LED 핀에 LOW(낮은 전기)를 보내서 LED를 켜요. 이 LED는 active LOW 방식이라 LOW일 때 불이 들어와요!"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "digitalWrite(LED_RED, HIGH)로 바꿔서 LED가 꺼지는 것도 확인해보세요!"
+    },
+    {
+      "reason": "delay(1000)을 추가하고 HIGH와 LOW를 번갈아 써서 LED를 깜빡이게 만들어 보세요 — 이걸 '블링크(Blink)'라고 해요!"
+    },
+    {
+      "reason": "다른 색 LED(파란색, 초록색)도 같은 방법으로 켜볼 수 있어요. 핀 이름만 바꾸면 돼요!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 빨간 LED를 켜는 명령어는 무엇인가요?",
+    "options": [
+      "digitalWrite(LED_RED, HIGH)",
+      "digitalWrite(LED_RED, LOW)",
+      "initHardware()",
+      "delay(10000)"
+    ],
+    "answer": 1,
+    "explanation": "이 LED는 'active LOW' 방식이에요. 그래서 LOW를 보낼 때 LED가 켜져요. HIGH를 보내면 오히려 꺼진답니다!"
+  }
+}

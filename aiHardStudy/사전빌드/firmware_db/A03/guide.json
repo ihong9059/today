@@ -1,0 +1,62 @@
+{
+  "result_description": "노란 LED가 켜집니다.",
+  "what_happens": [
+    "아두이노가 시작되면 setup() 함수가 실행됩니다.",
+    "LED_YELLOW 핀에 LOW 신호를 보내서 노란 LED를 켭니다.",
+    "그 다음 loop()에서 10초마다 쉬면서 LED가 계속 켜진 상태를 유지합니다."
+  ],
+  "concepts": [
+    {
+      "term": "digitalWrite",
+      "explanation": "아두이노 핀에 전기를 보내거나 끊는 명령어예요. 전등 스위치처럼 켜고 끄는 역할을 해요."
+    },
+    {
+      "term": "LOW",
+      "explanation": "전기 신호를 낮게(0) 만드는 값이에요. 이 LED는 특별히 LOW일 때 불이 켜져요. 이런 방식을 'active LOW'라고 해요."
+    },
+    {
+      "term": "setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번만 실행되는 함수예요. 준비 운동처럼 처음 설정을 하는 곳이에요."
+    },
+    {
+      "term": "loop()",
+      "explanation": "setup() 다음에 계속 반복 실행되는 함수예요. 심장이 계속 뛰는 것처럼 아두이노가 살아있는 동안 멈추지 않아요."
+    },
+    {
+      "term": "delay(10000)",
+      "explanation": "아두이노를 10000밀리초, 즉 10초 동안 기다리게 하는 명령어예요. 아무것도 안 하고 잠깐 쉬는 거예요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "digitalWrite(LED_YELLOW, LOW);",
+      "comment": "노란 LED 핀에 LOW 신호를 보내서 불을 켜는 핵심 코드예요."
+    },
+    {
+      "line": "delay(10000);",
+      "comment": "10초 동안 기다리면서 LED가 꺼지지 않도록 유지해요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "LED를 1초마다 깜빡이게 해보세요! digitalWrite(LED_YELLOW, HIGH)로 끄고 delay(1000), 다시 LOW로 켜고 delay(1000)을 반복하면 돼요."
+    },
+    {
+      "reason": "빨간 LED나 초록 LED도 켜보세요. LED_RED, LED_GREEN처럼 다른 핀 이름을 사용해봐요."
+    },
+    {
+      "reason": "여러 LED를 동시에 켜거나 순서대로 켜는 신호등을 만들어 보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 노란 LED를 켜려면 어떤 신호를 보내야 할까요?",
+    "options": [
+      "HIGH",
+      "LOW",
+      "MEDIUM",
+      "BLINK"
+    ],
+    "answer": 1,
+    "explanation": "이 LED는 'active LOW' 방식이라서 LOW 신호를 받을 때 불이 켜져요. 보통 LED와 반대라서 헷갈릴 수 있지만, 코드 주석에 힌트가 적혀 있었어요!"
+  }
+}

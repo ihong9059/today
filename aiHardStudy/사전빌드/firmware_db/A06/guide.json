@@ -1,0 +1,66 @@
+{
+  "result_description": "빨간 LED가 0.5초마다 반복해서 빠르게 켜졌다 꺼졌다 깜빡입니다.",
+  "what_happens": [
+    "아두이노가 시작되면 빨간 LED를 깜빡이는 임무(태스크)를 만들어요",
+    "LED가 켜지고 0.25초 기다린 뒤, 꺼지고 또 0.25초 기다려요",
+    "이 동작을 멈추지 않고 계속 반복해서 0.5초마다 깜빡이는 것처럼 보여요"
+  ],
+  "concepts": [
+    {
+      "term": "digitalWrite",
+      "explanation": "핀에 전기를 넣거나 끄는 명령이에요. LOW는 전기를 넣어서 LED를 켜고, HIGH는 전기를 끊어서 LED를 꺼요."
+    },
+    {
+      "term": "delay",
+      "explanation": "아두이노를 잠깐 기다리게 하는 명령이에요. delay(250)은 250밀리초, 즉 0.25초 동안 기다려요."
+    },
+    {
+      "term": "while(true)",
+      "explanation": "조건이 항상 참이라서 그 안의 명령을 영원히 반복해요. LED가 계속 깜빡이는 이유가 바로 이것 때문이에요."
+    },
+    {
+      "term": "xTaskCreate (태스크)",
+      "explanation": "아두이노에게 '이 일을 따로 맡아서 해줘'라고 부탁하는 거예요. 여러 일을 동시에 할 수 있게 도와줘요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "digitalWrite(LED_RED, LOW);",
+      "comment": "빨간 LED 핀에 전기를 넣어서 LED를 켜요"
+    },
+    {
+      "line": "delay(250);",
+      "comment": "0.25초 동안 기다려요. 켜기와 끄기 각각 0.25초씩 기다리면 합쳐서 0.5초가 돼요"
+    },
+    {
+      "line": "while (true) { ... }",
+      "comment": "안에 있는 켜기-끄기 동작을 끝없이 반복해요"
+    },
+    {
+      "line": "xTaskCreate(ledTask, \"ledTask\", 2048, NULL, 1, NULL);",
+      "comment": "LED 깜빡임 임무를 독립적으로 실행하도록 등록해요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "delay 숫자를 500으로 바꿔보세요. LED가 더 느리게 깜빡이는 걸 확인할 수 있어요!"
+    },
+    {
+      "reason": "LED_RED 대신 LED_BLUE나 LED_GREEN으로 바꿔서 다른 색 LED도 깜빡여 보세요."
+    },
+    {
+      "reason": "두 개의 xTaskCreate를 만들어서 빨간 LED와 파란 LED가 동시에 각각 다른 속도로 깜빡이게 해보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 LED가 1초에 몇 번 깜빡일까요?",
+    "options": [
+      "1번",
+      "2번",
+      "4번",
+      "8번"
+    ],
+    "answer": 1,
+    "explanation": "켜지는 데 0.25초, 꺼지는 데 0.25초, 합치면 0.5초에 한 번 깜빡여요. 1초에는 2번 깜빡이게 됩니다!"
+  }
+}

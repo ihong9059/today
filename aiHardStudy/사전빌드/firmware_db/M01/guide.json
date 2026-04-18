@@ -1,0 +1,62 @@
+{
+  "result_description": "OLED 화면에 '빨강!'이라는 글자가 나타나고, 빨간 LED가 켜집니다.",
+  "what_happens": [
+    "아두이노가 켜지면서 화면과 LED 준비를 합니다",
+    "OLED 화면에 '빨강!'이라는 글자가 표시됩니다",
+    "빨간 LED에 전기가 흘러 불이 켜집니다"
+  ],
+  "concepts": [
+    {
+      "term": "OLED",
+      "explanation": "스마트워치처럼 작고 얇은 화면이에요. 글자나 그림을 표시할 수 있어요."
+    },
+    {
+      "term": "digitalWrite",
+      "explanation": "핀에 전기를 넣거나 끊는 명령이에요. LOW는 전기를 흘려보내는 것이고, HIGH는 막는 거예요."
+    },
+    {
+      "term": "active LOW (반대로 동작)",
+      "explanation": "보통 켜려면 HIGH를 쓰지만, 이 LED는 반대로 LOW를 써야 켜져요. 마치 어떤 버튼은 눌러야 꺼지는 것처럼요!"
+    },
+    {
+      "term": "setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번만 실행되는 준비 구역이에요. 교실에서 수업 전 준비하는 것과 같아요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "oled.drawString(0, 0, \"빨강!\");",
+      "comment": "OLED 화면의 왼쪽 맨 위(0, 0) 위치에 '빨강!'이라는 글자를 써요"
+    },
+    {
+      "line": "oled.display();",
+      "comment": "준비한 글자를 실제로 화면에 보여줘요. 이 명령 없이는 아무것도 안 보여요!"
+    },
+    {
+      "line": "digitalWrite(LED_RED, LOW);",
+      "comment": "빨간 LED 핀에 LOW 신호를 보내서 빨간 불을 켜요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "oled.drawString의 숫자를 바꿔서 글자 위치를 옮겨보세요! (예: 10, 20)"
+    },
+    {
+      "reason": "'빨강!'을 '안녕!'이나 내 이름으로 바꿔서 나만의 화면을 만들어 보세요"
+    },
+    {
+      "reason": "digitalWrite(LED_RED, HIGH)로 바꾸면 어떻게 될지 실험해 보세요"
+    }
+  ],
+  "quiz": {
+    "question": "OLED 화면에 글자를 표시하려면 drawString 다음에 어떤 명령을 꼭 써야 할까요?",
+    "options": [
+      "oled.display()",
+      "oled.clear()",
+      "digitalWrite()",
+      "Serial.begin()"
+    ],
+    "answer": 0,
+    "explanation": "drawString은 글자를 '준비'만 하고, oled.display()를 호출해야 실제로 화면에 나타나요. 그림을 그린 다음 '공개' 버튼을 누르는 것과 같아요!"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-04-17T13:49:22.830815",
+  "total": 1,
+  "success": 1,
+  "failed": 0,
+  "elapsed_minutes": 4.8,
+  "results": [
+    {
+      "no": "A01",
+      "prompt": "빨간 LED 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 290.45804619789124,
+      "firmware_size": 650320,
+      "firmware_sha256": "afed80a49ff4732474b719f33e3a990f5cdb7891475e41b11f9dec9b42c84c57"
+    }
+  ]
+}

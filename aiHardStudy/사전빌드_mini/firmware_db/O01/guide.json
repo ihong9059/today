@@ -1,0 +1,74 @@
+{
+  "result_description": "스위치를 누르면 딩동 멜로디가 울리고, OLED 화면에 'VISITOR!'가 뜨며, 블루투스로 방문자 알림을 전송합니다.",
+  "what_happens": [
+    "스위치를 누르면 ESP32가 버튼 눌림을 감지합니다.",
+    "OLED 화면에 '** VISITOR! **'가 표시되고, 노란 LED가 3번 깜빡입니다.",
+    "딩동 멜로디가 2번 재생되고, 블루투스로 'VISITOR:BELL' 메시지를 스마트폰에 전송합니다."
+  ],
+  "concepts": [
+    {
+      "term": "디바운스(Debounce)",
+      "explanation": "버튼을 한 번 눌렀는데 여러 번 눌린 것처럼 인식되는 문제를 막기 위해 50ms(0.05초) 잠깐 기다리는 기술이에요. 마치 문을 한 번만 두드렸는데 여러 번 두드린 소리가 나지 않도록 하는 것과 같아요."
+    },
+    {
+      "term": "tone() 함수",
+      "explanation": "스피커에서 특정 높이의 소리를 내는 명령어예요. 숫자가 클수록 높은 소리가 나요. 880은 높은 '딩' 소리, 660은 낮은 '동' 소리를 만들어요."
+    },
+    {
+      "term": "xTaskCreate (태스크)",
+      "explanation": "여러 가지 일을 동시에 처리할 수 있게 해주는 기능이에요. 마치 요리사가 밥도 짓고 국도 끓이는 것처럼, ESP32가 멜로디, LED, BLE 전송을 동시에 처리할 수 있어요."
+    },
+    {
+      "term": "BLE 알림(notify)",
+      "explanation": "블루투스로 스마트폰에 메시지를 보내는 기능이에요. 집 현관에 누가 왔을 때 멀리 있어도 폰으로 알림을 받을 수 있어요."
+    },
+    {
+      "term": "OLED 디스플레이",
+      "explanation": "아주 작은 화면이에요. drawString 명령어로 화면 어디에 글자를 쓸지 위치(숫자)를 정해서 메시지를 표시할 수 있어요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "tone(2, 880, 200);",
+      "comment": "핀 2번 스피커에서 880Hz(높은 '딩' 소리)를 200ms 동안 재생해요."
+    },
+    {
+      "line": "if (cur == LOW && lastSwitch == HIGH && !bellActive)",
+      "comment": "버튼이 방금 막 눌렸을 때(HIGH→LOW 변화)만 벨이 울리도록 조건을 확인해요. 중복 실행을 막아줘요."
+    },
+    {
+      "line": "xTaskCreate(bellTask, \"bell\", 4096, NULL, 1, NULL);",
+      "comment": "멜로디+LED+BLE를 동시에 처리하는 '벨 태스크'를 새로 만들어 실행해요."
+    },
+    {
+      "line": "sensorChar->notify();",
+      "comment": "블루투스로 연결된 스마트폰에 'VISITOR:BELL' 메시지를 즉시 전송해요."
+    },
+    {
+      "line": "delay(50);",
+      "comment": "loop()에서 50ms마다 버튼 상태를 확인해서 버튼 떨림(디바운스) 문제를 해결해요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "멜로디를 바꿔보세요! tone()의 숫자(주파수)를 바꾸면 '학교종이 땡땡땡' 같은 나만의 벨소리를 만들 수 있어요."
+    },
+    {
+      "reason": "OLED에 방문자가 온 시간(몇 번째 방문인지 카운트)을 함께 표시해보세요. 변수 하나만 추가하면 돼요!"
+    },
+    {
+      "reason": "BLE로 'RING' 명령을 받으면 원격으로 벨을 울릴 수 있어요. 스마트폰 앱에서 버튼을 눌러 직접 테스트해보세요."
+    }
+  ],
+  "quiz": {
+    "question": "이 현관벨 코드에서 버튼을 눌렀을 때 일어나는 순서로 올바른 것은 무엇일까요?",
+    "options": [
+      "BLE 전송 → 멜로디 → OLED 표시 → LED 점멸",
+      "OLED 표시 → LED 점멸 → 멜로디 → BLE 전송",
+      "멜로디 → BLE 전송 → LED 점멸 → OLED 표시",
+      "LED 점멸 → 멜로디 → OLED 표시 → BLE 전송"
+    ],
+    "answer": 1,
+    "explanation": "bellTask() 함수 순서대로 ① showVisitor()로 OLED에 방문자 표시 → ② LED 노란색 3번 점멸 → ③ playDingDong() 멜로디 2회 재생 → ④ sensorChar->notify()로 BLE 전송 순으로 실행돼요!"
+  }
+}

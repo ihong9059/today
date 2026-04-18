@@ -1,0 +1,74 @@
+{
+  "result_description": "스위치를 누를 때마다 학교종, 작은별, 생일축하 3곡이 순서대로 재생되고, 노래마다 LED 색이 바뀌며 OLED 화면에 곡 이름이 표시됩니다.",
+  "what_happens": [
+    "스위치를 누르면 현재 곡 번호(currentSong)를 확인하고 playSong() 함수가 실행됩니다.",
+    "playSong()이 LED 색을 바꾸고 OLED에 곡 이름을 표시한 뒤, 음표 배열을 순서대로 tone()으로 소리 냅니다.",
+    "곡이 끝나면 currentSong이 0→1→2→0 순서로 바뀌어 다음 스위치 입력을 기다립니다."
+  ],
+  "concepts": [
+    {
+      "term": "배열(Array)",
+      "explanation": "여러 개의 음표나 박자를 순서대로 줄 세워 저장하는 상자입니다. mel1[], dur1[] 처럼 대괄호 안에 번호로 꺼내 씁니다."
+    },
+    {
+      "term": "tone() 함수",
+      "explanation": "스피커에서 소리를 내는 명령입니다. 괄호 안에 핀 번호와 주파수(높이)를 넣으면 그 높이의 소리가 납니다."
+    },
+    {
+      "term": "나머지 연산자(%)",
+      "explanation": "숫자를 나눈 나머지를 구합니다. (currentSong + 1) % 3 은 0, 1, 2 다음 다시 0으로 돌아오게 해서 곡을 순환시킵니다."
+    },
+    {
+      "term": "디바운스(Debounce)",
+      "explanation": "버튼을 한 번 눌러도 여러 번 눌린 것처럼 인식되는 문제를 막습니다. 250ms 안에 들어온 신호는 무시해서 딱 한 번만 동작하게 합니다."
+    },
+    {
+      "term": "포인터(*)",
+      "explanation": "mel과 dur 앞에 붙은 * 기호입니다. 배열을 직접 복사하지 않고 '위치'를 알려줘서 3곡 중 어떤 곡이든 같은 함수로 재생할 수 있게 합니다."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "currentSong = (currentSong + 1) % 3;",
+      "comment": "곡 번호를 1씩 올리되, 3이 되면 다시 0으로 돌아오게 합니다. 3곡이 끝없이 순환됩니다."
+    },
+    {
+      "line": "tone(2, mel[i], dur[i]);",
+      "comment": "2번 핀 스피커에서 mel[i] 주파수(음 높이)로 dur[i] 밀리초 동안 소리를 냅니다."
+    },
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(255, 0, 0));",
+      "comment": "첫 번째 LED를 빨간색으로 켭니다. 숫자 3개는 빨강, 초록, 파랑의 밝기(0~255)입니다."
+    },
+    {
+      "line": "oled.drawString(0, 16, name);",
+      "comment": "OLED 화면의 x=0, y=16 위치에 곡 이름 문자열을 출력합니다."
+    },
+    {
+      "line": "if (now - lastDebounce > DEBOUNCE_MS)",
+      "comment": "마지막으로 버튼이 눌린 시간으로부터 250ms가 지났을 때만 버튼 입력을 인정합니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "곡을 4번째로 추가해보세요. mel4[], dur4[] 배열을 만들고 % 3을 % 4로 바꾸면 됩니다."
+    },
+    {
+      "reason": "각 곡마다 LED가 천천히 깜빡이도록 playSong() 안에서 pixel.setPixelColor를 음표마다 켜고 끄는 코드를 넣어보세요."
+    },
+    {
+      "reason": "곡이 재생 중일 때 스위치를 누르면 멈추는 기능을 추가해보세요. 재생 반복문 안에서 digitalRead로 스위치를 매 음표마다 확인하면 됩니다."
+    }
+  ],
+  "quiz": {
+    "question": "스위치를 3번 누르면 currentSong 값은 얼마가 될까요?",
+    "options": [
+      "3",
+      "2",
+      "0",
+      "1"
+    ],
+    "answer": 2,
+    "explanation": "처음 currentSong은 0입니다. 한 번 누르면 1, 두 번 누르면 2, 세 번 누르면 (2+1)%3 = 0이 됩니다. 즉 다시 처음 곡(학교종)으로 돌아옵니다."
+  }
+}

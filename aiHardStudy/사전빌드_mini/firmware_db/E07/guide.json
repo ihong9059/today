@@ -1,0 +1,70 @@
+{
+  "result_description": "ESP32 보드에서 버튼을 누르면 초기화되는 초시계가 OLED 화면에 분:초.밀리초 형식으로 표시됩니다.",
+  "what_happens": [
+    "보드가 켜지면 millis()로 시작 시간을 기록하고 OLED에 '00:00.000'을 표시합니다.",
+    "loop()가 반복될 때마다 현재 시간에서 시작 시간을 빼서 경과 시간을 계산하고 화면을 새로 그립니다.",
+    "GPIO5 버튼을 누르면 startTime이 현재 시간으로 바뀌어 초시계가 0부터 다시 시작합니다."
+  ],
+  "concepts": [
+    {
+      "term": "millis()",
+      "explanation": "보드가 켜진 순간부터 지금까지 흐른 시간을 1000분의 1초(밀리초) 단위로 알려주는 함수예요. 마치 스톱워치의 숫자가 계속 올라가는 것과 같아요."
+    },
+    {
+      "term": "unsigned long",
+      "explanation": "아주 큰 양의 정수를 담는 변수 종류예요. millis()가 돌려주는 시간 값은 엄청 큰 숫자가 될 수 있어서 이 큰 그릇이 필요해요."
+    },
+    {
+      "term": "snprintf",
+      "explanation": "숫자를 '02:35.127' 같은 보기 좋은 글자 모양으로 바꿔서 char 배열(문자 상자)에 담아주는 함수예요. 마치 숫자를 예쁜 명찰로 만들어주는 것과 같아요."
+    },
+    {
+      "term": "나머지 연산자 %",
+      "explanation": "나누고 남은 나머지를 구하는 기호예요. 예를 들어 75초를 60으로 나누면 나머지가 15이니까, 1분 15초라는 걸 알 수 있어요."
+    },
+    {
+      "term": "디바운스(delay)",
+      "explanation": "버튼을 한 번 눌렀는데 여러 번 눌린 것처럼 인식되는 걸 막기 위해 잠깐 기다리는 것이에요. 버튼이 스스로 떨리는 시간을 무시하는 거예요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "unsigned long elapsed = millis() - startTime;",
+      "comment": "지금 시각에서 시작 시각을 빼서 초시계가 얼마나 흘렀는지 계산해요."
+    },
+    {
+      "line": "snprintf(timeStr, sizeof(timeStr), \"%02lu:%02lu.%03lu\", min, sec, ms);",
+      "comment": "분, 초, 밀리초 숫자를 '01:23.456' 형태의 글자로 만들어 timeStr 배열에 저장해요."
+    },
+    {
+      "line": "oled.drawString(0, 16, timeStr);",
+      "comment": "만들어진 시간 글자를 OLED 화면의 왼쪽 두 번째 줄에 그려요."
+    },
+    {
+      "line": "if (digitalRead(SWITCH_PIN) == LOW) { startTime = millis(); }",
+      "comment": "버튼이 눌리면 시작 시간을 지금으로 바꿔서 초시계를 0으로 리셋해요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "버튼을 한 번 누르면 일시정지, 다시 누르면 재개되는 기능을 추가해보세요. boolean 변수로 '실행 중인지 아닌지' 상태를 기억하면 돼요."
+    },
+    {
+      "reason": "경과 시간이 10초를 넘으면 OLED 글자 크기나 색(색 OLED인 경우)을 바꿔서 경고처럼 표시해보세요."
+    },
+    {
+      "reason": "랩 타임 기능을 만들어 보세요. 버튼을 누를 때마다 그 시각을 Serial Monitor에 출력하면 돼요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 초시계의 '초' 값을 올바르게 계산하는 코드는 무엇인가요?",
+    "options": [
+      "unsigned long sec = elapsed / 1000;",
+      "unsigned long sec = (elapsed / 1000) % 60;",
+      "unsigned long sec = elapsed % 60;",
+      "unsigned long sec = elapsed - 1000;"
+    ],
+    "answer": 1,
+    "explanation": "elapsed를 1000으로 나누면 전체 초가 나와요. 그런데 초는 0~59까지만 표시해야 하니까 % 60을 해서 60을 넘으면 다시 0부터 시작하도록 나머지를 구해야 해요."
+  }
+}

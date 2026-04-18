@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 10072
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"4db98bc3-00bc-4558-98a1-b0377d0359f4","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"2cb6e33d-bbb0-43d9-98e4-ccd939d34d5f","session_id":"6b293caa-8774-4ddf-8f6b-bbab365871ce"}
+{"type":"system","subtype":"hook_response","hook_id":"4db98bc3-00bc-4558-98a1-b0377d0359f4","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"c3920fa1-41cd-476a-ab21-8e337cda6e35","session_id":"6b293caa-8774-4ddf-8f6b-bbab365871ce"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\5379ee45","session_id":"6b293caa-8774-4ddf-8f6b-bbab365871ce","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:fast","gsd:list-workspaces","gsd:add-todo","gsd:cleanup","gsd:workstreams","gsd:list-phase-assumptions","gsd:join-discord","gsd:insert-phase","gsd:help","gsd:health","gsd:forensics","gsd:discuss-phase","gsd:debug","gsd:complete-milestone","gsd:do","gsd:execute-phase","gsd:reapply-patches","gsd:quick","gsd:prog

@@ -1,0 +1,3 @@
+entered generate_code_with_claude
+prompt: OLED에 글자 표시
+work_dir: C:\todo\today\aiHardStudy\cloud\jobs\04eee667

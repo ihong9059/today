@@ -1,0 +1,66 @@
+{
+  "result_description": "온도를 재서 25도 이하면 파란 LED, 25도보다 높으면 빨간 LED가 켜지는 온도 신호등이에요.",
+  "what_happens": [
+    "AHT20 센서가 지금 온도를 잽니다",
+    "온도가 25도 이하면 파란 LED가 켜지고 빨간 LED는 꺼집니다",
+    "온도가 25도보다 높으면 빨간 LED가 켜지고 OLED 화면에 결과가 표시된 뒤 10초 기다립니다"
+  ],
+  "concepts": [
+    {
+      "term": "임계값(Threshold)",
+      "explanation": "기준이 되는 값이에요. 여기서는 25도가 기준이고, 이 기준보다 낮은지 높은지에 따라 다른 LED가 켜져요."
+    },
+    {
+      "term": "if-else (만약 ~ 아니면)",
+      "explanation": "조건에 따라 다른 일을 하도록 선택하는 명령이에요. '만약 춥다면 파란 불, 아니면 빨간 불'처럼 사용해요."
+    },
+    {
+      "term": "digitalWrite",
+      "explanation": "핀에 전기를 켜거나(HIGH) 끄는(LOW) 명령이에요. LOW가 LED를 켜는 이유는 회로가 반대로 연결되어 있기 때문이에요."
+    },
+    {
+      "term": "delay(10000)",
+      "explanation": "10000밀리초, 즉 10초 동안 아무것도 안 하고 기다리라는 명령이에요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "#define TEMP_THRESHOLD 25.0",
+      "comment": "기준 온도를 25도로 정해요. 이 숫자를 바꾸면 기준 온도를 쉽게 바꿀 수 있어요."
+    },
+    {
+      "line": "if (temp <= TEMP_THRESHOLD)",
+      "comment": "온도가 25도 이하인지 확인해요. 맞으면 아래 파란 LED 코드를 실행해요."
+    },
+    {
+      "line": "digitalWrite(LED_BLUE, LOW);",
+      "comment": "파란 LED를 켜요. LOW가 켜는 신호인 이유는 이 회로는 GND쪽으로 전류가 흐르기 때문이에요."
+    },
+    {
+      "line": "oled.drawString(0, 32, temp <= TEMP_THRESHOLD ? \"=> BLUE LED\" : \"=> RED LED\");",
+      "comment": "OLED 화면에 어떤 LED가 켜졌는지 글자로 보여줘요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "기준 온도를 30도로 바꿔보세요! #define TEMP_THRESHOLD 30.0 으로 수정하면 돼요."
+    },
+    {
+      "reason": "경고 온도 구간을 추가해보세요. 예를 들어 20도 이하면 파란 불, 20~30도면 초록 불, 30도 초과면 빨간 불처럼 3단계로 만들 수 있어요."
+    },
+    {
+      "reason": "delay 값을 바꿔서 측정 간격을 5초(5000) 또는 1초(1000)로 조절해보세요."
+    }
+  ],
+  "quiz": {
+    "question": "온도가 27도일 때 어떤 LED가 켜질까요?",
+    "options": [
+      "파란 LED",
+      "빨간 LED",
+      "파란 LED와 빨간 LED 동시에",
+      "LED가 꺼진다"
+    ],
+    "answer": 1,
+    "explanation": "27도는 기준인 25도보다 높기 때문에 빨간 LED가 켜져요. if (temp <= 25.0) 조건이 거짓(false)이 되어 else 쪽 코드가 실행되거든요!"
+  }
+}

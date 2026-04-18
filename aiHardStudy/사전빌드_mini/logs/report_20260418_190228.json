@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-04-18T19:02:28.511536",
+  "total": 10,
+  "success": 10,
+  "failed": 0,
+  "elapsed_minutes": 14.6,
+  "results": [
+    {
+      "no": "A01",
+      "prompt": "RGB LED 빨간색으로 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 271.88820362091064,
+      "firmware_size": 624528,
+      "firmware_sha256": "f3e3984b8225936ccd18f853040ef584aaf83fe93e00f9042beabeec905a13eb"
+    },
+    {
+      "no": "A02",
+      "prompt": "RGB LED 초록색으로 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 63.10418629646301,
+      "firmware_size": 624528,
+      "firmware_sha256": "f49217b40bd6f3209784ae352f8e45a41cd93b23308949203dc614670fac428f"
+    },
+    {
+      "no": "A03",
+      "prompt": "RGB LED 파란색으로 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 57.65084958076477,
+      "firmware_size": 624528,
+      "firmware_sha256": "13b46a48f49ba8fd0eca8d02b537655354993c1a4a9df4d1f85857f3e73f9d3f"
+    },
+    {
+      "no": "A04",
+      "prompt": "RGB LED 노란색으로 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 59.37060356140137,
+      "firmware_size": 624528,
+      "firmware_sha256": "9dd0b25d03c73d23520612745465333c8538f8f6977dc869e6d6f6336c4c3fff"
+    },
+    {
+      "no": "A05",
+      "prompt": "RGB LED 빨간색으로 1초마다 깜빡이기",
+      "success": true,
+      "error": "",
+      "elapsed": 69.1342134475708,
+      "firmware_size": 624560,
+      "firmware_sha256": "c1bf6ab90b0d52b623adf71301098af93d618568f08caba0d2b6eab0283670f8"
+    },
+    {
+      "no": "A06",
+      "prompt": "RGB LED 무지개 색상 순환하기 (빨→주→노→초→파→남→보)",
+      "success": true,
+      "error": "",
+      "elapsed": 84.74177384376526,
+      "firmware_size": 624896,
+      "firmware_sha256": "b072c01ea5c85663bb52edcee928af7345d9725cf015f49d1c8b4ce790515ad6"
+    },
+    {
+      "no": "A07",
+      "prompt": "RGB LED 흰색으로 켜기",
+      "success": true,
+      "error": "",
+      "elapsed": 67.87041234970093,
+      "firmware_size": 624528,
+      "firmware_sha256": "ee829ce06437ba8a7ea719144c5c357fd9d4fc5427a2d69a7b6943e53c142e5d"
+    },
+    {
+      "no": "A08",
+      "prompt": "RGB LED 끄기",
+      "success": true,
+      "error": "",
+      "elapsed": 64.67288327217102,
+      "firmware_size": 624512,
+      "firmware_sha256": "c75d79e499ac855407aafba7efd6b756f3be35cabbf0169017f8569abae9440c"
+    },
+    {
+      "no": "A09",
+      "prompt": "RGB LED 빨간색 5번 깜빡이고 멈추기",
+      "success": true,
+      "error": "",
+      "elapsed": 61.23731565475464,
+      "firmware_size": 624576,
+      "firmware_sha256": "5958ee267d463e5885a469592049990674c00101cf6aa4a5cdd96bce07028c9a"
+    },
+    {
+      "no": "A10",
+      "prompt": "RGB LED 천천히 밝아졌다 어두워지기 반복 (빨간색 숨쉬기 효과)",
+      "success": true,
+      "error": "",
+      "elapsed": 74.72492718696594,
+      "firmware_size": 624640,
+      "firmware_sha256": "34640eb8ed9af6d94cd6b6a936496d6030cdf772431f90f69bdb59f6f12bbe11"
+    }
+  ]
+}

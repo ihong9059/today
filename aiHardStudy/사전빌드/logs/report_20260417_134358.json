@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-04-17T13:43:58.603543",
+  "total": 1,
+  "success": 0,
+  "failed": 1,
+  "elapsed_minutes": 0.6,
+  "results": [
+    {
+      "no": "A01",
+      "prompt": "빨간 LED 켜기",
+      "success": false,
+      "error": "Build failed:\nCan't open sketch: main file missing from sketch: C:\\todo\\today\\aiHardStudy\\사전빌드\\build_work\\build_work.ino\n",
+      "elapsed": 37.05102467536926
+    }
+  ]
+}

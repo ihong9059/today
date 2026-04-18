@@ -1,0 +1,74 @@
+{
+  "result_description": "빨강→노랑→파랑→노랑 순서로 LED가 번갈아 켜지며 무한 반복됩니다.",
+  "what_happens": [
+    "빨강 LED가 켜지고 0.5초 후 꺼집니다.",
+    "노랑 → 파랑 → 노랑 순서로 LED가 차례차례 켜졌다 꺼집니다.",
+    "마지막 노랑까지 끝나면 처음으로 돌아가 계속 반복됩니다."
+  ],
+  "concepts": [
+    {
+      "term": "배열(Array)",
+      "explanation": "여러 개의 값을 한 줄로 나란히 저장하는 상자예요. 예를 들어 '빨강, 노랑, 파랑, 노랑'을 순서대로 담아두고 하나씩 꺼내 씁니다."
+    },
+    {
+      "term": "반복문(for/while)",
+      "explanation": "같은 일을 여러 번 반복시키는 명령이에요. for는 횟수를 정해서 반복하고, while(true)는 멈추지 않고 영원히 반복합니다."
+    },
+    {
+      "term": "태스크(Task)",
+      "explanation": "컴퓨터가 동시에 여러 일을 할 수 있도록 나눈 작업 단위예요. LED 깜빡이는 일을 따로 맡은 직원 같은 거예요."
+    },
+    {
+      "term": "delay()",
+      "explanation": "아두이노에게 잠깐 기다리라고 하는 명령이에요. delay(500)은 0.5초 동안 기다리라는 뜻입니다."
+    },
+    {
+      "term": "digitalWrite()",
+      "explanation": "핀에 전기를 켜거나(LOW) 끄는(HIGH) 명령이에요. LOW면 LED가 켜지고, HIGH면 꺼집니다."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "const int pins[] = {LED_RED, LED_YELLOW, LED_BLUE, LED_YELLOW};",
+      "comment": "LED가 켜질 순서를 배열에 담아둡니다. 빨강→노랑→파랑→노랑 순서예요."
+    },
+    {
+      "line": "for (int i = 0; i < count; i++)",
+      "comment": "배열 속 LED를 처음(0번)부터 끝(3번)까지 하나씩 차례로 꺼냅니다."
+    },
+    {
+      "line": "digitalWrite(LED_RED, (pins[i] == LED_RED) ? LOW : HIGH);",
+      "comment": "지금 차례가 빨강이면 켜고(LOW), 아니면 끕니다(HIGH). 항상 딱 한 개만 켜져 있어요."
+    },
+    {
+      "line": "delay(500);",
+      "comment": "LED 하나가 0.5초 동안 켜진 뒤 다음으로 넘어갑니다."
+    },
+    {
+      "line": "xTaskCreate(ledCycleTask, \"ledCycle\", 2048, NULL, 1, NULL);",
+      "comment": "LED 깜빡이는 일을 독립된 태스크(직원)로 만들어 백그라운드에서 계속 실행합니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "delay 숫자를 바꿔보세요! 200으로 줄이면 더 빠르게, 1000으로 늘리면 더 느리게 바뀌는 걸 확인할 수 있어요."
+    },
+    {
+      "reason": "배열에 LED를 더 추가해보세요. {LED_RED, LED_YELLOW, LED_BLUE, LED_RED, LED_BLUE} 처럼 새로운 패턴을 만들어봐요!"
+    },
+    {
+      "reason": "파랑에서 빨강 방향으로도 돌아오게 해서 진짜 '왕복' 패턴을 만들어 보세요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 LED가 켜지는 순서로 올바른 것은 무엇인가요?",
+    "options": [
+      "빨강 → 노랑 → 파랑 → 노랑",
+      "빨강 → 파랑 → 노랑 → 빨강",
+      "노랑 → 빨강 → 파랑 → 노랑",
+      "파랑 → 노랑 → 빨강 → 노랑"
+    ],
+    "answer": 0,
+    "explanation": "배열 pins[]에 {LED_RED, LED_YELLOW, LED_BLUE, LED_YELLOW} 순서로 저장되어 있어서, for문이 0번부터 차례로 꺼내 실행하면 빨강→노랑→파랑→노랑 순서가 됩니다."
+  }
+}

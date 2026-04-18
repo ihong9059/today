@@ -1,0 +1,70 @@
+{
+  "result_description": "스마트폰에서 BLE로 명령을 보내면 ESP32가 학교종 또는 생일축하 멜로디를 연주하고, 연주 상태를 다시 스마트폰에 알려줍니다.",
+  "what_happens": [
+    "스마트폰 앱에서 'MELODY:학교종' 또는 'MELODY:생일' 문자를 BLE로 전송합니다.",
+    "ESP32가 명령을 받으면 LED를 켜고, 해당 멜로디의 음표를 하나씩 buzzer(33번 핀)로 연주합니다.",
+    "연주가 끝나면 LED를 끄고, 'DONE:학교종' 또는 'DONE:생일' 메시지를 BLE로 스마트폰에 돌려보냅니다."
+  ],
+  "concepts": [
+    {
+      "term": "음계 주파수 (NOTE_C4, NOTE_G4 등)",
+      "explanation": "소리는 공기가 떨리는 속도(주파수)로 높낮이가 결정돼요. 예를 들어 '도(C4)'는 1초에 262번 떨리는 소리예요. 숫자가 클수록 더 높은 소리가 납니다."
+    },
+    {
+      "term": "tone() 함수",
+      "explanation": "아두이노가 buzzer에게 '이 주파수로 이 시간만큼 소리 내!' 라고 명령하는 함수예요. 피아노 건반을 누르는 것과 같아요."
+    },
+    {
+      "term": "volatile bool (재생 플래그)",
+      "explanation": "다른 곳(BLE 수신)에서 값을 바꿀 수 있다고 알려주는 신호등 변수예요. true면 '연주해!', false면 '멈춰!'를 의미해요."
+    },
+    {
+      "term": "FreeRTOS 태스크 (xTaskCreate)",
+      "explanation": "ESP32가 여러 일을 동시에 할 수 있도록 '별도의 일꾼'을 만드는 방법이에요. 멜로디 재생이 끝날 때까지 기다리는 동안 BLE는 계속 명령을 받을 수 있어요."
+    },
+    {
+      "term": "BLE notify (sensorChar->notify())",
+      "explanation": "ESP32가 스마트폰에게 '지금 이런 상태야!' 라고 먼저 알려주는 기능이에요. 스마트폰이 물어보지 않아도 자동으로 알림이 가요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "tone(33, schoolNotes[i], schoolDurations[i]);",
+      "comment": "33번 핀에 연결된 buzzer로 i번째 음표를 해당 길이만큼 소리 냅니다."
+    },
+    {
+      "line": "delay(schoolDurations[i] + 50);",
+      "comment": "음표 길이만큼 기다린 뒤 50ms를 더 쉬어서, 음표 사이에 자연스러운 간격을 만들어요."
+    },
+    {
+      "line": "bleSendStatus(\"PLAYING:학교종\");",
+      "comment": "연주가 시작됐다는 사실을 BLE로 스마트폰에 바로 알려줍니다."
+    },
+    {
+      "line": "xTaskCreate(melodyTask, \"melodyTask\", 4096, NULL, 1, NULL);",
+      "comment": "멜로디 재생 전담 일꾼(태스크)을 만들어, BLE 수신과 멜로디 재생이 동시에 돌아가게 합니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "새 멜로디(예: '나비야', '반짝반짝')의 음표 배열을 추가하고, 'MELODY:나비야' 명령으로 연주해 보세요!"
+    },
+    {
+      "reason": "연주 중에 다른 명령이 오면 현재 멜로디를 멈추고 새 멜로디로 바꾸는 '중단 기능'을 만들어 보세요."
+    },
+    {
+      "reason": "OLED 화면에 현재 연주 중인 곡 이름과 몇 번째 음표인지 표시해 보세요."
+    }
+  ],
+  "quiz": {
+    "question": "스마트폰에서 'MELODY:생일'을 보냈을 때 ESP32가 가장 먼저 하는 일은 무엇인가요?",
+    "options": [
+      "buzzer로 첫 번째 음표를 바로 연주한다",
+      "BLE로 'PLAYING:생일' 상태 메시지를 스마트폰에 보낸다",
+      "LED를 끈다",
+      "OLED 화면을 지운다"
+    ],
+    "answer": 1,
+    "explanation": "코드를 보면 연주 시작 전에 bleSendStatus(\"PLAYING:생일\")을 먼저 호출해요. 그 다음 LED를 켜고, 음표를 하나씩 연주합니다. 스마트폰이 '지금 재생 중'이라는 사실을 즉시 알 수 있도록 알림을 먼저 보내는 거예요!"
+  }
+}

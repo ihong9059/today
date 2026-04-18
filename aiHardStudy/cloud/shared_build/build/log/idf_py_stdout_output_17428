@@ -1,0 +1,40 @@
+Command: ninja all
+[1/9] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\todo\today\aiHardStudy\cloud\shared_build\build\bootloader\esp-idf\esptool_py && C:\Espressif\python_env\idf5.5_py3.13_env\Scripts\python.exe C:/Espressif/frameworks/esp-idf-v5.5.1/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 C:/todo/today/aiHardStudy/cloud/shared_build/build/bootloader/bootloader.bin"
+Bootloader binary size 0x66d0 bytes. 0x930 bytes (8%) free.
+[2/9] No install step for 'bootloader'
+[3/9] Completed 'bootloader'
+[4/9] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj
+In file included from C:/todo/today/aiHardStudy/cloud/shared_build/main/main.c:10:
+C:/todo/today/aiHardStudy/cloud/shared_build/main/ssd1306.h:9:9: warning: "SSD1306_H" redefined
+    9 | #define SSD1306_H       64
+      |         ^~~~~~~~~
+C:/todo/today/aiHardStudy/cloud/shared_build/main/ssd1306.h:2:9: note: this is the location of the previous definition
+    2 | #define SSD1306_H
+      |         ^~~~~~~~~
+C:/todo/today/aiHardStudy/cloud/shared_build/main/ssd1306.h:200:13: warning: 'ssd1306_draw_string' defined but not used [-Wunused-function]
+  200 | static void ssd1306_draw_string(int x, int y, const char *str)
+      |             ^~~~~~~~~~~~~~~~~~~
+C:/todo/today/aiHardStudy/cloud/shared_build/main/ssd1306.h:68:13: warning: 'ssd1306_draw_hbitmap' defined but not used [-Wunused-function]
+   68 | static void ssd1306_draw_hbitmap(int x, int y, int w, int h, const uint8_t *bitmap)
+      |             ^~~~~~~~~~~~~~~~~~~~
+C:/todo/today/aiHardStudy/cloud/shared_build/main/ssd1306.h:51:13: warning: 'ssd1306_flush' defined but not used [-Wunused-function]
+   51 | static void ssd1306_flush(i2c_port_t port)
+      |             ^~~~~~~~~~~~~
+C:/todo/today/aiHardStudy/cloud/shared_build/main/ssd1306.h:46:13: warning: 'ssd1306_clear' defined but not used [-Wunused-function]
+   46 | static void ssd1306_clear(void)
+      |             ^~~~~~~~~~~~~
+C:/todo/today/aiHardStudy/cloud/shared_build/main/ssd1306.h:21:13: warning: 'ssd1306_init' defined but not used [-Wunused-function]
+   21 | static void ssd1306_init(i2c_port_t port)
+      |             ^~~~~~~~~~~~
+[5/9] Linking C static library esp-idf\main\libmain.a
+[6/9] Generating esp-idf/esp_system/ld/sections.ld
+[7/9] Linking CXX executable ble_ota.elf
+[8/9] Generating binary image from built executable
+esptool.py v4.12.dev1
+Creating esp32 image...
+Merged 2 ELF sections
+Successfully created esp32 image.
+Generated C:/todo/today/aiHardStudy/cloud/shared_build/build/ble_ota.bin
+[9/9] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\todo\today\aiHardStudy\cloud\shared_build\build\esp-idf\esptool_py && C:\Espressif\python_env\idf5.5_py3.13_env\Scripts\python.exe C:/Espressif/frameworks/esp-idf-v5.5.1/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/todo/today/aiHardStudy/cloud/shared_build/build/partition_table/partition-table.bin C:/todo/today/aiHardStudy/cloud/shared_build/build/ble_ota.bin"
+ble_ota.bin binary size 0x70580 bytes. Smallest app partition is 0x180000 bytes. 0x10fa80 bytes (71%) free.

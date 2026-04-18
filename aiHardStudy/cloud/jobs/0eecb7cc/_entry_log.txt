@@ -1,0 +1,3 @@
+entered generate_code_with_claude
+prompt: oled에 uttec을 포시해주세요
+work_dir: C:\todo\today\aiHardStudy\cloud\jobs\0eecb7cc

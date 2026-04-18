@@ -1,0 +1,19 @@
+claude, 이 folder의 내용을 기준으로 다른 project를 검토할려고 합니다.
+부분적인 사항은 이용하고, 부분적인것은 삭제 합니다.
+이번에는 python 교육과 관련하고, 
+smartphone의 hardware를 제어하고 결과를 smartphone에서 표현되도록 할려고 합니다.
+prompt 입력과 일반 ai질문은 지금과 동일한 구조로 합니다.
+cloud server의 역할도 동일합니다.
+그 이외의 기능과 과정은 claude가 생각하기에 최적의 교육효과를 나타낼수있도록 계획을 수립하면 됩니다.
+aiPython folder를 aiHardStudy내에 만들고, 그곳에 위의 계획서를 만들어 추가해 주세요.
+검토후 방향을 정해봅시다.
+
+스마트폰 실행 방식으로 하고, cloud는 이 pc가 대신하는것으로 합니다.
+claude cli가 설치되어있읍니다.
+esp32의 web과 비슷하게 web server를 구성하고, smartphone이 접속할수있도록합니다.
+스마트폰은 usb에 연결되어있읍니다.
+진행해주세요.
+aiPython내에 모든 project를 진행해 주세요.
+
+
+

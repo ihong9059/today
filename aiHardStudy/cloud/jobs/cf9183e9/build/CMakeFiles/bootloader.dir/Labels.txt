@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+C:/todo/today/aiHardStudy/cloud/jobs/cf9183e9/build/CMakeFiles/bootloader
+C:/todo/today/aiHardStudy/cloud/jobs/cf9183e9/build/CMakeFiles/bootloader.rule
+C:/todo/today/aiHardStudy/cloud/jobs/cf9183e9/build/CMakeFiles/bootloader-complete.rule
+C:/todo/today/aiHardStudy/cloud/jobs/cf9183e9/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+C:/todo/today/aiHardStudy/cloud/jobs/cf9183e9/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+C:/todo/today/aiHardStudy/cloud/jobs/cf9183e9/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+C:/todo/today/aiHardStudy/cloud/jobs/cf9183e9/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+C:/todo/today/aiHardStudy/cloud/jobs/cf9183e9/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+C:/todo/today/aiHardStudy/cloud/jobs/cf9183e9/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+C:/todo/today/aiHardStudy/cloud/jobs/cf9183e9/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

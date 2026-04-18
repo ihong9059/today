@@ -1,0 +1,74 @@
+{
+  "result_description": "스마트폰에서 'DISPLAY:Hello'를 보내면 ESP32가 BLE로 받아서 OLED 화면에 글자를 보여주고, 파란 LED가 잠깐 켜지며 '받았어요!'라고 응답합니다.",
+  "what_happens": [
+    "스마트폰 앱에서 'DISPLAY:Hello'라는 메시지를 BLE(블루투스)로 ESP32에 전송합니다",
+    "ESP32가 메시지를 받으면 'DISPLAY:' 뒷부분(Hello)만 잘라내어 OLED 화면에 표시합니다",
+    "파란색 LED가 잠깐 반짝이고, 스마트폰에 'OK:Hello'라고 확인 메시지를 되돌려 보냅니다"
+  ],
+  "concepts": [
+    {
+      "term": "BLE(블루투스 저에너지)",
+      "explanation": "스마트폰과 작은 기기가 짧은 거리에서 배터리를 아끼면서 무선으로 대화할 수 있게 해주는 기술이에요. 보통 블루투스보다 전기를 훨씬 적게 써요!"
+    },
+    {
+      "term": "명령 파싱(parsing)",
+      "explanation": "'DISPLAY:Hello'처럼 긴 문장에서 내가 필요한 부분만 쏙 뽑아내는 것이에요. 마치 '안녕:철수'라는 쪽지에서 이름인 '철수'만 읽는 것과 같아요."
+    },
+    {
+      "term": "OLED 화면",
+      "explanation": "ESP32에 연결할 수 있는 아주 작고 선명한 디스플레이예요. 글자나 그림을 표시할 수 있고, 전기도 조금밖에 안 써요."
+    },
+    {
+      "term": "notify(알림 전송)",
+      "explanation": "ESP32가 스마트폰에게 '나 이거 받았어!'하고 자동으로 메시지를 보내는 기능이에요. 스마트폰이 먼저 물어보지 않아도 ESP32가 먼저 알려줄 수 있어요."
+    },
+    {
+      "term": "startsWith(시작 확인)",
+      "explanation": "문자열이 특정 글자로 시작하는지 확인하는 명령어예요. 예를 들어 'DISPLAY:Hello'가 'DISPLAY:'로 시작하는지 확인해서, 맞으면 뒤쪽 글자를 처리해요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "if (cmd.startsWith(\"DISPLAY:\"))",
+      "comment": "받은 명령이 'DISPLAY:'로 시작하는지 확인해요. 다른 명령이 섞여 들어와도 이 조건을 통과해야만 화면에 표시해요."
+    },
+    {
+      "line": "displayText = cmd.substring(8);",
+      "comment": "'DISPLAY:'는 8글자니까, 8번째 이후 글자(Hello)만 잘라내서 저장해요. 마치 봉투는 버리고 편지지만 꺼내는 것과 같아요."
+    },
+    {
+      "line": "oled.drawString(0, 16, displayText.c_str());",
+      "comment": "잘라낸 글자를 OLED 화면 두 번째 줄(세로 16픽셀 위치)에 그려요."
+    },
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(0, 0, 255));",
+      "comment": "LED를 파란색(R=0, G=0, B=255)으로 켜서 메시지를 받았다는 것을 눈으로 확인할 수 있게 해요."
+    },
+    {
+      "line": "sensorChar->notify();",
+      "comment": "스마트폰에 'OK:Hello'라고 확인 메시지를 보내요. 이 한 줄 덕분에 스마트폰이 ESP32가 잘 받았는지 알 수 있어요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "'COLOR:RED' 명령을 추가해서 스마트폰에서 LED 색깔을 바꿔보세요. 'DISPLAY:'처럼 'COLOR:'로 시작하는지 확인하면 돼요!"
+    },
+    {
+      "reason": "글자 크기를 크게 만들어서 멀리서도 잘 보이게 해보세요. oled.setFont()로 폰트를 바꿀 수 있어요."
+    },
+    {
+      "reason": "받은 메시지 개수를 세어서 'count'라는 변수에 저장하고, OLED에 '3번째 메시지: Hello'처럼 표시해 보세요."
+    }
+  ],
+  "quiz": {
+    "question": "'DISPLAY:안녕하세요'를 받았을 때, displayText에 저장되는 값은 무엇일까요?",
+    "options": [
+      "DISPLAY:안녕하세요",
+      "안녕하세요",
+      "DISPLAY:",
+      "OK:안녕하세요"
+    ],
+    "answer": 1,
+    "explanation": "'DISPLAY:'는 8글자이므로, cmd.substring(8)은 8번째 글자 이후인 '안녕하세요'만 잘라냅니다. startsWith로 명령을 확인한 뒤 뒷부분만 꺼내는 것이 파싱의 핵심이에요!"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "result_description": "스마트폰에서 문자를 보내면 ESP32가 OLED 화면에 표시하고 '잘 받았어요!'라고 답장을 보냅니다.",
+  "what_happens": [
+    "스마트폰 앱에서 'DISPLAY:Hello World'라는 명령을 블루투스(BLE)로 ESP32에 전송합니다.",
+    "ESP32가 명령을 받아 'DISPLAY:' 뒤의 글자를 읽고 OLED 화면에 표시합니다.",
+    "ESP32가 스마트폰으로 'OK:DISPLAYED:Hello World'라는 확인 답장을 블루투스로 다시 보냅니다."
+  ],
+  "concepts": [
+    {
+      "term": "BLE(블루투스 저에너지)",
+      "explanation": "스마트폰과 ESP32가 짧은 거리에서 무선으로 데이터를 주고받는 기술이에요. 귀속말처럼 가까이 있어야 들려요!"
+    },
+    {
+      "term": "OLED 디스플레이",
+      "explanation": "빛을 스스로 내는 아주 작은 화면이에요. 스마트워치처럼 선명하게 글자나 그림을 보여줄 수 있어요."
+    },
+    {
+      "term": "콜백 함수",
+      "explanation": "누군가 말을 걸어올 때만 자동으로 실행되는 함수예요. 전화가 왔을 때만 울리는 벨소리와 같아요!"
+    },
+    {
+      "term": "문자열 파싱",
+      "explanation": "'DISPLAY:Hello' 처럼 긴 문장에서 필요한 부분만 잘라내는 것이에요. 편지 봉투에서 편지지만 꺼내는 것과 같아요."
+    },
+    {
+      "term": "notify(알림 전송)",
+      "explanation": "ESP32가 스마트폰에게 '나 방금 이 일 했어!'라고 먼저 알려주는 기능이에요. 메시지 알림처럼요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "String text = cmd.substring(8);",
+      "comment": "'DISPLAY:Hello World'에서 앞의 'DISPLAY:'(8글자)를 잘라내고 'Hello World'만 꺼내요."
+    },
+    {
+      "line": "oled.drawString(0, 16, text.c_str());",
+      "comment": "꺼낸 글자를 OLED 화면의 두 번째 줄(위에서 16픽셀 아래)에 그려 표시해요."
+    },
+    {
+      "line": "String ack = \"OK:DISPLAYED:\" + text;",
+      "comment": "스마트폰에 보낼 답장 문자를 만들어요. '잘 표시했어요!'라는 뜻의 확인 메시지예요."
+    },
+    {
+      "line": "sensorChar->notify();",
+      "comment": "만들어둔 답장을 스마트폰으로 블루투스를 통해 실제로 전송해요."
+    },
+    {
+      "line": "delay(10000);",
+      "comment": "loop는 그냥 쉬고 있어요. 진짜 일은 블루투스 메시지가 올 때만 자동으로 처리되거든요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "'DISPLAY:' 대신 'BLINK:'라는 명령을 만들어서 LED를 깜빡이게 해보세요!"
+    },
+    {
+      "reason": "OLED에 글자뿐만 아니라 스마트폰에서 받은 숫자만큼 별(★)을 그려보세요."
+    },
+    {
+      "reason": "명령어를 여러 개 만들어보세요. 예: 'RED', 'GREEN', 'BLUE'로 RGB LED 색을 바꾸기!"
+    }
+  ],
+  "quiz": {
+    "question": "스마트폰에서 'DISPLAY:안녕'을 보냈을 때, ESP32가 OLED에 표시하는 글자는 무엇인가요?",
+    "options": [
+      "DISPLAY:안녕",
+      "안녕",
+      "OK:DISPLAYED:안녕",
+      "BLE Message:"
+    ],
+    "answer": 1,
+    "explanation": "cmd.substring(8)이 'DISPLAY:'의 8글자를 잘라내기 때문에, 화면에는 그 뒤의 '안녕'만 표시됩니다. 'BLE Message:'는 항상 첫 줄에 함께 나오는 고정 안내문이에요."
+  }
+}

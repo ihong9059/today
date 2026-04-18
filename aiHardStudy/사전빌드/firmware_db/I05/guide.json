@@ -1,0 +1,70 @@
+{
+  "result_description": "아두이노가 생일 축하 노래를 연주하면서 LED 3개가 빨강→노랑→파랑 순서로 반짝이고, OLED 화면에 생일 축하 메시지가 표시됩니다.",
+  "what_happens": [
+    "아두이노가 켜지면 OLED 화면에 'Happy Birthday!' 메시지를 보여줍니다.",
+    "빨강, 노랑, 파랑 LED가 번갈아 깜빡이며 축제 분위기를 만듭니다.",
+    "스피커(버저)에서 생일 축하 노래가 끝까지 연주되고, 연주가 끝나면 LED 3개가 모두 켜집니다."
+  ],
+  "concepts": [
+    {
+      "term": "음표 주파수(Hz)",
+      "explanation": "소리는 1초에 공기가 얼마나 빨리 떨리느냐로 높낮이가 정해져요. 숫자가 클수록 높은 소리예요. 예를 들어 NOTE_G4(392)보다 NOTE_G5(784)가 두 배 빠르게 떨려서 한 옥타브 높은 소리가 나요."
+    },
+    {
+      "term": "배열(Array)",
+      "explanation": "같은 종류의 값을 줄줄이 담아두는 상자예요. melody[] 배열에는 연주할 음표들이 순서대로 들어 있어서, 아두이노가 앞에서부터 하나씩 꺼내 연주해요."
+    },
+    {
+      "term": "태스크(Task)",
+      "explanation": "여러 일을 동시에 하는 방법이에요. xTaskCreate로 LED 깜빡임 태스크를 따로 만들어두면, 노래를 연주하는 동안 LED도 함께 반짝일 수 있어요. 마치 노래하면서 손뼉 치는 것과 같아요."
+    },
+    {
+      "term": "tone() 함수",
+      "explanation": "스피커에서 원하는 높이의 소리를 내는 명령이에요. tone(핀번호, 주파수, 시간) 형태로 써서 '어느 핀에 연결된 스피커에서, 어떤 높이의 소리를, 얼마 동안 낼지' 알려줘요."
+    },
+    {
+      "term": "volatile",
+      "explanation": "여러 태스크가 함께 사용하는 변수 앞에 붙이는 표시예요. 'melodyDone'처럼 LED 태스크와 연주 함수가 같이 보는 값은 volatile을 붙여서 항상 최신 값을 읽도록 해요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "tone(33, melody[i], duration * 0.9);",
+      "comment": "33번 핀 스피커에서 melody[i]번째 음표를 duration의 90% 길이만큼 소리 내요. 0.9를 곱하면 음표 사이에 짧은 쉼이 생겨서 음이 또렷하게 들려요(스타카토)."
+    },
+    {
+      "line": "int duration = (60000 / tempo) * 4 / noteDurations[i];",
+      "comment": "템포(BPM)를 이용해 각 음표가 몇 밀리초 동안 울려야 하는지 계산해요. tempo가 180이면 1박이 약 333ms이고, 8분음표는 그 절반인 약 166ms가 돼요."
+    },
+    {
+      "line": "xTaskCreate(ledCelebrationTask, \"LED_Celebrate\", 2048, NULL, 1, NULL);",
+      "comment": "LED를 깜빡이는 태스크를 새로 만들어 시작해요. 이 한 줄 덕분에 노래 연주와 LED 깜빡임이 동시에 이루어져요."
+    },
+    {
+      "line": "melodyDone = true;",
+      "comment": "연주가 모두 끝났음을 LED 태스크에게 알리는 신호예요. 이 값이 true가 되면 LED 태스크가 while 루프를 빠져나와 LED를 모두 켜고 스스로 종료해요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "tempo 값을 120이나 240으로 바꿔보세요. 숫자가 작을수록 느리게, 클수록 빠르게 연주돼요. 빠른 버전과 느린 버전을 비교해보면 재미있어요!"
+    },
+    {
+      "reason": "melody[] 배열에 음표를 추가하거나 순서를 바꿔서 나만의 멜로디를 만들어보세요. 음표 주파수 표를 검색하면 다른 노래도 만들 수 있어요."
+    },
+    {
+      "reason": "LED 깜빡임 색 순서나 vTaskDelay 시간(150)을 바꿔서 빠르게 또는 천천히 반짝이도록 수정해보세요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 노래가 끝난 뒤 LED가 어떻게 되나요?",
+    "options": [
+      "LED가 모두 꺼진다",
+      "LED가 계속 번갈아 깜빡인다",
+      "LED가 모두 켜진다",
+      "LED 색이 무지개처럼 바뀐다"
+    ],
+    "answer": 2,
+    "explanation": "melodyDone이 true가 되면 LED 태스크의 while 루프가 끝나고, 그 아래에 있는 digitalWrite(LED_RED, LOW), digitalWrite(LED_YELLOW, LOW), digitalWrite(LED_BLUE, LOW) 코드가 실행돼요. LOW는 LED를 켜는 신호이므로(액티브 로우) 세 LED가 모두 켜집니다."
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "result_description": "스마트폰에서 'STATUS'를 보내면 아두이노가 온도·습도·LED 색·스위치 상태를 한 번에 답장해줘요.",
+  "what_happens": [
+    "스마트폰이 블루투스로 'STATUS'라는 문자를 아두이노에 보내요.",
+    "아두이노가 온도·습도 센서와 스위치를 읽고, LED가 무슨 색인지 확인해요.",
+    "모든 정보를 하나의 문자열로 묶어서 블루투스로 스마트폰에 답장하고, OLED 화면에도 보여줘요.",
+    "짧은 '삐!' 소리로 '전송 완료!'를 알려줘요."
+  ],
+  "concepts": [
+    {
+      "term": "BLE (블루투스)",
+      "explanation": "스마트폰과 아두이노가 선 없이 가까운 거리에서 데이터를 주고받는 무선 통신이에요. 마치 귓속말처럼 주변 기기끼리만 대화해요."
+    },
+    {
+      "term": "onBleReceive 함수",
+      "explanation": "스마트폰에서 문자가 도착하면 자동으로 실행되는 특별한 함수예요. 편지함을 열어보는 것처럼 메시지가 오면 바로 확인해요."
+    },
+    {
+      "term": "snprintf",
+      "explanation": "여러 숫자와 글자를 하나의 문자열로 예쁘게 합쳐주는 함수예요. 'T:25.3C H:60.0%' 처럼 깔끔하게 만들어줘요."
+    },
+    {
+      "term": "notify (알림 전송)",
+      "explanation": "아두이노가 스마트폰에 '새 데이터 왔어!'라고 먼저 알려주는 방식이에요. 스마트폰이 계속 물어보지 않아도 돼요."
+    },
+    {
+      "term": "digitalRead",
+      "explanation": "핀에 연결된 스위치가 눌렸는지(LOW) 안 눌렸는지(HIGH) 확인하는 명령이에요. 전등 스위치를 눈으로 보는 것과 같아요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "if (cmd == \"STATUS\")",
+      "comment": "받은 문자가 정확히 'STATUS'일 때만 동작해요. 다른 문자는 무시해요."
+    },
+    {
+      "line": "bool ok = aht20_read(temp, humi);",
+      "comment": "온도와 습도를 센서에서 읽어요. 읽기에 성공하면 ok가 true가 돼요."
+    },
+    {
+      "line": "bool swPressed = (digitalRead(SWITCH_PIN) == LOW);",
+      "comment": "스위치가 눌렸으면 swPressed가 true(ON), 안 눌렸으면 false(OFF)가 돼요."
+    },
+    {
+      "line": "snprintf(buf, sizeof(buf), \"TEMP:%.1f,HUMI:%.1f,LED:(%d,%d,%d),SW:%s\", ...);",
+      "comment": "온도·습도·LED 색·스위치 상태를 한 줄의 문자열로 합쳐요."
+    },
+    {
+      "line": "sensorChar->notify();",
+      "comment": "조합한 상태 문자열을 블루투스로 스마트폰에 전송해요."
+    },
+    {
+      "line": "tone(2, 1000, 80);",
+      "comment": "2번 핀 스피커로 1000Hz 소리를 80밀리초 동안 내서 전송 완료를 알려줘요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "명령어를 'LED_RED', 'LED_BLUE' 처럼 늘려서 스마트폰으로 LED 색을 바꿔보세요!"
+    },
+    {
+      "reason": "온도가 30도 이상이면 LED를 빨간색으로 자동으로 바꾸는 기능을 추가해보세요."
+    },
+    {
+      "reason": "loop() 안에서 10초마다 자동으로 STATUS를 전송하도록 만들어보세요."
+    }
+  ],
+  "quiz": {
+    "question": "스마트폰에서 'STATUS'를 보냈을 때 아두이노가 하지 않는 일은 무엇인가요?",
+    "options": [
+      "온도와 습도를 센서에서 읽는다",
+      "OLED 화면에 상태를 보여준다",
+      "와이파이로 인터넷에 데이터를 올린다",
+      "짧은 비프음을 낸다"
+    ],
+    "answer": 2,
+    "explanation": "이 코드는 블루투스(BLE)만 사용해요. 와이파이 기능은 전혀 없어요. 온도·습도 읽기, OLED 표시, 비프음은 모두 STATUS 명령에서 실행돼요."
+  }
+}

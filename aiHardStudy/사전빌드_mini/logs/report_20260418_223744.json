@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-04-18T22:37:44.944684",
+  "total": 4,
+  "success": 4,
+  "failed": 0,
+  "elapsed_minutes": 13.9,
+  "results": [
+    {
+      "no": "E07",
+      "prompt": "OLED에 초시계 표시하기. millis()로 경과 시간 계산, snprintf로 char 배열에 포맷팅 후 oled.drawString으로 표시. 코드에 ASCII 문자만 사용하고 특수문자(화살표, 대시 등) 사용 금지.",
+      "success": true,
+      "error": "",
+      "elapsed": 86.11541509628296,
+      "firmware_size": 624848,
+      "firmware_sha256": "207e06b6e5142ee9146217b4095e7249f294fa019c62c532504b8d599eaea59e"
+    },
+    {
+      "no": "K04",
+      "prompt": "OLED에 프로그레스바 0%에서 100% 표시. oled.drawString만 사용하여 = 문자를 반복하여 바 형태로 표시. setPixel/drawPixel 사용 금지 (SSD1306 클래스에 없음).",
+      "success": true,
+      "error": "",
+      "elapsed": 95.97331738471985,
+      "firmware_size": 624816,
+      "firmware_sha256": "3443dce8f712125bbf9a352d26165c8d9b8dc549c8a47d67335c6897f2ded325"
+    },
+    {
+      "no": "Q02",
+      "prompt": "나만의 악기: 스위치 누를 때마다 다음 멜로디(3곡: 학교종, 작은별, 생일축하) 순환 재생 + LED 색 변경 + OLED에 곡명 표시. 코드에 ASCII 문자만 사용, 특수문자(대시, 화살표 등) 금지.",
+      "success": true,
+      "error": "Command '['bash', '-c', 'cat \"C:\\\\Users\\\\lenovo\\\\AppData\\\\Local\\\\Temp\\\\tmpfvzhjoa7.txt\" | \"C:\\\\Users\\\\lenovo\\\\AppData\\\\Roaming\\\\npm\\\\claude.CMD\" -p - --output-format stream-json --verbose --model claude-sonnet-4-6']' timed out after 180 seconds",
+      "elapsed": 536.5504562854767,
+      "firmware_size": 626608,
+      "firmware_sha256": "0932cd7516cd9b97171568db9001dc3ed99f1d403a66cfe9250011c095eec0c0"
+    },
+    {
+      "no": "Q06",
+      "prompt": "OLED 부팅 화면: UTTEC Mini 텍스트 표시 후 = 문자로 로딩바 표시(0%에서100%), 완료 후 온습도 화면 전환. oled.drawString만 사용, drawPixel/setPixel 사용 금지.",
+      "success": true,
+      "error": "",
+      "elapsed": 114.87098026275635,
+      "firmware_size": 625184,
+      "firmware_sha256": "47ea536809134beeb8442dbaf8f9e6786de3d8b0effac269a713e2974c4cfbf0"
+    }
+  ]
+}

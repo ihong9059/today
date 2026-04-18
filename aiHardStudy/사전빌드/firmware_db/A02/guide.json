@@ -1,0 +1,58 @@
+{
+  "result_description": "빨간 LED를 꺼서 불이 켜지지 않은 상태로 만듭니다.",
+  "what_happens": [
+    "아두이노가 켜지면서 준비 작업을 시작해요",
+    "LED_RED 핀에 HIGH(높은 전기 신호)를 보내서 빨간 LED를 꺼요",
+    "그 다음부터는 10초마다 아무것도 하지 않고 기다려요"
+  ],
+  "concepts": [
+    {
+      "term": "digitalWrite",
+      "explanation": "아두이노의 핀에 전기를 켜거나 끄라고 명령하는 코드예요. 스위치를 올리고 내리는 것처럼 HIGH(켜기)나 LOW(끄기)를 선택할 수 있어요."
+    },
+    {
+      "term": "active LOW",
+      "explanation": "보통과 반대로 작동하는 방식이에요. 이 LED는 전기를 보내면(HIGH) 불이 꺼지고, 전기를 안 보내면(LOW) 불이 켜져요. 마치 손을 올리면 '쉬어', 내리면 '차려'인 것처럼요!"
+    },
+    {
+      "term": "setup()",
+      "explanation": "아두이노가 처음 켜질 때 딱 한 번만 실행되는 준비 구역이에요. 학교에서 수업 전에 가방 정리하는 것과 같아요."
+    },
+    {
+      "term": "loop()",
+      "explanation": "setup()이 끝난 후 계속 반복해서 실행되는 구역이에요. 심장이 계속 뛰는 것처럼 멈추지 않고 돌아가요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "digitalWrite(LED_RED, HIGH);",
+      "comment": "빨간 LED에 HIGH 신호를 보내서 불을 꺼요. 이 LED는 active LOW 방식이라 HIGH일 때 꺼진답니다!"
+    },
+    {
+      "line": "delay(10000);",
+      "comment": "10000밀리초, 즉 10초 동안 기다려요. 숫자가 클수록 더 오래 기다린답니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "HIGH를 LOW로 바꿔서 빨간 LED를 켜보세요! active LOW 방식을 직접 확인할 수 있어요."
+    },
+    {
+      "reason": "delay 숫자를 1000으로 바꾼 뒤, LED를 켰다 껐다 반복해서 깜빡이는 효과를 만들어보세요!"
+    },
+    {
+      "reason": "빨간 LED 말고 다른 색 LED도 꺼보고, 여러 LED를 동시에 제어해보세요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 빨간 LED가 꺼지는 이유는 무엇인가요?",
+    "options": [
+      "LOW 신호를 보냈기 때문에",
+      "HIGH 신호를 보냈고, 이 LED는 active LOW 방식이기 때문에",
+      "delay를 10000으로 설정했기 때문에",
+      "loop() 안에 아무 코드가 없기 때문에"
+    ],
+    "answer": 1,
+    "explanation": "이 LED는 active LOW 방식이에요. 그래서 HIGH 신호를 받으면 꺼지고, LOW 신호를 받으면 켜진답니다. 일반적인 LED와 반대로 동작하는 특별한 방식이에요!"
+  }
+}

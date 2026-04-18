@@ -1,0 +1,3 @@
+entered generate_code_with_claude
+prompt: 더 빠르게
+work_dir: C:\todo\today\aiHardStudy\cloud\jobs\f8aa6dba

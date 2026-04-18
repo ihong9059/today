@@ -1,0 +1,70 @@
+{
+  "result_description": "스마트폰에서 BLE로 색깔 명령을 보내면 ESP32의 LED가 그 색으로 켜지고, 현재 색깔을 다시 스마트폰으로 알려줍니다.",
+  "what_happens": [
+    "스마트폰에서 'RED', 'GREEN', 'BLUE' 중 하나를 블루투스로 보냅니다.",
+    "ESP32가 명령을 받아 LED를 해당 색깔로 켭니다.",
+    "ESP32가 'COLOR:RED'처럼 현재 색깔을 스마트폰으로 다시 전송해 알려줍니다."
+  ],
+  "concepts": [
+    {
+      "term": "BLE (블루투스 저전력)",
+      "explanation": "스마트폰과 작은 기기가 아주 적은 전기를 사용해 가까운 거리에서 신호를 주고받는 기술이에요. 무선 이어폰처럼 선 없이 연결돼요!"
+    },
+    {
+      "term": "WS2812 (네오픽셀 LED)",
+      "explanation": "빨강(R), 초록(G), 파랑(B) 세 가지 빛의 밝기를 숫자로 조절하면 원하는 색을 만들 수 있는 스마트 전구예요."
+    },
+    {
+      "term": "sensorChar (알림 기능)",
+      "explanation": "ESP32가 스마트폰에게 '나 지금 이렇게 됐어!'라고 쪽지를 보내는 창구예요. 명령 결과를 알려줄 때 사용해요."
+    },
+    {
+      "term": "cmd.toUpperCase()",
+      "explanation": "'red'나 'Red'처럼 소문자로 입력해도 자동으로 대문자 'RED'로 바꿔줘요. 오타를 줄여주는 친절한 기능이에요!"
+    },
+    {
+      "term": "if / else if / else",
+      "explanation": "여러 선택지 중 하나를 고르는 신호등 같아요. RED면 빨간불, GREEN이면 초록불, 모르는 명령이면 '모르겠어요'라고 답해요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(255, 0, 0));",
+      "comment": "LED를 빨간색으로 켜요. 숫자 255는 '최대 밝기', 0은 '꺼짐'을 뜻해요. (빨강=255, 초록=0, 파랑=0)"
+    },
+    {
+      "line": "cmd.trim(); cmd.toUpperCase();",
+      "comment": "명령어 앞뒤 빈칸을 없애고 대문자로 바꿔줘요. 'red '처럼 잘못 입력해도 'RED'로 알아들어요."
+    },
+    {
+      "line": "sensorChar->notify();",
+      "comment": "스마트폰에 '명령 처리 완료!'라고 알림을 보내는 코드예요. 마치 카톡 알림 같아요."
+    },
+    {
+      "line": "std::string res = \"UNKNOWN:\" + std::string(cmd.c_str());",
+      "comment": "RED, GREEN, BLUE가 아닌 이상한 명령이 오면 '모르는 명령이야!'라고 되돌려 보내줘요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "'YELLOW' 명령을 추가해보세요! 노란색은 빨강+초록이니까 pixel.Color(255, 255, 0)으로 만들 수 있어요."
+    },
+    {
+      "reason": "'OFF' 명령을 만들어 LED를 끄는 기능을 추가해보세요. pixel.clear()와 pixel.show()를 사용하면 돼요."
+    },
+    {
+      "reason": "OLED 화면에 현재 색깔 이름을 표시해보세요. LED가 바뀔 때 화면도 같이 바뀌면 더 멋지겠죠?"
+    }
+  ],
+  "quiz": {
+    "question": "스마트폰에서 'blue'(소문자)를 보내면 LED는 어떻게 될까요?",
+    "options": [
+      "아무것도 안 일어난다. 소문자는 인식 못한다.",
+      "파란색 LED가 켜진다. toUpperCase()가 'BLUE'로 바꿔주기 때문이다.",
+      "빨간색 LED가 켜진다.",
+      "ESP32가 오류로 꺼진다."
+    ],
+    "answer": 1,
+    "explanation": "cmd.toUpperCase() 코드가 'blue'를 자동으로 'BLUE'로 바꿔줘요. 그래서 소문자로 보내도 파란색 LED가 잘 켜진답니다!"
+  }
+}

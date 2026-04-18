@@ -1,0 +1,66 @@
+{
+  "result_description": "스위치를 누르면 부저가 울리고, 손을 떼면 부저가 멈춥니다.",
+  "what_happens": [
+    "아두이노가 스위치 핀(32번)의 상태를 계속 확인합니다",
+    "스위치를 누르면 신호가 LOW(낮음)가 되어 부저를 켭니다",
+    "스위치에서 손을 떼면 신호가 HIGH(높음)가 되어 부저를 끕니다"
+  ],
+  "concepts": [
+    {
+      "term": "digitalRead",
+      "explanation": "버튼이나 스위치가 눌렸는지 아닌지를 읽는 명령어예요. 눌리면 LOW(0), 안 눌리면 HIGH(1)을 알려줘요."
+    },
+    {
+      "term": "digitalWrite",
+      "explanation": "전기를 켜거나 끄는 명령어예요. LOW를 쓰면 켜지고, HIGH를 쓰면 꺼지는 부품도 있어요."
+    },
+    {
+      "term": "active LOW (반대 신호)",
+      "explanation": "보통 버튼은 누를 때 숫자가 커질 것 같지만, 이 스위치는 반대예요! 누르면 LOW(작은 값)가 돼요. 전기 회로의 연결 방식 때문이에요."
+    },
+    {
+      "term": "loop()",
+      "explanation": "아두이노가 전원이 켜져 있는 동안 이 안의 코드를 계속 반복해서 실행해요. 마치 눈을 깜빡이듯이요!"
+    },
+    {
+      "term": "delay(10)",
+      "explanation": "10밀리초(0.01초) 동안 잠깐 기다리는 명령어예요. 아두이노가 너무 빨리 확인하지 않도록 쉬게 해줘요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "if (digitalRead(32) == LOW)",
+      "comment": "32번 핀에 연결된 스위치가 눌렸는지 확인해요"
+    },
+    {
+      "line": "digitalWrite(BUZZER, LOW);",
+      "comment": "부저에 LOW 신호를 보내서 소리를 켜요"
+    },
+    {
+      "line": "digitalWrite(BUZZER, HIGH);",
+      "comment": "부저에 HIGH 신호를 보내서 소리를 꺼요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "스위치를 3번 누르면 부저가 '삐삐삐' 3번 울리도록 바꿔볼 수 있어요!"
+    },
+    {
+      "reason": "LED도 함께 연결해서 스위치를 누르면 불빛과 소리가 같이 나오게 만들어 보세요!"
+    },
+    {
+      "reason": "delay 숫자를 바꿔서 부저 소리의 길이가 달라지는지 실험해보세요!"
+    }
+  ],
+  "quiz": {
+    "question": "스위치를 누르지 않았을 때 digitalRead(32)의 값은 무엇일까요?",
+    "options": [
+      "LOW (낮은 신호, 0)",
+      "HIGH (높은 신호, 1)",
+      "MEDIUM (중간 신호)",
+      "OFF (꺼진 상태)"
+    ],
+    "answer": 1,
+    "explanation": "이 스위치는 active LOW 방식이에요. 누르지 않으면 HIGH(1), 누르면 LOW(0)가 돼요. 그래서 스위치를 안 눌렀을 때는 HIGH 값이 나와요!"
+  }
+}

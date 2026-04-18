@@ -1,0 +1,75 @@
+{
+  "result_description": "AHT20 센서로 온도와 습도를 읽어서 OLED 화면에 2초마다 자동으로 보여줍니다.",
+  "what_happens": [
+    "ESP32가 켜지면 화면(OLED)과 센서(AHT20)를 준비합니다.",
+    "displayTask라는 일꾼이 2초마다 온도와 습도를 센서에서 읽어옵니다.",
+    "읽은 값을 OLED 화면 위쪽에는 온도, 아래쪽에는 습도로 나누어 표시합니다.",
+    "센서가 고장났을 때는 'Sensor Error'라는 글자를 화면에 보여줍니다."
+  ],
+  "concepts": [
+    {
+      "term": "AHT20 센서",
+      "explanation": "공기의 온도와 습도를 동시에 측정할 수 있는 작은 부품이에요. 마치 날씨 앱처럼 현재 환경을 알려줘요."
+    },
+    {
+      "term": "OLED 디스플레이",
+      "explanation": "스스로 빛을 내는 작은 화면이에요. 스마트워치처럼 얇고 선명하게 글자나 그림을 보여줄 수 있어요."
+    },
+    {
+      "term": "Task (태스크)",
+      "explanation": "컴퓨터가 동시에 여러 가지 일을 할 수 있도록 나눠놓은 작업 단위예요. 사람이 음악을 들으면서 밥을 먹는 것처럼요."
+    },
+    {
+      "term": "vTaskDelay",
+      "explanation": "일꾼(태스크)에게 잠깐 쉬라고 알려주는 명령어예요. 여기서는 2초(2000ms)마다 한 번씩 센서를 읽도록 쉬게 해줘요."
+    },
+    {
+      "term": "snprintf",
+      "explanation": "숫자를 글자로 바꿔서 정해진 틀에 맞게 저장하는 명령이에요. '25.3'이라는 숫자를 'Temp: 25.3 C' 문장으로 만들어줘요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "bool ok = aht20_read(temp, humi);",
+      "comment": "센서에서 온도(temp)와 습도(humi)를 읽고, 성공하면 ok가 true가 됩니다."
+    },
+    {
+      "line": "oled.drawString(0, 0, tempStr);",
+      "comment": "OLED 화면의 가로 0, 세로 0 위치(맨 위)에 온도 문자열을 그립니다."
+    },
+    {
+      "line": "oled.drawString(0, 16, humiStr);",
+      "comment": "온도 아래쪽(세로 16픽셀)에 습도 문자열을 그려서 두 줄로 보이게 합니다."
+    },
+    {
+      "line": "vTaskDelay(2000 / portTICK_PERIOD_MS);",
+      "comment": "2초 동안 기다렸다가 다시 센서를 읽어요. 너무 자주 읽으면 전력이 낭비되거든요."
+    },
+    {
+      "line": "xTaskCreate(displayTask, \"displayTask\", 4096, NULL, 1, NULL);",
+      "comment": "displayTask라는 일꾼을 만들어 백그라운드에서 계속 화면을 업데이트하게 합니다."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "온도가 30도보다 높으면 '너무 더워요!'라는 경고 문구를 화면에 추가해보세요."
+    },
+    {
+      "reason": "갱신 주기를 2초에서 5초로 바꿔보고, 화면이 얼마나 천천히 바뀌는지 확인해보세요."
+    },
+    {
+      "reason": "온도와 습도 외에 현재 시각도 함께 화면에 표시해보세요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 OLED 화면이 새로운 온도/습도 값으로 업데이트되는 시간 간격은 얼마인가요?",
+    "options": [
+      "0.5초마다",
+      "1초마다",
+      "2초마다",
+      "10초마다"
+    ],
+    "answer": 2,
+    "explanation": "vTaskDelay(2000 / portTICK_PERIOD_MS) 코드에서 2000ms = 2초마다 센서를 읽고 화면을 갱신합니다. loop()의 delay(10000)은 메인 루프용이고, 화면 업데이트는 별도의 태스크(displayTask)가 담당해요."
+  }
+}

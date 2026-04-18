@@ -1,0 +1,66 @@
+{
+  "result_description": "스위치를 누르면 빨간 LED가 켜지고, 손을 떼면 꺼집니다.",
+  "what_happens": [
+    "아두이노가 켜지면서 32번 핀을 스위치 입력으로 준비합니다.",
+    "계속해서 스위치가 눌렸는지 확인합니다.",
+    "스위치를 누르면 빨간 LED가 켜지고, 누르지 않으면 LED가 꺼집니다."
+  ],
+  "concepts": [
+    {
+      "term": "INPUT_PULLUP",
+      "explanation": "스위치가 연결되지 않았을 때 핀이 항상 '눌리지 않음(HIGH)' 상태를 유지하도록 아두이노 안에 작은 저항을 연결하는 설정이에요."
+    },
+    {
+      "term": "digitalRead",
+      "explanation": "핀에서 신호를 읽어오는 명령이에요. 스위치가 눌렸는지(LOW) 안 눌렸는지(HIGH) 확인할 수 있어요."
+    },
+    {
+      "term": "LOW / HIGH",
+      "explanation": "전기가 없으면 LOW(0), 전기가 있으면 HIGH(1)이에요. 이 스위치는 눌리면 LOW가 돼요."
+    },
+    {
+      "term": "if / else",
+      "explanation": "만약 ~이면 이렇게 하고, 아니면 저렇게 해라! 라는 선택 명령이에요. 우리가 일상에서 '비가 오면 우산을 쓰고, 아니면 그냥 나가자'처럼 생각하는 것과 같아요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "pinMode(32, INPUT_PULLUP);",
+      "comment": "32번 핀을 스위치 입력으로 설정합니다. PULLUP 덕분에 스위치를 안 눌렀을 때는 자동으로 HIGH 상태가 돼요."
+    },
+    {
+      "line": "if (digitalRead(32) == LOW)",
+      "comment": "32번 핀의 신호를 읽어서 LOW(스위치가 눌린 상태)인지 확인합니다."
+    },
+    {
+      "line": "digitalWrite(LED_RED, LOW);",
+      "comment": "빨간 LED를 켭니다. LED는 LOW일 때 켜지는 방식으로 연결되어 있어요."
+    },
+    {
+      "line": "delay(10000);",
+      "comment": "10초 동안 기다립니다. 주의! 이 시간 동안은 스위치 변화를 감지하지 못해요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "delay(10000)을 delay(100)으로 바꿔보세요. 스위치 반응이 훨씬 빨라져요!"
+    },
+    {
+      "reason": "빨간 LED 대신 파란 LED(LED_BLUE)도 켜보세요. 두 개의 LED를 동시에 켤 수도 있어요!"
+    },
+    {
+      "reason": "스위치를 눌렀다 뗄 때마다 LED가 켜지고 꺼지는 '토글' 방식에 도전해보세요."
+    }
+  ],
+  "quiz": {
+    "question": "이 코드에서 스위치를 누르면 digitalRead(32)의 값은 무엇이 될까요?",
+    "options": [
+      "HIGH (전기 있음)",
+      "LOW (전기 없음)",
+      "1 (숫자 1)",
+      "ERROR (오류)"
+    ],
+    "answer": 1,
+    "explanation": "INPUT_PULLUP 설정에서는 스위치를 누르면 핀이 땅(GND)에 연결되어 LOW(0)가 됩니다. 누르지 않으면 HIGH(1)예요. 반대처럼 느껴지지만 이것이 PULLUP의 특징이에요!"
+  }
+}

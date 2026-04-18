@@ -1,0 +1,62 @@
+{
+  "result_description": "초록색 LED가 천천히 밝아졌다가 어두워지며 숨쉬는 것처럼 반짝입니다.",
+  "what_happens": [
+    "brightness 변수가 0에서 시작해서 매번 1씩 커집니다.",
+    "255에 도달하면 방향이 바뀌어 다시 1씩 작아집니다.",
+    "초록색 LED가 밝기에 따라 부드럽게 켜지고 꺼지며 약 4초마다 한 번씩 반복됩니다."
+  ],
+  "concepts": [
+    {
+      "term": "변수 (brightness)",
+      "explanation": "숫자를 기억하는 상자예요. brightness 상자 안에 LED의 밝기 숫자가 들어있어요."
+    },
+    {
+      "term": "step (방향)",
+      "explanation": "숫자가 올라갈지 내려갈지 알려주는 방향 표시예요. +1이면 올라가고, -1이면 내려가요."
+    },
+    {
+      "term": "PWM (밝기 조절)",
+      "explanation": "LED를 아주 빠르게 껐다 켰다 해서 밝기를 조절하는 방법이에요. 0은 완전히 꺼짐, 255는 가장 밝음이에요."
+    },
+    {
+      "term": "delay(8)",
+      "explanation": "8밀리초(0.008초) 동안 기다리는 명령이에요. 이 짧은 기다림이 쌓여서 LED가 천천히 변하는 것처럼 보여요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "brightness += step;",
+      "comment": "밝기를 step만큼 바꿔요. step이 1이면 밝아지고, -1이면 어두워져요."
+    },
+    {
+      "line": "pixel.Color(0, brightness, 0)",
+      "comment": "빨강=0, 초록=brightness, 파랑=0 으로 초록색만 켜요. 가운데 숫자가 초록 밝기예요."
+    },
+    {
+      "line": "step = -1;",
+      "comment": "255에 도달하면 방향을 바꿔서 이제부터 어두워지게 해요."
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "초록색 대신 빨간색으로 바꿔보세요! pixel.Color(brightness, 0, 0) 으로 수정하면 돼요."
+    },
+    {
+      "reason": "delay 숫자를 8 대신 20으로 바꾸면 LED가 더 느리게 숨쉬는 걸 볼 수 있어요."
+    },
+    {
+      "reason": "step을 1 대신 5로 바꾸면 LED가 훨씬 빠르게 깜빡여요. 숫자가 클수록 빠르게 변해요!"
+    }
+  ],
+  "quiz": {
+    "question": "brightness가 255가 되면 step은 어떤 값으로 바뀌나요?",
+    "options": [
+      "0",
+      "1",
+      "-1",
+      "255"
+    ],
+    "answer": 2,
+    "explanation": "255에 도달하면 step = -1 이 되어서 밝기가 줄어들기 시작해요. 마치 숨을 들이쉬다가 내쉬는 것과 같아요!"
+  }
+}

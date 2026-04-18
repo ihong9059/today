@@ -1,0 +1,84 @@
+{
+  "result_description": "스마트 화분이 3초마다 온도와 습도를 재고, 식물에게 좋은 환경이면 파란 불, 나쁘면 노란 불, 위험하면 빨간 불과 경보음을 울린다.",
+  "what_happens": [
+    "3초마다 온도·습도 센서가 공기를 측정해요",
+    "온도와 습도 값을 보고 Good(좋음) / Bad(나쁨) / Danger(위험) 중 하나를 정해요",
+    "OLED 화면에 온도·습도·상태를 글씨로 보여줘요",
+    "상태에 맞는 LED를 켜거나, Danger면 빨간 불과 부저를 500ms마다 번쩍·삐 울려요",
+    "10초마다 블루투스(BLE)로 스마트폰에 온도·습도·상태를 전송해요"
+  ],
+  "concepts": [
+    {
+      "term": "volatile 변수",
+      "explanation": "여러 일꾼(태스크)이 동시에 같은 값을 사용할 때, 항상 최신 값을 읽도록 해주는 특별한 변수예요. 마치 여러 사람이 공유하는 칠판처럼요!"
+    },
+    {
+      "term": "strncpy",
+      "explanation": "문자(글자) 상자에 새 글자를 복사해 넣는 함수예요. 상자 크기보다 글자가 넘치지 않게 딱 맞게 잘라서 넣어줘요."
+    },
+    {
+      "term": "strcmp",
+      "explanation": "두 글자를 비교해서 같으면 0을 돌려주는 함수예요. 'Good'인지 'Danger'인지 확인할 때 사용해요."
+    },
+    {
+      "term": "xTaskCreate (멀티태스킹)",
+      "explanation": "아두이노가 여러 일을 동시에 하도록 일꾼을 새로 만드는 함수예요. LED 깜빡이는 일꾼과 센서 읽는 일꾼이 동시에 일해요!"
+    },
+    {
+      "term": "millis()",
+      "explanation": "아두이노가 켜진 뒤 지나간 시간을 밀리초(1/1000초) 단위로 알려줘요. 3초, 10초 간격을 재는 스톱워치 역할이에요."
+    },
+    {
+      "term": "BLE (블루투스 저전력)",
+      "explanation": "스마트폰과 아두이노가 무선으로 대화하는 방법이에요. 일반 블루투스보다 전기를 훨씬 적게 써서 배터리가 오래 가요."
+    },
+    {
+      "term": "OLED 디스플레이",
+      "explanation": "작고 선명한 화면이에요. 화분 상태를 글자로 보여줘서 스마트폰 없이도 온도·습도를 바로 확인할 수 있어요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "if (t < 10.0f || t > 35.0f || h < 20.0f || h > 90.0f)",
+      "comment": "온도가 10도 아래이거나 35도 위이면, 또는 습도가 너무 낮거나 높으면 Danger(위험) 상태로 바꿔요"
+    },
+    {
+      "line": "strncpy((char*)plantStatus, \"Good\", sizeof(plantStatus));",
+      "comment": "plantStatus 상자 안에 'Good'이라는 글자를 안전하게 복사해서 넣어요"
+    },
+    {
+      "line": "snprintf(line1, sizeof(line1), \"T:%.1fC  H:%.0f%%\", curTemp, curHumi);",
+      "comment": "온도와 습도 숫자를 'T:23.5C  H:55%' 같은 보기 좋은 글자로 만들어요"
+    },
+    {
+      "line": "digitalWrite(BUZZER, LOW); delay(500); digitalWrite(BUZZER, HIGH); delay(500);",
+      "comment": "Danger일 때 부저를 0.5초 켰다 0.5초 껐다 반복해서 삐-삐- 경보음을 만들어요"
+    },
+    {
+      "line": "sensorChar->notify();",
+      "comment": "블루투스로 연결된 스마트폰에 지금 측정한 데이터를 '알림'으로 바로 보내요"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "Good 상태일 때 파란 LED가 천천히 숨쉬듯 밝아졌다 어두워지는 '호흡 효과'를 만들어 보세요 (analogWrite 활용)"
+    },
+    {
+      "reason": "Danger 상태가 30초 이상 계속되면 BLE로 긴급 알림을 한 번 더 보내는 기능을 추가해 보세요"
+    },
+    {
+      "reason": "Good / Bad / Danger 각 상태가 몇 번 발생했는지 카운트해서 OLED 두 번째 줄에 함께 보여줘 보세요"
+    }
+  ],
+  "quiz": {
+    "question": "이 스마트 화분에서 온도가 8도이고 습도가 50%일 때, 어떤 일이 일어날까요?",
+    "options": [
+      "파란 LED가 켜지고 Good이 표시돼요",
+      "노란 LED가 켜지고 Bad가 표시돼요",
+      "빨간 LED와 부저가 울리고 Danger가 표시돼요",
+      "아무 LED도 켜지지 않아요"
+    ],
+    "answer": 2,
+    "explanation": "온도 8도는 10도보다 낮아서 Danger 조건(t < 10.0)에 해당해요. 습도가 정상 범위여도 온도가 극단적이면 바로 Danger로 판단하기 때문에 빨간 LED가 켜지고 부저가 삐-삐- 울려요!"
+  }
+}

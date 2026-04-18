@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UTTEC 사전빌드 펌웨어</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Segoe UI', -apple-system, sans-serif;
+    background: #0f0f23;
+    color: #e0e0e0;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1a1a3e 0%, #2d1b69 100%);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #6c5ce7;
+  }
+  .header h1 { font-size: 1.4em; color: #a29bfe; }
+  .header .stats {
+    display: flex; gap: 16px; font-size: 0.85em;
+  }
+  .header .stat {
+    background: rgba(108,92,231,0.2);
+    padding: 4px 12px;
+    border-radius: 12px;
+  }
+  .header .stat b { color: #6c5ce7; }
+
+  /* Search */
+  .search-bar {
+    padding: 16px 24px;
+    background: #16162e;
+    display: flex;
+    gap: 10px;
+  }
+  .search-bar input {
+    flex: 1;
+    background: #1e1e3f;
+    border: 1px solid #333;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 1em;
+    outline: none;
+  }
+  .search-bar input:focus { border-color: #6c5ce7; }
+  .search-bar button {
+    background: #6c5ce7;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  /* Filters */
+  .filters {
+    padding: 12px 24px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    background: #12122a;
+    border-bottom: 1px solid #222;
+  }
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 16px;
+    border: 1px solid #444;
+    background: transparent;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 0.82em;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: #6c5ce7; color: #fff; }
+  .filter-btn.active {
+    background: #6c5ce7;
+    border-color: #6c5ce7;
+    color: #fff;
+  }
+  .diff-1 { border-color: #00b894; }
+  .diff-1.active { background: #00b894; border-color: #00b894; }
+  .diff-2 { border-color: #fdcb6e; }
+  .diff-2.active { background: #b8860b; border-color: #b8860b; }
+  .diff-3 { border-color: #e17055; }
+  .diff-3.active { background: #e17055; border-color: #e17055; }
+  .diff-4 { border-color: #d63031; }
+  .diff-4.active { background: #d63031; border-color: #d63031; }
+
+  /* Main */
+  .main { display: flex; height: calc(100vh - 160px); }
+
+  /* List */
+  .list-panel {
+    width: 380px;
+    overflow-y: auto;
+    border-right: 1px solid #222;
+    background: #12122a;
+  }
+  .cat-group { margin-bottom: 4px; }
+  .cat-header {
+    padding: 8px 16px;
+    background: #1a1a3e;
+    font-size: 0.82em;
+    color: #6c5ce7;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .cat-header:hover { background: #222255; }
+  .item {
+    padding: 10px 16px;
+    border-bottom: 1px solid #1a1a30;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.15s;
+  }
+  .item:hover { background: #1e1e40; }
+  .item.active { background: #2d1b69; border-left: 3px solid #6c5ce7; }
+  .item .diff {
+    font-size: 0.75em;
+    min-width: 20px;
+  }
+  .item .no {
+    color: #888;
+    font-size: 0.8em;
+    font-family: monospace;
+    min-width: 32px;
+  }
+  .item .name {
+    flex: 1;
+    font-size: 0.9em;
+  }
+  .item .bolt {
+    color: #fdcb6e;
+    font-size: 0.9em;
+  }
+
+  /* Detail */
+  .detail-panel {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+  }
+  .detail-empty {
+    text-align: center;
+    color: #555;
+    padding-top: 100px;
+    font-size: 1.2em;
+  }
+  .detail-card {
+    background: #1a1a3e;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .detail-card h2 {
+    color: #a29bfe;
+    margin-bottom: 12px;
+    font-size: 1.3em;
+  }
+  .detail-card h3 {
+    color: #6c5ce7;
+    margin: 16px 0 8px;
+    font-size: 1em;
+  }
+  .meta-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .meta-tag {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    background: rgba(108,92,231,0.15);
+    color: #a29bfe;
+  }
+  .desc-text {
+    color: #ccc;
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+
+  /* Send button */
+  .send-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: 700;
+    cursor: pointer;
+    margin: 16px 0;
+    transition: transform 0.1s;
+  }
+  .send-btn:hover { transform: scale(1.02); }
+  .send-btn:active { transform: scale(0.98); }
+  .send-btn:disabled {
+    background: #444;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Code block */
+  .code-block {
+    background: #0d0d1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82em;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
+    color: #b8c0d0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  /* Guide sections */
+  .guide-list {
+    list-style: none;
+    padding: 0;
+  }
+  .guide-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid #1a1a30;
+    color: #ccc;
+    font-size: 0.9em;
+  }
+  .guide-list li::before {
+    content: "▸ ";
+    color: #6c5ce7;
+  }
+
+  /* Quiz */
+  .quiz-card {
+    background: #12122a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 8px;
+  }
+  .quiz-q { font-weight: 600; margin-bottom: 10px; }
+  .quiz-opt {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 8px 14px;
+    margin: 4px 0;
+    background: #1a1a3e;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 0.9em;
+  }
+  .quiz-opt:hover { border-color: #6c5ce7; }
+  .quiz-opt.correct { background: #00b894; color: #fff; border-color: #00b894; }
+  .quiz-opt.wrong { background: #d63031; color: #fff; border-color: #d63031; }
+  .quiz-explain {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: rgba(0,184,148,0.1);
+    border-radius: 6px;
+    font-size: 0.85em;
+    color: #55efc4;
+    display: none;
+  }
+
+  /* Concepts */
+  .concept-item {
+    padding: 8px 12px;
+    margin: 4px 0;
+    background: #12122a;
+    border-radius: 6px;
+    border-left: 3px solid #6c5ce7;
+  }
+  .concept-item .term {
+    font-weight: 600;
+    color: #a29bfe;
+  }
+
+  /* BLE status */
+  .ble-bar {
+    padding: 10px 24px;
+    background: #1a1a2e;
+    border-top: 1px solid #222;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85em;
+  }
+  .ble-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #666;
+  }
+  .ble-dot.connected { background: #00b894; }
+  .ble-dot.connecting { background: #fdcb6e; animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { opacity: 0.3; } }
+
+  /* Progress */
+  .progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #333;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 8px 0;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+
+  /* Toggle */
+  .toggle-btn {
+    background: none;
+    border: 1px solid #444;
+    color: #aaa;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85em;
+    margin-top: 8px;
+  }
+  .toggle-btn:hover { border-color: #6c5ce7; color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>⚡ UTTEC 사전빌드</h1>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <span class="stat">전체 <b id="totalCount">0</b>개</span>
+    <button id="bleHeaderBtn" onclick="toggleBLE()" style="
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 2px solid #666;
+      background: transparent;
+      color: #aaa;
+      font-size: 0.9em;
+      font-weight: 600;
+      cursor: pointer;
+    ">🔗 BLE 연결</button>
+  </div>
+</div>
+
+<div class="search-bar" style="flex-wrap:wrap;">
+  <input type="text" id="mainInput" placeholder="명령 입력 (예: 빨간 LED 깜빡여, 온도 보여줘, 부저 울려...)" style="flex:1; min-width:200px; background:#1e1e3f; border:1px solid #6c5ce7; color:#fff; padding:12px 16px; border-radius:8px; font-size:1.05em; outline:none;"
+    onkeydown="if(event.key==='Enter')smartSearch()">
+  <button onclick="smartSearch()" id="smartSearchBtn" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe); white-space:nowrap; padding:12px 24px; font-size:1.05em; font-weight:600;">실행</button>
+  <div id="matchResults" style="width:100%; display:none; margin-top:6px;"></div>
+  <div id="customStatus" style="width:100%; display:none; margin-top:6px; font-size:0.85em; color:#a29bfe;">
+    <span id="customMsg">대기 중...</span>
+    <div class="progress-bar" style="margin-top:4px;">
+      <div class="progress-fill" id="customFill" style="width:0%"></div>
+    </div>
+  </div>
+</div>
+
+<div class="filters" id="filterBar">
+  <button class="filter-btn active" data-filter="all">전체</button>
+  <button class="filter-btn diff-1" data-filter="d1">기초</button>
+  <button class="filter-btn diff-2" data-filter="d2">중급</button>
+  <button class="filter-btn diff-3" data-filter="d3">고급</button>
+  <button class="filter-btn diff-4" data-filter="d4">프로</button>
+</div>
+
+<div class="main">
+  <div class="list-panel" id="listPanel">
+    <div class="detail-empty" style="padding-top:40px;">로딩 중...</div>
+  </div>
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-empty">← 목록에서 항목을 선택하거나, 자유 명령/질문을 입력하세요</div>
+  </div>
+</div>
+
+<!-- 코딩 질문 패널 -->
+<div style="background:#12122a; border-top:1px solid #222; padding:12px 24px;">
+  <div style="display:flex; gap:10px; align-items:center;">
+    <span style="color:#7C3AED; font-weight:600; white-space:nowrap;">💬 코딩 질문</span>
+    <input type="text" id="questionInput" placeholder="코딩에 대해 궁금한 것을 물어보세요... (예: for문과 while문의 차이가 뭐야?)"
+      style="flex:1; background:#1e1e3f; border:1px solid #7C3AED; color:#fff; padding:10px 16px; border-radius:8px; font-size:0.95em; outline:none;">
+    <button onclick="askQuestion()" id="questionBtn"
+      style="background:#7C3AED; color:#fff; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600; white-space:nowrap;">질문하기</button>
+  </div>
+  <div id="questionAnswer" style="display:none; margin-top:10px; padding:14px; background:#1a1a3e; border-radius:8px; color:#ccc; font-size:0.9em; line-height:1.7; max-height:300px; overflow-y:auto; white-space:pre-wrap;"></div>
+</div>
+
+<div class="ble-bar">
+  <div class="ble-dot" id="bleDot"></div>
+  <span id="bleStatus">BLE 미연결</span>
+  <button class="toggle-btn" id="bleBtn" onclick="toggleBLE()">연결</button>
+  <span style="flex:1"></span>
+  <span id="otaProgress" style="display:none;">
+    <span id="otaText">전송 중...</span>
+    <div class="progress-bar" style="width:200px;display:inline-block;vertical-align:middle;">
+      <div class="progress-fill" id="otaFill" style="width:0%"></div>
+    </div>
+  </span>
+</div>
+
+<script>
+// ─── State ───
+let catalog = { items: [] };
+let selectedItem = null;
+let currentFilter = 'all';
+let bleDevice = null, bleCtrlChar = null, bleDataChar = null, bleStatusChar = null;
+let bleConnected = false;
+
+// UTTEC Board BLE UUIDs
+const OTA_SERVICE  = '0000fe00-0000-1000-8000-00805f9b34fb';
+const OTA_CTRL     = '0000fe01-0000-1000-8000-00805f9b34fb';
+const OTA_DATA     = '0000fe02-0000-1000-8000-00805f9b34fb';
+const OTA_STATUS   = '0000fe03-0000-1000-8000-00805f9b34fb';
+// OTA Commands
+const OTA_CMD_START = 0x01;
+const OTA_CMD_END   = 0x02;
+const OTA_CMD_ABORT = 0x03;
+
+const DIFF_STAR = {1:'기초', 2:'중급', 3:'고급', 4:'프로'};
+const DIFF_COLOR = {1:'#00b894', 2:'#b8860b', 3:'#e17055', 4:'#d63031'};
+
+// ─── Load ───
+async function loadCatalog() {
+  try {
+    const res = await fetch('/api/catalog');
+    catalog = await res.json();
+    document.getElementById('totalCount').textContent = catalog.total;
+    renderList(catalog.items);
+  } catch(e) {
+    document.getElementById('listPanel').innerHTML =
+      '<div class="detail-empty" style="padding-top:40px;">서버 연결 실패</div>';
+  }
+}
+
+// ─── Render List ───
+function renderList(items) {
+  const panel = document.getElementById('listPanel');
+  if (!items.length) {
+    panel.innerHTML = '<div class="detail-empty" style="padding-top:40px;">항목 없음</div>';
+    return;
+  }
+
+  // Group by category
+  const groups = {};
+  items.forEach(item => {
+    if (!groups[item.category]) groups[item.category] = { name: item.category_name, items: [] };
+    groups[item.category].items.push(item);
+  });
+
+  let html = '';
+  Object.keys(groups).sort().forEach(cat => {
+    const g = groups[cat];
+    html += `<div class="cat-group">
+      <div class="cat-header">
+        <span>${cat}. ${g.name}</span>
+        <span>${g.items.length}개</span>
+      </div>`;
+    g.items.forEach(item => {
+      html += `<div class="item" data-no="${item.no}" onclick="selectItem('${item.no}')">
+        <span class="diff" style="color:${DIFF_COLOR[item.difficulty]}">${DIFF_STAR[item.difficulty]}</span>
+        <span class="no">${item.no}</span>
+        <span class="name">${item.user_prompt}</span>
+        <span class="bolt">⚡</span>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  panel.innerHTML = html;
+}
+
+// ─── Filter ───
+document.getElementById('filterBar').addEventListener('click', e => {
+  if (!e.target.classList.contains('filter-btn')) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  currentFilter = e.target.dataset.filter;
+
+  let items = catalog.items;
+  if (currentFilter === 'd1') items = items.filter(i => i.difficulty === 1);
+  else if (currentFilter === 'd2') items = items.filter(i => i.difficulty === 2);
+  else if (currentFilter === 'd3') items = items.filter(i => i.difficulty === 3);
+  else if (currentFilter === 'd4') items = items.filter(i => i.difficulty === 4);
+  renderList(items);
+});
+
+// ─── Search (통합: smartSearch에서 처리) ───
+
+// ─── Select Item ───
+async function selectItem(no) {
+  document.querySelectorAll('.item').forEach(el => el.classList.remove('active'));
+  const el = document.querySelector(`.item[data-no="${no}"]`);
+  if (el) el.classList.add('active');
+
+  selectedItem = catalog.items.find(i => i.no === no);
+  if (!selectedItem) return;
+
+  let html = `<div class="detail-card">
+    <h2>${DIFF_STAR[selectedItem.difficulty]} ${selectedItem.user_prompt}</h2>
+    <div class="meta-row">
+      <span class="meta-tag">${selectedItem.no}</span>
+      <span class="meta-tag">${selectedItem.category_name}</span>
+      <span class="meta-tag">${(selectedItem.firmware_size/1024).toFixed(0)}KB</span>
+    </div>
+    <p class="desc-text">${selectedItem.description}</p>
+    <button class="send-btn" onclick="sendToBoard('${no}')" ${!bleConnected ? 'disabled' : ''}>
+      ⚡ 보드에 보내기 ${!bleConnected ? '(BLE 연결 필요)' : ''}
+    </button>
+  </div>`;
+
+  // Load guide
+  try {
+    const gRes = await fetch(`/api/prebuilt/${no}/guide`);
+    if (gRes.ok) {
+      const guide = await gRes.json();
+      html += renderGuide(guide);
+    }
+  } catch(e) {}
+
+  // Code toggle
+  html += `<div class="detail-card">
+    <h3>생성 코드</h3>
+    <button class="toggle-btn" onclick="loadCode('${no}')">코드 보기</button>
+    <div id="codeArea"></div>
+  </div>`;
+
+  document.getElementById('detailPanel').innerHTML = html;
+}
+
+function renderGuide(guide) {
+  let html = '';
+
+  // What happens
+  if (guide.what_happens) {
+    html += `<div class="detail-card"><h3>동작 순서</h3><ul class="guide-list">`;
+    guide.what_happens.forEach(s => html += `<li>${s}</li>`);
+    html += '</ul></div>';
+  }
+
+  // Concepts
+  if (guide.concepts && guide.concepts.length) {
+    html += `<div class="detail-card"><h3>학습 개념</h3>`;
+    guide.concepts.forEach(c => {
+      html += `<div class="concept-item"><span class="term">${c.term}</span> — ${c.explanation}</div>`;
+    });
+    html += '</div>';
+  }
+
+  // Code highlights
+  if (guide.code_highlights && guide.code_highlights.length) {
+    html += `<div class="detail-card"><h3>핵심 코드</h3>`;
+    guide.code_highlights.forEach(h => {
+      html += `<div class="concept-item"><code style="color:#fdcb6e">${h.line}</code><br><span style="color:#aaa;font-size:0.85em">${h.comment}</span></div>`;
+    });
+    html += '</div>';
+  }
+
+  // Quiz
+  if (guide.quiz) {
+    const q = guide.quiz;
+    html += `<div class="detail-card"><h3>퀴즈</h3><div class="quiz-card">
+      <div class="quiz-q">${q.question}</div>`;
+    q.options.forEach((opt, idx) => {
+      html += `<button class="quiz-opt" onclick="checkQuiz(this,${idx},${q.answer})">${opt}</button>`;
+    });
+    html += `<div class="quiz-explain" id="quizExplain">${q.explanation}</div></div></div>`;
+  }
+
+  // Try next
+  if (guide.try_next && guide.try_next.length) {
+    html += `<div class="detail-card"><h3>다음 도전</h3><ul class="guide-list">`;
+    guide.try_next.forEach(t => html += `<li>${t.reason}</li>`);
+    html += '</ul></div>';
+  }
+
+  return html;
+}
+
+function checkQuiz(btn, selected, answer) {
+  document.querySelectorAll('.quiz-opt').forEach(b => {
+    b.disabled = true;
+    if (parseInt(b.dataset?.idx) === answer) b.classList.add('correct');
+  });
+  btn.classList.add(selected === answer ? 'correct' : 'wrong');
+  document.getElementById('quizExplain').style.display = 'block';
+}
+
+async function loadCode(no) {
+  try {
+    const res = await fetch(`/api/prebuilt/${no}/code`);
+    const data = await res.json();
+    document.getElementById('codeArea').innerHTML = `<div class="code-block">${escapeHtml(data.code)}</div>`;
+  } catch(e) {
+    document.getElementById('codeArea').innerHTML = '<p style="color:#888">코드 로드 실패</p>';
+  }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// ─── BLE ───
+async function toggleBLE() {
+  if (bleConnected) {
+    if (bleDevice?.gatt?.connected) bleDevice.gatt.disconnect();
+    setBleStatus(false);
+    return;
+  }
+  try {
+    setBleConnecting();
+    bleDevice = await navigator.bluetooth.requestDevice({
+      filters: [{ namePrefix: 'UTTEC' }],
+      optionalServices: [OTA_SERVICE]
+    });
+    bleDevice.addEventListener('gattserverdisconnected', () => setBleStatus(false));
+    const server = await bleDevice.gatt.connect();
+
+    // OTA 서비스 + 특성 연결
+    const otaSvc = await server.getPrimaryService(OTA_SERVICE);
+    bleCtrlChar = await otaSvc.getCharacteristic(OTA_CTRL);
+    bleDataChar = await otaSvc.getCharacteristic(OTA_DATA);
+    try {
+      bleStatusChar = await otaSvc.getCharacteristic(OTA_STATUS);
+      await bleStatusChar.startNotifications();
+      bleStatusChar.addEventListener('characteristicvaluechanged', onOtaStatus);
+    } catch(e) { console.log('Status notify not available'); }
+
+    setBleStatus(true, bleDevice.name || 'UTTEC');
+  } catch(e) {
+    console.error('BLE error:', e);
+    setBleStatus(false);
+    alert('BLE 연결 실패: ' + e.message);
+  }
+}
+
+function onOtaStatus(event) {
+  const val = new Uint8Array(event.target.value.buffer);
+  const status = val[0];
+  const progress = val.length > 1 ? val[1] : 0;
+  console.log(`OTA Status: ${status}, Progress: ${progress}%`);
+  if (status === 0x04) { // SUCCESS
+    document.getElementById('otaText').textContent = 'OTA 완료!';
+    document.getElementById('otaFill').style.width = '100%';
+  } else if (status === 0x05 || status === 0x06) { // CRC_FAIL or WRITE_FAIL
+    document.getElementById('otaText').textContent = 'OTA 실패!';
+  }
+}
+
+function setBleStatus(connected, name) {
+  bleConnected = connected;
+  const hdrBtn = document.getElementById('bleHeaderBtn');
+  document.getElementById('bleDot').className = 'ble-dot' + (connected ? ' connected' : '');
+  document.getElementById('bleStatus').textContent = connected ? `${name} 연결됨` : 'BLE 미연결';
+  document.getElementById('bleBtn').textContent = connected ? '해제' : '연결';
+  if (connected) {
+    hdrBtn.textContent = `✅ ${name}`;
+    hdrBtn.style.borderColor = '#00b894';
+    hdrBtn.style.color = '#00b894';
+  } else {
+    hdrBtn.textContent = '🔗 BLE 연결';
+    hdrBtn.style.borderColor = '#666';
+    hdrBtn.style.color = '#aaa';
+  }
+  // Update send buttons
+  document.querySelectorAll('.send-btn').forEach(btn => {
+    btn.disabled = !connected;
+    if (connected) btn.textContent = '⚡ 보드에 보내기';
+    else btn.textContent = '⚡ 보드에 보내기 (BLE 연결 필요)';
+  });
+}
+
+function setBleConnecting() {
+  document.getElementById('bleDot').className = 'ble-dot connecting';
+  document.getElementById('bleStatus').textContent = '연결 중...';
+  document.getElementById('bleHeaderBtn').textContent = '⏳ 연결 중...';
+}
+
+// ─── OTA Send ───
+async function sendToBoard(no) {
+  if (!bleConnected || !bleCtrlChar || !bleDataChar) {
+    alert('BLE 연결이 필요합니다.\n상단의 "BLE 연결" 버튼을 눌러주세요.');
+    return;
+  }
+
+  // 전송 중 버튼 비활성화
+  document.querySelectorAll('.send-btn').forEach(btn => {
+    btn.disabled = true;
+    btn.textContent = '⏳ 전송 중...';
+  });
+
+  const progEl = document.getElementById('otaProgress');
+  const fillEl = document.getElementById('otaFill');
+  const textEl = document.getElementById('otaText');
+  progEl.style.display = 'inline';
+  fillEl.style.width = '0%';
+
+  try {
+    // Step 1: 펌웨어 다운로드
+    textEl.textContent = '펌웨어 다운로드 중...';
+    const res = await fetch(`/api/prebuilt/${no}`);
+    const blob = await res.blob();
+    const fwData = new Uint8Array(await blob.arrayBuffer());
+    const total = fwData.length;
+
+    // Step 2: OTA START (크기 전송)
+    textEl.textContent = 'OTA 시작...';
+    const startCmd = new Uint8Array([OTA_CMD_START,
+      total & 0xFF, (total >> 8) & 0xFF,
+      (total >> 16) & 0xFF, (total >> 24) & 0xFF
+    ]);
+    await bleCtrlChar.writeValueWithResponse(startCmd);
+    await delay(200);
+
+    // Step 3: DATA 전송 (240바이트 청크 — 앱과 동일)
+    const chunkSize = 240;
+    textEl.textContent = `전송 중... (${(total/1024).toFixed(0)}KB)`;
+
+    for (let offset = 0, i = 0; offset < total; offset += chunkSize, i++) {
+      const chunk = fwData.slice(offset, Math.min(offset + chunkSize, total));
+      await bleDataChar.writeValueWithoutResponse(chunk);
+      const pct = Math.round((offset + chunk.length) / total * 100);
+      fillEl.style.width = pct + '%';
+      if (pct % 5 === 0 || offset + chunk.length >= total) {
+        textEl.textContent = `전송 중... ${pct}% (${((offset+chunk.length)/1024).toFixed(0)}/${(total/1024).toFixed(0)}KB)`;
+      }
+
+      // 20청크마다 잠깐 대기 (버퍼 오버플로우 방지)
+      if ((i + 1) % 20 === 0) await delay(30);
+    }
+
+    // 마지막 데이터 전송 후 보드 처리 시간 확보
+    await delay(1000);
+
+    // Step 4: OTA END
+    textEl.textContent = '완료 명령 전송 중...';
+    try {
+      const endCmd = new Uint8Array([OTA_CMD_END]);
+      await bleCtrlChar.writeValueWithResponse(endCmd);
+    } catch(e) {
+      console.log('OTA END error (expected if board rebooted):', e);
+    }
+
+    textEl.textContent = '✅ OTA 전송 완료! 보드가 재시작됩니다.';
+    fillEl.style.width = '100%';
+
+    // 버튼 완료 상태
+    document.querySelectorAll('.send-btn').forEach(btn => {
+      btn.textContent = '✅ 전송 완료!';
+    });
+
+    // 사용 카운트
+    fetch(`/api/stats/${no}`, { method: 'POST' }).catch(() => {});
+
+    // BLE 상태 업데이트 (보드 재부팅으로 끊김)
+    setBleStatus(false);
+
+    // 8초 후 자동 BLE 재연결
+    textEl.textContent = '✅ 완료! 8초 후 자동 재연결...';
+    setTimeout(async () => {
+      progEl.style.display = 'none';
+      fillEl.style.width = '0%';
+      await autoReconnectBLE();
+    }, 8000);
+
+  } catch(e) {
+    textEl.textContent = '❌ 전송 실패: ' + e.message;
+    console.error('OTA error:', e);
+    // ABORT
+    try { await bleCtrlChar.writeValueWithResponse(new Uint8Array([OTA_CMD_ABORT])); } catch(ex) {}
+    // 버튼 복원
+    document.querySelectorAll('.send-btn').forEach(btn => {
+      btn.disabled = false;
+      btn.textContent = '⚡ 보드에 보내기';
+    });
+    setTimeout(() => { progEl.style.display = 'none'; }, 5000);
+  }
+}
+
+// ─── BLE 자동 재연결 ───
+async function autoReconnectBLE() {
+  if (!bleDevice || !bleDevice.gatt) return;
+  try {
+    setBleConnecting();
+    const server = await bleDevice.gatt.connect();
+    const otaSvc = await server.getPrimaryService(OTA_SERVICE);
+    bleCtrlChar = await otaSvc.getCharacteristic(OTA_CTRL);
+    bleDataChar = await otaSvc.getCharacteristic(OTA_DATA);
+    try {
+      bleStatusChar = await otaSvc.getCharacteristic(OTA_STATUS);
+      await bleStatusChar.startNotifications();
+      bleStatusChar.addEventListener('characteristicvaluechanged', onOtaStatus);
+    } catch(e) {}
+    setBleStatus(true, bleDevice.name || 'UTTEC');
+  } catch(e) {
+    console.log('Auto reconnect failed:', e);
+    setBleStatus(false);
+  }
+}
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ─── Smart Search + Custom Build ───
+const BUILD_SERVER = 'http://localhost:8093';
+let customJobId = null;
+let customFirmware = null;
+
+async function smartSearch() {
+  const prompt = document.getElementById('mainInput').value.trim();
+  if (!prompt) {
+    // 빈 입력 → 전체 목록 복원
+    renderList(catalog.items);
+    document.getElementById('matchResults').style.display = 'none';
+    return;
+  }
+
+  const btn = document.getElementById('smartSearchBtn');
+  const matchEl = document.getElementById('matchResults');
+
+  btn.disabled = true;
+  btn.textContent = '⏳ 검색 중...';
+  matchEl.style.display = 'block';
+  matchEl.innerHTML = '<span style="color:#888; font-size:0.85em;">사전빌드 검색 중...</span>';
+
+  try {
+    const res = await fetch(`/api/search?q=${encodeURIComponent(prompt)}`);
+    const data = await res.json();
+
+    // 왼쪽 목록도 검색 결과로 업데이트
+    if (data.items && data.items.length > 0) {
+      renderList(data.items);
+    }
+
+    if (data.items && data.items.length > 0) {
+      // 매칭 결과 표시 (최대 5개)
+      const top = data.items.slice(0, 5);
+      let html = `<div style="font-size:0.85em; color:#a29bfe; margin-bottom:6px;">⚡ ${data.total}개 찾음 — 선택하면 즉시 전송 가능</div>`;
+      top.forEach(item => {
+        const diffLabel = {1:'기초',2:'중급',3:'고급',4:'프로'}[item.difficulty] || '커스텀';
+        const diffColor = {1:'#00b894',2:'#b8860b',3:'#e17055',4:'#d63031'}[item.difficulty] || '#6c5ce7';
+        html += `<div style="display:flex; align-items:center; gap:8px; padding:8px 12px; margin:3px 0; background:#1a1a3e; border-radius:8px; cursor:pointer; border:1px solid #333;"
+          onclick="selectItem('${item.no}'); document.getElementById('matchResults').style.display='none';"
+          onmouseover="this.style.borderColor='#6c5ce7'" onmouseout="this.style.borderColor='#333'">
+          <span style="background:${diffColor}22; color:${diffColor}; padding:2px 6px; border-radius:4px; font-size:0.75em; font-weight:600;">${diffLabel}</span>
+          <span style="color:#888; font-size:0.8em; font-family:monospace;">${item.no}</span>
+          <span style="flex:1; color:#e0e0e0; font-size:0.9em;">${item.user_prompt}</span>
+          <span style="color:#fdcb6e;">⚡</span>
+        </div>`;
+      });
+      if (data.total > 5) {
+        html += `<div style="font-size:0.8em; color:#888; margin-top:4px;">왼쪽 목록에서 나머지 ${data.total - 5}개도 확인할 수 있어요</div>`;
+      }
+      html += `<div style="margin-top:8px; text-align:center;">
+        <button onclick="startCustomBuild()" style="background:linear-gradient(135deg,#e17055,#d63031); color:#fff; border:none; padding:8px 20px; border-radius:8px; cursor:pointer; font-size:0.85em;">
+          원하는 게 없어요 → AI로 새로 만들기
+        </button>
+      </div>`;
+      matchEl.innerHTML = html;
+    } else {
+      // 매칭 없음 → 바로 AI 생성
+      matchEl.innerHTML = '<span style="color:#888; font-size:0.85em;">매칭되는 사전빌드가 없어요. AI로 생성합니다...</span>';
+      startCustomBuild();
+    }
+  } catch(e) {
+    matchEl.innerHTML = '';
+    startCustomBuild();
+  }
+
+  btn.disabled = false;
+  btn.textContent = '실행';
+}
+
+async function startCustomBuild() {
+  const prompt = document.getElementById('mainInput').value.trim();
+  if (!prompt) return;
+
+  const btn = document.getElementById('smartSearchBtn');
+  const statusEl = document.getElementById('customStatus');
+  const msgEl = document.getElementById('customMsg');
+  const fillEl = document.getElementById('customFill');
+  const matchEl = document.getElementById('matchResults');
+
+  btn.disabled = true;
+  btn.textContent = '⏳ 생성 중...';
+  matchEl.style.display = 'none';
+  statusEl.style.display = 'block';
+  msgEl.textContent = 'AI가 코드를 생성하고 있어요...';
+  fillEl.style.width = '10%';
+  customFirmware = null;
+
+  try {
+    const res = await fetch(`${BUILD_SERVER}/api/v1/generate`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({prompt}),
+    });
+    const data = await res.json();
+    customJobId = data.job_id;
+    pollCustomBuild();
+  } catch(e) {
+    msgEl.textContent = '❌ 서버 연결 실패: ' + e.message;
+    btn.disabled = false;
+    btn.textContent = '실행';
+  }
+}
+
+async function pollCustomBuild() {
+  const btn = document.getElementById('customBuildBtn');
+  const msgEl = document.getElementById('customMsg');
+  const fillEl = document.getElementById('customFill');
+
+  while (true) {
+    await delay(2000);
+    try {
+      const res = await fetch(`${BUILD_SERVER}/api/v1/status/${customJobId}`);
+      const data = await res.json();
+      msgEl.textContent = data.message;
+      fillEl.style.width = data.progress + '%';
+
+      if (data.status === 'success') {
+        fillEl.style.width = '100%';
+        msgEl.textContent = `✅ 빌드 성공! (${(data.firmware_size/1024).toFixed(0)}KB)`;
+
+        // 펌웨어 다운로드
+        const fwRes = await fetch(`${BUILD_SERVER}/api/v1/download/${customJobId}`);
+        const blob = await fwRes.blob();
+        customFirmware = new Uint8Array(await blob.arrayBuffer());
+
+        // 코드 가져오기
+        const codeRes = await fetch(`${BUILD_SERVER}/api/v1/code/${customJobId}`);
+        const codeData = await codeRes.json();
+
+        // 상세 패널에 결과 표시
+        showCustomResult(document.getElementById('mainInput').value.trim(), codeData.code, data);
+
+        btn.disabled = false;
+        btn.textContent = '실행';
+        return;
+      } else if (data.status === 'failed') {
+        msgEl.textContent = '❌ ' + data.message;
+        btn.disabled = false;
+        btn.textContent = '실행';
+        return;
+      }
+    } catch(e) {
+      console.error('Poll error:', e);
+    }
+  }
+}
+
+async function showCustomResult(prompt, code, jobData) {
+  const panel = document.getElementById('detailPanel');
+  let html = `<div class="detail-card">
+    <h2>🤖 ${prompt}</h2>
+    <div class="meta-row">
+      <span class="meta-tag">AI 생성</span>
+      <span class="meta-tag">${(jobData.firmware_size/1024).toFixed(0)}KB</span>
+      <span class="meta-tag">${jobData.elapsed.toFixed(1)}초</span>
+    </div>
+    <button class="send-btn" onclick="sendCustomToBoard()" ${!bleConnected ? 'disabled' : ''}>
+      ⚡ 보드에 보내기 ${!bleConnected ? '(BLE 연결 필요)' : ''}
+    </button>
+    <div id="saveStatus" style="margin-top:8px; font-size:0.85em; color:#00b894;"></div>
+  </div>
+  <div class="detail-card">
+    <h3>생성 코드</h3>
+    <div class="code-block">${escapeHtml(code)}</div>
+  </div>`;
+  panel.innerHTML = html;
+
+  // 사전빌드 DB에 자동 저장
+  await saveCustomToDb(prompt, code, customFirmware);
+}
+
+async function saveCustomToDb(prompt, code, firmware) {
+  const saveEl = document.getElementById('saveStatus');
+  try {
+    saveEl.textContent = '💾 사전빌드 DB에 저장 중...';
+    const tags = prompt.replace(/[,。.!?]/g, ' ').split(/\s+/).filter(w => w.length >= 2);
+
+    // 1. 번호 할당 + 메타 저장
+    const saveRes = await fetch('/api/save-custom', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({user_prompt: prompt, code, tags}),
+    });
+    const saveData = await saveRes.json();
+    const no = saveData.no;
+
+    // 2. 메타 정보 저장
+    await fetch(`/api/save-custom-meta/${no}`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({user_prompt: prompt, tags, code, difficulty: 2, components: []}),
+    });
+
+    // 3. 펌웨어 바이너리 저장 + 카탈로그 등록
+    await fetch(`/api/save-custom-firmware/${no}`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/octet-stream'},
+      body: firmware,
+    });
+
+    saveEl.textContent = `💾 사전빌드 DB에 저장 완료! (${no}) — 다음에 바로 사용 가능`;
+    // 카탈로그 새로고침
+    await loadCatalog();
+  } catch(e) {
+    saveEl.textContent = '⚠️ DB 저장 실패: ' + e.message;
+    console.error('Save error:', e);
+  }
+}
+
+async function sendCustomToBoard() {
+  if (!bleConnected || !customFirmware) return;
+
+  document.querySelectorAll('.send-btn').forEach(btn => {
+    btn.disabled = true;
+    btn.textContent = '⏳ 전송 중...';
+  });
+
+  const progEl = document.getElementById('otaProgress');
+  const fillEl = document.getElementById('otaFill');
+  const textEl = document.getElementById('otaText');
+  progEl.style.display = 'inline';
+  fillEl.style.width = '0%';
+
+  try {
+    const total = customFirmware.length;
+    textEl.textContent = 'OTA 시작...';
+    const startCmd = new Uint8Array([OTA_CMD_START,
+      total & 0xFF, (total >> 8) & 0xFF,
+      (total >> 16) & 0xFF, (total >> 24) & 0xFF
+    ]);
+    await bleCtrlChar.writeValueWithResponse(startCmd);
+    await delay(200);
+
+    const chunkSize = 240;
+    for (let offset = 0, i = 0; offset < total; offset += chunkSize, i++) {
+      const chunk = customFirmware.slice(offset, Math.min(offset + chunkSize, total));
+      await bleDataChar.writeValueWithoutResponse(chunk);
+      const pct = Math.round((offset + chunk.length) / total * 100);
+      fillEl.style.width = pct + '%';
+      if (pct % 5 === 0 || offset + chunk.length >= total) {
+        textEl.textContent = `전송 중... ${pct}%`;
+      }
+      if ((i + 1) % 20 === 0) await delay(30);
+    }
+
+    await delay(1000);
+    try {
+      await bleCtrlChar.writeValueWithResponse(new Uint8Array([OTA_CMD_END]));
+    } catch(e) {}
+
+    textEl.textContent = '✅ OTA 전송 완료! 보드가 재시작됩니다.';
+    fillEl.style.width = '100%';
+    document.querySelectorAll('.send-btn').forEach(btn => { btn.textContent = '✅ 전송 완료!'; });
+    setBleStatus(false);
+    setTimeout(async () => {
+      progEl.style.display = 'none';
+      fillEl.style.width = '0%';
+      await autoReconnectBLE();
+    }, 8000);
+  } catch(e) {
+    textEl.textContent = '❌ 전송 실패: ' + e.message;
+    document.querySelectorAll('.send-btn').forEach(btn => {
+      btn.disabled = false;
+      btn.textContent = '⚡ 보드에 보내기';
+    });
+    setTimeout(() => { progEl.style.display = 'none'; }, 5000);
+  }
+}
+
+// ─── Chat / Question ───
+async function askQuestion() {
+  const q = document.getElementById('questionInput').value.trim();
+  if (!q) { alert('질문을 입력해주세요'); return; }
+
+  const btn = document.getElementById('questionBtn');
+  const ansEl = document.getElementById('questionAnswer');
+  btn.disabled = true;
+  btn.textContent = '⏳ 생각 중...';
+  ansEl.style.display = 'block';
+  ansEl.textContent = 'AI가 답변을 생각하고 있어요...';
+
+  try {
+    const res = await fetch(`${BUILD_SERVER}/api/v1/chat`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({question: q}),
+    });
+    const data = await res.json();
+    ansEl.textContent = data.answer + `\n\n(${data.elapsed.toFixed(1)}초)`;
+  } catch(e) {
+    ansEl.textContent = '❌ 서버 연결 실패: ' + e.message;
+  }
+  btn.disabled = false;
+  btn.textContent = '질문하기';
+}
+
+document.getElementById('questionInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') askQuestion();
+});
+
+// ─── Init ───
+loadCatalog();
+</script>
+</body>
+</html>

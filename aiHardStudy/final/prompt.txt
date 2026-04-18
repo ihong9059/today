@@ -1,0 +1,17 @@
+claude, "C:\todo\today\aiHardStudy\final"내의 내용을 확인하고,
+초등학생 4,5,6년생이 앞으로 바이브코딩을 통한 firmware coding 전문가
+또는 ai를 통한 제어 전문가가 되기위한 전체 과정을 수립해주시고,
+전체 milestone을 만들어 주세요.
+그것을 final folder안에 만들어 주세요.
+
+이제는 최대한 예시문을 많이해서, 별도로 prompt창에 입력하지않고,
+이미 정해진(database화) build를 찾아서 내려줌으로써,
+전체 실행 속도를 높이고자 합니다.
+
+기본 개념은 이미 정해진 예시들을 기준으로 system prompt를 미리 만들고,
+그것을 기준으로 미리 build하여 bin file을 저장하고, 또한 자세한 설명자료도 사전에 준비해서,
+예시와 일치된 db가 있으면  bin file과 설명자료를 해당 smartphone에 download하여,
+나머지 과정을 진행되도록 하는것입니다.
+
+이해하셨나요?
+위의 내용을 정리해서 docs folder에 추가해주세요.

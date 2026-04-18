@@ -365,6 +365,51 @@ async def get_code(job_id: str):
     if job_id not in jobs: raise HTTPException(404, "Job not found")
     return {"code": jobs[job_id].get("generated_code", ""), "status": jobs[job_id]["status"]}
 
+class ChatRequest(BaseModel):
+    question: str
+
+@app.post("/api/v1/chat")
+async def chat(req: ChatRequest):
+    """코딩 질문 답변"""
+    import json as _json
+    t_start = time.time()
+
+    chat_prompt = f"""You are a friendly coding tutor for elementary/middle school students learning ESP32 Arduino programming.
+Answer in Korean. Keep it simple and use analogies kids can understand.
+The student is using UTTEC Board (ESP32-based) with: LED(GPIO25,26,27), Buzzer(GPIO14), Melody(GPIO33), OLED SSD1306, AHT20 sensor, Switch(GPIO32).
+
+Student's question: {req.question}"""
+
+    claude_cmd = shutil.which("claude") or "claude.cmd"
+    try:
+        prompt_file = JOBS_DIR / "_chat_prompt.txt"
+        prompt_file.write_text(chat_prompt, encoding="utf-8")
+        cmd_str = f'type "{prompt_file}" | claude -p - --output-format stream-json --verbose'
+        result = await asyncio.to_thread(
+            subprocess.run, cmd_str, capture_output=True, text=True,
+            timeout=120, cwd=str(JOBS_DIR), shell=True,
+        )
+
+        answer_parts = []
+        for line in result.stdout.splitlines():
+            line = line.strip()
+            if not line: continue
+            try:
+                obj = _json.loads(line)
+                if obj.get("type") == "assistant":
+                    for block in obj.get("message", {}).get("content", []):
+                        if block.get("type") == "text":
+                            answer_parts.append(block["text"])
+            except _json.JSONDecodeError:
+                continue
+
+        answer = "".join(answer_parts).strip()
+        elapsed = time.time() - t_start
+        return {"answer": answer, "elapsed": elapsed}
+    except Exception as e:
+        return {"answer": f"오류: {str(e)}", "elapsed": time.time() - t_start}
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8092)

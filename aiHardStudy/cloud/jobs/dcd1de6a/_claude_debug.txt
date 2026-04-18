@@ -1,0 +1,12 @@
+returncode: 0
+stdout_len: 10363
+stderr_len: 0
+cmd: C:\Users\lenovo\AppData\Roaming\npm\claude.CMD
+
+STDERR:
+
+
+STDOUT (first 2000):
+{"type":"system","subtype":"hook_started","hook_id":"1e27332f-3825-4125-9b19-b5587e75c7b3","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"6e83ffa8-69b7-4eaf-9726-76617c7c3031","session_id":"4e749888-3e92-418d-8a4c-f86b228a9c7c"}
+{"type":"system","subtype":"hook_response","hook_id":"1e27332f-3825-4125-9b19-b5587e75c7b3","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"42855e1d-6b03-4f28-bab8-a3c18372564d","session_id":"4e749888-3e92-418d-8a4c-f86b228a9c7c"}
+{"type":"system","subtype":"init","cwd":"C:\\todo\\today\\aiHardStudy\\cloud\\jobs\\dcd1de6a","session_id":"4e749888-3e92-418d-8a4c-f86b228a9c7c","tools":["Task","AskUserQuestion","Bash","CronCreate","CronDelete","CronList","Edit","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Glob","Grep","mcp__sequential-thinking__sequentialthinking","NotebookEdit","Read","RemoteTrigger","Skill","TaskOutput","TaskStop","TodoWrite","ToolSearch","WebFetch","WebSearch","Write"],"mcp_servers":[{"name":"sequential-thinking","status":"connected"},{"name":"claude.ai Gmail","status":"needs-auth"},{"name":"claude.ai Google Calendar","status":"needs-auth"}],"model":"claude-opus-4-6[1m]","permissionMode":"default","slash_commands":["update-config","debug","simplify","batch","loop","schedule","claude-api","ai-lesson","skill-creator","storage-cleaner","youtube-info","youtube-summary","youtube-transcript","claude-news","deploy-web","design","ec2-remote","lesson-video-url","nlm","qpp-template","slidedeck-clean","todo","watermark-clean","wishket-apply","wishket-check","work-end","work-start","yt-summary","gsd:add-tests","gsd:note","gsd:add-phase","gsd:add-backlog","gsd:review-backlog","gsd:resume-work","gsd:research-phase","gsd:remove-workspace","gsd:remove-phase","gsd:reapply-patches","gsd:quick","gsd:progress","gsd:profile-user","gsd:pr-branch","gsd:plant-seed","gsd:plan-phase","gsd:plan-milestone-gaps","gsd:paus

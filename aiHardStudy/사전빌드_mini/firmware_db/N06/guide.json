@@ -1,0 +1,66 @@
+{
+  "result_description": "스마트폰에서 색깔 명령을 보내면 ESP32의 LED가 그 색으로 빛나고, 화면에도 색 정보가 표시됩니다.",
+  "what_happens": [
+    "스마트폰에서 블루투스로 'COLOR:255,0,128' 같은 명령을 ESP32에 보냅니다.",
+    "ESP32가 명령을 받아서 숫자 세 개(빨강, 초록, 파랑)로 쪼갭니다.",
+    "쪼갠 숫자대로 LED 색을 바꾸고, 작은 화면에도 색 정보를 보여줍니다."
+  ],
+  "concepts": [
+    {
+      "term": "BLE (블루투스)",
+      "explanation": "휴대폰과 ESP32가 선 없이 가까운 거리에서 데이터를 주고받는 방법이에요. 무선 이어폰처럼 선 없이 연결되는 거예요!"
+    },
+    {
+      "term": "RGB",
+      "explanation": "빨강(Red), 초록(Green), 파랑(Blue) 세 가지 빛을 섞어서 모든 색을 만드는 방법이에요. TV나 스마트폰 화면도 이 방법을 사용해요."
+    },
+    {
+      "term": "파싱(Parsing)",
+      "explanation": "'COLOR:255,0,128' 같은 문자열에서 숫자만 쏙쏙 뽑아내는 과정이에요. 마치 과일 샐러드에서 딸기만 골라내는 것처럼요!"
+    },
+    {
+      "term": "함수(Function)",
+      "explanation": "특정 일을 하는 코드 묶음이에요. onBleReceive 함수는 블루투스 신호를 받을 때마다 자동으로 실행되는 일꾼이에요."
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "if (cmd.startsWith(\"COLOR:\"))",
+      "comment": "받은 문자가 'COLOR:'로 시작하는지 확인해요. 맞을 때만 아래 코드를 실행해요."
+    },
+    {
+      "line": "int r = values.substring(0, values.indexOf(',')).toInt();",
+      "comment": "첫 번째 쉼표 앞에 있는 숫자를 꺼내서 빨강(R) 값으로 저장해요."
+    },
+    {
+      "line": "pixel.setPixelColor(0, pixel.Color(r, g, b));",
+      "comment": "꺼낸 R, G, B 숫자로 LED의 색을 바꾸는 핵심 코드예요."
+    },
+    {
+      "line": "pixel.show();",
+      "comment": "설정한 색을 실제로 LED에 반영해서 빛나게 해요. 이게 없으면 색이 안 바뀌어요!"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "'RED', 'GREEN', 'BLUE' 같은 이름으로 명령어를 추가해서 색 이름으로도 LED를 바꿔보세요!"
+    },
+    {
+      "reason": "버튼을 누를 때마다 색이 무지개처럼 순서대로 바뀌게 만들어보세요."
+    },
+    {
+      "reason": "LED가 색을 바꿀 때 서서히 부드럽게 바뀌도록 중간 색들을 거쳐가게 해보세요."
+    }
+  ],
+  "quiz": {
+    "question": "'COLOR:0,255,0'을 ESP32에 보내면 LED는 무슨 색이 될까요?",
+    "options": [
+      "빨간색",
+      "초록색",
+      "파란색",
+      "흰색"
+    ],
+    "answer": 1,
+    "explanation": "RGB에서 R=0, G=255, B=0이면 초록(Green)만 최대로 켜진 것이라 LED가 초록색으로 빛나요!"
+  }
+}
