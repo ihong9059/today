@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:vibration/vibration.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:torch_light/torch_light.dart';
 
 /// 위젯 키로 인터랙티브 위젯 인스턴스를 반환
 Widget getInteractiveWidget(String key) {
@@ -607,12 +608,26 @@ class FlashlightWidget extends StatefulWidget {
 }
 class _FlashlightWidgetState extends State<FlashlightWidget> {
   bool _on = false;
+  String _status = '';
 
-  void _toggle() {
-    setState(() => _on = !_on);
-    HapticFeedback.mediumImpact();
-    // 플래시 제어는 torch_light 패키지가 필요합니다.
-    // 여기서는 시각적 시뮬레이션만 합니다.
+  Future<void> _toggle() async {
+    try {
+      if (_on) {
+        await TorchLight.disableTorch();
+      } else {
+        await TorchLight.enableTorch();
+      }
+      setState(() { _on = !_on; _status = ''; });
+      HapticFeedback.mediumImpact();
+    } catch (e) {
+      setState(() { _status = '플래시를 사용할 수 없습니다: $e'; });
+    }
+  }
+
+  @override
+  void dispose() {
+    if (_on) TorchLight.disableTorch();
+    super.dispose();
   }
 
   @override
@@ -635,6 +650,7 @@ class _FlashlightWidgetState extends State<FlashlightWidget> {
       Text(_on ? '🔦 손전등 ON' : '손전등 OFF',
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: _on ? _yellow : Colors.white54)),
       _statusText('터치하여 손전등을 켜고 끄세요'),
+      if (_status.isNotEmpty) Padding(padding: const EdgeInsets.only(top: 8), child: Text(_status, style: const TextStyle(color: Colors.red, fontSize: 12))),
     ]);
   }
 }

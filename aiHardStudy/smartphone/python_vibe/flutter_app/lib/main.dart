@@ -506,43 +506,62 @@ class PlayTab extends StatefulWidget {
 class _PlayTabState extends State<PlayTab> {
   final _codeCtrl = TextEditingController(text: "# Python 코드를 입력하세요\nprint('Hello Python!')\n\nfor i in range(5):\n    print(f'{i+1}번째 줄')");
   String _output = '';
+  String _error = '';
+  String _elapsed = '';
   bool _running = false;
 
-  void _runCode() {
-    setState(() { _running = true; _output = ''; });
+  Future<void> _runCode() async {
+    final code = _codeCtrl.text.trim();
+    if (code.isEmpty) return;
 
-    // 간단한 Python 시뮬레이터 (print문 파싱)
-    final code = _codeCtrl.text;
+    setState(() { _running = true; _output = ''; _error = ''; _elapsed = ''; });
+
+    try {
+      // 서버에서 실제 Python 실행
+      final res = await http.post(
+        Uri.parse('${widget.serverUrl}/api/v1/run'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'code': code, 'timeout': 5}),
+      ).timeout(const Duration(seconds: 10));
+
+      if (res.statusCode == 200) {
+        final data = jsonDecode(res.body);
+        setState(() {
+          _output = data['output'] ?? '';
+          _error = data['error'] ?? '';
+          _elapsed = '${data['elapsed']}초';
+        });
+      } else {
+        setState(() { _error = '서버 오류 (${res.statusCode})'; });
+      }
+    } catch (e) {
+      // 서버 연결 실패 시 로컬 시뮬레이션
+      setState(() {
+        _error = '서버 연결 실패 — 로컬 시뮬레이션 모드';
+        _output = _simulateLocally(code);
+      });
+    }
+
+    setState(() { _running = false; });
+  }
+
+  String _simulateLocally(String code) {
     final lines = <String>[];
-
-    // 기본적인 print 문 추출
     final printRegex = RegExp(r"print\((.+)\)");
     for (final line in code.split('\n')) {
       final trimmed = line.trim();
       if (trimmed.startsWith('#') || trimmed.isEmpty) continue;
-
       final match = printRegex.firstMatch(trimmed);
       if (match != null) {
         var arg = match.group(1)!.trim();
-        // 간단한 문자열 리터럴 처리
-        if ((arg.startsWith("'") && arg.endsWith("'")) ||
-            (arg.startsWith('"') && arg.endsWith('"'))) {
+        if ((arg.startsWith("'") && arg.endsWith("'")) || (arg.startsWith('"') && arg.endsWith('"'))) {
           lines.add(arg.substring(1, arg.length - 1));
-        } else if (arg.startsWith("f'") || arg.startsWith('f"')) {
-          lines.add(arg.substring(2, arg.length - 1).replaceAll(RegExp(r'\{[^}]+\}'), '...'));
         } else {
           lines.add('>>> $arg');
         }
       }
     }
-
-    if (lines.isEmpty) {
-      lines.add('(실행 완료 — 출력 없음)');
-      lines.add('');
-      lines.add('서버 연결 시 실제 Python이 실행됩니다.');
-    }
-
-    setState(() { _output = lines.join('\n'); _running = false; });
+    return lines.isEmpty ? '(로컬 시뮬레이션: print문만 해석 가능)' : lines.join('\n');
   }
 
   @override
@@ -601,13 +620,21 @@ class _PlayTabState extends State<PlayTab> {
           child: SingleChildScrollView(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(children: [
-                Icon(Icons.terminal, size: 14, color: Color(0xFF10B981)),
-                SizedBox(width: 6),
-                Text('실행 결과', style: TextStyle(color: Color(0xFF10B981), fontSize: 12, fontWeight: FontWeight.w600)),
+              Row(children: [
+                const Icon(Icons.terminal, size: 14, color: Color(0xFF10B981)),
+                const SizedBox(width: 6),
+                const Text('실행 결과', style: TextStyle(color: Color(0xFF10B981), fontSize: 12, fontWeight: FontWeight.w600)),
+                const Spacer(),
+                if (_elapsed.isNotEmpty) Text(_elapsed, style: const TextStyle(color: Color(0xFF64748B), fontSize: 11)),
               ]),
               const SizedBox(height: 8),
-              Text(_output, style: const TextStyle(fontFamily: 'monospace', fontSize: 13, color: Color(0xFF10B981), height: 1.5)),
+              if (_output.isNotEmpty)
+                Text(_output, style: const TextStyle(fontFamily: 'monospace', fontSize: 13, color: Color(0xFF10B981), height: 1.5)),
+              if (_error.isNotEmpty)
+                Padding(padding: const EdgeInsets.only(top: 4),
+                  child: Text(_error, style: const TextStyle(fontFamily: 'monospace', fontSize: 12, color: Color(0xFFEF4444), height: 1.5))),
+              if (_running)
+                const Padding(padding: EdgeInsets.all(20), child: Center(child: CircularProgressIndicator(color: Color(0xFF6366F1)))),
             ],
           )),
         )),
