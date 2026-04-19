@@ -4,66 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "9611a38f9d5b0a39",
-        "type": "split",
+        "id": "10d5397ccf035534",
+        "type": "tabs",
         "children": [
           {
-            "id": "10d5397ccf035534",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "c07b3127247ae084",
-                "type": "leaf",
-                "state": {
-                  "type": "empty",
-                  "state": {},
-                  "icon": "lucide-file",
-                  "title": "새 탭"
-                }
-              }
-            ]
-          },
-          {
-            "id": "3ef9974a47b44c99",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "ac5490f6f5bf2ca4",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "terminal:terminal",
-                  "state": {
-                    "terminal:terminal": {
-                      "cwd": "C:\\todo\\today\\myWiki",
-                      "focus": false,
-                      "profile": {
-                        "followTheme": true,
-                        "name": "",
-                        "restoreHistory": false,
-                        "rightClickAction": "copyPaste",
-                        "successExitCodes": [
-                          "0",
-                          "SIGINT",
-                          "SIGTERM"
-                        ],
-                        "terminalOptions": {
-                          "documentOverride": null
-                        },
-                        "type": "developerConsole"
-                      },
-                      "serial": null
-                    }
-                  },
-                  "pinned": true,
-                  "icon": "terminal",
-                  "title": "터미널: 개발자 콘솔"
-                }
-              }
-            ]
+            "id": "c07b3127247ae084",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "그래프 뷰"
+            }
           }
-        ],
-        "direction": "horizontal"
+        ]
       }
     ],
     "direction": "vertical"
@@ -120,7 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 405.5
   },
   "right": {
     "id": "08c2ab39686b73f7",
@@ -225,9 +179,53 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "ac5490f6f5bf2ca4",
+  "active": "c07b3127247ae084",
   "lastOpenFiles": [
-    "무제.base",
-    "환영합니다!.md"
+    "second-brain/raw/notion/upload_summary.py",
+    "second-brain/entities/xerix.md",
+    "second-brain/thoughts/2026-04-19_notion-data.md",
+    "second-brain/raw/revita-apps/apps/test/revita/done/Power_모듈_3단계_개발_테스트.md",
+    "second-brain/raw/revita-apps/apps/test/revita/done/Power_모듈_1단계_테스트_설계.md",
+    "second-brain/raw/revita-apps/apps/test/revita/done/Power_모듈_2단계_테스트_12V.md",
+    "second-brain/raw/revita-apps/apps/test/revita/done/Power_모듈_1단계_2단계_요약.md",
+    "second-brain/raw/revita-apps/apps/test/revita/Security_모듈_3단계_개발_테스트.md",
+    "second-brain/raw/revita-apps/apps/test/revita/Security_모듈_2단계_테스트_LoRa하향상향.md",
+    "second-brain/raw/revita-apps/apps/test/revita/Security_모듈_1단계_테스트_로컬.md",
+    "second-brain/raw/revita-apps/apps/test/revita/Port_List_Link_Tower 최종 확인본.md",
+    "second-brain/raw/revita-apps/apps/test/revita/LoRA_바이트프로토콜북0416.md",
+    "second-brain/raw/revita-apps/apps/test/revita/done",
+    "second-brain/raw/revita-apps/apps/test/revita",
+    "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_usb_module.h",
+    "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_usb_module.c",
+    "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_pinmap.h",
+    "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_lte_module.h",
+    "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_lte_module.c",
+    "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_lora.c",
+    "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_lora.h",
+    "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_device_table.h",
+    "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-20_Power_3단계_CRON배터리슬롯_시험결과.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-19_DeviceManager_2단계_CRON유틸_시험결과.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-18_DeviceManager_1단계_T1-01_시험결과.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-18_DeviceManager_1단계_시간동기_설명서.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-17_Security_3단계_시험결과.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-17_Security_3단계_설명서.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-16_Security_2단계_T2-02_T2-06_시험결과.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-15/TC-07_RX_module_type_라우팅.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-15/TC-06_ACK_MONITOR_cmd큐_실패_재암.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-15/TC-05_원샷_타이머_IDLE_사이클.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-15/TC-04_IDLE_WAKE_사이클_타이머모니터.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-15/TC-03_ACK_테이블_양방향.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-15/TC-02_IDLE_WAKE_확인.md",
+    "second-brain/raw/revita-apps/apps/test/2026-04-15/LoRa_RX_문제와_목표_아키텍처.md",
+    "second-brain/raw/revita-apps/apps/회로도/리비타_타워_MCU_PART.png",
+    "second-brain/raw/revita-apps/apps/회로도/리비타_링크_MCU_PART.png",
+    "second-brain/raw/revita-apps/apps/회로도/tower_page11_full.png",
+    "second-brain/raw/revita-apps/apps/회로도/page11_full.png",
+    "second-brain/raw/xerix/temp/09_PID_Control_RPM최적화/pid_control_result.png",
+    "second-brain/raw/xerix/temp/rs485_system.png",
+    "second-brain/raw/smartFactory/shredder/ai/01_LSTM_Autoencoder_베어링이상탐지/lstm_autoencoder_result.png",
+    "second-brain/raw/smartFactory/shredder/ai/10_Ensemble_통합분석/ensemble_result.png",
+    "second-brain/raw/smartFactory/shredder/ai/08_Random_Forest_파쇄크기예측/random_forest_result.png",
+    "second-brain/raw/smartFactory/shredder/ai/09_PID_Control_RPM최적화/pid_control_result.png"
   ]
 }
