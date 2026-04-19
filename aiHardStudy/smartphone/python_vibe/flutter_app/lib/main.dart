@@ -95,44 +95,77 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  final _searchCtrl = TextEditingController();
+  final _promptCtrl = TextEditingController();
   final _questionCtrl = TextEditingController();
-  List<ExItem> _searchResults = [];
-  bool _showResults = false;
 
-  // AI 생성
+  // AI 코드 생성
   String _buildStatus = 'idle'; // idle / generating / success / failed
   String _generatedCode = '';
-  String _buildMessage = '';
+  String _explanation = '';
+  List<Map<String, String>> _keyConcepts = [];
+  String _runOutput = '';
+  String _runError = '';
+  bool _running = false;
 
   // Q&A
-  String _qaStatus = 'idle'; // idle / asking / done / failed
+  String _qaStatus = 'idle';
   String _qaAnswer = '';
 
-  // 예시 프롬프트
-  bool _showExPrompts = false;
-
-  void _onSearch() {
-    final q = _searchCtrl.text.trim();
-    if (q.isEmpty) return;
-
-    // 질문 판별
-    if (_isQuestion(q)) {
-      _askQuestion(q);
-      return;
-    }
-
-    // 사전빌드 검색
-    final results = _catalog.where((e) =>
-      e.title.contains(q) || e.description.contains(q) || e.hardware.contains(q)
-    ).toList();
-
-    setState(() { _searchResults = results; _showResults = true; });
+  // 대표 예시 7개
+  List<ExItem> _getShowcaseExamples() {
+    const picks = ['A01', 'B05', 'C08', 'D10', 'E05', 'H01', 'J01'];
+    return picks.map((no) => _catalog.firstWhere((e) => e.no == no)).toList();
   }
 
-  bool _isQuestion(String s) {
-    return ['뭐예요', '뭐야', '뭔가요', '알려줘', '설명해', '어떻게', '왜', '차이', '뭐가 달라', '무슨 뜻', '뭘 할 수', '뭘 쓸', '하는 거']
-      .any((p) => s.contains(p));
+  Future<void> _onSubmit() async {
+    final input = _promptCtrl.text.trim();
+    if (input.isEmpty) return;
+    await _generateCode(input);
+  }
+
+  Future<void> _generateCode(String prompt) async {
+    setState(() { _buildStatus = 'generating'; _generatedCode = ''; _explanation = ''; _keyConcepts = []; _runOutput = ''; _runError = ''; });
+    try {
+      final res = await http.post(
+        Uri.parse('${widget.serverUrl}/api/v1/generate'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'prompt': prompt}),
+      ).timeout(const Duration(seconds: 60));
+      if (res.statusCode == 200) {
+        final data = jsonDecode(res.body);
+        final concepts = (data['key_concepts'] as List<dynamic>?)?.map((c) =>
+          {'term': (c['term'] ?? '') as String, 'desc': (c['desc'] ?? '') as String}).toList() ?? [];
+        setState(() {
+          _generatedCode = data['python_code'] ?? '# 코드 생성 완료';
+          _explanation = data['explanation'] ?? '';
+          _keyConcepts = concepts;
+          _buildStatus = 'success';
+        });
+      } else {
+        setState(() { _buildStatus = 'failed'; });
+      }
+    } catch (e) {
+      setState(() { _buildStatus = 'failed'; });
+    }
+  }
+
+  Future<void> _runGeneratedCode() async {
+    if (_generatedCode.isEmpty) return;
+    setState(() { _running = true; _runOutput = ''; _runError = ''; });
+    try {
+      final res = await http.post(
+        Uri.parse('${widget.serverUrl}/api/v1/run'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'code': _generatedCode, 'timeout': 5}),
+      ).timeout(const Duration(seconds: 10));
+      if (res.statusCode == 200) {
+        final data = jsonDecode(res.body);
+        setState(() { _runOutput = data['output'] ?? ''; _runError = data['error'] ?? ''; });
+      }
+    } catch (e) {
+      setState(() { _runError = '서버에 연결할 수 없습니다.'; });
+    }
+    setState(() { _running = false; });
   }
 
   Future<void> _askQuestion(String q) async {
@@ -142,7 +175,7 @@ class _HomeTabState extends State<HomeTab> {
         Uri.parse('${widget.serverUrl}/api/v1/chat'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'question': q}),
-      ).timeout(const Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 60));
       if (res.statusCode == 200) {
         final data = jsonDecode(res.body);
         setState(() { _qaAnswer = data['answer'] ?? '응답 없음'; _qaStatus = 'done'; });
@@ -150,37 +183,7 @@ class _HomeTabState extends State<HomeTab> {
         setState(() { _qaAnswer = '서버 응답 오류 (${res.statusCode})'; _qaStatus = 'failed'; });
       }
     } catch (e) {
-      setState(() {
-        _qaAnswer = '서버에 연결할 수 없습니다.\n\n잠깐! 서버가 아직 준비되지 않았을 수 있어요.\n서버 시작: python server.py\n\n(오프라인 답변)\n\n좋은 질문이에요! Python에서 "$q"에 대해 알려드릴게요.\n\n이 기능은 서버가 실행되면 Claude AI가 친절하게 답변해줄 거예요!';
-        _qaStatus = 'done';
-      });
-    }
-  }
-
-  Future<void> _generateCustom(String prompt) async {
-    setState(() { _buildStatus = 'generating'; _buildMessage = 'AI가 코드를 만들고 있어요...'; });
-    try {
-      final res = await http.post(
-        Uri.parse('${widget.serverUrl}/api/v1/generate'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'prompt': prompt}),
-      ).timeout(const Duration(seconds: 60));
-      if (res.statusCode == 200) {
-        final data = jsonDecode(res.body);
-        setState(() {
-          _generatedCode = data['python_code'] ?? '# 코드 생성 완료';
-          _buildStatus = 'success';
-          _buildMessage = '코드 생성 완료!';
-        });
-      } else {
-        setState(() { _buildStatus = 'failed'; _buildMessage = '생성 실패'; });
-      }
-    } catch (e) {
-      setState(() {
-        _generatedCode = "# AI 생성 데모\n# 프롬프트: $prompt\n\nimport random\n\nprint('$prompt')\nprint(f'결과: {random.randint(1, 100)}')\nprint('서버 연결 시 실제 AI가 코드를 만들어줘요!')";
-        _buildStatus = 'success';
-        _buildMessage = '(오프라인 데모)';
-      });
+      setState(() { _qaAnswer = '서버에 연결할 수 없습니다.'; _qaStatus = 'failed'; });
     }
   }
 
@@ -197,80 +200,87 @@ class _HomeTabState extends State<HomeTab> {
       body: SingleChildScrollView(padding: const EdgeInsets.all(16), child: Column(
         crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-        // ── 통합 검색창 ──
+        // ── Python 프롬프트 ──
+        _sectionHeader('Python 만들기', Icons.auto_awesome, const Color(0xFF8B5CF6)),
+        const SizedBox(height: 8),
         Row(children: [
           Expanded(child: TextField(
-            controller: _searchCtrl,
+            controller: _promptCtrl,
             decoration: InputDecoration(
-              hintText: '만들고 싶은 것을 입력하세요...',
+              hintText: '예: 1부터 10까지 합하기',
               hintStyle: const TextStyle(color: Color(0xFF64748B)),
               filled: true, fillColor: const Color(0xFF1E293B),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-              prefixIcon: const Icon(Icons.search, color: Color(0xFF6366F1)),
+              prefixIcon: const Icon(Icons.edit, color: Color(0xFF8B5CF6)),
             ),
             style: const TextStyle(color: Colors.white),
-            onSubmitted: (_) => _onSearch(),
+            onSubmitted: (_) => _onSubmit(),
           )),
           const SizedBox(width: 8),
           ElevatedButton(
-            onPressed: _onSearch,
+            onPressed: _buildStatus == 'generating' ? null : _onSubmit,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF6366F1), padding: const EdgeInsets.all(14),
+              backgroundColor: const Color(0xFF8B5CF6), padding: const EdgeInsets.all(14),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
-            child: const Icon(Icons.send, size: 22),
+            child: _buildStatus == 'generating'
+              ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+              : const Icon(Icons.send, size: 22),
           ),
         ]),
 
-        // ── 검색 결과 ──
-        if (_showResults) ...[
-          const SizedBox(height: 16),
-          _sectionHeader('사전빌드 매칭 결과', Icons.flash_on, const Color(0xFFF59E0B)),
-          if (_searchResults.isEmpty)
-            _infoCard('매칭되는 예시가 없습니다.')
-          else
-            ..._searchResults.take(5).map((e) => _exampleTile(e)),
-          const SizedBox(height: 8),
-          SizedBox(width: double.infinity, child: OutlinedButton.icon(
-            onPressed: () => _generateCustom(_searchCtrl.text),
-            icon: const Icon(Icons.auto_awesome, size: 18),
-            label: const Text('AI로 만들기'),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: const Color(0xFF8B5CF6), side: const BorderSide(color: Color(0xFF8B5CF6)),
-              padding: const EdgeInsets.all(12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-          )),
-        ],
-
         // ── AI 생성 결과 ──
-        if (_buildStatus != 'idle') ...[
-          const SizedBox(height: 16),
-          _sectionHeader('AI 코드 생성', Icons.auto_awesome, const Color(0xFF8B5CF6)),
-          if (_buildStatus == 'generating')
-            _infoCard('AI가 코드를 만들고 있어요...')
-          else if (_buildStatus == 'success') ...[
-            CodeCard(pythonCode: _generatedCode),
-            Text(_buildMessage, style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 12)),
-          ] else
-            _infoCard('생성 실패. 다시 시도해주세요.'),
+        if (_buildStatus == 'generating')
+          const Padding(padding: EdgeInsets.all(20), child: Center(child: Column(children: [
+            CircularProgressIndicator(color: Color(0xFF8B5CF6)),
+            SizedBox(height: 8),
+            Text('AI가 Python 코드를 만들고 있어요...', style: TextStyle(color: Color(0xFF94A3B8), fontSize: 13)),
+          ]))),
+        if (_buildStatus == 'success') ...[
+          const SizedBox(height: 12),
+          // 설명
+          if (_explanation.isNotEmpty)
+            Container(
+              width: double.infinity, padding: const EdgeInsets.all(12), margin: const EdgeInsets.only(bottom: 8),
+              decoration: BoxDecoration(color: const Color(0xFF1E293B), borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: const Color(0xFF334155))),
+              child: Text(_explanation, style: const TextStyle(color: Color(0xFFCBD5E1), fontSize: 13, height: 1.5)),
+            ),
+          // 코드
+          CodeCard(pythonCode: _generatedCode),
+          // 실행 버튼
+          ElevatedButton.icon(
+            onPressed: _running ? null : _runGeneratedCode,
+            icon: Icon(_running ? Icons.hourglass_top : Icons.play_arrow),
+            label: Text(_running ? '실행 중...' : '실행', style: const TextStyle(fontWeight: FontWeight.bold)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF10B981), minimumSize: const Size(double.infinity, 44),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+          ),
+          // 실행 결과
+          if (_runOutput.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            OutputArea(text: _runOutput),
+          ],
+          if (_runError.isNotEmpty)
+            Padding(padding: const EdgeInsets.only(top: 4),
+              child: Text(_runError, style: const TextStyle(color: Color(0xFFEF4444), fontSize: 12))),
+          // 핵심 개념
+          if (_keyConcepts.isNotEmpty)
+            ConceptCard(concepts: _keyConcepts),
         ],
+        if (_buildStatus == 'failed')
+          _infoCard('코드 생성 실패. 서버 연결을 확인해주세요.'),
 
-        // ── 예시 프롬프트 ──
+        // ── 대표 예시 (학습탭 샘플) ──
         const SizedBox(height: 20),
-        GestureDetector(
-          onTap: () => setState(() => _showExPrompts = !_showExPrompts),
-          child: _sectionHeader('이런 것도 만들어보세요', Icons.lightbulb, const Color(0xFFF59E0B),
-            trailing: Icon(_showExPrompts ? Icons.expand_less : Icons.expand_more, color: const Color(0xFF94A3B8))),
-        ),
-        if (_showExPrompts) ...[
-          _promptChip('흔들면 폭죽 터지기'),
-          _promptChip('기울기로 미로 탈출'),
-          _promptChip('박수치면 화면 색 바꾸기'),
-          _promptChip('만보기 만들기'),
-          _promptChip('나침반 앱 만들기'),
-          _promptChip('타이머 만들기'),
-        ],
+        _sectionHeader('대표 예시', Icons.star, const Color(0xFFF59E0B)),
+        const SizedBox(height: 4),
+        const Text('학습 탭에서 100개 예시를 모두 확인할 수 있습니다', style: TextStyle(color: Color(0xFF64748B), fontSize: 11)),
+        const SizedBox(height: 8),
+        ..._getShowcaseExamples().map((e) => _exampleTile(e)),
 
         // ── 코딩 질문 ──
         const SizedBox(height: 20),
@@ -331,22 +341,6 @@ class _HomeTabState extends State<HomeTab> {
         ]),
         trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF64748B)),
         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ExampleDetailPage(item: e))),
-      ),
-    );
-  }
-
-  Widget _promptChip(String text) {
-    return GestureDetector(
-      onTap: () { _searchCtrl.text = text; _onSearch(); },
-      child: Container(
-        width: double.infinity, padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        margin: const EdgeInsets.only(bottom: 4),
-        decoration: BoxDecoration(color: const Color(0xFF1E293B), borderRadius: BorderRadius.circular(8)),
-        child: Row(children: [
-          const Icon(Icons.chevron_right, size: 16, color: Color(0xFF6366F1)),
-          const SizedBox(width: 6),
-          Text(text, style: const TextStyle(color: Color(0xFFCBD5E1), fontSize: 13)),
-        ]),
       ),
     );
   }

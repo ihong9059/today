@@ -17,6 +17,11 @@ import tempfile
 import time
 import os
 from pathlib import Path
+
+# Claude CLI 경로 (Windows에서 subprocess가 찾을 수 있도록 .cmd 사용)
+CLAUDE_CMD = os.path.expanduser('~/AppData/Roaming/npm/claude.cmd')
+if not os.path.exists(CLAUDE_CMD):
+    CLAUDE_CMD = 'claude'  # fallback
 from pydantic import BaseModel
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -160,40 +165,69 @@ async def chat(req: ChatRequest):
         return {"answer": "질문을 입력해주세요!", "elapsed": 0}
 
     start = time.time()
-
-    # Claude CLI 호출
     prompt = f"{CHAT_SYSTEM_PROMPT}\n\n학생 질문: {question}"
-    try:
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False, encoding='utf-8') as f:
-            f.write(prompt)
-            prompt_path = f.name
 
-        result = subprocess.run(
-            ['claude', '-p', prompt, '--output-format', 'text'],
-            capture_output=True,
-            text=True,
-            timeout=30,
-            encoding='utf-8',
-            errors='replace',
-        )
+    answer = await _call_claude(prompt)
+    elapsed = round(time.time() - start, 1)
 
-        elapsed = time.time() - start
+    if not answer:
+        answer = _offline_answer(question)
 
-        if result.returncode == 0 and result.stdout.strip():
-            answer = result.stdout.strip()
-        else:
-            answer = _offline_answer(question)
+    return {"answer": answer, "elapsed": elapsed}
 
-        os.unlink(prompt_path)
-        return {"answer": answer, "elapsed": round(elapsed, 1)}
 
-    except subprocess.TimeoutExpired:
-        return {"answer": _offline_answer(question), "elapsed": 30}
-    except FileNotFoundError:
-        # Claude CLI가 설치되지 않은 경우
-        return {"answer": _offline_answer(question), "elapsed": round(time.time() - start, 1)}
-    except Exception as e:
-        return {"answer": _offline_answer(question), "elapsed": round(time.time() - start, 1)}
+async def _call_claude(prompt: str) -> str:
+    """Claude CLI 호출 — 기존 WROOM build_server와 동일한 방식"""
+    import asyncio
+
+    def _run():
+        prompt_file = SCRIPT_DIR / "_chat_prompt.txt"
+        try:
+            prompt_file.write_text(prompt, encoding="utf-8")
+            cmd_str = f'type "{prompt_file}" | "{CLAUDE_CMD}" -p - --output-format stream-json --verbose'
+            print(f"[Claude] CMD: {cmd_str}")
+
+            result = subprocess.run(
+                cmd_str,
+                capture_output=True, text=True,
+                timeout=60, cwd=str(SCRIPT_DIR), shell=True,
+                encoding='utf-8', errors='replace',
+            )
+
+            print(f"[Claude] rc={result.returncode}, stdout={len(result.stdout)}B, stderr={result.stderr[:100]}")
+
+            # stream-json 응답 파싱
+            answer_parts = []
+            for line in result.stdout.splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    obj = json.loads(line)
+                    if obj.get("type") == "assistant":
+                        for block in obj.get("message", {}).get("content", []):
+                            if block.get("type") == "text":
+                                answer_parts.append(block["text"])
+                except json.JSONDecodeError:
+                    continue
+
+            answer = "\n".join(answer_parts).strip()
+            print(f"[Claude] answer={len(answer)}B")
+            return answer
+
+        except subprocess.TimeoutExpired:
+            print("[Claude] timeout")
+            return ""
+        except Exception as e:
+            print(f"[Claude] error: {e}")
+            return ""
+        finally:
+            try:
+                prompt_file.unlink(missing_ok=True)
+            except:
+                pass
+
+    return await asyncio.to_thread(_run)
 
 def _offline_answer(question: str) -> str:
     """Claude CLI를 사용할 수 없을 때 기본 답변"""
@@ -220,15 +254,26 @@ def _offline_answer(question: str) -> str:
 class GenerateRequest(BaseModel):
     prompt: str
 
-GENERATE_SYSTEM_PROMPT = """당신은 Python 교육용 코드를 생성하는 AI입니다.
-학생의 요청에 맞는 Python 코드를 작성하세요.
+GENERATE_SYSTEM_PROMPT = """당신은 초등~중학생에게 Python을 가르치는 AI입니다.
+학생의 요청에 맞는 Python 코드를 작성하고, 핵심 개념을 설명하세요.
+
+반드시 아래 JSON 형식으로만 응답하세요 (마크다운 없이):
+{
+  "python_code": "실행 가능한 Python 코드 (한국어 주석 포함)",
+  "explanation": "이 코드가 하는 일을 2~3문장으로 설명",
+  "key_concepts": [
+    {"term": "핵심 개념1", "desc": "쉬운 설명"},
+    {"term": "핵심 개념2", "desc": "쉬운 설명"},
+    {"term": "핵심 개념3", "desc": "쉬운 설명"}
+  ]
+}
 
 규칙:
 - Python 3 표준 라이브러리만 사용
-- 한국어 주석 필수
-- 코드만 출력 (설명 없이)
-- 초등~중학생 수준으로 간결하게
-- print()로 결과를 보여주세요"""
+- 한국어 주석 필수, 초등~중학생 수준
+- print()로 결과를 보여주세요
+- 비유를 사용해 쉽게 설명
+- JSON만 출력, 다른 텍스트 없이"""
 
 @app.post("/api/v1/generate")
 async def generate_code(req: GenerateRequest):
@@ -240,29 +285,30 @@ async def generate_code(req: GenerateRequest):
     start = time.time()
     full_prompt = f"{GENERATE_SYSTEM_PROMPT}\n\n학생 요청: {prompt}"
 
-    try:
-        result = subprocess.run(
-            ['claude', '-p', full_prompt, '--output-format', 'text'],
-            capture_output=True,
-            text=True,
-            timeout=30,
-            encoding='utf-8',
-            errors='replace',
-        )
+    raw = await _call_claude(full_prompt)
+    elapsed = round(time.time() - start, 1)
 
-        elapsed = time.time() - start
-        if result.returncode == 0 and result.stdout.strip():
-            code = result.stdout.strip()
+    if raw:
+        # JSON 응답 파싱 시도
+        try:
             # 마크다운 코드블록 제거
-            if code.startswith('```'):
-                lines = code.split('\n')
-                code = '\n'.join(lines[1:-1]) if lines[-1].startswith('```') else '\n'.join(lines[1:])
-            return {"python_code": code, "status": "success", "elapsed": round(elapsed, 1)}
-        else:
-            return {"python_code": _fallback_code(prompt), "status": "fallback", "elapsed": round(elapsed, 1)}
-
-    except Exception:
-        return {"python_code": _fallback_code(prompt), "status": "fallback", "elapsed": round(time.time() - start, 1)}
+            cleaned = raw.strip()
+            if cleaned.startswith('```'):
+                lines = cleaned.split('\n')
+                cleaned = '\n'.join(lines[1:-1]) if lines[-1].startswith('```') else '\n'.join(lines[1:])
+            data = json.loads(cleaned)
+            return {
+                "python_code": data.get("python_code", ""),
+                "explanation": data.get("explanation", ""),
+                "key_concepts": data.get("key_concepts", []),
+                "status": "success",
+                "elapsed": elapsed,
+            }
+        except json.JSONDecodeError:
+            # JSON 파싱 실패 시 코드만 반환
+            return {"python_code": raw, "explanation": "", "key_concepts": [], "status": "success", "elapsed": elapsed}
+    else:
+        return {"python_code": _fallback_code(prompt), "explanation": "", "key_concepts": [], "status": "fallback", "elapsed": elapsed}
 
 def _fallback_code(prompt: str) -> str:
     return f"# AI 생성 (오프라인 모드)\n# 요청: {prompt}\n\nimport random\n\nprint('{prompt}')\nprint(f'랜덤 숫자: {{random.randint(1, 100)}}')\nprint()\nprint('💡 서버에 Claude AI가 연결되면')\nprint('   실제 코드가 생성됩니다!')"

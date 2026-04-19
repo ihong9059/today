@@ -12,6 +12,7 @@ import 'package:sensors_plus/sensors_plus.dart';
 import 'package:vibration/vibration.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:torch_light/torch_light.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 /// 위젯 키로 인터랙티브 위젯 인스턴스를 반환
 Widget getInteractiveWidget(String key) {
@@ -137,11 +138,12 @@ class _SOSWidgetState extends State<SOSWidget> {
     if (running) return;
     running = true;
     setState(() { output = 'SOS 전송 시작!'; morse = ''; });
-    for (int i = 0; i < 3; i++) { Vibration.vibrate(duration: 200); setState(() { morse += '·'; }); await Future.delayed(const Duration(milliseconds: 400)); }
+    for (int i = 0; i < 3; i++) { Vibration.vibrate(duration: 200); if (!mounted) return; setState(() { morse += '·'; }); await Future.delayed(const Duration(milliseconds: 400)); }
     await Future.delayed(const Duration(milliseconds: 400));
-    for (int i = 0; i < 3; i++) { Vibration.vibrate(duration: 600); setState(() { morse += '—'; }); await Future.delayed(const Duration(milliseconds: 800)); }
+    for (int i = 0; i < 3; i++) { Vibration.vibrate(duration: 600); if (!mounted) return; setState(() { morse += '—'; }); await Future.delayed(const Duration(milliseconds: 800)); }
     await Future.delayed(const Duration(milliseconds: 400));
-    for (int i = 0; i < 3; i++) { Vibration.vibrate(duration: 200); setState(() { morse += '·'; }); await Future.delayed(const Duration(milliseconds: 400)); }
+    for (int i = 0; i < 3; i++) { Vibration.vibrate(duration: 200); if (!mounted) return; setState(() { morse += '·'; }); await Future.delayed(const Duration(milliseconds: 400)); }
+    if (!mounted) return;
     setState(() { output = 'SOS 전송 완료!'; });
     running = false;
   }
@@ -169,6 +171,8 @@ class PedometerWidget extends StatefulWidget {
 class _PedometerWidgetState extends State<PedometerWidget> {
   int steps = 0;
   double _lastMag = 0;
+  bool _peakDetected = false;
+  DateTime _lastStep = DateTime.now();
   StreamSubscription? _sub;
 
   @override
@@ -176,9 +180,18 @@ class _PedometerWidgetState extends State<PedometerWidget> {
     super.initState();
     _sub = accelerometerEventStream(samplingPeriod: const Duration(milliseconds: 50)).listen((e) {
       final mag = sqrt(e.x * e.x + e.y * e.y + e.z * e.z);
-      if ((_lastMag - mag).abs() > 6) {
-        setState(() => steps++);
-        HapticFeedback.selectionClick();
+      final diff = mag - _lastMag;
+      // 피크 감지: 올라갈 때 마크하고, 내려올 때 한 번만 카운트 (디바운스 300ms)
+      if (diff > 6) {
+        _peakDetected = true;
+      } else if (_peakDetected && diff < -3) {
+        _peakDetected = false;
+        final now = DateTime.now();
+        if (now.difference(_lastStep).inMilliseconds > 300) {
+          _lastStep = now;
+          setState(() => steps++);
+          HapticFeedback.selectionClick();
+        }
       }
       _lastMag = mag;
     });
@@ -283,7 +296,7 @@ class _ShakeColorWidgetState extends State<ShakeColorWidget> {
         _lastShake = DateTime.now();
         final r = Random();
         final c = Color.fromARGB(255, r.nextInt(256), r.nextInt(256), r.nextInt(256));
-        final hex = '#${c.value.toRadixString(16).substring(2).toUpperCase()}';
+        final hex = '#${(c.value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
         HapticFeedback.mediumImpact();
         setState(() { _color = c; _hex = hex; });
       }
@@ -749,10 +762,12 @@ class _TimerCamWidgetState extends State<TimerCamWidget> {
     if (_running) return;
     _running = true;
     for (int i = 3; i > 0; i--) {
+      if (!mounted) return;
       setState(() => _countdown = i);
       Vibration.vibrate(duration: 100);
       await Future.delayed(const Duration(seconds: 1));
     }
+    if (!mounted) return;
     setState(() { _countdown = 0; _msg = '촬영 중...'; });
     final picked = await _picker.pickImage(source: ImageSource.camera);
     if (picked != null) {
@@ -937,74 +952,49 @@ class QRDisplayWidget extends StatefulWidget {
   @override State<QRDisplayWidget> createState() => _QRDisplayWidgetState();
 }
 class _QRDisplayWidgetState extends State<QRDisplayWidget> {
-  final _ctrl = TextEditingController(text: 'Hello UTTEC!');
-  List<List<bool>> _pattern = [];
-
-  @override
-  void initState() { super.initState(); _generate(); }
-
-  void _generate() {
-    final text = _ctrl.text;
-    if (text.isEmpty) return;
-    // 텍스트를 해시화하여 QR 패턴 생성
-    int hash = 0;
-    for (int i = 0; i < text.length; i++) {
-      hash = ((hash << 5) - hash + text.codeUnitAt(i)) & 0xFFFFFFFF;
-    }
-    final rng = Random(hash);
-    const size = 9;
-    final pattern = List.generate(size, (r) => List.generate(size, (c) {
-      // 모서리에 위치 마커 추가
-      if ((r < 3 && c < 3) || (r < 3 && c >= size - 3) || (r >= size - 3 && c < 3)) return true;
-      return rng.nextBool();
-    }));
-    setState(() => _pattern = pattern);
-  }
+  final _ctrl = TextEditingController(text: 'https://uttec.co.kr');
+  String _qrData = 'https://uttec.co.kr';
 
   @override void dispose() { _ctrl.dispose(); super.dispose(); }
+
+  void _generate() {
+    final text = _ctrl.text.trim();
+    if (text.isEmpty) return;
+    setState(() => _qrData = text);
+    HapticFeedback.mediumImpact();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      if (_pattern.isNotEmpty)
-        Center(child: Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
-          child: CustomPaint(size: const Size(200, 200), painter: _QRPainter(_pattern)),
-        )),
+      // 실제 QR 코드 (qr_flutter 패키지)
+      Center(child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
+        child: QrImageView(
+          data: _qrData,
+          version: QrVersions.auto,
+          size: 200,
+          backgroundColor: Colors.white,
+        ),
+      )),
+      const SizedBox(height: 8),
+      Text(_qrData, style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 12)),
       const SizedBox(height: 12),
       TextField(
         controller: _ctrl,
         decoration: InputDecoration(
-          hintText: '텍스트 입력', hintStyle: const TextStyle(color: Color(0xFF64748B)),
+          hintText: 'URL 또는 텍스트 입력', hintStyle: const TextStyle(color: Color(0xFF64748B)),
           filled: true, fillColor: _card,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
         ),
         style: const TextStyle(color: Colors.white),
+        onSubmitted: (_) => _generate(),
       ),
       const SizedBox(height: 8),
-      _bigButton('QR 패턴 생성', _generate, icon: Icons.qr_code),
+      _bigButton('QR 코드 생성', _generate, icon: Icons.qr_code),
     ]);
   }
-}
-class _QRPainter extends CustomPainter {
-  final List<List<bool>> pattern;
-  _QRPainter(this.pattern);
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (pattern.isEmpty) return;
-    final cellW = size.width / pattern[0].length;
-    final cellH = size.height / pattern.length;
-    final paint = Paint()..color = Colors.black;
-    for (int r = 0; r < pattern.length; r++) {
-      for (int c = 0; c < pattern[r].length; c++) {
-        if (pattern[r][c]) {
-          canvas.drawRect(Rect.fromLTWH(c * cellW, r * cellH, cellW, cellH), paint);
-        }
-      }
-    }
-  }
-  @override bool shouldRepaint(covariant _QRPainter old) => true;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1036,7 +1026,7 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final hex = '#${_selected.value.toRadixString(16).substring(2).toUpperCase()}';
+    final hex = '#${(_selected.value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
     return Column(children: [
       LayoutBuilder(builder: (ctx, constraints) {
         final w = min(constraints.maxWidth, 280.0);
@@ -1262,13 +1252,19 @@ class _WhackMoleWidgetState extends State<WhackMoleWidget> {
   Timer? _timer;
 
   void _start() {
+    _timer?.cancel();
     score = 0; misses = 0;
     _playing = true;
     _spawnMole();
     _timer = Timer.periodic(const Duration(milliseconds: 1500), (_) {
       if (_visible) misses++; // 못 잡으면 miss
-      _spawnMole();
-      if (misses >= 5) { _timer?.cancel(); _playing = false; }
+      if (misses >= 5) {
+        _timer?.cancel();
+        _playing = false;
+        Vibration.vibrate(duration: 300);
+      } else {
+        _spawnMole();
+      }
       setState(() {});
     });
   }
@@ -1361,15 +1357,19 @@ class _SimonSaysWidgetState extends State<SimonSaysWidget> {
     _round++;
     _sequence.add(Random().nextInt(4));
     _playerInput.clear();
+    if (!mounted) return;
     setState(() => _state = 'showing');
     await Future.delayed(const Duration(milliseconds: 500));
     for (final idx in _sequence) {
+      if (!mounted) return;
       setState(() => _highlightIdx = idx);
       Vibration.vibrate(duration: 200);
       await Future.delayed(const Duration(milliseconds: 600));
+      if (!mounted) return;
       setState(() => _highlightIdx = -1);
       await Future.delayed(const Duration(milliseconds: 200));
     }
+    if (!mounted) return;
     setState(() => _state = 'input');
   }
 
@@ -1749,7 +1749,7 @@ class _TypingGameWidgetState extends State<TypingGameWidget> {
   }
 
   void _update() {
-    if (!_playing) return;
+    if (!_playing || !mounted) return;
     for (final w in _words) { w.y += 1; }
     if (_words.any((w) => w.y > 300)) {
       _timer?.cancel();
