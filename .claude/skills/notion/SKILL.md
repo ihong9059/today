@@ -9,7 +9,7 @@ Notion API를 통해 페이지를 읽고 쓰는 Skill입니다.
 
 ## 설정
 
-- **토큰**: `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`
+- **토큰**: 환경변수 `NOTION_TOKEN` 사용 (settings.json에 설정됨)
 - **API 버전**: `2022-06-28`
 - **워크스페이스**: 홍광선님의 워크스페이스
 
@@ -38,7 +38,7 @@ Notion API를 통해 페이지를 읽고 쓰는 Skill입니다.
 ```python
 python -c "
 import requests, json
-TOKEN = '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'
+TOKEN = '$NOTION_TOKEN'
 PAGE_ID = '{PAGE_ID}'
 headers = {'Authorization': f'Bearer {TOKEN}', 'Content-Type': 'application/json', 'Notion-Version': '2022-06-28'}
 data = {'children': [{'object': 'block', 'type': 'bulleted_list_item', 'bulleted_list_item': {'rich_text': [{'type': 'text', 'text': {'content': '{내용}'}}]}}]}
@@ -55,7 +55,7 @@ print('성공!' if r.status_code == 200 else f'실패: {r.text}')
 사용자가 "Notion 확인해줘", "Notion 오늘 작업 뭐있어" 요청 시:
 
 ```bash
-curl -s -H "Authorization: Bearer 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" \
+curl -s -H "Authorization: Bearer $NOTION_TOKEN" \
   -H "Notion-Version: 2022-06-28" \
   "https://api.notion.com/v1/blocks/{PAGE_ID}/children?page_size=100"
 ```
@@ -69,7 +69,7 @@ curl -s -H "Authorization: Bearer ntn_545951938999gMkXj3avw2OFsvUp8AxEDnkPsjn1vB
 
 ```bash
 curl -s -X POST \
-  -H "Authorization: Bearer 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" \
+  -H "Authorization: Bearer $NOTION_TOKEN" \
   -H "Notion-Version: 2022-06-28" \
   -H "Content-Type: application/json" \
   "https://api.notion.com/v1/pages" \
@@ -95,7 +95,7 @@ curl -s -X POST \
 ### 4. 전체 페이지 목록 조회
 
 ```bash
-curl -s -H "Authorization: Bearer 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" \
+curl -s -H "Authorization: Bearer $NOTION_TOKEN" \
   -H "Notion-Version: 2022-06-28" \
   "https://api.notion.com/v1/search" -X POST \
   -H "Content-Type: application/json" \
