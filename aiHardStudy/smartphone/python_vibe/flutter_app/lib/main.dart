@@ -44,6 +44,13 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   int _tabIdx = 0;
   String _serverUrl = 'http://192.168.0.20:8094';
+  final _playTabKey = GlobalKey<_PlayTabState>();
+
+  /// 다른 탭에서 실행탭으로 코드를 보내고 탭 전환
+  void sendCodeToPlayTab(String code) {
+    _playTabKey.currentState?.loadCode(code);
+    setState(() => _tabIdx = 2); // 실행 탭으로 전환
+  }
 
   @override
   void initState() {
@@ -60,9 +67,9 @@ class _MainShellState extends State<MainShell> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(index: _tabIdx, children: [
-        HomeTab(serverUrl: _serverUrl),
-        const LearnTab(),
-        PlayTab(serverUrl: _serverUrl),
+        HomeTab(serverUrl: _serverUrl, onSendToPlay: sendCodeToPlayTab),
+        LearnTab(onSendToPlay: sendCodeToPlayTab),
+        PlayTab(key: _playTabKey, serverUrl: _serverUrl),
         SettingsTab(serverUrl: _serverUrl, onChanged: (url) {
           setState(() { _serverUrl = url; });
         }),
@@ -90,7 +97,8 @@ class _MainShellState extends State<MainShell> {
 // ═══════════════════════════════════════════════════════════
 class HomeTab extends StatefulWidget {
   final String serverUrl;
-  const HomeTab({super.key, required this.serverUrl});
+  final void Function(String code)? onSendToPlay;
+  const HomeTab({super.key, required this.serverUrl, this.onSendToPlay});
   @override State<HomeTab> createState() => _HomeTabState();
 }
 
@@ -249,16 +257,28 @@ class _HomeTabState extends State<HomeTab> {
             ),
           // 코드
           CodeCard(pythonCode: _generatedCode),
-          // 실행 버튼
-          ElevatedButton.icon(
-            onPressed: _running ? null : _runGeneratedCode,
-            icon: Icon(_running ? Icons.hourglass_top : Icons.play_arrow),
-            label: Text(_running ? '실행 중...' : '실행', style: const TextStyle(fontWeight: FontWeight.bold)),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF10B981), minimumSize: const Size(double.infinity, 44),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-          ),
+          // 실행 + 수정 버튼
+          Row(children: [
+            Expanded(child: ElevatedButton.icon(
+              onPressed: _running ? null : _runGeneratedCode,
+              icon: Icon(_running ? Icons.hourglass_top : Icons.play_arrow),
+              label: Text(_running ? '실행 중...' : '실행', style: const TextStyle(fontWeight: FontWeight.bold)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF10B981), padding: const EdgeInsets.all(12),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            )),
+            const SizedBox(width: 8),
+            Expanded(child: OutlinedButton.icon(
+              onPressed: () => widget.onSendToPlay?.call(_generatedCode),
+              icon: const Icon(Icons.edit, size: 18),
+              label: const Text('코드 수정', style: TextStyle(fontWeight: FontWeight.bold)),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: const Color(0xFF6366F1), side: const BorderSide(color: Color(0xFF6366F1)),
+                padding: const EdgeInsets.all(12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            )),
+          ]),
           // 실행 결과
           if (_runOutput.isNotEmpty) ...[
             const SizedBox(height: 8),
@@ -340,7 +360,7 @@ class _HomeTabState extends State<HomeTab> {
           _chip(e.hardware, const Color(0xFF6366F1)),
         ]),
         trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF64748B)),
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ExampleDetailPage(item: e))),
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ExampleDetailPage(item: e, onSendToPlay: widget.onSendToPlay))),
       ),
     );
   }
@@ -365,7 +385,8 @@ class _HomeTabState extends State<HomeTab> {
 //  Tab 2: 학습 (카테고리별 예시 탐색)
 // ═══════════════════════════════════════════════════════════
 class LearnTab extends StatefulWidget {
-  const LearnTab({super.key});
+  final void Function(String code)? onSendToPlay;
+  const LearnTab({super.key, this.onSendToPlay});
   @override State<LearnTab> createState() => _LearnTabState();
 }
 
@@ -437,7 +458,7 @@ class _LearnTabState extends State<LearnTab> {
                     _chip(e.categoryName, const Color(0xFF94A3B8)),
                   ]),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF64748B)),
-                  onTap: () => Navigator.push(ctx, MaterialPageRoute(builder: (_) => ExampleDetailPage(item: e))),
+                  onTap: () => Navigator.push(ctx, MaterialPageRoute(builder: (_) => ExampleDetailPage(item: e, onSendToPlay: widget.onSendToPlay))),
                 ),
               );
             },
@@ -498,11 +519,21 @@ class PlayTab extends StatefulWidget {
 }
 
 class _PlayTabState extends State<PlayTab> {
-  final _codeCtrl = TextEditingController(text: "# Python 코드를 입력하세요\nprint('Hello Python!')\n\nfor i in range(5):\n    print(f'{i+1}번째 줄')");
+  final _codeCtrl = TextEditingController(text: "# 학습탭이나 홈탭에서\n# '코드 수정' 버튼을 누르면\n# 여기에 코드가 로드됩니다.\n#\n# 직접 수정 후 [실행] 하세요!\n\nprint('Hello Python!')");
   String _output = '';
   String _error = '';
   String _elapsed = '';
   bool _running = false;
+
+  /// 외부에서 코드를 받아 에디터에 로드
+  void loadCode(String code) {
+    setState(() {
+      _codeCtrl.text = code;
+      _output = '';
+      _error = '';
+      _elapsed = '';
+    });
+  }
 
   Future<void> _runCode() async {
     final code = _codeCtrl.text.trim();
@@ -749,7 +780,8 @@ class _SettingsTabState extends State<SettingsTab> {
 // ═══════════════════════════════════════════════════════════
 class ExampleDetailPage extends StatelessWidget {
   final ExItem item;
-  const ExampleDetailPage({super.key, required this.item});
+  final void Function(String code)? onSendToPlay;
+  const ExampleDetailPage({super.key, required this.item, this.onSendToPlay});
 
   @override
   Widget build(BuildContext context) {
@@ -760,6 +792,18 @@ class ExampleDetailPage extends StatelessWidget {
         DescCard(description: item.description, steps: item.steps),
         const SectionTitle('Python 코드', icon: Icons.code),
         CodeCard(pythonCode: item.pythonCode),
+        // 모든 예시에 "코드 수정" 버튼 표시
+        if (onSendToPlay != null)
+          Padding(padding: const EdgeInsets.only(bottom: 8), child: OutlinedButton.icon(
+            onPressed: () { onSendToPlay!(item.pythonCode); Navigator.pop(context); },
+            icon: const Icon(Icons.edit, size: 18),
+            label: const Text('코드 수정하기 (실행탭)'),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: const Color(0xFF6366F1), side: const BorderSide(color: Color(0xFF6366F1)),
+              minimumSize: const Size(double.infinity, 40),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+          )),
         const SizedBox(height: 8),
 
         // type별 인터랙티브 영역
