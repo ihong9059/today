@@ -179,8 +179,9 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "c07b3127247ae084",
+  "active": "5bd341be470fbe3c",
   "lastOpenFiles": [
+    "무제",
     "second-brain/raw/notion/upload_summary.py",
     "second-brain/entities/xerix.md",
     "second-brain/thoughts/2026-04-19_notion-data.md",
@@ -202,7 +203,6 @@
     "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_lte_module.c",
     "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_lora.c",
     "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_lora.h",
-    "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_device_table.h",
     "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-20_Power_3단계_CRON배터리슬롯_시험결과.md",
     "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-19_DeviceManager_2단계_CRON유틸_시험결과.md",
     "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-18_DeviceManager_1단계_T1-01_시험결과.md",
