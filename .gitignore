@@ -2,7 +2,6 @@
 .claude/*
 !.claude/skills/
 *.pem
-*.mp4
 *.avi
 *.mov
 *.mkv
