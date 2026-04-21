@@ -4,7 +4,8 @@
 - **채널**: Jay Choi | 인디해커 라이프
 - **연사**: Jay Choi (인디 개발자, Caramell/Riftshot 운영)
 - **재생시간**: 11:13
-- **링크**: https://www.youtube.com/watch?v=xjQ4K4j3joU
+   https://www.youtube.com/watch?v=xjQ4K4j3joU
+- **링크**: 
 - **요약본**: [AI로_나를_복제했습니다_클로드코드_옵시디언_LLM_Wiki_요약.md](./AI로_나를_복제했습니다_클로드코드_옵시디언_LLM_Wiki_요약.md)
 
 ---

@@ -1,5 +1,0 @@
-esp32c3를 smartphone으로 개발, 제어하는 project를 진행할려고 합니다.
-smartphone에 개발환경을 구축하고,
-claude와 함께, 개발을 진행한후,
-ble를 통하여 esp32c3에 ota를 해서 기능을 확인할려고 합니다.
-이를 진행하기위한 계획서를 ble folder안에 추가해 주세요.

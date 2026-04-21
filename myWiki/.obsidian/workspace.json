@@ -11,10 +11,14 @@
             "id": "c07b3127247ae084",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "그래프 뷰"
+              "type": "markdown",
+              "state": {
+                "file": "second-brain/me.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "me"
             }
           }
         ]
@@ -179,7 +183,7 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "5bd341be470fbe3c",
+  "active": "c07b3127247ae084",
   "lastOpenFiles": [
     "second-brain/raw/revita/flowChart/why_this_architecture.md",
     "second-brain/raw/revita/flowChart/why_this_architecture.pdf",
