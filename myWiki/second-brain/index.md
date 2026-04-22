@@ -2,10 +2,15 @@
 title: 인덱스
 type: index
 created: 2026-04-19
-updated: 2026-04-19
+updated: 2026-04-22
 ---
 
 # Second Brain 위키 인덱스
+
+## 운영
+| 페이지 | 요약 |
+|--------|------|
+| [[dashboard]] | 대시보드 — dataview 기반 프로젝트 현황, 업데이트 추적, 링크 네트워크 |
 
 ## 핵심 (Identity)
 | 페이지 | 요약 |
@@ -62,3 +67,4 @@ updated: 2026-04-19
 | [[2026-04-19_second-brain-start]] | 세컨드 브레인을 시작하는 이유 |
 | [[2026-04-19_notion-연계]] | Notion과 세컨드 브레인 역할 분담 계획 |
 | [[2026-04-19_notion-data]] | Notion 첫 수집 + 라즈베리 Claude 아이디어 |
+| [[2026-04-22_wiki-운영-소감]] | Wiki 3일차 소감 — 유지 습관, Lint 한계, 자동화의 가치 |

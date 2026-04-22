@@ -2,10 +2,30 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-04-19
+updated: 2026-04-22
 ---
 
 # Second Brain 위키 로그
+
+## [2026-04-22] update | P1~P9 Wiki 개선 전체 완료
+- experience.md: 4/20~4/22 활동 9개 항목 추가
+- 서버인프라.md: 5대 서버 전수 조사 결과 반영, 요약 테이블 추가
+- tailscale네트워크.md: IP 오류 수정, 3대 추가, 용도 컬럼
+- goals.md: 단기 +4, 중기 +2, 완료 목표 6건, 핵심 질문 +1
+- dashboard.md: dataview 대시보드 신규 생성 (6개 쿼리)
+- raw/: webServer, 응원봉 junction 추가, CLAUDE.md 구조 업데이트
+- Notion 연동 설계 완료 (Obsidian=원본, Notion=모바일 창구)
+- obsidian-git 확인: data.json 없음, 자동 백업 미설정 상태
+
+## [2026-04-22] thought | Wiki 운영 3일차 소감
+- thoughts/2026-04-22_wiki-운영-소감.md: 유지 습관, Lint 한계(교차검증), 프로젝트 분리, 작업보고서 이원화, Claude+Obsidian 조합
+- index.md: 새 thought 페이지 등록
+
+## [2026-04-22] lint | Wiki 정합성 첫 점검
+- Lint 전 항목 PASS (A+): 깨진 링크 0, 고아 0, 모순 0, 프론트매터 정상
+- experience.md: 4/20~4/22 활동 반영 (9개 항목 추가)
+- Wiki 작업보고서 체계 신설 (myWiki/작업보고서/날짜별/)
+- /wiki-log Skill 생성, /work-end wiki 마무리 기능 추가
 
 ## [2026-04-19] update | Claude Design 발견 + Figma MCP 판단
 - ai-landscape.md: Claude Design (2026-04-17, Opus 4.7) 추가

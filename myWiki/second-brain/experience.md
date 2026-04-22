@@ -2,7 +2,7 @@
 title: 경험 타임라인
 type: experience
 created: 2026-04-19
-updated: 2026-04-19
+updated: 2026-04-22
 tags: [경험, 이력, 타임라인]
 links: [me, skills, projects]
 ---
@@ -49,13 +49,22 @@ links: [me, skills, projects]
 - Google Colab 노트북 13개 (시계열 분석/AI 시뮬레이션)
 - 위시캣 7건+ 지원 (BLE, 의료기기, MFC, PyQt)
 
-### 2026년 4월: 교육 제품 완성
+### 2026년 4월: 교육 제품 완성 + 인프라 정비
 - BLE OTA 바이브코딩 시스템 완성 (3-Tier 아키텍처)
 - 사전빌드 WROOM 155개 + Mini 117개 = 272개 완료
 - Python Vibe 교육앱 (100개 예시, 4탭, AI 코드 생성+실행)
 - Xerix MFC Controller 제안서 (4,970만원)
 - ESP32-C6-LCD 테스트 시작
 - aiGeneral AI Ask 서비스 배포
+- AI FanStick 시스템 문서화: Flow 설명서 + MVP vs newMvp 비교 → Notion 업로드
+- REVITA System Flowchart 제작: Mermaid 다이어그램 8개 (부팅/모듈/LoRa/Power/Security 등)
+- 전체 서버 웹 서비스 현황 조사/문서화 (5대: DigitalOcean, RPi5, RPi4, ODROID, REVITA)
+- 불필요 폴더 정리 (plc, ble, jmh, netbook, 충전기 삭제)
+- myhome-rpi5: snu-consulting 서비스 복구 (SO_REUSEADDR), aiPython 서비스 시작
+- ESP32-C3 카운터 프로그램 + BLE OTA 펌웨어 플래시
+- Second Brain Wiki 구축: Obsidian + Claude 연동, 9 코어 + 20 엔티티 + 3 생각 페이지
+- Wiki 자동화: /wiki-log Skill, /work-end wiki 마무리, 날짜별 작업보고서 체계
+- Wiki Lint 첫 점검 실행 (전 항목 PASS)
 
 ## 축적된 경험 영역
 
@@ -108,6 +117,7 @@ links: [me, skills, projects]
 - PM2 프로세스 관리
 - Cloudflare Tunnel / Tailscale 원격 접속
 - RPi5 / ODROID C2 / Jetson Nano 에지 서버
+- 전체 서버 5대 현황 문서화 완료 (PM2 12+, Python 14+, Docker 3+, 도메인 9+)
 
 ## 기록 방법
 새로운 경험이 추가되면 해당 영역에 항목을 추가하고,

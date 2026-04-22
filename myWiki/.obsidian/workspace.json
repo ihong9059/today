@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "10d5397ccf035534",
+        "id": "b6af3ec4a4eda4d6",
         "type": "tabs",
         "children": [
           {
-            "id": "c07b3127247ae084",
+            "id": "2bf2e759c0e0c275",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "second-brain/me.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "me"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "그래프 뷰"
             }
           }
         ]
@@ -78,7 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 405.5
+    "width": 250.5
   },
   "right": {
     "id": "08c2ab39686b73f7",
@@ -183,8 +179,15 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "c07b3127247ae084",
+  "active": "2bf2e759c0e0c275",
   "lastOpenFiles": [
+    "second-brain/index.md",
+    "작업보고서/2026-04-22/wiki_개선_우선순위.md",
+    "작업보고서/2026-04-22/작업일지.md",
+    "작업보고서/2026-04-22/wiki_현황_분석.md",
+    "작업보고서/2026-04-22",
+    "작업보고서",
+    "second-brain/me.md",
     "second-brain/raw/revita/flowChart/why_this_architecture.md",
     "second-brain/raw/revita/flowChart/why_this_architecture.pdf",
     "second-brain/raw/revita/flowChart/system_flowchart.md",
@@ -207,8 +210,6 @@
     "second-brain/raw/revita-apps/apps/test/revita",
     "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_usb_module.h",
     "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_usb_module.c",
-    "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_pinmap.h",
-    "second-brain/raw/revita-apps/apps/loraPing_tower/src/tower_lte_module.h",
     "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-20_Power_3단계_CRON배터리슬롯_시험결과.md",
     "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-19_DeviceManager_2단계_CRON유틸_시험결과.md",
     "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-18_DeviceManager_1단계_T1-01_시험결과.md",
@@ -216,11 +217,6 @@
     "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-17_Security_3단계_시험결과.md",
     "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-17_Security_3단계_설명서.md",
     "second-brain/raw/revita-apps/apps/test/2026-04-17/TC-16_Security_2단계_T2-02_T2-06_시험결과.md",
-    "second-brain/raw/revita-apps/apps/test/2026-04-15/TC-07_RX_module_type_라우팅.md",
-    "second-brain/raw/revita-apps/apps/test/2026-04-15/TC-06_ACK_MONITOR_cmd큐_실패_재암.md",
-    "second-brain/raw/revita-apps/apps/test/2026-04-15/TC-05_원샷_타이머_IDLE_사이클.md",
-    "second-brain/raw/revita-apps/apps/test/2026-04-15/TC-04_IDLE_WAKE_사이클_타이머모니터.md",
-    "second-brain/raw/revita-apps/apps/test/2026-04-15/TC-03_ACK_테이블_양방향.md",
     "second-brain/raw/revita-apps/apps/회로도/리비타_타워_MCU_PART.png",
     "second-brain/raw/revita-apps/apps/회로도/리비타_링크_MCU_PART.png",
     "second-brain/raw/revita-apps/apps/회로도/tower_page11_full.png",

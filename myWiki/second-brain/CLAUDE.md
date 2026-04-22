@@ -50,6 +50,9 @@ second-brain/
     ├── smartFactory/  # 스마트팩토리 AI 모델/제안서 (→ junction)
     ├── tailscale/     # 장비 네트워크 가이드 (→ junction)
     ├── xerix/         # MFC Controller 제안서 (→ junction)
+    ├── webServer/     # 서버 5대 현황 문서 (→ junction, 2026-04-21 추가)
+    ├── 응원봉/         # AI FanStick 제품 (→ junction, 2026-04-22 추가)
+    ├── notion/        # Notion 업로드 스크립트 (→ junction)
     └── articles/      # 인상 깊은 기사, 영상 메모, 스크랩
 ```
 
