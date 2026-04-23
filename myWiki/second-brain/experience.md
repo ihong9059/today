@@ -2,7 +2,7 @@
 title: 경험 타임라인
 type: experience
 created: 2026-04-19
-updated: 2026-04-22
+updated: 2026-04-23
 tags: [경험, 이력, 타임라인]
 links: [me, skills, projects]
 ---
@@ -77,6 +77,9 @@ links: [me, skills, projects]
 - Second Brain Wiki 구축: Obsidian + Claude 연동, 9 코어 + 20 엔티티 + 3 생각 페이지
 - Wiki 자동화: /wiki-log Skill, /work-end wiki 마무리, 날짜별 작업보고서 체계
 - Wiki Lint 첫 점검 실행 (전 항목 PASS)
+- 위시캣 4건 일괄 지원: #154780(PVDF 센서), #154806(BLE 출입통제), #154800(피트니스 IoT), #154763(태양광 모니터링)
+- 일본 BLE Mesh 자전거주차장 수출 실적을 BLE 출입통제 지원서에 핵심 강점으로 부각
+- /wishket-apply 스킬에 wiki 참고/업데이트 절차 추가
 
 ## 축적된 경험 영역
 

@@ -1,5 +1,6 @@
 import { Composition, Still } from "remotion";
 import { BleOtaPitchVideo, BLE_OTA_DURATION } from "./BleOtaPitchVideo";
+import { PrebuildPitchVideo, PREBUILD_PITCH_DURATION } from "./PrebuildPitchVideo";
 import { WallRobotVideo, WALL_ROBOT_VIDEO_DURATION } from "./WallRobotVideo";
 import { MyComposition } from "./Composition";
 import { EconomyNews } from "./EconomyNews";
@@ -1346,6 +1347,15 @@ export const RemotionRoot: React.FC = () => {
         id="WallRobotVideo"
         component={WallRobotVideo}
         durationInFrames={WALL_ROBOT_VIDEO_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      {/* AI Pre-build System Pitch Video */}
+      <Composition
+        id="PrebuildPitchVideo"
+        component={PrebuildPitchVideo}
+        durationInFrames={PREBUILD_PITCH_DURATION}
         fps={30}
         width={1920}
         height={1080}

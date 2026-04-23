@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "google-calendar": {
+      "command": "npx",
+      "args": ["-y", "@cocal/google-calendar-mcp"],
+      "env": {
+        "OAUTH_KEY_FILE": "/Users/maeg/.config/gcp-oauth.keys.json"
+      }
+    }
+  }
+}

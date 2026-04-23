@@ -5,6 +5,32 @@ description: 위시캣 프로젝트 지원서 작성. 프로젝트 ID를 입력�
 
 위시캣 지원서 작성 절차:
 
+## ★ Wiki 연계 (필수)
+
+### 지원서 작성 전: Wiki 참고
+지원서 작성 시 반드시 다음 wiki 파일을 읽고 내용을 반영한다:
+
+1. **myWiki/second-brain/entities/영업전략.md** — 사업 방향, 3대 사업 라인, 수출 실적, 정부지원 연계 전략
+2. **myWiki/second-brain/entities/회사소개.md** — 회사 연혁, 인증(KC/TELEC/CE), 납품처, 수출 실적
+3. **myWiki/second-brain/entities/위시캣활동.md** — 지원 이력, 브랜딩 전략, 수주 성공 사례
+4. **myWiki/second-brain/experience.md** — 최근 활동, 축적된 경험 영역
+5. **myWiki/second-brain/entities/양산제품.md** — 양산 5종 상세 정보
+
+특히 다음 항목을 지원서에 적극 반영:
+- 일본 자전거주차장 BLE Mesh 수출 실적 (500대 + 3,300대)
+- KC/TELEC/CE 인증 보유
+- 정부지원 연계 전략 (고객 비용 50% 절감)
+- 최근 사업 방향 (AI 3대 사업 라인)
+
+### 지원서 작성 후: Wiki 업데이트
+지원서 작성 완료 후 반드시 다음 wiki 파일을 업데이트한다:
+
+1. **위시캣활동.md** — 지원 이력 테이블에 새 항목 추가 (날짜, ID, 프로젝트명, 예산)
+2. **experience.md** — 해당 월 활동에 지원 내역 추가
+3. **log.md** — update 로그 추가 (지원 건수, 프로젝트 요약)
+
+---
+
 ## 사용법
 
 ```
