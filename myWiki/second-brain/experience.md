@@ -78,6 +78,8 @@ links: [me, skills, projects]
 - Wiki 자동화: /wiki-log Skill, /work-end wiki 마무리, 날짜별 작업보고서 체계
 - Wiki Lint 첫 점검 실행 (전 항목 PASS)
 - 위시캣 4건 일괄 지원: #154780(PVDF 센서), #154806(BLE 출입통제), #154800(피트니스 IoT), #154763(태양광 모니터링)
+- **#154780 PVDF 미팅 확정** (4/24 안산 POST-BI센터, 대면) — 지원 당일 미팅 확정, 매칭률 100%
+- 삼환 아파트 조명제어 시스템 제안서 작성 — RAK4630 + LoRa + Zephyr 기반, REVITA 기술 확장
 - 일본 BLE Mesh 자전거주차장 수출 실적을 BLE 출입통제 지원서에 핵심 강점으로 부각
 - /wishket-apply 스킬에 wiki 참고/업데이트 절차 추가
 

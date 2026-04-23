@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UTTEC 스마트 조명제어 시스템 구성도</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', -apple-system, sans-serif; background: #0a0e1a; color: #e0e6f0; min-height: 100vh; }
+
+  .header { text-align: center; padding: 40px 20px 20px; }
+  .header h1 { font-size: 28px; color: #60a5fa; margin-bottom: 8px; }
+  .header p { font-size: 14px; color: #94a3b8; }
+
+  .diagram { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; }
+
+  /* Cloud Layer */
+  .cloud-layer {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    border: 2px solid #6366f1;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  .cloud-layer::after {
+    content: '☁️ Cloud Server';
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: #312e81;
+    padding: 2px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #a5b4fc;
+    border: 1px solid #6366f1;
+  }
+  .cloud-items { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .cloud-item {
+    background: rgba(99,102,241,0.15);
+    border: 1px solid #4f46e5;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+    min-width: 180px;
+    flex: 1;
+  }
+  .cloud-item h3 { font-size: 14px; color: #a5b4fc; margin-bottom: 6px; }
+  .cloud-item p { font-size: 12px; color: #94a3b8; line-height: 1.5; }
+
+  /* Connection Line */
+  .connection { text-align: center; margin: 10px 0; position: relative; }
+  .connection .line { width: 3px; height: 40px; background: linear-gradient(to bottom, #6366f1, #22d3ee); margin: 0 auto; }
+  .connection .label {
+    display: inline-block;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: #67e8f9;
+    margin-top: 4px;
+  }
+
+  /* Gateway Layer */
+  .gateway-layer {
+    background: linear-gradient(135deg, #042f2e 0%, #134e4a 100%);
+    border: 2px solid #14b8a6;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  .gateway-layer::after {
+    content: '🏢 Gateway (관리사무소)';
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: #134e4a;
+    padding: 2px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #5eead4;
+    border: 1px solid #14b8a6;
+  }
+  .gateway-grid { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .gateway-module {
+    background: rgba(20,184,166,0.1);
+    border: 1px solid #0d9488;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 140px;
+  }
+  .gateway-module .icon { font-size: 24px; margin-bottom: 6px; }
+  .gateway-module h4 { font-size: 13px; color: #5eead4; margin-bottom: 4px; }
+  .gateway-module p { font-size: 11px; color: #94a3b8; }
+
+  /* LoRa Fan-out */
+  .lora-fanout { text-align: center; margin: 10px 0; }
+  .lora-fanout .label {
+    display: inline-block;
+    background: linear-gradient(90deg, #f59e0b, #f97316);
+    color: #1a1a1a;
+    border-radius: 20px;
+    padding: 6px 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .lora-lines { display: flex; justify-content: center; gap: 0; margin-top: 8px; }
+  .lora-line { width: 2px; height: 30px; background: #f59e0b; margin: 0 60px; }
+
+  /* Node Layer */
+  .node-layer {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 2px solid #3b82f6;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  .node-layer::after {
+    content: '💡 조명 노드 (최대 254개)';
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: #16213e;
+    padding: 2px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #93c5fd;
+    border: 1px solid #3b82f6;
+  }
+  .nodes-grid { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .node-card {
+    background: rgba(59,130,246,0.08);
+    border: 1px solid #2563eb;
+    border-radius: 14px;
+    padding: 16px;
+    min-width: 200px;
+    flex: 1;
+    max-width: 220px;
+  }
+  .node-card .node-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(59,130,246,0.2);
+  }
+  .node-card .node-icon { font-size: 22px; }
+  .node-card .node-title { font-size: 13px; font-weight: 600; color: #93c5fd; }
+  .node-card .node-count { font-size: 11px; color: #64748b; }
+  .node-features { list-style: none; }
+  .node-features li {
+    font-size: 11px;
+    color: #94a3b8;
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .node-features li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #3b82f6;
+  }
+
+  /* Tech Spec */
+  .tech-bar {
+    background: linear-gradient(135deg, #1e1b4b 0%, #1e293b 100%);
+    border: 2px solid #475569;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  .tech-bar::after {
+    content: '🔧 RAK4630 코어 기술';
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: #1e293b;
+    padding: 2px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #cbd5e1;
+    border: 1px solid #475569;
+  }
+  .tech-grid { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .tech-item {
+    background: rgba(71,85,105,0.15);
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 130px;
+    flex: 1;
+  }
+  .tech-item .val { font-size: 16px; font-weight: 700; color: #60a5fa; }
+  .tech-item .lbl { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+
+  /* Integration */
+  .integration-layer {
+    background: linear-gradient(135deg, #2d1f0e 0%, #44280e 100%);
+    border: 2px solid #d97706;
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+  }
+  .integration-layer::after {
+    content: '🔗 연동 시스템';
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: #44280e;
+    padding: 2px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #fbbf24;
+    border: 1px solid #d97706;
+  }
+  .integration-grid { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .integration-item {
+    background: rgba(217,119,6,0.1);
+    border: 1px solid #92400e;
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 120px;
+    flex: 1;
+  }
+  .integration-item .icon { font-size: 24px; margin-bottom: 4px; }
+  .integration-item p { font-size: 12px; color: #fcd34d; }
+
+  /* Benefits */
+  .benefits {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    margin-top: 30px; padding: 0 20px;
+  }
+  .benefit-card {
+    background: linear-gradient(135deg, #064e3b, #065f46);
+    border: 1px solid #10b981;
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    min-width: 150px;
+    flex: 1;
+  }
+  .benefit-card .num { font-size: 28px; font-weight: 800; color: #34d399; }
+  .benefit-card .desc { font-size: 12px; color: #a7f3d0; margin-top: 4px; }
+
+  .footer { text-align: center; padding: 30px; font-size: 12px; color: #475569; }
+  .footer a { color: #60a5fa; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>UTTEC Smart Lighting Control System</h1>
+  <p>아파트 단지 보안등 · 옥외등 스마트 조명제어 시스템 구성도 | RAK4630 + LoRa + Zephyr RTOS</p>
+</div>
+
+<div class="diagram">
+
+  <!-- Cloud -->
+  <div class="cloud-layer">
+    <div class="cloud-items">
+      <div class="cloud-item">
+        <h3>MQTT Broker</h3>
+        <p>TLS 1.2 암호화<br>실시간 양방향 통신<br>토픽 기반 라우팅</p>
+      </div>
+      <div class="cloud-item">
+        <h3>AI Engine</h3>
+        <p>예지정비 (고장 예측)<br>에너지 최적화<br>패턴 학습/분석</p>
+      </div>
+      <div class="cloud-item">
+        <h3>Dashboard</h3>
+        <p>단지 지도 뷰<br>실시간 모니터링<br>원격 제어/설정</p>
+      </div>
+      <div class="cloud-item">
+        <h3>Mobile App</h3>
+        <p>관리자 앱 (Flutter)<br>푸시 알림<br>현장 BLE 설정</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connection: Cloud ↔ Gateway -->
+  <div class="connection">
+    <div class="line"></div>
+    <div class="label">LTE Cat-M1 / 이더넷 | TLS 1.2 암호화</div>
+  </div>
+
+  <!-- Gateway -->
+  <div class="gateway-layer">
+    <div class="gateway-grid">
+      <div class="gateway-module">
+        <div class="icon">📡</div>
+        <h4>RAK4630</h4>
+        <p>nRF52840<br>+ SX1262 LoRa</p>
+      </div>
+      <div class="gateway-module">
+        <div class="icon">📶</div>
+        <h4>LTE 모뎀</h4>
+        <p>RC76xx<br>Cat-M1/NB-IoT</p>
+      </div>
+      <div class="gateway-module">
+        <div class="icon">🔌</div>
+        <h4>RS485</h4>
+        <p>Modbus RTU<br>기존 유선 연동</p>
+      </div>
+      <div class="gateway-module">
+        <div class="icon">🛡️</div>
+        <h4>AES-128</h4>
+        <p>CTR + CMAC<br>LoRa 암호화</p>
+      </div>
+      <div class="gateway-module">
+        <div class="icon">🔄</div>
+        <h4>OTA 관리</h4>
+        <p>MCUboot<br>원격 FW 업데이트</p>
+      </div>
+      <div class="gateway-module">
+        <div class="icon">⏱️</div>
+        <h4>TDMA</h4>
+        <p>시간 동기화<br>최대 254 노드</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LoRa Fan-out -->
+  <div class="lora-fanout">
+    <div class="label">LoRa 922.1MHz | SF7~12 | 14dBm | AES-128 | 도달 2km</div>
+    <div class="lora-lines">
+      <div class="lora-line"></div>
+      <div class="lora-line"></div>
+      <div class="lora-line"></div>
+      <div class="lora-line"></div>
+      <div class="lora-line"></div>
+    </div>
+  </div>
+
+  <!-- Nodes -->
+  <div class="node-layer">
+    <div class="nodes-grid">
+      <div class="node-card">
+        <div class="node-header">
+          <span class="node-icon">🔦</span>
+          <div>
+            <div class="node-title">보안등</div>
+            <div class="node-count">80개</div>
+          </div>
+        </div>
+        <ul class="node-features">
+          <li>조도 센서 (자동 점등)</li>
+          <li>PIR 동체감지 (100% 부스트)</li>
+          <li>전력 계측 (W/kWh)</li>
+          <li>진동 감지 (파손 알림)</li>
+          <li>적응형 4단계 디밍</li>
+        </ul>
+      </div>
+      <div class="node-card">
+        <div class="node-header">
+          <span class="node-icon">🌳</span>
+          <div>
+            <div class="node-title">산책로등</div>
+            <div class="node-count">40개</div>
+          </div>
+        </div>
+        <ul class="node-features">
+          <li>조도 센서 (일몰 자동)</li>
+          <li>PIR 보행자 감지</li>
+          <li>온도 센서 (과열 보호)</li>
+          <li>페이드 디밍 (부드러운 전환)</li>
+          <li>계절별 자동 스케줄</li>
+        </ul>
+      </div>
+      <div class="node-card">
+        <div class="node-header">
+          <span class="node-icon">🅿️</span>
+          <div>
+            <div class="node-title">주차장등</div>
+            <div class="node-count">60개</div>
+          </div>
+        </div>
+        <ul class="node-features">
+          <li>PIR 차량/보행자 감지</li>
+          <li>출입통제 연동 점등</li>
+          <li>전력 계측 + 고장감지</li>
+          <li>비상 시 전체 100%</li>
+          <li>CCTV 연동 조명</li>
+        </ul>
+      </div>
+      <div class="node-card">
+        <div class="node-header">
+          <span class="node-icon">🎪</span>
+          <div>
+            <div class="node-title">놀이터/출입구</div>
+            <div class="node-count">20개</div>
+          </div>
+        </div>
+        <ul class="node-features">
+          <li>시간 제한 운영 (조례 준수)</li>
+          <li>출입구 항시 80%+</li>
+          <li>CCTV PTZ 연동</li>
+          <li>비상 경보 연동</li>
+          <li>이벤트 특별 모드</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tech Spec Bar -->
+  <div class="tech-bar">
+    <div class="tech-grid">
+      <div class="tech-item">
+        <div class="val">nRF52840</div>
+        <div class="lbl">ARM Cortex-M4F<br>64MHz / 1MB Flash</div>
+      </div>
+      <div class="tech-item">
+        <div class="val">SX1262</div>
+        <div class="lbl">LoRa 트랜시버<br>922MHz ISM</div>
+      </div>
+      <div class="tech-item">
+        <div class="val">Zephyr</div>
+        <div class="lbl">RTOS<br>멀티스레드</div>
+      </div>
+      <div class="tech-item">
+        <div class="val">AES-128</div>
+        <div class="lbl">CTR + CMAC<br>암호화 통신</div>
+      </div>
+      <div class="tech-item">
+        <div class="val">16B</div>
+        <div class="lbl">고정 프레임<br>ACK 재전송</div>
+      </div>
+      <div class="tech-item">
+        <div class="val">BLE 5.0</div>
+        <div class="lbl">현장 설정<br>스마트폰 앱</div>
+      </div>
+      <div class="tech-item">
+        <div class="val">OTA</div>
+        <div class="lbl">MCUboot<br>원격 업데이트</div>
+      </div>
+      <div class="tech-item">
+        <div class="val">KC/CE</div>
+        <div class="lbl">인증 경험<br>한/일/유럽</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Integration -->
+  <div class="integration-layer">
+    <div class="integration-grid">
+      <div class="integration-item">
+        <div class="icon">📹</div>
+        <p>CCTV<br>PTZ 연동</p>
+      </div>
+      <div class="integration-item">
+        <div class="icon">🚪</div>
+        <p>출입통제<br>게이트 연동</p>
+      </div>
+      <div class="integration-item">
+        <div class="icon">🔥</div>
+        <p>화재경보<br>피난등 연동</p>
+      </div>
+      <div class="integration-item">
+        <div class="icon">📞</div>
+        <p>인터폰<br>비상통화</p>
+      </div>
+      <div class="integration-item">
+        <div class="icon">🌤️</div>
+        <p>기상 API<br>우천모드</p>
+      </div>
+      <div class="integration-item">
+        <div class="icon">⚡</div>
+        <p>한전 AMI<br>피크관리</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefits -->
+  <div class="benefits">
+    <div class="benefit-card">
+      <div class="num">60%</div>
+      <div class="desc">에너지 절감</div>
+    </div>
+    <div class="benefit-card">
+      <div class="num">3,260만</div>
+      <div class="desc">연간 비용 절감</div>
+    </div>
+    <div class="benefit-card">
+      <div class="num">254</div>
+      <div class="desc">최대 노드 수</div>
+    </div>
+    <div class="benefit-card">
+      <div class="num">2km</div>
+      <div class="desc">LoRa 도달 거리</div>
+    </div>
+    <div class="benefit-card">
+      <div class="num">3,800+</div>
+      <div class="desc">기 납품 수량</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>㈜유티텍 (UTTEC Inc.) | RAK4630 + Zephyr RTOS + LoRa | 2018 국내 최초 LoRa 조명 상용화</p>
+  <p>KC · TELEC · CE 인증 | 한국/일본 특허 보유 | 일본 수출 실적 3,800대+</p>
+</div>
+
+</body>
+</html>
