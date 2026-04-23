@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"C:\\todo\\today\\.claude\\hooks\\create-daily-report.py\" && python \"C:\\todo\\today\\.claude\\hooks\\notion-sync.py\""
+          }
+        ]
+      }
+    ]
+  }
+}

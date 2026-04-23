@@ -15,7 +15,6 @@ links: [me.md, ai-direction.md, projects.md, gaps.md]
 - [ ] Claude Design 학습
 - [ ] 위시캣 프로젝트 수주
 - [ ] Second Brain Wiki 안정화 (Lint 완료 ✅, 콘텐츠 최신화 진행중)
-- [ ] Obsidian raw/ 폴더 제외 설정
 - [ ] aiPython PM2 등록 + snu-consulting DuckDNS 도메인 결정
 - [ ] REVITA 테스트 진행 + 데모/설명서 개선
 

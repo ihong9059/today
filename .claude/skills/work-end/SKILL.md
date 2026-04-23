@@ -90,7 +90,19 @@ powershell -Command "Get-ChildItem 'C:\todo\today\.claude\sessions\session_*.md'
 - 위시캣 지원/수주 결과
 - 교육 현장 경험이나 피드백
 
-### 6. Wiki 작업일지 마무리
+### 6. Notion "오늘 할 일" 완료 항목 정리
+
+Notion "오늘 할 일" 페이지(ID: `349cb620-8c2b-817d-a7fe-c887ecdee292`)의 완료 섹션에서 **2일 이상 경과한 항목을 자동 삭제**한다.
+
+```bash
+python "C:\todo\today\.claude\hooks\notion-cleanup.py"
+```
+
+- 완료 섹션의 `[MM/DD] 항목명` 형식에서 날짜를 확인
+- 현재 날짜 기준 2일 이상 경과한 항목 삭제
+- 삭제 결과를 표시
+
+### 7. Wiki 작업일지 마무리
 
 오늘 날짜의 wiki 작업일지가 있으면 자동으로 마무리한다.
 

@@ -22,12 +22,34 @@ description: 위시캣 프로젝트 지원서 작성. 프로젝트 ID를 입력�
 - 정부지원 연계 전략 (고객 비용 50% 절감)
 - 최근 사업 방향 (AI 3대 사업 라인)
 
-### 지원서 작성 후: Wiki 업데이트
-지원서 작성 완료 후 반드시 다음 wiki 파일을 업데이트한다:
+### 지원서 작성 후: Wiki + Notion 업데이트
+지원서 작성 완료 후 반드시 다음을 업데이트한다:
 
 1. **위시캣활동.md** — 지원 이력 테이블에 새 항목 추가 (날짜, ID, 프로젝트명, 예산)
 2. **experience.md** — 해당 월 활동에 지원 내역 추가
 3. **log.md** — update 로그 추가 (지원 건수, 프로젝트 요약)
+4. **Notion "위시캣 프로젝트 추적" DB** — 새 행 추가 (상태: 대기)
+
+#### Notion DB 추가 방법
+```python
+python -c "
+import requests, json, os
+TOKEN = os.environ['NOTION_TOKEN']
+DB_ID = '34bcb620-8c2b-8109-bc86-d635a4e18479'
+headers = {'Authorization': f'Bearer {TOKEN}', 'Content-Type': 'application/json', 'Notion-Version': '2022-06-28'}
+props = {
+    '프로젝트명': {'title': [{'text': {'content': '{프로젝트명}'}}]},
+    '프로젝트ID': {'rich_text': [{'text': {'content': '#{ID}'}}]},
+    '상태': {'select': {'name': '대기'}},
+    '예산': {'rich_text': [{'text': {'content': '{예산}'}}]},
+    '지원일': {'date': {'start': '{YYYY-MM-DD}'}},
+    '매칭률': {'rich_text': [{'text': {'content': '{X/Y}'}}]},
+    '비고': {'rich_text': [{'text': {'content': ''}}]},
+}
+r = requests.post('https://api.notion.com/v1/pages', headers=headers, json={'parent': {'database_id': DB_ID}, 'properties': props})
+print('Notion 추가 성공' if r.status_code == 200 else f'실패: {r.text}')
+"
+```
 
 ---
 
