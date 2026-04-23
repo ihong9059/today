@@ -60,6 +60,17 @@ updated: 2026-04-22
 | [[uttec-homepage]] | UTTEC 홈페이지 — Next.js 14, 14개 사례연구 |
 | [[ai-education-web]] | AI Education Web — 코드베이스, Next.js 16 |
 | [[aiHardStudy]] | aiHardStudy — 바이브코딩 메인 저장소, 48K 파일 |
+| [[aiStudy]] | AI 교육 커리큘럼 — 4 Track 14주, 딥러닝 실습 |
+| [[remotion-project]] | Remotion 영상 제작 — React 기반 30+ 교육 영상 |
+| [[유투브]] | YouTube 콘텐츠 노트 — AI/하드웨어 영상 요약 |
+| [[동영상]] | ESP32 교육 동영상 — 초등 대상 임베디드 교육 |
+| [[ffmpeg]] | FFmpeg + HongLab — 영상 처리 도구 + AI 코스 |
+| [[figma]] | Figma 디자인 도구 — Claude Design으로 보류 판단 |
+| [[gsd]] | GSD 워크플로우 — 프로젝트 관리 학습 + CLI |
+| [[skill-자동화]] | 자동화 목록 — 19+ Skill, Hook, MCP 인벤토리 |
+| [[nlm]] | NotebookLM 슬라이드 — YouTube 자동 수집→PPTX |
+| [[전시회]] | 전시회 참가 — COEX AW/InterBattery, AI 예측 정비 |
+| [[회사소개]] | ㈜유티텍 — 연혁, 인증, 특허, 납품처, 기술 진화 |
 
 ## 생각 (Thoughts)
 | 페이지 | 요약 |
@@ -68,3 +79,4 @@ updated: 2026-04-22
 | [[2026-04-19_notion-연계]] | Notion과 세컨드 브레인 역할 분담 계획 |
 | [[2026-04-19_notion-data]] | Notion 첫 수집 + 라즈베리 Claude 아이디어 |
 | [[2026-04-22_wiki-운영-소감]] | Wiki 3일차 소감 — 유지 습관, Lint 한계, 자동화의 가치 |
+| [[2026-04-22_사업전환-AI시대]] | 사업 전환 — LED 조명→AI 3대 사업, 복리 인사이트 |

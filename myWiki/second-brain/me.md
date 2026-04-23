@@ -2,7 +2,7 @@
 title: 나는 누구인가
 type: identity
 created: 2026-04-19
-updated: 2026-04-19
+updated: 2026-04-22
 tags: [정체성, 핵심]
 links: [skills.md, experience.md, goals.md, projects.md]
 ---
@@ -24,10 +24,15 @@ links: [skills.md, experience.md, goals.md, projects.md]
 - 학생이 직접 만져보는 교육: 사전빌드 시스템으로 즉시 체험
 - "바이브 코딩" 접근: AI와 함께 코딩하는 새로운 교육 방식 시도
 
-### 사업가/프리랜서
-- 위시캣에서 프로젝트 수주 활동
-- 교육 사업 구축 중
-- 하드웨어 + 소프트웨어 통합 솔루션 제공
+### 사업가 — ㈜유티텍 대표
+- **2016년 설립**, Network Solution 전문 기업
+- 핵심 기술: BLE Mesh → LoRa → LoRa+AI 무선 제어 시스템
+- **일본 수출 실적**: 하네다공항 500대 + 나고야 3,300대 자전거주차장
+- **대형 납품**: 현대건설, 롯데건설, 한화건설, LH, 홈플러스
+- **인증**: 한국 KC, 일본 TELEC, 유럽 CE + 한일 특허 2건
+- 위시캣 프리랜서 활동 (REVITA #153090 수주)
+- 교육 사업 + 스마트팩토리 AI 사업 구축 중
+- 상세: [[회사소개]]
 
 ## 성향
 - **빠른 실행**: 계획보다 프로토타입 우선
@@ -35,7 +40,7 @@ links: [skills.md, experience.md, goals.md, projects.md]
 - **도구 활용**: Claude Code를 핵심 작업 도구로 적극 활용
 - **자동화 지향**: 반복 작업은 시스템으로 해결
 
-## 현재 상태 (2026-04-19)
+## 현재 상태 (2026-04-22)
 - [[skills|기술 스택]]: 임베디드(상) + 풀스택 + AI 활용
 - [[experience|경험]]: 272개 펌웨어 빌드, 교육 시스템 구축
 - [[projects|프로젝트]]: Python Vibe 교육앱 완성, 사전빌드 시스템 운영 중

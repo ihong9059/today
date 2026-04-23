@@ -7,6 +7,36 @@ updated: 2026-04-22
 
 # Second Brain 위키 로그
 
+## [2026-04-22] thought | 사업 전환 선언 — LED→AI 3대 사업
+- thoughts/2026-04-22_사업전환-AI시대.md 작성 — 전환 배경, 3대 사업 정의, 복리 인사이트, 리스크
+- ai-direction.md 재정의: 사업 전환 선언 + 판단 로그 4건 추가 + 전략적 방향 재작성
+- goals.md 장기 비전 3대 사업으로 교체, 핵심 질문 업데이트
+- 영업전략.md: 신규 AI 3대 사업 추가, 기존 사업은 "참고용" 분류
+- me.md: 사업가 섹션 전면 개편
+
+## [2026-04-22] ingest | 회사소개서 수집 + 회사 엔티티 생성
+- raw/회사소개 → homepage/회사소개 junction 연결
+- entities/회사소개.md 신규 생성: 연혁(2016~2023), 인증(KC/TELEC/CE), 특허(한일), 납품처 8곳, 기술 진화 스토리
+- 회사소개서(2024.10) PDF 18페이지 분석 반영
+
+## [2026-04-22] update | 위키 목적 체계 확장 (3→6 목적)
+- CLAUDE.md 목적을 3개 → 6개로 확장: 내부 역량(자기 이해, 개선점 도출) + 외부 환경(시장 이해, 사업 성과 추적) + 의사결정(방향 판단, 복리 성장)
+- 해석 워크플로우에 고객/매출/경쟁 재료 추가
+- 활용 로그에 revenue/lost/market 카테고리 추가
+- 사업 방향 판단 프레임워크 5개 질문 추가
+- 페이지 업데이트 주기에 시장/고객/경쟁 엔티티 트리거 추가
+
+## [2026-04-22] ingest | revitaProject junction 추가
+- raw/revitaProject → C:\todo\revitaProject junction 연결
+- revita.md 엔티티에 revitaProject 코드베이스 정보 통합 (별도 엔티티 불필요)
+
+## [2026-04-22] ingest | 미반영 폴더 10개 일괄 수집 + 엔티티 생성
+- raw/ junction 10개 추가: aiStudy, remotion-project, 유투브, 동영상, ffmpeg, figma, gsd, skill, nlm, 전시회
+- 신규 엔티티 10개: aiStudy, remotion-project, 유투브, 동영상, ffmpeg, figma, gsd, skill-자동화, nlm, 전시회
+- ubuntu-s-2vcpu-4gb-sgp1-01은 서버인프라 엔티티에 통합, pem은 제외 (민감 데이터)
+- CLAUDE.md에 반자동 엔티티 감지 규칙 + raw/ 추가 체크리스트 추가
+- root 폴더 전수 대조 → 미반영 0건 달성
+
 ## [2026-04-22] update | P1~P9 Wiki 개선 전체 완료
 - experience.md: 4/20~4/22 활동 9개 항목 추가
 - 서버인프라.md: 5대 서버 전수 조사 결과 반영, 요약 테이블 추가

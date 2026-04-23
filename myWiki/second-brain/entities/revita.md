@@ -2,14 +2,14 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-04-19
-tags: [프로젝트, IoT, 펌웨어, LoRa]
+updated: 2026-04-22
+tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, revitaProject]
 ---
 
 # REVITA
 
 ## 한 줄 정의
-IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응.
+IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**.
 
 ## 현재 상태
 - RAK4630 펌웨어 프로젝트 (Zephyr RTOS)
@@ -37,6 +37,16 @@ IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 �
 
 ## 코드베이스
 
+### revitaProject (C:/todo/revitaProject/) — raw/revitaProject junction
+- **application/**: REVITA 애플리케이션 소스
+- **zephyr_workspace/**: Zephyr RTOS 빌드 환경
+- **doc/**: 프로젝트 문서
+- **ref/**: 참고 자료
+- **revitaBrain/**: REVITA 지식 베이스
+- **revitaWiki/**: REVITA 전용 위키
+- **자료/**: 기타 자료
+- **작업보고서/**: REVITA 프로젝트 작업보고서
+
 ### 로컬 (C:/todo/today/revita/)
 - 약 7,830개 파일
 - `protocol/`: 통신 프로토콜 문서
@@ -60,9 +70,16 @@ IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 �
 - 검증 완료 드라이버: LoRa, USB CDC, QSPI, ADC, GPIO, I2C
 - bare-metal 불가 → Zephyr 필수 (LoRa/USB/QSPI 동시성)
 
+## 위키 연결
+
+- **revitaWiki** (C:\todo\revitaProject\revitaWiki) — 기술 상세 (설계 결정, 모듈, TC, 로드맵)
+- **myWiki의 이 페이지** — 사업 관점 요약
+
 ## 관련 페이지
+- [[위시캣활��]]: 수주 이력 (#153090, 주3회, 월500만)
 - [[projects]]: 프로젝트 맵
 - [[skills]]: LoRa, RS485, Modbus, Zephyr
 - [[experience]]: 산업 자동화 경험
 - [[tailscale네트워크]]: 원격 접근
 - [[양산제품]]: 양산 기술 활용
+- [[claude-code]]: 전체 개발을 AI 협업으로 진행
