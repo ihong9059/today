@@ -42,8 +42,7 @@ IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 �
 - **zephyr_workspace/**: Zephyr RTOS 빌드 환경
 - **doc/**: 프로젝트 문서
 - **ref/**: 참고 자료
-- **revitaBrain/**: REVITA 지식 베이스
-- **revitaWiki/**: REVITA 전용 위키
+- **revitaWiki/**: REVITA 지식 위키 (유일한 Source of Truth)
 - **자료/**: 기타 자료
 - **작업보고서/**: REVITA 프로젝트 작업보고서
 

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USLC 제안서 - 스마트 조명 + 전기차 안전관리</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f7fafc;color:#2d3748;line-height:1.6}
+.page{max-width:1000px;margin:0 auto;padding:40px 24px}
+
+/* 헤더 */
+.hero{background:linear-gradient(135deg,#1a365d 0%,#2b6cb0 100%);border-radius:20px;padding:48px 40px;color:#fff;text-align:center;margin-bottom:36px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:rgba(255,255,255,.05);border-radius:50%}
+.hero h1{font-size:30px;margin-bottom:8px;position:relative}
+.hero .sub{font-size:16px;opacity:.85;margin-bottom:24px;position:relative}
+.hero-tags{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
+.tag{background:rgba(255,255,255,.18);padding:8px 20px;border-radius:24px;font-size:13px;font-weight:bold;backdrop-filter:blur(4px)}
+
+/* 섹션 공통 */
+.sec{background:#fff;border-radius:16px;padding:36px;box-shadow:0 2px 16px rgba(0,0,0,.06);margin-bottom:28px}
+.sec h2{font-size:22px;color:#1a365d;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.sec h2 .ico{font-size:28px}
+.sec h3{font-size:16px;color:#2d3748;margin:24px 0 12px;padding-left:12px;border-left:4px solid #4299e1}
+
+/* 위기감 섹션 */
+.crisis{background:linear-gradient(135deg,#fff5f5,#fffaf0);border:2px solid #fed7d7}
+.crisis h2{color:#c53030}
+.crisis-stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:20px 0}
+.crisis-card{background:#fff;border-radius:12px;padding:20px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);border-top:4px solid #e53e3e}
+.crisis-card .big{font-size:36px;font-weight:900;color:#e53e3e;line-height:1.2}
+.crisis-card .desc{font-size:13px;color:#718096;margin-top:6px}
+.news-box{background:#2d3748;color:#fff;border-radius:12px;padding:20px;margin-top:16px;font-size:14px}
+.news-box strong{color:#fc8181}
+.news-box ul{list-style:none;margin-top:10px}
+.news-box ul li{padding:4px 0;padding-left:20px;position:relative}
+.news-box ul li::before{content:'>';position:absolute;left:0;color:#fc8181;font-weight:bold}
+
+/* 솔루션 개요 */
+.solution-hero{background:linear-gradient(135deg,#ebf8ff,#e6fffa);border:2px solid #bee3f8;text-align:center;padding:40px}
+.solution-hero h2{justify-content:center}
+.sol-flow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:24px 0}
+.sol-box{background:#fff;border-radius:12px;padding:16px 24px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center;min-width:140px}
+.sol-box .ico{font-size:32px;margin-bottom:4px}
+.sol-box h4{font-size:13px;color:#2b6cb0}
+.sol-box p{font-size:11px;color:#718096}
+.sol-arrow{font-size:24px;color:#4299e1;font-weight:bold}
+.sol-badge{background:#2b6cb0;color:#fff;padding:10px 24px;border-radius:24px;font-size:14px;font-weight:bold;display:inline-block;margin-top:16px}
+
+/* 기능 카드 그리드 */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.feat-card{border-radius:14px;padding:24px;position:relative;overflow:hidden}
+.feat-card h4{font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.feat-card ul{list-style:none;font-size:13px}
+.feat-card ul li{padding:5px 0;padding-left:18px;position:relative}
+.feat-card ul li::before{content:'✓';position:absolute;left:0;font-weight:bold}
+.fc-blue{background:#ebf8ff;border:1px solid #bee3f8}
+.fc-blue h4{color:#2b6cb0}
+.fc-blue ul li::before{color:#4299e1}
+.fc-red{background:#fff5f5;border:1px solid #fed7d7}
+.fc-red h4{color:#c53030}
+.fc-red ul li::before{color:#e53e3e}
+.fc-green{background:#f0fff4;border:1px solid #c6f6d5}
+.fc-green h4{color:#276749}
+.fc-green ul li::before{color:#38a169}
+.fc-orange{background:#fffaf0;border:1px solid #fefcbf}
+.fc-orange h4{color:#c05621}
+.fc-orange ul li::before{color:#dd6b20}
+.fc-purple{background:#faf5ff;border:1px solid #e9d8fd}
+.fc-purple h4{color:#6b46c1}
+.fc-purple ul li::before{color:#805ad5}
+
+/* 3단계 대응 */
+.steps-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.step{border-radius:14px;padding:24px;text-align:center}
+.step .temp{font-size:42px;font-weight:900;line-height:1}
+.step .label{font-size:14px;font-weight:bold;margin:8px 0 12px}
+.step ul{text-align:left;list-style:none;font-size:13px}
+.step ul li{padding:4px 0}
+.step-1{background:linear-gradient(135deg,#fffff0,#fefce8);border:2px solid #ecc94b}
+.step-1 .temp{color:#d69e2e}
+.step-1 .label{color:#b7791f}
+.step-2{background:linear-gradient(135deg,#fffaf0,#fef3c7);border:2px solid #ed8936}
+.step-2 .temp{color:#dd6b20}
+.step-2 .label{color:#c05621}
+.step-3{background:linear-gradient(135deg,#fff5f5,#fed7d7);border:2px solid #e53e3e}
+.step-3 .temp{color:#e53e3e}
+.step-3 .label{color:#c53030}
+
+/* 대시보드 */
+.dash{background:#1a202c;border-radius:14px;padding:24px;color:#fff}
+.dash-hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #2d3748;padding-bottom:12px;margin-bottom:16px}
+.dash-hdr h3{font-size:17px}
+.dash-hdr .date{color:#a0aec0;font-size:12px}
+.dash-section{margin-bottom:16px}
+.dash-section-title{font-size:11px;color:#a0aec0;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px}
+.st{background:#2d3748;border-radius:8px;padding:12px;text-align:center}
+.st .n{font-size:24px;font-weight:bold}
+.st .n.g{color:#68d391}.st .n.y{color:#f6e05e}.st .n.r{color:#fc8181}.st .n.b{color:#63b3ed}.st .n.o{color:#ed8936}
+.st .l{font-size:10px;color:#a0aec0;margin-top:2px}
+.alerts{background:#2d3748;border-radius:8px;padding:14px;margin-top:12px}
+.alerts h4{color:#fc8181;font-size:12px;margin-bottom:8px}
+.al{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #4a5568;font-size:12px}
+.al:last-child{border:none}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot-r{background:#fc8181}.dot-y{background:#f6e05e}.dot-g{background:#68d391}
+
+/* 비교 테이블 */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.cmp-side{border-radius:14px;padding:24px}
+.cmp-old{background:#fff5f5;border:2px solid #fed7d7}
+.cmp-new{background:#f0fff4;border:2px solid #c6f6d5}
+.cmp-side h3{font-size:16px;margin-bottom:12px}
+.cmp-old h3{color:#c53030}
+.cmp-new h3{color:#276749}
+.ci{padding:8px 0;font-size:14px;border-bottom:1px solid rgba(0,0,0,.05)}
+.ci:last-child{border:none}
+
+/* 민원 대응 */
+.complaint-grid{display:grid;gap:12px}
+.complaint{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;align-items:center;background:#f7fafc;border-radius:10px;padding:14px 18px;font-size:13px}
+.complaint .q{color:#4a5568;font-weight:bold}
+.complaint .old{color:#c53030;text-decoration:line-through;opacity:.6}
+.complaint .new{color:#276749;font-weight:bold}
+
+/* 비용 절감 */
+.savings{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.save-card{background:#f0fff4;border:2px solid #c6f6d5;border-radius:14px;padding:20px;text-align:center}
+.save-card .amount{font-size:28px;font-weight:900;color:#276749}
+.save-card .item{font-size:13px;color:#4a5568;margin-top:4px}
+.save-total{background:linear-gradient(135deg,#276749,#2f855a);color:#fff;border-radius:14px;padding:24px;text-align:center;margin-top:16px}
+.save-total .amount{font-size:36px;font-weight:900}
+.save-total .item{font-size:15px;opacity:.9;margin-top:4px}
+
+/* 타임라인 */
+.tl-bar{display:flex;height:48px;border-radius:10px;overflow:hidden;margin-bottom:10px}
+.tl-b{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;color:#fff;flex-direction:column}
+.tl-b .p{font-size:15px}
+.tl-b .t{font-size:9px;opacity:.8}
+.tl-legend{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;font-size:11px;color:#718096;margin-bottom:20px}
+
+/* 설치 과정 */
+.install-steps{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.inst{background:#f7fafc;border-radius:12px;padding:18px;text-align:center;flex:1;min-width:160px;max-width:220px;border:1px solid #e2e8f0}
+.inst .num{width:32px;height:32px;background:#4299e1;color:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;margin-bottom:8px}
+.inst .desc{font-size:12px;color:#4a5568}
+
+/* 실적 */
+.track{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.track-card{background:#f7fafc;border-radius:10px;padding:16px;text-align:center;border:1px solid #e2e8f0}
+.track-card .client{font-size:14px;font-weight:bold;color:#2d3748}
+.track-card .detail{font-size:11px;color:#718096;margin-top:4px}
+
+/* 비상 대응 플로우 */
+.emergency{background:linear-gradient(135deg,#1a202c,#2d3748);border-radius:14px;padding:28px;color:#fff}
+.emergency h3{color:#fc8181;font-size:17px;text-align:center;margin-bottom:16px}
+.em-flow{display:flex;flex-direction:column;gap:8px}
+.em-step{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.06);border-radius:8px;padding:10px 16px;font-size:13px}
+.em-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;flex-shrink:0}
+.em-num-r{background:#e53e3e}
+.em-num-o{background:#dd6b20}
+.em-num-b{background:#4299e1}
+.em-note{text-align:center;margin-top:14px;font-size:12px;color:#a0aec0;font-style:italic}
+
+/* 일정 */
+.schedule{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.sch{background:#f7fafc;border-radius:10px;padding:14px;text-align:center;border:1px solid #e2e8f0}
+.sch .phase{font-size:11px;color:#718096}
+.sch .weeks{font-size:22px;font-weight:bold;color:#2b6cb0}
+.sch .what{font-size:11px;color:#4a5568;margin-top:4px}
+
+/* 푸터 */
+.footer{text-align:center;padding:32px;color:#718096;font-size:13px}
+.footer .company{font-size:18px;font-weight:bold;color:#1a365d;margin-bottom:8px}
+
+/* 충전기 그리드 */
+.charger-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:12px 0}
+.charger{background:#2d3748;border-radius:8px;padding:10px;text-align:center;font-size:11px;color:#a0aec0}
+.charger .id{font-weight:bold;color:#fff;font-size:12px}
+.charger .status{margin:4px 0}
+.charger .temp{font-size:13px;font-weight:bold}
+.charger.charging{border:1px solid #4299e1}
+.charger.charging .status{color:#63b3ed}
+.charger.idle .status{color:#68d391}
+.charger.warning{border:2px solid #e53e3e;background:#2d2020}
+.charger.warning .temp{color:#fc8181}
+
+@media(max-width:768px){
+  .cmp{grid-template-columns:1fr}
+  .charger-grid{grid-template-columns:repeat(3,1fr)}
+  .complaint{grid-template-columns:1fr;gap:4px}
+  .hero{padding:32px 24px}
+  .hero h1{font-size:22px}
+}
+@media print{body{background:#fff}.page{max-width:100%;padding:0}.sec{box-shadow:none;border:1px solid #e2e8f0}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 표지 -->
+<div class="hero">
+  <h1>&#50500;&#54028;&#53944; &#49828;&#47560;&#53944; &#51312;&#47749; + &#51204;&#44592;&#52264; &#52649;&#51204; &#50504;&#51204;&#44288;&#47532;</h1>
+  <div class="sub">UTTEC Smart Lighting &amp; EV Safety System (USLC)</div>
+  <div class="hero-tags">
+    <span class="tag">&#128161; &#47924;&#49440; &#51312;&#47749;&#51228;&#50612;</span>
+    <span class="tag">&#128293; &#51204;&#44592;&#52264; &#54868;&#51116; &#50696;&#48169;</span>
+    <span class="tag">&#128225; &#48176;&#49440; &#44277;&#49324; &#50630;&#51020;</span>
+    <span class="tag">&#128202; &#50640;&#45320;&#51648; 60% &#51208;&#44048;</span>
+  </div>
+</div>
+
+<!-- 1. 위기감: 왜 필요한가 -->
+<div class="sec crisis">
+  <h2><span class="ico">&#128680;</span> &#50864;&#47532; &#50500;&#54028;&#53944;, &#50504;&#51204;&#54633;&#45768;&#44620;?</h2>
+  <div class="crisis-stat">
+    <div class="crisis-card">
+      <div class="big">23&#45824;</div>
+      <div class="desc">2024&#45380; &#52397;&#46972; &#50500;&#54028;&#53944; &#54868;&#51116;<br>&#49548;&#49892;&#46108; &#52264;&#47049; &#49688;</div>
+    </div>
+    <div class="crisis-card">
+      <div class="big">18%</div>
+      <div class="desc">&#51648;&#54616;&#51452;&#52264;&#51109; &#49828;&#54532;&#47553;&#53364;&#47084;<br>&#49892;&#51228; &#51089;&#46041;&#47456; (&#49548;&#48169;&#52397;)</div>
+    </div>
+    <div class="crisis-card">
+      <div class="big">100+</div>
+      <div class="desc">&#45824;&#54588; &#51452;&#48124; &#49688;<br>&#48373;&#44396;&#50640; &#49688;&#44060;&#50900;</div>
+    </div>
+    <div class="crisis-card">
+      <div class="big">&#8734;</div>
+      <div class="desc">&#44288;&#47532;&#49548;&#51109;&#51032;<br>&#48277;&#51201; &#52293;&#51076; &#48276;&#50948;</div>
+    </div>
+  </div>
+  <div class="news-box">
+    <strong>&#128227; &#51221;&#48512; &#51221;&#52293;&#51060; &#48320;&#54616;&#44256; &#51080;&#49845;&#45768;&#45796;</strong>
+    <ul>
+      <li>2024.09 &#12300;&#51204;&#44592;&#52264; &#54868;&#51116; &#50504;&#51204;&#44288;&#47532; &#45824;&#52293;&#12301; &#48156;&#54364; (&#49548;&#48169;&#52397;)</li>
+      <li>2025.02 &#12300;&#51648;&#54616;&#51452;&#52264;&#51109; &#51204;&#44592;&#52264; &#50504;&#51204;&#45824;&#52293;&#12301; &#52628;&#51652; (&#54665;&#50504;&#48512;/&#44397;&#53664;&#48512;)</li>
+      <li>2025.08 &#52649;&#51204;&#49324;&#50629;&#51088; <strong>&#47924;&#44284;&#49892; &#52293;&#51076;&#48372;&#54744;</strong> &#44032;&#51077; &#51032;&#47924;&#54868;</li>
+      <li><strong>&#49828;&#47560;&#53944; &#51228;&#50612; &#52649;&#51204;&#44592; &#48372;&#44553; &#54869;&#45824;</strong> &#51221;&#52293; &#52628;&#51652; &#51473;</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 2. 솔루션 개요 -->
+<div class="sec solution-hero">
+  <h2><span class="ico">&#128161;</span> USLC&#44032; &#54644;&#44208;&#54633;&#45768;&#45796;</h2>
+  <div class="sol-flow">
+    <div class="sol-box"><div class="ico">&#128294;</div><h4>&#50725;&#50808; &#51312;&#47749;</h4><p>&#51088;&#46041; &#46356;&#48141; + &#44256;&#51109; &#44048;&#51648;</p></div>
+    <span class="sol-arrow">+</span>
+    <div class="sol-box"><div class="ico">&#128293;</div><h4>EV &#52649;&#51204; &#50504;&#51204;</h4><p>&#50728;&#46020;/&#44032;&#49828;/&#51204;&#47448; &#44048;&#49884;</p></div>
+    <span class="sol-arrow">+</span>
+    <div class="sol-box"><div class="ico">&#128241;</div><h4>&#47784;&#48148;&#51068; &#50508;&#47548;</h4><p>&#44288;&#47532;&#49548;&#51109; &#50545; &#54392;&#49884;</p></div>
+    <span class="sol-arrow">=</span>
+    <div class="sol-box" style="background:#ebf8ff"><div class="ico">&#128225;</div><h4>&#54616;&#45208;&#51032; LoRa &#47924;&#49440;</h4><p>&#48176;&#49440; &#44277;&#49324; &#50630;&#51020;!</p></div>
+  </div>
+  <div class="sol-badge">&#51312;&#47749;&#44284; &#51204;&#44592;&#52264; &#50504;&#51204;&#51012; &#54616;&#45208;&#51032; &#54540;&#47019;&#54268;&#51004;&#47196; &#53685;&#54633;</div>
+</div>
+
+<!-- 3. EV 3단계 자동 대응 -->
+<div class="sec">
+  <h2><span class="ico">&#9888;</span> &#51204;&#44592;&#52264; &#52649;&#51204;&#49548; &#8212; 3&#45800;&#44228; &#51088;&#46041; &#45824;&#51025;</h2>
+  <p style="text-align:center;color:#718096;margin-bottom:20px;font-size:14px">&#44288;&#47532;&#51088;&#44032; &#48512;&#51116;&#54644;&#46020; &#49884;&#49828;&#53596;&#51060; <strong>&#51088;&#46041;&#51004;&#47196; &#45824;&#51025;</strong>&#54633;&#45768;&#45796;</p>
+  <div class="steps-row">
+    <div class="step step-1">
+      <div class="temp">45&#8451;</div>
+      <div class="label">&#9888; 1&#45800;&#44228; &#44221;&#44256;</div>
+      <ul>
+        <li>&#128241; &#44288;&#47532;&#49548;&#51109; &#50545; &#54392;&#49884;</li>
+        <li>&#9889; &#52649;&#51204; &#52636;&#47141; &#51088;&#46041; &#44048;&#49548;</li>
+        <li>&#128203; &#45824;&#49884;&#48372;&#46300; &#51452;&#51032; &#54364;&#49884;</li>
+      </ul>
+    </div>
+    <div class="step step-2">
+      <div class="temp">60&#8451;</div>
+      <div class="label">&#128680; 2&#45800;&#44228; &#50948;&#54744;</div>
+      <ul>
+        <li>&#9889; <b>&#54644;&#45817; &#52649;&#51204;&#44592; &#51088;&#46041; &#52264;&#45800;</b></li>
+        <li>&#9889; &#51064;&#51217; &#52649;&#51204;&#44592; &#51221;&#51648;</li>
+        <li>&#128680; &#44221;&#44256;&#46321; + &#44221;&#44256;&#51020; &#51089;&#46041;</li>
+        <li>&#128241; &#44288;&#47532;&#49324;&#47924;&#49548; + &#44221;&#48708;&#49892; &#46041;&#49884;</li>
+      </ul>
+    </div>
+    <div class="step step-3">
+      <div class="temp">80&#8451;</div>
+      <div class="label">&#128680; 3&#45800;&#44228; &#48708;&#49345;</div>
+      <ul>
+        <li>&#9889; <b>&#51204;&#52404; &#52649;&#51204;&#44592; &#52264;&#45800;</b></li>
+        <li>&#128161; &#51452;&#52264;&#51109; &#51312;&#47749; 100% &#51216;&#46321;</li>
+        <li>&#128168; &#54872;&#44592; &#49884;&#49828;&#53596; &#52572;&#45824; &#44032;&#46041;</li>
+        <li>&#128680; 119 &#51088;&#46041; &#49888;&#44256;</li>
+        <li>&#128241; &#51452;&#48124; &#45824;&#54588; &#50504;&#45236; &#54392;&#49884;</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 4. 5중 감시 체계 -->
+<div class="sec">
+  <h2><span class="ico">&#128269;</span> 5&#51473; &#49892;&#49884;&#44036; &#44048;&#49884; &#52404;&#44228;</h2>
+  <p style="text-align:center;color:#718096;margin-bottom:20px;font-size:14px">CCTV&#47564;&#51004;&#47196;&#45716; &#54868;&#51116;&#47484; &#47561;&#51012; &#49688; &#50630;&#49845;&#45768;&#45796;. <strong>&#48156;&#49373; &#51204; &#51669;&#54980;</strong>&#47484; &#44048;&#51648;&#54633;&#45768;&#45796;.</p>
+  <div class="feat-grid">
+    <div class="feat-card fc-red">
+      <h4>&#127777; &#50676;&#54868;&#49345; &#50728;&#46020; &#44048;&#49884;</h4>
+      <ul>
+        <li>&#52264;&#47049; &#54616;&#48512; &#54364;&#47732; &#50728;&#46020; &#49892;&#49884;&#44036; &#52769;&#51221;</li>
+        <li>45&#8451; &#44221;&#44256; &#8594; 60&#8451; &#50948;&#54744; &#8594; 80&#8451; &#48708;&#49345;</li>
+        <li>&#52649;&#51204; &#52964;&#45349;&#53552;/&#52992;&#51060;&#48660; &#44284;&#50676; &#44048;&#51648;</li>
+      </ul>
+    </div>
+    <div class="feat-card fc-orange">
+      <h4>&#9889; &#51204;&#47448;/&#51204;&#50517; &#44048;&#49884;</h4>
+      <ul>
+        <li>&#44284;&#51204;&#47448;/&#45572;&#51204;/&#50500;&#53356; &#49892;&#49884;&#44036; &#44048;&#51648;</li>
+        <li>&#51221;&#44201; 120% &#44221;&#44256;, 150% &#51088;&#46041; &#52264;&#45800;</li>
+        <li>&#51204;&#47141; &#54408;&#51656; &#51060;&#49345; &#51312;&#44592; &#48156;&#44204;</li>
+      </ul>
+    </div>
+    <div class="feat-card fc-blue">
+      <h4>&#128168; &#44032;&#49828; &#44048;&#51648; (CO/CO&#8322;/VOC)</h4>
+      <ul>
+        <li>&#51068;&#49328;&#54868;&#53444;&#49548; (CO) 50ppm &#44221;&#44256;</li>
+        <li>&#48176;&#53552;&#47532; &#51204;&#54644;&#51656; &#45572;&#52636; (VOC) &#51312;&#44592; &#44221;&#48372;</li>
+        <li>&#54872;&#44592; &#54060; &#51088;&#46041; &#44032;&#46041; &#50672;&#46041;</li>
+      </ul>
+    </div>
+    <div class="feat-card fc-green">
+      <h4>&#128684; &#50672;&#44592; &#44048;&#51648;</h4>
+      <ul>
+        <li>&#44305;&#54617;&#49885; &#50672;&#44592; &#49468;&#49436;</li>
+        <li>&#52488;&#44592; &#50672;&#44592; &#48156;&#49373; &#49884; &#51593;&#49884; &#50508;&#47548;</li>
+        <li>CCTV&#48372;&#45796; &#48736;&#47480; &#44048;&#51648;</li>
+      </ul>
+    </div>
+    <div class="feat-card fc-purple">
+      <h4>&#128167; &#54872;&#44221; &#44048;&#49884;</h4>
+      <ul>
+        <li>&#51648;&#54616;&#51452;&#52264;&#51109; &#50728;/&#49845;&#46020; &#47784;&#45768;&#53552;&#47553;</li>
+        <li>&#52840;&#49688; &#44048;&#51648; &#8594; &#52649;&#51204;&#44592; &#51204;&#50896; &#52264;&#45800;</li>
+        <li>&#54872;&#44592; &#49345;&#53468; &#49892;&#49884;&#44036; &#54869;&#51064;</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 5. 관리사무소 대시보드 -->
+<div class="sec">
+  <h2><span class="ico">&#128187;</span> &#44288;&#47532;&#49324;&#47924;&#49548; &#45824;&#49884;&#48372;&#46300; &#8212; &#54620; &#45576;&#50640;</h2>
+  <div class="dash">
+    <div class="dash-hdr"><h3>USLC &#53685;&#54633; &#44288;&#51228;</h3><span class="date">2026-04-25 (&#44552;) 09:15</span></div>
+    <div class="dash-section">
+      <div class="dash-section-title">&#128161; &#50725;&#50808; &#51312;&#47749;</div>
+      <div class="stats">
+        <div class="st"><div class="n g">137</div><div class="l">&#51221;&#49345;</div></div>
+        <div class="st"><div class="n y">2</div><div class="l">&#51452;&#51032;</div></div>
+        <div class="st"><div class="n r">1</div><div class="l">&#44256;&#51109;</div></div>
+        <div class="st"><div class="n b">180&#47564;</div><div class="l">&#51060;&#48264;&#45804; &#51208;&#44048;</div></div>
+      </div>
+    </div>
+    <div class="dash-section">
+      <div class="dash-section-title">&#128293; &#51204;&#44592;&#52264; &#52649;&#51204;&#49548;</div>
+      <div class="stats">
+        <div class="st"><div class="n b">8/20</div><div class="l">&#52649;&#51204; &#51473;</div></div>
+        <div class="st"><div class="n o">1</div><div class="l">&#50728;&#46020; &#51452;&#51032;</div></div>
+        <div class="st"><div class="n g">&#50577;&#54840;</div><div class="l">&#44277;&#44592;&#51656;</div></div>
+        <div class="st"><div class="n b">42kW</div><div class="l">&#52509; &#51204;&#47141;</div></div>
+      </div>
+    </div>
+    <div class="dash-section">
+      <div class="dash-section-title">&#128267; B2 &#52649;&#51204;&#44592; &#49345;&#53468;</div>
+      <div class="charger-grid">
+        <div class="charger charging"><div class="id">B2-01</div><div class="status">&#9889;&#52649;&#51204;&#51473;</div><div class="temp" style="color:#68d391">29&#8451;</div></div>
+        <div class="charger idle"><div class="id">B2-02</div><div class="status">&#128994;&#45824;&#44592;</div><div class="temp">23&#8451;</div></div>
+        <div class="charger charging"><div class="id">B2-03</div><div class="status">&#9889;&#52649;&#51204;&#51473;</div><div class="temp" style="color:#68d391">31&#8451;</div></div>
+        <div class="charger idle"><div class="id">B2-04</div><div class="status">&#128994;&#45824;&#44592;</div><div class="temp">24&#8451;</div></div>
+        <div class="charger idle"><div class="id">B2-05</div><div class="status">&#128994;&#45824;&#44592;</div><div class="temp">23&#8451;</div></div>
+        <div class="charger idle"><div class="id">B2-06</div><div class="status">&#128994;&#45824;&#44592;</div><div class="temp">24&#8451;</div></div>
+        <div class="charger warning"><div class="id">B2-07</div><div class="status">&#9888;&#51452;&#51032;!</div><div class="temp">42&#8451;&#8593;</div></div>
+        <div class="charger idle"><div class="id">B2-08</div><div class="status">&#128994;&#45824;&#44592;</div><div class="temp">23&#8451;</div></div>
+        <div class="charger idle"><div class="id">B2-09</div><div class="status">&#128994;&#45824;&#44592;</div><div class="temp">24&#8451;</div></div>
+        <div class="charger charging"><div class="id">B2-10</div><div class="status">&#9889;&#52649;&#51204;&#51473;</div><div class="temp" style="color:#68d391">28&#8451;</div></div>
+      </div>
+    </div>
+    <div class="alerts">
+      <h4>&#128276; &#44596;&#44553; &#50508;&#47548;</h4>
+      <div class="al"><span class="dot dot-r"></span> B2-07 &#52649;&#51204;&#44592; &#50728;&#46020; &#49345;&#49849; &#51473; (38&#8594;42&#8451;, 10&#48516;) &#8212; &#52636;&#47141; &#44048;&#49548; &#51201;&#50857; &#51473;</div>
+      <div class="al"><span class="dot dot-y"></span> &#49328;&#52293;&#47196; #12 LED &#54952;&#50984; &#51200;&#54616; &#8212; &#44368;&#52404; &#44428;&#51109; (~2&#51452;)</div>
+      <div class="al"><span class="dot dot-g"></span> B1 &#44277;&#44592;&#51656;: CO 12ppm / CO&#8322; 680ppm &#8212; &#51221;&#49345; &#48276;&#50948;</div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. 비상 대응 연동 -->
+<div class="sec" style="padding:0;overflow:hidden">
+  <div class="emergency">
+    <h3>&#128680; &#48708;&#49345; &#49884; &#51312;&#47749;&#44284; &#52649;&#51204;&#51060; &#51088;&#46041; &#50672;&#46041;&#46121;&#45768;&#45796;</h3>
+    <div class="em-flow">
+      <div class="em-step"><span class="em-num em-num-r">1</span> &#54644;&#45817; &#52649;&#51204;&#44592; &#51593;&#49884; &#52264;&#45800;</div>
+      <div class="em-step"><span class="em-num em-num-r">2</span> &#51064;&#51217; &#52649;&#51204;&#44592; &#51204;&#52404; &#51221;&#51648;</div>
+      <div class="em-step"><span class="em-num em-num-o">3</span> &#54644;&#45817; &#44396;&#50669; &#51312;&#47749; <b>100% &#51216;&#46321;</b> (&#45824;&#54588; &#44221;&#47196; &#54869;&#48372;)</div>
+      <div class="em-step"><span class="em-num em-num-o">4</span> &#54872;&#44592; &#49884;&#49828;&#53596; &#52572;&#45824; &#44032;&#46041;</div>
+      <div class="em-step"><span class="em-num em-num-o">5</span> &#48708;&#49345;&#44396; &#48169;&#54693; &#50504;&#45236;&#46321; &#51216;&#47736;</div>
+      <div class="em-step"><span class="em-num em-num-b">6</span> &#44288;&#47532;&#49324;&#47924;&#49548; + &#44221;&#48708;&#49892; &#44596;&#44553; &#50508;&#47548;</div>
+      <div class="em-step"><span class="em-num em-num-b">7</span> 119 &#51088;&#46041; &#49888;&#44256;</div>
+      <div class="em-step"><span class="em-num em-num-b">8</span> &#51452;&#48124; &#50545; &#45824;&#54588; &#50504;&#45236; &#54392;&#49884;</div>
+    </div>
+    <div class="em-note">&#44288;&#47532;&#51088; &#51312;&#51089; &#50630;&#51060; &#51204;&#52404; &#51088;&#46041; &#49892;&#54665; &#8212; &#51312;&#47749;&#44284; &#52649;&#51204;&#51060; &#54616;&#45208;&#51032; &#49884;&#49828;&#53596;&#51060;&#44592;&#50640; &#44032;&#45733;</div>
+  </div>
+</div>
+
+<!-- 7. 민원 Before/After -->
+<div class="sec">
+  <h2><span class="ico">&#128172;</span> &#48124;&#50896; &#45824;&#51025; &#8212; &#51060;&#47156;&#44172; &#45804;&#46972;&#51665;&#45768;&#45796;</h2>
+  <div class="complaint-grid">
+    <div class="complaint">
+      <div class="q">"&#52649;&#51204; &#51473; &#53440;&#45716; &#45252;&#49352;&#44032; &#45208;&#50836;"</div>
+      <div class="old">&#54788;&#51109; &#52636;&#46041; &#8594; &#50977;&#50504; &#54869;&#51064;</div>
+      <div class="new">&#10004; &#51060;&#48120; &#44048;&#51648; &#51473;, &#51088;&#46041; &#51312;&#52824; &#51652;&#54665;</div>
+    </div>
+    <div class="complaint">
+      <div class="q">"&#51204;&#44592;&#52264; &#54868;&#51116;&#44032; &#44145;&#51221;&#46104;&#50836;"</div>
+      <div class="old">"CCTV &#51080;&#49845;&#45768;&#45796;"</div>
+      <div class="new">&#10004; 24&#49884;&#44036; 5&#51473; &#51088;&#46041; &#44048;&#49884; &#49884;&#49828;&#53596; &#50868;&#50689; &#51473;</div>
+    </div>
+    <div class="complaint">
+      <div class="q">"&#52649;&#51204;&#48708; &#51221;&#49328;&#51060; &#51060;&#49345;&#54644;&#50836;"</div>
+      <div class="old">&#49688;&#44592; &#44592;&#47197; &#45824;&#51312; (&#48516;&#51137;)</div>
+      <div class="new">&#10004; &#50545;&#50640;&#49436; &#52649;&#51204; &#51060;&#47141; &#53804;&#47749; &#44277;&#44060;</div>
+    </div>
+    <div class="complaint">
+      <div class="q">"&#52649;&#51204;&#44592;&#44032; &#54637;&#49345; &#48512;&#51313;&#54644;&#50836;"</div>
+      <div class="old">&#45824;&#51025; &#50612;&#47140;&#50880;</div>
+      <div class="new">&#10004; &#50696;&#50557;/&#45824;&#44592;&#50676; + &#49900;&#50556; &#51088;&#46041; &#52649;&#51204;</div>
+    </div>
+    <div class="complaint">
+      <div class="q">"&#48372;&#50504;&#46321;&#51060; &#44256;&#51109;&#45212; &#44163; &#44057;&#50500;&#50836;"</div>
+      <div class="old">&#50556;&#44036; &#49692;&#52272; &#8594; &#54869;&#51064; (1~2&#51068;)</div>
+      <div class="new">&#10004; &#44256;&#51109; &#51088;&#46041; &#44048;&#51648; &#8594; &#51593;&#49884; &#50508;&#47548;</div>
+    </div>
+  </div>
+</div>
+
+<!-- 8. 기존 vs USLC -->
+<div class="sec">
+  <h2><span class="ico">&#128260;</span> &#44592;&#51316; &#48169;&#49885; vs USLC</h2>
+  <div class="cmp">
+    <div class="cmp-side cmp-old">
+      <h3>&#10060; &#51648;&#44552;&#44620;&#51648;</h3>
+      <div class="ci">&#128203; &#47588;&#51068; &#50556;&#44036; &#49692;&#52272;&#51004;&#47196; &#44256;&#51109; &#54869;&#51064;</div>
+      <div class="ci">&#128293; &#51204;&#44592;&#52264; &#54868;&#51116; &#48520;&#50504; (CCTV&#47564;)</div>
+      <div class="ci">&#9200; &#44228;&#51208;&#47560;&#45796; &#53440;&#51060;&#47672; &#49688;&#46041; &#51312;&#51221;</div>
+      <div class="ci">&#128176; &#52649;&#51204;&#48708; &#51221;&#49328; &#48516;&#51137;</div>
+      <div class="ci">&#128221; &#50640;&#45320;&#51648; &#48372;&#44256;&#49436; &#49688;&#51089;&#50629;</div>
+      <div class="ci">&#128295; &#48176;&#49440; &#44277;&#49324; &#54596;&#50836; (&#49688;&#52380;&#47564;&#50896;)</div>
+    </div>
+    <div class="cmp-side cmp-new">
+      <h3>&#10004; USLC &#51201;&#50857; &#54980;</h3>
+      <div class="ci">&#128225; &#44256;&#51109; &#51088;&#46041; &#44048;&#51648; &#8594; <b>&#51593;&#49884;</b> &#50508;&#47548;</div>
+      <div class="ci">&#128293; <b>24&#49884;&#44036; 5&#51473; &#51088;&#46041; &#44048;&#49884; + &#51088;&#46041; &#52264;&#45800;</b></div>
+      <div class="ci">&#127749; &#51068;&#52636;/&#51068;&#47792; &#51088;&#46041;, &#44228;&#51208; &#51088;&#46041; &#48372;&#51221;</div>
+      <div class="ci">&#128241; &#50545;&#51004;&#47196; &#52649;&#51204; &#51060;&#47141; <b>&#53804;&#47749; &#44277;&#44060;</b></div>
+      <div class="ci">&#128202; &#50900;&#44036; &#47532;&#54252;&#53944; <b>&#51088;&#46041; &#49373;&#49457;</b> (PDF)</div>
+      <div class="ci">&#128225; &#47924;&#49440; &#49444;&#52824; &#8212; <b>&#44277;&#49324;&#48708; 0&#50896;</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- 9. 자동 운영 스케줄 -->
+<div class="sec">
+  <h2><span class="ico">&#9200;</span> &#44288;&#47532;&#51088; &#51312;&#51089; &#50630;&#51060; &#51088;&#46041; &#50868;&#50689;</h2>
+  <h3>&#50725;&#50808; &#51312;&#47749;</h3>
+  <div class="tl-bar">
+    <div class="tl-b" style="flex:2;background:#1a365d"><span class="p">OFF</span><span class="t">&#51068;&#52636;~&#51068;&#47792;</span></div>
+    <div class="tl-b" style="flex:2;background:#dd6b20"><span class="p">80%</span><span class="t">&#51068;&#47792;~22&#49884;</span></div>
+    <div class="tl-b" style="flex:1;background:#d69e2e"><span class="p">50%</span><span class="t">22~24&#49884;</span></div>
+    <div class="tl-b" style="flex:2;background:#2d3748"><span class="p">20%</span><span class="t">0~4&#49884;</span></div>
+    <div class="tl-b" style="flex:1;background:#4a5568"><span class="p">40%</span><span class="t">4&#49884;~&#51068;&#52636;</span></div>
+  </div>
+  <div class="tl-legend">
+    <span>&#127749; &#51068;&#52636;/&#51068;&#47792; GPS &#51088;&#46041;</span>
+    <span>&#128694; &#49324;&#46988; &#44048;&#51648; &#49884; 100% (30&#52488;)</span>
+    <span>&#128680; &#48708;&#49345; &#49884; &#51204;&#52404; 100%</span>
+  </div>
+  <h3>&#51204;&#44592;&#52264; &#52649;&#51204;</h3>
+  <div class="tl-bar">
+    <div class="tl-b" style="flex:3;background:#ed8936"><span class="p">&#54588;&#53356; &#51312;&#51208;</span><span class="t">18~23&#49884;</span></div>
+    <div class="tl-b" style="flex:4;background:#276749"><span class="p">&#49900;&#50556; &#52649;&#51204;</span><span class="t">23~06&#49884; (&#50836;&#44552; 40%&#8595;)</span></div>
+    <div class="tl-b" style="flex:3;background:#4299e1"><span class="p">&#51068;&#48152; &#52649;&#51204;</span><span class="t">06~18&#49884;</span></div>
+  </div>
+  <div class="tl-legend">
+    <span>&#9889; &#54588;&#53356;: &#52636;&#47141; &#51088;&#46041; &#51312;&#51208;</span>
+    <span>&#127769; &#49900;&#50556;: &#51088;&#46041; &#51204;&#54872; &#8594; 40% &#51208;&#44048;</span>
+    <span>&#127777; 24&#49884;&#44036; &#50504;&#51204; &#44048;&#49884;</span>
+  </div>
+</div>
+
+<!-- 10. 비용 절감 효과 -->
+<div class="sec">
+  <h2><span class="ico">&#128176;</span> &#50672;&#44036; &#48708;&#50857; &#51208;&#44048; &#54952;&#44284; (500&#49464;&#45824; &#44592;&#51456;)</h2>
+  <div class="savings">
+    <div class="save-card"><div class="amount">2,160&#47564;</div><div class="item">&#50725;&#50808; &#51312;&#47749; &#51204;&#44592;&#50836;&#44552; &#51208;&#44048;</div></div>
+    <div class="save-card"><div class="amount">800&#47564;</div><div class="item">&#49692;&#52272; &#51064;&#44148;&#48708; &#51208;&#44048;</div></div>
+    <div class="save-card"><div class="amount">300&#47564;</div><div class="item">LED &#44368;&#52404; &#48708;&#50857; &#51208;&#44048;</div></div>
+    <div class="save-card"><div class="amount">960&#47564;</div><div class="item">&#52649;&#51204; &#49900;&#50556; &#51204;&#54872; &#51208;&#44048;</div></div>
+  </div>
+  <div class="save-total">
+    <div class="amount">&#50672;&#44036; 4,220&#47564;&#50896;+</div>
+    <div class="item">&#49688;&#51204; &#49444;&#48708; &#51613;&#49444; &#54924;&#54588; &#49884; &#49688;&#52380;&#47564;&#50896; &#52628;&#44032; &#51208;&#44048;</div>
+  </div>
+</div>
+
+<!-- 11. 설치 과정 -->
+<div class="sec">
+  <h2><span class="ico">&#128295;</span> &#49444;&#52824; &#8212; &#51060;&#47156;&#44172; &#44036;&#45800;&#54633;&#45768;&#45796;</h2>
+  <h3>&#50725;&#50808; &#51312;&#47749; (&#46321;&#44592;&#44396;&#45817; 15&#48516;)</h3>
+  <div class="install-steps">
+    <div class="inst"><div class="num">1</div><div class="desc">&#46321;&#44592;&#44396; &#52964;&#48260; &#50676;&#44592;</div></div>
+    <div class="inst"><div class="num">2</div><div class="desc">Node &#47784;&#46280; &#48512;&#52265;<br>(&#45208;&#49324; 2&#44060;)</div></div>
+    <div class="inst"><div class="num">3</div><div class="desc">&#44592;&#51316; &#51204;&#50896;&#49440;&#50640;<br>&#52964;&#45349;&#53552; &#50672;&#44208;</div></div>
+    <div class="inst"><div class="num">4</div><div class="desc">&#49828;&#47560;&#53944;&#54256; &#50545;&#51004;&#47196;<br>QR&#53076;&#46300; &#46321;&#47197;</div></div>
+  </div>
+  <h3 style="margin-top:24px">&#51204;&#44592;&#52264; &#52649;&#51204;&#49548; (&#52649;&#51204;&#44592;&#45817; 30&#48516;)</h3>
+  <div class="install-steps">
+    <div class="inst"><div class="num">1</div><div class="desc">&#48317;&#47732;/&#52380;&#51109;&#50640;<br>EV Node &#49444;&#52824;</div></div>
+    <div class="inst"><div class="num">2</div><div class="desc">&#50676;&#54868;&#49345; &#49468;&#49436;<br>&#52264;&#47049; &#54616;&#48512; &#51312;&#51456;</div></div>
+    <div class="inst"><div class="num">3</div><div class="desc">&#51204;&#47141; &#44228;&#52769; &#47784;&#46280;<br>&#53364;&#47016;&#54532; &#50672;&#44208;</div></div>
+    <div class="inst"><div class="num">4</div><div class="desc">&#48708;&#49345; &#52264;&#45800; &#47540;&#47112;&#51060;<br>&#51204;&#50896; &#46972;&#51064; &#50672;&#44208;</div></div>
+    <div class="inst"><div class="num">5</div><div class="desc">&#50545;&#51004;&#47196; &#46321;&#47197;<br>&#44592;&#51456;&#44050; &#49444;&#51221;</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px">
+    <div style="background:#fff5f5;border-radius:10px;padding:16px;text-align:center;border:1px solid #fed7d7">
+      <div style="font-size:13px;color:#c53030;font-weight:bold">&#10060; &#50976;&#49440; &#44048;&#49884; &#49884;&#49828;&#53596;</div>
+      <div style="font-size:12px;color:#718096;margin-top:6px">&#48176;&#49440; &#44277;&#49324; 2~4&#51452;, &#51452;&#52264;&#51109; &#54224;&#49604;, &#49688;&#52380;&#47564;&#50896;</div>
+    </div>
+    <div style="background:#f0fff4;border-radius:10px;padding:16px;text-align:center;border:1px solid #c6f6d5">
+      <div style="font-size:13px;color:#276749;font-weight:bold">&#10004; USLC &#47924;&#49440; &#49444;&#52824;</div>
+      <div style="font-size:12px;color:#718096;margin-top:6px"><b>3~5&#51068;</b>, &#51452;&#48124; &#48520;&#54200; &#50630;&#51020;, &#44277;&#49324;&#48708; 0&#50896;</div>
+    </div>
+  </div>
+</div>
+
+<!-- 12. 프로젝트 일정 -->
+<div class="sec">
+  <h2><span class="ico">&#128197;</span> &#54532;&#47196;&#51229;&#53944; &#51068;&#51221;</h2>
+  <div class="schedule">
+    <div class="sch"><div class="phase">1. &#54788;&#51109; &#51312;&#49324;</div><div class="weeks">1&#51452;</div><div class="what">&#46321;&#44592;&#44396;/&#52649;&#51204;&#49548; &#54788;&#54889;</div></div>
+    <div class="sch"><div class="phase">2. &#49345;&#49464; &#49444;&#44228;</div><div class="weeks">3&#51452;</div><div class="what">HW/SW &#49444;&#44228;</div></div>
+    <div class="sch"><div class="phase">3. &#49884;&#51228;&#54408;</div><div class="weeks">5&#51452;</div><div class="what">Gateway+Node &#51228;&#51089;</div></div>
+    <div class="sch"><div class="phase">4. &#54028;&#51068;&#47103;</div><div class="weeks">2&#51452;</div><div class="what">10&#44060;+2&#44592; &#49884;&#48276;</div></div>
+    <div class="sch"><div class="phase">5. KC &#51064;&#51613;</div><div class="weeks">4&#51452;</div><div class="what">&#44592; &#52712;&#46301; &#44221;&#54744; &#44592;&#48152;</div></div>
+    <div class="sch"><div class="phase">6. &#50577;&#49328;/&#49444;&#52824;</div><div class="weeks">4&#51452;</div><div class="what">&#51204;&#52404; &#49444;&#52824;</div></div>
+    <div class="sch"><div class="phase">7. &#49884;&#50868;&#51204;</div><div class="weeks">1&#51452;</div><div class="what">&#44288;&#47532;&#51088; &#44368;&#50977;</div></div>
+  </div>
+  <div style="text-align:center;margin-top:14px;color:#2b6cb0;font-size:16px;font-weight:bold">&#52509; &#50557; 20&#51452; (5&#44060;&#50900;)</div>
+</div>
+
+<!-- 13. UTTEC 실적 -->
+<div class="sec">
+  <h2><span class="ico">&#127942;</span> UTTEC &#49892;&#51201; &#8212; 8&#45380; &#50577;&#49328;&#183;&#45225;&#54408;</h2>
+  <div class="track">
+    <div class="track-card"><div class="client">&#54616;&#45208;&#44552;&#50997;&#52896;&#54140;&#49828;</div><div class="detail">&#47924;&#49440; &#51312;&#47749;&#51228;&#50612; &#49884;&#49828;&#53596;</div></div>
+    <div class="track-card"><div class="client">&#54596;&#47196;&#49828;GC / &#44305;&#47497;CC</div><div class="detail">&#44264;&#54532;&#51109; &#47924;&#49440; &#51312;&#47749;</div></div>
+    <div class="track-card"><div class="client">&#54616;&#45348;&#45796;&#44277;&#54637; &#127471;&#127477;</div><div class="detail">&#51088;&#51204;&#44144;&#51452;&#52264;&#51109; BLE 500&#45824;</div></div>
+    <div class="track-card"><div class="client">&#45208;&#44256;&#50556; &#49324;&#52852;&#50640;&#50669; &#127471;&#127477;</div><div class="detail">&#51088;&#51204;&#44144;&#51452;&#52264;&#51109; BLE 3,300&#45824;</div></div>
+    <div class="track-card"><div class="client">&#54788;&#45824;/&#47215;&#45936;/&#54620;&#54868;/LH</div><div class="detail">EMS IoT &#47784;&#46280; &#44277;&#44553;</div></div>
+  </div>
+  <div style="text-align:center;margin-top:16px;padding:16px;background:#ebf8ff;border-radius:10px;border:1px solid #bee3f8">
+    <div style="font-size:15px;font-weight:bold;color:#2b6cb0">2018&#45380; &#44397;&#45236; &#52572;&#52488; LoRa &#51312;&#47749; &#53080;&#53944;&#47204;&#47084; &#49345;&#50857;&#54868;</div>
+    <div style="font-size:13px;color:#718096;margin-top:4px">&#54620;&#44397;/&#51068;&#48376; &#53945;&#54728; &#48372;&#50976; &#8226; KC/TELEC/CE &#51064;&#51613; &#44221;&#54744; &#8226; &#50577;&#49328; &#51228;&#54408; 5&#51333; &#54032;&#47588; &#51473;</div>
+  </div>
+</div>
+
+<!-- 푸터 -->
+<div class="footer">
+  <div class="company">&#12828;&#50976;&#54000;&#53581; (UTTEC Inc.)</div>
+  <div>&#45824;&#54364;: &#54861;&#44305;&#49440; | ihong9059@gmail.com | uttec-sensor.duckdns.org</div>
+  <div style="margin-top:16px;padding:14px;background:#1a365d;color:#fff;border-radius:10px;font-size:14px">
+    <strong>&#51204;&#44592;&#52264; &#52649;&#51204; &#54868;&#51116; &#50696;&#48169;&#51008; &#49440;&#53469;&#51060; &#50500;&#45772; &#54596;&#49688;&#51077;&#45768;&#45796;.</strong><br>
+    <span style="opacity:.8;font-size:12px">&#48176;&#49440; &#44277;&#49324; &#50630;&#45716; LoRa &#47924;&#49440; &#54540;&#47019;&#54268;&#51004;&#47196; &#51312;&#47749; &#44288;&#47532;&#50752; &#51204;&#44592;&#52264; &#50504;&#51204;&#51012; &#46041;&#49884;&#50640; &#49892;&#54788;&#54633;&#45768;&#45796;.</span>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
