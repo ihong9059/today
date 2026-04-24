@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PVDF 압전센서 기반 층간소음 경고 시스템 - 개발 계획서</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --primary: #1a365d;
+    --primary-light: #2b6cb0;
+    --accent: #dd6b20;
+    --accent-light: #ed8936;
+    --bg: #ffffff;
+    --bg-light: #f7fafc;
+    --bg-blue: #ebf4ff;
+    --bg-orange: #fffaf0;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #718096;
+    --success: #38a169;
+    --warning: #d69e2e;
+    --danger: #e53e3e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text);
+    background: #f0f4f8;
+    line-height: 1.7;
+    font-size: 10pt;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 10mm auto;
+    background: var(--bg);
+    padding: 20mm 22mm;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    page-break-after: always;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  @media print {
+    body {
+      background: white;
+      margin: 0;
+      padding: 0;
+    }
+    .page {
+      width: 210mm;
+      height: 297mm;
+      min-height: 297mm;
+      max-height: 297mm;
+      margin: 0;
+      padding: 18mm 20mm;
+      box-shadow: none;
+      page-break-after: always;
+      break-after: page;
+      overflow: hidden;
+    }
+    .page:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .no-print { display: none; }
+    table { page-break-inside: avoid; break-inside: avoid; }
+    .timeline-item { page-break-inside: avoid; break-inside: avoid; }
+    .grid-2 { page-break-inside: avoid; break-inside: avoid; }
+    .info-box, .warn-box, .success-box { page-break-inside: avoid; break-inside: avoid; }
+  }
+
+  /* Cover Page */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 257mm;
+  }
+
+  .cover-line {
+    width: 80px;
+    height: 3px;
+    background: var(--accent);
+    margin: 20px auto;
+  }
+
+  .cover-subtitle {
+    font-size: 13pt;
+    color: var(--text-light);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+
+  .cover-title {
+    font-size: 26pt;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .cover-title-sub {
+    font-size: 15pt;
+    font-weight: 400;
+    color: var(--primary-light);
+    margin-bottom: 40px;
+  }
+
+  .cover-info {
+    margin-top: 60px;
+    font-size: 11pt;
+    color: var(--text-light);
+    line-height: 2;
+  }
+
+  .cover-info strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .cover-badge {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 8px 24px;
+    border-radius: 4px;
+    font-size: 10pt;
+    font-weight: 500;
+    margin-top: 30px;
+    letter-spacing: 1px;
+  }
+
+  /* Section Headers */
+  h1 {
+    font-size: 18pt;
+    font-weight: 700;
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+  }
+
+  h1 .num {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 14pt;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+
+  h2 {
+    font-size: 12pt;
+    font-weight: 600;
+    color: var(--primary-light);
+    margin: 18px 0 10px 0;
+    padding-left: 12px;
+    border-left: 3px solid var(--accent);
+  }
+
+  h3 {
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: var(--text);
+    margin: 12px 0 6px 0;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 16px 0;
+    font-size: 9.5pt;
+  }
+
+  table thead th {
+    background: var(--primary);
+    color: white;
+    font-weight: 500;
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 9pt;
+  }
+
+  table tbody td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  table tbody tr:nth-child(even) {
+    background: var(--bg-light);
+  }
+
+  table tbody tr:hover {
+    background: var(--bg-blue);
+  }
+
+  table.compact td, table.compact th {
+    padding: 5px 8px;
+  }
+
+  /* Info Box */
+  .info-box {
+    background: var(--bg-blue);
+    border-left: 4px solid var(--primary-light);
+    padding: 14px 18px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .warn-box {
+    background: var(--bg-orange);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .success-box {
+    background: #f0fff4;
+    border-left: 4px solid var(--success);
+    padding: 14px 18px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Flow Diagram */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+
+  .flow-item {
+    background: var(--primary);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 8.5pt;
+    font-weight: 500;
+    min-width: 90px;
+    line-height: 1.4;
+  }
+
+  .flow-item.accent {
+    background: var(--accent);
+  }
+
+  .flow-item.light {
+    background: var(--bg-blue);
+    color: var(--primary);
+    border: 1px solid var(--primary-light);
+  }
+
+  .flow-arrow {
+    font-size: 16pt;
+    color: var(--text-light);
+    margin: 0 4px;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+    margin: 14px 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--primary-light);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: var(--bg-light);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 14px;
+    width: 12px;
+    height: 12px;
+    background: var(--primary-light);
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+
+  .timeline-item .week {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 10pt;
+  }
+
+  .timeline-item .milestone {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 8pt;
+    font-weight: 500;
+    margin-top: 6px;
+  }
+
+  /* Badge / Tag */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 8pt;
+    font-weight: 500;
+  }
+  .badge-green { background: #c6f6d5; color: #22543d; }
+  .badge-yellow { background: #fefcbf; color: #744210; }
+  .badge-red { background: #fed7d7; color: #822727; }
+  .badge-blue { background: #bee3f8; color: #2a4365; }
+  .badge-orange { background: #feebc8; color: #7b341e; }
+
+  /* Gantt-like bar */
+  .gantt-bar {
+    display: flex;
+    gap: 2px;
+    margin: 4px 0;
+  }
+  .gantt-block {
+    height: 20px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7pt;
+    font-weight: 500;
+    color: white;
+  }
+
+  /* Grid Layout */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 12px 0;
+  }
+
+  .grid-card {
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-light);
+  }
+
+  .grid-card h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+
+  /* UI Mockup */
+  .oled-mock {
+    background: #1a1a2e;
+    color: #00ff88;
+    font-family: 'Courier New', monospace;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 9pt;
+    line-height: 1.6;
+    width: 260px;
+    margin: 10px auto;
+    border: 2px solid #333;
+  }
+
+  .oled-mock .status-green { color: #00ff88; }
+  .oled-mock .status-yellow { color: #ffdd00; }
+  .oled-mock .status-red { color: #ff4444; }
+  .oled-mock .dim { color: #666; }
+
+  /* List */
+  ul { margin: 6px 0 10px 20px; }
+  li { margin-bottom: 3px; }
+
+  /* Utility */
+  .text-center { text-align: center; }
+  .text-right { text-align: right; }
+  .text-small { font-size: 8.5pt; color: var(--text-light); }
+  .mt-10 { margin-top: 10px; }
+  .mt-20 { margin-top: 20px; }
+  .mb-10 { margin-bottom: 10px; }
+  .bold { font-weight: 600; }
+  .highlight { color: var(--accent); font-weight: 600; }
+
+  p { margin-bottom: 8px; }
+
+  /* Signal Chain Diagram */
+  .signal-chain {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 14px 0;
+  }
+
+  /* Footer */
+  .page-footer {
+    text-align: center;
+    font-size: 8pt;
+    color: var(--text-light);
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+    margin-top: auto;
+  }
+
+  /* Deliverable check */
+  .check-list {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  .check-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    padding-left: 24px;
+    position: relative;
+  }
+  .check-list li::before {
+    content: '\2713';
+    position: absolute;
+    left: 4px;
+    color: var(--success);
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: COVER ==================== -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-subtitle">Development Proposal</div>
+    <div class="cover-line"></div>
+    <div class="cover-title">PVDF 압전센서 기반<br>층간소음 경고 시스템</div>
+    <div class="cover-title-sub">MVP 개발 계획서</div>
+    <div class="cover-line"></div>
+
+    <div class="cover-info">
+      <strong>프로젝트</strong> &nbsp;|&nbsp; 위시캣 #154780<br>
+      <strong>예산</strong> &nbsp;|&nbsp; 10,000,000원<br>
+      <strong>기간</strong> &nbsp;|&nbsp; 45일 (계약 체결 후 즉시 착수)<br>
+      <strong>제출일</strong> &nbsp;|&nbsp; 2026년 4월 24일
+    </div>
+
+    <div class="cover-badge">CONFIDENTIAL</div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2: 목차 + 개요 ==================== -->
+<div class="page">
+  <h1><span class="num">&nbsp;</span>목차</h1>
+  <table class="compact">
+    <tbody>
+      <tr><td class="bold">1.</td><td>프로젝트 개요</td><td class="text-right text-light">2</td></tr>
+      <tr><td class="bold">2.</td><td>시스템 구성</td><td class="text-right text-light">3</td></tr>
+      <tr><td class="bold">3.</td><td>하드웨어 설계</td><td class="text-right text-light">4</td></tr>
+      <tr><td class="bold">4.</td><td>소프트웨어 설계</td><td class="text-right text-light">5</td></tr>
+      <tr><td class="bold">5.</td><td>충격 감지 알고리즘</td><td class="text-right text-light">6</td></tr>
+      <tr><td class="bold">6.</td><td>개발 일정 (45일)</td><td class="text-right text-light">7</td></tr>
+      <!-- 7~9 removed for client version -->
+    </tbody>
+  </table>
+
+</div>
+
+<!-- ==================== PAGE 2b: 프로젝트 개요 ==================== -->
+<div class="page">
+  <h1><span class="num">1</span>프로젝트 개요</h1>
+
+  <h2>1.1 배경 및 목적</h2>
+  <p>
+    아파트 거주 환경에서 아이들이 뛰어놀 때 발생하는 <strong>층간소음</strong>은 이웃 간 갈등의 주요 원인입니다.
+    아이들은 자신이 만들어내는 충격의 크기를 스스로 인지하기 어렵기 때문에, <strong>일정 수준 이상의 바닥 충격이 발생하면
+    즉각적인 경고음을 울려</strong> 아이들의 행동을 자연스럽게 교정하는 <strong>예방형 디바이스</strong>를 개발합니다.
+  </p>
+
+  <div class="info-box">
+    <strong>핵심 컨셉:</strong> PVDF 압전센서로 바닥 충격을 실시간 감지 &rarr; 임계값 초과 시 경고음 즉시 발생 &rarr; 아이들 스스로 행동 인지 및 교정
+  </div>
+
+  <h2>1.2 프로젝트 정보</h2>
+  <table>
+    <tbody>
+      <tr><td class="bold" style="width:160px;">프로젝트명</td><td>PVDF 압전센서 기반 층간소음 경고 시스템 MVP 개발</td></tr>
+      <tr><td class="bold">프로젝트 ID</td><td>위시캣 #154780</td></tr>
+      <tr><td class="bold">총 예산</td><td>10,000,000원</td></tr>
+      <tr><td class="bold">개발 기간</td><td>45일 (약 6.5주)</td></tr>
+      <tr><td class="bold">착수 시점</td><td>계약 체결 후 즉시</td></tr>
+      <tr><td class="bold">투입 인력</td><td>2명 (H/W 설계 + F/W 개발)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>1.3 핵심 요구사항</h2>
+  <table>
+    <thead>
+      <tr><th style="width:30px;">#</th><th>요구사항</th><th style="width:100px;">우선순위</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>PVDF 압전센서로 바닥 충격(아이 뛰기/점프) 실시간 감지</td><td><span class="badge badge-red">필수</span></td></tr>
+      <tr><td>2</td><td>임계값 기반 충격 강도 판별 (일상 진동은 무시)</td><td><span class="badge badge-red">필수</span></td></tr>
+      <tr><td>3</td><td>임계값 초과 시 즉각 경고음 출력 (200ms 이내)</td><td><span class="badge badge-red">필수</span></td></tr>
+      <tr><td>4</td><td>충격 강도별 차등 경고 (주의 / 경고 / 강력 경고)</td><td><span class="badge badge-red">필수</span></td></tr>
+      <tr><td>5</td><td>감도 조절 기능 (버튼으로 민감/보통/둔감 전환)</td><td><span class="badge badge-yellow">중요</span></td></tr>
+      <tr><td>6</td><td>OLED 디스플레이 (상태, 충격 횟수, 강도 표시)</td><td><span class="badge badge-yellow">중요</span></td></tr>
+      <tr><td>7</td><td>이벤트 로그 저장 (일별 충격 통계)</td><td><span class="badge badge-yellow">중요</span></td></tr>
+      <tr><td>8</td><td>비파괴 설치 (양면테이프, 원상복구 가능)</td><td><span class="badge badge-red">필수</span></td></tr>
+      <tr><td>9</td><td>음소거 / 야간 모드</td><td><span class="badge badge-blue">선택</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== PAGE 3: 시스템 구성 ==================== -->
+<div class="page">
+  <h1><span class="num">2</span>시스템 구성</h1>
+
+  <h2>2.1 전체 시스템 흐름</h2>
+  <div class="signal-chain">
+    <div class="flow">
+      <div class="flow-item">PVDF<br>압전센서<br><span style="font-size:7pt;">(바닥 부착)</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-item accent">Charge<br>Amplifier<br><span style="font-size:7pt;">(전하&rarr;전압)</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-item light">아날로그<br>필터<br><span style="font-size:7pt;">(HPF+LPF)</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-item light">외장 ADC<br>ADS1256<br><span style="font-size:7pt;">(24-bit)</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-item">ESP32-S3<br>판별 엔진<br><span style="font-size:7pt;">(FreeRTOS)</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-item accent">경고음<br>출력<br><span style="font-size:7pt;">(스피커/부저)</span></div>
+    </div>
+  </div>
+
+  <h2>2.2 구성 요소별 역할</h2>
+  <table>
+    <thead>
+      <tr><th style="width:140px;">구성 요소</th><th>역할</th><th style="width:120px;">핵심 사양</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">PVDF 압전센서</td>
+        <td>바닥 진동(충격)을 전하(charge) 신호로 변환. 유연한 필름 형태로 바닥에 비파괴 부착</td>
+        <td>28&mu;m 필름<br>TE DT1-028K</td>
+      </tr>
+      <tr>
+        <td class="bold">Charge Amplifier</td>
+        <td>PVDF 출력 전하를 측정 가능한 전압으로 변환. 고임피던스 입력 처리</td>
+        <td>OPA140 Op-Amp<br>Cf=1nF, Rf=1G&Omega;</td>
+      </tr>
+      <tr>
+        <td class="bold">아날로그 필터</td>
+        <td>HPF(5Hz): 온도 노이즈 제거 / LPF(1kHz): 고주파 노이즈 제거</td>
+        <td>통과대역<br>5Hz ~ 1kHz</td>
+      </tr>
+      <tr>
+        <td class="bold">외장 ADC</td>
+        <td>아날로그 신호를 24-bit 디지털로 정밀 변환 (ESP32 내장 ADC 한계 극복)</td>
+        <td>ADS1256<br>24-bit, 30kSPS</td>
+      </tr>
+      <tr>
+        <td class="bold">ESP32-S3 MCU</td>
+        <td>디지털 필터링, 충격 판별 알고리즘, 경고음 제어, UI, 데이터 저장</td>
+        <td>듀얼코어 240MHz<br>FreeRTOS</td>
+      </tr>
+      <tr>
+        <td class="bold">경고 스피커/부저</td>
+        <td>임계값 초과 시 단계별 경고음 출력. 아이들이 즉시 인지 가능한 2~3kHz 톤</td>
+        <td>PWM 제어<br>음량 조절 가능</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>2.3 PVDF 센서가 적합한 이유</h2>
+  <div class="grid-2">
+    <div class="grid-card">
+      <h3>vs PZT 세라믹 센서</h3>
+      <table class="compact">
+        <thead><tr><th>항목</th><th>PVDF</th><th>PZT</th></tr></thead>
+        <tbody>
+          <tr><td>전압 감도</td><td class="bold" style="color:var(--success);">339 mV&middot;m/N</td><td>25 mV&middot;m/N</td></tr>
+          <tr><td>주파수 응답</td><td class="bold" style="color:var(--success);">0.001Hz~GHz</td><td>~수백kHz</td></tr>
+          <tr><td>형태</td><td class="bold" style="color:var(--success);">유연한 필름</td><td>딱딱한 세라믹</td></tr>
+          <tr><td>기계적 수명</td><td class="bold" style="color:var(--success);">>10억 사이클</td><td>~1천만</td></tr>
+          <tr><td>비용</td><td class="bold" style="color:var(--success);">$5~30</td><td>$50~500</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid-card">
+      <h3>층간소음 감지에 최적인 이유</h3>
+      <ul>
+        <li><strong>광대역 저주파 응답</strong> &mdash; 층간소음 핵심 대역 30~500Hz를 왜곡 없이 감지</li>
+        <li><strong>높은 전압 감도</strong> &mdash; PZT 대비 13.6배, 미세 바닥 진동도 검출</li>
+        <li><strong>유연한 필름</strong> &mdash; 바닥에 접착제로 비파괴 설치</li>
+        <li><strong>저가</strong> &mdash; BOM $30 이하 IoT 센서 구현</li>
+        <li><strong>장수명</strong> &mdash; 10억 사이클 이상</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>2.4 설치 구성</h2>
+  <div class="info-box">
+    <strong>설치 방식:</strong> PVDF 센서 필름을 아이들이 주로 뛰어노는 <strong>거실/방 바닥</strong>에 양면테이프로 접착합니다.
+    센서에서 본체까지 플랫 케이블로 연결하며, 본체는 벽면 또는 가구 위에 배치합니다.
+    <strong>공사 불필요, 원상복구 가능</strong>한 완전 비파괴 방식입니다.
+  </div>
+</div>
+
+<!-- ==================== PAGE 4: 하드웨어 설계 ==================== -->
+<div class="page">
+  <h1><span class="num">3</span>하드웨어 설계</h1>
+
+  <h2>3.1 부품 목록 (BOM)</h2>
+  <table>
+    <thead>
+      <tr><th>부품</th><th>사양</th><th>역할</th><th style="width:70px;">예상 단가</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="bold">PVDF 센서</td><td>TE DT1-028K (28&mu;m)</td><td>바닥 충격 &rarr; 전하 변환</td><td>$8~15</td></tr>
+      <tr><td class="bold">Charge Amp</td><td>OPA140 (SOIC-8)</td><td>전하 &rarr; 전압 변환</td><td>$3</td></tr>
+      <tr><td class="bold">외장 ADC</td><td>ADS1256 (24-bit, SPI)</td><td>고정밀 A/D 변환</td><td>$5</td></tr>
+      <tr><td class="bold">MCU</td><td>ESP32-S3-WROOM-1</td><td>신호 처리 + 판별 + 제어</td><td>$3</td></tr>
+      <tr><td class="bold">OLED</td><td>SSD1306 0.96" (I2C)</td><td>상태/통계 표시</td><td>$2</td></tr>
+      <tr><td class="bold">스피커/부저</td><td>피에조 부저 + 소형 스피커</td><td>경고음 출력</td><td>$2</td></tr>
+      <tr><td class="bold">LED</td><td>RGB LED &times; 2</td><td>상태 표시 (녹/황/적)</td><td>$0.5</td></tr>
+      <tr><td class="bold">버튼</td><td>택트 스위치 &times; 3</td><td>감도/음소거/리셋</td><td>$0.5</td></tr>
+      <tr><td class="bold">수동 부품</td><td>R, C, 커넥터</td><td>회로 구성</td><td>$2</td></tr>
+      <tr><td class="bold">전원</td><td>USB-C 5V 어댑터</td><td>상시 전원</td><td>$2</td></tr>
+      <tr><td class="bold">인클로저</td><td>3D 프린트 케이스</td><td>본체 보호</td><td>$3</td></tr>
+      <tr style="background: var(--bg-blue);"><td class="bold" colspan="3" style="text-align:right;">총 BOM 예상가</td><td class="bold">~$30~35</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3.2 핵심 회로: Charge Amplifier</h2>
+  <p>
+    PVDF 센서 출력은 <strong>전하(charge)</strong> 형태이므로 일반적인 전압 증폭이 아닌
+    <strong>전하 증폭기(Charge Amplifier)</strong>가 반드시 필요합니다. 이것이 본 프로젝트의 <strong>가장 핵심적인 회로 설계</strong>입니다.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>설계 파라미터</th><th>값</th><th>설명</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="bold">피드백 커패시터 (Cf)</td><td>1nF</td><td>출력 전압 = Q/Cf, 감도 결정</td></tr>
+      <tr><td class="bold">피드백 저항 (Rf)</td><td>1G&Omega;</td><td>저주파 차단 주파수 결정 (&asymp;0.16Hz)</td></tr>
+      <tr><td class="bold">Op-Amp</td><td>OPA140</td><td>초저 입력 바이어스 (<1pA), FET 입력</td></tr>
+      <tr><td class="bold">후단 증폭</td><td>100~1000배</td><td>디지털 포텐셔미터로 S/W 감도 조절</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <strong>출력 예시:</strong> 아이가 바닥에 10N 충격 &rarr; PVDF 전하 330pC &rarr; Charge Amp 출력 0.33mV &rarr; 100배 증폭 = 33mV &rarr; 24-bit ADC로 정밀 측정 가능
+  </div>
+
+  <h2>3.3 아날로그 필터 설계</h2>
+  <table>
+    <thead>
+      <tr><th>필터</th><th>종류</th><th>차단 주파수</th><th>목적</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="bold">HPF</td><td>Sallen-Key 2차</td><td>5Hz</td><td>DC 차단 + 파이로전기(온도) 노이즈 제거</td></tr>
+      <tr><td class="bold">LPF</td><td>Sallen-Key 2차</td><td>1kHz</td><td>안티앨리어싱 + 고주파 노이즈 제거</td></tr>
+      <tr><td class="bold">노치 필터</td><td>디지털 (S/W)</td><td>60Hz</td><td>전원 노이즈 제거</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <strong>최종 통과 대역: 5Hz ~ 1kHz</strong> &mdash; 층간소음 핵심 대역(30~500Hz)을 완전히 포함하며, 온도 변화/전원 노이즈를 효과적으로 차단합니다.
+  </div>
+
+  <h2>3.4 외장 ADC를 사용하는 이유</h2>
+  <table>
+    <thead>
+      <tr><th>항목</th><th>ESP32 내장 ADC</th><th style="background:var(--accent);">외장 ADS1256 (채택)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="bold">해상도</td><td>12-bit (실효 9~10bit)</td><td class="bold" style="color:var(--success);">24-bit</td></tr>
+      <tr><td class="bold">비선형성</td><td>&plusmn;7 LSB (큼)</td><td class="bold" style="color:var(--success);">극히 낮음</td></tr>
+      <tr><td class="bold">추가 비용</td><td>$0</td><td>~$5</td></tr>
+    </tbody>
+  </table>
+  <p class="text-small mt-10">* $5 추가 투자로 미세 진동 감지 정확도가 획기적으로 향상됩니다.</p>
+</div>
+
+<!-- ==================== PAGE 5: 소프트웨어 설계 ==================== -->
+<div class="page">
+  <h1><span class="num">4</span>소프트웨어 설계</h1>
+
+  <h2>4.1 개발 환경</h2>
+  <table class="compact">
+    <tbody>
+      <tr><td class="bold" style="width:120px;">MCU</td><td>ESP32-S3 (듀얼코어 240MHz, FPU, WiFi/BLE)</td></tr>
+      <tr><td class="bold">SDK</td><td>ESP-IDF v5.x (Espressif 공식 네이티브 SDK)</td></tr>
+      <tr><td class="bold">OS</td><td>FreeRTOS (실시간 처리, Task 분리)</td></tr>
+      <tr><td class="bold">언어</td><td>C (임베디드 표준)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>4.2 FreeRTOS Task 구조 (5개 Task 분리)</h2>
+  <table>
+    <thead>
+      <tr><th>Task</th><th>역할</th><th style="width:60px;">우선순위</th><th style="width:60px;">주기</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">Task 1: 센서 수집</td>
+        <td>ADC 읽기 &rarr; 디지털 필터링 &rarr; 링버퍼 저장</td>
+        <td>최고 (5)</td>
+        <td>1ms</td>
+      </tr>
+      <tr>
+        <td class="bold">Task 2: 충격 판별</td>
+        <td>에너지 산출 &rarr; 임계값 비교 &rarr; 강도 분류 &rarr; 디바운싱</td>
+        <td>높음 (4)</td>
+        <td>10ms</td>
+      </tr>
+      <tr>
+        <td class="bold">Task 3: UI/출력</td>
+        <td>OLED 갱신, LED 제어, 경고음 출력, 버튼 입력 처리</td>
+        <td>중간 (3)</td>
+        <td>50ms</td>
+      </tr>
+      <tr>
+        <td class="bold">Task 4: 데이터 저장</td>
+        <td>NVS Flash 이벤트 기록, 일별/주별 통계 누적</td>
+        <td>낮음 (2)</td>
+        <td>이벤트</td>
+      </tr>
+      <tr>
+        <td class="bold">Task 5: 설정 관리</td>
+        <td>감도 설정, 임계값 조절, 시간대(야간) 설정</td>
+        <td>최저 (1)</td>
+        <td>이벤트</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>4.3 경고음 설계</h2>
+  <table>
+    <thead>
+      <tr><th>단계</th><th>LED</th><th>경고음 패턴</th><th>음량</th><th>지속시간</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-green">정상</span></td>
+        <td style="color:var(--success);">&#9679; 녹색</td>
+        <td>없음</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-yellow">주의</span></td>
+        <td style="color:var(--warning);">&#9679; 노란색</td>
+        <td>없음 (LED만)</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-orange">경고</span></td>
+        <td style="color:var(--danger);">&#9679; 빨간색</td>
+        <td><strong>삐-</strong> (단일 비프)</td>
+        <td>60%</td>
+        <td>0.3초</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-red">강력 경고</span></td>
+        <td style="color:var(--danger);">&#9679; 빨간색 점멸</td>
+        <td><strong>삐삐삐-</strong> (3연속)</td>
+        <td>100%</td>
+        <td>1초+</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- ==================== PAGE 5b: 소프트웨어 설계 (계속) ==================== -->
+<div class="page">
+  <h1><span class="num">4</span>소프트웨어 설계 (계속)</h1>
+
+  <div class="grid-2">
+    <div>
+      <h2>4.4 OLED 디스플레이</h2>
+      <div class="oled-mock">
+        <span class="dim">[층간소음 모니터]</span> <span style="float:right;">12:34</span><br>
+        <br>
+        현재 상태: <span class="status-green">&#9679; 정상</span><br>
+        <br>
+        오늘 충격: <strong>23회</strong><br>
+        <span class="dim">주의:</span>15 <span class="dim">경고:</span>6 <span class="dim">강:</span>2<br>
+        <br>
+        감도: <span class="status-green">████</span><span class="dim">░░</span> [보통]
+      </div>
+    </div>
+    <div>
+      <h2>4.5 버튼 기능</h2>
+      <table class="compact">
+        <thead>
+          <tr><th>버튼</th><th>짧게</th><th>길게(3초)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">감도</td>
+            <td>민감 &rarr; 보통 &rarr; 둔감</td>
+            <td>캘리브레이션</td>
+          </tr>
+          <tr>
+            <td class="bold">음소거</td>
+            <td>30분 음소거</td>
+            <td>야간 모드</td>
+          </tr>
+          <tr>
+            <td class="bold">리셋</td>
+            <td>오늘 카운트 초기화</td>
+            <td>전체 통계 초기화</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>4.6 야간 모드</h2>
+      <ul>
+        <li><strong>자동 전환</strong>: 22시~06시</li>
+        <li>경고음 음량 50% 감소</li>
+        <li>LED 밝기 감소</li>
+        <li>버튼으로 수동 전환 가능</li>
+      </ul>
+
+      <h2>4.7 데이터 저장</h2>
+      <ul>
+        <li>충격 이벤트 로그: 최근 <strong>7일</strong></li>
+        <li>일별 통계: 최근 <strong>30일</strong></li>
+        <li>설정/캘리브레이션: <strong>영구</strong></li>
+        <li>전원 차단 시 데이터 보존</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 6: 충격 감지 알고리즘 ==================== -->
+<div class="page">
+  <h1><span class="num">5</span>충격 감지 알고리즘</h1>
+
+  <h2>5.1 신호 처리 파이프라인</h2>
+  <div class="signal-chain">
+    <div class="flow">
+      <div class="flow-item">ADC<br>원시 데이터<br><span style="font-size:7pt;">1kHz 샘플링</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-item light">DC 오프셋<br>제거<br><span style="font-size:7pt;">이동평균 차감</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-item light">밴드패스<br>필터<br><span style="font-size:7pt;">IIR 30~500Hz</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-item light">에너지<br>산출<br><span style="font-size:7pt;">50ms 윈도우</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-item accent">임계값<br>비교<br><span style="font-size:7pt;">3단계 판별</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-item">경고<br>출력<br><span style="font-size:7pt;">스피커/LED</span></div>
+    </div>
+  </div>
+
+  <h2>5.2 임계값 기반 4단계 판별</h2>
+  <table>
+    <thead>
+      <tr><th>단계</th><th>에너지 레벨</th><th>해당 행동 예시</th><th>시스템 반응</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-green">무시</span></td>
+        <td>E &lt; T1</td>
+        <td>걷기, 의자 끌기, TV 소리</td>
+        <td>없음 (녹색 LED 유지)</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-yellow">주의</span></td>
+        <td>T1 &le; E &lt; T2</td>
+        <td>가벼운 뜀박질, 빠른 걸음</td>
+        <td>노란 LED 점등 + 로그 기록</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-orange">경고</span></td>
+        <td>T2 &le; E &lt; T3</td>
+        <td>뛰어다니기, 점프</td>
+        <td><strong>경고음 1회</strong> (삐-) + 빨간 LED</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-red">강력 경고</span></td>
+        <td>E &ge; T3</td>
+        <td>반복 점프, 쿵쿵 뛰기</td>
+        <td><strong>연속 경고음</strong> (삐삐삐-) + 빨간 LED 점멸</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <strong>임계값 T1, T2, T3</strong>는 설치 환경(바닥 재질, 층 구조)에 따라 달라지므로
+    <strong>현장 캘리브레이션</strong>으로 최적값을 결정합니다. 버튼으로 감도 3단계(민감/보통/둔감) 전환도 가능합니다.
+  </div>
+
+  <h2>5.3 오감지 방지 로직</h2>
+  <table>
+    <thead>
+      <tr><th style="width:140px;">방지 기법</th><th>설명</th><th style="width:120px;">효과</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">디바운싱</td>
+        <td>최소 간격 300ms &mdash; 연속 충격(쿵쿵쿵)을 1건으로 처리</td>
+        <td>중복 경고 방지</td>
+      </tr>
+      <tr>
+        <td class="bold">지속시간 확인</td>
+        <td>최소 20ms 이상 유지된 충격만 유효 처리 &mdash; 순간 전기 노이즈 제거</td>
+        <td>전기 노이즈 제거</td>
+      </tr>
+      <tr>
+        <td class="bold">패턴 판별</td>
+        <td>충격형(짧고 강함) vs 기계형(길고 일정) 구분 &mdash; 세탁기/냉장고 진동 필터링</td>
+        <td>가전 진동 필터</td>
+      </tr>
+      <tr>
+        <td class="bold">적응형 임계값</td>
+        <td>배경 노이즈 레벨에 따라 T1~T3 자동 보정 (조용한 밤 vs 시끄러운 낮)</td>
+        <td>환경 자동 대응</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>5.4 기술적 도전과 해결방안</h2>
+  <table>
+    <thead>
+      <tr><th style="width:160px;">도전 과제</th><th>문제</th><th>해결 방안</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">파이로전기 효과</td>
+        <td>PVDF가 온도 변화에도 전하를 발생 (오신호)</td>
+        <td>HPF(5Hz)로 느린 온도 신호 완전 제거 + 차동 센서 구성</td>
+      </tr>
+      <tr>
+        <td class="bold">EMI 전자파 간섭</td>
+        <td>고임피던스 입력이 전자파에 민감, 60Hz 노이즈</td>
+        <td>최단 케이블 + 가드 링 PCB + 금속 차폐 + 디지털 노치 필터</td>
+      </tr>
+      <tr>
+        <td class="bold">생활 진동 구분</td>
+        <td>세탁기, 냉장고, TV 등의 저주파 진동</td>
+        <td>시간-주파수 패턴 분석 (충격=짧고 넓음, 기계=연속적)</td>
+      </tr>
+      <tr>
+        <td class="bold">바닥 재질별 차이</td>
+        <td>장판/마루/타일마다 진동 전달 특성 상이</td>
+        <td>캘리브레이션 모드 (설치 시 기준값 자동 학습)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== PAGE 7: 개발 일정 ==================== -->
+<div class="page">
+  <h1><span class="num">6</span>개발 일정 (45일)</h1>
+
+  <h2>6.1 전체 타임라인</h2>
+
+  <table style="margin-bottom: 6px;">
+    <thead>
+      <tr>
+        <th style="width:70px;">주차</th>
+        <th style="width:80px;">기간</th>
+        <th>주요 작업</th>
+        <th style="width:200px;">진행률</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">Week 1</td>
+        <td>Day 1~7</td>
+        <td>센서 특성 분석 + 회로 설계</td>
+        <td><div class="gantt-bar"><div class="gantt-block" style="width:100%; background:var(--primary);">센서 분석 + 회로 설계</div></div></td>
+      </tr>
+      <tr>
+        <td class="bold">Week 2</td>
+        <td>Day 8~14</td>
+        <td>회로 제작 + 펌웨어 기초</td>
+        <td><div class="gantt-bar"><div class="gantt-block" style="width:100%; background:var(--primary-light);">만능기판 + FreeRTOS</div></div></td>
+      </tr>
+      <tr>
+        <td class="bold">Week 3</td>
+        <td>Day 15~21</td>
+        <td>충격 감지 알고리즘 + 경고음</td>
+        <td><div class="gantt-bar"><div class="gantt-block" style="width:100%; background:var(--accent);">알고리즘 + 경고음</div></div></td>
+      </tr>
+      <tr>
+        <td class="bold">Week 4</td>
+        <td>Day 22~28</td>
+        <td>데이터 저장 + 전체 통합</td>
+        <td><div class="gantt-bar"><div class="gantt-block" style="width:100%; background:var(--accent-light);">PCB 실장 + 통합</div></div></td>
+      </tr>
+      <tr>
+        <td class="bold">Week 5</td>
+        <td>Day 29~35</td>
+        <td>현장 튜닝 + 안정화</td>
+        <td><div class="gantt-bar"><div class="gantt-block" style="width:100%; background:var(--success);">실제 환경 테스트</div></div></td>
+      </tr>
+      <tr>
+        <td class="bold">Week 6+</td>
+        <td>Day 36~45</td>
+        <td>최종 검증 + 납품</td>
+        <td><div class="gantt-bar"><div class="gantt-block" style="width:70%; background:#805ad5;">문서 + 납품</div><div class="gantt-block" style="width:30%; background:#d6bcfa;">버퍼</div></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>6.2 주차별 상세 (H/W + F/W 병렬 진행)</h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="week">Week 1: 센서 특성 분석 + 회로 설계 (Day 1~7)</div>
+      <div class="grid-2" style="margin-top:8px;">
+        <div>
+          <strong>H/W (회로 설계)</strong>
+          <ul>
+            <li>PVDF 센서 입수 + 출력 특성 분석</li>
+            <li>Charge Amplifier 회로 설계 (OrCAD)</li>
+            <li>필터 회로 설계 (HPF + LPF)</li>
+            <li><strong>브레드보드 1차 회로 검증</strong></li>
+          </ul>
+        </div>
+        <div>
+          <strong>F/W (펌웨어)</strong>
+          <ul>
+            <li>ESP-IDF 개발 환경 셋업</li>
+            <li>ADS1256 SPI 드라이버 구현</li>
+            <li>ADC 연속 샘플링 + DMA 전송</li>
+            <li>센서 원시 데이터 수집 확인</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone">마일스톤: PVDF &rarr; Charge Amp &rarr; ADC &rarr; ESP32 데이터 수집 확인</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="week">Week 2: 회로 제작 + 펌웨어 기초 (Day 8~14)</div>
+      <div class="grid-2" style="margin-top:8px;">
+        <div>
+          <strong>H/W</strong>
+          <ul>
+            <li>만능기판 회로 제작</li>
+            <li>PCB 설계 발주 (EasyEDA &rarr; JLCPCB)</li>
+            <li>회로 테스트 + 노이즈 측정</li>
+          </ul>
+        </div>
+        <div>
+          <strong>F/W</strong>
+          <ul>
+            <li>FreeRTOS 5개 Task 구조 구현</li>
+            <li>에너지 산출 알고리즘 구현</li>
+            <li>임계값 비교 + 3단계 분류 로직</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone">마일스톤: 만능기판으로 충격 감지 + 3단계 분류 동작 확인</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== PAGE 7b: 개발 일정 (계속) ==================== -->
+<div class="page">
+  <h1><span class="num">6</span>개발 일정 (계속)</h1>
+
+  <div class="timeline" style="padding-left:24px;">
+    <div class="timeline-item">
+      <div class="week">Week 3: 충격 감지 알고리즘 + 경고음 (Day 15~21)</div>
+      <div class="grid-2" style="margin-top:8px;">
+        <div>
+          <strong>H/W</strong>
+          <ul>
+            <li>스피커/부저 출력 회로 구성</li>
+            <li>LED + OLED 디스플레이 배선</li>
+            <li>인클로저 3D 모델링</li>
+          </ul>
+        </div>
+        <div>
+          <strong>F/W</strong>
+          <ul>
+            <li>경고음 생성 (PWM, 단계별 패턴)</li>
+            <li>오감지 방지 로직 구현</li>
+            <li>OLED UI + 버튼 입력 처리</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone">마일스톤: 충격 감지 &rarr; 단계별 경고음 출력 + OLED 표시 동작</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="week">Week 4: 데이터 저장 + 전체 통합 (Day 22~28)</div>
+      <div class="grid-2" style="margin-top:8px;">
+        <div>
+          <strong>H/W</strong>
+          <ul>
+            <li>PCB 수령 + 부품 실장</li>
+            <li>PCB 테스트 + 디버깅</li>
+            <li>인클로저 3D 프린트 + 조립</li>
+          </ul>
+        </div>
+        <div>
+          <strong>F/W</strong>
+          <ul>
+            <li>NVS Flash 이벤트 로깅</li>
+            <li>일별/주별 통계 저장</li>
+            <li>감도 조절 + 음소거 + 야간 모드</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone">마일스톤: PCB 기반 완성 프로토타입, 전 기능 동작</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="week">Week 5~6+: 현장 튜닝 + 안정화 + 납품 (Day 29~45)</div>
+      <ul>
+        <li>실제 바닥 설치 테스트 (아이 뛰기 시뮬레이션)</li>
+        <li>임계값 튜닝 (걷기=무시, 뛰기=경고 정확 구분)</li>
+        <li>오감지 테스트 (세탁기, 냉장고, TV 등)</li>
+        <li>24시간 연속 동작 안정성 테스트</li>
+        <li>클라이언트 피드백 반영 + 문서 작성</li>
+        <li><strong>최종 납품 + 설치 지원 + 인수인계</strong></li>
+      </ul>
+      <div class="milestone">마일스톤: 납품 완료</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 40px; text-align:center; padding: 30px 0; border-top: 2px solid var(--primary);">
+    <p style="font-size: 13pt; font-weight: 600; color: var(--primary); margin-bottom: 16px;">
+      본 계획서에 대한 문의 사항이 있으시면 언제든 연락 주시기 바랍니다.
+    </p>
+    <p style="font-size: 10pt; color: var(--text-light); line-height: 2;">
+      2026년 4월 24일
+    </p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이력서 - 홍광선 | AI 교육 전문 강사</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --primary: #1e3a5f;
+    --accent: #e67e22;
+    --bg: #ffffff;
+    --bg-light: #f8f9fa;
+    --border: #e0e0e0;
+    --text: #333;
+    --text-light: #666;
+  }
+
+  @page { size: A4; margin: 0; }
+
+  @media print {
+    body { background: white; margin: 0; padding: 0; }
+    .page {
+      width: 210mm; margin: 0;
+      padding: 16mm 20mm; box-shadow: none;
+      min-height: auto;
+    }
+    .page-break { page-break-before: always; break-before: page; }
+    table { page-break-inside: avoid; break-inside: avoid; }
+    .section { page-break-inside: avoid; break-inside: avoid; }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text);
+    background: #eee;
+    line-height: 1.7;
+    font-size: 10pt;
+  }
+
+  .page {
+    width: 210mm; min-height: 297mm;
+    margin: 10mm auto; background: var(--bg);
+    padding: 16mm 20mm;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  .header-left h1 {
+    font-size: 24pt;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 2px;
+  }
+  .header-left .subtitle {
+    font-size: 12pt;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 9pt;
+    color: var(--text-light);
+    line-height: 1.9;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: 12pt;
+    font-weight: 700;
+    color: var(--primary);
+    border-left: 4px solid var(--accent);
+    padding-left: 10px;
+    margin-bottom: 10px;
+  }
+
+  /* Cards */
+  .highlight-box {
+    background: linear-gradient(135deg, #ebf4ff 0%, #f0f7ff 100%);
+    border: 1px solid #c3dafe;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+  }
+  .highlight-box .big-num {
+    font-size: 22pt;
+    font-weight: 700;
+    color: var(--primary);
+    margin-right: 6px;
+  }
+  .highlight-box .label {
+    font-size: 9pt;
+    color: var(--text-light);
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .stat-card {
+    flex: 1;
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .stat-card .num {
+    font-size: 18pt;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-card .desc {
+    font-size: 8pt;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin: 8px 0 12px 0;
+  }
+  table th {
+    background: var(--primary);
+    color: white;
+    font-weight: 500;
+    padding: 6px 10px;
+    text-align: left;
+    font-size: 9pt;
+  }
+  table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  table tr:nth-child(even) { background: var(--bg-light); }
+
+  /* List */
+  ul { margin: 4px 0 8px 18px; }
+  li { margin-bottom: 2px; font-size: 9.5pt; }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    background: #e8f4fd;
+    color: var(--primary);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 8pt;
+    font-weight: 500;
+    margin: 1px 2px;
+  }
+  .tag-orange {
+    background: #fef3e2;
+    color: #b45309;
+  }
+
+  /* Grid */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 8px 0;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 8px 0;
+  }
+
+  /* Emphasis */
+  .accent { color: var(--accent); font-weight: 600; }
+  .primary { color: var(--primary); font-weight: 600; }
+  .text-small { font-size: 8.5pt; color: var(--text-light); }
+  strong { font-weight: 600; }
+
+  .flow-box {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 8px 0 12px 0;
+    text-align: center;
+    font-size: 10pt;
+  }
+  .flow-arrow { color: var(--accent); font-weight: 700; font-size: 14pt; margin: 0 6px; }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1 ==================== -->
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>홍광선</h1>
+      <div class="subtitle">AI &middot; IoT 교육 전문가 | 임베디드 시스템 엔지니어</div>
+    </div>
+    <div class="header-right">
+      <strong>㈜유티텍 (UTTEC) 대표</strong><br>
+      설립 2016년 | 기업연구소 보유<br>
+      벤처기업 인증<br>
+      GitHub: github.com/ihong9059
+    </div>
+  </div>
+
+  <!-- 핵심 요약 -->
+  <div class="section">
+    <div class="section-title">핵심 요약</div>
+    <div class="highlight-box">
+      <strong>임베디드 시스템 38년</strong> 경력의 엔지니어가, AI 시대에 맞는 <strong>체험형 코딩 교육 시스템</strong>을 직접 설계하고 운영하고 있습니다.
+      초등학생이 <strong>"말로 설명하면 하드웨어가 동작하는"</strong> 경험을 통해 AI와 코딩의 원리를 자연스럽게 익히는 교육 프로그램을 보유하고 있습니다.
+    </div>
+  </div>
+
+  <!-- 교육 역량 수치 -->
+  <div class="section">
+    <div class="section-title">AI 교육 역량 (숫자로 증명)</div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="num">155</div>
+        <div class="desc">사전빌드 실습 예제</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">25</div>
+        <div class="desc">카테고리 (LED~AI)</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">272</div>
+        <div class="desc">펌웨어 빌드 완료</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">30+</div>
+        <div class="desc">교육 영상 (한/영)</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">37</div>
+        <div class="desc">온라인 교육 코스</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 사전빌드 교육 시스템 -->
+  <div class="section">
+    <div class="section-title">사전빌드 교육 시스템 — 초등학생 맞춤 체험 교육</div>
+    <p style="margin-bottom:8px;">
+      학생이 <strong>스마트폰 앱에서 원하는 동작을 선택</strong>하면, AI가 자동으로 코드를 생성하고,
+      <strong>BLE 무선 전송</strong>으로 ESP32 보드에 즉시 업로드됩니다.
+      학생은 코딩을 몰라도 <strong>눈앞에서 LED가 켜지고, 센서가 반응하는 것</strong>을 직접 체험합니다.
+    </p>
+    <div class="flow-box">
+      <span class="tag-orange tag">학생이 선택</span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="tag">AI가 코드 생성</span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="tag">BLE 무선 전송</span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="tag-orange tag">ESP32 보드에서 실행!</span>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <strong>초등학생 적합 이유</strong>
+        <ul>
+          <li>코딩 지식 <strong>불필요</strong> &mdash; 선택만 하면 동작</li>
+          <li>즉각적 피드백 &mdash; 선택 후 <strong>3초 내</strong> 결과 확인</li>
+          <li>안전한 저전압 하드웨어 (3.3V/5V USB 전원)</li>
+          <li>스마트폰 앱으로 친숙한 인터페이스</li>
+          <li>단계별 난이도 &mdash; LED 켜기부터 AI 음성인식까지</li>
+        </ul>
+      </div>
+      <div>
+        <strong>155개 실습 예제 (4단계)</strong>
+        <table>
+          <thead><tr><th>단계</th><th>내용</th><th>예시</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag">기초</span></td><td>LED, 버튼, 소리</td><td>빨간 LED 켜기</td></tr>
+            <tr><td><span class="tag">중급</span></td><td>센서, 모터, 통신</td><td>온도 측정 표시</td></tr>
+            <tr><td><span class="tag">고급</span></td><td>복합 제어, 로직</td><td>자동 환기 시스템</td></tr>
+            <tr><td><span class="tag-orange tag">프로</span></td><td>AI, 네트워크</td><td>음성 인식 제어</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 보유 교육 인프라 -->
+  <div class="section">
+    <div class="section-title">보유 교육 인프라</div>
+    <div class="grid-3">
+      <div class="stat-card">
+        <div class="num" style="font-size:14pt;">ESP32 보드</div>
+        <div class="desc">30대+ 동시 수업 가능<br>BLE OTA 무선 업로드</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="font-size:14pt;">Flutter 앱</div>
+        <div class="desc">Android/iOS 지원<br>학생 스마트폰 활용</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="font-size:14pt;">교육 웹</div>
+        <div class="desc">37개 코스 온라인<br>레슨 영상 30편+</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- 초등 4,5,6 커리큘럼 제안 -->
+  <div class="section">
+    <div class="section-title">초등 4&middot;5&middot;6학년 교육 커리큘럼 (안)</div>
+    <table>
+      <thead>
+        <tr><th style="width:60px;">대상</th><th>주제</th><th>실습 내용</th><th style="width:90px;">핵심 경험</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="primary">4학년</td>
+          <td><strong>"LED로 배우는 디지털 세계"</strong></td>
+          <td>빨간/초록/파란 LED 켜기, 깜빡이기, 무지개 색 만들기, 신호등 만들기</td>
+          <td>입력 &rarr; 출력 이해</td>
+        </tr>
+        <tr>
+          <td class="primary">5학년</td>
+          <td><strong>"센서로 느끼는 스마트 세상"</strong></td>
+          <td>온도/빛 센서 읽기, 부저로 경보 만들기, 어두우면 자동 점등</td>
+          <td>센서 &rarr; 판단 &rarr; 동작</td>
+        </tr>
+        <tr>
+          <td class="primary">6학년</td>
+          <td><strong>"AI와 함께 만드는 미래"</strong></td>
+          <td>AI 코드 생성 체험, 음성/제스처 인식, 나만의 IoT 프로젝트</td>
+          <td>AI 활용 + 창의 설계</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 경력 요약 -->
+  <div class="section">
+    <div class="section-title">경력 요약</div>
+    <table>
+      <thead>
+        <tr><th style="width:100px;">기간</th><th style="width:160px;">소속 / 직위</th><th>주요 실적</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="primary">2016 ~ 현재</td>
+          <td><strong>㈜유티텍 대표</strong></td>
+          <td>
+            IoT/임베디드 전문 기업 설립 &middot; 운영<br>
+            &bull; 일본 수출: 하네다공항 500대 + 나고야 3,300대 자전거주차장<br>
+            &bull; 대형 납품: 현대건설, 롯데건설, 한화건설, LH, 홈플러스<br>
+            &bull; KC/TELEC/CE 국제 인증, 한일 특허 2건<br>
+            &bull; <span class="accent">AI 교육 시스템 자체 개발 및 운영</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="primary">2025 ~ 현재</td>
+          <td><strong>AI 교육 사업</strong></td>
+          <td>
+            &bull; 사전빌드 교육 시스템 설계/개발/운영 (155개 예제, 272개 빌드)<br>
+            &bull; AI 교육 웹 플랫폼 구축 (37개 코스, 레슨 영상 30편+)<br>
+            &bull; Python Vibe 교육 앱 개발 (AI 코드 생성 + 실행)<br>
+            &bull; Remotion 기반 교육 영상 제작 파이프라인 구축
+          </td>
+        </tr>
+        <tr>
+          <td>1988 ~ 2015</td>
+          <td><strong>임베디드 엔지니어</strong><br><span class="text-small">삼성전자, AuthenTec 등</span></td>
+          <td>
+            &bull; C/C++ 임베디드 펌웨어 38년 경력<br>
+            &bull; 삼성전자 Video/Motor Controller, 대한전선 Winder Controller<br>
+            &bull; 미국 AuthenTec ARM CPU 설계, QuickLogic FPGA 설계<br>
+            &bull; 3개국 8개사, 60+ 프로젝트 양산
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- AI 교육 관련 기술 -->
+  <div class="section">
+    <div class="section-title">AI 교육 관련 보유 기술</div>
+    <div class="grid-2">
+      <div>
+        <strong>교육 시스템 개발</strong>
+        <ul>
+          <li><strong>사전빌드</strong>: ESP32 + BLE OTA + Flutter 앱 + 자동 빌드 서버</li>
+          <li><strong>Python Vibe</strong>: AI 코드 생성 &rarr; 실시간 실행 &rarr; 설명</li>
+          <li><strong>교육 웹</strong>: Next.js + Remotion 영상 + 온라인 코스</li>
+          <li><strong>CUDA 교육</strong>: Jetson Nano 기반 6주 커리큘럼</li>
+        </ul>
+      </div>
+      <div>
+        <strong>AI / 머신러닝</strong>
+        <ul>
+          <li>LLM API 활용 (Claude, GPT, Gemini, Groq)</li>
+          <li>AI OCR 번호판 인식 (EasyOCR, 90% 정확도)</li>
+          <li>볼트 품질검사 AI (MobileNetV3, 재현율 100%)</li>
+          <li>MNIST/EMNIST CNN 분류기 (99.32%)</li>
+          <li>Google Colab 실습 노트북 13개+</li>
+        </ul>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:4px;">
+      <div>
+        <strong>하드웨어 / 임베디드</strong>
+        <ul>
+          <li>ESP32 전 계열 (WROOM, C3, C6) 실전 개발</li>
+          <li>BLE/LoRa/MQTT/RS485 무선/유선 통신</li>
+          <li>회로 설계 (OrCAD) + PCB + 양산</li>
+          <li>센서 신호 처리 + 펌웨어 양산 다수</li>
+        </ul>
+      </div>
+      <div>
+        <strong>소프트웨어 / 앱</strong>
+        <ul>
+          <li>Flutter 모바일 앱 (교육앱 4개 개발)</li>
+          <li>Python 서버 (Flask/FastAPI)</li>
+          <li>React/Next.js 웹 프론트엔드</li>
+          <li>교육 영상 제작 (Remotion + edge-tts)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 교육 철학 + 인증 + 마무리 -->
+  <div class="section">
+    <div class="section-title">교육 철학</div>
+    <div style="display:flex; gap:12px; margin-bottom:12px;">
+      <div style="flex:1; background:#fef9e7; border:1px solid #f5d76e; border-radius:6px; padding:10px 14px;">
+        <strong>체험 먼저, 이해는 나중에</strong><br>
+        <span style="font-size:9pt;">눈앞에서 LED가 켜지면 <strong>"왜 켜졌지?"</strong>라는 호기심이 학습의 시작.</span>
+      </div>
+      <div style="flex:1; background:#fef9e7; border:1px solid #f5d76e; border-radius:6px; padding:10px 14px;">
+        <strong>AI는 도구, 사고력이 핵심</strong><br>
+        <span style="font-size:9pt;">코딩 문법이 아니라 <strong>"무엇을 만들지 생각하는 힘"</strong>을 키웁니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">회사 인증 및 실적</div>
+    <div style="display:flex; flex-wrap:wrap; gap:6px;">
+      <span class="tag">기업연구소 보유</span>
+      <span class="tag">벤처기업 인증</span>
+      <span class="tag">KC 인증 (한국)</span>
+      <span class="tag">TELEC 인증 (일본)</span>
+      <span class="tag">CE 인증 (유럽)</span>
+      <span class="tag">한일 특허 2건</span>
+      <span class="tag-orange tag">일본 수출 3,800대+</span>
+      <span class="tag-orange tag">대형 건설사 5사 납품</span>
+      <span class="tag">양산 제품 4종 판매 중</span>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px; text-align:center; padding: 16px 0; border-top: 2px solid var(--primary);">
+    <p style="font-size: 11pt; color: var(--primary); font-weight: 600;">
+      38년간 하드웨어를 만들어온 엔지니어가,<br>
+      아이들이 AI 시대를 체험할 수 있는 교육 시스템을 직접 만들었습니다.
+    </p>
+    <p class="text-small" style="margin-top:8px;">2026년 4월 | ㈜유티텍 홍광선</p>
+  </div>
+
+</div>
+
+</body>
+</html>
