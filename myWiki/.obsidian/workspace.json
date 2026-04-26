@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "b6af3ec4a4eda4d6",
+        "id": "1a199db1cc242b61",
         "type": "tabs",
         "children": [
           {
-            "id": "2bf2e759c0e0c275",
+            "id": "18d0f7b71e8b59ea",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "second-brain/projects.md",
+                "file": "second-brain/raw/ai-education-web/node_modules/eslint-plugin-react/README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "projects"
+              "title": "README"
             }
           }
         ]
@@ -183,8 +183,13 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "2bf2e759c0e0c275",
+  "active": "18d0f7b71e8b59ea",
   "lastOpenFiles": [
+    "actions-image.md",
+    "second-brain/raw/ai-education-web/node_modules/eslint-plugin-react/README.md",
+    "second-brain/raw/응원봉/사용설명서/node_modules/ms/license.md",
+    "second-brain/raw/ai-education-web/node_modules/eslint-plugin-import/README.md",
+    "second-brain/projects.md",
     "second-brain/strengths.md",
     "second-brain-guide.md",
     "second-brain/skills.md",
@@ -216,11 +221,6 @@
     "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Power_모듈_1단계_테스트_설계.md",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Security_모듈_2단계_테스트_LoRa하향상향.md",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Security_모듈_3단계_개발_테스트.md",
-    "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Security_모듈_1단계_테스트_로컬.md",
-    "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Power_모듈_3단계_개발_테스트.md",
-    "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Power_모듈_3단계_CRON10분격자_테스트_설계.md",
-    "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Power_모듈_1단계_2단계_요약.md",
-    "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Port_List_Link_Tower 최종 확인본.md",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/리비타_타워_MCU_PART.png",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/리비타_링크_MCU_PART.png",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/tower_page11_full.png",

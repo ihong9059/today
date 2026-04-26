@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김포나진초등학교 정보</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --primary: #1e3a5f;
+    --accent: #e67e22;
+    --bg: #ffffff;
+    --bg-light: #f8f9fa;
+    --border: #e0e0e0;
+    --text: #333;
+    --text-light: #666;
+  }
+
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: white; margin: 0; padding: 0; }
+    .page { width: 210mm; margin: 0; padding: 16mm 20mm; box-shadow: none; min-height: auto; }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text);
+    background: #eee;
+    line-height: 1.7;
+    font-size: 10pt;
+  }
+
+  .page {
+    width: 210mm; min-height: 297mm;
+    margin: 10mm auto; background: var(--bg);
+    padding: 16mm 20mm;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+
+  .header {
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 14px;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-size: 22pt;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 2px;
+  }
+  .header .subtitle {
+    font-size: 10pt;
+    color: var(--text-light);
+  }
+
+  .section {
+    margin-bottom: 18px;
+  }
+  .section-title {
+    font-size: 12pt;
+    font-weight: 700;
+    color: var(--primary);
+    border-left: 4px solid var(--accent);
+    padding-left: 10px;
+    margin-bottom: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin: 8px 0 12px 0;
+  }
+  table th {
+    background: var(--primary);
+    color: white;
+    font-weight: 500;
+    padding: 6px 10px;
+    text-align: left;
+    font-size: 9pt;
+  }
+  table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  table tr:nth-child(even) { background: var(--bg-light); }
+
+  .info-table td:first-child {
+    font-weight: 600;
+    color: var(--primary);
+    width: 120px;
+    white-space: nowrap;
+  }
+
+  .highlight-box {
+    background: linear-gradient(135deg, #ebf4ff 0%, #f0f7ff 100%);
+    border: 1px solid #c3dafe;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .stat-card {
+    flex: 1;
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .stat-card .num {
+    font-size: 18pt;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-card .desc {
+    font-size: 8pt;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+
+  .grade-table th { text-align: center; }
+  .grade-table td { text-align: center; }
+  .grade-table td:first-child { text-align: left; font-weight: 600; }
+
+  .target-highlight { background: #fef3e2 !important; }
+
+  ul { margin: 4px 0 8px 18px; }
+  li { margin-bottom: 4px; font-size: 9.5pt; }
+
+  .tag {
+    display: inline-block;
+    background: #e8f4fd;
+    color: var(--primary);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 8pt;
+    font-weight: 500;
+    margin: 1px 2px;
+  }
+
+  .text-small { font-size: 8.5pt; color: var(--text-light); }
+  .accent { color: var(--accent); font-weight: 600; }
+  .primary { color: var(--primary); font-weight: 600; }
+
+  .footer {
+    margin-top: 20px;
+    text-align: center;
+    padding-top: 12px;
+    border-top: 2px solid var(--primary);
+    font-size: 8.5pt;
+    color: var(--text-light);
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="header">
+    <h1>김포나진초등학교 정보</h1>
+    <div class="subtitle">AI 바이브코딩 교육 대상 학교 | 2026년 3월 기준</div>
+  </div>
+
+  <!-- 기본 정보 -->
+  <div class="section">
+    <div class="section-title">기본 정보</div>
+    <table class="info-table">
+      <tr><td>정식 명칭</td><td>김포나진초등학교</td></tr>
+      <tr><td>개교일</td><td>2020년 9월 1일</td></tr>
+      <tr><td>주소</td><td>경기도 김포시 걸포2로 58 (걸포동)</td></tr>
+      <tr><td>전화</td><td>031-8049-2100</td></tr>
+      <tr><td>홈페이지</td><td>https://gpnj-e.gpoe.kr</td></tr>
+      <tr><td>관할</td><td>경기도김포교육지원청</td></tr>
+      <tr><td>교훈</td><td>"배려하고 존중하며 슬기롭게"</td></tr>
+      <tr><td>교목 / 교화</td><td>소나무 / 장미</td></tr>
+      <tr><td>교명 유래</td><td>나진포천에서 기원</td></tr>
+      <tr><td>현 교장</td><td>이순호 (제2대, 2024.09~)</td></tr>
+    </table>
+  </div>
+
+  <!-- 학교 규모 -->
+  <div class="section">
+    <div class="section-title">학교 규모 (2026년 3월 4일 기준)</div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="num">1,219</div>
+        <div class="desc">총 학생수</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">52</div>
+        <div class="desc">학급수 (특수 2 포함)</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">75</div>
+        <div class="desc">교원수</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">2020</div>
+        <div class="desc">개교년도</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 학년별 현황 -->
+  <div class="section">
+    <div class="section-title">학년별 학급수 및 학생수</div>
+    <table class="grade-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>1학년</th><th>2학년</th><th>3학년</th>
+          <th style="background:#b45309;">4학년</th>
+          <th style="background:#b45309;">5학년</th>
+          <th style="background:#b45309;">6학년</th>
+          <th>특수</th><th>계</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>학급수</td>
+          <td>7</td><td>8</td><td>8</td>
+          <td class="target-highlight"><strong>9</strong></td>
+          <td class="target-highlight"><strong>10</strong></td>
+          <td class="target-highlight"><strong>8</strong></td>
+          <td>2</td><td><strong>52</strong></td>
+        </tr>
+        <tr>
+          <td>학생수</td>
+          <td>156</td><td>193</td><td>184</td>
+          <td class="target-highlight"><strong>231</strong></td>
+          <td class="target-highlight"><strong>236</strong></td>
+          <td class="target-highlight"><strong>205</strong></td>
+          <td>14</td><td><strong>1,219</strong></td>
+        </tr>
+        <tr>
+          <td>반별 평균</td>
+          <td>~22명</td><td>~24명</td><td>~23명</td>
+          <td class="target-highlight"><strong>~26명</strong></td>
+          <td class="target-highlight"><strong>~24명</strong></td>
+          <td class="target-highlight"><strong>~26명</strong></td>
+          <td>~7명</td><td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 교육 대상 요약 -->
+  <div class="section">
+    <div class="section-title">교육 대상 (4~6학년) 요약</div>
+    <div class="highlight-box">
+      <strong>AI 바이브코딩 교육 대상</strong>: 4~6학년 총 <span class="accent">27학급, 672명</span> (반별 평균 24~26명)
+    </div>
+    <table>
+      <thead>
+        <tr><th>학년</th><th>학급수</th><th>학생수</th><th>반별 평균</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="primary">4학년</td><td>9학급</td><td>231명</td><td>~26명</td></tr>
+        <tr><td class="primary">5학년</td><td>10학급</td><td>236명</td><td>~24명</td></tr>
+        <tr><td class="primary">6학년</td><td>8학급</td><td>205명</td><td>~26명</td></tr>
+        <tr style="font-weight:700; border-top:2px solid #333;">
+          <td>합계</td><td>27학급</td><td>672명</td><td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 연혁 -->
+  <div class="section">
+    <div class="section-title">연혁</div>
+    <table>
+      <thead><tr><th style="width:120px;">날짜</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>2019. 06. 13</td><td>교명 선정</td></tr>
+        <tr><td>2020. 09. 01</td><td>개교 / 초대 교장 임장명 취임</td></tr>
+        <tr><td>2021. 01. 13</td><td>첫 졸업식 (42명)</td></tr>
+        <tr><td>2024. 09. 01</td><td>제2대 교장 이순호 취임</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 교육 참고사항 -->
+  <div class="section">
+    <div class="section-title">교육 관련 참고사항</div>
+    <ul>
+      <li><strong>신설 학교</strong> — 2020년 개교 (6년차), 시설 최신</li>
+      <li><strong>대규모 학교</strong> — 1,219명, 52학급으로 김포시 내 대규모</li>
+      <li><strong>걸포동 소재</strong> — 김포 신도시 지역, 젊은 가정 밀집 지역</li>
+      <li><strong>수업 규모</strong> — 반별 24~26명, UTTEC 보드 최소 28대 준비 권장 (여분 포함)</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    출처: 김포나진초등학교 홈페이지 (gpnj-e.gpoe.kr) | 학교알리미 (schoolinfo.go.kr) | 위키백과<br>
+    작성일: 2026-04-25 | ㈜유티텍
+  </div>
+
+</div>
+
+</body>
+</html>

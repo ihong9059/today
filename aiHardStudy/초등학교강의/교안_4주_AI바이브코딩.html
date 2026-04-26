@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 보드와 놀아봐요 - 4주 교육과정</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --green-dark: #2d6a4f;
+    --green-mid: #52b788;
+    --green-light: #b7e4c7;
+    --green-bg: #eaf5e9;
+    --yellow: #ffd166;
+    --yellow-light: #fff8e1;
+    --orange: #f4845f;
+    --blue: #577590;
+    --blue-light: #e0f0ff;
+    --pink: #f7cad0;
+    --purple: #b5a3d4;
+    --purple-light: #f0ebfa;
+    --red-led: #e63946;
+    --yellow-led: #ffbe0b;
+    --blue-led: #4361ee;
+    --bg: #f0f7e6;
+    --white: #ffffff;
+    --text: #333;
+    --text-light: #666;
+  }
+
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: white; margin: 0; padding: 0; }
+    .page { width: 210mm; margin: 0; padding: 12mm 14mm; box-shadow: none; min-height: auto; }
+    .page-break { page-break-before: always; break-before: page; }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text);
+    background: #ddd;
+    line-height: 1.6;
+    font-size: 10pt;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 10mm auto;
+    background: var(--bg);
+    padding: 12mm 14mm;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 장식 요소 */
+  .deco-star { position: absolute; font-size: 18pt; opacity: 0.5; }
+  .deco-gear { position: absolute; font-size: 14pt; opacity: 0.3; color: var(--blue); }
+
+  /* 타이틀 헤더 */
+  .main-title {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .main-title h1 {
+    font-size: 26pt;
+    font-weight: 900;
+    color: var(--green-dark);
+    letter-spacing: -1px;
+    margin-bottom: 4px;
+  }
+  .main-title h1 span { color: var(--orange); }
+  .main-title .sub {
+    font-size: 11pt;
+    color: var(--blue);
+    font-weight: 600;
+    background: var(--white);
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 20px;
+    border: 2px dashed var(--green-mid);
+  }
+  .main-title .desc {
+    font-size: 9pt;
+    color: var(--text-light);
+    margin-top: 6px;
+    background: var(--white);
+    border-radius: 8px;
+    padding: 6px 14px;
+    display: inline-block;
+  }
+
+  /* 주차 카드 */
+  .week-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    border: 2px solid var(--green-light);
+    position: relative;
+  }
+  .week-card.week1 { border-color: var(--red-led); }
+  .week-card.week2 { border-color: var(--blue); }
+  .week-card.week3 { border-color: var(--orange); }
+  .week-card.week4 { border-color: var(--purple); }
+
+  .week-badge {
+    display: inline-block;
+    padding: 3px 14px;
+    border-radius: 20px;
+    font-size: 9pt;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 6px;
+  }
+  .week1 .week-badge { background: var(--red-led); }
+  .week2 .week-badge { background: var(--blue); }
+  .week3 .week-badge { background: var(--orange); }
+  .week4 .week-badge { background: var(--purple); }
+
+  .week-title {
+    font-size: 15pt;
+    font-weight: 800;
+    color: var(--green-dark);
+    margin-bottom: 8px;
+  }
+
+  .week-goal {
+    font-size: 9pt;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    padding: 6px 12px;
+    border-radius: 8px;
+  }
+  .week1 .week-goal { background: #ffeaea; }
+  .week2 .week-goal { background: var(--blue-light); }
+  .week3 .week-goal { background: #fff3e0; }
+  .week4 .week-goal { background: var(--purple-light); }
+
+  /* 실습 스텝 */
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .step {
+    background: var(--green-bg);
+    border-radius: 10px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .step-num {
+    background: var(--green-dark);
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8pt;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-content { flex: 1; }
+  .step-code {
+    font-size: 7.5pt;
+    font-weight: 700;
+    color: var(--blue);
+    background: var(--blue-light);
+    padding: 1px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 2px;
+  }
+  .step-text {
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .step-desc {
+    font-size: 7.5pt;
+    color: var(--text-light);
+  }
+
+  /* 퀴즈 박스 */
+  .quiz-box {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .quiz-item {
+    flex: 1;
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 8.5pt;
+  }
+  .quiz-q {
+    background: var(--yellow-light);
+    border: 1.5px solid var(--yellow);
+  }
+  .quiz-a {
+    background: #e8f5e9;
+    border: 1.5px solid var(--green-mid);
+  }
+  .quiz-label {
+    font-weight: 700;
+    font-size: 8pt;
+    margin-bottom: 3px;
+  }
+
+  /* 플로우 */
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+  }
+  .flow-item {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 8.5pt;
+    font-weight: 600;
+    text-align: center;
+  }
+  .flow-arrow {
+    font-size: 14pt;
+    font-weight: 700;
+    color: var(--orange);
+  }
+
+  /* 원리 설명 */
+  .principle-box {
+    background: var(--yellow-light);
+    border: 2px dashed var(--yellow);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 9pt;
+  }
+  .principle-box .icon { font-size: 14pt; margin-right: 4px; }
+
+  /* 예제 맵 테이블 */
+  .map-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 8.5pt;
+    margin: 8px 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .map-table th {
+    padding: 6px 8px;
+    font-weight: 700;
+    font-size: 8pt;
+    text-align: center;
+  }
+  .map-table td {
+    padding: 5px 8px;
+    text-align: center;
+    border-bottom: 1px solid var(--green-light);
+    font-size: 8pt;
+  }
+  .map-table thead th { background: var(--green-dark); color: white; }
+  .map-table tbody tr:nth-child(odd) { background: var(--white); }
+  .map-table tbody tr:nth-child(even) { background: var(--green-bg); }
+
+  /* 준비물 */
+  .prep-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .prep-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 10px;
+    border: 1.5px solid var(--green-light);
+    text-align: center;
+  }
+  .prep-card .icon { font-size: 20pt; margin-bottom: 4px; }
+  .prep-card .label { font-size: 8.5pt; font-weight: 600; }
+  .prep-card .detail { font-size: 7.5pt; color: var(--text-light); }
+
+  /* 4주차 추천 예제 */
+  .recommend-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .recommend-card {
+    border-radius: 10px;
+    padding: 8px 10px;
+    text-align: center;
+  }
+  .recommend-card.fun { background: #fff0f0; border: 1.5px solid #f7cad0; }
+  .recommend-card.useful { background: #e8f5e9; border: 1.5px solid var(--green-mid); }
+  .recommend-card.challenge { background: var(--purple-light); border: 1.5px solid var(--purple); }
+  .recommend-card .type { font-size: 7.5pt; font-weight: 700; margin-bottom: 2px; }
+  .recommend-card .name { font-size: 9pt; font-weight: 700; }
+  .recommend-card .sub { font-size: 7.5pt; color: var(--text-light); }
+
+  /* 수업 흐름 타임라인 */
+  .timeline {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border: 1.5px solid var(--green-light);
+  }
+  .timeline-title {
+    font-size: 9pt;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .timeline-row {
+    display: flex;
+    gap: 4px;
+    align-items: stretch;
+  }
+  .timeline-block {
+    flex: 1;
+    border-radius: 8px;
+    padding: 6px 8px;
+    text-align: center;
+    font-size: 7.5pt;
+    font-weight: 600;
+  }
+  .tl-intro { background: #e3f2fd; color: #1565c0; flex: 0.5; }
+  .tl-practice { background: #e8f5e9; color: #2e7d32; flex: 2; }
+  .tl-why { background: var(--yellow-light); color: #e65100; flex: 1; }
+  .tl-wrap { background: #fce4ec; color: #c62828; flex: 0.5; }
+
+  .section-divider {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 18pt;
+    letter-spacing: 8px;
+    color: var(--green-mid);
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 8pt;
+    color: var(--text-light);
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 2px solid var(--green-mid);
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1 ==================== -->
+<div class="page">
+  <div class="deco-star" style="top:10px;left:20px;">&#11088;</div>
+  <div class="deco-star" style="top:10px;right:30px;">&#127775;</div>
+  <div class="deco-gear" style="top:15px;right:60px;">&#9881;</div>
+
+  <!-- 타이틀 -->
+  <div class="main-title">
+    <h1>&#129302; <span>AI 보드</span>와 놀아봐요!</h1>
+    <div class="sub">&#128241; 핸드폰 앱으로 명령하면 UTTEC 보드가 움직여요!</div>
+    <div class="desc">
+      &#127912; 앱에 명령을 입력하면 불빛, 소리, 화면으로 바로 확인할 수 있어요. 신기한 동작을 해 보며 코딩의 원리를 배워 봐요!
+    </div>
+  </div>
+
+  <!-- 수업 흐름 타임라인 -->
+  <div class="timeline">
+    <div class="timeline-title">&#9200; 매주 수업 흐름 (40분)</div>
+    <div class="timeline-row">
+      <div class="timeline-block tl-intro">&#128075;<br>소개<br><span style="font-size:6.5pt;">0~5분</span></div>
+      <div class="timeline-block tl-practice">&#128187; 실습 (3~4개)<br>앱에서 선택 &#8594; 전송 &#8594; 결과 확인!<br><span style="font-size:6.5pt;">5~25분</span></div>
+      <div class="timeline-block tl-why">&#129300; 왜 그럴까?<br>원리 설명 + 질문<br><span style="font-size:6.5pt;">25~35분</span></div>
+      <div class="timeline-block tl-wrap">&#128221;<br>정리<br><span style="font-size:6.5pt;">35~40분</span></div>
+    </div>
+  </div>
+
+  <!-- 1주차 -->
+  <div class="week-card week1">
+    <div class="week-badge">1주차</div>
+    <div class="week-title">&#128161; 빛과 소리 &mdash; "LED를 켜고, 음악을 연주하자!"</div>
+    <div class="week-goal">
+      &#127919; <strong>목표:</strong> 사전빌드 앱 사용법 익히기 &bull; "선택 &#8594; 전송 &#8594; 결과" 체험 &bull; LED(빛)와 부저(소리) 출력 체험
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-code">A01</div>
+          <div class="step-text">&#128308; 빨간 LED 켜기</div>
+          <div class="step-desc">앱에서 선택 &#8594; 전송 &#8594; 빨간 불이 켜짐!</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-code">A07</div>
+          <div class="step-text">&#128308; LED 깜빡이기</div>
+          <div class="step-desc">1초마다 깜빡깜빡! 왜 깜빡일까?</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-code">H01</div>
+          <div class="step-text">&#128678; 신호등 만들기</div>
+          <div class="step-desc">빨강3초 &#8594; 노랑1초 &#8594; 파랑3초 반복!</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-code">I02</div>
+          <div class="step-text">&#127925; 작은별 연주</div>
+          <div class="step-desc">보드가 피아노가 됐다! 따라 부르자!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="quiz-item quiz-q">
+        <div class="quiz-label">&#10067; 생각해 보아요!</div>
+        LED가 왜 켜질까?<br>신호등은 누가 바꿔줄까?
+      </div>
+      <div class="quiz-item quiz-a">
+        <div class="quiz-label">&#128161; 알아보아요!</div>
+        전기가 흐르면 빛이 나요!<br>컴퓨터가 순서대로 바꿔줘요!
+      </div>
+    </div>
+  </div>
+
+  <!-- 2주차 -->
+  <div class="week-card week2">
+    <div class="week-badge">2주차</div>
+    <div class="week-title">&#129520; 합체 + 감각 &mdash; "화면도 띄우고, 온도도 느끼자!"</div>
+    <div class="week-goal">
+      &#127919; <strong>목표:</strong> 빛+소리+화면 동시 제어 &bull; 센서(기계의 감각) 체험 &bull; 입력&#8594;출력 흐름 이해
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-code">J03</div>
+          <div class="step-text">&#127926; LED + 도레미</div>
+          <div class="step-desc">빨강=도, 노랑=레, 파랑=미! 빛+소리 합체!</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-code">E01</div>
+          <div class="step-text">&#128424; OLED에 "Hello"</div>
+          <div class="step-desc">작은 화면에 글자가 나타나요!</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-code">F03</div>
+          <div class="step-text">&#127777; 온도 표시</div>
+          <div class="step-desc">교실 온도가 화면에! 진짜 맞는지 확인!</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-code">K02</div>
+          <div class="step-text">&#127777;&#8594;&#128308; 온도별 LED색</div>
+          <div class="step-desc">차가우면 파랑, 뜨거우면 빨강으로 변해요!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="quiz-item quiz-q">
+        <div class="quiz-label">&#10067; 생각해 보아요!</div>
+        기계가 뜨거운 걸 어떻게 알까?<br>에어컨은 어떻게 알아서 꺼질까?
+      </div>
+      <div class="quiz-item quiz-a">
+        <div class="quiz-label">&#128161; 알아보아요!</div>
+        센서 = 기계의 감각기관!<br>센서가 느끼고, 컴퓨터가 판단해요!
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== PAGE 2 ==================== -->
+<div class="page page-break">
+  <div class="deco-star" style="top:10px;right:20px;">&#11088;</div>
+  <div class="deco-gear" style="top:12px;left:30px;">&#9881;</div>
+
+  <!-- 3주차 -->
+  <div class="week-card week3">
+    <div class="week-badge">3주차</div>
+    <div class="week-title">&#9889; 자동화 &mdash; "만약 ~하면 ~해라!"</div>
+    <div class="week-goal">
+      &#127919; <strong>목표:</strong> 버튼(스위치) 입력 체험 &bull; 조건문(if-then) 개념 이해 &bull; 종합 프로젝트 체험
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-code">G01</div>
+          <div class="step-text">&#128076; 버튼 &#8594; LED 켜기</div>
+          <div class="step-desc">내가 누르니까 반응한다!</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-code">L01</div>
+          <div class="step-text">&#128280; LED 토글</div>
+          <div class="step-desc">한번 누르면 ON, 또 누르면 OFF!</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-code">K03</div>
+          <div class="step-text">&#128680; 자동 경보</div>
+          <div class="step-desc">28도 넘으면 삐~! 자동으로 알려줘요!</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-code">Q01</div>
+          <div class="step-text">&#127836; 라면 타이머</div>
+          <div class="step-desc">3분 카운트다운 + 멜로디 + LED!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- if-then 원리 -->
+    <div class="principle-box">
+      <div class="icon">&#128218;</div> <strong>프로그램의 핵심 원리!</strong><br>
+      <div class="flow-row">
+        <div class="flow-item" style="background:#ffeaea;border:1.5px solid var(--red-led);">만약(if) 버튼 누르면</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-item" style="background:#e8f5e9;border:1.5px solid var(--green-mid);">LED 켜라!(then)</div>
+        <span style="margin:0 8px;color:var(--text-light);">|</span>
+        <div class="flow-item" style="background:#ffeaea;border:1.5px solid var(--red-led);">만약(if) 28도 넘으면</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-item" style="background:#e8f5e9;border:1.5px solid var(--green-mid);">부저 울려라!(then)</div>
+      </div>
+      <div style="text-align:center;font-size:8.5pt;margin-top:4px;">
+        &#128161; 자동문, 화재경보기, 에어컨... 전부 이 원리로 움직여요!
+      </div>
+    </div>
+
+    <div class="quiz-box">
+      <div class="quiz-item quiz-q">
+        <div class="quiz-label">&#10067; 생각해 보아요!</div>
+        자동문은 어떻게 열릴까?<br>화재 경보기는 어떻게 작동할까?
+      </div>
+      <div class="quiz-item quiz-a">
+        <div class="quiz-label">&#128161; 알아보아요!</div>
+        사람 오면(if) &#8594; 문 열어(then)!<br>연기 감지하면(if) &#8594; 알람(then)!
+      </div>
+    </div>
+  </div>
+
+  <!-- 4주차 -->
+  <div class="week-card week4">
+    <div class="week-badge">4주차</div>
+    <div class="week-title">&#127942; 나만의 작품 + 발표 &mdash; "내가 만든 스마트 기기!"</div>
+    <div class="week-goal">
+      &#127919; <strong>목표:</strong> 155개 예제 중 내가 원하는 것을 골라서 실행! &bull; 발표로 자기 생각 표현 &bull; 4주 총정리
+    </div>
+
+    <div style="text-align:center;margin-bottom:10px;">
+      <div style="font-size:10pt;font-weight:700;color:var(--green-dark);margin-bottom:8px;">&#127775; 추천 예제에서 골라봐요!</div>
+      <div class="recommend-grid">
+        <div class="recommend-card fun">
+          <div class="type" style="color:var(--red-led);">&#127922; 재미있는 것</div>
+          <div class="name">반응속도 게임</div>
+          <div class="sub">Q03 &#9733;&#9733;&#9733;</div>
+          <div class="name" style="margin-top:4px;">주사위 게임</div>
+          <div class="sub">U02 &#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+        <div class="recommend-card useful">
+          <div class="type" style="color:var(--green-dark);">&#128296; 쓸모있는 것</div>
+          <div class="name">라면 타이머</div>
+          <div class="sub">Q01 &#9733;&#9733;&#9733;</div>
+          <div class="name" style="margin-top:4px;">온도계</div>
+          <div class="sub">O01 &#9733;&#9733;&#9733;</div>
+        </div>
+        <div class="recommend-card challenge">
+          <div class="type" style="color:#7b1fa2;">&#128170; 도전해 볼 것</div>
+          <div class="name">모스부호 SOS</div>
+          <div class="sub">N03 &#9733;&#9733;&#9733;</div>
+          <div class="name" style="margin-top:4px;">디지털 애완동물</div>
+          <div class="sub">Y01 &#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="principle-box" style="border-color:var(--purple);background:var(--purple-light);">
+      <div style="text-align:center;">
+        <strong>&#127908; 발표해 봐요!</strong> (1인 1~2분)<br>
+        <span style="font-size:9pt;">"내가 고른 예제는 <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>이고, 이유는 <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>입니다."</span><br>
+        <span style="font-size:8pt;color:var(--text-light);">직접 시연도 해 봐요! &#128079;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4주 정리 플로우 -->
+  <div style="background:var(--white);border-radius:12px;padding:12px;border:2px solid var(--green-mid);margin-bottom:14px;">
+    <div style="text-align:center;font-weight:700;font-size:11pt;color:var(--green-dark);margin-bottom:8px;">&#127891; 4주 동안 이렇게 성장했어요!</div>
+    <div class="flow-row">
+      <div class="flow-item" style="background:#ffeaea;border:2px solid var(--red-led);font-size:9pt;">1주<br>&#128161; 빛과 소리</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-item" style="background:var(--blue-light);border:2px solid var(--blue);font-size:9pt;">2주<br>&#129520; 합체+감각</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-item" style="background:#fff3e0;border:2px solid var(--orange);font-size:9pt;">3주<br>&#9889; 자동화</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-item" style="background:var(--purple-light);border:2px solid var(--purple);font-size:9pt;">4주<br>&#127942; 나만의 작품</div>
+    </div>
+    <div style="text-align:center;font-size:10pt;font-weight:700;color:var(--orange);margin-top:6px;">
+      &#127775; 여러분은 이미 AI 시대의 메이커입니다! &#127775;
+    </div>
+  </div>
+
+  <!-- 전체 예제 맵 -->
+  <div style="margin-bottom:14px;">
+    <div style="font-weight:700;font-size:10pt;color:var(--green-dark);margin-bottom:6px;">&#128203; 전체 사용 예제 맵</div>
+    <table class="map-table">
+      <thead>
+        <tr><th>주차</th><th>주제</th><th>실습 1</th><th>실습 2</th><th>실습 3</th><th>실습 4</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>빛과 소리</td><td>A01 빨간LED</td><td>A07 깜빡이기</td><td>H01 신호등</td><td>I02 작은별</td></tr>
+        <tr><td><strong>2</strong></td><td>합체+감각</td><td>J03 LED+도레미</td><td>E01 OLED Hello</td><td>F03 온도 OLED</td><td>K02 온도별LED</td></tr>
+        <tr><td><strong>3</strong></td><td>자동화</td><td>G01 버튼&#8594;LED</td><td>L01 LED 토글</td><td>K03 온도&#8594;부저</td><td>Q01 라면타이머</td></tr>
+        <tr><td><strong>4</strong></td><td>나만의 작품</td><td colspan="4">155개 중 자유 선택 &#127775;</td></tr>
+      </tbody>
+    </table>
+    <div style="text-align:center;font-size:8pt;color:var(--text-light);">총 사용 예제: 15개 (155개 중 10%) &mdash; 나머지는 심화/후속 과정으로!</div>
+  </div>
+
+  <!-- 준비물 -->
+  <div style="margin-bottom:10px;">
+    <div style="font-weight:700;font-size:10pt;color:var(--green-dark);margin-bottom:6px;">&#127890; 준비물</div>
+    <div class="prep-grid">
+      <div class="prep-card">
+        <div class="icon">&#128187;</div>
+        <div class="label">UTTEC 보드</div>
+        <div class="detail">학생 수 + 여분 2대</div>
+      </div>
+      <div class="prep-card">
+        <div class="icon">&#128241;</div>
+        <div class="label">스마트폰</div>
+        <div class="detail">사전빌드 앱 설치</div>
+      </div>
+      <div class="prep-card">
+        <div class="icon">&#128268;</div>
+        <div class="label">USB 케이블</div>
+        <div class="detail">전원 공급용</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    &#128218; 초등학교 AI 바이브코딩 4주 과정 | 대상: 초등 4&middot;5&middot;6학년 | 주 1회 40분<br>
+    &#169; 2026 ㈜유티텍 (UTTEC) | 강사: 홍광선
+  </div>
+
+</div>
+
+</body>
+</html>
