@@ -1,0 +1,21 @@
+2026-04-26 12:58:41,382 [INFO] ============================================================
+2026-04-26 12:58:41,383 [INFO] UTTEC C6-LCD Pre-built Firmware Generator
+2026-04-26 12:58:41,383 [INFO] ============================================================
+2026-04-26 12:58:41,383 [INFO] 카탈로그 로드: 74개 항목
+2026-04-26 12:58:41,384 [INFO] 빌드 대상: 1개
+2026-04-26 12:58:41,388 [INFO] Build dir initialized: C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd
+2026-04-26 12:58:41,388 [INFO] [1/1] A01: RGB LED 빨간색으로 켜기
+2026-04-26 12:58:41,389 [INFO]   [A01] 시도 1/3: RGB LED 빨간색으로 켜기
+2026-04-26 13:03:54,928 [WARNING]   [A01] 시도 1 실패: Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:PartitionScheme=min_spiffs', '--output-dir', 'C:\\todo\\today\\aiHardStudy\\aiS3\\prebuild\\ble_ota_c6_lcd\\output', 'C:\\todo\\today\\aiHardStudy\\aiS3\\prebuild\\ble_ota_c6_lcd']' timed out after 300 seconds
+2026-04-26 13:03:56,930 [INFO]   [A01] 시도 2/3: RGB LED 빨간색으로 켜기
+2026-04-26 13:06:32,389 [INFO]   [A01] 빌드 성공 (728KB, 471.0초)
+2026-04-26 13:06:32,391 [INFO]   진행: 1/1 (성공:1 실패:0) ETA: 0.0분
+2026-04-26 13:06:32,421 [INFO] catalog.json generated: 1 items (C:\todo\today\aiHardStudy\aiS3\prebuild\firmware_db\catalog.json)
+2026-04-26 13:06:32,421 [INFO] 
+2026-04-26 13:06:32,422 [INFO] ============================================================
+2026-04-26 13:06:32,422 [INFO] 빌드 완료 리포트
+2026-04-26 13:06:32,422 [INFO] ============================================================
+2026-04-26 13:06:32,422 [INFO] 총 소요: 7.9분
+2026-04-26 13:06:32,422 [INFO] 성공: 1/1 (100%)
+2026-04-26 13:06:32,422 [INFO] 실패: 0/1
+2026-04-26 13:06:32,425 [INFO] 리포트 저장: C:\todo\today\aiHardStudy\aiS3\prebuild\logs\report_20260426_130632.json

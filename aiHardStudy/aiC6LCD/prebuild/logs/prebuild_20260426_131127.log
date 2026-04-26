@@ -1,0 +1,727 @@
+2026-04-26 13:11:27,753 [INFO] ============================================================
+2026-04-26 13:11:27,753 [INFO] UTTEC C6-LCD Pre-built Firmware Generator
+2026-04-26 13:11:27,754 [INFO] ============================================================
+2026-04-26 13:11:27,754 [INFO] 카탈로그 로드: 74개 항목
+2026-04-26 13:11:27,755 [INFO] 빌드 대상: 74개
+2026-04-26 13:11:27,759 [INFO] Build dir initialized: C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd
+2026-04-26 13:11:27,759 [INFO] [1/74] A01: RGB LED 빨간색으로 켜기
+2026-04-26 13:11:27,761 [INFO]   [A01] 시도 1/3: RGB LED 빨간색으로 켜기
+2026-04-26 13:13:31,212 [INFO]   [A01] 빌드 성공 (728KB, 123.5초)
+2026-04-26 13:13:31,213 [INFO]   진행: 1/74 (성공:1 실패:0) ETA: 150.2분
+2026-04-26 13:13:31,213 [INFO] [2/74] A02: RGB LED 초록색으로 켜기
+2026-04-26 13:13:31,214 [INFO]   [A02] 시도 1/3: RGB LED 초록색으로 켜기
+2026-04-26 13:15:36,659 [INFO]   [A02] 빌드 성공 (728KB, 125.4초)
+2026-04-26 13:15:36,660 [INFO]   진행: 2/74 (성공:2 실패:0) ETA: 149.3분
+2026-04-26 13:15:36,660 [INFO] [3/74] A03: RGB LED 파란색으로 켜기
+2026-04-26 13:15:36,661 [INFO]   [A03] 시도 1/3: RGB LED 파란색으로 켜기
+2026-04-26 13:17:27,676 [INFO]   [A03] 빌드 성공 (728KB, 111.0초)
+2026-04-26 13:17:27,677 [INFO]   진행: 3/74 (성공:3 실패:0) ETA: 142.0분
+2026-04-26 13:17:27,677 [INFO] [4/74] A04: RGB LED 노란색으로 켜기
+2026-04-26 13:17:27,678 [INFO]   [A04] 시도 1/3: RGB LED 노란색으로 켜기
+2026-04-26 13:19:15,425 [INFO]   [A04] 빌드 성공 (728KB, 107.7초)
+2026-04-26 13:19:15,426 [INFO]   진행: 4/74 (성공:4 실패:0) ETA: 136.4분
+2026-04-26 13:19:15,426 [INFO] [5/74] A05: RGB LED 보라색으로 켜기
+2026-04-26 13:19:15,427 [INFO]   [A05] 시도 1/3: RGB LED 보라색으로 켜기
+2026-04-26 13:21:09,250 [INFO]   [A05] 빌드 성공 (728KB, 113.8초)
+2026-04-26 13:21:09,251 [INFO]   진행: 5/74 (성공:5 실패:0) ETA: 133.7분
+2026-04-26 13:21:09,251 [INFO] [6/74] A06: RGB LED 하늘색으로 켜기
+2026-04-26 13:21:09,252 [INFO]   [A06] 시도 1/3: RGB LED 하늘색으로 켜기
+2026-04-26 13:22:59,571 [INFO]   [A06] 빌드 성공 (728KB, 110.3초)
+2026-04-26 13:22:59,572 [INFO]   진행: 6/74 (성공:6 실패:0) ETA: 130.7분
+2026-04-26 13:22:59,572 [INFO] [7/74] A07: RGB LED 주황색으로 켜기
+2026-04-26 13:22:59,573 [INFO]   [A07] 시도 1/3: RGB LED 주황색으로 켜기
+2026-04-26 13:24:37,405 [INFO]   [A07] 빌드 성공 (728KB, 97.8초)
+2026-04-26 13:24:37,406 [INFO]   진행: 7/74 (성공:7 실패:0) ETA: 126.0분
+2026-04-26 13:24:37,406 [INFO] [8/74] A08: RGB LED 흰색으로 켜기
+2026-04-26 13:24:37,407 [INFO]   [A08] 시도 1/3: RGB LED 흰색으로 켜기
+2026-04-26 13:26:12,885 [INFO]   [A08] 빌드 성공 (728KB, 95.5초)
+2026-04-26 13:26:12,886 [INFO]   진행: 8/74 (성공:8 실패:0) ETA: 121.7분
+2026-04-26 13:26:12,886 [INFO] [9/74] B01: LCD 화면에 Hello World 표시하기
+2026-04-26 13:26:12,887 [INFO]   [B01] 시도 1/3: LCD 화면에 Hello World 표시하기
+2026-04-26 13:27:49,513 [INFO]   [B01] 빌드 성공 (728KB, 96.6초)
+2026-04-26 13:27:49,513 [INFO]   진행: 9/74 (성공:9 실패:0) ETA: 118.2분
+2026-04-26 13:27:49,514 [INFO] [10/74] B02: LCD에 내 이름 크게 표시하기
+2026-04-26 13:27:49,514 [INFO]   [B02] 시도 1/3: LCD에 내 이름 크게 표시하기
+2026-04-26 13:28:09,678 [WARNING]   [B02] 시도 1 실패: Generated code missing setup()
+2026-04-26 13:28:11,679 [INFO]   [B02] 시도 2/3: LCD에 내 이름 크게 표시하기
+2026-04-26 13:28:31,631 [WARNING]   [B02] 시도 2 실패: Generated code missing setup()
+2026-04-26 13:28:33,631 [INFO]   [B02] 시도 3/3: LCD에 내 이름 크게 표시하기
+2026-04-26 13:29:00,816 [WARNING]   [B02] 시도 3 실패: Generated code missing setup()
+2026-04-26 13:29:00,816 [ERROR]   [B02] 최종 실패: Generated code missing setup()
+2026-04-26 13:29:00,816 [INFO]   진행: 10/74 (성공:9 실패:1) ETA: 112.3분
+2026-04-26 13:29:00,816 [INFO] [11/74] B03: LCD 배경을 빨간색으로 채우기
+2026-04-26 13:29:00,817 [INFO]   [B03] 시도 1/3: LCD 배경을 빨간색으로 채우기
+2026-04-26 13:30:10,670 [INFO]   [B03] 빌드 성공 (728KB, 69.9초)
+2026-04-26 13:30:10,671 [INFO]   진행: 11/74 (성공:10 실패:1) ETA: 107.2분
+2026-04-26 13:30:10,672 [INFO] [12/74] B04: LCD에 카운트다운 숫자 표시하기
+2026-04-26 13:30:10,673 [INFO]   [B04] 시도 1/3: LCD에 카운트다운 숫자 표시하기
+2026-04-26 13:31:22,557 [INFO]   [B04] 빌드 성공 (730KB, 71.9초)
+2026-04-26 13:31:22,557 [INFO]   진행: 12/74 (성공:11 실패:1) ETA: 102.9분
+2026-04-26 13:31:22,558 [INFO] [13/74] B05: LCD에 현재 시간 표시하기 (millis 기반)
+2026-04-26 13:31:22,558 [INFO]   [B05] 시도 1/3: LCD에 현재 시간 표시하기 (millis 기반)
+2026-04-26 13:32:57,183 [WARNING]   [B05] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:575:23: error: extended character → is not valid in an identifier
+  575 | - RGB LED는 초 단위로 빨강→초록→파랑 순환
+      |                       ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:575:23: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-26 13:32:59,184 [INFO]   [B05] 시도 2/3: LCD에 현재 시간 표시하기 (millis 기반)
+2026-04-26 13:34:29,895 [WARNING]   [B05] 시도 2 실패: Build failed:
+cdText(10, 135, timeStr, C_YELLOW, 3);
+      |                      ^~~~~~~
+      |                      |
+      |                      String
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:78:40: note:   initializing argument 3 of 'void lcdText(int, int, const char*, uint16_t, uint8_t)'
+   78 | void lcdText(int x, int y, const char* text, uint16_t color = C_TEXT, uint8_t size = 2) {
+      |                            ~~~~~~~~~~~~^~~~
+Error during build: exit status 1
+
+2026-04-26 13:34:31,896 [INFO]   [B05] 시도 3/3: LCD에 현재 시간 표시하기 (millis 기반)
+2026-04-26 13:36:07,308 [WARNING]   [B05] 시도 3 실패: Build failed:
+ 560 |   lcdText(15, 200, secStr, C_GRAY, 1);
+      |                    ^~~~~~
+      |                    |
+      |                    String
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:78:40: note:   initializing argument 3 of 'void lcdText(int, int, const char*, uint16_t, uint8_t)'
+   78 | void lcdText(int x, int y, const char* text, uint16_t color = C_TEXT, uint8_t size = 2) {
+      |                            ~~~~~~~~~~~~^~~~
+Error during build: exit status 1
+
+2026-04-26 13:36:07,308 [ERROR]   [B05] 최종 실패: Build failed:
+ 560 |   lcdText(15, 200, secStr, C_GRAY, 1);
+      |                    ^~~~~~
+      |                    |
+      |                    String
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:78:40: note:   initializing argument 3 of 'void lcdText(int, int, const char*, uint16_t, uint8_t)'
+   78 | void lcdText(int x, int y, const char* text, uint16_t color = C_TEXT, uint8_t size = 2) {
+      |                            ~~~~~~~~~~~~^~~~
+Error during build: exit status 1
+
+2026-04-26 13:36:07,308 [INFO]   진행: 13/74 (성공:11 실패:2) ETA: 115.7분
+2026-04-26 13:36:07,309 [INFO] [14/74] B06: LCD에 여러 줄 텍스트 표시하기
+2026-04-26 13:36:07,309 [INFO]   [B06] 시도 1/3: LCD에 여러 줄 텍스트 표시하기
+2026-04-26 13:37:45,236 [WARNING]   [B06] 시도 1 실패: Build failed:
+564:38: error: extended character — is not valid in an identifier
+  564 | - `lcdText(x, y, text, color, size)` — 줄 간격은 `size × 8px` 기준으로 맞춤
+      |                                      ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:564:56: error: extended character × is not valid in an identifier
+  564 | - `lcdText(x, y, text, color, size)` — 줄 간격은 `size × 8px` 기준으로 맞춤
+      |                                                        ^
+Error during build: exit status 1
+
+2026-04-26 13:37:47,237 [INFO]   [B06] 시도 2/3: LCD에 여러 줄 텍스트 표시하기
+2026-04-26 13:39:23,028 [WARNING]   [B06] 시도 2 실패: Build failed:
+
+  574 | - `size 1` → 8px 높이, 최소 간격 12px
+      |            ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:575:12: error: extended character → is not valid in an identifier
+  575 | - `size 2` → 16px 높이, 최소 간격 20px
+      |            ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:576:12: error: extended character → is not valid in an identifier
+  576 | - `size 3` → 24px 높이, 최소 간격 28px
+      |            ^
+Error during build: exit status 1
+
+2026-04-26 13:39:25,029 [INFO]   [B06] 시도 3/3: LCD에 여러 줄 텍스트 표시하기
+2026-04-26 13:41:10,776 [INFO]   [B06] 빌드 성공 (729KB, 303.5초)
+2026-04-26 13:41:10,777 [INFO]   진행: 14/74 (성공:12 실패:2) ETA: 127.4분
+2026-04-26 13:41:10,777 [INFO] [15/74] B07: LCD에 색상별로 다른 텍스트 표시하기
+2026-04-26 13:41:10,778 [INFO]   [B07] 시도 1/3: LCD에 색상별로 다른 텍스트 표시하기
+2026-04-26 13:42:40,831 [WARNING]   [B07] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:572:38: error: extended character — is not valid in an identifier
+  572 | - `lcdText(x, y, text, color, size)` — y좌표만 증가시키며 줄 추가
+      |                                      ^
+Error during build: exit status 1
+
+2026-04-26 13:42:42,832 [INFO]   [B07] 시도 2/3: LCD에 색상별로 다른 텍스트 표시하기
+2026-04-26 13:44:16,338 [WARNING]   [B07] 시도 2 실패: Build failed:
+ valid in an identifier
+  572 | - `size 3` → 줄높이 약 24px → 권장 간격 30px
+      |            ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:572:29: error: extended character → is not valid in an identifier
+  572 | - `size 3` → 줄높이 약 24px → 권장 간격 30px
+      |                             ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:559:1: error: expected unqualified-id before '--' token
+  559 | ---
+      | ^~
+Error during build: exit status 1
+
+2026-04-26 13:44:18,339 [INFO]   [B07] 시도 3/3: LCD에 색상별로 다른 텍스트 표시하기
+2026-04-26 13:45:38,935 [WARNING]   [B07] 시도 3 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:573:40: error: extended character — is not valid in an identifier
+  573 | - `lcdText(x, y, "text", color, size)` — x는 0~171, y는 0~319
+      |                                        ^
+Error during build: exit status 1
+
+2026-04-26 13:45:38,935 [ERROR]   [B07] 최종 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:573:40: error: extended character — is not valid in an identifier
+  573 | - `lcdText(x, y, "text", color, size)` — x는 0~171, y는 0~319
+      |                                        ^
+Error during build: exit status 1
+
+2026-04-26 13:45:38,935 [INFO]   진행: 15/74 (성공:12 실패:3) ETA: 134.5분
+2026-04-26 13:45:38,936 [INFO] [16/74] B08: LCD 백라이트 밝기 조절하기
+2026-04-26 13:45:38,937 [INFO]   [B08] 시도 1/3: LCD 백라이트 밝기 조절하기
+2026-04-26 13:47:23,849 [WARNING]   [B08] 시도 1 실패: Build failed:
+ota_c6_lcd\ble_ota_c6_lcd.ino:610:43: error: extended character → is not valid in an identifier
+  610 | | 밝기 단계 | 6단계 (4% → 20% → 39% → 63% → 78% → 100%) |
+      |                                           ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:610:49: error: extended character → is not valid in an identifier
+  610 | | 밝기 단계 | 6단계 (4% → 20% → 39% → 63% → 78% → 100%) |
+      |                                                 ^
+Error during build: exit status 1
+
+2026-04-26 13:47:25,849 [INFO]   [B08] 시도 2/3: LCD 백라이트 밝기 조절하기
+2026-04-26 13:49:08,289 [WARNING]   [B08] 시도 2 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino: In function 'void drawBrightnessBar(int)':
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:538:20: error: 'C_WHITE' was not declared in this scope; did you mean 'WRITE'?
+  538 |   lcd.setTextColor(C_WHITE, C_BG);
+      |                    ^~~~~~~
+      |                    WRITE
+Error during build: exit status 1
+
+2026-04-26 13:49:10,290 [INFO]   [B08] 시도 3/3: LCD 백라이트 밝기 조절하기
+2026-04-26 13:50:36,950 [WARNING]   [B08] 시도 3 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:627:32: error: extended character — is not valid in an identifier
+  627 | - `analogWrite(LCD_BL, 0~255)` — GPIO22 PWM으로 백라이트 제어
+      |                                ^
+Error during build: exit status 1
+
+2026-04-26 13:50:36,951 [ERROR]   [B08] 최종 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:627:32: error: extended character — is not valid in an identifier
+  627 | - `analogWrite(LCD_BL, 0~255)` — GPIO22 PWM으로 백라이트 제어
+      |                                ^
+Error during build: exit status 1
+
+2026-04-26 13:50:36,951 [INFO]   진행: 16/74 (성공:12 실패:4) ETA: 141.9분
+2026-04-26 13:50:36,951 [INFO] [17/74] C01: RGB LED 빨강-초록-파랑 반복 깜빡이기
+2026-04-26 13:50:36,952 [INFO]   [C01] 시도 1/3: RGB LED 빨강-초록-파랑 반복 깜빡이기
+2026-04-26 13:52:04,156 [WARNING]   [C01] 시도 1 실패: Build failed:
+\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:614:40: error: extended character → is not valid in an identifier
+  614 | | 밝기 단계 | 0 → 50 → 100 → 150 → 200 → 255 → 반복 |
+      |                                        ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:614:46: error: extended character → is not valid in an identifier
+  614 | | 밝기 단계 | 0 → 50 → 100 → 150 → 200 → 255 → 반복 |
+      |                                              ^
+Error during build: exit status 1
+
+2026-04-26 13:52:06,157 [INFO]   [C01] 시도 2/3: RGB LED 빨강-초록-파랑 반복 깜빡이기
+2026-04-26 13:53:43,961 [INFO]   [C01] 빌드 성공 (728KB, 187.0초)
+2026-04-26 13:53:43,962 [INFO]   진행: 17/74 (성공:13 실패:4) ETA: 141.7분
+2026-04-26 13:53:43,962 [INFO] [18/74] C02: RGB LED 무지개 색상 순환하기
+2026-04-26 13:53:43,962 [INFO]   [C02] 시도 1/3: RGB LED 무지개 색상 순환하기
+2026-04-26 13:55:15,233 [INFO]   [C02] 빌드 성공 (728KB, 91.3초)
+2026-04-26 13:55:15,234 [INFO]   진행: 18/74 (성공:14 실패:4) ETA: 136.2분
+2026-04-26 13:55:15,234 [INFO] [19/74] C03: RGB LED 숨쉬기 효과 (fade in/out)
+2026-04-26 13:55:15,235 [INFO]   [C03] 시도 1/3: RGB LED 숨쉬기 효과 (fade in/out)
+2026-04-26 13:57:08,430 [INFO]   [C03] 빌드 성공 (728KB, 113.2초)
+2026-04-26 13:57:08,431 [INFO]   진행: 19/74 (성공:15 실패:4) ETA: 132.2분
+2026-04-26 13:57:08,431 [INFO] [20/74] C04: RGB LED SOS 신호 보내기
+2026-04-26 13:57:08,432 [INFO]   [C04] 시도 1/3: RGB LED SOS 신호 보내기
+2026-04-26 13:58:45,807 [WARNING]   [C04] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:636:25: error: extended character × is not valid in an identifier
+  636 | | S (점 3개) | 200ms ON × 3 |
+      |                         ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:637:25: error: extended character × is not valid in an identifier
+  637 | | O (선 3개) | 600ms ON × 3 |
+      |                         ^
+Error during build: exit status 1
+
+2026-04-26 13:58:47,808 [INFO]   [C04] 시도 2/3: RGB LED SOS 신호 보내기
+2026-04-26 14:00:19,437 [WARNING]   [C04] 시도 2 실패: Build failed:
+ild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:588:17: error: extended character • is not valid in an identifier
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:588:17: error: extended character • is not valid in an identifier
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:590:34: error: extended character → is not valid in an identifier
+  590 | - SOS 1회 완료 후 **1.5초** 대기 → 반복
+      |                                  ^
+Error during build: exit status 1
+
+2026-04-26 14:00:21,438 [INFO]   [C04] 시도 3/3: RGB LED SOS 신호 보내기
+2026-04-26 14:02:05,970 [INFO]   [C04] 빌드 성공 (729KB, 297.5초)
+2026-04-26 14:02:05,971 [INFO]   진행: 20/74 (성공:16 실패:4) ETA: 136.7분
+2026-04-26 14:02:05,971 [INFO] [21/74] C05: RGB LED 경찰차 사이렌 효과
+2026-04-26 14:02:05,972 [INFO]   [C05] 시도 1/3: RGB LED 경찰차 사이렌 효과
+2026-04-26 14:03:30,183 [WARNING]   [C05] 시도 1 실패: Build failed:
+0 | - RGB LED가 빨강 3단계(밝게→중간→어둡게) → 파랑 3단계로 교차 점멸
+      |                        ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:580:24: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:580:42: error: extended character → is not valid in an identifier
+  580 | - RGB LED가 빨강 3단계(밝게→중간→어둡게) → 파랑 3단계로 교차 점멸
+      |                                          ^
+Error during build: exit status 1
+
+2026-04-26 14:03:32,184 [INFO]   [C05] 시도 2/3: RGB LED 경찰차 사이렌 효과
+2026-04-26 14:05:10,511 [INFO]   [C05] 빌드 성공 (728KB, 184.5초)
+2026-04-26 14:05:10,511 [INFO]   진행: 21/74 (성공:17 실패:4) ETA: 135.6분
+2026-04-26 14:05:10,512 [INFO] [22/74] C06: RGB LED 랜덤 색상 변경
+2026-04-26 14:05:10,512 [INFO]   [C06] 시도 1/3: RGB LED 랜덤 색상 변경
+2026-04-26 14:06:50,112 [INFO]   [C06] 빌드 성공 (729KB, 99.6초)
+2026-04-26 14:06:50,113 [INFO]   진행: 22/74 (성공:18 실패:4) ETA: 130.9분
+2026-04-26 14:06:50,113 [INFO] [23/74] D01: LCD에 빨간 원 그리기
+2026-04-26 14:06:50,114 [INFO]   [D01] 시도 1/3: LCD에 빨간 원 그리기
+2026-04-26 14:08:42,436 [INFO]   [D01] 빌드 성공 (728KB, 112.3초)
+2026-04-26 14:08:42,437 [INFO]   진행: 23/74 (성공:19 실패:4) ETA: 126.9분
+2026-04-26 14:08:42,437 [INFO] [24/74] D02: LCD에 초록 사각형 그리기
+2026-04-26 14:08:42,438 [INFO]   [D02] 시도 1/3: LCD에 초록 사각형 그리기
+2026-04-26 14:10:22,071 [WARNING]   [D02] 시도 1 실패: Build failed:
+, C_BLUE, 2);
+      |                    ~~~~~~^~~~~~~~~~~
+      |                          |
+      |                          StringSumHelper
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:78:40: note:   initializing argument 3 of 'void lcdText(int, int, const char*, uint16_t, uint8_t)'
+   78 | void lcdText(int x, int y, const char* text, uint16_t color = C_TEXT, uint8_t size = 2) {
+      |                            ~~~~~~~~~~~~^~~~
+Error during build: exit status 1
+
+2026-04-26 14:10:24,072 [INFO]   [D02] 시도 2/3: LCD에 초록 사각형 그리기
+2026-04-26 14:12:41,810 [INFO]   [D02] 빌드 성공 (729KB, 239.4초)
+2026-04-26 14:12:41,811 [INFO]   진행: 24/74 (성공:20 실패:4) ETA: 127.6분
+2026-04-26 14:12:41,811 [INFO] [25/74] D03: LCD에 신호등 그리기
+2026-04-26 14:12:41,812 [INFO]   [D03] 시도 1/3: LCD에 신호등 그리기
+2026-04-26 14:14:27,700 [WARNING]   [D03] 시도 1 실패: Build failed:
+  ^~~~~~~~~~~~
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:539:6: error: variable or field 'drawTrafficLight' declared void
+  539 | void drawTrafficLight(TrafficState state) {
+      |      ^~~~~~~~~~~~~~~~
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:539:23: error: 'TrafficState' was not declared in this scope
+  539 | void drawTrafficLight(TrafficState state) {
+      |                       ^~~~~~~~~~~~
+Error during build: exit status 1
+
+2026-04-26 14:14:29,701 [INFO]   [D03] 시도 2/3: LCD에 신호등 그리기
+2026-04-26 14:16:07,149 [WARNING]   [D03] 시도 2 실패: Build failed:
+  620 | - 순환: 빨강 → 초록 → 노랑 → 빨강
+      |              ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:620:21: error: extended character → is not valid in an identifier
+  620 | - 순환: 빨강 → 초록 → 노랑 → 빨강
+      |                     ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:620:28: error: extended character → is not valid in an identifier
+  620 | - 순환: 빨강 → 초록 → 노랑 → 빨강
+      |                            ^
+Error during build: exit status 1
+
+2026-04-26 14:16:09,150 [INFO]   [D03] 시도 3/3: LCD에 신호등 그리기
+2026-04-26 14:17:52,730 [WARNING]   [D03] 시도 3 실패: Build failed:
+ate state) {
+      |                 ^~~~~~~~~~~~
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:573:6: error: variable or field 'updateLED' declared void
+  573 | void updateLED(TrafficState state) {
+      |      ^~~~~~~~~
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:573:16: error: 'TrafficState' was not declared in this scope
+  573 | void updateLED(TrafficState state) {
+      |                ^~~~~~~~~~~~
+Error during build: exit status 1
+
+2026-04-26 14:17:52,731 [ERROR]   [D03] 최종 실패: Build failed:
+ate state) {
+      |                 ^~~~~~~~~~~~
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:573:6: error: variable or field 'updateLED' declared void
+  573 | void updateLED(TrafficState state) {
+      |      ^~~~~~~~~
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:573:16: error: 'TrafficState' was not declared in this scope
+  573 | void updateLED(TrafficState state) {
+      |                ^~~~~~~~~~~~
+Error during build: exit status 1
+
+2026-04-26 14:17:52,731 [INFO]   진행: 25/74 (성공:20 실패:5) ETA: 130.2분
+2026-04-26 14:17:52,731 [INFO] [26/74] D04: LCD에 막대 그래프 그리기
+2026-04-26 14:17:52,732 [INFO]   [D04] 시도 1/3: LCD에 막대 그래프 그리기
+2026-04-26 14:19:29,115 [WARNING]   [D04] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:626:21: error: extended character → is not valid in an identifier
+  626 | - LED: 파란색(시작) → 녹색(완료) → 노란색(갱신중)
+      |                     ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:626:34: error: extended character → is not valid in an identifier
+  626 | - LED: 파란색(시작) → 녹색(완료) → 노란색(갱신중)
+      |                                  ^
+Error during build: exit status 1
+
+2026-04-26 14:19:31,116 [INFO]   [D04] 시도 2/3: LCD에 막대 그래프 그리기
+2026-04-26 14:21:11,414 [WARNING]   [D04] 시도 2 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:526:6: error: variable or field 'drawTrafficLight' declared void
+  526 | // [데이터] 각 막대의 값 (0~100)
+      |      ^~~~~~~~~~~~
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:526:18: error: 'TrafficState' was not declared in this scope
+  526 | // [데이터] 각 막대의 값 (0~100)
+      |                  ^~~~~~~~~
+Error during build: exit status 1
+
+2026-04-26 14:21:13,415 [INFO]   [D04] 시도 3/3: LCD에 막대 그래프 그리기
+2026-04-26 14:23:00,802 [WARNING]   [D04] 시도 3 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:701:10: error: extended character × is not valid in an identifier
+  701 | | 화면 | 172×320에 7개 컬러 막대 그래프 |
+      |          ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:702:26: error: extended character → is not valid in an identifier
+  702 | | 애니메이션 | 각 막대가 아래→위로 올라오는 효과 |
+      |                          ^
+Error during build: exit status 1
+
+2026-04-26 14:23:00,803 [ERROR]   [D04] 최종 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:701:10: error: extended character × is not valid in an identifier
+  701 | | 화면 | 172×320에 7개 컬러 막대 그래프 |
+      |          ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:702:26: error: extended character → is not valid in an identifier
+  702 | | 애니메이션 | 각 막대가 아래→위로 올라오는 효과 |
+      |                          ^
+Error during build: exit status 1
+
+2026-04-26 14:23:00,803 [INFO]   진행: 26/74 (성공:20 실패:6) ETA: 132.1분
+2026-04-26 14:23:00,804 [INFO] [27/74] D05: LCD에 체스판 패턴 그리기
+2026-04-26 14:23:00,806 [INFO]   [D05] 시도 1/3: LCD에 체스판 패턴 그리기
+2026-04-26 14:25:07,905 [INFO]   [D05] 빌드 성공 (729KB, 127.1초)
+2026-04-26 14:25:07,905 [INFO]   진행: 27/74 (성공:21 실패:6) ETA: 128.2분
+2026-04-26 14:25:07,906 [INFO] [28/74] D06: LCD에 국기 그리기
+2026-04-26 14:25:07,907 [INFO]   [D06] 시도 1/3: LCD에 국기 그리기
+2026-04-26 14:29:08,059 [INFO]   [D06] 빌드 성공 (730KB, 240.2초)
+2026-04-26 14:29:08,059 [INFO]   진행: 28/74 (성공:22 실패:6) ETA: 127.6분
+2026-04-26 14:29:08,060 [INFO] [29/74] D07: LCD에 아날로그 시계 그리기
+2026-04-26 14:29:08,060 [INFO]   [D07] 시도 1/3: LCD에 아날로그 시계 그리기
+2026-04-26 14:32:12,194 [WARNING]   [D07] 시도 1 실패: Build failed:
+           ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:570:55: error: extended character × is not valid in an identifier
+  570 | - 8×8 체스판을 LCD 중앙에 배치 (셀 크기 21×21px, 전체 168×168px)
+      |                                                       ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:569:7: error: expected constructor, destructor, or type conversion before ':' token
+  569 | **결과:**
+      |       ^
+Error during build: exit status 1
+
+2026-04-26 14:32:14,196 [INFO]   [D07] 시도 2/3: LCD에 아날로그 시계 그리기
+2026-04-26 14:34:42,972 [WARNING]   [D07] 시도 2 실패: Build failed:
+ declared in this scope; did you mean 'WRITE'?
+  580 |   drawHand(hDeg, CR - 28, 3, C_WHITE);
+      |                              ^~~~~~~
+      |                              WRITE
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino: At global scope:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:633:8: error: expected constructor, destructor, or type conversion before '설명'
+  633 | **동작 설명:**
+      |        ^~~~
+Error during build: exit status 1
+
+2026-04-26 14:34:44,973 [INFO]   [D07] 시도 3/3: LCD에 아날로그 시계 그리기
+2026-04-26 14:36:49,832 [WARNING]   [D07] 시도 3 실패: Build failed:
+d you mean 'WRITE'?
+  643 |     drawHourHand(clockHour, clockMin, C_WHITE);
+      |                                       ^~~~~~~
+      |                                       WRITE
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino: At global scope:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:658:8: error: expected constructor, destructor, or type conversion before '설명'
+  658 | **동작 설명:**
+      |        ^~~~
+Error during build: exit status 1
+
+2026-04-26 14:36:49,832 [ERROR]   [D07] 최종 실패: Build failed:
+d you mean 'WRITE'?
+  643 |     drawHourHand(clockHour, clockMin, C_WHITE);
+      |                                       ^~~~~~~
+      |                                       WRITE
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino: At global scope:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:658:8: error: expected constructor, destructor, or type conversion before '설명'
+  658 | **동작 설명:**
+      |        ^~~~
+Error during build: exit status 1
+
+2026-04-26 14:36:49,833 [INFO]   진행: 29/74 (성공:22 실패:7) ETA: 132.5분
+2026-04-26 14:36:49,834 [INFO] [30/74] D08: LCD에 게이지/미터 그리기
+2026-04-26 14:36:49,835 [INFO]   [D08] 시도 1/3: LCD에 게이지/미터 그리기
+2026-04-26 14:44:57,655 [WARNING]   [D08] 시도 1 실패: Command '['bash', '-c', 'cat "C:\\Users\\lenovo\\AppData\\Local\\Temp\\tmp_xow2or2.txt" | "C:\\Users\\lenovo\\AppData\\Roaming\\npm\\claude.CMD" -p - --output-format stream-json --verbose --model claude-sonnet-4-6']' timed out after 180 seconds
+2026-04-26 14:44:59,656 [INFO]   [D08] 시도 2/3: LCD에 게이지/미터 그리기
+2026-04-26 14:48:37,899 [WARNING]   [D08] 시도 2 실패: Command '['bash', '-c', 'cat "C:\\Users\\lenovo\\AppData\\Local\\Temp\\tmpx40pznpi.txt" | "C:\\Users\\lenovo\\AppData\\Roaming\\npm\\claude.CMD" -p - --output-format stream-json --verbose --model claude-sonnet-4-6']' timed out after 180 seconds
+2026-04-26 14:48:39,900 [INFO]   [D08] 시도 3/3: LCD에 게이지/미터 그리기
+2026-04-26 14:52:22,696 [WARNING]   [D08] 시도 3 실패: Command '['bash', '-c', 'cat "C:\\Users\\lenovo\\AppData\\Local\\Temp\\tmpjlvzcwm9.txt" | "C:\\Users\\lenovo\\AppData\\Roaming\\npm\\claude.CMD" -p - --output-format stream-json --verbose --model claude-sonnet-4-6']' timed out after 180 seconds
+2026-04-26 14:52:22,697 [ERROR]   [D08] 최종 실패: Command '['bash', '-c', 'cat "C:\\Users\\lenovo\\AppData\\Local\\Temp\\tmpjlvzcwm9.txt" | "C:\\Users\\lenovo\\AppData\\Roaming\\npm\\claude.CMD" -p - --output-format stream-json --verbose --model claude-sonnet-4-6']' timed out after 180 seconds
+2026-04-26 14:52:22,697 [INFO]   진행: 30/74 (성공:22 실패:8) ETA: 148.0분
+2026-04-26 14:52:22,697 [INFO] [31/74] E01: LCD에서 공이 좌우로 움직이기
+2026-04-26 14:52:22,699 [INFO]   [E01] 시도 1/3: LCD에서 공이 좌우로 움직이기
+2026-04-26 14:53:53,667 [WARNING]   [E01] 시도 1 실패: Build failed:
+              ^~~~~~~
+      |                                  WRITE
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino: In function 'void renderClock()':
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:582:29: error: 'C_WHITE' was not declared in this scope; did you mean 'WRITE'?
+  582 |   drawFatLine(hourX, hourY, C_WHITE, 3);
+      |                             ^~~~~~~
+      |                             WRITE
+Error during build: exit status 1
+
+2026-04-26 14:53:55,668 [INFO]   [E01] 시도 2/3: LCD에서 공이 좌우로 움직이기
+2026-04-26 14:55:03,350 [INFO]   [E01] 빌드 성공 (728KB, 160.7초)
+2026-04-26 14:55:03,350 [INFO]   진행: 31/74 (성공:23 실패:8) ETA: 143.7분
+2026-04-26 14:55:03,350 [INFO] [32/74] E02: LCD에서 공이 벽에 튕기기
+2026-04-26 14:55:03,352 [INFO]   [E02] 시도 1/3: LCD에서 공이 벽에 튕기기
+2026-04-26 14:56:24,586 [INFO]   [E02] 빌드 성공 (729KB, 81.2초)
+2026-04-26 14:56:24,587 [INFO]   진행: 32/74 (성공:24 실패:8) ETA: 137.7분
+2026-04-26 14:56:24,587 [INFO] [33/74] E03: LCD에 눈 내리는 효과 만들기
+2026-04-26 14:56:24,588 [INFO]   [E03] 시도 1/3: LCD에 눈 내리는 효과 만들기
+2026-04-26 14:58:20,200 [WARNING]   [E03] 시도 1 실패: Build failed:
+     | ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:594:2: error: stray '`' in program
+  594 | ```
+      |  ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:594:3: error: stray '`' in program
+  594 | ```
+      |   ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:596:8: error: expected constructor, destructor, or type conversion before '방식'
+  596 | **동작 방식:**
+      |        ^~~~
+Error during build: exit status 1
+
+2026-04-26 14:58:22,202 [INFO]   [E03] 시도 2/3: LCD에 눈 내리는 효과 만들기
+2026-04-26 15:00:32,243 [INFO]   [E03] 빌드 성공 (729KB, 247.7초)
+2026-04-26 15:00:32,244 [INFO]   진행: 33/74 (성공:25 실패:8) ETA: 135.5분
+2026-04-26 15:00:32,245 [INFO] [34/74] E04: LCD에 프로그레스 바 애니메이션
+2026-04-26 15:00:32,246 [INFO]   [E04] 시도 1/3: LCD에 프로그레스 바 애니메이션
+2026-04-26 15:01:36,271 [WARNING]   [E04] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:608:36: error: extended character → is not valid in an identifier
+  608 | - 진행률에 따라 바 색상 변화: 빨강 → 주황 → 초록
+      |                                    ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:608:43: error: extended character → is not valid in an identifier
+  608 | - 진행률에 따라 바 색상 변화: 빨강 → 주황 → 초록
+      |                                           ^
+Error during build: exit status 1
+
+2026-04-26 15:01:38,272 [INFO]   [E04] 시도 2/3: LCD에 프로그레스 바 애니메이션
+2026-04-26 15:02:47,801 [WARNING]   [E04] 시도 2 실패: Build failed:
+tudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:611:43: error: extended character → is not valid in an identifier
+  611 | - RGB LED도 진행률에 따라 색상 변경 (초록 → 주황 → 빨강)
+      |                                           ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:611:50: error: extended character → is not valid in an identifier
+  611 | - RGB LED도 진행률에 따라 색상 변경 (초록 → 주황 → 빨강)
+      |                                                  ^
+Error during build: exit status 1
+
+2026-04-26 15:02:49,802 [INFO]   [E04] 시도 3/3: LCD에 프로그레스 바 애니메이션
+2026-04-26 15:03:48,518 [WARNING]   [E04] 시도 3 실패: Build failed:
+lcd\ble_ota_c6_lcd.ino:604:40: error: extended character → is not valid in an identifier
+  604 | - 진행도에 따라 색상 변화: 초록(0~33%) → 노랑(34~66%) → 빨강(67~100%)
+      |                                        ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:604:55: error: extended character → is not valid in an identifier
+  604 | - 진행도에 따라 색상 변화: 초록(0~33%) → 노랑(34~66%) → 빨강(67~100%)
+      |                                                       ^
+Error during build: exit status 1
+
+2026-04-26 15:03:48,518 [ERROR]   [E04] 최종 실패: Build failed:
+lcd\ble_ota_c6_lcd.ino:604:40: error: extended character → is not valid in an identifier
+  604 | - 진행도에 따라 색상 변화: 초록(0~33%) → 노랑(34~66%) → 빨강(67~100%)
+      |                                        ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:604:55: error: extended character → is not valid in an identifier
+  604 | - 진행도에 따라 색상 변화: 초록(0~33%) → 노랑(34~66%) → 빨강(67~100%)
+      |                                                       ^
+Error during build: exit status 1
+
+2026-04-26 15:03:48,518 [INFO]   진행: 34/74 (성공:25 실패:9) ETA: 132.2분
+2026-04-26 15:03:48,518 [INFO] [35/74] E05: LCD에 스크롤 텍스트 만들기
+2026-04-26 15:03:48,519 [INFO]   [E05] 시도 1/3: LCD에 스크롤 텍스트 만들기
+2026-04-26 15:05:24,276 [WARNING]   [E05] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:602:24: error: extended character → is not valid in an identifier
+  602 | | 스크롤 방향 | 오른쪽 → 왼쪽 (마퀴 방식) |
+      |                        ^
+Error during build: exit status 1
+
+2026-04-26 15:05:26,278 [INFO]   [E05] 시도 2/3: LCD에 스크롤 텍스트 만들기
+2026-04-26 15:07:19,492 [WARNING]   [E05] 시도 2 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:602:17: error: extended character → is not valid in an identifier
+  602 | | 방향 | 오른쪽 → 왼쪽 마퀴(marquee) |
+      |                 ^
+Error during build: exit status 1
+
+2026-04-26 15:07:21,493 [INFO]   [E05] 시도 3/3: LCD에 스크롤 텍스트 만들기
+2026-04-26 15:09:12,060 [INFO]   [E05] 빌드 성공 (728KB, 323.5초)
+2026-04-26 15:09:12,062 [INFO]   진행: 35/74 (성공:26 실패:9) ETA: 131.2분
+2026-04-26 15:09:12,062 [INFO] [36/74] E06: LCD에 불꽃놀이 효과 만들기
+2026-04-26 15:09:12,063 [INFO]   [E06] 시도 1/3: LCD에 불꽃놀이 효과 만들기
+2026-04-26 15:11:44,591 [WARNING]   [E06] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:710:28: error: extended character ° is not valid in an identifier
+  710 | | **폭발** | 35개 파티클이 360° 방향으로 퍼짐 |
+      |                            ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:712:29: error: extended character → is not valid in an identifier
+  712 | | **페이드** | 수명 12 이하 → 회색으로 자연스럽게 사라짐 |
+      |                             ^
+Error during build: exit status 1
+
+2026-04-26 15:11:46,592 [INFO]   [E06] 시도 2/3: LCD에 불꽃놀이 효과 만들기
+2026-04-26 15:15:22,745 [INFO]   [E06] 빌드 성공 (728KB, 370.7초)
+2026-04-26 15:15:22,746 [INFO]   진행: 36/74 (성공:27 실패:9) ETA: 130.8분
+2026-04-26 15:15:22,746 [INFO] [37/74] E07: LCD 색상 그라데이션 화면 만들기
+2026-04-26 15:15:22,747 [INFO]   [E07] 시도 1/3: LCD 색상 그라데이션 화면 만들기
+2026-04-26 15:16:46,221 [WARNING]   [E07] 시도 1 실패: Generated code missing setup()
+2026-04-26 15:16:48,222 [INFO]   [E07] 시도 2/3: LCD 색상 그라데이션 화면 만들기
+2026-04-26 15:18:46,173 [WARNING]   [E07] 시도 2 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:592:60: error: extended character × is not valid in an identifier
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:593:48: error: extended character → is not valid in an identifier
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:593:62: error: extended character → is not valid in an identifier
+Error during build: exit status 1
+
+2026-04-26 15:18:48,174 [INFO]   [E07] 시도 3/3: LCD 색상 그라데이션 화면 만들기
+2026-04-26 15:21:36,554 [INFO]   [E07] 빌드 성공 (729KB, 373.8초)
+2026-04-26 15:21:36,555 [INFO]   진행: 37/74 (성공:28 실패:9) ETA: 130.1분
+2026-04-26 15:21:36,555 [INFO] [38/74] F01: 버튼 누르면 LCD에 PRESSED 표시하기
+2026-04-26 15:21:36,557 [INFO]   [F01] 시도 1/3: 버튼 누르면 LCD에 PRESSED 표시하기
+2026-04-26 15:23:16,361 [WARNING]   [F01] 시도 1 실패: Build failed:
+, barY - 1, barW + 2, barH + 2, C_WHITE);
+      |                                                        ^~~~~~~
+      |                                                        WRITE
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino: At global scope:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:607:8: error: expected constructor, destructor, or type conversion before '설명'
+  607 | **동작 설명:**
+      |        ^~~~
+Error during build: exit status 1
+
+2026-04-26 15:23:18,362 [INFO]   [F01] 시도 2/3: 버튼 누르면 LCD에 PRESSED 표시하기
+2026-04-26 15:25:31,923 [INFO]   [F01] 빌드 성공 (729KB, 235.4초)
+2026-04-26 15:25:31,924 [INFO]   진행: 38/74 (성공:29 실패:9) ETA: 127.0분
+2026-04-26 15:25:31,924 [INFO] [39/74] F02: 버튼으로 LED 색상 변경하기
+2026-04-26 15:25:31,925 [INFO]   [F02] 시도 1/3: 버튼으로 LED 색상 변경하기
+2026-04-26 15:26:38,902 [INFO]   [F02] 빌드 성공 (729KB, 67.0초)
+2026-04-26 15:26:38,903 [INFO]   진행: 39/74 (성공:30 실패:9) ETA: 121.3분
+2026-04-26 15:26:38,903 [INFO] [40/74] F03: 버튼 누른 횟수 LCD에 표시하기
+2026-04-26 15:26:38,904 [INFO]   [F03] 시도 1/3: 버튼 누른 횟수 LCD에 표시하기
+2026-04-26 15:27:45,715 [INFO]   [F03] 빌드 성공 (729KB, 66.8초)
+2026-04-26 15:27:45,715 [INFO]   진행: 40/74 (성공:31 실패:9) ETA: 115.9분
+2026-04-26 15:27:45,715 [INFO] [41/74] F04: 버튼으로 LCD 배경색 변경하기
+2026-04-26 15:27:45,716 [INFO]   [F04] 시도 1/3: 버튼으로 LCD 배경색 변경하기
+2026-04-26 15:29:54,250 [WARNING]   [F04] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:658:31: error: extended character — is not valid in an identifier
+  658 | - 세로 스크롤은 **원형 순환** — 맨 위로 나가면 맨 아래에서 재등장
+      |                               ^
+Error during build: exit status 1
+
+2026-04-26 15:29:56,252 [INFO]   [F04] 시도 2/3: 버튼으로 LCD 배경색 변경하기
+2026-04-26 15:31:09,591 [WARNING]   [F04] 시도 2 실패: Build failed:
+t valid in an identifier
+  568 | - 8가지 색상: BLACK → RED → GREEN → BLUE → YELLOW → CYAN → ORANGE → PURPLE
+      |                                                          ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:568:67: error: extended character → is not valid in an identifier
+  568 | - 8가지 색상: BLACK → RED → GREEN → BLUE → YELLOW → CYAN → ORANGE → PURPLE
+      |                                                                   ^
+Error during build: exit status 1
+
+2026-04-26 15:31:11,592 [INFO]   [F04] 시도 3/3: 버튼으로 LCD 배경색 변경하기
+2026-04-26 15:33:04,389 [WARNING]   [F04] 시도 3 실패: Build failed:
+ay\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:581:72: error: extended character → is not valid in an identifier
+  581 |   }
+      |                                                                        ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:581:83: error: extended character → is not valid in an identifier
+  581 |   }
+      |                                                                                   ^
+Error during build: exit status 1
+
+2026-04-26 15:33:04,389 [ERROR]   [F04] 최종 실패: Build failed:
+ay\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:581:72: error: extended character → is not valid in an identifier
+  581 |   }
+      |                                                                        ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:581:83: error: extended character → is not valid in an identifier
+  581 |   }
+      |                                                                                   ^
+Error during build: exit status 1
+
+2026-04-26 15:33:04,390 [INFO]   진행: 41/74 (성공:31 실패:10) ETA: 114.0분
+2026-04-26 15:33:04,390 [INFO] [42/74] F05: 버튼 길게 누르기/짧게 누르기 구분하기
+2026-04-26 15:33:04,390 [INFO]   [F05] 시도 1/3: 버튼 길게 누르기/짧게 누르기 구분하기
+2026-04-26 15:34:25,227 [WARNING]   [F05] 시도 1 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:601:27: error: extended character ≥ is not valid in an identifier
+  601 | | 길게 누르기 | 누르는 중 ≥ 800ms | 주황 박스 "LONG PRESS" | 주황 |
+      |                           ^
+Error during build: exit status 1
+
+2026-04-26 15:34:27,229 [INFO]   [F05] 시도 2/3: 버튼 길게 누르기/짧게 누르기 구분하기
+2026-04-26 15:35:27,482 [WARNING]   [F05] 시도 2 실패: Build failed:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:605:18: error: extended character ≥ is not valid in an identifier
+  605 | | 길게 누르기 | `≥ 800ms` 유지 중 | 빨강 | `LONG` |
+      |                  ^
+Error during build: exit status 1
+
+2026-04-26 15:35:29,483 [INFO]   [F05] 시도 3/3: 버튼 길게 누르기/짧게 누르기 구분하기
+2026-04-26 15:37:09,550 [WARNING]   [F05] 시도 3 실패: Build failed:
+          ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:689:24: error: extended character → is not valid in an identifier
+  689 | | **페이드** | 수명 50%→회색, 25%→어두운 회색으로 소멸 |
+      |                        ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:689:34: error: extended character → is not valid in an identifier
+  689 | | **페이드** | 수명 50%→회색, 25%→어두운 회색으로 소멸 |
+      |                                  ^
+Error during build: exit status 1
+
+2026-04-26 15:37:09,550 [ERROR]   [F05] 최종 실패: Build failed:
+          ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:689:24: error: extended character → is not valid in an identifier
+  689 | | **페이드** | 수명 50%→회색, 25%→어두운 회색으로 소멸 |
+      |                        ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:689:34: error: extended character → is not valid in an identifier
+  689 | | **페이드** | 수명 50%→회색, 25%→어두운 회색으로 소멸 |
+      |                                  ^
+Error during build: exit status 1
+
+2026-04-26 15:37:09,550 [INFO]   진행: 42/74 (성공:31 실패:11) ETA: 111.0분
+2026-04-26 15:37:09,550 [INFO] [43/74] F06: 버튼으로 LCD 메뉴 선택하기
+2026-04-26 15:37:09,551 [INFO]   [F06] 시도 1/3: 버튼으로 LCD 메뉴 선택하기
+2026-04-26 15:39:21,977 [WARNING]   [F06] 시도 1 실패: Build failed:
+dentifier
+  662 | 2. `LED OFF` — NeoPixel 끄기
+      |              ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:663:17: error: extended character — is not valid in an identifier
+  663 | 3. `Brightness` — 백라이트 50% 후 복원
+      |                 ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:664:11: error: extended character — is not valid in an identifier
+  664 | 4. `Info` — 보드 스펙 정보 표시
+      |           ^
+Error during build: exit status 1
+
+2026-04-26 15:39:23,978 [INFO]   [F06] 시도 2/3: 버튼으로 LCD 메뉴 선택하기
+2026-04-26 15:41:16,582 [WARNING]   [F06] 시도 2 실패: Build failed:
+   |              ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:665:28: error: extended character → is not valid in an identifier
+  665 | 선택 시 초록 테두리 피드백 → 결과 화면 → 메뉴 복귀
+      |                            ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:665:40: error: extended character → is not valid in an identifier
+  665 | 선택 시 초록 테두리 피드백 → 결과 화면 → 메뉴 복귀
+      |                                        ^
+Error during build: exit status 1
+
+2026-04-26 15:41:18,583 [INFO]   [F06] 시도 3/3: 버튼으로 LCD 메뉴 선택하기
+2026-04-26 15:42:38,629 [WARNING]   [F06] 시도 3 실패: Build failed:
+identifier
+  660 | - LED 빨강 / 초록 / 파랑 → WS2812 색상 변경
+      |                          ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:661:12: error: extended character → is not valid in an identifier
+  661 | - LED 끄기 → LED OFF
+      |            ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:662:15: error: extended character → is not valid in an identifier
+  662 | - 화면 지우기 → 화면 초기화
+      |               ^
+Error during build: exit status 1
+
+2026-04-26 15:42:38,630 [ERROR]   [F06] 최종 실패: Build failed:
+identifier
+  660 | - LED 빨강 / 초록 / 파랑 → WS2812 색상 변경
+      |                          ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:661:12: error: extended character → is not valid in an identifier
+  661 | - LED 끄기 → LED OFF
+      |            ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:662:15: error: extended character → is not valid in an identifier
+  662 | - 화면 지우기 → 화면 초기화
+      |               ^
+Error during build: exit status 1
+
+2026-04-26 15:42:38,630 [INFO]   진행: 43/74 (성공:31 실패:12) ETA: 109.0분
+2026-04-26 15:42:38,630 [INFO] [44/74] G01: WiFi 주변 네트워크 스캔하고 LCD에 표시하기
+2026-04-26 15:42:38,631 [INFO]   [G01] 시도 1/3: WiFi 주변 네트워크 스캔하고 LCD에 표시하기
+2026-04-26 15:50:39,982 [WARNING]   [G01] 시도 1 실패: Build failed:
+character → is not valid in an identifier
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:580:35: error: extended character → is not valid in an identifier
+  580 |   lcd.setTextSize(2);
+      |                                   ^
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:582:22: error: extended character → is not valid in an identifier
+  582 |   lcd.print("Color Gradient");
+      |                      ^
+Error during build: exit status 1
+
+2026-04-26 15:50:41,983 [INFO]   [G01] 시도 2/3: WiFi 주변 네트워크 스캔하고 LCD에 표시하기
+2026-04-26 16:01:24,373 [WARNING]   [G01] 시도 2 실패: Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:PartitionScheme=min_spiffs', '--output-dir', 'C:\\todo\\today\\aiHardStudy\\aiS3\\prebuild\\ble_ota_c6_lcd\\output', 'C:\\todo\\today\\aiHardStudy\\aiS3\\prebuild\\ble_ota_c6_lcd']' timed out after 600 seconds
+2026-04-26 16:01:26,374 [INFO]   [G01] 시도 3/3: WiFi 주변 네트워크 스캔하고 LCD에 표시하기
+2026-04-26 16:13:12,063 [WARNING]   [G01] 시도 3 실패: Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:PartitionScheme=min_spiffs', '--output-dir', 'C:\\todo\\today\\aiHardStudy\\aiS3\\prebuild\\ble_ota_c6_lcd\\output', 'C:\\todo\\today\\aiHardStudy\\aiS3\\prebuild\\ble_ota_c6_lcd']' timed out after 600 seconds
+2026-04-26 16:13:12,065 [ERROR]   [G01] 최종 실패: Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:PartitionScheme=min_spiffs', '--output-dir', 'C:\\todo\\today\\aiHardStudy\\aiS3\\prebuild\\ble_ota_c6_lcd\\output', 'C:\\todo\\today\\aiHardStudy\\aiS3\\prebuild\\ble_ota_c6_lcd']' timed out after 600 seconds
+2026-04-26 16:13:12,065 [INFO]   진행: 44/74 (성공:31 실패:13) ETA: 123.9분
+2026-04-26 16:13:12,067 [INFO] [45/74] G02: WiFi 신호 세기를 막대그래프로 표시하기
+2026-04-26 16:13:12,073 [INFO]   [G02] 시도 1/3: WiFi 신호 세기를 막대그래프로 표시하기
+2026-04-26 16:24:28,286 [WARNING]   [G02] 시도 1 실패: Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:PartitionScheme=min_spiffs', '--output-dir', 'C:\\todo\\today\\aiHardStudy\\aiS3\\prebuild\\ble_ota_c6_lcd\\output', 'C:\\todo\\today\\aiHardStudy\\aiS3\\prebuild\\ble_ota_c6_lcd']' timed out after 600 seconds
+2026-04-26 16:24:30,288 [INFO]   [G02] 시도 2/3: WiFi 신호 세기를 막대그래프로 표시하기

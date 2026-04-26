@@ -1,0 +1,5 @@
+rc: 1
+STDERR:
+Can't open sketch: main file missing from sketch: C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd_build\ble_ota_c6_lcd_build.ino
+
+STDOUT:

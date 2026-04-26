@@ -1,0 +1,701 @@
+{
+  "version": "1.0",
+  "board": "UTTEC C6-LCD (ESP32-C6-LCD-1.47)",
+  "total": 35,
+  "items": [
+    {
+      "no": "A01",
+      "user_prompt": "RGB LED 빨간색으로 켜기",
+      "tags": [
+        "빨간",
+        "빨강",
+        "red",
+        "LED",
+        "켜",
+        "on",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 빨간색으로 켜집니다",
+      "firmware_size": 745440,
+      "firmware_sha256": "2e4a3b4efd6b15784bfb2f4a08f2e10793a4e839db1b4aa28d0cd7b82ca009d1"
+    },
+    {
+      "no": "A02",
+      "user_prompt": "RGB LED 초록색으로 켜기",
+      "tags": [
+        "초록",
+        "녹색",
+        "green",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 초록색으로 켜집니다",
+      "firmware_size": 745408,
+      "firmware_sha256": "febfb38a165794608c5efb4c87e17a7c5deaa90db5f4150b31f85eba0930b2b2"
+    },
+    {
+      "no": "A03",
+      "user_prompt": "RGB LED 파란색으로 켜기",
+      "tags": [
+        "파란",
+        "파랑",
+        "blue",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 파란색으로 켜집니다",
+      "firmware_size": 745408,
+      "firmware_sha256": "1e56cc42914aebfd0d2213cc46319d426f9a9cdd0534d02f64884fee631dbbe1"
+    },
+    {
+      "no": "A04",
+      "user_prompt": "RGB LED 노란색으로 켜기",
+      "tags": [
+        "노란",
+        "노랑",
+        "yellow",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 노란색으로 켜집니다",
+      "firmware_size": 745408,
+      "firmware_sha256": "a95af93693f9c9941565279fe30fb92c2579e25af6f1ae38d530d0ba6258afb9"
+    },
+    {
+      "no": "A05",
+      "user_prompt": "RGB LED 보라색으로 켜기",
+      "tags": [
+        "보라",
+        "purple",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 보라색으로 켜집니다",
+      "firmware_size": 745440,
+      "firmware_sha256": "1980db5720a581fbe648cb5abaecd3e46a16e5037417e327eb1ba1fcc6fc1cef"
+    },
+    {
+      "no": "A06",
+      "user_prompt": "RGB LED 하늘색으로 켜기",
+      "tags": [
+        "하늘",
+        "cyan",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 하늘색으로 켜집니다",
+      "firmware_size": 745456,
+      "firmware_sha256": "6bc5e030d2b896503ce4bbeda145517f53bb6c13a1a41cceb869e57541daa853"
+    },
+    {
+      "no": "A07",
+      "user_prompt": "RGB LED 주황색으로 켜기",
+      "tags": [
+        "주황",
+        "orange",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 주황색으로 켜집니다",
+      "firmware_size": 745440,
+      "firmware_sha256": "08c8879d02d1b4b6c5876281018197dd5f4ef5a32d6704cda2d55b996fec8571"
+    },
+    {
+      "no": "A08",
+      "user_prompt": "RGB LED 흰색으로 켜기",
+      "tags": [
+        "흰",
+        "하얀",
+        "white",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 흰색으로 켜집니다",
+      "firmware_size": 745440,
+      "firmware_sha256": "c3c74b6258db72405f1683fad1abf94ef5a2d8489b1d30904f57ad6a8fbb2930"
+    },
+    {
+      "no": "B01",
+      "user_prompt": "LCD 화면에 Hello World 표시하기",
+      "tags": [
+        "LCD",
+        "hello",
+        "텍스트",
+        "문자",
+        "표시"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD에 Hello World 텍스트를 표시합니다",
+      "firmware_size": 745424,
+      "firmware_sha256": "a01ee49d2b85d2b3ff882f27f9dbd5fe129e7da4c2c461fd752ffc36622c69e1"
+    },
+    {
+      "no": "B03",
+      "user_prompt": "LCD 배경을 빨간색으로 채우기",
+      "tags": [
+        "LCD",
+        "배경",
+        "빨간",
+        "red",
+        "채우기"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD 전체를 빨간색으로 채웁니다",
+      "firmware_size": 745408,
+      "firmware_sha256": "db0bdb4249ea55c2c508ab7534c5d0ae964be2958ecb82953a7c83367e1b5d16"
+    },
+    {
+      "no": "B04",
+      "user_prompt": "LCD에 카운트다운 숫자 표시하기",
+      "tags": [
+        "LCD",
+        "카운트다운",
+        "숫자",
+        "countdown"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD에 10부터 0까지 카운트다운합니다",
+      "firmware_size": 746256,
+      "firmware_sha256": "cc440caa145ba455aa8d77ab194fc662c3cd69248eb04cb22b50dec89e35c948"
+    },
+    {
+      "no": "B05",
+      "user_prompt": "LCD에 현재 시간 표시하기 (millis 기반)",
+      "tags": [
+        "LCD",
+        "시간",
+        "타이머",
+        "millis"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD에 경과 시간을 표시합니다",
+      "firmware_size": 745888,
+      "firmware_sha256": "24a8563f2462f168011a6b5cedb73b72cbbb02f4afe5b6ee02fc3040396df8a6"
+    },
+    {
+      "no": "B06",
+      "user_prompt": "LCD에 여러 줄 텍스트 표시하기",
+      "tags": [
+        "LCD",
+        "여러줄",
+        "멀티라인",
+        "텍스트"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD에 여러 줄의 정보를 표시합니다",
+      "firmware_size": 746160,
+      "firmware_sha256": "ea8ee88ebd6a726c10f41a6c315339dc50185ec6e94d89c55bb0637d8af0b668"
+    },
+    {
+      "no": "C01",
+      "user_prompt": "RGB LED 빨강-초록-파랑 반복 깜빡이기",
+      "tags": [
+        "RGB",
+        "깜빡",
+        "반복",
+        "blink",
+        "패턴"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "RGB LED가 빨강-초록-파랑 순서로 깜빡입니다",
+      "firmware_size": 745664,
+      "firmware_sha256": "48965a058246417d2732c5f4ff65ead51106ba33409521b999363cdf849cbc31"
+    },
+    {
+      "no": "C02",
+      "user_prompt": "RGB LED 무지개 색상 순환하기",
+      "tags": [
+        "RGB",
+        "무지개",
+        "rainbow",
+        "순환"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "RGB LED가 무지개 색상으로 부드럽게 변합니다",
+      "firmware_size": 745856,
+      "firmware_sha256": "ec3122fecca62f76d7eab1509b8f48bb832b0958b7c6a82ec41121bff15e6c06"
+    },
+    {
+      "no": "C03",
+      "user_prompt": "RGB LED 숨쉬기 효과 (fade in/out)",
+      "tags": [
+        "RGB",
+        "숨쉬기",
+        "fade",
+        "breathing"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "RGB LED가 천천히 밝아졌다 어두워집니다",
+      "firmware_size": 746064,
+      "firmware_sha256": "4965aa3cba78085bc9185e20ac1522c47ec000f174f8fb76a1798907012ef675"
+    },
+    {
+      "no": "C04",
+      "user_prompt": "RGB LED SOS 신호 보내기",
+      "tags": [
+        "RGB",
+        "SOS",
+        "신호",
+        "모스부호"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "RGB LED로 SOS 모스부호 신호를 보냅니다",
+      "firmware_size": 745968,
+      "firmware_sha256": "6c5cb2513971fa8e6029c6d05ea845651a904c17ac56c09f79147ef9430184ff"
+    },
+    {
+      "no": "C05",
+      "user_prompt": "RGB LED 경찰차 사이렌 효과",
+      "tags": [
+        "RGB",
+        "경찰",
+        "사이렌",
+        "빨파"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "빨강-파랑이 번갈아 빠르게 깜빡입니다",
+      "firmware_size": 745776,
+      "firmware_sha256": "3cc95b755a7db9a8f5b7fd2363413e059f773ceeb64b5f889a06d0f397ebcbae"
+    },
+    {
+      "no": "C06",
+      "user_prompt": "RGB LED 랜덤 색상 변경",
+      "tags": [
+        "RGB",
+        "랜덤",
+        "random",
+        "색상"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "RGB LED가 무작위 색상으로 변합니다",
+      "firmware_size": 745952,
+      "firmware_sha256": "ca55900f69841d9b4de05d43ad67a4fbd505b0fc0c376414854215aa2c8ccd22"
+    },
+    {
+      "no": "D01",
+      "user_prompt": "LCD에 빨간 원 그리기",
+      "tags": [
+        "LCD",
+        "원",
+        "circle",
+        "빨간",
+        "그래픽"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD 화면에 빨간색 원을 그립니다",
+      "firmware_size": 745424,
+      "firmware_sha256": "2e9665b0ef2df3749113b90147d4bc243a1b8a34f6bca6376e6b5f929a6ac9c9"
+    },
+    {
+      "no": "D02",
+      "user_prompt": "LCD에 초록 사각형 그리기",
+      "tags": [
+        "LCD",
+        "사각형",
+        "rect",
+        "초록",
+        "그래픽"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD 화면에 초록색 사각형을 그립니다",
+      "firmware_size": 745424,
+      "firmware_sha256": "9ffbe42e0937fd35c9ee64a2020850ced7d3b91effd0f317d0de2959b935e1eb"
+    },
+    {
+      "no": "D03",
+      "user_prompt": "LCD에 신호등 그리기",
+      "tags": [
+        "LCD",
+        "신호등",
+        "traffic",
+        "light",
+        "그래픽"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD에 빨강-노랑-초록 신호등을 그립니다",
+      "firmware_size": 746624,
+      "firmware_sha256": "c8ed428f96fd0e1ca719e93f968815f9a986cb3d3cb5d503fa7d0b08a6523cc1"
+    },
+    {
+      "no": "D05",
+      "user_prompt": "LCD에 체스판 패턴 그리기",
+      "tags": [
+        "LCD",
+        "체스판",
+        "checkerboard",
+        "패턴"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD에 흑백 체스판 패턴을 그립니다",
+      "firmware_size": 745744,
+      "firmware_sha256": "fba173d4de30c747d59a8a1106180f6a06ef898e5e82641309a409f47c7b9943"
+    },
+    {
+      "no": "D06",
+      "user_prompt": "LCD에 국기 그리기",
+      "tags": [
+        "LCD",
+        "국기",
+        "태극기",
+        "flag"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD에 태극기를 그립니다",
+      "firmware_size": 747632,
+      "firmware_sha256": "c587eba478b8ca00ce2c68b553cb6623030f4f2c3c695147fd2c57691aaf2c29"
+    },
+    {
+      "no": "D07",
+      "user_prompt": "LCD에 아날로그 시계 그리기",
+      "tags": [
+        "LCD",
+        "시계",
+        "analog",
+        "clock"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD에 아날로그 시계를 그려서 표시합니다",
+      "firmware_size": 752608,
+      "firmware_sha256": "373ca884b18997fb2d64f339871c774462c190e1b4c72d2c4269b72ec397c823"
+    },
+    {
+      "no": "E01",
+      "user_prompt": "LCD에서 공이 좌우로 움직이기",
+      "tags": [
+        "LCD",
+        "공",
+        "ball",
+        "애니메이션",
+        "이동"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에서 공이 좌우로 왔다 갔다 합니다",
+      "firmware_size": 745696,
+      "firmware_sha256": "b92bbcbb624928026020bd8db263beb6009404764b2dedf399bb27efbe081939"
+    },
+    {
+      "no": "E02",
+      "user_prompt": "LCD에서 공이 벽에 튕기기",
+      "tags": [
+        "LCD",
+        "공",
+        "bounce",
+        "튕기기"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에서 공이 화면 가장자리에 튕깁니다",
+      "firmware_size": 745760,
+      "firmware_sha256": "0598931a85240dbb895b2ac86300728baa10abbe36fe2a407dc6d85b93e768a6"
+    },
+    {
+      "no": "E03",
+      "user_prompt": "LCD에 눈 내리는 효과 만들기",
+      "tags": [
+        "LCD",
+        "눈",
+        "snow",
+        "애니메이션"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에 눈이 내리는 효과를 만듭니다",
+      "firmware_size": 746512,
+      "firmware_sha256": "8b78d9a4bc1bd769f43c97da6df26198b68aef0454c0a49959c785cfb9cb517e"
+    },
+    {
+      "no": "E04",
+      "user_prompt": "LCD에 프로그레스 바 애니메이션",
+      "tags": [
+        "LCD",
+        "프로그레스",
+        "progress",
+        "bar",
+        "로딩"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에 진행률 바가 채워집니다",
+      "firmware_size": 746544,
+      "firmware_sha256": "11113367d7f445750729e3dca4fccd21b6b868eb5509fca1f04f8352ba765404"
+    },
+    {
+      "no": "E05",
+      "user_prompt": "LCD에 스크롤 텍스트 만들기",
+      "tags": [
+        "LCD",
+        "스크롤",
+        "scroll",
+        "텍스트",
+        "이동"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에서 텍스트가 위로 스크롤됩니다",
+      "firmware_size": 746208,
+      "firmware_sha256": "481e44068864f7c72794c431b3759c2dd1c9d9b425596fbf0a43b0209450bded"
+    },
+    {
+      "no": "E06",
+      "user_prompt": "LCD에 불꽃놀이 효과 만들기",
+      "tags": [
+        "LCD",
+        "불꽃놀이",
+        "firework",
+        "효과"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에 불꽃놀이 애니메이션을 표시합니다",
+      "firmware_size": 753120,
+      "firmware_sha256": "19398f9cd545d11fbf783e9419a221919ea128751f275f21fe02c9fc6fb88c69"
+    },
+    {
+      "no": "E07",
+      "user_prompt": "LCD 색상 그라데이션 화면 만들기",
+      "tags": [
+        "LCD",
+        "그라데이션",
+        "gradient",
+        "색상"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD 화면이 부드러운 색상 그라데이션을 보여줍니다",
+      "firmware_size": 746704,
+      "firmware_sha256": "ff258ffa9a26a31058f23358e8ef9dddfce6404d071b858b1f29b27f32b651b9"
+    },
+    {
+      "no": "F01",
+      "user_prompt": "버튼 누르면 LCD에 PRESSED 표시하기",
+      "tags": [
+        "버튼",
+        "LCD",
+        "누르기",
+        "press",
+        "BOOT"
+      ],
+      "difficulty": 1,
+      "components": [
+        "button",
+        "lcd"
+      ],
+      "category": "F",
+      "category_name": "버튼 + LCD",
+      "description": "BOOT 버튼을 누르면 LCD에 표시합니다",
+      "firmware_size": 746704,
+      "firmware_sha256": "9677cffa29dd9d2f3b51a6aca5733a7a73f176e7c810d81db3f55145df85310a"
+    },
+    {
+      "no": "F02",
+      "user_prompt": "버튼으로 LED 색상 변경하기",
+      "tags": [
+        "버튼",
+        "LED",
+        "색상",
+        "변경",
+        "toggle"
+      ],
+      "difficulty": 1,
+      "components": [
+        "button",
+        "ws2812"
+      ],
+      "category": "F",
+      "category_name": "버튼 + LCD",
+      "description": "버튼을 누를 때마다 LED 색상이 바뀝니다",
+      "firmware_size": 746720,
+      "firmware_sha256": "b18b13e21f2e23ff99479aa05e0a4ec99f9f2d4675eb6c58add56596f83afccc"
+    },
+    {
+      "no": "F03",
+      "user_prompt": "버튼 누른 횟수 LCD에 표시하기",
+      "tags": [
+        "버튼",
+        "카운터",
+        "횟수",
+        "count",
+        "LCD"
+      ],
+      "difficulty": 1,
+      "components": [
+        "button",
+        "lcd"
+      ],
+      "category": "F",
+      "category_name": "버튼 + LCD",
+      "description": "버튼 누른 횟수를 LCD에 표시합니다",
+      "firmware_size": 746720,
+      "firmware_sha256": "6c1227a4c5a413f15616eb5a82dd299d13158557055b19f50b07c36d2e7aabde"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-04-26T13:06:32.422948",
+  "total": 1,
+  "success": 1,
+  "failed": 0,
+  "elapsed_minutes": 7.9,
+  "results": [
+    {
+      "no": "A01",
+      "prompt": "RGB LED 빨간색으로 켜기",
+      "success": true,
+      "error": "Command '['C:\\\\Users\\\\lenovo\\\\bin\\\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:PartitionScheme=min_spiffs', '--output-dir', 'C:\\\\todo\\\\today\\\\aiHardStudy\\\\aiS3\\\\prebuild\\\\ble_ota_c6_lcd\\\\output', 'C:\\\\todo\\\\today\\\\aiHardStudy\\\\aiS3\\\\prebuild\\\\ble_ota_c6_lcd']' timed out after 300 seconds",
+      "elapsed": 471.00091099739075,
+      "firmware_size": 745536,
+      "firmware_sha256": "cf679dd29525697d5470bec9a94eea9334ca0ff38d9531e449d41cec2de34255"
+    }
+  ]
+}

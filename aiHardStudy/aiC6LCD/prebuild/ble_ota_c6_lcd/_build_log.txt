@@ -1,0 +1,23 @@
+rc: 1
+STDERR:
+C:\todo\today\aiHardStudy\aiS3\prebuild\ble_ota_c6_lcd\ble_ota_c6_lcd.ino:519:10: fatal error: WiFi.h: No such file or directory
+  519 | #include <WiFi.h>
+      |          ^~~~~~~~
+compilation terminated.
+Error during build: exit status 1
+
+STDOUT:
+
+[92mUsed library[0m                       [92mVersion[0m [90mPath[0m
+[93mNimBLE-Arduino[0m                     2.3.7   [90mC:\Users\lenovo\OneDrive\문서\Arduino\libraries\NimBLE-Arduino[0m
+[93mUpdate[0m                             3.2.0   [90mC:\Users\lenovo\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.2.0\libraries\Update[0m
+[93mWire[0m                               3.2.0   [90mC:\Users\lenovo\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.2.0\libraries\Wire[0m
+[93mSPI[0m                                3.2.0   [90mC:\Users\lenovo\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.2.0\libraries\SPI[0m
+[93mPreferences[0m                        3.2.0   [90mC:\Users\lenovo\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.2.0\libraries\Preferences[0m
+[93mAdafruit GFX Library[0m               1.12.4  [90mC:\Users\lenovo\OneDrive\문서\Arduino\libraries\Adafruit_GFX_Library[0m
+[93mAdafruit BusIO[0m                     1.17.4  [90mC:\Users\lenovo\OneDrive\문서\Arduino\libraries\Adafruit_BusIO[0m
+[93mAdafruit ST7735 and ST7789 Library[0m 1.11.0  [90mC:\Users\lenovo\OneDrive\문서\Arduino\libraries\Adafruit_ST7735_and_ST7789_Library[0m
+[93mAdafruit NeoPixel[0m                  1.15.2  [90mC:\Users\lenovo\OneDrive\문서\Arduino\libraries\Adafruit_NeoPixel[0m
+
+[92mUsed platform[0m [92mVersion[0m [90mPath[0m
+[93mesp32:esp32[0m   3.2.0   [90mC:\Users\lenovo\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.2.0[0m
