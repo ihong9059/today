@@ -154,19 +154,27 @@ python "C:\todo\today\.claude\hooks\notion-cleanup.py"
 ### 7. git 커밋 및 푸시
 
 ```bash
-# 상태 확인
+# 1) 상태 확인
 git status
 
-# 변경 내용 확인
+# 2) untracked 새 파일/폴더 감지 (push 누락 방지)
+git ls-files --others --exclude-standard --directory
+```
+
+**중요: untracked 파일/폴더가 있으면 반드시 사용자에게 목록을 보여주고, git add 대상에 포함할지 확인한다.**
+새로 생성된 폴더/파일은 add하지 않으면 push되지 않아 다른 PC에서 받을 수 없다.
+
+```bash
+# 3) 변경 내용 확인
 git diff --stat
 
-# 사용자 확인 후 커밋
-git add <파일>
+# 4) 사용자 확인 후 커밋 (untracked 포함)
+git add <변경 파일> <새 파일/폴더>
 git commit -m "작업: {주요 작업 요약}"
 git push
 ```
 
-**주의**: 반드시 사용자 확인 후 커밋 진행
+**주의**: 반드시 사용자 확인 후 커밋 진행. .env, credentials 등 민감 파일은 제외.
 
 ### 7. 완료 안내
 
