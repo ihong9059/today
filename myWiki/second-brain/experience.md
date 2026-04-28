@@ -82,6 +82,7 @@ links: [me, skills, projects]
 - 삼환 아파트 조명제어 시스템 제안서 작성 — RAK4630 + LoRa + Zephyr 기반, REVITA 기술 확장
 - 일본 BLE Mesh 자전거주차장 수출 실적을 BLE 출입통제 지원서에 핵심 강점으로 부각
 - /wishket-apply 스킬에 wiki 참고/업데이트 절차 추가
+- 위시캣 #154889 지원 (소각장 멀티모달 화재 탐지 AI SW, 2,000만원) — Jetson+Modbus+AI 비전
 
 ## 축적된 경험 영역
 

@@ -73,6 +73,7 @@ second-brain/
     ├── 전시회/         # COEX 전시회 자료 + 웹 데모 (→ junction, 2026-04-22 추가)
     ├── revitaProject/ # REVITA 프로젝트 전체 (→ junction C:\todo\revitaProject, 2026-04-22 추가)
     ├── 회사소개/       # UTTEC 회사소개서 PDF/HTML (→ junction homepage/회사소개, 2026-04-22 추가)
+    ├── multiCore/     # 멀티코어 Claude 교육 시스템 (→ junction, 2026-04-28 추가)
     └── articles/      # 인상 깊은 기사, 영상 메모, 스크랩
 ```
 

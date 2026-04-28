@@ -111,6 +111,182 @@ curl -s -H "Authorization: Bearer $NOTION_TOKEN" \
 2. Notion 새 페이지 또는 기존 페이지에 요약 추가
 3. 출장 중 모바일에서 참조 가능
 
+### 6. 마크다운 파일을 Notion에 예쁘게 업로드
+
+사용자가 "Notion에 올려줘", "Notion에 업로드" 요청 시, **md 파일을 Notion 블록으로 변환**하여 업로드한다.
+Notion에서 보기만 할 때가 많으므로, **보기 좋은 서식이 핵심**이다.
+
+**반드시 아래 Python 변환 함수를 사용한다:**
+
+```python
+import requests, json, os, re
+
+TOKEN = os.environ.get('NOTION_TOKEN')
+HEADERS = {'Authorization': f'Bearer {TOKEN}', 'Content-Type': 'application/json', 'Notion-Version': '2022-06-28'}
+
+def md_to_notion_blocks(md_text):
+    """마크다운 텍스트를 Notion API 블록 리스트로 변환"""
+    blocks = []
+    lines = md_text.split('\n')
+    i = 0
+
+    while i < len(lines):
+        line = lines[i]
+
+        # 빈 줄 무시
+        if not line.strip():
+            i += 1
+            continue
+
+        # 제목
+        if line.startswith('##### '):
+            blocks.append({'object': 'block', 'type': 'heading_3', 'heading_3': {'rich_text': parse_inline(line[6:])}})
+        elif line.startswith('#### '):
+            blocks.append({'object': 'block', 'type': 'heading_3', 'heading_3': {'rich_text': parse_inline(line[5:])}})
+        elif line.startswith('### '):
+            blocks.append({'object': 'block', 'type': 'heading_3', 'heading_3': {'rich_text': parse_inline(line[4:])}})
+        elif line.startswith('## '):
+            blocks.append({'object': 'block', 'type': 'heading_2', 'heading_2': {'rich_text': parse_inline(line[3:])}})
+        elif line.startswith('# '):
+            blocks.append({'object': 'block', 'type': 'heading_1', 'heading_1': {'rich_text': parse_inline(line[2:])}})
+
+        # 구분선
+        elif line.strip() == '---':
+            blocks.append({'object': 'block', 'type': 'divider', 'divider': {}})
+
+        # 인용구
+        elif line.startswith('> '):
+            blocks.append({'object': 'block', 'type': 'quote', 'quote': {'rich_text': parse_inline(line[2:])}})
+
+        # 번호 목록
+        elif re.match(r'^\d+\.\s', line):
+            text = re.sub(r'^\d+\.\s', '', line)
+            blocks.append({'object': 'block', 'type': 'numbered_list_item', 'numbered_list_item': {'rich_text': parse_inline(text)}})
+
+        # 글머리 목록
+        elif line.startswith('- ') or line.startswith('* '):
+            blocks.append({'object': 'block', 'type': 'bulleted_list_item', 'bulleted_list_item': {'rich_text': parse_inline(line[2:])}})
+
+        # 코드 블록
+        elif line.startswith('```'):
+            lang = line[3:].strip() or 'plain text'
+            code_lines = []
+            i += 1
+            while i < len(lines) and not lines[i].startswith('```'):
+                code_lines.append(lines[i])
+                i += 1
+            code_text = '\n'.join(code_lines)
+            if len(code_text) > 1900:
+                code_text = code_text[:1900] + '\n...(truncated)'
+            blocks.append({'object': 'block', 'type': 'code', 'code': {'rich_text': [{'type': 'text', 'text': {'content': code_text}}], 'language': lang if lang in NOTION_LANGUAGES else 'plain text'}})
+
+        # 테이블 (| col1 | col2 | 형식)
+        elif line.startswith('|'):
+            table_rows = []
+            while i < len(lines) and lines[i].startswith('|'):
+                row = lines[i]
+                # 구분선 행 (|---|---| ) 건너뛰기
+                if re.match(r'^\|[\s\-:]+\|', row):
+                    i += 1
+                    continue
+                cells = [c.strip() for c in row.split('|')[1:-1]]
+                table_rows.append(cells)
+                i += 1
+            i -= 1  # for 루프 증가분 보정
+
+            if table_rows:
+                width = max(len(r) for r in table_rows)
+                notion_rows = []
+                for row in table_rows:
+                    while len(row) < width:
+                        row.append('')
+                    notion_rows.append({'type': 'table_row', 'table_row': {'cells': [[{'type': 'text', 'text': {'content': cell[:2000]}}] for cell in row]}})
+                blocks.append({'object': 'block', 'type': 'table', 'table': {'table_width': width, 'has_column_header': True, 'has_row_header': False, 'children': notion_rows}})
+
+        # 일반 텍스트
+        else:
+            if len(line) > 2000:
+                line = line[:2000]
+            blocks.append({'object': 'block', 'type': 'paragraph', 'paragraph': {'rich_text': parse_inline(line)}})
+
+        i += 1
+
+    return blocks
+
+def parse_inline(text):
+    """인라인 서식 파싱 (볼드, 이탤릭, 코드, 링크)"""
+    result = []
+    pattern = re.compile(r'(\*\*(.+?)\*\*|`(.+?)`|\[(.+?)\]\((.+?)\)|(.+?))')
+
+    remaining = text.strip()
+    while remaining:
+        m_bold = re.search(r'\*\*(.+?)\*\*', remaining)
+        m_code = re.search(r'`(.+?)`', remaining)
+        m_link = re.search(r'\[(.+?)\]\((.+?)\)', remaining)
+
+        matches = [(m.start(), m) for m in [m_bold, m_code, m_link] if m]
+        if not matches:
+            if remaining:
+                result.append({'type': 'text', 'text': {'content': remaining}})
+            break
+
+        matches.sort(key=lambda x: x[0])
+        pos, match = matches[0]
+
+        if pos > 0:
+            result.append({'type': 'text', 'text': {'content': remaining[:pos]}})
+
+        if match == m_bold:
+            result.append({'type': 'text', 'text': {'content': m_bold.group(1)}, 'annotations': {'bold': True}})
+        elif match == m_code:
+            result.append({'type': 'text', 'text': {'content': m_code.group(1)}, 'annotations': {'code': True}})
+        elif match == m_link:
+            result.append({'type': 'text', 'text': {'content': m_link.group(1), 'link': {'url': m_link.group(2)}}})
+
+        remaining = remaining[match.end():]
+
+    return result if result else [{'type': 'text', 'text': {'content': text.strip() or ' '}}]
+
+NOTION_LANGUAGES = ['abap','arduino','bash','basic','c','clojure','coffeescript','c++','c#','css','dart',
+    'database','docker','elixir','elm','erlang','flow','fortran','f#','gherkin','glsl','go','graphql',
+    'groovy','haskell','html','java','javascript','json','julia','kotlin','latex','less','lisp',
+    'livescript','lua','makefile','markdown','markup','matlab','mermaid','nix','objective-c','ocaml',
+    'pascal','perl','php','plain text','powershell','prolog','protobuf','python','r','reason','ruby',
+    'rust','sass','scala','scheme','scss','shell','sql','swift','toml','typescript','vb.net',
+    'verilog','vhdl','visual basic','webassembly','xml','yaml','java/c/c++/c#']
+
+def upload_md_to_notion(md_text, title, parent_id):
+    """마크다운을 Notion 페이지로 업로드"""
+    blocks = md_to_notion_blocks(md_text)
+
+    # Notion API는 한 번에 최대 100 블록
+    first_batch = blocks[:100]
+    remaining = blocks[100:]
+
+    data = {
+        'parent': {'page_id': parent_id},
+        'properties': {'title': {'title': [{'text': {'content': title}}]}},
+        'children': first_batch
+    }
+    r = requests.post('https://api.notion.com/v1/pages', headers=HEADERS, json=data)
+    if r.status_code != 200:
+        return False, r.text[:200]
+
+    page_id = r.json()['id']
+
+    # 100개 초과 블록은 append로 추가
+    while remaining:
+        batch = remaining[:100]
+        remaining = remaining[100:]
+        r = requests.patch(f'https://api.notion.com/v1/blocks/{page_id}/children', headers=HEADERS, json={'children': batch})
+        if r.status_code != 200:
+            return False, r.text[:200]
+
+    return True, page_id
+```
+
+**사용법**: md 파일을 Notion에 올릴 때 반드시 `md_to_notion_blocks()` 함수로 변환 후 업로드한다. 절대 텍스트 블록으로 통째로 넣지 않는다.
+
 ## 트리거 키워드
 
 - "Notion에 추가해줘"

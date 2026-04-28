@@ -66,6 +66,33 @@ powershell -Command "Get-ChildItem 'C:\todo\today\.claude\sessions\session_*.md'
 
 오늘 작업 내용을 `C:\todo\today\myWiki\second-brain\` 위키에 반영한다.
 
+#### 5-A. 하위 프로젝트 위키 변경 감지 (Lint)
+
+하위 프로젝트 위키가 변경되었으면 myWiki의 해당 엔티티 페이지를 동기화한다.
+
+**감지 대상:**
+
+| 프로젝트 위키 | myWiki 엔티티 | 비교 기준 |
+|---|---|---|
+| `C:\todo\revitaProject\revitaWiki\overview.md` | `entities/revita.md` | updated 날짜 비교 |
+
+**감지 방법:**
+1. revitaWiki `overview.md`의 프론트매터 `updated` 날짜를 읽는다
+2. myWiki `entities/revita.md`의 프론트매터 `updated` 날짜와 비교한다
+3. revitaWiki가 더 최신이면 → **동기화 필요** 플래그
+
+**동기화 실행 (플래그가 켜진 경우):**
+1. revitaWiki `overview.md`에서 현재 상태, 핵심 지표, 완료/미완료 목록을 읽는다
+2. myWiki `entities/revita.md`의 "현재 상태", "타임라인" 섹션을 갱신한다
+3. `revita.md`의 `updated` 날짜를 오늘로 변경한다
+4. 결과를 work-end 리포트에 표시:
+   - 동기화됨: `revita.md ← revitaWiki (변경 요약)`
+   - 또는: `revita.md: 최신 상태 (변경 불필요)`
+
+**향후 프로젝트 추가 시:** 위 테이블에 행을 추가하면 같은 패턴으로 확장 가능.
+
+#### 5-B. myWiki 자체 반영
+
 **반영 대상 확인:**
 - 새로운 프로젝트 진행/완료 → `projects.md` 업데이트
 - 새 기술 사용/학습 → `skills.md` 업데이트

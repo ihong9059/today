@@ -71,6 +71,7 @@ updated: 2026-04-22
 | [[nlm]] | NotebookLM 슬라이드 — YouTube 자동 수집→PPTX |
 | [[전시회]] | 전시회 참가 — COEX AW/InterBattery, AI 예측 정비 |
 | [[회사소개]] | ㈜유티텍 — 연혁, 인증, 특허, 납품처, 기술 진화 |
+| [[multiCore]] | multiCore Claude 교육 — Odroid C2/AWS EC2 멀티유저 Claude Code 환경 |
 
 ## 생각 (Thoughts)
 | 페이지 | 요약 |

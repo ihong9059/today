@@ -2,8 +2,8 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-04-22
-tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, revitaProject]
+updated: 2026-04-27
+tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, revitaProject]
 ---
 
 # REVITA
@@ -17,9 +17,11 @@ IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 �
 - KC RS485 Modbus RTU 인증 프로토콜 설계 완료
 - RS485 사전 검증 시스템 (DUT 시뮬레이터 + Flask 웹)
 - 회로도/핀매핑 지속 업데이트
+- CC1101 리모콘 데모 완성 (TX/RX 양방향 433MHz 무선 통신)
 
 ## 기술 스택
 - RAK4630 (nRF52840 + SX1262 LoRa)
+- nRF52840 DK (pca10056) + CC1101 (HW-863) Sub-GHz RF
 - Zephyr RTOS
 - Modbus RTU / RS485
 - SCP/SSH 원격 관리
@@ -34,6 +36,7 @@ IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 �
 | 4/16 | 회로도 추출 |
 | 3/24 | RAK4630 핀매핑, 펌웨어 GSD 계획 |
 | 3/30 | KC RS485 프로토콜 설계 + 검증 시스템 |
+| 4/27 | CC1101 리모콘 데모 — pca10056 2대 + CC1101 HW-863 2개, TX/RX 433MHz 무선 통신 완성 |
 
 ## 코드베이스
 
@@ -62,6 +65,18 @@ IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 �
 - 하드웨어: RAK4631 × 2 (Tower S/N: 001050295470, Link S/N: 001050234191)
 - RF: 922MHz, SF7, BW125kHz, CR4/5, 14dBm
 - 빌드: `build.sh` (양쪽 빌드/플래시/리셋)
+
+### CC1101 리모콘 데모 (revita 서버 → /home/uttec/revita/remocon/)
+pca10056 2대 + CC1101 (HW-863) 2개로 433.92MHz Sub-GHz 무선 버튼 리모콘 구현.
+- **cc1101/**: CC1101 SPI 드라이버 (커스텀, Zephyr 공식 드라이버 없음)
+- **tx/**: TX 앱 — 버튼 1~4 누르면 4B 패킷 무선 송신
+- **rx/**: RX 앱 — 수신 후 해당 번호 LED 토글
+- RF: 433.92MHz, 2-FSK, 38.4kbps, 10dBm
+- 패킷: [LEN][BTN_ID][SEQ][CRC8] 4바이트 고정
+- SPI pinctrl 오버라이드: P0.27(SCK), P0.26(MOSI), P1.08(MISO), P1.06(CSN), P0.05(GDO0)
+- 빌드: `build.sh tx|rx [pristine|flash]`, Windows에서 nrfjprog로 플래시
+- 보드: 683449679(COM11, TX), 683795210(COM13, RX)
+- 참고: `USAGE.md` (사용설명서), `pinmap.md` (배선표), `plan.md` (계획서)
 
 ## Zephyr RTOS 아키텍처
 - Tower: 4+ 스레드 (LoRa, USB CDC, LTE/MQTT, 센서)

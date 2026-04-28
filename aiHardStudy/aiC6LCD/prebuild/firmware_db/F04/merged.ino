@@ -286,6 +286,52 @@ void initHardware() {
   Serial.println("Hardware initialized (ESP32-C6-LCD)");
 }
 
+volatile bool ledTaskActive = true;
+
+// ─── SDLOAD Task (separate stack to avoid BLE callback overflow) ───
+char sdloadPath[64] = "";
+void sdloadTask(void* param) {
+  char* path = sdloadPath;
+  Serial.printf("SD LOAD: %s\n", path);
+  if (!SD.exists(path)) {
+    lcdClear();
+    lcdText(10, 40, "SD: Not Found", C_RED, 2);
+    lcdText(10, 70, path, C_TEXT, 1);
+    Serial.println("File not found on SD");
+  } else {
+    File fw = SD.open(path, FILE_READ);
+    size_t fwSize = fw.size();
+    lcdClear();
+    lcdText(10, 60, "SD Flash...", C_YELLOW, 2);
+    Serial.printf("SD: %s (%u bytes)\n", path, fwSize);
+    if (!Update.begin(fwSize)) {
+      lcdText(10, 100, "Update Error", C_RED, 2);
+      fw.close();
+    } else {
+      uint8_t fbuf[4096];
+      size_t written = 0;
+      while (fw.available()) {
+        size_t n = fw.read(fbuf, sizeof(fbuf));
+        Update.write(fbuf, n);
+        written += n;
+        int pct = (int)(written * 100 / fwSize);
+        char buf[16]; snprintf(buf, sizeof(buf), "%d%%", pct);
+        lcdText(60, 100, buf, C_GREEN, 3);
+      }
+      fw.close();
+      if (Update.end(true)) {
+        lcdText(10, 150, "OK!", C_GREEN, 3);
+        Serial.println("SD flash OK!");
+        delay(500);
+        ESP.restart();
+      } else {
+        lcdText(10, 150, "Verify Fail", C_RED, 2);
+      }
+    }
+  }
+  vTaskDelete(NULL);
+}
+
 // ─── Command Callback ───
 class CmdCallbacks : public NimBLECharacteristicCallbacks {
   void onWrite(NimBLECharacteristic* pChar, NimBLEConnInfo& connInfo) override {
@@ -296,6 +342,7 @@ class CmdCallbacks : public NimBLECharacteristicCallbacks {
     Serial.printf("CMD: %s\n", cmd.c_str());
 
     // ─── WS2812 RGB LED ───
+    if (cmd.startsWith("LED_")) ledTaskActive = false;
     if (cmd == "LED_RED_ON")         { setColor(255, 0, 0); }
     else if (cmd == "LED_GREEN_ON")  { setColor(0, 255, 0); }
     else if (cmd == "LED_BLUE_ON")   { setColor(0, 0, 255); }
@@ -425,46 +472,12 @@ class CmdCallbacks : public NimBLECharacteristicCallbacks {
       }
     }
 
-    // ─── SD Card Firmware Load ───
+    // ─── SD Card Firmware Load (deferred to separate task) ───
     else if (cmd.startsWith("SDLOAD:")) {
       String no = cmd.substring(7);
       no.trim();
-      String path = "/firmware/" + no + ".bin";
-      Serial.printf("SD LOAD: %s\n", path.c_str());
-
-      if (!SD.exists(path)) {
-        lcdClear();
-        lcdText(10, 40, "SD: Not Found", C_RED, 2);
-        lcdText(10, 70, path.c_str(), C_TEXT, 1);
-        Serial.println("File not found on SD");
-      } else {
-        File fw = SD.open(path, FILE_READ);
-        size_t fwSize = fw.size();
-        lcdClear();
-        lcdText(10, 60, "SD Flash...", C_YELLOW, 2);
-        Serial.printf("SD: %s (%u bytes)\n", path.c_str(), fwSize);
-
-        if (!Update.begin(fwSize)) {
-          lcdText(10, 100, "Update Error", C_RED, 2);
-          fw.close();
-        } else {
-          uint8_t fbuf[4096];
-          while (fw.available()) {
-            size_t n = fw.read(fbuf, sizeof(fbuf));
-            Update.write(fbuf, n);
-          }
-          fw.close();
-
-          if (Update.end(true)) {
-            lcdText(10, 100, "OK!", C_GREEN, 3);
-            Serial.println("SD flash OK!");
-            delay(500);
-            ESP.restart();
-          } else {
-            lcdText(10, 100, "Verify Fail", C_RED, 2);
-          }
-        }
-      }
+      snprintf(sdloadPath, sizeof(sdloadPath), "/firmware/%s.bin", no.c_str());
+      xTaskCreate(sdloadTask, "sdload", 8192, NULL, 5, NULL);
     }
 
     // ─── User-defined handler (weak) ───
@@ -528,7 +541,7 @@ void initBLE() {
     OTA_STATUS_UUID, NIMBLE_PROPERTY::NOTIFY);
 
   NimBLECharacteristic* cmdChar = pService->createCharacteristic(
-    CMD_UUID, NIMBLE_PROPERTY::WRITE);
+    CMD_UUID, NIMBLE_PROPERTY::WRITE | NIMBLE_PROPERTY::WRITE_NR);
   cmdChar->setCallbacks(new CmdCallbacks());
 
   sensorChar = pService->createCharacteristic(
@@ -569,69 +582,27 @@ void buttonMonitorTask(void* param) {
 
 
 // ─── LED Task ───
-// [변수] 현재 배경색 인덱스
-int colorIndex = 0;
-
-// [색상] 배경색 배열
-uint16_t bgColors[] = {C_BG, C_RED, C_GREEN, C_BLUE, C_YELLOW, C_CYAN, C_PURPLE, C_ORANGE};
-const char* colorNames[] = {"BLACK", "RED", "GREEN", "BLUE", "YELLOW", "CYAN", "PURPLE", "ORANGE"};
-const int COLOR_COUNT = 8;
-
-// [상태] 버튼 디바운스용 변수
-bool lastBtnState = HIGH;
-unsigned long lastDebounce = 0;
-const unsigned long DEBOUNCE_MS = 50;
-
-// [화면] 현재 배경색으로 화면 갱신
-void drawScreen() {
-  lcd.fillScreen(bgColors[colorIndex]);
-  lcd.setTextColor(C_TEXT, bgColors[colorIndex]);
-  lcd.setTextSize(2);
-  lcd.setCursor(20, 130);
-  lcd.print("COLOR:");
-  lcd.setCursor(20, 160);
-  lcd.print(colorNames[colorIndex]);
-  lcd.setTextSize(1);
-  lcd.setCursor(20, 200);
-  lcd.print("BOOT BTN to change");
-}
-
+// [배경색 변경] 버튼으로 LCD 배경색 순환
+uint16_t colors[] = {C_RED, C_GREEN, C_BLUE, C_YELLOW, C_CYAN, C_PURPLE, C_ORANGE, C_BG};
+const char* names[] = {"RED", "GREEN", "BLUE", "YELLOW", "CYAN", "PURPLE", "ORANGE", "BLACK"};
+int idx = 0;
+bool lastBtn = HIGH;
 void setup() {
   Serial.begin(115200);
   initHardware();
   initBLE();
-
-  // [초기화] 첫 화면 출력
-  drawScreen();
-  setColor(0, 0, 50); // 파란색으로 준비 완료 표시
+  lcd.fillScreen(colors[idx]);
+  lcdText(10, 140, names[idx], C_TEXT, 3);
 }
-
 void loop() {
-  bool btnState = digitalRead(BOOT_BTN);
-
-  // [디바운스] 버튼 상태 변화 감지
-  if (btnState != lastBtnState) {
-    lastDebounce = millis();
+  bool btn = digitalRead(9);
+  if (btn == LOW && lastBtn == HIGH) {
+    idx = (idx + 1) % 8;
+    lcd.fillScreen(colors[idx]);
+    uint16_t tc = (idx == 7) ? C_TEXT : C_BG;
+    lcdText(10, 140, names[idx], tc, 3);
   }
-
-  if ((millis() - lastDebounce) > DEBOUNCE_MS) {
-    // [버튼] 눌렸을 때(LOW) 색상 변경
-    if (btnState == LOW && lastBtnState == HIGH) {
-      colorIndex = (colorIndex + 1) % COLOR_COUNT;
-      drawScreen();
-      Serial.print("색상 변경: ");
-      Serial.println(colorNames[colorIndex]);
-    }
-  }
-
-  lastBtnState = btnState;
-  delay(10);
+  lastBtn = btn;
+  delay(50);
 }
-```
 
-**동작 설명:**
-- BOOT 버튼(GPIO9)을 누를 때마다 배경색이 순환됨
-- 8가지 색상: BLACK → RED → GREEN → BLUE → YELLOW → CYAN → PURPLE → ORANGE
-- 화면 중앙에 현재 색상 이름 표시
-- 50ms 디바운스 처리로 오동작 방지
-- 시작 시 RGB LED 파란색으로 준비 완료 표시

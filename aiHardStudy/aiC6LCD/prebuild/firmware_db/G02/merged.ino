@@ -25,6 +25,11 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7789.h>
 #include <Adafruit_NeoPixel.h>
+#include <SD.h>
+
+// ─── SD Card ───
+#define SD_CS 4
+#define SD_MISO 5
 
 // ─── NVS (BLE name persistent storage) ───
 Preferences prefs;
@@ -49,11 +54,11 @@ char bleName[32] = "UTTEC-C6";
 #define I2C_SDA     1
 #define I2C_SCL     2
 
-// ─── Display ───
-Adafruit_ST7789 lcd = Adafruit_ST7789(LCD_CS, LCD_DC, LCD_MOSI, LCD_SCLK, LCD_RST);
+// ─── Display (hardware SPI — shared bus with SD card) ───
+Adafruit_ST7789 lcd = Adafruit_ST7789(&SPI, LCD_CS, LCD_DC, LCD_RST);
 
 // ─── WS2812 RGB LED ───
-Adafruit_NeoPixel pixel(1, WS2812_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixel(1, WS2812_PIN, NEO_RGB + NEO_KHZ800);
 
 // ─── Note frequencies ───
 static const int NOTES[] = {262, 294, 330, 349, 392, 440, 494, 523};
@@ -239,6 +244,9 @@ void initHardware() {
   pinMode(LCD_BL, OUTPUT);
   digitalWrite(LCD_BL, HIGH);
 
+  // Hardware SPI (shared by LCD + SD card)
+  SPI.begin(LCD_SCLK, SD_MISO, LCD_MOSI);
+
   // LCD init (172x320, ST7789)
   lcd.init(172, 320);
   lcd.setRotation(0);
@@ -257,15 +265,71 @@ void initHardware() {
   // I2C for external sensors
   Wire.begin(I2C_SDA, I2C_SCL);
 
-  // Startup screen (172x320, size 1=6x8, 2=12x16, 3=18x24)
+  // Startup screen
   lcdText(20, 30, "UTTEC C6", C_CYAN, 3);
   lcdText(20, 65, "LCD 1.47\"", C_GREEN, 2);
   lcd.drawFastHLine(10, 90, 152, C_GRAY);
   lcdText(20, 105, "BLE OTA", C_TEXT, 2);
   lcdText(20, 130, "Ready!", C_GREEN, 2);
-  lcdText(20, 165, "Waiting...", C_GRAY, 1);
+
+  // SD card (same SPI bus, different CS)
+  if (SD.begin(SD_CS, SPI)) {
+    char buf[32];
+    snprintf(buf, sizeof(buf), "SD: %uMB", (unsigned)(SD.totalBytes()/1024/1024));
+    lcdText(20, 165, buf, C_GREEN, 2);
+    Serial.println(buf);
+  } else {
+    lcdText(20, 165, "SD: None", C_YELLOW, 2);
+    Serial.println("SD: not found");
+  }
 
   Serial.println("Hardware initialized (ESP32-C6-LCD)");
+}
+
+volatile bool ledTaskActive = true;
+
+// ─── SDLOAD Task (separate stack to avoid BLE callback overflow) ───
+char sdloadPath[64] = "";
+void sdloadTask(void* param) {
+  char* path = sdloadPath;
+  Serial.printf("SD LOAD: %s\n", path);
+  if (!SD.exists(path)) {
+    lcdClear();
+    lcdText(10, 40, "SD: Not Found", C_RED, 2);
+    lcdText(10, 70, path, C_TEXT, 1);
+    Serial.println("File not found on SD");
+  } else {
+    File fw = SD.open(path, FILE_READ);
+    size_t fwSize = fw.size();
+    lcdClear();
+    lcdText(10, 60, "SD Flash...", C_YELLOW, 2);
+    Serial.printf("SD: %s (%u bytes)\n", path, fwSize);
+    if (!Update.begin(fwSize)) {
+      lcdText(10, 100, "Update Error", C_RED, 2);
+      fw.close();
+    } else {
+      uint8_t fbuf[4096];
+      size_t written = 0;
+      while (fw.available()) {
+        size_t n = fw.read(fbuf, sizeof(fbuf));
+        Update.write(fbuf, n);
+        written += n;
+        int pct = (int)(written * 100 / fwSize);
+        char buf[16]; snprintf(buf, sizeof(buf), "%d%%", pct);
+        lcdText(60, 100, buf, C_GREEN, 3);
+      }
+      fw.close();
+      if (Update.end(true)) {
+        lcdText(10, 150, "OK!", C_GREEN, 3);
+        Serial.println("SD flash OK!");
+        delay(500);
+        ESP.restart();
+      } else {
+        lcdText(10, 150, "Verify Fail", C_RED, 2);
+      }
+    }
+  }
+  vTaskDelete(NULL);
 }
 
 // ─── Command Callback ───
@@ -278,6 +342,7 @@ class CmdCallbacks : public NimBLECharacteristicCallbacks {
     Serial.printf("CMD: %s\n", cmd.c_str());
 
     // ─── WS2812 RGB LED ───
+    if (cmd.startsWith("LED_")) ledTaskActive = false;
     if (cmd == "LED_RED_ON")         { setColor(255, 0, 0); }
     else if (cmd == "LED_GREEN_ON")  { setColor(0, 255, 0); }
     else if (cmd == "LED_BLUE_ON")   { setColor(0, 0, 255); }
@@ -407,6 +472,14 @@ class CmdCallbacks : public NimBLECharacteristicCallbacks {
       }
     }
 
+    // ─── SD Card Firmware Load (deferred to separate task) ───
+    else if (cmd.startsWith("SDLOAD:")) {
+      String no = cmd.substring(7);
+      no.trim();
+      snprintf(sdloadPath, sizeof(sdloadPath), "/firmware/%s.bin", no.c_str());
+      xTaskCreate(sdloadTask, "sdload", 8192, NULL, 5, NULL);
+    }
+
     // ─── User-defined handler (weak) ───
     else {
       onBleReceive(cmd);
@@ -468,7 +541,7 @@ void initBLE() {
     OTA_STATUS_UUID, NIMBLE_PROPERTY::NOTIFY);
 
   NimBLECharacteristic* cmdChar = pService->createCharacteristic(
-    CMD_UUID, NIMBLE_PROPERTY::WRITE);
+    CMD_UUID, NIMBLE_PROPERTY::WRITE | NIMBLE_PROPERTY::WRITE_NR);
   cmdChar->setCallbacks(new CmdCallbacks());
 
   sensorChar = pService->createCharacteristic(
@@ -508,89 +581,35 @@ void buttonMonitorTask(void* param) {
 }
 
 
-#include <WiFi.h>
 // ─── LED Task ───
+// [WiFi 신호] 막대그래프로 표시
 #include <WiFi.h>
-
-// RSSI → 수평 막대그래프 (색상: 강도별 녹/황/적)
-void drawSignalBar(int x, int y, int rssi) {
-    int barW = map(constrain(rssi, -100, -30), -100, -30, 0, 56);
-    uint16_t color;
-    if (rssi >= -60)      color = C_GREEN;
-    else if (rssi >= -75) color = C_YELLOW;
-    else                  color = C_RED;
-    lcd.fillRect(x, y, 56, 8, C_GRAY);         // 배경 막대
-    lcd.fillRect(x, y, barW, 8, color);         // 신호 막대
-    lcd.drawRect(x, y, 56, 8, C_TEXT);          // 테두리
-}
-
-// 헤더 그리기
-void drawHeader() {
-    lcd.fillRect(0, 0, 172, 30, lcd.color565(0, 30, 60));
-    lcdText(10, 7, "WiFi Scanner", C_CYAN, 2);
-    lcd.drawLine(0, 30, 172, 30, C_GRAY);
-}
-
-// WiFi 스캔 후 결과 표시
-void displayWiFiScan() {
-    lcdClear();
-    drawHeader();
-    lcdText(20, 100, "Scanning...", C_YELLOW, 2);
-    setColor(0, 0, 80);                         // 파란색 LED - 스캔 중
-
-    int n = WiFi.scanNetworks();
-
-    lcdClear();
-    drawHeader();
-
-    if (n == 0) {
-        lcdText(20, 120, "No networks", C_RED, 2);
-        lcdText(30, 150, "found!", C_RED, 2);
-        setColor(80, 0, 0);                     // 빨간색 LED - 실패
-        return;
-    }
-
-    // 최대 6개 네트워크 표시
-    int maxShow = min(n, 6);
-    for (int i = 0; i < maxShow; i++) {
-        int y = 36 + i * 46;
-        int rssi = WiFi.RSSI(i);
-
-        // SSID (최대 13자)
-        String ssid = WiFi.SSID(i);
-        if (ssid.length() == 0) ssid = "(hidden)";
-        if (ssid.length() > 13) ssid = ssid.substring(0, 13);
-        lcdText(4, y, ssid, C_TEXT, 1);
-
-        // RSSI 수치
-        String rssiStr = String(rssi) + "dBm";
-        lcdText(4, y + 12, rssiStr, C_YELLOW, 1);
-
-        // 수평 막대그래프
-        drawSignalBar(4, y + 26, rssi);
-    }
-
-    // 하단: 발견된 네트워크 수
-    String info = "Found: " + String(n) + " APs";
-    lcdText(4, 308, info, C_GRAY, 1);
-
-    WiFi.scanDelete();
-    setColor(0, 80, 0);                         // 초록 LED - 스캔 완료
-}
-
 void setup() {
-    Serial.begin(115200);
-    initHardware();
-    initBLE();
-
-    WiFi.mode(WIFI_STA);
-    WiFi.disconnect();
-    delay(200);
-
-    displayWiFiScan();
+  Serial.begin(115200);
+  initHardware();
+  initBLE();
+  WiFi.mode(WIFI_STA);
+  WiFi.disconnect();
 }
-
 void loop() {
-    delay(30000);           // 30초 간격으로 재스캔
-    displayWiFiScan();
+  lcdClear();
+  lcdText(10, 5, "WiFi Signal", C_CYAN, 2);
+  int n = WiFi.scanNetworks();
+  int maxShow = (n > 6) ? 6 : n;
+  for (int i = 0; i < maxShow; i++) {
+    int rssi = WiFi.RSSI(i);
+    int barW = map(constrain(rssi, -90, -30), -90, -30, 5, 120);
+    uint16_t c = (rssi > -50) ? C_GREEN : (rssi > -70) ? C_YELLOW : C_RED;
+    String ssid = WiFi.SSID(i);
+    if (ssid.length() > 10) ssid = ssid.substring(0, 10);
+    int y = 35 + i * 45;
+    lcdText(5, y, ssid.c_str(), C_TEXT, 1);
+    lcd.fillRect(5, y + 12, barW, 14, c);
+    lcd.drawRect(5, y + 12, 120, 14, C_GRAY);
+    char buf[16];
+    snprintf(buf, sizeof(buf), "%ddBm", rssi);
+    lcdText(130, y + 12, buf, C_GRAY, 1);
+  }
+  delay(5000);
 }
+

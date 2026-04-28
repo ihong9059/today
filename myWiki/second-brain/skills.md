@@ -20,6 +20,7 @@ links: [me, projects, ai-direction, strengths, gaps]
 | MQTT/RS485/Modbus RTU | 상 | 산업 통신, KC 인증 | 높음 |
 | CAN 통신 | 중상 | 대한전선 Winder Controller | 과거 |
 | LoRa/Zigbee | 중 | REVITA, IoT 통신 | 간헐 |
+| CC1101 Sub-GHz (433MHz) | 중 | remocon 데모 (pca10056+HW-863) | 신규 |
 | Jetson Nano/CUDA | 중 | AI 추론, 비전, 교육 | 간헐 |
 | ODROID C2 | 중 | 원격 빌드 서버 | 최근 구축 |
 | Luckfox (RISC-V) | 초중 | revita 프로젝트 | 탐색 중 |
