@@ -1,0 +1,53 @@
+[1/24] I09: building... OK (783KB, 99s)
+  Progress: 1/24 (OK:1 FAIL:0) ETA: 38.1min
+[2/24] I10: building... FAIL (71s):             ^~~
+      |                                      MIN
+C:\todo\today\aiHardStudy\aiC6LCD\p
+  Progress: 2/24 (OK:1 FAIL:1) ETA: 31.2min
+[3/24] I11: building... OK (775KB, 77s)
+  Progress: 3/24 (OK:2 FAIL:1) ETA: 28.8min
+[4/24] I12: building... OK (783KB, 88s)
+  Progress: 4/24 (OK:3 FAIL:1) ETA: 27.9min
+[5/24] I13: building... OK (784KB, 98s)
+  Progress: 5/24 (OK:4 FAIL:1) ETA: 27.4min
+[6/24] I14: building... OK (784KB, 88s)
+  Progress: 6/24 (OK:5 FAIL:1) ETA: 26.0min
+[7/24] M01: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 7/24 (OK:5 FAIL:2) ETA: 45.4min
+[8/24] M02: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 8/24 (OK:5 FAIL:3) ETA: 57.4min
+[9/24] M03: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 9/24 (OK:5 FAIL:4) ETA: 64.5min
+[10/24] M04: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 10/24 (OK:5 FAIL:5) ETA: 68.2min
+[11/24] M05: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 11/24 (OK:5 FAIL:6) ETA: 69.4min
+[12/24] M06: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 12/24 (OK:5 FAIL:7) ETA: 68.7min
+[13/24] N01: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 13/24 (OK:5 FAIL:8) ETA: 66.6min
+[14/24] N02: building... OK (775KB, 547s)
+  Progress: 14/24 (OK:6 FAIL:8) ETA: 62.7min
+[15/24] N03: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 15/24 (OK:6 FAIL:9) ETA: 58.7min
+[16/24] N04: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 16/24 (OK:6 FAIL:10) ETA: 53.9min
+[17/24] N05: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 17/24 (OK:6 FAIL:11) ETA: 48.5min
+[18/24] N06: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 18/24 (OK:6 FAIL:12) ETA: 42.6min
+[19/24] O01: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 19/24 (OK:6 FAIL:13) ETA: 36.3min
+[20/24] O02: building... OK (776KB, 497s)
+  Progress: 20/24 (OK:7 FAIL:13) ETA: 29.2min
+[21/24] O03: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 21/24 (OK:7 FAIL:14) ETA: 22.3min
+[22/24] O04: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 22/24 (OK:7 FAIL:15) ETA: 15.1min
+[23/24] O05: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 23/24 (OK:7 FAIL:16) ETA: 7.7min
+[24/24] O06: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 24/24 (OK:7 FAIL:17) ETA: 0.0min
+catalog.json: 88 items
+
+Done! 7/24 OK, 17 failed, 186.1min total

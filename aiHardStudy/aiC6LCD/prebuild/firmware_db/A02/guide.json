@@ -1,0 +1,39 @@
+{
+  "result_description": "WS2812 RGB LED가 초록색으로 켜집니다",
+  "what_happens": [
+    "보드가 초기화됩니다 (LCD, LED, BLE 시작)",
+    "WS2812 RGB LED가 초록색으로 켜집니다",
+    "프로그램이 계속 실행됩니다"
+  ],
+  "concepts": [
+    {
+      "term": "WS2812 RGB LED",
+      "explanation": "빨강/초록/파랑을 섞어서 모든 색을 만드는 LED"
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "",
+      "comment": "[LED] 초록색으로 켜기"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "색상이나 숫자를 바꿔보세요"
+    },
+    {
+      "reason": "다른 예시와 비교해보세요"
+    }
+  ],
+  "quiz": {
+    "question": "이 프로그램은 무엇을 하나요?",
+    "options": [
+      "WS2812 RGB LED가 초록색으로 켜집니다",
+      "아무것도 하지 않습니다",
+      "보드를 끕니다",
+      "인터넷에 연결합니다"
+    ],
+    "answer": 0,
+    "explanation": "WS2812 RGB LED가 초록색으로 켜집니다"
+  }
+}

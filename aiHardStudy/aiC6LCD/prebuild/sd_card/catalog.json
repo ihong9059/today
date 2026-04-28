@@ -1,0 +1,2203 @@
+{
+  "version": "1.0",
+  "board": "UTTEC C6-LCD (ESP32-C6-LCD-1.47)",
+  "total": 105,
+  "items": [
+    {
+      "no": "A01",
+      "user_prompt": "RGB LED 빨간색으로 켜기",
+      "tags": [
+        "빨간",
+        "빨강",
+        "red",
+        "LED",
+        "켜",
+        "on",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 빨간색으로 켜집니다",
+      "firmware_size": 788224,
+      "firmware_sha256": "105e1d6c8ad0ca65b51051096269a2640f3c23346bb520120ab2c2194c40695e"
+    },
+    {
+      "no": "A02",
+      "user_prompt": "RGB LED 초록색으로 켜기",
+      "tags": [
+        "초록",
+        "녹색",
+        "green",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 초록색으로 켜집니다",
+      "firmware_size": 788176,
+      "firmware_sha256": "3e94412f222fdc32b55dfed5ab3b5f3ae0846cd6272ee6d8696c87f5efc673d2"
+    },
+    {
+      "no": "A03",
+      "user_prompt": "RGB LED 파란색으로 켜기",
+      "tags": [
+        "파란",
+        "파랑",
+        "blue",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 파란색으로 켜집니다",
+      "firmware_size": 788176,
+      "firmware_sha256": "c198adf83f16ad353a590510ca3d0f19330e46ee99cb3d85cfbc3353e738488f"
+    },
+    {
+      "no": "A04",
+      "user_prompt": "RGB LED 노란색으로 켜기",
+      "tags": [
+        "노란",
+        "노랑",
+        "yellow",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 노란색으로 켜집니다",
+      "firmware_size": 788176,
+      "firmware_sha256": "35518872aff6e0df7b1404b02650a01b3565487a671be826ba7f77cc245965d2"
+    },
+    {
+      "no": "A05",
+      "user_prompt": "RGB LED 보라색으로 켜기",
+      "tags": [
+        "보라",
+        "purple",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 보라색으로 켜집니다",
+      "firmware_size": 788224,
+      "firmware_sha256": "67cea44a93ee506e5669e2f8a86a4314343356146dda5a9beacdf9b806f71d24"
+    },
+    {
+      "no": "A06",
+      "user_prompt": "RGB LED 하늘색으로 켜기",
+      "tags": [
+        "하늘",
+        "cyan",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 하늘색으로 켜집니다",
+      "firmware_size": 788224,
+      "firmware_sha256": "9eccdeea62271dfc8bfeb011498e2e83647eaa5b2eb6bb55b5d6c817dc898a30"
+    },
+    {
+      "no": "A07",
+      "user_prompt": "RGB LED 주황색으로 켜기",
+      "tags": [
+        "주황",
+        "orange",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 주황색으로 켜집니다",
+      "firmware_size": 788224,
+      "firmware_sha256": "f33087f3ae1445e0d73b71dd9305fdfe2ba73629309be5c9e866796efa495673"
+    },
+    {
+      "no": "A08",
+      "user_prompt": "RGB LED 흰색으로 켜기",
+      "tags": [
+        "흰",
+        "하얀",
+        "white",
+        "LED",
+        "켜",
+        "RGB"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "A",
+      "category_name": "RGB LED 단일 색상",
+      "description": "WS2812 RGB LED가 흰색으로 켜집니다",
+      "firmware_size": 788224,
+      "firmware_sha256": "cbb69103bb6be4120f98dafd396734575c74c29b9ea7873553a61fbd9843932b"
+    },
+    {
+      "no": "B01",
+      "user_prompt": "LCD 화면에 Hello World 표시하기",
+      "tags": [
+        "LCD",
+        "hello",
+        "텍스트",
+        "문자",
+        "표시"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD에 Hello World 텍스트를 표시합니다",
+      "firmware_size": 788208,
+      "firmware_sha256": "9101c8a884625abb4e988ea0ed1a2646d0d8946a35df898fc670db2621941208"
+    },
+    {
+      "no": "B02",
+      "user_prompt": "LCD에 내 이름 크게 표시하기",
+      "tags": [
+        "LCD",
+        "이름",
+        "큰글씨",
+        "크게"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD에 이름을 큰 글씨로 표시합니다",
+      "firmware_size": 788288,
+      "firmware_sha256": "74de9a9cb34ce5a456384e9b3d623a5620f9ce1efd7490e01cbc73b29c6ffb49"
+    },
+    {
+      "no": "B03",
+      "user_prompt": "LCD 배경을 빨간색으로 채우기",
+      "tags": [
+        "LCD",
+        "배경",
+        "빨간",
+        "red",
+        "채우기"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD 전체를 빨간색으로 채웁니다",
+      "firmware_size": 788192,
+      "firmware_sha256": "728cf3bf858255f893ea2573c2f10281148ffa8bf39314b45028e0fccf2047fe"
+    },
+    {
+      "no": "B04",
+      "user_prompt": "LCD에 카운트다운 숫자 표시하기",
+      "tags": [
+        "LCD",
+        "카운트다운",
+        "숫자",
+        "countdown"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD에 10부터 0까지 카운트다운합니다",
+      "firmware_size": 789008,
+      "firmware_sha256": "ad2994371a1f86e58c6e5cde6b44a49ed0033c5876e289ba2ea13b57eccdaa3b"
+    },
+    {
+      "no": "B05",
+      "user_prompt": "LCD에 현재 시간 표시하기 (millis 기반)",
+      "tags": [
+        "LCD",
+        "시간",
+        "타이머",
+        "millis"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD에 경과 시간을 표시합니다",
+      "firmware_size": 788672,
+      "firmware_sha256": "9f1bb9dfedbd72038a5c2dab6dc3b97999976baa6f1ab701ac7a72e1a2e6c784"
+    },
+    {
+      "no": "B06",
+      "user_prompt": "LCD에 여러 줄 텍스트 표시하기",
+      "tags": [
+        "LCD",
+        "여러줄",
+        "멀티라인",
+        "텍스트"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD에 여러 줄의 정보를 표시합니다",
+      "firmware_size": 788816,
+      "firmware_sha256": "8e9f9ed7a5677780c4aa00d4acf947d92f7dc38ae3b8f72247c69c322f2e8d03"
+    },
+    {
+      "no": "B07",
+      "user_prompt": "LCD에 색상별로 다른 텍스트 표시하기",
+      "tags": [
+        "LCD",
+        "색상",
+        "컬러",
+        "텍스트"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD에 빨강/초록/파랑 색상으로 텍스트를 표시합니다",
+      "firmware_size": 788480,
+      "firmware_sha256": "d03ac470c78c41b2177ee5f7dc1905dd551e1e512f88973b8678c5d4d9df710d"
+    },
+    {
+      "no": "B08",
+      "user_prompt": "LCD 백라이트 밝기 조절하기",
+      "tags": [
+        "LCD",
+        "백라이트",
+        "밝기",
+        "brightness"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "B",
+      "category_name": "LCD 텍스트 기초",
+      "description": "LCD 백라이트 밝기를 변경합니다",
+      "firmware_size": 788656,
+      "firmware_sha256": "2cfb4aa380b255bd4314f79581999443ea20d2f4ac3fbfbdd4c597030d3c7c00"
+    },
+    {
+      "no": "C01",
+      "user_prompt": "RGB LED 빨강-초록-파랑 반복 깜빡이기",
+      "tags": [
+        "RGB",
+        "깜빡",
+        "반복",
+        "blink",
+        "패턴"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "RGB LED가 빨강-초록-파랑 순서로 깜빡입니다",
+      "firmware_size": 788448,
+      "firmware_sha256": "dd3db32ec8c0d6b96fa2b2f0e402f1fa24f059ff951036cd3c03347acdbf2346"
+    },
+    {
+      "no": "C02",
+      "user_prompt": "RGB LED 무지개 색상 순환하기",
+      "tags": [
+        "RGB",
+        "무지개",
+        "rainbow",
+        "순환"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "RGB LED가 무지개 색상으로 부드럽게 변합니다",
+      "firmware_size": 788640,
+      "firmware_sha256": "58d76fb1531bdaf621d0afab37a8c51d71231ade180218cbb3102b84d196fb5d"
+    },
+    {
+      "no": "C03",
+      "user_prompt": "RGB LED 숨쉬기 효과 (fade in/out)",
+      "tags": [
+        "RGB",
+        "숨쉬기",
+        "fade",
+        "breathing"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "RGB LED가 천천히 밝아졌다 어두워집니다",
+      "firmware_size": 788816,
+      "firmware_sha256": "d3692a3815b2cce998f85d299f104bd61cfa558aa1b3aeb1d65db633c7bb5043"
+    },
+    {
+      "no": "C04",
+      "user_prompt": "RGB LED SOS 신호 보내기",
+      "tags": [
+        "RGB",
+        "SOS",
+        "신호",
+        "모스부호"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "RGB LED로 SOS 모스부호 신호를 보냅니다",
+      "firmware_size": 788768,
+      "firmware_sha256": "7a3f62cf3886e8d25a963b3efc15a878788e6f168c4190c5329067b96f96d4c3"
+    },
+    {
+      "no": "C05",
+      "user_prompt": "RGB LED 경찰차 사이렌 효과",
+      "tags": [
+        "RGB",
+        "경찰",
+        "사이렌",
+        "빨파"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "빨강-파랑이 번갈아 빠르게 깜빡입니다",
+      "firmware_size": 788560,
+      "firmware_sha256": "7577f897279f3307812fba1cddca868c6a1d826e37db97c24b4369241253dca6"
+    },
+    {
+      "no": "C06",
+      "user_prompt": "RGB LED 랜덤 색상 변경",
+      "tags": [
+        "RGB",
+        "랜덤",
+        "random",
+        "색상"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812"
+      ],
+      "category": "C",
+      "category_name": "RGB LED 패턴",
+      "description": "RGB LED가 무작위 색상으로 변합니다",
+      "firmware_size": 788704,
+      "firmware_sha256": "dff7e5413483164894d820c81c6dd32914335f9d0c2d6963936fd06da2ff68dc"
+    },
+    {
+      "no": "D01",
+      "user_prompt": "LCD에 빨간 원 그리기",
+      "tags": [
+        "LCD",
+        "원",
+        "circle",
+        "빨간",
+        "그래픽"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD 화면에 빨간색 원을 그립니다",
+      "firmware_size": 788208,
+      "firmware_sha256": "0ed2e3f39125c9144fb2d418eca3ba170e5224c8eec318b800062d0ae1aef140"
+    },
+    {
+      "no": "D02",
+      "user_prompt": "LCD에 초록 사각형 그리기",
+      "tags": [
+        "LCD",
+        "사각형",
+        "rect",
+        "초록",
+        "그래픽"
+      ],
+      "difficulty": 1,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD 화면에 초록색 사각형을 그립니다",
+      "firmware_size": 788192,
+      "firmware_sha256": "0739e577e86756bedb6506a4243d5e9b8c5a5cb809db22c73b0a7b61d468de5b"
+    },
+    {
+      "no": "D03",
+      "user_prompt": "LCD에 신호등 그리기",
+      "tags": [
+        "LCD",
+        "신호등",
+        "traffic",
+        "light",
+        "그래픽"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD에 빨강-노랑-초록 신호등을 그립니다",
+      "firmware_size": 789408,
+      "firmware_sha256": "c315f323c08d947bdc9296253823b4dbf73d9b1b038cab0d60c0a0220f52526a"
+    },
+    {
+      "no": "D04",
+      "user_prompt": "LCD에 막대 그래프 그리기",
+      "tags": [
+        "LCD",
+        "그래프",
+        "bar",
+        "chart",
+        "막대"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD에 색상별 막대 그래프를 표시합니다",
+      "firmware_size": 788544,
+      "firmware_sha256": "2a1acc9ac4b4673cce6dc01570f3b2e3479d12967dbb410a827d5d22ca769b79"
+    },
+    {
+      "no": "D05",
+      "user_prompt": "LCD에 체스판 패턴 그리기",
+      "tags": [
+        "LCD",
+        "체스판",
+        "checkerboard",
+        "패턴"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD에 흑백 체스판 패턴을 그립니다",
+      "firmware_size": 788528,
+      "firmware_sha256": "82f584cc8dc6dfac422007027ddbc02d82c50c1baa0a3ef35dda2b38234c27a3"
+    },
+    {
+      "no": "D06",
+      "user_prompt": "LCD에 국기 그리기",
+      "tags": [
+        "LCD",
+        "국기",
+        "태극기",
+        "flag"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD에 태극기를 그립니다",
+      "firmware_size": 789072,
+      "firmware_sha256": "23cea1658f43f28905f357e3cac3fa2a59850cc6ff435a1a5c38e788bc5cf0c2"
+    },
+    {
+      "no": "D07",
+      "user_prompt": "LCD에 아날로그 시계 그리기",
+      "tags": [
+        "LCD",
+        "시계",
+        "analog",
+        "clock"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD에 아날로그 시계를 그려서 표시합니다",
+      "firmware_size": 795360,
+      "firmware_sha256": "0bdfbc7deb4869b84a7698fbdacb5378a683f019e6ac164cfed89d9a51ca3c4e"
+    },
+    {
+      "no": "D08",
+      "user_prompt": "LCD에 게이지/미터 그리기",
+      "tags": [
+        "LCD",
+        "게이지",
+        "meter",
+        "gauge"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd"
+      ],
+      "category": "D",
+      "category_name": "LCD 그래픽",
+      "description": "LCD에 반원형 게이지 미터를 그립니다",
+      "firmware_size": 794960,
+      "firmware_sha256": "c3c6a625b7ca605da796ed792c027a62b0e7c84576f2960623ba999691399114"
+    },
+    {
+      "no": "E01",
+      "user_prompt": "LCD에서 공이 좌우로 움직이기",
+      "tags": [
+        "LCD",
+        "공",
+        "ball",
+        "애니메이션",
+        "이동"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에서 공이 좌우로 왔다 갔다 합니다",
+      "firmware_size": 788448,
+      "firmware_sha256": "afdb856adda82d73b877d5e874dbe2836cb54181d402629bb2fb251ea2f9b2e2"
+    },
+    {
+      "no": "E02",
+      "user_prompt": "LCD에서 공이 벽에 튕기기",
+      "tags": [
+        "LCD",
+        "공",
+        "bounce",
+        "튕기기"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에서 공이 화면 가장자리에 튕깁니다",
+      "firmware_size": 788512,
+      "firmware_sha256": "7ea0d5fe28991ec4773c6eaab0b7c2c134072056601114bae22b1183dbbc9657"
+    },
+    {
+      "no": "E03",
+      "user_prompt": "LCD에 눈 내리는 효과 만들기",
+      "tags": [
+        "LCD",
+        "눈",
+        "snow",
+        "애니메이션"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에 눈이 내리는 효과를 만듭니다",
+      "firmware_size": 789280,
+      "firmware_sha256": "541d7841d5e0f79a7f27d86e50a698e149b74fff9736b3d94be572e4e7e74fce"
+    },
+    {
+      "no": "E04",
+      "user_prompt": "LCD에 프로그레스 바 애니메이션",
+      "tags": [
+        "LCD",
+        "프로그레스",
+        "progress",
+        "bar",
+        "로딩"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에 진행률 바가 채워집니다",
+      "firmware_size": 789280,
+      "firmware_sha256": "e0ce05da976c18df0086e3e23cb0082b99de41b1cae57b919ba83c2589ff930b"
+    },
+    {
+      "no": "E05",
+      "user_prompt": "LCD에 스크롤 텍스트 만들기",
+      "tags": [
+        "LCD",
+        "스크롤",
+        "scroll",
+        "텍스트",
+        "이동"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에서 텍스트가 위로 스크롤됩니다",
+      "firmware_size": 788960,
+      "firmware_sha256": "c0fbc8a5219fd2240ef27b576ec89b64146d6fa55a5bd318a6813036094cf51c"
+    },
+    {
+      "no": "E06",
+      "user_prompt": "LCD에 불꽃놀이 효과 만들기",
+      "tags": [
+        "LCD",
+        "불꽃놀이",
+        "firework",
+        "효과"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD에 불꽃놀이 애니메이션을 표시합니다",
+      "firmware_size": 795872,
+      "firmware_sha256": "84af72e31930838c7364dd543f9af5dbebd509477df152ec6555ba217880dba3"
+    },
+    {
+      "no": "E07",
+      "user_prompt": "LCD 색상 그라데이션 화면 만들기",
+      "tags": [
+        "LCD",
+        "그라데이션",
+        "gradient",
+        "색상"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "E",
+      "category_name": "LCD 애니메이션",
+      "description": "LCD 화면이 부드러운 색상 그라데이션을 보여줍니다",
+      "firmware_size": 789872,
+      "firmware_sha256": "d0d6b473f9b431cf6dd7bf8d1cbe9921189ff134389410bf8e0947e9ef6ee4e6"
+    },
+    {
+      "no": "F01",
+      "user_prompt": "버튼 누르면 LCD에 PRESSED 표시하기",
+      "tags": [
+        "버튼",
+        "LCD",
+        "누르기",
+        "press",
+        "BOOT"
+      ],
+      "difficulty": 1,
+      "components": [
+        "button",
+        "lcd"
+      ],
+      "category": "F",
+      "category_name": "버튼 + LCD",
+      "description": "BOOT 버튼을 누르면 LCD에 표시합니다",
+      "firmware_size": 788448,
+      "firmware_sha256": "7805935d1846f18413d6b0722502c8e05ad9e4a2c7a8498021febf35e2b9d6a0"
+    },
+    {
+      "no": "F02",
+      "user_prompt": "버튼으로 LED 색상 변경하기",
+      "tags": [
+        "버튼",
+        "LED",
+        "색상",
+        "변경",
+        "toggle"
+      ],
+      "difficulty": 1,
+      "components": [
+        "button",
+        "ws2812"
+      ],
+      "category": "F",
+      "category_name": "버튼 + LCD",
+      "description": "버튼을 누를 때마다 LED 색상이 바뀝니다",
+      "firmware_size": 788992,
+      "firmware_sha256": "24e3e1bd58690e40d9e9165a956b21626c21f6245203f523593628c32f0f4c56"
+    },
+    {
+      "no": "F03",
+      "user_prompt": "버튼 누른 횟수 LCD에 표시하기",
+      "tags": [
+        "버튼",
+        "카운터",
+        "횟수",
+        "count",
+        "LCD"
+      ],
+      "difficulty": 1,
+      "components": [
+        "button",
+        "lcd"
+      ],
+      "category": "F",
+      "category_name": "버튼 + LCD",
+      "description": "버튼 누른 횟수를 LCD에 표시합니다",
+      "firmware_size": 789472,
+      "firmware_sha256": "0b3d73bae0a1d7252150d6ab6a4f63222ec4a2160c027bdb5a3b9d87daac61f6"
+    },
+    {
+      "no": "F04",
+      "user_prompt": "버튼으로 LCD 배경색 변경하기",
+      "tags": [
+        "버튼",
+        "LCD",
+        "배경색",
+        "변경"
+      ],
+      "difficulty": 2,
+      "components": [
+        "button",
+        "lcd"
+      ],
+      "category": "F",
+      "category_name": "버튼 + LCD",
+      "description": "버튼 누를 때마다 LCD 배경색이 바뀝니다",
+      "firmware_size": 788544,
+      "firmware_sha256": "84ca053e9c9d3f0d86ee998fb750051b1d562f2aee3052167706c53af7c03d6b"
+    },
+    {
+      "no": "F05",
+      "user_prompt": "버튼 길게 누르기/짧게 누르기 구분하기",
+      "tags": [
+        "버튼",
+        "길게",
+        "짧게",
+        "long",
+        "short",
+        "press"
+      ],
+      "difficulty": 2,
+      "components": [
+        "button",
+        "lcd"
+      ],
+      "category": "F",
+      "category_name": "버튼 + LCD",
+      "description": "버튼 길게/짧게 누르기를 구분하여 LCD에 표시합니다",
+      "firmware_size": 788640,
+      "firmware_sha256": "817868721068c9506f3746ffaeb3ca73c544bac4ab23ebb9895df1e23e3842c0"
+    },
+    {
+      "no": "F06",
+      "user_prompt": "버튼으로 LCD 메뉴 선택하기",
+      "tags": [
+        "버튼",
+        "메뉴",
+        "선택",
+        "menu",
+        "navigate"
+      ],
+      "difficulty": 3,
+      "components": [
+        "button",
+        "lcd"
+      ],
+      "category": "F",
+      "category_name": "버튼 + LCD",
+      "description": "버튼으로 LCD 메뉴를 탐색합니다",
+      "firmware_size": 788928,
+      "firmware_sha256": "f7c8dc502b04e4055407146319b48799dfff2f1e8055736af45564758c8e7d83"
+    },
+    {
+      "no": "G01",
+      "user_prompt": "WiFi 주변 네트워크 스캔하고 LCD에 표시하기",
+      "tags": [
+        "WiFi",
+        "스캔",
+        "scan",
+        "네트워크",
+        "목록"
+      ],
+      "difficulty": 2,
+      "components": [
+        "wifi",
+        "lcd"
+      ],
+      "category": "G",
+      "category_name": "WiFi + LCD",
+      "description": "주변 WiFi 네트워크를 스캔하여 LCD에 표시합니다",
+      "firmware_size": 1377184,
+      "firmware_sha256": "9f6d1825dee9034d6557f0f1234d95536c15d3c0015e07ed6d791a32e16f929a"
+    },
+    {
+      "no": "G02",
+      "user_prompt": "WiFi 신호 세기를 막대그래프로 표시하기",
+      "tags": [
+        "WiFi",
+        "신호",
+        "RSSI",
+        "막대",
+        "그래프"
+      ],
+      "difficulty": 2,
+      "components": [
+        "wifi",
+        "lcd"
+      ],
+      "category": "G",
+      "category_name": "WiFi + LCD",
+      "description": "WiFi 신호 세기를 LCD 막대그래프로 표시합니다",
+      "firmware_size": 1377232,
+      "firmware_sha256": "842b57578ab15b20e55a238ec3b7eb954fa040a625dcf8fe6e2b69d69341ac36"
+    },
+    {
+      "no": "G03",
+      "user_prompt": "WiFi에 연결하고 IP 주소 LCD에 표시하기",
+      "tags": [
+        "WiFi",
+        "연결",
+        "connect",
+        "IP",
+        "주소"
+      ],
+      "difficulty": 2,
+      "components": [
+        "wifi",
+        "lcd"
+      ],
+      "category": "G",
+      "category_name": "WiFi + LCD",
+      "description": "WiFi에 연결하고 IP 주소를 표시합니다",
+      "firmware_size": 1377008,
+      "firmware_sha256": "84ae6cffce52bf1d6a56fbf473289c6714c65b22dcafbba2a629d0e3661279b7"
+    },
+    {
+      "no": "G04",
+      "user_prompt": "WiFi 연결 상태를 LED 색상으로 표시하기",
+      "tags": [
+        "WiFi",
+        "연결",
+        "상태",
+        "LED",
+        "색상"
+      ],
+      "difficulty": 2,
+      "components": [
+        "wifi",
+        "ws2812"
+      ],
+      "category": "G",
+      "category_name": "WiFi + LCD",
+      "description": "WiFi 연결 상태를 LED 색상으로 보여줍니다",
+      "firmware_size": 1376912,
+      "firmware_sha256": "a4e7d8d826b65ea04133467fc9c47adf0c3e8fbf524dc58ba319c66d2849f5c9"
+    },
+    {
+      "no": "G05",
+      "user_prompt": "WiFi 스캔 후 가장 강한 신호 강조하기",
+      "tags": [
+        "WiFi",
+        "스캔",
+        "강한",
+        "신호",
+        "best"
+      ],
+      "difficulty": 2,
+      "components": [
+        "wifi",
+        "lcd"
+      ],
+      "category": "G",
+      "category_name": "WiFi + LCD",
+      "description": "가장 강한 WiFi 신호를 LCD에 강조 표시합니다",
+      "firmware_size": 1377488,
+      "firmware_sha256": "a770c110f28f980f817002401d6aff1e068e0c821d50a5e642cf428fda00851b"
+    },
+    {
+      "no": "G06",
+      "user_prompt": "WiFi로 웹 서버 만들어 LED 제어하기",
+      "tags": [
+        "WiFi",
+        "웹서버",
+        "web",
+        "LED",
+        "제어"
+      ],
+      "difficulty": 3,
+      "components": [
+        "wifi",
+        "ws2812"
+      ],
+      "category": "G",
+      "category_name": "WiFi + LCD",
+      "description": "WiFi 웹 서버로 LED를 원격 제어합니다",
+      "firmware_size": 1424640,
+      "firmware_sha256": "719ea4e887eb1f17d0e8183c12e9e22632a00bae8b1cf41de3a84fe414dd4a49"
+    },
+    {
+      "no": "H01",
+      "user_prompt": "LED + LCD 동시에 빨간색 표시하기",
+      "tags": [
+        "LED",
+        "LCD",
+        "빨간",
+        "동시",
+        "sync"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812",
+        "lcd"
+      ],
+      "category": "H",
+      "category_name": "LED + LCD 조합",
+      "description": "LED와 LCD 모두 빨간색으로 표시합니다",
+      "firmware_size": 788272,
+      "firmware_sha256": "d1c4f0be6128023586734a91b3c0c211754d19769e16df6e92dcd0cd5269a1a1"
+    },
+    {
+      "no": "H02",
+      "user_prompt": "LED 색상을 LCD에 텍스트로 표시하기",
+      "tags": [
+        "LED",
+        "LCD",
+        "색상",
+        "텍스트",
+        "상태"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812",
+        "lcd"
+      ],
+      "category": "H",
+      "category_name": "LED + LCD 조합",
+      "description": "LED 색상 이름을 LCD에 표시합니다",
+      "firmware_size": 788576,
+      "firmware_sha256": "edfa7c21b09838621dffbb0debb6441841b9a71ff0337d3b8d8f33f4c3f700b1"
+    },
+    {
+      "no": "H03",
+      "user_prompt": "LED 무지개 + LCD 색상코드 표시하기",
+      "tags": [
+        "LED",
+        "LCD",
+        "무지개",
+        "색상코드",
+        "RGB"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812",
+        "lcd"
+      ],
+      "category": "H",
+      "category_name": "LED + LCD 조합",
+      "description": "LED 무지개 효과와 함께 RGB 값을 LCD에 표시합니다",
+      "firmware_size": 788896,
+      "firmware_sha256": "2bbcc260d7135c00ae17f67d91b740c16ff15b3f884803bb5b8797d7dea29adb"
+    },
+    {
+      "no": "H04",
+      "user_prompt": "LED 밝기를 LCD 슬라이더로 보여주기",
+      "tags": [
+        "LED",
+        "LCD",
+        "밝기",
+        "슬라이더",
+        "bar"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812",
+        "lcd"
+      ],
+      "category": "H",
+      "category_name": "LED + LCD 조합",
+      "description": "LED 밝기 변화를 LCD 바로 표시합니다",
+      "firmware_size": 788592,
+      "firmware_sha256": "9a0c5b32ee33640ff807939849f467d1786c8a98e63f6995c856b938ee9c3a4d"
+    },
+    {
+      "no": "H05",
+      "user_prompt": "LED 경찰차 + LCD 경고 텍스트",
+      "tags": [
+        "LED",
+        "LCD",
+        "경찰",
+        "경고",
+        "alert"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ws2812",
+        "lcd"
+      ],
+      "category": "H",
+      "category_name": "LED + LCD 조합",
+      "description": "LED 경찰차 효과 + LCD 경고 메시지를 동시에 보여줍니다",
+      "firmware_size": 788352,
+      "firmware_sha256": "3be633190c5957b73beb7e60d1fb63728805e8f52c4825ea1239a90dfa13926f"
+    },
+    {
+      "no": "H06",
+      "user_prompt": "LCD에 색상 이름 표시하고 LED를 해당 색상으로 설정하기",
+      "tags": [
+        "LED",
+        "LCD",
+        "색상",
+        "컬러",
+        "테스트",
+        "color",
+        "test"
+      ],
+      "difficulty": 1,
+      "components": [
+        "ws2812",
+        "lcd"
+      ],
+      "category": "H",
+      "category_name": "LED + LCD 조합",
+      "description": "LCD에 RED/GREEN/BLUE 등 색상 이름과 RGB값을 표시하고 WS2812를 해당 색상으로 3초마다 순환합니다",
+      "firmware_size": 788640,
+      "firmware_sha256": "ab0895222b2b7759f9269c86e1b4366414a4eea9347ad8b6cf3ece73d0b94e5f"
+    },
+    {
+      "no": "I01",
+      "user_prompt": "LCD에 디지털 시계 만들기 (시:분:초)",
+      "tags": [
+        "LCD",
+        "시계",
+        "digital",
+        "clock",
+        "시간"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "LCD에 디지털 시계를 표시합니다",
+      "firmware_size": 788528,
+      "firmware_sha256": "b659731e99940aada08703a0d554ca14f87636fcab82ca6dfa90cb8f8173ed74"
+    },
+    {
+      "no": "I02",
+      "user_prompt": "LCD 스톱워치 만들기 (버튼으로 시작/정지)",
+      "tags": [
+        "LCD",
+        "스톱워치",
+        "stopwatch",
+        "버튼",
+        "타이머"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "버튼으로 제어하는 LCD 스톱워치입니다",
+      "firmware_size": 788720,
+      "firmware_sha256": "1cd2f2671ef4d7ec093aa8fb3a165cc51e6e2f749dc5c283a541e620fff435c0"
+    },
+    {
+      "no": "I03",
+      "user_prompt": "LCD 반응속도 테스트 게임 만들기",
+      "tags": [
+        "LCD",
+        "반응속도",
+        "게임",
+        "reaction",
+        "test"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "LCD 색상 변화에 버튼으로 반응하는 게임입니다",
+      "firmware_size": 789200,
+      "firmware_sha256": "5baa2a377b6ce99b610ba00a0b15ea10e3ee75a08d2cd975fbea02c8b1ab6c66"
+    },
+    {
+      "no": "I04",
+      "user_prompt": "LCD 가위바위보 게임 만들기",
+      "tags": [
+        "LCD",
+        "가위바위보",
+        "게임",
+        "rock",
+        "paper"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "버튼으로 선택하는 가위바위보 게임입니다",
+      "firmware_size": 796976,
+      "firmware_sha256": "eb780e1c5d98eb0a5be2cccf22533888900e2606f007a0a732c0b4dbac23167d"
+    },
+    {
+      "no": "I05",
+      "user_prompt": "LCD 주사위 게임 만들기",
+      "tags": [
+        "LCD",
+        "주사위",
+        "dice",
+        "게임",
+        "랜덤"
+      ],
+      "difficulty": 2,
+      "components": [
+        "lcd",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "버튼을 누르면 LCD에 주사위 결과가 표시됩니다",
+      "firmware_size": 796720,
+      "firmware_sha256": "513b5ea94c56bcc929b9d11812e024458bd4ca1955b3d21742bb0b04774bb6f7"
+    },
+    {
+      "no": "I06",
+      "user_prompt": "LCD에 틱택토 게임 보드 그리기",
+      "tags": [
+        "LCD",
+        "틱택토",
+        "tic-tac-toe",
+        "게임",
+        "보드"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "LCD에 틱택토 게임 보드를 그립니다",
+      "firmware_size": 788912,
+      "firmware_sha256": "d25397f7d9242b37a9c6d9f73667ed9936f4fc505a4cdf28100e6907c9dfa688"
+    },
+    {
+      "no": "I07",
+      "user_prompt": "LCD 미니 벽돌깨기 게임 만들기",
+      "tags": [
+        "LCD",
+        "벽돌깨기",
+        "breakout",
+        "게임",
+        "arcade"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "LCD에서 버튼으로 조작하는 벽돌깨기 게임입니다",
+      "firmware_size": 788976,
+      "firmware_sha256": "7012e38a40005c15b6c285e0b12b2b2f7b22656afadc1fa8fff00193264a2e73"
+    },
+    {
+      "no": "I08",
+      "user_prompt": "LCD 뱀 게임 만들기",
+      "tags": [
+        "LCD",
+        "뱀",
+        "snake",
+        "게임",
+        "arcade"
+      ],
+      "difficulty": 4,
+      "components": [
+        "lcd",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "LCD에서 뱀 게임을 플레이합니다",
+      "firmware_size": 797056,
+      "firmware_sha256": "7a0e70248d7106df35594a1bb05035b89044a077ff4c429783d2923ef9af22d5"
+    },
+    {
+      "no": "J01",
+      "user_prompt": "BLE로 LED 색상 원격 제어하기",
+      "tags": [
+        "BLE",
+        "LED",
+        "원격",
+        "제어",
+        "색상"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ble",
+        "ws2812"
+      ],
+      "category": "J",
+      "category_name": "BLE 제어",
+      "description": "스마트폰 앱에서 BLE로 LED 색상을 변경합니다",
+      "firmware_size": 788544,
+      "firmware_sha256": "475e5c9c320ada6ee490890afa5cf3b1b6e79f22fc8bf0b2827a76be77b351c9"
+    },
+    {
+      "no": "J02",
+      "user_prompt": "BLE로 LCD에 메시지 보내기",
+      "tags": [
+        "BLE",
+        "LCD",
+        "메시지",
+        "전송",
+        "text"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ble",
+        "lcd"
+      ],
+      "category": "J",
+      "category_name": "BLE 제어",
+      "description": "스마트폰에서 보낸 메시지를 LCD에 표시합니다",
+      "firmware_size": 788336,
+      "firmware_sha256": "fdc17fb6099e1a299c79a06c1ed2f3064c2ca6d83024ed3d90d819a262d7a7c8"
+    },
+    {
+      "no": "J03",
+      "user_prompt": "BLE로 LCD 배경색 원격 변경하기",
+      "tags": [
+        "BLE",
+        "LCD",
+        "배경",
+        "원격",
+        "color"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ble",
+        "lcd"
+      ],
+      "category": "J",
+      "category_name": "BLE 제어",
+      "description": "BLE로 LCD 배경색을 원격 변경합니다",
+      "firmware_size": 788592,
+      "firmware_sha256": "8be1fbd0c03dc57baa3631919acfb492c5094bb2406e005c2f08ac21cd099718"
+    },
+    {
+      "no": "J04",
+      "user_prompt": "BLE 연결 상태를 LCD에 표시하기",
+      "tags": [
+        "BLE",
+        "연결",
+        "상태",
+        "LCD",
+        "status"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ble",
+        "lcd"
+      ],
+      "category": "J",
+      "category_name": "BLE 제어",
+      "description": "BLE 연결 상태를 LCD에 실시간 표시합니다",
+      "firmware_size": 789184,
+      "firmware_sha256": "3f6ea672d1723e3bedfb6a070270aa9301fc418b56906ac3bafe691aa427b0da"
+    },
+    {
+      "no": "J05",
+      "user_prompt": "BLE로 버튼 누름 이벤트 스마트폰에 전송하기",
+      "tags": [
+        "BLE",
+        "버튼",
+        "이벤트",
+        "전송",
+        "notify"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ble",
+        "button"
+      ],
+      "category": "J",
+      "category_name": "BLE 제어",
+      "description": "버튼 누름을 BLE로 스마트폰에 알립니다",
+      "firmware_size": 789056,
+      "firmware_sha256": "d9864f8bc695b4c8d7d3a7fefc05d56c8543d63d4a64d58cdae779058c163e7a"
+    },
+    {
+      "no": "J06",
+      "user_prompt": "BLE 리모컨으로 LED + LCD 동시 제어하기",
+      "tags": [
+        "BLE",
+        "리모컨",
+        "LED",
+        "LCD",
+        "제어"
+      ],
+      "difficulty": 3,
+      "components": [
+        "ble",
+        "ws2812",
+        "lcd"
+      ],
+      "category": "J",
+      "category_name": "BLE 제어",
+      "description": "BLE로 LED와 LCD를 동시에 원격 제어합니다",
+      "firmware_size": 788816,
+      "firmware_sha256": "0940fa3b2fb43d644af0232b369a11886ae9304e80473a49a6250e71effcd9f1"
+    },
+    {
+      "no": "K01",
+      "user_prompt": "LCD 대시보드 만들기 (시간+LED상태+WiFi)",
+      "tags": [
+        "LCD",
+        "대시보드",
+        "dashboard",
+        "정보",
+        "종합"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd",
+        "ws2812",
+        "wifi"
+      ],
+      "category": "K",
+      "category_name": "종합 프로젝트",
+      "description": "LCD에 시간, LED 상태, WiFi 정보를 종합 표시합니다",
+      "firmware_size": 1377184,
+      "firmware_sha256": "1f90433cbe1a9f1e8b05b0ad95a477110c8ca6065c0ff57573d1db6b8f7c0825"
+    },
+    {
+      "no": "K02",
+      "user_prompt": "LCD 날씨 위젯 만들기 (가상 데이터)",
+      "tags": [
+        "LCD",
+        "날씨",
+        "weather",
+        "위젯",
+        "widget"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd"
+      ],
+      "category": "K",
+      "category_name": "종합 프로젝트",
+      "description": "LCD에 날씨 위젯을 만듭니다",
+      "firmware_size": 788688,
+      "firmware_sha256": "51183da4c212d4449dd76f13804d8cbc7e020640cace8b1dcff4a72095f4dfbb"
+    },
+    {
+      "no": "K03",
+      "user_prompt": "LCD 포토프레임 만들기 (컬러 도형 슬라이드쇼)",
+      "tags": [
+        "LCD",
+        "포토프레임",
+        "slideshow",
+        "도형",
+        "아트"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd"
+      ],
+      "category": "K",
+      "category_name": "종합 프로젝트",
+      "description": "LCD에 다양한 도형이 슬라이드쇼로 표시됩니다",
+      "firmware_size": 797088,
+      "firmware_sha256": "26264a4d416d2f83b584d978630ced6dd7323eb96002fa9a9bd31f05d1f04354"
+    },
+    {
+      "no": "K04",
+      "user_prompt": "BLE + WiFi + LED + LCD 종합 제어 시스템",
+      "tags": [
+        "BLE",
+        "WiFi",
+        "LED",
+        "LCD",
+        "종합",
+        "system"
+      ],
+      "difficulty": 4,
+      "components": [
+        "ble",
+        "wifi",
+        "ws2812",
+        "lcd"
+      ],
+      "category": "K",
+      "category_name": "종합 프로젝트",
+      "description": "BLE와 WiFi로 LED와 LCD를 모두 제어하는 종합 시스템",
+      "firmware_size": 1377376,
+      "firmware_sha256": "c71e7b78ac5ac6ffe48ba13fd1bdba2f2f739820855a0064b53767191dd2d8c0"
+    },
+    {
+      "no": "K05",
+      "user_prompt": "LCD 미니 운영체제 만들기 (메뉴+앱)",
+      "tags": [
+        "LCD",
+        "OS",
+        "메뉴",
+        "앱",
+        "시스템"
+      ],
+      "difficulty": 4,
+      "components": [
+        "lcd",
+        "button",
+        "wifi"
+      ],
+      "category": "K",
+      "category_name": "종합 프로젝트",
+      "description": "LCD에 메뉴와 여러 앱이 있는 미니 OS를 만듭니다",
+      "firmware_size": 790080,
+      "firmware_sha256": "a381847db6390b83ae6157a1eb62816c6eaba3beee22083b58217f88e296d9d9"
+    },
+    {
+      "no": "K06",
+      "user_prompt": "LCD에 주식 차트 시뮬레이션 만들기",
+      "tags": [
+        "LCD",
+        "주식",
+        "차트",
+        "stock",
+        "chart"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd"
+      ],
+      "category": "K",
+      "category_name": "종합 프로젝트",
+      "description": "LCD에 실시간 주식 차트 시뮬레이션을 표시합니다",
+      "firmware_size": 796960,
+      "firmware_sha256": "b30558cb26415b3c1a5ded2d167d8530ff25b8eef584b58c53f97022406bac0d"
+    },
+    {
+      "no": "L01",
+      "user_prompt": "SD 카드에 Hello World 텍스트 파일 쓰기",
+      "tags": [
+        "SD",
+        "카드",
+        "파일",
+        "쓰기",
+        "write",
+        "텍스트"
+      ],
+      "difficulty": 1,
+      "components": [
+        "sd",
+        "lcd"
+      ],
+      "category": "L",
+      "category_name": "SD 카드",
+      "description": "MicroSD에 텍스트 파일을 생성하고 LCD에 결과를 표시합니다",
+      "firmware_size": 789152,
+      "firmware_sha256": "ffd33c8eaf81c27ddc43d443dc7811f5e9695877813a91f8f4f08dda0f11f32e"
+    },
+    {
+      "no": "L02",
+      "user_prompt": "SD 카드에서 파일 읽어서 LCD에 표시하기",
+      "tags": [
+        "SD",
+        "카드",
+        "읽기",
+        "read",
+        "LCD",
+        "표시"
+      ],
+      "difficulty": 1,
+      "components": [
+        "sd",
+        "lcd"
+      ],
+      "category": "L",
+      "category_name": "SD 카드",
+      "description": "MicroSD에서 파일을 읽어 LCD에 내용을 표시합니다",
+      "firmware_size": 788992,
+      "firmware_sha256": "a3dd98b73745d8608d3329d1442d4f03a090296066716922aa7c596764b9562a"
+    },
+    {
+      "no": "L03",
+      "user_prompt": "SD 카드 파일 목록을 LCD에 표시하기",
+      "tags": [
+        "SD",
+        "카드",
+        "목록",
+        "list",
+        "파일",
+        "디렉토리"
+      ],
+      "difficulty": 1,
+      "components": [
+        "sd",
+        "lcd"
+      ],
+      "category": "L",
+      "category_name": "SD 카드",
+      "description": "MicroSD의 파일/폴더 목록을 LCD에 나열합니다",
+      "firmware_size": 789328,
+      "firmware_sha256": "21a70a86dcbb01e9a23222c726a2668c13a25b59b232518634a849ae4ffcaa5d"
+    },
+    {
+      "no": "L04",
+      "user_prompt": "SD 카드 용량과 사용량 LCD에 표시하기",
+      "tags": [
+        "SD",
+        "카드",
+        "용량",
+        "space",
+        "사용량"
+      ],
+      "difficulty": 1,
+      "components": [
+        "sd",
+        "lcd"
+      ],
+      "category": "L",
+      "category_name": "SD 카드",
+      "description": "MicroSD 전체/사용/남은 용량을 LCD에 표시합니다",
+      "firmware_size": 789408,
+      "firmware_sha256": "dafabbd3f5cb162753affbcb06706d839728454b60850973ba50b278ce23df1a"
+    },
+    {
+      "no": "L05",
+      "user_prompt": "버튼 누를 때마다 카운트를 SD 카드에 저장하기",
+      "tags": [
+        "SD",
+        "버튼",
+        "카운트",
+        "저장",
+        "로깅"
+      ],
+      "difficulty": 2,
+      "components": [
+        "sd",
+        "button",
+        "lcd"
+      ],
+      "category": "L",
+      "category_name": "SD 카드",
+      "description": "버튼 누름 횟수를 SD에 저장하고 재부팅 후에도 유지합니다",
+      "firmware_size": 789744,
+      "firmware_sha256": "c1c8b0aa278f85bde37f87f0b197af08467d961ddaad50c65b8e33e43720f834"
+    },
+    {
+      "no": "L06",
+      "user_prompt": "millis 타이머 데이터를 SD 카드에 CSV로 로깅하기",
+      "tags": [
+        "SD",
+        "로깅",
+        "CSV",
+        "타이머",
+        "데이터"
+      ],
+      "difficulty": 2,
+      "components": [
+        "sd",
+        "lcd"
+      ],
+      "category": "L",
+      "category_name": "SD 카드",
+      "description": "1초마다 시간 데이터를 CSV 파일로 SD에 기록합니다",
+      "firmware_size": 789376,
+      "firmware_sha256": "9a8645b8e29177e62a89fd5a50c65831b40df6b157e629d2aeb2dc1c2794102c"
+    },
+    {
+      "no": "I09",
+      "user_prompt": "LCD 플래피버드 게임 만들기",
+      "tags": [
+        "LCD",
+        "플래피",
+        "flappy",
+        "게임",
+        "bird"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "버튼으로 새를 점프시켜 장애물을 피하는 게임입니다",
+      "firmware_size": 796816,
+      "firmware_sha256": "25bca4f2d64c2ebf1d1b9b7854d7c9dee2b85b6269b7c52ceabb8807f858bcc3"
+    },
+    {
+      "no": "I10",
+      "user_prompt": "LCD 사이먼 게임 (색상 순서 기억하기)",
+      "tags": [
+        "LCD",
+        "사이먼",
+        "simon",
+        "기억",
+        "색상",
+        "게임"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd",
+        "ws2812",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "색상 순서를 기억하고 버튼으로 따라하는 기억력 게임입니다",
+      "firmware_size": 797040,
+      "firmware_sha256": "095eb8a2c2dca75078ec1ab7f442ea3c9dc73a43b1916995cb48dd6ec5fac44b"
+    },
+    {
+      "no": "I11",
+      "user_prompt": "LCD 퐁 게임 (버튼으로 패들 이동)",
+      "tags": [
+        "LCD",
+        "퐁",
+        "pong",
+        "게임",
+        "패들"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "버튼으로 패들을 움직여 공을 튕기는 퐁 게임입니다",
+      "firmware_size": 788880,
+      "firmware_sha256": "29be1235156e94234eb1edfbf5b8fa3314f51ecf07e833579b365cc615bf6c3c"
+    },
+    {
+      "no": "I12",
+      "user_prompt": "LCD 테트리스 미니 게임 만들기",
+      "tags": [
+        "LCD",
+        "테트리스",
+        "tetris",
+        "게임",
+        "블록"
+      ],
+      "difficulty": 4,
+      "components": [
+        "lcd",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "LCD에서 버튼으로 블록을 조작하는 미니 테트리스입니다",
+      "firmware_size": 797264,
+      "firmware_sha256": "9062af79230dfc8fa7cf0d0509405a7b506581e51cc7ce8aa83488a4a032359a"
+    },
+    {
+      "no": "I13",
+      "user_prompt": "LCD 미로 탈출 게임 만들기",
+      "tags": [
+        "LCD",
+        "미로",
+        "maze",
+        "탈출",
+        "게임"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "버튼으로 미로를 탐색하여 출구를 찾는 게임입니다",
+      "firmware_size": 797296,
+      "firmware_sha256": "60ea03643beee980206835a00e166c3c49ddc7ba76dbb34bf4f7fee443073945"
+    },
+    {
+      "no": "I14",
+      "user_prompt": "LCD 우주선 슈팅 게임 만들기",
+      "tags": [
+        "LCD",
+        "우주선",
+        "슈팅",
+        "shooting",
+        "게임"
+      ],
+      "difficulty": 3,
+      "components": [
+        "lcd",
+        "button"
+      ],
+      "category": "I",
+      "category_name": "타이머/게임",
+      "description": "우주선을 조종하여 적을 피하고 격추하는 게임입니다",
+      "firmware_size": 797792,
+      "firmware_sha256": "7e67f4916bde6e142676364bfdd124710fb5c069ceeb5f2ed91f47e331304be1"
+    },
+    {
+      "no": "M01",
+      "user_prompt": "WiFi AP 모드로 접속 기기 수 LCD에 표시하기",
+      "tags": [
+        "WiFi",
+        "AP",
+        "접속",
+        "기기",
+        "수",
+        "LCD"
+      ],
+      "difficulty": 2,
+      "components": [
+        "wifi",
+        "lcd"
+      ],
+      "category": "M",
+      "category_name": "WiFi AP 모드",
+      "description": "WiFi AP를 열고 접속한 기기 수를 LCD에 표시합니다",
+      "firmware_size": 1378288,
+      "firmware_sha256": "19ace3efd44aef298a537e692b6b9d1c6871ffa596c8653b1f28850804f9bec7"
+    },
+    {
+      "no": "M02",
+      "user_prompt": "WiFi AP + 웹 채팅 (브라우저에서 보낸 메시지 LCD에 표시)",
+      "tags": [
+        "WiFi",
+        "AP",
+        "채팅",
+        "chat",
+        "웹",
+        "메시지"
+      ],
+      "difficulty": 3,
+      "components": [
+        "wifi",
+        "lcd"
+      ],
+      "category": "M",
+      "category_name": "WiFi AP 모드",
+      "description": "폰 브라우저에서 보낸 메시지를 LCD에 실시간 표시합니다",
+      "firmware_size": 1423184,
+      "firmware_sha256": "38cbdfb554f4a83631212096d9d55747f7d1c98d62853c6cd39b116a8309e16f"
+    },
+    {
+      "no": "M03",
+      "user_prompt": "WiFi AP + 웹 컬러 피커로 LED 색상 선택하기",
+      "tags": [
+        "WiFi",
+        "AP",
+        "컬러",
+        "color",
+        "picker",
+        "LED"
+      ],
+      "difficulty": 3,
+      "components": [
+        "wifi",
+        "ws2812",
+        "lcd"
+      ],
+      "category": "M",
+      "category_name": "WiFi AP 모드",
+      "description": "폰 브라우저의 컬러 피커로 LED 색상을 실시간 변경합니다",
+      "firmware_size": 1423168,
+      "firmware_sha256": "88d4784c42072d80b7aaec28eb36620b7a6a9bf6968800b429e53c05dfb81eab"
+    },
+    {
+      "no": "M04",
+      "user_prompt": "WiFi AP + 웹 그림판 (브라우저에서 그리면 LCD에 표시)",
+      "tags": [
+        "WiFi",
+        "AP",
+        "그림판",
+        "draw",
+        "canvas",
+        "LCD"
+      ],
+      "difficulty": 4,
+      "components": [
+        "wifi",
+        "lcd"
+      ],
+      "category": "M",
+      "category_name": "WiFi AP 모드",
+      "description": "폰 브라우저에서 그린 그림이 LCD에 실시간 표시됩니다",
+      "firmware_size": 1423584,
+      "firmware_sha256": "89e1bcfbe8aed8aa8d4fd453058c8718ed5eef720244b070002da1dcc0ca1465"
+    },
+    {
+      "no": "M05",
+      "user_prompt": "WiFi AP + 캡티브 포탈 (접속 시 자동 환영 페이지)",
+      "tags": [
+        "WiFi",
+        "AP",
+        "캡티브",
+        "captive",
+        "portal",
+        "환영"
+      ],
+      "difficulty": 3,
+      "components": [
+        "wifi",
+        "lcd"
+      ],
+      "category": "M",
+      "category_name": "WiFi AP 모드",
+      "description": "WiFi 접속 시 자동으로 환영 페이지를 보여주는 캡티브 포탈입니다",
+      "firmware_size": 1428896,
+      "firmware_sha256": "f9f1874f20846dd9d68da18324eab70f9b321910f1b699d37b69a58dbcc5f53e"
+    },
+    {
+      "no": "M06",
+      "user_prompt": "WiFi AP + 웹 게임 컨트롤러 (폰 브라우저로 게임 조작)",
+      "tags": [
+        "WiFi",
+        "AP",
+        "게임",
+        "컨트롤러",
+        "controller",
+        "조작"
+      ],
+      "difficulty": 4,
+      "components": [
+        "wifi",
+        "lcd",
+        "button"
+      ],
+      "category": "M",
+      "category_name": "WiFi AP 모드",
+      "description": "폰 브라우저의 가상 버튼으로 LCD 게임을 조작합니다",
+      "firmware_size": 1423568,
+      "firmware_sha256": "e79a099c1062d904ad7cee00f0aae693d70afc0bf50de4f758abb034d457dbe1"
+    },
+    {
+      "no": "N01",
+      "user_prompt": "BLE로 폰 텍스트 받아 SD에 메모 저장하기",
+      "tags": [
+        "BLE",
+        "SD",
+        "메모",
+        "저장",
+        "텍스트",
+        "폰"
+      ],
+      "difficulty": 2,
+      "components": [
+        "ble",
+        "sd",
+        "lcd"
+      ],
+      "category": "N",
+      "category_name": "폰 데이터 연동",
+      "description": "스마트폰에서 BLE로 보낸 텍스트를 SD 카드에 메모로 저장합니다",
+      "firmware_size": 788800,
+      "firmware_sha256": "aa3b13e84dcdfad5fdbe5f5da606d94af15908f1abaf955a1d87cf820e417b9e"
+    },
+    {
+      "no": "N02",
+      "user_prompt": "BLE로 폰 메시지 수신하여 SD 로그 + LCD 알림 표시",
+      "tags": [
+        "BLE",
+        "SD",
+        "로그",
+        "알림",
+        "메시지",
+        "LCD"
+      ],
+      "difficulty": 3,
+      "components": [
+        "ble",
+        "sd",
+        "lcd",
+        "ws2812"
+      ],
+      "category": "N",
+      "category_name": "폰 데이터 연동",
+      "description": "BLE 메시지를 SD에 시간순 로그로 저장하고 LCD+LED로 알림합니다",
+      "firmware_size": 788736,
+      "firmware_sha256": "a758c4aee9555d493d1d77c0503ab04f41318a0dc43583de9e61172cf06a83f0"
+    },
+    {
+      "no": "N03",
+      "user_prompt": "WiFi AP 웹으로 파일 업로드하여 SD 카드에 저장하기",
+      "tags": [
+        "WiFi",
+        "AP",
+        "업로드",
+        "upload",
+        "SD",
+        "파일"
+      ],
+      "difficulty": 3,
+      "components": [
+        "wifi",
+        "sd",
+        "lcd"
+      ],
+      "category": "N",
+      "category_name": "폰 데이터 연동",
+      "description": "폰 브라우저에서 파일을 업로드하면 SD 카드에 저장됩니다",
+      "firmware_size": 1423568,
+      "firmware_sha256": "54fd7321e7a997c0a34d54017ff8d6c64c4912a9f1ffcdf534529036f5209959"
+    },
+    {
+      "no": "N04",
+      "user_prompt": "SD 카드 파일을 WiFi 웹으로 다운로드하기",
+      "tags": [
+        "WiFi",
+        "AP",
+        "다운로드",
+        "download",
+        "SD",
+        "파일"
+      ],
+      "difficulty": 3,
+      "components": [
+        "wifi",
+        "sd",
+        "lcd"
+      ],
+      "category": "N",
+      "category_name": "폰 데이터 연동",
+      "description": "SD 카드의 파일 목록을 웹으로 보고 다운로드합니다",
+      "firmware_size": 1424944,
+      "firmware_sha256": "3a954289e08d25680f9279a724564606c50cc2df6faae9aee835aa4c22a1a17a"
+    },
+    {
+      "no": "N05",
+      "user_prompt": "BLE로 폰 이미지 수신하여 LCD에 사진 표시하기",
+      "tags": [
+        "BLE",
+        "이미지",
+        "사진",
+        "photo",
+        "LCD",
+        "수신"
+      ],
+      "difficulty": 4,
+      "components": [
+        "ble",
+        "lcd"
+      ],
+      "category": "N",
+      "category_name": "폰 데이터 연동",
+      "description": "폰에서 BLE로 이미지 데이터를 전송하여 LCD에 표시합니다",
+      "firmware_size": 788928,
+      "firmware_sha256": "23ecebf8b45f2d3deff2070cb51087af23af73712c7897c1f3931452b8438e80"
+    },
+    {
+      "no": "N06",
+      "user_prompt": "WiFi AP 갤러리 (SD 이미지를 웹 브라우저로 열람)",
+      "tags": [
+        "WiFi",
+        "AP",
+        "갤러리",
+        "gallery",
+        "SD",
+        "이미지"
+      ],
+      "difficulty": 4,
+      "components": [
+        "wifi",
+        "sd",
+        "lcd"
+      ],
+      "category": "N",
+      "category_name": "폰 데이터 연동",
+      "description": "SD 카드의 이미지 파일을 웹 갤러리로 열람합니다",
+      "firmware_size": 1425840,
+      "firmware_sha256": "0e3f0c98088ff061ce6e80e0ecaba5b7e70afff38067dc50ad965abb3ede6b00"
+    },
+    {
+      "no": "O01",
+      "user_prompt": "IoT 센서 대시보드 (WiFi AP + 웹 실시간 그래프 + LED 경고)",
+      "tags": [
+        "IoT",
+        "센서",
+        "대시보드",
+        "WiFi",
+        "AP",
+        "그래프"
+      ],
+      "difficulty": 3,
+      "components": [
+        "wifi",
+        "lcd",
+        "ws2812"
+      ],
+      "category": "O",
+      "category_name": "복합 응용",
+      "description": "가상 센서 데이터를 LCD+웹 그래프로 실시간 표시하고 LED 경고합니다",
+      "firmware_size": 1430688,
+      "firmware_sha256": "d27af2c67f863700ec6a3c9548d70dbb5e7c1db4ac153a4e1b144ae557085b65"
+    },
+    {
+      "no": "O02",
+      "user_prompt": "스마트 알림 시스템 (BLE 수신 → LCD+LED 알림 + SD 로그)",
+      "tags": [
+        "BLE",
+        "알림",
+        "notification",
+        "LED",
+        "SD",
+        "로그"
+      ],
+      "difficulty": 3,
+      "components": [
+        "ble",
+        "lcd",
+        "ws2812",
+        "sd"
+      ],
+      "category": "O",
+      "category_name": "복합 응용",
+      "description": "BLE 알림을 LED+LCD로 표시하고 SD에 이력을 기록합니다",
+      "firmware_size": 789136,
+      "firmware_sha256": "b91904b29e517c072a9edb2151364c7aa731d2d32d5bea85326fe8b5db65a272"
+    },
+    {
+      "no": "O03",
+      "user_prompt": "WiFi AP 멀티플레이어 퀴즈 (폰 브라우저로 참여)",
+      "tags": [
+        "WiFi",
+        "AP",
+        "퀴즈",
+        "quiz",
+        "멀티",
+        "게임"
+      ],
+      "difficulty": 4,
+      "components": [
+        "wifi",
+        "lcd",
+        "ws2812"
+      ],
+      "category": "O",
+      "category_name": "복합 응용",
+      "description": "여러 폰이 WiFi로 접속하여 퀴즈에 참여하는 멀티플레이어 게임입니다",
+      "firmware_size": 1424288,
+      "firmware_sha256": "be3e395038c01f12285cb6a4b72c342d8d2e6221a3ebcd1cc0574d59e158fdb7"
+    },
+    {
+      "no": "O04",
+      "user_prompt": "디지털 명함 (WiFi AP 접속 시 명함 웹페이지 + LCD 표시)",
+      "tags": [
+        "WiFi",
+        "AP",
+        "명함",
+        "card",
+        "웹",
+        "소개"
+      ],
+      "difficulty": 3,
+      "components": [
+        "wifi",
+        "lcd"
+      ],
+      "category": "O",
+      "category_name": "복합 응용",
+      "description": "WiFi AP에 접속하면 명함 웹페이지를 보여주고 LCD에도 표시합니다",
+      "firmware_size": 1423472,
+      "firmware_sha256": "e213fb7dcbae0fd602ebeb3d76db6525a76e678b3d8c78edce7da7e3156a6d6a"
+    },
+    {
+      "no": "O05",
+      "user_prompt": "미니 웹 키오스크 (WiFi AP + 메뉴 선택 + 주문 접수)",
+      "tags": [
+        "WiFi",
+        "AP",
+        "키오스크",
+        "kiosk",
+        "메뉴",
+        "주문"
+      ],
+      "difficulty": 4,
+      "components": [
+        "wifi",
+        "lcd",
+        "sd"
+      ],
+      "category": "O",
+      "category_name": "복합 응용",
+      "description": "웹 메뉴에서 주문하면 LCD에 주문내역이 표시되고 SD에 기록됩니다",
+      "firmware_size": 1423984,
+      "firmware_sha256": "a1781c9de282109d94bf6db2683521e96b36149316a80d53786ebad0bb6fddb4"
+    },
+    {
+      "no": "O06",
+      "user_prompt": "환경 모니터 (센서 시뮬레이션 + LCD 그래프 + SD CSV + 웹 열람)",
+      "tags": [
+        "환경",
+        "모니터",
+        "센서",
+        "그래프",
+        "CSV",
+        "웹"
+      ],
+      "difficulty": 3,
+      "components": [
+        "wifi",
+        "lcd",
+        "sd"
+      ],
+      "category": "O",
+      "category_name": "복합 응용",
+      "description": "온도/습도 시뮬레이션 데이터를 LCD+웹+SD로 종합 모니터링합니다",
+      "firmware_size": 1433776,
+      "firmware_sha256": "a996adf88ebf305e52966f608c694596d22bfe14ec635296827c256011e39c56"
+    }
+  ]
+}

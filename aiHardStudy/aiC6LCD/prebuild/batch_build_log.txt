@@ -1,0 +1,94 @@
+[1/46] B02: ALREADY BUILT - SKIP
+[2/46] B07: building... OK (775KB, 48s)
+  Progress: 2/46 (OK:2 FAIL:0) ETA: 17.5min
+[3/46] B08: building... OK (775KB, 54s)
+  Progress: 3/46 (OK:3 FAIL:0) ETA: 24.2min
+[4/46] D04: building... OK (775KB, 55s)
+  Progress: 4/46 (OK:4 FAIL:0) ETA: 27.4min
+[5/46] D08: building... OK (781KB, 54s)
+  Progress: 5/46 (OK:5 FAIL:0) ETA: 28.7min
+[6/46] F04: building... OK (775KB, 52s)
+  Progress: 6/46 (OK:6 FAIL:0) ETA: 29.1min
+[7/46] F05: building... OK (775KB, 53s)
+  Progress: 7/46 (OK:7 FAIL:0) ETA: 29.3min
+[8/46] F06: building... OK (775KB, 55s)
+  Progress: 8/46 (OK:8 FAIL:0) ETA: 29.4min
+[9/46] G01: building... OK (1350KB, 505s)
+  Progress: 9/46 (OK:9 FAIL:0) ETA: 60.0min
+[10/46] G02: building... OK (1350KB, 82s)
+  Progress: 10/46 (OK:10 FAIL:0) ETA: 57.5min
+[11/46] G03: building... OK (1350KB, 80s)
+  Progress: 11/46 (OK:11 FAIL:0) ETA: 55.1min
+[12/46] G04: building... OK (1350KB, 71s)
+  Progress: 12/46 (OK:12 FAIL:0) ETA: 52.4min
+[13/46] G05: building... OK (1350KB, 66s)
+  Progress: 13/46 (OK:13 FAIL:0) ETA: 49.7min
+[14/46] G06: building... OK (1396KB, 511s)
+  Progress: 14/46 (OK:14 FAIL:0) ETA: 64.2min
+[15/46] H01: building... OK (775KB, 334s)
+  Progress: 15/46 (OK:15 FAIL:0) ETA: 69.6min
+[16/46] H02: building... OK (775KB, 68s)
+  Progress: 16/46 (OK:16 FAIL:0) ETA: 65.2min
+[17/46] H03: building... OK (775KB, 64s)
+  Progress: 17/46 (OK:17 FAIL:0) ETA: 61.2min
+[18/46] H04: building... OK (775KB, 69s)
+  Progress: 18/46 (OK:18 FAIL:0) ETA: 57.6min
+[19/46] H05: building... OK (775KB, 59s)
+  Progress: 19/46 (OK:19 FAIL:0) ETA: 54.0min
+[20/46] H06: building... OK (775KB, 55s)
+  Progress: 20/46 (OK:20 FAIL:0) ETA: 50.6min
+[21/46] I01: building... OK (775KB, 55s)
+  Progress: 21/46 (OK:21 FAIL:0) ETA: 47.4min
+[22/46] I02: building... OK (775KB, 55s)
+  Progress: 22/46 (OK:22 FAIL:0) ETA: 44.5min
+[23/46] I03: building... OK (776KB, 57s)
+  Progress: 23/46 (OK:23 FAIL:0) ETA: 41.7min
+[24/46] I04: building... OK (783KB, 57s)
+  Progress: 24/46 (OK:24 FAIL:0) ETA: 39.1min
+[25/46] I05: building... OK (783KB, 55s)
+  Progress: 25/46 (OK:25 FAIL:0) ETA: 36.6min
+[26/46] I06: building... OK (775KB, 55s)
+  Progress: 26/46 (OK:26 FAIL:0) ETA: 34.2min
+[27/46] I07: building... OK (775KB, 55s)
+  Progress: 27/46 (OK:27 FAIL:0) ETA: 32.0min
+[28/46] I08: building... OK (783KB, 54s)
+  Progress: 28/46 (OK:28 FAIL:0) ETA: 29.8min
+[29/46] J01: building... FAIL (2708s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 29/46 (OK:28 FAIL:1) ETA: 53.6min
+[30/46] J02: building... OK (775KB, 121s)
+  Progress: 30/46 (OK:29 FAIL:1) ETA: 49.8min
+[31/46] J03: building... OK (775KB, 148s)
+  Progress: 31/46 (OK:30 FAIL:1) ETA: 46.4min
+[32/46] J04: building... OK (776KB, 539s)
+  Progress: 32/46 (OK:31 FAIL:1) ETA: 45.9min
+[33/46] J05: building... OK (775KB, 209s)
+  Progress: 33/46 (OK:32 FAIL:1) ETA: 42.7min
+[34/46] J06: building... OK (775KB, 188s)
+  Progress: 34/46 (OK:33 FAIL:1) ETA: 39.4min
+[35/46] K01: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 35/46 (OK:33 FAIL:2) ETA: 38.2min
+[36/46] K02: building... OK (775KB, 174s)
+  Progress: 36/46 (OK:34 FAIL:2) ETA: 34.6min
+[37/46] K03: building... OK (783KB, 70s)
+  Progress: 37/46 (OK:35 FAIL:2) ETA: 30.6min
+[38/46] K04: building... FAIL (600s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 38/46 (OK:35 FAIL:3) ETA: 28.5min
+[39/46] K05: building... FAIL (1003s): Command '['C:\\Users\\lenovo\\bin\\arduino-cli.exe', 'compile', '--fqbn', 'esp32:esp32:esp32c6:Parti
+  Progress: 39/46 (OK:35 FAIL:4) ETA: 27.3min
+[40/46] K06: building... OK (783KB, 106s)
+  Progress: 40/46 (OK:36 FAIL:4) ETA: 23.1min
+[41/46] L01: building... OK (776KB, 98s)
+  Progress: 41/46 (OK:37 FAIL:4) ETA: 19.0min
+[42/46] L02: building... OK (775KB, 108s)
+  Progress: 42/46 (OK:38 FAIL:4) ETA: 15.0min
+[43/46] L03: building... OK (776KB, 103s)
+  Progress: 43/46 (OK:39 FAIL:4) ETA: 11.1min
+[44/46] L04: building... OK (776KB, 119s)
+  Progress: 44/46 (OK:40 FAIL:4) ETA: 7.3min
+[45/46] L05: building... OK (776KB, 108s)
+  Progress: 45/46 (OK:41 FAIL:4) ETA: 3.6min
+[46/46] L06: building... OK (776KB, 104s)
+  Progress: 46/46 (OK:42 FAIL:4) ETA: 0.0min
+catalog.json: 77 items
+
+Done! 42/46 OK, 4 failed, 164.8min total

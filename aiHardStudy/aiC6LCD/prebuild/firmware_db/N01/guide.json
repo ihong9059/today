@@ -1,0 +1,47 @@
+{
+  "result_description": "스마트폰에서 BLE로 보낸 텍스트를 SD 카드에 메모로 저장합니다",
+  "what_happens": [
+    "보드가 초기화됩니다 (LCD, LED, BLE 시작)",
+    "스마트폰에서 BLE로 보낸 텍스트를 SD 카드에 메모로 저장합니다",
+    "프로그램이 계속 실행됩니다"
+  ],
+  "concepts": [
+    {
+      "term": "BLE 블루투스",
+      "explanation": "스마트폰과 가까운 거리에서 무선 통신하는 기술"
+    },
+    {
+      "term": "SD 카드 저장",
+      "explanation": "데이터를 파일로 저장하는 작은 메모리 카드"
+    },
+    {
+      "term": "LCD 디스플레이",
+      "explanation": "작은 화면에 글자와 그림을 보여주는 장치"
+    }
+  ],
+  "code_highlights": [
+    {
+      "line": "",
+      "comment": "[BLE→SD 메모] 폰 텍스트를 SD에 저장"
+    }
+  ],
+  "try_next": [
+    {
+      "reason": "색상이나 숫자를 바꿔보세요"
+    },
+    {
+      "reason": "다른 예시와 비교해보세요"
+    }
+  ],
+  "quiz": {
+    "question": "이 프로그램은 무엇을 하나요?",
+    "options": [
+      "스마트폰에서 BLE로 보낸 텍스트를 SD 카드에 메모로 저장합니다",
+      "아무것도 하지 않습니다",
+      "보드를 끕니다",
+      "인터넷에 연결합니다"
+    ],
+    "answer": 0,
+    "explanation": "스마트폰에서 BLE로 보낸 텍스트를 SD 카드에 메모로 저장합니다"
+  }
+}
