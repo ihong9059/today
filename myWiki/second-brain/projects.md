@@ -69,6 +69,8 @@ links: [me, skills, goals, experience]
 - uttec-sensor.duckdns.org 운영 중
 - 파쇄기 AI 제안서 (85억, ROI 4.9개월)
 - 21개 기업 예지정비 제안서
+- **한국기계 AI 업무효율화 계획서** 완성 (Obsidian+Claude+Notion 기반, md+html+pdf)
+- **태명과학 AI 업무효율화 계획서** 완성 (부속품 호환 DB 중심, md+html+pdf)
 
 ### Xerix MFC Controller
 - EtherCAT 기술 검토 (문서 6건)

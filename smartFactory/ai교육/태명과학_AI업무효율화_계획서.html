@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태명과학 AI 업무 효율화 시스템 구축 계획서</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    color: #1a1a2e;
+    background: #f0f2f5;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Cover - 태명과학 전용 컬러 (짙은 파랑 계열) */
+  .cover {
+    background: linear-gradient(135deg, #0a1628, #1a365d, #2b6cb0);
+    color: white;
+    padding: 80px 60px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cover .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 6px 20px;
+    border-radius: 50px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  .cover h1 {
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .cover .subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    opacity: 0.85;
+    margin-bottom: 30px;
+  }
+  .cover-info {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+  }
+  .cover-info-item {
+    text-align: center;
+  }
+  .cover-info-item .label {
+    font-size: 11px;
+    opacity: 0.6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .cover-info-item .value {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  /* Section */
+  .section {
+    background: white;
+    border-radius: 12px;
+    padding: 40px 48px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0a1628;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #2b6cb0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section h2 .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #2b6cb0;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .section h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a365d;
+    margin: 28px 0 14px;
+  }
+  .section h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin: 20px 0 10px;
+  }
+  .section p { margin-bottom: 14px; color: #333; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 14px;
+  }
+  thead th {
+    background: #2b6cb0;
+    color: white;
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  thead th:first-child { border-radius: 8px 0 0 0; }
+  thead th:last-child { border-radius: 0 8px 0 0; }
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e8eaed;
+    vertical-align: top;
+  }
+  tbody tr:hover { background: #f8f9fa; }
+  tbody tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+  tbody tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+  .center { text-align: center; }
+  .compat { text-align: center; font-size: 16px; }
+
+  /* Highlight box */
+  .highlight-box {
+    background: linear-gradient(135deg, #ebf4ff, #f0f5ff);
+    border-left: 4px solid #2b6cb0;
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .highlight-box.warning {
+    background: linear-gradient(135deg, #fff8e1, #fff3cd);
+    border-left-color: #d69e2e;
+  }
+  .highlight-box.success {
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    border-left-color: #2e7d32;
+  }
+  .highlight-box.danger {
+    background: linear-gradient(135deg, #fef3f2, #fee2e2);
+    border-left-color: #e53e3e;
+  }
+  .highlight-box strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* Before/After comparison */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  .comparison .before, .comparison .after {
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .comparison .before {
+    background: #fef3f2;
+    border: 1px solid #fecaca;
+  }
+  .comparison .after {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+  }
+  .comparison .tag {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .comparison .before .tag { background: #fee2e2; color: #991b1b; }
+  .comparison .after .tag { background: #d1fae5; color: #065f46; }
+  .comparison ol, .comparison ul {
+    padding-left: 20px;
+    font-size: 14px;
+  }
+  .comparison li { margin-bottom: 6px; }
+  .comparison .total {
+    margin-top: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    padding-top: 10px;
+    border-top: 1px dashed #ccc;
+  }
+
+  /* Stat cards */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .stat-card {
+    background: linear-gradient(135deg, #2b6cb0, #1a365d);
+    color: white;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  .stat-card .stat-value {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 4px;
+  }
+  .stat-card .stat-label {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  .stat-card .stat-detail {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 4px;
+  }
+
+  /* Checklist */
+  .checklist {
+    background: #fafbfc;
+    border: 1px solid #e0e4e8;
+    border-radius: 10px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .checklist-item .check {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #2b6cb0;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Flow steps */
+  .flow-step {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .flow-step .step-num {
+    width: 48px;
+    min-height: 48px;
+    background: #2b6cb0;
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .flow-step .step-content {
+    flex: 1;
+    background: #f8f9fb;
+    border-radius: 10px;
+    padding: 16px 20px;
+    border: 1px solid #e0e4e8;
+  }
+  .flow-step .step-content .step-title {
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #1a365d;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    margin: 20px 0;
+    padding-left: 30px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #2b6cb0, #90cdf4);
+    border-radius: 2px;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+    padding: 18px 24px;
+    background: #f8f9fb;
+    border-radius: 10px;
+    border: 1px solid #e0e4e8;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 22px;
+    width: 12px;
+    height: 12px;
+    background: #2b6cb0;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px #2b6cb0;
+  }
+  .timeline-item .week {
+    font-size: 12px;
+    font-weight: 700;
+    color: #2b6cb0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .timeline-item .title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  .timeline-item ul {
+    padding-left: 18px;
+    font-size: 13px;
+    color: #555;
+  }
+  .timeline-item li { margin-bottom: 4px; }
+
+  /* Decision tree */
+  .decision-tree {
+    background: #f8f9fb;
+    border: 1px solid #e0e4e8;
+    border-radius: 12px;
+    padding: 28px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.9;
+  }
+  .decision-tree .question {
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+  .decision-tree .branch {
+    padding-left: 24px;
+    border-left: 3px solid #bee3f8;
+    margin: 8px 0 8px 12px;
+  }
+  .decision-tree .answer {
+    background: #ebf4ff;
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+    color: #2b6cb0;
+  }
+  .decision-tree .result {
+    background: #d1fae5;
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    color: #065f46;
+  }
+
+  /* Synergy box */
+  .synergy-box {
+    background: linear-gradient(135deg, #faf5ff, #f0e6ff);
+    border: 2px solid #d6bcfa;
+    border-radius: 12px;
+    padding: 28px;
+    margin: 20px 0;
+  }
+  .synergy-box h4 {
+    color: #553c9a;
+    margin-bottom: 12px;
+  }
+
+  /* Cost total */
+  .cost-total td {
+    font-weight: 700 !important;
+    background: #ebf4ff !important;
+    font-size: 15px !important;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 30px;
+    color: #999;
+    font-size: 13px;
+  }
+
+  @media print {
+    body { background: white; font-size: 12px; }
+    .container { max-width: 100%; padding: 0; }
+    .section { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+    .cover { page-break-after: always; }
+  }
+
+  @media (max-width: 768px) {
+    .cover { padding: 40px 24px; }
+    .cover h1 { font-size: 24px; }
+    .section { padding: 24px 20px; }
+    .comparison { grid-template-columns: 1fr; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="badge">AI Business Efficiency Plan</div>
+  <h1>태명과학<br>AI 업무 효율화 시스템 구축 계획서</h1>
+  <div class="subtitle">Obsidian + Claude 기반 지능형 장비 컨설팅 플랫폼</div>
+  <div class="cover-info">
+    <div class="cover-info-item">
+      <div class="label">대상 기업</div>
+      <div class="value">태명과학 (MJ Research)</div>
+    </div>
+    <div class="cover-info-item">
+      <div class="label">웹사이트</div>
+      <div class="value">www.mjr.co.kr</div>
+    </div>
+    <div class="cover-info-item">
+      <div class="label">파트너</div>
+      <div class="value">FRITSCH (독일)</div>
+    </div>
+    <div class="cover-info-item">
+      <div class="label">작성</div>
+      <div class="value">UTTEC | 2026.04.28</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EXECUTIVE SUMMARY ============ -->
+<div class="section">
+  <h2><span class="num">0</span> 핵심 요약</h2>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-value">90%</div>
+      <div class="stat-label">장비 추천 시간 단축</div>
+      <div class="stat-detail">1시간+ → 5분</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">97%</div>
+      <div class="stat-label">부속품 확인 시간 단축</div>
+      <div class="stat-detail">20분 → 30초</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">Zero</div>
+      <div class="stat-label">부속품 주문 오류</div>
+      <div class="stat-detail">호환성 DB 자동 검증</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">3~4만원</div>
+      <div class="stat-label">월 운영비 (1인)</div>
+      <div class="stat-detail">Obsidian 무료 + Claude $20</div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>태명과학 시스템의 핵심 차별점</strong>
+    수백 종의 부속품(용기/볼/체/소모품) × 8종 재질 × 다양한 용량의 <strong>호환성 매트릭스를 DB화</strong>하여, 부속품 선정 오류를 원천 차단하고, 시료 특성에 맞는 장비+부속품+재질을 <strong>패키지로 즉시 추천</strong>하는 시스템입니다.
+  </div>
+</div>
+
+<!-- ============ 1. 현황 분석 ============ -->
+<div class="section">
+  <h2><span class="num">1</span> 현황 분석 — 태명과학의 업무 특수성</h2>
+
+  <h3>1.1 한국기계와의 비교</h3>
+  <table>
+    <thead>
+      <tr><th>구분</th><th>태명과학</th><th>한국기계</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>제품 성격</strong></td><td>수입 정밀 장비 (FRITSCH 독일)</td><td>자체 생산 산업용 장비</td></tr>
+      <tr><td><strong>주요 고객</strong></td><td>연구원, QC 담당자, 교수</td><td>공장장, 엔지니어</td></tr>
+      <tr><td><strong>장비 종류</strong></td><td>30종+ (매우 다양)</td><td>8종 (집중)</td></tr>
+      <tr><td><strong>부속품</strong></td><td>수백 종 (핵심 난제)</td><td>상대적 단순</td></tr>
+      <tr><td><strong>재질 선택</strong></td><td>8종+ (오염 방지 핵심)</td><td>용량/토크 중심</td></tr>
+      <tr><td><strong>핵심 서비스</strong></td><td>시료 테스트 + 컨설팅</td><td>현장 설치/시운전</td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.2 현재 업무의 핵심 어려움</h3>
+  <table>
+    <thead>
+      <tr><th>문의 유형</th><th>현재 상황</th><th>난점</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>장비 선정</strong><br>(가장 빈번)</td>
+        <td>"세라믹을 10μm 이하로 분쇄하려면?"</td>
+        <td>시료 특성 × 입도 × 처리량 × 오염 허용도 = 수십 가지 조합</td>
+      </tr>
+      <tr>
+        <td><strong>부속품 주문</strong><br>(가장 복잡)</td>
+        <td>"P-7에 80ml 지르코니아 용기 있나요?"</td>
+        <td>장비별 × 용량별 × 재질별 = 수백 가지, 호환 확인 필수</td>
+      </tr>
+      <tr>
+        <td><strong>재질 선택</strong><br>(가장 빈번 질문)</td>
+        <td>"Agate? ZrO₂? 뭐가 다른가요?"</td>
+        <td>8종 재질의 특성/용도를 매번 구두 설명</td>
+      </tr>
+      <tr>
+        <td><strong>시료 테스트</strong></td>
+        <td>"우리 시료가 이 장비로 되나요?"</td>
+        <td>시료 특성 파악 → 장비 선정 → 테스트 조건 설계</td>
+      </tr>
+      <tr>
+        <td><strong>입도 데이터 해석</strong></td>
+        <td>"D50이 15μm인데, 괜찮은 건가요?"</td>
+        <td>산업별/용도별 기준이 다름</td>
+      </tr>
+      <tr>
+        <td><strong>영문 카탈로그</strong></td>
+        <td>FRITSCH 원문을 한글로 설명</td>
+        <td>번역 + 한국 시장 맞춤 자료 필요</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box danger">
+    <strong>가장 심각한 문제: 부속품 오주문</strong>
+    장비 모델 × 용기 크기 × 재질 조합이 너무 많아, 카탈로그를 수십 페이지 대조해야 합니다. 잘못 주문하면 사용 불가 → 반품 → 재주문 → FRITSCH 리드타임 4~8주 추가 대기.
+  </div>
+</div>
+
+<!-- ============ 2. 시스템 구조 ============ -->
+<div class="section">
+  <h2><span class="num">2</span> 시스템 전체 구조</h2>
+
+  <h3>3가지 핵심 도구의 역할</h3>
+  <table>
+    <thead>
+      <tr><th>도구</th><th>역할</th><th>태명과학 특화 기능</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Obsidian</strong></td>
+        <td>지식 저장소</td>
+        <td>장비 DB + <strong>부속품 호환 매트릭스</strong> + 재질 가이드 + 시료별 분쇄 조건</td>
+      </tr>
+      <tr>
+        <td><strong>Claude AI</strong></td>
+        <td>장비 컨설턴트</td>
+        <td>시료→장비+부속품+재질 <strong>패키지 추천</strong> + 입도 데이터 자동 해석</td>
+      </tr>
+      <tr>
+        <td><strong>Notion</strong></td>
+        <td>업무 관리</td>
+        <td>CRM + <strong>부속품 재고 관리</strong> + 시료 테스트 진행 추적</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>AI 장비 컨설팅 프로세스</h3>
+  <div class="flow-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <div class="step-title">시료 정보 수집 (AI 가이드, 3분)</div>
+      <p>Claude가 구조화된 질문: 시료명 → 경도 → 현재/목표 입도 → 처리량 → 오염 허용도 → 건식/습식 → 용도</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <div class="step-title">AI 자동 분석 (30초)</div>
+      <p>시료DB 검색 → 장비DB 매칭 → 부속품 호환 매트릭스 → 재질 의사결정 트리 → 유사 사례 검색</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <div class="step-title">추천 패키지 생성 (1분)</div>
+      <p><strong>추천 장비</strong> + <strong>추천 용기</strong> (재질/용량) + <strong>추천 볼</strong> (크기/재질) + 분쇄 조건 + 예상 결과 + 대안 + 개략 견적</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <div class="step-title">시료 테스트 연결 (옵션)</div>
+      <p>확인이 필요하면 시료 테스트 신청서 자동 생성 → Notion에 테스트 일정 등록</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 3. 부속품 호환 DB ============ -->
+<div class="section">
+  <h2><span class="num">3</span> 핵심 DB — 부속품 호환성 매트릭스</h2>
+
+  <div class="highlight-box warning">
+    <strong>태명과학 시스템의 가장 중요한 차별점</strong>
+    수백 종 부속품의 호환성을 DB화하여, "이 장비에 이 용기/볼을 쓸 수 있는가?"를 AI가 즉시 검증합니다. 부속품 오주문을 원천 차단합니다.
+  </div>
+
+  <h3>3.1 분쇄 용기 호환 매트릭스 (예시)</h3>
+  <h4>P-7 Premium Line (고에너지 볼밀)</h4>
+  <table>
+    <thead>
+      <tr><th class="center">용량</th><th class="compat">Agate<br>(마노)</th><th class="compat">ZrO₂<br>(지르코니아)</th><th class="compat">Si₃N₄<br>(질화규소)</th><th class="compat">Al₂O₃<br>(코런덤)</th><th class="compat">WC<br>(초경합금)</th><th class="compat">SS<br>(스테인리스)</th><th class="compat">PTFE<br>(테프론)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="center"><strong>20ml</strong></td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">-</td></tr>
+      <tr><td class="center"><strong>45ml</strong></td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">-</td></tr>
+      <tr><td class="center"><strong>80ml</strong></td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td></tr>
+    </tbody>
+  </table>
+
+  <h4>P-5 Classic Line (유성 볼밀)</h4>
+  <table>
+    <thead>
+      <tr><th class="center">용량</th><th class="compat">Agate</th><th class="compat">ZrO₂</th><th class="compat">Si₃N₄</th><th class="compat">Al₂O₃</th><th class="compat">WC</th><th class="compat">SS</th><th class="compat">PTFE</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="center"><strong>80ml</strong></td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">-</td></tr>
+      <tr><td class="center"><strong>250ml</strong></td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">-</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">-</td></tr>
+      <tr><td class="center"><strong>500ml</strong></td><td class="compat">&#10004;</td><td class="compat">&#10004;</td><td class="compat">-</td><td class="compat">&#10004;</td><td class="compat">-</td><td class="compat">&#10004;</td><td class="compat">-</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px; color:#666;">* 전체 모델에 대한 호환 매트릭스를 Obsidian에 구축하여, AI가 즉시 검증합니다.</p>
+
+  <h3>3.2 재질 선택 가이드 (고객 질문 최다)</h3>
+  <table>
+    <thead>
+      <tr><th>재질</th><th class="center">경도<br>(Mohs)</th><th class="center">순수성</th><th class="center">내화학성</th><th class="center">가격</th><th>추천 시료</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Agate (마노)</strong></td><td class="center">6.5</td><td class="center">★★★★★</td><td class="center">★★★</td><td class="center">★★★★</td><td>순수성 최우선 (분석용 전처리)</td></tr>
+      <tr><td><strong>ZrO₂ (지르코니아)</strong></td><td class="center">8.5</td><td class="center">★★★★</td><td class="center">★★★★</td><td class="center">★★★</td><td>가장 범용, 배터리 소재, 세라믹</td></tr>
+      <tr><td><strong>Si₃N₄ (질화규소)</strong></td><td class="center">9</td><td class="center">★★★★</td><td class="center">★★★★</td><td class="center">★★★★</td><td>고경도 세라믹, 반도체 소재</td></tr>
+      <tr><td><strong>Al₂O₃ (코런덤)</strong></td><td class="center">9</td><td class="center">★★★</td><td class="center">★★★★</td><td class="center">★★</td><td>광물, 암석, XRF 전처리</td></tr>
+      <tr><td><strong>WC (초경합금)</strong></td><td class="center">9.5</td><td class="center">★★</td><td class="center">★★★</td><td class="center">★★★★★</td><td>최고 경도 시료, 금속</td></tr>
+      <tr><td><strong>SS (스테인리스)</strong></td><td class="center">5.5</td><td class="center">★★</td><td class="center">★★</td><td class="center">★</td><td>식품(GMP), 저비용</td></tr>
+      <tr><td><strong>경화강</strong></td><td class="center">6</td><td class="center">★</td><td class="center">★</td><td class="center">★</td><td>오염 무관, 최저가</td></tr>
+      <tr><td><strong>PTFE (테프론)</strong></td><td class="center">2</td><td class="center">★★★★★</td><td class="center">★★★★★</td><td class="center">★★</td><td>화학적 불활성 필수 시</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.3 재질 선택 의사결정 트리</h3>
+  <div class="decision-tree">
+    <div class="question">시료에 금속 오염이 허용되는가?</div>
+    <div class="branch">
+      <span class="answer">NO (분석용, 고순도)</span> → 시료 경도가 Mohs 7 이상인가?
+      <div class="branch">
+        <span class="answer">YES (고경도)</span> → <span class="result">ZrO₂ (지르코니아) 또는 Si₃N₄ (질화규소)</span>
+      </div>
+      <div class="branch">
+        <span class="answer">NO (보통/연질)</span> → <span class="result">Agate (마노) — 최고 순수성</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:16px;">
+      <span class="answer">YES (오염 허용)</span> → 예산이 제한적인가?
+      <div class="branch">
+        <span class="answer">YES (저예산)</span> → <span class="result">경화강 또는 스테인리스강</span>
+      </div>
+      <div class="branch">
+        <span class="answer">NO (예산 여유)</span> → <span class="result">WC (초경합금) — 최고 경도</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 4. AI 기능 ============ -->
+<div class="section">
+  <h2><span class="num">4</span> Claude AI 장비 컨설턴트 기능</h2>
+
+  <table>
+    <thead>
+      <tr><th>기능</th><th>입력</th><th>출력</th><th class="center">소요</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>장비 추천</strong></td><td>시료 특성 + 목표 입도</td><td>장비 + 부속품 + 재질 패키지</td><td class="center">30초</td></tr>
+      <tr><td><strong>부속품 조회</strong></td><td>장비 모델명</td><td>호환 부속품 전체 목록 + 재고</td><td class="center">즉시</td></tr>
+      <tr><td><strong>재질 추천</strong></td><td>시료 + 오염 허용도</td><td>최적 재질 + 비교표 + 이유</td><td class="center">즉시</td></tr>
+      <tr><td><strong>시료 테스트 설계</strong></td><td>시료 정보 + 목표</td><td>테스트 조건 3안 + 예상 결과</td><td class="center">1분</td></tr>
+      <tr><td><strong>입도 데이터 해석</strong></td><td>D50/D90 + 산업 분야</td><td>합격 판정 + 개선 방안</td><td class="center">30초</td></tr>
+      <tr><td><strong>카탈로그 번역</strong></td><td>FRITSCH 영문 PDF</td><td>한글 기술자료</td><td class="center">10분</td></tr>
+      <tr><td><strong>견적서 생성</strong></td><td>장비 + 부속품 구성</td><td>견적서 초안</td><td class="center">5분</td></tr>
+    </tbody>
+  </table>
+
+  <h3>입도분석 자동 해석 예시</h3>
+  <div class="highlight-box">
+    <strong>고객 질문: "D50=15.2μm인데, 제약 API로 괜찮은가요?"</strong>
+    <table style="margin-top:12px;">
+      <thead>
+        <tr><th>지표</th><th class="center">측정값</th><th class="center">제약 API 기준</th><th class="center">판정</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>D10</td><td class="center">2.3μm</td><td class="center">1~5μm</td><td class="center" style="color:green; font-weight:700;">&#10004; 적합</td></tr>
+        <tr><td>D50</td><td class="center">15.2μm</td><td class="center">5~25μm</td><td class="center" style="color:green; font-weight:700;">&#10004; 적합</td></tr>
+        <tr><td>D90</td><td class="center">45.8μm</td><td class="center">&lt;75μm</td><td class="center" style="color:green; font-weight:700;">&#10004; 적합</td></tr>
+        <tr><td>Span</td><td class="center">2.86</td><td class="center">&lt;3.0</td><td class="center" style="color:green; font-weight:700;">&#10004; 적합</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px; font-size:13px;">AI 자동 판정: "제약 API 일반 기준에 모두 적합합니다. 단, 흡입제(Inhalation) 용도라면 D50 &lt; 5μm 필요 — P-7 Premium 추가 분쇄로 달성 가능합니다."</p>
+  </div>
+</div>
+
+<!-- ============ 5. Before/After ============ -->
+<div class="section">
+  <h2><span class="num">5</span> 업무 프로세스 Before / After</h2>
+
+  <h3>시나리오 1: 신규 장비 문의</h3>
+  <div class="comparison">
+    <div class="before">
+      <div class="tag">BEFORE 기존 방식</div>
+      <ol>
+        <li>고객 전화 — 시료 설명 (10분)</li>
+        <li>카탈로그 검토 (20분)</li>
+        <li>재질/용기 호환 확인 (15분)</li>
+        <li>내부 확인 — 모델/재고 (10분)</li>
+        <li>견적서 수작업 (30분)</li>
+        <li>고객 재문의 → 반복</li>
+      </ol>
+      <div class="total" style="color:#991b1b;">총 소요: 2~3시간/건</div>
+    </div>
+    <div class="after">
+      <div class="tag">AFTER AI 적용 후</div>
+      <ol>
+        <li>고객 전화 (5분)</li>
+        <li>Claude에 시료 정보 입력 (2분)</li>
+        <li>AI 자동 패키지 추천 (30초)</li>
+        <li>호환성 자동 검증 (즉시)</li>
+        <li>견적서 초안 자동 생성 (1분)</li>
+        <li>담당자 검토 + 발송 (5분)</li>
+      </ol>
+      <div class="total" style="color:#065f46;">총 소요: 15분/건 (90% 단축)</div>
+    </div>
+  </div>
+
+  <h3>시나리오 2: 부속품 주문 (가장 빈번)</h3>
+  <div class="comparison">
+    <div class="before">
+      <div class="tag">BEFORE</div>
+      <ul>
+        <li>고객: "P-5에 250ml ZrO₂ 용기 있나요?"</li>
+        <li>카탈로그 확인 — Classic? Premium? (5분)</li>
+        <li>250ml ZrO₂ 호환 여부 확인 (10분)</li>
+        <li>품번 → 재고 → 가격 확인 (10분)</li>
+      </ul>
+      <div class="total" style="color:#991b1b;">총 소요: 25분</div>
+    </div>
+    <div class="after">
+      <div class="tag">AFTER</div>
+      <ul>
+        <li>Claude: "/부속품 P-5 Classic 250ml ZrO₂"</li>
+        <li>즉시 응답: "P-5 Classic 250ml ZrO₂ 용기"</li>
+        <li>품번: XX-XXXX, 가격: XX만원, 재고: 1개</li>
+        <li>대안: "P-5 Premium은 250ml ZrO₂ 미지원"</li>
+      </ul>
+      <div class="total" style="color:#065f46;">총 소요: 30초 (97% 단축)</div>
+    </div>
+  </div>
+
+  <h3>시나리오 3: 시료 테스트 설계</h3>
+  <div class="comparison">
+    <div class="before">
+      <div class="tag">BEFORE</div>
+      <ul>
+        <li>시료 특성 파악 (30분)</li>
+        <li>경험 기반 테스트 조건 설계 (1시간)</li>
+        <li>테스트 실시 후 조건 수정 반복</li>
+      </ul>
+      <div class="total" style="color:#991b1b;">총 소요: 2시간+ / 성공률 변동</div>
+    </div>
+    <div class="after">
+      <div class="tag">AFTER</div>
+      <ul>
+        <li>Claude에 시료 정보 입력 (3분)</li>
+        <li>AI가 3가지 테스트 조건 자동 설계 (1분)</li>
+        <li>예상 결과 포함 → 1차 테스트 성공률 향상</li>
+      </ul>
+      <div class="total" style="color:#065f46;">총 소요: 10분 / 성공률 향상</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 6. 제품 라인업 ============ -->
+<div class="section">
+  <h2><span class="num">6</span> 태명과학 취급 제품 총괄</h2>
+
+  <h3>6.1 FRITSCH 분쇄 장비 (독일 수입)</h3>
+  <table>
+    <thead>
+      <tr><th>카테고리</th><th>모델</th><th>분쇄 방식</th><th>입도 범위</th><th>주요 용도</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>유성 볼밀</strong></td><td>P-5/P-6</td><td>충격+마찰</td><td>~1μm</td><td>대/중용량 미분쇄, R&D</td></tr>
+      <tr><td><strong>고에너지 볼밀</strong></td><td>P-7</td><td>충격+마찰</td><td>~0.1μm</td><td>나노 분쇄, 기계적합금</td></tr>
+      <tr><td><strong>진동 볼밀</strong></td><td>P-23</td><td>진동+충격</td><td>~5μm</td><td>소량 빠른 분쇄</td></tr>
+      <tr><td><strong>로터밀</strong></td><td>P-14</td><td>충격+전단</td><td>~80μm</td><td>연질/섬유질 시료</td></tr>
+      <tr><td><strong>컷팅밀</strong></td><td>P-15/P-19</td><td>절단</td><td>~250μm</td><td>플라스틱, 식품, 직물</td></tr>
+      <tr><td><strong>조크러셔</strong></td><td>P-1</td><td>압축</td><td>~500μm</td><td>1차 조쇄, 광석/암석</td></tr>
+      <tr><td><strong>디스크밀</strong></td><td>P-13</td><td>압축+전단</td><td>~50μm</td><td>광물, 세라믹</td></tr>
+      <tr><td><strong>컵밀</strong></td><td>P-2</td><td>진동+충격</td><td>~10μm</td><td>XRF 전처리</td></tr>
+      <tr><td><strong>비터밀/나이프밀</strong></td><td>P-11/P-19K</td><td>충격/절단</td><td>~100μm</td><td>범용 분쇄, 식품</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.2 FRITSCH 분석/측정 장비</h3>
+  <table>
+    <thead>
+      <tr><th>카테고리</th><th>모델</th><th>측정 방식</th><th>측정 범위</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>레이저 입도분석기</strong></td><td>A-22 NeXT Nano</td><td>레이저 회절</td><td>0.01~3,800μm</td></tr>
+      <tr><td><strong>레이저 입도분석기</strong></td><td>A-22 NeXT Micro</td><td>레이저 회절</td><td>0.5~4,000μm</td></tr>
+      <tr><td><strong>이미지 입도분석기</strong></td><td>A-28 ImageSizer</td><td>동적 이미지</td><td>20~20,000μm</td></tr>
+      <tr><td><strong>진동 체분석기</strong></td><td>A-3 PRO/SPARTAN</td><td>체 진동</td><td>20μm~25mm</td></tr>
+      <tr><td><strong>에어젯 체분석기</strong></td><td>A-18</td><td>에어젯</td><td>10μm~2mm</td></tr>
+      <tr><td><strong>시료 분할기/피더</strong></td><td>-</td><td>회전/진동</td><td>대표 시료 추출</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.3 MJ Research 자체 취급 장비</h3>
+  <table>
+    <thead>
+      <tr><th>카테고리</th><th>대표 장비</th><th>용도</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>혼합/분산</strong></td><td>Paste Mixer, Homo-Mixer, 3-Roll Mill, FILMIX</td><td>슬러리/페이스트 혼합</td></tr>
+      <tr><td><strong>초음파 분산</strong></td><td>Ultrasonic Disperser</td><td>나노 입자 분산</td></tr>
+      <tr><td><strong>반응기</strong></td><td>Lab Reactor, Multi-Reactor, Custom</td><td>화학 반응/합성</td></tr>
+      <tr><td><strong>분석장비</strong></td><td>Mini-SEM, 점도계, 이온 코팅기</td><td>미세 구조 관찰</td></tr>
+      <tr><td><strong>펌프/온도제어</strong></td><td>Vacuum, Dosing, 항온순환기</td><td>액체 이송, 온도 제어</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ 7. 갖추어야 할 것 ============ -->
+<div class="section">
+  <h2><span class="num">7</span> 갖추어야 할 것</h2>
+
+  <h3>7.1 소프트웨어</h3>
+  <table>
+    <thead>
+      <tr><th class="center">순번</th><th>항목</th><th>용도</th><th>비용</th><th class="center">우선순위</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="center">1</td><td><strong>Obsidian</strong></td><td>장비/부속품/시료 DB</td><td>무료</td><td class="center">★★★</td></tr>
+      <tr><td class="center">2</td><td><strong>Claude Pro</strong></td><td>AI 장비 컨설턴트</td><td>월 $20/인</td><td class="center">★★★</td></tr>
+      <tr><td class="center">3</td><td><strong>Obsidian Git</strong></td><td>자동 백업 + 동기화</td><td>무료</td><td class="center">★★☆</td></tr>
+      <tr><td class="center">4</td><td><strong>Notion</strong></td><td>CRM + 부속품 재고 관리</td><td>무료~$10/월</td><td class="center">★★☆</td></tr>
+      <tr><td class="center">5</td><td><strong>GitHub</strong></td><td>Vault 백업 저장소</td><td>무료</td><td class="center">★★☆</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.2 데이터 준비 (가장 중요)</h3>
+  <div class="checklist">
+    <div class="checklist-item"><div class="check"></div>FRITSCH 전 모델 카탈로그 (영문 PDF)</div>
+    <div class="checklist-item"><div class="check"></div><strong>부속품 전체 목록 (품번, 호환 장비, 재질, 용량, 가격) ← 핵심 #1</strong></div>
+    <div class="checklist-item"><div class="check"></div>재질별 특성 데이터 (경도, 화학식, 내화학성, 밀도)</div>
+    <div class="checklist-item"><div class="check"></div><strong>과거 시료 테스트 리포트 (20건 이상) ← 핵심 #2</strong></div>
+    <div class="checklist-item"><div class="check"></div>과거 견적서/주문 이력 (주요 고객 50건)</div>
+    <div class="checklist-item"><div class="check"></div>MJ Research 자체 취급 장비 목록</div>
+    <div class="checklist-item"><div class="check"></div><strong>산업별 입도 기준 자료 (제약/배터리/세라믹/식품) ← 핵심 #3</strong></div>
+    <div class="checklist-item"><div class="check"></div>자주 받는 고객 질문 목록 (50개 이상)</div>
+    <div class="checklist-item"><div class="check"></div>유지보수 매뉴얼 (주요 장비)</div>
+    <div class="checklist-item"><div class="check"></div>기존 동영상 자료 (FRITSCH 23편 보유)</div>
+    <div class="checklist-item"><div class="check"></div><strong>담당자 인터뷰 (1~2시간) — 부속품 선정 노하우, 시료 테스트 경험</strong></div>
+  </div>
+
+  <div class="highlight-box warning">
+    <strong>핵심 3대 데이터</strong>
+    <ol style="margin-top:8px; padding-left:20px;">
+      <li><strong>부속품 호환성 매트릭스</strong> (장비 × 재질 × 용량) — 오주문 방지</li>
+      <li><strong>시료별 분쇄 조건 이력</strong> (경험 데이터) — 추천 정확도</li>
+      <li><strong>산업별 입도 기준값</strong> — 자동 합격 판정</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ 8. 로드맵 ============ -->
+<div class="section">
+  <h2><span class="num">8</span> 구축 로드맵 (총 10주)</h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="week">Week 1~2</div>
+      <div class="title">Phase 1-A — Vault 구조 + 장비 DB</div>
+      <ul>
+        <li>Vault 생성 + CLAUDE.md 작성 (AI 컨설턴트 규칙)</li>
+        <li>FRITSCH 전 모델 장비 페이지 작성 (영문 카탈로그 기반)</li>
+        <li>장비 선정 플로차트 작성</li>
+        <li>기존 동영상 23편 연결</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="week">Week 3~4 (핵심)</div>
+      <div class="title">Phase 1-B — 부속품 호환 DB 구축</div>
+      <ul>
+        <li><strong>부속품 호환성 매트릭스 전체 구축 (가장 큰 작업)</strong></li>
+        <li>분쇄용기 DB (모델별 × 재질별 × 용량별)</li>
+        <li>분쇄볼 DB (크기별 × 재질별)</li>
+        <li>재질 가이드 8종 상세 페이지</li>
+        <li>담당자 인터뷰 1차 (부속품 노하우)</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="week">Week 5~6</div>
+      <div class="title">Phase 1-C + Phase 2 — 시료 DB + Claude 연동</div>
+      <ul>
+        <li>시료별 분쇄 조건 DB 구축 (9개 산업 분류)</li>
+        <li>산업별 입도 기준 DB 구축</li>
+        <li>Claude Code 스킬 개발 (장비추천/부속품조회/재질가이드)</li>
+        <li>입도 데이터 해석 스킬 개발</li>
+        <li>담당자 인터뷰 2차 (시료 테스트 노하우)</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="week">Week 7~8</div>
+      <div class="title">Phase 3 — 고객 대응 자동화 테스트</div>
+      <ul>
+        <li>시료 테스트 설계 자동화</li>
+        <li>견적서/추천서 자동 생성 테스트</li>
+        <li>영문→한글 카탈로그 변환 테스트</li>
+        <li>실제 고객 문의 5건으로 파일럿 테스트</li>
+        <li>FAQ DB 구축 (60개 이상)</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="week">Week 9~10</div>
+      <div class="title">Phase 4 + 안정화</div>
+      <ul>
+        <li>Notion CRM + 부속품 재고 관리 구축</li>
+        <li>시료 테스트 관리 시스템 구축</li>
+        <li>담당자 교육 (Obsidian + Claude 활용법)</li>
+        <li>피드백 반영 + 데이터 보강</li>
+        <li>운영 가이드 문서 작성</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 9. 기대 효과 ============ -->
+<div class="section">
+  <h2><span class="num">9</span> 기대 효과</h2>
+
+  <h3>9.1 정량적 효과</h3>
+  <table>
+    <thead>
+      <tr><th>항목</th><th class="center">현재</th><th class="center">AI 적용 후</th><th class="center">개선율</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>장비 추천</td><td class="center">1시간+/건</td><td class="center">5분/건</td><td class="center"><strong>90%↓</strong></td></tr>
+      <tr><td>부속품 호환 확인</td><td class="center">20분/건</td><td class="center">30초/건</td><td class="center"><strong>97%↓</strong></td></tr>
+      <tr><td>재질 상담</td><td class="center">15분/건</td><td class="center">즉시</td><td class="center"><strong>95%↓</strong></td></tr>
+      <tr><td>시료 테스트 설계</td><td class="center">2시간/건</td><td class="center">10분/건</td><td class="center"><strong>90%↓</strong></td></tr>
+      <tr><td>입도 데이터 해석</td><td class="center">30분/건</td><td class="center">1분/건</td><td class="center"><strong>95%↓</strong></td></tr>
+      <tr><td>견적서 작성</td><td class="center">1시간/건</td><td class="center">5분/건</td><td class="center"><strong>90%↓</strong></td></tr>
+      <tr><td>영문 카탈로그 번역</td><td class="center">2~3일/건</td><td class="center">30분/건</td><td class="center"><strong>95%↓</strong></td></tr>
+      <tr><td>부속품 주문 오류</td><td class="center">월 2~3건</td><td class="center">Zero</td><td class="center"><strong>100%↓</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>9.2 정성적 효과</h3>
+  <table>
+    <thead>
+      <tr><th>효과</th><th>설명</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>부속품 오주문 제거</strong></td><td>호환성 DB로 잘못된 조합을 사전 차단</td></tr>
+      <tr><td><strong>담당자 의존도 해소</strong></td><td>누구나 AI로 정확한 추천 가능</td></tr>
+      <tr><td><strong>시료 테스트 품질 향상</strong></td><td>최적 조건 사전 설계로 테스트 성공률 향상</td></tr>
+      <tr><td><strong>지식 자동 축적</strong></td><td>테스트 결과가 DB에 축적 → 갈수록 정확해짐</td></tr>
+      <tr><td><strong>해외 대응 역량</strong></td><td>영문↔한글 즉시 변환</td></tr>
+      <tr><td><strong>논문 지원</strong></td><td>연구원에게 논문용 기재 형식 자동 제공</td></tr>
+    </tbody>
+  </table>
+
+  <h3>9.3 투자 비용</h3>
+  <table>
+    <thead>
+      <tr><th>항목</th><th>비용</th><th>비고</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Obsidian</td><td>무료</td><td>개인용</td></tr>
+      <tr><td>Claude Pro</td><td>$20/월 (약 2.7만원)</td><td>1인 기준</td></tr>
+      <tr><td>Notion</td><td>무료~$10/월</td><td>소규모 팀</td></tr>
+      <tr><td>GitHub Private</td><td>무료</td><td>Vault 백업</td></tr>
+      <tr class="cost-total"><td>총 월 비용</td><td>약 3~4만원/인</td><td></td></tr>
+      <tr><td>초기 구축비</td><td>별도 협의</td><td>UTTEC 시스템 구축 (10주)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ 10. 시너지 ============ -->
+<div class="section">
+  <h2><span class="num">10</span> 한국기계와의 시너지</h2>
+
+  <div class="synergy-box">
+    <h4>두 시스템을 함께 운영하면 강력한 시너지가 발생합니다</h4>
+    <table>
+      <thead>
+        <tr><th>단계</th><th>태명과학 (실험실)</th><th>한국기계 (산업용)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>R&D 단계</strong></td><td>P-7 볼밀로 소량 시료 테스트</td><td>-</td></tr>
+        <tr><td><strong>스케일업</strong></td><td>최적 조건 도출 + 리포트</td><td>산업용 장비 사양 설계</td></tr>
+        <tr><td><strong>양산</strong></td><td>-</td><td>슈레더/해머크러셔 생산라인 구축</td></tr>
+        <tr><td><strong>품질관리</strong></td><td>ANALYSETTE 입도분석기로 QC</td><td>생산 결과 모니터링</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:16px; font-size:15px;">
+      <strong>두 회사의 Obsidian Vault를 연결하면</strong>, "시료 전처리 → 분쇄 → 분석" 전체 워크플로우를 AI가 통합 컨설팅할 수 있습니다.
+    </p>
+  </div>
+</div>
+
+<!-- ============ CLOSING ============ -->
+<div class="section">
+  <h2><span class="num">11</span> 맺음말</h2>
+
+  <div class="highlight-box success">
+    <strong>이 시스템의 핵심 가치</strong>
+    <p style="margin-top:10px; font-size:16px; line-height:1.8;">
+      태명과학의 가장 큰 자산은 <strong>"어떤 시료에 어떤 장비와 부속품을 조합하면 최적인가"</strong>를 아는 것입니다.<br><br>
+      이 노하우를 <strong>Obsidian</strong>에 체계적으로 기록하고,<br>
+      <strong>Claude</strong>가 24시간 활용하여 즉각적인 컨설팅을 제공하면,<br>
+      태명과학은 <strong>"장비 판매 회사"</strong>에서 <strong>"AI 기반 분쇄/분석 토탈 솔루션 기업"</strong>으로 진화합니다.
+    </p>
+  </div>
+
+  <div style="text-align:center; margin-top:30px; padding:20px; background:#f8f9fb; border-radius:10px;">
+    <p style="font-size:14px; color:#666; margin-bottom:4px;">작성</p>
+    <p style="font-size:18px; font-weight:700;">UTTEC</p>
+    <p style="font-size:13px; color:#999; margin-top:8px;">문서 버전 1.0 | 2026-04-28</p>
+  </div>
+</div>
+
+<div class="footer">
+  &copy; 2026 UTTEC. All rights reserved.
+</div>
+
+</div>
+</body>
+</html>
