@@ -7,6 +7,11 @@ updated: 2026-04-28
 
 # Second Brain 위키 로그
 
+## [2026-04-28] ingest | 중소기업육성회 Pi 공장자동화+AI 교육 커리큘럼 작성
+- 반영: [[projects]] — 신규 프로젝트 추가
+- 핵심: 대면(5일 30h) / 원격(8주 32h) 2안, Pi4B+자체Shield+Camera 키트, AI(이상탐지+비전+API) 포함
+- uttec Pi(192.168.1.27) 한글 입력 환경 설정 (fcitx+hangul)
+
 ## [2026-04-28] ingest | 한국기계/태명과학 AI 업무효율화 계획서 완성
 - 반영: [[projects]] — 스마트팩토리 데모/영업에 2개 계획서 추가
 - 핵심: Obsidian+Claude+Notion 기반 업무 지원 플랫폼 설계, 각 md+html+pdf 3종 생성

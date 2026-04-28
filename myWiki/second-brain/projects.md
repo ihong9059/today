@@ -51,6 +51,13 @@ links: [me, skills, goals, experience]
 - 미해결: taskset alias, credentials cron, cgroups 리소스 제한
 - 상세 문서 9개 작성 완료 (multiCore/ 폴더)
 
+### 중소기업육성회 Pi 교육
+- 중소기업 종업원 대상 Raspberry Pi 공장자동화 + AI 교육 의뢰
+- 커리큘럼 3종 작성 완료 (교육과정 비교 개요, 대면 5일 과정, 원격 8주 과정)
+- 키트: Pi 4B + 자체 Shield(센서6종+릴레이+모터+OLED) + Camera (185,000원/세트)
+- AI: 이상탐지(Isolation Forest) + 비전검사(OpenCV) + AI API(Claude/GPT)
+- 협의 진행 예정
+
 ### REVITA
 - RAK4630 펌웨어 (Zephyr RTOS)
 - LoRa 프로토콜 v2 (16B 통일)
