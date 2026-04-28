@@ -1,3 +1,6 @@
+bool lastBtnState = HIGH;
+bool pressed = false;
+
 void setup() {
   Serial.begin(115200);
   initHardware();

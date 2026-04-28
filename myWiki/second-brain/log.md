@@ -2,10 +2,40 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-04-25
+updated: 2026-04-28
 ---
 
 # Second Brain 위키 로그
+
+## [2026-04-28] ingest | C6-LCD 사전빌드 105개 완성
+- 반영: [[projects]] — C6-LCD 상태 업데이트 (105개 빌드+SDLOAD 파이프라인 완성)
+- 핵심: SD 카드 SDLOAD 방식으로 서버 없이 교육 가능, BLE 콜백 스택 오버플로우 해결
+
+## [2026-04-28] ingest | multiCore Claude 교육 시스템 위키 등록
+- 참조: [[multiCore]], [[projects]], [[skills]]
+- Odroid C2 서버(100.89.56.69) 실환경 검증 결과 정리
+- 상세 문서 9개: 서버환경, 학생계정, 웹서버, SSH 가이드, 인증, 코어할당, 검증결과, 갭분석, 비밀번호관리
+- 핵심 교훈: Claude TUI는 SSH만 가능, .claude.json 독립 필수, OAuth 동시 불안정
+- raw/multiCore junction 생성
+
+## [2026-04-27] lost | 위시캣 #154780 무산 — 가격 불일치
+- 참조: [[위시캣활동]]
+- PVDF 층간소음 MVP, 매칭률 100%, 미팅+계획서까지 진행했으나 가격 협상 결렬
+- 교훈: 소규모 MVP(1,000만원)는 클라이언트 가격 기대치가 낮을 수 있음
+
+## [2026-04-27] ingest | 위시캣 #154889 지원
+- 참조: [[위시캣활동]], [[experience]]
+- 소각장 멀티모달 화재 탐지 AI SW (2,000만원/60일)
+- Jetson Orin + TensorRT + Modbus/GPIO — AI 모델 개발 핵심, 산업 인터페이스 강점 부각
+- 매칭 8항목 중 O:4 △:4, 솔직한 갭 분석 포함
+
+## [2026-04-27] ingest | CC1101 리모콘 데모 프로젝트 완성
+- 참조: [[revita]], [[skills]]
+- revita 서버 /home/uttec/revita/remocon/ 에 Zephyr 프로젝트 구축
+- pca10056 2대 + CC1101 HW-863 2개 → 433.92MHz 무선 버튼→LED 토글 데모
+- SPI pinctrl 오버라이드로 pinmap.md 배선 그대로 사용 (DTS 기본 핀과 다름)
+- CC1101 커스텀 SPI 드라이버 작성 (Zephyr 공식 미지원)
+- Windows nrfjprog 원격 플래시 워크플로우 확립
 
 ## [2026-04-25] use | 삼환 제안서 전면 재작성 — 전기차 충전 안전관리 추가
 - 참조: [[revita]], [[양산제품]], [[위시캣활동]]

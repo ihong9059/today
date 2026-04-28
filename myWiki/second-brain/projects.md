@@ -14,9 +14,9 @@ links: [me, skills, goals, experience]
 ### 사전빌드 교육 시스템 (핵심)
 - **WROOM**: 155개 항목 빌드 완료, OTA 안정화
 - **Mini (C3)**: 117개 항목 빌드 완료
-- **C6-LCD**: 초기 테스트 완료, 사전빌드 시스템 구축 예정
+- **C6-LCD**: 105개 항목 빌드 완료 (16카테고리), SD 카드 SDLOAD 파이프라인 완성 (앱→BLE→SD→플래시), 소스코드 표시/서버 URL 설정 미완
 - **구조**: Flutter 앱 + Python 빌드 서버 + 웹 UI
-- **포트**: 8095(WROOM), 8096(Mini), 8092(WROOM 커스텀), 8093(Mini 커스텀)
+- **포트**: 8095(WROOM), 8096(Mini), 8097(C6-LCD build), 8098(C6-LCD prebuilt), 8092(WROOM 커스텀), 8093(Mini 커스텀)
 - **과제**: 동시 빌드 문제 해결 필요 (교육 현장 대비)
 
 ### Python Vibe 교육앱
@@ -42,6 +42,14 @@ links: [me, skills, goals, experience]
 - **수주 진행 중**: #153090 nRF52 스마트팜 펌웨어 (주 3회 방문, 월 500만원)
 - 임베디드/IoT/펌웨어 프로젝트 타겟
 - 지원서 품질 지속 향상 (2월 단순→4월 아키텍처+갭분석 포함)
+
+### multiCore Claude 교육 시스템
+- Odroid C2에서 3명 동시 Claude Code 사용 검증 완료 (2026-04-26)
+- SSH 직접 접속 방식 확정 (ttyd 웹 터미널 비호환 → 폐기)
+- student1~3 계정 + /opt/claude-education 웹서버 구축
+- AWS EC2 스케일업 계획 수립 (20명 → c7g.8xlarge)
+- 미해결: taskset alias, credentials cron, cgroups 리소스 제한
+- 상세 문서 9개 작성 완료 (multiCore/ 폴더)
 
 ### REVITA
 - RAK4630 펌웨어 (Zephyr RTOS)

@@ -290,13 +290,23 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   }
 
   Future<void> _loadCatalog() async {
+    // 서버에서 먼저 시도, 실패 시 내장 카탈로그 사용
     try {
-      final resp = await http.get(Uri.parse('${_s.prebuiltServerUrl}/api/catalog'));
+      final resp = await http.get(Uri.parse('${_s.prebuiltServerUrl}/api/catalog'))
+          .timeout(const Duration(seconds: 3));
       if (resp.statusCode == 200) {
         final data = jsonDecode(resp.body);
         final items = (data['items'] as List).cast<Map<String, dynamic>>();
         setState(() { _catalogItems = items; _catalogLoaded = true; });
+        return;
       }
+    } catch (_) {}
+    // 내장 카탈로그 로드
+    try {
+      final jsonStr = await rootBundle.loadString('assets/catalog.json');
+      final data = jsonDecode(jsonStr);
+      final items = (data['items'] as List).cast<Map<String, dynamic>>();
+      setState(() { _catalogItems = items; _catalogLoaded = true; });
     } catch (e) {
       debugPrint('Catalog load error: $e');
     }
@@ -305,56 +315,60 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   Future<void> _selectPrebuilt(Map<String, dynamic> item) async {
     setState(() { _selectedPrebuilt = item; _guideData = null; });
     try {
-      final resp = await http.get(Uri.parse('${_s.prebuiltServerUrl}/api/prebuilt/${item['no']}/guide'));
+      final resp = await http.get(Uri.parse('${_s.prebuiltServerUrl}/api/prebuilt/${item['no']}/guide'))
+          .timeout(const Duration(seconds: 3));
       if (resp.statusCode == 200) {
         setState(() => _guideData = jsonDecode(resp.body));
+        return;
       }
+    } catch (_) {}
+    // 내장 가이드 로드
+    try {
+      final jsonStr = await rootBundle.loadString('assets/guide/${item['no']}.json');
+      setState(() => _guideData = jsonDecode(jsonStr));
     } catch (_) {}
   }
 
   Future<void> _sendPrebuilt(String no) async {
+    // SD 카드에서 SDLOAD로 즉시 전송
+    if (_s.bleStatus != 'connected') {
+      setState(() {
+        _buildStatus = 'success';
+        _buildMessage = 'BLE 연결 중...';
+        _buildProgress = 30;
+      });
+      await _connectBLE();
+      await Future.delayed(const Duration(seconds: 2));
+    }
+    if (_s.bleStatus != 'connected') {
+      setState(() { _buildStatus = 'failed'; _buildMessage = 'BLE 연결 실패'; });
+      return;
+    }
     setState(() {
       _buildStatus = 'success';
-      _buildMessage = '⚡ 사전빌드 다운로드 중...';
+      _buildMessage = '⚡ SD 카드에서 로딩 중... ($no)';
       _buildProgress = 50;
       _otaStatus = 'idle';
       _otaProgress = 0;
     });
     try {
-      debugPrint('Prebuilt download: ${_s.prebuiltServerUrl}/api/prebuilt/$no');
-      final client = http.Client();
-      final resp = await client.get(
-        Uri.parse('${_s.prebuiltServerUrl}/api/prebuilt/$no'),
-      ).timeout(const Duration(seconds: 15));
-      client.close();
-
-      if (resp.statusCode == 200 && resp.bodyBytes.isNotEmpty) {
-        _firmware = resp.bodyBytes;
-        setState(() {
-          _firmwareSize = _firmware!.length;
-          _buildProgress = 100;
-          _buildMessage = '⚡ 다운로드 완료 (${(_firmwareSize / 1024).toStringAsFixed(0)} KB)';
-        });
-        debugPrint('Prebuilt downloaded: ${_firmware!.length} bytes');
-        // 코드 가져오기
-        try {
-          final codeResp = await http.get(
-            Uri.parse('${_s.prebuiltServerUrl}/api/prebuilt/$no/code'),
-          ).timeout(const Duration(seconds: 5));
-          if (codeResp.statusCode == 200) {
-            setState(() => _generatedCode = jsonDecode(codeResp.body)['code']);
-          }
-        } catch (_) {}
-        // 사용 카운트
-        http.post(Uri.parse('${_s.prebuiltServerUrl}/api/stats/$no')).timeout(const Duration(seconds: 3)).catchError((_) => http.Response('', 200));
-        // 자동 OTA
-        await _autoConnectAndSend();
-      } else {
-        setState(() { _buildStatus = 'failed'; _buildMessage = '다운로드 실패: ${resp.statusCode}'; });
-      }
+      await _s.sendCommand('SDLOAD:$no');
+      setState(() {
+        _buildProgress = 100;
+        _buildMessage = '⚡ SD 로드 완료! ($no) — 보드 재시작 중...';
+      });
+      // 코드 가져오기 (서버에서, 실패해도 무관)
+      try {
+        final codeResp = await http.get(
+          Uri.parse('${_s.prebuiltServerUrl}/api/prebuilt/$no/code'),
+        ).timeout(const Duration(seconds: 3));
+        if (codeResp.statusCode == 200) {
+          setState(() => _generatedCode = jsonDecode(codeResp.body)['code']);
+        }
+      } catch (_) {}
     } catch (e) {
-      debugPrint('Prebuilt error: $e');
-      setState(() { _buildStatus = 'failed'; _buildMessage = '다운로드 실패: $e'; });
+      debugPrint('SDLOAD error: $e');
+      setState(() { _buildStatus = 'failed'; _buildMessage = 'SD 로드 실패: $e'; });
     }
   }
 
