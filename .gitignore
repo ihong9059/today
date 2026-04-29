@@ -1,6 +1,8 @@
-# Claude Code 설정 (skills만 포함)
+# Claude Code 설정 (skills, hooks, settings 포함)
 .claude/*
 !.claude/skills/
+!.claude/hooks/
+!.claude/settings.json
 *.pem
 *.avi
 *.mov

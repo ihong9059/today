@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LFP 양극재 장비 추천 Flow Chart</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  body {
+    font-family: 'Malgun Gothic', sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  h1 {
+    color: #1a237e;
+    margin-bottom: 5px;
+  }
+  .subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 14px;
+  }
+  .mermaid {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    max-width: 1200px;
+    width: 100%;
+  }
+  .legend {
+    margin-top: 24px;
+    background: white;
+    border-radius: 12px;
+    padding: 20px 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-size: 14px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-color {
+    width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0;
+  }
+  .footer {
+    margin-top: 16px;
+    color: #999;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<h1>LFP 양극재 장비 추천 Flow Chart</h1>
+<p class="subtitle">태명과학 | FRITSCH 분쇄 장비 선정 의사결정 프로세스</p>
+
+<div class="mermaid">
+flowchart TD
+    START([시료 접수]):::start --> INPUT[/"시료: LFP 양극재<br/>경도: Mohs 5<br/>현재 입도: 2mm<br/>목표 입도: 5um<br/>처리량: 100g<br/>건식 | R&D"/]:::input
+
+    INPUT --> METAL{금속 오염<br/>허용 여부?}:::decision
+
+    METAL -->|불허| HARDNESS{시료 경도<br/>Mohs 7 이상?}:::decision
+    METAL -->|허용| BUDGET{예산 제한?}:::decision
+
+    BUDGET -->|있음| STEEL[경화강 / SS]:::reject
+    BUDGET -->|없음| WC[WC 초경합금]:::reject
+
+    HARDNESS -->|YES Mohs 7+| HARD_DETAIL{Mohs 9 이상?}:::decision
+    HARDNESS -->|"NO Mohs < 7 ✓"| MATERIAL_SELECT[/"재질 선택:<br/>ZrO2 지르코니아<br/>(Mohs 8.5, 금속오염 Zero)"/]:::selected
+
+    HARD_DETAIL -->|YES| SI3N4[Si3N4 질화규소]:::alt
+    HARD_DETAIL -->|NO| ZRO2_ALT[ZrO2 지르코니아]:::selected
+
+    MATERIAL_SELECT --> TARGET{목표 입도<br/>5um 이하?}:::decision
+
+    TARGET -->|YES| EQUIP_SELECT[/"장비 선택:<br/>P-7 Premium<br/>(95G 최고 에너지)"/]:::selected
+
+    TARGET -->|"NO > 10um"| P6[P-6 Premium]:::alt
+
+    EQUIP_SELECT --> COMPAT{호환성 검증<br/>P-7 + ZrO2 + 80ml}:::decision
+
+    COMPAT -->|"호환 ✓"| VOLUME[/"부속품 구성:<br/>용기: ZrO2 80ml x 2<br/>볼: ZrO2 3mm<br/>BPR: 10:1"/]:::selected
+
+    COMPAT -->|비호환| ALT_SEARCH[대안 조합 검색]:::reject
+
+    VOLUME --> CONDITION[/"분쇄 조건 설계:<br/>700 rpm<br/>15분 간헐 분쇄<br/>(5분+1분 휴지 x 3)"/]:::process
+
+    CONDITION --> RESULT[/"예상 결과:<br/>D50 ~3um<br/>D90 ~8.5um<br/>Span ~2.3"/]:::process
+
+    RESULT --> JUDGE{합격 판정<br/>배터리 양극재 기준}:::decision
+
+    JUDGE -->|"D50 3~15um ✓<br/>D90 < 30um ✓<br/>Span < 2.5 ✓"| PASS([전 항목 합격]):::pass
+
+    JUDGE -->|불합격| ADJUST[조건 조정<br/>rpm/시간/볼크기]:::reject
+
+    ADJUST --> CONDITION
+
+    classDef start fill:#1a237e,color:#fff,stroke:none,font-weight:bold
+    classDef input fill:#e3f2fd,color:#0d47a1,stroke:#90caf9,stroke-width:2px
+    classDef decision fill:#fff3e0,color:#e65100,stroke:#ffb74d,stroke-width:2px
+    classDef selected fill:#e8f5e9,color:#1b5e20,stroke:#66bb6a,stroke-width:2px,font-weight:bold
+    classDef process fill:#f3e5f5,color:#4a148c,stroke:#ce93d8,stroke-width:2px
+    classDef pass fill:#2e7d32,color:#fff,stroke:none,font-weight:bold
+    classDef reject fill:#ffebee,color:#b71c1c,stroke:#ef9a9a,stroke-width:2px
+    classDef alt fill:#e0f2f1,color:#004d40,stroke:#80cbc4,stroke-width:2px
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-color" style="background:#e3f2fd;border:2px solid #90caf9"></div> 시료 정보</div>
+  <div class="legend-item"><div class="legend-color" style="background:#fff3e0;border:2px solid #ffb74d"></div> 의사결정 분기</div>
+  <div class="legend-item"><div class="legend-color" style="background:#e8f5e9;border:2px solid #66bb6a"></div> 선택된 경로</div>
+  <div class="legend-item"><div class="legend-color" style="background:#f3e5f5;border:2px solid #ce93d8"></div> 조건/결과</div>
+  <div class="legend-item"><div class="legend-color" style="background:#ffebee;border:2px solid #ef9a9a"></div> 제외/조정</div>
+  <div class="legend-item"><div class="legend-color" style="background:#2e7d32"></div> 합격</div>
+</div>
+
+<p class="footer">www.mjr.co.kr | www.fritsch.co.kr | 사례 참조: D대학 LFP 양극재 나노분쇄 (2025-01)</p>
+
+</body>
+</html>

@@ -1,1 +1,9 @@
-["dataview"]
+[
+  "dataview",
+  "calendar",
+  "obsidian-excalidraw-plugin",
+  "obsidian-git",
+  "obsidian-icon-folder",
+  "open-in-terminal",
+  "terminal"
+]
