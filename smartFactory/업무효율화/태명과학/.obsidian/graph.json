@@ -1,0 +1,8 @@
+{
+  "showTags": true,
+  "showOrphans": false,
+  "textFadeMultiplier": 0,
+  "repelStrength": 10,
+  "linkDistance": 200,
+  "lineSizeMultiplier": 1
+}

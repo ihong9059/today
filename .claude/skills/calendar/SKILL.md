@@ -52,9 +52,11 @@ URL을 생성하고 브라우저에서 자동으로 연다:
 # - dates: UTC 변환 (KST -9시간), 형식 YYYYMMDDTHHMMSSZ
 # - 종일이면: YYYYMMDD/YYYYMMDD (다음날)
 # - text, location, details는 URL 인코딩
+# - 반드시 webbrowser.open() 사용 (cmd start는 한글 URL 깨짐)
+# - urllib.parse.urlencode에 quote_via=urllib.parse.quote 사용
 
 python -c "
-import urllib.parse, subprocess, sys
+import urllib.parse, webbrowser
 
 title = '{제목}'
 start = '{YYYYMMDDTHHMMSSZ}'  # UTC 변환된 시작시간
@@ -62,15 +64,15 @@ end = '{YYYYMMDDTHHMMSSZ}'    # UTC 변환된 종료시간
 location = '{장소}'
 details = '{메모}'
 
-params = {
+params = urllib.parse.urlencode({
     'action': 'TEMPLATE',
     'text': title,
-    'dates': f'{start}/{end}',
+    'dates': start + '/' + end,
     'location': location,
     'details': details
-}
-url = 'https://calendar.google.com/calendar/render?' + urllib.parse.urlencode(params)
-subprocess.Popen(['cmd', '/c', 'start', '', url], shell=True)
+}, quote_via=urllib.parse.quote)
+url = 'https://calendar.google.com/calendar/render?' + params
+webbrowser.open(url)
 print(f'Google Calendar 열림: {title}')
 "
 ```
