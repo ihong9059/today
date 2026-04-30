@@ -56,6 +56,7 @@ links: [me, skills, goals, experience]
 - 커리큘럼 3종 작성 완료 (교육과정 비교 개요, 대면 5일 과정, 원격 8주 과정)
 - 키트: Pi 4B + 자체 Shield(센서6종+릴레이+모터+OLED) + Camera (185,000원/세트)
 - AI: 이상탐지(Isolation Forest) + 비전검사(OpenCV) + AI API(Claude/GPT)
+- **출석체크 인증 시스템 구축 완료** (2026-05-01): Flask 웹 서버 + Claude Hook 기반 접속 제어, 출석부 관리, 교육 종료 시 자동 삭제
 - 협의 진행 예정
 
 ### REVITA

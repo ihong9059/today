@@ -2,10 +2,15 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-04-30
+updated: 2026-05-01
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-01] ingest | 출석체크 인증 시스템 구축
+- 참조: [[projects]], [[aiHardStudy]]
+- 내용: Claude 접속 제어 웹 시스템 구축 (Flask 서버 + Pi Hook + uttecEdu 명령 + 교육 만료 자동 삭제)
+- 산출물: aiHardStudy/중소기업교육/출석체크/ (app.py, 사용설명서.html 등 6파일)
 
 ## [2026-04-30] ingest | 중소기업교육 커리큘럼 작성 + Shield 포트 연결 정리
 - 참조: [[aiHardStudy]], [[스마트팩토리]]

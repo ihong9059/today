@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Raspberry Pi 공장자동화 & AI 교육과정 - 중소기업육성회</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
+
+  :root {
+    --primary: #1a365d;
+    --primary-light: #2b6cb0;
+    --accent: #c05621;
+    --text: #1a202c;
+    --text-light: #4a5568;
+    --border: #cbd5e0;
+    --bg-light: #f7fafc;
+    --bg-blue: #ebf4ff;
+    --bg-orange: #fffaf0;
+    --bg-green: #f0fff4;
+    --bg-red: #fff5f5;
+    --bg-yellow: #fffff0;
+  }
+
+  @page {
+    size: A4;
+    margin: 18mm 16mm 20mm 16mm;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text);
+    font-size: 9.5pt;
+    line-height: 1.65;
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Page Break Control ── */
+  .page {
+    page-break-after: always;
+    position: relative;
+    min-height: 100%;
+  }
+  .page:last-child { page-break-after: auto; }
+  .no-break { page-break-inside: avoid; }
+
+  /* ── Cover Page ── */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 240mm;
+    text-align: center;
+    page-break-after: always;
+  }
+  .cover-badge {
+    display: inline-block;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 5px 24px;
+    border-radius: 50px;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .cover h1 {
+    font-size: 26pt;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .cover h1 span { color: var(--accent); }
+  .cover .cover-sub {
+    font-size: 13pt;
+    color: var(--text-light);
+    font-weight: 400;
+    margin-bottom: 40px;
+  }
+  .cover-info {
+    border-top: 2px solid var(--primary);
+    border-bottom: 2px solid var(--primary);
+    padding: 20px 0;
+    margin-top: 10px;
+    width: 360px;
+  }
+  .cover-info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 20px;
+    font-size: 10pt;
+  }
+  .cover-info-row .label { color: var(--text-light); font-weight: 500; }
+  .cover-info-row .value { font-weight: 700; color: var(--primary); }
+  .cover-line {
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin: 30px auto 0;
+  }
+
+  /* ── Page Header ── */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+  }
+  .page-header-title {
+    font-size: 8pt;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+  .page-header-num {
+    font-size: 8pt;
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  /* ── Section Title ── */
+  .stitle {
+    font-size: 14pt;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .stitle .num {
+    background: var(--primary);
+    color: white;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    font-size: 12pt;
+    flex-shrink: 0;
+  }
+  .stitle-sub {
+    font-size: 9pt;
+    color: var(--text-light);
+    margin-bottom: 16px;
+    padding-left: 38px;
+  }
+
+  .h3 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 16px 0 8px;
+    padding-left: 4px;
+    border-left: 3px solid var(--accent);
+    padding-left: 10px;
+  }
+
+  /* ── Tables ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+    margin-bottom: 12px;
+  }
+  th {
+    background: var(--bg-light);
+    color: var(--primary);
+    font-weight: 700;
+    text-align: left;
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    font-size: 8pt;
+  }
+  td {
+    padding: 5px 8px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+  .td-right { text-align: right; }
+  .td-center { text-align: center; }
+  tr.total-row { background: var(--bg-light); font-weight: 700; }
+
+  /* ── Two Column Layout ── */
+  .cols-2 {
+    display: flex;
+    gap: 16px;
+  }
+  .cols-2 > div { flex: 1; }
+
+  /* ── Box / Card ── */
+  .box {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    page-break-inside: avoid;
+  }
+  .box-title {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  /* ── Benefit Arrows ── */
+  .benefit-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 8.5pt;
+  }
+  .b-before {
+    background: var(--bg-red);
+    border: 1px solid #fed7d7;
+    padding: 4px 12px;
+    border-radius: 4px;
+    min-width: 160px;
+    text-align: center;
+    color: #9b2c2c;
+    font-weight: 500;
+  }
+  .b-arrow { color: var(--accent); font-weight: 800; font-size: 12pt; }
+  .b-after {
+    background: var(--bg-green);
+    border: 1px solid #c6f6d5;
+    padding: 4px 12px;
+    border-radius: 4px;
+    min-width: 220px;
+    text-align: center;
+    color: #276749;
+    font-weight: 500;
+  }
+
+  /* ── Flow Diagram ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 12px 0;
+  }
+  .flow-step {
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    text-align: center;
+    min-width: 120px;
+  }
+  .flow-step .fn { font-size: 9pt; font-weight: 700; color: var(--primary); }
+  .flow-step .fd { font-size: 7.5pt; color: var(--text-light); margin-top: 2px; }
+  .flow-arrow { font-size: 14pt; color: var(--accent); padding: 0 4px; font-weight: 700; }
+
+  /* ── Day Schedule Block ── */
+  .day-block { margin-bottom: 14px; page-break-inside: avoid; }
+  .day-title {
+    background: var(--primary);
+    color: white;
+    padding: 5px 14px;
+    font-size: 9.5pt;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 4px 4px 0 0;
+  }
+  .day-title .dtag {
+    background: rgba(255,255,255,0.2);
+    padding: 1px 8px;
+    border-radius: 3px;
+    font-size: 7.5pt;
+    font-weight: 600;
+  }
+  .day-result {
+    background: #f0fff4;
+    border: 1px solid #c6f6d5;
+    border-top: none;
+    padding: 5px 14px;
+    font-size: 8pt;
+    color: #276749;
+    border-radius: 0 0 4px 4px;
+  }
+
+  /* ── Diagram (monospace) ── */
+  .diagram {
+    background: #1e293b;
+    color: #94a3b8;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 8pt;
+    line-height: 1.5;
+    white-space: pre;
+    overflow: visible;
+    margin-bottom: 12px;
+  }
+  .diagram .hl { color: #fbbf24; }
+  .diagram .bl { color: #60a5fa; }
+  .diagram .gr { color: #4ade80; }
+  .diagram .or { color: #fb923c; }
+  .diagram .pu { color: #c084fc; }
+  .diagram .rd { color: #f87171; }
+
+  /* ── Badge ── */
+  .badge {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 3px;
+    font-size: 7pt;
+    font-weight: 700;
+  }
+  .b-blue { background: #dbeafe; color: #1e40af; }
+  .b-green { background: #dcfce7; color: #166534; }
+  .b-orange { background: #ffedd5; color: #9a3412; }
+  .b-red { background: #fee2e2; color: #991b1b; }
+  .b-gray { background: #f1f5f9; color: #475569; }
+  .b-yellow { background: #fef3c7; color: #92400e; }
+
+  /* ── Phase Colors for left border ── */
+  .p1 td:first-child { border-left: 3px solid #3182ce; }
+  .p2 td:first-child { border-left: 3px solid #38a169; }
+  .p3 td:first-child { border-left: 3px solid #d69e2e; }
+  .p4 td:first-child { border-left: 3px solid #e53e3e; }
+
+  /* ── Compare Highlight ── */
+  .cmp-a { background: #ebf4ff; }
+  .cmp-b { background: #fffaf0; }
+
+  /* ── Stars ── */
+  .stars { color: #d69e2e; }
+
+  /* ── Highlight Box ── */
+  .highlight-box {
+    background: #fffff0;
+    border: 1.5px solid #f6e05e;
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 12px 0;
+    font-size: 9pt;
+  }
+  .highlight-box strong { color: #744210; }
+
+  /* ── Cost Total ── */
+  .cost-total {
+    background: var(--primary);
+    color: white;
+    border-radius: 6px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .cost-total .ct-label { font-size: 9pt; opacity: 0.8; }
+  .cost-total .ct-value { font-size: 14pt; font-weight: 900; }
+  .cost-total-orange { background: var(--accent); }
+
+  /* ── Footer (page number) ── */
+  .page-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 7.5pt;
+    color: #a0aec0;
+    padding-top: 8px;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  /* ── Utilities ── */
+  .mt8 { margin-top: 8px; }
+  .mt12 { margin-top: 12px; }
+  .mt16 { margin-top: 16px; }
+  .mb8 { margin-bottom: 8px; }
+  .mb12 { margin-bottom: 12px; }
+  .small { font-size: 7.5pt; color: var(--text-light); }
+  .bold { font-weight: 700; }
+  .text-primary { color: var(--primary); }
+  .text-accent { color: var(--accent); }
+  .center { text-align: center; }
+
+  /* ── Screen only: Preview controls ── */
+  @media screen {
+    body { background: #e2e8f0; }
+    .page {
+      background: white;
+      max-width: 210mm;
+      min-height: 297mm;
+      margin: 20px auto;
+      padding: 18mm 16mm 20mm 16mm;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      position: relative;
+    }
+    .cover {
+      max-width: 210mm;
+      min-height: 297mm;
+      margin: 20px auto;
+      padding: 18mm 16mm;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 1000;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .print-btn:hover { background: #2b6cb0; }
+  }
+  @media print {
+    .print-btn { display: none; }
+    .page { padding: 0; margin: 0; box-shadow: none; }
+    .cover { padding: 0; margin: 0; box-shadow: none; min-height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">인쇄하기 (Ctrl+P)</button>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 0: COVER
+     ═══════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">EDUCATION PROPOSAL 2026</div>
+  <h1>Raspberry Pi<br><span>공장자동화 & AI</span><br>교육과정</h1>
+  <div class="cover-sub">중소기업 종업원 대상 | 실습 중심 역량 교육</div>
+  <div class="cover-info">
+    <div class="cover-info-row"><span class="label">의뢰</span><span class="value">중소기업육성회</span></div>
+    <div class="cover-info-row"><span class="label">대상</span><span class="value">중소기업 종업원 (프로그래밍 초보자)</span></div>
+    <div class="cover-info-row"><span class="label">교육 형태</span><span class="value">A안 대면 / B안 원격(Zoom)</span></div>
+    <div class="cover-info-row"><span class="label">작성일</span><span class="value">2026. 04. 28</span></div>
+  </div>
+  <div class="cover-line"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 1: 교육 개요 + 목표
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Raspberry Pi 공장자동화 & AI 교육과정</div>
+    <div class="page-header-num">1 / 8</div>
+  </div>
+
+  <div class="stitle"><span class="num">1</span> 교육 목표</div>
+  <div class="stitle-sub">중소기업 현장 과제를 Raspberry Pi + AI로 해결하는 실무 역량 교육</div>
+
+  <div class="h3">현장 과제 → 교육 후 역량 변화</div>
+  <div style="padding: 4px 0 12px;">
+    <div class="benefit-row">
+      <div class="b-before">설비 고장 → 사후 대응</div>
+      <div class="b-arrow">→</div>
+      <div class="b-after">센서 데이터로 이상 조기 감지</div>
+    </div>
+    <div class="benefit-row">
+      <div class="b-before">수작업 품질 검사</div>
+      <div class="b-arrow">→</div>
+      <div class="b-after">카메라 AI로 자동 불량 판정</div>
+    </div>
+    <div class="benefit-row">
+      <div class="b-before">생산 데이터 수기 기록</div>
+      <div class="b-arrow">→</div>
+      <div class="b-after">자동 수집 + 대시보드 시각화</div>
+    </div>
+    <div class="benefit-row">
+      <div class="b-before">자동화 = 비싸다는 인식</div>
+      <div class="b-arrow">→</div>
+      <div class="b-after">Raspberry Pi로 저비용 구현 체험</div>
+    </div>
+  </div>
+
+  <div class="h3">핵심 교육 성과 5가지</div>
+  <table>
+    <thead><tr><th style="width:30px">#</th><th>성과</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td class="td-center bold">1</td><td class="bold">센서 데이터 수집</td><td>온도, 진동, 전류 등 공장 핵심 데이터 실시간 수집</td></tr>
+      <tr><td class="td-center bold">2</td><td class="bold">자동 제어 구현</td><td>릴레이, 모터, 알림 — 센서 연동 자동 제어</td></tr>
+      <tr><td class="td-center bold">3</td><td class="bold">AI 이상탐지 / 불량판정</td><td>TensorFlow Lite, OpenCV 기반 머신러닝</td></tr>
+      <tr><td class="td-center bold">4</td><td class="bold">실시간 대시보드 구축</td><td>웹 기반(Flask + Chart.js) 모니터링 시각화</td></tr>
+      <tr><td class="td-center bold">5</td><td class="bold">AI API 활용</td><td>ChatGPT / Claude API로 자연어 설비 질의 · 보고서 생성</td></tr>
+    </tbody>
+  </table>
+
+  <div class="h3">4단계 학습 경로</div>
+  <div class="flow">
+    <div class="flow-step" style="border-color:#3182ce;">
+      <div class="fn" style="color:#3182ce;">Phase 1 · 기초</div>
+      <div class="fd">Pi 세팅 / Linux / Python</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#38a169;">
+      <div class="fn" style="color:#38a169;">Phase 2 · 센서/제어</div>
+      <div class="fd">GPIO / 센서 / 릴레이 / 모터</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#d69e2e;">
+      <div class="fn" style="color:#d69e2e;">Phase 3 · AI 적용</div>
+      <div class="fd">이상탐지 / 비전AI / API</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#e53e3e;">
+      <div class="fn" style="color:#e53e3e;">Phase 4 · 종합</div>
+      <div class="fd">스마트팩토리 구축 + 발표</div>
+    </div>
+  </div>
+
+  <div class="h3">교재(키트) 하드웨어 구성</div>
+  <div class="cols-2">
+    <div>
+      <table>
+        <thead><tr><th>구성품</th><th>사양</th><th class="td-right">단가</th></tr></thead>
+        <tbody>
+          <tr><td class="bold">Raspberry Pi 4B</td><td>4GB RAM</td><td class="td-right">75,000</td></tr>
+          <tr><td class="bold">공장자동화 실습 Shield</td><td>자체 설계</td><td class="td-right">45,000</td></tr>
+          <tr><td class="bold">Pi Camera v2</td><td>8MP</td><td class="td-right">35,000</td></tr>
+          <tr><td>microSD 32GB</td><td>Class 10</td><td class="td-right">8,000</td></tr>
+          <tr><td>전원 어댑터</td><td>5V 3A USB-C</td><td class="td-right">12,000</td></tr>
+          <tr><td>케이스 + 방열판</td><td>알루미늄</td><td class="td-right">10,000</td></tr>
+          <tr class="total-row"><td class="bold">합계</td><td></td><td class="td-right bold">185,000원</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>소프트웨어 (SD카드 사전설치)</th><th>용도</th></tr></thead>
+        <tbody>
+          <tr><td>Raspberry Pi OS (Bookworm)</td><td>기본 운영체제</td></tr>
+          <tr><td>Python 3.11 + Thonny IDE</td><td>프로그래밍</td></tr>
+          <tr><td>TensorFlow Lite 2.x, OpenCV 4.x</td><td>머신러닝/비전</td></tr>
+          <tr><td>Flask + Chart.js</td><td>대시보드</td></tr>
+          <tr><td>MQTT (Mosquitto)</td><td>IoT 데이터 전송</td></tr>
+          <tr><td>Claude API / OpenAI API</td><td>자연어 처리</td></tr>
+          <tr><td>전 과정 예제 + 답안</td><td>사전 설치</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 2: Shield 구성 + 커리큘럼 16모듈
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Raspberry Pi 공장자동화 & AI 교육과정</div>
+    <div class="page-header-num">2 / 8</div>
+  </div>
+
+  <div class="stitle"><span class="num">2</span> 실습 Shield 구성 & 세부 커리큘럼</div>
+
+  <div class="h3">공장자동화 실습 Shield v1.0</div>
+  <div class="diagram"><span class="hl">┌───────────────────────────────────────────────────────────┐</span>
+<span class="hl">│</span>               공장자동화 실습 Shield v1.0                     <span class="hl">│</span>
+<span class="hl">├───────────────────────────────────────────────────────────┤</span>
+<span class="hl">│</span>                                                           <span class="hl">│</span>
+<span class="hl">│</span>  <span class="bl">[센서부]</span>                 <span class="gr">[출력부]</span>              <span class="pu">[통신부]</span> <span class="hl">│</span>
+<span class="hl">│</span>  ├ 온습도 (DHT22)         ├ LED x 4 (상태등)    ├ I2C    <span class="hl">│</span>
+<span class="hl">│</span>  ├ 진동 (ADXL345)         ├ 부저 (능동)          ├ SPI    <span class="hl">│</span>
+<span class="hl">│</span>  ├ 조도 (BH1750)          ├ 릴레이 x 2          ├ UART   <span class="hl">│</span>
+<span class="hl">│</span>  ├ 전류 (ACS712)          ├ 서보모터 커넥터              <span class="hl">│</span>
+<span class="hl">│</span>  ├ 적외선 (PIR)           ├ DC모터 드라이버              <span class="hl">│</span>
+<span class="hl">│</span>  └ ADC (MCP3008)          └ OLED 0.96" I2C              <span class="hl">│</span>
+<span class="hl">│</span>                                                           <span class="hl">│</span>
+<span class="hl">│</span>  <span class="or">[버튼]</span> 택트 x 3              <span class="or">[GPIO]</span> 확장 핀헤더        <span class="hl">│</span>
+<span class="hl">└───────────────────────────────────────────────────────────┘</span></div>
+
+  <div class="h3">세부 커리큘럼 — 16개 모듈</div>
+  <table>
+    <thead><tr><th style="width:40px">모듈</th><th style="width:50px">Phase</th><th>주제</th><th>실습 내용</th></tr></thead>
+    <tbody>
+      <tr class="p1"><td class="td-center bold">M01</td><td><span class="badge b-blue">Phase 1</span></td><td>Raspberry Pi 시작하기</td><td>부팅, 네트워크, 원격접속(VNC)</td></tr>
+      <tr class="p1"><td class="td-center bold">M02</td><td><span class="badge b-blue">Phase 1</span></td><td>Linux 명령어 & 파일관리</td><td>터미널 기초, 파일 조작, 권한</td></tr>
+      <tr class="p1"><td class="td-center bold">M03</td><td><span class="badge b-blue">Phase 1</span></td><td>Python 프로그래밍 기초</td><td>변수, 조건문, 반복문, 함수</td></tr>
+      <tr class="p2"><td class="td-center bold">M04</td><td><span class="badge b-green">Phase 2</span></td><td>GPIO와 LED 제어</td><td>LED 점멸, PWM 밝기 조절</td></tr>
+      <tr class="p2"><td class="td-center bold">M05</td><td><span class="badge b-green">Phase 2</span></td><td>센서 데이터 수집</td><td>온습도, 진동, 조도 센서 읽기</td></tr>
+      <tr class="p2"><td class="td-center bold">M06</td><td><span class="badge b-green">Phase 2</span></td><td>모터 & 릴레이 제어</td><td>DC모터 속도제어, 릴레이 ON/OFF</td></tr>
+      <tr class="p2"><td class="td-center bold">M07</td><td><span class="badge b-green">Phase 2</span></td><td>OLED 디스플레이 & 알림</td><td>센서값 표시, 부저 경고</td></tr>
+      <tr class="p2"><td class="td-center bold">M08</td><td><span class="badge b-green">Phase 2</span></td><td>데이터 저장 & 시각화</td><td>CSV 저장, 그래프 그리기</td></tr>
+      <tr class="p3"><td class="td-center bold">M09</td><td><span class="badge b-yellow">Phase 3</span></td><td>이상탐지 AI 기초</td><td>통계 기반 이상치 탐지, Z-score</td></tr>
+      <tr class="p3"><td class="td-center bold">M10</td><td><span class="badge b-yellow">Phase 3</span></td><td>머신러닝 이상탐지</td><td>Isolation Forest, 센서 이상 판별</td></tr>
+      <tr class="p3"><td class="td-center bold">M11</td><td><span class="badge b-yellow">Phase 3</span></td><td>카메라 AI - 불량 검사</td><td>OpenCV 이미지 처리, 색상/형상 판별</td></tr>
+      <tr class="p3"><td class="td-center bold">M12</td><td><span class="badge b-yellow">Phase 3</span></td><td>TensorFlow Lite 모델</td><td>사전학습 모델 배포, 추론 실행</td></tr>
+      <tr class="p3"><td class="td-center bold">M13</td><td><span class="badge b-yellow">Phase 3</span></td><td>AI API 활용 (Claude/GPT)</td><td>자연어로 설비 상태 질의, 보고서 생성</td></tr>
+      <tr class="p4"><td class="td-center bold">M14</td><td><span class="badge b-red">Phase 4</span></td><td>웹 대시보드 구축</td><td>Flask + Chart.js 실시간 모니터링</td></tr>
+      <tr class="p4"><td class="td-center bold">M15</td><td><span class="badge b-red">Phase 4</span></td><td>MQTT IoT 통신</td><td>센서 → 브로커 → 대시보드 파이프라인</td></tr>
+      <tr class="p4"><td class="td-center bold">M16</td><td><span class="badge b-red">Phase 4</span></td><td>종합 프로젝트</td><td>미니 스마트팩토리 구축 + 발표</td></tr>
+    </tbody>
+  </table>
+
+  <div class="h3">종합 프로젝트 (M16) 구성도</div>
+  <div class="diagram"><span class="bl">  [진동센서]</span> ──┐
+<span class="bl">  [온도센서]</span> ──┼── <span class="hl">[Raspberry Pi]</span> ── <span class="pu">[MQTT]</span> ── <span class="gr">[웹 대시보드]</span>
+<span class="bl">  [전류센서]</span> ──┤         │                          ├ 실시간 그래프
+<span class="bl">  [카메라]</span>  ───┘         │                          ├ 이상 알림
+                          ├── <span class="or">[AI 이상탐지]</span>            ├ AI 판정 결과
+                          ├── <span class="or">[AI 비전검사]</span>            └ 일일 보고서
+                          ├── <span class="rd">[릴레이 제어]</span> ── [경고등/부저]
+                          └── <span class="pu">[Claude API]</span>  ── [자연어 보고서]</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 3: A안 대면교육 Day 1~3
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Raspberry Pi 공장자동화 & AI 교육과정</div>
+    <div class="page-header-num">3 / 8</div>
+  </div>
+
+  <div class="stitle"><span class="num" style="background:var(--primary);">A</span> A안: 대면교육 — 5일 집중과정</div>
+  <div class="stitle-sub">5일 (월~금) | 일 6시간 (09:30~16:30) | 총 30시간 | 15~20명 | 강사 2명 (메인+보조)</div>
+
+  <!-- Day 1 -->
+  <div class="day-block">
+    <div class="day-title"><span>Day 1 (월) — Raspberry Pi & Python 기초</span><span class="dtag">M01 M02 M03</span></div>
+    <table style="margin:0;">
+      <thead><tr><th style="width:100px">시간</th><th style="width:44px">구분</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>09:30~10:00</td><td><span class="badge b-gray">OT</span></td><td>교육 소개, 키트 배포, 조 편성 (4~5인 1조)</td></tr>
+        <tr><td>10:00~11:00</td><td><span class="badge b-blue">이론</span></td><td>Raspberry Pi 소개 + 공장자동화 개요</td></tr>
+        <tr><td>11:00~12:00</td><td><span class="badge b-green">실습</span></td><td>Pi 부팅, Wi-Fi 연결, VNC 원격접속 설정</td></tr>
+        <tr><td>13:00~14:30</td><td><span class="badge b-blue">이론</span>+<span class="badge b-green">실습</span></td><td>Linux 터미널 기초 → 파일 조작, nano 에디터, 권한 관리</td></tr>
+        <tr><td>14:40~16:30</td><td><span class="badge b-blue">이론</span>+<span class="badge b-green">실습</span></td><td>Python 기초 (변수, 조건문, 반복문) → Thonny IDE 연습</td></tr>
+      </tbody>
+    </table>
+    <div class="day-result"><strong>결과물:</strong> Pi 원격접속 성공 + Python으로 "Hello Factory!" 출력</div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="day-block">
+    <div class="day-title"><span>Day 2 (화) — GPIO & 센서 제어</span><span class="dtag">M04 M05 M07</span></div>
+    <table style="margin:0;">
+      <thead><tr><th style="width:100px">시간</th><th style="width:44px">구분</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>09:30~10:00</td><td><span class="badge b-gray">복습</span></td><td>어제 내용 퀴즈 (5문제) + 질의응답</td></tr>
+        <tr><td>10:00~12:00</td><td><span class="badge b-blue">이론</span>+<span class="badge b-green">실습</span></td><td>GPIO 개념, LED 점멸 → PWM 밝기 → 버튼 입력 → 신호등 만들기</td></tr>
+        <tr><td>13:00~14:30</td><td><span class="badge b-blue">이론</span>+<span class="badge b-green">실습</span></td><td>센서 종류와 활용 → 온습도 센서 읽기 → OLED에 표시</td></tr>
+        <tr><td>14:40~16:30</td><td><span class="badge b-green">실습</span></td><td>진동/조도 센서 수집 + 임계치 초과 시 LED 경고등 + 부저</td></tr>
+      </tbody>
+    </table>
+    <div class="day-result"><strong>결과물:</strong> 온도 30도 초과 → 빨간 LED + 부저 경고 시스템 동작</div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="day-block">
+    <div class="day-title"><span>Day 3 (수) — 제어 & 데이터 관리</span><span class="dtag">M06 M08 M14</span></div>
+    <table style="margin:0;">
+      <thead><tr><th style="width:100px">시간</th><th style="width:44px">구분</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>09:30~10:00</td><td><span class="badge b-gray">복습</span></td><td>어제 내용 퀴즈 + 질의응답</td></tr>
+        <tr><td>10:00~12:00</td><td><span class="badge b-blue">이론</span>+<span class="badge b-green">실습</span></td><td>릴레이/모터 제어 원리 → 릴레이 ON/OFF → 모터 속도제어 → 센서 연동</td></tr>
+        <tr><td>13:00~14:30</td><td><span class="badge b-blue">이론</span>+<span class="badge b-green">실습</span></td><td>데이터 저장 (CSV) → 센서 데이터 CSV 저장 → matplotlib 그래프</td></tr>
+        <tr><td>14:40~16:30</td><td><span class="badge b-blue">이론</span>+<span class="badge b-green">실습</span></td><td>웹 대시보드 개념 → Flask + Chart.js 실시간 그래프 구축</td></tr>
+      </tbody>
+    </table>
+    <div class="day-result"><strong>결과물:</strong> 브라우저에서 실시간 온도/진동 그래프 모니터링 대시보드</div>
+  </div>
+
+  <div class="h3">강사 운영 핵심 원칙</div>
+  <table>
+    <tbody>
+      <tr><td class="bold" style="width:100px;">따라하기 우선</td><td>강사 한 줄씩 시연 → 수강생이 그대로 따라 입력</td></tr>
+      <tr><td class="bold">3분 규칙</td><td>개인 막힘 3분 이상이면 보조강사가 즉시 도움</td></tr>
+      <tr><td class="bold">체크포인트</td><td>각 실습 끝에 "여기까지 된 분 손!" 확인 후 진행</td></tr>
+      <tr><td class="bold">스크린샷 대조</td><td>각 단계 완료 화면을 프로젝터에 표시하여 비교</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 4: A안 Day 4~5 + 준비일정
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Raspberry Pi 공장자동화 & AI 교육과정</div>
+    <div class="page-header-num">4 / 8</div>
+  </div>
+
+  <div class="stitle"><span class="num" style="background:var(--primary);">A</span> A안: 대면교육 (계속)</div>
+
+  <!-- Day 4 -->
+  <div class="day-block">
+    <div class="day-title" style="background:#92400e;"><span>Day 4 (목) — AI 적용</span><span class="dtag">M09~M13</span></div>
+    <table style="margin:0;">
+      <thead><tr><th style="width:100px">시간</th><th style="width:44px">구분</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>09:30~10:00</td><td><span class="badge b-gray">복습</span></td><td>어제 내용 퀴즈 + 질의응답</td></tr>
+        <tr><td>10:00~12:00</td><td><span class="badge b-blue">이론</span>+<span class="badge b-green">실습</span></td><td>AI/머신러닝 개요 → 통계 이상탐지 (Z-score, 이동평균) → 진동 이상 감지</td></tr>
+        <tr><td>13:00~14:30</td><td><span class="badge b-blue">이론</span>+<span class="badge b-green">실습</span></td><td>카메라 AI 비전 검사 → OpenCV 색상 분류 → 불량/양품 자동 판별</td></tr>
+        <tr><td>14:40~16:30</td><td><span class="badge b-blue">이론</span>+<span class="badge b-green">실습</span></td><td>TensorFlow Lite + AI API → 물체 인식 + Claude API 보고서 자동 생성</td></tr>
+      </tbody>
+    </table>
+    <div class="day-result"><strong>결과물:</strong> 카메라로 부품 색상 판별 + 이상 감지 시 AI 보고서 자동 생성</div>
+  </div>
+
+  <!-- Day 5 -->
+  <div class="day-block">
+    <div class="day-title" style="background:#9b2c2c;"><span>Day 5 (금) — 종합 프로젝트 & 발표</span><span class="dtag">M15 M16</span></div>
+    <table style="margin:0;">
+      <thead><tr><th style="width:100px">시간</th><th style="width:44px">구분</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>09:30~10:00</td><td><span class="badge b-gray">안내</span></td><td>프로젝트 요구사항 재확인, 팀별 작업 계획</td></tr>
+        <tr><td>10:00~12:00</td><td><span class="badge b-orange">프로젝트</span></td><td>조별 "미니 스마트팩토리" 구축</td></tr>
+        <tr><td>13:00~14:30</td><td><span class="badge b-orange">프로젝트</span></td><td>구축 마무리 + 발표 준비</td></tr>
+        <tr><td>14:40~15:40</td><td><span class="badge b-red">발표</span></td><td>조별 발표 (10분 시연 + 5분 Q&A) x 4조</td></tr>
+        <tr><td>15:40~16:10</td><td><span class="badge b-gray">토론</span></td><td>"우리 공장에 어떻게 적용할까?" 현장 적용 토론</td></tr>
+        <tr><td>16:10~16:30</td><td><span class="badge b-gray">수료</span></td><td>수료증 수여, 사후 지원 안내, 설문조사</td></tr>
+      </tbody>
+    </table>
+    <div class="day-result"><strong>최종 결과물:</strong> 조별 미니 스마트팩토리 시연 + 현장 적용 계획서</div>
+  </div>
+
+  <div class="h3">사전 준비 일정</div>
+  <table>
+    <thead><tr><th style="width:60px">시점</th><th>작업</th><th style="width:70px">담당</th></tr></thead>
+    <tbody>
+      <tr><td class="bold">D-30</td><td>교재 키트 부품 발주 (Shield PCB 제작 포함)</td><td>제작팀</td></tr>
+      <tr><td class="bold">D-21</td><td>교재 인쇄 (A4 바인딩, 컬러)</td><td>인쇄업체</td></tr>
+      <tr><td class="bold">D-14</td><td>SD카드 이미지 준비 (OS + 실습환경 + 예제코드)</td><td>강사</td></tr>
+      <tr><td class="bold">D-7</td><td>키트 조립 + 전수 테스트 (전 세트 동작 확인)</td><td>제작팀</td></tr>
+      <tr><td class="bold">D-3</td><td>교육장 세팅 (모니터, 공유기, 전원)</td><td>운영팀</td></tr>
+      <tr><td class="bold">D-1</td><td>최종 리허설 (강사 시연 전체 1회 진행)</td><td>강사</td></tr>
+    </tbody>
+  </table>
+
+  <div class="h3">프로젝트 평가 기준</div>
+  <table>
+    <thead><tr><th>항목</th><th style="width:50px" class="td-center">배점</th><th>기준</th></tr></thead>
+    <tbody>
+      <tr><td>센서 데이터 수집</td><td class="td-center">20점</td><td>3종 이상 센서 정상 동작</td></tr>
+      <tr><td>자동 제어</td><td class="td-center">20점</td><td>임계값 초과 시 릴레이/알림 동작</td></tr>
+      <tr><td>AI 이상탐지</td><td class="td-center">20점</td><td>이상 상황 자동 판별</td></tr>
+      <tr><td>대시보드</td><td class="td-center">20점</td><td>웹 기반 실시간 모니터링</td></tr>
+      <tr><td>발표/문서화</td><td class="td-center">20점</td><td>구현 내용 설명 + 현장 적용 아이디어</td></tr>
+    </tbody>
+  </table>
+
+  <div class="h3">트러블슈팅 TOP 5</div>
+  <table>
+    <thead><tr><th style="width:30px">#</th><th style="width:130px">문제</th><th>해결</th></tr></thead>
+    <tbody>
+      <tr><td class="td-center">1</td><td>Pi 부팅 안 됨</td><td>SD카드 재삽입, 전원 어댑터 교체, 여분 Pi 교체</td></tr>
+      <tr><td class="td-center">2</td><td>Wi-Fi 연결 안 됨</td><td>SSID/비번 재확인, 공유기 재부팅, 유선랜 대체</td></tr>
+      <tr><td class="td-center">3</td><td>센서값 안 읽힘</td><td>Shield 커넥터 재장착, I2C 활성화 확인 (raspi-config)</td></tr>
+      <tr><td class="td-center">4</td><td>Python 에러</td><td>들여쓰기/대소문자 확인, 라이브러리 설치 확인</td></tr>
+      <tr><td class="td-center">5</td><td>카메라 안 됨</td><td>Camera 활성화 확인, 케이블 방향, libcamera-hello 테스트</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 5: B안 원격교육 (1)
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Raspberry Pi 공장자동화 & AI 교육과정</div>
+    <div class="page-header-num">5 / 8</div>
+  </div>
+
+  <div class="stitle"><span class="num" style="background:var(--accent);">B</span> B안: 원격교육(Zoom) — 8주 과정</div>
+  <div class="stitle-sub">8주 | 주 2회 (화/목) 19:00~21:00 | 총 32시간 | 10~30명 | 업무 병행 가능</div>
+
+  <div class="h3">전체 운영 흐름</div>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="fn">교육 2주 전</div>
+      <div class="fd">키트 택배 발송<br>SD카드 이미지 포함</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="fn">D-1 테스트</div>
+      <div class="fd">Zoom 0회차 (30분)<br>부팅+Wi-Fi+VNC 확인</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="fn">8주 수업</div>
+      <div class="fd">Zoom 실시간 16회<br>녹화 영상 복습 제공</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="fn">수료 후</div>
+      <div class="fd">슬랙 채널 3개월<br>GitHub 1년 업데이트</div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>키트 배포 핵심:</strong> 전원만 꽂고 켜면 바로 사용 가능 — 완전 조립+설치 상태로 발송
+  </div>
+
+  <div class="h3">키트 배포 일정</div>
+  <table>
+    <thead><tr><th style="width:60px">시점</th><th>작업</th></tr></thead>
+    <tbody>
+      <tr><td class="bold">D-21</td><td>수강생 명단 + 배송지 확정</td></tr>
+      <tr><td class="bold">D-14</td><td>키트 조립 + SD카드 이미지 복사 + 전수 테스트</td></tr>
+      <tr><td class="bold">D-10</td><td>택배 발송 (선불)</td></tr>
+      <tr><td class="bold">D-7</td><td>수령 확인 + 사전 세팅 가이드 이메일 발송</td></tr>
+      <tr><td class="bold">D-3</td><td>슬랙 채널 초대 + VNC Viewer 설치 안내</td></tr>
+      <tr><td class="bold">D-1</td><td>"0회차" Zoom 테스트 (30분, 부팅+Wi-Fi+VNC 확인)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="h3">8주 커리큘럼</div>
+  <table>
+    <thead><tr><th style="width:50px">주차</th><th style="width:44px">회차</th><th>주제</th><th>과제</th></tr></thead>
+    <tbody>
+      <tr class="p1"><td class="bold">Week 1</td><td>1~2회</td><td>Pi 소개 + Linux + Python 기초</td><td>Pi 파일 생성 / 구구단 프로그램</td></tr>
+      <tr class="p1"><td class="bold">Week 2</td><td>3~4회</td><td>Python 심화 + GPIO LED 제어</td><td>파일 읽기 / LED 패턴 변경</td></tr>
+      <tr class="p2"><td class="bold">Week 3</td><td>5~6회</td><td>온습도/조도 + 진동/전류 센서</td><td>CSV 저장 / 4종 센서 동시 수집</td></tr>
+      <tr class="p2"><td class="bold">Week 4</td><td>7~8회</td><td>릴레이/모터 + 센서 연동 자동제어</td><td>팬 자동제어 / "공장 신호등"</td></tr>
+      <tr style="background:#fffff0;"><td colspan="4" class="center bold" style="color:#92400e; font-size:8pt;">— Week 4 중간 점검: 과제 4개 제출 확인 —</td></tr>
+      <tr class="p2"><td class="bold">Week 5</td><td>9~10회</td><td>데이터 시각화 + Flask 웹 대시보드</td><td>그래프 제출 / 대시보드 스크린샷</td></tr>
+      <tr class="p3"><td class="bold">Week 6</td><td>11~12회</td><td>통계 이상탐지 + ML 이상탐지</td><td>이상치 탐지 / 실시간 감시 구현</td></tr>
+      <tr class="p3"><td class="bold">Week 7</td><td>13~14회</td><td>카메라 AI 불량검사 + AI API 활용</td><td>색상 분류 / AI 보고서 생성</td></tr>
+      <tr class="p4"><td class="bold">Week 8</td><td>15~16회</td><td>MQTT 통합 + <strong>최종 발표</strong></td><td>프로젝트 중간 / 최종 보고서</td></tr>
+    </tbody>
+  </table>
+
+  <div class="h3">Zoom 수업 구조 (매 회차 2시간)</div>
+  <table>
+    <thead><tr><th style="width:100px">시간</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>19:00~19:10</td><td>출석 + 지난 과제 리뷰</td></tr>
+      <tr><td>19:10~19:30</td><td>이론 강의 (화면 공유)</td></tr>
+      <tr><td>19:30~19:40</td><td>강사 시연 (Pi 카메라 확대)</td></tr>
+      <tr><td>19:40~20:30</td><td>실습 — 막히면 Zoom 채팅/손들기 → 강사 원격접속(VNC)</td></tr>
+      <tr><td>20:30~20:45</td><td>질의응답 + 다음 회차 예고</td></tr>
+      <tr><td>20:45~21:00</td><td>과제 안내 + 보충 설명</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 6: B안 원격교육 (2) — 지원체계 + 평가
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Raspberry Pi 공장자동화 & AI 교육과정</div>
+    <div class="page-header-num">6 / 8</div>
+  </div>
+
+  <div class="stitle"><span class="num" style="background:var(--accent);">B</span> B안: 원격교육 (계속) — 지원 체계 & 평가</div>
+
+  <div class="cols-2">
+    <div>
+      <div class="h3">실시간 지원 (수업 중)</div>
+      <table>
+        <thead><tr><th>상황</th><th>대응</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge b-green">간단</span></td><td>Zoom 채팅 → 보조강사 채팅 답변</td></tr>
+          <tr><td><span class="badge b-blue">보통</span></td><td>Zoom 손들기 → 화면 공유 → 같이 해결</td></tr>
+          <tr><td><span class="badge b-red">심각</span></td><td>VNC로 수강생 Pi에 원격접속 직접 확인</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="h3">비동시 지원 (수업 외)</div>
+      <table>
+        <thead><tr><th>채널</th><th>용도</th><th>응답</th></tr></thead>
+        <tbody>
+          <tr><td class="bold">슬랙 #help</td><td>에러 해결</td><td>24시간</td></tr>
+          <tr><td class="bold">슬랙 #show</td><td>인증샷 공유</td><td>—</td></tr>
+          <tr><td class="bold">오피스아워</td><td>토 10~11시</td><td>실시간</td></tr>
+          <tr><td class="bold">이메일</td><td>과제 제출</td><td>48시간</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="h3">하드웨어 문제 원격 대응</div>
+  <table>
+    <thead><tr><th style="width:120px">상황</th><th>대응</th></tr></thead>
+    <tbody>
+      <tr><td>Shield 접촉 불량</td><td>슬랙에 사진 → 강사 판단 → 재장착 가이드</td></tr>
+      <tr><td>센서 고장</td><td>택배로 교체 부품 발송 (익일 도착)</td></tr>
+      <tr><td>Pi 자체 고장</td><td>여분 Pi 택배 발송 + 불량 Pi 회수</td></tr>
+      <tr><td>SD카드 손상</td><td>이미지 파일 다운로드 링크 → 재설치 가이드</td></tr>
+    </tbody>
+  </table>
+  <div class="small mt8">※ 여분 확보: 키트 총 수량의 15%를 여분으로 보유 (20명 기준 → 3세트)</div>
+
+  <div class="h3">과제 & 평가</div>
+  <div class="cols-2">
+    <div>
+      <div class="box">
+        <div class="box-title">주간 과제 (6회, 총 75점)</div>
+        <table>
+          <thead><tr><th>과제</th><th>주차</th><th class="td-center">배점</th></tr></thead>
+          <tbody>
+            <tr><td>버튼+LED 패턴 제어</td><td>Week 2</td><td class="td-center">10</td></tr>
+            <tr><td>센서 4종 CSV 수집</td><td>Week 3</td><td class="td-center">10</td></tr>
+            <tr><td>공장 신호등 전체 구현</td><td>Week 4</td><td class="td-center">15</td></tr>
+            <tr><td>웹 대시보드 스크린샷</td><td>Week 5</td><td class="td-center">10</td></tr>
+            <tr><td>AI 이상탐지 실행 결과</td><td>Week 6</td><td class="td-center">15</td></tr>
+            <tr><td>카메라 불량검사+AI 보고서</td><td>Week 7</td><td class="td-center">15</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="box">
+        <div class="box-title">최종 프로젝트 (Week 8, 25점)</div>
+        <table>
+          <thead><tr><th>항목</th><th class="td-center">배점</th></tr></thead>
+          <tbody>
+            <tr><td>센서 데이터 수집 (3종 이상)</td><td class="td-center">5</td></tr>
+            <tr><td>자동 제어 동작</td><td class="td-center">5</td></tr>
+            <tr><td>AI 이상탐지 또는 비전</td><td class="td-center">5</td></tr>
+            <tr><td>대시보드</td><td class="td-center">5</td></tr>
+            <tr><td>발표 (Zoom 화면 공유)</td><td class="td-center">5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box">
+        <div class="box-title">수료 기준</div>
+        <table>
+          <tbody>
+            <tr><td class="bold">출석</td><td>16회 중 13회 이상 (80%)</td></tr>
+            <tr><td class="bold">과제</td><td>6회 중 4회 이상 제출</td></tr>
+            <tr><td class="bold">프로젝트</td><td>제출 + 발표 참여</td></tr>
+            <tr><td class="bold">총점</td><td>100점 중 60점 이상</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="h3">영상 & 보충 자료 제공</div>
+  <table>
+    <thead><tr><th>유형</th><th>내용</th><th>제공 방식</th></tr></thead>
+    <tbody>
+      <tr><td class="bold">수업 녹화</td><td>매 회차 Zoom 녹화 (2시간)</td><td>구글 드라이브 링크</td></tr>
+      <tr><td class="bold">실습 가이드</td><td>핵심 실습 단계별 영상 (10~15분)</td><td>사전 제작, YouTube 비공개</td></tr>
+      <tr><td class="bold">트러블슈팅</td><td>자주 묻는 에러 해결 영상</td><td>필요 시 추가 제작</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 7: 비교 & 비용
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Raspberry Pi 공장자동화 & AI 교육과정</div>
+    <div class="page-header-num">7 / 8</div>
+  </div>
+
+  <div class="stitle"><span class="num">$</span> A안 vs B안 비교 & 비용 산출</div>
+  <div class="stitle-sub">20명 기준</div>
+
+  <div class="h3">두 방안 비교</div>
+  <table>
+    <thead>
+      <tr><th style="width:110px">항목</th><th class="cmp-a td-center" style="width:44%">A안: 대면교육</th><th class="cmp-b td-center">B안: 원격교육 (Zoom)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="bold">총 시간</td><td class="td-center">5일 x 6h = 30시간</td><td class="td-center">8주 x 2회 x 2h = 32시간</td></tr>
+      <tr><td class="bold">일정</td><td class="td-center">집중 1주 (월~금)</td><td class="td-center">주 2회, 2개월</td></tr>
+      <tr><td class="bold">장소</td><td class="td-center">교육장 (20명)</td><td class="td-center">각자 사무실/자택</td></tr>
+      <tr><td class="bold">교재 배포</td><td class="td-center">현장 당일 배포</td><td class="td-center">택배 사전 배포 (1주 전)</td></tr>
+      <tr><td class="bold">실습 지원</td><td class="td-center">강사 순회 + 보조강사</td><td class="td-center">화면 공유 + 원격접속(VNC)</td></tr>
+      <tr><td class="bold">적정 인원</td><td class="td-center">15~20명</td><td class="td-center">10~30명</td></tr>
+      <tr><td class="bold">교육 효과</td><td class="td-center"><span class="stars">★★★★★</span></td><td class="td-center"><span class="stars">★★★★</span>☆</td></tr>
+      <tr><td class="bold">접근성</td><td class="td-center"><span class="stars">★★★</span>☆☆</td><td class="td-center"><span class="stars">★★★★★</span></td></tr>
+      <tr><td class="bold">업무 영향</td><td class="td-center">5일 업무 공백</td><td class="td-center">최소 (저녁 시간 활용)</td></tr>
+      <tr><td class="bold">HW 문제 해결</td><td class="td-center"><span class="stars">★★★★★</span></td><td class="td-center"><span class="stars">★★★</span>☆☆</td></tr>
+      <tr><td class="bold">수료 기준</td><td class="td-center">출석 80% + 최종 프로젝트</td><td class="td-center">출석 80% + 과제 6회 + 프로젝트</td></tr>
+    </tbody>
+  </table>
+
+  <div class="h3">비용 산출 (20명 기준)</div>
+  <div class="cols-2">
+    <!-- A안 -->
+    <div>
+      <div class="box">
+        <div class="box-title" style="color: var(--primary);">A안: 대면교육</div>
+        <table>
+          <thead><tr><th>항목</th><th class="td-right">금액</th></tr></thead>
+          <tbody>
+            <tr><td>Pi 키트 (23세트)</td><td class="td-right">4,255,000</td></tr>
+            <tr><td>교재 인쇄 (200p 컬러)</td><td class="td-right">300,000</td></tr>
+            <tr><td>강사비 (5일, 메인+보조)</td><td class="td-right">3,500,000</td></tr>
+            <tr><td>교육장 임대 (5일)</td><td class="td-right">1,500,000</td></tr>
+            <tr><td>모니터/장비 렌탈</td><td class="td-right">500,000</td></tr>
+            <tr><td>기타 (다과, 소모품)</td><td class="td-right">200,000</td></tr>
+          </tbody>
+        </table>
+        <div class="cost-total">
+          <div><div class="ct-label">총 합계</div><div class="ct-value">10,255,000원</div></div>
+          <div style="text-align:right;"><div class="ct-label">인당</div><div class="ct-value">512,750원</div></div>
+        </div>
+        <div class="small mt8">키트 회수 시: 인당 약 350,000원</div>
+      </div>
+    </div>
+    <!-- B안 -->
+    <div>
+      <div class="box">
+        <div class="box-title" style="color: var(--accent);">B안: 원격교육</div>
+        <table>
+          <thead><tr><th>항목</th><th class="td-right">금액</th></tr></thead>
+          <tbody>
+            <tr><td>Pi 키트 (23세트)</td><td class="td-right">4,444,000</td></tr>
+            <tr><td>교재 + 택배비</td><td class="td-right">460,000</td></tr>
+            <tr><td>강사비 (8주, 메인+보조)</td><td class="td-right">4,800,000</td></tr>
+            <tr><td>Zoom Pro 라이선스</td><td class="td-right">40,000</td></tr>
+            <tr><td>실습 가이드 영상 제작</td><td class="td-right">800,000</td></tr>
+            <tr><td>여분 부품 + 교체 배송비</td><td class="td-right">200,000</td></tr>
+          </tbody>
+        </table>
+        <div class="cost-total cost-total-orange">
+          <div><div class="ct-label">총 합계</div><div class="ct-value">10,744,000원</div></div>
+          <div style="text-align:right;"><div class="ct-label">인당</div><div class="ct-value">537,200원</div></div>
+        </div>
+        <div class="small mt8">키트 회수 시: 인당 약 380,000원</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box mt12">
+    <strong>권장 사항</strong><br>
+    ▸ <strong>소규모 (15명 이하) + 일정 확보 가능</strong> → A안 (대면) 권장<br>
+    ▸ <strong>다수 (20명+) + 업무 병행 필요</strong> → B안 (원격) 권장<br>
+    ▸ <strong>혼합 방식:</strong> Week 1, 4, 8만 대면 (3일), 나머지 원격 → 가장 효과적 (별도 견적)
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 8: 기대 효과 + 수료 후 지원
+     ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Raspberry Pi 공장자동화 & AI 교육과정</div>
+    <div class="page-header-num">8 / 8</div>
+  </div>
+
+  <div class="stitle"><span class="num">★</span> 기대 효과 & 수료 후 지원</div>
+
+  <div class="h3">교육 수료 후 즉시 활용 가능 역량</div>
+  <table>
+    <thead><tr><th style="width:140px">역량</th><th>현장 적용 예시</th><th style="width:120px">기대 효과</th></tr></thead>
+    <tbody>
+      <tr><td class="bold">센서 데이터 수집</td><td>설비 온도/진동 모니터링 시스템 자체 구축</td><td>실시간 감시 체계</td></tr>
+      <tr><td class="bold">이상탐지 AI</td><td>설비 고장 조기 경보 시스템</td><td class="bold" style="color:#276749;">다운타임 30% 감소</td></tr>
+      <tr><td class="bold">비전 AI</td><td>간단한 외관 검사 자동화</td><td class="bold" style="color:#276749;">검사 시간 50% 단축</td></tr>
+      <tr><td class="bold">대시보드</td><td>생산현황 실시간 공유</td><td>의사결정 속도 향상</td></tr>
+      <tr><td class="bold">AI API 활용</td><td>보고서 자동 생성, 데이터 분석 자동화</td><td>업무 효율 향상</td></tr>
+    </tbody>
+  </table>
+
+  <div class="h3">비용 효과 — 저비용 프로토타이핑</div>
+  <div class="flow" style="margin: 16px 0;">
+    <div class="flow-step" style="border-color:#e53e3e; min-width: 150px;">
+      <div style="font-size: 7.5pt; color: var(--text-light);">기존 스마트팩토리 구축</div>
+      <div style="font-size: 14pt; font-weight: 900; color: #e53e3e;">수천만~수억원</div>
+      <div style="font-size: 7.5pt; color: var(--text-light);">PLC + SCADA + MES</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#38a169; min-width: 150px;">
+      <div style="font-size: 7.5pt; color: var(--text-light);">Raspberry Pi 기반</div>
+      <div style="font-size: 14pt; font-weight: 900; color: #38a169;">20~50만원</div>
+      <div style="font-size: 7.5pt; color: var(--text-light);">핵심 기능 프로토타입</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#3182ce; min-width: 150px;">
+      <div style="font-size: 7.5pt; color: var(--text-light);">검증 후 본격 투자</div>
+      <div style="font-size: 14pt; font-weight: 900; color: #3182ce;">리스크 최소화</div>
+      <div style="font-size: 7.5pt; color: var(--text-light);">실패 비용 극소화</div>
+    </div>
+  </div>
+
+  <div class="h3">수료 후 지원 프로그램</div>
+  <table>
+    <thead><tr><th style="width:120px">지원</th><th>내용</th><th style="width:70px">기간</th></tr></thead>
+    <tbody>
+      <tr><td class="bold">슬랙 채널</td><td>수강생 전용 질의응답 채널 운영</td><td>3개월</td></tr>
+      <tr><td class="bold">예제코드 업데이트</td><td>GitHub 저장소 지속 업데이트</td><td>1년</td></tr>
+      <tr><td class="bold">후속 교육 안내</td><td>중급과정 (PLC 연동, 클라우드 IoT) 개설 시 우선 안내</td><td>상시</td></tr>
+      <tr><td class="bold">현장 컨설팅</td><td>실제 공장 적용 시 1회 무료 방문 자문</td><td>6개월 내</td></tr>
+    </tbody>
+  </table>
+
+  <div class="h3">교육장 배치도 (A안 대면 시)</div>
+  <div class="diagram"><span class="hl">┌──────────────────────────────────────────────────────┐</span>
+<span class="hl">│</span>                     교육장 배치도                       <span class="hl">│</span>
+<span class="hl">├──────────────────────────────────────────────────────┤</span>
+<span class="hl">│</span>                                                      <span class="hl">│</span>
+<span class="hl">│</span>  <span class="bl">[프로젝터/대형TV]</span>     <span class="or">[강사 PC + Pi 시연 카메라]</span>      <span class="hl">│</span>
+<span class="hl">│</span>                                                      <span class="hl">│</span>
+<span class="hl">│</span>  <span class="gr">┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐</span>                 <span class="hl">│</span>
+<span class="hl">│</span>  <span class="gr">│수강1│ │수강2│ │수강3│ │수강4│ │수강5│</span>   1열          <span class="hl">│</span>
+<span class="hl">│</span>  <span class="gr">└────┘ └────┘ └────┘ └────┘ └────┘</span>                 <span class="hl">│</span>
+<span class="hl">│</span>  <span class="gr">┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐</span>                 <span class="hl">│</span>
+<span class="hl">│</span>  <span class="gr">│수강6│ │수강7│ │수강8│ │수강9│ │ 10 │</span>   2열          <span class="hl">│</span>
+<span class="hl">│</span>  <span class="gr">└────┘ └────┘ └────┘ └────┘ └────┘</span>                 <span class="hl">│</span>
+<span class="hl">│</span>  <span class="gr">┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐</span>                 <span class="hl">│</span>
+<span class="hl">│</span>  <span class="gr">│ 11 │ │ 12 │ │ 13 │ │ 14 │ │ 15 │</span>   3열          <span class="hl">│</span>
+<span class="hl">│</span>  <span class="gr">└────┘ └────┘ └────┘ └────┘ └────┘</span>                 <span class="hl">│</span>
+<span class="hl">│</span>                                                      <span class="hl">│</span>
+<span class="hl">│</span>  각 자리: <span class="bl">모니터(HDMI)</span> + <span class="bl">키보드</span> + <span class="bl">마우스</span> + <span class="bl">전원</span>       <span class="hl">│</span>
+<span class="hl">│</span>  <span class="pu">Wi-Fi 공유기 (20명 동시접속 가능)</span>                     <span class="hl">│</span>
+<span class="hl">│</span>                                                      <span class="hl">│</span>
+<span class="hl">└──────────────────────────────────────────────────────┘</span></div>
+
+  <!-- Footer -->
+  <div style="margin-top: 24px; border-top: 2px solid var(--primary); padding-top: 16px; text-align: center;">
+    <div style="font-size: 11pt; font-weight: 800; color: var(--primary);">Raspberry Pi 공장자동화 & AI 교육과정</div>
+    <div style="font-size: 9pt; color: var(--text-light); margin-top: 4px;">중소기업육성회 종업원 교육 제안서 | 2026</div>
+  </div>
+</div>
+
+</body>
+</html>
