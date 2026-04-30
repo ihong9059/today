@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국기계 AI 업무효율화 데모</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif;background:#f0f2f5;color:#333}
+.header{background:linear-gradient(135deg,#1b5e20,#2e7d32 50%,#66bb6a);color:#fff;padding:36px 20px 28px;text-align:center}
+.header h1{font-size:26px;margin-bottom:4px}.header p{font-size:13px;opacity:.85}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #e0e0e0;position:sticky;top:0;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,.05);overflow-x:auto}
+.tab{padding:13px 22px;cursor:pointer;font-size:13px;font-weight:600;color:#777;border-bottom:3px solid transparent;white-space:nowrap;transition:.2s}
+.tab:hover{color:#1b5e20}.tab.active{color:#1b5e20;border-bottom-color:#2e7d32;background:#e8f5e9}
+.content{max-width:960px;margin:0 auto;padding:20px 16px 60px}
+.panel{display:none}.panel.active{display:block}
+.card{background:#fff;border-radius:12px;padding:24px 28px;margin-bottom:18px;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.card h2{font-size:19px;color:#1b5e20;margin-bottom:4px}
+.card .desc{font-size:13px;color:#666;margin-bottom:16px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group label{font-size:12px;font-weight:600;color:#555}
+.form-group select,.form-group input{padding:8px 10px;border:2px solid #ddd;border-radius:6px;font-size:14px}
+.form-group select:focus,.form-group input:focus{outline:none;border-color:#2e7d32}
+.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{padding:10px 22px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:.2s}
+.btn-primary{background:#2e7d32;color:#fff}.btn-primary:hover{background:#1b5e20}
+.btn-example{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9;font-size:12px;padding:7px 14px}
+.btn-example:hover{background:#c8e6c9}
+.result{margin-top:20px;display:none}.result.show{display:block}
+.result-box{background:#fafafa;border:1px solid #e0e0e0;border-radius:10px;padding:22px 26px;line-height:1.8}
+.result-box h3{color:#1b5e20;font-size:16px;margin-bottom:12px;border-bottom:2px solid #e8f5e9;padding-bottom:6px}
+.result-box h4{color:#2e7d32;font-size:14px;margin:14px 0 6px}
+.r-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+.r-table th{background:#e8f5e9;padding:7px 10px;text-align:left;color:#1b5e20;font-size:12px}
+.r-table td{padding:7px 10px;border-bottom:1px solid #eee}
+.reason{background:#f1f8e9;border-left:3px solid #2e7d32;padding:10px 14px;margin:8px 0;font-size:13px;border-radius:0 6px 6px 0}
+.reason b{color:#1b5e20}
+.note{padding:10px 14px;border-radius:6px;margin:10px 0;font-size:12px}
+.note.danger{background:#fce4ec;border-left:3px solid #ef5350}
+.note.success{background:#e8f5e9;border-left:3px solid #66bb6a}
+.note.info{background:#e3f2fd;border-left:3px solid #42a5f5}
+.flow{font-family:Consolas,monospace;font-size:12px;background:#263238;color:#b0bec5;padding:14px 18px;border-radius:8px;line-height:1.9;margin:10px 0;overflow-x:auto;white-space:pre}
+.flow .hl{color:#a5d6a7;font-weight:700}.flow .sel{color:#ffcc80;font-weight:700}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.badge-pass{background:#c8e6c9;color:#2e7d32}.badge-warn{background:#fff9c4;color:#f57f17}
+.footer{text-align:center;padding:24px;color:#aaa;font-size:11px}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>한국기계 AI 업무효율화</h1>
+  <p>(주)한국기계엔지니어링 — 분쇄/분급/혼합 장비 추천 시스템</p>
+</div>
+<div class="tabs">
+  <div class="tab active" onclick="showTab(0)">🔧 장비 추천</div>
+  <div class="tab" onclick="showTab(1)">🏭 공정 설계</div>
+  <div class="tab" onclick="showTab(2)">📋 사례 검색</div>
+  <div class="tab" onclick="showTab(3)">📝 제안서 생성</div>
+  <div class="tab" onclick="showTab(4)">💬 수준별 설명</div>
+  <div class="tab" onclick="showTab(5)">📦 조달/제작 공정</div>
+</div>
+<div class="content">
+
+<!-- ===== 탭0: 장비 추천 ===== -->
+<div class="panel active" id="panel-0"><div class="card">
+  <h2>장비 추천</h2>
+  <p class="desc">처리 대상, 처리량, 목표 입도를 입력하면 최적 장비를 추천합니다.</p>
+  <div class="form-grid">
+    <div class="form-group"><label>처리 대상</label>
+      <select id="f0-material"><option value="battery">폐배터리 (리튬이온)</option><option value="food">음식물</option><option value="mineral">광물/석회석</option><option value="plastic">폐플라스틱</option><option value="waste">건설폐기물</option><option value="chemical">화학원료</option><option value="grain">곡물/사료</option></select></div>
+    <div class="form-group"><label>시간당 처리량</label>
+      <select id="f0-capacity"><option value="100">~100 kg/h (소량)</option><option value="500">~500 kg/h</option><option value="1000" selected>~1,000 kg/h</option><option value="3000">~3,000 kg/h</option><option value="5000">~5,000 kg/h (대량)</option></select></div>
+    <div class="form-group"><label>목표 입도</label>
+      <select id="f0-size"><option value="100">100mm (조파쇄)</option><option value="10">10mm (중분쇄)</option><option value="1" selected>1mm (미분쇄)</option><option value="0.1">100μm (극미분)</option><option value="0.01">10μm (초미분)</option></select></div>
+    <div class="form-group"><label>투입 크기</label>
+      <select id="f0-input"><option value="500">500mm+ (대형)</option><option value="100" selected>100~500mm</option><option value="50">50~100mm</option><option value="10">10~50mm</option></select></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="recommendEquip()">추천 실행</button>
+    <button class="btn btn-example" onclick="setE0(0)">예시: 폐배터리 월2000톤</button>
+    <button class="btn btn-example" onclick="setE0(1)">예시: 음식물 시간5톤</button>
+    <button class="btn btn-example" onclick="setE0(2)">예시: 석회석 미분쇄</button>
+  </div>
+  <div class="result" id="res0"></div>
+</div></div>
+
+<!-- ===== 탭1: 공정 설계 ===== -->
+<div class="panel" id="panel-1"><div class="card">
+  <h2>공정 설계</h2>
+  <p class="desc">산업을 선택하면 전체 공정도와 단계별 장비 구성을 보여줍니다.</p>
+  <div class="form-grid">
+    <div class="form-group"><label>산업/용도</label>
+      <select id="f1-industry"><option value="battery">폐배터리 재활용</option><option value="food">음식물 처리</option><option value="mineral">광물 분쇄</option><option value="plastic">폐플라스틱 재활용</option><option value="waste">일반 폐기물</option><option value="pharma">의약/화학</option></select></div>
+    <div class="form-group"><label>처리 규모</label>
+      <select id="f1-scale"><option value="small">소규모 (~500kg/h)</option><option value="medium" selected>중규모 (~2,000kg/h)</option><option value="large">대규모 (~5,000kg/h)</option></select></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="designProcess()">공정 설계</button>
+    <button class="btn btn-example" onclick="setE1(0)">예시: 폐배터리</button>
+    <button class="btn btn-example" onclick="setE1(1)">예시: 음식물</button>
+    <button class="btn btn-example" onclick="setE1(2)">예시: 광물</button>
+  </div>
+  <div class="result" id="res1"></div>
+</div></div>
+
+<!-- ===== 탭2: 사례 검색 ===== -->
+<div class="panel" id="panel-2"><div class="card">
+  <h2>납품 사례 검색</h2>
+  <p class="desc">산업 키워드로 유사 납품 사례를 검색합니다.</p>
+  <div class="form-grid">
+    <div class="form-group"><label>산업 키워드</label>
+      <select id="f2-keyword"><option value="battery">폐배터리</option><option value="food">음식물</option><option value="mineral">광물/석회석</option></select></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="searchCase()">사례 검색</button>
+  </div>
+  <div class="result" id="res2"></div>
+</div></div>
+
+<!-- ===== 탭3: 제안서 생성 ===== -->
+<div class="panel" id="panel-3"><div class="card">
+  <h2>제안서 초안 생성</h2>
+  <p class="desc">고객 정보와 요구사항을 입력하면 제안서 초안을 자동 생성합니다.</p>
+  <div class="form-grid">
+    <div class="form-group"><label>고객명</label><input type="text" id="f3-client" value="D기업"></div>
+    <div class="form-group"><label>산업</label>
+      <select id="f3-industry"><option value="battery">폐배터리 재활용</option><option value="food">음식물 처리</option><option value="mineral">광물 분쇄</option></select></div>
+    <div class="form-group"><label>처리량 (ton/h)</label><input type="number" id="f3-cap" value="2" min="0.1" step="0.1"></div>
+    <div class="form-group"><label>특이사항</label><input type="text" id="f3-note" value="" placeholder="예: 방폭 필요, 야외 설치"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="genProposal()">제안서 생성</button>
+    <button class="btn btn-example" onclick="setE3(0)">예시: 폐배터리 월1000톤</button>
+    <button class="btn btn-example" onclick="setE3(1)">예시: 음식물 시간5톤</button>
+  </div>
+  <div class="result" id="res3"></div>
+</div></div>
+
+<!-- ===== 탭4: 수준별 설명 ===== -->
+<div class="panel" id="panel-4"><div class="card">
+  <h2>수준별 장비 설명</h2>
+  <p class="desc">같은 장비를 비전문가/엔지니어/경영진 수준으로 설명합니다.</p>
+  <div class="form-grid">
+    <div class="form-group"><label>장비</label>
+      <select id="f4-equip"><option value="turbo">터보밀</option><option value="pin">핀밀</option><option value="hammer">해머크러셔</option><option value="shredder">슈레더</option><option value="jaw">조크러셔</option><option value="roll">롤밀</option></select></div>
+    <div class="form-group"><label>설명 수준</label>
+      <select id="f4-level"><option value="simple">비전문가 (쉽게)</option><option value="engineer">엔지니어 (기술적)</option><option value="exec">경영진 (ROI 중심)</option></select></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="explainEquip()">설명 생성</button>
+    <button class="btn btn-example" onclick="setE4(0)">예시: 터보밀-비전문가</button>
+    <button class="btn btn-example" onclick="setE4(1)">예시: 슈레더-엔지니어</button>
+    <button class="btn btn-example" onclick="setE4(2)">예시: 핀밀-경영진</button>
+  </div>
+  <div class="result" id="res4"></div>
+</div></div>
+
+<!-- ===== 탭5: 조달/제작 공정 ===== -->
+<div class="panel" id="panel-5"><div class="card">
+  <h2>조달/제작 공정 시뮬레이션</h2>
+  <p class="desc">장비를 선택하면 BOM(부품 명세), 구매품 발주, 외주 가공, 조립 일정을 시뮬레이션합니다.</p>
+  <div class="form-grid">
+    <div class="form-group"><label>장비</label>
+      <select id="f5-equip"><option value="shredder">슈레더 SH-2000</option><option value="hammer">해머크러셔 HC-500</option><option value="turbo">터보밀 TOP 500TM</option><option value="pin">핀밀 PM T-18P</option><option value="jaw">조크러셔 JC-400</option></select></div>
+    <div class="form-group"><label>수주일 기준</label>
+      <input type="date" id="f5-date" value="2026-05-01"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="simProcure()">시뮬레이션 실행</button>
+    <button class="btn btn-example" onclick="document.getElementById('f5-equip').value='shredder';simProcure()">예시: 슈레더</button>
+    <button class="btn btn-example" onclick="document.getElementById('f5-equip').value='turbo';simProcure()">예시: 터보밀</button>
+    <button class="btn btn-example" onclick="document.getElementById('f5-equip').value='hammer';simProcure()">예시: 해머크러셔</button>
+  </div>
+  <div class="result" id="res5"></div>
+</div></div>
+
+</div>
+<div class="footer">(주)한국기계엔지니어링 | www.topcrusher.co.kr | 시뮬레이션 데모</div>
+
+<script>
+// ===== DATA =====
+const EQUIPS={
+  shredder:{name:'슈레더',type:'1차 파쇄',method:'이축 전단',range:'20~100mm',cap:'200~5,000kg/h',models:[{m:'SH-600',kw:'2x15kW',cap:'200~800kg/h'},{m:'SH-1000',kw:'2x30kW',cap:'500~2,000kg/h'},{m:'SH-2000',kw:'2x75kW',cap:'1,000~5,000kg/h'}],
+    simple:'슈레더는 "초대형 종이 파쇄기"입니다. 사무실에서 서류를 갈기갈기 찢듯이, 이 기계는 자동차 배터리나 타이어도 찢어버릴 수 있습니다.',
+    engineer:'이축 저속 고토크(15~30rpm) 전단 파쇄기. 2x75kW 기준 최대 5ton/h 처리. 역회전 과부하 방지, 개별 커터 교체, 방폭 옵션(질소 퍼지) 대응. 금속/배터리/타이어 등 난처리물에 최적.',
+    exec:'폐배터리/폐타이어 등 고부가 폐기물 1차 파쇄의 핵심 설비. 월 1,000톤 처리 기준 투자 회수 약 2.5년. 고장률 낮아 가동률 95%+ 유지. EU 배터리법 대응 필수 장비.'},
+  jaw:{name:'조크러셔',type:'1차 조쇄',method:'압축',range:'10~100mm',cap:'500~10,000kg/h',models:[{m:'JC-250',kw:'5.5kW',cap:'500~1,500kg/h'},{m:'JC-400',kw:'15kW',cap:'1,000~5,000kg/h'},{m:'JC-600',kw:'30kW',cap:'3,000~10,000kg/h'}],
+    simple:'조크러셔는 "악어 입"과 비슷합니다. 두 개의 강철판이 번갈아 벌어졌다 오므라들면서 큰 돌덩이를 부숩니다.',
+    engineer:'V자형 jaw 왕복 운동 압축 파쇄. JC-600 기준 투입구 600x400mm, 최대 10ton/h. 파쇄비 4~6:1. 망간강 조 플레이트 사용, 토출 간극 조정으로 배출 입도 제어.',
+    exec:'광석/건설폐기물 1차 조쇄 장비. 단순 구조로 유지보수비 최소. 대형 원석 직접 투입으로 전처리 공정 단축, 후단 장비 수명 연장 효과.'},
+  hammer:{name:'해머크러셔',type:'2차 분쇄',method:'해머 타격',range:'1~10mm',cap:'100~5,000kg/h',models:[{m:'HC-300',kw:'15kW',cap:'100~500kg/h'},{m:'HC-500',kw:'30~75kW',cap:'500~2,000kg/h'},{m:'HC-800',kw:'75~150kW',cap:'1,000~5,000kg/h'}],
+    simple:'해머크러셔는 "망치로 때려 부수는 기계"입니다. 내부에서 강철 망치 여러 개가 빠르게 회전하면서 재료를 작은 조각으로 만듭니다.',
+    engineer:'고속 회전 해머(1,000~1,500rpm) 충격 분쇄. 라이너 2차 충돌 + 하부 스크린 배출. HC-500 기준 30~75kW, 2ton/h. 스크린 교체로 배출 입도 가변. 소모품: 해머/라이너/스크린 3~6개월 주기.',
+    exec:'가장 범용적인 중간 분쇄 장비. 거의 모든 산업에서 사용. 스크린 교체만으로 다양한 입도 대응 → 한 대로 여러 제품 생산 가능.'},
+  turbo:{name:'터보밀',type:'미분쇄',method:'고속 충격',range:'10~300μm',cap:'20~3,000kg/h',models:[{m:'TOP 250TM',kw:'7.5~18kW',cap:'20~100kg/h'},{m:'TOP 400TM',kw:'15~30kW',cap:'100~300kg/h'},{m:'TOP 500TM',kw:'30~55kW',cap:'200~600kg/h'},{m:'TOP 800TM',kw:'55~110kW',cap:'500~1,000kg/h'},{m:'TOP 1000TM',kw:'110~200kW',cap:'1,000~3,000kg/h'}],
+    simple:'터보밀은 "초고속 믹서기"와 비슷합니다. 내부에서 날개가 엄청 빠르게 돌면서 재료를 가루처럼 곱게 만듭니다. 밀가루보다 더 고운 분말을 만들 수 있어요.',
+    engineer:'고속 충격식 미분쇄기. 로터-스테이터 간극 조정 + 내장 분급기. TOP 500TM 기준 30~55kW, 2,000~4,500rpm, 200~600kg/h. 입도 10~150μm. 열 민감 재료 주의(고속 충격 발열).',
+    exec:'100μm 이하 초미세 분쇄의 핵심 장비. 대용량(최대 3ton/h) 연속 처리로 생산성 극대화. 내장 분급기로 별도 분급 공정 불필요 → 라인 단순화, 공간/비용 절감.'},
+  pin:{name:'핀밀',type:'극미분쇄',method:'핀 충격',range:'5~50μm',cap:'50~500kg/h',models:[{m:'PM T-12P',kw:'15kW',cap:'50~150kg/h'},{m:'PM T-18P',kw:'37kW',cap:'100~300kg/h'},{m:'PM T-24P',kw:'55kW',cap:'200~500kg/h'}],
+    simple:'핀밀은 "초고속 빗"과 비슷합니다. 수천 개의 핀(못)이 서로 엇갈려 돌면서 재료를 머리카락보다 훨씬 가는 가루로 만듭니다.',
+    engineer:'고정/회전 디스크 핀 충격식. PM T-18P 기준 37kW, 4,000~7,000rpm. D50 5~10μm 달성. 양극재 박리 기능(금속박-활물질 분리). 분해 세척 용이(의약/식품 GMP 대응).',
+    exec:'폐배터리 양극재 박리의 핵심 장비 — 회수율 95% 달성의 결정 요인. 토너, 의약 등 고부가 미분말 시장 대응. 박리+분쇄 복합 기능으로 공정 단축.'},
+  roll:{name:'롤밀',type:'압축 분쇄',method:'롤러 압축',range:'0.5~5mm',cap:'100~2,000kg/h',models:[{m:'RM-300',kw:'7.5kW',cap:'100~500kg/h'},{m:'RM-500',kw:'15kW',cap:'300~1,000kg/h'},{m:'RM-800',kw:'30kW',cap:'500~2,000kg/h'}],
+    simple:'롤밀은 "가정용 파스타 머신"의 산업용 버전입니다. 두 개의 큰 롤러 사이로 재료를 통과시키면 눌려서 잘게 부서집니다.',
+    engineer:'이중 롤러 압축식. RM-500 기준 15kW, 롤러 직경 500mm. 입도 0.5~5mm, 300~1,000kg/h. 롤러 간격 조정으로 정밀 입도 제어. 충격식 대비 발열 낮음(열 민감 재료 적합).',
+    exec:'균일한 입도가 제품 품질의 핵심인 곡물/사료/화학 분야 표준 장비. 소음·분진 낮아 도심 공장 설치 가능. 소모품 적어 유지비 최소.'}
+};
+
+const PROCESSES={
+  battery:{name:'폐배터리 재활용',steps:[
+    {stage:'1차 파쇄',equip:'슈레더',model:'SH-2000',desc:'배터리팩 → 20~100mm 파편',why:'금속 케이스 포함 대형물 전단 파쇄, 저속 고토크로 안전'},
+    {stage:'2차 분쇄',equip:'해머크러셔',model:'HC-500',desc:'파편 → 1~10mm 입자',why:'고속 타격으로 중간 크기 분쇄, 스크린으로 입도 제어'},
+    {stage:'3차 박리',equip:'핀밀',model:'PM T-18P',desc:'금속박에서 활물질 분리 (5~50μm)',why:'핀 충격으로 양극재-집전체 박리, 블랙매스 회수율 극대화'},
+    {stage:'분급',equip:'트위스트스크린',model:'TS-600',desc:'입도별 분리 (금속/블랙매스)',why:'회전 진동으로 Cu/Al/블랙매스 정밀 분리'}],
+    safety:'⚠️ 방전 처리 필수, 질소 퍼지(O₂<5%), 온도 모니터링, 방폭 설계, 분진 집진'},
+  food:{name:'음식물 처리',steps:[
+    {stage:'1차 파쇄',equip:'슈레더',model:'SH-1000',desc:'큰 덩어리 → 20~50mm',why:'이물질(비닐/뼈/금속) 포함 상태에서 저속 파쇄, 막힘 방지 역회전'},
+    {stage:'2차 분쇄',equip:'해머크러셔',model:'HC-300',desc:'→ 5~10mm 균일 입자',why:'균일 입자로 후단 탈수/건조 효율 향상'}],
+    safety:'⚠️ 수분 80%+ → STS316L 부식방지, 이물질 사전 선별, 밀폐+탈취 설비'},
+  mineral:{name:'광물 분쇄',steps:[
+    {stage:'1차 조쇄',equip:'조크러셔',model:'JC-400',desc:'원석 500mm → 20~60mm',why:'대형 원석 압축 파쇄, 투입구 400x250mm'},
+    {stage:'2차 분쇄',equip:'해머크러셔',model:'HC-500',desc:'→ 1~10mm',why:'고속 타격 분쇄, 범용'},
+    {stage:'3차 미분쇄',equip:'터보밀',model:'TOP 500TM',desc:'→ 10~100μm',why:'고속 충격+내장 분급으로 목표 입도 자동 배출'},
+    {stage:'분급',equip:'트위스트스크린',model:'TS-600',desc:'입도별 제품 분리',why:'다단 스크린으로 제품별 입도 분류'}],
+    safety:'⚠️ 분진폭발 방지(석탄/유황), 내마모 라이너, 미세분진 집진'},
+  plastic:{name:'폐플라스틱 재활용',steps:[
+    {stage:'1차 파쇄',equip:'슈레더',model:'SH-1000',desc:'대형 폐플라스틱 → 20~50mm',why:'연성 재료 전단 파쇄, 저속으로 열 발생 최소'},
+    {stage:'2차 분쇄',equip:'해머크러셔',model:'HC-500',desc:'→ 5~10mm 플레이크',why:'타격 분쇄로 균일 플레이크 생성'}],
+    safety:'⚠️ 정전기 주의, 금속 이물 사전 제거, 분진 집진'},
+  waste:{name:'일반 폐기물',steps:[
+    {stage:'1차 파쇄',equip:'슈레더',model:'SH-2000',desc:'대형 폐기물 → 30~100mm',why:'다양한 재질 혼합물 전단 파쇄'},
+    {stage:'2차 분쇄',equip:'해머크러셔',model:'HC-800',desc:'→ 5~20mm',why:'대용량 분쇄, 스크린 교체로 입도 가변'}],
+    safety:'⚠️ 이물질(금속/유리) 주의, 안전장치 필수'},
+  pharma:{name:'의약/화학',steps:[
+    {stage:'분쇄',equip:'터보밀 또는 롤밀',model:'TOP 400TM / RM-500',desc:'원료 → 10~100μm',why:'터보밀: 미분쇄, 롤밀: 균일 입도+저발열'},
+    {stage:'분급',equip:'트위스트스크린',model:'TS-600',desc:'입도별 분리',why:'정밀 입도 분류'}],
+    safety:'⚠️ GMP/HACCP 적합 재질(STS), 교차오염 방지, 세척 밸리데이션'}
+};
+
+const CASES={
+  battery:{title:'A사 폐배터리 재활용 라인',date:'2024-06',client:'대기업 (충남 서산)',
+    req:'월 1,000톤, D90<1mm, 회수율 95%+',
+    equips:'SH-2000×2 + HC-500×2 + PM T-18P×1 + TS-600×2',
+    result:'월 1,200톤 달성(120%), D90=0.8mm, 회수율 95%, 가동률 95%, ROI 2.5년',
+    feedback:'"기존 중국산 대비 고장률 낮고 A/S 빠름. 핀밀 박리 성능 우수하여 회수율 향상"'},
+  food:{title:'B사 음식물 파쇄시설',date:'2025-01',client:'공공기관 (경기 안산)',
+    req:'시간당 3톤, 이물질 포함 음식물',
+    equips:'SH-1000×1 + HC-300×1',
+    result:'시간당 3.5톤 달성, 균일 파쇄로 탈수 효율 15% 향상',
+    feedback:'"슈레더 역회전 기능으로 막힘 문제 해결. 유지보수 편의성 우수"'},
+  mineral:{title:'C사 광물 미분쇄',date:'2025-03',client:'중견기업 (강원 영월)',
+    req:'석회석 시간당 1톤, D50<50μm',
+    equips:'JC-400×1 + HC-500×1 + TOP 500TM×1 + TS-600×1',
+    result:'시간당 1.2톤, D50=35μm 달성, 분진 기준 충족',
+    feedback:'"터보밀 내장 분급기로 별도 분급 공정 불필요, 라인 단순화"'}
+};
+
+function showTab(i){document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',j===i));document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('active',j===i))}
+function show(id,html){const el=document.getElementById(id);el.innerHTML='<div class="result-box">'+html+'</div>';el.classList.add('show')}
+
+// ===== 탭0: 장비 추천 =====
+function setE0(n){
+  const p=[{m:'battery',c:'3000',s:'0.01',i:'100'},{m:'food',c:'5000',s:'10',i:'100'},{m:'mineral',c:'1000',s:'0.1',i:'500'}][n];
+  document.getElementById('f0-material').value=p.m;document.getElementById('f0-capacity').value=p.c;
+  document.getElementById('f0-size').value=p.s;document.getElementById('f0-input').value=p.i;
+  recommendEquip();
+}
+function recommendEquip(){
+  const mat=document.getElementById('f0-material').value;
+  const cap=+document.getElementById('f0-capacity').value;
+  const size=+document.getElementById('f0-size').value;
+  const inp=+document.getElementById('f0-input').value;
+  let chain=[],reasons=[];
+
+  // 1차: 투입 크기 > 50mm
+  if(inp>=50){
+    if(mat==='battery'||mat==='plastic'||mat==='food'){
+      let m=cap>2000?'SH-2000':cap>500?'SH-1000':'SH-600';
+      chain.push({stage:'1차 파쇄',equip:'슈레더',model:m});
+      reasons.push({step:'1차 파쇄',decision:`슈레더 ${m}`,why:`투입 ${inp}mm + ${mat==='battery'?'금속 포함 배터리':mat==='plastic'?'연성 플라스틱':'이물질 포함 음식물'} → 이축 전단식 슈레더 (저속 고토크, 난처리물 대응)`});
+    }else{
+      let m=cap>3000?'JC-600':cap>1000?'JC-400':'JC-250';
+      chain.push({stage:'1차 조쇄',equip:'조크러셔',model:m});
+      reasons.push({step:'1차 조쇄',decision:`조크러셔 ${m}`,why:`투입 ${inp}mm + 경질 재료(광물/건설) → 압축식 조크러셔 (대형 투입구, 높은 파쇄비)`});
+    }
+  }
+
+  // 2차: 10mm 이하 필요
+  if(size<=10){
+    let m=cap>2000?'HC-800':cap>500?'HC-500':'HC-300';
+    chain.push({stage:'2차 분쇄',equip:'해머크러셔',model:m});
+    reasons.push({step:'2차 분쇄',decision:`해머크러셔 ${m}`,why:`목표 ${size>=1?size+'mm':size*1000+'μm'} → 해머 타격식 분쇄 (범용, 스크린 교체로 입도 제어, ${cap}kg/h 대응)`});
+  }
+
+  // 3차: 1mm 이하 (미분쇄)
+  if(size<1){
+    if(mat==='battery'&&size<=0.05){
+      let m=cap>300?'PM T-24P':cap>100?'PM T-18P':'PM T-12P';
+      chain.push({stage:'3차 박리/미분쇄',equip:'핀밀',model:m});
+      reasons.push({step:'3차 박리',decision:`핀밀 ${m}`,why:'폐배터리 양극재 박리 필요 → 핀밀 (금속박-활물질 분리 + 극미분쇄 5~50μm)'});
+    }else if(mat==='grain'||mat==='chemical'){
+      let m=cap>500?'RM-800':cap>300?'RM-500':'RM-300';
+      chain.push({stage:'분쇄',equip:'롤밀',model:m});
+      reasons.push({step:'분쇄',decision:`롤밀 ${m}`,why:`${mat==='grain'?'곡물/사료':'화학원료'} → 롤밀 (균일 입도, 저발열, 정숙 운전)`});
+    }else{
+      let m=cap>1000?'TOP 1000TM':cap>500?'TOP 800TM':cap>200?'TOP 500TM':cap>100?'TOP 400TM':'TOP 250TM';
+      chain.push({stage:'미분쇄',equip:'터보밀',model:m});
+      reasons.push({step:'미분쇄',decision:`터보밀 ${m}`,why:`목표 ${size*1000}μm + ${cap}kg/h → 터보밀 (고속 충격 + 내장 분급기, 대용량 미분쇄)`});
+    }
+  }
+
+  // 분급
+  if(size<=1||mat==='battery'){
+    chain.push({stage:'분급',equip:'트위스트스크린',model:'TS-600'});
+    reasons.push({step:'분급',decision:'트위스트스크린 TS-600',why:'입도별 제품 분리 필요 → 회전 진동식 다단 스크린'});
+  }
+
+  let html=`<h3>장비 추천 결과</h3>`;
+  html+=`<table class="r-table"><tr><th>단계</th><th>장비</th><th>모델</th></tr>`;
+  chain.forEach(c=>html+=`<tr><td>${c.stage}</td><td><b>${c.equip}</b></td><td>${c.model}</td></tr>`);
+  html+=`</table>`;
+  html+=`<h4>선정 근거 (왜 이 장비인가?)</h4>`;
+  reasons.forEach(r=>html+=`<div class="reason"><b>[${r.step}]</b> ${r.decision}<br><span style="color:#555">→ ${r.why}</span></div>`);
+  if(mat==='battery')html+=`<div class="note danger">⚠️ 폐배터리: 방전 처리 필수, 질소 퍼지, 온도 모니터링, 방폭 설계 필요</div>`;
+  show('res0',html);
+}
+
+// ===== 탭1: 공정 설계 =====
+function setE1(n){
+  document.getElementById('f1-industry').value=['battery','food','mineral'][n];
+  designProcess();
+}
+function designProcess(){
+  const ind=document.getElementById('f1-industry').value;
+  const p=PROCESSES[ind];if(!p){show('res1','<p>공정 데이터 없음</p>');return}
+  let html=`<h3>${p.name} 공정</h3>`;
+  // 플로우
+  html+=`<div class="flow">`;
+  p.steps.forEach((s,i)=>{
+    html+=`<span class="hl">[${s.stage}]</span> ─── <span class="sel">${s.equip}</span> ${s.model}\n`;
+    html+=`    ${s.desc}\n`;
+    if(i<p.steps.length-1)html+=`    │\n    ▼\n`;
+  });
+  html+=`</div>`;
+  // 테이블
+  html+=`<h4>단계별 장비 구성 및 선정 근거</h4>`;
+  html+=`<table class="r-table"><tr><th>단계</th><th>장비</th><th>모델</th><th>선정 이유</th></tr>`;
+  p.steps.forEach(s=>html+=`<tr><td>${s.stage}</td><td><b>${s.equip}</b></td><td>${s.model}</td><td>${s.why}</td></tr>`);
+  html+=`</table>`;
+  if(p.safety)html+=`<div class="note danger">${p.safety}</div>`;
+  show('res1',html);
+}
+
+// ===== 탭2: 사례 검색 =====
+function searchCase(){
+  const k=document.getElementById('f2-keyword').value;
+  const c=CASES[k];if(!c){show('res2','<p>해당 사례 없음</p>');return}
+  let html=`<h3>${c.title}</h3>`;
+  html+=`<table class="r-table">
+    <tr><th>항목</th><th>내용</th></tr>
+    <tr><td>납품일</td><td>${c.date}</td></tr>
+    <tr><td>고객</td><td>${c.client}</td></tr>
+    <tr><td>요구사항</td><td>${c.req}</td></tr>
+    <tr><td>장비 구성</td><td>${c.equips}</td></tr>
+    <tr><td>결과</td><td>${c.result}</td></tr></table>`;
+  html+=`<h4>고객 피드백</h4><div class="reason">${c.feedback}</div>`;
+  show('res2',html);
+}
+
+// ===== 탭3: 제안서 =====
+function setE3(n){
+  const p=[{c:'A기업',i:'battery',cap:2,n:'방폭 필요'},{c:'B공공기관',i:'food',cap:5,n:'야외 설치, 탈취'}][n];
+  document.getElementById('f3-client').value=p.c;document.getElementById('f3-industry').value=p.i;
+  document.getElementById('f3-cap').value=p.cap;document.getElementById('f3-note').value=p.n;
+  genProposal();
+}
+function genProposal(){
+  const client=document.getElementById('f3-client').value||'고객';
+  const ind=document.getElementById('f3-industry').value;
+  const cap=+document.getElementById('f3-cap').value;
+  const note=document.getElementById('f3-note').value;
+  const p=PROCESSES[ind];if(!p){show('res3','<p>공정 데이터 없음</p>');return}
+  const today=new Date().toISOString().slice(0,10);
+  const ref=CASES[ind];
+
+  let html=`<h3>제안서 초안</h3>`;
+  html+=`<div style="border:2px solid #2e7d32;border-radius:10px;padding:20px;margin:10px 0;background:#fff">`;
+  html+=`<h4 style="text-align:center;color:#1b5e20;font-size:18px">${p.name} 설비 제안서</h4>`;
+  html+=`<p style="text-align:center;color:#888;font-size:13px">제출일: ${today} | (주)한국기계엔지니어링 → ${client}</p>`;
+  html+=`<hr style="margin:14px 0;border:none;border-top:1px solid #e0e0e0">`;
+
+  html+=`<h4>1. 요구사항</h4><table class="r-table">
+    <tr><td>처리 대상</td><td>${p.name}</td></tr>
+    <tr><td>처리 용량</td><td>${cap} ton/h</td></tr>
+    ${note?`<tr><td>특이사항</td><td>${note}</td></tr>`:''}</table>`;
+
+  html+=`<h4>2. 추천 장비 구성</h4><table class="r-table"><tr><th>단계</th><th>장비</th><th>모델</th><th>선정 이유</th></tr>`;
+  p.steps.forEach(s=>html+=`<tr><td>${s.stage}</td><td>${s.equip}</td><td>${s.model}</td><td>${s.why}</td></tr>`);
+  html+=`</table>`;
+
+  if(ref){
+    html+=`<h4>3. 유사 납품 실적</h4><table class="r-table">
+      <tr><td>사례</td><td>${ref.title} (${ref.date})</td></tr>
+      <tr><td>결과</td><td>${ref.result}</td></tr></table>`;
+  }
+
+  html+=`<h4>4. 안전 관리</h4><div class="note danger">${p.safety}</div>`;
+  html+=`<p style="margin-top:14px;font-size:12px;color:#888">※ 본 제안서는 시뮬레이션 초안이며, 실제 가격·납기는 별도 협의가 필요합니다.</p>`;
+  html+=`</div>`;
+  show('res3',html);
+}
+
+// ===== 탭4: 수준별 설명 =====
+function setE4(n){
+  const p=[{e:'turbo',l:'simple'},{e:'shredder',l:'engineer'},{e:'pin',l:'exec'}][n];
+  document.getElementById('f4-equip').value=p.e;document.getElementById('f4-level').value=p.l;
+  explainEquip();
+}
+function explainEquip(){
+  const ek=document.getElementById('f4-equip').value;
+  const lv=document.getElementById('f4-level').value;
+  const e=EQUIPS[ek];if(!e){show('res4','<p>장비 데이터 없음</p>');return}
+  const lvName={simple:'비전문가',engineer:'엔지니어',exec:'경영진'}[lv];
+
+  let html=`<h3>${e.name} — ${lvName} 설명</h3>`;
+  html+=`<table class="r-table"><tr><th>분류</th><th>분쇄 방식</th><th>입도 범위</th><th>처리 용량</th></tr>
+    <tr><td>${e.type}</td><td>${e.method}</td><td>${e.range}</td><td>${e.cap}</td></tr></table>`;
+  html+=`<h4>${lvName}용 설명</h4><div class="reason" style="font-size:14px;line-height:2">${e[lv]}</div>`;
+
+  html+=`<h4>모델별 사양</h4><table class="r-table"><tr><th>모델</th><th>모터</th><th>처리량</th></tr>`;
+  e.models.forEach(m=>html+=`<tr><td>${m.m}</td><td>${m.kw}</td><td>${m.cap}</td></tr>`);
+  html+=`</table>`;
+
+  // 다른 수준도 보여주기
+  const others={simple:'비전문가',engineer:'엔지니어',exec:'경영진'};
+  html+=`<h4>다른 수준 비교</h4>`;
+  for(const k in others){
+    if(k!==lv)html+=`<div class="reason"><b>[${others[k]}]</b> ${e[k]}</div>`;
+  }
+  show('res4',html);
+}
+// ===== 탭5: 조달/제작 공정 =====
+const BOM={
+  shredder:{name:'슈레더 SH-2000',design:2,assembly:3,test:1,total:'10~12주',
+    purchase:[
+      {part:'기어드모터 75kW',qty:2,supplier:'SEW',lead:5,note:'핵심 부품, 장납기'},
+      {part:'유압장치 (파워팩+실린더)',qty:1,supplier:'보쉬렉스로스',lead:4,note:'과부하 보호'},
+      {part:'베어링 자동조심 Ø120',qty:4,supplier:'SKF',lead:2,note:''},
+      {part:'커플링 플렉시블 Ø80',qty:2,supplier:'Rexnord',lead:2,note:''},
+      {part:'전장함 (PLC+HMI)',qty:1,supplier:'내부/협력사',lead:4,note:''}
+    ],
+    outsource:[
+      {part:'케이싱 (본체)',material:'SS400 용접구조물',method:'절단→용접→가공→도장',lead:6,qc:'평면도 0.1mm, 진원도 0.05mm',critical:true},
+      {part:'로터축',material:'SCM440 열처리',method:'단조→황삭→열처리→정삭',lead:5,qc:'동밸런싱 G2.5',critical:true},
+      {part:'커터 40장',material:'SKD11 HRC60',method:'가공→열처리(HRC58~62)',lead:4,qc:'경도 측정',critical:false},
+      {part:'호퍼',material:'SS400',method:'판금→벤딩→용접',lead:3,qc:'용접 검사',critical:false},
+      {part:'프레임',material:'H형강 SS400',method:'절단→용접→가공',lead:3,qc:'수평도 0.5mm/m',critical:false}
+    ]},
+  hammer:{name:'해머크러셔 HC-500',design:1,assembly:2,test:1,total:'7~8주',
+    purchase:[
+      {part:'모터 30~75kW IE3',qty:1,supplier:'현대일렉트릭',lead:4,note:''},
+      {part:'베어링 자동조심 Ø100',qty:2,supplier:'NSK',lead:2,note:''},
+      {part:'V벨트/풀리 SPC',qty:1,supplier:'Gates',lead:1,note:''},
+      {part:'전장함',qty:1,supplier:'내부',lead:2,note:''}
+    ],
+    outsource:[
+      {part:'케이싱',material:'SS400 용접+가공',method:'절단→용접→가공→도장',lead:4,qc:'평면도 0.1mm',critical:true},
+      {part:'로터 Ø500',material:'SCM440',method:'단조→가공→동밸런싱',lead:4,qc:'동밸런싱 G2.5',critical:true},
+      {part:'해머 12개',material:'고망간강 HRC50',method:'주조→가공→열처리',lead:3,qc:'경도 HRC45~55',critical:false},
+      {part:'스크린 2장',material:'STS304',method:'레이저 절단→벤딩',lead:2,qc:'개구율/홀 크기',critical:false},
+      {part:'라이너 4개',material:'고크롬주철 HRC55',method:'주조→가공',lead:3,qc:'경도 HRC55+',critical:false},
+      {part:'프레임',material:'H형강',method:'절단→용접',lead:2,qc:'수평도',critical:false}
+    ]},
+  turbo:{name:'터보밀 TOP 500TM',design:2,assembly:3,test:1,total:'10~12주',
+    purchase:[
+      {part:'모터 30~55kW IE3',qty:1,supplier:'LS일렉트릭',lead:4,note:''},
+      {part:'인버터 55kW 벡터제어',qty:1,supplier:'ABB',lead:3,note:'속도 제어 핵심'},
+      {part:'베어링 앵귤러 콘택트',qty:2,supplier:'SKF',lead:2,note:'고속용'},
+      {part:'커플링 Ø60',qty:1,supplier:'Lovejoy',lead:1,note:''},
+      {part:'전장함 (PLC+인버터+HMI)',qty:1,supplier:'내부/협력사',lead:4,note:''}
+    ],
+    outsource:[
+      {part:'로터/디스크 Ø500',material:'SCM440',method:'단조→황삭→열처리→정삭',lead:6,qc:'동밸런싱 G2.5',critical:true},
+      {part:'케이싱',material:'STS304',method:'용접→정밀가공',lead:5,qc:'간극 정밀도 0.05mm',critical:true},
+      {part:'블레이드 8개',material:'SKD11 HRC60',method:'가공→열처리',lead:3,qc:'경도 HRC58~62',critical:false},
+      {part:'분급 휠',material:'알루미늄 합금',method:'CNC 5축가공',lead:3,qc:'동밸런싱',critical:false},
+      {part:'라이너',material:'세라믹/고크롬',method:'주조→가공',lead:3,qc:'경도 확인',critical:false}
+    ]},
+  pin:{name:'핀밀 PM T-18P',design:2,assembly:2,test:1,total:'8~10주',
+    purchase:[
+      {part:'모터 37kW IE3',qty:1,supplier:'현대일렉트릭',lead:4,note:''},
+      {part:'인버터 37kW',qty:1,supplier:'LS일렉트릭',lead:3,note:''},
+      {part:'베어링 앵귤러 콘택트',qty:2,supplier:'NSK',lead:2,note:'고속용'},
+      {part:'전장함',qty:1,supplier:'내부/협력사',lead:3,note:''}
+    ],
+    outsource:[
+      {part:'핀 디스크(회전)',material:'SCM440 HRC50',method:'가공→열처리→동밸런싱',lead:5,qc:'동밸런싱 G2.5',critical:true},
+      {part:'핀 디스크(고정)',material:'SCM440 HRC50',method:'가공→열처리',lead:5,qc:'경도 확인',critical:true},
+      {part:'핀 200개',material:'STS630 석출경화',method:'CNC 가공',lead:3,qc:'치수 정밀도',critical:false},
+      {part:'케이싱',material:'STS304',method:'용접→가공',lead:4,qc:'분해세척 구조 확인',critical:false},
+      {part:'프레임',material:'H형강',method:'절단→용접',lead:2,qc:'수평도',critical:false}
+    ]},
+  jaw:{name:'조크러셔 JC-400',design:1,assembly:2,test:1,total:'7~8주',
+    purchase:[
+      {part:'모터 15kW IE3',qty:1,supplier:'현대일렉트릭',lead:3,note:''},
+      {part:'베어링 자동조심 Ø80',qty:2,supplier:'SKF',lead:2,note:''},
+      {part:'V벨트/풀리 SPB',qty:1,supplier:'Gates',lead:1,note:''},
+      {part:'전장함',qty:1,supplier:'내부',lead:2,note:''}
+    ],
+    outsource:[
+      {part:'본체 프레임',material:'주강/용접',method:'주조→가공',lead:5,qc:'치수 정밀도',critical:true},
+      {part:'편심축',material:'SCM440',method:'단조→가공',lead:4,qc:'진원도 0.02mm',critical:true},
+      {part:'조 플레이트(고정)',material:'고망간강 Mn13',method:'주조→가공',lead:4,qc:'충격인성',critical:false},
+      {part:'조 플레이트(가동)',material:'고망간강 Mn13',method:'주조→가공',lead:4,qc:'충격인성',critical:false},
+      {part:'토글 플레이트',material:'주강',method:'주조',lead:3,qc:'과부하 안전장치',critical:false}
+    ]}
+};
+
+function addWeeks(dateStr,weeks){const d=new Date(dateStr);d.setDate(d.getDate()+weeks*7);return d.toISOString().slice(0,10)}
+function simProcure(){
+  const ek=document.getElementById('f5-equip').value;
+  const startDate=document.getElementById('f5-date').value;
+  const b=BOM[ek];if(!b){show('res5','<p>데이터 없음</p>');return}
+
+  const designEnd=addWeeks(startDate,b.design);
+  const maxPurchase=Math.max(...b.purchase.map(p=>p.lead));
+  const maxOutsource=Math.max(...b.outsource.map(o=>o.lead));
+  const procureEnd=addWeeks(designEnd,Math.max(maxPurchase,maxOutsource));
+  const assemblyEnd=addWeeks(procureEnd,b.assembly);
+  const shipDate=addWeeks(assemblyEnd,b.test);
+
+  let html=`<h3>${b.name} — 조달/제작 공정 시뮬레이션</h3>`;
+
+  // 일정 요약
+  html+=`<h4>전체 일정</h4>`;
+  html+=`<table class="r-table">
+    <tr><th>단계</th><th>기간</th><th>시작</th><th>완료</th></tr>
+    <tr><td>설계/도면</td><td>${b.design}주</td><td>${startDate}</td><td>${designEnd}</td></tr>
+    <tr><td>구매품 발주+입고</td><td>${maxPurchase}주</td><td>${designEnd}</td><td rowspan="2">${procureEnd}</td></tr>
+    <tr><td>외주 가공+입고</td><td>${maxOutsource}주</td><td>${designEnd}</td></tr>
+    <tr><td>조립</td><td>${b.assembly}주</td><td>${procureEnd}</td><td>${assemblyEnd}</td></tr>
+    <tr><td>시운전/검사</td><td>${b.test}주</td><td>${assemblyEnd}</td><td>${shipDate}</td></tr>
+    <tr style="background:#e8f5e9;font-weight:bold"><td>총 기간</td><td>${b.total}</td><td>${startDate}</td><td><b>${shipDate}</b></td></tr>
+  </table>`;
+
+  // 간트 차트 (텍스트)
+  const totalWeeks=b.design+Math.max(maxPurchase,maxOutsource)+b.assembly+b.test;
+  html+=`<h4>간트 차트</h4><div class="flow">`;
+  const bar=(label,startW,durW,color)=>{
+    const pad='░'.repeat(startW);const fill='█'.repeat(durW);const rest='░'.repeat(Math.max(0,totalWeeks-startW-durW));
+    return `${label.padEnd(16)} │${pad}<span style="color:${color}">${fill}</span>${rest}│ ${durW}주\n`;
+  };
+  html+=`${'단계'.padEnd(16)} │${'주차: '+(Array.from({length:totalWeeks},(_, i)=>(i+1).toString().padStart(2)).join(''))}│\n`;
+  html+=bar('설계',0,b.design,'#a5d6a7');
+  html+=bar('구매품 발주',b.design,maxPurchase,'#90caf9');
+  html+=bar('외주 가공',b.design,maxOutsource,'#ffcc80');
+  html+=bar('조립',b.design+Math.max(maxPurchase,maxOutsource),b.assembly,'#ce93d8');
+  html+=bar('시운전',b.design+Math.max(maxPurchase,maxOutsource)+b.assembly,b.test,'#ef9a9a');
+  html+=`</div>`;
+
+  // 구매품
+  html+=`<h4>핵심 구매품 발주 목록</h4>`;
+  html+=`<table class="r-table"><tr><th>부품</th><th>수량</th><th>공급처</th><th>리드타임</th><th>발주일</th><th>입고예정</th></tr>`;
+  b.purchase.forEach(p=>{
+    const isCritical=p.lead===maxPurchase;
+    html+=`<tr${isCritical?' style="background:#fff8e1"':''}><td>${p.part}${isCritical?' <span class="badge badge-warn">크리티컬</span>':''}</td><td>${p.qty}</td><td>${p.supplier}</td><td>${p.lead}주</td><td>${designEnd}</td><td>${addWeeks(designEnd,p.lead)}</td></tr>`;
+  });
+  html+=`</table>`;
+
+  // 외주 가공
+  html+=`<h4>외주 가공품 목록</h4>`;
+  html+=`<table class="r-table"><tr><th>가공품</th><th>재질</th><th>가공 방법</th><th>리드타임</th><th>발주일</th><th>입고예정</th><th>품질 기준</th></tr>`;
+  b.outsource.forEach(o=>{
+    html+=`<tr${o.critical?' style="background:#fff8e1"':''}><td>${o.part}${o.critical?' <span class="badge badge-warn">크리티컬</span>':''}</td><td>${o.material}</td><td>${o.method}</td><td>${o.lead}주</td><td>${designEnd}</td><td>${addWeeks(designEnd,o.lead)}</td><td>${o.qc}</td></tr>`;
+  });
+  html+=`</table>`;
+
+  // 크리티컬 패스
+  const critPurchase=b.purchase.filter(p=>p.lead===maxPurchase).map(p=>p.part);
+  const critOutsource=b.outsource.filter(o=>o.critical).map(o=>o.part);
+  html+=`<h4>크리티컬 패스 분석</h4>`;
+  html+=`<div class="reason"><b>[병목 요인]</b> 구매품: ${critPurchase.join(', ')} (${maxPurchase}주) / 외주: ${critOutsource.join(', ')} (${maxOutsource}주)<br>`;
+  if(maxPurchase>=maxOutsource)html+=`<span style="color:#555">→ 구매품 조달이 크리티컬 패스. 조기 발주 또는 대체 공급처 확보로 단축 가능</span>`;
+  else html+=`<span style="color:#555">→ 외주 가공이 크리티컬 패스. 가공업체 사전 예약 또는 병행 가공으로 단축 가능</span>`;
+  html+=`</div>`;
+
+  html+=`<div class="note info">📌 구매품 조달과 외주 가공은 <b>병행 진행</b>하여 일정 단축. 조기 발주 시 1~2주 단축 가능.</div>`;
+  html+=`<div class="note success">✅ 예상 출하일: <b>${shipDate}</b> (수주일 ${startDate} 기준)</div>`;
+  show('res5',html);
+}
+</script>
+</body>
+</html>

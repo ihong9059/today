@@ -7,6 +7,11 @@ updated: 2026-05-01
 
 # Second Brain 위키 로그
 
+## [2026-05-01] ingest | 업무효율화 데모 웹 제작 (태명과학 + 한국기계)
+- 참조: [[projects]], [[스마트팩토리]]
+- 내용: 태명과학(FRITSCH 장비) 데모 웹 2종 + 한국기계(분쇄장비) 데모 웹 2종 제작. 고정결과 버전 + 실시간 로직 버전. 한국기계 조달/외주 Wiki 데이터(BOM, 구매품, 외주가공, 간트차트) 추가
+- 산출물: 태명과학/demo.html, demo_live.html, 한국기계/demo.html, demo_live.html, 조달/ 폴더
+
 ## [2026-05-01] ingest | 출석체크 인증 시스템 구축
 - 참조: [[projects]], [[aiHardStudy]]
 - 내용: Claude 접속 제어 웹 시스템 구축 (Flask 서버 + Pi Hook + uttecEdu 명령 + 교육 만료 자동 삭제)

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태명과학 AI 장비 컨설턴트 (Live)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif;background:#f0f2f5;color:#333}
+.header{background:linear-gradient(135deg,#0d47a1,#1565c0 50%,#42a5f5);color:#fff;padding:36px 20px 28px;text-align:center}
+.header h1{font-size:26px;margin-bottom:4px}.header p{font-size:13px;opacity:.85}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #e0e0e0;position:sticky;top:0;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,.05);overflow-x:auto}
+.tab{padding:13px 22px;cursor:pointer;font-size:13px;font-weight:600;color:#777;border-bottom:3px solid transparent;white-space:nowrap;transition:.2s}
+.tab:hover{color:#0d47a1}.tab.active{color:#0d47a1;border-bottom-color:#1565c0;background:#e3f2fd}
+.content{max-width:960px;margin:0 auto;padding:20px 16px 60px}
+.panel{display:none}.panel.active{display:block}
+.card{background:#fff;border-radius:12px;padding:24px 28px;margin-bottom:18px;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.card h2{font-size:19px;color:#0d47a1;margin-bottom:4px}
+.card .desc{font-size:13px;color:#666;margin-bottom:16px}
+/* Form */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group label{font-size:12px;font-weight:600;color:#555}
+.form-group select,.form-group input{padding:8px 10px;border:2px solid #ddd;border-radius:6px;font-size:14px}
+.form-group select:focus,.form-group input:focus{outline:none;border-color:#1565c0}
+.form-full{grid-column:1/-1}
+/* Buttons */
+.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{padding:10px 22px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:.2s}
+.btn-primary{background:#1565c0;color:#fff}.btn-primary:hover{background:#0d47a1}
+.btn-example{background:#e3f2fd;color:#1565c0;border:1px solid #bbdefb;font-size:12px;padding:7px 14px}
+.btn-example:hover{background:#bbdefb}
+/* Result */
+.result{margin-top:20px;display:none}
+.result.show{display:block}
+.result-box{background:#fafafa;border:1px solid #e0e0e0;border-radius:10px;padding:22px 26px;line-height:1.8}
+.result-box h3{color:#0d47a1;font-size:16px;margin-bottom:12px;border-bottom:2px solid #e3f2fd;padding-bottom:6px}
+.result-box h4{color:#1565c0;font-size:14px;margin:14px 0 6px}
+.r-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+.r-table th{background:#e3f2fd;padding:7px 10px;text-align:left;color:#0d47a1;font-size:12px}
+.r-table td{padding:7px 10px;border-bottom:1px solid #eee}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.badge-pass{background:#c8e6c9;color:#2e7d32}.badge-fail{background:#ffcdd2;color:#c62828}
+.badge-warn{background:#fff9c4;color:#f57f17}.badge-info{background:#e3f2fd;color:#1565c0}
+.reason{background:#f5f7ff;border-left:3px solid #1565c0;padding:10px 14px;margin:8px 0;font-size:13px;border-radius:0 6px 6px 0}
+.reason b{color:#0d47a1}
+.note{padding:10px 14px;border-radius:6px;margin:10px 0;font-size:12px}
+.note.danger{background:#fce4ec;border-left:3px solid #ef5350}
+.note.success{background:#e8f5e9;border-left:3px solid #66bb6a}
+.note.info{background:#e3f2fd;border-left:3px solid #42a5f5}
+.tree{font-family:Consolas,monospace;font-size:12px;background:#263238;color:#b0bec5;padding:14px 18px;border-radius:8px;line-height:1.9;margin:10px 0;overflow-x:auto;white-space:pre}
+.hl{color:#80cbc4;font-weight:700}.sel{color:#ffcc80;font-weight:700}.dim{color:#546e7a}
+.footer{text-align:center;padding:24px;color:#aaa;font-size:11px}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>태명과학 AI 장비 컨설턴트</h1>
+  <p>FRITSCH 분쇄/분석 장비 — 실시간 추천 시스템</p>
+</div>
+<div class="tabs" id="tabs">
+  <div class="tab active" onclick="showTab(0)">🔧 장비 추천</div>
+  <div class="tab" onclick="showTab(1)">🔩 부속품 호환</div>
+  <div class="tab" onclick="showTab(2)">💎 재질 추천</div>
+  <div class="tab" onclick="showTab(3)">🧪 테스트 설계</div>
+  <div class="tab" onclick="showTab(4)">📊 입도 해석</div>
+</div>
+<div class="content">
+
+<!-- ===== 탭0: 장비추천 ===== -->
+<div class="panel active" id="panel-0"><div class="card">
+  <h2>장비+부속품 패키지 추천</h2>
+  <p class="desc">시료 조건을 입력하면 최적 장비/용기/볼/조건을 추천합니다. 조건을 바꿔가며 비교해 보세요.</p>
+  <div class="form-grid">
+    <div class="form-group"><label>산업/시료</label>
+      <select id="f0-industry"><option value="battery">배터리 양극재</option><option value="pharma">제약 API (경구)</option><option value="pharma-inh">제약 API (흡입)</option><option value="mineral">광물 (XRF 전처리)</option><option value="ceramic">세라믹 분말</option><option value="food">식품</option></select></div>
+    <div class="form-group"><label>시료 경도 (Mohs)</label>
+      <select id="f0-mohs"><option value="2">2 (매우 부드러움)</option><option value="3">3 (부드러움)</option><option value="4">4</option><option value="5" selected>5 (보통)</option><option value="6">6</option><option value="7">7 (단단함)</option><option value="8">8</option><option value="9">9 (매우 단단함)</option></select></div>
+    <div class="form-group"><label>현재 입도</label>
+      <select id="f0-current"><option value="0.5">500μm</option><option value="1">1mm</option><option value="2" selected>2mm</option><option value="5">5mm</option><option value="10">10mm 이상</option></select></div>
+    <div class="form-group"><label>목표 입도 (μm)</label>
+      <select id="f0-target"><option value="1">1μm (나노)</option><option value="3">3μm</option><option value="5" selected>5μm</option><option value="10">10μm</option><option value="50">50μm</option><option value="75">75μm</option></select></div>
+    <div class="form-group"><label>금속 오염 허용</label>
+      <select id="f0-contam"><option value="no">불허 (금속오염 불가)</option><option value="yes">허용</option></select></div>
+    <div class="form-group"><label>처리 방식</label>
+      <select id="f0-method"><option value="dry">건식</option><option value="wet">습식</option></select></div>
+    <div class="form-group"><label>용도</label>
+      <select id="f0-purpose"><option value="rd">R&D (연구)</option><option value="qc">QC (품질관리)</option><option value="prod">양산</option></select></div>
+    <div class="form-group"><label>처리량</label>
+      <select id="f0-volume"><option value="small">소량 (~100g)</option><option value="medium" selected>중간 (~300g)</option><option value="large">대량 (~1kg)</option></select></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="recommend()">추천 실행</button>
+    <button class="btn btn-example" onclick="setEx0(0)">예시: LFP양극재</button>
+    <button class="btn btn-example" onclick="setEx0(1)">예시: 제약API</button>
+    <button class="btn btn-example" onclick="setEx0(2)">예시: 광물XRF</button>
+  </div>
+  <div class="result" id="res0"></div>
+</div></div>
+
+<!-- ===== 탭1: 부속품 호환 ===== -->
+<div class="panel" id="panel-1"><div class="card">
+  <h2>부속품 호환 확인</h2>
+  <p class="desc">장비 + 용량 + 재질 조합의 호환 여부를 실시간으로 확인합니다.</p>
+  <div class="form-grid">
+    <div class="form-group"><label>장비 모델</label>
+      <select id="f1-equip"><option value="P7">P-7 Premium/Classic</option><option value="P6">P-6 Premium/Classic</option><option value="P5">P-5 Premium/Classic</option></select></div>
+    <div class="form-group"><label>용기 용량</label>
+      <select id="f1-vol"><option value="20">20ml</option><option value="45">45ml</option><option value="80" selected>80ml</option><option value="250">250ml</option><option value="500">500ml</option></select></div>
+    <div class="form-group"><label>재질</label>
+      <select id="f1-mat"><option value="Agate">Agate (마노)</option><option value="ZrO2" selected>ZrO2 (지르코니아)</option><option value="Si3N4">Si3N4 (질화규소)</option><option value="Al2O3">Al2O3 (코런덤)</option><option value="WC">WC (초경합금)</option><option value="SS">SS (스테인리스)</option><option value="PTFE">PTFE (테프론)</option></select></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkCompat()">호환 확인</button>
+    <button class="btn btn-example" onclick="setEx1(0)">예시: P7+80ml+ZrO2</button>
+    <button class="btn btn-example" onclick="setEx1(1)">예시: P5+500ml+Si3N4</button>
+    <button class="btn btn-example" onclick="setEx1(2)">예시: P6+250ml+Si3N4</button>
+  </div>
+  <div class="result" id="res1"></div>
+</div></div>
+
+<!-- ===== 탭2: 재질 추천 ===== -->
+<div class="panel" id="panel-2"><div class="card">
+  <h2>재질 추천</h2>
+  <p class="desc">시료 특성에 따라 최적 재질을 추천합니다. 의사결정 과정을 단계별로 보여줍니다.</p>
+  <div class="form-grid">
+    <div class="form-group"><label>산업</label>
+      <select id="f2-industry"><option value="battery">배터리</option><option value="ceramic">세라믹</option><option value="pharma">제약</option><option value="food">식품</option><option value="mineral">광물/지질</option><option value="metal">금속/합금</option><option value="env">환경 분석</option><option value="chem">화학/산성시료</option></select></div>
+    <div class="form-group"><label>금속 오염 허용</label>
+      <select id="f2-contam"><option value="no">불허</option><option value="yes">허용</option></select></div>
+    <div class="form-group"><label>시료 경도 (Mohs)</label>
+      <select id="f2-mohs"><option value="3">3 (부드러움)</option><option value="5" selected>5 (보통)</option><option value="7">7 (단단함)</option><option value="9">9 (매우 단단함)</option></select></div>
+    <div class="form-group"><label>특수 조건</label>
+      <select id="f2-special"><option value="none">없음</option><option value="gmp">GMP/HACCP 필요</option><option value="acid">산/알칼리 접촉</option><option value="nano">나노 분쇄 (0.1mm 볼)</option><option value="trace">미량원소 분석</option></select></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="recommendMat()">재질 추천</button>
+    <button class="btn btn-example" onclick="setEx2(0)">예시: 배터리(금속불허)</button>
+    <button class="btn btn-example" onclick="setEx2(1)">예시: 제약GMP</button>
+    <button class="btn btn-example" onclick="setEx2(2)">예시: 광물분석</button>
+  </div>
+  <div class="result" id="res2"></div>
+</div></div>
+
+<!-- ===== 탭3: 테스트설계 ===== -->
+<div class="panel" id="panel-3"><div class="card">
+  <h2>시료테스트 조건 설계</h2>
+  <p class="desc">시료와 목표 입도를 입력하면 분쇄 조건을 자동 설계합니다.</p>
+  <div class="form-grid">
+    <div class="form-group"><label>시료 종류</label>
+      <select id="f3-sample"><option value="lfp">LFP 양극재</option><option value="nmc">NMC 양극재</option><option value="solidE">전고체 전해질</option><option value="api-oral">제약 API (경구)</option><option value="api-inh">제약 API (흡입)</option><option value="alumina">알루미나 (Al2O3)</option><option value="caco3">탄산칼슘 (CaCO3)</option><option value="quartz">석영 (Quartz)</option></select></div>
+    <div class="form-group"><label>목표 D50 (μm)</label>
+      <input type="number" id="f3-d50" value="5" min="0.1" max="100" step="0.1"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="designTest()">조건 설계</button>
+    <button class="btn btn-example" onclick="setEx3(0)">예시: LFP→3μm</button>
+    <button class="btn btn-example" onclick="setEx3(1)">예시: CaCO3→5μm</button>
+    <button class="btn btn-example" onclick="setEx3(2)">예시: 제약API→10μm</button>
+  </div>
+  <div class="result" id="res3"></div>
+</div></div>
+
+<!-- ===== 탭4: 입도해석 ===== -->
+<div class="panel" id="panel-4"><div class="card">
+  <h2>입도분석 결과 해석</h2>
+  <p class="desc">D10/D50/D90 측정값을 입력하면 산업별 합격 여부를 판정하고 개선 방안을 제시합니다.</p>
+  <div class="form-grid">
+    <div class="form-group"><label>산업/용도</label>
+      <select id="f4-industry"><option value="pharma-oral">제약 API (경구)</option><option value="pharma-inh">제약 API (흡입)</option><option value="battery">배터리 양극재</option><option value="battery-e">배터리 전해질</option><option value="ceramic">세라믹 (소결용)</option><option value="food">식품 분말</option><option value="mineral-xrf">광물 (XRF)</option><option value="mineral-xrd">광물 (XRD)</option><option value="cement">시멘트</option><option value="pigment">안료/도료</option></select></div>
+    <div class="form-group"><label>D10 (μm)</label><input type="number" id="f4-d10" value="2.3" step="0.1"></div>
+    <div class="form-group"><label>D50 (μm)</label><input type="number" id="f4-d50" value="15.2" step="0.1"></div>
+    <div class="form-group"><label>D90 (μm)</label><input type="number" id="f4-d90" value="45.8" step="0.1"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="analyzeSize()">판정 실행</button>
+    <button class="btn btn-example" onclick="setEx4(0)">예시: 제약합격</button>
+    <button class="btn btn-example" onclick="setEx4(1)">예시: 배터리불합격</button>
+    <button class="btn btn-example" onclick="setEx4(2)">예시: 세라믹경고</button>
+  </div>
+  <div class="result" id="res4"></div>
+</div></div>
+
+</div>
+<div class="footer">태명과학 (MJ Research) | FRITSCH 공식 파트너 | 시뮬레이션 데모 (실시간 로직)</div>
+
+<script>
+// ===== DATA =====
+const COMPAT={
+  P7:{20:{Agate:1,ZrO2:1,Si3N4:1,Al2O3:1,WC:1,SS:1,PTFE:0},45:{Agate:1,ZrO2:1,Si3N4:1,Al2O3:1,WC:1,SS:1,PTFE:0},80:{Agate:1,ZrO2:1,Si3N4:1,Al2O3:1,WC:1,SS:1,PTFE:1}},
+  P6:{80:{Agate:1,ZrO2:1,Si3N4:1,Al2O3:1,WC:1,SS:1,PTFE:0},250:{Agate:1,ZrO2:1,Si3N4:0,Al2O3:1,WC:1,SS:1,PTFE:0},500:{Agate:1,ZrO2:1,Si3N4:0,Al2O3:1,WC:0,SS:1,PTFE:0}},
+  P5:{80:{Agate:1,ZrO2:1,Si3N4:1,Al2O3:1,WC:1,SS:1,PTFE:1},250:{Agate:1,ZrO2:1,Si3N4:0,Al2O3:1,WC:1,SS:1,PTFE:0},500:{Agate:1,ZrO2:1,Si3N4:0,Al2O3:1,WC:0,SS:1,PTFE:0}}
+};
+const MAT_NAMES={Agate:'Agate (마노)',ZrO2:'ZrO2 (지르코니아)',Si3N4:'Si3N4 (질화규소)',Al2O3:'Al2O3 (코런덤)',WC:'WC (초경합금)',SS:'SS (스테인리스)',PTFE:'PTFE (테프론)'};
+const MAT_MOHS={Agate:6.5,ZrO2:8.5,Si3N4:9,Al2O3:9,WC:9.5,SS:5.5,PTFE:2};
+const SIZE_STD={
+  'pharma-oral':{d50:[5,25],d90:75,span:3,label:'제약 API (경구)',ref:'USP <429>'},
+  'pharma-inh':{d50:[1,5],d90:10,span:2,label:'제약 API (흡입)',ref:'폐 도달 입도'},
+  battery:{d50:[3,15],d90:30,span:2.5,label:'배터리 양극재',ref:'금속오염 불가'},
+  'battery-e':{d50:[0,5],d90:15,span:3,label:'배터리 전해질',ref:'미세할수록 우수'},
+  ceramic:{d50:[0.5,5],d90:15,span:3,label:'세라믹 (소결용)',ref:'소결밀도 영향'},
+  food:{d50:[10,50],d90:100,span:99,label:'식품 분말',ref:'식감/용해도'},
+  'mineral-xrf':{d50:[0,75],d90:150,span:99,label:'광물 (XRF)',ref:'#200 mesh'},
+  'mineral-xrd':{d50:[0,45],d90:100,span:99,label:'광물 (XRD)',ref:'#325 mesh'},
+  cement:{d50:[15,25],d90:45,span:2,label:'시멘트',ref:'강도/수화'},
+  pigment:{d50:[1,10],d90:25,span:2.5,label:'안료/도료',ref:'광택/은폐력'}
+};
+const SAMPLES={
+  lfp:{name:'LFP 양극재',equip:'P-7 Premium',mat:'ZrO2',vol:'80ml',ball:'3mm',rpm:700,time:15,d50:3,note:'금속오염 불가, 건식, 95G 고에너지'},
+  nmc:{name:'NMC 양극재',equip:'P-7 Premium',mat:'ZrO2',vol:'80ml',ball:'3mm',rpm:700,time:20,d50:5,note:'금속오염 불가, 건식'},
+  solidE:{name:'전고체 전해질',equip:'P-7 Premium',mat:'ZrO2',vol:'45ml',ball:'1mm',rpm:800,time:30,d50:1,note:'가능한 미세하게, 건식'},
+  'api-oral':{name:'제약 API (경구)',equip:'P-6 Premium',mat:'ZrO2',vol:'250ml',ball:'5mm',rpm:500,time:10,d50:15,note:'GMP, USP <429>'},
+  'api-inh':{name:'제약 API (흡입)',equip:'P-7 Premium',mat:'ZrO2',vol:'80ml',ball:'1mm',rpm:700,time:20,d50:3,note:'폐 도달 입도 1~5μm'},
+  alumina:{name:'알루미나 (Al2O3)',equip:'P-7 Premium',mat:'ZrO2',vol:'80ml',ball:'3mm',rpm:700,time:15,d50:3,note:'고경도 Mohs 9, 나노 분쇄'},
+  caco3:{name:'탄산칼슘 (CaCO3)',equip:'P-6 Premium',mat:'ZrO2',vol:'250ml',ball:'3mm',rpm:500,time:15,d50:5,note:'Mohs 3, 분쇄 용이'},
+  quartz:{name:'석영 (Quartz)',equip:'P-5 Classic',mat:'Agate',vol:'250ml',ball:'10mm',rpm:350,time:15,d50:30,note:'XRF 전처리, 순수성 필요'}
+};
+
+function showTab(i){document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',j===i));document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('active',j===i))}
+function show(id,html){const el=document.getElementById(id);el.innerHTML='<div class="result-box">'+html+'</div>';el.classList.add('show')}
+
+// ===== 탭0: 장비 추천 =====
+function setEx0(n){
+  const presets=[
+    {industry:'battery',mohs:'5',current:'2',target:'5',contam:'no',method:'dry',purpose:'rd',volume:'small'},
+    {industry:'pharma',mohs:'3',current:'0.5',target:'10',contam:'yes',method:'dry',purpose:'qc',volume:'small'},
+    {industry:'mineral',mohs:'7',current:'5',target:'75',contam:'yes',method:'dry',purpose:'rd',volume:'medium'}
+  ];
+  const p=presets[n];for(const k in p)document.getElementById('f0-'+k).value=p[k];
+  recommend();
+}
+function recommend(){
+  const ind=document.getElementById('f0-industry').value;
+  const mohs=+document.getElementById('f0-mohs').value;
+  const cur=+document.getElementById('f0-current').value;
+  const target=+document.getElementById('f0-target').value;
+  const contam=document.getElementById('f0-contam').value;
+  const method=document.getElementById('f0-method').value;
+  const purpose=document.getElementById('f0-purpose').value;
+  const vol=document.getElementById('f0-volume').value;
+
+  let reasons=[], equip='', mat='',容量='', ball='', rpm=0, time=0;
+
+  // 1. 전처리 판단
+  let preEquip='';
+  if(cur>=10){preEquip='P-1 조크러셔';reasons.push({step:'전처리',decision:'P-1 조크러셔 필요',why:'투입 크기 10mm 이상 → 압축파쇄로 1mm 이하로 조쇄 후 분쇄'})}
+
+  // 2. 장비 선택
+  if(target<=5){
+    if(target<=1){equip='P-7 Premium';reasons.push({step:'장비 선택',decision:'P-7 Premium',why:`목표 입도 ${target}μm은 나노 영역 → 95G 최고 에너지의 P-7 Premium 필요`})}
+    else{
+      if(vol==='large'){equip='P-5 Premium';reasons.push({step:'장비 선택',decision:'P-5 Premium',why:`목표 ${target}μm + 대용량 → 4스테이션 P-5 Premium (고에너지)`})}
+      else{equip='P-7 Premium';reasons.push({step:'장비 선택',decision:'P-7 Premium',why:`목표 ${target}μm → 나노~미세 영역, P-7 Premium이 최고 효율`})}
+    }
+  }else if(target<=50){
+    if(vol==='large'){equip='P-5 Classic';reasons.push({step:'장비 선택',decision:'P-5 Classic',why:`목표 ${target}μm + 대용량 → 4스테이션 P-5 Classic 범용`})}
+    else if(purpose==='qc'){equip='P-6 Classic';reasons.push({step:'장비 선택',decision:'P-6 Classic',why:`목표 ${target}μm + QC용 → P-6 Classic (비용 효율)`})}
+    else{equip='P-6 Premium';reasons.push({step:'장비 선택',decision:'P-6 Premium',why:`목표 ${target}μm + 연구용 → P-6 Premium (고급 프로그래밍)`})}
+  }else{
+    equip='P-5 Classic';reasons.push({step:'장비 선택',decision:'P-5 Classic',why:`목표 ${target}μm → 범용 미세분쇄, P-5 Classic 4스테이션`});
+  }
+
+  // 3. 재질 선택
+  if(contam==='no'){
+    if(mohs>=7){mat='ZrO2';reasons.push({step:'재질 선택',decision:'ZrO2 (지르코니아)',why:`금속오염 불허 + 경도 Mohs ${mohs} → ZrO2 (경도 8.5, 금속오염 없음)`})}
+    else if(ind==='mineral'){mat='Agate';reasons.push({step:'재질 선택',decision:'Agate (마노)',why:'금속오염 불허 + 광물 분석 → Agate (SiO2 99.9%, 최고 순수성)'})}
+    else{mat='ZrO2';reasons.push({step:'재질 선택',decision:'ZrO2 (지르코니아)',why:`금속오염 불허 + Mohs ${mohs} → ZrO2 (범용, 고순도, 나노볼 가용)`})}
+  }else{
+    if(ind==='food'||ind==='pharma'){mat='SS';reasons.push({step:'재질 선택',decision:'SS (스테인리스)',why:'오염 허용 + 제약/식품 → SS (GMP/HACCP 적합, 세척 용이, 경제적)'})}
+    else if(mohs>=8){mat='WC';reasons.push({step:'재질 선택',decision:'WC (초경합금)',why:`오염 허용 + 고경도 Mohs ${mohs} → WC (최고 경도 9.5)`})}
+    else if(ind==='mineral'){mat='Agate';reasons.push({step:'재질 선택',decision:'Agate (마노)',why:'광물 분석 → 순수성 최우선, Agate (SiO2 99.9%)'})}
+    else{mat='SS';reasons.push({step:'재질 선택',decision:'SS (스테인리스)',why:'오염 허용 + 범용 → SS (경제적, 내구성 우수)'})}
+  }
+
+  // 4. 용량 결정
+  if(equip.startsWith('P-7')){容量='80ml';reasons.push({step:'용기 용량',decision:'80ml',why:'P-7은 2×80ml 스테이션, 나노분쇄 최적 용량'})}
+  else if(vol==='large'){容量='500ml';reasons.push({step:'용기 용량',decision:'500ml',why:'대용량 처리 → 500ml 용기'})}
+  else if(vol==='small'){容量='250ml';reasons.push({step:'용기 용량',decision:'250ml',why:'소량 처리 → 250ml 용기 (적정 충전율 유지)'})}
+  else{容量='250ml';reasons.push({step:'용기 용량',decision:'250ml',why:'중간 처리량 → 250ml 범용'})}
+
+  // 호환성 체크
+  const eKey=equip.includes('P-7')?'P7':equip.includes('P-6')?'P6':'P5';
+  const vKey=parseInt(容量);
+  if(COMPAT[eKey]&&COMPAT[eKey][vKey]&&!COMPAT[eKey][vKey][mat]){
+    const alt=mat==='Si3N4'?'ZrO2':mat==='WC'?'SS':mat==='PTFE'?'ZrO2':mat;
+    reasons.push({step:'호환성 보정',decision:`${mat} → ${alt}로 변경`,why:`${equip} ${容量}에서 ${mat}은 비호환 → ${alt}로 대체 (호환 확인됨)`});
+    mat=alt;
+  }
+
+  // 5. 볼 크기
+  if(target<=1){ball='1mm';reasons.push({step:'볼 크기',decision:'1mm',why:`목표 ${target}μm → 1mm 미세볼 (나노 영역 도달)`})}
+  else if(target<=10){ball='3mm';reasons.push({step:'볼 크기',decision:'3mm',why:`목표 ${target}μm → 3mm 볼 (미세 분쇄 최적)`})}
+  else if(target<=50){ball='5mm';reasons.push({step:'볼 크기',decision:'5mm',why:`목표 ${target}μm → 5mm 볼`})}
+  else{ball='10mm';reasons.push({step:'볼 크기',decision:'10mm',why:`목표 ${target}μm → 10mm 대형볼 (조분쇄)`})}
+
+  // 6. RPM/시간
+  if(target<=3){rpm=700;time=15}else if(target<=10){rpm=500;time=10}else if(target<=50){rpm=350;time=8}else{rpm=300;time=5}
+  if(mohs>=7){rpm=Math.min(rpm+100,800);time+=5}
+  reasons.push({step:'분쇄 조건',decision:`${rpm}rpm / ${time}분`,why:`목표 ${target}μm + 경도 Mohs ${mohs} 기반 최적 조건 (경도 높을수록 rpm/시간 증가)`});
+
+  // Render
+  let html=`<h3>추천 결과</h3>`;
+  if(preEquip)html+=`<div class="note info">📌 전처리 필요: <b>${preEquip}</b>로 1mm 이하로 조쇄 후 분쇄</div>`;
+  html+=`<table class="r-table"><tr><th>항목</th><th>추천</th></tr>
+    <tr><td>장비</td><td><b>${equip}</b></td></tr>
+    <tr><td>용기</td><td>${MAT_NAMES[mat]||mat} ${容量}</td></tr>
+    <tr><td>분쇄볼</td><td>${MAT_NAMES[mat]||mat} ${ball}</td></tr>
+    <tr><td>회전속도</td><td>${rpm} rpm</td></tr>
+    <tr><td>시간</td><td>${time}분</td></tr>
+    <tr><td>방식</td><td>${method==='dry'?'건식':'습식'}</td></tr>
+    <tr><td>예상 D50</td><td>~${target}μm</td></tr></table>`;
+  html+=`<h4>의사결정 과정 (왜 이렇게 추천했는가?)</h4>`;
+  reasons.forEach(r=>{html+=`<div class="reason"><b>[${r.step}]</b> ${r.decision}<br><span style="color:#555">→ ${r.why}</span></div>`});
+  if(contam==='no')html+=`<div class="note danger">⚠️ 금속오염 불허: SS, 경화강, WC(Co 바인더) 사용 금지</div>`;
+  show('res0',html);
+}
+
+// ===== 탭1: 부속품 호환 =====
+function setEx1(n){
+  const p=[{e:'P7',v:'80',m:'ZrO2'},{e:'P5',v:'500',m:'Si3N4'},{e:'P6',v:'250',m:'Si3N4'}][n];
+  document.getElementById('f1-equip').value=p.e;document.getElementById('f1-vol').value=p.v;document.getElementById('f1-mat').value=p.m;
+  checkCompat();
+}
+function checkCompat(){
+  const eq=document.getElementById('f1-equip').value;
+  const vol=+document.getElementById('f1-vol').value;
+  const mat=document.getElementById('f1-mat').value;
+  const eqName={'P7':'P-7','P6':'P-6','P5':'P-5'}[eq];
+  const data=COMPAT[eq];
+
+  if(!data||!data[vol]){show('res1',`<h3>호환성 확인</h3><div class="note danger">⚠️ ${eqName}에 ${vol}ml 용기는 존재하지 않습니다.<br>→ ${eqName} 가용 용량: ${Object.keys(data||{}).join(', ')}ml</div>`);return}
+
+  const ok=data[vol][mat];
+  const allMats=Object.keys(data[vol]);
+  let html=`<h3>호환성 확인: ${eqName} + ${vol}ml + ${MAT_NAMES[mat]}</h3>`;
+  html+=`<p style="font-size:20px;margin:14px 0"><span class="badge ${ok?'badge-pass':'badge-fail'}" style="font-size:15px;padding:6px 20px">${ok?'✅ 호환':'❌ 비호환'}</span></p>`;
+
+  html+=`<div class="reason"><b>[판정 근거]</b> ${eqName} ${vol}ml 용기의 ${MAT_NAMES[mat]} 호환 여부를 부속품 호환 매트릭스에서 확인<br><span style="color:#555">→ ${ok?'해당 조합은 매트릭스에서 O(호환)으로 확인됨':'해당 조합은 매트릭스에서 -(비호환)으로 확인됨'}</span></div>`;
+
+  // 해당 용량 전체 호환표
+  html+=`<h4>${eqName} ${vol}ml 전체 호환 현황</h4><table class="r-table"><tr>`;
+  allMats.forEach(m=>html+=`<th>${m}</th>`);
+  html+=`</tr><tr>`;
+  allMats.forEach(m=>html+=`<td><span class="badge ${data[vol][m]?'badge-pass':'badge-fail'}">${data[vol][m]?'O':'-'}</span></td>`);
+  html+=`</tr></table>`;
+
+  if(!ok){
+    html+=`<h4>대안 제시</h4><table class="r-table"><tr><th>대안</th><th>조합</th><th>호환</th><th>이유</th></tr>`;
+    // 같은 재질 다른 용량
+    Object.keys(data).forEach(v=>{
+      if(+v!==vol&&data[v][mat])html+=`<tr><td>같은 재질, 다른 용량</td><td>${eqName} + <b>${v}ml</b> + ${mat}</td><td><span class="badge badge-pass">O</span></td><td>용량을 ${v}ml로 줄이면 호환</td></tr>`;
+    });
+    // 같은 용량 다른 재질
+    allMats.forEach(m=>{
+      if(m!==mat&&data[vol][m])html+=`<tr><td>같은 용량, 다른 재질</td><td>${eqName} + ${vol}ml + <b>${m}</b></td><td><span class="badge badge-pass">O</span></td><td>${MAT_NAMES[m]}로 변경</td></tr>`;
+    });
+    html+=`</table>`;
+  }
+  show('res1',html);
+}
+
+// ===== 탭2: 재질 추천 =====
+function setEx2(n){
+  const p=[{i:'battery',c:'no',m:'5',s:'none'},{i:'pharma',c:'yes',m:'3',s:'gmp'},{i:'mineral',c:'no',m:'5',s:'trace'}][n];
+  document.getElementById('f2-industry').value=p.i;document.getElementById('f2-contam').value=p.c;document.getElementById('f2-mohs').value=p.m;document.getElementById('f2-special').value=p.s;
+  recommendMat();
+}
+function recommendMat(){
+  const ind=document.getElementById('f2-industry').value;
+  const contam=document.getElementById('f2-contam').value;
+  const mohs=+document.getElementById('f2-mohs').value;
+  const special=document.getElementById('f2-special').value;
+  let first='',second='',steps=[];
+
+  // 특수 조건 먼저
+  if(special==='acid'){first='PTFE';second='ZrO2';steps.push({q:'산/알칼리 접촉?',a:'YES → PTFE (테프론, 화학적 불활성 최고)'});steps.push({q:'2순위',a:'ZrO2 (내화학성 양호)'});show('res2',renderMat(first,second,steps,[`PTFE는 Mohs 2로 매우 부드러움 — 경도가 낮은 시료에만 적합`,`고경도 시료는 ZrO2를 선택하고 산성 용매 사용 최소화`]));return}
+  if(special==='nano'){first='ZrO2';second='';steps.push({q:'나노 분쇄 (0.1mm 볼)?',a:'YES → ZrO2 (유일하게 0.1mm 초미세볼 가용)'});show('res2',renderMat(first,second,steps,[`0.1mm 볼은 ZrO2만 제조 가능 — 나노 분쇄의 유일한 선택`]));return}
+  if(special==='trace'){first='Agate';second='ZrO2';steps.push({q:'미량원소 분석?',a:'YES → Agate (SiO2 99.9%, 최고 순수성)'});steps.push({q:'2순위',a:'ZrO2 (Si 오염을 피해야 할 때)'});show('res2',renderMat(first,second,steps,[`Agate(마노)는 천연 SiO2로 금속 원소 오염 Zero`,`XRF/XRD/ICP 분석 시 정확도 최고`]));return}
+  if(special==='gmp'){first='SS';second='ZrO2';steps.push({q:'GMP/HACCP 필요?',a:'YES → SS (스테인리스, GMP 표준 재질)'});steps.push({q:'금속오염 최소화 필요 시',a:'ZrO2 (2순위)'});show('res2',renderMat(first,second,steps,[`SS는 세척 밸리데이션이 확립된 GMP 표준`,`가격이 가장 저렴하여 경제적`]));return}
+
+  // 일반 의사결정 트리
+  if(contam==='no'){
+    steps.push({q:'금속 오염 허용?',a:'NO'});
+    if(mohs>=9){first='Si3N4';second='ZrO2';steps.push({q:`경도 Mohs ${mohs} ≥ 9?`,a:`YES → Si3N4 (경도 9, 고경도 시료 대응)`})}
+    else if(mohs>=7){first='ZrO2';second='Si3N4';steps.push({q:`경도 Mohs ${mohs} ≥ 7?`,a:'YES → ZrO2 (경도 8.5, 범용 고순도)'})}
+    else{
+      if(ind==='mineral'||ind==='env'){first='Agate';second='ZrO2';steps.push({q:`경도 ${mohs} < 7 + 분석용?`,a:'Agate (최고 순수성, SiO2 99.9%)'})}
+      else{first='ZrO2';second='Agate';steps.push({q:`경도 ${mohs} < 7`,a:'ZrO2 (범용, 나노볼 가용, 금속오염 없음)'})}
+    }
+  }else{
+    steps.push({q:'금속 오염 허용?',a:'YES'});
+    if(ind==='food'||ind==='pharma'){first='SS';second='ZrO2';steps.push({q:'식품/제약?',a:'SS (GMP/HACCP, 세척 용이, 저가)'})}
+    else if(mohs>=8){first='WC';second='Si3N4';steps.push({q:`고경도 Mohs ${mohs}?`,a:'WC (최고 경도 9.5, 금속/합금 분쇄)'})}
+    else{first='SS';second='ZrO2';steps.push({q:'범용',a:'SS (경제적) 또는 경화강 (최저가)'})}
+  }
+
+  const indLabels={battery:'배터리',ceramic:'세라믹',pharma:'제약',food:'식품',mineral:'광물',metal:'금속',env:'환경',chem:'화학'};
+  const warns=[];
+  if(contam==='no')warns.push(`금속오염 불허 → SS, 경화강, WC(Co 바인더) 사용 금지`);
+  if(ind==='battery')warns.push(`배터리 소재: Fe/Cr/Ni 오염 시 성능/안전성 저하`);
+  show('res2',renderMat(first,second,steps,warns));
+}
+function renderMat(first,second,steps,warns){
+  let tree='';
+  steps.forEach(s=>{tree+=`<div class="reason"><b>[${s.q}]</b> → ${s.a}</div>`});
+  let html=`<h3>재질 추천 결과</h3>`;
+  html+=`<h4>의사결정 과정</h4>${tree}`;
+  html+=`<table class="r-table"><tr><th>순위</th><th>재질</th><th>경도(Mohs)</th></tr>`;
+  html+=`<tr><td><b>1순위</b></td><td><b>${MAT_NAMES[first]}</b></td><td>${MAT_MOHS[first]}</td></tr>`;
+  if(second)html+=`<tr><td>2순위</td><td>${MAT_NAMES[second]}</td><td>${MAT_MOHS[second]}</td></tr>`;
+  html+=`</table>`;
+  warns.forEach(w=>html+=`<div class="note danger">⚠️ ${w}</div>`);
+  return html;
+}
+
+// ===== 탭3: 테스트 설계 =====
+function setEx3(n){
+  const p=[{s:'lfp',d:3},{s:'caco3',d:5},{s:'api-oral',d:10}][n];
+  document.getElementById('f3-sample').value=p.s;document.getElementById('f3-d50').value=p.d;
+  designTest();
+}
+function designTest(){
+  const sKey=document.getElementById('f3-sample').value;
+  const targetD50=+document.getElementById('f3-d50').value;
+  const s=SAMPLES[sKey];
+  if(!s){show('res3','<p>시료 데이터 없음</p>');return}
+
+  // 조건 조정
+  let rpm=s.rpm, time=s.time, ball=s.ball, equip=s.equip;
+  let adjustReasons=[];
+  const ratio=s.d50/targetD50;
+
+  if(targetD50<s.d50){
+    rpm=Math.min(s.rpm+100,800);time=Math.round(s.time*1.5);
+    if(targetD50<=1)ball='1mm';
+    adjustReasons.push(`목표 D50(${targetD50}μm)이 기본값(${s.d50}μm)보다 미세 → rpm 증가(${s.rpm}→${rpm}), 시간 연장(${s.time}→${time}분)`);
+  }else if(targetD50>s.d50*2){
+    rpm=Math.max(s.rpm-150,250);time=Math.max(Math.round(s.time*0.5),3);
+    adjustReasons.push(`목표 D50(${targetD50}μm)이 기본값(${s.d50}μm)보다 큼 → rpm 감소(${s.rpm}→${rpm}), 시간 단축(${s.time}→${time}분)`);
+  }else{
+    adjustReasons.push(`목표 D50(${targetD50}μm)이 기본 조건(${s.d50}μm) 부근 → 표준 조건 적용`);
+  }
+
+  let html=`<h3>테스트 설계: ${s.name} → D50 ${targetD50}μm</h3>`;
+  html+=`<table class="r-table"><tr><th>항목</th><th>설정값</th></tr>
+    <tr><td>장비</td><td><b>${equip}</b></td></tr>
+    <tr><td>용기</td><td>${s.mat} ${s.vol}</td></tr>
+    <tr><td>분쇄볼</td><td>${s.mat} ${ball}, 충전율 30%</td></tr>
+    <tr><td>회전속도</td><td>${rpm} rpm</td></tr>
+    <tr><td>시간</td><td>${time}분</td></tr>
+    <tr><td>시료량</td><td>용기 용량의 1/3</td></tr></table>`;
+  html+=`<h4>조건 설정 근거</h4>`;
+  html+=`<div class="reason"><b>[기본 조건]</b> ${s.name}의 표준 분쇄 조건: ${s.equip}, ${s.mat} ${s.vol}, ${s.ball}, ${s.rpm}rpm, ${s.time}분 → D50 ~${s.d50}μm<br><span style="color:#555">→ ${s.note}</span></div>`;
+  adjustReasons.forEach(r=>html+=`<div class="reason"><b>[조건 조정]</b> ${r}</div>`);
+  if(targetD50<=1)html+=`<div class="note info">💡 나노 영역(≤1μm): 간헐 운전(5분 ON / 1분 OFF)으로 온도 상승을 방지하세요.</div>`;
+  show('res3',html);
+}
+
+// ===== 탭4: 입도 해석 =====
+function setEx4(n){
+  const p=[{i:'pharma-oral',a:2.3,b:15.2,c:45.8},{i:'battery',a:1.5,b:8.2,c:42},{i:'ceramic',a:0.3,b:3.5,c:18.2}][n];
+  document.getElementById('f4-industry').value=p.i;document.getElementById('f4-d10').value=p.a;document.getElementById('f4-d50').value=p.b;document.getElementById('f4-d90').value=p.c;
+  analyzeSize();
+}
+function analyzeSize(){
+  const indKey=document.getElementById('f4-industry').value;
+  const d10=+document.getElementById('f4-d10').value;
+  const d50=+document.getElementById('f4-d50').value;
+  const d90=+document.getElementById('f4-d90').value;
+  const std=SIZE_STD[indKey];
+  if(!std){show('res4','<p>기준 데이터 없음</p>');return}
+
+  const span=d10>0?((d90-d10)/d50).toFixed(2):'-';
+  const d50ok=d50>=std.d50[0]&&d50<=std.d50[1];
+  const d90ok=d90<=std.d90;
+  const spanOk=span==='-'||std.span>=99||+span<=std.span;
+  const allPass=d50ok&&d90ok&&spanOk;
+
+  let html=`<h3>입도 해석: ${std.label}</h3>`;
+  html+=`<table class="r-table">
+    <tr><th>측정값</th><th>값</th><th>기준</th><th>판정</th><th>근거</th></tr>
+    <tr><td>D10</td><td>${d10} μm</td><td>-</td><td><span class="badge badge-info">참고</span></td><td>미세 입자 비율 지표</td></tr>
+    <tr><td>D50</td><td>${d50} μm</td><td>${std.d50[0]}~${std.d50[1]} μm</td><td><span class="badge ${d50ok?'badge-pass':'badge-fail'}">${d50ok?'합격':'불합격'}</span></td>
+      <td>${d50ok?`기준 범위(${std.d50[0]}~${std.d50[1]}) 이내`:`${d50<std.d50[0]?'기준 하한('+std.d50[0]+') 미만 → 과분쇄':'기준 상한('+std.d50[1]+') 초과 → 분쇄 부족'}`}</td></tr>
+    <tr><td>D90</td><td>${d90} μm</td><td>&lt; ${std.d90} μm</td><td><span class="badge ${d90ok?'badge-pass':'badge-fail'}">${d90ok?'합격':'불합격'}</span></td>
+      <td>${d90ok?`기준(${std.d90}μm) 이하 충족`:`기준(${std.d90}μm) 초과 → 조대 입자 잔류`}</td></tr>`;
+  if(std.span<99)html+=`<tr><td>Span</td><td>${span}</td><td>&lt; ${std.span}</td><td><span class="badge ${spanOk?'badge-pass':'badge-fail'}">${spanOk?'합격':'불합격'}</span></td>
+      <td>${spanOk?`기준(${std.span}) 이하 → 분포 균일`:`기준(${std.span}) 초과 → 분포 불균일`}</td></tr>`;
+  html+=`</table>`;
+
+  const verdict=allPass?'합격 ✅':(!d50ok&&!d90ok?'불합격 ❌':'조건부 ⚠️');
+  const vClass=allPass?'badge-pass':(!d50ok&&!d90ok?'badge-fail':'badge-warn');
+  html+=`<p style="font-size:20px;margin:14px 0;text-align:center"><span class="badge ${vClass}" style="font-size:15px;padding:7px 22px">종합 판정: ${verdict}</span></p>`;
+
+  if(!allPass){
+    html+=`<h4>문제 분석 및 개선 방안</h4><table class="r-table"><tr><th>문제</th><th>원인</th><th>대책</th></tr>`;
+    if(!d50ok){
+      if(d50<std.d50[0])html+=`<tr><td>D50 미달 (${d50} < ${std.d50[0]}μm)</td><td>과분쇄</td><td>rpm 감소 또는 시간 단축</td></tr>`;
+      else html+=`<tr><td>D50 초과 (${d50} > ${std.d50[1]}μm)</td><td>분쇄 부족</td><td>rpm 증가, 시간 연장, 볼 크기 감소</td></tr>`;
+    }
+    if(!d90ok)html+=`<tr><td>D90 초과 (${d90} > ${std.d90}μm)</td><td>조대 입자 잔류</td><td>단계적 분쇄 또는 체 분급(${std.d90}μm)</td></tr>`;
+    if(!spanOk)html+=`<tr><td>Span 초과 (${span} > ${std.span})</td><td>불균일 분포</td><td>볼 크기 단일화, 분급 또는 습식 전환</td></tr>`;
+    html+=`</table>`;
+  }
+  html+=`<div class="note info">📌 기준 출처: ${std.ref} | ${std.label}</div>`;
+  show('res4',html);
+}
+</script>
+</body>
+</html>
