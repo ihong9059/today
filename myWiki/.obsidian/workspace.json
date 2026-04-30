@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "1a199db1cc242b61",
+        "id": "8951f6b4292c9e8b",
         "type": "tabs",
         "children": [
           {
-            "id": "18d0f7b71e8b59ea",
+            "id": "02a7e6bb165a9ad9",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "second-brain/raw/ai-education-web/node_modules/eslint-plugin-react/README.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "README"
+              "title": "새 탭"
             }
           }
         ]
@@ -183,10 +179,13 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "18d0f7b71e8b59ea",
+  "active": "5bd341be470fbe3c",
   "lastOpenFiles": [
-    "actions-image.md",
+    "second-brain/raw/smartFactory/업무효율화/태명과학/LFP_추천_플로우차트.html",
+    "second-brain/raw/smartFactory/업무효율화/태명과학/태명wiki/환영합니다!.md",
+    "second-brain/raw/smartFactory/업무효율화/태명과학/태명wiki",
     "second-brain/raw/ai-education-web/node_modules/eslint-plugin-react/README.md",
+    "actions-image.md",
     "second-brain/raw/응원봉/사용설명서/node_modules/ms/license.md",
     "second-brain/raw/ai-education-web/node_modules/eslint-plugin-import/README.md",
     "second-brain/projects.md",
@@ -214,13 +213,10 @@
     "second-brain/raw/revitaProject/zephyr_workspace/deprecated/old/platformio_projects/test_05_lora_tx/src/main.c",
     "second-brain/raw/revitaProject/zephyr_workspace/deprecated/old/platformio_projects/test_06_ble_peripheral/src/main.c",
     "second-brain/raw/revitaProject/zephyr_workspace/deprecated/old/platformio_projects/test_07_ble_central/src/main.c",
-    "second-brain/raw/revitaProject/zephyr_workspace/deprecated/old/platformio_projects/test_03_mcp23017_basic/src/main.c",
     "second-brain/raw/revitaProject/zephyr_workspace/deprecated/old/ncs_projects/pca10059Test/README.md",
     "second-brain/raw/revitaProject/zephyr_workspace/deprecated/old/ncs_projects/bleCom/README.md",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Power_모듈_2단계_테스트_12V.md",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Power_모듈_1단계_테스트_설계.md",
-    "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Security_모듈_2단계_테스트_LoRa하향상향.md",
-    "second-brain/raw/revitaProject/zephyr_workspace/apps/test/revita/done/Security_모듈_3단계_개발_테스트.md",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/리비타_타워_MCU_PART.png",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/리비타_링크_MCU_PART.png",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/tower_page11_full.png",

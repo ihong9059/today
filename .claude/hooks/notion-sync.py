@@ -115,11 +115,14 @@ def is_similar(a, b):
             if ratio >= 0.7:
                 return True
 
-    # 키워드 2개 이상 일치
+    # 키워드 일치: 3개 이상 또는 작은 쪽의 50% 이상
     ka = set(w for w in normalize_text(a).split() if len(w) >= 2)
     kb = set(w for w in normalize_text(b).split() if len(w) >= 2)
-    if ka and kb and len(ka & kb) >= 2:
-        return True
+    if ka and kb:
+        common = len(ka & kb)
+        ratio = common / min(len(ka), len(kb))
+        if common >= 3 or (common >= 2 and ratio >= 0.5):
+            return True
 
     return False
 
