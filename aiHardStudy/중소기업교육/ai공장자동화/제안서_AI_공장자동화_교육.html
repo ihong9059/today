@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 공장자동화 교육 제안 - Raspberry Pi + Python + Colab</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #0a0a0a; color: #fff; overflow: hidden; }
+  .slide { display: none; width: 100vw; height: 100vh; padding: 50px 70px; position: absolute; top: 0; left: 0; animation: fadeIn 0.5s ease; }
+  .slide.active { display: flex; flex-direction: column; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Cover */
+  .slide-cover { background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #3b82f6 150%); justify-content: center; align-items: center; text-align: center; }
+  .slide-cover .badge { display: inline-block; background: rgba(59,130,246,0.2); border: 1px solid rgba(59,130,246,0.5); border-radius: 30px; padding: 8px 24px; font-size: 13px; letter-spacing: 2px; color: #93c5fd; margin-bottom: 25px; }
+  .slide-cover h1 { font-size: 46px; font-weight: 900; line-height: 1.3; margin-bottom: 15px; background: linear-gradient(to right, #fff, #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .slide-cover .subtitle { font-size: 19px; font-weight: 300; color: rgba(255,255,255,0.75); margin-bottom: 12px; }
+  .slide-cover .tools { font-size: 15px; color: rgba(255,255,255,0.5); margin-bottom: 35px; }
+  .slide-cover .tools span { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 5px 14px; margin: 0 4px; font-size: 13px; }
+  .slide-cover .meta { font-size: 15px; color: rgba(255,255,255,0.4); }
+
+  /* Common */
+  .sh { margin-bottom: 28px; }
+  .sh .num { font-size: 13px; font-weight: 500; color: #3b82f6; letter-spacing: 3px; margin-bottom: 6px; }
+  .sh h2 { font-size: 32px; font-weight: 700; }
+  .sh .line { width: 50px; height: 3px; background: #3b82f6; margin-top: 12px; border-radius: 2px; }
+  .sb { flex: 1; display: flex; gap: 28px; }
+
+  /* Problem */
+  .s-prob { background: linear-gradient(160deg, #0f172a, #1a1a2e); }
+  .prob-left { flex: 1.2; display: flex; flex-direction: column; gap: 14px; }
+  .prob-right { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  .prob-item { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; padding: 16px 20px; display: flex; gap: 14px; align-items: center; }
+  .prob-item .icon { font-size: 26px; flex-shrink: 0; }
+  .prob-item h3 { font-size: 15px; font-weight: 700; color: #fca5a5; margin-bottom: 2px; }
+  .prob-item p { font-size: 12px; color: rgba(255,255,255,0.55); }
+  .prob-vs { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px; width: 100%; }
+  .prob-vs h3 { font-size: 15px; font-weight: 700; color: #3b82f6; margin-bottom: 15px; text-align: center; }
+  .vs-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+  .vs-row .old { color: rgba(255,255,255,0.4); text-decoration: line-through; }
+  .vs-row .new { color: #4ade80; font-weight: 500; }
+
+  /* Solution */
+  .s-sol { background: linear-gradient(160deg, #0a2540, #1a0f2e); }
+  .sol-main { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 25px; }
+  .sol-row { display: flex; gap: 18px; align-items: center; justify-content: center; }
+  .sol-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(59,130,246,0.3); border-radius: 14px; padding: 20px 16px; text-align: center; width: 160px; }
+  .sol-box .icon { font-size: 32px; margin-bottom: 6px; }
+  .sol-box h3 { font-size: 14px; font-weight: 700; color: #93c5fd; margin-bottom: 4px; }
+  .sol-box p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+  .sol-arrow { font-size: 22px; color: #3b82f6; }
+  .sol-desc { text-align: center; font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+  .sol-desc strong { color: #93c5fd; }
+
+  /* Hardware */
+  .s-hw { background: linear-gradient(160deg, #0f172a, #1c1917); }
+  .hw-left { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .hw-right { flex: 1; display: flex; flex-direction: column; gap: 10px; justify-content: center; }
+  .hw-feat { display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 12px 16px; }
+  .hw-feat .icon { font-size: 22px; }
+  .hw-feat h3 { font-size: 14px; font-weight: 600; }
+  .hw-feat p { font-size: 11px; color: rgba(255,255,255,0.5); }
+  .hw-ascii { background: rgba(0,0,0,0.4); border: 1px solid rgba(59,130,246,0.3); border-radius: 12px; padding: 22px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.5; color: #93c5fd; white-space: pre; }
+
+  /* Tools */
+  .s-tools { background: linear-gradient(160deg, #0f172a, #172554); }
+  .tools-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-content: center; }
+  .tool-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px 22px; text-align: center; }
+  .tool-card .icon { font-size: 40px; margin-bottom: 10px; }
+  .tool-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .tool-card .sub { font-size: 12px; color: #93c5fd; margin-bottom: 10px; }
+  .tool-card p { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+  .tool-card ul { list-style: none; text-align: left; padding: 0; margin-top: 10px; }
+  .tool-card ul li { font-size: 11px; color: rgba(255,255,255,0.55); padding: 3px 0; padding-left: 12px; position: relative; }
+  .tool-card ul li::before { content: ""; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: #3b82f6; }
+
+  /* Curriculum */
+  .s-cur { background: linear-gradient(160deg, #0f172a, #1e3a5f); }
+  .cur-flow { display: flex; align-items: center; gap: 8px; margin-bottom: 22px; justify-content: center; }
+  .cur-step { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 10px; padding: 8px 14px; text-align: center; font-size: 11px; }
+  .cur-step strong { display: block; font-size: 13px; color: #93c5fd; margin-bottom: 2px; }
+  .cur-sarrow { color: #3b82f6; font-size: 16px; }
+  .cur-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cur-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px; display: flex; gap: 12px; }
+  .cur-num { background: linear-gradient(135deg, #3b82f6, #2563eb); width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .cur-item h3 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .cur-item p { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.3; }
+  .cur-item .result { font-size: 10px; color: #4ade80; margin-top: 4px; }
+
+  /* Demo */
+  .s-demo { background: linear-gradient(160deg, #0f172a, #0c4a6e); }
+  .demo-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-content: center; }
+  .demo-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 22px; }
+  .demo-card .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 10px; margin-bottom: 8px; letter-spacing: 1px; }
+  .demo-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .demo-card p { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.4; }
+  .demo-card .code { background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px; margin-top: 8px; font-family: 'Courier New', monospace; font-size: 10px; color: #93c5fd; line-height: 1.4; white-space: pre; }
+  .tag-hw { background: rgba(59,130,246,0.2); color: #60a5fa; }
+  .tag-data { background: rgba(34,197,94,0.2); color: #4ade80; }
+  .tag-ai { background: rgba(249,115,22,0.2); color: #fb923c; }
+  .tag-web { background: rgba(168,85,247,0.2); color: #c084fc; }
+
+  /* Compare */
+  .s-cmp { background: linear-gradient(160deg, #0f172a, #3b0764); }
+  .cmp-table { flex: 1; display: flex; flex-direction: column; gap: 5px; justify-content: center; }
+  .cmp-row { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 6px; }
+  .cmp-row.hdr { margin-bottom: 4px; }
+  .cmp-cell { padding: 11px 14px; border-radius: 8px; font-size: 12px; line-height: 1.3; }
+  .cmp-row.hdr .cmp-cell { background: rgba(255,255,255,0.1); font-weight: 700; text-align: center; font-size: 13px; }
+  .cmp-cell.lbl { background: rgba(255,255,255,0.04); font-weight: 500; display: flex; align-items: center; }
+  .cmp-cell.old { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.15); color: rgba(255,255,255,0.55); }
+  .cmp-cell.new { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); color: #93c5fd; font-weight: 500; }
+
+  /* Effect */
+  .s-eff { background: linear-gradient(160deg, #0f172a, #1e3a5f); }
+  .eff-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; align-content: center; }
+  .eff-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 26px; text-align: center; }
+  .eff-card .big { font-size: 40px; font-weight: 900; background: linear-gradient(to right, #3b82f6, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+  .eff-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 5px; }
+  .eff-card p { font-size: 11px; color: rgba(255,255,255,0.45); }
+
+  /* CTA */
+  .s-cta { background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #3b82f6 150%); justify-content: center; align-items: center; text-align: center; }
+  .s-cta h2 { font-size: 40px; font-weight: 900; margin-bottom: 18px; line-height: 1.3; }
+  .s-cta p { font-size: 17px; color: rgba(255,255,255,0.7); margin-bottom: 30px; line-height: 1.6; }
+  .cta-box { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 25px 45px; backdrop-filter: blur(10px); }
+  .cta-box .to { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 5px; }
+  .cta-box .org { font-size: 18px; font-weight: 700; }
+
+  /* Nav */
+  .nav { position: fixed; bottom: 25px; right: 35px; display: flex; gap: 8px; z-index: 100; }
+  .nav button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 40px; height: 40px; border-radius: 10px; cursor: pointer; font-size: 16px; transition: all 0.2s; }
+  .nav button:hover { background: rgba(255,255,255,0.2); }
+  .pg { position: fixed; bottom: 30px; left: 35px; font-size: 13px; color: rgba(255,255,255,0.35); z-index: 100; }
+</style>
+</head>
+<body>
+
+<!-- 1: Cover -->
+<div class="slide slide-cover active" id="s1">
+  <div class="badge">EDUCATION PROPOSAL 2026</div>
+  <h1>AI 공장자동화 프로그래밍<br>중소기업 교육 제안</h1>
+  <div class="subtitle">Raspberry Pi + Python + Google Colab으로 시작하는 실습형 스마트 팩토리</div>
+  <div class="tools">
+    <span>Raspberry Pi</span>
+    <span>UTTEC Shield</span>
+    <span>Python</span>
+    <span>Google Colab</span>
+  </div>
+  <div class="meta">UTTEC | 용인시 중소기업진흥원</div>
+</div>
+
+<!-- 2: Problem -->
+<div class="slide s-prob" id="s2">
+  <div class="sh"><div class="num">01 -- PROBLEM</div><h2>중소기업 제조 현장의 과제</h2><div class="line"></div></div>
+  <div class="sb">
+    <div class="prob-left">
+      <div class="prob-item"><div class="icon">&#x26A0;&#xFE0F;</div><div><h3>설비 고장 = 사후 대응</h3><p>고장 나야 알고, 원인 찾느라 반나절. 예방은 꿈같은 이야기</p></div></div>
+      <div class="prob-item"><div class="icon">&#x1F441;</div><div><h3>품질 검사 = 육안 의존</h3><p>사람 눈으로 확인. 피로 누적, 오류 발생, 24시간 불가</p></div></div>
+      <div class="prob-item"><div class="icon">&#x1F4CB;</div><div><h3>환경 관리 = 수기 기록</h3><p>온도, 습도를 주기적으로 확인하고 수기로 기록. 누락과 지연</p></div></div>
+      <div class="prob-item"><div class="icon">&#x1F4B0;</div><div><h3>스마트 팩토리 = 비용 부담</h3><p>PLC + SCADA + MES = 수천만원~수억원. 중소기업에겐 벽</p></div></div>
+    </div>
+    <div class="prob-right">
+      <div class="prob-vs">
+        <h3>상용 시스템 vs Raspberry Pi</h3>
+        <div class="vs-row"><span class="old">도입비 수천만원</span><span class="new">Pi 키트 12만원</span></div>
+        <div class="vs-row"><span class="old">도입 기간 수개월</span><span class="new">구축 기간 수일</span></div>
+        <div class="vs-row"><span class="old">유지보수 외부 의존</span><span class="new">Python으로 직접 관리</span></div>
+        <div class="vs-row"><span class="old">전문 프로그래밍 필요</span><span class="new">Python 초보도 가능</span></div>
+        <div class="vs-row"><span class="old">벤더 종속</span><span class="new">오픈소스 생태계</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3: Solution -->
+<div class="slide s-sol" id="s3">
+  <div class="sh"><div class="num">02 -- SOLUTION</div><h2>Raspberry Pi + Python + AI = 스마트 팩토리</h2><div class="line"></div></div>
+  <div class="sol-main">
+    <div class="sol-row">
+      <div class="sol-box"><div class="icon">&#x1F4BB;</div><h3>Raspberry Pi</h3><p>신용카드 크기<br>완전한 컴퓨터<br>GPIO 하드웨어 제어</p></div>
+      <div class="sol-arrow">+</div>
+      <div class="sol-box"><div class="icon">&#x1F6E1;&#xFE0F;</div><h3>UTTEC Shield</h3><p>센서, LED, 부저<br>OLED, 스위치<br>배선 불필요</p></div>
+      <div class="sol-arrow">+</div>
+      <div class="sol-box"><div class="icon">&#x1F40D;</div><h3>Python</h3><p>가장 쉬운 언어<br>AI 라이브러리 풍부<br>산업 현장 실사용</p></div>
+      <div class="sol-arrow">+</div>
+      <div class="sol-box"><div class="icon">&#x2601;&#xFE0F;</div><h3>Google Colab</h3><p>무료 GPU 제공<br>설치 불필요<br>브라우저만으로 AI 학습</p></div>
+    </div>
+    <div class="sol-desc">
+      <strong>Raspberry Pi</strong>로 센서를 읽고 설비를 제어하고, <strong>Python</strong>으로 데이터를 분석하고,<br>
+      <strong>Google Colab</strong>에서 AI를 학습시켜 이상을 탐지합니다.<br>
+      5회 15시간 교육으로 <strong>미니 스마트팩토리</strong>를 직접 구축합니다.
+    </div>
+  </div>
+</div>
+
+<!-- 4: Hardware -->
+<div class="slide s-hw" id="s4">
+  <div class="sh"><div class="num">03 -- HARDWARE</div><h2>Raspberry Pi + UTTEC Shield</h2><div class="line"></div></div>
+  <div class="sb">
+    <div class="hw-left">
+      <div class="hw-ascii">+-----------------------------------+
+|        Raspberry Pi 4B            |
+|     + UTTEC Shield Board          |
+|                                   |
+|  [RED] [YEL] [BLU]  [WS2812 x4] |
+|   LED   LED   LED   RGB NeoPixel |
+|                                   |
+|  +-------+  +-------+   [SW1]   |
+|  | OLED  |  | AHT20 |   Button  |
+|  |128x64 |  | Temp/  |          |
+|  +-------+  | Humid  |          |
+|              +-------+           |
+|                                   |
+|  [BUZZER] [SPEAKER] [ESP32C3]    |
+|   Alert    Melody    UART MCU    |
+|                                   |
+|  Python + GPIO + I2C + UART      |
++-----------------------------------+</div>
+    </div>
+    <div class="hw-right">
+      <div class="hw-feat"><div class="icon">&#x1F321;&#xFE0F;</div><div><h3>AHT20 온습도 센서</h3><p>공장 환경 실시간 모니터링</p></div></div>
+      <div class="hw-feat"><div class="icon">&#x1F7E2;</div><div><h3>신호등 LED (R/Y/B)</h3><p>정상/주의/위험 상태 표시</p></div></div>
+      <div class="hw-feat"><div class="icon">&#x1F308;</div><div><h3>WS2812 RGB LED x4</h3><p>다색 상태 표시 (NeoPixel)</p></div></div>
+      <div class="hw-feat"><div class="icon">&#x1F4FA;</div><div><h3>OLED 디스플레이</h3><p>128x64 실시간 수치 표시</p></div></div>
+      <div class="hw-feat"><div class="icon">&#x1F514;</div><div><h3>부저 + 스피커</h3><p>경고음, 알림 멜로디</p></div></div>
+      <div class="hw-feat"><div class="icon">&#x1F4E1;</div><div><h3>ESP32C3 (UART)</h3><p>Wi-Fi/BLE 게이트웨이</p></div></div>
+      <div class="hw-feat"><div class="icon">&#x1F4B2;</div><div><h3>키트 전체 12만원</h3><p>기존 시스템 대비 1/100 비용</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 5: Tools -->
+<div class="slide s-tools" id="s5">
+  <div class="sh"><div class="num">04 -- TOOLS</div><h2>교육 핵심 도구 3가지</h2><div class="line"></div></div>
+  <div class="sb">
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="icon">&#x1F4BB;</div>
+        <h3>Raspberry Pi</h3>
+        <div class="sub">하드웨어 제어의 핵심</div>
+        <ul>
+          <li>Linux OS가 탑재된 완전한 컴퓨터</li>
+          <li>GPIO로 센서, LED, 모터 직접 제어</li>
+          <li>Python으로 프로그래밍</li>
+          <li>Flask 웹서버로 대시보드 구축</li>
+          <li>교육 후 현장에서 즉시 활용 가능</li>
+        </ul>
+      </div>
+      <div class="tool-card">
+        <div class="icon">&#x1F40D;</div>
+        <h3>Python</h3>
+        <div class="sub">가장 쉽고 강력한 언어</div>
+        <ul>
+          <li>문법이 영어와 유사하여 초보자 친화적</li>
+          <li>AI/데이터 분석 분야 1위 언어</li>
+          <li>풍부한 하드웨어 제어 라이브러리</li>
+          <li>코드 20줄로 공장 신호등 완성</li>
+          <li>산업 현장에서 실제 사용</li>
+        </ul>
+      </div>
+      <div class="tool-card">
+        <div class="icon">&#x2601;&#xFE0F;</div>
+        <h3>Google Colab</h3>
+        <div class="sub">무료 AI 학습 환경</div>
+        <ul>
+          <li>브라우저만으로 AI 모델 학습</li>
+          <li>무료 GPU (CPU 대비 10~50배 빠름)</li>
+          <li>설치/환경 설정 불필요</li>
+          <li>교육 자료를 링크 하나로 공유</li>
+          <li>학습된 모델을 Pi에 적용</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6: Curriculum -->
+<div class="slide s-cur" id="s6">
+  <div class="sh"><div class="num">05 -- CURRICULUM</div><h2>교육 커리큘럼 (3시간 x 5회 = 15시간)</h2><div class="line"></div></div>
+  <div class="cur-flow">
+    <div class="cur-step"><strong>1회차</strong>환경 구축</div>
+    <div class="cur-sarrow">&#x2192;</div>
+    <div class="cur-step"><strong>2회차</strong>센서/제어</div>
+    <div class="cur-sarrow">&#x2192;</div>
+    <div class="cur-step"><strong>3회차</strong>데이터/통신</div>
+    <div class="cur-sarrow">&#x2192;</div>
+    <div class="cur-step"><strong>4회차</strong>AI 적용</div>
+    <div class="cur-sarrow">&#x2192;</div>
+    <div class="cur-step"><strong>5회차</strong>종합 프로젝트</div>
+  </div>
+  <div class="cur-grid">
+    <div class="cur-item"><div class="cur-num">1</div><div><h3>환경 구축 + Python 기초</h3><p>Pi 부팅, Wi-Fi, VNC 원격접속, Linux 명령어, Python 변수/조건문/반복문</p><div class="result">&#x2192; Pi 원격접속 + "Hello Factory!" 출력</div></div></div>
+    <div class="cur-item"><div class="cur-num">2</div><div><h3>GPIO 제어 + 센서</h3><p>LED 신호등, 스위치 입력, AHT20 온습도 읽기, OLED 표시, 자동 경고</p><div class="result">&#x2192; 공장 신호등 시스템 완성</div></div></div>
+    <div class="cur-item"><div class="cur-num">3</div><div><h3>데이터 관리 + 통신</h3><p>CSV 데이터 저장, matplotlib 그래프, ESP32C3 UART, Flask 웹 대시보드</p><div class="result">&#x2192; 브라우저 실시간 모니터링</div></div></div>
+    <div class="cur-item"><div class="cur-num">4</div><div><h3>AI 적용</h3><p>Colab에서 MNIST AI 학습, 통계 이상탐지(Z-score), AI API 보고서 자동 생성</p><div class="result">&#x2192; AI 이상탐지 + 자동 보고서</div></div></div>
+    <div class="cur-item" style="grid-column: 1 / -1;"><div class="cur-num">5</div><div><h3>종합 프로젝트 -- 미니 스마트팩토리</h3><p>조별 스마트팩토리 구축: 센서 수집 + 신호등 제어 + AI 이상탐지 + 웹 대시보드. 시연 발표 + "우리 공장에 어떻게 적용할까?" 토론</p><div class="result">&#x2192; 완전한 미니 스마트팩토리 시연 + 현장 적용 계획서</div></div></div>
+  </div>
+</div>
+
+<!-- 7: Demo -->
+<div class="slide s-demo" id="s7">
+  <div class="sh"><div class="num">06 -- HANDS-ON</div><h2>핵심 실습 미리보기</h2><div class="line"></div></div>
+  <div class="sb">
+    <div class="demo-grid">
+      <div class="demo-card">
+        <div class="tag tag-hw">HARDWARE</div>
+        <h3>공장 신호등 시스템</h3>
+        <p>온도에 따라 LED 색상 자동 변경 + 위험 시 부저 경고</p>
+        <div class="code">temp = sensor.temperature
+if temp >= 35:
+    LED_RED = ON   # 위험!
+    BUZZER = ON    # 경고음!
+elif temp >= 28:
+    LED_YELLOW = ON  # 주의
+else:
+    LED_BLUE = ON    # 정상</div>
+      </div>
+      <div class="demo-card">
+        <div class="tag tag-web">DASHBOARD</div>
+        <h3>웹 실시간 대시보드</h3>
+        <p>Flask + Chart.js로 브라우저에서 실시간 모니터링</p>
+        <div class="code">app = Flask(__name__)
+
+@app.route('/data')
+def get_data():
+    temp = sensor.temperature
+    humi = sensor.humidity
+    return jsonify(temp=temp,
+                   humi=humi)</div>
+      </div>
+      <div class="demo-card">
+        <div class="tag tag-ai">AI / COLAB</div>
+        <h3>Google Colab AI 학습</h3>
+        <p>무료 GPU로 이미지 인식 AI 모델을 직접 학습</p>
+        <div class="code"># Colab에서 실행
+model = Sequential([
+  Conv2D(32, (3,3), ...),
+  Dense(10, 'softmax')
+])
+model.fit(x_train, y_train)
+# -> 정확도 99%!</div>
+      </div>
+      <div class="demo-card">
+        <div class="tag tag-data">AI ANOMALY</div>
+        <h3>AI 이상탐지 + 자동 보고서</h3>
+        <p>센서 이상 감지 시 AI가 원인 분석 보고서 자동 작성</p>
+        <div class="code">z_score = abs(temp - mean) / std
+if z_score > 2:
+    print("이상 감지!")
+    report = AI_API(
+        "설비 과열 분석 요청"
+    )  # -> AI 보고서 자동 생성</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 8: Compare -->
+<div class="slide s-cmp" id="s8">
+  <div class="sh"><div class="num">07 -- DIFFERENTIATION</div><h2>기존 시스템 대비 차별점</h2><div class="line"></div></div>
+  <div class="sb">
+    <div class="cmp-table">
+      <div class="cmp-row hdr"><div class="cmp-cell"></div><div class="cmp-cell">상용 공장자동화</div><div class="cmp-cell">Pi + Python 교육</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">초기 비용</div><div class="cmp-cell old">수천만원 ~ 수억원</div><div class="cmp-cell new">키트 12만원 (인당)</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">도입 기간</div><div class="cmp-cell old">수개월 (설계+구축+테스트)</div><div class="cmp-cell new">5회 교육 후 즉시 시작</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">프로그래밍</div><div class="cmp-cell old">PLC 래더 / 전문 언어</div><div class="cmp-cell new">Python (가장 쉬운 언어)</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">AI 적용</div><div class="cmp-cell old">별도 솔루션 추가 구매</div><div class="cmp-cell new">Google Colab (무료 GPU)</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">유지보수</div><div class="cmp-cell old">외부 업체 의존 (유료)</div><div class="cmp-cell new">내부 인력이 직접 관리</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">확장/수정</div><div class="cmp-cell old">벤더 종속, 추가 비용</div><div class="cmp-cell new">오픈소스, 자유 수정</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">선행 지식</div><div class="cmp-cell old">전기/자동화 전문 지식</div><div class="cmp-cell new">초보자도 5회 만에 습득</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">교육 후</div><div class="cmp-cell old">외부 운영 의존</div><div class="cmp-cell new">키트 가져가 현장 적용</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 9: Effect -->
+<div class="slide s-eff" id="s9">
+  <div class="sh"><div class="num">08 -- EXPECTED EFFECT</div><h2>기대 효과</h2><div class="line"></div></div>
+  <div class="sb">
+    <div class="eff-grid">
+      <div class="eff-card"><div class="big">15시간</div><h3>5회 실습 교육</h3><p>이론 2.5h + 실습 10.5h + 프로젝트 2h</p></div>
+      <div class="eff-card"><div class="big">12만원</div><h3>키트 전체 비용</h3><p>Pi + Shield + 케이스 + 전원 + SD카드</p></div>
+      <div class="eff-card"><div class="big">Python</div><h3>가장 쉬운 프로그래밍</h3><p>코드 20줄로 신호등 시스템 완성</p></div>
+      <div class="eff-card"><div class="big">무료</div><h3>Google Colab GPU</h3><p>AI 모델 학습에 비용 제로</p></div>
+      <div class="eff-card"><div class="big">즉시</div><h3>현장 적용 가능</h3><p>키트 가져가 바로 프로토타이핑</p></div>
+      <div class="eff-card"><div class="big">확장</div><h3>점진적 스케일업</h3><p>필요에 따라 센서/Pi 추가</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 10: CTA -->
+<div class="slide s-cta" id="s10">
+  <h2>내 손으로 만드는 스마트 팩토리,<br>Raspberry Pi + AI로 시작하세요</h2>
+  <p>12만원 키트와 Python, 무료 Colab AI로<br>5회 15시간이면 공장자동화를 직접 구축합니다</p>
+  <div class="cta-box">
+    <div class="to">교육 제안</div>
+    <div class="org">용인시 중소기업진흥원 귀중</div>
+    <div style="margin-top:12px; font-size:14px; color:rgba(255,255,255,0.5);">UTTEC</div>
+  </div>
+</div>
+
+<!-- Nav -->
+<div class="nav"><button onclick="prev()">&#x25C0;</button><button onclick="next()">&#x25B6;</button></div>
+<div class="pg" id="pg">1 / 10</div>
+
+<script>
+let c=1; const t=10;
+function show(n){document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));const s=document.getElementById('s'+n);if(s){s.classList.add('active');s.style.animation='none';s.offsetHeight;s.style.animation='';}document.getElementById('pg').textContent=n+' / '+t;}
+function next(){if(c<t){c++;show(c);}}
+function prev(){if(c>1){c--;show(c);}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='Enter'){e.preventDefault();next();}if(e.key==='ArrowLeft'||e.key==='Backspace'){e.preventDefault();prev();}});
+let tx=0;document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>50){d>0?next():prev();}});
+</script>
+</body>
+</html>
