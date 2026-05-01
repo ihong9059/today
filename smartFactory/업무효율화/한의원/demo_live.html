@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한의원 AI 업무효율화 - 실시간 데모</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI','Malgun Gothic',sans-serif; background:#f3e5f5; color:#333; }
+.header { background:linear-gradient(135deg,#4a148c,#7b1fa2); color:#fff; padding:20px 30px; text-align:center; }
+.header h1 { font-size:28px; margin-bottom:6px; }
+.header p { font-size:14px; opacity:.85; }
+.badge { display:inline-block; background:#ff9800; color:#fff; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:bold; margin-top:6px; }
+
+.tabs { display:flex; background:#6a1b9a; overflow-x:auto; }
+.tabs button { flex:1; padding:14px 8px; background:none; border:none; color:#e1bee7; font-size:14px; cursor:pointer; transition:.2s; white-space:nowrap; min-width:120px; }
+.tabs button:hover { background:rgba(255,255,255,.1); }
+.tabs button.active { background:#4a148c; color:#fff; font-weight:bold; border-bottom:3px solid #ce93d8; }
+
+.content { max-width:1000px; margin:20px auto; padding:0 16px; }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+.card { background:#fff; border-radius:12px; padding:24px; margin-bottom:24px; box-shadow:0 2px 12px rgba(74,20,140,.12); }
+.card h3 { color:#4a148c; margin-bottom:16px; font-size:18px; }
+
+.form-group { margin-bottom:14px; }
+.form-group label { display:block; font-weight:600; margin-bottom:4px; color:#6a1b9a; font-size:13px; }
+.form-group select, .form-group input { width:100%; padding:10px 12px; border:2px solid #e1bee7; border-radius:8px; font-size:14px; transition:.2s; }
+.form-group select:focus, .form-group input:focus { border-color:#9c27b0; outline:none; }
+
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:600px) { .form-row { grid-template-columns:1fr; } }
+
+.btn { background:linear-gradient(135deg,#7b1fa2,#9c27b0); color:#fff; border:none; padding:12px 24px; border-radius:8px; font-size:15px; cursor:pointer; width:100%; margin-top:8px; transition:.2s; }
+.btn:hover { background:linear-gradient(135deg,#6a1b9a,#8e24aa); transform:translateY(-1px); }
+
+.result { margin-top:20px; display:none; }
+.result.show { display:block; }
+.result-title { background:#4a148c; color:#fff; padding:12px 16px; border-radius:8px 8px 0 0; font-size:15px; }
+.result-body { background:#faf5ff; border:1px solid #e1bee7; border-top:none; border-radius:0 0 8px 8px; padding:16px; }
+
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:13px; }
+table th { background:#f3e5f5; color:#4a148c; padding:8px 10px; text-align:left; }
+table td { padding:8px 10px; border-bottom:1px solid #f3e5f5; }
+
+.tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:12px; margin:2px; }
+.tag-purple { background:#f3e5f5; color:#6a1b9a; }
+.tag-red { background:#ffebee; color:#c62828; }
+.tag-green { background:#e8f5e9; color:#2e7d32; }
+.tag-orange { background:#fff3e0; color:#e65100; }
+.tag-blue { background:#e3f2fd; color:#1565c0; }
+
+.warning { background:#fff3e0; border-left:4px solid #ff9800; padding:10px 14px; border-radius:0 8px 8px 0; margin:10px 0; font-size:13px; }
+.danger { background:#fce4ec; border-left:4px solid #e53935; padding:10px 14px; border-radius:0 8px 8px 0; margin:10px 0; font-size:13px; }
+.info { background:#e8eaf6; border-left:4px solid #5c6bc0; padding:10px 14px; border-radius:0 8px 8px 0; margin:10px 0; font-size:13px; }
+.step { background:#faf5ff; border-left:3px solid #9c27b0; padding:8px 12px; margin:6px 0; font-size:13px; }
+
+.footer { text-align:center; padding:30px; color:#9e9e9e; font-size:12px; border-top:1px solid #e0e0e0; margin-top:40px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>🏥 한의원 AI 업무효율화 시스템</h1>
+<p>실시간 AI 분석 — 처방 추천 · 경혈 배혈 · 약재 상호작용 · 체질 분석 · 변증 진단</p>
+<span class="badge">LIVE DEMO</span>
+</div>
+
+<div class="tabs">
+<button class="active" onclick="showTab(0)">🏥 처방 추천</button>
+<button onclick="showTab(1)">📍 경혈 추천</button>
+<button onclick="showTab(2)">🌿 약재 확인</button>
+<button onclick="showTab(3)">🔮 체질 분석</button>
+<button onclick="showTab(4)">📋 변증 진단</button>
+</div>
+
+<div class="content">
+
+<!-- ==================== TAB 1: 처방 추천 ==================== -->
+<div class="tab-panel active" id="tab0">
+<div class="card">
+<h3>🏥 체질 기반 처방 추천</h3>
+<div class="form-row">
+<div class="form-group">
+<label>체질</label>
+<select id="rx_constitution">
+<option value="">-- 선택 --</option>
+<option value="태음인">태음인(太陰人)</option>
+<option value="소음인">소음인(少陰人)</option>
+<option value="소양인">소양인(少陽人)</option>
+<option value="태양인">태양인(太陽人)</option>
+</select>
+</div>
+<div class="form-group">
+<label>주증상</label>
+<select id="rx_symptom">
+<option value="">-- 선택 --</option>
+<option value="소화불량">소화불량</option>
+<option value="감기">감기</option>
+<option value="두통">두통</option>
+<option value="요통">요통</option>
+<option value="불면">불면</option>
+<option value="피로">피로</option>
+<option value="생리통">생리통</option>
+</select>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label>한열(寒熱)</label>
+<select id="rx_hanheol">
+<option value="보통">보통</option>
+<option value="한증">한증(寒證) — 추위 많이 탐</option>
+<option value="열증">열증(熱證) — 열 많음</option>
+</select>
+</div>
+<div class="form-group">
+<label>허실(虛實)</label>
+<select id="rx_heosil">
+<option value="보통">보통</option>
+<option value="허증">허증(虛證) — 기력 부족</option>
+<option value="실증">실증(實證) — 통증/울체</option>
+</select>
+</div>
+</div>
+<button class="btn" onclick="recommendPrescription()">처방 추천 받기</button>
+<div class="result" id="rx_result"></div>
+</div>
+</div>
+
+<!-- ==================== TAB 2: 경혈 추천 ==================== -->
+<div class="tab-panel" id="tab1">
+<div class="card">
+<h3>📍 증상별 경혈 배혈 추천</h3>
+<div class="form-row">
+<div class="form-group">
+<label>증상</label>
+<select id="acu_symptom">
+<option value="">-- 선택 --</option>
+<option value="두통">두통</option>
+<option value="요통">요통</option>
+<option value="경항통">경항통(목 통증)</option>
+<option value="소화불량">소화불량</option>
+<option value="불면">불면</option>
+<option value="생리통">생리통</option>
+<option value="감기">감기</option>
+<option value="스트레스">스트레스</option>
+</select>
+</div>
+<div class="form-group">
+<label>침법</label>
+<select id="acu_method">
+<option value="체침">체침(體鍼)</option>
+<option value="전침">전침(電鍼)</option>
+<option value="이침">이침(耳鍼)</option>
+</select>
+</div>
+</div>
+<button class="btn" onclick="recommendAcupoint()">경혈 추천 받기</button>
+<div class="result" id="acu_result"></div>
+</div>
+</div>
+
+<!-- ==================== TAB 3: 약재 확인 ==================== -->
+<div class="tab-panel" id="tab2">
+<div class="card">
+<h3>🌿 약재 상호작용 확인</h3>
+<div class="form-row">
+<div class="form-group">
+<label>약재 A</label>
+<select id="herb_a">
+<option value="">-- 선택 --</option>
+<option value="인삼">인삼(人蔘)</option>
+<option value="황기">황기(黃芪)</option>
+<option value="당귀">당귀(當歸)</option>
+<option value="백출">백출(白朮)</option>
+<option value="감초">감초(甘草)</option>
+<option value="부자">부자(附子)</option>
+<option value="반하">반하(半夏)</option>
+<option value="세신">세신(細辛)</option>
+<option value="백작약">백작약(白芍藥)</option>
+<option value="오두">오두(烏頭)</option>
+<option value="패모">패모(貝母)</option>
+<option value="과루">과루(栝樓)</option>
+<option value="백급">백급(白芨)</option>
+<option value="백렴">백렴(白蘞)</option>
+<option value="여로">여로(藜蘆)</option>
+<option value="대극">대극(大戟)</option>
+<option value="원화">원화(芫花)</option>
+<option value="감수">감수(甘遂)</option>
+<option value="해조">해조(海藻)</option>
+<option value="대황">대황(大黃)</option>
+<option value="시호">시호(柴胡)</option>
+<option value="천궁">천궁(川芎)</option>
+<option value="복령">복령(茯苓)</option>
+<option value="진피">진피(陳皮)</option>
+</select>
+</div>
+<div class="form-group">
+<label>약재 B</label>
+<select id="herb_b">
+<option value="">-- 선택 --</option>
+<option value="인삼">인삼(人蔘)</option>
+<option value="황기">황기(黃芪)</option>
+<option value="당귀">당귀(當歸)</option>
+<option value="백출">백출(白朮)</option>
+<option value="감초">감초(甘草)</option>
+<option value="부자">부자(附子)</option>
+<option value="반하">반하(半夏)</option>
+<option value="세신">세신(細辛)</option>
+<option value="백작약">백작약(白芍藥)</option>
+<option value="오두">오두(烏頭)</option>
+<option value="패모">패모(貝母)</option>
+<option value="과루">과루(栝樓)</option>
+<option value="백급">백급(白芨)</option>
+<option value="백렴">백렴(白蘞)</option>
+<option value="여로">여로(藜蘆)</option>
+<option value="대극">대극(大戟)</option>
+<option value="원화">원화(芫花)</option>
+<option value="감수">감수(甘遂)</option>
+<option value="해조">해조(海藻)</option>
+<option value="대황">대황(大黃)</option>
+<option value="시호">시호(柴胡)</option>
+<option value="천궁">천궁(川芎)</option>
+<option value="복령">복령(茯苓)</option>
+<option value="진피">진피(陳皮)</option>
+</select>
+</div>
+</div>
+<button class="btn" onclick="checkHerbInteraction()">상호작용 확인</button>
+<div class="result" id="herb_result"></div>
+</div>
+</div>
+
+<!-- ==================== TAB 4: 체질 분석 ==================== -->
+<div class="tab-panel" id="tab3">
+<div class="card">
+<h3>🔮 사상체질 분석</h3>
+<div class="form-row">
+<div class="form-group">
+<label>체형</label>
+<select id="const_body">
+<option value="건장">건장 (골격 크고 기육 풍만)</option>
+<option value="보통">보통</option>
+<option value="마른">마른 (체구 작고 여윔)</option>
+</select>
+</div>
+<div class="form-group">
+<label>식욕</label>
+<select id="const_appetite">
+<option value="왕성">왕성 (많이 먹음)</option>
+<option value="보통">보통</option>
+<option value="약">약 (소식, 소화 잘 안됨)</option>
+</select>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label>한열 경향</label>
+<select id="const_temp">
+<option value="더위잘탐">더위 잘 탐 (열성)</option>
+<option value="보통">보통</option>
+<option value="추위잘탐">추위 잘 탐 (한성)</option>
+</select>
+</div>
+<div class="form-group">
+<label>성격</label>
+<select id="const_personality">
+<option value="활발외향">활발 외향적</option>
+<option value="침착">침착 신중</option>
+<option value="섬세내성">섬세 내성적</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label>취약 부위</label>
+<select id="const_weakness">
+<option value="호흡기">호흡기 (감기, 기관지 잘 걸림)</option>
+<option value="소화기">소화기 (소화불량, 설사)</option>
+<option value="비뇨기">비뇨기 (방광, 신장 약함)</option>
+<option value="간">간 (피로, 근육 약함)</option>
+</select>
+</div>
+<button class="btn" onclick="analyzeConstitution()">체질 분석하기</button>
+<div class="result" id="const_result"></div>
+</div>
+</div>
+
+<!-- ==================== TAB 5: 변증 진단 ==================== -->
+<div class="tab-panel" id="tab4">
+<div class="card">
+<h3>📋 팔강변증 진단</h3>
+<div class="form-row">
+<div class="form-group">
+<label>한열 증상</label>
+<select id="diag_hanheol">
+<option value="오한">오한 (추위 느낌, 으슬으슬)</option>
+<option value="발열">발열 (열감, 안면홍조)</option>
+<option value="모두">오한+발열 모두</option>
+<option value="없음">특별한 증상 없음</option>
+</select>
+</div>
+<div class="form-group">
+<label>허실 증상</label>
+<select id="diag_heosil">
+<option value="피로무력">피로, 무력감</option>
+<option value="통증심">통증 심함, 거부압(拒按)</option>
+<option value="보통">보통</option>
+</select>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label>맥상(脈象)</label>
+<select id="diag_pulse">
+<option value="부">부맥(浮) — 가볍게 눌러도 느낌</option>
+<option value="침">침맥(沈) — 깊이 눌러야 느낌</option>
+<option value="삭">삭맥(數) — 빠름</option>
+<option value="지">지맥(遲) — 느림</option>
+<option value="허">허맥(虛) — 힘없음</option>
+<option value="실">실맥(實) — 힘 있음</option>
+</select>
+</div>
+<div class="form-group">
+<label>설태(舌苔)</label>
+<select id="diag_tongue">
+<option value="백태">백태(白苔) — 하얀 설태</option>
+<option value="황태">황태(黃苔) — 누런 설태</option>
+<option value="무태">무태(無苔) — 설태 없음, 혀 붉음</option>
+</select>
+</div>
+</div>
+<button class="btn" onclick="diagnoseBianzheng()">변증 진단하기</button>
+<div class="result" id="diag_result"></div>
+</div>
+</div>
+
+</div>
+
+<div class="footer">
+한의원 AI 업무효율화 시스템 — 실시간 데모 | 실제 임상에서는 반드시 한의사의 직접 진찰을 받으시기 바랍니다.
+</div>
+
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab'+n).classList.add('active');
+  document.querySelectorAll('.tabs button')[n].classList.add('active');
+}
+
+// ==================== TAB 1: 처방 추천 DB ====================
+const prescriptionDB = {
+  '태음인': {
+    '소화불량': { name:'태음조위탕(太陰調胃湯)', herbs:'갈근12g, 황금8g, 나복자8g, 오미자4g, 맥문동4g, 길경4g, 마황3g, 석창포3g', reason:'태음인의 비위 습담(濕痰)을 제거하고 위기(胃氣)를 조절. 태음인은 습담이 쉽게 정체되어 소화불량 유발', lifestyle:'기름진 음식·밀가루 절제, 무·도라지·율무 등 이습(利濕) 식품 권장' },
+    '감기': { name:'갈근탕(葛根湯)', herbs:'갈근12g, 마황6g, 계지6g, 작약6g, 생강3편, 대조4매, 감초3g', reason:'태음인은 체격이 건장하여 발한법에 적합. 갈근은 태양경의 경기를 소통시켜 두통·경항 강직 해소', lifestyle:'따뜻하게 복용 후 이불 덮고 미한(微汗). 2~3일 단기 투약' },
+    '두통': { name:'갈근해기탕', herbs:'갈근10g, 황금6g, 승마4g, 백지4g, 길경4g, 감초3g', reason:'태음인의 두통은 습담상요(濕痰上擾)가 많아 거습화담+해표 병행. 갈근이 경항부 이완', lifestyle:'과식 절제, 가벼운 유산소 운동으로 습담 배출' },
+    '요통': { name:'갈근탕 가감', herbs:'갈근10g, 독활8g, 우슬6g, 두충6g, 방풍4g, 감초3g', reason:'태음인 요통은 습(濕)이 요부에 정체된 경우가 많아 거습+보신 병행', lifestyle:'체중 관리 중요, 코어 근력 강화 운동 권장' },
+    '불면': { name:'산조인탕 가감', herbs:'산조인15g, 복령6g, 천궁4g, 지모6g, 감초3g, 갈근8g', reason:'태음인의 불면은 담열(痰熱)이 심(心)을 괴롭히는 경우 多. 산조인으로 안신+갈근으로 청열', lifestyle:'취침 전 족욕, 과식 금지, 가벼운 산책 후 수면' },
+    '피로': { name:'조위승청탕(調胃升清湯)', herbs:'갈근10g, 황금6g, 나복자6g, 길경4g, 승마4g, 백지4g, 감초3g', reason:'태음인 피로는 습담으로 인한 청양불승(淸陽不升). 승청화담으로 기력 회복', lifestyle:'땀을 충분히 내는 운동 필수. 등산·수영 권장' },
+    '생리통': { name:'태음조위탕 가 향부자·당귀', herbs:'갈근10g, 황금6g, 나복자6g, 향부자6g, 당귀6g, 천궁4g, 감초3g', reason:'태음인 생리통은 습담+기체(氣滯) 복합. 조위+행기활혈 병행', lifestyle:'생리 전 따뜻한 음식, 하복부 온찜질' }
+  },
+  '소음인': {
+    '소화불량': { name:'향사양위탕(香砂養胃湯)', herbs:'향부자6g, 사인4g, 백출6g, 복령6g, 인삼4g, 진피4g, 반하4g, 감초3g, 생강3편, 대조3매', reason:'소음인의 비위양허(脾胃陽虛)로 인한 소화불량. 온비건위(溫脾健胃)하여 소화력 근본 강화', lifestyle:'찬 음식·생냉식 절대 금지, 따뜻한 죽·미음 위주 식이' },
+    '감기': { name:'소건중탕 + 향소산', herbs:'계지6g, 작약12g, 감초4g, 생강3편, 대조4매, 교이(膠飴)15g / 향부자6g, 소엽4g, 진피4g', reason:'소음인은 체력이 약하여 발한법 신중. 소건중탕으로 정기 보강+향소산으로 가볍게 해표', lifestyle:'과로 금지, 따뜻한 생강차·대추차 수시 음용' },
+    '두통': { name:'보중익기탕 가 천궁·백지', herbs:'황기15g, 인삼6g, 백출6g, 당귀6g, 진피4g, 승마3g, 시호3g, 감초3g, 천궁4g, 백지4g', reason:'소음인 두통은 기허(氣虛)로 청양(淸陽)이 머리로 올라가지 못하는 경우. 보기승양+통규(通竅)', lifestyle:'충분한 수면, 따뜻한 음식, 스트레스 관리' },
+    '요통': { name:'관계부자리중탕 가 두충·우슬', herbs:'관계4g, 부자(포)4g, 인삼4g, 백출6g, 건강4g, 감초3g, 두충6g, 우슬6g', reason:'소음인 요통은 신양허(腎陽虛)가 근본. 온양보신(溫陽補腎)이 핵심 치법', lifestyle:'보온 철저, 허리 온찜질, 과로 금지' },
+    '불면': { name:'귀비탕(歸脾湯)', herbs:'인삼6g, 황기10g, 백출6g, 복신6g, 산조인10g, 용안육6g, 당귀4g, 원지4g, 목향3g, 감초3g, 생강3편, 대조3매', reason:'소음인 불면은 심비양허(心脾兩虛)로 심혈(心血) 부족. 보익심비하여 안신(安神)', lifestyle:'저녁 과식 금지, 따뜻한 우유·대추차, 족욕 후 취침' },
+    '피로': { name:'보중익기탕(補中益氣湯)', herbs:'황기18g, 인삼6g, 백출6g, 당귀6g, 진피6g, 승마3g, 시호3g, 감초3g', reason:'소음인 피로의 정석 처방. 비기허(脾氣虛)+중기하함(中氣下陷)의 근본 치료', lifestyle:'충분한 휴식, 따뜻한 식사, 가벼운 산책 정도의 운동' },
+    '생리통': { name:'온경탕(溫經湯)', herbs:'당귀6g, 천궁4g, 작약6g, 인삼4g, 계지4g, 오수유3g, 반하4g, 맥문동6g, 감초3g, 생강3편', reason:'소음인 생리통은 혈한(血寒)+기허가 근본. 온경산한+보기양혈', lifestyle:'생리 전후 보온, 찬 음식 절대 금지, 당귀차·생강차 음용' }
+  },
+  '소양인': {
+    '소화불량': { name:'양격산화탕 가감', herbs:'생지황8g, 지모6g, 방풍4g, 형개4g, 석고8g, 지각4g, 황금6g, 감초3g', reason:'소양인 소화불량은 위열(胃熱)로 인한 경우가 많아 청위열(淸胃熱) 위주', lifestyle:'맵고 뜨거운 음식 절제, 시원한 성질의 식품(보리밥, 녹두) 권장' },
+    '감기': { name:'형방패독산(荊防敗毒散)', herbs:'형개6g, 방풍6g, 강활4g, 독활4g, 시호4g, 전호4g, 길경4g, 지각4g, 복령4g, 천궁4g, 감초3g', reason:'소양인 감기는 소간해표(疏肝解表) 위주. 과도한 발한보다 소산(疏散)이 적합', lifestyle:'충분한 수분 섭취, 시원한 환경 유지' },
+    '두통': { name:'억간산(抑肝散)', herbs:'조구등6g, 시호6g, 당귀6g, 백출6g, 복령6g, 천궁3g, 감초3g', reason:'소양인 두통은 간화상염(肝火上炎)이 원인. 억간식풍+평간잠양', lifestyle:'스트레스 관리 핵심, 명상·호흡 훈련, 녹차 음용' },
+    '요통': { name:'독활기생탕 가감', herbs:'독활6g, 상기생6g, 방풍4g, 형개4g, 우슬6g, 두충6g, 당귀4g, 생지황6g, 감초3g', reason:'소양인 요통은 신음허(腎陰虛)+풍습. 보신음+거풍습 병행', lifestyle:'적당한 운동, 과격한 운동 삼가, 하체 근력 강화' },
+    '불면': { name:'용담사간탕 가 산조인', herbs:'용담초6g, 황금6g, 치자6g, 생지황8g, 당귀4g, 시호4g, 택사6g, 차전자6g, 감초3g, 산조인10g', reason:'소양인 불면은 간담화(肝膽火)가 성하여 심신 불안. 사간청열+안신', lifestyle:'매운 음식·음주 절제, 취침 전 명상, 시원한 수면 환경' },
+    '피로': { name:'형방지황탕(荊防地黃湯)', herbs:'숙지황10g, 산수유6g, 산약6g, 택사4g, 복령4g, 목단피4g, 형개4g, 방풍4g', reason:'소양인 피로는 음허(陰虛)로 인한 허열 소모. 보신음(補腎陰)이 근본', lifestyle:'충분한 수면, 과로 금지, 해산물·검은콩 등 보음 식품' },
+    '생리통': { name:'시호소간산 가감', herbs:'시호6g, 향부자6g, 작약6g, 지각4g, 천궁4g, 감초3g, 치자4g, 목단피4g', reason:'소양인 생리통은 간기울결(肝氣鬱結)+열. 소간해울+청열양혈', lifestyle:'스트레스 관리 핵심, 찬 성질 식품(녹두, 수박) 적당히 섭취' }
+  },
+  '태양인': {
+    '소화불량': { name:'오가피장척탕', herbs:'오가피6g, 포도근6g, 솔잎4g, 다래4g, 앵두4g, 감초3g', reason:'태양인은 매우 드문 체질. 폐기(肺氣)가 과강하고 간기(肝氣)가 약한 체질로, 간기 보강 위주', lifestyle:'소식(少食) 원칙, 담백한 음식, 해산물·조개류 권장' },
+    '감기': { name:'미후등식장탕 가감', herbs:'미후등8g, 다래6g, 솔잎4g, 오가피4g, 감초3g', reason:'태양인 감기는 간음허(肝陰虛) 바탕에서 발생. 보간음+소풍 병행', lifestyle:'과로·분노 절제, 충분한 휴식' },
+    '두통': { name:'오가피장척탕 가 천궁·백지', herbs:'오가피6g, 포도근6g, 솔잎4g, 천궁4g, 백지4g, 감초3g', reason:'태양인 두통은 간양(肝陽) 상항이 근본. 보간+평간 병행', lifestyle:'분노·흥분 절제, 안정적 생활 리듬 유지' },
+    '요통': { name:'오가피장척탕 가 두충·우슬', herbs:'오가피6g, 포도근6g, 두충6g, 우슬6g, 감초3g', reason:'태양인 요통은 간신음허(肝腎陰虛) 바탕. 보간신 위주', lifestyle:'과격한 운동 삼가, 스트레칭 위주' },
+    '불면': { name:'미후등식장탕 가 산조인', herbs:'미후등8g, 다래6g, 솔잎4g, 산조인10g, 감초3g', reason:'태양인 불면은 간음부족으로 혼(魂)이 불안. 보간안신', lifestyle:'규칙적 수면, 감정 절제, 담백한 식이' },
+    '피로': { name:'오가피장척탕', herbs:'오가피6g, 포도근6g, 솔잎4g, 다래4g, 앵두4g, 감초3g', reason:'태양인 피로는 간기허(肝氣虛)가 근본. 보간기 위주', lifestyle:'모과·포도·다래 등 과일 섭취, 과로 금지' },
+    '생리통': { name:'오가피장척탕 가 당귀·천궁', herbs:'오가피6g, 포도근6g, 당귀6g, 천궁4g, 백작약6g, 감초3g', reason:'태양인 생리통은 간혈허(肝血虛). 보간혈+활혈', lifestyle:'담백한 식이, 감정 안정 유지' }
+  }
+};
+
+function recommendPrescription() {
+  const c = document.getElementById('rx_constitution').value;
+  const s = document.getElementById('rx_symptom').value;
+  const h = document.getElementById('rx_hanheol').value;
+  const v = document.getElementById('rx_heosil').value;
+  const el = document.getElementById('rx_result');
+
+  if (!c || !s) { el.innerHTML='<div class="result-title">입력 오류</div><div class="result-body"><p>체질과 주증상을 모두 선택해주세요.</p></div>'; el.classList.add('show'); return; }
+
+  const rx = prescriptionDB[c]?.[s];
+  if (!rx) { el.innerHTML='<div class="result-title">데이터 없음</div><div class="result-body"><p>해당 조합의 처방 데이터가 없습니다.</p></div>'; el.classList.add('show'); return; }
+
+  let hanheolNote = '';
+  if (h === '한증') hanheolNote = '<div class="step"><strong>한증 가감:</strong> 건강(乾薑) 3g, 계지(桂枝) 3g 가미 → 온경산한(溫經散寒) 효과 강화</div>';
+  if (h === '열증') hanheolNote = '<div class="step"><strong>열증 가감:</strong> 황금(黃芩) 4g, 치자(梔子) 4g 가미 → 청열사화(淸熱瀉火) 효과 추가</div>';
+
+  let heosilNote = '';
+  if (v === '허증') heosilNote = '<div class="step"><strong>허증 가감:</strong> 인삼(人蔘) 증량 또는 황기(黃芪) 가미 → 보기(補氣) 효과 강화</div>';
+  if (v === '실증') heosilNote = '<div class="step"><strong>실증 가감:</strong> 지각(枳殼) 4g, 향부자(香附子) 4g 가미 → 행기파체(行氣破滯) 효과 추가</div>';
+
+  el.innerHTML = `
+    <div class="result-title">AI 처방 추천 결과</div>
+    <div class="result-body">
+      <div class="step"><strong>Step 1. 체질 확인:</strong> <span class="tag tag-purple">${c}</span> — 체질별 처방 원칙 적용</div>
+      <div class="step"><strong>Step 2. 증상 매칭:</strong> "${s}" → 체질 맞춤 처방 DB 검색</div>
+      <div class="step"><strong>Step 3. 변증 보정:</strong> 한열(${h}) + 허실(${v}) 정보로 가감 적용</div>
+      <h4 style="color:#4a148c;margin:16px 0 8px;border-left:3px solid #9c27b0;padding-left:8px;">추천 처방: ${rx.name}</h4>
+      <table>
+        <tr><th style="width:120px">항목</th><th>내용</th></tr>
+        <tr><td>처방명</td><td><strong>${rx.name}</strong></td></tr>
+        <tr><td>약재 구성</td><td>${rx.herbs}</td></tr>
+        <tr><td>처방 근거</td><td>${rx.reason}</td></tr>
+        <tr><td>생활 지도</td><td>${rx.lifestyle}</td></tr>
+      </table>
+      ${hanheolNote}${heosilNote}
+      <div class="warning"><strong>주의:</strong> AI 추천은 참고용이며, 실제 처방은 반드시 한의사의 직접 진찰(망문문절) 후 결정해야 합니다.</div>
+    </div>`;
+  el.classList.add('show');
+}
+
+// ==================== TAB 2: 경혈 DB ====================
+const acupointDB = {
+  '두통': {
+    main: [
+      { name:'풍지(風池) GB20', loc:'후두골 하방, 승모근·흉쇄유돌근 사이', reason:'소풍청열, 두통의 1차 선혈' },
+      { name:'합곡(合谷) LI4', loc:'제1·2중수골 사이', reason:'면구통치, 두면부 통증 원위취혈' },
+      { name:'태충(太衝) LR3', loc:'족배 제1·2중족골 사이', reason:'평간식풍, 사관혈(합곡+태충) 배합' },
+      { name:'백회(百會) GV20', loc:'정수리 정중앙', reason:'제양지회, 두정부 승양' }
+    ],
+    ear: ['신문','심','뇌간','두통점'], logic:'두통 → 풍사+간양상항 → 거풍+평간+통락 치법 → 원근배혈 적용'
+  },
+  '요통': {
+    main: [
+      { name:'신수(腎兪) BL23', loc:'L2 극돌기 하, 옆 1.5촌', reason:'보신강요, 요자신지부' },
+      { name:'대장수(大腸兪) BL25', loc:'L4 극돌기 하, 옆 1.5촌', reason:'요천부 국소취혈' },
+      { name:'위중(委中) BL40', loc:'슬와횡문 중앙', reason:'요배위중구, 원위취혈 대표' },
+      { name:'환도(環跳) GB30', loc:'대전자·미골 연결선 외1/3', reason:'하지 방사통 치료' },
+      { name:'요양관(腰陽關) GV3', loc:'L4 극돌기 하 함몰부', reason:'독맥 양기 소통' }
+    ],
+    ear: ['요추','신(腎)','교감','신문'], logic:'요통 → 신허+어혈/습 → 보신+통락+거습 → 배수혈+원위혈+독맥혈 배합'
+  },
+  '경항통': {
+    main: [
+      { name:'풍지(風池) GB20', loc:'후두골 하방', reason:'소풍통락, 경항부 핵심 혈위' },
+      { name:'천주(天柱) BL10', loc:'후두골 하, 후정중선 옆 1.3촌', reason:'경항부 국소취혈' },
+      { name:'후계(後谿) SI3', loc:'제5중수골두 후방', reason:'독맥 통치, 경항강직 원위취혈' },
+      { name:'대추(大椎) GV14', loc:'C7 극돌기 하', reason:'독맥 혈위, 경추 중심부 소통' }
+    ],
+    ear: ['경추','신문','교감'], logic:'경항통 → 풍한침습/기혈어체 → 거풍산한+활혈통락 → 국소혈+원위혈 배합'
+  },
+  '소화불량': {
+    main: [
+      { name:'중완(中脘) CV12', loc:'배꼽 상 4촌', reason:'위의 모혈(募穴), 건위소식 핵심' },
+      { name:'족삼리(足三里) ST36', loc:'외슬안 하 3촌', reason:'합혈(合穴), 건비화위의 대표' },
+      { name:'내관(內關) PC6', loc:'완관절 상 2촌, 양건 사이', reason:'화위강역, 구역·구토 억제' },
+      { name:'천추(天樞) ST25', loc:'배꼽 옆 2촌', reason:'대장 모혈, 장 기능 조절' }
+    ],
+    ear: ['위(胃)','비(脾)','교감','신문'], logic:'소화불량 → 비위기허/식적 → 건비화위+소식도체 → 모혈+합혈+낙혈 배합'
+  },
+  '불면': {
+    main: [
+      { name:'신문(神門) HT7', loc:'완관절 횡문, 척측수근굴근건 요측', reason:'영심안신, 심경 원혈' },
+      { name:'삼음교(三陰交) SP6', loc:'내과첨 상 3촌', reason:'자음양혈, 삼음경 교회혈' },
+      { name:'백회(百會) GV20', loc:'정수리 정중앙', reason:'안신정지, 양불입음 교정' },
+      { name:'내관(內關) PC6', loc:'완관절 상 2촌', reason:'영심안신, 심계 동반 불면' }
+    ],
+    ear: ['신문','심(心)','교감','피질하'], logic:'불면 → 심신불교/심비양허 → 안신+자음+조양 → 심경원혈+교회혈+독맥혈 배합'
+  },
+  '생리통': {
+    main: [
+      { name:'삼음교(三陰交) SP6', loc:'내과첨 상 3촌', reason:'부인과 질환의 1차 선혈, 활혈조경' },
+      { name:'관원(關元) CV4', loc:'배꼽 하 3촌', reason:'원기 보충, 자궁 온후(溫煦)' },
+      { name:'기해(氣海) CV6', loc:'배꼽 하 1.5촌', reason:'보기, 하복부 기혈 순환' },
+      { name:'혈해(血海) SP10', loc:'슬개골 내상방 2촌', reason:'활혈화어, 혈분(血分) 질환 핵심' },
+      { name:'합곡(合谷) LI4', loc:'제1·2중수골 사이', reason:'행기진통, 원위취혈' }
+    ],
+    ear: ['자궁','내분비','신문','교감'], logic:'생리통 → 기체혈어/한응자궁 → 행기활혈+온경산한 → 임맥혈+비경혈+원위혈 배합'
+  },
+  '감기': {
+    main: [
+      { name:'대추(大椎) GV14', loc:'C7 극돌기 하', reason:'해표퇴열, 양경의 교회혈' },
+      { name:'풍지(風池) GB20', loc:'후두골 하방', reason:'소풍해표, 두통 동반 시 필수' },
+      { name:'합곡(合谷) LI4', loc:'제1·2중수골 사이', reason:'해표 원위취혈' },
+      { name:'열결(列缺) LU7', loc:'요골경상돌기 상방 1.5촌', reason:'폐경 낙혈, 선폐해표' }
+    ],
+    ear: ['폐','내비(코)','편도','인후'], logic:'감기 → 풍한/풍열 외감 → 해표소풍 → 독맥혈+폐경혈+원위혈 배합'
+  },
+  '스트레스': {
+    main: [
+      { name:'태충(太衝) LR3', loc:'족배 제1·2중족골 사이', reason:'소간해울, 스트레스의 1차 선혈' },
+      { name:'합곡(合谷) LI4', loc:'제1·2중수골 사이', reason:'사관혈(태충+합곡), 기혈 대순환' },
+      { name:'내관(內關) PC6', loc:'완관절 상 2촌', reason:'영심안신, 심계·불안 완화' },
+      { name:'백회(百會) GV20', loc:'정수리 정중앙', reason:'승양개규, 정신 안정' },
+      { name:'신문(神門) HT7', loc:'완관절 횡문 척측', reason:'영심안신, 심경 원혈' }
+    ],
+    ear: ['신문','심(心)','간(肝)','교감','피질하'], logic:'스트레스 → 간기울결 → 소간해울+안신정지 → 사관혈+심경혈+독맥혈 배합'
+  }
+};
+
+function recommendAcupoint() {
+  const s = document.getElementById('acu_symptom').value;
+  const m = document.getElementById('acu_method').value;
+  const el = document.getElementById('acu_result');
+
+  if (!s) { el.innerHTML='<div class="result-title">입력 오류</div><div class="result-body"><p>증상을 선택해주세요.</p></div>'; el.classList.add('show'); return; }
+
+  const data = acupointDB[s];
+  let pointsHTML = data.main.map(p => `<tr><td><strong>${p.name}</strong></td><td>${p.loc}</td><td>${p.reason}</td></tr>`).join('');
+
+  let methodNote = '';
+  if (m === '체침') methodNote = '체침(體鍼): 호침(毫鍼) 0.25×25~40mm 사용, 유침 20~30분. 득기(得氣) 후 보법 또는 사법 적용.';
+  if (m === '전침') methodNote = '전침(電鍼): 주요 혈위 2쌍에 전침기 연결. 2Hz(보법, 만성) 또는 100Hz(사법, 급성) 설정. 환자 감내 범위 내 강도 조절.';
+  if (m === '이침') methodNote = `이침(耳鍼): 이혈 — ${data.ear.join(', ')}. 왕불류행 씨앗 부착 또는 피내침 사용. 3~5일마다 교체, 취침 전 자극.`;
+
+  el.innerHTML = `
+    <div class="result-title">AI 경혈 배혈 추천 결과</div>
+    <div class="result-body">
+      <div class="step"><strong>Step 1. 증상 분석:</strong> "${s}" 입력</div>
+      <div class="step"><strong>Step 2. 변증 추론:</strong> ${data.logic}</div>
+      <div class="step"><strong>Step 3. 배혈 구성:</strong> 원근배혈(遠近配穴) 원칙 적용</div>
+      <h4 style="color:#4a148c;margin:16px 0 8px;border-left:3px solid #9c27b0;padding-left:8px;">추천 경혈 배혈</h4>
+      <table>
+        <tr><th>경혈</th><th>위치</th><th>배혈 이유</th></tr>
+        ${pointsHTML}
+      </table>
+      <h4 style="color:#4a148c;margin:16px 0 8px;border-left:3px solid #9c27b0;padding-left:8px;">침법: ${m}</h4>
+      <p style="font-size:13px;margin:8px 0;">${methodNote}</p>
+      <div class="info"><strong>치료 빈도:</strong> 급성 — 매일 또는 격일, 만성 — 주 2~3회, 총 10~15회 세션 후 재평가</div>
+      <div class="warning"><strong>주의:</strong> 임부는 합곡·삼음교·관원 등 금기 혈위 확인 필수. 출혈 경향 환자는 자침 신중.</div>
+    </div>`;
+  el.classList.add('show');
+}
+
+// ==================== TAB 3: 약재 상호작용 DB ====================
+const herbInfo = {
+  '인삼': { hanja:'人蔘', taste:'감미온(甘微溫)', channel:'비·폐·심경', effect:'대보원기, 복맥고탈, 보비익폐, 생진안신' },
+  '황기': { hanja:'黃芪', taste:'감온(甘溫)', channel:'비·폐경', effect:'보기승양, 익위고표, 탁독생기, 이수소종' },
+  '당귀': { hanja:'當歸', taste:'감신온(甘辛溫)', channel:'간·심·비경', effect:'보혈활혈, 조경지통, 윤장통변' },
+  '백출': { hanja:'白朮', taste:'고감온(苦甘溫)', channel:'비·위경', effect:'건비익기, 조습이수, 고표지한, 안태' },
+  '감초': { hanja:'甘草', taste:'감평(甘平)', channel:'심·폐·비·위경', effect:'보비익기, 청열해독, 거담지해, 조화제약' },
+  '부자': { hanja:'附子', taste:'신감대열유독(辛甘大熱有毒)', channel:'심·신·비경', effect:'회양구역, 보화조양, 산한지통' },
+  '반하': { hanja:'半夏', taste:'신온유독(辛溫有毒)', channel:'비·위·폐경', effect:'조습화담, 강역지구, 소비산결' },
+  '세신': { hanja:'細辛', taste:'신온(辛溫)', channel:'폐·신경', effect:'거풍산한, 통규지통, 온폐화음' },
+  '백작약': { hanja:'白芍藥', taste:'고산미한(苦酸微寒)', channel:'간·비경', effect:'양혈조경, 유간지통, 염음수한' },
+  '오두': { hanja:'烏頭', taste:'신고열유대독(辛苦熱有大毒)', channel:'심·간·신·비경', effect:'거풍제습, 온경지통' },
+  '패모': { hanja:'貝母', taste:'고감미한(苦甘微寒)', channel:'폐·심경', effect:'청열화담, 산결소옹' },
+  '과루': { hanja:'栝樓', taste:'감미고한(甘微苦寒)', channel:'폐·위·대장경', effect:'청열화담, 관흉산결, 윤장통변' },
+  '백급': { hanja:'白芨', taste:'고감삽미한(苦甘澁微寒)', channel:'폐·간·위경', effect:'수렴지혈, 소종생기' },
+  '백렴': { hanja:'白蘞', taste:'고신미한(苦辛微寒)', channel:'심·위경', effect:'청열해독, 소옹산결' },
+  '여로': { hanja:'藜蘆', taste:'고신한유독(苦辛寒有毒)', channel:'폐·위·간경', effect:'용토풍담, 살충' },
+  '대극': { hanja:'大戟', taste:'고한유독(苦寒有毒)', channel:'폐·비·신경', effect:'사수축음, 소종산결' },
+  '원화': { hanja:'芫花', taste:'신고온유독(辛苦溫有毒)', channel:'폐·비·신경', effect:'사수축음, 거담지해' },
+  '감수': { hanja:'甘遂', taste:'고한유독(苦寒有毒)', channel:'폐·신·대장경', effect:'사수축음, 소종산결' },
+  '해조': { hanja:'海藻', taste:'고함한(苦鹹寒)', channel:'간·위·신경', effect:'소담연견, 이수소종' },
+  '대황': { hanja:'大黃', taste:'고한(苦寒)', channel:'비·위·대장·간·심포경', effect:'사하공적, 청열사화, 양혈해독, 축어통경' },
+  '시호': { hanja:'柴胡', taste:'고신미한(苦辛微寒)', channel:'간·담경', effect:'소간해울, 화해표리, 승양거함' },
+  '천궁': { hanja:'川芎', taste:'신온(辛溫)', channel:'간·담·심포경', effect:'활혈행기, 거풍지통' },
+  '복령': { hanja:'茯苓', taste:'감담평(甘淡平)', channel:'심·비·신경', effect:'이수삼습, 건비영심, 안신' },
+  '진피': { hanja:'陳皮', taste:'신고온(辛苦溫)', channel:'비·폐경', effect:'이기건비, 조습화담' }
+};
+
+// 십팔반 (18 incompatibilities)
+const shibaFan = [
+  { a:['오두','부자'], b:['반하','과루','패모','백급','백렴'], rule:'오두(부자) 반 반하·과루·패모·백급·백렴' },
+  { a:['감초'], b:['대극','원화','감수','해조'], rule:'감초 반 대극·원화·감수·해조' },
+  { a:['여로'], b:['인삼','단삼','사삼','현삼','고삼','세신','백작약'], rule:'여로 반 제삼(諸蔘)·세신·작약' }
+];
+
+// 십구외 (19 fears)
+const shijiuWei = [
+  { a:'유황', b:'박초' }, { a:'수은', b:'비상' }, { a:'낭독', b:'밀타승' },
+  { a:'파두', b:'견우자' }, { a:'정향', b:'울금' }, { a:'아초', b:'삼릉' },
+  { a:'천오·초오', b:'서각' }, { a:'인삼', b:'오령지' }, { a:'관계', b:'적석지' }
+];
+
+function checkHerbInteraction() {
+  const a = document.getElementById('herb_a').value;
+  const b = document.getElementById('herb_b').value;
+  const el = document.getElementById('herb_result');
+
+  if (!a || !b) { el.innerHTML='<div class="result-title">입력 오류</div><div class="result-body"><p>약재 A와 B를 모두 선택해주세요.</p></div>'; el.classList.add('show'); return; }
+  if (a === b) { el.innerHTML='<div class="result-title">동일 약재</div><div class="result-body"><p>같은 약재를 선택했습니다. 서로 다른 약재를 선택해주세요.</p></div>'; el.classList.add('show'); return; }
+
+  const ha = herbInfo[a], hb = herbInfo[b];
+  let conflict = null;
+
+  for (const rule of shibaFan) {
+    if ((rule.a.includes(a) && rule.b.includes(b)) || (rule.a.includes(b) && rule.b.includes(a))) {
+      conflict = { type:'십팔반(十八反)', rule: rule.rule };
+      break;
+    }
+  }
+
+  let infoHTML = `
+    <h4 style="color:#4a148c;margin:12px 0 8px;border-left:3px solid #9c27b0;padding-left:8px;">약재 정보 비교</h4>
+    <table>
+      <tr><th style="width:120px">항목</th><th>${a}(${ha.hanja})</th><th>${b}(${hb.hanja})</th></tr>
+      <tr><td>성미</td><td>${ha.taste}</td><td>${hb.taste}</td></tr>
+      <tr><td>귀경</td><td>${ha.channel}</td><td>${hb.channel}</td></tr>
+      <tr><td>효능</td><td>${ha.effect}</td><td>${hb.effect}</td></tr>
+    </table>`;
+
+  let resultHTML;
+  if (conflict) {
+    resultHTML = `
+      <div class="result-title">상호작용 확인 결과</div>
+      <div class="result-body">
+        <div class="step"><strong>Step 1. 약재 확인:</strong> ${a}(${ha.hanja}) + ${b}(${hb.hanja})</div>
+        <div class="step"><strong>Step 2. 십팔반 검색:</strong> <span class="tag tag-red">해당!</span> "${conflict.rule}"</div>
+        <div class="step"><strong>Step 3. 판정:</strong> <strong style="color:#c62828;">배합 금기(配合禁忌)</strong></div>
+        ${infoHTML}
+        <div class="danger"><strong>판정: ${conflict.type} 해당 — 배합 금기!</strong><br>
+        "${conflict.rule}"<br>
+        이 두 약재는 상반(相反) 관계로, 병용 시 독성이 증가하거나 약효가 소실될 수 있습니다. 임상에서 절대 병용하지 마십시오.</div>
+        <h4 style="color:#4a148c;margin:12px 0 8px;border-left:3px solid #9c27b0;padding-left:8px;">대체약 제안</h4>
+        <table>
+          <tr><th>${a}의 효능이 필요한 경우</th><th>${b}의 효능이 필요한 경우</th></tr>
+          <tr><td>${getAlternative(a)}</td><td>${getAlternative(b)}</td></tr>
+        </table>
+      </div>`;
+  } else {
+    resultHTML = `
+      <div class="result-title">상호작용 확인 결과</div>
+      <div class="result-body">
+        <div class="step"><strong>Step 1. 약재 확인:</strong> ${a}(${ha.hanja}) + ${b}(${hb.hanja})</div>
+        <div class="step"><strong>Step 2. 십팔반 검색:</strong> <span class="tag tag-green">해당 없음</span></div>
+        <div class="step"><strong>Step 3. 십구외 검색:</strong> <span class="tag tag-green">해당 없음</span></div>
+        <div class="step"><strong>Step 4. 판정:</strong> <strong style="color:#2e7d32;">배합 가능</strong></div>
+        ${infoHTML}
+        <div class="info"><strong>판정: 배합 금기 없음</strong><br>
+        십팔반·십구외 기준 상호 금기사항이 없습니다. 다만 임상 사용 시 한의사의 판단에 따라 용량과 배합을 조절하십시오.</div>
+      </div>`;
+  }
+
+  el.innerHTML = resultHTML;
+  el.classList.add('show');
+}
+
+function getAlternative(herb) {
+  const alt = {
+    '부자': '건강(乾薑) 또는 육계(肉桂)로 온양 효과 대체',
+    '오두': '건강(乾薑) 또는 위령선(威靈仙)으로 거풍지통 대체',
+    '반하': '진피(陳皮)+복령(茯苓)으로 화담 효과 대체',
+    '과루': '행인(杏仁)+길경(桔梗)으로 화담관흉 대체',
+    '패모': '행인(杏仁)+자완(紫菀)으로 화담지해 대체',
+    '백급': '삼칠(三七)+포황(蒲黃)으로 지혈 대체',
+    '백렴': '금은화(金銀花)+포공영(蒲公英)으로 청열소옹 대체',
+    '감초': '대조(大棗)로 조화제약 대체',
+    '대극': '택사(澤瀉)+저령(豬苓)으로 이수 대체',
+    '원화': '택사(澤瀉)+차전자(車前子)로 이수 대체',
+    '감수': '택사(澤瀉)+복령(茯苓)으로 이수 대체',
+    '해조': '곤포(昆布) 단독 사용 또는 패모(貝母)로 연견산결 대체',
+    '여로': '반하(半夏)로 용토 대체 (단, 십팔반 확인 필수)',
+    '인삼': '황기(黃芪) 또는 당삼(黨蔘)으로 보기 대체',
+    '세신': '백지(白芷)+방풍(防風)으로 거풍지통 대체',
+    '백작약': '당귀(當歸)로 양혈유간 대체'
+  };
+  return alt[herb] || '한의사와 상담하여 적절한 대체약을 결정하십시오.';
+}
+
+// ==================== TAB 4: 체질 분석 ====================
+function analyzeConstitution() {
+  const body = document.getElementById('const_body').value;
+  const appetite = document.getElementById('const_appetite').value;
+  const temp = document.getElementById('const_temp').value;
+  const personality = document.getElementById('const_personality').value;
+  const weakness = document.getElementById('const_weakness').value;
+  const el = document.getElementById('const_result');
+
+  // Scoring
+  let scores = { '태음인':0, '소음인':0, '소양인':0, '태양인':0 };
+
+  // 체형
+  if (body==='건장') { scores['태음인']+=3; scores['태양인']+=1; }
+  if (body==='보통') { scores['태음인']+=1; scores['소양인']+=1; }
+  if (body==='마른') { scores['소음인']+=3; scores['소양인']+=1; }
+
+  // 식욕
+  if (appetite==='왕성') { scores['태음인']+=3; scores['태양인']+=1; }
+  if (appetite==='보통') { scores['소양인']+=1; scores['태음인']+=1; }
+  if (appetite==='약') { scores['소음인']+=3; }
+
+  // 한열
+  if (temp==='더위잘탐') { scores['소양인']+=3; scores['태양인']+=2; }
+  if (temp==='보통') { scores['태음인']+=1; }
+  if (temp==='추위잘탐') { scores['소음인']+=3; scores['태음인']+=1; }
+
+  // 성격
+  if (personality==='활발외향') { scores['소양인']+=2; scores['태양인']+=2; }
+  if (personality==='침착') { scores['태음인']+=2; }
+  if (personality==='섬세내성') { scores['소음인']+=2; }
+
+  // 취약부위
+  if (weakness==='호흡기') { scores['태음인']+=3; }
+  if (weakness==='소화기') { scores['소음인']+=3; }
+  if (weakness==='비뇨기') { scores['소양인']+=3; }
+  if (weakness==='간') { scores['태양인']+=3; }
+
+  const total = Object.values(scores).reduce((a,b)=>a+b,0);
+  const sorted = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const top = sorted[0];
+  const confidence = Math.round((top[1]/total)*100);
+
+  const constitutionData = {
+    '태음인': {
+      desc: '기육(肌肉)이 풍만하고 골격이 큰 체질. 폐(肺) 기능이 약하고 간(肝) 기능이 강함.',
+      strong: '간(肝) — 해독, 근육 기능 우수',
+      weak: '폐(肺) — 호흡기 질환, 감기에 취약',
+      food_good: '소고기, 밀, 콩, 무, 도라지, 율무, 잣, 호두, 배, 사과',
+      food_bad: '닭고기, 돼지고기(과다), 기름진 음식, 과음',
+      exercise: '등산, 수영, 걷기 — 땀을 충분히 내는 유산소 운동 필수',
+      rx: '태음조위탕, 갈근탕, 조위승청탕',
+      key: '"한다즉건(汗多則健)" — 땀을 충분히 흘려야 건강한 체질'
+    },
+    '소음인': {
+      desc: '체구가 작고 마른 편. 비위(脾胃) 양기가 부족하여 소화력이 약한 체질.',
+      strong: '신(腎) — 비뇨·생식 기능 상대적 우수',
+      weak: '비(脾) — 소화불량, 설사, 수족냉증에 취약',
+      food_good: '찹쌀, 감자, 닭고기, 양고기, 생강, 대추, 계피, 꿀, 마늘',
+      food_bad: '찬 음식, 생냉식, 보리, 돼지고기, 수박, 참외',
+      exercise: '가벼운 산책, 실내 운동, 요가. 격렬한 운동은 기력 소모',
+      rx: '향사양위탕, 보중익기탕, 귀비탕',
+      key: '"보온이 생명" — 따뜻하게 유지하는 것이 건강의 핵심'
+    },
+    '소양인': {
+      desc: '상체(가슴)가 발달하고 하체(엉덩이)가 약한 체질. 열성(熱性)으로 활발한 성격.',
+      strong: '비(脾) — 소화 기능, 에너지 대사 우수',
+      weak: '신(腎) — 비뇨기·생식기 질환에 취약',
+      food_good: '돼지고기, 해산물, 보리, 팥, 녹두, 수박, 참외, 오이, 배추',
+      food_bad: '닭고기, 양고기, 인삼, 꿀, 마늘(과다), 고추(과다)',
+      exercise: '수영, 조깅 — 적당한 운동, 하체 근력 강화',
+      rx: '형방지황탕, 양격산화탕, 억간산',
+      key: '"화(火)를 다스려라" — 열을 내리고 감정을 절제하는 것이 핵심'
+    },
+    '태양인': {
+      desc: '매우 드문 체질. 폐(肺) 기능이 과강하고 간(肝) 기능이 약함. 창의적이고 진취적.',
+      strong: '폐(肺) — 호흡 기능, 기(氣)의 선발 기능 우수',
+      weak: '간(肝) — 간 해독, 근육·인대 약함',
+      food_good: '메밀, 새우, 조개, 포도, 다래, 앵두, 솔잎, 붕어',
+      food_bad: '맵고 뜨거운 음식, 지방 과다 음식, 과음',
+      exercise: '가벼운 체조, 산책. 과격한 운동 삼가',
+      rx: '오가피장척탕, 미후등식장탕',
+      key: '"감정 절제" — 분노·흥분을 다스리고 간(肝)을 보하는 것이 핵심'
+    }
+  };
+
+  const d = constitutionData[top[0]];
+
+  let scoreHTML = sorted.map(([name,score]) => {
+    const pct = Math.round((score/total)*100);
+    const isTop = name === top[0];
+    return `<tr style="${isTop?'background:#f3e5f5;font-weight:bold':''}"><td>${name}</td><td>${score}점</td><td><div style="background:#e1bee7;border-radius:4px;overflow:hidden;height:20px;"><div style="background:${isTop?'#7b1fa2':'#ce93d8'};width:${pct}%;height:100%;border-radius:4px;"></div></div></td><td>${pct}%</td></tr>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="result-title">AI 체질 분석 결과</div>
+    <div class="result-body">
+      <div class="step"><strong>Step 1. 체형 분석:</strong> ${body} → 체형 점수 배분</div>
+      <div class="step"><strong>Step 2. 식성 분석:</strong> 식욕 ${appetite} → 비위 기능 평가</div>
+      <div class="step"><strong>Step 3. 한열 분석:</strong> ${temp} → 한열 경향 평가</div>
+      <div class="step"><strong>Step 4. 성격 분석:</strong> ${personality} → 기질 유형 평가</div>
+      <div class="step"><strong>Step 5. 취약부위:</strong> ${weakness} → 장부 허실 평가</div>
+
+      <h4 style="color:#4a148c;margin:16px 0 8px;border-left:3px solid #9c27b0;padding-left:8px;">체질 점수 분석</h4>
+      <table>
+        <tr><th>체질</th><th>점수</th><th>비율</th><th>%</th></tr>
+        ${scoreHTML}
+      </table>
+
+      <h4 style="color:#4a148c;margin:16px 0 8px;border-left:3px solid #9c27b0;padding-left:8px;">판정: <span class="tag tag-purple">${top[0]}</span> (신뢰도 ${confidence}%)</h4>
+      <table>
+        <tr><th style="width:120px">항목</th><th>내용</th></tr>
+        <tr><td>체질 설명</td><td>${d.desc}</td></tr>
+        <tr><td>강한 장부</td><td>${d.strong}</td></tr>
+        <tr><td>약한 장부</td><td>${d.weak}</td></tr>
+        <tr><td>이로운 음식</td><td>${d.food_good}</td></tr>
+        <tr><td>해로운 음식</td><td>${d.food_bad}</td></tr>
+        <tr><td>운동</td><td>${d.exercise}</td></tr>
+        <tr><td>대표 처방</td><td>${d.rx}</td></tr>
+        <tr><td>핵심 원칙</td><td><strong>${d.key}</strong></td></tr>
+      </table>
+      <div class="warning"><strong>주의:</strong> 사상체질 판정은 한의사의 종합적 진찰(체형·용모·성격·병증)을 통해 확정됩니다. AI 분석은 참고용으로만 활용하십시오.</div>
+    </div>`;
+  el.classList.add('show');
+}
+
+// ==================== TAB 5: 변증 진단 ====================
+function diagnoseBianzheng() {
+  const hanheol = document.getElementById('diag_hanheol').value;
+  const heosil = document.getElementById('diag_heosil').value;
+  const pulse = document.getElementById('diag_pulse').value;
+  const tongue = document.getElementById('diag_tongue').value;
+  const el = document.getElementById('diag_result');
+
+  // 팔강변증 decision tree
+  let biaoli = '', hanre = '', xushi = '';
+  let diagnosis = '', treatment = '', prescription = '', explanation = '';
+
+  // 표리 판별
+  if (hanheol === '모두' && pulse === '부') {
+    biaoli = '표증(表證)';
+  } else if (hanheol === '모두') {
+    biaoli = '표증(表證)';
+  } else if (pulse === '부') {
+    biaoli = '표증(表證)';
+  } else if (pulse === '침') {
+    biaoli = '이증(裏證)';
+  } else {
+    biaoli = '이증(裏證)';
+  }
+
+  // 한열 판별
+  if (hanheol === '오한' || tongue === '백태' || pulse === '지') {
+    hanre = '한증(寒證)';
+  } else if (hanheol === '발열' || tongue === '황태' || pulse === '삭') {
+    hanre = '열증(熱證)';
+  } else if (tongue === '무태') {
+    hanre = '열증(熱證) — 음허열';
+  } else {
+    hanre = '한열 불편향';
+  }
+
+  // 허실 판별
+  if (heosil === '피로무력' || pulse === '허') {
+    xushi = '허증(虛證)';
+  } else if (heosil === '통증심' || pulse === '실') {
+    xushi = '실증(實證)';
+  } else {
+    xushi = '허실 겸잡';
+  }
+
+  // 종합 진단
+  if (biaoli.includes('표') && hanre.includes('한')) {
+    diagnosis = '풍한표증(風寒表證)';
+    treatment = '해표산한(解表散寒) — 신온해표법(辛溫解表法)';
+    prescription = xushi.includes('허') ? '계지탕(桂枝湯) — 표허(表虛)에 해기조영(解肌調營)' : '마황탕(麻黃湯) — 표실(表實)에 발한해표';
+    explanation = '사기(邪氣)가 체표에 있고 한사(寒邪)의 성질 → 따뜻한 성질의 약으로 한사를 발산. 표한증의 정석 치법.';
+  } else if (biaoli.includes('표') && hanre.includes('열')) {
+    diagnosis = '풍열표증(風熱表證)';
+    treatment = '해표청열(解表淸熱) — 신량해표법(辛涼解表法)';
+    prescription = '은교산(銀翹散) — 신량투표(辛涼透表), 청열해독';
+    explanation = '사기가 체표에 있으나 열사(熱邪)의 성질 → 서늘한 성질의 약으로 열사를 투산. 표열증의 정석 치법.';
+  } else if (biaoli.includes('이') && hanre.includes('한') && xushi.includes('허')) {
+    diagnosis = '비위허한증(脾胃虛寒證)';
+    treatment = '온중건비(溫中健脾) — 보양(補陽) 치법';
+    prescription = '이중탕(理中湯) 또는 부자이중탕 — 온양건비(溫陽健脾)';
+    explanation = '이증+한증+허증 = 장부 양기(陽氣) 부족으로 한(寒)이 내생. 따뜻한 약으로 비위 양기를 보충하는 것이 정법.';
+  } else if (biaoli.includes('이') && hanre.includes('한') && xushi.includes('실')) {
+    diagnosis = '한실증(寒實證) — 한적내정(寒積內停)';
+    treatment = '온하(溫下) — 온리공적(溫裏攻積)';
+    prescription = '대황부자탕(大黃附子湯) — 온리산한+통변';
+    explanation = '이증+한증+실증 = 한사가 체내에 축적(寒積). 따뜻한 약+사하(瀉下)로 한적을 제거하는 공법(攻法).';
+  } else if (biaoli.includes('이') && hanre.includes('열') && xushi.includes('실')) {
+    diagnosis = '이실열증(裏實熱證)';
+    treatment = '청열사하(淸熱瀉下) — 청열공하법';
+    prescription = '대승기탕(大承氣湯) — 양명부실(陽明腑實)에 준하열결';
+    explanation = '이증+열증+실증 = 열사가 장부에 결취(結聚). 찬 성질의 약으로 열을 내리고 사하(瀉下)로 실사를 제거.';
+  } else if (biaoli.includes('이') && hanre.includes('열') && xushi.includes('허')) {
+    diagnosis = '음허내열증(陰虛內熱證)';
+    treatment = '자음강화(滋陰降火) — 보음(補陰) 치법';
+    prescription = '육미지황환(六味地黃丸) 또는 지백지황환 — 보음청열';
+    explanation = '이증+열증+허증 = 음액(陰液) 부족으로 상대적 허열(虛熱) 발생. 음액을 보충하여 음양 균형을 회복시키는 치법.';
+  } else if (xushi.includes('허') && hanre.includes('불편향')) {
+    diagnosis = '기허증(氣虛證)';
+    treatment = '보기(補氣) — 보기건비(補氣健脾)';
+    prescription = '사군자탕(四君子湯) 또는 보중익기탕 — 기허의 기본 처방';
+    explanation = '뚜렷한 한열 편향 없이 허증이 주된 경우 → 기허(氣虛)로 판단. 비위의 기를 보충하여 후천지본(後天之本) 강화.';
+  } else {
+    diagnosis = '기혈부조(氣血不調) — 복합 변증';
+    treatment = '변증시치(辨證施治) — 종합적 접근 필요';
+    prescription = '소시호탕(小柴胡湯) — 화해소양(和解少陽), 표리 겸증의 기본 처방';
+    explanation = '단일 변증으로 확정하기 어려운 복합 상태. 한의사의 세밀한 진찰로 주증(主證)을 확정한 후 치법 결정 필요.';
+  }
+
+  el.innerHTML = `
+    <div class="result-title">AI 변증 진단 결과</div>
+    <div class="result-body">
+      <h4 style="color:#4a148c;margin:0 0 12px;border-left:3px solid #9c27b0;padding-left:8px;">팔강변증(八綱辨證) 분석 과정</h4>
+
+      <div class="step"><strong>Step 1. 표리(表裏) 판별</strong><br>
+        한열 증상: ${hanheol} / 맥상: ${pulse}맥<br>
+        → 판정: <span class="tag tag-blue">${biaoli}</span><br>
+        근거: ${biaoli.includes('표') ? '오한+발열 동반 또는 부맥(浮脈) → 사기가 체표에 위치' : '외감 증상 미약 또는 침맥(沈脈) → 사기가 체내 장부에 위치'}</div>
+
+      <div class="step"><strong>Step 2. 한열(寒熱) 판별</strong><br>
+        한열 증상: ${hanheol} / 설태: ${tongue} / 맥상: ${pulse}맥<br>
+        → 판정: <span class="tag ${hanre.includes('한') ? 'tag-blue' : 'tag-orange'}">${hanre}</span><br>
+        근거: ${hanre.includes('한') ? '오한/백태/지맥 → 한사(寒邪) 또는 양기 부족' : hanre.includes('열') ? '발열/황태(또는 무태)/삭맥 → 열사 또는 음허발열' : '한열 편향이 뚜렷하지 않음'}</div>
+
+      <div class="step"><strong>Step 3. 허실(虛實) 판별</strong><br>
+        허실 증상: ${heosil} / 맥상: ${pulse}맥<br>
+        → 판정: <span class="tag ${xushi.includes('허') ? 'tag-red' : 'tag-orange'}">${xushi}</span><br>
+        근거: ${xushi.includes('허') ? '피로·무력감 또는 허맥 → 정기(正氣) 부족' : xushi.includes('실') ? '통증 심하고 압통 거부(拒按) 또는 실맥 → 사기(邪氣) 왕성' : '허실이 혼재된 상태'}</div>
+
+      <h4 style="color:#4a148c;margin:20px 0 8px;border-left:3px solid #9c27b0;padding-left:8px;">종합 진단</h4>
+      <table>
+        <tr><th style="width:120px">항목</th><th>내용</th></tr>
+        <tr><td>변증 진단</td><td><strong><span class="tag tag-purple">${diagnosis}</span></strong></td></tr>
+        <tr><td>표리</td><td>${biaoli}</td></tr>
+        <tr><td>한열</td><td>${hanre}</td></tr>
+        <tr><td>허실</td><td>${xushi}</td></tr>
+        <tr><td>치법</td><td><strong>${treatment}</strong></td></tr>
+        <tr><td>추천 처방</td><td>${prescription}</td></tr>
+      </table>
+
+      <div class="info"><strong>의사결정 근거:</strong> ${explanation}</div>
+      <div class="warning"><strong>주의:</strong> 팔강변증은 한의 진단의 기본 골격이며, 실제 임상에서는 장부변증·경락변증·기혈진액변증 등을 종합하여 최종 진단합니다. AI 결과는 참고용이며, 반드시 한의사의 직접 진찰(망·문·문·절)을 받으십시오.</div>
+    </div>`;
+  el.classList.add('show');
+}
+</script>
+</body>
+</html>

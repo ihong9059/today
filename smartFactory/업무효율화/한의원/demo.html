@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한의원 AI 업무효율화 - 사전빌드 데모</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI','Malgun Gothic',sans-serif; background:#f3e5f5; color:#333; }
+.header { background:linear-gradient(135deg,#4a148c,#7b1fa2); color:#fff; padding:20px 30px; text-align:center; }
+.header h1 { font-size:28px; margin-bottom:6px; }
+.header p { font-size:14px; opacity:.85; }
+.badge { display:inline-block; background:#ce93d8; color:#4a148c; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:bold; margin-top:6px; }
+
+.tabs { display:flex; background:#6a1b9a; overflow-x:auto; }
+.tabs button { flex:1; padding:14px 8px; background:none; border:none; color:#e1bee7; font-size:14px; cursor:pointer; transition:.2s; white-space:nowrap; min-width:120px; }
+.tabs button:hover { background:rgba(255,255,255,.1); }
+.tabs button.active { background:#4a148c; color:#fff; font-weight:bold; border-bottom:3px solid #ce93d8; }
+
+.content { max-width:1100px; margin:20px auto; padding:0 16px; }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+.example { background:#fff; border-radius:12px; margin-bottom:24px; box-shadow:0 2px 12px rgba(74,20,140,.12); overflow:hidden; }
+.example-header { background:linear-gradient(135deg,#7b1fa2,#9c27b0); color:#fff; padding:16px 20px; }
+.example-header .num { background:#ce93d8; color:#4a148c; padding:2px 10px; border-radius:10px; font-size:12px; font-weight:bold; margin-right:8px; }
+.example-header .query { font-size:15px; }
+.example-body { padding:20px; }
+
+.result-section { margin-bottom:16px; }
+.result-section h4 { color:#4a148c; font-size:15px; margin-bottom:8px; padding-left:8px; border-left:3px solid #9c27b0; }
+
+table { width:100%; border-collapse:collapse; margin-bottom:12px; font-size:13px; }
+table th { background:#f3e5f5; color:#4a148c; padding:8px 12px; text-align:left; font-weight:600; }
+table td { padding:8px 12px; border-bottom:1px solid #f3e5f5; }
+table tr:hover td { background:#fce4ec08; }
+
+.tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:12px; margin:2px; }
+.tag-purple { background:#f3e5f5; color:#6a1b9a; }
+.tag-red { background:#ffebee; color:#c62828; }
+.tag-green { background:#e8f5e9; color:#2e7d32; }
+.tag-orange { background:#fff3e0; color:#e65100; }
+.tag-blue { background:#e3f2fd; color:#1565c0; }
+
+.warning { background:#fff3e0; border-left:4px solid #ff9800; padding:12px 16px; border-radius:0 8px 8px 0; margin:12px 0; font-size:13px; }
+.warning strong { color:#e65100; }
+.info { background:#e8eaf6; border-left:4px solid #5c6bc0; padding:12px 16px; border-radius:0 8px 8px 0; margin:12px 0; font-size:13px; }
+.info strong { color:#283593; }
+.danger { background:#fce4ec; border-left:4px solid #e53935; padding:12px 16px; border-radius:0 8px 8px 0; margin:12px 0; font-size:13px; }
+.danger strong { color:#b71c1c; }
+
+.footer { text-align:center; padding:30px; color:#9e9e9e; font-size:12px; border-top:1px solid #e0e0e0; margin-top:40px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>🏥 한의원 AI 업무효율화 시스템</h1>
+<p>AI 기반 처방 추천 · 경혈 배혈 · 약재 상호작용 · 체질 분석 · 변증 진단</p>
+<span class="badge">PRE-BUILT DEMO</span>
+</div>
+
+<div class="tabs">
+<button class="active" onclick="showTab(0)">🏥 처방 추천</button>
+<button onclick="showTab(1)">📍 경혈 추천</button>
+<button onclick="showTab(2)">🌿 약재 확인</button>
+<button onclick="showTab(3)">🔮 체질 분석</button>
+<button onclick="showTab(4)">📋 변증 진단</button>
+</div>
+
+<div class="content">
+
+<!-- ==================== TAB 1: 처방 추천 ==================== -->
+<div class="tab-panel active" id="tab0">
+
+<!-- Example 1 -->
+<div class="example">
+<div class="example-header">
+<span class="num">1</span>
+<span class="query">"소음인, 만성 소화불량, 피로"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>AI 추천 처방: 보중익기탕(補中益氣湯)</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>추천 처방</td><td><strong>보중익기탕(補中益氣湯)</strong></td></tr>
+<tr><td>체질 적합성</td><td><span class="tag tag-purple">소음인</span> — 비위(脾胃)가 허약하여 소화력이 약하고 기운이 부족한 체질. 보중익기탕은 비기(脾氣)를 보하여 소음인의 근본 체질 약점을 보강</td></tr>
+<tr><td>증상 근거</td><td>만성 소화불량 → 비위기허(脾胃氣虛), 피로 → 중기하함(中氣下陷). 보중익기탕은 이 두 병기를 동시에 치료하는 대표 처방</td></tr>
+<tr><td>출전</td><td>이동원(李東垣)『비위론(脾胃論)』</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>약재 구성</h4>
+<table>
+<tr><th>약재</th><th>용량</th><th>역할</th></tr>
+<tr><td>황기(黃芪)</td><td>18g</td><td>군약(君) — 보기승양, 기허의 핵심 치료</td></tr>
+<tr><td>인삼(人蔘)</td><td>6g</td><td>신약(臣) — 비기 보강, 피로 개선</td></tr>
+<tr><td>백출(白朮)</td><td>6g</td><td>신약(臣) — 건비이습, 소화 촉진</td></tr>
+<tr><td>당귀(當歸)</td><td>6g</td><td>좌약(佐) — 혈허 보충, 기혈 동시 보양</td></tr>
+<tr><td>진피(陳皮)</td><td>6g</td><td>좌약(佐) — 이기화담, 보약의 체기 방지</td></tr>
+<tr><td>승마(升麻)</td><td>3g</td><td>사약(使) — 승양거함, 중기 끌어올림</td></tr>
+<tr><td>시호(柴胡)</td><td>3g</td><td>사약(使) — 승양소간, 양기 상승</td></tr>
+<tr><td>자감초(炙甘草)</td><td>3g</td><td>사약(使) — 제약 조화, 비기 보조</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>복약지도</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>지도 내용</th></tr>
+<tr><td>복용 시간</td><td>식전 30분 또는 식간(공복) 복용 권장</td></tr>
+<tr><td>복용 기간</td><td>최소 4주 ~ 8주 복용 후 재평가</td></tr>
+<tr><td>음식 주의</td><td>찬 음식·생냉식 절제, 따뜻한 죽·미음 권장</td></tr>
+<tr><td>생활 지도</td><td>과로 금지, 충분한 수면, 가벼운 산책 권장</td></tr>
+</table>
+</div>
+<div class="warning">
+<strong>⚠ 주의:</strong> 실열(實熱) 증상(안면홍조, 구갈, 변비)이 있으면 보중익기탕은 부적합. 반드시 한의사 진찰 후 처방받을 것.
+</div>
+</div>
+</div>
+
+<!-- Example 2 -->
+<div class="example">
+<div class="example-header">
+<span class="num">2</span>
+<span class="query">"태음인, 감기 초기, 오한+두통"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>AI 추천 처방: 갈근탕(葛根湯)</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>추천 처방</td><td><strong>갈근탕(葛根湯)</strong></td></tr>
+<tr><td>체질 적합성</td><td><span class="tag tag-purple">태음인</span> — 체격이 건장하고 기육(肌肉)이 발달한 체질. 갈근탕은 표증 해소 시 땀을 내는 발한법으로, 태음인의 충실한 체력에 적합</td></tr>
+<tr><td>증상 근거</td><td>오한+두통 → 풍한외감(風寒外感), 감기 초기 → 태양병(太陽病) 항강통(項强痛). 갈근은 태양경의 경기(經氣)를 소통시켜 두통·경항 강직 해소</td></tr>
+<tr><td>투약 기간</td><td>감기 초기 급성기 2~3일 단기 투약. 증상 호전 시 즉시 중단</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>약재 구성</h4>
+<table>
+<tr><th>약재</th><th>용량</th><th>역할</th></tr>
+<tr><td>갈근(葛根)</td><td>12g</td><td>군약 — 해기발표, 경항부 이완</td></tr>
+<tr><td>마황(麻黃)</td><td>6g</td><td>신약 — 발한해표, 오한 해소</td></tr>
+<tr><td>계지(桂枝)</td><td>6g</td><td>신약 — 온경산한, 마황과 배합으로 발한력 증강</td></tr>
+<tr><td>작약(芍藥)</td><td>6g</td><td>좌약 — 마황·계지의 과도한 발한 억제</td></tr>
+<tr><td>생강(生薑)</td><td>3편</td><td>좌약 — 위기(胃氣) 보호, 구역 방지</td></tr>
+<tr><td>대조(大棗)</td><td>4매</td><td>사약 — 비위 조화, 약성 완화</td></tr>
+<tr><td>감초(甘草)</td><td>3g</td><td>사약 — 제약 조화</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>복약지도</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>복용 방법</td><td>따뜻하게 달여서 복용, 복용 후 이불을 덮고 미한(微汗)을 낼 것</td></tr>
+<tr><td>복용 기간</td><td>2~3일 단기 투약, 땀이 나고 오한이 풀리면 중단</td></tr>
+<tr><td>금기</td><td>땀을 이미 많이 흘리고 있는 경우 사용 금지 (망양증 위험)</td></tr>
+</table>
+</div>
+<div class="warning">
+<strong>⚠ 주의:</strong> 소음인처럼 체력이 약한 환자에게는 발한 과다로 탈진 위험. 고혈압·심장질환 환자는 마황 금기. 반드시 한의사 진찰 필요.
+</div>
+</div>
+</div>
+
+<!-- Example 3 -->
+<div class="example">
+<div class="example-header">
+<span class="num">3</span>
+<span class="query">"소양인, 불면+스트레스+두통"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>AI 추천 처방: 억간산(抑肝散) + 용담사간탕(龍膽瀉肝湯) 고려</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>1차 추천</td><td><strong>억간산(抑肝散)</strong> — 간풍내동(肝風內動) 억제, 스트레스성 두통+불면에 우수</td></tr>
+<tr><td>2차 고려</td><td><strong>용담사간탕(龍膽瀉肝湯)</strong> — 간담습열(肝膽濕熱) 소증 시, 간화(肝火)가 성하여 두통+불면이 심한 경우</td></tr>
+<tr><td>체질 근거</td><td><span class="tag tag-purple">소양인</span> — 열성(熱性) 체질로 간화(肝火)가 쉽게 상승. 스트레스 시 화(火)가 상역하여 두통·불면 유발. 사간(瀉肝)·청열(淸熱) 계열 처방이 적합</td></tr>
+<tr><td>변증 근거</td><td>불면+스트레스 → 간기울결(肝氣鬱結)→간화상염(肝火上炎). 두통 → 간양상항(肝陽上亢). 복합 변증으로 억간+사간 병행 고려</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>억간산 약재 구성</h4>
+<table>
+<tr><th>약재</th><th>용량</th><th>역할</th></tr>
+<tr><td>조구등(釣鉤藤)</td><td>6g</td><td>군약 — 평간식풍, 진경</td></tr>
+<tr><td>시호(柴胡)</td><td>6g</td><td>신약 — 소간해울, 스트레스 완화</td></tr>
+<tr><td>당귀(當歸)</td><td>6g</td><td>좌약 — 양혈유간</td></tr>
+<tr><td>백출(白朮)</td><td>6g</td><td>좌약 — 건비</td></tr>
+<tr><td>복령(茯苓)</td><td>6g</td><td>좌약 — 영심안신</td></tr>
+<tr><td>천궁(川芎)</td><td>3g</td><td>좌약 — 활혈행기, 두통 완화</td></tr>
+<tr><td>감초(甘草)</td><td>3g</td><td>사약 — 조화제약</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>생활 관리</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>권장 사항</th></tr>
+<tr><td>식이</td><td>맵고 뜨거운 음식 절제, 녹두·수박·오이 등 청열식품 권장</td></tr>
+<tr><td>운동</td><td>격렬한 운동보다 요가·명상·태극권 등 이완 운동</td></tr>
+<tr><td>수면 위생</td><td>취침 2시간 전 전자기기 차단, 족욕(足浴) 권장</td></tr>
+<tr><td>스트레스</td><td>복식호흡, 이침(耳鍼) 신문혈 자극 병행 추천</td></tr>
+</table>
+</div>
+<div class="info">
+<strong>ℹ 참고:</strong> 소양인은 열성 체질이므로 인삼·녹용 등 온보(溫補) 약재는 부적합. 화(火)를 내리는 청열(淸熱) 위주 처방이 원칙.
+</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 2: 경혈 추천 ==================== -->
+<div class="tab-panel" id="tab1">
+
+<div class="example">
+<div class="example-header">
+<span class="num">1</span>
+<span class="query">"만성 두통 (긴장형)"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>AI 경혈 배혈 추천</h4>
+<table>
+<tr><th>경혈</th><th>위치</th><th>배혈 이유</th></tr>
+<tr><td><strong>풍지(風池) GB20</strong></td><td>후두골 하방, 승모근과 흉쇄유돌근 사이 함몰부</td><td>소풍청열, 두통의 1차 선혈. 풍사(風邪)가 침입하는 관문으로 긴장형 두통의 근본 치료</td></tr>
+<tr><td><strong>합곡(合谷) LI4</strong></td><td>제1·2중수골 사이, 제2중수골 요측 중점</td><td>면구통치(面口通治), 두면부 통증의 원위취혈. 진통 효과 우수</td></tr>
+<tr><td><strong>태충(太衝) LR3</strong></td><td>족배, 제1·2중족골 사이 함몰부</td><td>평간식풍. 합곡+태충 = "사관혈(四關穴)"로 기혈 순환 촉진, 스트레스성 두통 해소</td></tr>
+<tr><td><strong>백회(百會) GV20</strong></td><td>정수리, 양쪽 귀끝을 연결한 선과 정중선 교차점</td><td>제양지회(諸陽之會), 승양거함, 두정부 통증 직접 치료</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>침법 권고</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>자침 심도</td><td>풍지 0.5~1촌(귀 방향), 합곡 0.5~1촌(직자), 태충 0.3~0.5촌, 백회 0.3~0.5촌(평자)</td></tr>
+<tr><td>유침 시간</td><td>20~30분</td></tr>
+<tr><td>보조 치법</td><td>경추 주변 부항(拔罐) 병행 시 효과 증대</td></tr>
+<tr><td>치료 빈도</td><td>주 2~3회, 총 10~15회 세션 권장</td></tr>
+</table>
+</div>
+<div class="info">
+<strong>ℹ 의사결정 근거:</strong> 긴장형 두통 → 간양상항+풍사 → 평간식풍+소풍통락을 치법으로 설정 → 풍지(거풍)+태충(평간)+합곡(원위진통)+백회(국소)로 원근배혈(遠近配穴) 원칙 적용
+</div>
+</div>
+</div>
+
+<div class="example">
+<div class="example-header">
+<span class="num">2</span>
+<span class="query">"요통 (허리 디스크)"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>AI 경혈 배혈 추천</h4>
+<table>
+<tr><th>경혈</th><th>위치</th><th>배혈 이유</th></tr>
+<tr><td><strong>신수(腎兪) BL23</strong></td><td>L2 극돌기 하, 후정중선 옆 1.5촌</td><td>보신강요(補腎强腰), 요통의 근본 치료. "요자신지부(腰者腎之府)"</td></tr>
+<tr><td><strong>대장수(大腸兪) BL25</strong></td><td>L4 극돌기 하, 후정중선 옆 1.5촌</td><td>요천부 국소취혈, L4-L5 디스크 병변부 직접 자극</td></tr>
+<tr><td><strong>위중(委中) BL40</strong></td><td>슬와횡문 중앙</td><td>"요배위중구(腰背委中求)" — 요통 치료의 경험혈, 원위취혈의 대표</td></tr>
+<tr><td><strong>환도(環跳) GB30</strong></td><td>대전자와 미골 연결선 외1/3점</td><td>하지 방사통 동반 시 필수. 좌골신경 경로상의 핵심 혈위</td></tr>
+<tr><td><strong>요양관(腰陽關) GV3</strong></td><td>L4 극돌기 하 함몰부</td><td>독맥 혈위, 양기 소통, 요부 냉감·무력감 해소</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>추나요법 병행 권고</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>추나 유형</td><td>요추 굴곡신연 추나 + 골반 교정 추나</td></tr>
+<tr><td>목적</td><td>디스크 환원, 요추 주변 근긴장 이완, 골반 비대칭 교정</td></tr>
+<tr><td>병행 효과</td><td>침 치료 단독 대비 추나 병행 시 통증 감소율 약 30% 향상 (임상 근거)</td></tr>
+<tr><td>주의사항</td><td>급성 파열성 디스크·마미증후군 의심 시 추나 금기, 즉시 영상 검사</td></tr>
+</table>
+</div>
+<div class="warning">
+<strong>⚠ 주의:</strong> 하지 근력 약화, 대소변 장애 동반 시 마미증후군(cauda equina syndrome) 의심 → 즉시 신경외과 의뢰 필요.
+</div>
+</div>
+</div>
+
+<div class="example">
+<div class="example-header">
+<span class="num">3</span>
+<span class="query">"불면증"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>AI 경혈 배혈 추천</h4>
+<table>
+<tr><th>경혈</th><th>위치</th><th>배혈 이유</th></tr>
+<tr><td><strong>신문(神門) HT7</strong></td><td>완관절 횡문, 척측수근굴근건 요측 함몰부</td><td>영심안신(寧心安神), 심경 원혈(原穴)로 불면의 1차 선혈</td></tr>
+<tr><td><strong>삼음교(三陰交) SP6</strong></td><td>내과첨 상 3촌, 경골 내측면 후방</td><td>삼음경 교회혈, 자음양혈(滋陰養血), 음혈 부족으로 인한 불면 치료</td></tr>
+<tr><td><strong>백회(百會) GV20</strong></td><td>정수리 정중앙</td><td>안신정지(安神定志), 양기 조절로 양불입음(陽不入陰) 상태 교정</td></tr>
+<tr><td><strong>내관(內關) PC6</strong></td><td>완관절 횡문 상 2촌, 양건 사이</td><td>영심안신, 심포경 낙혈(絡穴), 심계·불안 동반 불면에 효과적</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>이침(耳鍼) 추가 안내</h4>
+<table>
+<tr><th style="width:160px">이침 혈위</th><th>효과</th></tr>
+<tr><td>신문(이침)</td><td>안신 효과, 취침 전 자극 시 입면(入眠) 촉진</td></tr>
+<tr><td>심(心)</td><td>심화(心火) 하강, 심계·불안 완화</td></tr>
+<tr><td>교감</td><td>자율신경 조절, 교감신경 항진 억제</td></tr>
+<tr><td>피질하</td><td>대뇌피질 진정, 과각성 상태 개선</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>이침 적용 방법</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>방법</td><td>왕불류행(王不留行) 씨앗 부착 또는 피내침 사용</td></tr>
+<tr><td>자극법</td><td>취침 30분 전 각 혈위를 1~2분간 지압</td></tr>
+<tr><td>교체 주기</td><td>3~5일마다 교체, 피부 상태 확인</td></tr>
+</table>
+</div>
+<div class="info">
+<strong>ℹ 의사결정 근거:</strong> 불면 → 심신불교(心腎不交) 또는 심비양허(心脾兩虛) → 안신(安神) 치법 → 신문(심경)+내관(심포경)으로 심(心)을 안정, 삼음교(음혈 보충)+백회(양기 조절)로 음양 교합 촉진. 이침 병행으로 지속적 자극 효과.
+</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 3: 약재 확인 ==================== -->
+<div class="tab-panel" id="tab2">
+
+<div class="example">
+<div class="example-header">
+<span class="num">1</span>
+<span class="query">"황기 상세"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>약재 상세 정보: 황기(黃芪) Astragali Radix</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>기원</td><td>콩과 황기 Astragalus membranaceus의 뿌리</td></tr>
+<tr><td>성미(性味)</td><td><span class="tag tag-orange">온(溫)</span> <span class="tag tag-green">감(甘)</span></td></tr>
+<tr><td>귀경(歸經)</td><td><span class="tag tag-blue">폐경(肺經)</span> <span class="tag tag-blue">비경(脾經)</span></td></tr>
+<tr><td>효능</td><td>보기승양(補氣升陽), 익위고표(益衛固表), 탁독생기(托毒生肌), 이수소종(利水消腫)</td></tr>
+<tr><td>상용 용량</td><td>9~30g (보기 목적 시 30g까지 증량 가능)</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>주의사항</h4>
+<table>
+<tr><th style="width:160px">상황</th><th>주의 내용</th></tr>
+<tr><td>표실사성(表實邪盛)</td><td>감기 초기 한사(寒邪)가 표에 있을 때 사용 금지 → 익기고표 작용이 사기(邪氣)를 가둠</td></tr>
+<tr><td>음허양항</td><td>음허(陰虛)로 인한 화(火) 상승 시 금기 → 양기 보충이 화를 더 올림</td></tr>
+<tr><td>습열내온</td><td>습열(濕熱)이 내부에 있을 때 신중 → 기를 보하면 습열 정체 악화</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>대표 처방</h4>
+<table>
+<tr><th>처방명</th><th>역할</th><th>적응증</th></tr>
+<tr><td>보중익기탕</td><td>군약(18g)</td><td>비위기허, 중기하함, 만성 피로</td></tr>
+<tr><td>옥병풍산(玉屛風散)</td><td>군약(30g)</td><td>표허자한(表虛自汗), 감기 잘 걸리는 체질</td></tr>
+<tr><td>방기황기탕</td><td>군약(15g)</td><td>풍수부종, 부종+자한</td></tr>
+<tr><td>당귀보혈탕</td><td>군약(30g)</td><td>혈허발열, 기허 근본 치료로 혈 생성 촉진</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="example">
+<div class="example-header">
+<span class="num">2</span>
+<span class="query">"부자 + 반하 상극 확인"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>상호작용 판정: 십팔반(十八反) 해당</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>판정 결과</td><td><span class="tag tag-red">⛔ 금기 — 십팔반(十八反) 해당</span></td></tr>
+<tr><td>근거</td><td>"오두반패모 과루반하 백급백렴(烏頭反貝母 栝樓半夏 白芨白蘞)" — 오두(부자의 모체)와 반하는 십팔반에 명시된 상반(相反) 약물</td></tr>
+<tr><td>독성 기전</td><td>부자(아코니틴 aconitine)와 반하 병용 시 독성 상승작용. 부정맥, 심계항진, 중추신경 억제 위험 증가</td></tr>
+<tr><td>출전</td><td>『본초명언(本草明言)』, 『신농본초경(神農本草經)』</td></tr>
+</table>
+</div>
+<div class="danger">
+<strong>🚫 절대 금기:</strong> 부자(附子)와 반하(半夏)의 동시 투여는 십팔반(十八反)에 해당하는 배합금기입니다. 임상에서 절대 병용하지 마십시오.
+</div>
+<div class="result-section">
+<h4>대체약 추천</h4>
+<table>
+<tr><th>원래 의도</th><th>대체 방안</th></tr>
+<tr><td>부자의 온양(溫陽) 효과 필요</td><td>건강(乾薑) 또는 육계(肉桂)로 대체 — 반하와 금기 없음</td></tr>
+<tr><td>반하의 화담(化痰) 효과 필요</td><td>진피(陳皮)+복령(茯苓) 조합으로 대체 — 부자와 금기 없음</td></tr>
+<tr><td>온양+화담 동시 필요</td><td>건강(乾薑)+반하(半夏) 조합 → 소반하가복령탕 등 활용</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="example">
+<div class="example-header">
+<span class="num">3</span>
+<span class="query">"임부 금기 약재 목록"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>임부 절대 금기 약재 (禁用)</h4>
+<table>
+<tr><th>약재</th><th>성분/작용</th><th>금기 사유</th></tr>
+<tr><td>파두(巴豆)</td><td>준하(峻下) 약물</td><td>강렬한 사하작용으로 자궁수축 유발, 유산 위험</td></tr>
+<tr><td>우슬(牛膝)</td><td>활혈거어</td><td>활혈통경(活血通經) 작용으로 자궁 출혈·유산 유발</td></tr>
+<tr><td>대극(大戟)</td><td>준하축수</td><td>독성 강하고 사하작용이 격렬하여 태아 손상</td></tr>
+<tr><td>망초(芒硝)</td><td>준하 사하</td><td>강력한 사하로 자궁수축 촉진</td></tr>
+<tr><td>삼릉(三稜)</td><td>파혈거어</td><td>파혈(破血) 작용으로 자궁 출혈 위험</td></tr>
+<tr><td>봉출(蓬朮)</td><td>파혈거어</td><td>파혈 작용, 자궁수축 유발</td></tr>
+<tr><td>수질(水蛭)</td><td>파혈축어</td><td>히루딘(hirudin) 성분, 항응고 작용으로 출혈 위험</td></tr>
+<tr><td>반묘(斑猫)</td><td>유독</td><td>칸타리딘(cantharidin) 독성, 신장·방광 손상</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>임부 신중 투여 약재 (愼用)</h4>
+<table>
+<tr><th>약재</th><th>성분/작용</th><th>주의 사유</th></tr>
+<tr><td>도인(桃仁)</td><td>활혈거어</td><td>활혈작용이 있으나 소량 사용 시 허용 가능한 경우 있음</td></tr>
+<tr><td>홍화(紅花)</td><td>활혈거어</td><td>소량은 양혈, 대량은 파혈 → 용량 주의</td></tr>
+<tr><td>반하(半夏)</td><td>화담 강역</td><td>임신오조(妊娠惡阻) 치료 시 제한적 사용 가능하나 신중</td></tr>
+<tr><td>부자(附子)</td><td>온리(溫裏)</td><td>아코니틴 독성, 반드시 포제(炮製) 후 사용</td></tr>
+<tr><td>대황(大黃)</td><td>사하</td><td>사하 작용으로 자궁수축 가능, 신중 사용</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>임부 안전 약재</h4>
+<table>
+<tr><th>약재</th><th>안전 등급</th><th>적응증</th></tr>
+<tr><td>황금(黃芩)</td><td><span class="tag tag-green">안전 — 안태(安胎) 약</span></td><td>임신 중 열증, 태동불안 치료의 핵심 약재</td></tr>
+<tr><td>백출(白朮)</td><td><span class="tag tag-green">안전 — 안태 약</span></td><td>비위 보강, 안태. "당귀산"의 핵심 약재</td></tr>
+<tr><td>사인(砂仁)</td><td><span class="tag tag-green">안전 — 안태 약</span></td><td>행기안태, 임신 구역에 안전하게 사용</td></tr>
+<tr><td>숙지황(熟地黃)</td><td><span class="tag tag-green">안전</span></td><td>보혈자음, 임신 중 혈허 치료</td></tr>
+<tr><td>감초(甘草)</td><td><span class="tag tag-green">안전</span></td><td>제약 조화, 소량 사용 안전</td></tr>
+</table>
+</div>
+<div class="danger">
+<strong>🚫 원칙:</strong> 임부 투약은 "유고무상(有故無殞, 역시 무고(無故)면 불투약)" 원칙. 반드시 치료 필요성이 있을 때만 최소 용량으로 투여하고, 한의사의 직접 진찰 하에 처방해야 합니다.
+</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 4: 체질 분석 ==================== -->
+<div class="tab-panel" id="tab3">
+
+<div class="example">
+<div class="example-header">
+<span class="num">1</span>
+<span class="query">"체격 건장, 식욕 왕성, 땀 많음, 호흡기 약"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>체질 판정: 태음인(太陰人)</h4>
+<table>
+<tr><th style="width:160px">판정 항목</th><th>분석</th></tr>
+<tr><td>체질 판정</td><td><span class="tag tag-purple">태음인(太陰人)</span> — 신뢰도 92%</td></tr>
+<tr><td>체격 근거</td><td>건장한 체격 → 태음인 특징. 기육(肌肉)이 풍만하고 골격이 크다</td></tr>
+<tr><td>식성 근거</td><td>식욕 왕성 → 태음인은 식욕이 좋고 많이 먹는 편. 비위(脾胃) 기능이 상대적으로 양호</td></tr>
+<tr><td>발한 근거</td><td>땀을 많이 흘림 → 태음인의 핵심 생리. "한다즉건(汗多則健)" — 땀이 나면 건강한 체질</td></tr>
+<tr><td>취약부위</td><td>호흡기 약 → 태음인은 폐(肺) 기능이 약하여 감기·기관지염·천식 등 호흡기 질환에 취약</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>맞춤 처방</h4>
+<table>
+<tr><th>상황</th><th>추천 처방</th><th>근거</th></tr>
+<tr><td>기본 보양</td><td>태음조위탕(太陰調胃湯)</td><td>태음인 표병 치료의 기본 처방</td></tr>
+<tr><td>감기·호흡기</td><td>갈근해기탕</td><td>폐 기능 보강 + 해표</td></tr>
+<tr><td>비만 관리</td><td>조위승청탕</td><td>태음인 습담(濕痰) 제거</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>맞춤 음식 · 생활</h4>
+<table>
+<tr><th style="width:160px">분류</th><th>내용</th></tr>
+<tr><td>이로운 음식</td><td>소고기, 밀, 콩, 무, 도라지, 더덕, 율무, 잣, 호두, 은행, 배, 사과</td></tr>
+<tr><td>해로운 음식</td><td>닭고기, 돼지고기(과다), 기름진 음식, 술(과음), 밀가루(과다)</td></tr>
+<tr><td>운동</td><td>등산, 수영, 걷기 등 유산소 운동 필수. 땀을 충분히 내는 것이 건강의 핵심</td></tr>
+<tr><td>생활 주의</td><td>비만 경향이 있으므로 식이 조절 중요. 땀을 흘리지 않으면 건강 악화. 규칙적 운동 필수</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="example">
+<div class="example-header">
+<span class="num">2</span>
+<span class="query">"마른 체형, 소화 약, 추위 많이 탐, 수족냉"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>체질 판정: 소음인(少陰人)</h4>
+<table>
+<tr><th style="width:160px">판정 항목</th><th>분석</th></tr>
+<tr><td>체질 판정</td><td><span class="tag tag-purple">소음인(少陰人)</span> — 신뢰도 95%</td></tr>
+<tr><td>체격 근거</td><td>마른 체형 → 소음인은 체구가 작고 마른 편. 상체보다 하체가 발달</td></tr>
+<tr><td>소화 근거</td><td>소화 약 → 소음인의 핵심 약점. 비위(脾胃) 양기가 부족하여 소화력이 약함</td></tr>
+<tr><td>한열 근거</td><td>추위를 많이 탐 → 양기(陽氣) 부족, 한증(寒證) 경향. 소음인 전형</td></tr>
+<tr><td>수족냉</td><td>수족냉증 → 비신양허(脾腎陽虛), 말단 순환 부족. 소음인의 대표 증상</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>맞춤 관리</h4>
+<table>
+<tr><th style="width:160px">분류</th><th>내용</th></tr>
+<tr><td>기본 처방</td><td>향사양위탕(香砂養胃湯) — 비위 양기 보강의 기본 처방</td></tr>
+<tr><td>수족냉 치료</td><td>관계부자리중탕(官桂附子理中湯) — 비신양허 수족냉에 온양</td></tr>
+<tr><td>이로운 음식</td><td>찹쌀, 감자, 닭고기, 양고기, 생강, 대추, 계피, 꿀, 양파, 마늘</td></tr>
+<tr><td>해로운 음식</td><td>찬 음식, 생냉식, 밀가루(차가운 성질), 보리, 돼지고기, 수박, 참외</td></tr>
+<tr><td>운동</td><td>가벼운 산책, 실내 운동, 요가. 격렬한 운동은 체력 소모 → 기력 저하</td></tr>
+<tr><td>생활 주의</td><td>보온 철저, 족욕 습관화. 과로·스트레스에 특히 취약. 충분한 수면 필수</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="example">
+<div class="example-header">
+<span class="num">3</span>
+<span class="query">"활발, 열성, 상체 발달, 신장 약"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>체질 판정: 소양인(少陽人)</h4>
+<table>
+<tr><th style="width:160px">판정 항목</th><th>분석</th></tr>
+<tr><td>체질 판정</td><td><span class="tag tag-purple">소양인(少陽人)</span> — 신뢰도 90%</td></tr>
+<tr><td>성격 근거</td><td>활발함 → 소양인은 외향적이고 활발하며 행동이 빠른 성격</td></tr>
+<tr><td>한열 근거</td><td>열성 → 비위(脾胃)의 열기가 강하고, 상체로 열이 모이는 체질</td></tr>
+<tr><td>체형 근거</td><td>상체 발달 → 소양인은 가슴 부위가 발달하고 하체(엉덩이)가 약한 체형</td></tr>
+<tr><td>취약부위</td><td>신장(腎) 약 → 소양인은 신(腎) 기능이 약하여 비뇨기·생식기 질환에 취약</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>맞춤 관리</h4>
+<table>
+<tr><th style="width:160px">분류</th><th>내용</th></tr>
+<tr><td>기본 처방</td><td>형방지황탕(荊防地黃湯) — 소양인 표병의 기본 처방</td></tr>
+<tr><td>열증 치료</td><td>양격산화탕(凉膈散火湯) — 소양인 이병(裏病), 상체 열 하강</td></tr>
+<tr><td>이로운 음식</td><td>돼지고기, 해산물, 보리, 팥, 녹두, 수박, 참외, 오이, 배추, 상추</td></tr>
+<tr><td>해로운 음식</td><td>닭고기, 양고기, 인삼, 꿀, 마늘(과다), 고추(과다), 열성 음식</td></tr>
+<tr><td>운동</td><td>수영, 조깅 등 적당한 운동. 과격한 운동보다 꾸준한 운동 권장</td></tr>
+<tr><td>생활 주의</td><td>화(火)를 다스리는 것이 핵심. 급한 성격 절제, 명상·호흡 훈련 권장. 하체 근력 강화 운동 필수</td></tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 5: 변증 진단 ==================== -->
+<div class="tab-panel" id="tab4">
+
+<div class="example">
+<div class="example-header">
+<span class="num">1</span>
+<span class="query">"오한, 발열, 맑은 콧물, 맥 부긴"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>변증 진단: 풍한표증(風寒表證)</h4>
+<table>
+<tr><th style="width:160px">진단 항목</th><th>분석</th></tr>
+<tr><td>변증 결과</td><td><span class="tag tag-purple">풍한표증(風寒表證)</span></td></tr>
+<tr><td>표리(表裏)</td><td><span class="tag tag-blue">표증(表證)</span> — 오한·발열 동반, 사기(邪氣)가 체표에 위치</td></tr>
+<tr><td>한열(寒熱)</td><td><span class="tag tag-blue">한증(寒證)</span> — 오한 위주, 맑은 콧물(청체, 清涕)은 한사(寒邪)의 증거</td></tr>
+<tr><td>맥상 근거</td><td>부긴맥(浮緊脈) — 부(浮)=표증, 긴(緊)=한사. 풍한표증의 전형적 맥상</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>치법 및 처방</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>치법(治法)</td><td><strong>해표산한(解表散寒)</strong> — 사기를 발산시켜 표증을 해소</td></tr>
+<tr><td>추천 처방</td><td>마황탕(麻黃湯) — 오한 심하고 땀이 안 나는 표실증(表實證)<br>계지탕(桂枝湯) — 오한+자한(自汗)이 있는 표허증(表虛證)</td></tr>
+<tr><td>감별 포인트</td><td>무한(無汗) → 마황탕 / 자한(自汗) → 계지탕</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>의사결정 과정</h4>
+<table>
+<tr><th>단계</th><th>판단</th><th>근거</th></tr>
+<tr><td>1. 표리 판별</td><td>표증</td><td>오한+발열 동반 = 표증의 기본 조건</td></tr>
+<tr><td>2. 한열 판별</td><td>한증</td><td>맑은 콧물(청체) = 한사, 오한이 발열보다 우세</td></tr>
+<tr><td>3. 맥진 확인</td><td>부긴</td><td>부=표, 긴=한 → 풍한표증 확진</td></tr>
+<tr><td>4. 치법 결정</td><td>해표산한</td><td>표한(表寒) → 신온해표(辛溫解表)가 정법</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="example">
+<div class="example-header">
+<span class="num">2</span>
+<span class="query">"안면홍조, 구갈, 불면, 맥 세삭"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>변증 진단: 음허내열증(陰虛內熱證)</h4>
+<table>
+<tr><th style="width:160px">진단 항목</th><th>분석</th></tr>
+<tr><td>변증 결과</td><td><span class="tag tag-purple">음허내열증(陰虛內熱證)</span></td></tr>
+<tr><td>표리(表裏)</td><td><span class="tag tag-blue">이증(裏證)</span> — 외감 증상 없이 내부 장부의 음허로 인한 내열</td></tr>
+<tr><td>한열(寒熱)</td><td><span class="tag tag-orange">열증(熱證)</span> — 안면홍조, 구갈(口渴)은 허열(虛熱)의 증거</td></tr>
+<tr><td>허실(虛實)</td><td><span class="tag tag-red">허증(虛證)</span> — 음액(陰液)이 부족하여 상대적으로 열이 떠오르는 허열</td></tr>
+<tr><td>맥상 근거</td><td>세삭맥(細數脈) — 세(細)=음혈부족, 삭(數)=열. 음허내열의 전형적 맥상</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>치법 및 처방</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>치법(治法)</td><td><strong>자음강화(滋陰降火)</strong> — 음액을 보충하여 허열을 내림</td></tr>
+<tr><td>추천 처방</td><td>육미지황환(六味地黃丸) — 간신음허(肝腎陰虛)의 기본 처방<br>지백지황환(知柏地黃丸) — 음허화왕(陰虛火旺)이 심한 경우</td></tr>
+<tr><td>보조 치법</td><td>불면 심하면 천왕보심단(天王補心丹) 가감 고려</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>의사결정 과정</h4>
+<table>
+<tr><th>단계</th><th>판단</th><th>근거</th></tr>
+<tr><td>1. 표리 판별</td><td>이증</td><td>외감 증상(오한·발열 동반) 없음 → 이증</td></tr>
+<tr><td>2. 한열 판별</td><td>열증</td><td>안면홍조+구갈 = 열상(熱象)</td></tr>
+<tr><td>3. 허실 판별</td><td>허증</td><td>세맥(음혈부족) + 불면(심음부족) = 허열, 실열이 아님</td></tr>
+<tr><td>4. 종합 변증</td><td>음허내열</td><td>이(裏)+열(熱)+허(虛) = 음허내열증</td></tr>
+<tr><td>5. 치법 결정</td><td>자음강화</td><td>음허 → 보음(補陰), 내열 → 강화(降火)</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="example">
+<div class="example-header">
+<span class="num">3</span>
+<span class="query">"피로, 식욕부진, 사지무력, 맥 허약"</span>
+</div>
+<div class="example-body">
+<div class="result-section">
+<h4>변증 진단: 기허증(氣虛證)</h4>
+<table>
+<tr><th style="width:160px">진단 항목</th><th>분석</th></tr>
+<tr><td>변증 결과</td><td><span class="tag tag-purple">기허증(氣虛證)</span> — 비기허(脾氣虛) 위주</td></tr>
+<tr><td>표리(表裏)</td><td><span class="tag tag-blue">이증(裏證)</span> — 장부(비위) 기능 약화로 인한 전신 증상</td></tr>
+<tr><td>한열(寒熱)</td><td>한열 편향 뚜렷하지 않으나 양기 부족 경향</td></tr>
+<tr><td>허실(虛實)</td><td><span class="tag tag-red">허증(虛證)</span> — 피로+무력+식욕부진은 모두 부족의 증거</td></tr>
+<tr><td>맥상 근거</td><td>허약맥(虛弱脈) — 맥에 힘이 없고 약함 = 기혈 부족의 직접 증거</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>치법 및 처방</h4>
+<table>
+<tr><th style="width:160px">항목</th><th>내용</th></tr>
+<tr><td>치법(治法)</td><td><strong>보기(補氣)</strong> — 비위의 기를 보충하여 후천지본(後天之本) 강화</td></tr>
+<tr><td>추천 처방</td><td>사군자탕(四君子湯) — 기허의 기본 처방 (인삼+백출+복령+감초)<br>보중익기탕(補中益氣湯) — 중기하함(中氣下陷) 동반 시</td></tr>
+<tr><td>식이 처방</td><td>산약(山藥)죽, 대추차, 인삼차 등 비위를 보하는 식이 병행</td></tr>
+</table>
+</div>
+<div class="result-section">
+<h4>의사결정 과정</h4>
+<table>
+<tr><th>단계</th><th>판단</th><th>근거</th></tr>
+<tr><td>1. 주소 분석</td><td>전신 기허</td><td>피로+무력감 = 기(氣)의 기본 기능(추동·온후·고섭) 약화</td></tr>
+<tr><td>2. 장부 귀속</td><td>비(脾)</td><td>식욕부진+사지무력 = "비주사지(脾主四肢)" "비주운화(脾主運化)" 기능 실조</td></tr>
+<tr><td>3. 허실 판별</td><td>허증</td><td>허약맥+부족 증상 → 명확한 허증. 사기(邪氣) 실증 아님</td></tr>
+<tr><td>4. 치법 결정</td><td>보기건비</td><td>비기허 → 보기(補氣)+건비(健脾)가 정법</td></tr>
+</table>
+</div>
+<div class="info">
+<strong>ℹ 진행 관찰:</strong> 기허가 지속되면 양허(陽虛)로 진행 가능. 추위를 타기 시작하면 보양(補陽) 처방으로 전환 필요. 정기적 재진 권고.
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="footer">
+한의원 AI 업무효율화 시스템 — 사전빌드 데모 | 실제 임상에서는 반드시 한의사의 직접 진찰을 받으시기 바랍니다.
+</div>
+
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab'+n).classList.add('active');
+  document.querySelectorAll('.tabs button')[n].classList.add('active');
+}
+</script>
+</body>
+</html>

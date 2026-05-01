@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>약국 AI 복약지도 데모</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif;background:#f0f2f5;color:#333}
+.header{background:linear-gradient(135deg,#004d40,#00695c 50%,#26a69a);color:#fff;padding:40px 20px 30px;text-align:center}
+.header h1{font-size:28px;margin-bottom:6px}.header p{font-size:14px;opacity:.85}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #e0e0e0;position:sticky;top:0;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,.05);overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;font-size:13px;font-weight:600;color:#777;border-bottom:3px solid transparent;white-space:nowrap;transition:.2s}
+.tab:hover{color:#004d40}.tab.active{color:#004d40;border-bottom-color:#00695c;background:#e0f2f1}
+.content{max-width:960px;margin:0 auto;padding:24px 16px 60px}
+.panel{display:none}.panel.active{display:block}
+.card{background:#fff;border-radius:12px;padding:28px 32px;margin-bottom:20px;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.card h2{font-size:20px;color:#004d40;margin-bottom:6px}
+.card .desc{font-size:14px;color:#666;margin-bottom:20px}
+.eg{display:grid;gap:12px}
+.eb{display:flex;align-items:center;padding:16px 20px;background:#f0faf8;border:2px solid #b2dfdb;border-radius:10px;cursor:pointer;transition:.2s}
+.eb:hover{border-color:#00695c;background:#e0f2f1;transform:translateY(-1px)}
+.eb.sel{border-color:#00695c;background:#e0f2f1}
+.ei{font-size:28px;margin-right:16px;min-width:36px;text-align:center}
+.et h3{font-size:15px;color:#333;margin-bottom:3px}.et p{font-size:13px;color:#888}
+.ra{margin-top:24px;display:none}.ra.show{display:block}
+.rb{background:#fafafa;border:1px solid #e0e0e0;border-radius:10px;padding:24px 28px;line-height:1.8}
+.rb h3{color:#004d40;font-size:17px;margin-bottom:14px;border-bottom:2px solid #e0f2f1;padding-bottom:8px}
+.rb h4{color:#00695c;font-size:15px;margin:16px 0 8px}
+.rt{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.rt th{background:#e0f2f1;padding:8px 12px;text-align:left;font-size:13px;color:#004d40}
+.rt td{padding:8px 12px;border-bottom:1px solid #eee}
+.badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:700}
+.b-pass{background:#c8e6c9;color:#2e7d32}.b-fail{background:#ffcdd2;color:#c62828}
+.b-warn{background:#fff9c4;color:#f57f17}.b-info{background:#e0f2f1;color:#00695c}
+.note{padding:12px 16px;border-radius:6px;margin:12px 0;font-size:13px}
+.note.danger{background:#fce4ec;border-left:4px solid #ef5350}
+.note.success{background:#e8f5e9;border-left:4px solid #66bb6a}
+.note.info{background:#e3f2fd;border-left:4px solid #42a5f5}
+.footer{text-align:center;padding:30px;color:#aaa;font-size:12px}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>약국 AI 복약지도 데모</h1>
+  <p>의약품 복약지도 · 상호작용 확인 · OTC 추천 시뮬레이션</p>
+</div>
+<div class="tabs">
+  <div class="tab active" onclick="T(0)">💊 복약지도</div>
+  <div class="tab" onclick="T(1)">⚠️ 상호작용</div>
+  <div class="tab" onclick="T(2)">💡 OTC 추천</div>
+  <div class="tab" onclick="T(3)">👶 특수환자</div>
+  <div class="tab" onclick="T(4)">📊 DUR 점검</div>
+</div>
+<div class="content">
+
+<!-- 탭0: 복약지도 -->
+<div class="panel active" id="p0"><div class="card">
+  <h2>복약지도</h2><p class="desc">약품을 선택하면 용법, 주의사항, 상호작용 정보를 제공합니다.</p>
+  <div class="eg">
+    <div class="eb" onclick="R(0,0)"><div class="ei">💊</div><div class="et"><h3>타이레놀 (아세트아미노펜) 복약지도</h3><p>해열진통제, 간독성 주의, 알코올 금지</p></div></div>
+    <div class="eb" onclick="R(0,1)"><div class="ei">❤️</div><div class="et"><h3>고혈압 환자 복약지도 (암로디핀+발사르탄)</h3><p>복합 처방, 복용 시간, NSAIDs 주의</p></div></div>
+    <div class="eb" onclick="R(0,2)"><div class="ei">🩸</div><div class="et"><h3>당뇨 환자 복약지도 (메트포르민+글리메피리드)</h3><p>저혈당 관리, Sick Day 규칙, 조영제 주의</p></div></div>
+  </div><div class="ra" id="r0"></div>
+</div></div>
+
+<!-- 탭1: 상호작용 -->
+<div class="panel" id="p1"><div class="card">
+  <h2>상호작용 확인</h2><p class="desc">두 약물 간 상호작용을 확인하고 대체약을 제안합니다.</p>
+  <div class="eg">
+    <div class="eb" onclick="R(1,0)"><div class="ei">🚫</div><div class="et"><h3>와파린 + 이부프로펜</h3><p>출혈 위험 극대화 — 금기 조합</p></div></div>
+    <div class="eb" onclick="R(1,1)"><div class="ei">⚠️</div><div class="et"><h3>시프로플록사신 + 겔포스 (제산제)</h3><p>항생제 흡수 감소 — 복용 간격 필요</p></div></div>
+    <div class="eb" onclick="R(1,2)"><div class="ei">🚫</div><div class="et"><h3>아토르바스타틴 + 클래리스로마이신</h3><p>횡문근융해증 위험 — 금기 조합</p></div></div>
+  </div><div class="ra" id="r1"></div>
+</div></div>
+
+<!-- 탭2: OTC 추천 -->
+<div class="panel" id="p2"><div class="card">
+  <h2>OTC 약품 추천</h2><p class="desc">증상과 환자 특성에 따라 최적의 일반의약품을 추천합니다.</p>
+  <div class="eg">
+    <div class="eb" onclick="R(2,0)"><div class="ei">🤰</div><div class="et"><h3>두통+발열, 30세 여성, 임신 가능성</h3><p>NSAIDs 회피 → 아세트아미노펜 추천</p></div></div>
+    <div class="eb" onclick="R(2,1)"><div class="ei">👴</div><div class="et"><h3>콧물+재채기, 60대 남성, 전립선비대</h3><p>1세대 항히스타민/슈도에페드린 회피</p></div></div>
+    <div class="eb" onclick="R(2,2)"><div class="ei">💔</div><div class="et"><h3>속쓰림, 50대, 클로피도그렐 복용 중</h3><p>오메프라졸 회피 → 파모티딘 추천</p></div></div>
+  </div><div class="ra" id="r2"></div>
+</div></div>
+
+<!-- 탭3: 특수환자 -->
+<div class="panel" id="p3"><div class="card">
+  <h2>특수환자 확인</h2><p class="desc">소아/임부/고령자에게 안전한 약물인지 확인합니다.</p>
+  <div class="eg">
+    <div class="eb" onclick="R(3,0)"><div class="ei">👶</div><div class="et"><h3>소아(5세) 감기약 선택</h3><p>아스피린 금기, 체중 기반 용량, OTC 주의</p></div></div>
+    <div class="eb" onclick="R(3,1)"><div class="ei">🤰</div><div class="et"><h3>임부(28주) 두통약</h3><p>NSAIDs 금기, 아세트아미노펜만 가능</p></div></div>
+    <div class="eb" onclick="R(3,2)"><div class="ei">👴</div><div class="et"><h3>고령자(75세) 불면증</h3><p>벤조디아제핀 부적절(Beers Criteria)</p></div></div>
+  </div><div class="ra" id="r3"></div>
+</div></div>
+
+<!-- 탭4: DUR -->
+<div class="panel" id="p4"><div class="card">
+  <h2>DUR 점검</h2><p class="desc">처방전의 안전성을 점검합니다.</p>
+  <div class="eg">
+    <div class="eb" onclick="R(4,0)"><div class="ei">📋</div><div class="et"><h3>동일 성분 중복 처방 발견</h3><p>2개 병원에서 같은 NSAIDs 처방</p></div></div>
+    <div class="eb" onclick="R(4,1)"><div class="ei">⚠️</div><div class="et"><h3>아세트아미노펜 용량 초과 (6,000mg/일)</h3><p>간독성 위험, 최대 4,000mg 안내</p></div></div>
+    <div class="eb" onclick="R(4,2)"><div class="ei">👴</div><div class="et"><h3>65세 환자 Beers 부적절 약물</h3><p>클로르페니라민 처방 → 대체약 제안</p></div></div>
+  </div><div class="ra" id="r4"></div>
+</div></div>
+
+</div>
+<div class="footer">약국 AI 복약지도 시뮬레이션 데모 | 교육/시뮬레이션 목적</div>
+
+<script>
+function T(i){document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',j===i));document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('active',j===i))}
+function R(t,i){const p=document.getElementById('p'+t);p.querySelectorAll('.eb').forEach(b=>b.classList.remove('sel'));p.querySelectorAll('.eb')[i].classList.add('sel');const a=document.getElementById('r'+t);a.classList.add('show');a.innerHTML='<div class="rb">'+D[t][i]+'</div>'}
+
+const D={
+0:[
+// 타이레놀
+`<h3>복약지도: 타이레놀 (아세트아미노펜)</h3>
+<table class="rt"><tr><th>항목</th><th>내용</th></tr>
+<tr><td>성분</td><td>아세트아미노펜 (Acetaminophen) 500mg</td></tr>
+<tr><td>분류</td><td>일반의약품 (OTC) — 해열진통제</td></tr>
+<tr><td>용법</td><td>1회 1~2정 (500~1000mg), 4~6시간 간격, <b>1일 최대 4000mg (8정)</b></td></tr>
+<tr><td>효능</td><td>두통, 치통, 생리통, 근육통, 발열</td></tr>
+<tr><td>보관</td><td>실온 (15~25℃), 직사광선 피하기</td></tr></table>
+<h4>주의사항</h4>
+<table class="rt"><tr><th>항목</th><th>내용</th><th>이유</th></tr>
+<tr><td><span class="badge b-fail">간독성</span></td><td>1일 4000mg 초과 금지</td><td>간세포 괴사 → 간부전 위험</td></tr>
+<tr><td><span class="badge b-fail">알코올</span></td><td>음주 시 복용 금지</td><td>알코올 + 아세트아미노펜 = 간독성 시너지</td></tr>
+<tr><td><span class="badge b-warn">중복</span></td><td>감기약 성분 확인</td><td>판콜, 타이레놀콜드 등에 이미 포함</td></tr>
+<tr><td><span class="badge b-warn">간질환</span></td><td>간경변/간염 환자 감량</td><td>대사 능력 저하 → 독성 축적</td></tr></table>
+<h4>상호작용 주의약물</h4>
+<table class="rt"><tr><th>약물</th><th>영향</th></tr>
+<tr><td>와파린</td><td>INR 상승 → 출혈 위험 증가 (장기 복용 시)</td></tr>
+<tr><td>카바마제핀</td><td>간 대사 유도 → 독성 대사물 증가</td></tr></table>
+<div class="note success">✅ 임산부, 수유부에서 비교적 안전한 해열진통제입니다 (NSAIDs보다 우선 권장)</div>`,
+
+// 고혈압
+`<h3>복약지도: 고혈압 (암로디핀 + 발사르탄)</h3>
+<table class="rt"><tr><th>약물</th><th>분류</th><th>용법</th><th>작용</th></tr>
+<tr><td><b>암로디핀</b> (노바스크)</td><td>CCB</td><td>1일 1회 5mg, 아침</td><td>혈관 이완 → 혈압 강하</td></tr>
+<tr><td><b>발사르탄</b> (디오반)</td><td>ARB</td><td>1일 1회 80mg, 아침</td><td>안지오텐신 II 차단 → 혈압 강하</td></tr></table>
+<h4>환자 교육 사항</h4>
+<table class="rt"><tr><th>항목</th><th>안내</th><th>이유</th></tr>
+<tr><td>복용 시간</td><td>매일 같은 시간 (아침 권장)</td><td>혈중 농도 일정 유지</td></tr>
+<tr><td>혈압 측정</td><td>가정에서 아침/저녁 측정 기록</td><td>약효 모니터링</td></tr>
+<tr><td>자세 변경</td><td>천천히 일어나기</td><td>기립성 저혈압 (특히 발사르탄)</td></tr>
+<tr><td>식이</td><td>저염식, DASH 식단</td><td>약효 증가, 용량 감량 가능</td></tr></table>
+<div class="note danger">⚠️ <b>NSAIDs (이부프로펜, 나프록센) 주의:</b> 혈압강하 효과 감소 + 신기능 악화. 진통제 필요 시 아세트아미노펜 사용</div>
+<div class="note danger">⚠️ <b>임신 금기:</b> ARB(발사르탄)는 태아 신부전/사망 유발 가능. 임신 계획 시 즉시 의사 상담</div>
+<div class="note info">📌 증상이 없어도 중단 금지 — 고혈압은 "침묵의 살인자". 임의 중단 시 반동성 고혈압 위험</div>`,
+
+// 당뇨
+`<h3>복약지도: 당뇨 (메트포르민 + 글리메피리드)</h3>
+<table class="rt"><tr><th>약물</th><th>분류</th><th>용법</th><th>작용</th></tr>
+<tr><td><b>메트포르민</b> (글루코파지)</td><td>비구아니드</td><td>1일 2회 500mg, 식사와 함께</td><td>간 포도당 생성 억제</td></tr>
+<tr><td><b>글리메피리드</b> (아마릴)</td><td>설포닐우레아</td><td>1일 1회 2mg, 아침 식사 시</td><td>인슐린 분비 촉진</td></tr></table>
+<h4>핵심 교육</h4>
+<table class="rt"><tr><th>항목</th><th>안내</th><th>이유</th></tr>
+<tr><td><span class="badge b-fail">저혈당</span></td><td>떨림/식은땀/어지러움 시 당분 섭취 (사탕, 주스)</td><td>글리메피리드가 저혈당 유발 가능</td></tr>
+<tr><td>식사</td><td>반드시 식사와 함께 복용</td><td>메트포르민: 위장장애 감소 / 글리메피리드: 저혈당 방지</td></tr>
+<tr><td><span class="badge b-fail">조영제</span></td><td>CT/MRI 검사 전 48시간 중단</td><td>메트포르민 + 조영제 = 유산산증 위험</td></tr>
+<tr><td>음주</td><td>과음 금지</td><td>메트포르민 유산산증 + 글리메피리드 저혈당 악화</td></tr>
+<tr><td>Sick Day</td><td>구토/설사/식사 못할 때 글리메피리드 중단, 의사 연락</td><td>탈수 시 저혈당+유산산증 위험 급증</td></tr></table>
+<h4>저혈당 대처법 (15-15 Rule)</h4>
+<div class="note info">📌 1) 포도당 15g 섭취 (사탕 3~4개, 주스 150mL) → 2) 15분 대기 → 3) 혈당 재측정 → 4) 여전히 70mg/dL 미만이면 반복</div>`
+],
+
+1:[
+// 와파린+이부프로펜
+`<h3>상호작용: 와파린 + 이부프로펜</h3>
+<p style="font-size:22px;margin:16px 0;text-align:center"><span class="badge b-fail" style="font-size:16px;padding:8px 24px">금기 (Contraindicated)</span></p>
+<table class="rt"><tr><th>항목</th><th>내용</th></tr>
+<tr><td>약물 A</td><td><b>와파린</b> — 항응고제 (혈액 응고 억제)</td></tr>
+<tr><td>약물 B</td><td><b>이부프로펜</b> — NSAIDs (항혈소판 작용 + 위점막 손상)</td></tr>
+<tr><td>위험</td><td>출혈 위험 <b>극대화</b> — 응고 억제 + 혈소판 기능 저하 + 위점막 손상 삼중 작용</td></tr>
+<tr><td>증상</td><td>코피, 잇몸 출혈, 멍, 혈뇨, 혈변, 뇌출혈</td></tr></table>
+<h4>대체약 및 조치</h4>
+<table class="rt"><tr><th>상황</th><th>대체약</th><th>이유</th></tr>
+<tr><td>통증/발열</td><td><b>아세트아미노펜</b> (타이레놀)</td><td>항혈소판 작용 없음, 위점막 손상 없음</td></tr>
+<tr><td>불가피 시</td><td>최저 용량, 최단 기간 + INR 모니터링</td><td>출혈 위험 최소화</td></tr></table>
+<div class="note danger">⚠️ 와파린 복용 환자가 진통제를 요청하면 <b>반드시 아세트아미노펜</b>을 권장하세요. 모든 NSAIDs (이부프로펜, 나프록센, 아스피린)은 출혈 위험을 높입니다.</div>`,
+
+// 항생제+제산제
+`<h3>상호작용: 시프로플록사신 + 겔포스 (제산제)</h3>
+<p style="font-size:22px;margin:16px 0;text-align:center"><span class="badge b-warn" style="font-size:16px;padding:8px 24px">주의 (Caution)</span></p>
+<table class="rt"><tr><th>항목</th><th>내용</th></tr>
+<tr><td>약물 A</td><td><b>시프로플록사신</b> — 퀴놀론계 항생제</td></tr>
+<tr><td>약물 B</td><td><b>겔포스</b> — 제산제 (수산화알루미늄/마그네슘)</td></tr>
+<tr><td>위험</td><td>킬레이트 형성 → 항생제 흡수 <b>최대 90% 감소</b> → 치료 실패</td></tr></table>
+<h4>조치</h4>
+<table class="rt"><tr><th>조치</th><th>구체적 방법</th></tr>
+<tr><td><b>복용 간격 확보</b></td><td>항생제 복용 <b>2시간 전</b> 또는 <b>6시간 후</b>에 제산제 복용</td></tr>
+<tr><td>대체 위장약</td><td>H2차단제(파모티딘) 또는 PPI(오메프라졸)는 영향 적음</td></tr></table>
+<div class="note info">📌 같은 원리로 <b>철분제, 칼슘제, 우유</b>도 퀴놀론/테트라사이클린 흡수를 감소시킵니다. 2시간 이상 간격을 두세요.</div>`,
+
+// 스타틴+클래리스로마이신
+`<h3>상호작용: 아토르바스타틴 + 클래리스로마이신</h3>
+<p style="font-size:22px;margin:16px 0;text-align:center"><span class="badge b-fail" style="font-size:16px;padding:8px 24px">금기 (Contraindicated)</span></p>
+<table class="rt"><tr><th>항목</th><th>내용</th></tr>
+<tr><td>약물 A</td><td><b>아토르바스타틴</b> (리피토) — 고지혈증약 (CYP3A4로 대사)</td></tr>
+<tr><td>약물 B</td><td><b>클래리스로마이신</b> (클래리시드) — 마크로라이드 항생제 (CYP3A4 강력 억제)</td></tr>
+<tr><td>위험</td><td>스타틴 혈중농도 <b>급상승</b> → <b>횡문근융해증</b> (근육 파괴 → 급성 신부전)</td></tr>
+<tr><td>증상</td><td>심한 근육통, 갈색 소변, 전신 무력감</td></tr></table>
+<h4>대체약</h4>
+<table class="rt"><tr><th>대체 방향</th><th>약물</th><th>이유</th></tr>
+<tr><td>스타틴 대체</td><td><b>프라바스타틴</b> 또는 <b>로수바스타틴</b></td><td>CYP3A4 비의존 → 상호작용 적음</td></tr>
+<tr><td>항생제 대체</td><td><b>아지스로마이신</b></td><td>CYP3A4 억제 약함</td></tr>
+<tr><td>일시 중단</td><td>항생제 기간(7~14일) 동안 스타틴 중단</td><td>단기 중단은 심혈관 위험 미미</td></tr></table>
+<div class="note danger">⚠️ 이 조합은 <b>즉시 처방의에게 연락</b>하여 대체약을 협의해야 합니다.</div>`
+],
+
+2:[
+// 임신 가능 두통
+`<h3>OTC 추천: 두통+발열, 30세 여성, 임신 가능성</h3>
+<h4>의사결정 과정</h4>
+<table class="rt"><tr><th>단계</th><th>판단</th><th>근거</th></tr>
+<tr><td>1. 증상 확인</td><td>두통 + 발열 → 해열진통제 필요</td><td>-</td></tr>
+<tr><td>2. 임신 가능성</td><td><span class="badge b-fail">NSAIDs 회피</span></td><td>임신 3분기 동맥관 조기 폐쇄, 1분기 유산 위험 보고</td></tr>
+<tr><td>3. 아스피린</td><td><span class="badge b-fail">회피</span></td><td>출혈 위험, 태아 영향</td></tr>
+<tr><td>4. 아세트아미노펜</td><td><span class="badge b-pass">추천</span></td><td>임산부에서 가장 안전한 해열진통제</td></tr></table>
+<h4>추천</h4>
+<table class="rt"><tr><th>추천약</th><th>용법</th><th>주의</th></tr>
+<tr><td><b>타이레놀 (아세트아미노펜) 500mg</b></td><td>1~2정, 4~6시간 간격, 1일 최대 8정</td><td>알코올 금지, 감기약 중복 확인</td></tr></table>
+<div class="note danger">⚠️ <b>회피 약물:</b> 이부프로펜(애드빌), 나프록센(낙센), 아스피린 — 임신 가능성이 있으면 모든 NSAIDs 회피</div>
+<div class="note success">✅ 아세트아미노펜은 FDA에서 임신 중 가장 안전한 해열진통제로 분류합니다.</div>`,
+
+// 전립선비대 콧물
+`<h3>OTC 추천: 콧물+재채기, 60대 남성, 전립선비대</h3>
+<h4>의사결정 과정</h4>
+<table class="rt"><tr><th>단계</th><th>판단</th><th>근거</th></tr>
+<tr><td>1. 증상</td><td>콧물 + 재채기 → 항히스타민제 필요</td><td>알레르기 또는 감기 초기</td></tr>
+<tr><td>2. 1세대 항히스타민</td><td><span class="badge b-fail">회피</span></td><td>클로르페니라민: 항콜린 작용 → <b>요저류</b> (전립선비대 악화)</td></tr>
+<tr><td>3. 슈도에페드린</td><td><span class="badge b-fail">회피</span></td><td>교감신경 자극 → 방광경부 수축 → <b>배뇨장애 악화</b></td></tr>
+<tr><td>4. 2세대 항히스타민</td><td><span class="badge b-pass">추천</span></td><td>항콜린 작용 최소, 졸음 적음</td></tr></table>
+<h4>추천</h4>
+<table class="rt"><tr><th>추천약</th><th>용법</th><th>장점</th></tr>
+<tr><td><b>로라타딘 (클라리틴) 10mg</b></td><td>1일 1회 1정</td><td>졸음 거의 없음, 항콜린 작용 없음</td></tr>
+<tr><td>대안: 펙소페나딘 (알레그라)</td><td>1일 1회 180mg</td><td>졸음 가장 적음</td></tr></table>
+<div class="note danger">⚠️ <b>회피 약물:</b> 판콜에이, 콘택600, 코대원 — 모두 슈도에페드린 또는 1세대 항히스타민 포함</div>`,
+
+// 클로피도그렐 속쓰림
+`<h3>OTC 추천: 속쓰림, 50대, 클로피도그렐 복용 중</h3>
+<h4>의사결정 과정</h4>
+<table class="rt"><tr><th>단계</th><th>판단</th><th>근거</th></tr>
+<tr><td>1. 증상</td><td>속쓰림 → 위산 억제제 필요</td><td>-</td></tr>
+<tr><td>2. 오메프라졸(PPI)</td><td><span class="badge b-fail">회피</span></td><td>CYP2C19 억제 → 클로피도그렐 활성화 차단 → <b>항혈소판 효과 감소</b></td></tr>
+<tr><td>3. 에소메프라졸</td><td><span class="badge b-fail">회피</span></td><td>동일 CYP2C19 문제</td></tr>
+<tr><td>4. H2차단제</td><td><span class="badge b-pass">추천</span></td><td>CYP2C19 영향 없음, 클로피도그렐과 안전 병용</td></tr></table>
+<h4>추천</h4>
+<table class="rt"><tr><th>추천약</th><th>용법</th></tr>
+<tr><td><b>파모티딘 (가스터) 10~20mg</b></td><td>1일 2회 또는 증상 시 1회</td></tr></table>
+<div class="note danger">⚠️ 클로피도그렐(플라빅스) 복용 환자에게 <b>오메프라졸/에소메프라졸은 권장하지 않습니다</b>. 필요 시 판토프라졸(판토록)은 영향이 적습니다.</div>`
+],
+
+3:[
+// 소아 감기
+`<h3>특수환자: 소아(5세, 20kg) 감기약 선택</h3>
+<h4>금기 약물</h4>
+<table class="rt"><tr><th>약물</th><th>판정</th><th>이유</th></tr>
+<tr><td>아스피린</td><td><span class="badge b-fail">절대 금기</span></td><td>라이 증후군 (급성 간부전 + 뇌병증) — 18세 미만 금지</td></tr>
+<tr><td>코데인</td><td><span class="badge b-fail">금기</span></td><td>12세 미만 호흡억제 위험 (CYP2D6 초고속대사자)</td></tr>
+<tr><td>종합감기약(성인용)</td><td><span class="badge b-fail">금기</span></td><td>성분 과량, 다성분 중복 위험</td></tr></table>
+<h4>안전한 선택</h4>
+<table class="rt"><tr><th>증상</th><th>약물</th><th>용량 (20kg 기준)</th></tr>
+<tr><td>발열/통증</td><td>아세트아미노펜 시럽</td><td>200~300mg/회 (10~15mg/kg), 4~6시간 간격</td></tr>
+<tr><td>발열/통증</td><td>이부프로펜 시럽 (6개월+)</td><td>100~200mg/회 (5~10mg/kg), 6~8시간 간격</td></tr>
+<tr><td>콧물</td><td>생리식염수 코세척</td><td>비약물 우선</td></tr></table>
+<div class="note info">📌 <b>핵심 원칙:</b> 체중 기반 용량 계산 필수, 시럽/산제 제형 사용, 계량 도구(주사기/계량컵) 보호자에게 제공</div>`,
+
+// 임부 두통
+`<h3>특수환자: 임부(28주) 두통약</h3>
+<h4>약물 안전성 평가</h4>
+<table class="rt"><tr><th>약물</th><th>판정</th><th>이유</th></tr>
+<tr><td>아세트아미노펜</td><td><span class="badge b-pass">사용 가능</span></td><td>임신 전 기간 비교적 안전, 1순위 해열진통제</td></tr>
+<tr><td>이부프로펜</td><td><span class="badge b-fail">금기 (28주)</span></td><td>임신 32주 이후 동맥관 조기 폐쇄, 양수과소 — 3분기 접근 시 회피</td></tr>
+<tr><td>나프록센</td><td><span class="badge b-fail">금기</span></td><td>NSAIDs 동일 위험</td></tr>
+<tr><td>아스피린 (고용량)</td><td><span class="badge b-fail">금기</span></td><td>출혈, 동맥관 영향 (저용량 100mg은 전문의 판단 하 사용)</td></tr>
+<tr><td>트라마돌</td><td><span class="badge b-warn">주의</span></td><td>오피오이드 — 신생아 금단증상, 호흡억제. 불가피 시 최단 기간</td></tr></table>
+<h4>추천</h4>
+<div class="note success">✅ <b>아세트아미노펜 500mg</b>, 1~2정, 4~6시간 간격. 비약물 요법(휴식, 냉찜질) 병행 권장</div>
+<div class="note danger">⚠️ 28주는 3분기 진입 — <b>모든 NSAIDs 금기</b>. 두통이 심하거나 지속되면 자간전증 가능성 → 즉시 산부인과 진료 권유</div>`,
+
+// 고령자 불면
+`<h3>특수환자: 고령자(75세) 불면증</h3>
+<h4>Beers Criteria 평가</h4>
+<table class="rt"><tr><th>약물</th><th>판정</th><th>이유</th></tr>
+<tr><td>벤조디아제핀 (디아제팜, 알프라졸람)</td><td><span class="badge b-fail">부적절</span></td><td>인지기능 저하, 낙상 → 골절, 섬망, 의존성</td></tr>
+<tr><td>졸피뎀</td><td><span class="badge b-fail">부적절</span></td><td>몽유병, 낙상, 교통사고 위험 (65세+ 특히 위험)</td></tr>
+<tr><td>1세대 항히스타민 (디펜히드라민)</td><td><span class="badge b-fail">부적절</span></td><td>항콜린 작용 → 인지저하, 변비, 요저류, 낙상</td></tr>
+<tr><td>멜라토닌</td><td><span class="badge b-pass">고려 가능</span></td><td>의존성 낮음, 낙상 위험 적음 (단기 사용)</td></tr></table>
+<h4>권장 접근</h4>
+<table class="rt"><tr><th>순서</th><th>방법</th></tr>
+<tr><td>1순위</td><td><b>비약물 요법</b> — 수면 위생 교육 (규칙적 취침, 카페인 제한, 낮잠 금지, 침실 환경)</td></tr>
+<tr><td>2순위</td><td>멜라토닌 1~3mg 취침 30분 전 (단기)</td></tr>
+<tr><td>3순위</td><td>의사 상담 (수면장애 원인 감별 — 통증, 우울, 야뇨 등)</td></tr></table>
+<div class="note danger">⚠️ 고령자 수면제 처방은 <b>낙상 → 고관절 골절 → 입원 → 사망</b>의 연쇄 위험. Beers Criteria에서 벤조디아제핀/졸피뎀은 65세+ 부적절 약물로 분류</div>`
+],
+
+4:[
+// 중복처방
+`<h3>DUR 점검: 동일 성분 중복 처방</h3>
+<table class="rt"><tr><th>항목</th><th>내용</th></tr>
+<tr><td>A병원 처방</td><td>셀레콕시브 (세레브렉스) 200mg 1일 2회</td></tr>
+<tr><td>B병원 처방</td><td>멜록시캄 (모비크) 15mg 1일 1회</td></tr>
+<tr><td>DUR 경고</td><td><span class="badge b-fail">동일 계열 중복</span> — NSAIDs (COX-2 억제제) 2종 중복</td></tr></table>
+<h4>위험</h4>
+<table class="rt"><tr><th>위험</th><th>내용</th></tr>
+<tr><td>위장관 출혈</td><td>NSAIDs 중복 시 위궤양/출혈 위험 <b>2~4배 증가</b></td></tr>
+<tr><td>신기능 악화</td><td>신혈류 감소 중복 → 급성 신부전</td></tr>
+<tr><td>심혈관</td><td>COX-2 선택적 NSAIDs 중복 → 심혈관 위험 증가</td></tr></table>
+<h4>조치 절차</h4>
+<div class="note danger">⚠️ 1) 조제 보류 → 2) B병원 처방의에게 전화 → 3) "A병원에서 셀레콕시브 처방 중, 동일 계열 중복" 알림 → 4) 처방 변경 또는 한 쪽 삭제 확인 → 5) 변경 후 조제</div>`,
+
+// 용량 초과
+`<h3>DUR 점검: 아세트아미노펜 용량 초과</h3>
+<table class="rt"><tr><th>항목</th><th>내용</th></tr>
+<tr><td>처방 내역</td><td>아세트아미노펜 500mg × 2정 × 1일 6회 = <b>6,000mg/일</b></td></tr>
+<tr><td>최대 허용 용량</td><td><b>4,000mg/일</b> (성인)</td></tr>
+<tr><td>DUR 경고</td><td><span class="badge b-fail">1일 최대 용량 초과 (150%)</span></td></tr></table>
+<h4>위험</h4>
+<table class="rt"><tr><th>위험</th><th>내용</th></tr>
+<tr><td><span class="badge b-fail">간독성</span></td><td>아세트아미노펜 과량 → NAPQI(독성 대사물) 축적 → <b>간세포 괴사 → 간부전</b></td></tr>
+<tr><td>특히 위험한 환자</td><td>간질환, 알코올 사용, 영양불량, 고령자</td></tr></table>
+<h4>조치</h4>
+<div class="note danger">⚠️ 1) 조제 보류 → 2) 처방의에게 연락 → 3) "아세트아미노펜 1일 6,000mg으로 최대 용량(4,000mg) 초과" 알림 → 4) 용량 조정 또는 NSAIDs 병용으로 변경 확인</div>
+<div class="note info">📌 감기약/진통제에 포함된 아세트아미노펜도 합산해야 합니다 (판콜 1정당 300mg 등)</div>`,
+
+// Beers 부적절
+`<h3>DUR 점검: 65세 환자 Beers 부적절 약물</h3>
+<table class="rt"><tr><th>항목</th><th>내용</th></tr>
+<tr><td>환자</td><td>68세 여성</td></tr>
+<tr><td>처방</td><td>클로르페니라민 (페니라민) 4mg × 1일 3회 — 알레르기 비염</td></tr>
+<tr><td>DUR 경고</td><td><span class="badge b-warn">Beers Criteria 부적절 약물</span> — 1세대 항히스타민</td></tr></table>
+<h4>부적절 사유</h4>
+<table class="rt"><tr><th>부작용</th><th>고령자 영향</th></tr>
+<tr><td>강한 항콜린 작용</td><td>인지기능 저하, 혼돈, 섬망</td></tr>
+<tr><td>과도한 진정</td><td>낙상 → 고관절 골절</td></tr>
+<tr><td>요저류</td><td>전립선비대 환자 특히 위험</td></tr>
+<tr><td>변비</td><td>장운동 저하 악화</td></tr></table>
+<h4>대체약 제안</h4>
+<table class="rt"><tr><th>대체약</th><th>장점</th></tr>
+<tr><td><b>로라타딘 (클라리틴)</b></td><td>졸음/항콜린 최소, 1일 1회</td></tr>
+<tr><td><b>펙소페나딘 (알레그라)</b></td><td>졸음 가장 적음</td></tr>
+<tr><td>비강 스테로이드 (나조넥스)</td><td>전신 부작용 없음, 비염에 효과적</td></tr></table>
+<div class="note info">📌 처방의에게 연락: "68세 환자에게 클로르페니라민이 처방되었습니다. Beers Criteria상 고령자 부적절 약물로 분류되어, 2세대 항히스타민(로라타딘)으로 변경을 제안드립니다."</div>`
+]
+};
+</script>
+</body>
+</html>
