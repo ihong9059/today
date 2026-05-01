@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태명과학 AI 장비 컨설턴트 데모</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif; background: #f0f2f5; color: #333; }
+
+  .header { background: linear-gradient(135deg, #0d47a1 0%, #1565c0 50%, #42a5f5 100%); color: white; padding: 40px 20px 30px; text-align: center; }
+  .header h1 { font-size: 28px; margin-bottom: 6px; }
+  .header p { font-size: 14px; opacity: 0.85; }
+
+  .tabs { display: flex; background: white; border-bottom: 2px solid #e0e0e0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow-x: auto; }
+  .tab { padding: 14px 24px; cursor: pointer; font-size: 14px; font-weight: 600; color: #777; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
+  .tab:hover { color: #0d47a1; }
+  .tab.active { color: #0d47a1; border-bottom-color: #1565c0; background: #e3f2fd; }
+  .tab-icon { margin-right: 6px; }
+
+  .content { max-width: 960px; margin: 0 auto; padding: 24px 16px 60px; }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .card { background: white; border-radius: 12px; padding: 28px 32px; margin-bottom: 20px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
+  .card h2 { font-size: 20px; color: #0d47a1; margin-bottom: 6px; }
+  .card .desc { font-size: 14px; color: #666; margin-bottom: 20px; }
+
+  .example-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .example-btn { display: flex; align-items: center; padding: 16px 20px; background: #f5f7ff; border: 2px solid #e0e6f6; border-radius: 10px; cursor: pointer; transition: all 0.2s; }
+  .example-btn:hover { border-color: #1565c0; background: #e3f2fd; transform: translateY(-1px); }
+  .example-btn.selected { border-color: #1565c0; background: #e3f2fd; }
+  .example-icon { font-size: 28px; margin-right: 16px; min-width: 36px; text-align: center; }
+  .example-info h3 { font-size: 15px; color: #333; margin-bottom: 3px; }
+  .example-info p { font-size: 13px; color: #888; }
+
+  .result-area { margin-top: 24px; display: none; }
+  .result-area.show { display: block; }
+  .result-box { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 10px; padding: 24px 28px; line-height: 1.8; }
+  .result-box h3 { color: #0d47a1; font-size: 17px; margin-bottom: 14px; border-bottom: 2px solid #e3f2fd; padding-bottom: 8px; }
+  .result-box h4 { color: #1565c0; font-size: 15px; margin: 16px 0 8px; }
+
+  .r-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  .r-table th { background: #e3f2fd; padding: 8px 12px; text-align: left; font-size: 13px; color: #0d47a1; }
+  .r-table td { padding: 8px 12px; border-bottom: 1px solid #eee; }
+  .r-table tr:hover td { background: #f5f7ff; }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+  .badge-pass { background: #c8e6c9; color: #2e7d32; }
+  .badge-fail { background: #ffcdd2; color: #c62828; }
+  .badge-warn { background: #fff9c4; color: #f57f17; }
+  .badge-info { background: #e3f2fd; color: #1565c0; }
+
+  .tree { font-family: 'Consolas', monospace; font-size: 13px; background: #263238; color: #b0bec5; padding: 16px 20px; border-radius: 8px; line-height: 1.9; margin: 12px 0; overflow-x: auto; }
+  .tree .hl { color: #80cbc4; font-weight: bold; }
+  .tree .sel { color: #ffcc80; font-weight: bold; }
+  .tree .dim { color: #546e7a; }
+
+  .note { background: #fff8e1; border-left: 4px solid #ffc107; padding: 12px 16px; border-radius: 6px; margin: 12px 0; font-size: 13px; }
+  .note.danger { background: #fce4ec; border-color: #ef5350; }
+  .note.success { background: #e8f5e9; border-color: #66bb6a; }
+
+  .footer { text-align: center; padding: 30px; color: #aaa; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>태명과학 AI 장비 컨설턴트</h1>
+  <p>FRITSCH 분쇄/분석 장비 자동 추천 시스템 데모</p>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" onclick="showTab(0)"><span class="tab-icon">🔧</span>장비 추천</div>
+  <div class="tab" onclick="showTab(1)"><span class="tab-icon">🔩</span>부속품 호환</div>
+  <div class="tab" onclick="showTab(2)"><span class="tab-icon">💎</span>재질 추천</div>
+  <div class="tab" onclick="showTab(3)"><span class="tab-icon">🧪</span>테스트 설계</div>
+  <div class="tab" onclick="showTab(4)"><span class="tab-icon">📊</span>입도 해석</div>
+</div>
+
+<div class="content">
+
+<!-- ===== 탭 0: 장비 추천 ===== -->
+<div class="panel active" id="panel-0">
+  <div class="card">
+    <h2>장비+부속품 패키지 추천</h2>
+    <p class="desc">시료 특성을 선택하면, 최적 장비/용기/볼/조건을 추천합니다.</p>
+    <div class="example-grid">
+      <div class="example-btn" onclick="runExample(0,0)">
+        <div class="example-icon">🔋</div>
+        <div class="example-info">
+          <h3>LFP 양극재 나노분쇄</h3>
+          <p>Mohs 5, 2mm → 5μm, 100g, 금속오염 불허, 건식, R&D</p>
+        </div>
+      </div>
+      <div class="example-btn" onclick="runExample(0,1)">
+        <div class="example-icon">💊</div>
+        <div class="example-info">
+          <h3>제약 API 미분쇄</h3>
+          <p>Mohs 3, 500μm → 10μm, 50g, 오염 허용, 건식, QC</p>
+        </div>
+      </div>
+      <div class="example-btn" onclick="runExample(0,2)">
+        <div class="example-icon">🪨</div>
+        <div class="example-info">
+          <h3>광물 시료 전처리 (XRF)</h3>
+          <p>Mohs 7, 5mm → 75μm, 200g, 오염 허용, 건식, 분석</p>
+        </div>
+      </div>
+    </div>
+    <div class="result-area" id="result-0"></div>
+  </div>
+</div>
+
+<!-- ===== 탭 1: 부속품 호환 ===== -->
+<div class="panel" id="panel-1">
+  <div class="card">
+    <h2>부속품 호환 확인</h2>
+    <p class="desc">장비 모델 + 용량 + 재질 조합의 호환 여부를 확인합니다.</p>
+    <div class="example-grid">
+      <div class="example-btn" onclick="runExample(1,0)">
+        <div class="example-icon">✅</div>
+        <div class="example-info">
+          <h3>P-7 Premium + 80ml + ZrO2</h3>
+          <p>나노분쇄 대표 조합 — 호환 확인</p>
+        </div>
+      </div>
+      <div class="example-btn" onclick="runExample(1,1)">
+        <div class="example-icon">❌</div>
+        <div class="example-info">
+          <h3>P-5 Classic + 500ml + Si3N4 (질화규소)</h3>
+          <p>자주 실수하는 비호환 조합</p>
+        </div>
+      </div>
+      <div class="example-btn" onclick="runExample(1,2)">
+        <div class="example-icon">⚠️</div>
+        <div class="example-info">
+          <h3>P-6 Premium + 250ml + Si3N4</h3>
+          <p>비호환 조합 — 대안 제시</p>
+        </div>
+      </div>
+    </div>
+    <div class="result-area" id="result-1"></div>
+  </div>
+</div>
+
+<!-- ===== 탭 2: 재질 추천 ===== -->
+<div class="panel" id="panel-2">
+  <div class="card">
+    <h2>재질 추천</h2>
+    <p class="desc">시료 특성과 오염 허용 여부에 따라 최적 재질을 추천합니다.</p>
+    <div class="example-grid">
+      <div class="example-btn" onclick="runExample(2,0)">
+        <div class="example-icon">🔋</div>
+        <div class="example-info">
+          <h3>배터리 양극재 — 금속오염 불허</h3>
+          <p>NMC/LFP 소재, Fe/Cr/Ni 오염 절대 불가</p>
+        </div>
+      </div>
+      <div class="example-btn" onclick="runExample(2,1)">
+        <div class="example-icon">💊</div>
+        <div class="example-info">
+          <h3>제약 API — GMP 환경</h3>
+          <p>경구 제제, GMP 적합 재질 필요</p>
+        </div>
+      </div>
+      <div class="example-btn" onclick="runExample(2,2)">
+        <div class="example-icon">🪨</div>
+        <div class="example-info">
+          <h3>광물 분석 — 미량원소 분석용</h3>
+          <p>XRF/XRD 전처리, 최고 순수성 필요</p>
+        </div>
+      </div>
+    </div>
+    <div class="result-area" id="result-2"></div>
+  </div>
+</div>
+
+<!-- ===== 탭 3: 테스트 설계 ===== -->
+<div class="panel" id="panel-3">
+  <div class="card">
+    <h2>시료테스트 조건 설계</h2>
+    <p class="desc">시료와 목표 입도를 선택하면, 최적 분쇄 조건을 자동 설계합니다.</p>
+    <div class="example-grid">
+      <div class="example-btn" onclick="runExample(3,0)">
+        <div class="example-icon">🔋</div>
+        <div class="example-info">
+          <h3>LFP 양극재 → D50 3μm</h3>
+          <p>나노 영역 분쇄, 건식, 금속오염 불허</p>
+        </div>
+      </div>
+      <div class="example-btn" onclick="runExample(3,1)">
+        <div class="example-icon">🏗️</div>
+        <div class="example-info">
+          <h3>탄산칼슘 → D50 5μm</h3>
+          <p>세라믹 소결용, 건식</p>
+        </div>
+      </div>
+      <div class="example-btn" onclick="runExample(3,2)">
+        <div class="example-icon">💊</div>
+        <div class="example-info">
+          <h3>제약 API → D50 10μm</h3>
+          <p>경구 정제용, GMP 환경</p>
+        </div>
+      </div>
+    </div>
+    <div class="result-area" id="result-3"></div>
+  </div>
+</div>
+
+<!-- ===== 탭 4: 입도 해석 ===== -->
+<div class="panel" id="panel-4">
+  <div class="card">
+    <h2>입도분석 결과 해석</h2>
+    <p class="desc">D10/D50/D90 측정값을 입력하면, 산업별 합격 여부를 판정합니다.</p>
+    <div class="example-grid">
+      <div class="example-btn" onclick="runExample(4,0)">
+        <div class="example-icon">✅</div>
+        <div class="example-info">
+          <h3>제약 API — 합격 사례</h3>
+          <p>D10=2.3, D50=15.2, D90=45.8 (경구 제제)</p>
+        </div>
+      </div>
+      <div class="example-btn" onclick="runExample(4,1)">
+        <div class="example-icon">❌</div>
+        <div class="example-info">
+          <h3>배터리 양극재 — D90 초과 불합격</h3>
+          <p>D10=1.5, D50=8.2, D90=42.0 (LFP)</p>
+        </div>
+      </div>
+      <div class="example-btn" onclick="runExample(4,2)">
+        <div class="example-icon">⚠️</div>
+        <div class="example-info">
+          <h3>세라믹 분말 — Span 초과</h3>
+          <p>D10=0.3, D50=3.5, D90=18.2 (소결용)</p>
+        </div>
+      </div>
+    </div>
+    <div class="result-area" id="result-4"></div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">태명과학 (MJ Research) | FRITSCH 공식 파트너 | www.mjr.co.kr | 시뮬레이션 데모</div>
+
+<script>
+function showTab(idx) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+
+function runExample(tab, idx) {
+  // Highlight selected
+  const panel = document.getElementById('panel-'+tab);
+  panel.querySelectorAll('.example-btn').forEach(b => b.classList.remove('selected'));
+  panel.querySelectorAll('.example-btn')[idx].classList.add('selected');
+
+  const area = document.getElementById('result-'+tab);
+  area.classList.add('show');
+
+  const results = {
+    // 탭0: 장비 추천
+    0: [
+      // LFP 양극재
+      `<div class="result-box">
+        <h3>추천 결과: LFP 양극재 나노분쇄</h3>
+        <table class="r-table">
+          <tr><th>항목</th><th>추천</th><th>사유</th></tr>
+          <tr><td>장비</td><td><b>P-7 Premium</b></td><td>95G 고에너지, 나노 영역 도달 가능</td></tr>
+          <tr><td>용기</td><td>ZrO2 80ml × 2</td><td>금속오염 불가 → ZrO2 필수</td></tr>
+          <tr><td>분쇄볼</td><td>ZrO2 3mm</td><td>목표 D50 5μm에 적합한 볼 크기</td></tr>
+        </table>
+        <h4>추천 분쇄 조건</h4>
+        <table class="r-table">
+          <tr><th>RPM</th><th>시간</th><th>방식</th><th>예상 D50</th></tr>
+          <tr><td>700 rpm</td><td>15분</td><td>건식</td><td>~3μm</td></tr>
+        </table>
+        <div class="note danger">⚠️ <b>주의:</b> LFP 양극재는 Fe/Cr/Ni 금속오염 시 배터리 성능 저하. SS/경화강/WC 사용 금지. 수분에 민감하므로 건식 분쇄 필수.</div>
+        <div class="note success">✅ P-7 Premium + ZrO2 80ml은 배터리 소재 분쇄의 표준 조합입니다.</div>
+      </div>`,
+      // 제약 API
+      `<div class="result-box">
+        <h3>추천 결과: 제약 API 미분쇄</h3>
+        <table class="r-table">
+          <tr><th>항목</th><th>추천</th><th>사유</th></tr>
+          <tr><td>장비</td><td><b>P-6 Premium</b></td><td>소량 연구/QC에 적합, 1스테이션</td></tr>
+          <tr><td>용기</td><td>SS (스테인리스) 250ml</td><td>GMP 적합, 세척 용이</td></tr>
+          <tr><td>분쇄볼</td><td>SS 5mm</td><td>목표 D50 10μm에 적합</td></tr>
+        </table>
+        <h4>추천 분쇄 조건</h4>
+        <table class="r-table">
+          <tr><th>RPM</th><th>시간</th><th>방식</th><th>예상 D50</th></tr>
+          <tr><td>400 rpm</td><td>10분</td><td>건식</td><td>~10μm</td></tr>
+        </table>
+        <div class="note">💡 <b>참고:</b> 제약 GMP 환경에서는 스테인리스(SS) 재질이 세척 밸리데이션에 유리합니다. 오염 허용 조건이므로 SS가 가장 경제적입니다.</div>
+      </div>`,
+      // 광물 시료
+      `<div class="result-box">
+        <h3>추천 결과: 광물 시료 전처리 (XRF)</h3>
+        <table class="r-table">
+          <tr><th>항목</th><th>추천</th><th>사유</th></tr>
+          <tr><td>전처리</td><td><b>P-1 조크러셔</b></td><td>5mm → 1mm 조쇄</td></tr>
+          <tr><td>분쇄</td><td><b>P-5 Classic</b></td><td>대용량 4스테이션, 범용</td></tr>
+          <tr><td>용기</td><td>Agate(마노) 250ml × 4</td><td>XRF 분석 시 순수성 중요</td></tr>
+          <tr><td>분쇄볼</td><td>Agate 15mm</td><td>목표 75μm에 적합</td></tr>
+        </table>
+        <h4>추천 분쇄 조건</h4>
+        <table class="r-table">
+          <tr><th>RPM</th><th>시간</th><th>방식</th><th>예상 D50</th></tr>
+          <tr><td>300 rpm</td><td>5분</td><td>건식</td><td>~50μm</td></tr>
+        </table>
+        <div class="note">💡 <b>참고:</b> XRF 전처리는 #200 mesh(75μm) 이하가 필요합니다. Agate(마노)는 SiO2 99.9%로 미량원소 분석에 최적입니다. 대량 처리 시 P-5의 4스테이션이 효율적입니다.</div>
+      </div>`
+    ],
+
+    // 탭1: 부속품 호환
+    1: [
+      `<div class="result-box">
+        <h3>호환성 확인: P-7 Premium + 80ml + ZrO2</h3>
+        <p style="font-size:20px;margin:16px 0"><span class="badge badge-pass">✅ 호환</span></p>
+        <table class="r-table">
+          <tr><th>장비</th><th>용량</th><th>재질</th><th>결과</th></tr>
+          <tr><td>P-7 Premium</td><td>80ml</td><td>ZrO2 (지르코니아)</td><td><span class="badge badge-pass">호환</span></td></tr>
+        </table>
+        <h4>P-7 80ml 전체 호환 재질</h4>
+        <table class="r-table">
+          <tr><th>Agate</th><th>ZrO2</th><th>Si3N4</th><th>Al2O3</th><th>WC</th><th>SS</th><th>PTFE</th></tr>
+          <tr><td><span class="badge badge-pass">O</span></td><td><span class="badge badge-pass">O</span></td><td><span class="badge badge-pass">O</span></td><td><span class="badge badge-pass">O</span></td><td><span class="badge badge-pass">O</span></td><td><span class="badge badge-pass">O</span></td><td><span class="badge badge-pass">O</span></td></tr>
+        </table>
+        <div class="note success">✅ P-7 80ml은 PTFE 포함 <b>전 재질 호환</b> — 가장 유연한 조합입니다.</div>
+      </div>`,
+
+      `<div class="result-box">
+        <h3>호환성 확인: P-5 Classic + 500ml + Si3N4</h3>
+        <p style="font-size:20px;margin:16px 0"><span class="badge badge-fail">❌ 비호환</span></p>
+        <table class="r-table">
+          <tr><th>장비</th><th>용량</th><th>재질</th><th>결과</th></tr>
+          <tr><td>P-5 Classic</td><td>500ml</td><td>Si3N4 (질화규소)</td><td><span class="badge badge-fail">비호환</span></td></tr>
+        </table>
+        <h4>대안 제시</h4>
+        <table class="r-table">
+          <tr><th>대안</th><th>조합</th><th>호환</th></tr>
+          <tr><td>같은 재질, 작은 용량</td><td>P-5 + <b>250ml</b> + Si3N4</td><td><span class="badge badge-fail">비호환</span></td></tr>
+          <tr><td>같은 재질, 더 작은 용량</td><td>P-5 + <b>80ml</b> + Si3N4</td><td><span class="badge badge-pass">호환</span></td></tr>
+          <tr><td>같은 용량, 다른 재질</td><td>P-5 + 500ml + <b>ZrO2</b></td><td><span class="badge badge-pass">호환</span> (추천)</td></tr>
+          <tr><td>다른 장비</td><td><b>P-7</b> + 80ml + Si3N4</td><td><span class="badge badge-pass">호환</span></td></tr>
+        </table>
+        <div class="note danger">⚠️ P-5/P-6의 500ml 용기에서는 Si3N4, WC, PTFE가 지원되지 않습니다. 대용량이 필요하면 ZrO2로 변경하세요.</div>
+      </div>`,
+
+      `<div class="result-box">
+        <h3>호환성 확인: P-6 Premium + 250ml + Si3N4</h3>
+        <p style="font-size:20px;margin:16px 0"><span class="badge badge-fail">❌ 비호환</span></p>
+        <table class="r-table">
+          <tr><th>장비</th><th>용량</th><th>재질</th><th>결과</th></tr>
+          <tr><td>P-6 Premium</td><td>250ml</td><td>Si3N4 (질화규소)</td><td><span class="badge badge-fail">비호환</span></td></tr>
+        </table>
+        <h4>대안 제시</h4>
+        <table class="r-table">
+          <tr><th>대안</th><th>조합</th><th>호환</th></tr>
+          <tr><td>같은 재질, 작은 용량</td><td>P-6 + <b>80ml</b> + Si3N4</td><td><span class="badge badge-pass">호환</span></td></tr>
+          <tr><td>같은 용량, 다른 재질</td><td>P-6 + 250ml + <b>ZrO2</b></td><td><span class="badge badge-pass">호환</span> (추천)</td></tr>
+          <tr><td>다른 장비(나노)</td><td><b>P-7</b> + 80ml + Si3N4</td><td><span class="badge badge-pass">호환</span></td></tr>
+        </table>
+        <div class="note">💡 Si3N4(질화규소)는 P-6에서 80ml만 호환됩니다. 250ml 이상이 필요하면 동등 성능의 <b>ZrO2</b>를 추천합니다.</div>
+      </div>`
+    ],
+
+    // 탭2: 재질 추천
+    2: [
+      `<div class="result-box">
+        <h3>재질 추천: 배터리 양극재 (금속오염 불허)</h3>
+        <div class="tree">
+<span class="hl">금속 오염 허용?</span>
+├── <span class="sel">NO</span> → 시료 경도 Mohs 7 이상?
+│         ├── <span class="dim">YES → ZrO2 또는 Si3N4</span>
+│         └── <span class="sel">NO (Mohs 5)</span> → <span class="sel">★ ZrO2 (지르코니아) 추천</span>
+│                    └── <span class="dim">예산 제한? → ZrO2 (동일)</span>
+└── <span class="dim">YES → ...</span>
+        </div>
+        <table class="r-table">
+          <tr><th>순위</th><th>재질</th><th>경도</th><th>순수성</th><th>사유</th></tr>
+          <tr><td><b>1순위</b></td><td>ZrO2 (지르코니아)</td><td>Mohs 8.5</td><td>★★★★</td><td>금속오염 없음, 범용, 나노볼 0.1mm 가용</td></tr>
+          <tr><td>2순위</td><td>Si3N4 (질화규소)</td><td>Mohs 9</td><td>★★★★</td><td>고경도, 금속오염 없음 (가격 높음)</td></tr>
+        </table>
+        <div class="note danger">⚠️ <b>사용 금지 재질:</b> SS(Fe/Cr/Ni 용출), 경화강(Fe), WC(Co 바인더) — 배터리 성능/안전성 저하 원인</div>
+      </div>`,
+
+      `<div class="result-box">
+        <h3>재질 추천: 제약 API (GMP 환경)</h3>
+        <div class="tree">
+<span class="hl">금속 오염 허용?</span>
+├── <span class="dim">NO → ...</span>
+└── <span class="sel">YES</span> → 예산 제한?
+          ├── <span class="dim">YES → 경화강</span>
+          │         └── <span class="sel">GMP 필요? → ★ SS (스테인리스) 추천</span>
+          └── <span class="dim">NO → WC</span>
+        </div>
+        <table class="r-table">
+          <tr><th>순위</th><th>재질</th><th>경도</th><th>사유</th></tr>
+          <tr><td><b>1순위</b></td><td>SS (스테인리스)</td><td>Mohs 5.5</td><td>GMP/HACCP 적합, 세척 밸리데이션 용이, 저가</td></tr>
+          <tr><td>2순위</td><td>ZrO2 (지르코니아)</td><td>Mohs 8.5</td><td>금속오염 최소화 필요 시</td></tr>
+        </table>
+        <div class="note success">✅ 제약 GMP에서는 스테인리스가 가장 경제적이고 세척이 쉽습니다.</div>
+      </div>`,
+
+      `<div class="result-box">
+        <h3>재질 추천: 광물 분석 (미량원소)</h3>
+        <div class="tree">
+<span class="hl">금속 오염 허용?</span>
+├── <span class="sel">NO</span> → 시료 경도 Mohs 7 이상?
+│         ├── <span class="dim">YES → ZrO2 또는 Si3N4</span>
+│         └── <span class="sel">NO (Mohs 5~6)</span> → <span class="sel">★ Agate (마노) 추천</span>
+│                    <span class="dim">(최고 순수성, SiO2 99.9%)</span>
+└── <span class="dim">YES → ...</span>
+        </div>
+        <table class="r-table">
+          <tr><th>순위</th><th>재질</th><th>경도</th><th>순수성</th><th>사유</th></tr>
+          <tr><td><b>1순위</b></td><td>Agate (마노)</td><td>Mohs 6.5</td><td>★★★★★</td><td>SiO2 99.9%, XRF/XRD 분석에 최적</td></tr>
+          <tr><td>2순위</td><td>Al2O3 (코런덤)</td><td>Mohs 9</td><td>★★★</td><td>고경도 광물일 때 (가격 저렴)</td></tr>
+        </table>
+        <div class="note">💡 Agate(마노)는 미량원소 분석에 가장 중요한 <b>최고 순수성</b>을 제공합니다. 단, 볼 크기는 5mm 이상만 가용합니다.</div>
+      </div>`
+    ],
+
+    // 탭3: 테스트 설계
+    3: [
+      `<div class="result-box">
+        <h3>테스트 설계: LFP 양극재 → D50 3μm</h3>
+        <table class="r-table">
+          <tr><th>항목</th><th>설정값</th><th>비고</th></tr>
+          <tr><td>장비</td><td><b>P-7 Premium</b></td><td>95G 최고 에너지</td></tr>
+          <tr><td>용기</td><td>ZrO2 80ml × 2</td><td>금속오염 방지</td></tr>
+          <tr><td>분쇄볼</td><td>ZrO2 3mm, 충전율 30%</td><td>나노 영역 최적</td></tr>
+          <tr><td>회전속도</td><td>700 rpm</td><td>고에너지 분쇄</td></tr>
+          <tr><td>시간</td><td>15분</td><td>단계: 5분 ON / 1분 OFF × 3</td></tr>
+          <tr><td>방식</td><td>건식</td><td>리튬계 수분 민감</td></tr>
+          <tr><td>시료량</td><td>30g / 용기</td><td>용기 용량의 1/3</td></tr>
+        </table>
+        <h4>예상 결과</h4>
+        <table class="r-table">
+          <tr><th>D10</th><th>D50</th><th>D90</th><th>Span</th></tr>
+          <tr><td>~0.8μm</td><td>~3μm</td><td>~12μm</td><td>~3.7</td></tr>
+        </table>
+        <div class="note">💡 <b>팁:</b> D50 3μm 미만이 필요하면 볼을 1mm로 줄이고 시간을 30분으로 연장하세요. 온도 상승 방지를 위해 반드시 간헐 운전(ON/OFF)을 사용합니다.</div>
+      </div>`,
+
+      `<div class="result-box">
+        <h3>테스트 설계: 탄산칼슘 → D50 5μm</h3>
+        <table class="r-table">
+          <tr><th>항목</th><th>설정값</th><th>비고</th></tr>
+          <tr><td>장비</td><td><b>P-6 Premium</b></td><td>소량 연구용</td></tr>
+          <tr><td>용기</td><td>ZrO2 250ml</td><td>범용, 고경도</td></tr>
+          <tr><td>분쇄볼</td><td>ZrO2 3mm, 충전율 30%</td><td>미세 분쇄 최적</td></tr>
+          <tr><td>회전속도</td><td>500 rpm</td><td>중에너지</td></tr>
+          <tr><td>시간</td><td>15분</td><td>연속 운전 가능 (Mohs 3)</td></tr>
+          <tr><td>방식</td><td>건식</td><td></td></tr>
+          <tr><td>시료량</td><td>80g / 용기</td><td>용기 용량의 1/3</td></tr>
+        </table>
+        <h4>예상 결과</h4>
+        <table class="r-table">
+          <tr><th>D10</th><th>D50</th><th>D90</th><th>Span</th></tr>
+          <tr><td>~1.2μm</td><td>~5μm</td><td>~14μm</td><td>~2.6</td></tr>
+        </table>
+        <div class="note success">✅ 탄산칼슘(Mohs 3)은 부드러운 시료로 분쇄가 용이합니다. 세라믹 소결용 기준(D50 0.5~5μm) 충족 예상.</div>
+      </div>`,
+
+      `<div class="result-box">
+        <h3>테스트 설계: 제약 API → D50 10μm</h3>
+        <table class="r-table">
+          <tr><th>항목</th><th>설정값</th><th>비고</th></tr>
+          <tr><td>장비</td><td><b>P-6 Classic</b></td><td>QC용, 비용 효율</td></tr>
+          <tr><td>용기</td><td>SS (스테인리스) 250ml</td><td>GMP 적합</td></tr>
+          <tr><td>분쇄볼</td><td>SS 5mm, 충전율 30%</td><td></td></tr>
+          <tr><td>회전속도</td><td>350 rpm</td><td>과분쇄 방지</td></tr>
+          <tr><td>시간</td><td>8분</td><td>짧게 시작, 점진 증가</td></tr>
+          <tr><td>방식</td><td>건식</td><td></td></tr>
+          <tr><td>시료량</td><td>80g / 용기</td><td></td></tr>
+        </table>
+        <h4>예상 결과</h4>
+        <table class="r-table">
+          <tr><th>D10</th><th>D50</th><th>D90</th><th>Span</th></tr>
+          <tr><td>~2.5μm</td><td>~10μm</td><td>~35μm</td><td>~3.3</td></tr>
+        </table>
+        <div class="note">💡 <b>팁:</b> 제약 API는 과분쇄 시 용해 속도에 영향을 줍니다. 낮은 rpm에서 시작하여 점진적으로 조건을 강화하세요. USP &lt;429&gt; 기준: D50 5~25μm.</div>
+      </div>`
+    ],
+
+    // 탭4: 입도 해석
+    4: [
+      `<div class="result-box">
+        <h3>입도 해석: 제약 API (경구 제제)</h3>
+        <table class="r-table">
+          <tr><th>측정값</th><th>값</th><th>기준</th><th>판정</th></tr>
+          <tr><td>D10</td><td>2.3 μm</td><td>-</td><td><span class="badge badge-info">참고</span></td></tr>
+          <tr><td>D50</td><td>15.2 μm</td><td>5~25 μm</td><td><span class="badge badge-pass">합격</span></td></tr>
+          <tr><td>D90</td><td>45.8 μm</td><td>&lt; 75 μm</td><td><span class="badge badge-pass">합격</span></td></tr>
+          <tr><td>Span</td><td>2.86</td><td>&lt; 3.0</td><td><span class="badge badge-pass">합격</span></td></tr>
+        </table>
+        <p style="font-size:22px;margin:16px 0;text-align:center"><span class="badge badge-pass" style="font-size:16px;padding:8px 24px">종합 판정: 합격 ✅</span></p>
+        <div class="note success">✅ D50, D90, Span 모두 USP &lt;429&gt; 기준 이내. 경구 정제/캡슐 제조에 적합한 입도 분포입니다.</div>
+      </div>`,
+
+      `<div class="result-box">
+        <h3>입도 해석: 배터리 양극재 (LFP)</h3>
+        <table class="r-table">
+          <tr><th>측정값</th><th>값</th><th>기준</th><th>판정</th></tr>
+          <tr><td>D10</td><td>1.5 μm</td><td>-</td><td><span class="badge badge-info">참고</span></td></tr>
+          <tr><td>D50</td><td>8.2 μm</td><td>3~15 μm</td><td><span class="badge badge-pass">합격</span></td></tr>
+          <tr><td>D90</td><td>42.0 μm</td><td>&lt; 30 μm</td><td><span class="badge badge-fail">불합격</span></td></tr>
+          <tr><td>Span</td><td>4.94</td><td>&lt; 2.5</td><td><span class="badge badge-fail">불합격</span></td></tr>
+        </table>
+        <p style="font-size:22px;margin:16px 0;text-align:center"><span class="badge badge-fail" style="font-size:16px;padding:8px 24px">종합 판정: 불합격 ❌</span></p>
+        <h4>문제 분석 및 개선 방안</h4>
+        <table class="r-table">
+          <tr><th>문제</th><th>원인</th><th>대책</th></tr>
+          <tr><td>D90 초과 (42 > 30μm)</td><td>조대 입자 잔류</td><td>분쇄 시간 연장 (15분 → 25분) 또는 볼 크기 감소 (3mm → 1mm)</td></tr>
+          <tr><td>Span 초과 (4.94 > 2.5)</td><td>불균일 분포</td><td>단계적 분쇄 (10분 + 15분) 또는 체 분급(30μm) 병행</td></tr>
+        </table>
+        <div class="note danger">⚠️ D90이 30μm을 초과하면 조대 입자가 배터리 전극 코팅 시 결함을 유발할 수 있습니다. 추가 분쇄 또는 분급이 필요합니다.</div>
+      </div>`,
+
+      `<div class="result-box">
+        <h3>입도 해석: 세라믹 분말 (소결용)</h3>
+        <table class="r-table">
+          <tr><th>측정값</th><th>값</th><th>기준</th><th>판정</th></tr>
+          <tr><td>D10</td><td>0.3 μm</td><td>-</td><td><span class="badge badge-info">참고</span></td></tr>
+          <tr><td>D50</td><td>3.5 μm</td><td>0.5~5 μm</td><td><span class="badge badge-pass">합격</span></td></tr>
+          <tr><td>D90</td><td>18.2 μm</td><td>&lt; 15 μm</td><td><span class="badge badge-fail">불합격</span></td></tr>
+          <tr><td>Span</td><td>5.11</td><td>&lt; 3.0</td><td><span class="badge badge-fail">불합격</span></td></tr>
+        </table>
+        <p style="font-size:22px;margin:16px 0;text-align:center"><span class="badge badge-warn" style="font-size:16px;padding:8px 24px">종합 판정: 조건부 ⚠️</span></p>
+        <h4>분석</h4>
+        <p>D50은 기준 내이나, D90과 Span이 초과합니다. 미세 입자는 충분하지만 <b>조대 입자가 잔류</b>하여 분포가 불균일합니다.</p>
+        <h4>개선 방안</h4>
+        <table class="r-table">
+          <tr><th>방안</th><th>효과</th></tr>
+          <tr><td>체 분급 (15μm 체)</td><td>D90 즉시 개선, Span 감소</td></tr>
+          <tr><td>볼 크기 단일화 (3mm만 사용)</td><td>분포 균일화</td></tr>
+          <tr><td>습식 분쇄 전환</td><td>재응집 방지, Span 개선</td></tr>
+        </table>
+        <div class="note">💡 소결 밀도를 높이려면 균일한 입도 분포가 핵심입니다. 분급 후 재측정을 권장합니다.</div>
+      </div>`
+    ]
+  };
+
+  area.innerHTML = results[tab][idx];
+}
+</script>
+
+</body>
+</html>

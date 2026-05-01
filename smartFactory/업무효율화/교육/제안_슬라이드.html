@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 활용 중소기업 업무효율화 교육 제안</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .slide {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    padding: 60px 80px;
+    position: absolute;
+    top: 0; left: 0;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .slide.active { display: flex; flex-direction: column; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Slide 1: Cover */
+  .slide-cover {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0d9488 100%);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .slide-cover .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 30px;
+    padding: 8px 24px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+  }
+  .slide-cover h1 {
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #fff, #67e8f9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .slide-cover .subtitle {
+    font-size: 22px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 50px;
+  }
+  .slide-cover .info {
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* Common slide header */
+  .slide-header {
+    margin-bottom: 40px;
+  }
+  .slide-header .number {
+    font-size: 14px;
+    font-weight: 500;
+    color: #0d9488;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  .slide-header h2 {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .slide-header .line {
+    width: 60px;
+    height: 3px;
+    background: #0d9488;
+    margin-top: 15px;
+    border-radius: 2px;
+  }
+
+  .slide-body { flex: 1; display: flex; gap: 40px; }
+
+  /* Problem slide */
+  .slide-problem { background: linear-gradient(160deg, #0f172a, #1a1a2e); }
+  .problem-card {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s;
+  }
+  .problem-card:hover { transform: translateY(-5px); }
+  .problem-card .icon { font-size: 40px; margin-bottom: 15px; }
+  .problem-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; color: #f87171; }
+  .problem-card p { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+  /* Solution slide */
+  .slide-solution { background: linear-gradient(160deg, #0a2540, #0d3b2e); }
+  .solution-flow {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  .flow-box {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(13,148,136,0.4);
+    border-radius: 16px;
+    padding: 25px 20px;
+    text-align: center;
+    width: 200px;
+  }
+  .flow-box .icon { font-size: 36px; margin-bottom: 10px; }
+  .flow-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #5eead4; }
+  .flow-box p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .flow-arrow { font-size: 30px; color: #0d9488; }
+
+  /* Cases slide */
+  .slide-cases { background: linear-gradient(160deg, #0f172a, #1e1b4b); }
+  .case-card {
+    flex: 1;
+    border-radius: 16px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .case-card.c1 { background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.05)); border-color: rgba(59,130,246,0.3); }
+  .case-card.c2 { background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05)); border-color: rgba(34,197,94,0.3); }
+  .case-card.c3 { background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(6,182,212,0.05)); border-color: rgba(6,182,212,0.3); }
+  .case-card.c4 { background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.05)); border-color: rgba(168,85,247,0.3); }
+  .case-card .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    width: fit-content;
+  }
+  .c1 .tag { background: rgba(59,130,246,0.3); color: #93c5fd; }
+  .c2 .tag { background: rgba(34,197,94,0.3); color: #86efac; }
+  .c3 .tag { background: rgba(6,182,212,0.3); color: #67e8f9; }
+  .c4 .tag { background: rgba(168,85,247,0.3); color: #d8b4fe; }
+  .case-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .case-card .desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; margin-bottom: 15px; flex: 1; }
+  .case-card .stat { font-size: 13px; color: rgba(255,255,255,0.8); }
+  .case-card .stat strong { color: #fbbf24; }
+
+  /* Curriculum slide */
+  .slide-curriculum { background: linear-gradient(160deg, #0f172a, #172554); }
+  .curriculum-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  .cur-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  .cur-num {
+    background: linear-gradient(135deg, #0d9488, #0891b2);
+    color: #fff;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px;
+    flex-shrink: 0;
+  }
+  .cur-item h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .cur-item p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.4; }
+
+  /* Comparison slide */
+  .slide-compare { background: linear-gradient(160deg, #0f172a, #3b0764); }
+  .compare-table {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+  }
+  .compare-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .compare-row.header { margin-bottom: 5px; }
+  .compare-cell {
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .compare-row.header .compare-cell {
+    background: rgba(255,255,255,0.1);
+    font-weight: 700;
+    text-align: center;
+    font-size: 15px;
+  }
+  .compare-cell.label {
+    background: rgba(255,255,255,0.05);
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+    display: flex; align-items: center;
+  }
+  .compare-cell.old {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.2);
+    color: rgba(255,255,255,0.7);
+  }
+  .compare-cell.new {
+    background: rgba(13,148,136,0.1);
+    border: 1px solid rgba(13,148,136,0.3);
+    color: #5eead4;
+    font-weight: 500;
+  }
+
+  /* Effect slide */
+  .slide-effect { background: linear-gradient(160deg, #0f172a, #1e3a5f); }
+  .effect-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    align-content: center;
+  }
+  .effect-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+  }
+  .effect-card .percent {
+    font-size: 52px;
+    font-weight: 900;
+    background: linear-gradient(to right, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .effect-card h3 { font-size: 17px; font-weight: 500; margin-bottom: 6px; }
+  .effect-card p { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+  /* CTA slide */
+  .slide-cta {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0d9488 100%);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .slide-cta h2 {
+    font-size: 44px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  .slide-cta p {
+    font-size: 20px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+  .cta-box {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    padding: 30px 50px;
+    backdrop-filter: blur(10px);
+  }
+  .cta-box p { font-size: 16px; color: rgba(255,255,255,0.6); margin-bottom: 0; }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    bottom: 30px;
+    right: 40px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+  }
+  .nav button {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s;
+    backdrop-filter: blur(10px);
+  }
+  .nav button:hover { background: rgba(255,255,255,0.2); }
+
+  .page-indicator {
+    position: fixed;
+    bottom: 35px;
+    left: 40px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Cover -->
+<div class="slide slide-cover active" id="slide-1">
+  <div class="badge">EDUCATION PROPOSAL 2026</div>
+  <h1>AI와 지식DB를 활용한<br>중소기업 업무효율화</h1>
+  <div class="subtitle">현업 업무 지식을 DB화하고, AI Tool로 자동화하는 실전 교육</div>
+  <div class="info">UTTEC | 중소기업 디지털 전환 교육</div>
+</div>
+
+<!-- Slide 2: Problem -->
+<div class="slide slide-problem" id="slide-2">
+  <div class="slide-header">
+    <div class="number">01 — PROBLEM</div>
+    <h2>중소기업이 직면한 문제</h2>
+    <div class="line"></div>
+  </div>
+  <div class="slide-body">
+    <div class="problem-card">
+      <div class="icon">🧠</div>
+      <h3>지식의 속인화</h3>
+      <p>핵심 업무 노하우가 특정 직원의 머릿속에만 존재합니다. 퇴직하면 지식도 함께 사라집니다.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">🔄</div>
+      <h3>반복 업무의 비효율</h3>
+      <p>견적서, 제안서, 고객 응대 등 유사한 업무를 매번 처음부터 다시 작성합니다.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">📚</div>
+      <h3>신입 교육의 부담</h3>
+      <p>인수인계에 수개월이 걸리고, 전문가 수준의 응대까지는 더 오랜 시간이 필요합니다.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">🤷</div>
+      <h3>AI 도입의 막막함</h3>
+      <p>AI가 좋다는 건 알지만, 우리 회사에 어떻게 적용해야 할지 방법을 모릅니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 3: Solution -->
+<div class="slide slide-solution" id="slide-3">
+  <div class="slide-header">
+    <div class="number">02 — SOLUTION</div>
+    <h2>해결 방안: 지식DB + AI Tool</h2>
+    <div class="line"></div>
+  </div>
+  <div class="slide-body">
+    <div class="solution-flow">
+      <div class="flow-box">
+        <div class="icon">📋</div>
+        <h3>흩어진 업무 지식</h3>
+        <p>문서, 엑셀, 메모, 직원의 머릿속에 분산된 노하우</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">
+        <div class="icon">🗄️</div>
+        <h3>지식DB 구축</h3>
+        <p>마크다운 문서로 체계화, 문서 간 링크로 연결, 검색 가능한 구조</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">
+        <div class="icon">🤖</div>
+        <h3>AI Tool 연동</h3>
+        <p>지식DB를 참조하는 AI 어시스턴트 설정, 역할/명령어 정의</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">
+        <div class="icon">⚡</div>
+        <h3>업무 자동화</h3>
+        <p>견적서/제안서 자동생성, 제품추천, 고객응대 즉시 처리</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 4: Cases -->
+<div class="slide slide-cases" id="slide-4">
+  <div class="slide-header">
+    <div class="number">03 — CASE STUDY</div>
+    <h2>실제 구축 사례 4개 업종</h2>
+    <div class="line"></div>
+  </div>
+  <div class="slide-body">
+    <div class="case-card c1">
+      <div class="tag">과학장비</div>
+      <h3>태명과학</h3>
+      <div class="desc">시료 특성 입력 → 장비+부속품+재질 자동 추천, 견적서 초안 생성</div>
+      <div class="stat">Wiki <strong>55</strong>개 | DB <strong>6</strong>종 | 추천 소요 <strong>3분</strong></div>
+    </div>
+    <div class="case-card c2">
+      <div class="tag">산업기계</div>
+      <h3>한국기계</h3>
+      <div class="desc">고객 요구사항 → 공정 설계 + 장비 구성 + 제안서/BOM 자동 생성</div>
+      <div class="stat">Wiki <strong>41</strong>개 | DB <strong>9</strong>종 | 제안서 <strong>2시간</strong></div>
+    </div>
+    <div class="case-card c3">
+      <div class="tag">약국</div>
+      <h3>약국 복약지도</h3>
+      <div class="desc">환자 정보+복용약 → 상호작용 검토 + 대안 제시 + 복약지도 기록</div>
+      <div class="stat">Wiki <strong>29</strong>개 | 데모 <strong>2</strong>종 | 즉시 확인</div>
+    </div>
+    <div class="case-card c4">
+      <div class="tag">한의원</div>
+      <h3>한의원 진료보조</h3>
+      <div class="desc">증상+체질 → 처방 추천 + 약재 안전성 검증 + 경혈 배혈 자동화</div>
+      <div class="stat">Wiki <strong>24</strong>개 | 데모 <strong>2</strong>종 | 안전성 자동검증</div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 5: Curriculum -->
+<div class="slide slide-curriculum" id="slide-5">
+  <div class="slide-header">
+    <div class="number">04 — CURRICULUM</div>
+    <h2>교육 커리큘럼 (기본 1일 / 심화 2일)</h2>
+    <div class="line"></div>
+  </div>
+  <div class="slide-body">
+    <div class="curriculum-grid">
+      <div class="cur-item">
+        <div class="cur-num">1</div>
+        <div>
+          <h3>지식DB 이해</h3>
+          <p>마크다운 문법, DB 구조, 문서 간 링크 체계 학습 + 샘플 실습</p>
+        </div>
+      </div>
+      <div class="cur-item">
+        <div class="cur-num">2</div>
+        <div>
+          <h3>우리 회사 지식 정리</h3>
+          <p>업무 분류 체계 설계, 핵심 문서 3건 이상 직접 작성</p>
+        </div>
+      </div>
+      <div class="cur-item">
+        <div class="cur-num">3</div>
+        <div>
+          <h3>AI Tool 연동</h3>
+          <p>AI Tool 설정, 역할 정의(시스템 프롬프트), 명령어 설계</p>
+        </div>
+      </div>
+      <div class="cur-item">
+        <div class="cur-num">4</div>
+        <div>
+          <h3>실전 업무 자동화</h3>
+          <p>견적서/제안서/고객응대 자동 생성, 자사 시나리오 실습</p>
+        </div>
+      </div>
+      <div class="cur-item">
+        <div class="cur-num">5</div>
+        <div>
+          <h3>DB 테이블 설계 (심화)</h3>
+          <p>구조화된 데이터 설계, 제품/서비스 DB 구축, 검색/필터링</p>
+        </div>
+      </div>
+      <div class="cur-item">
+        <div class="cur-num">6</div>
+        <div>
+          <h3>고급 AI 활용 (심화)</h3>
+          <p>다단계 명령어, 조건부 추천, 자동 검증 시나리오 구현</p>
+        </div>
+      </div>
+      <div class="cur-item">
+        <div class="cur-num">7</div>
+        <div>
+          <h3>데모 웹 제작 (심화)</h3>
+          <p>HTML 기반 업무 시뮬레이션 데모 페이지 직접 제작</p>
+        </div>
+      </div>
+      <div class="cur-item">
+        <div class="cur-num">8</div>
+        <div>
+          <h3>도입 및 운영 (심화)</h3>
+          <p>팀 확산 전략, 데이터 관리, 도입 계획서 작성</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 6: Comparison -->
+<div class="slide slide-compare" id="slide-6">
+  <div class="slide-header">
+    <div class="number">05 — DIFFERENTIATION</div>
+    <h2>기존 AI 교육과의 차별점</h2>
+    <div class="line"></div>
+  </div>
+  <div class="slide-body">
+    <div class="compare-table">
+      <div class="compare-row header">
+        <div class="compare-cell"></div>
+        <div class="compare-cell">일반 AI 교육</div>
+        <div class="compare-cell">본 교육</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell label">교육 내용</div>
+        <div class="compare-cell old">AI 사용법, 프롬프트 작성법</div>
+        <div class="compare-cell new">자사 데이터 + AI 연동 시스템 구축</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell label">교육 결과물</div>
+        <div class="compare-cell old">프롬프트 몇 개</div>
+        <div class="compare-cell new">즉시 사용 가능한 업무 자동화 시스템</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell label">데이터 기반</div>
+        <div class="compare-cell old">인터넷 일반 지식</div>
+        <div class="compare-cell new">우리 회사 고유 데이터</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell label">답변 정확도</div>
+        <div class="compare-cell old">AI 환각(Hallucination) 위험</div>
+        <div class="compare-cell new">검증된 자사 데이터만 참조</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell label">데이터 보안</div>
+        <div class="compare-cell old">회사 정보 외부 전송</div>
+        <div class="compare-cell new">로컬 DB로 보안 유지</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell label">지속성</div>
+        <div class="compare-cell old">교육 후 활용 어려움</div>
+        <div class="compare-cell new">시스템이 남아서 계속 발전</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 7: Effect -->
+<div class="slide slide-effect" id="slide-7">
+  <div class="slide-header">
+    <div class="number">06 — EXPECTED EFFECT</div>
+    <h2>기대 효과</h2>
+    <div class="line"></div>
+  </div>
+  <div class="slide-body">
+    <div class="effect-grid">
+      <div class="effect-card">
+        <div class="percent">90%</div>
+        <h3>제품/장비 추천 시간 단축</h3>
+        <p>30분 → 3분</p>
+      </div>
+      <div class="effect-card">
+        <div class="percent">85%</div>
+        <h3>제안서/견적서 작성 시간 단축</h3>
+        <p>2일 → 2시간</p>
+      </div>
+      <div class="effect-card">
+        <div class="percent">80%</div>
+        <h3>신입 직원 교육 기간 단축</h3>
+        <p>3개월 → 2주</p>
+      </div>
+      <div class="effect-card">
+        <div class="percent">100%</div>
+        <h3>인력 의존도 해소</h3>
+        <p>전문가만 가능 → 누구나 가능</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 8: CTA -->
+<div class="slide slide-cta" id="slide-8">
+  <h2>AI와 지식DB로<br>우리 회사의 업무를 바꿔보세요</h2>
+  <p>4개 업종 실제 구축 사례 시연 + 자사 업무 즉시 적용 실습<br>교육 당일부터 사용할 수 있는 시스템을 가져갑니다</p>
+  <div class="cta-box">
+    <p>교육 문의: UTTEC</p>
+  </div>
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <button onclick="prevSlide()">◀</button>
+  <button onclick="nextSlide()">▶</button>
+</div>
+<div class="page-indicator" id="pageIndicator">1 / 8</div>
+
+<script>
+  let current = 1;
+  const total = 8;
+
+  function showSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('slide-' + n);
+    if (target) {
+      target.classList.add('active');
+      // Re-trigger animation
+      target.style.animation = 'none';
+      target.offsetHeight;
+      target.style.animation = '';
+    }
+    document.getElementById('pageIndicator').textContent = n + ' / ' + total;
+  }
+
+  function nextSlide() {
+    if (current < total) { current++; showSlide(current); }
+  }
+
+  function prevSlide() {
+    if (current > 1) { current--; showSlide(current); }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft' || e.key === 'Backspace') { e.preventDefault(); prevSlide(); }
+  });
+
+  // Touch support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? nextSlide() : prevSlide(); }
+  });
+</script>
+</body>
+</html>

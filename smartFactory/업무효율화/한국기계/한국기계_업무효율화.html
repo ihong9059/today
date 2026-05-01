@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국기계 AI 업무효율화 데모</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif;background:#f0f2f5;color:#333}
+.header{background:linear-gradient(135deg,#1b5e20,#2e7d32 50%,#66bb6a);color:#fff;padding:40px 20px 30px;text-align:center}
+.header h1{font-size:28px;margin-bottom:6px}.header p{font-size:14px;opacity:.85}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #e0e0e0;position:sticky;top:0;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,.05);overflow-x:auto}
+.tab{padding:14px 24px;cursor:pointer;font-size:14px;font-weight:600;color:#777;border-bottom:3px solid transparent;white-space:nowrap;transition:.2s}
+.tab:hover{color:#1b5e20}.tab.active{color:#1b5e20;border-bottom-color:#2e7d32;background:#e8f5e9}
+.content{max-width:960px;margin:0 auto;padding:24px 16px 60px}
+.panel{display:none}.panel.active{display:block}
+.card{background:#fff;border-radius:12px;padding:28px 32px;margin-bottom:20px;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.card h2{font-size:20px;color:#1b5e20;margin-bottom:6px}
+.card .desc{font-size:14px;color:#666;margin-bottom:20px}
+.example-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.example-btn{display:flex;align-items:center;padding:16px 20px;background:#f5fff5;border:2px solid #c8e6c9;border-radius:10px;cursor:pointer;transition:.2s}
+.example-btn:hover{border-color:#2e7d32;background:#e8f5e9;transform:translateY(-1px)}
+.example-btn.selected{border-color:#2e7d32;background:#e8f5e9}
+.example-icon{font-size:28px;margin-right:16px;min-width:36px;text-align:center}
+.example-info h3{font-size:15px;color:#333;margin-bottom:3px}
+.example-info p{font-size:13px;color:#888}
+.result-area{margin-top:24px;display:none}.result-area.show{display:block}
+.result-box{background:#fafafa;border:1px solid #e0e0e0;border-radius:10px;padding:24px 28px;line-height:1.8}
+.result-box h3{color:#1b5e20;font-size:17px;margin-bottom:14px;border-bottom:2px solid #e8f5e9;padding-bottom:8px}
+.result-box h4{color:#2e7d32;font-size:15px;margin:16px 0 8px}
+.r-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.r-table th{background:#e8f5e9;padding:8px 12px;text-align:left;font-size:13px;color:#1b5e20}
+.r-table td{padding:8px 12px;border-bottom:1px solid #eee}
+.r-table tr:hover td{background:#f5fff5}
+.note{padding:12px 16px;border-radius:6px;margin:12px 0;font-size:13px}
+.note.danger{background:#fce4ec;border-left:4px solid #ef5350}
+.note.success{background:#e8f5e9;border-left:4px solid #66bb6a}
+.note.info{background:#e3f2fd;border-left:4px solid #42a5f5}
+.flow{font-family:Consolas,monospace;font-size:13px;background:#263238;color:#b0bec5;padding:16px 20px;border-radius:8px;line-height:1.9;margin:12px 0;overflow-x:auto;white-space:pre}
+.flow .hl{color:#a5d6a7;font-weight:700}.flow .sel{color:#ffcc80;font-weight:700}
+.footer{text-align:center;padding:30px;color:#aaa;font-size:12px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>한국기계 AI 업무효율화 데모</h1>
+  <p>(주)한국기계엔지니어링 — 분쇄/분급 장비 자동 추천 시스템</p>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab(0)">🔧 장비 추천</div>
+  <div class="tab" onclick="showTab(1)">🏭 공정 설계</div>
+  <div class="tab" onclick="showTab(2)">📋 사례 검색</div>
+  <div class="tab" onclick="showTab(3)">📝 제안서 생성</div>
+  <div class="tab" onclick="showTab(4)">💬 수준별 설명</div>
+  <div class="tab" onclick="showTab(5)">📦 조달/제작 공정</div>
+</div>
+
+<div class="content">
+
+<!-- ===== 탭0: 장비 추천 ===== -->
+<div class="panel active" id="panel-0"><div class="card">
+  <h2>장비 추천</h2>
+  <p class="desc">처리 대상과 조건을 선택하면, 최적 장비 조합을 추천합니다.</p>
+  <div class="example-grid">
+    <div class="example-btn" onclick="run(0,0)">
+      <div class="example-icon">🔋</div>
+      <div class="example-info"><h3>폐배터리 재활용 — 월 2,000톤</h3><p>1차 파쇄 → 2차 분쇄 → 3차 박리 → 분급, 블랙매스 회수</p></div>
+    </div>
+    <div class="example-btn" onclick="run(0,1)">
+      <div class="example-icon">🍜</div>
+      <div class="example-info"><h3>음식물 처리 — 시간당 5톤</h3><p>이물질 포함 음식물 파쇄, 탈수/건조 전처리</p></div>
+    </div>
+    <div class="example-btn" onclick="run(0,2)">
+      <div class="example-icon">🪨</div>
+      <div class="example-info"><h3>석회석 미분쇄 — 시간당 1톤, D50 50μm</h3><p>원석 조쇄 → 중분쇄 → 미분쇄 → 분급</p></div>
+    </div>
+  </div>
+  <div class="result-area" id="res-0"></div>
+</div></div>
+
+<!-- ===== 탭1: 공정 설계 ===== -->
+<div class="panel" id="panel-1"><div class="card">
+  <h2>공정 설계</h2>
+  <p class="desc">산업을 선택하면 전체 공정도와 단계별 장비 구성을 보여줍니다.</p>
+  <div class="example-grid">
+    <div class="example-btn" onclick="run(1,0)">
+      <div class="example-icon">🔋</div>
+      <div class="example-info"><h3>폐배터리 재활용 공정</h3><p>방전 → 파쇄 → 분쇄 → 박리 → 분급 → 선별 → 블랙매스</p></div>
+    </div>
+    <div class="example-btn" onclick="run(1,1)">
+      <div class="example-icon">🍜</div>
+      <div class="example-info"><h3>음식물 처리 공정</h3><p>투입 → 파쇄 → 분쇄 → 탈수 → 건조 → 퇴비화</p></div>
+    </div>
+    <div class="example-btn" onclick="run(1,2)">
+      <div class="example-icon">🪨</div>
+      <div class="example-info"><h3>광물 분쇄 공정</h3><p>채광 → 조쇄 → 분쇄 → 미분쇄 → 분급 → 포장</p></div>
+    </div>
+  </div>
+  <div class="result-area" id="res-1"></div>
+</div></div>
+
+<!-- ===== 탭2: 사례 검색 ===== -->
+<div class="panel" id="panel-2"><div class="card">
+  <h2>납품 사례 검색</h2>
+  <p class="desc">산업별 실제 납품 사례를 확인합니다.</p>
+  <div class="example-grid">
+    <div class="example-btn" onclick="run(2,0)">
+      <div class="example-icon">🏭</div>
+      <div class="example-info"><h3>A사 — 폐배터리 재활용 라인</h3><p>2024-06, 대기업, 충남 서산, 월 1,000톤</p></div>
+    </div>
+    <div class="example-btn" onclick="run(2,1)">
+      <div class="example-icon">🏛️</div>
+      <div class="example-info"><h3>B사 — 음식물 파쇄 시설</h3><p>2025-01, 공공기관, 경기 안산, 시간당 3톤</p></div>
+    </div>
+    <div class="example-btn" onclick="run(2,2)">
+      <div class="example-icon">⛏️</div>
+      <div class="example-info"><h3>C사 — 광물 미분쇄 라인</h3><p>2025-03, 중견기업, 강원 영월, 시간당 1톤</p></div>
+    </div>
+  </div>
+  <div class="result-area" id="res-2"></div>
+</div></div>
+
+<!-- ===== 탭3: 제안서 생성 ===== -->
+<div class="panel" id="panel-3"><div class="card">
+  <h2>제안서 초안 생성</h2>
+  <p class="desc">고객 요구사항에 맞는 제안서 초안을 자동 생성합니다.</p>
+  <div class="example-grid">
+    <div class="example-btn" onclick="run(3,0)">
+      <div class="example-icon">📄</div>
+      <div class="example-info"><h3>A기업 — 폐배터리 재활용, 월 1,000톤</h3><p>방폭 설비 필요, EU 배터리법 대응</p></div>
+    </div>
+    <div class="example-btn" onclick="run(3,1)">
+      <div class="example-icon">📄</div>
+      <div class="example-info"><h3>B공공기관 — 음식물 처리, 시간당 5톤</h3><p>야외 설치, 탈취 설비 필요</p></div>
+    </div>
+  </div>
+  <div class="result-area" id="res-3"></div>
+</div></div>
+
+<!-- ===== 탭4: 수준별 설명 ===== -->
+<div class="panel" id="panel-4"><div class="card">
+  <h2>수준별 장비 설명</h2>
+  <p class="desc">같은 장비를 비전문가/엔지니어/경영진 수준으로 설명합니다.</p>
+  <div class="example-grid">
+    <div class="example-btn" onclick="run(4,0)">
+      <div class="example-icon">👨‍👩‍👧</div>
+      <div class="example-info"><h3>터보밀 — 비전문가용 설명</h3><p>쉬운 비유로 원리와 용도 설명</p></div>
+    </div>
+    <div class="example-btn" onclick="run(4,1)">
+      <div class="example-icon">👷</div>
+      <div class="example-info"><h3>슈레더 — 엔지니어용 설명</h3><p>정확한 사양, 데이터 중심 기술 설명</p></div>
+    </div>
+    <div class="example-btn" onclick="run(4,2)">
+      <div class="example-icon">👔</div>
+      <div class="example-info"><h3>핀밀 — 경영진용 설명</h3><p>ROI, 투자 회수, 생산성 중심 설명</p></div>
+    </div>
+  </div>
+  <div class="result-area" id="res-4"></div>
+</div></div>
+
+<!-- ===== 탭5: 조달/제작 공정 ===== -->
+<div class="panel" id="panel-5"><div class="card">
+  <h2>조달/제작 공정</h2>
+  <p class="desc">장비 제작에 필요한 구매품 발주, 외주 가공, 조립 일정을 확인합니다.</p>
+  <div class="example-grid">
+    <div class="example-btn" onclick="run(5,0)">
+      <div class="example-icon">⚙️</div>
+      <div class="example-info"><h3>슈레더 SH-2000 — 조달/제작 공정</h3><p>기어드모터, 커터, 케이싱 등 BOM + 10~12주 일정</p></div>
+    </div>
+    <div class="example-btn" onclick="run(5,1)">
+      <div class="example-icon">🔧</div>
+      <div class="example-info"><h3>터보밀 TOP 500TM — 조달/제작 공정</h3><p>인버터, 로터, 분급휠 등 BOM + 10~12주 일정</p></div>
+    </div>
+    <div class="example-btn" onclick="run(5,2)">
+      <div class="example-icon">🔨</div>
+      <div class="example-info"><h3>해머크러셔 HC-500 — 조달/제작 공정</h3><p>모터, 해머, 스크린 등 BOM + 7~8주 일정</p></div>
+    </div>
+  </div>
+  <div class="result-area" id="res-5"></div>
+</div></div>
+
+</div>
+<div class="footer">(주)한국기계엔지니어링 | www.topcrusher.co.kr | 시뮬레이션 데모</div>
+
+<script>
+function showTab(i){document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',j===i));document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('active',j===i))}
+
+function run(tab,idx){
+  const panel=document.getElementById('panel-'+tab);
+  panel.querySelectorAll('.example-btn').forEach(b=>b.classList.remove('selected'));
+  panel.querySelectorAll('.example-btn')[idx].classList.add('selected');
+  const area=document.getElementById('res-'+tab);
+  area.classList.add('show');
+  area.innerHTML='<div class="result-box">'+DATA[tab][idx]+'</div>';
+}
+
+const DATA={
+// ===== 탭0: 장비 추천 =====
+0:[
+// 폐배터리
+`<h3>추천 결과: 폐배터리 재활용 — 월 2,000톤</h3>
+<table class="r-table">
+  <tr><th>단계</th><th>장비</th><th>모델</th><th>핵심 사양</th><th>선정 이유</th></tr>
+  <tr><td>1차 파쇄</td><td><b>슈레더</b></td><td>SH-2000 × 2대</td><td>2×75kW, 15rpm</td><td>배터리팩 대형물 전단 파쇄, 저속 고토크로 안전</td></tr>
+  <tr><td>2차 분쇄</td><td><b>해머크러셔</b></td><td>HC-500 × 2대</td><td>30~75kW, 1,200rpm</td><td>파편 → 1~10mm, 스크린 교체로 입도 제어</td></tr>
+  <tr><td>3차 박리</td><td><b>핀밀</b></td><td>PM T-18P</td><td>37kW, 5,000rpm</td><td>양극재-집전체 박리, 블랙매스 회수율 극대화</td></tr>
+  <tr><td>분급</td><td><b>트위스트스크린</b></td><td>TS-600 × 2대</td><td>600mm, 3단</td><td>Cu/Al/블랙매스 입도별 정밀 분리</td></tr>
+</table>
+<div class="note danger">⚠️ <b>안전 필수사항:</b> 방전 처리 필수 | 질소 퍼지 (O₂ < 5%) | 온도 모니터링 + 자동 소화 | 방폭 전기설비 | 분진 집진</div>
+<div class="note success">✅ 유사 사례: A사(2024-06) 월 1,200톤 달성, 회수율 95%, 투자 회수 2.5년</div>`,
+
+// 음식물
+`<h3>추천 결과: 음식물 처리 — 시간당 5톤</h3>
+<table class="r-table">
+  <tr><th>단계</th><th>장비</th><th>모델</th><th>핵심 사양</th><th>선정 이유</th></tr>
+  <tr><td>1차 파쇄</td><td><b>슈레더</b></td><td>SH-2000</td><td>2×75kW</td><td>이물질(비닐/뼈/금속) 포함 상태에서 저속 파쇄, 역회전 막힘 방지</td></tr>
+  <tr><td>2차 분쇄</td><td><b>해머크러셔</b></td><td>HC-800</td><td>75~150kW</td><td>5~10mm 균일 입자 → 탈수/건조 효율 향상</td></tr>
+</table>
+<div class="note danger">⚠️ <b>주의:</b> 수분 80%+ → STS316L 부식방지 코팅 | 이물질 사전 선별 필수 | 밀폐형 + 탈취(바이오필터) 병행</div>
+<div class="note success">✅ 유사 사례: B사(2025-01) 시간당 3.5톤 달성, 탈수 효율 15% 향상</div>`,
+
+// 석회석
+`<h3>추천 결과: 석회석 미분쇄 — 시간당 1톤, D50 50μm</h3>
+<table class="r-table">
+  <tr><th>단계</th><th>장비</th><th>모델</th><th>핵심 사양</th><th>선정 이유</th></tr>
+  <tr><td>1차 조쇄</td><td><b>조크러셔</b></td><td>JC-400</td><td>15kW, 투입 400×250mm</td><td>원석 500mm → 20~60mm 압축 파쇄, 대형 투입 가능</td></tr>
+  <tr><td>2차 분쇄</td><td><b>해머크러셔</b></td><td>HC-500</td><td>30~75kW, 1,200rpm</td><td>→ 1~10mm, 범용 충격 분쇄</td></tr>
+  <tr><td>3차 미분쇄</td><td><b>터보밀</b></td><td>TOP 500TM</td><td>30~55kW, 2,000~4,500rpm</td><td>→ 10~100μm, 내장 분급기로 목표 입도 자동 배출</td></tr>
+  <tr><td>분급</td><td><b>트위스트스크린</b></td><td>TS-600</td><td>600mm, 다단</td><td>입도별 제품 분리</td></tr>
+</table>
+<div class="note danger">⚠️ <b>주의:</b> 고경도 광물 → 내마모 라이너(고크롬주철) 적용 | 미세분진 집진 필수</div>
+<div class="note success">✅ 유사 사례: C사(2025-03) 시간당 1.2톤, D50=35μm 달성</div>`
+],
+
+// ===== 탭1: 공정 설계 =====
+1:[
+// 폐배터리
+`<h3>폐배터리 재활용 공정</h3>
+<div class="flow"><span class="hl">[방전/해체]</span>
+    │
+    ▼
+<span class="hl">[1차 파쇄]</span> ─── <span class="sel">슈레더 SH-2000</span> (2×75kW, 10~18rpm)
+    │           배터리 팩 → 20~100mm 파편
+    ▼
+<span class="hl">[2차 분쇄]</span> ─── <span class="sel">해머크러셔 HC-500</span> (30~75kW, 1,200rpm)
+    │           파편 → 1~10mm 입자
+    ▼
+<span class="hl">[3차 박리]</span> ─── <span class="sel">핀밀 PM T-18P</span> (37kW, 4,000~7,000rpm)
+    │           금속박에서 활물질 분리 (5~50μm)
+    ▼
+<span class="hl">[분급]</span> ──────── <span class="sel">트위스트스크린 TS-600</span>
+    │           입도별 분리 (금속/블랙매스)
+    ▼
+<span class="hl">[선별]</span> ──────── 자력선별 + 와전류 + 비중선별
+    │           Cu / Al / 블랙매스 분리
+    ▼
+<span class="hl">[블랙매스 회수]</span>  Li, Co, Ni, Mn 함유 분말</div>
+<div class="note danger">⚠️ 방전 처리 필수 | 질소 퍼지 (O₂<5%) | 온도 모니터링 | 방폭 설계 | 분진 집진</div>`,
+
+// 음식물
+`<h3>음식물 처리 공정</h3>
+<div class="flow"><span class="hl">[투입/선별]</span> ── 이물질(비닐, 뼈, 금속) 제거
+    │
+    ▼
+<span class="hl">[1차 파쇄]</span> ─── <span class="sel">슈레더 SH-1000</span> (2×30kW)
+    │           큰 덩어리 → 20~50mm
+    ▼
+<span class="hl">[2차 분쇄]</span> ─── <span class="sel">해머크러셔 HC-300</span> (15kW)
+    │           → 5~10mm 균일 입자
+    ▼
+<span class="hl">[탈수]</span> ──────── 스크류프레스
+    │           수분 80% → 60%
+    ▼
+<span class="hl">[건조]</span> ──────── 열풍/마이크로파 건조
+    │           수분 60% → 10~15%
+    ▼
+<span class="hl">[퇴비화/사료화]</span></div>
+<div class="note danger">⚠️ 수분 80%+ → STS316L 부식방지 | 이물질 사전 선별 | 밀폐 + 탈취 설비</div>`,
+
+// 광물
+`<h3>광물 분쇄 공정</h3>
+<div class="flow"><span class="hl">[채광/투입]</span> ── 원석 (최대 500mm)
+    │
+    ▼
+<span class="hl">[1차 조쇄]</span> ─── <span class="sel">조크러셔 JC-400</span> (15kW)
+    │           500mm → 20~60mm
+    ▼
+<span class="hl">[2차 분쇄]</span> ─── <span class="sel">해머크러셔 HC-500</span> (30~75kW)
+    │           → 1~10mm
+    ▼
+<span class="hl">[3차 미분쇄]</span> ── <span class="sel">터보밀 TOP 500TM</span> (30~55kW)
+    │           → 10~100μm
+    ▼
+<span class="hl">[분급]</span> ──────── <span class="sel">트위스트스크린 TS-600</span>
+    │           입도별 제품 분리
+    ▼
+<span class="hl">[포장/출하]</span></div>
+<div class="note danger">⚠️ 분진폭발 방지 (석탄/유황) | 내마모 라이너 | 미세분진 집진</div>`
+],
+
+// ===== 탭2: 사례 검색 =====
+2:[
+// A사
+`<h3>A사 — 폐배터리 재활용 라인 구축</h3>
+<table class="r-table">
+  <tr><th>항목</th><th>내용</th></tr>
+  <tr><td>납품일</td><td>2024년 6월</td></tr>
+  <tr><td>고객</td><td>2차전지 재활용 전문기업 (대기업, 충남 서산)</td></tr>
+  <tr><td>요구사항</td><td>월 1,000톤 처리, D90 < 1mm, 회수율 95%+, EU 배터리법 대응</td></tr>
+</table>
+<h4>장비 구성</h4>
+<table class="r-table">
+  <tr><th>단계</th><th>장비</th><th>모델</th><th>수량</th></tr>
+  <tr><td>1차 파쇄</td><td>슈레더</td><td>SH-2000</td><td>2대</td></tr>
+  <tr><td>2차 분쇄</td><td>해머크러셔</td><td>HC-500</td><td>2대</td></tr>
+  <tr><td>3차 박리</td><td>핀밀</td><td>PM T-18P</td><td>1대</td></tr>
+  <tr><td>분급</td><td>트위스트스크린</td><td>TS-600</td><td>2대</td></tr>
+</table>
+<h4>결과</h4>
+<table class="r-table">
+  <tr><td>처리량</td><td>월 1,200톤 달성 (목표 대비 <b>120%</b>)</td></tr>
+  <tr><td>블랙매스 입도</td><td>D90 = 0.8mm (목표 달성)</td></tr>
+  <tr><td>회수율</td><td><b>95%</b> (목표 달성)</td></tr>
+  <tr><td>가동률</td><td>95% (월 25일, 일 10시간)</td></tr>
+  <tr><td>투자 회수</td><td>약 <b>2.5년</b></td></tr>
+</table>
+<div class="note success">💬 고객 피드백: "기존 중국산 장비 대비 고장률이 현저히 낮고, A/S 대응이 빠릅니다. 특히 핀밀의 박리 성능이 우수하여 회수율이 크게 향상되었습니다."</div>`,
+
+// B사
+`<h3>B사 — 음식물 파쇄 시설</h3>
+<table class="r-table">
+  <tr><th>항목</th><th>내용</th></tr>
+  <tr><td>납품일</td><td>2025년 1월</td></tr>
+  <tr><td>고객</td><td>공공기관 (경기 안산)</td></tr>
+  <tr><td>요구사항</td><td>시간당 3톤, 이물질 포함 음식물 처리</td></tr>
+</table>
+<h4>장비 구성</h4>
+<table class="r-table">
+  <tr><th>장비</th><th>모델</th><th>수량</th></tr>
+  <tr><td>슈레더</td><td>SH-1000</td><td>1대</td></tr>
+  <tr><td>해머크러셔</td><td>HC-300</td><td>1대</td></tr>
+</table>
+<h4>결과</h4>
+<table class="r-table">
+  <tr><td>처리량</td><td>시간당 <b>3.5톤</b> 달성</td></tr>
+  <tr><td>탈수 효율</td><td>균일 파쇄로 <b>15% 향상</b></td></tr>
+</table>
+<div class="note success">💬 고객 피드백: "슈레더 역회전 기능으로 막힘 문제 해결. 유지보수 편의성 우수"</div>`,
+
+// C사
+`<h3>C사 — 광물 미분쇄 라인</h3>
+<table class="r-table">
+  <tr><th>항목</th><th>내용</th></tr>
+  <tr><td>납품일</td><td>2025년 3월</td></tr>
+  <tr><td>고객</td><td>중견기업 (강원 영월)</td></tr>
+  <tr><td>요구사항</td><td>석회석 시간당 1톤, D50 < 50μm</td></tr>
+</table>
+<h4>장비 구성</h4>
+<table class="r-table">
+  <tr><th>장비</th><th>모델</th><th>수량</th></tr>
+  <tr><td>조크러셔</td><td>JC-400</td><td>1대</td></tr>
+  <tr><td>해머크러셔</td><td>HC-500</td><td>1대</td></tr>
+  <tr><td>터보밀</td><td>TOP 500TM</td><td>1대</td></tr>
+  <tr><td>트위스트스크린</td><td>TS-600</td><td>1대</td></tr>
+</table>
+<h4>결과</h4>
+<table class="r-table">
+  <tr><td>처리량</td><td>시간당 <b>1.2톤</b> 달성</td></tr>
+  <tr><td>입도</td><td>D50 = <b>35μm</b> (목표 달성)</td></tr>
+</table>
+<div class="note success">💬 고객 피드백: "터보밀 내장 분급기로 별도 분급 공정 불필요, 라인 단순화"</div>`
+],
+
+// ===== 탭3: 제안서 =====
+3:[
+`<h3>제안서 초안: A기업 — 폐배터리 재활용</h3>
+<div style="border:2px solid #2e7d32;border-radius:10px;padding:20px;background:#fff">
+  <h4 style="text-align:center;color:#1b5e20;font-size:18px">폐배터리 재활용 설비 제안서</h4>
+  <p style="text-align:center;color:#888;font-size:13px">(주)한국기계엔지니어링 → A기업</p>
+  <hr style="margin:14px 0;border:none;border-top:1px solid #e0e0e0">
+  <h4>1. 요구사항</h4>
+  <table class="r-table">
+    <tr><td>처리 대상</td><td>폐리튬이온배터리</td></tr>
+    <tr><td>처리 용량</td><td>월 1,000톤 (시간당 약 4톤)</td></tr>
+    <tr><td>목표</td><td>블랙매스 D90 < 1mm, 회수율 95%+</td></tr>
+    <tr><td>특이사항</td><td>방폭 설비 필요, EU 배터리법 대응</td></tr>
+  </table>
+  <h4>2. 추천 장비 구성</h4>
+  <table class="r-table">
+    <tr><th>단계</th><th>장비</th><th>모델</th><th>수량</th><th>선정 이유</th></tr>
+    <tr><td>1차 파쇄</td><td>슈레더</td><td>SH-2000</td><td>2대</td><td>대형 배터리팩 전단 파쇄, 방폭 옵션</td></tr>
+    <tr><td>2차 분쇄</td><td>해머크러셔</td><td>HC-500</td><td>2대</td><td>1~10mm 중간 분쇄, 대용량</td></tr>
+    <tr><td>3차 박리</td><td>핀밀</td><td>PM T-18P</td><td>1대</td><td>양극재 박리, 회수율 결정 요인</td></tr>
+    <tr><td>분급</td><td>트위스트스크린</td><td>TS-600</td><td>2대</td><td>금속/블랙매스 정밀 분리</td></tr>
+  </table>
+  <h4>3. 유사 납품 실적</h4>
+  <table class="r-table">
+    <tr><td>사례</td><td>A사 폐배터리 재활용 라인 (2024-06)</td></tr>
+    <tr><td>결과</td><td>월 1,200톤, 회수율 95%, ROI 2.5년</td></tr>
+  </table>
+  <h4>4. 안전 관리</h4>
+  <div class="note danger">⚠️ 방전 처리 필수 | 질소 퍼지 시스템 | 온도 모니터링 + 자동 소화 | 방폭 전기설비 | 분진 집진</div>
+  <p style="margin-top:14px;font-size:12px;color:#888">※ 본 제안서는 시뮬레이션 초안이며, 실제 가격·납기는 별도 협의가 필요합니다.</p>
+</div>`,
+
+`<h3>제안서 초안: B공공기관 — 음식물 처리</h3>
+<div style="border:2px solid #2e7d32;border-radius:10px;padding:20px;background:#fff">
+  <h4 style="text-align:center;color:#1b5e20;font-size:18px">음식물 처리 설비 제안서</h4>
+  <p style="text-align:center;color:#888;font-size:13px">(주)한국기계엔지니어링 → B공공기관</p>
+  <hr style="margin:14px 0;border:none;border-top:1px solid #e0e0e0">
+  <h4>1. 요구사항</h4>
+  <table class="r-table">
+    <tr><td>처리 대상</td><td>음식물 폐기물 (이물질 포함)</td></tr>
+    <tr><td>처리 용량</td><td>시간당 5톤</td></tr>
+    <tr><td>특이사항</td><td>야외 설치, 탈취 설비 필요</td></tr>
+  </table>
+  <h4>2. 추천 장비 구성</h4>
+  <table class="r-table">
+    <tr><th>단계</th><th>장비</th><th>모델</th><th>선정 이유</th></tr>
+    <tr><td>1차 파쇄</td><td>슈레더</td><td>SH-2000</td><td>5톤/h 대응, 이물질 포함 저속 파쇄</td></tr>
+    <tr><td>2차 분쇄</td><td>해머크러셔</td><td>HC-800</td><td>균일 입자로 탈수 효율 향상</td></tr>
+  </table>
+  <h4>3. 유사 납품 실적</h4>
+  <table class="r-table">
+    <tr><td>사례</td><td>B사 음식물 파쇄시설 (2025-01)</td></tr>
+    <tr><td>결과</td><td>3.5톤/h 달성, 탈수 효율 15% 향상</td></tr>
+  </table>
+  <h4>4. 주의사항</h4>
+  <div class="note danger">⚠️ STS316L 부식방지 | 이물질 선별 | 밀폐형 설비 + 바이오필터 탈취 | 야외 설치 시 방수/방청 처리</div>
+  <p style="margin-top:14px;font-size:12px;color:#888">※ 본 제안서는 시뮬레이션 초안이며, 실제 가격·납기는 별도 협의가 필요합니다.</p>
+</div>`
+],
+
+// ===== 탭4: 수준별 설명 =====
+4:[
+// 터보밀-비전문가
+`<h3>터보밀 — 비전문가용 설명</h3>
+<table class="r-table">
+  <tr><th>분류</th><th>분쇄 방식</th><th>입도 범위</th><th>처리 용량</th></tr>
+  <tr><td>미분쇄기</td><td>고속 충격식</td><td>10~300μm</td><td>20~3,000kg/h</td></tr>
+</table>
+<h4>쉬운 설명</h4>
+<div style="background:#f1f8e9;padding:20px;border-radius:8px;font-size:15px;line-height:2;margin:12px 0">
+  터보밀은 <b>"초고속 믹서기"</b>와 비슷합니다.<br>
+  내부에서 날개가 엄청 빠르게 돌면서 재료를 가루처럼 곱게 만듭니다.<br>
+  <b>밀가루보다 더 고운 분말</b>을 만들 수 있어요.<br><br>
+  가정에서 쓰는 믹서기가 과일을 갈 듯이,<br>
+  터보밀은 돌이나 화학 재료를 아주 고운 가루로 만듭니다.<br>
+  차이는 크기와 힘 — 이 기계는 <b>시간에 3톤</b>까지 처리할 수 있습니다.
+</div>`,
+
+// 슈레더-엔지니어
+`<h3>슈레더 — 엔지니어용 설명</h3>
+<table class="r-table">
+  <tr><th>분류</th><th>분쇄 방식</th><th>파쇄 크기</th><th>처리 용량</th></tr>
+  <tr><td>이축 파쇄기</td><td>저속 전단식</td><td>20~100mm</td><td>200~5,000kg/h</td></tr>
+</table>
+<h4>기술 상세</h4>
+<div style="background:#f1f8e9;padding:20px;border-radius:8px;font-size:14px;line-height:2;margin:12px 0">
+  <b>이축 저속 고토크 전단 파쇄기.</b><br>
+  회전수 15~30rpm, 모터 출력 최대 2×75kW (150kW).<br>
+  SH-2000 기준 커터 폭 2,000mm, 처리량 1,000~5,000kg/h.<br><br>
+  <b>핵심 메커니즘:</b> 두 축의 커터가 맞물려 저속 회전하며 전단력으로 파쇄.<br>
+  <b>과부하 보호:</b> 자동 역회전 기능으로 막힘 해소.<br>
+  <b>소모품:</b> 개별 커터 교체 가능, 마모 시 재연삭 2~3회 후 교체.<br>
+  <b>방폭 옵션:</b> 질소 퍼지 시스템, 온도 센서, 방폭 모터 적용 가능.<br><br>
+  <b>적합 재료:</b> 금속, 배터리, 타이어, 대형 플라스틱 등 연성/강인 재료.<br>
+  고속 충격식(해머크러셔) 대비 열 발생 최소, 폭발 위험 재료에 안전.
+</div>
+<h4>모델별 사양</h4>
+<table class="r-table">
+  <tr><th>모델</th><th>모터</th><th>커터 폭</th><th>처리량</th></tr>
+  <tr><td>SH-600</td><td>2×15kW</td><td>600mm</td><td>200~800kg/h</td></tr>
+  <tr><td>SH-1000</td><td>2×30kW</td><td>1,000mm</td><td>500~2,000kg/h</td></tr>
+  <tr><td>SH-2000</td><td>2×75kW</td><td>2,000mm</td><td>1,000~5,000kg/h</td></tr>
+</table>`,
+
+// 핀밀-경영진
+`<h3>핀밀 — 경영진용 설명</h3>
+<table class="r-table">
+  <tr><th>분류</th><th>입도 범위</th><th>처리 용량</th></tr>
+  <tr><td>극미분쇄기</td><td>5~50μm</td><td>50~500kg/h</td></tr>
+</table>
+<h4>투자 가치</h4>
+<div style="background:#f1f8e9;padding:20px;border-radius:8px;font-size:15px;line-height:2;margin:12px 0">
+  핀밀은 <b>폐배터리 양극재 박리의 핵심 장비</b>입니다.<br><br>
+  <b>🔑 핵심 가치:</b><br>
+  • 블랙매스 <b>회수율 95%</b> 달성의 결정적 요인<br>
+  • 기존 장비 대비 회수율 <b>10~15% 향상</b> → 유가금속 수익 증가<br>
+  • 박리 + 분쇄 복합 기능 → <b>공정 1단계 단축</b><br><br>
+  <b>💰 투자 효과:</b><br>
+  • 월 1,000톤 처리 기준, 회수율 10% 향상 시 <b>연간 수억원 추가 수익</b><br>
+  • 투자 회수 기간: 약 <b>1~1.5년</b> (핀밀 단독)<br>
+  • 가동률 95%+ (고장률 낮음, A/S 신속)<br><br>
+  <b>📊 시장 대응:</b><br>
+  • EU 배터리법 대응 필수 설비<br>
+  • 토너, 의약 등 <b>고부가 미분말 시장</b> 진출 가능<br>
+  • ESG 경영 핵심 지표 달성
+</div>`
+],
+
+// ===== 탭5: 조달/제작 공정 =====
+5:[
+// 슈레더
+`<h3>슈레더 SH-2000 — 조달/제작 공정</h3>
+<h4>전체 일정 (총 10~12주)</h4>
+<div class="flow"><span class="hl">[설계/도면]</span> 2주
+    │
+    ├─ <span class="sel">[구매품 발주]</span> ──────────────── 최대 5주 (병행)
+    │   • 기어드모터 75kW × 2 ─── SEW ─── 5주 <span class="sel">★크리티컬</span>
+    │   • 유압장치 ─────────── 보쉬렉스로스 ── 4주
+    │   • 베어링 Ø120 × 4 ──── SKF ──── 2주
+    │   • 커플링 × 2 ────────── Rexnord ── 2주
+    │   • 전장함 (PLC+HMI) ──── 협력사 ── 4주
+    │
+    ├─ <span class="sel">[외주 가공]</span> ───────────────── 최대 6주 (병행)
+    │   • 케이싱 (SS400 용접) ──── 6주 <span class="sel">★크리티컬</span>
+    │   • 로터축 (SCM440 열처리) ── 5주 ★동밸런싱
+    │   • 커터 40장 (SKD11 HRC60) ── 4주
+    │   • 호퍼 ──────────────── 3주
+    │   • 프레임 (H형강) ─────── 3주
+    │
+    ▼
+<span class="hl">[조립]</span> 3주 ── 구매품 + 외주가공품 + 내부가공품
+    │
+    ▼
+<span class="hl">[시운전/검사]</span> 1주 ── 무부하 → 부하 시험
+    │
+    ▼
+<span class="hl">[출하]</span></div>
+<h4>핵심 구매품</h4>
+<table class="r-table">
+  <tr><th>부품</th><th>수량</th><th>공급처</th><th>리드타임</th><th>비고</th></tr>
+  <tr style="background:#fff8e1"><td>기어드모터 75kW</td><td>2</td><td>SEW</td><td>5주</td><td>크리티컬 패스</td></tr>
+  <tr><td>유압장치</td><td>1세트</td><td>보쉬렉스로스</td><td>4주</td><td>과부하 보호</td></tr>
+  <tr><td>베어링 자동조심 Ø120</td><td>4</td><td>SKF</td><td>2주</td><td></td></tr>
+  <tr><td>전장함 (PLC+HMI)</td><td>1</td><td>협력사</td><td>4주</td><td></td></tr>
+</table>
+<h4>외주 가공품</h4>
+<table class="r-table">
+  <tr><th>가공품</th><th>재질</th><th>가공 방법</th><th>리드타임</th><th>품질 기준</th></tr>
+  <tr style="background:#fff8e1"><td>케이싱 (본체)</td><td>SS400 용접구조물</td><td>절단→용접→가공→도장</td><td>6주</td><td>평면도 0.1mm, 진원도 0.05mm</td></tr>
+  <tr style="background:#fff8e1"><td>로터축</td><td>SCM440 열처리</td><td>단조→황삭→열처리→정삭</td><td>5주</td><td>동밸런싱 G2.5</td></tr>
+  <tr><td>커터 40장</td><td>SKD11 HRC60</td><td>가공→열처리</td><td>4주</td><td>경도 HRC58~62</td></tr>
+  <tr><td>호퍼</td><td>SS400</td><td>판금→벤딩→용접</td><td>3주</td><td>용접 검사</td></tr>
+</table>
+<div class="note info">📌 <b>크리티컬 패스:</b> 외주 케이싱(6주)이 병목. 설계 확정 즉시 가공업체 예약 필요. 구매품은 기어드모터(5주)가 최장.</div>`,
+
+// 터보밀
+`<h3>터보밀 TOP 500TM — 조달/제작 공정</h3>
+<h4>전체 일정 (총 10~12주)</h4>
+<div class="flow"><span class="hl">[설계/도면]</span> 2주
+    │
+    ├─ <span class="sel">[구매품 발주]</span> ──────────────── 최대 4주 (병행)
+    │   • 모터 30~55kW ──────── LS일렉트릭 ── 4주
+    │   • 인버터 55kW ────────── ABB ──── 3주
+    │   • 베어링 앵귤러 × 2 ──── SKF ──── 2주
+    │   • 전장함 (PLC+인버터+HMI) ── 협력사 ── 4주 <span class="sel">★크리티컬</span>
+    │
+    ├─ <span class="sel">[외주 가공]</span> ───────────────── 최대 6주 (병행)
+    │   • 로터/디스크 Ø500 ──────── 6주 <span class="sel">★크리티컬</span>
+    │   • 케이싱 (STS304 정밀가공) ── 5주 ★간극 정밀
+    │   • 블레이드 8개 (SKD11) ──── 3주
+    │   • 분급 휠 (알루미늄 CNC) ── 3주 ★동밸런싱
+    │   • 라이너 (세라믹/고크롬) ── 3주
+    │
+    ▼
+<span class="hl">[조립]</span> 3주 ── 로터-케이싱 간극 정밀 조립
+    │
+    ▼
+<span class="hl">[시운전/검사]</span> 1주 ── 무부하 → 부하, 입도 확인
+    │
+    ▼
+<span class="hl">[출하]</span></div>
+<h4>핵심 구매품</h4>
+<table class="r-table">
+  <tr><th>부품</th><th>수량</th><th>공급처</th><th>리드타임</th><th>비고</th></tr>
+  <tr><td>모터 30~55kW IE3</td><td>1</td><td>LS일렉트릭</td><td>4주</td><td></td></tr>
+  <tr><td>인버터 55kW 벡터제어</td><td>1</td><td>ABB</td><td>3주</td><td>속도 제어 핵심</td></tr>
+  <tr style="background:#fff8e1"><td>전장함 (PLC+인버터+HMI)</td><td>1</td><td>협력사</td><td>4주</td><td>크리티컬</td></tr>
+</table>
+<h4>외주 가공품</h4>
+<table class="r-table">
+  <tr><th>가공품</th><th>재질</th><th>가공 방법</th><th>리드타임</th><th>품질 기준</th></tr>
+  <tr style="background:#fff8e1"><td>로터/디스크 Ø500</td><td>SCM440</td><td>단조→황삭→열처리→정삭</td><td>6주</td><td>동밸런싱 G2.5</td></tr>
+  <tr style="background:#fff8e1"><td>케이싱</td><td>STS304</td><td>용접→정밀가공</td><td>5주</td><td>간극 정밀도 0.05mm</td></tr>
+  <tr><td>분급 휠</td><td>알루미늄 합금</td><td>CNC 5축가공</td><td>3주</td><td>동밸런싱</td></tr>
+</table>
+<div class="note info">📌 <b>크리티컬 패스:</b> 로터/디스크 가공(6주)이 병목. 단조 소재 사전 확보 시 1~2주 단축 가능. 케이싱은 정밀 간극이 핵심 — 숙련 가공업체 필수.</div>`,
+
+// 해머크러셔
+`<h3>해머크러셔 HC-500 — 조달/제작 공정</h3>
+<h4>전체 일정 (총 7~8주)</h4>
+<div class="flow"><span class="hl">[설계/도면]</span> 1주
+    │
+    ├─ <span class="sel">[구매품 발주]</span> ──────────────── 최대 4주 (병행)
+    │   • 모터 30~75kW ──────── 현대일렉트릭 ── 4주 <span class="sel">★크리티컬</span>
+    │   • 베어링 × 2 ──────── NSK ──── 2주
+    │   • V벨트/풀리 ────────── Gates ──── 1주
+    │   • 전장함 ──────────── 내부 ──── 2주
+    │
+    ├─ <span class="sel">[외주 가공]</span> ───────────────── 최대 4주 (병행)
+    │   • 케이싱 (SS400) ──────── 4주 <span class="sel">★크리티컬</span>
+    │   • 로터 Ø500 ────────── 4주 ★동밸런싱
+    │   • 해머 12개 (고망간강) ── 3주
+    │   • 라이너 4개 (고크롬) ── 3주
+    │   • 스크린 2장 (STS304) ── 2주
+    │   • 프레임 ──────────── 2주
+    │
+    ▼
+<span class="hl">[조립]</span> 2주
+    │
+    ▼
+<span class="hl">[시운전/검사]</span> 1주
+    │
+    ▼
+<span class="hl">[출하]</span></div>
+<h4>핵심 구매품</h4>
+<table class="r-table">
+  <tr><th>부품</th><th>수량</th><th>공급처</th><th>리드타임</th></tr>
+  <tr style="background:#fff8e1"><td>모터 30~75kW IE3</td><td>1</td><td>현대일렉트릭</td><td>4주</td></tr>
+  <tr><td>베어링 자동조심 Ø100</td><td>2</td><td>NSK</td><td>2주</td></tr>
+  <tr><td>V벨트/풀리 SPC</td><td>1세트</td><td>Gates</td><td>1주</td></tr>
+</table>
+<h4>외주 가공품 (소모품 포함)</h4>
+<table class="r-table">
+  <tr><th>가공품</th><th>재질</th><th>리드타임</th><th>품질 기준</th><th>비고</th></tr>
+  <tr style="background:#fff8e1"><td>케이싱</td><td>SS400</td><td>4주</td><td>평면도 0.1mm</td><td>크리티컬</td></tr>
+  <tr style="background:#fff8e1"><td>로터 Ø500</td><td>SCM440</td><td>4주</td><td>동밸런싱 G2.5</td><td>크리티컬</td></tr>
+  <tr><td>해머 12개</td><td>고망간강 HRC50</td><td>3주</td><td>경도 HRC45~55</td><td>소모품 (3~6개월)</td></tr>
+  <tr><td>스크린 2장</td><td>STS304</td><td>2주</td><td>개구율/홀 크기</td><td>소모품</td></tr>
+  <tr><td>라이너 4개</td><td>고크롬주철</td><td>3주</td><td>경도 HRC55+</td><td>소모품</td></tr>
+</table>
+<div class="note info">📌 <b>크리티컬 패스:</b> 모터(4주)와 케이싱/로터(4주)가 동시 크리티컬. 해머/스크린/라이너는 소모품으로 예비 재고 확보 권장.</div>
+<div class="note success">✅ 해머크러셔는 구조가 비교적 단순하여 7~8주로 가장 빠른 납기 가능.</div>`
+]
+};
+</script>
+
+</body>
+</html>
