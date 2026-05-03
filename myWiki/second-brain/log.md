@@ -7,6 +7,12 @@ updated: 2026-05-03
 
 # Second Brain 위키 로그
 
+## [2026-05-03] ingest | AI 업무효율화 base tool 교육 가이드 13종 + 통합 HTML 제작
+- 참조: [[aiStudy]], [[claude-code]], [[skill-자동화]], [[tailscale네트워크]]
+- 내용: 초보자 대상 AI 도구 설치/사용 가이드 13종(MD) + 통합 HTML. 5 Track 체계(AI환경/인프라/콘텐츠/개발환경/팀협업). 기존 AI_도구_활용_가이드.md + myWiki 분석하여 누락 도구(Obsidian, Tailscale, VS Code, Slack) 식별 후 추가
+- 산출물: aiStudy/introductionAi/ 01~13 MD + AI_도구_가이드.html + 00_목차.md
+- 특이사항: 도구 간 상호 연결 관계를 아키텍처 맵 + 시나리오 7개로 시각화
+
 ## [2026-05-03] ingest | AI 공장자동화 교육자료 8종 제작 (8일 커리큘럼 + 포트맵 + LoRa + 동영상)
 - 참조: [[aiHardStudy]], [[스마트팩토리]], [[uttec-edu]]
 - 내용: RPi 3B+ + UTTEC Shield 기반 8일(32시간) 교육 커리큘럼, 보드 포트맵(port_map.py), E22-900T30D LoRa 매뉴얼 확보, TX/RX 크로스 연결 분석, 구현가능 기능 10개 카테고리 정리, 동영상 시나리오(5분30초 8씬) + 내레이션 대사 + 슬라이드용 설명자료

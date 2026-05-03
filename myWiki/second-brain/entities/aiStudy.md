@@ -2,7 +2,7 @@
 title: AI 교육 커리큘럼
 type: entity
 created: 2026-04-22
-updated: 2026-04-22
+updated: 2026-05-03
 tags: [교육, AI, 딥러닝, 커리큘럼, Python, Claude]
 links: [skills, experience, projects, goals, ai-education-web, python-vibe, uttec-edu, cuda교육]
 ---
@@ -23,7 +23,7 @@ AI/딥러닝 교육 전체 커리큘럼 및 실습 자료 저장소. 4 Track 14�
 | Track 4 | AI 전문가 | 4주 | 딥러닝 + 번호판 인식 |
 
 ### 레벨별 실습 콘텐츠
-- **introductionAi** — AI 도구 입문 (Claude, 영상, 이미지, PPT, 음악)
+- **introductionAi** — AI 업무효율화 base tool 가이드 13종 + 통합 HTML (2026-05-03 대폭 확장: Claude Code, Skill, MCP, GitHub, AWS, Colab, NotebookLM, Remotion, SSH, Obsidian, Tailscale, VS Code, Slack)
 - **Level 3** — 딥러닝 핵심 (과적합, 역전파, 활성화 함수)
 - **Level 4** — PyTorch 실전 (CNN, MNIST 분류기)
 - **Level 5** — CNN과 전이학습
