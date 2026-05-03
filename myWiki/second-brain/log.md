@@ -2,10 +2,22 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-03
+updated: 2026-05-04
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-04] ingest | LLM Wiki 패턴 학습 + 유투브 자료 카테고리 정리
+- 참조: [[claude-code]], [[skills]], [[ai-landscape]]
+- 내용: Andrej Karpathy의 LLM Wiki 패턴(Raw/Wiki/Schema + Ingest/Query/Lint) 영상 2편 + gist 원본 학습. 유투브 폴더 11개 파일을 4개 카테고리(LLM위키_지식관리/클로드_활용/AI_영상제작/AI_이론)로 분류. /yt-summary skill을 상세본 전용으로 단순화. 5개 영상 상세본 신규 생성 + Karpathy gist 한글 번역
+- 산출물: 유투브/01~04 폴더 구조, 5개 상세본 md, llm-wiki-ko.md, .claude/skills/yt-summary/SKILL.md 단순화
+- 특이사항: LLM Wiki의 "정원사 비유"가 myWiki second-brain의 lint/ingest 사이클과 정확히 일치 — 향후 second-brain에도 동일 패턴 적용 검토
+
+## [2026-05-04] ingest | 팔란티어 파운드리 아키텍처 시리즈 학습 (#0/#1/#2)
+- 참조: [[ai-landscape]], [[스마트팩토리]], [[ai-direction]]
+- 내용: Kelly Ontology Hub 채널 팔란티어 파운드리 시리즈 3편 학습. 5층 아키텍처(Core→Data Connection→Ontology→Analysis→Application), Closed Feedback Loop, Hyperauto(SAP 통합 2개월→8시간), Writeback(양방향), Pipeline Builder(코더+비코더 협업 + AI 통합 + 온톨로지 직접 연결)
+- 산출물: 유투브/04_AI_이론/팔란티어_파운드리_*.md (3편)
+- 특이사항: 스마트팩토리 사업 영역에 직접 연결 — 온톨로지 + 디지털 트윈 + Operational Feedback Loop 개념을 자체 제안서/교육에 활용 가능. 다음 편(#3) Ontology Manager 예정
 
 ## [2026-05-03] ingest | AI 업무효율화 base tool 교육 가이드 13종 + 통합 HTML 제작
 - 참조: [[aiStudy]], [[claude-code]], [[skill-자동화]], [[tailscale네트워크]]
