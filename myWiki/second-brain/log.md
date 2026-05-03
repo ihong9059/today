@@ -7,6 +7,13 @@ updated: 2026-05-04
 
 # Second Brain 위키 로그
 
+## [2026-05-04] thought | 위키 아키텍처 판단 원칙 도출 — 자기 이해형 vs 도메인 룩업형
+- 참조: [[claude-code]], [[skills]], [[projects]], [[스마트팩토리]]
+- 내용: simulation 예제(태명과학/한국기계)가 Karpathy LLM Wiki 패턴을 따르지 않는 이유 분석. 두 위키의 목적·사용자·데이터 성격이 본질적으로 다르며, Karpathy 패턴(Raw/Wiki/Schema + log + thoughts + identity)을 강제 적용하면 죽은 파일·중복 보관·환각 위험 발생.
+- 산출물: 작업보고서/checkFile/simulation_구조차이_이유.md
+- 판단 원칙: **위키 구조는 목적·사용자·데이터 성격의 함수다.** 자기 이해형 위키(개인 second brain) → Karpathy 패턴, 도메인 룩업형 위키(고객사 컨설팅 봇) → 도메인 카테고리 + 호환 매트릭스 + Dataview. simulation의 CLAUDE.md는 "스키마"가 아니라 "AI 페르소나 정의서" 역할.
+- 특이사항: 향후 새 도메인 위키 제작 시 참고 가이드. simulation 제작 경험·인사이트는 second-brain의 thoughts/, projects.md에 ingest 되어야 두 위키가 분리되면서도 연결됨.
+
 ## [2026-05-04] ingest | LLM Wiki 패턴 학습 + 유투브 자료 카테고리 정리
 - 참조: [[claude-code]], [[skills]], [[ai-landscape]]
 - 내용: Andrej Karpathy의 LLM Wiki 패턴(Raw/Wiki/Schema + Ingest/Query/Lint) 영상 2편 + gist 원본 학습. 유투브 폴더 11개 파일을 4개 카테고리(LLM위키_지식관리/클로드_활용/AI_영상제작/AI_이론)로 분류. /yt-summary skill을 상세본 전용으로 단순화. 5개 영상 상세본 신규 생성 + Karpathy gist 한글 번역
