@@ -49,7 +49,22 @@ powershell -Command "Get-ChildItem 'C:\todo\today\.claude\sessions\session_*.md'
 
 **중요: 오늘 작업보고서(YYYY-MM-DD_작업보고서.md)의 "오늘 할일" 섹션에 위 통합 테이블을 Edit 도구로 반영한다.**
 
-### 5. 작업 시작 질문
+### 5. myWiki 세컨드 브레인 상태 확인
+
+`C:\todo\today\myWiki\second-brain\log.md`에서 마지막 로그 날짜를 확인한다.
+
+**확인 항목:**
+1. 마지막 로그 날짜가 어제 이전이면 → "myWiki 로그가 [마지막 날짜] 이후 미반영입니다" 경고 표시
+2. 이전 세션에서 작업한 내용이 위키에 반영되었는지 확인
+3. 미반영 작업이 있으면 할일 테이블에 "myWiki 반영" 항목 추가
+
+**표시 형식:**
+```
+myWiki 상태: 마지막 로그 YYYY-MM-DD (N일 전)
+→ 미반영 작업이 있을 수 있습니다. 작업 중 또는 /work-end 시 반영합니다.
+```
+
+### 6. 작업 시작 질문
 
 사용자에게 질문:
 - "이전 작업을 이어서 진행할까요?"
