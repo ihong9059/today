@@ -32,3 +32,36 @@ image만드는 방법
 이상의 내용에 따라, 가장 효과적인 방법을 구체적으로 설명하는 자료를 md file로 만들어 주세요.
 
 file:///c:/todo/today/aiStudy/introductionAi 에 포함시켜주세요.
+
+
+ai 교육 item
+
+ai를 이용한 업무효율화를 위하여,
+초보자에게 ai교육을 위한 base tool들을 설치하고,
+사용하는 방법을 교육시키고자 합니다.
+아래 항목에 대해서, 설치방법, 사용방법을 상세하게 만들어 주세요.
+이 folder안에 자료를 추가해 주세요.
+
+1. claude code 설치
+2. skill 설치
+    - /work-start
+    - /work-end
+3. mcp 연결
+    - notion & notion calendar
+
+4. github
+5. aws cloud 설치 
+6. colab 
+7. notebookLM for 동영상 and 슬라이드
+8. remotion for 동영상
+9. ssh and 포트포워드 
+
+이 모든 과정의 필요성과 상호 연관 관계를 고려하여,
+반드시 사용해야하는 필요성을 강조하여, 설명서를 html로 만들어 주세요.
+초보자들이 보고, 직관적으로 이해할수 있도록 만들어 주세요.
+
+
+
+
+
+
