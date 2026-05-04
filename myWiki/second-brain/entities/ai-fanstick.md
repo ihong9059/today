@@ -1,9 +1,10 @@
----
+﻿---
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
 updated: 2026-04-19
 tags: [프로젝트, 제품, 특허, 블루오션]
+links: [ai-direction, experience, me, projects, skills, strengths]
 ---
 
 # AI FanStick (응원봉)

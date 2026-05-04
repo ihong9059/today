@@ -1,9 +1,10 @@
----
+﻿---
 title: UTTEC Edu 교육 플랫폼
 type: entity
 created: 2026-04-19
 updated: 2026-04-19
 tags: [프로젝트, 교육, 웹, 플랫폼]
+links: [experience, goals, me, projects, python-vibe, 사전빌드]
 ---
 
 # UTTEC Edu 교육 플랫폼

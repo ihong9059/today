@@ -132,4 +132,4 @@ user_invocable: true
 - Q: Skill을 삭제하려면? → 해당 skills/[skill명] 폴더를 삭제
 
 ## 8. 다음 단계
-- [03_MCP_연결.md](03_MCP_연결.md) - MCP 서버 연결 방법 알아보기
+- [05_MCP_연결.md](05_MCP_연결.md) - MCP 서버 연결 방법 알아보기

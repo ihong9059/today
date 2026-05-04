@@ -1,9 +1,10 @@
----
+﻿---
 title: CUDA / Jetson 교육
 type: entity
 created: 2026-04-19
 updated: 2026-04-19
 tags: [교육, GPU, CUDA, Jetson, AI]
+links: [ai-landscape, skills, uttec-edu, 서버인프라]
 ---
 
 # CUDA / Jetson 교육

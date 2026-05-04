@@ -169,4 +169,4 @@ settings.json에 추가:
 | Web Search | 웹 검색 | @anthropic-ai/mcp-server-brave-search |
 
 ## 7. 다음 단계
-- [04_GitHub_사용법.md](04_GitHub_사용법.md) - GitHub 설치 및 사용법 알아보기
+- [06_GitHub_사용법.md](06_GitHub_사용법.md) - GitHub 설치 및 사용법 알아보기

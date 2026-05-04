@@ -5,7 +5,10 @@
 - **재생시간**: 8:21
 - **업로드일**: 2025-12-12
 - **링크**: https://www.youtube.com/watch?v=lUro4I-pIdw
-- **시리즈**: 팔란티어 파운드리 시리즈 #1 (#0 [5개 레이어 아키텍처](팔란티어_파운드리_5개레이어_아키텍처_상세.md)에 이은 후속편)
+- **시리즈**: 팔란티어 파운드리 시리즈 #1
+  - [#0 5개 레이어 아키텍처](팔란티어_파운드리_5개레이어_아키텍처_상세.md)
+  - [#2 Pipeline Builder - 노코드 ELT](팔란티어_파운드리_2_PipelineBuilder_노코드ELT_상세.md)
+  - [#3 End-to-End Workshop / Action](팔란티어_파운드리_3_OntologyManager_End-to-End_상세.md)
 
 ---
 

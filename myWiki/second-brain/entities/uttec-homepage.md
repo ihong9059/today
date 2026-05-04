@@ -1,9 +1,10 @@
----
+﻿---
 title: UTTEC 홈페이지
 type: entity
 created: 2026-04-19
 updated: 2026-04-19
 tags: [웹, 홈페이지, 회사]
+links: [me, skills, 서버인프라, 영업전략]
 ---
 
 # UTTEC 홈페이지

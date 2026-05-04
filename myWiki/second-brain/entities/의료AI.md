@@ -1,9 +1,10 @@
----
+﻿---
 title: 의료 AI / 영상의학 병원 인수
 type: entity
 created: 2026-04-19
 updated: 2026-04-19
 tags: [프로젝트, 의료, AI, SNOMED, 사업]
+links: [ai-direction, experience, goals, me, skills]
 ---
 
 # 의료 AI / 영상의학 병원 인수

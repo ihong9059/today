@@ -1,9 +1,10 @@
----
+﻿---
 title: Notion 첫 데이터 수집 + 라즈베리 Claude 아이디어
 type: thought
 created: 2026-04-19
 updated: 2026-04-19
 tags: [Notion, 아이디어, 라즈베리파이, Claude]
+links: [2026-04-19_notion-연계, claude-code, me, tailscale네트워크, 사전빌드, 서버인프라]
 ---
 
 # Notion 첫 데이터 수집

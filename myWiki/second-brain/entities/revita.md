@@ -1,9 +1,10 @@
----
+﻿---
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-04-27
+updated: 2026-05-04
 tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, revitaProject]
+links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활��]
 ---
 
 # REVITA
@@ -11,13 +12,17 @@ tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, revitaProjec
 ## 한 줄 정의
 IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**.
 
-## 현재 상태
+## 현재 상태 (2026-05-04 동기화)
 - RAK4630 펌웨어 프로젝트 (Zephyr RTOS)
-- LoRa 프로토콜 v2 (16B 통일)
-- KC RS485 Modbus RTU 인증 프로토콜 설계 완료
-- RS485 사전 검증 시스템 (DUT 시뮬레이터 + Flask 웹)
+- LoRa 프로토콜 v2 (16B 통일) — 양방향 TX/RX, ACK 상태머신 완료
+- KC RS485 Modbus RTU **인증 Testbed 완성** (Modbus 슬레이브 + Flask Web UI 마스터)
 - 회로도/핀매핑 지속 업데이트
-- CC1101 리모콘 데모 완성 (TX/RX 양방향 433MHz 무선 통신)
+- CC1101 리모콘 데모 완성 + **OOK Replay 447.925MHz 성공** (대상 기기 ON/OFF, 10버튼 코드)
+- **Sensor RS485 모듈** 완료 (sensor_rs485.c, sensor_blob NVS 저장)
+- **Valve 모듈** 완료 (3선 H-bridge CW/CCW/STOP, 2시간 하드리밋)
+- **MCP23017 드라이버** 완성 (Tower I/O 확장, shadow 복구, mutex 직렬화)
+- **모듈 파일 분리**: Link 20+ 파일, Tower 8+ 파일 아키텍처
+- **펌웨어 정본 문서 5종** 신규 (DM·Power·Sensor·NVS·모듈공통)
 
 ## 기술 스택
 - RAK4630 (nRF52840 + SX1262 LoRa)
@@ -37,6 +42,8 @@ IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 �
 | 3/24 | RAK4630 핀매핑, 펌웨어 GSD 계획 |
 | 3/30 | KC RS485 프로토콜 설계 + 검증 시스템 |
 | 4/27 | CC1101 리모콘 데모 — pca10056 2대 + CC1101 HW-863 2개, TX/RX 433MHz 무선 통신 완성 |
+| 4/24~26 | Sensor RS485 + Valve 3선 H-bridge 모듈 완료 (집중 개발) |
+| 4/27~5/1 | KC 인증 Testbed + MCP23017 + CC1101 OOK Replay 447MHz 성공 + 펌웨어 정본 문서 5종 |
 
 ## 코드베이스
 

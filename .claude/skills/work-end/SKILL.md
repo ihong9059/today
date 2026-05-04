@@ -117,6 +117,34 @@ powershell -Command "Get-ChildItem 'C:\todo\today\.claude\sessions\session_*.md'
 - 위시캣 지원/수주 결과
 - 교육 현장 경험이나 피드백
 
+#### 5-C. Wiki 정원사 사이클 (Lint) — Karpathy LLM Wiki 패턴
+
+위키 반영 직후 자동으로 wiki-lint를 실행하여 위키 건강 상태를 점검한다.
+
+```bash
+powershell -ExecutionPolicy Bypass -File "C:\todo\today\myWiki\second-brain\.lint-script.ps1"
+```
+
+**점검 결과 처리:**
+- 이슈 0건 → 침묵 (보고 생략)
+- 🔴 High 이슈(NO_FRONTMATTER, MISSING_*) → 사용자에게 즉시 알림 + 수정 권장
+- 🟡 Medium 이슈(STALE, NO_internal_links) → 작업보고서 하단 "위키 점검" 섹션에 요약
+- 🟢 Low 이슈(NO_links_field) → 카운트만 표시 (자동 수정 옵션 제안)
+
+**작업보고서 첨부 형식:**
+```markdown
+## 위키 점검 (자동 lint)
+- 총 N개 파일 스캔, M개 이슈
+- 🔴 High: X건 [파일명 나열]
+- 🟡 Medium: Y건 [요약]
+- 🟢 Low: Z건 (frontmatter links 필드 누락)
+```
+
+**판단 원칙:**
+- 매 work-end마다 자동 실행되므로 결과는 간결하게
+- 이슈가 누적되어도 차단하지 않음 (정원사는 권고, 차단 아님)
+- 단 High 이슈는 다음 세션의 work-start 시 우선 표시
+
 ### 6. Notion "오늘 할 일" 완료 항목 정리
 
 Notion "오늘 할 일" 페이지(ID: `349cb620-8c2b-817d-a7fe-c887ecdee292`)의 완료 섹션에서 **2일 이상 경과한 항목을 자동 삭제**한다.

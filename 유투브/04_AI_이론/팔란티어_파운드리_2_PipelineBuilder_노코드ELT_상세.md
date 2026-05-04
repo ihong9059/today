@@ -8,6 +8,7 @@
 - **시리즈**: 팔란티어 파운드리 시리즈 #2
   - [#0 5개 레이어 아키텍처](팔란티어_파운드리_5개레이어_아키텍처_상세.md)
   - [#1 Data Connection & Core Services](팔란티어_파운드리_1_DataConnection_엔진룸_상세.md)
+  - [#3 End-to-End Workshop / Action](팔란티어_파운드리_3_OntologyManager_End-to-End_상세.md)
 
 ---
 
@@ -390,7 +391,7 @@ Pipeline Builder의 3대 강점: ① 코딩 없이 통합/변환 ② AI로 가�
 ### 시리즈 영상
 - **#0** [팔란티어 파운드리 #0 - 5개 레이어 아키텍처](팔란티어_파운드리_5개레이어_아키텍처_상세.md)
 - **#1** [팔란티어 파운드리 #1 - Data Connection & Core Services](팔란티어_파운드리_1_DataConnection_엔진룸_상세.md)
-- **#3** (예고): **온톨로지 매니저(Ontology Manager)** — 정제된 데이터의 활용 무대
+- **#3** [End-to-End Workshop / Action](팔란티어_파운드리_3_OntologyManager_End-to-End_상세.md) — 4단계 종단 시연 + 액션(동사) 개념
 
 ### 동일 카테고리 (04_AI_이론)
 - [팔란티어 vs 앤트로픽 (심화 버전)](팔란티어_vs_앤트로픽_심화버전_상세.md)

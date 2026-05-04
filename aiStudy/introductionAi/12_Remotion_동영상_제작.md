@@ -201,4 +201,4 @@ Claude Code에서 요청하면 Remotion 코드를 자동 생성:
 - Q: 오디오와 영상 싱크가 안 맞아요 → 오디오 길이에 맞춰 durationInFrames 조정
 
 ## 10. 다음 단계
-- [09_SSH_포트포워딩.md](09_SSH_포트포워딩.md) - SSH와 포트포워딩 알아보기
+- [13_AWS_Cloud_설치.md](13_AWS_Cloud_설치.md) - 24시간 클라우드 서버 만들기

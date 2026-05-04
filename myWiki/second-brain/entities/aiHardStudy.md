@@ -1,9 +1,10 @@
----
+﻿---
 title: aiHardStudy (바이브 코딩 교육 코드베이스)
 type: entity
 created: 2026-04-19
 updated: 2026-04-19
 tags: [프로젝트, 코드, 교육, 임베디드, 핵심]
+links: [claude-code, goals, me, projects, python-vibe, skills, uttec-edu, 사전빌드, 서버인프라]
 ---
 
 # aiHardStudy (바이브 코딩 교육 코드베이스)

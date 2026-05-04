@@ -1,9 +1,10 @@
----
+﻿---
 title: Python Vibe 교육앱
 type: entity
 created: 2026-04-19
 updated: 2026-04-19
 tags: [프로젝트, 교육, AI, 바이브코딩]
+links: [ai-direction, claude-code, goals, me, projects, uttec-edu, 사전빌드]
 ---
 
 # Python Vibe 교육앱

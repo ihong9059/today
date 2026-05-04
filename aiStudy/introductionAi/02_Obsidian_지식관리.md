@@ -171,4 +171,4 @@ git add . && git commit -m "init" && git push -u origin main
 - Q: 데이터 유출 위험은? → 로컬 저장이므로 클라우드 유출 없음
 
 ## 10. 다음 단계
-- [11_Tailscale_VPN.md](11_Tailscale_VPN.md) - Tailscale VPN으로 어디서든 접속하기
+- [03_VS_Code_에디터.md](03_VS_Code_에디터.md) - 표준 코드 에디터 설치하기

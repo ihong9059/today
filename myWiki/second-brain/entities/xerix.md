@@ -1,9 +1,10 @@
----
+﻿---
 title: Xerix MFC Controller
 type: entity
 created: 2026-04-19
 updated: 2026-04-19
 tags: [프로젝트, 산업, EtherCAT, 제안]
+links: [experience, projects, skills, 스마트팩토리, 양산제품, 위시캣활동]
 ---
 
 # Xerix MFC Controller

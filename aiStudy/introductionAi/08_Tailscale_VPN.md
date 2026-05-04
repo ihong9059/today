@@ -166,4 +166,4 @@ sudo systemctl enable tailscaled
 - Q: 회사 네트워크에서 차단되나요? → 대부분 정상 작동 (HTTPS 기반 우회)
 
 ## 10. 다음 단계
-- [12_VS_Code_에디터.md](12_VS_Code_에디터.md) - VS Code 코드 에디터 설치하기
+- [09_Slack_업무협의.md](09_Slack_업무협의.md) - 팀 업무 알림 허브 만들기

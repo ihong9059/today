@@ -379,4 +379,4 @@ npm install -g @anthropic-ai/claude-code
 
 설치가 완료되었다면 다음 가이드로 이동:
 
-- [02_Skill_설치_및_사용.md](02_Skill_설치_및_사용.md) - Skill 설치 방법 알아보기
+- [02_Obsidian_지식관리.md](02_Obsidian_지식관리.md) - 세컨드 브레인 만들기

@@ -1,9 +1,10 @@
----
+﻿---
 title: Claude Code
 type: entity
 created: 2026-04-19
 updated: 2026-04-19
 tags: [도구, AI, 핵심]
+links: [ai-direction, ai-landscape, me, python-vibe, skills, strengths, 사전빌드]
 ---
 
 # Claude Code

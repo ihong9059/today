@@ -144,4 +144,4 @@ print(result[0]['generated_text'])
 - Q: .py 파일을 실행할 수 있나요? → !python 파일명.py 로 실행 가능
 
 ## 10. 다음 단계
-- [07_NotebookLM_동영상_슬라이드.md](07_NotebookLM_동영상_슬라이드.md) - NotebookLM으로 동영상/슬라이드 만들기
+- [11_NotebookLM_동영상_슬라이드.md](11_NotebookLM_동영상_슬라이드.md) - NotebookLM으로 동영상/슬라이드 만들기

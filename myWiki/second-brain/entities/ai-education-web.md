@@ -1,9 +1,10 @@
----
+﻿---
 title: AI Education Web (코드베이스)
 type: entity
 created: 2026-04-19
 updated: 2026-04-19
 tags: [프로젝트, 코드, 교육, 웹]
+links: [cuda교육, projects, skills, uttec-edu, 서버인프라]
 ---
 
 # AI Education Web (코드베이스)

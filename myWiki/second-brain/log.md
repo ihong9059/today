@@ -2,10 +2,45 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-04
+updated: 2026-05-04 (#3 학습 추가)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-04] ingest | AI 교육 패키지 마무리 — 13가이드 옵션 B 재편성 + 동영상 시나리오 + 강사용 마스터 가이드
+- 참조: [[uttec-edu]], [[aiStudy]], [[claude-code]], [[remotion-project]]
+- 내용: aiStudy/introductionAi의 13개 가이드를 학습 곡선 우선(옵션 B) 순서로 재편성. 5 Track 재정의(A: Claude+Obsidian+VSCode 즉시 효용 / B: Skill+MCP / C: GitHub+SSH+Tailscale / D: Slack / E: Colab+NotebookLM+Remotion+AWS). git mv로 12개 파일 rename, 00_목차·HTML Deep Dive 13카드·CTA·Track 섹션·각 가이드 "다음 단계" 링크 모두 일관되게 갱신.
+- 산출물:
+  - 시나리오_AI교육_소개동영상.md — 7분 영상 9씬 시나리오 (Remotion 제작용, TTS·BGM·자막 가이드 포함)
+  - 교육_전체_설명서.md — 강사용 마스터 가이드 (3·5·7일 옵션, 13개 모듈 상세, 검증 체크리스트, 트러블슈팅, FAQ)
+- 핵심 결론: **단일 도구(Obsidian+Claude) 체제를 유지하면서 교육 콘텐츠 일관성 확보**. 본 자료가 보완의견의 "Stage 1 AI 도구 교육"(3-Stage 패키지의 첫 단계)의 실행 자료가 됨. 정부지원 교육·기업 사내 교육·1인 사업자 학습용으로 즉시 활용 가능.
+- 사업 적용: 태명과학·한국기계 등 기존 simulation 4개 wiki에 본 교육 패키지를 결합하면 4,000-5,000만원/건의 통합 패키지 영업 가능
+
+## [2026-05-04] thought | 보완의견 — 교육 사업화 + web 앱 액션 점진추가로 약점이 강점이 됨
+- 참조: [[스마트팩토리]], [[ai-direction]], [[uttec-edu]], [[aiStudy]]
+- 내용: 오전 작성한 도구 적합성 검토(Obsidian+Claude 약점 진단)를 본인이 보완·반박. UTTEC이 이미 보유한 자산(AI_도구_가이드.html 60KB + demo_live.html 4종)을 사업 모델에 통합하면 약점이 강점으로 전환됨. (1) "고객사 인계 부적합" → 교육 사업화로 학습 곡선 자체가 매출이 됨, (2) "액션 불가능" → demo_live.html에 액션 Lv1~4 점진 추가
+- 산출물: smartFactory/업무효율화/참고/Obsidian_Claude_적합성_보완의견.md
+- 핵심 결론: **3-Stage 패키지(교육→위키 공동구축→web앱+액션) = 4,000-5,000만원/건**. 단일 도구 체제 유지 + 다층 가치 추가. 어제 권한 도구 전환(Obsidian→ChatGPT GPT→RAG)은 1인/소규모 또는 대기업에만 적용. 5인+ 중소기업 고객은 본 패키지가 우월.
+- 사업 적용: 태명과학 또는 한국기계 1개사에 시범 견적 제안. AI_도구_가이드.html 3일 커리큘럼화. wiki→web앱 자동 빌드 스크립트 PoC가 핵심 차별점
+
+## [2026-05-04] thought | 도구 적합성 검토 — Obsidian+Claude는 큐레이션 도구이지 배포 도구가 아님
+- 참조: [[스마트팩토리]], [[ai-direction]], [[claude-code]]
+- 내용: 어제 도출한 "위키 구조 = 목적·사용자·데이터의 함수" 원칙의 자연스러운 후속 질문 — 만약 simulation wiki가 myWiki와 본질적으로 다른 구조라면, Obsidian+Claude 조합 자체가 중소기업 업무효율화에 최선인가? 8개 대안 도구(Notion AI, ChatGPT GPT, Claude Projects, Copilot Studio, Dify, RAG 직접구축, Palantir Foundry) 비교 후 4단계 로드맵 제시.
+- 산출물: smartFactory/업무효율화/참고/Obsidian_Claude_적합성_검토.md
+- 핵심 결론: **Obsidian+Claude는 '제작 도구'이지 '배포 도구'가 아님**. 단계별 도구 분업이 정답 — (1)큐레이션 단계: Obsidian (현재 최선) → (2)시연 단계: 동일 → (3)고객 인계 단계: ChatGPT GPT/Notion → (4)운영 앱 단계: RAG/Dify로 진화. 마크다운 자산은 모든 다음 도구의 출발점이 되므로 락인 없음.
+- 사업 적용: Phase 2(3-6개월)에 태명과학 Vault를 ChatGPT GPT로 1차 변환 + 1개 고객사 시범 운영 → Phase 3(6-12개월)에 RAG 운영 앱화 + 유료 구축 사업 (1건당 500-1,500만원)
+
+## [2026-05-04] lint | 첫 정원사 사이클 실행 — Karpathy LLM Wiki 패턴 적용 완료
+- 참조: [[skills]], [[claude-code]]
+- 내용: myWiki second-brain에 Karpathy LLM Wiki "정원사 사이클" 패턴 도입. wiki-lint skill 신규 작성, wiki-query skill 신규 작성, work-end skill에 자동 lint 통합 (5-C 섹션). 첫 lint 실행에서 23건 이슈 발견 → 자동 fix 스크립트로 21개 entities/thoughts 파일에 frontmatter `links:` 필드 자동 추가. lint script에 index/log/dashboard 메타 페이지 예외 처리 추가. 최종 0 이슈 상태 달성.
+- 산출물: .claude/skills/wiki-lint/SKILL.md, .claude/skills/wiki-query/SKILL.md, myWiki/second-brain/.lint-script.ps1, .lint-fix.ps1, work-end SKILL.md 5-C 섹션
+- 특이사항: 정원사 사이클이 매 work-end마다 자동 실행되어 위키 건강 상태가 지속적으로 유지됨. 향후 STALE 임계값(30일) 조정 가능. wiki-query는 Grep 기반이지만 향후 그래프 탐색 강화 여지 있음
+
+## [2026-05-04] ingest | 팔란티어 파운드리 시리즈 #3 학습 — Ontology Manager + Action 개념 + 4단계 End-to-End
+- 참조: [[스마트팩토리]], [[ai-landscape]], [[ai-direction]]
+- 내용: Kelly Ontology Hub 채널 #온톨로지매니저 #End-to-End #workshop 영상 학습 (시리즈 #3 자리). 오피스굿즈+뷰로SAS M&A 시나리오로 파운드리 4단계(수집→통합→온톨로지→운영앱)를 압축 시연. 핵심 통찰: **분석 툴 vs 운영 앱의 결정적 차이는 '액션(동사)' 개념**. 객체(명사)+액션(동사)=클릭 한 번으로 디지털 세상 변경.
+- 산출물: 유투브/04_AI_이론/팔란티어_파운드리_3_OntologyManager_End-to-End_상세.md, #0/#1/#2 파일 시리즈 링크 갱신, 스마트팩토리.md "팔란티어 학습 5가지 적용 인사이트" 섹션 신설
+- 특이사항: 시리즈 #3 명시 영상은 채널 미공개 → 가장 직접적인 후속작(qCn5aCLA9TY) 사용. "진짜_최종_V3 끝" 비유는 온톨로지 가치 마케팅 카피로 즉시 재사용 가능. 우리 디지털 트윈/스마트팩토리 영업 자료에 5가지 개념 직접 활용 가능
 
 ## [2026-05-04] thought | 위키 아키텍처 판단 원칙 도출 — 자기 이해형 vs 도메인 룩업형
 - 참조: [[claude-code]], [[skills]], [[projects]], [[스마트팩토리]]

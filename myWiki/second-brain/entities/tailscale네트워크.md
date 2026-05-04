@@ -1,9 +1,10 @@
----
+﻿---
 title: Tailscale 장비 네트워크
 type: entity
 created: 2026-04-19
 updated: 2026-04-22
 tags: [인프라, 네트워크, VPN, 원격]
+links: [skills, 사전빌드, 서버인프라]
 ---
 
 # Tailscale 장비 네트워크

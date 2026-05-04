@@ -4,20 +4,73 @@
     "type": "split",
     "children": [
       {
-        "id": "4dfa4f2d8484a3bc",
-        "type": "tabs",
+        "id": "0885e9c2a3391387",
+        "type": "split",
         "children": [
           {
-            "id": "2f56e43acdfead9a",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "그래프 뷰"
-            }
+            "id": "4dfa4f2d8484a3bc",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "2f56e43acdfead9a",
+                "type": "leaf",
+                "state": {
+                  "type": "graph",
+                  "state": {},
+                  "icon": "lucide-git-fork",
+                  "title": "그래프 뷰"
+                }
+              }
+            ]
+          },
+          {
+            "id": "3b98857c4cb7cdc6",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "67f9375b011a6e7e",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "terminal:terminal",
+                  "state": {
+                    "terminal:terminal": {
+                      "cwd": "C:\\todo\\today\\smartFactory\\업무효율화\\태명과학",
+                      "focus": false,
+                      "profile": {
+                        "args": [],
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "followTheme": true,
+                        "name": "",
+                        "platforms": {
+                          "win32": true
+                        },
+                        "pythonExecutable": "python3",
+                        "restoreHistory": false,
+                        "rightClickAction": "copyPaste",
+                        "successExitCodes": [
+                          "0",
+                          "SIGINT",
+                          "SIGTERM"
+                        ],
+                        "terminalOptions": {
+                          "documentOverride": null
+                        },
+                        "type": "integrated",
+                        "useWin32Conhost": true
+                      },
+                      "serial": null
+                    }
+                  },
+                  "pinned": true,
+                  "icon": "terminal",
+                  "title": "터미널: C:\\Windows\\System32\\conhost.exe"
+                }
+              }
+            ]
           }
-        ]
+        ],
+        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
@@ -189,7 +242,7 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "2f56e43acdfead9a",
+  "active": "67f9375b011a6e7e",
   "lastOpenFiles": [
     "LFP_추천_플로우차트.html"
   ]

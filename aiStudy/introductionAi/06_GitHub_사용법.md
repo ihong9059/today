@@ -116,4 +116,4 @@ node_modules/
 - Q: Private 저장소는 무료인가요? → 네, GitHub 무료 계정도 Private 가능
 
 ## 11. 다음 단계
-- [05_AWS_Cloud_설치.md](05_AWS_Cloud_설치.md) - AWS 클라우드 설치 알아보기
+- [07_SSH_포트포워딩.md](07_SSH_포트포워딩.md) - 원격 서버 접속하기
