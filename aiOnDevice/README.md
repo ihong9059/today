@@ -2,7 +2,7 @@
 title: AI On-Device 검토 — 현재 흐름과 향후 전망
 type: analysis
 created: 2026-05-05
-updated: 2026-05-05
+updated: 2026-05-05 (후속 분석 3종 추가: humanoid / sdv / federated-learning)
 tags: [on-device, edge-ai, slm, npu, tinyml, 2026, 산업동향]
 links: [영업전략, ai-direction, 스마트팩토리, uttec-edu, 양산제품]
 source: WebSearch + Anthropic Claude 분석
@@ -272,15 +272,24 @@ source: WebSearch + Anthropic Claude 분석
 
 ---
 
-## 10. 부록 — 향후 추가 조사 권장 영역
+## 10. 부록 — 후속 분석 (2026-05-05 작성 완료) + 추가 조사 영역
+
+### 10-1. 후속 분석 3종 (별도 문서)
+
+| 주제 | 문서 | 핵심 결론 |
+|------|------|---------|
+| **휴머노이드 로봇** | [humanoid.md](humanoid.md) | 2026 양산 원년 — Tesla Optimus(연 100만 목표), Hyundai-BD Atlas(연 3만), 1X NEO(첫 소비자). **BOM 90%가 임베디드** → UTTEC 양산 38년이 모터 컨트롤러·BMS·안전회로 8/9 영역에 즉시 매칭. **2026 하반기가 1차 공급망 진입 골든 윈도우.** |
+| **차량 SDV** | [sdv.md](sdv.md) | NVIDIA Drive Thor(2070 TFLOPS) + Qualcomm Snapdragon Ride Flex 양산 → 100개 ECU가 5개 컴퓨트로 통합. 단, **그 사이를 잇는 zonal IO 보드는 차량당 수십 개로 분산** → 새 시장. UTTEC + STM32 + 외벽청소로봇 SIL2 경험이 ASIL-B 보드(조명·HMI·도어)에 매칭. **2026~2027이 ASIL-B 인증 시작 마지막 골든 윈도우.** |
+| **Federated Learning** | [federated-learning.md](federated-learning.md) | 추론은 이미 디바이스, 학습도 디바이스로 가는 해. Apple Siri/Google Gboard production 검증, NVIDIA FLARE 의료 양산 진입. **한국 제조사 "노하우 외부 유출 공포" + 의료 보수적 데이터 정책에 정확히 매칭**. UTTEC = 디바이스(ESP32-S3, Jetson) + 양산 + 안전회로 + Memory MCP를 모두 보유한 드문 OEM. 영업 차별화 직결. |
+
+### 10-2. 추가 조사 권장 영역 (다음)
 
 | 주제 | 이유 |
 |------|------|
-| 휴머노이드 로봇 (Figure, 1X, Tesla Optimus) | UTTEC 양산 노하우 + 외벽청소로봇 경험 매칭 |
-| Federated Learning | 디바이스에서 학습 + 프라이버시 보장 |
-| 차량 SDV (Software-Defined Vehicle) | NVIDIA Drive Thor + 임베디드 통합 |
 | Edge AI 보안 (모델 보호, 펌웨어 암호화) | KC/CE 인증 + 암호화 경험 매칭 |
 | 한국 K-문샷 AI Co-Scientist 6대 분야 | uttec-edu + 컨설팅 진입 경로 |
+| Apple MLX 양산 활용 사례 | Mac 기반 SLM 개발자 도구 시장 |
+| TinyML federated 산업 양산 케이스 | UTTEC ESP32-S3 + Jetson 통합 차별화 |
 
 ---
 

@@ -58,7 +58,8 @@ https://www.wishket.com/project/ 에서 신규 프로젝트를 확인합니다.
 
 ## 4. 매칭 분석 기준
 
-참가 가능 프로젝트 선별 기준:
+참가 가능 프로젝트 선별 기준 — **2026-04-22 사업 전환 + 2026-05-05 On-Device AI 분석 반영**.
+n8n 자동검색(`~/n8n/wishket-prompt.txt`)과 동일한 신호 체계를 사용하되, 본 skill은 임호균(38년) + 홍광선(40년) 협력자 이력서까지 함께 평가.
 
 ### 근무 형태 필터 (최우선 적용)
 - ✅ **원격 + 프로젝트 단위** (결과물 납품) — 선호
@@ -67,24 +68,46 @@ https://www.wishket.com/project/ 에서 신규 프로젝트를 확인합니다.
 - ❌ **월 단가 + 상주** — 불가
 
 ### ✅ 적합 분야 (지원 추천)
-- 임베디드/펌웨어 개발 (STM32, ARM, MCU)
+
+**A. 전통 임베디드 (기존 강점, 유지)**
+- 임베디드/펌웨어 개발 (STM32, ESP32-S3, ARM Cortex, nRF52, MCU)
 - PCB/회로 설계
-- EtherCAT, CAN, RS485 산업용 통신
+- EtherCAT, CAN-FD, RS485 산업용 통신
 - IoT 센서/모니터링 시스템
 - FreeRTOS, RTOS 기반 시스템
-- Python + Raspberry Pi 조합
+- Python + Raspberry Pi 조합 (RPi CM4 양산)
 - 모터 제어, 공장자동화
+
+**B. AI 3대 사업 영역 (2026-04-22 사업 전환 이후 신규 추가)**
+- **AI 프로그래밍 교육**: 13가이드 + 6 Track(A~F) + Claude Code/MCP/Skill 활용 교육
+- **AI 스마트팩토리**: 데모 25개 / 한국기계 협력 + 정부지원 50% 매칭 (1~5억 규모)
+- **AI 소형 제품**: AI FanStick(특허), 응원봉, 임베디드 + AI 통합 양산
+
+**C. On-Device / Edge AI (강한 적합 신호 — 가산점 영역)**
+- **SLM 노트북 추론**: Ollama, Llama 3.2 1B/3B, Phi-4 mini, llama.cpp
+- **TinyML 임베디드**: TFLite Micro on ESP32-S3 / STM32H7, wake word, 이상 감지
+- **NPU/AI 가속기**: Jetson Orin Nano, Hailo-8/15, Snapdragon NPU, Apple MLX
+- **Federated Learning**: Flower / NVIDIA FLARE, 데이터 외부 유출 금지 요구사항
+- **임베디드 + AI 동시 언급 프로젝트**: ESP32-S3+ML, STM32+추론 등
+
+**D. AI 영역 추가 매칭**
+- n8n 워크플로우 자동화, MCP 서버 구축, Vibe coding 컨설팅
+- Claude API/OpenAI API 통합 솔루션
+- AI 전환 컨설팅 (Foundry 5층 → 무료 도구 매핑 = 3.5-Stage 패키지)
 
 ### ⚠️ 검토 필요 (부분 매칭)
 - PC 어플리케이션 + 임베디드 연동 (C#/C++ 혼합)
 - 웹 백엔드 + IoT 연동
+- **AI/ML 모델 신규 학습** (클라우드 GPU 단독, 임베디드 미관여) — 임호균/홍광선 강점 영역 아님
+- LLM 파인튜닝 단독 (HuggingFace 트레이너 운용 등)
 
 ### ❌ 불가 분야 (제외)
-- 순수 웹/앱 프론트엔드 개발
+- 순수 웹/앱 프론트엔드 개발 (디자인 중심)
 - ERP, SAP, 회계 시스템
 - 보안관제, EDR, SIEM
-- AI/ML 모델 개발 (단순 연동 제외)
 - 디자인, 기획 중심
+- 게임 개발 (Unity/Unreal 메인)
+- 마케팅/광고 시스템
 
 ## 5. 가능프로젝트.md 파일 생성
 
@@ -206,3 +229,13 @@ https://www.wishket.com/project/ 에서 신규 프로젝트를 확인합니다.
 - 보유기술: `지원서류/보유기술.pdf`
 - 지원서 가이드: `위시캣/위시캣_지원서_작성_가이드.md`
 - 기존 가능프로젝트: `위시캣/YYYY-MM-DD_가능프로젝트.md`
+- 자매 시스템: `~/n8n/wishket-prompt.txt` (cron 매일 09:00 자동 평가, 동일 신호 체계 유지)
+- 사업 전환 컨텍스트: `myWiki/second-brain/ai-direction.md` (2026-04-22 LED → AI 3대 사업 피벗)
+- On-Device AI 분석: `aiOnDevice/README.md` + `humanoid.md` + `sdv.md` + `federated-learning.md` (2026-05-05 작성)
+
+---
+
+## 변경 이력
+
+- **2026-05-05**: 적합 분야 대폭 확장 — AI 3대 사업 + On-Device AI 영역 추가, "AI/ML 모델 개발 (단순 연동 제외)" ❌ 불가에서 제거하고 ⚠️ 검토 필요로 세분화. n8n 자동검색 prompt(2.5배 확장)와 동일 신호 체계 정렬.
+- **2026-04-22**: 사업 전환 선언 — LED 무선 조명제어 → AI 3대 사업 피벗.

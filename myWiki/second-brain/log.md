@@ -2,10 +2,77 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-05 (Stage 0 견적서 + K-문샷 + Memory MCP)
+updated: 2026-05-05 (AI On-Device 후속 분석 3종: humanoid / sdv / federated-learning)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-06 00:15] plan | 강사 양성 파일럿 6주 시범 계획서 — 옵션 2 표준 5일 코스
+- 참조: [[uttec-edu]], [[영업전략]], [[3.5-Stage 패키지]], [[정부지원 교육사업 채널]], [[Stage 0 견적서]]
+- 내용: 옵션 2 표준 5일 코스(40시간, Day 1~5 Track A→E)의 첫 시범 운영을 6주 후로 가설정. 시나리오 A(무료 + 잠재 고객 모집) 채택 — 한국기계·태명과학 직원 우선 + 위시캣 동료 보완. Track F 통합 결정: 시나리오 C 채택(13가이드 그대로, 14가이드 미포함, 시범 안정 후 2차 차수 통합). 본인 부담 표준 320만 (장소 150만 + Claude Pro 50만 + 식대 50만 + 영상장비 50만 + 자료 20만). Stage 1 (300만) 1건 수주 시 거의 본전. 풀 강의 영상 40h가 영구 영업 자산.
+- 산출물: aiStudy/introductionAi/강사양성_파일럿/0_시범계획서.md (13 섹션) + README.md
+- 핵심 결론: **검증·확장·영업 3차원 동시 확보**. 한국기계·태명과학에 시범 안내가 Stage 0 PDF 회신 시점에 묶이면 영업 + 시범 모집이 한 흐름. 정부지원 매트릭스(#12 톱 3 채널)의 실적 자료로도 직결.
+- 다음 액션: (1) 한국기계·태명과학 시범 안내 메일 작성 (이번 주) (2) 위시캣 동료 1~2명 컨택 (3) 장소 후보 3곳 답사 (4) T-3주(05-26) 수강생 4명 확정 평가
+
+## [2026-05-05 23:50] research | 정부지원 교육사업 매칭 조사 — 9 채널 1차 조사 + 톱 3 진입 전략
+- 참조: [[영업전략]], [[uttec-edu]], [[On-Device AI]], [[K-문샷]], [[3.5-Stage 패키지]], [[n8n]]
+- 내용: WebSearch 11회로 9개 정부 채널 자료 수집 후 종합 매트릭스 작성. 5차원(단가/자격충족/콘텐츠매칭/진입난이도/매출잠재) 25점 만점 평가. 톱 3 도출:
+  - 1순위 서울시 정보통신교육 전문강사 (22/25): 자격 즉시 충족 + 보조강사 모집 활성. 시간당 5~10만 안정 매출.
+  - 2순위 스마트제조혁신 공급기업 등록 (20/25): smart-factory.kr Pool + 통합 역량진단. 도입기업 매칭 시 1~5억/건 + 한국기계 견적 가산점.
+  - 3순위 디지털배움터 + 혁신바우처 병행 (18~19/25): 시간당 5~8만 + 기업당 5,000만 잠재.
+- 산출물: 영업/정부지원_교육사업/0_검토_노트.md (12 섹션) + README.md
+- 핵심 결론: **9 채널 중 즉시 진입 가능 4건 — 이번 주 내 등록 시작 가능**. 6개월 누적 잠재 매출 6,000만~1억. uttec-edu 13가이드 + Track F 콘텐츠가 정부 채널과 매칭되어 영업 안정 채널 확보.
+- 자동화 발견: 정부 공고 일일 모니터링이 위시캣 자동검색 패턴과 동일 구조 → n8n 워크플로우로 즉시 확장 가능 (bizinfo/smart-factory/nipa 크롤링 + 적합도 점수)
+- 다음 액션: (1) 서울시 강사 보조 공고 확인·지원 (2) smart-factory.kr 공급기업 등록 (3) 디지털배움터 지역사업자 1~2곳 컨택 (4) 정부 공고 자동검색 n8n 워크플로우 구축
+
+## [2026-05-05 23:10] update | 스마트팩토리 슈레더 제안서 — Hailo-8 옵션 추가 (옵션 A 노선)
+- 참조: [[스마트팩토리]], [[On-Device AI]], [[영업전략]], [[양산제품]], [[3.5-Stage 패키지]]
+- 내용: smartFactory/shredder/ 일반 템플릿 3건(메인 제안서·통합 제안서·상세 계획서)에 Hailo-8 옵션 B 추가. 한국기계 진행중 견적(15억 규모 3건)은 분리 보존. 옵션 A(Jetson Orin NX 100 TOPS @ 25W, 다목적) vs 옵션 B(Hailo-8 26 TOPS @ 2.5~3W, ★ perf/W 9~10 TOPS/W 세계 1위, 24/7 비전 검사 특화). 100라인 5년 누적 운영비 약 1억 원 절감 비교 표 포함. 영업 카피: "Jetson은 매시간 25W, Hailo-8은 3W — perf/W 세계 1위 5년 1억 절감". 하이브리드(본체 A + 비전 검사 보조 B) 권장 시나리오 명시.
+- 산출물: smartFactory/shredder/Edge_AI_슈레더_제안서.md(11.1 갱신), Edge_AI_SmartFactory_통합제안서.md(10.1 갱신), 슈레더_AI시스템_구축_상세계획서.md(8.1 갱신)
+- 핵심 결론: **본인 Hailo-8 보드 미보유 상태에서도 객관적 사양·운영비 비교 표만으로 영업 자료 차별화 즉시 확보**. 신규 잠재 고객 견적부터 적용. ESP32-S3 보드 입수(#34) 시 Hailo-8 보드도 함께 입수해 데모 제작 가능.
+- 다음 액션: (1) Hailo-8 한국 정식 대리점·납기·단가 확인 (2) 본인 데모 제작 (Hailo-8 보드 + AI FanStick + ESP32-S3 일괄 입수) (3) 시범 고객 발송 시 Hailo-8 옵션 영업 카피 검증
+
+## [2026-05-05 22:55] update | PC `/wishket-check` skill 정책 정비 — n8n과 동일 신호 체계 정렬
+- 참조: [[n8n]], [[ai-direction]], [[영업전략]], [[위시캣활동]], [[On-Device AI]], [[uttec-edu]]
+- 내용: PC `.claude/skills/wishket-check/SKILL.md`의 ❌ 불가 분야에 "AI/ML 모델 개발"이 명시되어 있어 n8n 자동검색 prompt(On-Device AI 가산점)와 **정반대 신호** 발생 — 2026-04-22 사업 전환(LED → AI 3대 사업) 이후 시점이 PC skill에 미반영. 정비:
+  - ✅ 적합 분야를 4 카테고리로 재구성: A) 전통 임베디드(STM32/ESP32-S3/EtherCAT/CAN/RS485) B) AI 3대 사업(교육 + 스마트팩토리 + 소형제품) C) On-Device·Edge AI(Ollama/TinyML/NPU/Federated) D) AI 영역 추가(n8n/MCP/Vibe coding)
+  - ❌ 불가에서 "AI/ML 모델 개발" 제거 → ⚠️ 검토 필요로 세분화 (클라우드 GPU 단독, LLM 파인튜닝 단독은 검토 필요)
+  - 자매 시스템(~/n8n/wishket-prompt.txt) 명시, "동일 신호 체계" 보장 문구 추가
+  - SKILL.md 변경 이력 섹션 신설 (2026-04-22, 2026-05-05)
+- 산출물: .claude/skills/wishket-check/SKILL.md 갱신
+- 핵심 결론: **n8n cron 자동평가와 PC 수동검토가 동일 신호 출력**. 두 시스템이 충돌 시 영업 판단이 흔들리므로 정합성 필수. 사업 전환 + On-Device AI 분석이 양쪽 모두에 반영됨.
+- 다음 액션: (1) 다음 /wishket-check 실행 시 새 카테고리 동작 확인 (2) 1주 후 양쪽 시스템 결과 비교 (3) wishket-apply skill에도 사업 전환 반영 여부 점검
+
+## [2026-05-05 22:35] update | 위시캣 자동검색 키워드 확장 — On-Device AI 가산점 시스템
+- 참조: [[n8n]], [[ai-direction]], [[영업전략]], [[위시캣활동]], [[On-Device AI]]
+- 내용: home-odroidc2:~/n8n/wishket-prompt.txt를 757 → 1873 chars로 확장. UTTEC 적합도 컨텍스트에 On-Device AI/TinyML/NPU/Federated Learning 전문성 추가 + "강한 적합 신호" 섹션 신설(키워드 매칭 시 +1~2점 가산, 상한 10). 매칭 키워드: 온디바이스, Edge AI, TinyML, NPU, Jetson/Hailo/Orin, SLM, Llama 3.2, Ollama, Federated Learning, 임베디드+AI 동시 언급, 휴머노이드, SDV, ASIL+ML 등. cron 매일 09:00 자동 적용. 백업: wishket-prompt.txt.bak.20260505_213241.
+- 산출물: home-odroidc2:~/n8n/wishket-prompt.txt 갱신
+- 핵심 결론: **오늘 작성한 aiOnDevice 후속 분석 3종(humanoid/sdv/federated)이 영업 자동화에 즉시 반영됨**. 분석 → 실행 시간 6시간 사이클. 다음 09:00 cron부터 On-Device AI 영역 위시캣 프로젝트가 자동 우선순위화.
+- 다음 액션: (1) 내일 09:00 cron.log 확인 (2) 1주 후 가산점 효과 측정 (이전 vs 신규 키워드 매칭 비율) (3) 추가 키워드 후보(휴머노이드, SDV) 효과 검증 후 prompt 미세 조정
+
+## [2026-05-05 22:25] automation | Stage 0 견적서 PDF 자동 발송 워크플로우 구축
+- 참조: [[n8n]], [[Stage 0 견적서]], [[영업전략]], [[home-odroidc2]]
+- 내용: Hybrid 아키텍처(PC = Chrome headless PDF + 한글 폰트 / n8n 서버 = SMTP 발송) 구축. PC `영업/quotes-test/generate_and_send.py`(Python 3.14)에서 Stage 0 견적서.md를 읽고 회사별 맞춤 정보(intro 1단락 + 산출물 3건) 치환 → markdown→HTML(CSS 인라인)→Chrome print-to-pdf→SFTP→SSH 트리거. 서버 `~/n8n/send_quote_attachment.py`(Python 3.12 표준 lib)에서 .secrets 로드 후 smtplib SMTP_SSL 465로 첨부 메일 발송. 한국기계(282KB) + 태명과학(283KB) 양쪽 ihong9059@gmail.com 수신 검증 완료. 사용자 Gmail 확인 결과 한글 폰트 정상.
+- 산출물: 영업/quotes-test/generate_and_send.py, n8n/docs/deploy_send_quote_attachment.py, ~/n8n/send_quote_attachment.py, ~/n8n/quotes/(2 PDFs)
+- 핵심 결론: **n8n 서버 ARM64에 sudo·pip·libpango·한글폰트 모두 부재 → 단독 PDF 비실용**. PC가 렌더링·서버가 발송하는 hybrid가 검증된 최적 패턴. 새 회사 추가 시 COMPANIES dict + python generate_and_send.py 회사명 1줄로 발송 가능. 영업 자동화 첫 영구 자산 확보.
+- 다음 액션: (1) 실제 고객 담당자 이메일 확보 시 --to 옵션으로 발송 (2) n8n UI 워크플로우로 시각화 추가 (3) 1주 후 follow-up 메일 자동화 cron
+
+## [2026-05-05 22:30] update | uttec-edu Track F (On-Device AI) 신설 — 14가이드 / 6 Track 확장
+- 참조: [[uttec-edu]], [[On-Device AI]], [[3.5-Stage 패키지]], [[ai-direction]]
+- 내용: aiStudy/introductionAi/14_On-Device_AI.md 신규 작성(10섹션 실습 중심): Ollama 노트북 SLM(Llama 3.2 3B, Continue VS Code 통합) + Apple MLX(Mac M-시리즈) + ESP32-S3 + TFLite Micro(TinyML) + UTTEC 적용 4건(노트북 SLM/Edge AI 스마트팩토리/AI FanStick/영업 카피) + 4주 학습 로드맵. 00_목차.md 갱신: 14번 행 추가, "5 Track → 6 Track", Track F 학습 의도 표, 다이어그램에 Track F 블록 추가. 변경 이력 기록.
+- 산출물: aiStudy/introductionAi/14_On-Device_AI.md, 00_목차.md 갱신
+- 핵심 결론: **3.5-Stage 패키지 Stage 1 교육 콘텐츠와 Stage 4 영업 자료(1,500만)가 직결**. Track F 영업 카피 "외부 LLM 의존 0% — 양산제품·공장·IP 보호용"이 K-문샷 미션 #10 인재양성 정부조달 응모 무기.
+- 다음 액션: (1) 본인 노트북 Ollama 설치 + Llama 3.2 3B 시연(촬영) (2) Track F 영상 제작(5 Track 소개영상 v2 또는 별도) (3) ESP32-S3 보드 1개 입수 + hello_world 검증 → AI FanStick 다음 버전 결정(#34 진행중)
+
+## [2026-05-05 21:50] ingest | AI On-Device 후속 분석 3종 — 휴머노이드 / 차량 SDV / Federated Learning
+- 참조: [[ai-direction]], [[영업전략]], [[양산제품]], [[uttec-edu]], [[스마트팩토리]], [[외벽로봇]], [[ai-fanstick]], [[memory-mcp]]
+- 내용: aiOnDevice/README.md 섹션 10 부록 "추가 조사 권장 영역"의 3개 주제를 별도 분석 문서로 작성. WebSearch 9회로 2026 5월 기준 최신 자료 수집.
+  - **humanoid.md**: Tesla Optimus V3 Q3 2026 양산(연 100만 목표), Hyundai-Boston Dynamics Atlas Product CES 2026 공개(연 3만/2028), Figure 02 BMW Spartanburg PoC 완료, 1X NEO $20K 첫 소비자 출시. NVIDIA Jetson Thor 2070 TFLOPS / 128GB / Isaac GR00T N1.7 VLA 표준화. **휴머노이드 BOM 90%가 임베디드** → UTTEC 양산 38년이 모터 컨트롤러·BMS·IMU·안전회로 8/9 영역 즉시 매칭.
+  - **sdv.md**: NVIDIA Drive Thor(Volvo EX90, Mercedes EQS, Jaguar/Land Rover 2026~) + Qualcomm Snapdragon Ride Flex(VW 2027, 75M+ 차량 누적). 100 ECU → 5 컴퓨트 + 4 zonal로 통합. **단, zonal 사이 IO 보드는 차량당 수십 개로 분산 → 새 Tier-2 시장**. UTTEC + STM32 + 외벽청소로봇 SIL2가 ASIL-B 보드(조명·HMI·도어)에 매칭. 인증 진입 장벽 높지만 수익 안정.
+  - **federated-learning.md**: Apple Siri / Google Gboard production 5년+ 검증, NVIDIA FLARE 의료 양산 진입(2025~2026 의료영상 벤치마크 논문). Flower(학술/PoC) + FLARE(production). **한국 제조사 "노하우 외부 유출 공포" + 의료 보수적 데이터 정책에 정확히 매칭**. Memory MCP(Foundry 3층) + Federated Learning(Foundry 4층) 결합으로 3.5-Stage 패키지 완성도 ↑.
+- 산출물: `aiOnDevice/humanoid.md`, `aiOnDevice/sdv.md`, `aiOnDevice/federated-learning.md` + README.md 섹션 10 갱신
+- 핵심 결론: **3.5-Stage 패키지 → 7-Stage로 확장 가능성 도출**. Stage 4 On-Device(1,500만), Stage 5 휴머노이드 양산 컨설팅(5,000만~1억), Stage 6 SDV 부품 양산 컨설팅(1~3억), Stage 7 의료/금융 Federated 컨설팅(5,000만~1억). 기존 4,300만 → 잠재 1억+ 패키지로 격상 가능.
+- 다음 액션: (1) 현대모비스/보스턴다이내믹스코리아 Atlas 부품 공급망 컨택 (2) 자동차 ASIL-B 인증 3년 로드맵 수립 (3) 스마트팩토리 견적서에 federated 옵션 추가 (4) AI FanStick 다음 버전 federated personalization 검토
 
 ## [2026-05-05 20:30] ingest | AI On-Device 종합 분석 — 현재 흐름 + 향후 전망 + UTTEC 적용 방안
 - 참조: [[ai-direction]], [[영업전략]], [[양산제품]], [[uttec-edu]], [[스마트팩토리]], [[3.5-Stage 패키지]]
