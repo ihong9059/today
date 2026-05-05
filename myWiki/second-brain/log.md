@@ -2,10 +2,33 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-05 (Pipeline Builder 분석 + 소개영상 제작 추가)
+updated: 2026-05-05 (K-문샷 엔티티 신설 + 문샷 폴더 + Memory MCP 첫 활용)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-05] ingest | K-문샷 (한국 정부 거대 R&D) 엔티티 신설 — 영업전략 정부지원 연계 핵심 추가
+- 참조: [[k-문샷]], [[영업전략]], [[uttec-edu]], [[스마트팩토리]], [[ai-direction]]
+- 내용: 2026-03-11 출범한 한국 K-Moonshot R&D 프로그램을 entity로 정리. 거버넌스(MSIT 배경훈 부총리, 161개 기업), 예산(2026 AI 10.1조, +206% YoY, R&D/GDP 5.2% 세계 2위), 12대 국가미션(2035 목표), AI Co-Scientist 6대 분야(2027~31, 4,640억) 종합. UTTEC 직접 응모는 비현실적이지만 간접 진입 경로 5종 도출(하위 발주 / AI Co-Scientist 도입 컨설팅 / 휴머노이드 양산 인프라 / AI 가속기 검증 / 인재양성 정부조달).
+- 산출물:
+  - `myWiki/second-brain/entities/k-문샷.md` (entity 신설)
+  - `문샷/` 폴더 신설 + `UTTEC_액션플랜.md` (간접 진입 5경로 상세 + 즉시 액션 4건)
+- 핵심 결론: **인재양성 미션 #10 (2만 명 AI 전문가)이 uttec-edu 13가이드·5 Track 영상과 직접 매칭**. AI Co-Scientist 출시(2027~) 대비 영업 메시지 사전 준비 — "K-문샷이 만든 AI를 1/100 가격에 도입시켜드립니다"는 3.5-Stage 패키지와 정확히 맞물림.
+- 다음 액션: NTIS 회원가입 + K-문샷 키워드 알림 / 미션 #10 정부조달 응모 가능성 조사 / 휴머노이드 양산 발주처 조사
+
+## [2026-05-05] init | Memory MCP 첫 활용 — 시드 지식 그래프 12 entities + 20 relations 구축
+- 참조: [[Memory MCP]], [[3.5-Stage 패키지]], [[Foundry 5층 아키텍처]], [[claude-code]], [[스마트팩토리]]
+- 내용: 어제(05-05 오후) 설치한 Memory MCP를 실제 사용. 12개 핵심 비즈니스 엔티티를 시드로 생성(UTTEC, 이형근, 3.5-Stage 패키지, 스마트팩토리, uttec-edu, 한국기계, 태명과학, n8n, revita 서버, Memory MCP, Obsidian myWiki, Foundry 5층 아키텍처) + 관계 20건(운영한다/사업라인이다/도구로포함한다/고객후보다/Stage1_2시범견적후보다 등). read_graph·create_entities·create_relations·open_nodes·search_nodes 모두 정상 동작 확인.
+- 주요 발견:
+  1. **search_nodes 패턴**: 단일 키워드는 정상, 다중 단어는 AND 매칭 (모든 단어 포함 필요). 한글 entityType("고객후보")로 검색 시 빈 결과 — 영문 entityType("customer-prospect") 일관 사용 권장 또는 observation 본문에 한글 키워드 포함.
+  2. **영구 저장 이슈 발견·해결**: `.claude.json` MCP env 블록이 `{}`로 비어있어 MEMORY_FILE_PATH가 서버에 전달되지 않음. 데이터가 메모리에만 있고 디스크 미저장 상태였음. 수정 후 `C:\todo\today\myWiki\ontology\memory.json`에 시드 JSONL 12+20행 직접 배치 → 다음 Claude Code 재시작 시 자동 로드됨.
+- 산출물:
+  - `myWiki/ontology/memory.json` (시드 파일, JSONL 형식)
+  - `myWiki/ontology/memory_seed_2026-05-05.jsonl` (백업)
+  - `~/.claude.json` (env 블록 수정: MEMORY_FILE_PATH 추가)
+  - `~/.claude/projects/C--todo-today/memory/reference_memory_mcp.md` (검증 결과 + 검색 노하우 갱신)
+- 핵심 결론: **Memory MCP가 영업 컨텍스트의 "AI용 백본"** 역할 가능성 입증 — Obsidian이 사람용 1차 저장소면, Memory MCP는 AI가 즉시 쿼리 가능한 구조화 그래프. 다음 단계는 **위시캣 신규 검토 결과를 entities로 자동 누적**하는 워크플로우 구축(n8n 첫 워크플로우와 결합 가능).
+- 다음 액션: (1) Claude Code 재시작 후 read_graph로 시드 12 entities 로드 확인 (2) 위시캣 #155041~#155060 검토 시 발주사를 customer-prospect entity로 자동 추가 (3) entities/.md frontmatter `links:` 필드를 Memory MCP relations로 일괄 마이그레이션 검토
 
 ## [2026-05-05] thought | Pipeline Builder 적용 검토 — 직접 구현 ❌, n8n + Obsidian + Claude로 같은 가치 1/100 비용
 - 참조: [[스마트팩토리]], [[ai-direction]], [[영업전략]], [[claude-code]]

@@ -2,7 +2,7 @@
 title: 인덱스
 type: index
 created: 2026-04-19
-updated: 2026-04-22
+updated: 2026-05-05
 ---
 
 # Second Brain 위키 인덱스
@@ -72,6 +72,8 @@ updated: 2026-04-22
 | [[전시회]] | 전시회 참가 — COEX AW/InterBattery, AI 예측 정비 |
 | [[회사소개]] | ㈜유티텍 — 연혁, 인증, 특허, 납품처, 기술 진화 |
 | [[multiCore]] | multiCore Claude 교육 — Odroid C2/AWS EC2 멀티유저 Claude Code 환경 |
+| [[memory-mcp]] | Memory MCP — 지식 그래프 서버, 12 entities/20 relations 시드, Foundry 3층 70% 대체 |
+| [[k-문샷]] | K-문샷 — 한국 정부 거대 R&D, 2026 AI 10.1조, 2035년 12대 국가미션, 인재양성 미션 직접 매칭 |
 
 ## 생각 (Thoughts)
 | 페이지 | 요약 |
