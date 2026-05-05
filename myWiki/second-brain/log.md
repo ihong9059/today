@@ -2,10 +2,29 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-04 (#3 학습 추가)
+updated: 2026-05-05 (Pipeline Builder 분석 + 소개영상 제작 추가)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-05] thought | Pipeline Builder 적용 검토 — 직접 구현 ❌, n8n + Obsidian + Claude로 같은 가치 1/100 비용
+- 참조: [[스마트팩토리]], [[ai-direction]], [[영업전략]], [[claude-code]]
+- 내용: 팔란티어 파운드리 #2 학습의 자연스러운 후속 질문 — Pipeline Builder를 우리가 구현할 수 있나? 3가지 야망 수준에서 평가. (1) 1:1 클론은 수십억 달러·20년·수천 엔지니어 규모로 불가능. (2) Lite 자체구현은 4~8주로 가능하지만 동일 도구 5개+ 무료 존재로 Not Invented Here 함정. (3) 철학을 본인 도구 스택에 적용은 이미 80% 완료 — 빠진 건 시각 UI 한 가지뿐. 시각 UI는 직접 만들지 말고 n8n(오픈소스, 노드 400+, AI 노드 포함, Self-host) 활용 권장.
+- 산출물: smartFactory/업무효율화/참고/Pipeline_Builder_적용_검토.md (8섹션, frontmatter 포함)
+- 핵심 결론: **Pipeline Builder를 만드는 게 아니라, Pipeline Builder가 풀려는 문제(사일로 해체 + 비코더 협업 + AI 통합)를 우리 도구 스택(n8n + Obsidian + Claude)으로 1/100 비용에 해결하는 컨설팅** — 이게 영업 무기.
+- 사업 적용: 3-Stage 패키지에 n8n 시각 워크플로우 구축 추가 → Stage 2 가격 1,500만 → **2,500만** (가치 1.7배). 총 4,300만 → **5,300만**. n8n 추가 가치 = 비코더 인계 후 자립 + 의사결정자에게 시각 설명 + 자체 호스팅으로 대기업 보안 대응. 첫 시범 견적: 태명과학 또는 한국기계에 Stage 1+2 통합 ~2,800만.
+- 다음 액션: n8n 환경 구축(revita 서버) → 태명과학 데이터로 워크플로우 1개 → 5분 데모 영상(Remotion + n8n 캡처) → 견적서 항목 추가
+
+## [2026-05-05] ingest | AI 도구 13종 5 Track 소개 영상 제작 완료 — Remotion + edge-tts 9씬, 5분 53초
+- 참조: [[aiStudy]], [[remotion-project]], [[uttec-edu]], [[claude-code]]
+- 내용: 어제 작성한 시나리오_AI교육_소개동영상.md를 Remotion 코드로 구현. edge-tts(ko-KR-InJoonNeural 남성 차분한 톤)로 9개 씬 내레이션 mp3 생성, 실제 오디오 길이 측정 후 씬 duration 정확히 매핑. 9 Scene 컴포넌트 작성 — Hook(문제 제기) → 5 Track 솔루션 → Track A 즉시 효용 3종 → Track B Claude 확장 → Track C 인프라 → Track D 협업 → Track E 콘텐츠/클라우드 → Before/After 사례 → CTA. 5 Track 컬러 시스템(보라/초록/파랑/분홍/청록), 13 도구 ToolBadge 재사용 컴포넌트, 씬별 데모(터미널·Obsidian Graph·VS Code·MCP 방사형·Tailscale 메시·Slack 알림·Before/After).
+- 산출물:
+  - remotion-project/src/AIToolsIntroVideo.tsx (9 Scene 컴포넌트, 1500+ 줄)
+  - remotion-project/src/Root.tsx (Composition 등록)
+  - remotion-project/scripts/intro-tools-video/ (9 .txt + generate-tts.py + measure-audio.py)
+  - remotion-project/public/audio/intro-tools/ (9 mp3 파일)
+  - remotion-project/out/AIToolsIntro/AI도구_5Track_소개영상.mp4 (63.5 MB, 1920×1080, 30fps)
+- 특이사항: 시나리오 7분(420초) 계획 → 실제 5분 53초(353초)로 자연스러운 페이스. UTTEC-Lab 로고 좌측 상단 항상 표시. 영상 자체에 "이 영상도 Remotion으로 제작" 메타 강조 포함. 3-Stage 패키지 Stage 1 교육 자료의 핵심 무기 확보 — 영업 미팅·정부지원 입찰·온보딩 모두 활용 가능.
 
 ## [2026-05-04] ingest | AI 교육 패키지 마무리 — 13가이드 옵션 B 재편성 + 동영상 시나리오 + 강사용 마스터 가이드
 - 참조: [[uttec-edu]], [[aiStudy]], [[claude-code]], [[remotion-project]]

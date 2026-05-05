@@ -7,6 +7,7 @@ import { EconomyNews } from "./EconomyNews";
 import { DumulmeoriTravel } from "./DumulmeoriTravel";
 import { AIIntroVideo, INTRO_VIDEO_DURATION } from "./AIIntroVideo";
 import { AIIntroThumbnail } from "./AIIntroThumbnail";
+import { AIToolsIntroVideo, TOOLS_INTRO_DURATION } from "./AIToolsIntroVideo";
 import { Lesson0_1Video, LESSON_0_1_DURATION } from "./Lesson0_1Video";
 import { Lesson0_1Thumbnail } from "./Lesson0_1Thumbnail";
 import { Lesson0_2Video, LESSON_0_2_DURATION } from "./Lesson0_2Video";
@@ -1227,6 +1228,15 @@ export const RemotionRoot: React.FC = () => {
       <Still
         id="AIIntro-Thumbnail"
         component={AIIntroThumbnail}
+        width={1920}
+        height={1080}
+      />
+      {/* AI 도구 13종 5 Track 소개 영상 (introductionAi) */}
+      <Composition
+        id="AIToolsIntroVideo"
+        component={AIToolsIntroVideo}
+        durationInFrames={TOOLS_INTRO_DURATION}
+        fps={30}
         width={1920}
         height={1080}
       />

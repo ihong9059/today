@@ -1,0 +1,15 @@
+
+claude.md 내용 분석: 실제 적용하기위해 필요사항 확인
+
+obsidian에서 flow chart를 그리는 방법확인
+
+obsidian에서 git hub연결은 어떻게 되나요? 확인 필요.
+
+obsidian web clipper 확인
+
+ai 이론 영어 유투브 확인
+
+새로운 testWiki만들기.
+
+obsidian에서 캔버스는 무엇인가.
+
