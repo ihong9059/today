@@ -2,10 +2,84 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-05 (K-문샷 엔티티 신설 + 문샷 폴더 + Memory MCP 첫 활용)
+updated: 2026-05-05 (Stage 0 견적서 + K-문샷 + Memory MCP)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-05 20:30] ingest | AI On-Device 종합 분석 — 현재 흐름 + 향후 전망 + UTTEC 적용 방안
+- 참조: [[ai-direction]], [[영업전략]], [[양산제품]], [[uttec-edu]], [[스마트팩토리]], [[3.5-Stage 패키지]]
+- 내용: 2025~2026년이 "클라우드 AI → 온디바이스 AI" 변곡점. SLM(1B~14B) + NPU(40~80 TOPS)가 새로운 표준. WebSearch 7회로 시장 동향(Edge AI $66B/2030, SLM 28.7% CAGR), 모델 계층(SmolLM2 135M ~ Llama 3.x 70B), 하드웨어 계층(MCU TFLite Micro ~ Jetson AGX Orin 275 TOPS), 프레임워크(MLX, llama.cpp, ExecuTorch, TFLite Micro 등 10종), 산업 사례(Humanoid HMND 01 Siemens 공장 / Heidi Remote 의료 STT / Hailo-15 산업 카메라 30fps), 1년·3년·5년 전망 종합. UTTEC의 임베디드 38년 + AI 통합 + 양산 5개 + Edge 인프라가 이 흐름 정중앙에 위치 — 3.5-Stage 패키지에 "Stage 4 On-Device AI 통합 (1,500만)" 신설 권장.
+- 산출물: `aiOnDevice/README.md` (11섹션, 출처 22개 + UTTEC 적용 방안 4건)
+- 핵심 결론: **"클라우드 AI는 매달 비용을 청구한다. UTTEC는 한 번 구축으로 평생 무료다"** — Phi-4 14B 노트북 1대 1만 쿼리/일 = 전기료 30,000원/월 vs GPT-5 API 5,000만원/월 = **1,400배 절감**. 이 카피가 영업 결정타.
+- 다음 액션: (1) uttec-edu Track F 신설 검토 ("On-Device AI") (2) AI FanStick 다음 버전에 Llama 3.2 1B(650MB) 통합 검토 (3) 스마트팩토리 견적서에 Hailo-8 옵션 추가 (4) 위시캣 자동검색 키워드에 "온디바이스/edge/TinyML/NPU/Jetson" 추가
+
+## [2026-05-05 19:05] update | 위시캣 #155004 전자칠판 기술지원 챗봇 앱 지원서 작성 — 자동검색 첫 수확
+- 참조: [[위시캣활동]], [[uttec-edu]], [[experience]], [[양산제품]], [[회사소개]]
+- 내용: 오늘 18:30 n8n 위시캣 자동검색이 첫 실행에서 발견한 #155004(score 8, 1,500만/60일)에 대해 /wishket-apply skill로 지원서 작성. 핵심 통찰은 두 제약("AI 사용 배제" + "기존 서버 활용 필수")을 약점이 아닌 강점으로 전환한 것 — 외부 LLM API 비용 0원 + 데이터 외부 유출 0 + 24/7 자체 호스팅 노하우와 정확히 매칭. 26명 지원 경쟁에서 차별화 핵심: (1) 파나소닉 LCD/I/O Printer Controller 경력으로 전자칠판 도메인 깊이 (2) Linux 서버 5대 + 12+ PM2 + 9개 도메인 24/7 운영 (3) 룰 기반 패턴 매칭 시스템(스마트팩토리 알람·Python Vibe) 다수 운영. 매칭률 8/8 (100%).
+- 산출물: `위시캣/2026-05/155004_전자칠판챗봇/2026-05-05_프로젝트155004_지원내용.txt`
+- 핵심 결론: **n8n 자동검색 → 발견 → AI 평가 → 지원서 작성까지 한 흐름이 6시간 내 완성** (18:30 발견 → 19:05 지원서). 본인 매일 30분 수동 검색이 자동화로 전환되어 시간 회수 + 경쟁 환경에서 즉시 응답 가능. 다음은 Notion DB 추가 + 클라이언트 답변 추적.
+- 다음 액션: (1) Notion 위시캣 추적 DB에 #155004 행 추가 (대기 상태) (2) 위시캣 사이트에서 실제 지원 액션 (3) 클라이언트 답변 시 미팅 일정 협의
+
+## [2026-05-05 18:48] automation | 위시캣 자동화 v2 — Notion + Gmail 통합, 매일 09:00 무인 실행 완성
+- 참조: [[n8n]], [[home-odroidc2]], [[uttec-edu]], [[claude-code]], [[3.5-Stage 패키지]]
+- 내용: v1(JSON 파일 저장)에 Notion + Gmail 통합 추가. 모듈 분리 설계(`notion_add.py` + `email_send.py` 헬퍼 + `wishket-check.sh` 메인 + `.secrets` chmod 600). Notion은 기존 PC notion-sync hook과 동일한 PAGE_ID 사용 → "진행" 섹션 to_do 블록 추가 → 다음 /work-start 시 작업보고서 자동 동기화. Gmail SMTP_SSL + App Password 인증. 검증: 오늘자 JSON 재처리로 Notion 2/2 추가 + Gmail 발송 성공. 내일 09:00부터 사람 개입 0%로 매일 자동 실행.
+- 산출물:
+  - `~/n8n/.secrets` (chmod 600) — NOTION_TOKEN + NOTION_PAGE_ID + GMAIL_USER + GMAIL_APP_PASSWORD + EMAIL_TO
+  - `~/n8n/notion_add.py` (chmod 755) — JSON stdin → Notion 페이지 to_do 블록 PATCH
+  - `~/n8n/email_send.py` (chmod 755) — JSON stdin → Gmail SMTP_SSL 465 발송
+  - `~/n8n/wishket-check.sh` v2 — secrets source + claude + Notion + Email + (옵션) Webhook
+- 보안: .secrets 파일은 ODROID-C2에만 존재(2대 PC 환경 + git 제외 보호), 토큰 파일 로컬 미저장
+- 핵심 결론: **3.5-Stage 패키지 Stage 0 산출물 #4(n8n 자체 호스팅) + Phase 1 본인 자동화 트랙(매일 30분 절약 + 자동 알림 Push) 동시 검증 완료.** 다음 영업 미팅에서 "이 자동화를 귀사에 구축합니다" 살아있는 데모 가능.
+- 다음 액션: (1) 내일 09:00 첫 자동 실행 검증 (2) #155004 즉시 검토 (3) n8n UI 시각화 워크플로우 (영업 데모용) (4) last_id 추적으로 신규만 평가 최적화
+
+## [2026-05-05 18:30] automation | 위시캣 자동 검색 1차 완성 — 첫 실행 즉시 #155004 전자칠판 챗봇 발견(score 8)
+- 참조: [[n8n]], [[home-odroidc2]], [[3.5-Stage 패키지]], [[uttec-edu]], [[claude-code]]
+- 내용: 호스트(odroidc2)의 Claude Code 2.1.112 + 이미 설정된 claudeAiOauth 인증 활용. 인라인 이력서 컨텍스트(임베디드 38년 / AI 통합 / 한일 인증 / 단가 시간 5~10만 / 단기 PoC 선호 / 대규모 SI·상주 비선호)를 프롬프트에 포함하여 매일 09:00 cron으로 위시캣 신규 8건 평가 + JSON 저장. n8n 컨테이너에서 직접 claude를 호출하지 않고 호스트 cron + wrapper 스크립트 + 옵션 N8N_WEBHOOK_URL POST 패턴 채택(컨테이너 내부 claude 의존성 우회 + 모듈성 확보).
+- 산출물: ~/n8n/wishket-prompt.txt + ~/n8n/wishket-check.sh + /etc/cron.d/n8n-wishket + ~/n8n/data/wishket/YYYY-MM-DD.json
+- 첫 실행 결과 (43s, 8 projects, 2 high-fit):
+  - ⭐ **#155004 전자칠판 챗봇 앱** (score 8, 1,500만/60일) — AI+임베디드+교육 3박자 매칭 — 본인 검토 필수
+  - #154717 Python/React 특허 자동화 (score 7) — 한일 특허 도메인 매칭
+  - #155037 상품권 자동 매입 (score 3) — 어제 본인 부적합 판단과 일치 → 평가 신뢰성 입증
+- 핵심 결론: **본인이 매일 30분 수동으로 하던 검색을 43초/0개입 자동화로 전환** + 첫 실행에서 즉시 검토 가치 있는 신규 1건 발견. 이로써 3.5-Stage 패키지 Stage 0 견적서의 산출물 #4(n8n 자체 호스팅) + Phase 1 본인 자동화 트랙(영업 무기 패키징 전제) 동시 검증.
+- 다음 액션: (1) #155004 즉시 검토 → 지원 여부 결정 (2) n8n Webhook 통합 (시각화 + Slack 발송) (3) last_id.txt 상태 추적으로 신규만 평가 최적화 (4) 결과 캡처 → Stage 0 견적서 부록 추가
+
+## [2026-05-05 17:25] init | n8n 설치 완료 — home-odroidc2 (Tailscale 100.89.56.69) Docker 기동 성공
+- 참조: [[n8n]], [[home-odroidc2]], [[3.5-Stage 패키지]], [[Stage 0 견적서]], [[Pipeline_Builder_적용_검토]]
+- 내용: 사전점검(paramiko 자동) → Docker 29.4.2 설치(171s) → n8n 2.18.7 기동 → HTTP 200 검증 4단계 자동화. **설치 대상 변경**: 원래 README는 revita 서버(100.73.114.75)를 가정했으나 사전점검에서 home-odroidc2가 실제 활성 서버로 확인되어 그쪽으로 진행. ARM64/RAM 2GB/디스크 7GB 제약 대응을 위해 NODE_OPTIONS=--max-old-space-size=768 + memory cap 1GiB + DB SQLite 기본 + EXECUTIONS_DATA_PRUNE 7일 설정.
+- 이슈/해결: `sudo cd ~/n8n && docker compose ...` 실패 → `sudo bash -c '...'` + `docker compose -f` 절대경로로 우회.
+- 산출물:
+  - 원격 `~/n8n/` (.env chmod 600 + docker-compose.yml + data/ + backups/)
+  - 로컬 `n8n/credentials/n8n_basic_auth.txt` (gitignored — URL/User/Password)
+  - 로컬 `n8n/docs/installation_log.md` (시간순 4단계 기록)
+  - 로컬 `n8n/docs/precheck.py / install_docker.py / install_n8n.py / start_n8n.py / verify_n8n.py` (재현 가능 자동화 스크립트)
+- 검증: localhost:5678 HTTP 200 + 100.89.56.69:5678 Tailscale 외부 HTTP 200 + Basic Auth 정상 + 메모리 283 MiB/1 GiB (27.7%) + CPU idle 0.22%
+- 핵심 결론: **3.5-Stage 패키지의 Stage 0 산출물 #4(n8n 자체 호스팅) 실 환경 확보**. 이제 Stage 0 견적서를 시범 고객에 발송 시 화면 캡처/실시간 데모 가능. 다음은 Owner 계정 생성 + Hello World + 위시캣 자동 검색 워크플로우.
+- 다음 액션: (1) Chrome으로 http://100.89.56.69:5678 접속 + Owner 계정 생성 (2) Hello World (3) 위시캣 자동 검색 (Schedule + Claude API + Notion + Slack) (4) 백업 cron `~/n8n/backup.sh` + crontab 03:00
+
+## [2026-05-05] ingest | n8n/ 폴더 신설 — Docker 설치 사전 준비 (왜·무엇·어떻게 통합 README)
+- 참조: [[n8n]], [[revita 서버]], [[3.5-Stage 패키지]], [[Stage 0 견적서]], [[Pipeline_Builder_적용_검토]]
+- 내용: revita 서버에 n8n Docker 설치 진행 전 사전 준비. top-level `n8n/` 폴더에 README.md 신설(8섹션 1만+자) + 하위 디렉토리(workflows/docs/customer-demos/credentials) + .gitignore. README는 (1) 왜 지금 설치하는가 4가지(영업 차별화 / Stage 0 견적서 약속 / 본인 자동화 ROI / Foundry 1·2층 자체 구현 증명) (2) n8n 30초 요약 (3) revita 서버 선택 근거 (4) Docker 설치 8단계(사전점검→Docker설치→.env→docker-compose.yml→기동→접속→Hello World→백업 cron) (5) 첫 워크플로우(위시캣 자동검색) (6) 보안·운영 체크리스트 + 트러블슈팅 표 (7) Day 1~Week 3 액션 (8) 핵심 인사이트.
+- 산출물:
+  - `n8n/README.md` (왜 + Docker 설치 가이드)
+  - `n8n/.gitignore` (credentials/.env, data/, backups/ 제외)
+  - `n8n/docs/installation_log.md` (시간순 운영 로그 시작)
+  - `n8n/credentials/README.md` (자격증명 보관 규칙)
+  - `n8n/workflows/`, `n8n/customer-demos/` (빈 폴더, 향후 .json export)
+- 핵심 결론: **기존 `n8n_실행_가이드.md`(영업 전략) + 신설 `n8n/README.md`(설치·운영) 분리 — 각각 다른 목적**. revita 실제 설치는 다음 세션 또는 SSH 접속 가능 시점에 `installation_log.md`에 시간순 기록하며 진행.
+- 다음 액션: (1) revita SSH 접속 + Docker 사전점검 (2) ~/n8n/.env + docker-compose.yml 작성 (3) 기동 + Hello World (4) 위시캣 자동검색 워크플로우
+
+## [2026-05-05] ingest | Stage 0 Core Services Starter Pack 견적서 1페이지 — 영업 무기화 첫 산출물
+- 참조: [[3.5-Stage 패키지]], [[영업전략]], [[Core_Services_무료대체_매핑]], [[스마트팩토리]]
+- 내용: 어제 도출한 Stage 0(500만) 패키지의 영업 즉시 활용 가능한 1페이지 견적서 작성. 핵심 카피 "Foundry 1층을 1주에 500만"을 진입 메시지로, Foundry Core Services 7종(IAM/Storage/Security/Audit/Catalog/API Gateway/Collaboration) → Free Tools 대체 매핑 표를 가격 정당성으로, 산출물 6종(Tailscale 메시 + Git 표준 저장소 + Obsidian Vault + n8n 도커 + Slack 알림 + 운영 매뉴얼/영상 강의)을 가시성으로 구성. 5영업일 일정표 + Stage 1~3 옵션 미포함 명시 + 차별화 메시지("만족 시 단계 확장, 아니면 1주 후 인계") 포함.
+- 산출물: `영업/Stage0_Core_Services_견적서.md` (550만/VAT 포함)
+- 핵심 결론: **3.5-Stage 패키지 첫 영업 자료 완성** — 결재권 1,000만 이하 부장급도 결재 가능한 진입 가격으로 설정. 다음 단계는 태명과학 또는 한국기계에 시범 발송, 또는 신규 위시캣 발주사 매칭 시 즉시 회신 자료로 활용.
+- 다음 액션: (1) Memory MCP에 견적서 entity 추가 (2) Canvas 시각화 시 견적서를 Stage 0 노드로 배치 (3) 시범 고객 1곳 선정 후 PDF 변환 + 발송
+
+## [2026-05-05] verify | Memory MCP 영구 저장 검증 — Claude Code 재시작 후 read_graph 정상 로드
+- 참조: [[Memory MCP]], [[claude-code]]
+- 내용: 어제 영구 저장 이슈 해결(.claude.json env 블록 수정 + memory.json 시드 배치) 후 첫 Claude Code 재시작. `mcp__memory__read_graph` 호출하여 시드 12 entities + 20 relations 모두 자동 로드 확인. UTTEC, 이형근, 3.5-Stage 패키지, 스마트팩토리, uttec-edu, 한국기계, 태명과학, n8n, revita 서버, Memory MCP, Obsidian myWiki, Foundry 5층 아키텍처 — 모두 observation 본문까지 보존됨.
+- 핵심 결론: **MCP 서버 영구 저장 패턴 확립** — `.claude.json` mcpServers.<name>.env 블록에 환경변수 직접 명시 + 데이터 파일을 절대경로로 지정. 향후 다른 MCP(예: Filesystem, Obsidian) 도입 시 동일 패턴 적용.
 
 ## [2026-05-05] ingest | K-문샷 (한국 정부 거대 R&D) 엔티티 신설 — 영업전략 정부지원 연계 핵심 추가
 - 참조: [[k-문샷]], [[영업전략]], [[uttec-edu]], [[스마트팩토리]], [[ai-direction]]

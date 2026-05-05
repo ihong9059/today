@@ -9,10 +9,12 @@ description: 일정 등록. Notion DB 저장 + Google Calendar 브라우저 자�
 
 ## Notion 일정 DB 정보
 
-- **DB 페이지**: `34acb620-8c2b-814f-a466-f24646527957`
-- **Data Source ID**: `24384ac4-e322-41f4-9e38-d6cecc61a98e`
+- **DB ID**: `82339590-e321-46ec-b62f-43746b265ef6` (제목: "📅 일정")
+- **이전 ID** (deprecated, 2026-05-05 갱신): ~~`34acb620-8c2b-814f-a466-f24646527957`~~
 - **스키마**: 일정(TITLE), 날짜(DATE), 장소(TEXT), 카테고리(SELECT), 메모(TEXT)
 - **카테고리 옵션**: 경조사(pink), 업무(blue), 개인(green), 미팅(orange)
+- **접근 방법**: NOTION_TOKEN REST API ("Claude MCP 연동" Integration 공유 필수)
+- **변경 이력**: 2026-05-05 ID 갱신 — DB가 워크스페이스에서 재구성되며 ID 변경됨
 
 ## 실행 절차
 

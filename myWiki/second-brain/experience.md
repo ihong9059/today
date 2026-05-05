@@ -84,6 +84,13 @@ links: [me, skills, projects]
 - /wishket-apply 스킬에 wiki 참고/업데이트 절차 추가
 - 위시캣 #154889 지원 (소각장 멀티모달 화재 탐지 AI SW, 2,000만원) — Jetson+Modbus+AI 비전
 
+### 2026년 5월: 자동화 인프라 + AI 자동 검색 시스템
+- n8n Docker 설치 (home-odroidc2, ARM64) + 7노드 시각화 워크플로우 (REST API 자동 구축)
+- 위시캣 자동 검색 매일 09:00 cron (호스트 wrapper + Claude WebFetch + JSON 파싱)
+- Notion + Gmail 통합 (high-fit ≥7 자동 등록·발송)
+- Stage 0 Core Services Starter Pack 견적서 1페이지 작성 (3.5-Stage 패키지 첫 영업 자료)
+- 위시캣 #155004 지원 (전자칠판 기술지원 챗봇 앱, 1,500만원) — n8n 자동검색 첫 발견(score 8), AI 배제·자체호스팅 제약을 강점화 (룰 기반 챗봇 + 24/7 서버 노하우 + 파나소닉 디스플레이 도메인)
+
 ## 축적된 경험 영역
 
 ### 임베디드 시스템 (38년 경력)

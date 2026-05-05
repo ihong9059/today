@@ -1,0 +1,17 @@
+# credentials 폴더는 README 외 전부 제외 (비밀번호·자격증명 보호)
+credentials/*
+!credentials/README.md
+
+# docs 폴더의 자동화 스크립트 (SSH 비밀번호 하드코딩 — 커밋 금지)
+docs/*.py
+docs/wishket_test_output.txt
+# 단 운영 로그는 보존
+!docs/installation_log.md
+
+# 데이터·백업 (원격에만 보관)
+data/
+backups/
+*.tar.gz
+
+# n8n 로컬 캐시
+.n8n/
