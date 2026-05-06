@@ -2,10 +2,65 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-05 (AI On-Device 후속 분석 3종: humanoid / sdv / federated-learning)
+updated: 2026-05-06 (옵시디언+AI 영상 트리오 분석 + 교육 사이트 매트릭스 + n8n 대안 검토 + microGPT 가이드 + TwinCAT 차단)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-06 17:30] research | 옵시디언 + AI 영상 트리오 분석 — 강사양성 Day 4 콘텐츠 완성 + myWiki 운영 객관 검증
+- 참조: [[uttec-edu]], [[강사양성_파일럿]], [[ai-direction]], [[영업전략]]
+- 내용: 한국 옵시디언 + AI PKM 영상 3편 연속 분석 (총 82분):
+  - **구요한** (커맨드스페이스, 박사·교육공학, 37분): 두 번째 뇌, 사람·미팅·강의 노트, Claude Artifacts 활용
+  - **김문정** (배움의 달인, 교사·플러그인 개발자, 28분): 7시간/일 사용, 자체 플러그인 매일 개발, 보이스 브리핑 + Voice Writing 플러그인 GitHub 공개. **핵심 카피: "AI에게 데이터를 들고 가지 말고, 데이터 레이크로 AI를 불러들여라"**
+  - **생산적생산자** (책 저자 + 8주 코칭, 17분): Claude Code + 옵시디언, /init → CLAUDE.md (시스템 프롬프트), 제텔카스텐+PARA 자동 생성, todos.md 자동 추적
+- 산출물: 유투브/구요한_상세.md / 김문정_상세.md / 생산적생산자_상세.md (각 13~12 섹션)
+- **객관적 발견**: 사용자(이형근)의 myWiki + CLAUDE.md + 자동 메모리 시스템이 **한국 시장에서 책·8주 코칭으로 팔리는 콘텐츠보다 한 단계 위**임 검증됨
+- 핵심 결론: 강사양성 파일럿 Day 4 = 트리오 통합 3시간 워크숍 (오전 기본 → 오후 1부 자동화 → 오후 2부 Claude Code+PKM)
+- 다음 액션: (1) Day 4 워크숍 콘텐츠 정리 (2) 호오컨설팅 강연 후보 "바이브 코딩으로 1인 사업자 두 번째 뇌" (3) 인프런 강의 후보 "스마트팩토리 엔지니어를 위한 Claude Code + 옵시디언 PKM" — 임베디드/제조업 특화 차별화
+
+## [2026-05-06 14:00] research | n8n 대안 비교 검토서 — 12개 도구 5 카테고리 + 하이브리드 모델 결론
+- 참조: [[n8n]], [[ai-direction]], [[영업전략]], [[Pipeline_Builder]]
+- 내용: 사용자가 "n8n은 오래된 시스템"으로 인식 → 객관 검증 후 정정. 12개 도구를 5 카테고리로 비교:
+  - 시각적: n8n / Activepieces / Windmill
+  - IoT: Node-RED / ThingsBoard
+  - 코드: Trigger.dev / Inngest / Temporal
+  - SaaS: Zapier / Make.com / Pipedream
+  - AI 네이티브: Claude Code Routines (2026-04 출시) / Gumloop
+- UTTEC 적합도 매트릭스 25점: n8n(24) > Claude Code Routines(23) = Activepieces(23) > Node-RED(22)
+- **결론**: n8n 유지 (현재) + Claude Code Routines 병행 (이번 달 시범 1건) + (Stage 1 진입 시) Node-RED 추가 = 하이브리드
+- 산출물: n8n/검토_n8n_대안비교.md (9 섹션)
+- 핵심 발견: 2026 자동화 컨센서스는 "n8n vs Claude Code"가 아니라 "n8n + Claude Code" 분업
+- 다음 액션: Claude Code Routines 시범 1건 (위시캣 누적 보고 또는 위키 정원사 lint 자동화)
+
+## [2026-05-06 11:00] research | 교육 사이트 종합 매트릭스 — 민간 채널 15건 4 카테고리
+- 참조: [[영업전략]], [[uttec-edu]], [[강사양성_파일럿]], [[정부지원_교육사업]]
+- 내용: 어제 정부 채널 9건 매트릭스의 자매 문서. 민간 채널 15건을 4 카테고리로 분류:
+  - **A B2B 기업교육 (5건)**: 휴넷, 멀티캠퍼스, KMA, KMAC, KPC
+  - **B 콘텐츠 플랫폼 (5건)**: 인프런, 패스트캠퍼스, 클래스101, 유데미, 코드잇
+  - **C 강사 섭외/매칭 (4건)**: 호오컨설팅, 강사인 등, 탤런트뱅크, 탈잉
+  - **D AI 전문 (2건)**: 한국AI교육진흥원, IAAE
+- UTTEC 적합도 매트릭스 25점: 인프런(23) > 호오컨설팅(22) = 휴넷(22) = 멀티캠퍼스(22) > KMA(21) = 탤런트뱅크(21)
+- 즉시 진입 액션 4건 (이번 주, 4.5시간 소요)
+- 6개월 누적 잠재 매출: 3,000~7,400만 (정부 매트릭스 6,000만~1억과 합산 시 **연 1억~2억 잠재 채널**)
+- 산출물: 영업/교육사이트_매트릭스/0_검토_노트.md (11 섹션) + README.md
+- 다음 액션: 인프런 지식공유자 등록 + 호오컨설팅 강사 풀 + KMA 러닝센터 + 탤런트뱅크 (병행 4건)
+
+## [2026-05-06 09:00] study | microGPT 초보자 가이드 — Karpathy 200줄 GPT 완전 분석
+- 참조: [[ai-direction]], [[ai-landscape]], [[On-Device AI]], [[강사양성_파일럿]], [[AI FanStick]]
+- 내용: Karpathy가 2026-02-12 공개한 microGPT(200줄 순수 Python, 의존성 0, MacBook 1분 학습, 4,192 파라미터). 10년 시리즈 정점: micrograd → makemore → nanoGPT → microGPT. 자매 nanochat(2025-10, 8000줄, $100, 4시간, ChatGPT 클론).
+- 산출물: 작업보고서/temp/microGPT_초보자_가이드.md (11 섹션, 일상 비유 다수)
+- UTTEC 활용 5 시나리오: ① 강사양성 Day 4 워크숍 ② Track F Week 2 실습 ③ AI FanStick ESP32-S3 실제 탑재 (4K 파라미터 = SRAM 520KB에 여유) ④ 호오컨설팅 단발 강연 ⑤ 인프런 강의 콘텐츠
+- 핵심 발견: **microGPT의 4,192 파라미터는 ESP32-S3에 실제 탑재 가능** → AI FanStick "외부 인터넷 0%, 응원봉 자체 GPT" 카피 검증 가능
+- 다음 액션: (1) microGPT 직접 실행 테스트 (2) AI FanStick ESP32-S3 입수 시 포팅 검토
+
+## [2026-05-06 08:00] use | TwinCAT 자동시작 완전 차단 — 레지스트리 Run 키 점검 패턴 학습
+- 참조: [[작업환경]], [[Windows]]
+- 내용: PC 부팅 시 TwinCAT 화면 깜빡 등장 문제. 어제 서비스 6개를 Disabled로 차단했으나 부족. 진단 결과 `HKLM\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Run`에 **TcSysUI** 항목이 살아있어 트레이 UI 자동 시작.
+- 처리: UAC 관리자 권한 → 레지스트리 백업 → TcSysUI 항목 삭제 → TcSysUI(PID 20680)/TcEventLogger 프로세스 종료
+- 검증: TwinCAT 관련 프로세스 0개 확인
+- 백업: `C:\Users\lenovo\TcSysUI_RunKey_backup_20260506_081936.txt`
+- **학습 패턴**: Windows 서비스 차단만으로 부족 — 레지스트리 Run 키 + 시작 프로그램 폴더 + 예약 작업도 별도 점검 필요
+- 다음 액션: 다음 부팅 시 깜빡임 사라짐 검증
 
 ## [2026-05-06 00:15] plan | 강사 양성 파일럿 6주 시범 계획서 — 옵션 2 표준 5일 코스
 - 참조: [[uttec-edu]], [[영업전략]], [[3.5-Stage 패키지]], [[정부지원 교육사업 채널]], [[Stage 0 견적서]]
