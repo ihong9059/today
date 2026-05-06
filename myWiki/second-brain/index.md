@@ -65,7 +65,6 @@ updated: 2026-05-05
 | [[유투브]] | YouTube 콘텐츠 노트 — AI/하드웨어 영상 요약 |
 | [[동영상]] | ESP32 교육 동영상 — 초등 대상 임베디드 교육 |
 | [[ffmpeg]] | FFmpeg + HongLab — 영상 처리 도구 + AI 코스 |
-| [[figma]] | Figma 디자인 도구 — Claude Design으로 보류 판단 |
 | [[gsd]] | GSD 워크플로우 — 프로젝트 관리 학습 + CLI |
 | [[skill-자동화]] | 자동화 목록 — 19+ Skill, Hook, MCP 인벤토리 |
 | [[nlm]] | NotebookLM 슬라이드 — YouTube 자동 수집→PPTX |
@@ -74,6 +73,7 @@ updated: 2026-05-05
 | [[multiCore]] | multiCore Claude 교육 — Odroid C2/AWS EC2 멀티유저 Claude Code 환경 |
 | [[memory-mcp]] | Memory MCP — 지식 그래프 서버, 12 entities/20 relations 시드, Foundry 3층 70% 대체 |
 | [[k-문샷]] | K-문샷 — 한국 정부 거대 R&D, 2026 AI 10.1조, 2035년 12대 국가미션, 인재양성 미션 직접 매칭 |
+| [[obsidian-시리즈-사업화]] | obsidian 6편 시리즈(201KB) + 자영업·중소기업 AI 플랫폼 사업화(가능성 23/25) — 4-Agent 시스템이 곧 핵심 IP |
 
 ## 생각 (Thoughts)
 | 페이지 | 요약 |

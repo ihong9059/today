@@ -66,7 +66,6 @@ second-brain/
     ├── 유투브/         # YouTube 영상 요약/분석 노트 (→ junction, 2026-04-22 추가)
     ├── 동영상/         # ESP32 교육 동영상 자료 (→ junction, 2026-04-22 추가)
     ├── ffmpeg/        # FFmpeg 도구 + HongLab AI 코스 (→ junction, 2026-04-22 추가)
-    ├── figma/         # Figma/Slack 설명서 (→ junction, 2026-04-22 추가)
     ├── gsd/           # GSD 워크플로우 학습 프로젝트 (→ junction, 2026-04-22 추가)
     ├── skill/         # 자동화 목록 문서 (→ junction, 2026-04-22 추가)
     ├── nlm/           # NotebookLM 슬라이드 생성 시스템 (→ junction, 2026-04-22 추가)

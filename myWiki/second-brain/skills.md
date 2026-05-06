@@ -84,7 +84,6 @@ links: [me, projects, ai-direction, strengths, gaps]
 | Claude Code | 핵심 개발 도구 (코딩, 문서, 자동화) | 매일 |
 | Markdown | 문서/보고서/제안서 | 매일 |
 | Playwright | HTML→PDF 변환 | 간헐 |
-| Figma | UI 디자인 | 탐색 중 |
 | NotebookLM | 리서치/학습 | 간헐 |
 
 ## 양산 제품 (5개 운영 중)

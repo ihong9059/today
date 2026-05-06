@@ -2,10 +2,24 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-06 (오후세션: 3Blue1Brown 9편 + 디지털배움터 풀세트 + REVITA LDO + 사용자 이름 정정)
+updated: 2026-05-07 (obsidian 폴더 6편 시리즈 완성 + 자영업 AI 플랫폼 사업 검토)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-07 01:30] ingest | obsidian 폴더 6편 시리즈 완성 — 새 사업 라인 + 강사양성 차별화 콘텐츠
+- 참조: [[Obsidian myWiki]], [[Memory MCP]], [[강사양성_파일럭]], [[3.5-Stage 패키지]], [[uttec-edu]]
+- 내용: `obsidian/` 폴더에 6편 시리즈 작성(201.1 KB, 5,059 lines): (1) Obsidian 상세설명서 (2) 제조업 프로젝트 자료정리 기준 (REVITA 사례) (3) Ontology vs Obsidian 관계 검토보고서 (4) myWiki 작동원리 상세설명서 (4-Agent 시스템) (5) 자영업·중소기업 AI 플랫폼 사업가능성 검토 + 진행계획 (6) 중소기업 AI운영 교육지침서 (학원·자동차 정비소 포함 10개 업종 시뮬레이션 + 강사 대본 + FAQ 30). 시리즈 구조: 이론(1) → 적용(2) → 심화(3) → 메타(4) → 사업화(5) → 실행(6).
+- 핵심 결론: **사용자 myWiki = 4-Agent emergent 시스템 (Substrate + Schema + Agent + Director)** 이며 이것이 곧 **새 사업 라인의 핵심 IP**. 자영업·중소기업 AI 플랫폼 가능성 23/25 — 사용자 사업 후보 1위. Phase 0 비용 거의 0으로 즉시 검증 가능. 강사양성 파일럭(06-15~) Day 4·5 콘텐츠로 통합 시 한국 시장 차별화. Foundry 무료 재현 모델의 자영업 진입 단계(Stage -1)로 3.5-Stage 패키지 funnel 입구 구축 가능.
+
+## [2026-05-06 23:00] cleanup | figma 폴더 삭제 + obsidian 빈 폴더 신설
+- 참조: [[skills]], [[ai-direction]], [[ai-landscape]]
+- 내용: `C:\todo\today\figma\` 폴더 삭제(Figma_설명서.md + Slack_설명서.md 포함). 사유: 2026-04-19에 Claude Design 발견으로 Figma 학습 보류 결정 후 미사용 상태였고, Slack도 협업 도구 참고용으로 보존 가치 낮음. 동시에 `C:\todo\today\obsidian\` 빈 폴더 신설(향후 옵시디언 콰르텟·플러그인·강사양성 Day 4 자료 적재 예정).
+- 위키 정리:
+  - 삭제: `entities/figma.md`
+  - 수정: `CLAUDE.md`(raw 스키마에서 figma 라인 제거), `index.md`(엔티티 테이블 figma 행 제거), `skills.md`(도구 테이블 Figma 행 제거)
+  - 유지(역사적 판단 기록): `ai-direction.md`(2026-04-19 판단 로그), `ai-landscape.md`(Claude Design vs Figma 비교), `gaps.md`(Figma MCP 학습 불필요 결정), `log.md`(2026-04-22·2026-04-19 기존 항목), `entities/유투브.md`(YouTube 영상 제목 참조)
+- 핵심 결론: 미사용 폴더는 즉시 삭제 + 위키 cleanup 동시 진행으로 고아 참조 방지. 보존할 자산(역사적 판단 로그)과 정리할 자산(엔티티·스키마·인벤토리)을 구분하는 패턴 정립.
 
 ## [2026-05-06 22:00] correction | 사용자 이름 오류 일괄 수정 — Memory MCP 시드 오염 추적 발견
 - 참조: [[me]], [[Memory MCP]], 메모리 시스템
