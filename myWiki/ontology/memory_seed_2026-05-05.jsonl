@@ -1,5 +1,5 @@
-{"type":"entity","name":"UTTEC","entityType":"company","observations":["이형근(ihong9059) 1인 사업자가 운영하는 임베디드 + AI 통합 회사","2026-04-22 사업 전환 선언: 기존 LED 무선 조명제어 → AI 3대 사업으로 피벗","신규 3대 사업: AI 프로그래밍 교육(1순위) / AI 스마트팩토리(2순위) / AI 소형 제품(3순위)","보유 인증: 한국 KC, 일본 TELEC, 유럽 CE / 한일 특허 2건","양산 5개 실적, 38년 경력 (이형근 누적)","기존 LED 사업 경쟁력 상실 원인: 중국 저가 공세(BLE Mesh 1/3~1/5 가격) + 국내 조명제어 인프라 시장 소멸"]}
-{"type":"entity","name":"이형근","entityType":"person","observations":["UTTEC 1인 사업자 (이메일 ihong9059@gmail.com, GitHub ihong9059)","임베디드(38년) + AI(2024~) + 영업까지 1인이 모두 처리하는 풀스택 사업자","Karpathy LLM Wiki 패턴 도입(2026-04-19)으로 second-brain 위키 운영","FOMO 회피 원칙 준수: 1주 1개 도구 한계 안에서 도입 결정","2대 PC 동시 사용(today 저장소 git 동기화)"]}
+{"type":"entity","name":"UTTEC","entityType":"company","observations":["홍광선(ihong9059) 1인 사업자가 운영하는 임베디드 + AI 통합 회사","2026-04-22 사업 전환 선언: 기존 LED 무선 조명제어 → AI 3대 사업으로 피벗","신규 3대 사업: AI 프로그래밍 교육(1순위) / AI 스마트팩토리(2순위) / AI 소형 제품(3순위)","보유 인증: 한국 KC, 일본 TELEC, 유럽 CE / 한일 특허 2건","양산 5개 실적, 38년 경력 (홍광선 누적)","기존 LED 사업 경쟁력 상실 원인: 중국 저가 공세(BLE Mesh 1/3~1/5 가격) + 국내 조명제어 인프라 시장 소멸"]}
+{"type":"entity","name":"홍광선","entityType":"person","observations":["UTTEC 1인 사업자 (이메일 ihong9059@gmail.com, GitHub ihong9059)","임베디드(38년) + AI(2024~) + 영업까지 1인이 모두 처리하는 풀스택 사업자","Karpathy LLM Wiki 패턴 도입(2026-04-19)으로 second-brain 위키 운영","FOMO 회피 원칙 준수: 1주 1개 도구 한계 안에서 도입 결정","2대 PC 동시 사용(today 저장소 git 동기화)"]}
 {"type":"entity","name":"3.5-Stage 패키지","entityType":"business-model","observations":["Foundry 5층 아키텍처를 무료/저가 도구로 1/100 가격에 재현하는 영업 모델","Stage 0: UTTEC Core Services Starter Pack — 500만 (Tailscale + Git + Obsidian + n8n + 모니터링)","Stage 1: 교육 — 300만 (13가이드, 옵션 B, 5 Track)","Stage 2: 위키 + n8n 워크플로우 — 2,500만 (n8n 추가로 1,000만 인상)","Stage 3: 운영 앱 — 2,500만 (demo_live.html 진화)","총액: 5,800만 (기존 4,300만에서 1,500만 ↑, 진입성 ↑ + 가치 ↑)","도출일: 2026-05-05 (Foundry Core Services 무료 대체 매핑 분석에서)","영업 핵심 메시지: 'Palantir Foundry 5층 아키텍처를 무료/저가 도구로 완전 재현, 1/100 가격에 동일 비즈니스 가치'"]}
 {"type":"entity","name":"스마트팩토리","entityType":"business-line","observations":["AI 기반 예지정비, 품질검사, 공정 모니터링 솔루션","데모 사이트 25개 (Three.js 3D, uttec-sensor.duckdns.org)","제안서 21개 기업, 한국기계 협력 제안 15억 규모 3건","파쇄기 AI 제안: 14센서·10AI모델, 8,500만, ROI 4.9개월, 회수율 92→98.2%","AI 모델: MobileNetV3 볼트 검사(재현율 100%), EasyOCR 번호판(90%), Prophet/LSTM/TFT/XGBoost/ARIMA","정부지원 50% 활용 가능 (스마트공장 기초 1억, 고도화 5억, AI 트랙 2.5억)","경쟁사 대비 1/10 가격 (Siemens MindSphere, GE Predix)"]}
 {"type":"entity","name":"uttec-edu","entityType":"business-line","observations":["온라인 AI/코딩/자격증 교육 플랫폼, 37개 코스, 765일 커리큘럼","Next.js + DigitalOcean(PM2) + Nginx + Let's Encrypt SSL","AI 교육 Level 0~9 + Remotion 레슨 비디오 30편+","13개 AI 도구 가이드 옵션 B 재편성 완료(2026-05-04, 학습 곡선 우선)","5 Track 컬러 시스템: A(Claude+Obsidian+VSCode 즉시) / B(Skill+MCP) / C(GitHub+SSH+Tailscale) / D(Slack) / E(Colab+NotebookLM+Remotion+AWS)","AI 도구 5 Track 소개 영상 제작 완료(2026-05-05): 5분 53초, 1920×1080, 63.5MB"]}
@@ -10,7 +10,7 @@
 {"type":"entity","name":"Memory MCP","entityType":"tool","observations":["Anthropic 공식 지식 그래프 서버 (@modelcontextprotocol/server-memory)","Claude Code 등록 완료 2026-05-05 (✓ Connected)","저장 경로: C:\\todo\\today\\myWiki\\ontology\\memory.json","환경변수 영구 설정: MEMORY_FILE_PATH","9개 도구 제공: read_graph, create_entities, create_relations, add_observations, search_nodes, open_nodes, delete_entities, delete_observations, delete_relations","Foundry 3층 온톨로지의 70% 대체 도구로 평가됨","활용 패턴: Obsidian = 사람용 1차 저장소 / Memory MCP = AI용 구조화 저장소"]}
 {"type":"entity","name":"Obsidian myWiki","entityType":"tool","observations":["second-brain 위키 (49파일, 0 issues, 정원사 사이클 운영)","구조: 핵심 페이지 9개 + entities/(31개) + thoughts/ + raw/ junction 25개+","Karpathy LLM Wiki 패턴 적용 (Raw/Wiki/Schema 3계층 + Ingest/Query/Lint 3명령)","skill 운영: wiki-lint, wiki-query, wiki-clean, wiki-log","LLM 사용: Claude Code 단일 도구"]}
 {"type":"entity","name":"Foundry 5층 아키텍처","entityType":"reference-architecture","observations":["Palantir Foundry 5층 구조 (Kelly Ontology Hub 채널 #0~#3 학습)","1층 Core Services: 인프라/모니터링/계정 → Tailscale + Git + Obsidian + n8n + Grafana로 95% 무료 대체","2층 Data Connection: 데이터 통합 → n8n Pipeline로 대체","3층 ★ 온톨로지 (Ontology Manager): 디지털 트윈 → Memory MCP + Obsidian로 70% 대체","4층 분석: BI/노트북 → Claude + Python로 대체","5층 운영 앱(Workshop): 객체+액션 → demo_live.html + n8n Webhook로 대체","핵심 통찰(시리즈 #3): 객체(명사) + 액션(동사) = 운영 앱 — 분석 툴(BI)과 운영 앱의 결정적 차이","마케팅 카피: '센서_데이터_v17_최종.csv → 진동, 온도, 회전수' (진짜_최종_V3 비유 한국화)"]}
-{"type":"relation","from":"이형근","to":"UTTEC","relationType":"운영한다"}
+{"type":"relation","from":"홍광선","to":"UTTEC","relationType":"운영한다"}
 {"type":"relation","from":"UTTEC","to":"스마트팩토리","relationType":"사업라인이다"}
 {"type":"relation","from":"UTTEC","to":"uttec-edu","relationType":"사업라인이다"}
 {"type":"relation","from":"UTTEC","to":"3.5-Stage 패키지","relationType":"영업모델이다"}
@@ -22,8 +22,8 @@
 {"type":"relation","from":"Memory MCP","to":"Foundry 5층 아키텍처","relationType":"3층_온톨로지를70%대체한다"}
 {"type":"relation","from":"Obsidian myWiki","to":"Foundry 5층 아키텍처","relationType":"3층_온톨로지를보강한다"}
 {"type":"relation","from":"n8n","to":"revita 서버","relationType":"여기에설치된다"}
-{"type":"relation","from":"이형근","to":"Obsidian myWiki","relationType":"운영한다"}
-{"type":"relation","from":"이형근","to":"Memory MCP","relationType":"활용한다"}
+{"type":"relation","from":"홍광선","to":"Obsidian myWiki","relationType":"운영한다"}
+{"type":"relation","from":"홍광선","to":"Memory MCP","relationType":"활용한다"}
 {"type":"relation","from":"한국기계","to":"스마트팩토리","relationType":"고객후보다"}
 {"type":"relation","from":"태명과학","to":"스마트팩토리","relationType":"고객후보다"}
 {"type":"relation","from":"한국기계","to":"3.5-Stage 패키지","relationType":"Stage1_2시범견적후보다"}

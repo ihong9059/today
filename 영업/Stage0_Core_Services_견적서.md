@@ -19,7 +19,7 @@ links: [Core_Services_무료대체_매핑, n8n_실행_가이드, 영업전략, U
 |------|------|
 | 수신 | (고객사명) |
 | 담당자 | (담당자명 / 직급) |
-| 발송 | UTTEC 이형근 (ihong9059@gmail.com) |
+| 발송 | UTTEC 홍광선 (ihong9059@gmail.com) |
 | 견적일 | 2026-05-05 |
 | 유효기간 | 견적일로부터 30일 |
 | 작업 기간 | 5영업일 (셋업 3일 + 검증·교육 2일) |
@@ -112,5 +112,5 @@ links: [Core_Services_무료대체_매핑, n8n_실행_가이드, 영업전략, U
 
 ---
 
-**UTTEC** | 이형근 | ihong9059@gmail.com
+**UTTEC** | 홍광선 | ihong9059@gmail.com
 임베디드 38년 + AI 통합 1인 사업자 | 한국 KC·일본 TELEC·유럽 CE 인증 보유

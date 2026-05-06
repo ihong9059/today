@@ -2,10 +2,53 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-06 (옵시디언+AI 영상 트리오 분석 + 교육 사이트 매트릭스 + n8n 대안 검토 + microGPT 가이드 + TwinCAT 차단)
+updated: 2026-05-06 (오후세션: 3Blue1Brown 9편 + 디지털배움터 풀세트 + REVITA LDO + 사용자 이름 정정)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-06 22:00] correction | 사용자 이름 오류 일괄 수정 — Memory MCP 시드 오염 추적 발견
+- 참조: [[me]], [[Memory MCP]], 메모리 시스템
+- 내용: 어제(2026-05-05) Memory MCP 첫 시드 작성 시 사용자 entity 이름을 "이형근"으로 잘못 입력한 사고가 발견됨. 실제 사용자 본명은 **홍광선** (UTTEC 대표). 이메일 prefix `ihong9059@gmail.com`에서 한국 이름 추정 오류로 추정됨. 27개 파일 sed 일괄 치환(PC 자료 22 + 강사양성 시범계획서 + n8n/docs 3 + 서버 wishket-prompt.txt) + Memory MCP json 동기화 + memory_seed.jsonl 동기화 + Claude Code 메모리에 사용자 본명 명시 메모리 신설(`user_name_hong_kwangsun.md`)로 재발 방지.
+- 핵심 결론: **Memory MCP 시드의 정확성이 미래 세션의 모든 추론에 영향**. 시드 작성 시 사용자 본명·핵심 식별자는 사용자 직접 확인 후 입력 필수. 또한 Claude Code memory에도 명시 저장하여 시드 오염 시에도 fallback 가능.
+
+## [2026-05-06 21:00] ingest | 3Blue1Brown 딥러닝 시리즈 9편 일괄 분석 — 강사양성 Day 5·6 콘텐츠 확정
+- 참조: [[uttec-edu]], [[강사양성_파일럿]], [[Track F On-Device AI]], [[microGPT]]
+- 내용: 3Blue1Brown(Grant Sanderson) 채널의 신경망·딥러닝 시리즈 전 9편(Chapter 1~7 + LLM brief + Welch Labs guest) 일괄 분석. 총 3시간 44분 콘텐츠. 강사양성 파일럿 Day 5·6 (딥러닝 입문) 콘텐츠로 확정. 시청 권장 순서 매핑(LLM brief → Ch.1~3 → Ch.5~6 → 선택 Ch.4·7·Welch). 핵심 통찰 시리즈 매트릭스화: 13,002 파라미터 → 1,750억(GPT-3) 규모의 마법 + Superposition + Mechanistic Interpretability. microGPT 가이드 보강 자료 확보.
+- 산출: `유투브/3Blue1Brown_딥러닝_시리즈/` (9편 분석 + README, 총 10개 파일)
+- 핵심 결론: 글로벌 표준 자료를 강사양성 파일럿에 통합 → 한국 시장 차별화 가능.
+
+## [2026-05-06 20:30] ingest | 디지털배움터 (NIA + 지자체) 1순위 진입 풀세트 작성
+- 참조: [[영업전략]], [[uttec-edu]], [[Track F On-Device AI]]
+- 내용: 정부지원 9채널 매트릭스 검토 결과를 받아 **1순위 채널인 디지털배움터** 진입 액션 플랜 풀세트 작성. 7개 파일: README + 사업개요 + 신청절차 단계별(Phase 0~6) + 2주 액션 플랜(Day 1~14) + 수도권 6개 지역사업자 컨택 리스트 + 강사 지원서류 템플릿(이력서·자기소개서·강의계획서) + Claude Code+Obsidian 8시간 시범강의안. 동일 패턴으로 다른 채널(서울시·smart-factory·혁신바우처) 확장 가능.
+- 산출: `영업/정부지원_교육사업/01_디지털배움터/` (7개 파일)
+- 핵심 결론: 정부 채널 진입을 즉시 시작할 수 있는 풀세트 확보. 6개월 누적 600~1,200만 매출 잠재.
+
+## [2026-05-06 19:00] ingest | REVITA 동글 LDO 교체 검토 — MP2338GTL → 12V to 3.3V 저Iq LDO
+- 참조: [[revita]], 회로도 분석
+- 내용: REVITA_DONGLE V1.0의 MP2338GTL buck 컨버터를 저Iq LDO로 교체 검토. 발열 검산(35°C 상승, SOT-89로 안전) + 후보 8개 비교 + 3가지 솔루션(A안 펌웨어 EN 제어, B안 2단 변환, C안 단순 LDO 교체). **1순위: MCP1755-3302E/MC** (Iq 1.6μA, SOT-89, 300mA). **권장 솔루션: A안 (펌웨어 EN 제어)** — 회로 변경 없이 standby 5μA 달성 가능. Active duty cycle 측정 후 결정 권장.
+- 산출: `revita/회로도/LDO_교체_검토_MP2338GTL_to_LDO.md`
+
+## [2026-05-06 18:00] ingest | 위시캣 자동검색 dedup 시스템 — wishket-check.sh v3
+- 참조: [[위시캣활동]], [[n8n]], 자동화
+- 내용: 매일 09:00 cron이 어제(5/5) 이미 지원 완료한 #155004 전자칠판 챗봇을 다시 high-fit로 평가하여 중복 알림 발송. 해결: `applied.txt` 기반 dedup 로직 추가(jq로 array 만들고 high-fit 결과에서 제외) + 헬퍼 스크립트 `wishket-applied.sh` 신설(add/list/remove). 향후 지원 시 `ssh uttec@100.89.56.69 "~/n8n/wishket-applied.sh add <ID> '메모'"` 한 줄로 등록.
+- 핵심 결론: 자동화 시스템도 **운영 중 발생하는 edge case 보강이 핵심**. 단순 검색을 넘어 "지원 완료 이력 추적"까지 통합되어 진정한 운영 자동화 달성.
+
+## [2026-05-06 20:00] research | 옵시디언 영상 4번째 (구요한 티타임즈TV 55분) — Foundry=옵시디언 객관 검증 + AI 모델 비교
+- 참조: [[ai-direction]], [[Pipeline_Builder]], [[3.5-Stage 패키지]], [[강사양성_파일럿]], [[Stage0_Core_Services_견적서]]
+- 내용: 어제 분석한 윤자동 영상의 4개월 빠른 버전(2025-06). 같은 게스트(구요한)가 19분 더 깊이 있게 다룬 추가 내용:
+  - **AI 모델 비교** (구요한 평가, 2025-06): GPT(설계·보고서·멀티모달) > Claude Sonnet 3.7(코딩) > Gemini(대용량+무료 API). "코딩은 클로드, 프로그래밍은 GPT". 하나만 결제 → GPT 픽
+  - **⭐ 팔란티어 Foundry = 옵시디언** (객체+속성+릴레이션 동일 구조) → 사용자의 어제 작성 `Pipeline_Builder_적용_검토.md` 메시지가 1년 전부터 한국 PKM 권위자 사이에 공유되던 인사이트임을 객관 검증
+  - **⭐ "옵시디언 회사 망해도 OK — 마크다운 파일이 남으니까"** = 데이터 영구 소유권 철학. Notion 대비 Stage 0 견적서 차별화 카피 도출
+  - **국내 최초 옵시디언 컨퍼런스** (2024 개최) — 옵시디언 대표 한국 방문, "투자 거부 + 사용자 헌신" 입장 공개
+  - **Various Complements + Templater 플러그인** = 자기 말투 자동완성 + JS+AI API 통합
+  - **인생 모토**: "질문은 언제나 환영" + "2주 뒤에 뵙겠습니다" + Learning Agility (러닝 어질리티)
+- 산출물: 유투브/옵시디언으로_지식_쌓고_연결하고_꺼내쓰자_구요한_티타임즈TV_상세.md (9 섹션)
+- **객관 검증 결과 2가지**:
+  1. 사용자 myWiki 운영 = 한국 시장 강의/책보다 발전형 (어제 검증)
+  2. 사용자 Foundry 무료 재현 모델 = 한국 PKM 권위자가 1년 전 동일 인사이트 도달, **시장 검증된 영업 메시지**
+- **콰르텟 통합**: 강사양성 파일럿 Day 4 = 3.5시간 워크숍 (이론 + 실습 + 영업 응용)
+- 다음 액션: (1) Stage 0 견적서에 "데이터 영구 소유권" 섹션 추가 (2) 호오컨설팅 강연 후보 "Learning Agility 1인 사업자" 콘텐츠화 (3) 2026-05 시점 최신 AI 모델 비교 재확인 (Claude 4.7 vs GPT-5 vs Gemini 3.0)
 
 ## [2026-05-06 17:30] research | 옵시디언 + AI 영상 트리오 분석 — 강사양성 Day 4 콘텐츠 완성 + myWiki 운영 객관 검증
 - 참조: [[uttec-edu]], [[강사양성_파일럿]], [[ai-direction]], [[영업전략]]
@@ -14,7 +57,7 @@ updated: 2026-05-06 (옵시디언+AI 영상 트리오 분석 + 교육 사이트 
   - **김문정** (배움의 달인, 교사·플러그인 개발자, 28분): 7시간/일 사용, 자체 플러그인 매일 개발, 보이스 브리핑 + Voice Writing 플러그인 GitHub 공개. **핵심 카피: "AI에게 데이터를 들고 가지 말고, 데이터 레이크로 AI를 불러들여라"**
   - **생산적생산자** (책 저자 + 8주 코칭, 17분): Claude Code + 옵시디언, /init → CLAUDE.md (시스템 프롬프트), 제텔카스텐+PARA 자동 생성, todos.md 자동 추적
 - 산출물: 유투브/구요한_상세.md / 김문정_상세.md / 생산적생산자_상세.md (각 13~12 섹션)
-- **객관적 발견**: 사용자(이형근)의 myWiki + CLAUDE.md + 자동 메모리 시스템이 **한국 시장에서 책·8주 코칭으로 팔리는 콘텐츠보다 한 단계 위**임 검증됨
+- **객관적 발견**: 사용자(홍광선)의 myWiki + CLAUDE.md + 자동 메모리 시스템이 **한국 시장에서 책·8주 코칭으로 팔리는 콘텐츠보다 한 단계 위**임 검증됨
 - 핵심 결론: 강사양성 파일럿 Day 4 = 트리오 통합 3시간 워크숍 (오전 기본 → 오후 1부 자동화 → 오후 2부 Claude Code+PKM)
 - 다음 액션: (1) Day 4 워크숍 콘텐츠 정리 (2) 호오컨설팅 강연 후보 "바이브 코딩으로 1인 사업자 두 번째 뇌" (3) 인프런 강의 후보 "스마트팩토리 엔지니어를 위한 Claude Code + 옵시디언 PKM" — 임베디드/제조업 특화 차별화
 
@@ -200,7 +243,7 @@ updated: 2026-05-06 (옵시디언+AI 영상 트리오 분석 + 교육 사이트 
 
 ## [2026-05-05] verify | Memory MCP 영구 저장 검증 — Claude Code 재시작 후 read_graph 정상 로드
 - 참조: [[Memory MCP]], [[claude-code]]
-- 내용: 어제 영구 저장 이슈 해결(.claude.json env 블록 수정 + memory.json 시드 배치) 후 첫 Claude Code 재시작. `mcp__memory__read_graph` 호출하여 시드 12 entities + 20 relations 모두 자동 로드 확인. UTTEC, 이형근, 3.5-Stage 패키지, 스마트팩토리, uttec-edu, 한국기계, 태명과학, n8n, revita 서버, Memory MCP, Obsidian myWiki, Foundry 5층 아키텍처 — 모두 observation 본문까지 보존됨.
+- 내용: 어제 영구 저장 이슈 해결(.claude.json env 블록 수정 + memory.json 시드 배치) 후 첫 Claude Code 재시작. `mcp__memory__read_graph` 호출하여 시드 12 entities + 20 relations 모두 자동 로드 확인. UTTEC, 홍광선, 3.5-Stage 패키지, 스마트팩토리, uttec-edu, 한국기계, 태명과학, n8n, revita 서버, Memory MCP, Obsidian myWiki, Foundry 5층 아키텍처 — 모두 observation 본문까지 보존됨.
 - 핵심 결론: **MCP 서버 영구 저장 패턴 확립** — `.claude.json` mcpServers.<name>.env 블록에 환경변수 직접 명시 + 데이터 파일을 절대경로로 지정. 향후 다른 MCP(예: Filesystem, Obsidian) 도입 시 동일 패턴 적용.
 
 ## [2026-05-05] ingest | K-문샷 (한국 정부 거대 R&D) 엔티티 신설 — 영업전략 정부지원 연계 핵심 추가
@@ -214,7 +257,7 @@ updated: 2026-05-06 (옵시디언+AI 영상 트리오 분석 + 교육 사이트 
 
 ## [2026-05-05] init | Memory MCP 첫 활용 — 시드 지식 그래프 12 entities + 20 relations 구축
 - 참조: [[Memory MCP]], [[3.5-Stage 패키지]], [[Foundry 5층 아키텍처]], [[claude-code]], [[스마트팩토리]]
-- 내용: 어제(05-05 오후) 설치한 Memory MCP를 실제 사용. 12개 핵심 비즈니스 엔티티를 시드로 생성(UTTEC, 이형근, 3.5-Stage 패키지, 스마트팩토리, uttec-edu, 한국기계, 태명과학, n8n, revita 서버, Memory MCP, Obsidian myWiki, Foundry 5층 아키텍처) + 관계 20건(운영한다/사업라인이다/도구로포함한다/고객후보다/Stage1_2시범견적후보다 등). read_graph·create_entities·create_relations·open_nodes·search_nodes 모두 정상 동작 확인.
+- 내용: 어제(05-05 오후) 설치한 Memory MCP를 실제 사용. 12개 핵심 비즈니스 엔티티를 시드로 생성(UTTEC, 홍광선, 3.5-Stage 패키지, 스마트팩토리, uttec-edu, 한국기계, 태명과학, n8n, revita 서버, Memory MCP, Obsidian myWiki, Foundry 5층 아키텍처) + 관계 20건(운영한다/사업라인이다/도구로포함한다/고객후보다/Stage1_2시범견적후보다 등). read_graph·create_entities·create_relations·open_nodes·search_nodes 모두 정상 동작 확인.
 - 주요 발견:
   1. **search_nodes 패턴**: 단일 키워드는 정상, 다중 단어는 AND 매칭 (모든 단어 포함 필요). 한글 entityType("고객후보")로 검색 시 빈 결과 — 영문 entityType("customer-prospect") 일관 사용 권장 또는 observation 본문에 한글 키워드 포함.
   2. **영구 저장 이슈 발견·해결**: `.claude.json` MCP env 블록이 `{}`로 비어있어 MEMORY_FILE_PATH가 서버에 전달되지 않음. 데이터가 메모리에만 있고 디스크 미저장 상태였음. 수정 후 `C:\todo\today\myWiki\ontology\memory.json`에 시드 JSONL 12+20행 직접 배치 → 다음 Claude Code 재시작 시 자동 로드됨.

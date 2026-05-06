@@ -34,7 +34,7 @@ Anthropic 공식 지식 그래프 MCP 서버. AI가 세션 간 영구적으로 e
 **12 entities** + **20 relations**:
 
 ### 핵심 비즈니스 엔티티
-- **UTTEC** (company), **이형근** (person)
+- **UTTEC** (company), **홍광선** (person)
 - **3.5-Stage 패키지** (business-model)
 - **스마트팩토리**, **uttec-edu** (business-line)
 - **한국기계**, **태명과학** (customer-prospect)
@@ -43,7 +43,7 @@ Anthropic 공식 지식 그래프 MCP 서버. AI가 세션 간 영구적으로 e
 - **Foundry 5층 아키텍처** (reference-architecture)
 
 ### 핵심 관계
-- 이형근 → UTTEC (운영한다)
+- 홍광선 → UTTEC (운영한다)
 - UTTEC → 스마트팩토리 / uttec-edu (사업라인이다)
 - UTTEC → 3.5-Stage 패키지 (영업모델이다)
 - 3.5-Stage 패키지 → Foundry 5층 아키텍처 (참조아키텍처로한다)
