@@ -90,6 +90,8 @@ links: [me, skills, projects]
 - Notion + Gmail 통합 (high-fit ≥7 자동 등록·발송)
 - Stage 0 Core Services Starter Pack 견적서 1페이지 작성 (3.5-Stage 패키지 첫 영업 자료)
 - 위시캣 #155004 지원 (전자칠판 기술지원 챗봇 앱, 1,500만원) — n8n 자동검색 첫 발견(score 8), AI 배제·자체호스팅 제약을 강점화 (룰 기반 챗봇 + 24/7 서버 노하우 + 파나소닉 디스플레이 도메인)
+- 위시캣 #155057 지원 (AISG 3.0 통신 프로토콜 포팅, 2,400만원/90일) — C++/MCU/RS-485/UART 핵심 매칭 9/10, 용인 기흥 현장테스트
+- 위시캣 #155091 지원 (AI 오디오 믹싱 PoC, 2,000만원/60일) — C++ DSP+LLM API+Node.js+React 풀스택, 삼성 Audio Controller 경력 활용
 
 ## 축적된 경험 영역
 
