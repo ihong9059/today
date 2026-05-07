@@ -73,6 +73,8 @@ second-brain/
     ├── revitaProject/ # REVITA 프로젝트 전체 (→ junction C:\todo\revitaProject, 2026-04-22 추가)
     ├── 회사소개/       # UTTEC 회사소개서 PDF/HTML (→ junction homepage/회사소개, 2026-04-22 추가)
     ├── multiCore/     # 멀티코어 Claude 교육 시스템 (→ junction, 2026-04-28 추가)
+    ├── onDevice_AI_검증/ # ESP32-S3 + microGPT + AI FanStick 차세대 기술 검증 (→ junction, 2026-05-07 추가)
+    ├── uttecBizWiki/  # onDevice AI 제품 비즈니스 전용 vault (→ junction, 2026-05-07 추가)
     └── articles/      # 인상 깊은 기사, 영상 메모, 스크랩
 ```
 

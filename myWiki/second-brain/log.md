@@ -8,14 +8,134 @@ updated: 2026-05-07 (obsidian 폴더 6편 시리즈 완성 + 자영업 AI 플랫
 # Second Brain 위키 로그
 
 ## [2026-05-07] use | 위시캣 #155091 지원 (AI 오디오 믹싱 PoC, 2,000만/60일)
-- 참조: [[위시캣활동]], [[experience]], [[회사소개]]
-- 판단: C++ DSP(삼성 Audio Controller) + LLM API + Node.js/React 풀스택 매칭 8/10. Neo4j/WASM 학습 필요하나 PoC 수준. 외주 원격.
-- 결과: (추후 기록)
+- 참조: [[위시캣활동]], [[experience]], [[회사소개]], [[memory-mcp]], [[remotion-project]], [[ai-fanstick]]
+- 판단: C++ DSP(삼성 Audio Controller) + LLM API + Node.js/React 풀스택. PoC 수준 + 외주 원격.
+- 보강 (5/7 06:00): myWiki 검색으로 누락 자산 3건 발견 — (1) Remotion+edge-tts 음성 합성 파이프라인 30편+ 운영 (가장 큰 누락), (2) Memory MCP 지식 그래프 운영 + Palantir Foundry Ontology (Neo4j [△]→[O]), (3) measure-audio.py + AI FanStick 특허. 11곳 보강 → **매칭률 8/10 → 9/10**, 강점 5→7, 관련 실무 4→7, 주요 경력에 [지식 그래프 / 도메인 모델링] 카테고리 신규.
+- 추가 (5/7 12:30): 발주처 사전 질의 Q1(오디오 DSP 경험)·Q2(웹 실시간 시스템 설계) 답변 작성 +221줄 — 4-레이어 입체 답변 + 6계층 아키텍처 + 60일 5-Phase 검증 계획 + 리스크 4건.
+- **결과: 2026-05-07 13:30 사이트 제출 완료**
+
+## [2026-05-07 18:05] correction | uttecBizWiki scope 정정 — onDevice AI 제품 전용으로 좁힘
+- 사용자 명확화: "uttecBizWiki는 onDevice_AI_검증 개발 제품에 대해서만 진행. 다른 biz는 관여하지 않음."
+- 이전 scope (오해): UTTEC 사업 전반 (영업·매출·고객·플랫폼·경쟁사·의사결정 광범위)
+- 올바른 scope: **onDevice AI 제품(AI FanStick 차세대 + Stage 4) 비즈니스 전용**
+- 다른 사업 영역은 본 vault 미포함:
+  - 위시캣 일반 → myWiki/위시캣활동
+  - 한국기계 Stage 0 → 영업/Stage0_견적서 + myWiki
+  - 강사양성 → aiStudy/.../강사양성_파일럭/ + myWiki
+  - 정부지원 → 영업/정부지원_교육사업/
+  - uttec-edu, REVITA, 스마트팩토리 등 → myWiki
+- 갱신:
+  - `uttecBizWiki/README.md` — scope 명확화 + 포함/미포함 매트릭스
+  - `uttecBizWiki/CLAUDE.md` — 책임/비책임 + 분리 원칙
+  - `uttecBizWiki/index.md` — 단일 제품군 인덱스
+  - `uttecBizWiki/log.md` — correction 로그
+  - `myWiki/entities/uttecBizWiki.md` — scope 정정 반영
+- 핵심 결론: **uttecBizWiki는 단일 제품군(onDevice AI) 전용 vault**. onDevice_AI_검증과 1:1 한 쌍. myWiki는 다른 모든 사업 영역(위시캣·강사양성·정부지원·다른 제품) 그대로 처리.
+
+## [2026-05-07 17:50] start | uttecBizWiki 본격 진입 — 3-vault 분리 운영 확정 (기술↔비즈니스)
+- 참조: [[uttecBizWiki]], [[onDevice-ai-검증]], [[ai-fanstick]], [[uttec-stage-package]]
+- 결정: 5/5 검토 노트 보류 → 5/7 본격 진입
+- 트리거: onDevice_AI_검증 vault 신설(5/7 17:30)로 기술 vault 명확해짐 → 비즈니스 vault도 별도 분리 필요성 확정
+- 3-vault 구조 확정:
+  - `myWiki/second-brain/` — 학습+개인+도구 통합 second-brain (영구)
+  - `uttecBizWiki/` — **사업 운영** 전용 (영구) — 외부 공개 시 안전
+  - `onDevice_AI_검증/` — **기술 검증** 단기 프로젝트 (archive 가능)
+- 산출:
+  - `uttecBizWiki/README.md` 갱신 (보류 → 본격 진입)
+  - `uttecBizWiki/CLAUDE.md` 신규 (사업 운영 schema)
+  - `uttecBizWiki/index.md` 신규 (페이지 인덱스)
+  - `uttecBizWiki/log.md` 신규 (시간순 활동)
+  - `uttecBizWiki/entities/AI_FanStick.md` 신규 — 첫 사업 영역 (Stage 4 영업과 직결)
+  - `onDevice_AI_검증/README.md` 갱신 — uttecBizWiki와의 cross-link 추가
+  - `myWiki/second-brain/entities/uttecBizWiki.md` 신규 — vault entity
+- 핵심 결론: **같은 제품(AI FanStick / Stage 4)을 두 vault에서 동시 추적**. onDevice_AI_검증 = 기술 가능성, uttecBizWiki = 비즈니스 가능성. 검증 결과 → 영업 자료 갱신 → 수주 → 다음 검증 사이클의 흐름 확립.
+- 다음 액션: 5/8~10 raw/ 첫 영업 이벤트 (한국기계 회신 / 위시캣 결과), 5/13 thoughts/ 첫 인사이트
+
+## [2026-05-07 17:30] ingest | onDevice_AI_검증 vault 신설 — microGPT + AI FanStick 차세대 + Stage 4 통합
+- 참조: [[onDevice-ai-검증]], [[ai-fanstick]], [[uttec-stage-package]], [[On-Device AI]]
+- 통합 대상 (3개 작업 항목 → 1개 vault):
+  - 작업보고서 #18 microGPT 직접 실행 테스트
+  - Notion #21 AI FanStick 다음 버전 SLM 통합 검토 (ESP32-S3 hello_world)
+  - 작업보고서 #23 UTTEC 사업용 새 vault 시작
+- 산출: `onDevice_AI_검증/` 신규 vault (8 파일):
+  - README.md / CLAUDE.md / 0_검증계획.md / log.md (마스터 4)
+  - microGPT/01_검증절차.md (Phase 1A·1B)
+  - aiFanStick_차세대/01_검증절차.md (Phase 2)
+  - 통합검증/01_SRAM_파라미터_매트릭스.md (모델 후보 비교)
+  - 통합검증/02_Stage4_영업매핑.md (검증→영업 흐름 4곳)
+- myWiki entity 신설: `entities/onDevice-ai-검증.md`
+- 핵심 결론: **3개 작업이 같은 ESP32-S3 + On-Device AI 검증 사이클**. microGPT 4,192 파라미터 = ESP32-S3 SRAM 520KB 1% 미만 사용 → AI FanStick "외부 인터넷 0%" 카피 검증 가능 → Stage 4 (1,500만) 영업 패키지의 기술 근거. uttecBizWiki는 별개 보존 (사업 일반 wiki).
+- 진행 흐름: Phase 1A (PC microGPT 실행, 즉시 가능 1~2h) → Phase 2 (ESP32-S3 보드 도착 후, 4~8h) → Phase 3 (Stage 4 영업 자료 갱신)
+- 영업 임팩트: 검증 성공 시 6개월 2,000~3,500만 매출 잠재 (Stage 4 첫 수주 + 강사양성 Day 5 + 호오컨설팅 + 인프런 사례)
+
+## [2026-05-07 17:00] ingest | 정부지원 톱 3 진입 액션 정리 + 이번 주말(5/10~11) 마감 확인 액션 추가
+- 참조: [[정부지원_교육사업]], [[영업전략]], [[uttec-edu]], [[강사양성_파일럿]]
+- 산출:
+  - `영업/정부지원_교육사업/톱3_진입액션.md` (신규) — 톱 3 채널별 즉시 액션 + 시나리오 분기 + 이번 주말 통합 플랜
+  - `myWiki/second-brain/entities/정부지원_교육사업.md` (신규) — 9채널 매트릭스 한 페이지 + 톱 3 진입 상태 + 자료 위치
+  - 작업보고서 #4 갱신 (★★ 강조 + 이번 주말 5/10 반드시 명시)
+  - 작업보고서 #29 신규 (★★ 서울시·NIPA 마감 확인 — 이번 주말 5/11 반드시)
+- 핵심 결론: **이번 주말이 톱 3 진입 골든 타임**. 디지털배움터(1순위)는 풀세트 완성으로 즉시 가입·컨택 가능. 서울시·NIPA는 마감 시점 미확인 (5월 시점 마감 지났을 가능성 70~80%) — **5/11 일 마감 확인이 결정타**. 살아있으면 즉시 신청, 지났으면 2027년 1월 대기 + 디지털배움터 단독 집중.
+- 매출 잠재력: 6개월 누계 600~1,200만 (디지털배움터 단독) ~ 6,000~9,000만 (풀 톱 3 진입)
+- 다음 의사결정: 5/13(월) — 마감 확인 결과 종합 후 다음 단계 결정
+
+## [2026-05-07 16:30] ingest | 강사양성 파일럿 entity 신설 + 모집 메시지 템플릿 작성
+- 참조: [[강사양성_파일럿]], [[uttec-edu]], [[uttec-stage-package]], [[obsidian-시리즈-사업화]]
+- 산출:
+  - `myWiki/second-brain/entities/강사양성_파일럿.md` (신규) — 한 페이지 요약 (시범 일정·5일 코스·옵션 D 결정·모집 전략·비용·KPI·의사결정 시점)
+  - `aiStudy/introductionAi/강사양성_파일럿/모집/2_모집_메시지_템플릿.md` (신규) — 한국기계·태명과학·위시캣 동료·공개 모집 + 후속 메시지 5종
+  - `aiStudy/introductionAi/강사양성_파일럿/0_시범계획서.md` (갱신) — §5에 옵션 D 결정 섹션 추가 (obsidian 시리즈 미포함 명시)
+  - `aiStudy/introductionAi/강사양성_파일럿/README.md` (갱신) — 폴더 구조 + 핵심 결정 사항 시간순 표
+- 핵심 결론: **시범계획서 + 모집 메시지 + entity = 모집 즉시 시작 가능 상태**. 한국기계·태명과학에 Stage 0 PDF 회신과 동시에 시범 안내 발송, T-3주(5/26)까지 수강생 4명 확정 목표.
+- 다음 액션: (1) 한국기계·태명과학 시범 안내 발송 (사용자 직접) (2) 위시캣 동료 1~2명 컨택 (3) 장소 후보 3곳 답사 (4) T-3주 시점 4명 미달 시 의사결정
+
+## [2026-05-07 15:50] decision | 3.5-Stage → 4.5-Stage 패키지 확장 — Stage 4 (On-Device AI) 신설 채택
+- 참조: [[uttec-stage-package]], [[On-Device AI]], [[Stage0_Core_Services_견적서]], [[ai-direction]]
+- 배경: 작업보고서 #19 검토. myWiki ontology에 "Stage 4 신설 후보"로 등록되어 있던 항목 (5/4 Foundry 5층 학습 시 도출). 사용자 강점(임베디드 38년 + AI 통합) + 시장 트렌드(Hailo·Jetson·SLM) + microGPT 검증으로 신설 타당성 입증.
+- 채택안: Stage 4 (On-Device AI) 신설, **단가 1,500만 / 기간 4주**. 패키지 명칭 4.5-Stage로 갱신 (Stage 0 0.5 + Stage 1·2·3·4 = 4.5). Stage 4 산출물: 보드(Hailo-8/Jetson Orin/ESP32-S3 중 1종) + 모델(SLM/microGPT fine-tuning) + C++ 추론 엔진 + Stage 0 인프라 통합 + 매뉴얼·영상 + 30일 무상 지원.
+- 산출: `영업/Stage4_OnDeviceAI_검토.md` 신규 (1.5h 검토 결과 종합), `myWiki/second-brain/entities/uttec-stage-package.md` 신규 (4.5-Stage 매트릭스 + 영업 시나리오 4종), Stage 0 견적서 미포함 섹션에 Stage 4 옵션 한 줄 추가, ai-direction.md 판단 로그
+- 매출 임팩트: 5,800만 (3.5-Stage) → 7,300만 (4.5-Stage 풀스택), +1,500만 (+26%)
+- 영업 시나리오: A 한국기계 스마트팩토리(2,300만~7,300만) / B 자영업(800만) / C 임베디드 스타트업(1,500~2,000만) / D 대형 고객 풀스택(7,300만)
+- 핵심 결론: **Stage 4 신설로 임베디드 특화 고객(스타트업·제조)을 직접 겨냥 가능.** 사용자 38년 임베디드 자산이 영업 패키지에 직접 반영. 다음 수주 후보: 한국기계(Hailo-8 예측정비) 또는 위시캣 임베디드 공고.
+
+## [2026-05-07 14:30] ingest | obsidian 강의 모듈 (2~3h) 작성 — 옵션 D 산출물 폴더 구조로 분리 완성
+- 참조: [[obsidian-시리즈-사업화]], [[강사양성_파일럭]]
+- 산출: `obsidian/강의모듈_2~3h/` 폴더 (5 마스터 파일 + vault_template/ 2 파일 = 총 8 파일)
+  - `0_README.md` — 폴더 인덱스 (시간 옵션·학습 목표·강의 흐름·시리즈 매핑)
+  - `1_슬라이드.md` — 16장 슬라이드 (Reveal.js / Marp 호환 Markdown, `---` 구분)
+  - `2_강사_스크립트.md` — Part 1·2·3 발표 대본 + 시간 분배 (2.5h 기준)
+  - `3_실습_가이드.md` — 라이브 데모 6 step + 수강생 실습 절차 + 시간 다이어트 시나리오
+  - `4_채널별_활용안내.md` — 호오컨설팅·인프런·디지털배움터·강사양성 2차 채널별 맞춤
+  - `5_FAQ_+_체크리스트.md` — Q&A 10 + 강사 사전 준비 (T-1주/T-1일/당일/사후)
+  - `vault_template/CLAUDE.md` — 실습용 샘플 schema
+  - `vault_template/README.md` — 수강생 5분 시작 가이드
+- 시간 옵션: 2h 압축 / 2.5h 표준 / 3h 풀버전
+- 활용 채널 매핑: 호오컨설팅(2h) / 인프런(3h) / 디지털배움터(3~8h) / 강사양성 2차 차수(장기)
+- 핵심 결론: **6편 시리즈(5,059줄) → 1 폴더 8 파일로 압축·분리 완료** = 영업 즉시 투입 가능. 강사가 6 파일을 순서대로 익히면 2~3h 강의 진행 가능. 수강생은 vault_template/을 5분 만에 복사해서 시작. 호오컨설팅 강연 모집 게시판 확인이 다음 단계.
+
+## [2026-05-07 13:50] decision | obsidian 시리즈 강사양성 통합 — 옵션 D 채택 (첫 시범 미포함)
+- 참조: [[obsidian-시리즈-사업화]], [[강사양성_파일럭]], [[ai-direction]]
+- 배경: 작업보고서 #10 "강사양성 Day 4·5 콘텐츠에 obsidian 6편 시리즈 통합"의 의미가 모호. 시범계획서 검토 결과 Day 4·5는 이미 Track D+E (Slack/Colab/NLM/Remotion/AWS)로 8시간씩 빈틈없이 채워져 있어 시간 충돌. Track F 처리 패턴(시나리오 C — 첫 시범 검증 우선, 신규 콘텐츠 미포함)과 일관성 유지 필요.
+- 채택안 (옵션 D): obsidian 6편 시리즈를 첫 시범에서 미포함. 별도 단기 모듈(2~3h)로 분리하여 호오컨설팅 단발 강연 / 인프런 강의 / 디지털배움터 차별화 자료로 활용. 첫 시범 안정 후 2차 차수에 통합 검토.
+- 변경: 작업보고서 #10 문구 갱신, entities/obsidian-시리즈-사업화.md §5·결정사항·관련 3곳 반영, ai-direction.md 판단 로그 추가
+- 영향: 시범계획서(`aiStudy/introductionAi/강사양성_파일럭/0_시범계획서.md`) 변경 없음 — 13가이드 검증 우선 정책 일관성 유지
+- 핵심 결론: **시범은 검증 우선, 신규 콘텐츠는 보수적 도입**. obsidian 시리즈는 강사양성에 종속되지 않은 독립 영업 자산으로 보존 → 활용처 다양화 (단발 강연·인프런·정부지원 차별화).
+
+## [2026-05-07 06:00] ingest | 위시캣 #155091 지원서 영업 자산화 — 동일 위키 검색 패턴 재확인 (1일 2건)
+- 참조: [[위시캣활동]], [[memory-mcp]], [[remotion-project]], [[ai-fanstick]], [[skills]], [[strengths]], [[experience]], [[ai-direction]], [[2026-05-07_OOK-두-응용-영역]]
+- 내용: #155057 보강 패턴을 #155091 (AI 오디오 믹싱 PoC, 2,000만/60일)에 재적용. myWiki 검색으로 누락 자산 3건 발견 — (1) Remotion+edge-tts 음성 합성 파이프라인 30편+ 운영 (가장 큰 누락, 오디오 DSP 매칭 핵심), (2) Memory MCP 지식 그래프 운영 + Palantir Foundry Ontology 학습 완료 (Neo4j [△]→[O] 격상), (3) measure-audio.py mp3 측정 + AI FanStick 음성+AI+BLE 특허 (통합 제품 사례). 지원서 11곳 보강 → 매칭률 8/10 → 9/10, 운영 서비스 3→6, 강점 5→7, 주요 경력에 [지식 그래프 / 도메인 모델링] 카테고리 신규.
+- 핵심 결론: **위키 영업 자산 발견 패턴이 1일 2건 재현** — 같은 날 다른 도메인(통신 프로토콜 vs 오디오+지식그래프) 두 건 모두 셀프 디스카운트 해소. 패턴의 도메인-독립성 입증 = 시스템 결함이라는 강한 증거. `/wishket-apply` 스킬에 myWiki 선검색 단계 추가 필수.
+
+## [2026-05-07 04:00] ingest | AISG 3.0 + OOK 두 응용 영역 통합 — 위시캣 #155057 영업 자산화
+- 참조: [[aisg]], [[revita]], [[위시캣활동]], [[skills]], [[experience]], [[strengths]], [[ai-direction]], [[2026-05-07_OOK-두-응용-영역]]
+- 내용: 위시캣 #155057 (AISG 3.0 통신 프로토콜 포팅) 사전 학습 결과 영구화. 신규 entity [[aisg]] (3계층 스택, HDLC 프레임, 2.0→3.0 변경점, 보유 매칭 11/11), 신규 thought [[2026-05-07_OOK-두-응용-영역]] (REVITA OOK Replay 447MHz + AISG OOK 2.176MHz 두 응용 영역 통합 → 통신 프로토콜 7종 보유 인사이트). skills/experience/strengths/ai-direction/index cross-link 갱신. 위시캣 지원서 9곳 보강으로 매칭률 9/10 → 11/11.
+- 핵심 결론: **위키가 영업 자산을 발견한다** — REVITA OOK Replay(4/27~5/1)와 AISG OOK PHY(5/7)의 1주 시차 누락을 위키 단순 검색이 트리거. ingest 누락 시 영업 반영 0 → 향후 모든 위시캣 지원 전 myWiki 선검색 워크플로우 정착 필요.
 
 ## [2026-05-07] use | 위시캣 #155057 지원 (AISG 3.0 통신 프로토콜 포팅, 2,400만/90일)
-- 참조: [[위시캣활동]], [[양산제품]], [[회사소개]], [[experience]]
-- 판단: C++/MCU/RS-485/UART 핵심 역량 정확 매칭(9/10). AISG 프로토콜만 학습 필요. 용인 기흥 현장으로 사무실 동일 지역. 마감 5/15 긴급.
-- 결과: (추후 기록)
+- 참조: [[위시캣활동]], [[양산제품]], [[회사소개]], [[experience]], [[aisg]], [[revita]]
+- 판단: C++/MCU/RS-485/UART 핵심 역량 정확 매칭. AISG 3.0 변경점만 학습 필요. 용인 기흥 현장으로 사무실 동일 지역. 마감 5/15 긴급.
+- 보강 (5/7 04:00): myWiki 검색으로 REVITA OOK Replay(447.925MHz, 4/27~5/1) 자산이 지원서에 누락됨을 발견. 9곳 보강(OOK 직접 경험 + AISG 두 PHY 모두 대응) → **매칭률 9/10 → 11/11**, 통신 프로토콜 6종 어필. 신규 entity [[aisg]] + thought [[2026-05-07_OOK-두-응용-영역]] 작성.
+- **결과: 2026-05-07 13:30 사이트 제출 완료**
 
 ## [2026-05-07 01:30] ingest | obsidian 폴더 6편 시리즈 완성 — 새 사업 라인 + 강사양성 차별화 콘텐츠
 - 참조: [[Obsidian myWiki]], [[Memory MCP]], [[강사양성_파일럭]], [[3.5-Stage 패키지]], [[uttec-edu]]

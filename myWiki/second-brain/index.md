@@ -74,6 +74,12 @@ updated: 2026-05-05
 | [[memory-mcp]] | Memory MCP — 지식 그래프 서버, 12 entities/20 relations 시드, Foundry 3층 70% 대체 |
 | [[k-문샷]] | K-문샷 — 한국 정부 거대 R&D, 2026 AI 10.1조, 2035년 12대 국가미션, 인재양성 미션 직접 매칭 |
 | [[obsidian-시리즈-사업화]] | obsidian 6편 시리즈(201KB) + 자영업·중소기업 AI 플랫폼 사업화(가능성 23/25) — 4-Agent 시스템이 곧 핵심 IP |
+| [[aisg]] | AISG 3.0 — 기지국 안테나 ALD 통신 프로토콜(HDLC + RS-485/OOK PHY), 위시캣 #155057 분석, 매칭 11/11 |
+| [[uttec-stage-package]] | UTTEC 영업 패키지 4.5-Stage — Stage 0(500만)+1(300만)+2(2,500만)+3(2,500만)+4(1,500만) 풀 7,300만, Foundry 1/100 가격 |
+| [[강사양성_파일럿]] | 강사양성 옵션 2 표준 5일 코스 — 2026-06-15~19 시범, 시나리오 A 무료+잠재고객, 본인부담 320만, 수강생 4~10명 |
+| [[정부지원_교육사업]] | 정부지원 9채널 매트릭스 — 톱 3 즉시 진입(디지털배움터·서울시·NIPA AX 바우처) + 4건 자격 보강 후 + 2건 장기 |
+| [[onDevice-ai-검증]] | onDevice_AI_검증 vault — microGPT + AI FanStick 차세대 + Stage 4 통합 검증, ESP32-S3 SRAM 520KB 1%로 microGPT 탑재 가설 |
+| [[uttecBizWiki]] | uttecBizWiki vault — **onDevice AI 제품(AI FanStick + Stage 4) 비즈니스 전용**. 다른 사업 영역 미포함. onDevice_AI_검증과 기술↔비즈니스 한 쌍 |
 
 ## 생각 (Thoughts)
 | 페이지 | 요약 |
@@ -83,3 +89,4 @@ updated: 2026-05-05
 | [[2026-04-19_notion-data]] | Notion 첫 수집 + 라즈베리 Claude 아이디어 |
 | [[2026-04-22_wiki-운영-소감]] | Wiki 3일차 소감 — 유지 습관, Lint 한계, 자동화의 가치 |
 | [[2026-04-22_사업전환-AI시대]] | 사업 전환 — LED 조명→AI 3대 사업, 복리 인사이트 |
+| [[2026-05-07_OOK-두-응용-영역]] | OOK 두 응용 영역(공중파 RF + RF feeder in-band) 통합 → 통신 프로토콜 포팅 사업 라인 발견 |

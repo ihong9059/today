@@ -90,8 +90,10 @@ links: [me, skills, projects]
 - Notion + Gmail 통합 (high-fit ≥7 자동 등록·발송)
 - Stage 0 Core Services Starter Pack 견적서 1페이지 작성 (3.5-Stage 패키지 첫 영업 자료)
 - 위시캣 #155004 지원 (전자칠판 기술지원 챗봇 앱, 1,500만원) — n8n 자동검색 첫 발견(score 8), AI 배제·자체호스팅 제약을 강점화 (룰 기반 챗봇 + 24/7 서버 노하우 + 파나소닉 디스플레이 도메인)
-- 위시캣 #155057 지원 (AISG 3.0 통신 프로토콜 포팅, 2,400만원/90일) — C++/MCU/RS-485/UART 핵심 매칭 9/10, 용인 기흥 현장테스트
+- 위시캣 #155057 지원 (AISG 3.0 통신 프로토콜 포팅, 2,400만원/90일) — C++/MCU/RS-485 핵심 매칭, 용인 기흥 현장테스트
+- **#155057 지원서 보강 (5/7 04:00)** — myWiki 검색으로 REVITA OOK Replay 자산이 누락됨을 발견, 9곳 보강 → **매칭률 9/10 → 11/11**, 통신 프로토콜 6종 어필. 신규 entity [[aisg]] + thought [[2026-05-07_OOK-두-응용-영역]] 작성
 - 위시캣 #155091 지원 (AI 오디오 믹싱 PoC, 2,000만원/60일) — C++ DSP+LLM API+Node.js+React 풀스택, 삼성 Audio Controller 경력 활용
+- **#155091 지원서 보강 (5/7 06:00)** — myWiki 검색으로 음성 합성 파이프라인(Remotion+edge-tts 30편+) + Memory MCP 지식그래프 + AI FanStick 특허가 누락됨을 발견, 11곳 보강 → **매칭률 8/10 → 9/10**, 주요 경력에 [지식 그래프 / 도메인 모델링] 카테고리 신규. 동일 위키 검색 패턴 1일 2건(#155057/#155091) 재현 → 도메인-독립적 시스템 결함 입증
 
 ## 축적된 경험 영역
 
@@ -104,7 +106,9 @@ links: [me, skills, projects]
 - STM32 컴프레서/세탁기 컨트롤러 (양산 판매 중)
 - Raspberry Pi CM4 EtherCAT 컨트롤러 (양산 판매 중)
 - RS485/Modbus RTU 산업 통신
-- LoRa/MQTT/CAN 통신 프로토콜
+- LoRa/MQTT/CAN/EtherCAT 통신 프로토콜
+- OOK 변조 직접 구현 (CC1101 447.925MHz Replay, REVITA 2026-05)
+- AISG 3.0 안테나 인터페이스 분석 완료 (위시캣 #155057, 2026-05) — [[aisg]]
 
 ### 교육 시스템
 - UTTEC Edu 온라인 교육 플랫폼 (37개 코스, 765일 커리큘럼)

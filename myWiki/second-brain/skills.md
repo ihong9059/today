@@ -20,7 +20,8 @@ links: [me, projects, ai-direction, strengths, gaps]
 | MQTT/RS485/Modbus RTU | 상 | 산업 통신, KC 인증 | 높음 |
 | CAN 통신 | 중상 | 대한전선 Winder Controller | 과거 |
 | LoRa/Zigbee | 중 | REVITA, IoT 통신 | 간헐 |
-| CC1101 Sub-GHz (433MHz) | 중 | remocon 데모 (pca10056+HW-863) | 신규 |
+| CC1101 Sub-GHz / OOK Replay (433~447MHz) | 중상 | remocon 데모 + OOK Replay 10버튼 디코딩 (REVITA, 2026-05) | 신규 |
+| AISG 3.0 (안테나 인터페이스 — HDLC + RS-485/OOK PHY) | 분석 완료 | 위시캣 #155057 ([[aisg]]) | 분석 |
 | Jetson Nano/CUDA | 중 | AI 추론, 비전, 교육 | 간헐 |
 | ODROID C2 | 중 | 원격 빌드 서버 | 최근 구축 |
 | Luckfox (RISC-V) | 초중 | revita 프로젝트 | 탐색 중 |
@@ -57,6 +58,8 @@ links: [me, projects, ai-direction, strengths, gaps]
 | YOLO | 중 | 번호판 검출 | 교육용 |
 | MobileNetV3 | 중 | 볼트 품질검사 AI | 완료 |
 | Google Colab | 중 | 시계열 분석 노트북 13개+ | 간헐 |
+| Memory MCP (지식 그래프) | 중상 | second-brain 30+ entity, 12 entities/20 relations 시드, JSONL 영구 저장 | 매일 |
+| Palantir Foundry Ontology | 학습 완료 | 시리즈 3편 (객체+액션 4단계 End-to-End) | 분석 |
 
 ## 영상/콘텐츠 제작
 | 기술 | 수준 | 활용 프로젝트 | 사용 빈도 |

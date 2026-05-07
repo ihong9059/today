@@ -4,15 +4,23 @@
 Notion "오늘 할 일" 자동 동기화 스크립트
 SessionStart hook으로 자동 실행
 
+정책 (memory: feedback_todo_notion_sync.md):
+  - 할일 생성 source of truth = 작업보고서 (Claude prompt에서 생성)
+  - 완료 source of truth = Notion (사용자가 어디서나 체크)
+  - 단방향: Notion 완료 → 작업보고서 ✅ (역방향 차단)
+
 Flow:
   1. 체크된 항목 → 완료 섹션으로 이동 (날짜 태그)
-  2. 완료 정리 (2일 경과 삭제 + 동일 텍스트 중복 제거)
-  3. 작업보고서 ↔ Notion 양방향 동기화
+  2. 완료 정리 (2일 경과 + 빈 항목 + 동일 텍스트 중복 제거)
+  2.5. 완료 ↔ 목표/진행 중복 제거 (완료가 source of truth, 목표/진행 측 삭제)
+  3. 작업보고서 ↔ Notion 단방향 동기화
+       - 추가: 양방향 (작업보고서에 있는 항목을 Notion에 / Notion에 있는 항목을 작업보고서에)
+       - 상태: Notion 완료 → 작업보고서 ✅ 만 (작업보고서 ✅ → Notion 체크 차단)
   4. 번호 재정렬 ([1], [2], ...)
 
 입력 경로:
-  - 할일 추가: Claude prompt → Notion + 작업보고서
-  - 완료 처리: Notion에서 체크 → 자동 반영
+  - 할일 추가: Claude prompt → 작업보고서 → (sync) → Notion
+  - 완료 처리: Notion에서 사용자가 체크 → (sync) → 작업보고서 ✅
 """
 
 import os
@@ -254,17 +262,26 @@ def cleanup_completed(sections):
         print(f"notion-sync: 완료 정리 {len(deleted)}건")
 
 
-# ── 3단계: 작업보고서 ↔ Notion 양방향 동기화 ────────────────
+# ── 2.5단계: 완료 ↔ 목표/진행 중복 제거 ────────────────────
 
-def sync_bidirectional(sections):
-    if "목표" not in sections:
+def dedup_against_completed(sections):
+    """완료 섹션의 항목과 동일한 항목이 목표/진행에 있으면 → 목표/진행 측 삭제.
+    완료가 source of truth. 같은 항목이 양쪽에 있으면 미완료 측 정리."""
+    if "완료" not in sections:
         return
 
-    report_todos = get_report_todos()
-    report_path = get_report_path()
+    completed_texts = []
+    for b in sections["완료"]["blocks"]:
+        if b.get("type") != "to_do":
+            continue
+        text = get_block_text(b).strip()
+        if text:
+            completed_texts.append(text)
 
-    # Notion 목표 + 진행 중 항목 수집
-    notion_todos = []
+    if not completed_texts:
+        return
+
+    deleted = 0
     for sec in ["목표", "진행"]:
         if sec not in sections:
             continue
@@ -274,9 +291,46 @@ def sync_bidirectional(sections):
             text = get_block_text(b).strip()
             if not text:
                 continue
-            # 비교 시 번호 프리픽스 제거
+            for ct in completed_texts:
+                if is_similar(text, ct):
+                    requests.delete(
+                        f"https://api.notion.com/v1/blocks/{b['id']}",
+                        headers=HEADERS,
+                    )
+                    deleted += 1
+                    break
+
+    if deleted:
+        print(f"notion-sync: 완료 중복 제거 {deleted}건 (목표/진행 측)")
+
+
+# ── 3단계: 작업보고서 ↔ Notion 양방향 동기화 ────────────────
+
+def sync_bidirectional(sections):
+    if "목표" not in sections:
+        return
+
+    report_todos = get_report_todos()
+    report_path = get_report_path()
+
+    # Notion 모든 섹션 항목 수집 (완료 매칭으로 작업보고서 ✅ 동기화에 사용)
+    notion_todos = []
+    for sec in ["목표", "진행", "완료"]:
+        if sec not in sections:
+            continue
+        for b in sections[sec]["blocks"]:
+            if b.get("type") != "to_do":
+                continue
+            text = get_block_text(b).strip()
+            if not text:
+                continue
+            # 비교 시 번호 프리픽스 + 날짜 태그 제거
             clean_text = strip_number_prefix(text)
+            clean_text = re.sub(r"^\[\d{2}/\d{2}\]\s*", "", clean_text)
             checked = b.get("to_do", {}).get("checked", False)
+            # 완료 섹션 항목은 강제 done=True
+            if sec == "완료":
+                checked = True
             notion_todos.append({"text": clean_text, "done": checked, "id": b["id"], "section": sec})
 
     # --- 작업보고서 → Notion 추가 ---
@@ -332,13 +386,14 @@ def sync_bidirectional(sections):
                 continue
 
         for nt in notion_todos:
+            # 완료 항목은 작업보고서에 새로 추가하지 않음 (역사적 완료 누적 방지)
+            if nt["done"]:
+                continue
             if any(is_similar(rt["text"], nt["text"]) for rt in report_todos):
                 continue
 
             max_num += 1
-            if nt["done"]:
-                status = "✅"
-            elif nt.get("section") == "진행":
+            if nt.get("section") == "진행":
                 status = "🔄"
             else:
                 status = "⬜"
@@ -348,22 +403,30 @@ def sync_bidirectional(sections):
                 last_table_line += 1
             added_to_report.append(nt["text"])
 
-        # --- 상태 동기화 ---
+        # --- 상태 동기화 (단방향: Notion → 작업보고서) ---
+        # 정책 (memory: feedback_todo_notion_sync.md):
+        # - 완료 source of truth = Notion (사용자가 어디서나 체크)
+        # - 작업보고서 ✅ → Notion 체크는 차단 (역방향 금지)
         status_synced = []
         for rt in report_todos:
             for nt in notion_todos:
                 if not is_similar(rt["text"], nt["text"]):
                     continue
                 if nt["done"] and not rt["done"]:
-                    lines[rt["line"]] = lines[rt["line"]].replace("⬜", "✅").replace("🔄", "✅")
+                    # ⬜/🔄 → ✅ 변경 + 텍스트 ~~취소선~~ 추가
+                    line = lines[rt["line"]]
+                    line = line.replace("⬜", "✅").replace("🔄", "✅")
+                    # 작업보고서 행: | N | TEXT | 출처 | 상태 |
+                    # TEXT 부분만 ~~로 감싸기 (이미 감싸져 있으면 skip)
+                    parts = line.split("|")
+                    if len(parts) >= 5:
+                        todo_text = parts[2].strip()
+                        if todo_text and not todo_text.startswith("~~"):
+                            parts[2] = f" ~~{todo_text}~~ "
+                            line = "|".join(parts)
+                    lines[rt["line"]] = line
                     status_synced.append(f'{rt["text"]} → ✅')
-                elif rt["done"] and not nt["done"]:
-                    requests.patch(
-                        f'https://api.notion.com/v1/blocks/{nt["id"]}',
-                        headers=HEADERS,
-                        json={"to_do": {"checked": True}},
-                    )
-                    status_synced.append(f'{nt["text"]} → checked')
+                # 역방향(작업보고서 ✅ → Notion checked) 차단 — 정책상 금지
                 break
 
         if added_to_report or status_synced:
@@ -436,7 +499,12 @@ def main():
     sections = get_section_map(blocks)
     cleanup_completed(sections)
 
-    # 3. 작업보고서 ↔ Notion 양방향 동기화
+    # 2.5. 완료 ↔ 목표/진행 중복 제거 (완료가 source of truth)
+    blocks = get_blocks()
+    sections = get_section_map(blocks)
+    dedup_against_completed(sections)
+
+    # 3. 작업보고서 ↔ Notion 동기화 (단방향: Notion 완료 → 작업보고서 ✅)
     blocks = get_blocks()
     sections = get_section_map(blocks)
     sync_bidirectional(sections)
