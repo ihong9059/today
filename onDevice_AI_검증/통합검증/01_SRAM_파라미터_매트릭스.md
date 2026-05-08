@@ -73,13 +73,59 @@ created: 2026-05-07
 
 ## 결과 기록 영역 (검증 후 채움)
 
-### Phase 1 결과 (PC + 분석)
+### Phase 1 결과 (PC + 분석) — 2026-05-08 완료
+
 ```
-microGPT PC 실행 결과: ___
-파라미터 수: ___
-INT8 양자화 후 크기: ___ KB
-PC 추론 시간: ___ ms
+microGPT PC 실행 결과: 성공
+  ─ Loss 3.37 → 2.65 (-21%, 1000 step, ~3~4분)
+  ─ 추론 20 샘플 (영문 이름 패턴 학습 확인)
+  ─ 환경: Windows 11 + Python 3.13.13, 의존성 0 (numpy/torch 없음)
+
+파라미터 수: 4,192 (실측 일치)
+  ─ 공식: (2·vocab + block) × n_embd + n_layer × 12 × n_embd²
+  ─ 현재 (vocab=27, block=16, n_embd=16, n_layer=1):
+      (54+16)×16 + 1×12×256 = 1,120 + 3,072 = 4,192 ✓
+
+양자화 후 크기:
+  ─ FP32: 16.4 KB | SRAM 3.15%
+  ─ INT8:  4.1 KB | SRAM 0.79%
+  ─ INT4:  2.0 KB | SRAM 0.39%
+
+PC 추론 시간 (inference_bench.py, 200 샘플 평균):
+  ─ token당  : 0.510 ms
+  ─ sample(16t)당: 8.16 ms
+  ─ 처리량: 122 samples/sec
+  ─ 환경: Python 순수 (인터프리터 오버헤드 큼)
+
+ESP32-S3 추론 추정 (Xtensa LX7 240MHz, 4000 FLOPS/token):
+  ─ FP32 (FPU 50~100 MFLOPS): token당 0.5~5 ms (보수)
+  ─ INT8 (ESP-DSP SIMD 200~400 MMAC/s): token당 0.1~1 ms
+  ─ 16 토큰 sample: 2~20 ms (인터랙티브 < 1초의 50배 마진)
 ```
+
+### 모델 확장 시뮬레이션 (D — 더 큰 모델 후보)
+
+응원봉 응답 풍부도에 따른 후보. 모두 vocab 27 가정 외엔 한국어 확장.
+
+| 구성 | vocab | block | n_embd | n_layer | 파라미터 | FP32 | INT8 | SRAM% (INT8) | 응답 수준 |
+|---|:-:|:-:|:-:|:-:|---:|---:|---:|:-:|---|
+| **Tiny (검증완)** | 27 | 16 | 16 | 1 | **4,192** | 16.4 KB | 4.1 KB | **0.79%** | 영문 이름 |
+| Small-A | 27 | 32 | 32 | 1 | 15,040 | 60 KB | 15 KB | 2.9% | 짧은 영어 단어 |
+| Small-B | 27 | 32 | 32 | 2 | 27,328 | 109 KB | 27 KB | 5.2% | 영어 짧은 문장 |
+| Medium-A | 100 | 64 | 64 | 2 | 115,200 | 461 KB | 115 KB | 22.2% | 영어 단순 응답 |
+| Medium-B | 256 | 128 | 64 | 4 | 237,568 | 950 KB ⚠ | 238 KB | 45.7% | 영어 단락 |
+| **Korean-Small** | 2,000 | 64 | 32 | 2 | **154,624** | 619 KB ⚠ | 155 KB | **29.7%** | **한국어 짧은 응답** |
+| Korean-Medium | 2,000 | 128 | 64 | 4 | 460,800 | 1.84 MB ❌ | 461 KB | 88.7% ⚠ | 한국어 중간 응답 |
+
+⚠ = SRAM 빠듯 / PSRAM 검토. ❌ = SRAM 초과 (PSRAM 8MB 필수).
+
+**AI FanStick 차세대 권장: Korean-Small (~155K, INT8, SRAM 29.7%)**
+  - 한국어 vocab 2000 (자모 + 응원 도메인 단어)
+  - 응원봉 짧은 응답 ("최고예요", "사랑해요", 5~10토큰) 충분
+  - 칩 변경 불필요: 기존 ESP32-S3 SRAM 520KB 그대로
+  - PSRAM(N16R8) 옵션은 Korean-Medium 이상 시 검토
+
+**검증 1차 (현재) → 4K로 PoC → 2차 학습으로 Korean-Small 확장 → AI FanStick 탑재**
 
 ### Phase 2 결과 (ESP32-S3 실측)
 ```
@@ -92,14 +138,22 @@ Flash 사용: ___ KB / __ MB
 정확도 (PC 대비): __ %
 ```
 
-### 권장 모델 결정
+### 권장 모델 결정 (Phase 1 완료 시점, 2026-05-08)
+
 ```
-AI FanStick 차세대 채택 모델: ___
-   - 파라미터: ___
-   - 양자화: ___
-   - 메모리: SRAM only / PSRAM 사용
-   - 추론 시간: ___ ms (1 토큰)
-   - 도메인: 응원 컨텍스트 (K-POP)
+AI FanStick 차세대 채택 모델: Korean-Small (microGPT 변형)
+   - 파라미터: 약 154,624 (vocab=2000, block=64, n_embd=32, n_layer=2)
+   - 양자화: INT8 (1차) → INT4 검토 (2차, 더 여유 시)
+   - 메모리: SRAM only (155 KB / 520 KB = 29.7%)
+   - 추론 시간 추정: 1 token 0.5~5 ms (FP32 기준), 짧은 응답(10t) < 50 ms
+   - 도메인: 응원 컨텍스트 (K-POP) — 짧은 한국어 응원 표현 우선
+   - 칩 변경 불필요 (기존 ESP32-S3 그대로, PSRAM 8MB N16R8은 오버스펙)
+
+PoC 단계 모델 (현재 검증 완료): microGPT Tiny (4,192 영문 이름)
+   - 의미: "ESP32-S3 + 외부 인터넷 0% AI 가설" 검증 완료
+   - 한계: 영문 이름만 생성, 실제 응답엔 부족
+   - 다음: Phase 2 (보드 도착 후 ESP32-S3 hello_world + Tiny 포팅)
+   - 그 다음: Korean-Small 학습·포팅 (한국어 vocab + 도메인 데이터셋)
 ```
 
 ---
