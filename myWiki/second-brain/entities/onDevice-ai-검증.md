@@ -2,10 +2,10 @@
 title: onDevice AI 검증 vault
 type: entity
 created: 2026-05-07
-updated: 2026-05-07
-status: 🔄 vault 골격 작성 완료, Phase 1A (microGPT PC 실행) 대기
-tags: [vault, On-Device AI, microGPT, AI FanStick, ESP32-S3, Stage4]
-links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code]
+updated: 2026-05-08
+status: ✅ Phase 1A·1B 완료 (PC PoC 확보) / Phase 2 (ESP32-S3 보드 입수 대기) / 마케팅 정지선 = Phase 2 종료
+tags: [vault, On-Device AI, microGPT, AI FanStick, ESP32-S3, Stage4, 정지선]
+links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_응원봉-온디바이스AI-정지선]
 ---
 
 # onDevice AI 검증 vault
@@ -54,13 +54,28 @@ onDevice_AI_검증/
 | Phase | 단계 | 상태 |
 |:-:|---|:-:|
 | 0 | vault 골격 작성 | ✅ (5/7) |
-| 1A | microGPT PC 직접 실행 | ⬜ 대기 (즉시 가능) |
-| 1B | 포팅 가능성 분석 | ⬜ |
+| 1A | microGPT PC 직접 실행 | ✅ (5/8, Loss 3.37→2.65, 4192 params) |
+| 1B | 포팅 가능성 분석 | ✅ (5/8, FP32 16.4KB / INT8 4.1KB / 추론 0.1~5ms 추정) |
+| 1B+ | 모델 확장 시뮬레이션 | ✅ (5/8, Korean-Small 154K params 권장) |
 | 2 | ESP32-S3 보드 입수 | ⬜ (사용자 직접) |
 | 2 | ESP32-S3 hello_world | ⬜ |
 | 2 | microGPT ESP32-S3 포팅 | ⬜ |
-| 3 | AI FanStick SLM 통합 결정 | ⬜ |
-| 3 | Stage 4 영업 자료 갱신 | ⬜ |
+| 3 | AI FanStick SLM 통합 결정 | 🔄 1차 (5/8, Korean-Small 권장 / 칩 변경 불필요) |
+| 3 | Stage 4 영업 자료 갱신 | ✅ 1차 동기화 (5/8, Stage4_OnDeviceAI_검토.md 실측 추가) |
+
+## Phase 1A·1B 검증 결과 요약 (2026-05-08)
+
+| 항목 | 측정/추정 |
+|---|---|
+| microGPT 학습 (PC) | Loss 3.37 → 2.65 (-21%, 1000 step, ~3분 Windows Python 3.13) |
+| 추론 샘플 | 20개 영문 이름 (anna, lara, anton 등 — 패턴 학습 확인) |
+| 파라미터 수 | 4,192 (가이드 일치, 공식 검증) |
+| 메모리 | FP32 16.4KB / INT8 4.1KB / INT4 2.0KB → SRAM 520KB의 0.39~3.15% |
+| PC 추론 시간 | token당 0.510 ms / sample(16t) 8.16 ms (Python 순수) |
+| ESP32-S3 추정 | token당 0.1~5 ms (FPU/SIMD 가정) — 인터랙티브 응답 OK |
+| C++ 포팅 분량 | 약 500~700줄, 1~2주 1인 작업 |
+| **결론** | **포팅 가능 (압도적 여유), Phase 2 즉시 진행 권장** |
+| **AI FanStick 권장 모델** | **Korean-Small (154K params, INT8 155KB) → 칩 변경 불필요** |
 
 ## 검증 → 영업 자산 흐름
 
@@ -82,11 +97,32 @@ onDevice_AI_검증/
 - **본 vault (onDevice_AI_검증)**: 검증 작업 공간 (단기 프로젝트)
 - 둘은 다른 목적 — uttecBizWiki는 사업 운영, 본 vault는 기술 검증
 
+## 마케팅 정지선 (2026-05-08)
+
+본 vault는 **응원봉 양산 적용 트랙이 아니라 "회사의 기술 자산·B2B 영업 무기·PR 콘텐츠" 트랙**으로 운영. 정지선은 **Phase 2 종료**.
+
+| Phase | 상태 | 정지선 |
+|:-:|---|:-:|
+| 1A·1B | ✅ 완료 | — |
+| 2 (보드 1대 PoC) | 🔵 진행 권장 | — |
+| 3 (Korean-Small 154K 양산 적용) | ⛔ 정지 | ★ 정지선 |
+| 3 (양산 칩 ESP32-S3 교체) | ⛔ 정지 | ★ 정지선 |
+| 3 (양산 펌웨어 SLM 통합) | ⛔ 정지 | ★ 정지선 |
+
+근거:
+- microGPT 4K 파라미터 = 응원봉 사용자 기대 응답 품질에 6~7자릿수 미달
+- 응원봉 양산 방향은 newMvp/온디바이스_AI_검토서 결론(스마트폰 Gemma 2B 하이브리드)으로 잠금
+- 양산 BOM +1,500원/대 영향, 사용자 가치 미입증
+
+자세한 의사결정 기록: [[2026-05-08_응원봉-온디바이스AI-정지선]]
+1차 자료: `응원봉/마케팅검토/2026-05-08_온디바이스AI_정렬도검토.md`
+
 ## 관련 페이지
-- [[ai-fanstick]] — 특허 출원 완료, 본 vault 검증 후 차세대 버전 갱신
+- [[ai-fanstick]] — 특허 출원 완료, 양산 방향은 Gemma 2B 하이브리드로 잠금
 - [[uttec-stage-package]] — Stage 4 영업 패키지 (본 vault 검증 결과 반영)
 - [[On-Device AI]] — 핵심 기술 트렌드
 - [[claude-code]] — 본 vault 운영 도구
+- [[2026-05-08_응원봉-온디바이스AI-정지선]] — 정지선 의사결정 기록
 
 ## 메타
 

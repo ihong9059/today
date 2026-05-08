@@ -38,4 +38,20 @@
 
 ---
 
+## [2026-05-08 09:12] update | vault 인프라 보강 — `/biz-*` skill 신설 + 작업보고서 폴더
+
+- 산출:
+  - `.claude/skills/biz-start/SKILL.md` 신규 (vault 외, vault 전용 skill)
+  - `.claude/skills/biz-end/SKILL.md` 신규 (vault 외, vault 전용 skill)
+  - `작업보고서/2026-05-08_작업보고서.md` 신규 (vault 평가 + 갭 6개)
+- 핵심 결론:
+  - vault 진입/종료 트리거 확보. `/vault-*`(onDevice 검증)와 이름 충돌 없이 분리.
+  - 평가 결과 진행 방법 갭 5개(보강 가능) + 1개(보류). 즉시 패치 후보: AI_FanStick "기술 근거" 섹션 / Stage4_패키지 골격 분리 / raw/ template.
+- 다음 액션:
+  1. AI_FanStick.md "기술 근거" 섹션 신규 (검증 흡수 위치 확보)
+  2. Stage4_패키지.md 골격 분리 (검증 결과 기다리지 않아도 가능)
+  3. onDevice 검증 Phase 1A 결과 (5/8~10) 기다린 후 흡수
+
+---
+
 (이후 영업·매출·미팅 이벤트 시간순 추가)

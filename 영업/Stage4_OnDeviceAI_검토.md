@@ -2,11 +2,13 @@
 title: Stage 4 (On-Device AI) 신설 검토 + 4.5-Stage 패키지 확장
 type: business-decision
 created: 2026-05-07
-updated: 2026-05-07
-status: 채택 (4.5-Stage 패키지로 확장)
+updated: 2026-05-08
+status: 채택 (4.5-Stage 패키지로 확장) + Phase 1A·1B 검증 데이터 반영
 related:
   - 영업/Stage0_Core_Services_견적서.md
   - myWiki/second-brain/entities/uttec-stage-package.md
+  - onDevice_AI_검증/microGPT/01_검증절차.md (실증 검증)
+  - onDevice_AI_검증/통합검증/01_SRAM_파라미터_매트릭스.md (실측 매트릭스)
   - 작업보고서_항목: #19 3.5-Stage → 4.5-Stage 확장 검토
 tags: [영업, 패키지, Stage4, On-Device AI, 의사결정]
 ---
@@ -151,6 +153,35 @@ myWiki ontology에 명시된 신설 후보:
 ### 시나리오 C — 임베디드 신생기업 / IoT 스타트업
 - Stage 0 (선택) + **Stage 4 단독** (ESP32-S3 SLM 탑재)
 - 매출 합: 1,500 ~ 2,000만
+- **실증 데이터** (2026-05-08 Phase 1A·1B 완료):
+  - microGPT 4,192 파라미터 PC 직접 실행 성공 (Loss 3.37 → 2.65, ~3분)
+  - INT8 양자화: 4.1 KB / SRAM 520KB의 0.79% (압도적 여유)
+  - ESP32-S3 추정 추론 시간: token당 0.1~5 ms (인터랙티브 < 1초)
+  - C++ 포팅: 약 500~700줄 (1~2주), ESP-DSP SIMD 활용
+  - **차별화 카피**: "1인이 PC에서 직접 검증한 ESP32-S3 SLM 사례 보유"
+
+#### 사례 카드: AI FanStick (응원봉 자체 GPT) — Stage 4 첫 PoC
+
+> **본 사례는 PR·B2B 영업·강의 콘텐츠 트랙 한정**. AI FanStick 응원봉 양산은 별도 트랙(스마트폰 Gemma 2B 하이브리드, `응원봉/newMvp/온디바이스_AI_검토서.md`)으로 잠금. 본 사례는 "ESP32-S3 PoC 보유"의 영업 무기로 활용. 정지선 근거: `myWiki/.../thoughts/2026-05-08_응원봉-온디바이스AI-정지선.md`.
+
+| 항목 | 값 |
+|---|---|
+| **사례명** | "1만원 칩에 GPT 200줄 — UTTEC 한국 최초 시연" |
+| **하드웨어** | ESP32-S3 (1만원 단일 보드) |
+| **모델** | Karpathy microGPT 4,192 파라미터 (Python 200줄) |
+| **PoC 결과 (Phase 1A·1B, 5/8)** | INT8 4.1 KB / SRAM 0.79% / 추론 0.1~5 ms / token |
+| **Phase 2 산출 (보드 도착 후)** | hello_world + C++ 포팅 + LED 시연 영상 1편 |
+| **활용 채널** | Stage 4 영업 (한국기계·임베디드 스타트업) / 강사양성 Day 5 / 호오컨설팅 / 인프런 / 변리사 미팅 (특허 보강) |
+| **첫 영업 시도 시점** | Phase 2 완료 후 (~7월) |
+| **차별화 메시지** | "다른 강사·외주는 보드 검증 없이 제안만. UTTEC는 PC PoC + ESP32-S3 시연 영상 보유" |
+
+**Stage 4 영업 시 사용 시나리오**:
+1. 첫 미팅: PC PoC 결과 표 + 모델 매트릭스 시연 (3분)
+2. 두 번째 미팅: ESP32-S3 보드 시연 영상 (Phase 2 산출, 5분)
+3. 견적 제안: 1,500만 / 4주 (보드 + 모델 fine-tune + 통합 + 매뉴얼)
+4. 후속: 강의 사례·특허 보강으로 신뢰 누적
+
+**활용 금지 카피 (응원봉 C2C용 X)**: "응원봉 자체 AI 비서" — 사용자 기대 격차로 클레임 위험. 본 카피는 B2B/PR/강의 청자에게만.
 
 ### 시나리오 D — 풀스택 (대형 고객)
 - Stage 0 + 1 + 2 + 3 + 4 = **7,300만**
@@ -203,5 +234,8 @@ myWiki ontology에 명시된 신설 후보:
 | 검토 시간 | 2026-05-07 14:50 ~ 15:50 (1시간) |
 | 결정 | 채택 (4.5-Stage 확장) |
 | 매출 임팩트 | 5,800만 → 최대 7,300만 (+26%) |
-| 종속 작업 | microGPT 직접 실행 테스트(#18 ⬜), AI FanStick ESP32-S3 검증 |
+| 종속 작업 | microGPT 직접 실행 테스트(#18 ✅ 5/8 완료), AI FanStick ESP32-S3 검증 (Phase 2 보드 도착 후) |
+| Phase 1A 결과 | Loss 3.37→2.65 / 4192 params / INT8 4.1KB / SRAM 0.79% / 추론 0.5ms·PC |
+| Phase 1B 결과 | ESP32-S3 추정 token당 0.1~5ms / C++ 500~700줄 / 1~2주 / 포팅 가능 |
+| 권장 모델 | Korean-Small 154K params INT8 (한국어 짧은 응원 응답) |
 | myWiki 갱신 | log.md decision, ai-direction.md 판단 로그, entities/uttec-stage-package.md 신설 |

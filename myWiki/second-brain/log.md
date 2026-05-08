@@ -2,10 +2,29 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-07 (obsidian 폴더 6편 시리즈 완성 + 자영업 AI 플랫폼 사업 검토)
+updated: 2026-05-08 (응원봉 ↔ onDevice_AI_검증 정지선 결정 + 마케팅검토 폴더 신설)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-08] research | onDevice AI 확장 영역 시장조사 — 응원봉 부분 통합 5종 + 타 분야 우선 3개
+- 참조: [[ai-fanstick]], [[onDevice-ai-검증]], [[자영업-AI플랫폼]], [[uttec-stage-package]], [[2026-05-08_onDevice-AI-확장영역]]
+- 발견: microGPT/SLM 4K~150K 클래스는 "풀 비서"가 아닌 "전용 작은 모델 5종 조합"으로 위치시켜야 가치 발생
+- 응원봉 시스템 내: Wake Word / KWS / 제스처 / LED 패턴 / VAD 5종 (ESP32-C3 그대로 가능)
+- 응원봉 외 우선순위: ① 자영업 음성주문 키오스크 (obsidian 플랫폼 결합, 6개월 1,500만), ② 산업용 음성명령 HMI (한국기계 Stage 4 첫 사례), ③ 노약자 컴패니언 (정부지원 매칭)
+- 시장 데이터: Voice AI Smart Homes $29.5B (2026, CAGR 47.6%), Smart AI Toy $18.5B → $55.2B (2035), Edge AI 70% voice query on-device
+- 산출물: `응원봉/마케팅검토/2026-05-08_onDevice_AI_확장영역_시장조사.md`, `thoughts/2026-05-08_onDevice-AI-확장영역.md`
+- 다음 점검: 5/15 obsidian 자영업 모듈 보강 / 5/20 한국기계 미팅 자료 / 분기 (2026-08-08)
+
+## [2026-05-08] decision | 응원봉 ↔ onDevice_AI_검증 정지선 = Phase 2 종료
+- 참조: [[ai-fanstick]], [[onDevice-ai-검증]], [[2026-05-08_응원봉-온디바이스AI-정지선]]
+- 판단: microGPT 4K 파라미터로는 응원봉 사용자 기대 응답 품질 미달 (6~7자릿수 체급 차). 양산 BOM +1,500원/대(5만 대 +7,500만)에 사용자 가치 미입증. **검증 vault는 PR·B2B 영업·강의 자산용 트랙으로 분리 운영, 양산 방향은 스마트폰 Gemma 2B 하이브리드 잠금.**
+- 산출물:
+  - `응원봉/마케팅검토/2026-05-08_온디바이스AI_정렬도검토.md` (1차 자료)
+  - `응원봉/마케팅검토/README.md` (폴더 운영 규칙)
+  - `thoughts/2026-05-08_응원봉-온디바이스AI-정지선.md` (인사이트 영구화)
+  - entities/ai-fanstick.md, entities/onDevice-ai-검증.md (정지선 + 카피 분리 정책 추가)
+- 다음 점검 트리거: Phase 2 PoC 완료 / Stage 4 첫 수주 / 분기 정기점검 (2026-08-08, 2026-11-08)
 
 ## [2026-05-07] use | 위시캣 #155091 지원 (AI 오디오 믹싱 PoC, 2,000만/60일)
 - 참조: [[위시캣활동]], [[experience]], [[회사소개]], [[memory-mcp]], [[remotion-project]], [[ai-fanstick]]
