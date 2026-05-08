@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "ea424422d0ee81bd",
+        "id": "f6cec193662df87b",
         "type": "tabs",
         "children": [
           {
-            "id": "c14da7d111a2c96b",
+            "id": "9ead33511e18fdd2",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -176,8 +176,13 @@
       "daily-notes:오늘의 일일 노트 열기": false
     }
   },
-  "active": "c14da7d111a2c96b",
+  "active": "9ead33511e18fdd2",
   "lastOpenFiles": [
+    "second-brain-guide.md",
+    "second-brain/raw/Obsidian Web Clipper.md",
+    "Clippings/김어준의 다스뵈이다 395회 전쟁은 끝나는가, 한동훈 출국금지, 피아노맨이 눈물을 흘린 이유.md",
+    "Clippings/🚀 AI City Builders - AI 1인 기업가 양성 플랫폼.md",
+    "Clippings",
     "second-brain/raw/aiStudy/introductionAi/강사양성_파일럿/README.md",
     "second-brain/raw/aiStudy/introductionAi/강사양성_파일럿/0_시범계획서.md",
     "second-brain/raw/aiStudy/introductionAi/강사양성_파일럿",
@@ -192,7 +197,6 @@
     "second-brain/raw/영업/quotes-test",
     "second-brain/raw/aiStudy/introductionAi/14_On-Device_AI.md",
     "second-brain/raw/위시캣/2026-05/155004_전자칠판챗봇/2026-05-05_프로젝트155004_지원내용.txt",
-    "second-brain/raw/위시캣/2026-05/155004_전자칠판챗봇",
     "second-brain/raw/영업/Stage0_Core_Services_견적서.md",
     "llm-wiki.md",
     "actions-image.md",
@@ -204,16 +208,12 @@
     "second-brain/raw/ai-education-web/node_modules/eslint-plugin-import/README.md",
     "second-brain/projects.md",
     "second-brain/strengths.md",
-    "second-brain-guide.md",
     "second-brain/skills.md",
     "second-brain/me.md",
     "second-brain/ai-direction.md",
     "llm-wiki-ko.md",
     "second-brain/experience.md",
     "second-brain/raw/위시캣/2026-04-22_가능프로젝트.md",
-    "second-brain/thoughts/2026-04-22_사업전환-AI시대.md",
-    "second-brain/entities/회사소개.md",
-    "second-brain/raw/revitaProject/revitaWiki/improvement/gap-negative-testing.md",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/리비타_타워_MCU_PART.png",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/리비타_링크_MCU_PART.png",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/tower_page11_full.png",

@@ -2,8 +2,8 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-05-04
-tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, revitaProject]
+updated: 2026-05-08
+tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject]
 links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활��]
 ---
 
@@ -12,8 +12,8 @@ links: [claude-code, experience, projects, skills, tailscale네트워크, 양산
 ## 한 줄 정의
 IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**.
 
-## 현재 상태 (2026-05-04 동기화)
-- RAK4630 펌웨어 프로젝트 (Zephyr RTOS)
+## 현재 상태 (2026-05-08 동기화)
+- RAK4630/RAK4631 펌웨어 프로젝트 (Zephyr RTOS NCS v2.x)
 - LoRa 프로토콜 v2 (16B 통일) — 양방향 TX/RX, ACK 상태머신 완료
 - KC RS485 Modbus RTU **인증 Testbed 완성** (Modbus 슬레이브 + Flask Web UI 마스터)
 - 회로도/핀매핑 지속 업데이트
@@ -23,6 +23,15 @@ IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 �
 - **MCP23017 드라이버** 완성 (Tower I/O 확장, shadow 복구, mutex 직렬화)
 - **모듈 파일 분리**: Link 20+ 파일, Tower 8+ 파일 아키텍처
 - **펌웨어 정본 문서 5종** 신규 (DM·Power·Sensor·NVS·모듈공통)
+- **STM32 Modbus RTU 리모콘 시뮬 (5/6)**: PC Web UI(Flask :5001) ↔ USB CDC ↔ STM32 Slave 0x20 ↔ CC1101 OOK TX 양방향 통신 완성
+- **CC1101 전수 검사 firmware (5/6)**: nRF52840 + STM32 6항목 + VERSION 판정 (0x04=양품/0x14=클론)
+- **Python 시뮬 스택 (5/6)**: `revita_link_sim/` 26개 테스트 파일 143+ pass
+- **link_v2 신설 (5/8)**: `apps/system/link_v2/` ~10K줄, RAK4631 정식 overlay, 모듈 Kconfig 시도
+- **CC1101 FSK 양방향 통신 (5/8)**: 433.92MHz 2-FSK 38.4kbps STM32↔nRF52840 4B+CRC 검증
+- **BLE Long Range (5/8)**: BLE Coded PHY S=8 (125kbps, 2.4GHz) 검증 — LoRa 대비 통달거리 매우 짧음 확인
+- **솔라 원격 모니터링 (5/8)**: RAK4631 + INA219 + LoRa SF12 (922.1MHz, 22dBm) 근거리 RSSI=-86dBm 성공, Web UI Flask :5002
+- **KC 인증 통합 Link 앱 (5/8)**: `apps/kc_cert_link/link_app/` main.c 1125줄 — LoRa(KC2) + BLE peripheral + RS485 master + 버튼/sleep 통합
+- **정본 문서 재구성 (5/8)**: `doc/revita_link_firmware/` 본문 정리 + `doc/revita_link_firmware_old/` 아카이브 신설
 
 ## 기술 스택
 - RAK4630 (nRF52840 + SX1262 LoRa)
@@ -44,6 +53,8 @@ IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 �
 | 4/27 | CC1101 리모콘 데모 — pca10056 2대 + CC1101 HW-863 2개, TX/RX 433MHz 무선 통신 완성 |
 | 4/24~26 | Sensor RS485 + Valve 3선 H-bridge 모듈 완료 (집중 개발) |
 | 4/27~5/1 | KC 인증 Testbed + MCP23017 + CC1101 OOK Replay 447MHz 성공 + 펌웨어 정본 문서 5종 |
+| 5/6 | STM32 Modbus RTU 리모콘 시뮬 + CC1101 전수검사 + Python 시뮬 스택 (143+ tests) |
+| 5/8 | link_v2 신설 + CC1101 FSK 양방향(433MHz) + BLE LR Coded PHY 검증 + 솔라 INA219 + KC 통합 Link 앱(1125줄) |
 
 ## 코드베이스
 
