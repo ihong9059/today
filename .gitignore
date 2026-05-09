@@ -62,3 +62,55 @@ onDevice_AI_검증/.claude/
 onDevice_AI_검증/.obsidian/
 uttecBizWiki/.claude/
 uttecBizWiki/.obsidian/
+
+# ─────────────────────────────────────────────────────
+# 동영상·오디오 (별도 보관: C:\todo\videos_backup\)
+# ─────────────────────────────────────────────────────
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.m4a
+*.wav
+*.mp3
+*.webm
+*.flv
+*.wmv
+
+# ─────────────────────────────────────────────────────
+# 빌드 산출물 — 재생성 가능 (2026-05-09 정리 후 추가)
+# ─────────────────────────────────────────────────────
+
+# Python
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Flutter / Dart
+**/.dart_tool/
+**/flutter_app/build/
+
+# Android / Gradle / Kotlin
+**/.gradle/
+**/.kotlin/
+**/.idea/workspace.xml
+**/.idea/caches/
+**/local.properties
+**/*.iml
+
+# C++ / CMake
+**/.cxx/
+
+# ESP32 / Arduino firmware build
+aiHardStudy/aiC6LCD/firmware/*/build/
+aiHardStudy/aiEspMini/build/
+
+# Generic build outputs (특정 위치만, 광범위 패턴 회피)
+**/build/output/
+**/build/intermediates/
+**/build/generated/
+**/build/tmp/
+**/build/kotlin/
+**/build/reports/
+**/build/test-results/
+**/build/.transforms/
