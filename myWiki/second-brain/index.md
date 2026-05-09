@@ -2,7 +2,7 @@
 title: 인덱스
 type: index
 created: 2026-04-19
-updated: 2026-05-05
+updated: 2026-05-09
 ---
 
 # Second Brain 위키 인덱스
@@ -62,7 +62,7 @@ updated: 2026-05-05
 | [[aiHardStudy]] | aiHardStudy — 바이브코딩 메인 저장소, 48K 파일 |
 | [[aiStudy]] | AI 교육 커리큘럼 — 4 Track 14주, 딥러닝 실습 |
 | [[remotion-project]] | Remotion 영상 제작 — React 기반 30+ 교육 영상 |
-| [[유투브]] | YouTube 콘텐츠 노트 — AI/하드웨어 영상 요약 |
+| [[유투브]] | YouTube 콘텐츠 노트 — 5 카테고리(LLM위키/Claude_Code/AI영상/AI이론/3Blue1Brown), 카파시 LLM-Wiki + Code w/ Claude 등 핵심 인사이트 누적 |
 | [[동영상]] | ESP32 교육 동영상 — 초등 대상 임베디드 교육 |
 | [[ffmpeg]] | FFmpeg + HongLab — 영상 처리 도구 + AI 코스 |
 | [[gsd]] | GSD 워크플로우 — 프로젝트 관리 학습 + CLI |

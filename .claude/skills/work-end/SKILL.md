@@ -16,6 +16,14 @@ description: 작업 종료 시 사용. 세션 저장, 작업보고서 업데이�
 - 진행 중인 작업
 - 다음에 할 일
 
+### 1-Z. 진행 로그 임시 파일 인계
+
+`_current_progress.md`를 정식 세션 파일로 변환:
+
+1. `C:\todo\today\.claude\sessions\_current_progress.md` 읽기
+2. 그 내용을 정식 세션 파일(아래 2번 단계)의 "상세 진행 로그" 섹션에 그대로 포함
+3. 정식 세션 파일 저장 후 `_current_progress.md` 삭제 (다음 세션의 work-start에서 새로 생성됨)
+
 ### 2. 세션 파일 저장
 
 저장 위치: `C:\todo\today\.claude\sessions\session_[날짜시간].md`

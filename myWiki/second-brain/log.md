@@ -2,10 +2,33 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-09 (이진서 협업 창업 프로젝트 도전 — A안 AI 응원봉 + 도전신청서 초안 + 이미지 시안)
+updated: 2026-05-09 (PM: GitHub 계정 대규모 정리 — today -54%, 26 repo → ext 1개)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-09] cleanup | GitHub 계정 대규모 정리 — today -54%, 26 repo → ext 1개로 통합 (PM)
+- 참조: [[strengths]], [[gaps]]
+- today repo: 동영상 4.71 GB → C:\todo\videos_backup\ 별도 보관, history rewrite (filter-repo) — 로컬 .git 11 GB → 5 GB
+- ext repo 신설 (private monorepo): 26개 repo subtree merge (528 commits, history 보존), filter-repo 적용 후 1.13 GB
+- 원본 26개 영구 삭제 (gh auth refresh -s delete_repo + gh repo delete 26회)
+- 결과: ihong9059 = today + ext 2개, GC 후 합계 약 3 GB 예상 (이전 8.2 GB)
+- 부가 인프라: 응답 진행 로그 분리 정책 + `_current_progress.md` 임시 파일 + work-start/end SKILL 통합
+
+## [2026-05-09] ingest | YouTube 요약 2건 — Claude Code 새 기능 + 카파시 LLM-Wiki 진실
+- 참조: [[유투브]], [[claude-code]], [[ai-direction]], [[obsidian-시리즈-사업화]]
+- 영상 1: **Claude Code 새로운 기능 소개 (Anthropic "Code w/ Claude" Dixon Sai 발표, 24:56)** → `02_Claude_Code/`
+  - 두 축: ① 개발자 경험(Remote Control / TUI Full Screen / Voice / Desktop 사이드바·댓글·**챕터 고정→목차**)
+  - ② **자율성**: Auto Mode 권한 분류기, Worktree 병렬, **Auto Memory(`memory.md` + 점진적 공개)**, `/ultra review`, **Routines**(cron/webhook/API), `/loop`, Tool Search
+  - 핵심: "사용자가 직접 PR을 검토할 필요가 없어졌다" — 4종 세트가 묶여 인간 승인 횟수 자체를 축소
+- 영상 2: **카파시도 못 말한 LLM-Wiki의 진실 (GilliLab 정보관리기술사, 30:00)** → `01_LLM위키_지식관리/`
+  - 진단: 입력 마찰 > 검색 가치 → PKM 90%가 3개월 안에 사망. Karpathy Gist + Garry Tan G-Brain 동시 폭발 = 수렴 진화
+  - 스택: Obsidian + Qdrant + **BGE-M3**(한국어 핵심) + MCP + Ollama vs Cloud LLM
+  - 한국어 함정: KoNLPy 형태소 분석 + 문단 단위 청킹 + 15~20% 오버랩
+  - 벤치: Recall@K — 키워드 0.51 / RAG 0.74, 키워드 강쿼리에선 키워드가 0.89로 우세 → **하이브리드가 답**
+  - 비용: 5,000개 노트 인덱싱 12,000원/회 + 6개월마다 재구성 = 연 24,000원 매몰비용
+  - 결론 3원칙: ① **시스템보다 습관** ② 지속가능성 ∝ 1/마찰 비용 ③ ROI는 **검색 횟수**로 측정
+- 인사이트 연결: [[obsidian-시리즈-사업화]]에서 진단한 "옵시디언 시리즈 사업화 가능성"의 **반대측 데이터** 제공 — 도구가 아니라 *습관 + 큐레이션 비용*이 핵심 변수임을 재확인. 4-Agent 시스템 IP의 차별화 포인트도 *수집보다 큐레이션 자동화*로 좁혀야 함
 
 ## [2026-05-09] decision | 「모두의 창업 프로젝트」 A안(AI 응원봉) 메인 신청 — 이진서 협업
 - 참조: [[ai-fanstick]], [[2026-05-09_이진서협업-창업프로젝트도전]]

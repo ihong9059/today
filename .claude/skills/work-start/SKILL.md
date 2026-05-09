@@ -14,6 +14,21 @@ description: 작업 시작 시 사용. git pull, 세션 복원, 작업보고서 
 git pull
 ```
 
+### 1-A. 진행 로그 임시 파일 초기화 (매 세션 시작)
+
+`_current_progress.md` = 이번 세션 동안 모든 prompt 응답을 누적 기록하는 임시 파일.
+새 세션 시작이므로 **비우거나 새로 생성**한다.
+
+```bash
+powershell -Command "Set-Content 'C:\todo\today\.claude\sessions\_current_progress.md' -Value (\"# Progress Log - \" + (Get-Date -Format 'yyyy-MM-dd HH:mm') + \"`n`n새 세션 시작.`n\")"
+```
+
+이후 매 응답 직후 다음 형식으로 append:
+```markdown
+## [HH:MM] {사용자 prompt 1줄 요약}
+{이번 응답에 표시한 내용 그대로}
+```
+
 ### 1-B. memory 동기화 자동 셋업 (idempotent — 매번 실행 안전)
 
 `~/.claude/projects/<project>/memory/` 가 today repo의 `.claude/memory/`로 link되어 있는지 자동 확인. 없으면 자동 생성하여 양 PC 동기화 활성화.
