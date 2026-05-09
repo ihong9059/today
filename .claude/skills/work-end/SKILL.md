@@ -145,6 +145,36 @@ powershell -ExecutionPolicy Bypass -File "C:\todo\today\myWiki\second-brain\.lin
 - 이슈가 누적되어도 차단하지 않음 (정원사는 권고, 차단 아님)
 - 단 High 이슈는 다음 세션의 work-start 시 우선 표시
 
+### 5-D. log.md 분기 아카이브 트리거 체크 (자동)
+
+`myWiki/second-brain/log.md` 사이즈와 분기 경계를 체크하여 아카이브가 필요한지 판단한다.
+
+**트리거 조건 (둘 중 하나):**
+1. log.md 사이즈 ≥ **500 KB** (= 512000 bytes)
+2. 직전 분기 종료일(3/31, 6/30, 9/30, 12/31) + 7일 경과 + 활성 log.md에 직전 분기 항목 잔존
+
+**체크 명령:**
+```bash
+powershell -ExecutionPolicy Bypass -File "C:\todo\today\myWiki\second-brain\log-archive\_check-size.ps1"
+```
+
+**판단 후 행동:**
+- **트리거 미도달** → 침묵 (보고 생략)
+- **트리거 도달** → 사용자에게 알림:
+  ```
+  📦 log.md 분기 아카이브 트리거 도달
+  - 사이즈: NNN KB / 500 KB 임계값
+  - 권장: log-archive/YYYY-QN.md 분리 작업 진행
+  - 절차: CLAUDE.md "log.md 분기 아카이브 정책" 섹션 참조
+  ```
+- 사용자 결정에 따라 분리 작업 수행 (작업 자체는 자동화하지 않음 — 데이터 안전성 우선)
+
+**분리 작업 가이드 (트리거 시 사용자에게 안내):**
+1. log.md에서 분리 대상 분기(Q1=1~3월, Q2=4~6월, Q3=7~9월, Q4=10~12월) 항목 추출
+2. `log-archive/YYYY-QN.md` 신규 생성 (프론트매터 포함)
+3. log.md에서 해당 항목 제거, `updated:` 갱신, "분리: YYYY-QN → log-archive" 메모 1줄
+4. work-end git commit에 함께 포함
+
 ### 6. Notion "오늘 할 일" 완료 항목 정리
 
 Notion "오늘 할 일" 페이지(ID: `349cb620-8c2b-817d-a7fe-c887ecdee292`)의 완료 섹션에서 **2일 이상 경과한 항목을 자동 삭제**한다.
