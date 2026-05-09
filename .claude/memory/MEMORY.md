@@ -1,0 +1,16 @@
+- [사용자 본명 — 홍광선](user_name_hong_kwangsun.md) — UTTEC 대표, 이메일 prefix에서 이름 추정 금지 (이형근 X)
+- [위시캣 회사명 금지](feedback_wishket_no_company_name.md) — 지원서에 UTTEC/유티즘 등 회사명 노출 시 페널티, 마스킹 필수
+- [사전빌드 앱은 Flutter만](project_prebuild_flutter_only.md) — Kotlin(PrebuiltApp) 삭제됨, Flutter(flutter_app)만 사용
+- [동시 빌드 문제](project_prebuild_concurrent_build.md) — 여러 학생 동시 새 요청 시 빌드 충돌, 반드시 해결 필요
+- [기존 코드 먼저 참조](feedback_reuse_existing_code.md) — 동작하는 코드가 있으면 새로 작성하지 말고 기존 패턴 복사
+- [Google Calendar MCP 설정](reference_google_calendar_mcp.md) — @cocal/google-calendar-mcp OAuth 경로, 계정 ihong9059, 프로젝트 uttecproject
+- [2대 PC 동시 사용](project_dual_pc.md) — today 저장소를 2대 PC에서 동시 사용, git 충돌 주의
+- [UTTEC 보드 명칭](feedback_uttec_board_naming.md) — aiHardStudy 내 ESP32 보드 → UTTEC 보드로 명칭 통일
+- [할일 Notion 동기화](feedback_todo_notion_sync.md) — 작업보고서 할일과 Notion "오늘 할 일"을 항상 일치시킴
+- [myWiki 반영 필수](feedback_mywiki_sync.md) — 작업 중/종료 시 myWiki second-brain에 반드시 반영, 누락 금지
+- [브라우저 Chrome 선호](feedback_browser_chrome.md) — URL 열 때 chrome.exe 명시 호출 (기본 브라우저는 Edge라 그냥 열면 Edge로 뜸)
+- [Memory MCP 설치](reference_memory_mcp.md) — Anthropic 공식 지식 그래프 서버, myWiki/ontology/memory.json 저장, Claude Code 등록 완료 (2026-05-05)
+- [PDF 이메일 자동화 Hybrid](feedback_pdf_email_hybrid.md) — 한글 PDF는 PC Chrome headless 렌더 + n8n 서버 SMTP 발송 (서버 도구 부재 + Windows 폰트 우수)
+- [uttec@192.168.0.23 서버](reference_uttec_192_168_0_23.md) — Debian 13 ARM64 LAN 서버, SSH 키 등록·Claude Code v2.1.132 설치 (2026-05-07)
+- [3-vault 분리 운영](project_3vault_분리.md) — myWiki(통합) + uttecBizWiki(onDevice AI 제품 비즈니스) + onDevice_AI_검증(기술), 결정 트리로 작업 분류 (2026-05-07)
+- [vault scope 격리](feedback_vault_scope_isolation.md) — vault 안 작업 시 외부 자산 자동 동기화 금지, /vault-end ≠ /work-end (책임 분리)

@@ -14,6 +14,26 @@ description: 작업 시작 시 사용. git pull, 세션 복원, 작업보고서 
 git pull
 ```
 
+### 1-B. memory 동기화 자동 셋업 (idempotent — 매번 실행 안전)
+
+`~/.claude/projects/<project>/memory/` 가 today repo의 `.claude/memory/`로 link되어 있는지 자동 확인. 없으면 자동 생성하여 양 PC 동기화 활성화.
+
+```bash
+python "C:\todo\today\.claude\hooks\setup-memory-sync.py"
+```
+
+(Mac/Linux의 경우):
+```bash
+python3 ~/path/to/today/.claude/hooks/setup-memory-sync.py
+```
+
+**판단 후 행동:**
+- `STATUS: Already configured correctly` → 침묵 (보고 생략)
+- `SUCCESS: Memory sync setup complete` → "✅ 메모리 동기화 셋업 완료 (첫 실행)" 1줄 알림
+- `ERROR` → 사용자에게 출력 + 수동 가이드 (`.claude/memory/README.md` 참조)
+
+이 단계는 **신규 PC에서 첫 work-start 시 자동으로 link 생성**하여, 사용자가 별도 작업 없이 메모리 동기화가 즉시 시작되도록 한다.
+
 ### 2. 최근 세션 파일 확인 및 복원
 
 ```bash
