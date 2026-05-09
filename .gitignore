@@ -37,3 +37,27 @@ kaggle.json
 aiHardStudy/firmware/*/build/
 aiHardStudy/prototype/__pycache__/
 aiHardStudy/prototype/_*.json
+
+# ─────────────────────────────────────────────────────
+# Build artifacts (added 2026-05-09)
+# ─────────────────────────────────────────────────────
+
+# Android (FanStickApp 등 응원봉 mvp 빌드)
+**/FanStickApp/build/
+**/FanStickApp/app/build/
+**/FanStickApp/.gradle/
+**/FanStickApp/.idea/
+**/FanStickApp/local.properties
+**/FanStickApp/*.iml
+
+# Kotlin (Flutter android 등)
+**/.kotlin/
+
+# C/C++ CMake build cache
+**/.cxx/
+
+# Vault — 별도 vault 분리 운영 (work-end로 commit 안 함)
+onDevice_AI_검증/.claude/
+onDevice_AI_검증/.obsidian/
+uttecBizWiki/.claude/
+uttecBizWiki/.obsidian/
