@@ -2,10 +2,34 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-09 (PM: GitHub 계정 대규모 정리 — today -54%, 26 repo → ext 1개)
+updated: 2026-05-09 (PM2: oldProject repo 신설 + 4 entities + 양산 6개 갱신)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-09] research | UTTEC BLE Module Zephyr 펌웨어 + E22 LoRa 통합 시도 (EVE)
+- 참조: [[ai-fanstick]], [[양산제품]], [[oldProject]], [[skills]]
+- bleModule(nRF52832-QFAA, 2022) Zephyr/NCS 첫 실전 펌웨어 작성: LED blink (P0.18/P0.23 SCAN으로 식별 — 회로도 라벨과 다름) + SW-UART (SPI MOSI 트릭, Bresenham 패턴 0.37% 오차로 115,274 baud 구현)
+- E22-400T30D LoRa 모듈 통합 시도: bleModule J28 odd pins 1:1 결선, UART 핀 스왑(P0.08 TX/P0.22 RX), M0/M1/AUX GPIO 제어
+- Hello LoRa 송신 펌웨어 작동 (AUX 1→0 확인) — 다만 RF 실측은 미검증 (SDR/수신기 부재, 사용자 정정으로 솔직히 인정)
+- E22 Config 진단 시도: 4-mode 매트릭스로 **M0/M1 wiring SWAP 발견** (P0.13=M0, P0.11=M1), 12개 AT 명령(C3/C1/C2/Hayes/ASCII) 모두 Sleep 모드 무응답 → deep sleep 또는 lock 상태 추정
+- 환경: Zephyr v4.3.99 mainline + NCS toolchain b620d30767, PCA10100 J-Link OB로 외부 nRF52832 SWD 플래시 검증, APPROTECT는 nrfjprog --recover로 해결
+- 인사이트: 회로도 PDF 텍스트 추출만으론 핀 식별 부정확 (시각 위치 손실), SCAN 모드(모든 GPIO 동시 토글)가 강력한 진단 도구. EBYTE 모듈 라벨과 실제 wire가 swap될 수 있음.
+- 다음 단계: EBYTE RF Setting Software로 PC 직결 진단 또는 두 번째 E22 페어링 시도
+
+## [2026-05-09] ingest | oldProject 아카이브 신설 — 4 entities 추가 + 양산 5→6개 갱신 (PM2)
+- 참조: [[oldProject]], [[일본-시장]], [[whybiz-tracker]], [[군사업]], [[ai-fanstick]], [[양산제품]], [[strengths]]
+- 다운로드 폴더에서 5개 분류 큐레이션 → 1,200 files / 574.6 MB 보존
+  - 태양광(26MB), 일본/도카이(50MB) + AMANO(13MB), rfTech(406MB), whybiz(78MB), 회로도(0.7MB)
+- 큐레이션 정책: 외부 공개 자료(WeAct·ABOV·Quectel Qnavigator) 제외 + 명백한 중복 제외 + 시연 영상 추정 ppt 제외 → 1.12GB → 575MB (49% 절감)
+- GitHub 신규 repo: `ihong9059/oldProject` (private, 단일 push 성공) → ihong9059 = today + ext + oldProject 3개 체계
+- today repo `.gitignore` 처리: `oldProject/` 분리 추적
+- **신규 entities 4건**: [[oldProject]] (인덱스), [[일본-시장]] (영업), [[whybiz-tracker]] (IoT IP), [[군사업]] (방산 IP)
+- **기존 entities 보강 3건**:
+  - [[ai-fanstick]] — 응원봉 특허_now 60건/200MB IP 백업 섹션 추가
+  - [[양산제품]] — AMANO 일본 BLE Mesh 3,800대를 **6번째 양산 사례**로 추가 (5개 → 6개)
+  - [[strengths]] — "양산 5종 → 6종" + "일본 직거래 양산" 진정성 강조
+- 인사이트: 단순 보관(repo)에서 **검색·연결 가능한 영업·기술 자산**으로 격상. 위키에서 "AMANO" "응원봉 특허" "ITM-G3" 검색 시 즉시 hit + 원본 파일 위치 안내
 
 ## [2026-05-09] cleanup | GitHub 계정 대규모 정리 — today -54%, 26 repo → ext 1개로 통합 (PM)
 - 참조: [[strengths]], [[gaps]]

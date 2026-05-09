@@ -4,7 +4,7 @@ type: entity
 created: 2026-04-19
 updated: 2026-05-09
 tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트]
-links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai-검증, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전]
+links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai-검증, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전]
 ---
 
 # AI FanStick (응원봉)
@@ -84,6 +84,17 @@ AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타�
 - 도전신청서 초안: `이진서/창업project/A안_도전신청서_초안_v1.md`
 - 종합 정리: `이진서/창업project/창업아이템_종합정리.md`
 
+## 특허 IP 백업 (2026-05-09 추가)
+
+응원봉 특허 출원 자료 + 검토 자료 + 분석 자료 일체를 [[oldProject]] 아카이브에 보존.
+
+| 폴더 | 위치 | 내용 |
+|---|---|---|
+| 응원봉특허_now | `oldProject/rfTech/응원봉/응원봉특허_now/` (60 files / 200 MB) | 최신 특허 출원 자료 본 (확정본) |
+| 루트 docx/xlsx 7건 | `oldProject/rfTech/응원봉/` | UTTEC 응원봉 System.pptx, 특허 분석.docx, 응원봉특허list.xlsx, 응원봉 사업 계획서.docx 등 |
+
+큐레이션 정책에 따라 `final특허/`, `검토특허/`, `응원봉특허/` (구버전 3개)는 제외. `_now` 버전만 단일 source of truth로 유지.
+
 ## 관련 페이지
 - [[me]]: 사업가/발명가 정체성
 - [[projects]]: 완료 프로젝트
@@ -92,4 +103,5 @@ AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타�
 - [[strengths]]: 폭발적 실행 속도 증거
 - [[experience]]: 제품화 경험
 - [[onDevice-ai-검증]]: 별도 트랙 (PR·B2B·강의 자산용)
+- [[oldProject]]: 응원봉 특허 IP 백업 (2026-05-09)
 - [[2026-05-08_응원봉-온디바이스AI-정지선]]: 정지선 의사결정 기록

@@ -33,6 +33,7 @@ pem/
 samsung/DrivingLicenseWeb/
 sam/prompt.txt
 ubuntu-s-2vcpu-4gb-sgp1-01/
+oldProject/
 kaggle.json
 !ai-practice/docs/kaggle.json
 aiHardStudy/firmware/*/build/

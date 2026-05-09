@@ -80,6 +80,10 @@ updated: 2026-05-09
 | [[정부지원_교육사업]] | 정부지원 9채널 매트릭스 — 톱 3 즉시 진입(디지털배움터·서울시·NIPA AX 바우처) + 4건 자격 보강 후 + 2건 장기 |
 | [[onDevice-ai-검증]] | onDevice_AI_검증 vault — microGPT + AI FanStick 차세대 + Stage 4 통합 검증, ESP32-S3 SRAM 520KB 1%로 microGPT 탑재 가설 |
 | [[uttecBizWiki]] | uttecBizWiki vault — **onDevice AI 제품(AI FanStick + Stage 4) 비즈니스 전용**. 다른 사업 영역 미포함. onDevice_AI_검증과 기술↔비즈니스 한 쌍 |
+| [[oldProject]] | UTTEC 과거 프로젝트 아카이브 — 1,200 files / 575 MB (태양광·일본·rfTech·whybiz·회로도). private repo `ihong9059/oldProject` |
+| [[일본-시장]] | 일본 영업 트랙 — AMANO BLE Mesh 3,800대 양산(nRF52832) + 도카이 자전거주차장 + Patron 제안서 |
+| [[whybiz-tracker]] | whybiz GPS Tracker IoT IP — LTE+GPS+Zigbee+LoRa+Modbus+BLE 모듈러 솔루션, 모듈 즉시 재조합 가능 |
+| [[군사업]] | 군 사업 IP — ITM-G3 RF 통신기(Qorvo QPG6105) + 60Channel 군대충전기 + 함상통신기·지뢰감시센서 |
 
 ## 생각 (Thoughts)
 | 페이지 | 요약 |
