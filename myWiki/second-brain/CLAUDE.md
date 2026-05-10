@@ -47,22 +47,14 @@ second-brain/
     ├── projects/      # 프로젝트별 기획서, 설계서, 결과물
     ├── career/        # 이력서, 자격증, 교육 이수, 경력 증명
     ├── 영업/          # 마케팅 계획서, 경쟁사 분석, 정부지원 보고서 (→ junction)
-    ├── 외벽로봇/       # 설계서, 컨셉 분석, ESP32 리서치 (→ junction)
-    ├── 충전기/         # PowerDock Pro 사업계획서, 디자인 (→ junction)
-    ├── ai-education-web/ # AI 교육 웹 소스 코드 (→ junction)
-    ├── aiHardStudy/   # 바이브코딩 메인 저장소 48K 파일 (→ junction)
     ├── cuda/          # CUDA 6주 커리큘럼 (→ junction)
     ├── doctor/        # 의료AI, SNOMED CT, 병원 인수 (→ junction)
-    ├── homepage/      # UTTEC 홈페이지 Next.js (→ junction)
-    ├── revita/        # REVITA IoT 펌웨어 (→ junction)
     ├── smartFactory/  # 스마트팩토리 AI 모델/제안서 (→ junction)
     ├── tailscale/     # 장비 네트워크 가이드 (→ junction)
     ├── xerix/         # MFC Controller 제안서 (→ junction)
     ├── webServer/     # 서버 5대 현황 문서 (→ junction, 2026-04-21 추가)
     ├── 응원봉/         # AI FanStick 제품 (→ junction, 2026-04-22 추가)
     ├── notion/        # Notion 업로드 스크립트 (→ junction)
-    ├── aiStudy/       # AI 교육 커리큘럼 4 Track + 레벨별 실습 (→ junction, 2026-04-22 추가)
-    ├── remotion-project/ # Remotion 영상 제작 파이프라인 (→ junction, 2026-04-22 추가)
     ├── 유투브/         # YouTube 영상 요약/분석 노트 (→ junction, 2026-04-22 추가)
     ├── 동영상/         # ESP32 교육 동영상 자료 (→ junction, 2026-04-22 추가)
     ├── ffmpeg/        # FFmpeg 도구 + HongLab AI 코스 (→ junction, 2026-04-22 추가)
@@ -71,7 +63,7 @@ second-brain/
     ├── revitaProject/ # REVITA 프로젝트 전체 (→ junction C:\todo\revitaProject, 2026-04-22 추가)
     ├── 회사소개/       # UTTEC 회사소개서 PDF/HTML (→ junction homepage/회사소개, 2026-04-22 추가)
     ├── multiCore/     # 멀티코어 Claude 교육 시스템 (→ junction, 2026-04-28 추가)
-    ├── onDevice_AI_검증/ # ESP32-S3 + microGPT + AI FanStick 차세대 기술 검증 (→ junction, 2026-05-07 추가)
+    ├── onDevice_AI/   # ESP32-S3 + microGPT + AI FanStick 차세대 기술 검증 + 시장조사 (→ junction, 2026-05-07 추가, 2026-05-10 rename)
     ├── uttecBizWiki/  # onDevice AI 제품 비즈니스 전용 vault (→ junction, 2026-05-07 추가)
     └── articles/      # 인상 깊은 기사, 영상 메모, 스크랩
 ```

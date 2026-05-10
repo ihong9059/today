@@ -3,10 +3,10 @@
   "autoCommitMessage": "wiki: {{date}} 자동 백업",
   "commitMessageScript": "",
   "commitDateFormat": "YYYY-MM-DD HH:mm:ss",
-  "autoSaveInterval": 10,
-  "autoPushInterval": 10,
-  "autoPullInterval": 5,
-  "autoPullOnBoot": true,
+  "autoSaveInterval": 0,
+  "autoPushInterval": 0,
+  "autoPullInterval": 0,
+  "autoPullOnBoot": false,
   "autoCommitOnlyStaged": false,
   "disablePush": false,
   "pullBeforePush": true,
@@ -63,8 +63,8 @@
     "ignoreWhitespace": false,
     "gutterSpacingFallbackLength": 5
   },
-  "autoPushIntervalMinutes": 10,
-  "autoSaveIntervalMinutes": 10,
-  "autoPullIntervalMinutes": 5,
-  "pushOnAutoCommit": true
+  "autoPushIntervalMinutes": 0,
+  "autoSaveIntervalMinutes": 0,
+  "autoPullIntervalMinutes": 0,
+  "pushOnAutoCommit": false
 }

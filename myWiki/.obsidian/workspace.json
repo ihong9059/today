@@ -11,10 +11,14 @@
             "id": "9ead33511e18fdd2",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "작업보고서/2026-04-29/작업일지.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "새 탭"
+              "title": "작업일지"
             }
           }
         ]
@@ -74,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 250.5
+    "width": 200
   },
   "right": {
     "id": "08c2ab39686b73f7",
@@ -173,11 +177,15 @@
       "templates:템플릿 삽입": false,
       "command-palette:명령어 팔레트 열기": false,
       "bases:새 베이스 생성하기": false,
-      "daily-notes:오늘의 일일 노트 열기": false
+      "daily-notes:오늘의 일일 노트 열기": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "obsidian-git:Open Git source control": false,
+      "terminal:Open terminal": false
     }
   },
   "active": "9ead33511e18fdd2",
   "lastOpenFiles": [
+    "second-brain/goals.md",
     "second-brain-guide.md",
     "second-brain/raw/Obsidian Web Clipper.md",
     "Clippings/김어준의 다스뵈이다 395회 전쟁은 끝나는가, 한동훈 출국금지, 피아노맨이 눈물을 흘린 이유.md",
@@ -213,7 +221,6 @@
     "second-brain/ai-direction.md",
     "llm-wiki-ko.md",
     "second-brain/experience.md",
-    "second-brain/raw/위시캣/2026-04-22_가능프로젝트.md",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/리비타_타워_MCU_PART.png",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/리비타_링크_MCU_PART.png",
     "second-brain/raw/revitaProject/zephyr_workspace/apps/회로도/tower_page11_full.png",

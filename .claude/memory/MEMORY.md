@@ -6,7 +6,7 @@
 - [Google Calendar MCP 설정](reference_google_calendar_mcp.md) — @cocal/google-calendar-mcp OAuth 경로, 계정 ihong9059, 프로젝트 uttecproject
 - [2대 PC 동시 사용](project_dual_pc.md) — today 저장소를 2대 PC에서 동시 사용, git 충돌 주의
 - [UTTEC 보드 명칭](feedback_uttec_board_naming.md) — aiHardStudy 내 ESP32 보드 → UTTEC 보드로 명칭 통일
-- [할일 Notion 동기화](feedback_todo_notion_sync.md) — 작업보고서 할일과 Notion "오늘 할 일"을 항상 일치시킴
+- [할일 Notion 동기화 — 단방향](feedback_todo_notion_sync.md) — **생성=작업보고서 source / 완료=Notion source**. Claude는 작업보고서 ⬜→✅ 임의 변경 절대 금지. Notion에서 사용자 체크 시에만 작업보고서 ✅ 전파
 - [myWiki 반영 필수](feedback_mywiki_sync.md) — 작업 중/종료 시 myWiki second-brain에 반드시 반영, 누락 금지
 - [브라우저 Chrome 선호](feedback_browser_chrome.md) — URL 열 때 chrome.exe 명시 호출 (기본 브라우저는 Edge라 그냥 열면 Edge로 뜸)
 - [Memory MCP 설치](reference_memory_mcp.md) — Anthropic 공식 지식 그래프 서버, myWiki/ontology/memory.json 저장, Claude Code 등록 완료 (2026-05-05)

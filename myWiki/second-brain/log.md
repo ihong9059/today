@@ -7,6 +7,28 @@ updated: 2026-05-10 (onDevice_AI_검증 → onDevice_AI rename + gsd·nlm·twinC
 
 # Second Brain 위키 로그
 
+## [2026-05-10] performance | Obsidian vault 인덱싱 최적화 — 무거운 junction 6개 제거
+
+- 참조: [[skills]], [[ai-education-web]], [[aiHardStudy]], [[remotion-project]], [[homepage]], [[revita]], [[aiStudy]]
+- 동기: Obsidian vault 로드 시 hang (CPU 154%, 인덱싱 130K 파일). userIgnoreFilters는 인덱싱만 막고 filesystem walk는 막지 못해 raw/ 안 130K 파일 traversal이 영구 부담.
+- 처리:
+  - **junction 6개 제거** (target 폴더 보존):
+    - aiHardStudy (51,213 파일, 99.8% 코드)
+    - ai-education-web (31,449 파일, 97.6% 코드)
+    - aiStudy (14,715 파일, 98.9% 빌드 산출물)
+    - remotion-project (12,746 파일, 97.4% 빌드)
+    - homepage (9,802 파일, 98.6% Next.js)
+    - revita (7,832 파일, 99.5% 빌드)
+  - **myWiki/CLAUDE.md raw/ 트리 정리**: 위 6개 + 이전 dangling 외벽로봇/충전기 항목 제거, onDevice_AI_검증 → onDevice_AI 정정
+  - **app.json userIgnoreFilters 강화** (40 → 101 패턴): node_modules, .next, build, dist, .gradle, .dart_tool, intermediates 등 폴더 단위 ignore 추가
+  - **obsidian-git 자동화 비활성**: autoPullOnBoot=false, autoPullInterval=0, autoPushInterval=0, autoSaveInterval=0, pushOnAutoCommit=false (vault root가 today repo 안이라 git status 비용 큼)
+- 효과: vault 파일 130,472 → **5,445** (96% 감소), Obsidian 로드 10~20분 → 수 초
+- 영향 없음:
+  - 6 폴더의 target 보존 (today/aiHardStudy/ 등 그대로) — Claude는 직접 경로 접근
+  - entity 파일 (`entities/aiHardStudy.md` 등) 영향 없음 — wikilink는 entity .md 파일을 가리킴
+  - 노트 작성·그래프·검색·dataview 동일 동작 (.md 노트 2.6K 그대로 인덱싱)
+- 원칙: vault에는 **노트 가치 있는 자료**만 junction. 코드 산출물·빌드 결과는 vault 밖 직접 경로.
+
 ## [2026-05-10] rename | onDevice_AI_검증 → onDevice_AI (vault 폴더명 + entity rename)
 
 - 참조: [[onDevice-ai]], [[uttecBizWiki]], [[ai-fanstick]]
