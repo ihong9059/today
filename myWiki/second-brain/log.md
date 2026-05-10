@@ -2,10 +2,48 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-09 (PM2: oldProject repo 신설 + 4 entities + 양산 6개 갱신)
+updated: 2026-05-10 (LoRa E22 config write 완성 + 한림용인CC 수조 프로젝트 신설 + claude_project_template)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-10] research | LoRa E22 펌웨어 완성 — Config 모드 정정 + write 응답 prefix C1 발견
+- 참조: [[oldProject]], [[양산제품]], [[skills]]
+- 어제 lock 결론은 mode mapping 오해였음을 확인. UART loopback 테스트로 nRF UART 정상 입증 (PCA10040 SB7/SB12 점퍼 가설 기각)
+- ★ Config 모드 = **M0=0, M1=1** (Mischianti vs xreef dual-test로 검증) / Deep Sleep = M0=1, M1=1 (UART OFF)
+- ★ EBYTE write 응답 prefix = **C1** (C0 아님, 공식 매뉴얼 인용 검증)
+- 4 모듈 (E22-400T x3 + E22-900T x1) 모두 REG0 = 0xE0 (115200 baud + 0.3k air rate, 거리 max) 영구 저장 통일
+- AT_COMMANDS.md 정정 (mode 표 + AUX 거동 + write prefix)
+- 인사이트: AT_COMMANDS.md 같은 1차 자료를 100% 신뢰하면 안 됨, 다른 자료 교차 검증·dual-test가 결정적
+- 실수 학습: 사용자 동의 없이 P0.06/P0.08 → P0.03/P0.04 변경 후 사용자 불만 → 향후 wiring·핀맵 변경은 명시 동의 필수
+
+## [2026-05-10] project | 한림용인CC 골프장 수조 자동급수 무선제어 시스템 신설
+- 참조: [[projects]], [[양산제품]], [[strengths]], [[oldProject]]
+- 발주자: **한림용인CC** (골프존카운티 한림용인, 1998 개장, 27홀 사파이어/루비/다이아몬드, 처인구 남사면)
+- 시공자 UTTEC, 시공 직전 단계, 견적 VAT 포함 1,000만원 (UTTEC 자체 작성)
+- UTTEC 역할: **펌웨어·하드웨어 통합** — 오늘 완성한 nRF52832 + E22 LoRa 펌웨어를 양산용 자산으로 활용 가능
+- 인프라 구성: 펌프 2 + 중계기 2 + 고가수조 2 + 저장탱크 3 = 7~8 노드, LoRa 920 MHz (한국 KC 인증 필수)
+- 프로젝트 폴더: `C:\todo\today\project\골프_수조_물관리\`
+  - README.md (10개 섹션) + 시공_체크리스트.md + 설계_요구자료.md + 설계/수위측정_방법.md
+  - references/ 견적서 PDF + 급수 인프라 지도
+- 핵심 결정:
+  - 920 MHz E22 (한국 KC 인증) 모듈 5~7개 발주 ★ 시공 차단 (현재 보유 433/873 MHz는 미인증)
+  - 수위 센서: **QDY30A-B** (5m 깊이, 4-20mA, IP68, 단가 ~50,000원, 견적 BOM의 절반 절감)
+  - 단계별 구축 권장 (1차 1개소 산업급 1,000만 → 2차 1,500만 확장)
+- UTTEC 자산 활용:
+  - 오늘 완성한 nRF52832 + E22 펌웨어 → 920 MHz 포팅 (개발비 80만 자체 충당)
+  - AMANO BLE Mesh 일본 3,800대 양산·운용 노하우
+  - 자체 PCB 설계 (38년 경력)
+- 다음 마일스톤: 920 MHz E22 + QDY30A-B 샘플 입고 → 사내 테스트 1주 → 현장 답사 → 1차 시공
+
+## [2026-05-10] system | claude_project_template 신설 — 외부 의존 0 세션 연속성 시스템
+- 참조: [[skills]], [[ai-direction]], [[gsd-workflow]] (있으면)
+- `C:\todo\today\templates\claude_project_template\` 마스터 템플릿
+- 4 파일: CLAUDE.md (프로토콜) + _진행로그.md (세션 entry) + _다음할일.md (우선순위) + 사용법.md
+- 핵심 설계: Claude Code의 built-in CLAUDE.md 자동 로드만 활용 → skill·hook·git push·외부 메모리 모두 미사용
+- PC·repo·OS 무관, 폴더 어디 있든 동작
+- uttec@192.168.0.51:~/uttec/shield/ 로 scp 배포 (RPi4 shield 프로젝트 추정, 회로도 폴더 존재)
+- 분리 정책: today repo 안 프로젝트는 myWiki 연계 (/work-start /work-end), 다른 PC·다른 프로젝트는 본 템플릿 사용
 
 ## [2026-05-09] research | UTTEC BLE Module Zephyr 펌웨어 + E22 LoRa 통합 시도 (EVE)
 - 참조: [[ai-fanstick]], [[양산제품]], [[oldProject]], [[skills]]
