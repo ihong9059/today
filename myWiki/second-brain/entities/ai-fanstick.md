@@ -1,10 +1,10 @@
-﻿---
+---
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
 updated: 2026-05-09
 tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트]
-links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai-검증, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전]
+links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전]
 ---
 
 # AI FanStick (응원봉)
@@ -46,7 +46,7 @@ AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타�
 
 근거:
 - newMvp/온디바이스_AI_검토서(2026-02-27) §10 결론과 일치
-- onDevice_AI_검증(2026-05-08) microGPT 4K 파라미터 = 응원봉 사용자 기대 응답 품질에 6~7자릿수 미달
+- onDevice_AI(2026-05-08) microGPT 4K 파라미터 = 응원봉 사용자 기대 응답 품질에 6~7자릿수 미달
 - 양산 칩 교체(ESP32-C3 → ESP32-S3-N16R8) +1,500원/대 = 5만 대 +7,500만 BOM, 사용자 가치 미입증
 
 자세한 정지선: [[2026-05-08_응원봉-온디바이스AI-정지선]]
@@ -102,6 +102,6 @@ AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타�
 - [[ai-direction]]: AI+HW 제품화 사례
 - [[strengths]]: 폭발적 실행 속도 증거
 - [[experience]]: 제품화 경험
-- [[onDevice-ai-검증]]: 별도 트랙 (PR·B2B·강의 자산용)
+- [[onDevice-ai]]: 별도 트랙 (PR·B2B·강의 자산용)
 - [[oldProject]]: 응원봉 특허 IP 백업 (2026-05-09)
 - [[2026-05-08_응원봉-온디바이스AI-정지선]]: 정지선 의사결정 기록

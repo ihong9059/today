@@ -42,7 +42,7 @@
 | 외부 vault | 본 vault에서 참조 |
 |---|---|
 | `myWiki/second-brain/` | 큰그림 + 다른 영역 (위시캣·강사양성·정부지원 등) |
-| `onDevice_AI_검증/` | **기술 검증 결과 → 본 vault entities/ "기술 근거"** |
+| `onDevice_AI/` | **기술 검증 결과 → 본 vault entities/ "기술 근거"** |
 | `영업/Stage4_OnDeviceAI_검토.md` | Stage 4 1차 영업 자료 |
 
 ## 운영 규칙 (요약)

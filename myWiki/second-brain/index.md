@@ -65,9 +65,7 @@ updated: 2026-05-09
 | [[유투브]] | YouTube 콘텐츠 노트 — 5 카테고리(LLM위키/Claude_Code/AI영상/AI이론/3Blue1Brown), 카파시 LLM-Wiki + Code w/ Claude 등 핵심 인사이트 누적 |
 | [[동영상]] | ESP32 교육 동영상 — 초등 대상 임베디드 교육 |
 | [[ffmpeg]] | FFmpeg + HongLab — 영상 처리 도구 + AI 코스 |
-| [[gsd]] | GSD 워크플로우 — 프로젝트 관리 학습 + CLI |
 | [[skill-자동화]] | 자동화 목록 — 19+ Skill, Hook, MCP 인벤토리 |
-| [[nlm]] | NotebookLM 슬라이드 — YouTube 자동 수집→PPTX |
 | [[전시회]] | 전시회 참가 — COEX AW/InterBattery, AI 예측 정비 |
 | [[회사소개]] | ㈜유티텍 — 연혁, 인증, 특허, 납품처, 기술 진화 |
 | [[multiCore]] | multiCore Claude 교육 — Odroid C2/AWS EC2 멀티유저 Claude Code 환경 |
@@ -78,8 +76,8 @@ updated: 2026-05-09
 | [[uttec-stage-package]] | UTTEC 영업 패키지 4.5-Stage — Stage 0(500만)+1(300만)+2(2,500만)+3(2,500만)+4(1,500만) 풀 7,300만, Foundry 1/100 가격 |
 | [[강사양성_파일럿]] | 강사양성 옵션 2 표준 5일 코스 — 2026-06-15~19 시범, 시나리오 A 무료+잠재고객, 본인부담 320만, 수강생 4~10명 |
 | [[정부지원_교육사업]] | 정부지원 9채널 매트릭스 — 톱 3 즉시 진입(디지털배움터·서울시·NIPA AX 바우처) + 4건 자격 보강 후 + 2건 장기 |
-| [[onDevice-ai-검증]] | onDevice_AI_검증 vault — microGPT + AI FanStick 차세대 + Stage 4 통합 검증, ESP32-S3 SRAM 520KB 1%로 microGPT 탑재 가설 |
-| [[uttecBizWiki]] | uttecBizWiki vault — **onDevice AI 제품(AI FanStick + Stage 4) 비즈니스 전용**. 다른 사업 영역 미포함. onDevice_AI_검증과 기술↔비즈니스 한 쌍 |
+| [[onDevice-ai]] | onDevice_AI vault — microGPT + AI FanStick 차세대 + Stage 4 통합 검증, ESP32-S3 SRAM 520KB 1%로 microGPT 탑재 가설 |
+| [[uttecBizWiki]] | uttecBizWiki vault — **onDevice AI 제품(AI FanStick + Stage 4) 비즈니스 전용**. 다른 사업 영역 미포함. onDevice_AI과 기술↔비즈니스 한 쌍 |
 | [[oldProject]] | UTTEC 과거 프로젝트 아카이브 — 1,200 files / 575 MB (태양광·일본·rfTech·whybiz·회로도). private repo `ihong9059/oldProject` |
 | [[일본-시장]] | 일본 영업 트랙 — AMANO BLE Mesh 3,800대 양산(nRF52832) + 도카이 자전거주차장 + Patron 제안서 |
 | [[whybiz-tracker]] | whybiz GPS Tracker IoT IP — LTE+GPS+Zigbee+LoRa+Modbus+BLE 모듈러 솔루션, 모듈 즉시 재조합 가능 |

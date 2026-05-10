@@ -8,8 +8,8 @@ tags: [제품, AI, BLE, K-POP, 양산, Stage4]
 links: [Stage4_영업, 한국기계, 위시캣]
 external_refs:
   - myWiki/second-brain/entities/ai-fanstick.md (제품 기술·특허)
-  - onDevice_AI_검증/microGPT/01_검증절차.md (Phase 1A·1B 결과)
-  - onDevice_AI_검증/통합검증/01_SRAM_파라미터_매트릭스.md (실측 매트릭스)
+  - onDevice_AI/microGPT/01_검증절차.md (Phase 1A·1B 결과)
+  - onDevice_AI/통합검증/01_SRAM_파라미터_매트릭스.md (실측 매트릭스)
   - 영업/Stage4_OnDeviceAI_검토.md (Stage 4 영업 매핑)
 ---
 
@@ -39,7 +39,7 @@ K-POP 1.5억+ 팬덤 시장 타겟 **AI 음성 비서 + LED 응원봉 + BLE 통�
 
 ### 학습/배포 4 경로 결정 (2026-05-08 학습설계 폴더 신설)
 
-상세: `onDevice_AI_검증/aiFanStick_차세대/학습설계/` 5 파일
+상세: `onDevice_AI/aiFanStick_차세대/학습설계/` 5 파일
 
 | 경로 | 위치 | 모델 | 채택 여부 |
 |:-:|---|---|:-:|
@@ -97,7 +97,7 @@ K-POP 1.5억+ 팬덤 시장 타겟 **AI 음성 비서 + LED 응원봉 + BLE 통�
 | 시점 | 이벤트 | 상태 |
 |---|---|:-:|
 | 2026-02 | AI FanStick MVP 검증 + 특허 출원 | ✅ 완료 |
-| 2026-05-07 | onDevice_AI_검증 vault 신설 (차세대 검증 시작) | ✅ |
+| 2026-05-07 | onDevice_AI vault 신설 (차세대 검증 시작) | ✅ |
 | 2026-05-08 | Phase 1A (PC 직접 실행) + 1B (포팅 분석) 완료 | ✅ |
 | 2026-05-08 | Stage 4 영업 자료 1차 동기화 (실측 데이터 추가) | ✅ |
 | Phase 2 (보드 도착 후) | ESP32-S3 hello_world + microGPT C++ 포팅 | ⬜ |
@@ -141,7 +141,7 @@ K-POP 1.5억+ 팬덤 시장 타겟 **AI 음성 비서 + LED 응원봉 + BLE 통�
 
 | 시점 | 액션 | 담당 |
 |:-:|---|:-:|
-| 검증 진행 중 | onDevice_AI_검증/ Phase 1A 완료 | 사용자 + Claude |
+| 검증 진행 중 | onDevice_AI/ Phase 1A 완료 | 사용자 + Claude |
 | 검증 완료 | 본 entity "기술 근거" 섹션 갱신 | Claude |
 | 검증 완료 후 | Stage 4 영업 자료 갱신 | Claude |
 | 6/22 이후 | 강사양성 Day 5 사례 자료 작성 | Claude |
@@ -157,7 +157,7 @@ K-POP 1.5억+ 팬덤 시장 타겟 **AI 음성 비서 + LED 응원봉 + BLE 통�
 ### 외부 vault
 - `myWiki/second-brain/entities/ai-fanstick.md` — 제품 기술·특허 (학습/큰그림)
 - `myWiki/second-brain/entities/uttec-stage-package.md` — Stage 4 영업 모델
-- `onDevice_AI_검증/aiFanStick_차세대/01_검증절차.md` — 차세대 기술 검증
+- `onDevice_AI/aiFanStick_차세대/01_검증절차.md` — 차세대 기술 검증
 - `영업/Stage4_OnDeviceAI_검토.md` — Stage 4 1차 영업 자료
 
 ## 메타
@@ -167,4 +167,4 @@ K-POP 1.5억+ 팬덤 시장 타겟 **AI 음성 비서 + LED 응원봉 + BLE 통�
 | 등록 (본 vault) | 2026-05-07 |
 | 첫 매출 | (대기) |
 | 영업 단계 | 검증 진행 → 영업 자료 갱신 → 첫 수주 시도 |
-| 다음 갱신 | onDevice_AI_검증 Phase 1A 완료 시 |
+| 다음 갱신 | onDevice_AI Phase 1A 완료 시 |

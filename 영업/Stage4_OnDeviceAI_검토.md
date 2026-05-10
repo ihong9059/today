@@ -7,8 +7,8 @@ status: 채택 (4.5-Stage 패키지로 확장) + Phase 1A·1B 검증 데이터 �
 related:
   - 영업/Stage0_Core_Services_견적서.md
   - myWiki/second-brain/entities/uttec-stage-package.md
-  - onDevice_AI_검증/microGPT/01_검증절차.md (실증 검증)
-  - onDevice_AI_검증/통합검증/01_SRAM_파라미터_매트릭스.md (실측 매트릭스)
+  - onDevice_AI/microGPT/01_검증절차.md (실증 검증)
+  - onDevice_AI/통합검증/01_SRAM_파라미터_매트릭스.md (실측 매트릭스)
   - 작업보고서_항목: #19 3.5-Stage → 4.5-Stage 확장 검토
 tags: [영업, 패키지, Stage4, On-Device AI, 의사결정]
 ---

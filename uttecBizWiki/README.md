@@ -1,7 +1,7 @@
 # uttecBizWiki — onDevice AI 제품 비즈니스 wiki
 
 > **상태**: ✅ 본격 진입 (2026-05-07~)
-> **scope**: **`onDevice_AI_검증/` 개발 제품의 비즈니스 전용**
+> **scope**: **`onDevice_AI/` 개발 제품의 비즈니스 전용**
 >             (AI FanStick 차세대 + Stage 4 영업 패키지)
 > **다른 사업 영역은 본 vault에 포함하지 않음**
 
@@ -9,14 +9,14 @@
 
 ## 한 줄 정의
 
-`onDevice_AI_검증/` vault에서 개발하는 제품(AI FanStick 차세대 + Stage 4 패키지)의 **비즈니스 전용 vault**. 영업·매출·고객을 기술 vault와 분리 운영.
+`onDevice_AI/` vault에서 개발하는 제품(AI FanStick 차세대 + Stage 4 패키지)의 **비즈니스 전용 vault**. 영업·매출·고객을 기술 vault와 분리 운영.
 
 ## 본 vault에 포함하는 것
 
 ✅ **AI FanStick 차세대 비즈니스** — K-POP 시장·매출 모델·특허·BOM
 ✅ **Stage 4 패키지 비즈니스** — 1인 사업자 영업·수주·B2B
 ✅ **위 두 제품의 고객사** — 한국기계(Stage 4 후보) / 임베디드 스타트업
-✅ **위 두 제품의 검증 결과 비즈니스 반영** — onDevice_AI_검증 → 영업 자료
+✅ **위 두 제품의 검증 결과 비즈니스 반영** — onDevice_AI → 영업 자료
 
 ## 본 vault에 포함하지 않는 것 (별도)
 
@@ -34,14 +34,14 @@
 |---|---|---|
 | `myWiki/second-brain/` | 학습+개인+도구+모든 사업 영역 통합 | 본 vault 외 다른 영역 처리 |
 | **`uttecBizWiki/`** | **onDevice AI 제품 비즈니스 전용** | (본 vault) |
-| `onDevice_AI_검증/` | 같은 제품의 **기술 검증** (단기) | 본 vault와 한 쌍 |
+| `onDevice_AI/` | 같은 제품의 **기술 검증** (단기) | 본 vault와 한 쌍 |
 
-→ **본 vault ↔ onDevice_AI_검증** = **비즈니스 ↔ 기술** 제품 한 쌍.
+→ **본 vault ↔ onDevice_AI** = **비즈니스 ↔ 기술** 제품 한 쌍.
 
 ## cross-link 흐름
 
 ```
-[onDevice_AI_검증] 기술 검증
+[onDevice_AI] 기술 검증
    Phase 1·2·3 진행 (microGPT + ESP32-S3 + AI FanStick 차세대)
        ↓ 검증 결과 (실측 SRAM·시간·BOM)
        ↓
@@ -52,7 +52,7 @@
    수주·매출 추적
        ↑ 영업 요구사항 (시장이 원하는 기능)
        ↑
-[onDevice_AI_검증] 다음 검증 사이클
+[onDevice_AI] 다음 검증 사이클
 ```
 
 ## 폴더 구조

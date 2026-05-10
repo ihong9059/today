@@ -59,8 +59,8 @@ aiHardStudy/prototype/_*.json
 **/.cxx/
 
 # Vault — 별도 vault 분리 운영 (work-end로 commit 안 함)
-onDevice_AI_검증/.claude/
-onDevice_AI_검증/.obsidian/
+onDevice_AI/.claude/
+onDevice_AI/.obsidian/
 uttecBizWiki/.claude/
 uttecBizWiki/.obsidian/
 

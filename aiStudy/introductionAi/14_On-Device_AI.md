@@ -6,7 +6,7 @@
 - 외부 데이터 전송 0 → 프라이버시·비용·속도 3가지 동시 해결
 - 본 가이드는 **노트북(Ollama) → 폰(MLX) → 임베디드(TinyML)** 순으로 단계적 실습
 
-> 더 깊은 분석은 `aiOnDevice/README.md` 11섹션 참조 (모델 계층, 하드웨어 계층, 시장 동향)
+> 더 깊은 분석은 `onDevice_AI/시장조사/README.md` 11섹션 참조 (모델 계층, 하드웨어 계층, 시장 동향)
 
 ---
 
@@ -292,10 +292,10 @@ git clone https://github.com/tensorflow/tflite-micro-arduino-examples
 - [llama.cpp GitHub](https://github.com/ggerganov/llama.cpp) (C++ 단일 바이너리)
 - [TFLite Micro GitHub](https://github.com/tensorflow/tflite-micro)
 - [Edge Impulse](https://www.edgeimpulse.com/) (TinyML 노코드 학습)
-- 본 저장소: [`aiOnDevice/README.md`](../../aiOnDevice/README.md) — 11섹션 종합 분석
-- 본 저장소: [`aiOnDevice/humanoid.md`](../../aiOnDevice/humanoid.md) — 휴머노이드 양산 동향
-- 본 저장소: [`aiOnDevice/sdv.md`](../../aiOnDevice/sdv.md) — 차량 SDV
-- 본 저장소: [`aiOnDevice/federated-learning.md`](../../aiOnDevice/federated-learning.md) — Federated Learning
+- 본 저장소: [`onDevice_AI/시장조사/README.md`](../../onDevice_AI/시장조사/README.md) — 11섹션 종합 분석
+- 본 저장소: [`onDevice_AI/시장조사/humanoid.md`](../../onDevice_AI/시장조사/humanoid.md) — 휴머노이드 양산 동향
+- 본 저장소: [`onDevice_AI/시장조사/sdv.md`](../../onDevice_AI/시장조사/sdv.md) — 차량 SDV
+- 본 저장소: [`onDevice_AI/시장조사/federated-learning.md`](../../onDevice_AI/시장조사/federated-learning.md) — Federated Learning
 
 ---
 

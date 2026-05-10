@@ -9,7 +9,7 @@ description: uttecBizWiki vault 작업 시작 시 사용. 영업 진행 상태·
 
 ## 적용 조건
 
-현재 작업 디렉터리가 `C:\todo\today\uttecBizWiki` 또는 그 하위일 때만 의미가 있다. 그 외에서는 `/work-start` 를 사용한다. onDevice 기술 검증은 `/vault-start` (onDevice_AI_검증 전용).
+현재 작업 디렉터리가 `C:\todo\today\uttecBizWiki` 또는 그 하위일 때만 의미가 있다. 그 외에서는 `/work-start` 를 사용한다. onDevice 기술 검증은 `/vault-start` (onDevice_AI 전용).
 
 ## 실행 절차
 
@@ -44,11 +44,11 @@ raw/ 가 비어 있으면 "아직 영업 이벤트 기록 없음 — 첫 미팅�
 
 ### 4. onDevice 검증 결과 흡수 체크
 
-본 vault는 onDevice_AI_검증 vault의 결과를 **흡수**해야 한다(역방향). 다음을 비교:
+본 vault는 onDevice_AI vault의 결과를 **흡수**해야 한다(역방향). 다음을 비교:
 
 | 비교 대상 | 의미 |
 |---|---|
-| `C:\todo\today\onDevice_AI_검증\log.md` 마지막 항목 | 가장 최근 검증 결과 |
+| `C:\todo\today\onDevice_AI\log.md` 마지막 항목 | 가장 최근 검증 결과 |
 | `C:\todo\today\uttecBizWiki\entities\AI_FanStick.md` updated 필드 | 본 vault 마지막 흡수 시점 |
 
 검증 log 가 더 최신이면 "흡수 대상 검증 결과 있음 — `entities/AI_FanStick.md` '기술 근거' 섹션 갱신 필요" 알림. 흡수 권고는 `/biz-end` 에서 실제 처리.
@@ -85,7 +85,7 @@ vault `log.md` 마지막 갱신일보다 오래된 외부 자산이 있으면 "�
 
 | 항목 | /work-start | /vault-start (onDevice) | /biz-start (uttecBizWiki) |
 |---|---|---|---|
-| 범위 | today 전체 | onDevice_AI_검증 안만 | uttecBizWiki 안만 |
+| 범위 | today 전체 | onDevice_AI 안만 | uttecBizWiki 안만 |
 | git pull | 실행 | 안 함 | 안 함 |
 | 세션 복원 | today/.claude/sessions | 안 함 | 안 함 |
 | 진행 상태 출처 | 작업보고서 통합 테이블 | README 진행 상태 표 | entities/ "영업 진행 상태" 표 |

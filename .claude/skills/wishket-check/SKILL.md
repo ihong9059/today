@@ -231,7 +231,7 @@ n8n 자동검색(`~/n8n/wishket-prompt.txt`)과 동일한 신호 체계를 사�
 - 기존 가능프로젝트: `위시캣/YYYY-MM-DD_가능프로젝트.md`
 - 자매 시스템: `~/n8n/wishket-prompt.txt` (cron 매일 09:00 자동 평가, 동일 신호 체계 유지)
 - 사업 전환 컨텍스트: `myWiki/second-brain/ai-direction.md` (2026-04-22 LED → AI 3대 사업 피벗)
-- On-Device AI 분석: `aiOnDevice/README.md` + `humanoid.md` + `sdv.md` + `federated-learning.md` (2026-05-05 작성)
+- On-Device AI 분석: `onDevice_AI/시장조사/README.md` + `humanoid.md` + `sdv.md` + `federated-learning.md` (2026-05-05 작성, 2026-05-10 vault 통합 이동)
 
 ---
 

@@ -2,10 +2,72 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-10 (LoRa E22 config write 완성 + 한림용인CC 수조 프로젝트 신설 + claude_project_template)
+updated: 2026-05-10 (onDevice_AI_검증 → onDevice_AI rename + gsd·nlm·twinCat ext archive + aiOnDevice 통합 + LoRa E22 + 한림용인CC + claude_project_template)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-10] rename | onDevice_AI_검증 → onDevice_AI (vault 폴더명 + entity rename)
+
+- 참조: [[onDevice-ai]], [[uttecBizWiki]], [[ai-fanstick]]
+- 동기: 사용자 `goOndevice.bat`이 `C:\todo\today\onDevice_AI` 가정. + 5/10 시장조사/ 통합으로 vault 정체성이 "검증" → "온디바이스 AI 작업 공간"으로 확장된 흐름 일치.
+- 처리 (옵션 B — 활성 시스템만):
+  - **폴더 rename**: `git mv onDevice_AI_검증 → onDevice_AI` (이력 보존, 23개 tracked file rename)
+  - **Junction 재생성**: `myWiki/second-brain/raw/onDevice_AI_검증` 제거 → `raw/onDevice_AI` 신규 생성
+  - **Entity rename**: `entities/onDevice-ai-검증.md` → `entities/onDevice-ai.md`
+  - **활성 config 9 파일** PowerShell UTF-8 일괄 치환:
+    - `.claude/skills/{vault-start,vault-end,biz-start,biz-end,wishket-check}/SKILL.md`
+    - `.claude/memory/{MEMORY,feedback_vault_scope_isolation,project_3vault_분리}.md`
+    - `.gitignore` (2 라인)
+  - **Vault 내부 6 파일**: `README.md`, `CLAUDE.md`, `log.md`, `microGPT/01_검증절차.md`, `aiFanStick_차세대/학습설계/00_README.md`, `통합검증/02_Stage4_영업매핑.md`
+  - **myWiki cross-link 5 파일**: `index.md`, `entities/{uttecBizWiki,ai-fanstick,onDevice-ai}.md`, `thoughts/2026-05-08_응원봉-온디바이스AI-정지선.md`
+  - **uttecBizWiki sister vault 5 파일**: `README.md`, `CLAUDE.md`, `log.md`, `index.md`, `entities/AI_FanStick.md`
+  - **Active reference docs 4 파일**: `aiStudy/introductionAi/14_On-Device_AI.md`, `작업보고서/temp/microGPT_초보자_가이드.md`, `영업/Stage4_OnDeviceAI_검토.md`, `응원봉/마케팅검토/README.md`
+- 보존(이력 정확성): 작업보고서 5/7~5/8, vault 내부 5/7 작업보고서, 이진서·응원봉 마케팅검토(5/8) historical, 위시캣 5/8 가능프로젝트, 본 log.md 과거 entry, thoughts 2026-05-08_onDevice-AI-확장영역.md
+- `goOndevice.bat` 동작 확인: ✅ `C:\todo\today\onDevice_AI` 경로 일치
+
+## [2026-05-10] archive | gsd ext repo 이동 — 학습 완료 자산 정리
+
+- 참조: [[claude-code]], [[projects]]
+- 대상: `today/gsd/` (GSD 워크플로우 학습용 Task Tracker CLI, 22 파일 / 347KB)
+- 운용 중단 신호: 모든 페이즈 COMPLETED (v1.0 MVP 완료, 2026-03-24 마지막 활동)
+- 처리: `ihong9059/ext/gsd/` 으로 이동 (commit 695e4ea). twinCat·nlm 패턴 일관 적용.
+- 함께 보존된 자산 (5/10 추가):
+  - `실습_설명서.md` (23KB) — 9 섹션 종합 한국어 가이드 (Number Memo CLI 새 실습 템플릿 포함)
+  - 4 페이즈 × PLAN+VERIFICATION 산출물 표준 사례
+- myWiki 정리:
+  - `raw/gsd` junction 제거
+  - `CLAUDE.md` raw/ 디렉토리 구조에서 gsd 행 제거
+  - `index.md` entity 테이블에서 [[gsd]] 행 제거
+  - `entities/gsd.md` → archive 표시 + 새 실습 권장 폴더(`gsd_practice/numberMemo/`) 명시
+- 영향 없음: `/gsd:*` 슬래시 명령은 `~/.claude/commands/gsd/` + `~/.claude/get-shit-done/`에 별도 설치되어 폴더와 무관, 정상 동작 유지
+
+## [2026-05-10] archive | nlm ext repo 이동 — 운용 중단 시스템 정리
+
+- 참조: [[skill-자동화]], [[projects]]
+- 대상: `today/nlm/` (NotebookLM YouTube → PPTX 자동화, v1~v3, 120 파일 / 16MB)
+- 운용 중단 신호: 마지막 활동 2026-02-18, 약 3개월 미사용
+- 처리: `ihong9059/ext` repo `nlm/` 으로 이동 (commit 7f69457). 5/9 26개 archive 통합 패턴 일관 적용.
+- myWiki 정리:
+  - `raw/nlm` junction 제거
+  - `CLAUDE.md` raw/ 디렉토리 구조에서 nlm 행 제거
+  - `index.md` entity 테이블에서 [[nlm]] 행 제거
+  - `entities/nlm.md` → archive 표시(status: archived, archived_to 명시)로 갱신
+- 영향 없음: `/nlm` 슬래시 스킬은 NotebookLM 웹 여는 별도 도구라 정상 동작 유지
+- 부활 절차: `entities/nlm.md`의 "부활 시" 섹션 명시
+
+## [2026-05-10] structure | aiOnDevice/ → onDevice_AI_검증/시장조사/ 통합
+
+- 참조: [[onDevice-ai-검증]], [[ai-direction]]
+- 5/5 시장 조사(aiOnDevice/, 4 파일) → 5/7 검증 vault의 트리거였으므로 한 우산 아래로 통합
+- git mv로 이력 보존 + 활성 참조 6건 갱신 (3 frontmatter + wishket-check skill + 14_On-Device_AI lesson + microGPT 가이드)
+- 보존(이력 정확성): 작업보고서 5/5, 본 log 5/5~5/6 entry, 유투브 요약은 그대로
+
+## [2026-05-10] archive | twinCat ext repo 이동 — TwinCAT 서비스 관리 스크립트
+
+- 참조: [[skills]], [[projects]]
+- `today/twinCat/` (2 파일, 5KB) → `ihong9059/ext/twinCat/` (commit 93bd75b)
+- 5/9 ext archive 패턴 일관 적용
 
 ## [2026-05-10] research | LoRa E22 펌웨어 완성 — Config 모드 정정 + write 응답 prefix C1 발견
 - 참조: [[oldProject]], [[양산제품]], [[skills]]

@@ -9,7 +9,7 @@
 - AI FanStick 차세대 비즈니스 (K-POP 시장·매출·BOM·특허·B2C/B2B/OEM)
 - Stage 4 패키지 비즈니스 (1인 사업자 영업·수주·B2B)
 - 위 두 제품의 **고객사** — 한국기계(Stage 4 후보) / 임베디드 스타트업 / K-POP 매니지먼트
-- 위 두 제품의 검증 결과 비즈니스 반영 (onDevice_AI_검증 결과 → 영업 자료)
+- 위 두 제품의 검증 결과 비즈니스 반영 (onDevice_AI 결과 → 영업 자료)
 - 위 두 제품의 영업·매출·미팅·계약 추적
 
 ### ❌ 본 vault 비책임 — 다른 vault/폴더에서 처리
@@ -17,7 +17,7 @@
 | 영역 | 어디에 |
 |---|---|
 | 학습·개인·도구·큰그림 | `myWiki/second-brain/` |
-| 기술 검증 (코드·보드·실측) | `onDevice_AI_검증/` |
+| 기술 검증 (코드·보드·실측) | `onDevice_AI/` |
 | 위시캣 일반 활동 | `myWiki/entities/위시캣활동.md` + `위시캣/` 폴더 |
 | 한국기계 Stage 0·1·2·3 영업 (LED·기계 일반) | `영업/Stage0_Core_Services_견적서.md` + myWiki |
 | 강사양성 파일럿 운영 | `aiStudy/introductionAi/강사양성_파일럭/` + myWiki |
@@ -76,7 +76,7 @@
 - "이 작업은 본 vault scope가 아닙니다. [정확한 위치]에 처리하시는 게 맞습니다." 안내
 - 본 vault에 잘못 추가하지 않음
 
-### "검증 결과 받음 (onDevice_AI_검증 Phase X 완료)"
+### "검증 결과 받음 (onDevice_AI Phase X 완료)"
 1. entities/AI_FanStick.md "기술 근거" 갱신 (실측 데이터)
 2. entities/Stage4_패키지.md 갱신 (영업 자료 반영)
 3. log.md 한 줄 추가
@@ -84,7 +84,7 @@
 
 ## cross-link
 
-### onDevice_AI_검증 → uttecBizWiki
+### onDevice_AI → uttecBizWiki
 - Phase 1·2·3 검증 결과 → entities/AI_FanStick.md "기술 근거"
 - 칩 변경 결정 → entities/AI_FanStick.md "차세대 BOM"
 - microGPT 탑재 가능 → entities/Stage4_패키지.md (신설)
@@ -93,7 +93,7 @@
 - entities/ai-fanstick.md (제품 기술·특허) → entities/AI_FanStick.md (비즈니스)
 - entities/uttec-stage-package.md (4.5-Stage 영업 모델) → entities/Stage4_패키지.md (Stage 4만)
 
-### uttecBizWiki → onDevice_AI_검증
+### uttecBizWiki → onDevice_AI
 - 영업 요구사항 (시장 피드백) → 다음 검증 사이클
 
 ## 메타

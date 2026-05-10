@@ -447,8 +447,8 @@ nanochat  ────  실용 끝판  ────  "실제로 작동하는 Cha
 
 ### 10-3. UTTEC 내부 자료 (이 폴더에서 시작)
 - `aiStudy/introductionAi/14_On-Device_AI.md` — Track F 14가이드 (Section 9 4주 로드맵)
-- `aiOnDevice/README.md` — On-Device AI 11섹션 종합
-- `aiOnDevice/federated-learning.md` — Federated Learning 분석
+- `onDevice_AI/시장조사/README.md` — On-Device AI 11섹션 종합
+- `onDevice_AI/시장조사/federated-learning.md` — Federated Learning 분석
 - `n8n/검토_n8n_대안비교.md` — 자동화 도구 12개 비교 (이번 검토서)
 
 ---

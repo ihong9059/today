@@ -169,6 +169,27 @@ import { UttecVideoEN, UTTEC_VIDEO_EN_DURATION } from "./UttecVideoEN";
 import { TurboMillVideo, TURBO_MILL_DURATION } from "./TurboMillVideo";
 import { XerixProposalVideoKO, XERIX_VIDEO_DURATION } from "./XerixProposalVideoKO";
 import { XerixProposalVideoEN, XERIX_VIDEO_EN_DURATION } from "./XerixProposalVideoEN";
+import { BaekhwajeomPitchVideo, BAEKHWAJEOM_DURATION } from "./BaekhwajeomPitchVideo";
+import {
+  Slide01,
+  Slide02,
+  Slide03,
+  Slide04,
+  Slide05,
+  Slide06,
+  Slide07,
+  Slide08,
+  Slide09,
+  Slide10,
+  Slide11,
+  Slide12,
+  Slide13,
+  Slide14,
+  Slide15,
+  Slide16,
+  Slide17,
+  Slide18,
+} from "./BaekhwajeomSlides";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -1387,6 +1408,33 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
       />
+      {/* ============ 백화점 점장 — Claude+Obsidian 제안 ============ */}
+      <Composition
+        id="BaekhwajeomPitch"
+        component={BaekhwajeomPitchVideo}
+        durationInFrames={BAEKHWAJEOM_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Still id="Baekhwajeom-Slide-01" component={Slide01} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-02" component={Slide02} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-03" component={Slide03} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-04" component={Slide04} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-05" component={Slide05} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-06" component={Slide06} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-07" component={Slide07} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-08" component={Slide08} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-09" component={Slide09} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-10" component={Slide10} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-11" component={Slide11} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-12" component={Slide12} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-13" component={Slide13} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-14" component={Slide14} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-15" component={Slide15} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-16" component={Slide16} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-17" component={Slide17} width={1920} height={1080} />
+      <Still id="Baekhwajeom-Slide-18" component={Slide18} width={1920} height={1080} />
     </>
   );
 };

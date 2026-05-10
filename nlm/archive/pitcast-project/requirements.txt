@@ -1,7 +1,0 @@
-# Daily Pitcast Generator Requirements
-
-# NotebookLM CLI (for podcast generation)
-notebooklm-mcp-cli>=0.3.0
-
-# yt-dlp is required but installed separately via pip
-# pip install yt-dlp

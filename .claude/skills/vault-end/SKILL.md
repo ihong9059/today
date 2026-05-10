@@ -1,11 +1,11 @@
 ---
 name: vault-end
-description: onDevice_AI_검증 vault 작업 종료 시 사용. log.md 추가, README 진행 상태 갱신, 결과 영역 기록, 영업 자산 동기화 체크. "vault 종료", "결과 기록해줘", "vault-end" 요청 시 사용
+description: onDevice_AI vault 작업 종료 시 사용. log.md 추가, README 진행 상태 갱신, 결과 영역 기록, 영업 자산 동기화 체크. "vault 종료", "결과 기록해줘", "vault-end" 요청 시 사용
 ---
 
-# vault 작업 종료 Skill (onDevice_AI_검증 전용)
+# vault 작업 종료 Skill (onDevice_AI 전용)
 
-`C:\todo\today\onDevice_AI_검증\` vault 작업을 마칠 때 결과 기록·진행 상태 갱신·외부 자산 동기화 체크를 한 번에 수행. today 전역의 `/work-end`와 별개로 vault 컨텍스트만 정리한다.
+`C:\todo\today\onDevice_AI\` vault 작업을 마칠 때 결과 기록·진행 상태 갱신·외부 자산 동기화 체크를 한 번에 수행. today 전역의 `/work-end`와 별개로 vault 컨텍스트만 정리한다.
 
 ## 적용 조건
 
@@ -38,7 +38,7 @@ CLAUDE.md "결과 기록해줘" 규칙 준수.
 
 ### 3. log.md 한 줄 ingest 추가
 
-`C:\todo\today\onDevice_AI_검증\log.md` 마지막에 새 블록 추가:
+`C:\todo\today\onDevice_AI\log.md` 마지막에 새 블록 추가:
 
 ```markdown
 ## [YYYY-MM-DD HH:MM] {start|step|done} | {한 줄 요약}
@@ -56,7 +56,7 @@ CLAUDE.md "결과 기록해줘" 규칙 준수.
 
 ### 4. README.md 진행 상태 표 갱신
 
-`C:\todo\today\onDevice_AI_검증\README.md` 의 "진행 상태" 표에서:
+`C:\todo\today\onDevice_AI\README.md` 의 "진행 상태" 표에서:
 - 이번에 완료한 항목 → ✅
 - 부분 완료 → 🟡 (필요 시 새 행 추가)
 - 다음 단계 ⬜ 항목 그대로 유지
@@ -69,7 +69,7 @@ CLAUDE.md "결과 기록해줘" 규칙 준수.
 
 | 임계치 | 갱신 대상 |
 |---|---|
-| microGPT 실측 수치(loss·시간) 첫 확보 | `myWiki/second-brain/entities/onDevice-ai-검증.md` |
+| microGPT 실측 수치(loss·시간) 첫 확보 | `myWiki/second-brain/entities/onDevice-ai.md` |
 | ESP32-S3 SRAM 사용량 실측 | `uttecBizWiki/entities/AI_FanStick.md` "기술 근거" |
 | Stage 4 영업 적용 가능한 사례 확정 | `영업/Stage4_OnDeviceAI_검토.md` |
 | 핵심 가설 검증/반증 | `myWiki/second-brain/log.md` 인사이트 |
@@ -79,8 +79,8 @@ CLAUDE.md "결과 기록해줘" 규칙 준수.
 ### 6. git 커밋 제안 (vault 한정)
 
 ```bash
-git status -- onDevice_AI_검증/
-git diff --stat -- onDevice_AI_검증/
+git status -- onDevice_AI/
+git diff --stat -- onDevice_AI/
 ```
 
 vault 안 변경만 추출하여 커밋 메시지 초안 제시:
@@ -93,7 +93,7 @@ vault 안 변경만 추출하여 커밋 메시지 초안 제시:
 - (검증 절차 결과 기록): ...
 ```
 
-**사용자 확인 후** `git add onDevice_AI_검증/` → commit → push.
+**사용자 확인 후** `git add onDevice_AI/` → commit → push.
 
 vault 외 변경(영업/, myWiki/, uttecBizWiki/ 등)이 함께 있으면 별도 커밋으로 분리하거나 사용자에게 묶을지 질문.
 

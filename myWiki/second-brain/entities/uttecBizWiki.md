@@ -5,14 +5,14 @@ created: 2026-05-05
 updated: 2026-05-07
 status: ✅ 본격 진입 (5/7~), scope 정정 (5/7 18:05)
 tags: [vault, biz-wiki, AI-FanStick, Stage4, onDevice-AI, 단일제품군]
-links: [onDevice-ai-검증, ai-fanstick, uttec-stage-package]
+links: [onDevice-ai, ai-fanstick, uttec-stage-package]
 ---
 
 # uttecBizWiki
 
 ## 한 줄 정의
 
-`onDevice_AI_검증/` vault에서 개발하는 제품(AI FanStick 차세대 + Stage 4 패키지)의 **비즈니스 전용 vault**. **단일 제품군 전용** — 다른 사업 영역은 본 vault에 포함하지 않음.
+`onDevice_AI/` vault에서 개발하는 제품(AI FanStick 차세대 + Stage 4 패키지)의 **비즈니스 전용 vault**. **단일 제품군 전용** — 다른 사업 영역은 본 vault에 포함하지 않음.
 
 ## 위치
 
@@ -52,7 +52,7 @@ links: [onDevice-ai-검증, ai-fanstick, uttec-stage-package]
 |---|---|---|
 | `myWiki/second-brain/` | 학습+개인+도구+**모든 사업 영역** | 본 vault 외 모든 영역 |
 | **`uttecBizWiki/`** | **onDevice AI 제품 비즈니스만** | AI FanStick + Stage 4 |
-| `onDevice_AI_검증/` | 같은 제품의 **기술 검증** (단기) | (한 쌍) |
+| `onDevice_AI/` | 같은 제품의 **기술 검증** (단기) | (한 쌍) |
 
 ## 폴더 구조
 
@@ -70,7 +70,7 @@ uttecBizWiki/
 ## cross-link 흐름
 
 ```
-[onDevice_AI_검증] 기술 검증
+[onDevice_AI] 기술 검증
        ↓ 검증 결과 (실측 SRAM·시간·BOM)
        ↓
 [uttecBizWiki/entities/AI_FanStick.md] ← 본 vault
@@ -79,7 +79,7 @@ uttecBizWiki/
 [Stage 4 영업 자료 + 첫 수주 시도]
        ↑ 시장 피드백
        ↑
-[onDevice_AI_검증] 다음 검증 사이클
+[onDevice_AI] 다음 검증 사이클
 ```
 
 ## 다음 갱신 시점
@@ -91,7 +91,7 @@ uttecBizWiki/
 | 첫 Stage 4 수주 | thoughts/ 종합 + 메타 갱신 |
 
 ## 관련 페이지
-- [[onDevice-ai-검증]] — 기술 vault (한 쌍)
+- [[onDevice-ai]] — 기술 vault (한 쌍)
 - [[ai-fanstick]] — 제품 기술·특허 (myWiki, 학습/큰그림)
 - [[uttec-stage-package]] — 4.5-Stage 영업 모델 (Stage 4 한 부분)
 

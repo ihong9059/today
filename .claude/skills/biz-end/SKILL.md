@@ -19,7 +19,7 @@ description: uttecBizWiki vault 작업 종료 시 사용. raw/ 미팅 노트 생
 - 발생한 영업 이벤트 (미팅·견적·계약·컨택)
 - 의사결정자 / 다음 미팅 / 협의 단계
 - 시장·고객 신규 사실 (숫자·계약 단가 우선)
-- 흡수한 검증 결과 (있으면 onDevice_AI_검증 → entity 반영)
+- 흡수한 검증 결과 (있으면 onDevice_AI → entity 반영)
 - 미완료 항목 / 막힌 지점
 - 다음 액션 1~3개
 
@@ -82,10 +82,10 @@ CLAUDE.md "AI FanStick 영업 한 일 정리해줘" / "Stage 4 한국기계 미�
 
 ### 4. 검증 결과 흡수 (해당 시)
 
-이번 세션에서 onDevice_AI_검증 vault 의 결과를 흡수했으면:
+이번 세션에서 onDevice_AI vault 의 결과를 흡수했으면:
 
 - `entities/AI_FanStick.md` "기술 근거" 또는 "차세대 BOM 영향" 섹션에 실측 데이터 반영
-- 출처 링크 명시 (예: `onDevice_AI_검증/aiFanStick_차세대/01_검증절차.md` Step N)
+- 출처 링크 명시 (예: `onDevice_AI/aiFanStick_차세대/01_검증절차.md` Step N)
 - frontmatter `external_refs` 항목 점검
 
 ### 5. log.md 한 줄 ingest 추가
@@ -155,7 +155,7 @@ vault 안 변경만 추출하여 커밋 메시지 초안 제시:
 
 **사용자 확인 후** `git add uttecBizWiki/` → commit → push.
 
-vault 외 변경(영업/, myWiki/, onDevice_AI_검증/ 등)이 함께 있으면 별도 커밋으로 분리하거나 사용자에게 묶을지 질문.
+vault 외 변경(영업/, myWiki/, onDevice_AI/ 등)이 함께 있으면 별도 커밋으로 분리하거나 사용자에게 묶을지 질문.
 
 ### 9. 완료 안내
 
@@ -194,8 +194,8 @@ vault 외 변경(영업/, myWiki/, onDevice_AI_검증/ 등)이 함께 있으면 
 | 진행 상태 갱신 | 작업보고서 | README 진행 상태 표 | entities/ "영업 진행 상태" 표 |
 | 검증/제품 흐름 | (관여 없음) | 결과 → uttecBizWiki entity (정방향) | 검증 결과 흡수 (역방향) |
 | myWiki 반영 | 항상 검토 | 임계치 넘었을 때만 | 임계치 넘었을 때만 |
-| log 기록 | myWiki second-brain/log.md | onDevice_AI_검증/log.md | uttecBizWiki/log.md |
-| git commit 범위 | today 전체 | onDevice_AI_검증/ 한정 | uttecBizWiki/ 한정 |
+| log 기록 | myWiki second-brain/log.md | onDevice_AI/log.md | uttecBizWiki/log.md |
+| git commit 범위 | today 전체 | onDevice_AI/ 한정 | uttecBizWiki/ 한정 |
 | Notion cleanup | 실행 | 안 함 | 안 함 |
 | wiki-lint | 실행 | 안 함 | 안 함 |
 

@@ -1,12 +1,12 @@
 ---
 name: vault 작업은 vault 안만, 외부 자산 자동 동기화 금지
-description: vault(onDevice_AI_검증, uttecBizWiki 등)에서 작업할 때 myWiki·영업·외부 entity를 자동 갱신하지 말 것. /work-end와 /vault-end의 책임 분리.
+description: vault(onDevice_AI, uttecBizWiki 등)에서 작업할 때 myWiki·영업·외부 entity를 자동 갱신하지 말 것. /work-end와 /vault-end의 책임 분리.
 type: feedback
 originSessionId: e8c42ebb-f042-45a1-8d7d-0853a8ecdfaa
 ---
 vault 안에서 작업할 때는 그 vault에 관련된 일련의 작업만 진행한다. myWiki·영업·외부 entity를 자동으로 갱신하지 않는다.
 
-**Why:** 5/8 onDevice_AI_검증 vault 마무리 시 외부 5곳(myWiki entities/log/thoughts, uttecBizWiki, 영업/Stage4)을 자동 동기화하면서 작업이 길고 복잡해졌다는 피드백. 사용자가 직접 작성한 thoughts와 내가 작성한 학습설계 충돌, git 커밋 3번 분할 등 마찰이 누적됨.
+**Why:** 5/8 onDevice_AI vault 마무리 시 외부 5곳(myWiki entities/log/thoughts, uttecBizWiki, 영업/Stage4)을 자동 동기화하면서 작업이 길고 복잡해졌다는 피드백. 사용자가 직접 작성한 thoughts와 내가 작성한 학습설계 충돌, git 커밋 3번 분할 등 마찰이 누적됨.
 
 **How to apply:**
 - vault 안에서 작업 → vault 안의 결과·log·README만 갱신
