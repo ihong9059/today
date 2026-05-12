@@ -183,6 +183,101 @@ powershell -ExecutionPolicy Bypass -File "C:\todo\today\myWiki\second-brain\log-
 3. log.md에서 해당 항목 제거, `updated:` 갱신, "분리: YYYY-QN → log-archive" 메모 1줄
 4. work-end git commit에 함께 포함
 
+### 5-E. 외부 위키 흡수 점검 (2026-05-12 도입 — revitaWiki ↔ myWiki 비대칭 방지)
+
+revitaWiki의 마지막 ingest와 myWiki의 마지막 absorb를 비교해 누락 방지.
+
+```bash
+# revitaWiki 마지막 ingest 번호 확인
+grep -h "^## .*ingest #" "C:/todo/revitaProject/application/revitaWiki/log.md" 2>/dev/null | head -1
+
+# myWiki 마지막 absorb 항목 확인
+grep -h "^## .*absorb" "C:/todo/today/myWiki/second-brain/log.md" 2>/dev/null | head -1
+```
+
+**판단 후 행동:**
+- **같은 ingest 번호 또는 myWiki absorb가 더 최신** → 침묵 (정상 흡수 상태)
+- **revitaWiki ingest #N > myWiki absorb #N** → 미흡수 발견. 두 가지 선택:
+  - **즉시 흡수** (권장 — 이번 work-end 안에) → 5단계 흡수 실행, log.md absorb 박제, done 카드 회신
+  - **다음 work-start에 위임** → myWiki/_inbox/pending/ 에 자동 카드 작성
+
+자동 카드 형식 (위임 시):
+```yaml
+---
+id: {YYYY-MM-DD}-{NNN}-ingest-{N}-pending
+from: work-end-skill
+to: mywiki-claude
+type: request
+priority: normal
+subject: revitaWiki ingest #N 미흡수 — 다음 세션 처리 필요
+created: {timestamp}
+status: pending
+---
+
+revitaWiki ingest #N 흡수 누락. 다음 work-start의 1-C 단계에서 처리 권장.
+참조: revitaProject/application/revitaWiki/log.md
+```
+
+### 5-F. multi-agent 인계 카드 작성 (2026-05-12 도입)
+
+이번 세션에서 다른 Claude(revita-claude 등)가 알아야 할 변경 있는지 점검 후 카드 작성.
+
+**점검 항목:**
+1. **myWiki에서 revita 관련 entity·skill·thought 신규/갱신** → revita-claude 알림 가치 있나?
+2. **다음 작업이 다른 Claude 영역**으로 넘어가는 경우 (예: revita 측에서 처리해야 할 follow-up)
+3. **사용자 broker 없이 진행될 합의 사항** 발생 (정책 변경·시스템 변경 등)
+
+**판단 후 행동:**
+- **알림 가치 없음** → 카드 작성 생략
+- **알림 가치 있음** → `revitaProject/_inbox/pending/` 에 카드 작성:
+
+```yaml
+---
+id: {YYYY-MM-DD}-{NNN}-{slug}
+from: mywiki-claude
+to: revita-claude
+type: done                  # 또는 request (응답 필요 시)
+priority: normal
+subject: {제목}
+created: {ISO 시각}
+related: [관련 카드 id 또는 파일]
+status: pending
+---
+
+# {subject}
+
+## 변경 내용
+{이번 세션에서 한 일 — 다른 Claude가 알아야 할 것만}
+
+## 영향
+{다른 Claude의 작업에 영향 있나? 있으면 명시}
+
+## 후속 액션 (있다면)
+{다른 Claude가 해야 할 일 — 있으면 type: request)
+```
+
+**참조**: `myWiki/_inbox/PROTOCOL.md` (표준 형식), `myWiki/_inbox/SYSTEM_GUIDE.md` (전체 가이드)
+
+### 5-G. 시스템 인지 자산 보호 (2026-05-12 도입)
+
+다음 work-start가 시스템을 잊지 않도록 보호:
+
+```bash
+# 핵심 자산 존재 확인
+ls "C:/todo/today/myWiki/_inbox/PROTOCOL.md" 2>/dev/null
+ls "C:/todo/today/myWiki/_inbox/SYSTEM_GUIDE.md" 2>/dev/null
+ls "C:/todo/today/myWiki/.claude/hooks/check-inbox.py" 2>/dev/null
+```
+
+**판단:**
+- 모두 존재 → 침묵
+- 하나라도 누락 → 경고 + 복구 가이드:
+  ```
+  ⚠ multi-agent 통신 시스템 자산 누락
+    - 누락: {파일명}
+  → 복구: revitaProject/_inbox/PROTOCOL.md 사본 + SELF_ID="mywiki-claude" hook 재작성
+  ```
+
 ### 6. Notion "오늘 할 일" 완료 항목 정리
 
 Notion "오늘 할 일" 페이지(ID: `349cb620-8c2b-817d-a7fe-c887ecdee292`)의 완료 섹션에서 **2일 이상 경과한 항목을 자동 삭제**한다.

@@ -130,6 +130,8 @@ LED 무선 제어 (BLE Mesh, 2016~2023)
 | 2026-05-07 | 위키 영업 자산 발견 워크플로우 시스템화 결정 | 1일 2건(#155057/#155091) 누락 자산 발견 패턴 재현, 다른 도메인에서도 일관 → 도메인-독립적 시스템 결함 입증. /wishket-apply 스킬에 myWiki 선검색 단계 추가 결정 | 시스템 개선 진행 |
 | 2026-05-07 | obsidian 시리즈 첫 시범 미포함 결정 (옵션 D) | 시범 Day 4·5는 Track D+E로 8h씩 채워져 시간 충돌 + Track F 미포함 패턴(시나리오 C)과 일관성. 첫 시범은 13가이드 검증 우선. obsidian 시리즈는 별도 단기 모듈(2~3h)로 분리 → 호오컨설팅·인프런·디지털배움터 차별화로 다각 활용. 2차 차수 통합 검토 | 결정 ([[obsidian-시리즈-사업화]]) |
 | 2026-05-07 | 3.5-Stage → 4.5-Stage 패키지 확장 (Stage 4 On-Device AI 신설) | 사용자 강점(임베디드 38년 + AI 통합) + 시장 트렌드(Hailo·Jetson·SLM) + microGPT 검증으로 타당성 입증. 단가 1,500만/4주, 매출 5,800만→7,300만(+26%). Stage 0 견적서 옵션 섹션 갱신. 첫 수주 후보: 한국기계 Hailo-8 예측정비 | 결정 ([[uttec-stage-package]]) |
+| 2026-05-12 | **위키 ingest 누락 방지 3계층 자동화 패턴 채택** | revitaProject Claude의 SessionStart hook + work-start 강화 + `_remote-cache/`. "수동 절차의 자동 1차 방어선 + 정밀 분류 + 심층 분석 도구" 패턴 → Claude 협업 전반에 적용 가능. myWiki에도 multi-agent `_inbox/` + `check-inbox.py` 같은 패턴으로 확장 (사용자 broker 부담 0) | 가동 중 ([[revita]] / `myWiki/_inbox/PROTOCOL.md`) |
+| 2026-05-12 | **원격 모니터링 풀스택 = 사업 라인 발견** | Solar Monitor (RAK4631 + INA219 + LoRa SF12 + Flask + Chart.js + systemd) ↔ [[한림용인cc-고가수조]] (1,000만원 시공 직전) 동일 아키텍처 확인. "센서→LoRa→RPi Flask Web UI→현장 운용"이 농업·양식·산업 시설로 확장 가능 | 실증 진행 중 ([[2026-05-12_원격모니터링-사업라인]]) |
 
 ## 위시캣 시장 인사이트
 

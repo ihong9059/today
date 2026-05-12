@@ -1,0 +1,19 @@
+{
+  "_comment": "본 파일은 settings.local.json의 hooks 섹션 예시. 기존 settings.local.json이 있으면 hooks 섹션만 merge 하세요.",
+  "_setup_note": "1. mcp/permissions 기존 필드는 보존 / 2. hooks 섹션이 없으면 그대로 추가 / 3. 있으면 SessionStart 배열에 추가",
+
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/check-inbox.py",
+            "timeout": 5,
+            "statusMessage": "_inbox 미처리 카드 확인 중..."
+          }
+        ]
+      }
+    ]
+  }
+}

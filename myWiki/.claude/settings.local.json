@@ -1,0 +1,20 @@
+{
+  "enabledMcpjsonServers": [
+    "google-calendar"
+  ],
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/check-inbox.py",
+            "timeout": 5,
+            "statusMessage": "_inbox 미처리 카드 확인 중..."
+          }
+        ]
+      }
+    ]
+  }
+}

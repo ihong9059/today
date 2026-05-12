@@ -23,7 +23,8 @@
 second-brain/
 ├── CLAUDE.md          # 이 파일 (스키마/규칙)
 ├── index.md           # 전체 페이지 목록 + 한줄 요약
-├── log.md             # 시간순 기록 (수집/질의/점검)
+├── log.md             # 시간순 기록 (수집/질의/점검) — 분기별 archive 정책 적용
+├── log-archive/       # 분기별 아카이브 (2026-Q1.md, Q2.md, ...)
 │
 ├── me.md              # 핵심 정체성 (누구인가)
 ├── skills.md          # 기술 스택 인벤토리
@@ -36,10 +37,12 @@ second-brain/
 ├── gaps.md            # 부족한 부분, 채워야 할 것
 │
 ├── entities/          # 엔티티 페이지 (사람, 조직, 도구 등)
-│   └── *.md
+│   └── *.md           # 44개 (2026-05-12 기준)
 │
-├── thoughts/          # 생각/인사이트/일기 페이지
-│   └── *.md
+├── thoughts/          # 생각/인사이트/일기 페이지 — 분기별 sub-folder 적용 (2026-05-12 도입)
+│   ├── 2026-Q2/       # 2026-04~06 thought
+│   ├── 2026-Q3/       # 2026-07~09 thought
+│   └── ...            # (분기 종료 시 자동 분리)
 │
 └── raw/               # 원본 소스 (불변, LLM 읽기 전용)
     ├── 위시캣/        # 위시캣 지원서, 프로젝트 정보, 수주 이력 (→ junction)
@@ -172,6 +175,51 @@ links: [관련 페이지 파일명]
 ```
 이 패턴이 발견되면 반드시 thoughts/에 기록한다.
 
+### 외부 위키 흡수 (Absorption) — revitaWiki 등 자체 ingest 사이클이 있는 위키
+
+**배경**: revitaWiki(`C:\todo\revitaProject\revitaWiki\`)는 자체 ingest 사이클(#1, #2 …)로 자료를 축적한다. 그러나 그 자료가 myWiki의 사업 자산으로 자동 전환되지는 않는다. 2026-05-12 진단([[2026-05-12_revitaWiki-myWiki-비대칭]]) 결과 자료의 약 90%가 흡수 안 된 상태였음. 본 정책으로 그 갭을 메운다.
+
+**트리거**: `revitaWiki/log.md`에 새 `## [날짜] ingest #N |` 항목이 추가됨 (사용자 또는 Claude가 인지 시점에 즉시).
+
+**5단계 흡수 체크리스트** (한 사이클당 5~15분):
+
+1. **신규 entity** (`revitaWiki/entities/entity-*.md` 신설) → `myWiki/skills.md` / `strengths.md`에 새 스킬·강점 추가 검토. 예: CC1101 SPI 드라이버 작성·OOK 신호 분석·libopencm3 + USB CDC 등.
+2. **신규 gotcha** (`revitaWiki/improvement/gotcha-*.md` 신설) → `myWiki/gaps.md`에 패턴 함정 누적. 1인 작업의 함정 패턴은 강의·교재 자산으로도 활용 가능.
+3. **신규 decision** (`revitaWiki/progress/decision-*.md` 신설) → `myWiki/me.md` 의사결정 패턴 갱신 검토.
+4. **매칭 패턴 발견** — 새 entity·gotcha·decision이 myWiki의 다른 entities(aisg / 스마트팩토리 / 위시캣활용 / 호오컨설팅 / 강사양성 등)와 시너지를 만드는지 검토 → 발견 시 `myWiki/thoughts/` 작성 (OOK→AISG 매칭이 모범).
+5. **myWiki/entities/revita.md 갱신** — 사업 요약 부분(영업 가치·차별화 카피·고객 매핑)에 새 자료가 영향 주는지 확인.
+
+**판정**: 5단계 모두 "검토 완료" (해당 없음 포함)일 때 본 사이클 흡수 종료. 결과는 `myWiki/log.md`에 한 줄 기록.
+
+**적용 시작**: 2026-05-12. 다음 ingest #8 종료 시 첫 적용.
+
+**같은 패턴이 적용될 수 있는 다른 위키**:
+- `uttecBizWiki/` (만약 자체 ingest 사이클 도입 시)
+- `onDevice_AI/` log.md (현재 단순 로그지만 향후 사이클화 가능)
+
+### today/ 신규 폴더 → myWiki entity 검토 정책 (2026-05-12 추가)
+
+**배경**: 2026-05-12에 `today/project/골프_수조_물관리/` (한림용인CC 1,000만원 매출 직전 프로젝트)가 myWiki entity로 흡수되지 않은 채 2일 방치된 사건 박제. revitaWiki만의 문제가 아닌 today/ 전반의 흡수 부재 패턴.
+
+**트리거**: `today/`에 새 폴더가 생성될 때 (또는 기존 컨테이너 폴더 안에 의미 있는 sub-project 신설 시).
+
+**검토 절차 (3단계)**:
+1. **사업 자산 가치 평가**: 새 폴더가 매출·고객·기술 자산화 가능한가?
+   - **YES** → 2단계로
+   - **NO** (단순 도구·임시 작업) → INDEX.md 등재만으로 충분
+2. **myWiki entity 신설 여부 결정**:
+   - 매출 직전 / 시공 직전 / 수주 협상 중 → **즉시 entity 신설** (`entities/[프로젝트명].md`)
+   - 검토 단계 / 탐색 단계 → thought 또는 작업보고서로 일단 박제
+3. **관련 페이지 cross-link**:
+   - `회사소개.md` 거래 이력에 등재 검토
+   - `skills.md` 새 기술 적용 사례 등재 검토
+   - `영업전략.md` 영업 패턴 (재거래·신규 영역 등) 등재 검토
+   - `INDEX.md` 카테고리 등재 (1단계와 별개로 항상)
+
+**모범 사례**: [[한림용인cc-고가수조]] entity 신설 (2026-05-12, 골프 프로젝트 발견 직후 30분 내 흡수 + 회사소개·영업전략·skills 동시 갱신).
+
+**실패 사례**: 2026-05-10 `today/project/골프_수조_물관리/` 신설 당시 myWiki entity 미신설 → 2일 지연. 본 정책 도입 사유.
+
 ### 활용 (Use) — 성과 추적
 위키를 참조하여 의사결정이 이루어지면 log.md에 use 로그를 남긴다:
 ```
@@ -194,6 +242,22 @@ links: [관련 페이지 파일명]
 2. 관련 페이지 읽기
 3. 종합 답변 생성
 4. 가치 있는 답변은 새 페이지로 위키에 저장
+
+### entities/ 정기 lint — 활성·휴면 분리 (2026-05-12 정책 신설)
+
+entities/는 시간이 갈수록 누적 (44개 → 100개+ 예상). 활성·휴면을 구분하지 않으면 mental model이 무거워짐.
+
+**lint 트리거**: 분기별 (1회 / 3개월) 또는 entities/ 파일 수 ≥ 60개 도달 시.
+
+**lint 절차**:
+1. `entities/*.md`의 frontmatter `updated:` 날짜 확인
+2. **6개월 이상 updated 안 됨 + 다른 페이지에서 참조 0회** → `entities-stale/`로 이동
+3. **6개월 이상 updated 안 됨 + 참조 ≥1회** → 활성으로 간주, 그대로 유지 (참조하는 페이지의 컨텍스트에서 가치 있음)
+4. `entities-stale/`로 이동 시 index.md 등록 해제 + log.md에 lint 항목 추가
+
+**복귀**: stale entity가 다시 활성화되면 (사용자가 작업 재개) `entities/`로 복원.
+
+**적용 시작**: 2026-05-12. 첫 lint는 entities 60개 도달 또는 2026-08-12 (3개월 후) 중 빠른 시점.
 
 ### 점검 (Lint)
 주기적으로 확인:

@@ -2,10 +2,158 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-10 (onDevice_AI_검증 → onDevice_AI rename + gsd·nlm·twinCat ext archive + aiOnDevice 통합 + LoRa E22 + 한림용인CC + claude_project_template)
+updated: 2026-05-12 (revita/remocon 발견 + revita entity 보강 + Blue Pill blink 워크플로우 확인)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-12] skill | work-start / work-end 측 multi-agent 시스템 통합 (시스템 영구화)
+
+- 참조: `today/.claude/skills/work-start/SKILL.md` § 1-C, `today/.claude/skills/work-end/SKILL.md` § 5-E·5-F·5-G, `myWiki/_inbox/SYSTEM_GUIDE.md`
+- 트리거: 사용자 — "이런 진행이 상실되지 않도록 /work-start나 기타 방법으로 진행 가능하게, /work-end에서 다른 claude가 작업 이어갈 수 있도록 정리"
+- 처리:
+  - **work-start § 1-C 신설** — myWiki/_inbox/pending/ 명시적 확인 단계. 카드 있으면 5단계 흡수 우선 처리 안내
+  - **work-end § 5-E 신설** — revitaWiki 마지막 ingest vs myWiki 마지막 absorb 비교 (비대칭 방지). 미흡수 발견 시 즉시 처리 또는 자동 카드 위임
+  - **work-end § 5-F 신설** — multi-agent 인계 카드 작성. 이번 세션에서 다른 Claude가 알아야 할 변경 시 그쪽 inbox에 카드
+  - **work-end § 5-G 신설** — 시스템 자산 존재 검증 (PROTOCOL.md / SYSTEM_GUIDE.md / hook). 누락 시 경고
+  - **`_inbox/SYSTEM_GUIDE.md` 신설** — 새 Claude 세션을 위한 빠른 진입 가이드 (시스템 구성도 + 핵심 자산 위치 + 첫 사이클 사례 + 확장 절차)
+  - revita 측에 정합화 권고 카드 발송 (`#005`, priority: low) — 저쪽 work-end skill도 동등 단계 추가 권고
+- 효과 (장기):
+  - **시스템 인지 유실 방지** — work-start가 매번 inbox 확인, work-end가 매번 정합화 점검
+  - **새 Claude 세션 빠른 진입** — SYSTEM_GUIDE.md만 읽으면 한 번에 파악
+  - **자동 작동 보장** — SessionStart hook + 스킬 명시 단계 + 자산 존재 검증 3중 방어선
+- 검증 시점:
+  - 다음 work-start 실행 시 — § 1-C가 정상 실행되는지
+  - 다음 ingest #9 발생 시 — 흡수 사이클이 사용자 broker 없이 자동 닫히는지
+  - 1개월 후 — `today/.claude/skills/` 추가 변경 시 본 통합이 보존됐는지
+
+---
+
+## [2026-05-12] absorb | revitaWiki ingest #8 흡수 완료 — 외부 위키 흡수 정책 첫 실증 ★
+
+- 참조: [[2026-05-12_원격모니터링-사업라인]] (신규 thought), [[revita]], [[한림용인cc-고가수조]], [[gaps]], [[strengths]], [[skills]], [[ai-direction]]
+- 처리 카드: `myWiki/_inbox/pending/2026-05-12-001-ingest-8-absorb.md` (PROTOCOL 합의 후 첫 표준 카드)
+- 흡수 5단계 결과:
+  1. **entity 갱신·신규 (skills.md / strengths.md)** — "원격 모니터링 풀스택 (Flask+pyserial+Chart.js+systemd)" 4 라인 skills.md 신규 + strengths.md "현장 배포 운용 자산" 섹션 신설
+  2. **gotcha (gaps.md)** — "현장 배포 함정 패턴" 섹션 신설 + 3건 박제 (CP2104 S/N / RPi USB Undervoltage / Chart.js CDN 의존). 강의·교재 자산 가치
+  3. **decision (ai-direction.md)** — 판단 로그 2026-05-12 2건 추가: ① 위키 ingest 누락 방지 3계층 자동화 패턴 채택 ② 원격 모니터링 풀스택 = 사업 라인 발견
+  4. **매칭 패턴 (thoughts/2026-Q2/)** — `2026-05-12_원격모니터링-사업라인.md` 신설. Solar Monitor + 한림용인CC 골프수조 = 동일 풀스택 + 7종 응용 영역 매트릭스
+  5. **entities/revita.md 갱신** — § "2026-05-12 ingest #8 흡수" 신설 (Solar Monitor + 함정 3종 + button_module + 3계층 자동화)
+- 후속 행동:
+  - 카드 → `_inbox/processed/2026-05-12-001-ingest-8-absorb.md` 이동 (status: done)
+  - revita-claude inbox에 done 회신 카드 발송 (`2026-05-12-004-absorb-done.md`)
+- 메타 의미:
+  - **외부 위키 흡수 정책 첫 실증** — 정책 만든 같은 날 첫 발동 + 6건 자산 박제
+  - **multi-agent 통신 시스템 정상 작동** — 카드 lifecycle 박제 (request → done)
+  - 다음 ingest #9부터는 SessionStart hook이 자동 알림 → 사용자 broker 없이 흡수 가능
+- 검증 시점:
+  - 한림용인CC 시공 시 Solar 자산 재사용 비율 (목표 ≥ 50%)
+  - 2026-06-12 — 7종 응용 영역 중 영업 시도 1건 이상
+  - 분기 후 — 새 매출 수주 또는 영업 진행 사례 1건
+
+---
+
+## [2026-05-12] protocol | multi-agent _inbox 통신 시스템 합의·가동 (with revita-claude)
+
+- 참조: [[2026-05-12_revitaWiki-myWiki-비대칭]], `C:\todo\today\myWiki\_inbox\PROTOCOL.md`
+- 트리거: 사용자 — "내가 broker 안 하고 두 Claude가 직접 협업하는 통로 만들자"
+- 합의 흐름 (3단계):
+  - **단계 1** myWiki Claude 제안 (옵션 A 단순 메일박스 + 표준 카드 frontmatter + 외부 `_claude-bus/` 위치)
+  - **단계 2** revita Claude ACK + 위치 1건 조정 (외부 → **각 프로젝트 내부 `_inbox/`**) — 권한 단순화 / self-contained / sync 명확성 / 일관성
+  - **단계 3** myWiki Claude 동의 + 셋업 완료 (본 항목)
+- 위치 조정 동의 이유: 4가지 모두 타당. 특히 좀 전 사용자 broker로 전달된 임시 카드 `myWiki/_inbox/ingest-8-absorb.md` 가 이미 내부 위치라 일관성 결정적.
+- myWiki 측 셋업 완료:
+  - `_inbox/{pending,processed}/` 생성 + `PROTOCOL.md` 사본 (revita 본문 그대로 + 합의 이력 §3단계 추가)
+  - `.claude/hooks/check-inbox.py` 작성 (revita 코드 그대로 + `SELF_ID = "mywiki-claude"`)
+  - `.claude/settings.local.json` SessionStart hook 등록
+  - 임시 카드 → `pending/2026-05-12-001-ingest-8-absorb.md` 표준 frontmatter 마이그레이션
+  - ACK 카드 `2026-05-12-002` → `processed/` 이동
+- 시스템 가동 첫 메시지: `2026-05-12-003-mywiki-ack-protocol.md` (revita inbox에 발송)
+- 효과:
+  - **사용자 broker 부담 0** — 두 Claude가 비동기로 자동 협업
+  - ingest #N → absorption #N 추적 가능 (카드 id로 lifecycle 박제)
+  - 향후 uttecBizWiki / onDevice_AI 등 추가 시 같은 패턴 (자기 _inbox 만들면 됨)
+  - escalation 채널 — 한쪽 처리 불가 시 사용자에게 escalate
+- 다음 사이클 발동:
+  - `2026-05-12-001` 카드 (ingest #8 흡수 요청) 처리는 별도 작업 — 사용자 결정 후 또는 다음 myWiki 세션 시 SessionStart hook이 자동 인지
+
+---
+
+## [2026-05-12] absorption | 한림용인CC 골프 프로젝트 myWiki 흡수 + INDEX 정책 보강 (좀 전 진단의 두 번째 검증)
+
+- 참조: [[한림용인cc-고가수조]] (신규), [[회사소개]], [[영업전략]], [[skills]], [[2026-05-12_revitaWiki-myWiki-비대칭]]
+- 트리거: 사용자 — "golf장 project도 감지되나요?" → INDEX·myWiki entity 둘 다 미감지 발견
+- 발견의 의미:
+  - 시공 직전 1,000만원 매출 프로젝트가 myWiki entity 0개 / INDEX 미노출 상태로 2일(5/10~5/12) 방치
+  - revitaWiki만의 흡수 누락이 아니라 **today/ 전반의 시스템적 패턴** 확인
+  - 좀 전 [[2026-05-12_revitaWiki-myWiki-비대칭]] 진단의 두 번째 데이터 포인트
+- 영업 인사이트 (재거래 패턴 박제):
+  - 2020 한림광릉CC (조명) → 2026 한림용인CC (수조) = **기존 고객 그룹 신규 사업장에서 새 영역 수주**
+  - 한림그룹 산하 골프장 다수 → 본 사례 성공 후 같은 솔루션 복제 가능
+  - 1인 기업 + 6년 전 관계 자산 = 중국 저가 공세가 닿지 않는 영역
+- 처리:
+  1. **entity 신설** [[한림용인cc-고가수조]] — 발주자·견적·일정·UTTEC 자산 매칭·위험 완화·사업 자산화 매핑 (10KB README 흡수)
+  2. **회사소개.md** — 2026년 거래 + 골프 고객 리스트 한림용인CC 추가
+  3. **영업전략.md** — "기존 고객 신규 사업장·영역" 패턴 섹션 신설 + 확장 후보 명시
+  4. **skills.md** — LoRa/Zigbee 보강 (간헐→활성) + LoRa E22 EByte 920MHz 풀스택 + 수위센서 펌프제어 신규 3 라인 추가
+  5. **INDEX.md** — project/골프_수조_물관리 비즈니스 카테고리에 명시 + "컨테이너 폴더 sub-folder 등재 정책" 신설
+  6. **myWiki/CLAUDE.md** — "today/ 신규 폴더 → entity 검토 정책" 신설 (3단계: 가치 평가 → entity 신설 여부 → cross-link)
+  7. **index.md** — 신규 entity 등재
+- 효과:
+  - 매출 1,000만원 프로젝트가 6개 페이지에 즉시 연결됨 (entity·회사·영업·skills·INDEX·index)
+  - 향후 today/ 신규 폴더 발생 시 자동 흡수 트리거 작동
+  - 영업 측 "재거래 패턴"이 첫 명시화 → 비슷한 사례 (필로스GC·광릉CC 등) 추적 가능
+
+---
+
+## [2026-05-12] cleanup | myWiki 구조 정리 + today/INDEX.md + thoughts 분기화 + entities lint 정책
+
+- 참조: [[2026-05-12_revitaWiki-myWiki-비대칭]] (이 정리의 동기)
+- 트리거: 사용자 — "이런 방식으로 자주 진행할텐데 한 folder에 모두 모으면 관리 어려움" → 4단계 일괄 진행 요청
+- 처리:
+  1. **빈 sub-folder 4개 제거** (progress/, optimization/, improvement/, direction/) — schema에는 있지만 0파일이라 mental model 노이즈만 만듦. CLAUDE.md 디렉토리 구조 갱신.
+  2. **thoughts/ 분기 sub-folder화** — 10개 thought을 `thoughts/2026-Q2/`로 이동. README 추가로 정책 명시. Obsidian wikilink는 파일명 resolve라 기존 링크 영향 없음.
+  3. **entities/ 정기 lint 정책** — 분기별 또는 60개 도달 시 6개월+ updated 안 됨 & 참조 0 → `entities-stale/`로 이동. CLAUDE.md에 정식 등재.
+  4. **today/INDEX.md 신설** — 36개 폴더를 7개 카테고리로 분류한 표 페이지. 실제 폴더 위치 변경 없음 (junction·git 안전). 신규 폴더 등재 정책 명시.
+- 효과 (예상):
+  - 매 작업 시 "이거 어디 넣지?" 결정 부담 감소 (특히 thoughts·entities)
+  - today/ 36폴더가 카테고리로 그룹화돼 검색 시간 단축
+  - 향후 1년간 자료 누적해도 mental model 일정 유지
+- 검증 시점:
+  - 다음 thought 작성 시 — 2026-Q2/ sub-folder에 자동 진입했는가
+  - 2026-08-12 (3개월 후) — entities lint 첫 실행
+  - 다음 today/ 신규 폴더 생성 시 — INDEX.md 자동 등재됐는가
+
+---
+
+## [2026-05-12] policy | 외부 위키 흡수(Absorption) 정책 신설 — revitaWiki 비대칭 진단의 처방
+
+- 참조: [[2026-05-12_revitaWiki-myWiki-비대칭]] (진단 thought 신규)
+- 진단: revitaWiki entities 32개 + gotcha 21개가 축적됐지만, myWiki/skills.md에 Zephyr/libopencm3/RAK4631/INA219 등 핵심 키워드 0회 등재 — 자료의 약 90%가 사업 자산화되지 않음. 양 바퀴 비대칭.
+- 처방: myWiki/CLAUDE.md 워크플로우 섹션에 "외부 위키 흡수 (Absorption)" 단계 신설. 5단계 체크리스트 (entity / gotcha / decision / 매칭패턴 / revita 사업요약).
+- 트리거: revitaWiki/log.md에 `## [날짜] ingest #N |` 신규 항목 발생.
+- 첫 적용 시점: 다음 revitaWiki ingest #8 종료 시.
+- 검증: 1개월 후(6/12) myWiki/skills.md 키워드 등장 빈도 재측정, 새 매칭 패턴 thought 1건 이상 생산 여부.
+
+---
+
+## [2026-05-12] ingest | revita/remocon 핀포인트 동기 + entity 보강 (STM32 + Blue Pill 통합)
+
+- 참조: [[revita]], [[aisg]], [[2026-05-07_OOK-두-응용-영역]]
+- 트리거: 사용자가 좀 전 Blue Pill blink 작업 → revita remocon project 인지 확인 → 로컬 동기 결정.
+- **발견 — 양방향 분업 워크플로우 정리**:
+  - 로컬 `C:\todo\revitaProject\` = 위키 작업장 (revitaWiki ingest #4~#7, 10+ unpushed commits)
+  - Pi `~/revita/` = 펌웨어 개발장 (origin/main 동기, 5/9~5/12 Solar Monitor 작업)
+  - 두 클론은 의도된 분기 상태. ingest 사이클로 주기 통합.
+- 처리:
+  - `git checkout origin/main -- remocon/` 핀포인트 동기 (29 MB / 1507 파일, HEAD 불변)
+  - 충돌 파일 2건은 `_thisPC` 접미사로 보존 (`작업보고서/2026-05-12_thisPC_ingest.md`, `.context/2026-05-12.session_thisPC.md`)
+  - myWiki `entities/revita.md` CC1101 섹션 대폭 보강 — 펌웨어 변형 5종 표, AISG 시너지, **2026-05-12 박제** (COM25=REMOCON01 식별 / Blue Pill 보드 호환 / ST-Link 드라이버 해결)
+  - revitaWiki entity 직접 갱신은 스킵 — 사용자가 ingest #8 진행 중이라 충돌 회피
+- 인사이트: 본 PC에서 좀 전 만든 `today/revita/blue_pill_blink/` (244B bare-metal)과 `revita/remocon/stm32/` (libopencm3 + USB CDC + Modbus)가 **같은 STM32F103C8T6 보드** → 향후 디버그 출력 통합 가능. `stm32/src/usb_cdc.c` 재사용 경로 확보.
+- 비계산 자산: ST-Link 드라이버 영구 설치. 본 PC에서 향후 STM32 플래시 즉시 가능.
+
+---
 
 ## [2026-05-10] performance | Obsidian vault 인덱싱 최적화 — 무거운 junction 6개 제거
 

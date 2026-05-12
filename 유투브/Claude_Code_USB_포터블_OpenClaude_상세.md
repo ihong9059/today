@@ -8,6 +8,10 @@
 - **링크**: https://www.youtube.com/watch?v=9Dh3kKWFFjg
 - **GitHub**: https://github.com/techjarves/OpenClaude-Portable
 - **자막**: 영어 (한국어 자동자막 없음, 영어 자동자막 사용)
+- NVIDIA site
+https://build.nvidia.com/settings/api-keys
+* OpenRouter site
+https://openrouter.ai/sign-in?redirect_url=https%3A%2F%2Fopenrouter.ai%2Fworkspaces%2Fdefault%2Fkeys
 
 ## 한 줄 요약
 USB 드라이브 한 개에 Claude Code의 오픈소스 클론(OpenClaude Portable)을 통째로 담아 **Windows·Mac·Linux 어디든 꽂으면 즉시 실행** + **NVIDIA NIM/OpenRouter 무료 API + Ollama 로컬 모델** 옵션 제공 + **모든 채팅·파일이 USB에 저장**되어 PC에 흔적 0.

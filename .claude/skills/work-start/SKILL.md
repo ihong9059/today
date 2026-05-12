@@ -49,6 +49,40 @@ python3 ~/path/to/today/.claude/hooks/setup-memory-sync.py
 
 이 단계는 **신규 PC에서 첫 work-start 시 자동으로 link 생성**하여, 사용자가 별도 작업 없이 메모리 동기화가 즉시 시작되도록 한다.
 
+### 1-C. multi-agent _inbox 카드 확인 (2026-05-12 도입)
+
+**시스템 가이드**: `myWiki/_inbox/SYSTEM_GUIDE.md` (전체 개요·합의 이력·다음 Claude를 위한 빠른 진입점)
+
+myWiki는 다른 Claude(revita-claude 등)와 `_inbox/` 메일박스로 비동기 협업한다. 미처리 카드 우선 처리.
+
+```bash
+ls "C:/todo/today/myWiki/_inbox/pending/" 2>/dev/null
+```
+
+**판단 후 행동:**
+- **빈 폴더 또는 없음** → 침묵 (보고 생략, 다음 단계 진행)
+- **미처리 카드 있음** → 사용자에게 알림:
+  ```
+  📬 myWiki/_inbox/pending/ 미처리 카드 N건 — multi-agent 통신
+    - [priority/type] from {발신측} | {subject}
+  처리: 카드 본문 읽기 → 5단계 흡수 (외부 위키 흡수 정책) → processed/로 이동 + status: done
+  발신측 inbox에 done 회신 카드 발송 (PROTOCOL: myWiki/_inbox/PROTOCOL.md)
+  ```
+- 사용자가 처리 결정 → 카드 본문 읽고 5단계 흡수 수행. 처리 후 다음 단계 진행
+- 사용자가 보류 → 다음 work-start에서 다시 알림
+
+**5단계 흡수 체크리스트** (myWiki/CLAUDE.md § "외부 위키 흡수" 참조):
+1. 신규 entity → skills.md / strengths.md
+2. 신규 gotcha → gaps.md
+3. 신규 decision → ai-direction.md 판단 로그
+4. 매칭 패턴 → thoughts/2026-Q{N}/
+5. revita entity → entities/revita.md
+
+처리 완료 시:
+1. 카드 → `_inbox/processed/` 이동 + frontmatter `status: done`
+2. 발신측 inbox에 `done` 회신 카드 발송
+3. `myWiki/log.md`에 `## [날짜] absorb | ...` 박제
+
 ### 2. 최근 세션 파일 확인 및 복원
 
 ```bash

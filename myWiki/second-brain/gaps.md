@@ -68,6 +68,35 @@ links: [me, skills, ai-direction, strengths, goals]
 - 나머지 15건의 결과(수주/탈락) 미추적
 - **대응**: 지원 결과를 체계적으로 추적하여 성공 패턴 분석
 
+## 현장 배포 함정 패턴 (2026-05-12 신설 — revitaWiki ingest #8 흡수)
+
+> "1인이 직접 시공·운용까지 하는 사업 모델"에서 **현장 배포 첫 24시간에 만나는 함정**들. 강의·교재 자산으로도 활용 가치 ★★★.
+> 출처: `revitaProject/application/revitaWiki/improvement/gotcha-*.md`
+
+### USB 동글 식별 충돌 (CP2104 S/N 동일)
+
+같은 모델 USB-UART 동글들이 공장 출고 시 **동일 시리얼 번호**를 가짐. `/dev/ttyUSB0` 같은 단순 매핑은 부팅마다 달라짐.
+- **회피책**: USB 허브 물리 포트로 구분 → `udev rule`에 `ID_PATH` 사용 / 라벨 부착 / 최후의 수단으로 EEPROM 재프로그래밍
+- **대응 정책**: 양산·현장 시리얼 매핑 시 처음부터 ID_PATH 기반 udev rule 작성
+- **관련 프로젝트**: revita Solar Monitor (5/12 진단), 골프수조·AISG 등 다수 동글 운용 시 동일
+
+### RPi USB Undervoltage (현장 배포 핵심 함정)
+
+라즈베리파이 USB 허브 전원 부족 시 **새 장치 인식 실패 + 기존 file descriptor `(deleted)` 상태**로 빠짐. 외관상 정상이지만 통신 실패.
+- **회피책**: **powered USB hub 필수** + 공식 어댑터 사용 + `vcgencmd get_throttled` 정기 모니터링
+- **대응 정책**: 농촌·외부 배포 시 전원 마진 사전 측정
+- **관련 프로젝트**: revita Solar (5/12 발생), [[한림용인cc-고가수조]] (시공 직전 — 사전 회피 필요)
+
+### 외부 CDN 의존 (Chart.js CDN 오프라인)
+
+라즈베리파이 현장 환경의 인터넷 불안정 → 외부 CDN(jsdelivr 등) 접속 실패 → Web UI 차트 로딩 안 됨.
+- **회피책**: 정적 자원 **로컬 호스팅 정책** (`static/chart.min.js` 직접 포함)
+- **부수 함정**: Flask deque maxlen / 템플릿 캐시도 비슷한 함정
+- **대응 정책**: 현장 배포 Web UI 모든 프로젝트에 일반화 — AISG·골프수조·smartFactory 등
+- **관련 프로젝트**: revita Solar (5/11 정책 확정)
+
+→ **이 3건은 강의 콘텐츠 자산**: 호오컨설팅·인프런·강사양성 교재의 "1인 시공 함정 패턴" 사례. [[한림용인cc-고가수조]] 시공 시 사전 회피 체크리스트로 활용.
+
 ## 업데이트 방법
 새로운 갭을 발견하거나, 기존 갭을 채웠을 때 이 페이지를 업데이트한다.
 채운 갭은 삭제하지 않고 ~~취소선~~으로 표시하여 성장 기록을 남긴다.

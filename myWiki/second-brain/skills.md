@@ -19,7 +19,12 @@ links: [me, projects, ai-direction, strengths, gaps]
 | Raspberry Pi (3B/4/5/CM4/Zero) | 상 | EtherCAT (양산), 서버, 교육 | 높음 |
 | MQTT/RS485/Modbus RTU | 상 | 산업 통신, KC 인증 | 높음 |
 | CAN 통신 | 중상 | 대한전선 Winder Controller | 과거 |
-| LoRa/Zigbee | 중 | REVITA, IoT 통신 | 간헐 |
+| LoRa/Zigbee | 중상 | REVITA, IoT 통신, **[[한림용인cc-고가수조]] (2026-05 시공 직전, 1,000만원)** | 활성 |
+| LoRa E22 EByte 920MHz 풀스택 | 중상 | [[한림용인cc-고가수조]] 노드·중계기·게이트웨이 / oldProject bleModule (config read/write 검증·mode mapping 정정·air rate 0.3k 통일) | 신규(2026-05) |
+| 수위센서 + 펌프제어 무선 | 중 | [[한림용인cc-고가수조]] 압력센서 + 임계값 + LoRa 명령 + 펌프 ON/OFF (응답 3~5초) | 신규(2026-05) |
+| **원격 모니터링 풀스택 (Flask+pyserial+Chart.js+systemd)** | 중상 | revita Solar Monitor 운영 (5분 평균·data.json 영속화·Chart.js 로컬·Y축 고정·Serial Log·systemd 자동 실행). [[한림용인cc-고가수조]] / 농업·양식 등 확장 가능. 사업 라인: [[2026-05-12_원격모니터링-사업라인]] | 신규(2026-05) ★ |
+| Linux systemd 서비스 운용 | 중 | revita Solar `solar-monitor.service` — 자동 실행·재시작·로그 통합 (현장 배포 안정성) | 활성 |
+| Web UI 오프라인 배포 (정적 자원 로컬 호스팅) | 중 | Chart.js / fonts / icons 로컬 호스팅 정책 — 현장 인터넷 불안정 대응 | 신규(2026-05) |
 | CC1101 Sub-GHz / OOK Replay (433~447MHz) | 중상 | remocon 데모 + OOK Replay 10버튼 디코딩 (REVITA, 2026-05) | 신규 |
 | AISG 3.0 (안테나 인터페이스 — HDLC + RS-485/OOK PHY) | 분석 완료 | 위시캣 #155057 ([[aisg]]) | 분석 |
 | Jetson Nano/CUDA | 중 | AI 추론, 비전, 교육 | 간헐 |
