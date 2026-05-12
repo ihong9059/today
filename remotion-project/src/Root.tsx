@@ -1,5 +1,6 @@
 import { Composition, Still } from "remotion";
 import { BleOtaPitchVideo, BLE_OTA_DURATION } from "./BleOtaPitchVideo";
+import { UttecAisgPitchVideo, UTTEC_AISG_PITCH_DURATION } from "./UttecAisgPitchVideo";
 import { PrebuildPitchVideo, PREBUILD_PITCH_DURATION } from "./PrebuildPitchVideo";
 import { WallRobotVideo, WALL_ROBOT_VIDEO_DURATION } from "./WallRobotVideo";
 import { MyComposition } from "./Composition";
@@ -198,6 +199,14 @@ export const RemotionRoot: React.FC = () => {
         id="BleOtaPitch"
         component={BleOtaPitchVideo}
         durationInFrames={BLE_OTA_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="UttecAisgPitch"
+        component={UttecAisgPitchVideo}
+        durationInFrames={UTTEC_AISG_PITCH_DURATION}
         fps={30}
         width={1920}
         height={1080}

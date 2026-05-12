@@ -2,7 +2,7 @@
 title: AISG (Antenna Interface Standards Group)
 type: entity
 created: 2026-05-07
-updated: 2026-05-12 (AISG자료 패키지 5 파일 신설 + 미팅 D-1 사전 학습)
+updated: 2026-05-13 (OOK PHY + Bias-T + MAX11947 심층 자료 + UTTEC × AISG 3.0 Pitch 동영상 자산 신설)
 tags: [프로토콜, 통신, 임베디드, 기지국, 안테나, OOK, RS-485, HDLC]
 links: [revita, 위시캣활동, skills, 양산제품, experience]
 ---
@@ -98,6 +98,8 @@ links: [revita, 위시캣활동, skills, 양산제품, experience]
 - **★ 미팅 제안 수령**: 2026-05-12 (클라이언트가 사전 요구 4가지 송부)
 - **미팅 준비물**: `위시캣/2026-05-12_프로젝트155057_미팅준비/준비물/` (6 파일 + 시각자료 14 파일)
 - **AISG 표준 자료 패키지** (PM3, 2026-05-12): `위시캣/2026-05-12_프로젝트155057_미팅준비/AISG자료/` — WHY/WHAT/DIFF/DEVICE 4단 분류 5 파일 (55 KB) + Q&A 21개. 미팅 1회용이 아니라 **후속 영업·교육 자산**으로 재사용 가능.
+- **OOK PHY 심층 자료** (2026-05-13): `위시캣/2026-05-12_프로젝트155057_미팅준비/준비물/5_OOK_2.176MHz_BiasT_상세.md` — 9 KB / 8 섹션 / 출처 18 / **driver IC MAX11947 확정** (ADI/Maxim, AISG v2/v3 통합 4채널 single-chip, +15 dB spectral mask margin) + Bias-T L/C 토폴로지 + Smart Bias-T 5 vendor (Kaelus/HUBER+SUHNER/Amphenol/CCI/RFS) + Q&A 6개. PHY 위험 분석에 결정적.
+- **UTTEC × AISG 3.0 Pitch 동영상** (2026-05-13): `remotion-project/out/UttecAisgPitch/video.mp4` (8:56 · 35.5 MB · 7 scene) + `video_1.2x.mp4` (7:27 · 20.7 MB · 1.2배속). Remotion + Edge TTS ko-KR-SunHiNeural. 미팅 사후 follow-up·임원 1차 자료·후속 AISG 영업에 재사용 가능.
 - **요구 #3 핵심 대응**: 정직 명시(AISG 양산 소스/직접 경험 없음) + 2경로(A 클라이언트 소스 인수 / B 자체 5강점 처음부터 90일)
 - **결과**: (미팅 일정 확정 대기 / 미팅 후 기록)
 

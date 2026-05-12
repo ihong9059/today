@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>㈜유티텍 회사소개서 2026 v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 landscape; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Noto Sans KR', sans-serif; background: #0a0e1a; color: #FFFFFF; }
+
+/* ── Slide Base ── */
+.slide {
+  width: 1280px; height: 720px; margin: 30px auto;
+  background: #0F172A; position: relative; overflow: hidden;
+  page-break-after: always; padding: 60px 80px;
+  box-shadow: 0 0 80px rgba(139,92,246,0.08);
+}
+/* Grid texture */
+.slide::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background:
+    linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+/* Bottom gradient line */
+.slide::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; z-index: 10;
+  background: linear-gradient(90deg, #8B5CF6, #06B6D4, #8B5CF6);
+}
+.slide > * { position: relative; z-index: 1; }
+
+/* ── Typography ── */
+.orbitron { font-family: 'Orbitron', sans-serif; }
+.accent { color: #8B5CF6; }
+.cyan { color: #06B6D4; }
+.gradient-text {
+  background: linear-gradient(135deg, #8B5CF6, #06B6D4);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+h1 { font-size: 48px; font-weight: 900; line-height: 1.2; }
+h2 { font-size: 32px; font-weight: 800; line-height: 1.3; }
+h3 { font-size: 20px; font-weight: 700; }
+h4 { font-size: 16px; font-weight: 600; }
+.sub { color: #94A3B8; font-size: 15px; line-height: 1.7; }
+.sub-sm { color: #64748B; font-size: 12px; line-height: 1.6; }
+.sub-xs { color: #475569; font-size: 11px; }
+
+/* ── Glass Cards ── */
+.glass {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; backdrop-filter: blur(12px);
+}
+.glass-sm {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px; backdrop-filter: blur(8px);
+}
+.glass-accent {
+  background: rgba(139,92,246,0.08);
+  border: 1px solid rgba(139,92,246,0.25);
+  border-radius: 16px;
+}
+.glass-cyan {
+  background: rgba(6,182,212,0.08);
+  border: 1px solid rgba(6,182,212,0.25);
+  border-radius: 16px;
+}
+
+/* ── Tags ── */
+.tag {
+  display: inline-block; padding: 4px 14px; border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+  background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3);
+  color: #A78BFA;
+}
+.tag-cyan {
+  display: inline-block; padding: 4px 14px; border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+  background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.3);
+  color: #22D3EE;
+}
+.tag-sm {
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 10px; font-weight: 500;
+  background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.2);
+  color: #A78BFA;
+}
+
+/* ── Decorations ── */
+.slide-num {
+  position: absolute; bottom: 18px; right: 40px; z-index: 5;
+  font-family: 'Orbitron', sans-serif; font-size: 12px;
+  color: rgba(255,255,255,0.15); letter-spacing: 2px;
+}
+.logo-mark {
+  position: absolute; top: 28px; right: 40px; z-index: 5;
+  font-family: 'Orbitron', sans-serif; font-size: 12px;
+  color: rgba(255,255,255,0.12); letter-spacing: 4px;
+}
+.orb {
+  position: absolute; border-radius: 50%; z-index: 0; pointer-events: none;
+  background: radial-gradient(circle, rgba(139,92,246,0.12), transparent 70%);
+}
+.orb-cyan {
+  position: absolute; border-radius: 50%; z-index: 0; pointer-events: none;
+  background: radial-gradient(circle, rgba(6,182,212,0.08), transparent 70%);
+}
+.glow-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139,92,246,0.4), transparent);
+}
+.glow-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #8B5CF6; box-shadow: 0 0 12px #8B5CF6, 0 0 24px rgba(139,92,246,0.3);
+  display: inline-block;
+}
+.glow-dot-cyan {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #06B6D4; box-shadow: 0 0 12px #06B6D4, 0 0 24px rgba(6,182,212,0.3);
+  display: inline-block;
+}
+
+/* ── Layout Helpers ── */
+.flex { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.text-center { text-align: center; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.gap-6 { gap: 24px; }
+.gap-8 { gap: 32px; }
+.mt-2 { margin-top: 8px; }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+.mt-6 { margin-top: 24px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-4 { margin-bottom: 16px; }
+.p-3 { padding: 12px; }
+.p-4 { padding: 16px; }
+.p-5 { padding: 20px; }
+.p-6 { padding: 24px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+.w-full { width: 100%; }
+
+/* ── Icon circles ── */
+.icon-circle {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3);
+}
+.icon-circle-cyan {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.3);
+}
+.icon-circle-sm {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.2);
+}
+
+/* ── Hexagon layout for slide 3 ── */
+.hex-grid { position: relative; width: 100%; height: 400px; }
+.hex-center {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 140px; height: 140px; border-radius: 50%;
+  background: rgba(139,92,246,0.15); border: 2px solid rgba(139,92,246,0.4);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: 0 0 40px rgba(139,92,246,0.2), inset 0 0 30px rgba(139,92,246,0.1);
+}
+.hex-node {
+  position: absolute; width: 160px;
+  padding: 14px; border-radius: 14px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px); text-align: center;
+  transition: all 0.3s;
+}
+.hex-node:hover {
+  border-color: rgba(139,92,246,0.4);
+  box-shadow: 0 0 20px rgba(139,92,246,0.15);
+}
+.hex-connector {
+  position: absolute; z-index: 0;
+  border-top: 1px dashed rgba(139,92,246,0.2);
+}
+
+/* ── Timeline ── */
+.timeline-v { position: relative; padding-left: 24px; }
+.timeline-v::before {
+  content: ''; position: absolute; left: 5px; top: 0; bottom: 0; width: 2px;
+  background: linear-gradient(to bottom, #8B5CF6, #06B6D4);
+}
+.tl-item { position: relative; margin-bottom: 10px; }
+.tl-item::before {
+  content: ''; position: absolute; left: -23px; top: 6px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #8B5CF6; border: 2px solid #0F172A;
+  box-shadow: 0 0 8px rgba(139,92,246,0.5);
+}
+
+/* ── Network diagram ── */
+.net-node {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 10px 14px; border-radius: 12px;
+  background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.25);
+  font-size: 11px; font-weight: 500;
+}
+.net-arrow {
+  display: inline-flex; align-items: center; color: rgba(139,92,246,0.4);
+  font-size: 18px; margin: 0 6px;
+}
+.net-arrow-cyan {
+  display: inline-flex; align-items: center; color: rgba(6,182,212,0.4);
+  font-size: 18px; margin: 0 6px;
+}
+
+/* ── Cert badge ── */
+.cert-badge {
+  text-align: center; padding: 16px 12px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+}
+.cert-icon {
+  width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 800;
+  background: rgba(139,92,246,0.15); border: 2px solid rgba(139,92,246,0.3);
+  box-shadow: 0 0 16px rgba(139,92,246,0.15);
+}
+
+/* ── Stat box ── */
+.stat-box {
+  text-align: center; padding: 14px 10px;
+  background: rgba(139,92,246,0.06); border: 1px solid rgba(139,92,246,0.15);
+  border-radius: 12px;
+}
+.stat-num {
+  font-family: 'Orbitron', sans-serif; font-size: 26px; font-weight: 800;
+  background: linear-gradient(135deg, #8B5CF6, #06B6D4);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-label { font-size: 11px; color: #94A3B8; margin-top: 4px; }
+
+/* ── Org chart ── */
+.org-box {
+  display: inline-block; padding: 8px 16px; border-radius: 10px;
+  font-size: 12px; font-weight: 600; text-align: center;
+  background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.25);
+}
+.org-box-top {
+  display: inline-block; padding: 10px 24px; border-radius: 12px;
+  font-size: 14px; font-weight: 700; text-align: center;
+  background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(6,182,212,0.2));
+  border: 1px solid rgba(139,92,246,0.4);
+  box-shadow: 0 0 20px rgba(139,92,246,0.15);
+}
+.org-sub {
+  display: inline-block; padding: 4px 10px; border-radius: 8px;
+  font-size: 10px; color: #94A3B8;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Print */
+@media print {
+  body { background: #0F172A; }
+  .slide { margin: 0; box-shadow: none; break-after: page; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- SLIDE 1 — COVER                                              -->
+<!-- ============================================================ -->
+<div class="slide" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+  <div class="orb" style="width:500px;height:500px;top:-100px;right:-100px;"></div>
+  <div class="orb-cyan" style="width:400px;height:400px;bottom:-80px;left:-80px;"></div>
+  <div class="orb" style="width:300px;height:300px;bottom:100px;right:200px;opacity:0.5;"></div>
+
+  <div style="margin-bottom:20px;">
+    <div style="width:120px;height:120px;margin:0 auto;border-radius:50%;
+      background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(6,182,212,0.2));
+      border:2px solid rgba(139,92,246,0.4);display:flex;align-items:center;justify-content:center;
+      box-shadow:0 0 60px rgba(139,92,246,0.25),0 0 120px rgba(139,92,246,0.1);">
+      <span class="orbitron" style="font-size:32px;font-weight:900;letter-spacing:3px;">
+        <span class="gradient-text">UT</span>
+      </span>
+    </div>
+  </div>
+
+  <h1 class="orbitron" style="font-size:56px;letter-spacing:6px;">
+    <span class="gradient-text">UTTEC</span>
+  </h1>
+  <div class="orbitron" style="font-size:16px;letter-spacing:8px;color:#8B5CF6;margin-top:8px;">
+    NETWORK SOLUTION
+  </div>
+
+  <div class="glow-line" style="width:300px;margin:28px auto;"></div>
+
+  <h2 style="font-size:28px;font-weight:600;letter-spacing:2px;">
+    ㈜유티텍 회사소개서
+  </h2>
+
+  <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+    <span class="tag">BLE Mesh</span>
+    <span class="tag">Low Energy</span>
+    <span class="tag-cyan">AI</span>
+    <span class="tag-cyan">IoT</span>
+    <span class="tag">Smart Factory</span>
+    <span class="tag-cyan">Smart Farm</span>
+  </div>
+
+  <div style="margin-top:36px;font-size:14px;color:#64748B;letter-spacing:3px;" class="orbitron">
+    2026年 3月
+  </div>
+
+  <div class="slide-num">01 / 12</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 2 — COMPANY OVERVIEW                                   -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div class="orb" style="width:350px;height:350px;top:-80px;right:-60px;"></div>
+  <div class="orb-cyan" style="width:250px;height:250px;bottom:-50px;left:-40px;"></div>
+
+  <div style="margin-bottom:20px;">
+    <div class="orbitron accent" style="font-size:12px;letter-spacing:4px;margin-bottom:6px;">COMPANY OVERVIEW</div>
+    <h2>회사 <span class="gradient-text">개요</span></h2>
+  </div>
+
+  <!-- Top row: Description + Stats -->
+  <div class="flex gap-6" style="margin-bottom:18px;">
+    <div class="glass p-5" style="flex:1.3;">
+      <h4 style="margin-bottom:8px;"><span class="glow-dot"></span>&nbsp; ㈜유티텍 (UTTEC Co., Ltd.)</h4>
+      <p class="sub" style="font-size:13px;">
+        2016년 설립된 <span class="accent">BLE Mesh Network</span> 전문 기업으로,
+        RF 개발 40년 이상의 노하우를 기반으로 조명제어, 주차장 시스템, 스마트팜, 스마트팩토리,
+        AI 교육 등 다양한 분야에 <span class="cyan">IoT 솔루션</span>을 제공합니다.
+        일본을 중심으로 <span class="accent">3,800대 이상</span>의 해외 수출 실적을 보유하고 있습니다.
+      </p>
+    </div>
+    <div style="flex:1;">
+      <div class="grid-2" style="gap:10px;">
+        <div class="stat-box">
+          <div class="stat-num">40+</div>
+          <div class="stat-label">년 개발 역사</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">3,800+</div>
+          <div class="stat-label">일본 수출 대수</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">2016</div>
+          <div class="stat-label">설립 연도</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" style="font-size:22px;">4<span style="font-size:14px;"> CERTS</span></div>
+          <div class="stat-label">국제 인증 보유</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom row: Org Chart + Contact -->
+  <div class="flex gap-6">
+    <!-- Org Chart -->
+    <div class="glass p-4" style="flex:1.4;">
+      <h4 style="font-size:13px;margin-bottom:12px;"><span class="glow-dot-cyan"></span>&nbsp; 조직도</h4>
+      <div style="text-align:center;">
+        <div class="org-box-top">대표이사</div>
+        <div style="margin-top:8px;height:20px;border-left:2px solid rgba(139,92,246,0.3);margin-left:50%;"></div>
+        <div style="display:flex;justify-content:center;gap:0;position:relative;">
+          <div style="position:absolute;top:0;left:16%;right:16%;height:2px;background:rgba(139,92,246,0.2);"></div>
+          <div style="flex:1;text-align:center;">
+            <div style="height:14px;border-left:2px solid rgba(139,92,246,0.2);margin:0 auto;width:0;"></div>
+            <div class="org-box" style="margin-bottom:6px;">연구소</div><br>
+            <div style="display:flex;gap:4px;justify-content:center;">
+              <div class="org-sub">연구팀</div>
+              <div class="org-sub">개발팀</div>
+            </div>
+          </div>
+          <div style="flex:1;text-align:center;">
+            <div style="height:14px;border-left:2px solid rgba(139,92,246,0.2);margin:0 auto;width:0;"></div>
+            <div class="org-box" style="margin-bottom:6px;">영업부</div><br>
+            <div style="display:flex;gap:4px;justify-content:center;">
+              <div class="org-sub">영업팀</div>
+              <div class="org-sub">기획팀</div>
+            </div>
+          </div>
+          <div style="flex:1;text-align:center;">
+            <div style="height:14px;border-left:2px solid rgba(139,92,246,0.2);margin:0 auto;width:0;"></div>
+            <div class="org-box" style="margin-bottom:6px;">관리부</div><br>
+            <div style="display:flex;gap:4px;justify-content:center;">
+              <div class="org-sub">운영</div>
+              <div class="org-sub">구매</div>
+              <div class="org-sub">자재</div>
+            </div>
+          </div>
+          <div style="flex:0.7;text-align:center;">
+            <div style="height:14px;border-left:2px solid rgba(139,92,246,0.2);margin:0 auto;width:0;"></div>
+            <div class="org-box" style="margin-bottom:6px;">생산</div><br>
+            <div class="org-sub">외주</div>
+          </div>
+          <div style="flex:0.5;text-align:center;">
+            <div style="height:14px;border-left:2px solid rgba(139,92,246,0.2);margin:0 auto;width:0;"></div>
+            <div class="org-box">감사</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="glass-accent p-4" style="flex:0.8;">
+      <h4 style="font-size:13px;margin-bottom:10px;"><span class="glow-dot"></span>&nbsp; 연락처</h4>
+      <div style="font-size:12px;line-height:2;color:#CBD5E1;">
+        <div>&#x1F4CD; 경기도 용인시 기흥구 흥덕중앙로 120</div>
+        <div style="padding-left:22px;">흥덕유타워 2404호</div>
+        <div>&#x1F4DE; Tel: 031-627-2250</div>
+        <div>&#x1F4E0; Fax: 0505-300-8065</div>
+        <div>&#x1F310; www.uttec.co.kr</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">02 / 12</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 3 — BUSINESS AREAS (사업영역)                           -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div class="orb" style="width:450px;height:450px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.5;"></div>
+
+  <div style="margin-bottom:12px;">
+    <div class="orbitron accent" style="font-size:12px;letter-spacing:4px;margin-bottom:6px;">BUSINESS AREAS</div>
+    <h2>사업 <span class="gradient-text">영역</span></h2>
+  </div>
+
+  <!-- Hexagonal layout -->
+  <div class="hex-grid">
+    <!-- Center: UTTEC -->
+    <div class="hex-center">
+      <span class="orbitron" style="font-size:20px;font-weight:900;letter-spacing:2px;">
+        <span class="gradient-text">UTTEC</span>
+      </span>
+      <span style="font-size:10px;color:#94A3B8;margin-top:4px;">BLE Mesh · AI · IoT</span>
+    </div>
+
+    <!-- SVG connector lines -->
+    <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:0;" viewBox="0 0 1120 400">
+      <line x1="560" y1="200" x2="180" y2="70" stroke="rgba(139,92,246,0.15)" stroke-width="1" stroke-dasharray="6,4"/>
+      <line x1="560" y1="200" x2="560" y2="30" stroke="rgba(139,92,246,0.15)" stroke-width="1" stroke-dasharray="6,4"/>
+      <line x1="560" y1="200" x2="940" y2="70" stroke="rgba(6,182,212,0.15)" stroke-width="1" stroke-dasharray="6,4"/>
+      <line x1="560" y1="200" x2="180" y2="330" stroke="rgba(6,182,212,0.15)" stroke-width="1" stroke-dasharray="6,4"/>
+      <line x1="560" y1="200" x2="560" y2="370" stroke="rgba(139,92,246,0.15)" stroke-width="1" stroke-dasharray="6,4"/>
+      <line x1="560" y1="200" x2="940" y2="330" stroke="rgba(139,92,246,0.15)" stroke-width="1" stroke-dasharray="6,4"/>
+    </svg>
+
+    <!-- Node 1: 조명제어 (top-left) -->
+    <div class="hex-node" style="top:10px;left:100px;">
+      <div style="font-size:26px;margin-bottom:6px;">&#x1F4A1;</div>
+      <div style="font-size:14px;font-weight:700;color:#A78BFA;">조명제어</div>
+      <div style="font-size:10px;color:#94A3B8;margin-top:4px;line-height:1.5;">
+        건물 보안등<br>스포츠조명<br>에너지 절감
+      </div>
+    </div>
+
+    <!-- Node 2: 주차장 (top-center) -->
+    <div class="hex-node" style="top:-20px;left:480px;">
+      <div style="font-size:26px;margin-bottom:6px;">&#x1F697;</div>
+      <div style="font-size:14px;font-weight:700;color:#22D3EE;">주차장 무선제어</div>
+      <div style="font-size:10px;color:#94A3B8;margin-top:4px;line-height:1.5;">
+        빈주차공간 확인<br>침수감지 시스템
+      </div>
+    </div>
+
+    <!-- Node 3: 주륜장 (top-right) -->
+    <div class="hex-node" style="top:10px;right:100px;">
+      <div style="font-size:26px;margin-bottom:6px;">&#x1F6B2;</div>
+      <div style="font-size:14px;font-weight:700;color:#A78BFA;">주륜장</div>
+      <div style="font-size:10px;color:#94A3B8;margin-top:4px;line-height:1.5;">
+        자전거 주차장<br>일본 수출
+      </div>
+    </div>
+
+    <!-- Node 4: 스마트팜 (bottom-left) -->
+    <div class="hex-node" style="bottom:10px;left:100px;">
+      <div style="font-size:26px;margin-bottom:6px;">&#x1F33F;</div>
+      <div style="font-size:14px;font-weight:700;color:#22D3EE;">스마트팜</div>
+      <div style="font-size:10px;color:#94A3B8;margin-top:4px;line-height:1.5;">
+        온도·습도·CO2·조도<br>커튼·분무기·도어
+      </div>
+    </div>
+
+    <!-- Node 5: 스마트팩토리 (bottom-center) -->
+    <div class="hex-node" style="bottom:-20px;left:480px;">
+      <div style="font-size:26px;margin-bottom:6px;">&#x1F3ED;</div>
+      <div style="font-size:14px;font-weight:700;color:#A78BFA;">스마트팩토리</div>
+      <div style="font-size:10px;color:#94A3B8;margin-top:4px;line-height:1.5;">
+        AI 모니터링<br>예측 보전 시스템
+      </div>
+    </div>
+
+    <!-- Node 6: AI 교육 (bottom-right) -->
+    <div class="hex-node" style="bottom:10px;right:100px;">
+      <div style="font-size:26px;margin-bottom:6px;">&#x1F393;</div>
+      <div style="font-size:14px;font-weight:700;color:#22D3EE;">AI 교육</div>
+      <div style="font-size:10px;color:#94A3B8;margin-top:4px;line-height:1.5;">
+        온라인 플랫폼<br>진학·취준생 교육
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">03 / 12</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 4 — CORE TECHNOLOGY (RF Development)                   -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div class="orb" style="width:400px;height:400px;top:-80px;left:-80px;"></div>
+  <div class="orb-cyan" style="width:300px;height:300px;bottom:-60px;right:-40px;"></div>
+
+  <div style="margin-bottom:18px;">
+    <div class="orbitron accent" style="font-size:12px;letter-spacing:4px;margin-bottom:6px;">CORE TECHNOLOGY</div>
+    <h2>RF 개발 <span class="gradient-text">기술 진화</span></h2>
+  </div>
+
+  <!-- Evolution Path -->
+  <div class="flex items-center gap-4" style="margin-bottom:28px;">
+    <!-- Stage 1 -->
+    <div class="glass p-5" style="flex:1;text-align:center;position:relative;">
+      <div style="position:absolute;top:-12px;left:16px;">
+        <span class="tag-sm">STAGE 1</span>
+      </div>
+      <div style="font-size:36px;margin:10px 0;">&#x1F4E1;</div>
+      <h4 style="color:#A78BFA;margin-bottom:8px;">General RF</h4>
+      <div class="sub-sm" style="line-height:1.7;">
+        No Encryption<br>
+        Chip Antenna<br>
+        <span class="accent" style="font-size:13px;font-weight:600;">Under 100m</span>
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div style="font-size:28px;color:rgba(139,92,246,0.4);">&#x25B6;</div>
+
+    <!-- Stage 2 -->
+    <div class="glass p-5" style="flex:1;text-align:center;position:relative;">
+      <div style="position:absolute;top:-12px;left:16px;">
+        <span class="tag-sm">STAGE 2</span>
+      </div>
+      <div style="font-size:36px;margin:10px 0;">&#x1F512;</div>
+      <h4 style="color:#22D3EE;margin-bottom:8px;">Encryption RF</h4>
+      <div class="sub-sm" style="line-height:1.7;">
+        Encryption<br>
+        External Antenna<br>
+        <span class="cyan" style="font-size:13px;font-weight:600;">Over 200m</span>
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div style="font-size:28px;color:rgba(6,182,212,0.4);">&#x25B6;</div>
+
+    <!-- Stage 3 -->
+    <div class="glass-accent p-5" style="flex:1.2;text-align:center;position:relative;
+      box-shadow:0 0 30px rgba(139,92,246,0.15);">
+      <div style="position:absolute;top:-12px;left:16px;">
+        <span class="tag" style="background:rgba(139,92,246,0.25);">STAGE 3</span>
+      </div>
+      <div style="font-size:36px;margin:10px 0;">&#x1F310;</div>
+      <h4 style="margin-bottom:8px;"><span class="gradient-text">BLE Mesh Network</span></h4>
+      <div class="sub-sm" style="line-height:1.7;">
+        Low Energy<br>
+        BLE Mesh Protocol<br>
+        <span style="font-size:13px;font-weight:600;color:#fff;">Dead Zone → Live Zone</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- System Features -->
+  <div class="glass p-4">
+    <h4 style="font-size:13px;margin-bottom:14px;"><span class="glow-dot"></span>&nbsp; System Features</h4>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <div style="padding:10px 20px;border-radius:12px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);text-align:center;">
+        <div style="font-size:20px;">&#x26A1;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">Low Energy</div>
+      </div>
+      <div style="padding:10px 20px;border-radius:12px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2);text-align:center;">
+        <div style="font-size:20px;">&#x1F512;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">Encryption</div>
+      </div>
+      <div style="padding:10px 20px;border-radius:12px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);text-align:center;">
+        <div style="font-size:20px;">&#x2B50;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">Simple Design</div>
+      </div>
+      <div style="padding:10px 20px;border-radius:12px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2);text-align:center;">
+        <div style="font-size:20px;">&#x1F578;&#xFE0F;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">Mesh Network</div>
+      </div>
+      <div style="padding:10px 20px;border-radius:12px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);text-align:center;">
+        <div style="font-size:20px;">&#x1F4F6;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">BLE 5.0</div>
+      </div>
+      <div style="padding:10px 20px;border-radius:12px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2);text-align:center;">
+        <div style="font-size:20px;">&#x1F4E1;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">Wireless</div>
+      </div>
+      <div style="padding:10px 24px;border-radius:12px;background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(6,182,212,0.15));border:1px solid rgba(139,92,246,0.3);text-align:center;">
+        <div style="font-size:20px;">&#x1F680;</div>
+        <div style="font-size:11px;font-weight:700;margin-top:4px;">Dead Zone → Live Zone</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">04 / 12</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 5 — SYSTEM ARCHITECTURE                                -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div class="orb" style="width:350px;height:350px;top:-60px;right:-40px;"></div>
+
+  <div style="margin-bottom:14px;">
+    <div class="orbitron accent" style="font-size:12px;letter-spacing:4px;margin-bottom:6px;">SYSTEM ARCHITECTURE</div>
+    <h2>시스템 <span class="gradient-text">아키텍처</span></h2>
+  </div>
+
+  <!-- Main Flow -->
+  <div class="glass p-5" style="margin-bottom:18px;">
+    <h4 style="font-size:12px;color:#94A3B8;margin-bottom:16px;">&#x25C8; Full System Flow</h4>
+    <div style="display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:nowrap;">
+      <div class="net-node" style="min-width:120px;">
+        <div style="font-size:24px;">&#x1F4E1;</div>
+        <div style="font-weight:700;color:#A78BFA;">Node</div>
+        <div style="font-size:9px;color:#64748B;line-height:1.4;">Wireless · Solar cell<br>Battery · Sensor</div>
+      </div>
+      <div class="net-arrow">&#x25B6; &#x25B6;</div>
+      <div class="net-node" style="min-width:100px;background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.25);">
+        <div style="font-size:24px;">&#x1F4F6;</div>
+        <div style="font-weight:700;color:#22D3EE;">Gateway</div>
+        <div style="font-size:9px;color:#64748B;">BLE &#x2194; WiFi</div>
+      </div>
+      <div class="net-arrow-cyan">&#x25B6; &#x25B6;</div>
+      <div class="net-node" style="min-width:100px;">
+        <div style="font-size:24px;">&#x1F310;</div>
+        <div style="font-weight:700;color:#A78BFA;">Internet</div>
+        <div style="font-size:9px;color:#64748B;">Cloud</div>
+      </div>
+      <div class="net-arrow">&#x25B6; &#x25B6;</div>
+      <div class="net-node" style="min-width:100px;background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.25);">
+        <div style="font-size:24px;">&#x1F5A5;&#xFE0F;</div>
+        <div style="font-weight:700;color:#22D3EE;">Server</div>
+        <div style="font-size:9px;color:#64748B;">AI Processing</div>
+      </div>
+      <div class="net-arrow-cyan">&#x25B6; &#x25B6;</div>
+      <div class="net-node" style="min-width:100px;">
+        <div style="font-size:24px;">&#x1F468;&#x200D;&#x1F4BB;</div>
+        <div style="font-weight:700;color:#A78BFA;">User</div>
+        <div style="font-size:9px;color:#64748B;">Computer · Mobile</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5-Step Pipeline -->
+  <div class="glass-cyan p-4" style="margin-bottom:18px;">
+    <h4 style="font-size:12px;color:#94A3B8;margin-bottom:14px;">&#x25C8; 5-Step Pipeline</h4>
+    <div style="display:flex;align-items:stretch;justify-content:center;gap:0;">
+      <div style="flex:1;text-align:center;padding:12px 8px;background:rgba(139,92,246,0.08);border-radius:12px 0 0 12px;border:1px solid rgba(139,92,246,0.15);">
+        <div style="font-size:22px;">&#x1F50C;</div>
+        <div style="font-size:11px;font-weight:700;margin-top:6px;">센서/디바이스</div>
+        <div style="font-size:9px;color:#64748B;">온도·습도·조도</div>
+      </div>
+      <div style="width:2px;background:linear-gradient(to bottom,rgba(139,92,246,0.3),rgba(6,182,212,0.3));"></div>
+      <div style="flex:1;text-align:center;padding:12px 8px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.1);">
+        <div style="font-size:22px;">&#x1F4E1;</div>
+        <div style="font-size:11px;font-weight:700;margin-top:6px;">BLE Mesh Node</div>
+        <div style="font-size:9px;color:#64748B;">무선 네트워크</div>
+      </div>
+      <div style="width:2px;background:linear-gradient(to bottom,rgba(139,92,246,0.3),rgba(6,182,212,0.3));"></div>
+      <div style="flex:1;text-align:center;padding:12px 8px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.1);">
+        <div style="font-size:22px;">&#x1F4F6;</div>
+        <div style="font-size:11px;font-weight:700;margin-top:6px;">Gateway</div>
+        <div style="font-size:9px;color:#64748B;">데이터 수집</div>
+      </div>
+      <div style="width:2px;background:linear-gradient(to bottom,rgba(6,182,212,0.3),rgba(139,92,246,0.3));"></div>
+      <div style="flex:1;text-align:center;padding:12px 8px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.15);">
+        <div style="font-size:22px;">&#x2601;&#xFE0F;</div>
+        <div style="font-size:11px;font-weight:700;margin-top:6px;">Cloud / AI</div>
+        <div style="font-size:9px;color:#64748B;">분석 · 예측</div>
+      </div>
+      <div style="width:2px;background:linear-gradient(to bottom,rgba(6,182,212,0.3),rgba(139,92,246,0.3));"></div>
+      <div style="flex:1;text-align:center;padding:12px 8px;background:rgba(139,92,246,0.08);border-radius:0 12px 12px 0;border:1px solid rgba(139,92,246,0.15);">
+        <div style="font-size:22px;">&#x1F4CA;</div>
+        <div style="font-size:11px;font-weight:700;margin-top:6px;">모니터링</div>
+        <div style="font-size:9px;color:#64748B;">실시간 대시보드</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Three Core Technologies -->
+  <div class="grid-3">
+    <div class="glass-accent p-4 text-center">
+      <div style="font-size:28px;margin-bottom:6px;">&#x1F578;&#xFE0F;</div>
+      <div class="orbitron" style="font-size:14px;font-weight:700;color:#A78BFA;">BLE Mesh Network</div>
+      <div class="sub-sm" style="margin-top:6px;">자체 메시 프로토콜로<br>Dead Zone 제거</div>
+    </div>
+    <div class="glass-cyan p-4 text-center">
+      <div style="font-size:28px;margin-bottom:6px;">&#x26A1;</div>
+      <div class="orbitron" style="font-size:14px;font-weight:700;color:#22D3EE;">Low Energy</div>
+      <div class="sub-sm" style="margin-top:6px;">배터리·솔라셀 운용<br>초저전력 설계</div>
+    </div>
+    <div class="glass-accent p-4 text-center">
+      <div style="font-size:28px;margin-bottom:6px;">&#x1F9E0;</div>
+      <div class="orbitron" style="font-size:14px;font-weight:700;color:#A78BFA;">AI Analytics</div>
+      <div class="sub-sm" style="margin-top:6px;">AI 기반 데이터 분석<br>예측 보전 시스템</div>
+    </div>
+  </div>
+
+  <div class="slide-num">05 / 12</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 6 — APPLICATION DETAILS (적용 분야)                     -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div class="orb-cyan" style="width:350px;height:350px;bottom:-80px;right:-60px;"></div>
+
+  <div style="margin-bottom:16px;">
+    <div class="orbitron accent" style="font-size:12px;letter-spacing:4px;margin-bottom:6px;">APPLICATIONS</div>
+    <h2>적용 <span class="gradient-text">분야</span></h2>
+  </div>
+
+  <!-- Smart Farm -->
+  <div class="glass p-4" style="margin-bottom:14px;">
+    <div class="flex items-center gap-3" style="margin-bottom:12px;">
+      <div class="icon-circle">&#x1F33F;</div>
+      <div>
+        <h4 style="color:#A78BFA;">스마트팜</h4>
+        <div class="sub-xs">Smart Farm Sensor Network</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:130px;padding:10px 14px;border-radius:10px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.12);text-align:center;">
+        <div style="font-size:20px;">&#x1F321;&#xFE0F;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">온도센서</div>
+      </div>
+      <div style="flex:1;min-width:130px;padding:10px 14px;border-radius:10px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.12);text-align:center;">
+        <div style="font-size:20px;">&#x1F4A7;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">습도센서</div>
+      </div>
+      <div style="flex:1;min-width:130px;padding:10px 14px;border-radius:10px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.12);text-align:center;">
+        <div style="font-size:20px;">&#x2600;&#xFE0F;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">조도센서</div>
+      </div>
+      <div style="flex:1;min-width:130px;padding:10px 14px;border-radius:10px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.12);text-align:center;">
+        <div style="font-size:20px;">&#x1F4A8;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">CO2센서</div>
+      </div>
+      <div style="flex:1;min-width:130px;padding:10px 14px;border-radius:10px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.12);text-align:center;">
+        <div style="font-size:20px;">&#x1FA9E;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">커튼개폐</div>
+      </div>
+      <div style="flex:1;min-width:130px;padding:10px 14px;border-radius:10px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.12);text-align:center;">
+        <div style="font-size:20px;">&#x1F4A6;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">분무기</div>
+      </div>
+      <div style="flex:1;min-width:130px;padding:10px 14px;border-radius:10px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.12);text-align:center;">
+        <div style="font-size:20px;">&#x1F6AA;</div>
+        <div style="font-size:11px;font-weight:600;margin-top:4px;">도어개폐</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parking + Lighting -->
+  <div class="grid-2">
+    <!-- 주차장 -->
+    <div class="glass p-4">
+      <div class="flex items-center gap-3" style="margin-bottom:12px;">
+        <div class="icon-circle-cyan">&#x1F697;</div>
+        <div>
+          <h4 style="color:#22D3EE;">주차장</h4>
+          <div class="sub-xs">Parking System</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="padding:10px 14px;border-radius:10px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.12);display:flex;align-items:center;gap:10px;">
+          <span style="font-size:18px;">&#x1F17F;&#xFE0F;</span>
+          <div>
+            <div style="font-size:12px;font-weight:600;">빈주차공간 확인시스템</div>
+            <div class="sub-xs">실시간 주차 가용 현황</div>
+          </div>
+        </div>
+        <div style="padding:10px 14px;border-radius:10px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.12);display:flex;align-items:center;gap:10px;">
+          <span style="font-size:18px;">&#x1F4A1;</span>
+          <div>
+            <div style="font-size:12px;font-weight:600;">보안등 무선디밍</div>
+            <div class="sub-xs">에너지 절감 LED 제어</div>
+          </div>
+        </div>
+        <div style="padding:10px 14px;border-radius:10px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.12);display:flex;align-items:center;gap:10px;">
+          <span style="font-size:18px;">&#x1F30A;</span>
+          <div>
+            <div style="font-size:12px;font-weight:600;">지하주차장 침수감지</div>
+            <div class="sub-xs">실시간 수위 모니터링</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 조명 -->
+    <div class="glass p-4">
+      <div class="flex items-center gap-3" style="margin-bottom:12px;">
+        <div class="icon-circle">&#x1F4A1;</div>
+        <div>
+          <h4 style="color:#A78BFA;">조명</h4>
+          <div class="sub-xs">Lighting Control</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="padding:10px 14px;border-radius:10px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.12);display:flex;align-items:center;gap:10px;">
+          <span style="font-size:18px;">&#x26BD;</span>
+          <div>
+            <div style="font-size:12px;font-weight:600;">스포츠조명</div>
+            <div class="sub-xs">골프장·운동시설 조명제어</div>
+          </div>
+        </div>
+        <div style="padding:10px 14px;border-radius:10px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.12);display:flex;align-items:center;gap:10px;">
+          <span style="font-size:18px;">&#x1F3E2;</span>
+          <div>
+            <div style="font-size:12px;font-weight:600;">건물 보안등</div>
+            <div class="sub-xs">아파트·빌딩 무선 보안등 제어</div>
+          </div>
+        </div>
+        <div style="padding:14px;border-radius:10px;background:linear-gradient(135deg,rgba(139,92,246,0.08),rgba(6,182,212,0.08));border:1px solid rgba(139,92,246,0.15);text-align:center;">
+          <div style="font-size:12px;font-weight:700;color:#A78BFA;">
+            &#x26A1; 국내 최초 지하주차장 무선 디밍 시스템
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">06 / 12</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 7 — SOLUTIONS 1 (조명 & 주차장)                        -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div class="orb" style="width:300px;height:300px;top:-60px;left:-40px;"></div>
+
+  <div style="margin-bottom:14px;">
+    <div class="orbitron accent" style="font-size:12px;letter-spacing:4px;margin-bottom:6px;">SOLUTIONS 1</div>
+    <h2>조명시스템 & <span class="gradient-text">주차장시스템</span></h2>
+  </div>
+
+  <div class="grid-2" style="gap:24px;">
+    <!-- 조명시스템 -->
+    <div class="glass p-4">
+      <h4 style="color:#A78BFA;margin-bottom:10px;">&#x1F4A1; 조명시스템</h4>
+
+      <!-- Network Diagram -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:14px;
+        padding:12px;border-radius:10px;background:rgba(0,0,0,0.2);">
+        <div style="padding:6px 10px;border-radius:8px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.2);font-size:10px;font-weight:600;text-align:center;">
+          Monitor<br><span style="font-size:8px;color:#64748B;">WEB/APP</span>
+        </div>
+        <span style="color:rgba(139,92,246,0.3);font-size:12px;">&#x2194;</span>
+        <div style="padding:6px 10px;border-radius:8px;background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.2);font-size:10px;font-weight:600;text-align:center;">
+          Gateway
+        </div>
+        <span style="color:rgba(6,182,212,0.3);font-size:12px;">&#x2194;</span>
+        <div style="display:flex;gap:3px;">
+          <div style="padding:6px 8px;border-radius:8px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.15);font-size:9px;">Node</div>
+          <div style="padding:6px 8px;border-radius:8px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.15);font-size:9px;">Node</div>
+          <div style="padding:6px 8px;border-radius:8px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.15);font-size:9px;">Node</div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div style="font-size:11px;line-height:2;color:#CBD5E1;margin-bottom:12px;">
+        <div>&#x25B8; 지하주차장 무선 디밍 <span class="tag-sm" style="font-size:9px;">국내최초</span></div>
+        <div>&#x25B8; 골프장 스포츠조명 무선제어</div>
+        <div>&#x25B8; 건물 보안등 원격 관리</div>
+        <div>&#x25B8; 에너지 절감 최적화 시스템</div>
+      </div>
+
+      <!-- Cases -->
+      <div style="padding:10px;border-radius:10px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.1);">
+        <div style="font-size:10px;color:#64748B;margin-bottom:6px;">주요 납품처</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag-sm">필로스GC</span>
+          <span class="tag-sm">광릉CC</span>
+          <span class="tag-sm">현대힐스테이트</span>
+          <span class="tag-sm">홈플러스</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 주차장시스템 -->
+    <div class="glass p-4">
+      <h4 style="color:#22D3EE;margin-bottom:10px;">&#x1F697; 주차장시스템</h4>
+
+      <!-- Network Diagram -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:14px;
+        padding:12px;border-radius:10px;background:rgba(0,0,0,0.2);">
+        <div style="padding:6px 10px;border-radius:8px;background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.2);font-size:10px;font-weight:600;text-align:center;">
+          Monitor<br><span style="font-size:8px;color:#64748B;">WEB/APP</span>
+        </div>
+        <span style="color:rgba(6,182,212,0.3);font-size:12px;">&#x2194;</span>
+        <div style="padding:6px 10px;border-radius:8px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.2);font-size:10px;font-weight:600;text-align:center;">
+          Gateway
+        </div>
+        <span style="color:rgba(139,92,246,0.3);font-size:12px;">&#x2194;</span>
+        <div style="display:flex;gap:3px;">
+          <div style="padding:6px 8px;border-radius:8px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.15);font-size:9px;">Node</div>
+          <div style="padding:6px 8px;border-radius:8px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.15);font-size:9px;">Node</div>
+          <div style="padding:6px 8px;border-radius:8px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.15);font-size:9px;">Node</div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div style="font-size:11px;line-height:2;color:#CBD5E1;margin-bottom:12px;">
+        <div>&#x25B8; 빈주차공간 실시간 확인 시스템</div>
+        <div>&#x25B8; 지하주차장 침수감지 센서</div>
+        <div>&#x25B8; 주차유도 LED 시스템</div>
+        <div>&#x25B8; 무선 네트워크 기반 통합관리</div>
+      </div>
+
+      <!-- Cases -->
+      <div style="padding:10px;border-radius:10px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.1);">
+        <div style="font-size:10px;color:#64748B;margin-bottom:6px;">주요 납품처</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag-sm" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);color:#22D3EE;">하네다공항 500대</span>
+          <span class="tag-sm" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);color:#22D3EE;">나고야 3,300대</span>
+          <span class="tag-sm" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);color:#22D3EE;">롯데월드</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">07 / 12</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 8 — SOLUTIONS 2 (주륜장 & 스마트팩토리 & 스마트팜)      -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div class="orb-cyan" style="width:300px;height:300px;bottom:-60px;left:50%;transform:translateX(-50%);"></div>
+
+  <div style="margin-bottom:14px;">
+    <div class="orbitron accent" style="font-size:12px;letter-spacing:4px;margin-bottom:6px;">SOLUTIONS 2</div>
+    <h2>주륜장 · 스마트팩토리 · <span class="gradient-text">스마트팜</span></h2>
+  </div>
+
+  <div class="grid-3" style="gap:18px;">
+    <!-- 주륜장 -->
+    <div class="glass p-4">
+      <h4 style="color:#A78BFA;margin-bottom:8px;font-size:15px;">&#x1F6B2; 주륜장시스템</h4>
+
+      <!-- Mini diagram -->
+      <div style="padding:10px;border-radius:8px;background:rgba(0,0,0,0.2);margin-bottom:10px;text-align:center;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;font-size:9px;">
+          <div style="padding:4px 8px;border-radius:6px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.2);">Gateway</div>
+          <span style="color:rgba(139,92,246,0.3);">&#x2192;</span>
+          <div style="padding:4px 8px;border-radius:6px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.15);">주차정산기</div>
+          <span style="color:rgba(139,92,246,0.3);">&#x2192;</span>
+          <div style="padding:4px 8px;border-radius:6px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.1);">Nodes</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;line-height:1.9;color:#CBD5E1;">
+        <div>&#x25B8; 자전거 주차 관리 시스템</div>
+        <div>&#x25B8; 일본 수출 전문</div>
+        <div>&#x25B8; 도카이기켄 공동개발</div>
+        <div>&#x25B8; 하네다공항 500대</div>
+        <div>&#x25B8; 나고야 3,300대</div>
+      </div>
+
+      <div style="margin-top:10px;padding:8px;border-radius:8px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.1);text-align:center;">
+        <span class="orbitron" style="font-size:20px;font-weight:800;">
+          <span class="gradient-text">3,800+</span>
+        </span>
+        <div style="font-size:9px;color:#64748B;">일본 수출 누적</div>
+      </div>
+    </div>
+
+    <!-- 스마트팩토리 -->
+    <div class="glass p-4">
+      <h4 style="color:#22D3EE;margin-bottom:8px;font-size:15px;">&#x1F3ED; 스마트팩토리</h4>
+
+      <!-- Mini diagram -->
+      <div style="padding:10px;border-radius:8px;background:rgba(0,0,0,0.2);margin-bottom:10px;text-align:center;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;font-size:9px;">
+          <div style="padding:4px 8px;border-radius:6px;background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.2);">Gateway</div>
+          <span style="color:rgba(6,182,212,0.3);">&#x2192;</span>
+          <div style="padding:4px 8px;border-radius:6px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.15);">AI Engine</div>
+          <span style="color:rgba(6,182,212,0.3);">&#x2192;</span>
+          <div style="padding:4px 8px;border-radius:6px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.1);">Nodes</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;line-height:1.9;color:#CBD5E1;">
+        <div>&#x25B8; AI 기반 모니터링</div>
+        <div>&#x25B8; 예측 보전 시스템</div>
+        <div>&#x25B8; 실시간 데이터 분석</div>
+        <div>&#x25B8; 이상감지 알림</div>
+      </div>
+
+      <div style="margin-top:10px;padding:8px;border-radius:8px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.1);text-align:center;">
+        <div style="font-size:11px;font-weight:700;color:#22D3EE;">
+          &#x1F50B; 배터리 분쇄 AI
+        </div>
+        <div style="font-size:9px;color:#64748B;">2025 프로젝트</div>
+      </div>
+    </div>
+
+    <!-- 스마트팜 -->
+    <div class="glass p-4">
+      <h4 style="color:#A78BFA;margin-bottom:8px;font-size:15px;">&#x1F33F; 스마트팜</h4>
+
+      <!-- Mini diagram -->
+      <div style="padding:10px;border-radius:8px;background:rgba(0,0,0,0.2);margin-bottom:10px;text-align:center;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;font-size:9px;">
+          <div style="padding:4px 8px;border-radius:6px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.2);">Gateway</div>
+          <span style="color:rgba(139,92,246,0.3);">&#x2192;</span>
+          <div style="padding:4px 8px;border-radius:6px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.15);">Sensors</div>
+          <span style="color:rgba(139,92,246,0.3);">&#x2192;</span>
+          <div style="padding:4px 8px;border-radius:6px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.1);">Nodes</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;line-height:1.9;color:#CBD5E1;">
+        <div>&#x25B8; 온도·습도·CO2·조도</div>
+        <div>&#x25B8; 커튼·분무기·도어 제어</div>
+        <div>&#x25B8; 클라우드 대시보드</div>
+        <div>&#x25B8; AI 생육환경 최적화</div>
+      </div>
+
+      <div style="margin-top:10px;padding:8px;border-radius:8px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.1);text-align:center;">
+        <div style="font-size:11px;font-weight:700;color:#A78BFA;">
+          &#x1F33E; 서울대 농지 AI
+        </div>
+        <div style="font-size:9px;color:#64748B;">2026 프로젝트</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">08 / 12</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 9 — AI & EDUCATION                                     -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div class="orb" style="width:400px;height:400px;top:-80px;right:-80px;"></div>
+  <div class="orb-cyan" style="width:300px;height:300px;bottom:-60px;left:-40px;"></div>
+
+  <div style="margin-bottom:18px;">
+    <div class="orbitron accent" style="font-size:12px;letter-spacing:4px;margin-bottom:6px;">AI & EDUCATION</div>
+    <h2>AI · <span class="gradient-text">교육 사업</span></h2>
+  </div>
+
+  <div class="grid-2" style="gap:24px;">
+    <!-- Left: Education -->
+    <div class="flex-col gap-4">
+      <div class="glass-accent p-5">
+        <div class="flex items-center gap-3" style="margin-bottom:12px;">
+          <div class="icon-circle" style="font-size:26px;">&#x1F393;</div>
+          <div>
+            <h4>AI Education Platform</h4>
+            <div class="sub-xs">온라인 AI·IoT 교육 플랫폼</div>
+          </div>
+        </div>
+        <div style="font-size:12px;line-height:2;color:#CBD5E1;">
+          <div>&#x25B8; AI·IoT 실무 중심 커리큘럼</div>
+          <div>&#x25B8; 온라인/오프라인 병행 교육</div>
+          <div>&#x25B8; 실습 장비 제공 및 프로젝트 기반</div>
+        </div>
+      </div>
+
+      <div class="glass p-4">
+        <div class="flex items-center gap-3" style="margin-bottom:10px;">
+          <div class="icon-circle-cyan" style="font-size:22px;">&#x1F3AF;</div>
+          <h4 style="color:#22D3EE;">스마트 진학 컨설팅</h4>
+        </div>
+        <div style="font-size:12px;line-height:1.8;color:#CBD5E1;">
+          <div>&#x25B8; AI 기반 진학 방향 분석</div>
+          <div>&#x25B8; 맞춤형 학습 로드맵 제공</div>
+        </div>
+      </div>
+
+      <div class="glass p-4">
+        <div class="flex items-center gap-3" style="margin-bottom:10px;">
+          <div class="icon-circle" style="font-size:22px;">&#x1F4BC;</div>
+          <h4 style="color:#A78BFA;">취준생 AI·IoT 실무 교육</h4>
+        </div>
+        <div style="font-size:12px;line-height:1.8;color:#CBD5E1;">
+          <div>&#x25B8; 취업 연계 실무 프로그램</div>
+          <div>&#x25B8; BLE·센서·AI 통합 교육</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: AI Projects -->
+    <div class="flex-col gap-4">
+      <div class="glass-cyan p-5" style="position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-20px;right:-20px;width:120px;height:120px;border-radius:50%;
+          background:radial-gradient(circle,rgba(6,182,212,0.15),transparent 70%);"></div>
+        <div class="flex items-center gap-3" style="margin-bottom:12px;">
+          <div class="icon-circle-cyan" style="font-size:26px;">&#x1F9E0;</div>
+          <div>
+            <h4 style="color:#22D3EE;">의료 X-ray AI 판별 시스템</h4>
+            <span class="tag-sm" style="background:rgba(6,182,212,0.15);border-color:rgba(6,182,212,0.25);color:#22D3EE;">2026</span>
+          </div>
+        </div>
+        <div style="font-size:12px;line-height:1.8;color:#CBD5E1;">
+          <div>&#x25B8; AI 기반 X-ray 영상 자동 판독</div>
+          <div>&#x25B8; 딥러닝 모델 학습 및 검증</div>
+          <div>&#x25B8; 의료기관 연계 실증</div>
+        </div>
+      </div>
+
+      <div class="glass p-5" style="position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-20px;right:-20px;width:120px;height:120px;border-radius:50%;
+          background:radial-gradient(circle,rgba(139,92,246,0.15),transparent 70%);"></div>
+        <div class="flex items-center gap-3" style="margin-bottom:12px;">
+          <div class="icon-circle" style="font-size:26px;">&#x1F50B;</div>
+          <div>
+            <h4 style="color:#A78BFA;">배터리 분쇄 시스템 AI</h4>
+            <span class="tag-sm">2025</span>
+          </div>
+        </div>
+        <div style="font-size:12px;line-height:1.8;color:#CBD5E1;">
+          <div>&#x25B8; AI 기반 배터리 분쇄 공정 모니터링</div>
+          <div>&#x25B8; 이상 감지 및 예측 보전</div>
+          <div>&#x25B8; 스마트팩토리 연계</div>
+        </div>
+      </div>
+
+      <div style="padding:16px;border-radius:14px;
+        background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(6,182,212,0.1));
+        border:1px solid rgba(139,92,246,0.2);text-align:center;">
+        <div class="orbitron" style="font-size:13px;font-weight:700;">
+          <span class="gradient-text">AI + IoT + Education</span>
+        </div>
+        <div style="font-size:11px;color:#94A3B8;margin-top:6px;">
+          기술과 교육을 융합하는 UTTEC의 미래 비전
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">09 / 12</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 10 — CERTIFICATIONS & PATENTS                          -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div class="orb" style="width:300px;height:300px;top:-60px;left:-40px;"></div>
+
+  <div style="margin-bottom:16px;">
+    <div class="orbitron accent" style="font-size:12px;letter-spacing:4px;margin-bottom:6px;">CERTIFICATIONS & PATENTS</div>
+    <h2>인증 & <span class="gradient-text">특허</span></h2>
+  </div>
+
+  <!-- International Certifications -->
+  <div class="grid-3" style="margin-bottom:16px;">
+    <div class="cert-badge">
+      <div class="cert-icon" style="font-size:18px;font-weight:900;color:#A78BFA;">KC</div>
+      <h4 style="font-size:14px;color:#A78BFA;">KC 인증</h4>
+      <div class="sub-xs" style="margin-top:6px;line-height:1.5;">한국 전파인증<br>국내 무선기기 적합성 인증</div>
+      <div style="margin-top:8px;"><span class="tag-sm">한국</span></div>
+    </div>
+    <div class="cert-badge">
+      <div class="cert-icon" style="font-size:14px;font-weight:900;color:#22D3EE;background:rgba(6,182,212,0.15);border-color:rgba(6,182,212,0.3);box-shadow:0 0 16px rgba(6,182,212,0.15);">TELEC</div>
+      <h4 style="font-size:14px;color:#22D3EE;">TELEC 인증</h4>
+      <div class="sub-xs" style="margin-top:6px;line-height:1.5;">일본 전파인증<br>일본 무선기기 기술기준 적합</div>
+      <div style="margin-top:8px;"><span class="tag-sm" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);color:#22D3EE;">일본</span></div>
+    </div>
+    <div class="cert-badge">
+      <div class="cert-icon" style="font-size:18px;font-weight:900;color:#A78BFA;">CE</div>
+      <h4 style="font-size:14px;color:#A78BFA;">CE 인증</h4>
+      <div class="sub-xs" style="margin-top:6px;line-height:1.5;">유럽 안전인증<br>EU 시장 진출 필수 인증</div>
+      <div style="margin-top:8px;"><span class="tag-sm">유럽</span></div>
+    </div>
+  </div>
+
+  <!-- Additional Certs + Patents -->
+  <div class="grid-2" style="gap:18px;">
+    <div class="glass p-4">
+      <h4 style="font-size:13px;margin-bottom:12px;"><span class="glow-dot"></span>&nbsp; 기업 인증</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.1);">
+          <div class="icon-circle-sm">&#x1F3C6;</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;">벤처기업 인증</div>
+            <div class="sub-xs">중소벤처기업부 인증 (2016~)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.1);">
+          <div class="icon-circle-sm" style="background:rgba(6,182,212,0.12);border-color:rgba(6,182,212,0.2);">&#x1F52C;</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;">기업부설연구소</div>
+            <div class="sub-xs">한국산업기술진흥협회 인증 (2018~)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.1);">
+          <div class="icon-circle-sm">&#x1F4E6;</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;">수출 인증</div>
+            <div class="sub-xs">일본·유럽 수출 적합 인증 보유</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass p-4">
+      <h4 style="font-size:13px;margin-bottom:12px;"><span class="glow-dot-cyan"></span>&nbsp; 특허</h4>
+      <div style="padding:16px;border-radius:12px;background:linear-gradient(135deg,rgba(139,92,246,0.08),rgba(6,182,212,0.08));border:1px solid rgba(139,92,246,0.15);">
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <div style="width:50px;height:50px;border-radius:12px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);
+            display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">
+            &#x1F4DC;
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#A78BFA;margin-bottom:4px;">
+              복합센서를 활용한 디밍제어시스템
+            </div>
+            <div style="font-size:12px;color:#CBD5E1;line-height:1.8;">
+              등록번호: <span class="cyan">10-1623345</span><br>
+              등록국가: 대한민국 (한국특허청)<br>
+              자동 조도 감지 + 무선 디밍 제어 기술
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:10px;border-radius:10px;background:rgba(6,182,212,0.04);border:1px solid rgba(6,182,212,0.08);text-align:center;">
+        <div style="font-size:11px;color:#94A3B8;">
+          지속적인 R&D 투자를 통한 기술 경쟁력 확보
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">10 / 12</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 11 — HISTORY (연혁)                                    -->
+<!-- ============================================================ -->
+<div class="slide" style="padding:50px 70px;">
+  <div class="logo-mark">UTTEC</div>
+  <div class="orb" style="width:350px;height:350px;bottom:-80px;right:-60px;"></div>
+
+  <div style="margin-bottom:12px;">
+    <div class="orbitron accent" style="font-size:12px;letter-spacing:4px;margin-bottom:6px;">HISTORY</div>
+    <h2>회사 <span class="gradient-text">연혁</span></h2>
+  </div>
+
+  <div class="grid-2" style="gap:24px;">
+    <!-- Left column: 2016-2019 -->
+    <div>
+      <div class="timeline-v">
+        <!-- 2016 -->
+        <div class="tl-item">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span class="orbitron" style="font-size:16px;font-weight:800;color:#8B5CF6;">2016</span>
+            <span class="tag-sm">설립</span>
+          </div>
+          <div style="font-size:11px;color:#CBD5E1;line-height:1.7;padding-left:4px;">
+            6월 ㈜유티텍 설립<br>
+            벤처기업 인증
+          </div>
+        </div>
+        <!-- 2017 -->
+        <div class="tl-item">
+          <div style="margin-bottom:4px;">
+            <span class="orbitron" style="font-size:16px;font-weight:800;color:#06B6D4;">2017</span>
+          </div>
+          <div style="font-size:11px;color:#CBD5E1;line-height:1.7;padding-left:4px;">
+            KC / TELEC / CE 인증 취득<br>
+            EMS IoT 조명제어 공급<br>
+            <span class="sub-xs">(현대건설, 롯데건설, 한화건설, LH, 홈플러스)</span><br>
+            클라우드 WEB LED 조명제어 개발<br>
+            스위스 LUMITEC 수출<br>
+            일본 OPTILED 수출
+          </div>
+        </div>
+        <!-- 2018 -->
+        <div class="tl-item">
+          <div style="margin-bottom:4px;">
+            <span class="orbitron" style="font-size:16px;font-weight:800;color:#8B5CF6;">2018</span>
+          </div>
+          <div style="font-size:11px;color:#CBD5E1;line-height:1.7;padding-left:4px;">
+            LoRa 클라우드서버 국내최초 상용화<br>
+            기업부설연구소 설립<br>
+            특허등록 "복합센서 디밍제어"
+          </div>
+        </div>
+        <!-- 2019 -->
+        <div class="tl-item">
+          <div style="margin-bottom:4px;">
+            <span class="orbitron" style="font-size:16px;font-weight:800;color:#06B6D4;">2019</span>
+          </div>
+          <div style="font-size:11px;color:#CBD5E1;line-height:1.7;padding-left:4px;">
+            골프장 무선조명 (필로스GC, 광릉CC)<br>
+            도카이기켄 주륜장 공동개발<br>
+            RF BLE Mesh 개발<br>
+            흥덕유타워 이전
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: 2022-2026 -->
+    <div>
+      <div class="timeline-v">
+        <!-- 2022 -->
+        <div class="tl-item">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span class="orbitron" style="font-size:16px;font-weight:800;color:#8B5CF6;">2022</span>
+            <span class="tag-sm" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);color:#22D3EE;">수출</span>
+          </div>
+          <div style="font-size:11px;color:#CBD5E1;line-height:1.7;padding-left:4px;">
+            하네다공항 500대 수출<br>
+            나고야 3,300대 수출
+          </div>
+        </div>
+        <!-- 2023 -->
+        <div class="tl-item">
+          <div style="margin-bottom:4px;">
+            <span class="orbitron" style="font-size:16px;font-weight:800;color:#06B6D4;">2023</span>
+          </div>
+          <div style="font-size:11px;color:#CBD5E1;line-height:1.7;padding-left:4px;">
+            하나금융글로벌캠퍼스 조명무선시스템
+          </div>
+        </div>
+        <!-- 2024 -->
+        <div class="tl-item">
+          <div style="margin-bottom:4px;">
+            <span class="orbitron" style="font-size:16px;font-weight:800;color:#8B5CF6;">2024</span>
+          </div>
+          <div style="font-size:11px;color:#CBD5E1;line-height:1.7;padding-left:4px;">
+            Smart Factory AI 사업 시작<br>
+            Smart Farm IoT 개발<br>
+            AI Education 플랫폼 구축<br>
+            스마트 진학·취업 교육 사업
+          </div>
+        </div>
+        <!-- 2025 -->
+        <div class="tl-item">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span class="orbitron" style="font-size:16px;font-weight:800;color:#06B6D4;">2025</span>
+            <span class="tag-sm" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);color:#22D3EE;">AI</span>
+          </div>
+          <div style="font-size:11px;color:#CBD5E1;line-height:1.7;padding-left:4px;">
+            배터리 분쇄 시스템 AI 개발
+          </div>
+        </div>
+        <!-- 2026 -->
+        <div class="tl-item">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span class="orbitron" style="font-size:16px;font-weight:800;background:linear-gradient(135deg,#8B5CF6,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">2026</span>
+            <span class="tag" style="font-size:9px;">CURRENT</span>
+          </div>
+          <div style="font-size:11px;color:#CBD5E1;line-height:1.7;padding-left:4px;">
+            서울대 농지 AI Smart Farm<br>
+            의료 X-ray AI 판별 시스템
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">11 / 12</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 12 — PARTNERS & CONTACT                                -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div class="orb" style="width:400px;height:400px;top:-80px;left:50%;transform:translateX(-50%);"></div>
+  <div class="orb-cyan" style="width:250px;height:250px;bottom:-40px;right:-40px;"></div>
+
+  <div style="margin-bottom:16px;">
+    <div class="orbitron accent" style="font-size:12px;letter-spacing:4px;margin-bottom:6px;">PARTNERS & CONTACT</div>
+    <h2>파트너 & <span class="gradient-text">연락처</span></h2>
+  </div>
+
+  <div class="grid-2" style="gap:24px;margin-bottom:18px;">
+    <!-- Partners -->
+    <div class="glass p-5">
+      <h4 style="margin-bottom:14px;"><span class="glow-dot"></span>&nbsp; 주요 납품처 / 거래처</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:70px;font-size:11px;font-weight:700;color:#A78BFA;">주륜장</div>
+          <div style="flex:1;display:flex;gap:6px;flex-wrap:wrap;">
+            <span class="tag-sm">도카이기켄</span>
+            <span class="tag-sm">RESTAR</span>
+          </div>
+        </div>
+        <div style="height:1px;background:rgba(255,255,255,0.04);"></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:70px;font-size:11px;font-weight:700;color:#22D3EE;">조명</div>
+          <div style="flex:1;display:flex;gap:6px;flex-wrap:wrap;">
+            <span class="tag-sm" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);color:#22D3EE;">삼환전기</span>
+            <span class="tag-sm" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);color:#22D3EE;">ALPS</span>
+          </div>
+        </div>
+        <div style="height:1px;background:rgba(255,255,255,0.04);"></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:70px;font-size:11px;font-weight:700;color:#A78BFA;">건설</div>
+          <div style="flex:1;display:flex;gap:6px;flex-wrap:wrap;">
+            <span class="tag-sm">현대힐스테이트</span>
+            <span class="tag-sm">롯데월드</span>
+          </div>
+        </div>
+        <div style="height:1px;background:rgba(255,255,255,0.04);"></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:70px;font-size:11px;font-weight:700;color:#22D3EE;">골프</div>
+          <div style="flex:1;display:flex;gap:6px;flex-wrap:wrap;">
+            <span class="tag-sm" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);color:#22D3EE;">필로스GC</span>
+            <span class="tag-sm" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);color:#22D3EE;">광릉CC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="glass-accent p-5">
+      <h4 style="margin-bottom:14px;"><span class="glow-dot"></span>&nbsp; Contact</h4>
+      <div style="font-size:13px;line-height:2.2;color:#CBD5E1;">
+        <div style="display:flex;gap:10px;">
+          <span style="color:#A78BFA;width:20px;text-align:center;">&#x1F3E2;</span>
+          <span>㈜유티텍 (UTTEC Co., Ltd.)</span>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <span style="color:#A78BFA;width:20px;text-align:center;">&#x1F4CD;</span>
+          <span>경기도 용인시 기흥구 흥덕중앙로 120<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 흥덕유타워 2404호</span>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <span style="color:#A78BFA;width:20px;text-align:center;">&#x1F4DE;</span>
+          <span>Tel: <span class="accent">031-627-2250</span></span>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <span style="color:#A78BFA;width:20px;text-align:center;">&#x1F4E0;</span>
+          <span>Fax: 0505-300-8065</span>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <span style="color:#A78BFA;width:20px;text-align:center;">&#x1F310;</span>
+          <span><span class="cyan">www.uttec.co.kr</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Development History Timeline -->
+  <div class="glass p-4">
+    <h4 style="font-size:12px;color:#94A3B8;margin-bottom:12px;">&#x25C8; Development History — 40+ Years of RF Expertise</h4>
+    <div style="display:flex;align-items:center;gap:0;">
+      <div style="flex:1;text-align:center;padding:10px 6px;border-radius:10px 0 0 10px;
+        background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.1);">
+        <div class="orbitron" style="font-size:13px;font-weight:700;color:#8B5CF6;">1985</div>
+        <div style="font-size:10px;color:#94A3B8;margin-top:4px;">Audio</div>
+        <div style="font-size:9px;color:#475569;">RF 기초기술</div>
+      </div>
+      <div style="width:30px;text-align:center;color:rgba(139,92,246,0.3);font-size:14px;">&#x25B6;</div>
+      <div style="flex:1;text-align:center;padding:10px 6px;
+        background:rgba(139,92,246,0.04);border:1px solid rgba(139,92,246,0.08);">
+        <div class="orbitron" style="font-size:13px;font-weight:700;color:#A78BFA;">1990s</div>
+        <div style="font-size:10px;color:#94A3B8;margin-top:4px;">CATV</div>
+        <div style="font-size:9px;color:#475569;">케이블 방송</div>
+      </div>
+      <div style="width:30px;text-align:center;color:rgba(6,182,212,0.3);font-size:14px;">&#x25B6;</div>
+      <div style="flex:1;text-align:center;padding:10px 6px;
+        background:rgba(6,182,212,0.04);border:1px solid rgba(6,182,212,0.08);">
+        <div class="orbitron" style="font-size:13px;font-weight:700;color:#22D3EE;">2000s</div>
+        <div style="font-size:10px;color:#94A3B8;margin-top:4px;">Digital Broadcasting</div>
+        <div style="font-size:9px;color:#475569;">디지털 방송 장비</div>
+      </div>
+      <div style="width:30px;text-align:center;color:rgba(6,182,212,0.3);font-size:14px;">&#x25B6;</div>
+      <div style="flex:1;text-align:center;padding:10px 6px;
+        background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.1);">
+        <div class="orbitron" style="font-size:13px;font-weight:700;color:#06B6D4;">2010s</div>
+        <div style="font-size:10px;color:#94A3B8;margin-top:4px;">IoT</div>
+        <div style="font-size:9px;color:#475569;">사물인터넷 전환</div>
+      </div>
+      <div style="width:30px;text-align:center;color:rgba(139,92,246,0.4);font-size:14px;">&#x25B6;</div>
+      <div style="flex:1.2;text-align:center;padding:10px 6px;border-radius:0 10px 10px 0;
+        background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(6,182,212,0.1));
+        border:1px solid rgba(139,92,246,0.2);
+        box-shadow:0 0 16px rgba(139,92,246,0.1);">
+        <div class="orbitron" style="font-size:13px;font-weight:800;">
+          <span class="gradient-text">2016~</span>
+        </div>
+        <div style="font-size:10px;color:#fff;margin-top:4px;font-weight:600;">UTTEC</div>
+        <div style="font-size:9px;color:#94A3B8;">BLE Mesh · AI · IoT</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div style="position:absolute;bottom:18px;left:80px;font-size:10px;color:#334155;">
+    &copy; 2026 UTTEC Co., Ltd. All rights reserved. | BLE Mesh Network Solution Provider
+  </div>
+
+  <div class="slide-num">12 / 12</div>
+</div>
+
+</body>
+</html>

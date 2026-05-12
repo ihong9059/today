@@ -2,10 +2,41 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-12 (PM3 — AISG 표준 자료 패키지 5 파일 신설 / WHY-WHAT-DIFF-DEVICE 4단 분류)
+updated: 2026-05-13 (OOK PHY 심층 자료 + UTTEC × AISG 3.0 Pitch 동영상 자산 신설)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-13] asset | UTTEC × AISG 3.0 Pitch 동영상 제작 — 미팅 사후·후속 영업 시청각 자산
+
+- 참조: [[aisg]] § "AISG 표준 자료 패키지", `remotion-project/out/UttecAisgPitch/`
+- 산출물:
+  - `video.mp4` — 8분 56초 / 35.5 MB / 1920×1080 H.264 / 7 scene (1 인사·약속 / 2 AISG 이해 / 3 PHY 0% / 4 5대 강점 / 5 PHY 깊이 MAX11947 / 6 13주 타임라인 / 7 클로징·3대 약속)
+  - `video_1.2x.mp4` — 7분 27초 / 20.7 MB / 1.2배속 (ffmpeg setpts + atempo)
+- 기술 스택: **Remotion** (1920×1080 30fps, 16082 frame) + **Edge TTS** (ko-KR-SunHiNeural -5%) + ffmpeg 후처리
+- 제작 과정 박제:
+  - 1차 시도 (concurrency=4) 22분 후 stall — Background sin/cos blob + blur(60px) GPU 부담 누적
+  - 단순화(정적 gradient + 정적 radial-glow) + concurrency=2로 재시도 성공
+  - 사용자 요청으로 Scene 7 (결제+정직 시그널) 제거 → 8→7 scene
+  - 사용자 요청으로 1.2배속 후처리 (ffmpeg 2분, 전체 재렌더 대비 10배 빠름)
+- 시사점:
+  - **5분 이상 Remotion 영상**: 정적 background 권장 / concurrency=2 / --log=info+tee 진행률 모니터링 필수
+  - 동영상은 미팅 1회용이 아닌 **사후 follow-up·임원 1차 자료·후속 AISG 영업 자산**으로 재사용
+  - TTS(7분 27초 1.2배속) = 사람이 직접 말로 8~10분 분량과 동등 → 클라이언트 의사결정권자가 미팅에 못 와도 사후 전달 가능
+
+## [2026-05-13] asset | OOK 2.176 MHz PHY + Bias-T + MAX11947 심층 자료 — 미팅 PHY 질문 직격 대응
+
+- 참조: [[aisg]] § "AISG 표준 자료 패키지", `위시캣/2026-05-12_프로젝트155057_미팅준비/준비물/5_OOK_2.176MHz_BiasT_상세.md`
+- 분량: 9 KB / 8 섹션 / Q&A 6개 / 출처 18개
+- 핵심 발견:
+  - **driver IC 확정**: ADI / Maxim **MAX11947** (AISG v2/v3 통합 compliant, 4채널 MUX, 3×3 mm TQFN, +15 dB spectral mask margin, EVKit 즉시 구매 가능)
+  - **상용 Smart Bias-T 5 vendor** 식별: Kaelus / HUBER+SUHNER / Amphenol / CCI BT-0821 (800-2200 MHz, IL 0.2 dB, 2 A, 서지 2 kA) / RFS
+  - **PHY 핵심 사양 11항목** 수치화: carrier 2.176 MHz / 9.6 kbps / +3 dBm 0.89 Vpp / RX BPF 200 kHz / xtal 8.704 MHz ±100 ppm / DC 10-30V 2A 등
+  - **Bias-T L/C 토폴로지** + Smart Bias-T 시스템도 ASCII art
+- 미팅 활용:
+  - 클라이언트 "PHY 어떻게 구현?" 질문 시 § 5 Q&A 6개로 즉시 답변
+  - **"PHY는 v2.0→v3.0 변경 0%"** 사실로 "AISG 양산 경험 없음" 약점을 데이터로 무력화
+- 영업 자산화: 1회용 X. AISG 시장 진입 후 후속 외주·강의·교재 자산으로 재사용 가능
 
 ## [2026-05-12] asset | AISG 표준 사전 학습 자료 패키지 신설 — 미팅 1회용 → 후속 영업·교육 재사용 자산
 
