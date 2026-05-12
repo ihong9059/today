@@ -2,10 +2,26 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-12 (위시캣 #155057 미팅 제안 수령 + 준비물 패키지 신설 + 시각자료 수집)
+updated: 2026-05-12 (PM3 — AISG 표준 자료 패키지 5 파일 신설 / WHY-WHAT-DIFF-DEVICE 4단 분류)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-12] asset | AISG 표준 사전 학습 자료 패키지 신설 — 미팅 1회용 → 후속 영업·교육 재사용 자산
+
+- 참조: [[aisg]] § "AISG 표준 자료 패키지", `위시캣/2026-05-12_프로젝트155057_미팅준비/AISG자료/`
+- 산출물: 5 파일 / 55 KB / Q&A 21개
+  - `00_AISG_목적과_배경.md` (13 KB) — **WHY** (통일 대상 5가지·이해관계자별 가치·발전사)
+  - `01_AISG_3.0_상세_spec.md` (11 KB) — **WHAT** (3계층·HDLC·EP·v3.0 신기능 4종)
+  - `02_AISG_2.0_vs_3.0_심도비교.md` (10 KB) — **DIFF** (PHY 0%/L2 5%/L3 90% 변경 매트릭스)
+  - `03_ALD_타입별_상세.md` (13 KB) — **DEVICE** (RET·TMA·GLS·ASD 동작·명령·펌웨어 모델)
+  - `README.md` (7 KB) — 인덱스·학습 순서 5 step
+- 웹 리서치 출처 8개 (aisg.org.uk 공식 / Wikipedia / Analog Devices / EDN / Connector Supplier / 3GPP TS 25.460~466 / HandWiki / AISG Subunit 표준)
+- 핵심 메시지 5건 (정직 시그널 / PHY 변경 0% / OOK 자산 차별화 / 13/13 매칭 / Multi-Primary 동시성 완화)
+- 시사점:
+  - **WHY/WHAT/DIFF/DEVICE 4단 분류**가 5분~60분 어떤 분량 요구에도 즉시 적응 가능한 구조 만듦
+  - 비전공자 (PM·구매) → 00_*.md만으로 충분 / 기술자 → 01~03 + Q&A 21개로 깊이
+  - **미팅 1회용이 아닌 자산**: AISG 시장 진입 후 후속 외주·영업·강의 재사용 가능 → 24M 1회 수주가 아닌 시장 진입의 디딤돌
 
 ## [2026-05-12] market | 위시캣 #155057 AISG 클라이언트 미팅 제안 수령 ★ 영업 자산화 결정적 단계
 
