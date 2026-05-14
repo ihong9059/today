@@ -2,10 +2,26 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-15 (위시캣 5건 작성·4건 제출: #155325 IoT 확장 + #155248 BLE 스마트락 + #155225 PLC/DAQ + #155235·#155220)
+updated: 2026-05-15 (onDevice_AI vault foundation v1.0 완료 + 위시캣 5건 신기록)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-15] foundation | onDevice_AI vault 기초 구조 v1.0 완료 — 7 hardware × 10 응용 scope 확장
+
+- 참조: [[onDevice-ai]], [[ai-fanstick]], [[uttec-stage-package]], [[ai-direction]]
+- 신설 12 파일, 갱신 3 파일, 누적 ~2,000줄. vault scope: microGPT + AI FanStick(2건) → **7 hardware × 10 응용 카탈로그**로 확장.
+- 핵심 4 문서:
+  1. **`00_정의_OnDeviceAI.md`** (헌법, 150줄) — On-Device AI canonical 정의 + 4 가치(P/L/O/C) + 4 기술(양자화·프루닝·증류·NPU) + 스펙트럼 T1~T4 + **연구 5축 15 질문** + 흔들릴 조건 4 (정지선 해제 트리거)
+  2. **`0_실험계획서.md`** (Master Plan, 580줄) — H1~H7 가설 + 응용 카탈로그 10건 + **실험 12 단위(E1~E12)** + Phase 1~4(Phase 5 양산 ⛔) + KPI 정량/정성 + 위험 완화 7 + **담당자 첫 주 onboarding Day 1~7**
+  3. **`0_인재상.md`** (채용·평가, 420줄) — 페르소나 A 펌웨어 강점 / B ML 강점 / C 풀스택 (우선순위 A≥B>C), 3-Tier 기술 요건, 평가 체크리스트 80점(합격선 ≥65), Red flags 8개(AI 도구 거부 포함), 자가진단 15항
+  4. **`hardware/`** 폴더 (9 파일, 700줄) — `_README` + `_matrix` + 7 보드 `00_spec.md` (pca10040·pca10056·esp32wroom·esp32c6·esp32s3·smartphone·pc)
+- 실측 디바이스 확인: SSH/USB로 Ubuntu(MBP11,4 i7-4770HQ 16GB) + Windows(Lenovo i5-1235U 16GB) + Galaxy A51 5G(Exynos 980 NPU 2.1 TOPS 6GB) 확정. **smartphone은 플래그십 아닌 2020 미드레인지** 발견 — 응용 가능성 재조정 (TinyLlama 1.1B borderline, 3B+ 불가).
+- 정정: pca10040 = Cortex-M0 16KB ❌ → Cortex-M4F 64KB ✅ (이전 추측 오류)
+- 폴더 운영 결정: **hardware-first hybrid** (1차 축 = 보드, 2차 축 = 응용, cross = `_matrix.md` 단일 출처). 보드 RAM 차수 6(64KB~16GB)이 정당화.
+- 영업 의미: vault가 "분석 단계 → 실행 단계 진입 가능 상태". 보드(7종 보유 ✅) + 환경(Ubuntu 빌드 ✅) + 계획(12 실험 ✅) + 인재상(평가 가능 ✅) 모두 ✅. Phase 4 종료 시 영업/Stage4 자료에 실측 데이터 첨부 → 첫 Stage 4 수주 시도 가능.
+- 다음 단계: (a) Claude 단독 Phase 0 — E9 환경 셋업 + microGPT 학습 재현 / (b) 담당자 합류 후 Phase 1 — esp32s3 microGPT 4K full pipeline / (c) UTTEC 강사양성 출신 적합 후보 점검
+- 의미: 기존 0_검증계획.md(microGPT + AI FanStick 한정) → 본 master plan의 sub-plan으로 격하. vault가 단일 영업 트랙(Stage 4 AI FanStick)에서 **광역 On-Device AI 연구 vault**로 격상.
 
 ## [2026-05-15] update | 위시캣 #155325 지원서 작성 — IoT 플랫폼 무중단 확장, 양산 5개 운영 자산 정조준
 
