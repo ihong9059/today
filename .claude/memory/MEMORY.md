@@ -1,5 +1,6 @@
 - [사용자 본명 — 홍광선](user_name_hong_kwangsun.md) — UTTEC 대표, 이메일 prefix에서 이름 추정 금지 (이형근 X)
 - [위시캣 회사명 금지](feedback_wishket_no_company_name.md) — 지원서에 UTTEC/유티즘 등 회사명 노출 시 페널티, 마스킹 필수
+- [위시캣 WebFetch 배너 오해석](feedback_wishket_webfetch_banner.md) — "기간제(상주)..." 안내문은 사이트 공통 배너, 프로젝트 메타 아님. 근무형태는 카테고리 아이콘 라벨만 신뢰
 - [사전빌드 앱은 Flutter만](project_prebuild_flutter_only.md) — Kotlin(PrebuiltApp) 삭제됨, Flutter(flutter_app)만 사용
 - [동시 빌드 문제](project_prebuild_concurrent_build.md) — 여러 학생 동시 새 요청 시 빌드 충돌, 반드시 해결 필요
 - [기존 코드 먼저 참조](feedback_reuse_existing_code.md) — 동작하는 코드가 있으면 새로 작성하지 말고 기존 패턴 복사
