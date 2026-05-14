@@ -2,10 +2,45 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-13 (OOK PHY 심층 자료 + UTTEC × AISG 3.0 Pitch 동영상 자산 신설)
+updated: 2026-05-14 (김정호 KAIST 강연 흡수 + Mac → Ubuntu 컨버전)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-14] ingest | 김정호 KAIST "AI 메모리 시대" 강연 흡수
+
+- 참조: [[2026-05-14_AI-메모리시대-김정호KAIST]], [[ai-landscape]]
+- 원본: `raw/유투브/엔비디아_시대_끝_결국_웃는건_삼성_하이닉스_김정호_KAIST_상세.md` (19분 45초, 이데일리TV 2026 넥스트테크 포럼)
+- 핵심 흡수:
+  - **메모리 시대 명제**: 토큰 = 메모리 = 전기 = 돈 (12:48), "AI 시대 돈은 메모리가 번다" (19:06)
+  - **GPU 한계 도달**: 발열·통신 한계로 NVIDIA 4개, AMD 16개 (HBM 비교)
+  - **HBM5/HBM7 로드맵**: GPU를 HBM 옥상으로, HBF(낸드 적층) 부착
+  - **2038년 시그널**: HBF 인퍼런스 전용 메모리 폭증 예측
+- 복리 패턴:
+  - 클라우드 메모리 폭증 ↔ UTTEC onDevice AI 대각선 포지션
+  - "토큰 비용 없는 AI" = 자영업·산업·노약자 영역 차별화 카피로 활용
+- 산출물:
+  - 신규 thought: `thoughts/2026-Q2/2026-05-14_AI-메모리시대-김정호KAIST.md`
+  - `ai-landscape.md` "AI 반도체 — 메모리 시대 전환" 섹션 추가
+
+---
+
+## [2026-05-14] migration | Mac PC → Ubuntu 22.04 LTS 컨버전, 개발 전용 노드 신설
+
+- 참조: [[uttec-ubuntu-pc]], [[2026-05-14_mac에서-ubuntu로]]
+- 산출물:
+  - **하드웨어 재활용**: Intel MacBook Pro의 macOS 완전 삭제 → Ubuntu 22.04.5 LTS 설치 (8코어 / 16GB / 457GB)
+  - **SSH 접속 단축**: Windows `~/.ssh/config`에 `Host ubuntu` 별칭 + Tailscale IP `100.90.158.36` 등록 → **`ssh ubuntu` 한 단어 접속**
+  - **개발 환경**: Node.js 20.20.2 (NodeSource) + Claude Code v2.1.141 (`/usr/bin/claude`)
+  - **신규 엔티티**: `entities/uttec-ubuntu-pc.md`
+  - **회고 박제**: `thoughts/2026-Q2/2026-05-14_mac에서-ubuntu로.md`
+- 의미·전환:
+  - **2대 PC 동시 사용 시대 종료** — 그동안 Windows ↔ Mac 대칭 동기화 → 이제 **Windows = myWiki/일상 / Ubuntu = 개발 전용**으로 역할 분리
+  - 어제(5/13) 작업보고서 #21 "Mac PC 재 clone (history rewrite로 git pull 불가)" → 본 컨버전으로 **완전 해소**
+  - Linux 임베디드(onDevice_AI / revita / AISG 펌웨어) 개발 환경의 표준화 — 기존 [[reference_uttec_192_168_0_23|uttec@192.168.0.23 Debian ARM64]] 셋업과 같은 패턴 확장
+- 메모리 갱신:
+  - `project_dual_pc.md` — Ubuntu는 동기화 대상에서 제외, Windows 단일 myWiki source 명시
+  - `reference_uttec_ubuntu_mac.md` (신규) — SSH 별칭 `ubuntu` 셋업 박제
 
 ## [2026-05-13] asset | UTTEC × AISG 3.0 Pitch 동영상 제작 — 미팅 사후·후속 영업 시청각 자산
 

@@ -4,7 +4,8 @@
 - [동시 빌드 문제](project_prebuild_concurrent_build.md) — 여러 학생 동시 새 요청 시 빌드 충돌, 반드시 해결 필요
 - [기존 코드 먼저 참조](feedback_reuse_existing_code.md) — 동작하는 코드가 있으면 새로 작성하지 말고 기존 패턴 복사
 - [Google Calendar MCP 설정](reference_google_calendar_mcp.md) — @cocal/google-calendar-mcp OAuth 경로, 계정 ihong9059, 프로젝트 uttecproject
-- [2대 PC 동시 사용](project_dual_pc.md) — today 저장소를 2대 PC에서 동시 사용, git 충돌 주의
+- [PC 인프라 — 역할 분리](project_dual_pc.md) — Windows=myWiki/일상 (단일 source) / Ubuntu=개발 전용 (2026-05-14 Mac→Ubuntu 컨버전)
+- [uttec@ubuntu 개발 PC](reference_uttec_ubuntu_mac.md) — Mac→Ubuntu 22.04 컨버전, `ssh ubuntu` 별칭, Tailscale 100.90.158.36, Claude Code v2.1.141 (2026-05-14)
 - [UTTEC 보드 명칭](feedback_uttec_board_naming.md) — aiHardStudy 내 ESP32 보드 → UTTEC 보드로 명칭 통일
 - [할일 Notion 동기화 — 단방향](feedback_todo_notion_sync.md) — **생성=작업보고서 source / 완료=Notion source**. Claude는 작업보고서 ⬜→✅ 임의 변경 절대 금지. Notion에서 사용자 체크 시에만 작업보고서 ✅ 전파
 - [myWiki 반영 필수](feedback_mywiki_sync.md) — 작업 중/종료 시 myWiki second-brain에 반드시 반영, 누락 금지
