@@ -66,8 +66,7 @@ second-brain/
     ├── revitaProject/ # REVITA 프로젝트 전체 (→ junction C:\todo\revitaProject, 2026-04-22 추가)
     ├── 회사소개/       # UTTEC 회사소개서 PDF/HTML (→ junction homepage/회사소개, 2026-04-22 추가)
     ├── multiCore/     # 멀티코어 Claude 교육 시스템 (→ junction, 2026-04-28 추가)
-    ├── onDevice_AI/   # ESP32-S3 + microGPT + AI FanStick 차세대 기술 검증 + 시장조사 (→ junction, 2026-05-07 추가, 2026-05-10 rename)
-    ├── uttecBizWiki/  # onDevice AI 제품 비즈니스 전용 vault (→ junction, 2026-05-07 추가)
+    ├── onDevice_AI/   # AI FanStick + Stage 4 제품 통합 vault — 기술 검증 + 비즈니스(business/) (→ junction → C:\todo\onDevice_AI\, 2026-05-15 위치 변경 + 정체성 확장)
     └── articles/      # 인상 깊은 기사, 영상 메모, 스크랩
 ```
 
@@ -194,8 +193,9 @@ links: [관련 페이지 파일명]
 **적용 시작**: 2026-05-12. 다음 ingest #8 종료 시 첫 적용.
 
 **같은 패턴이 적용될 수 있는 다른 위키**:
-- `uttecBizWiki/` (만약 자체 ingest 사이클 도입 시)
-- `onDevice_AI/` log.md (현재 단순 로그지만 향후 사이클화 가능)
+- `onDevice_AI/` log.md (5/15 multi-agent 합류 후 work-end 시 자동 흡수 카드 발송 — ondevice-claude → mywiki-claude)
+  - `onDevice_AI/business/` 영업 이벤트 발생 시 매칭 패턴 분석 카드 발송
+  - Phase 검증 결과 발생 시 entities/onDevice-ai.md, ai-fanstick.md 갱신 카드 발송
 
 ### today/ 신규 폴더 → myWiki entity 검토 정책 (2026-05-12 추가)
 
