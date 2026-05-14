@@ -1,24 +1,33 @@
 ---
-title: onDevice AI 검증 vault
+title: onDevice_AI vault — AI FanStick + Stage 4 제품 통합
 type: entity
 created: 2026-05-07
-updated: 2026-05-15 (vault 기초 구조 구축 완료 — 정의·실험계획·인재상·hardware 폴더 9파일)
-status: ✅ Phase 1A·1B 완료 (PC PoC) / **vault foundation v1.0 완료 (5/15)** / Phase 1 (E1·E9·E10) 진입 가능 — 보드·환경·계획·인재상 모두 ✅, 담당자 합류 또는 Claude 단독 Phase 0 가능
-tags: [vault, On-Device AI, microGPT, AI FanStick, ESP32-S3, Stage4, 정지선, foundation]
-links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_응원봉-온디바이스AI-정지선]
+updated: 2026-05-15 (repo 분리 + uttecBizWiki 흡수 + multi-agent 합류 — 제품 통합 vault로 정체성 확장)
+status: ✅ Phase 1A·1B 완료 (PC PoC) / vault foundation v1.0 완료 (5/15) / **별도 repo + business/ 흡수 + ondevice-claude 합류 완료 (5/15)** / Phase 1 (E1·E9·E10) 진입 가능
+tags: [vault, On-Device AI, microGPT, AI FanStick, ESP32-S3, Stage4, 정지선, foundation, multi-agent, ondevice-claude]
+links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_응원봉-온디바이스AI-정지선, revita]
 ---
 
-> **2026-05-15 vault foundation v1.0 완료**: scope 확장 (microGPT + AI FanStick → 7 hardware × 10 응용). 핵심 문서 4종 — `00_정의_OnDeviceAI.md`(헌법·5축 15질문), `0_실험계획서.md`(12 실험 + Phase 1~4), `0_인재상.md`(페르소나 3종 + 평가 80점), `hardware/`(7 보드 + matrix). vault가 분석 → 실행 단계 전환 가능.
+> **2026-05-15 인프라 변경 3건 동시**: (1) repo 분리 (today/onDevice_AI → /todo/onDevice_AI, private), (2) 구 today/uttecBizWiki 전체를 business/ 폴더로 흡수 (제품별 분리 — 한 제품 = 한 vault), (3) multi-agent 합류 (ondevice-claude 식별자 등록, _inbox 통신 셋업). **검증 목표·계획·정지선·인재상 100% 보존**, 인프라만 변경.
 
-# onDevice AI 검증 vault
+# onDevice_AI vault — AI FanStick + Stage 4 제품 통합
 
 ## 한 줄 정의
 
-ESP32-S3 + On-Device AI 통합 검증 작업 공간. **microGPT(Karpathy 200줄) + AI FanStick 차세대 + Stage 4 영업 패키지를 한 vault에서 통합 검증**.
+**AI FanStick + Stage 4 제품의 기술 검증 + 비즈니스 운영 통합 vault** — 검증부터 영업·수주까지 한 vault에서 추적. ESP32-S3 + On-Device AI 통합 검증 영역 + 제품 비즈니스 영역(`business/`, 구 uttecBizWiki 흡수)을 같은 vault에 둠.
 
-## 위치
+## 위치 (2026-05-15 변경)
 
-`C:\todo\today\onDevice_AI\` (myWiki 외부, 별도 vault)
+- **현재**: `C:\todo\onDevice_AI\` (myWiki 외부, 별도 git repo, private, ihong9059/onDevice_AI)
+- **이전**: `C:\todo\today\onDevice_AI\` (today repo의 일부, 5/7~5/14)
+- **흡수**: 구 `C:\todo\today\uttecBizWiki\` 전체 → `business/` 폴더로 통합
+
+## Multi-agent 식별자
+
+- Claude 식별자: `ondevice-claude`
+- 통신 채널: `_inbox/{pending,processed}/` + `.claude/hooks/check-inbox.py`
+- 상대 Claude: `mywiki-claude` (본 myWiki), `revita-claude` (revitaProject)
+- PROTOCOL: 본 myWiki `_inbox/PROTOCOL.md` 합의 이력 § 2026-05-15 등재
 
 ## 통합 의미
 
@@ -34,21 +43,40 @@ ESP32-S3 + On-Device AI 통합 검증 작업 공간. **microGPT(Karpathy 200줄)
 
 > microGPT 4,192 파라미터 = ESP32-S3 SRAM 520KB의 1% 미만 → 탑재 가능 → AI FanStick "외부 인터넷 0% 카피" 검증 가능 → Stage 4 (1,500만) 영업 패키지의 기술 근거.
 
-## vault 폴더 구조
+## vault 폴더 구조 (5/15 갱신)
 
 ```
-onDevice_AI/
+/todo/onDevice_AI/                  ← 별도 git repo (private)
 ├── README.md                       네비게이션
-├── CLAUDE.md                       schema (Claude 운영 규칙)
-├── 0_검증계획.md                   통합 검증 매트릭스 + 진행 흐름
-├── log.md                          시간순 기록
+├── CLAUDE.md                       schema (multi-agent + 통합)
+├── 00_정의_OnDeviceAI.md           헌법 (5축 15질문)
+├── 0_실험계획서.md                 Master Plan (12 실험 + Phase 1~4)
+├── 0_인재상.md                     채용·평가·자가진단
+├── 0_검증계획.md                   sub-plan
+├── 00_검토순서.md                  reading order
+├── log.md                          시간순 기록 (검증+비즈니스 통합)
+│
+├── hardware/                       7 보드 spec + matrix (5/15 신설)
 ├── microGPT/                       Karpathy 200줄 검증
-│   └── 01_검증절차.md (Phase 1A·1B)
 ├── aiFanStick_차세대/              AI FanStick + SLM 통합
-│   └── 01_검증절차.md (Phase 2)
-└── 통합검증/                       두 검증의 교집합
-    ├── 01_SRAM_파라미터_매트릭스.md
-    └── 02_Stage4_영업매핑.md
+├── 통합검증/                       두 검증의 교집합
+├── 시장조사/                       산업 동향
+│
+├── business/                       ⭐ 제품 비즈니스 (5/15 흡수, 구 uttecBizWiki)
+│   ├── README.md, CLAUDE.md
+│   ├── entities/AI_FanStick.md
+│   └── raw/, thoughts/
+│
+├── _inbox/                         multi-agent 통신
+│   ├── pending/, processed/
+│   ├── PROTOCOL.md, SYSTEM_GUIDE.md
+│
+├── .claude/
+│   ├── commands/work-start.md, work-end.md
+│   ├── hooks/check-inbox.py (SELF_ID=ondevice-claude)
+│   └── settings.local.json
+│
+└── 작업보고서/
 ```
 
 ## 진행 상태
@@ -93,11 +121,13 @@ onDevice_AI/
 - Stage 4 첫 수주 가능: 1,500만/4주 (한국기계 또는 임베디드 스타트업)
 - 강사양성 Day 5 + 호오컨설팅 + 인프런: 6개월 누계 2,000~3,500만
 
-## uttecBizWiki와의 관계
+## uttecBizWiki와의 관계 (5/15 변경 — 흡수 완료)
 
-- **uttecBizWiki**: 사업 일반 wiki (보존, 추후 재검토 후 진입) — 별개 유지
-- **본 vault (onDevice_AI)**: 검증 작업 공간 (단기 프로젝트)
-- 둘은 다른 목적 — uttecBizWiki는 사업 운영, 본 vault는 기술 검증
+- **uttecBizWiki**: 5/15 본 vault `business/` 폴더로 흡수 완료 (구 today/uttecBizWiki/ 폴더 제거)
+- **본 vault (onDevice_AI)**: 같은 제품(AI FanStick + Stage 4)의 **기술+비즈니스 통합 vault**로 정체성 확장
+- **흡수 동기**: 한 제품이 두 vault에 분리되어 cross-link 비용이 컸음. 한 vault에서 검증→영업→수주 흐름 일직선으로 단순화. uttecBizWiki는 컨텐츠 0에 가까운 schema 선언 상태였음 (1주 정전).
+- **이력**: 5/7~5/14 = 3-vault (myWiki + uttecBizWiki + onDevice_AI). 5/15 = 2-vault (myWiki + onDevice_AI).
+- 관련 entity: [[uttecBizWiki]] (DEPRECATED 표시)
 
 ## 마케팅 정지선 (2026-05-08)
 

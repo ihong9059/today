@@ -2,10 +2,34 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-15 (onDevice_AI vault foundation v1.0 완료 + 위시캣 5건 신기록)
+updated: 2026-05-15 (onDevice_AI repo 분리 + uttecBizWiki 흡수 + ondevice-claude 합류)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-15] migrate+absorb | onDevice_AI repo 분리 + uttecBizWiki 흡수 + multi-agent 합류 (3-vault → 2-vault)
+
+- **인프라 변경 3건 동시** (onDevice_AI vault 측):
+  1. **repo 분리**: `today/onDevice_AI/` → `/todo/onDevice_AI/` (별도 git repo, private, ihong9059/onDevice_AI)
+  2. **uttecBizWiki 흡수**: 구 `today/uttecBizWiki/` 전체 → `onDevice_AI/business/` 폴더 (제품별 분리, 한 제품 = 한 vault)
+  3. **multi-agent 합류**: 신규 Claude 식별자 `ondevice-claude` 등록, `_inbox/{pending,processed}/` + `.claude/hooks/check-inbox.py` 셋업
+- **myWiki 측 영향**:
+  - `entities/onDevice-ai.md` — 위치·정체성·폴더 구조·multi-agent·uttecBizWiki 관계 갱신 (검증 vault → 제품 통합 vault)
+  - `entities/uttecBizWiki.md` — DEPRECATED 표시, redirect anchor (onDevice_AI/business/ 흡수처 명시)
+  - `_inbox/PROTOCOL.md` 합의 이력 — 2026-05-15 ondevice-claude 합류 등재 (예정)
+  - `_inbox/SYSTEM_GUIDE.md` 핵심 자산 표 — onDevice_AI 행 추가 (예정)
+  - `raw/onDevice_AI` junction — `today/onDevice_AI` (제거됨) → `/todo/onDevice_AI` 재연결 필요 (사용자 직접)
+  - `raw/uttecBizWiki` junction — 제거 또는 `/todo/onDevice_AI/business`로 재연결 (사용자 직접)
+- **memory 측 영향**:
+  - `project_3vault_분리.md` → 2-vault 구조로 갱신 예정
+  - `feedback_vault_scope_isolation.md` — onDevice_AI 별도 repo 명시 추가 예정
+- **사용자 동기 (5/15)**: "제품별로 분리하는 것이 좋겠다" — 한 제품의 기술과 비즈니스가 따로 노는 것보다 한 vault에서 통합 추적이 일관성 + cross-link 단순화에 유리. revita 패턴(별도 repo + multi-agent) 검증된 모델 적용.
+- **보존**: onDevice_AI vault의 검증 목표·계획·정지선·인재상 100% 유지 — 인프라만 변경, 콘텐츠 0 변경
+- **상대 Claude 통보 카드 발송 예정**:
+  - `myWiki/_inbox/pending/2026-05-15-001-ondevice-claude-join.md` (to: mywiki-claude)
+  - `revitaProject/_inbox/pending/2026-05-15-001-ondevice-claude-join.md` (to: revita-claude)
+
+---
 
 ## [2026-05-15] foundation | onDevice_AI vault 기초 구조 v1.0 완료 — 7 hardware × 10 응용 scope 확장
 

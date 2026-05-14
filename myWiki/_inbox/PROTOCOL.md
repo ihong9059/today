@@ -110,16 +110,25 @@ status: pending                   # pending | in_progress | done | rejected
 
 ## 확장 — 새 위키/Claude 추가
 
-uttecBizWiki, onDevice_AI 등 새 Claude 추가 시:
+새 Claude 추가 시:
 - 해당 프로젝트에 `_inbox/{pending,processed}/` + `PROTOCOL.md` 사본
-- `.claude/hooks/check-inbox.py` 추가
-- 카드 frontmatter `to:` 에 새 식별자 추가 (예: `uttecbiz-claude`)
+- `.claude/hooks/check-inbox.py` 추가 (SELF_ID 변경)
+- `.claude/settings.local.json` SessionStart hook 등록
+- 카드 frontmatter `to:` 에 새 식별자 추가
+- 본 § "합의 이력"에 합류 일자·식별자 등재
+- 모든 기존 Claude의 PROTOCOL.md에도 동일 등재 (3 Claude 동기화)
+
+**현재 활성 Claude (3 시스템, 5/15~)**:
+- `mywiki-claude` — `today/myWiki/`
+- `revita-claude` — `revitaProject/`
+- `ondevice-claude` — `/todo/onDevice_AI/` (5/15 합류)
 
 ## 합의 이력
 
 - **2026-05-12 단계 1**: myWiki Claude 제안 (옵션 A 단순 메일박스, 외부 `_claude-bus` 중앙 위치 + 표준 카드 형식)
 - **2026-05-12 단계 2**: revita Claude 응답 (옵션 A 채택, 위치는 **각 프로젝트 내부 `_inbox/`** 로 조정 — 권한·sync 단순화, self-contained, 향후 확장 동일 패턴)
 - **2026-05-12 단계 3**: myWiki Claude 합의 완료 (`done` 카드 회신, 셋업 완료)
+- **2026-05-15**: **ondevice-claude 합류** — onDevice_AI vault가 별도 repo 분리(`/todo/onDevice_AI/`, private) + uttecBizWiki 흡수 + multi-agent 합류. SELF_ID="ondevice-claude". 3 Claude 시스템으로 확장 (mywiki + revita + ondevice). 합류 카드: `myWiki/_inbox/pending/2026-05-15-001-ondevice-claude-join.md`.
 
 ## 참고
 

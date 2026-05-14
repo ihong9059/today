@@ -1,18 +1,24 @@
 ---
-name: 3-vault 분리 운영 (myWiki + uttecBizWiki + onDevice_AI)
-description: 사용자 second-brain은 3개 vault로 분리 운영. 작업 요청 시 어느 vault에 속하는지 먼저 판단 후 진행
+name: 2-vault 분리 운영 (myWiki + onDevice_AI) — 5/15 재구성
+description: 사용자 second-brain 운영 구조. 5/7 3-vault → 5/15 2-vault 재구성. 작업 요청 시 어느 vault에 속하는지 먼저 판단 후 진행
 type: project
 originSessionId: b3245c42-bf7b-4dd3-a682-cd49deb90641
 ---
-사용자는 `C:\todo\today\` 안에 **3개 vault를 분리 운영**한다 (2026-05-07 결정).
+사용자는 **2개 vault**를 분리 운영한다 (2026-05-15 재구성).
 
-| vault | 역할 | scope |
-|---|---|---|
-| `myWiki/second-brain/` | 학습+개인+도구+모든 사업 영역 통합 | second-brain (영구, 매일) |
-| `uttecBizWiki/` | **onDevice AI 제품 비즈니스 전용** | AI FanStick 차세대 + Stage 4 패키지 |
-| `onDevice_AI/` | 같은 제품의 **기술 검증** (단기) | ESP32-S3 + microGPT 검증 |
+| vault | 위치 | 역할 | scope |
+|---|---|---|---|
+| `myWiki/second-brain/` | `C:\todo\today\myWiki\` (today repo 안) | 학습+개인+도구+범 사업 영역 통합 | second-brain (영구, 매일) |
+| **`onDevice_AI/`** | **`C:\todo\onDevice_AI\` (별도 git repo, private, ihong9059/onDevice_AI)** | **AI FanStick + Stage 4 제품 통합 (기술 검증 + 비즈니스)** | 한 제품의 처음부터 끝까지 |
+| (참고) `revitaProject/` | `C:\todo\revitaProject\` (별도 repo) | REVITA 제품 (기술 + 위키) | 별도 제품 |
 
-**Why:** 기술↔비즈니스 분리 + 외부 공개 안전. uttecBizWiki는 사용자가 명확히 "onDevice_AI 개발 제품에 대해서만 진행, 다른 biz는 관여하지 않음"이라 정정함 (5/7 18:05).
+**Why (5/7 결정)**: 기술↔비즈니스 분리 + 외부 공개 안전. 3-vault로 시작.
+
+**Why (5/15 재구성)**: 한 제품(AI FanStick + Stage 4)의 기술과 비즈니스가 두 vault에 분리되어 cross-link 비용이 컸음. 한 vault에서 검증→영업→수주 흐름을 일직선으로 단순화. uttecBizWiki는 컨텐츠 0에 가까운 schema 선언 상태 (1주 정전, 영업 이벤트 0건)였기 때문에 흡수 비용 낮음. revita 패턴(별도 repo + multi-agent _inbox) 검증된 모델 적용.
+
+**구 3-vault → 신 2-vault 재구성**:
+- `today/uttecBizWiki/` (5/7 신설, 5/14 정전) → `onDevice_AI/business/` (5/15 흡수)
+- `today/onDevice_AI/` (5/7 신설, 5/14 운영) → `/todo/onDevice_AI/` (5/15 별도 repo)
 
 **How to apply:**
 
@@ -21,46 +27,60 @@ originSessionId: b3245c42-bf7b-4dd3-a682-cd49deb90641
 ```
 사용자 요청 도착 → "이 작업은 무엇에 관한가?"
    ├── AI FanStick 차세대 / Stage 4 비즈니스 (영업·매출·고객·시장)
-   │      → uttecBizWiki/
-   ├── ESP32-S3 + microGPT 기술 검증 (코드·실측·포팅)
-   │      → onDevice_AI/
+   │      → /todo/onDevice_AI/business/
+   ├── ESP32-S3 + microGPT 기술 검증 (코드·실측·포팅·hardware)
+   │      → /todo/onDevice_AI/ (검증 영역)
+   ├── REVITA 제품 (기술·위키·LoRa·BLE 등)
+   │      → /todo/revitaProject/
    └── 그 외 모든 작업 (학습·도구·다른 사업·다른 제품)
-          → myWiki/second-brain/
+          → today/myWiki/second-brain/
 ```
 
 ### 결정 트리 (헷갈리는 케이스)
 
 | 케이스 | 어디에 |
 |---|---|
-| 한국기계 Stage 4 견적·미팅 | uttecBizWiki/ |
-| 한국기계 Stage 0·1·2·3 일반 영업 | 영업/ + myWiki |
-| 위시캣 임베디드 IoT 공고 (Stage 4 매핑되면) | uttecBizWiki + myWiki/위시캣활동 둘 다 |
+| 한국기계 Stage 4 견적·미팅 | `/todo/onDevice_AI/business/` |
+| 한국기계 Stage 0·1·2·3 일반 영업 | today/영업/ + myWiki |
+| 위시캣 임베디드 IoT 공고 (Stage 4 매핑되면) | `/todo/onDevice_AI/business/` + myWiki/위시캣활동 둘 다 |
 | 위시캣 일반 신규 공고 검토 | myWiki/위시캣활동 |
-| K-POP HYBE 라이센스 컨택 | uttecBizWiki/ |
-| AI FanStick 차세대 펌웨어 작업 | onDevice_AI/ |
-| ESP32-S3 microGPT 포팅 | onDevice_AI/ |
+| K-POP HYBE 라이센스 컨택 | `/todo/onDevice_AI/business/` |
+| AI FanStick 차세대 펌웨어 작업 | `/todo/onDevice_AI/aiFanStick_차세대/` |
+| ESP32-S3 microGPT 포팅 | `/todo/onDevice_AI/microGPT/` |
 | 강사양성 시범 운영 | aiStudy/.../강사양성_파일럭/ + myWiki |
-| 디지털배움터 강사 신청 | 영업/정부지원_교육사업/ |
-| obsidian 강의 모듈 작성 | obsidian/강의모듈_2~3h/ |
+| 디지털배움터 강사 신청 | today/영업/정부지원_교육사업/ |
+| obsidian 강의 모듈 작성 | today/obsidian/강의모듈_2~3h/ |
 | 새로운 학습·연구 | myWiki |
 | 새 사업 라인 검토 (자영업 AI 등) | myWiki/entities (새 entity) |
+| REVITA LoRa 거리 테스트 | revitaProject/project/lora_range/ |
+
+### Multi-agent 통신 (vault 간)
+
+- `mywiki-claude` (today/myWiki) ↔ `ondevice-claude` (/todo/onDevice_AI) ↔ `revita-claude` (/todo/revitaProject)
+- 각 vault `_inbox/{pending,processed}/` + `.claude/hooks/check-inbox.py`
+- 통신 표준: 각 vault `_inbox/PROTOCOL.md` (동일 사본)
+- 합의 일자: 2026-05-12 (mywiki+revita) + 2026-05-15 (ondevice 합류)
 
 ### Claude 작업 시 주의
 
 - **새 파일 만들 때**: 위 결정 트리로 정확한 vault 결정 후 그 vault의 폴더 안에 배치
 - **vault 이동 금지**: 같은 항목을 두 vault에 중복 작성하지 않기 (cross-link로 연결만)
 - **각 vault의 CLAUDE.md 참조**: vault별 운영 규칙 다름
-- **uttecBizWiki에 다른 사업 영역 추가 금지**: 위시캣 일반·강사양성·정부지원 등은 절대 본 vault에 추가하지 않음
+- **`/todo/onDevice_AI/business/`에 다른 사업 영역 추가 금지**: 위시캣 일반·강사양성·정부지원 등은 절대 본 vault에 추가하지 않음 (myWiki로)
+- **multi-agent 카드**: 다른 vault에 영향 있는 변경 시 해당 inbox에 카드 작성 (work-end skill에서 자동화)
 
 ### vault 간 cross-link 흐름
 
 ```
-[onDevice_AI] → 검증 결과 → [uttecBizWiki] → 영업 수주 → [onDevice_AI] 다음 사이클
-                                          ↕
-                            [myWiki entities/uttec-stage-package, ai-fanstick]
-                            (큰그림에서 두 vault 모두 참조)
+[onDevice_AI 검증 영역] → 검증 결과 → [onDevice_AI/business/] → 영업 수주 → [onDevice_AI 검증] 다음 사이클
+                                                          ↕
+                                            [myWiki entities/uttec-stage-package, ai-fanstick, onDevice-ai]
+                                            (큰그림에서 본 vault 참조)
 ```
 
 ### 옵시디언 vault 등록 (사용자 직접)
 
-세 vault를 옵시디언 앱에서 별도 vault로 열거나, myWiki 한 vault에서 raw junction으로 본 폴더 모두 접근 (둘 다 가능). myWiki/second-brain/raw/onDevice_AI, raw/uttecBizWiki junction은 2026-05-07 자동 생성됨.
+- 옵시디언에서 vault 별도 등록: `today/myWiki/`, `/todo/onDevice_AI/`, `/todo/revitaProject/` 각각
+- `myWiki/second-brain/raw/` junction 갱신 필요:
+  - `raw/onDevice_AI` → `/todo/onDevice_AI/` (5/15 재연결 필요)
+  - `raw/uttecBizWiki` → 제거 또는 `/todo/onDevice_AI/business/`로 재연결

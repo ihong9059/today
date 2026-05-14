@@ -7,52 +7,50 @@
 
 > **두 Claude(`mywiki-claude` / `revita-claude`)가 각자의 프로젝트 폴더에서 `_inbox/pending/` 메일박스를 통해 비동기 협업한다. 사용자가 broker 역할을 하지 않아도 ingest·흡수·정합화가 자동.**
 
-## 시스템 구성도
+## 시스템 구성도 (3 Claude, 5/15~)
 
 ```
-┌──── revita-claude (작업 위치: C:\todo\revitaProject\) ────┐
-│                                                          │
-│  .claude/hooks/check-inbox.py  ← SessionStart 자동 실행  │
-│      ↓                                                   │
-│  _inbox/pending/   ← 자기에게 온 카드 (to: revita-claude)│
-│      ├─ 자동 컨텍스트 주입                                │
-│      ├─ 처리 후 → processed/                              │
-│      └─ 응답 카드 → myWiki/_inbox/pending/                │
-│                                                          │
-│  application/revitaWiki/log.md  ← ingest #N 진행         │
-│      ↓ work-end                                          │
-│  myWiki/_inbox/pending/2026-MM-NNN-ingest-N-absorb.md    │
-│  자동 생성 (다른 Claude에 흡수 요청)                       │
-└──────────────────────────────────────────────────────────┘
+┌──── revita-claude (작업 위치: C:\todo\revitaProject\) ────────┐
+│  .claude/hooks/check-inbox.py + check-ingest.py                │
+│  _inbox/pending/   ← 수신                                       │
+│  application/revitaWiki/log.md  ← ingest #N                     │
+│  → work-end 시 myWiki/_inbox/pending/ 에 흡수 카드 자동 작성   │
+└────────────────────────────────────────────────────────────────┘
                           ↕ (비동기)
-┌──── mywiki-claude (작업 위치: C:\todo\today\myWiki\) ─────┐
-│                                                          │
-│  .claude/hooks/check-inbox.py  ← SessionStart 자동 실행  │
-│      ↓                                                   │
-│  _inbox/pending/   ← 자기에게 온 카드 (to: mywiki-claude)│
-│      ├─ 5단계 흡수 (외부 위키 흡수 정책)                  │
-│      ├─ 처리 후 → processed/ + status: done              │
-│      └─ done 카드 → revitaProject/_inbox/pending/        │
-│                                                          │
-│  second-brain/log.md  ← absorb 박제                     │
-│  thoughts/2026-Q{N}/  ← 매칭 패턴 발견 시 신규           │
-└──────────────────────────────────────────────────────────┘
+┌──── mywiki-claude (작업 위치: C:\todo\today\myWiki\) ──────────┐
+│  .claude/hooks/check-inbox.py                                   │
+│  _inbox/pending/   ← 수신                                       │
+│  second-brain/log.md  ← absorb 박제                             │
+│  thoughts/2026-Q{N}/  ← 매칭 패턴 발견 시 신규                  │
+│  → 응답 카드 → revita / ondevice 측 _inbox/pending/             │
+└────────────────────────────────────────────────────────────────┘
+                          ↕ (비동기)
+┌──── ondevice-claude (작업 위치: C:\todo\onDevice_AI\) ─────────┐
+│  .claude/hooks/check-inbox.py (5/15~)                          │
+│  _inbox/pending/   ← 수신                                       │
+│  log.md  ← 검증·비즈니스 통합 시간순                            │
+│  business/  ← 제품 비즈니스 (구 uttecBizWiki 흡수)               │
+│  hardware/, microGPT/, aiFanStick_차세대/  ← 검증               │
+│  → work-end 시 myWiki/_inbox/pending/ 에 흡수 카드 자동 작성   │
+└────────────────────────────────────────────────────────────────┘
 ```
 
-## 핵심 자산 (각 위치)
+## 핵심 자산 (각 위치, 5/15~ 3 Claude)
 
 | 위치 | 파일 | 역할 |
 |---|---|---|
-| `C:\todo\today\myWiki\_inbox\` | `PROTOCOL.md` | 양쪽 동일 표준 (카드 형식·라이프사이클·escalation) |
+| `C:\todo\today\myWiki\_inbox\` | `PROTOCOL.md` | 3 Claude 동일 표준 |
 | 위와 동일 | `SYSTEM_GUIDE.md` | **본 파일** — 빠른 진입 가이드 |
 | 위와 동일 | `pending/`, `processed/` | myWiki 측 메일박스 |
-| `C:\todo\today\myWiki\.claude\hooks\` | `check-inbox.py` | SessionStart 자동 확인 (`SELF_ID="mywiki-claude"`) |
+| `C:\todo\today\myWiki\.claude\hooks\` | `check-inbox.py` | `SELF_ID="mywiki-claude"` |
 | `C:\todo\today\myWiki\.claude\` | `settings.local.json` | SessionStart hook 등록 |
-| `C:\todo\today\myWiki\second-brain\` | `CLAUDE.md` § "외부 위키 흡수 (Absorption)" | 5단계 흡수 체크리스트 정책 |
+| `C:\todo\today\myWiki\second-brain\` | `CLAUDE.md` § "외부 위키 흡수 (Absorption)" | 5단계 흡수 체크리스트 |
 | 위와 동일 | `CLAUDE.md` § "today/ 신규 폴더 → entity 검토 정책" | 3단계 신규 폴더 흡수 |
-| `C:\todo\revitaProject\_inbox\` | `PROTOCOL.md` (사본) | 동일 표준 양측 유지 |
-| 위와 동일 | `pending/`, `processed/` | revita 측 메일박스 |
+| `C:\todo\revitaProject\_inbox\` | `PROTOCOL.md` 사본 + `pending/processed/` | revita 측 메일박스 |
 | `C:\todo\revitaProject\.claude\hooks\` | `check-inbox.py` | `SELF_ID="revita-claude"` |
+| **`C:\todo\onDevice_AI\_inbox\`** (5/15~) | **`PROTOCOL.md` 사본 + `SYSTEM_GUIDE.md` 사본 + `pending/processed/`** | **ondevice 측 메일박스** |
+| **`C:\todo\onDevice_AI\.claude\hooks\`** | **`check-inbox.py`** | **`SELF_ID="ondevice-claude"`** |
+| **`C:\todo\onDevice_AI\.claude\commands\`** | **`work-start.md`, `work-end.md`** | **vault 단위 자동화 (revita 패턴)** |
 | `C:\todo\today\.claude\skills\work-start\` | `SKILL.md` § 1-C | _inbox 확인 통합 |
 | `C:\todo\today\.claude\skills\work-end\` | `SKILL.md` § 5-E, 5-F, 5-G | 흡수 점검 / 인계 카드 / 자산 보호 |
 
@@ -108,13 +106,20 @@ status: pending              # pending | in_progress | done | rejected
 
 ## 확장 — 새 Claude / 위키 추가 시
 
-`uttecBizWiki`, `onDevice_AI` 등 추가 시:
+새 Claude 추가 시:
 
 1. 해당 프로젝트에 `_inbox/{pending,processed}/` + `PROTOCOL.md` 사본
 2. `.claude/hooks/check-inbox.py` 작성 (SELF_ID만 변경)
 3. `.claude/settings.local.json`에 SessionStart hook 등록
-4. PROTOCOL.md 합의 이력 §에 새 Claude 식별자 추가 (예: `uttecbiz-claude`)
+4. 모든 기존 Claude의 PROTOCOL.md 합의 이력 §에 새 식별자 등재 (3 Claude 동기화)
 5. 본 SYSTEM_GUIDE.md 사본도 만들면 새 Claude도 빠른 진입 가능
+
+**현재 활성 Claude (3 시스템, 5/15~)**:
+- `mywiki-claude` — `today/myWiki/`
+- `revita-claude` — `revitaProject/`
+- `ondevice-claude` — `/todo/onDevice_AI/` (5/15 합류, AI FanStick + Stage 4 제품 통합)
+
+**적용된 셋업 패키지**: `today/obsidian/myWikiSetup/templates/` (시나리오 D — 3번째 위키 추가)
 
 ## 합의 이력
 
@@ -123,6 +128,7 @@ status: pending              # pending | in_progress | done | rejected
 - **2026-05-12 단계 3**: myWiki Claude 합의 완료 + 셋업 완료
 - **2026-05-12 단계 4**: 첫 흡수 사이클 완료 (ingest #8 → 6건 사업 자산 박제)
 - **2026-05-12 단계 5**: work-start / work-end 스킬 통합 + 본 SYSTEM_GUIDE 신설
+- **2026-05-15**: **ondevice-claude 합류** — `/todo/onDevice_AI/` (별도 private repo) multi-agent 시스템 합류. AI FanStick + Stage 4 제품의 기술+비즈니스 통합 vault. uttecBizWiki는 본 vault `business/` 폴더로 흡수됨. 3 Claude 시스템으로 확장 (myWikiSetup 시나리오 D 적용 첫 사례).
 
 ## 관련 thoughts
 
