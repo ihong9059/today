@@ -2,11 +2,13 @@
 title: onDevice AI 검증 vault
 type: entity
 created: 2026-05-07
-updated: 2026-05-08
-status: ✅ Phase 1A·1B 완료 (PC PoC 확보) / Phase 2 (ESP32-S3 보드 입수 대기) / 마케팅 정지선 = Phase 2 종료
-tags: [vault, On-Device AI, microGPT, AI FanStick, ESP32-S3, Stage4, 정지선]
+updated: 2026-05-15 (vault 기초 구조 구축 완료 — 정의·실험계획·인재상·hardware 폴더 9파일)
+status: ✅ Phase 1A·1B 완료 (PC PoC) / **vault foundation v1.0 완료 (5/15)** / Phase 1 (E1·E9·E10) 진입 가능 — 보드·환경·계획·인재상 모두 ✅, 담당자 합류 또는 Claude 단독 Phase 0 가능
+tags: [vault, On-Device AI, microGPT, AI FanStick, ESP32-S3, Stage4, 정지선, foundation]
 links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_응원봉-온디바이스AI-정지선]
 ---
+
+> **2026-05-15 vault foundation v1.0 완료**: scope 확장 (microGPT + AI FanStick → 7 hardware × 10 응용). 핵심 문서 4종 — `00_정의_OnDeviceAI.md`(헌법·5축 15질문), `0_실험계획서.md`(12 실험 + Phase 1~4), `0_인재상.md`(페르소나 3종 + 평가 80점), `hardware/`(7 보드 + matrix). vault가 분석 → 실행 단계 전환 가능.
 
 # onDevice AI 검증 vault
 

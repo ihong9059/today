@@ -23,8 +23,23 @@
 onDevice_AI/
 ├── README.md                       ← 네비게이션 (이 파일)
 ├── CLAUDE.md                       ← Claude를 위한 schema
-├── 0_검증계획.md                   ← 통합 검증 매트릭스 + 진행 흐름
+├── 00_정의_OnDeviceAI.md           ← **본 vault 헌법** (정의 + 연구 5축 + 우선순위)
+├── 00_검토순서.md                  ← 신규 협업자를 위한 reading order
+├── 0_실험계획서.md                 ← ⭐ **Master Plan** (12 실험 + 4 Phase + 담당자 onboarding)
+├── 0_인재상.md                     ← 담당자 채용·평가·자가진단 (페르소나 3종 + 체크리스트)
+├── 0_검증계획.md                   ← (선행) microGPT + AI FanStick 한정 sub-plan
 ├── log.md                          ← 시간순 작업 기록
+│
+├── hardware/                       ← **보드별 spec·실측·한계** (5/15 신설, 1차 축)
+│   ├── _README.md                  ← 7개 보드 한눈 비교 + schema 표준
+│   ├── _matrix.md                  ← 보드 × 응용 cross-matrix (single source)
+│   ├── pca10040/00_spec.md         ← Nordic nRF52832 DK (64KB)
+│   ├── pca10056/00_spec.md         ← Nordic nRF52840 DK (256KB, BLE5/USB/NFC)
+│   ├── esp32wroom/00_spec.md       ← ESP32 baseline (가속 없음 비교군)
+│   ├── esp32c6/00_spec.md          ← RISC-V + WiFi6 + Matter
+│   ├── esp32s3/00_spec.md          ← **메인 타겟** (AI SIMD + PSRAM 8MB)
+│   ├── smartphone/00_spec.md       ← T3 reference (응용 발굴)
+│   └── pc/00_spec.md               ← T4 학습·증류·시뮬레이션 환경
 │
 ├── 시장조사/                       ← 산업 동향·시장 규모 분석 (5/10 통합, 구 aiOnDevice/)
 │   ├── README.md                   ← On-Device AI 11섹션 종합 (모델·HW·시장)
@@ -32,10 +47,10 @@ onDevice_AI/
 │   ├── sdv.md                      ← 차량 SDV ECU 통합 (Drive Thor / Snapdragon Ride)
 │   └── federated-learning.md       ← Federated Learning 양산 진입 (Apple/Google/NVIDIA)
 │
-├── microGPT/                       ← Karpathy 200줄 GPT 검증
+├── microGPT/                       ← Karpathy 200줄 GPT 검증 (실험 단위, hardware 축과 직교)
 │   └── 01_검증절차.md
 │
-├── aiFanStick_차세대/              ← AI FanStick + SLM 통합 검증
+├── aiFanStick_차세대/              ← AI FanStick + SLM 통합 검증 (제품 단위, hardware 축과 직교)
 │   ├── 01_검증절차.md
 │   └── 학습설계/                   ← AI FanStick 용도별 학습 시나리오 (5/8 신설)
 │       ├── 00_README.md
@@ -44,7 +59,7 @@ onDevice_AI/
 │       ├── 03_데이터셋_설계.md
 │       └── 04_권장_로드맵.md
 │
-└── 통합검증/                       ← 두 검증의 교집합
+└── 통합검증/                       ← 두 검증의 교집합 (hardware/_matrix.md로 일부 흡수 예정)
     ├── 01_SRAM_파라미터_매트릭스.md
     └── 02_Stage4_영업매핑.md
 ```
@@ -71,9 +86,15 @@ onDevice_AI/
 
 ## 시작점
 
-1. **검증 계획 확인**: `0_검증계획.md`
-2. **PC 직접 실행 (보드 없이 가능)**: `microGPT/01_검증절차.md` Step 1~3
-3. **보드 입수 후**: `aiFanStick_차세대/01_검증절차.md`
+> **담당자 onboarding은 `0_실험계획서.md` §12 (첫 주 가이드) 한 곳에 통합됨.** 아래는 일반 검토 순서.
+
+1. **정의**: `00_정의_OnDeviceAI.md` (본 vault 모든 검증의 출발점)
+2. **실험계획서**: `0_실험계획서.md` (12 실험 + 4 Phase + 담당자 가이드) ⭐
+3. **보드 능력 확인**: `hardware/_README.md` + `hardware/_matrix.md`
+4. **메인 타겟**: `hardware/esp32s3/00_spec.md`
+5. **PC 학습 (보드 없이)**: `microGPT/01_검증절차.md` Step 1~3
+6. **(선행) 검증 계획**: `0_검증계획.md` (microGPT + AI FanStick 한정)
+7. **제품 검증**: `aiFanStick_차세대/01_검증절차.md`
 
 ## 관련 vault (3-vault 구조)
 
