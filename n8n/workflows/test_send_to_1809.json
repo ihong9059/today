@@ -1,0 +1,94 @@
+[
+  {
+    "id": "TestSendTo1809001",
+    "name": "Test_메일발송_ihong1809",
+    "active": false,
+    "nodes": [
+      {
+        "parameters": {},
+        "id": "44444444-4444-4444-4444-444444444444",
+        "name": "Manual Trigger",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [240, 300]
+      },
+      {
+        "parameters": {
+          "url": "https://ipinfo.io/json",
+          "options": {}
+        },
+        "id": "55555555-5555-5555-5555-555555555555",
+        "name": "Get IP & Location (HTTP)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [460, 300]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {"id": "b1", "name": "host", "value": "Ubuntu n8n (Tailscale 100.90.158.36)", "type": "string"},
+              {"id": "b2", "name": "n8n_version", "value": "2.20.7-exp.0 (Docker)", "type": "string"},
+              {"id": "b3", "name": "node_version", "value": "v24.14.1 (container)", "type": "string"},
+              {"id": "b4", "name": "public_ip", "value": "={{ $json.ip }}", "type": "string"},
+              {"id": "b5", "name": "city", "value": "={{ $json.city }}", "type": "string"},
+              {"id": "b6", "name": "region", "value": "={{ $json.region }}", "type": "string"},
+              {"id": "b7", "name": "country", "value": "={{ $json.country }}", "type": "string"},
+              {"id": "b8", "name": "timezone", "value": "={{ $json.timezone }}", "type": "string"},
+              {"id": "b9", "name": "isp", "value": "={{ $json.org }}", "type": "string"},
+              {"id": "b10", "name": "test_status", "value": "ihong1809 수신 테스트 — Manual Trigger 흐름 정상", "type": "string"},
+              {"id": "b11", "name": "tested_at", "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}", "type": "string"}
+            ]
+          },
+          "options": {}
+        },
+        "id": "66666666-6666-6666-6666-666666666666",
+        "name": "Format Result",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [680, 300]
+      },
+      {
+        "parameters": {
+          "fromEmail": "ihong9059@gmail.com",
+          "toEmail": "ihong1809@gmail.com",
+          "subject": "[알림] Ubuntu n8n 발송 — ihong1809 수신",
+          "emailFormat": "text",
+          "text": "Ubuntu n8n 자동 발송 (수신자: ihong1809@gmail.com)\n\n[기본 정보]\n호스트: {{ $json.host }}\nn8n 버전: {{ $json.n8n_version }}\nNode 버전: {{ $json.node_version }}\n\n[네트워크]\n공인 IP: {{ $json.public_ip }}\n위치: {{ $json.city }}, {{ $json.region }}, {{ $json.country }}\nISP: {{ $json.isp }}\n시간대: {{ $json.timezone }}\n\n[실행]\n상태: {{ $json.test_status }}\n실행 시각: {{ $json.tested_at }}\n",
+          "options": {}
+        },
+        "id": "77777777-7777-7777-7777-777777777777",
+        "name": "Send an Email",
+        "type": "n8n-nodes-base.emailSend",
+        "typeVersion": 2.1,
+        "position": [900, 300],
+        "credentials": {
+          "smtp": {
+            "id": "lqslPgq87VEwts7M",
+            "name": "SMTP account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Manual Trigger": {
+        "main": [[{"node": "Get IP & Location (HTTP)", "type": "main", "index": 0}]]
+      },
+      "Get IP & Location (HTTP)": {
+        "main": [[{"node": "Format Result", "type": "main", "index": 0}]]
+      },
+      "Format Result": {
+        "main": [[{"node": "Send an Email", "type": "main", "index": 0}]]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "tags": [],
+    "pinData": {},
+    "versionId": "00000000-0000-0000-0000-000000000010",
+    "triggerCount": 0,
+    "staticData": null,
+    "meta": null
+  }
+]
