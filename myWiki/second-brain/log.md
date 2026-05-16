@@ -7,6 +7,20 @@ updated: 2026-05-16 (#155381 PLC 산업자동화 지원서 + shield-claude 합�
 
 # Second Brain 위키 로그
 
+## [2026-05-16] cleanup | today/위시캣 junction 삭제 (SKILL.md 절대 경로화로 분리 의미 명확화)
+
+- 참조: [[위시캣활동]]
+- **배경**: 5/16 위시캣 분리 직후 사용자 지적 — "wishketProject로 분리시켰는데 today에 junction이 있을 필요가 있냐". 합리적 — junction은 디스크 0이지만 분리 의미를 흐림.
+- **해결**: SKILL.md 내부 `위시캣/` 상대 경로 → `C:/todo/wishketProject/위시캣/` 절대 경로 일괄 변경. cwd 무관 동작 보장 → today/위시캣 junction 불필요.
+- **변경 사항**:
+  - `wishketProject/.claude/skills/wishket-check/SKILL.md` + `wishket-apply/SKILL.md` — 위시캣/ → C:/todo/wishketProject/위시캣/ 절대 경로 (21 occurrences 일괄)
+  - `today/위시캣` NTFS junction 삭제
+  - `today/.gitignore` `위시캣/` 라인 제거
+  - `today/myWiki/second-brain/raw/위시캣` symlink → junction으로 교체 (`/c/todo/today/위시캣` → `C:\todo\wishketProject\위시캣`)
+- **유지**: `today/.claude/skills/wishket-{check,apply}` junction (cwd=today에서 슬래시 명령 호출 위해 필수)
+- **검증 6 checks**: today/위시캣 부재 / today/.claude/skills/wishket-* junction 정상 / SKILL.md 절대 경로 일관성 / myWiki raw 접근 정상 / 두 repo push 동기화 (today `6aae380c` + wishketProject `07502f4`)
+- **교훈**: 분리 시 source-of-truth는 분리된 repo만 가리키도록 절대 경로화가 가장 깔끔. junction은 "호환성 임시 다리"이며 절대 경로 정착 후 제거하는 것이 분리 의미를 명확히 함.
+
 ## [2026-05-16] cleanup | today/onDevice_AI 잔재 폴더 삭제 (5/15 분리 잔재)
 
 - 참조: [[onDevice-ai]]
