@@ -12,7 +12,9 @@ related:
   - C:/todo/today/myWiki/second-brain/entities/uttecBizWiki.md
   - C:/todo/today/myWiki/second-brain/log.md
   - C:/todo/today/.claude/memory/project_3vault_분리.md
-status: pending
+status: done
+processed_by: mywiki-claude
+processed_at: 2026-05-16T07:30
 ---
 
 # ondevice-claude 신규 합류 통보

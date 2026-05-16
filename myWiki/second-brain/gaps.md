@@ -97,6 +97,33 @@ links: [me, skills, ai-direction, strengths, goals]
 
 → **이 3건은 강의 콘텐츠 자산**: 호오컨설팅·인프런·강사양성 교재의 "1인 시공 함정 패턴" 사례. [[한림용인cc-고가수조]] 시공 시 사전 회피 체크리스트로 활용.
 
+## 자동화/스크립팅 함정 패턴 (2026-05-15 신설 — onDevice_AI ingest #1 흡수)
+
+> Claude Code multi-agent + n8n 자동화 본격 도입(5/15 megasession)에서 발견된 셸·자동화 영역 함정. 강의 자산으로도 활용 가능.
+
+### bash heredoc 변수 expansion 손실 (n8n expression 사고)
+
+`<<EOF` (no quote) 사용 시 shell이 heredoc 내부 `$json.var` 같은 변수를 자기 변수로 해석하여 **expansion 후 빈 문자열 또는 임의 값으로 치환됨**. n8n expression 같은 외부 DSL을 heredoc으로 전달할 때 expression이 통째로 손실됨.
+- **회피책**: **단일 quote heredoc 표준** — `<<'EOF'` (앞에 따옴표). 또는 `\$` 백슬래시 escape.
+- **대응 정책**: shell heredoc으로 외부 DSL/JSON/SQL 전달 시 무조건 `<<'EOF'`. 가독성 차이 미미, 사고 차이는 큼.
+- **관련 사례**: 5/15 n8n Test_Ubuntu_n8n 워크플로우 import 시 expression 손실. import 성공 후 trigger 결과 값이 빈 문자열로 들어와서 발견 (사후 진단).
+
+### Mac↔Windows·Linux Python 버전 차이 (n8n npm 회피 → Docker)
+
+Ubuntu에 `npm install -g n8n` 시 latest는 Node 22 강제 (NodeSource Node 20 호환 한계) → npm은 자동으로 호환 마지막 버전인 2.8.4로 fallback. 즉 **silent downgrade**.
+- **회피책**: n8n는 **Docker 패턴 표준** (revita odroidc2와 일관). Node 격리 + 워크플로우 마이그레이션 호환.
+- **대응 정책**: 서버에 nodejs 도구 설치 시 Docker로 격리하는 패턴을 1순위. npm 글로벌 install은 2순위.
+- **관련 사례**: 5/15 Ubuntu Mac→리눅스 컨버전 후 n8n 셋업. npm 2.8.4로 1회 가동 후 Docker 2.20.7-exp.0로 마이그레이션 (~30분 소요).
+
+### Gmail App Password 채팅 노출
+
+Claude 세션 중 SMTP 셋업하면서 App Password를 평문으로 노출. Anthropic 로그·Notion sync 등 잠재 경로에 영구 박제 가능.
+- **회피책**: 민감 토큰은 **별도 채널** (PC 직접 키 등록 + Claude는 "이미 등록함" 정도만 통보).
+- **대응 정책**: App Password / API key / DB password 등은 처음부터 환경변수 파일에 두고 Claude에게는 파일 경로만. 한 번 노출되면 즉시 폐기 + 재발급.
+- **관련 사례**: 5/15 megasession Gmail App Password `rdachuzebgzoappa` 노출 → 폐기 권장 박제 (작업보고서 5/15 § 중요 정보).
+
+→ **이 3건은 자동화 강의 자산** + 1인 운영 함정 시리즈에 추가 가능. multi-core/AI 자동화 코스 사례로 직접 활용.
+
 ## 업데이트 방법
 새로운 갭을 발견하거나, 기존 갭을 채웠을 때 이 페이지를 업데이트한다.
 채운 갭은 삭제하지 않고 ~~취소선~~으로 표시하여 성장 기록을 남긴다.

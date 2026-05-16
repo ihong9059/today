@@ -126,12 +126,18 @@ myWikiSetup/
 
 | 사례 | 위치 | 결과 |
 |---|---|---|
-| **UTTEC myWiki** | `C:\todo\today\myWiki\second-brain\` | 44 entity / 11 thought / log 활성 / 외부 위키 흡수 정책 작동 |
+| **UTTEC myWiki** | `C:\todo\today\myWiki\second-brain\` | 44+ entity / 13+ thought / log 활성 / 외부 위키 흡수 정책 작동 |
 | **REVITA revitaWiki** | `C:\todo\revitaProject\revitaWiki\` | 32 entity / 21 gotcha / ingest 사이클 #4~#8 정기 진행 |
 | **첫 multi-agent 사이클** | 2026-05-12, 4 카드 정상 닫힘 | request → ACK → done → done (사용자 broker 단계 2 후 무인화) |
 | **첫 흡수 사이클** | revitaWiki #8 → myWiki 6건 사업 자산 박제 | 사업 라인 발견 + 강의 자산 3건 + 차별화 카피 |
+| **시나리오 D 첫 적용** (2026-05-15) | onDevice_AI vault 별도 repo 분리 + ondevice-claude 합류 | 3 Claude 시스템 + 제품별 vault 통합 패턴 검증 |
+| **시나리오 D 두 번째 적용** ⭐ (2026-05-16) | n8nUttec vault 신설 (Ubuntu) + n8n-claude 합류 | 4 Claude 시스템 + **분산 호스트 (Windows ↔ Linux) 검증** + 패키지 메타 검증 |
+| **시나리오 D 세 번째 적용** ⭐⭐ (2026-05-16) | shield vault 신설 (RPi Linux) + shield-claude 합류 + **work-end § 5-F always-send 강제 룰 커스텀** | 5 Claude 시스템 + **분산 호스트 3 사례 (Windows × 1 + Linux × 2)** + 도메인 다양성 (자동화 + 하드웨어 시험) + "myWiki 연결" 확실 보장 패턴 |
 
-상세: `EXAMPLES.md`
+상세:
+- `EXAMPLES.md` — 첫 사례 (5/12 UTTEC + REVITA + 시나리오 D 첫 적용)
+- `EXAMPLES_n8nUttec.md` — 두 번째 사례 (5/16 n8n-claude 합류, **사용자 prompt 원본 박제 포함**)
+- `EXAMPLES_shield.md` — 세 번째 사례 (5/16 shield-claude 합류, **사용자 query "myWiki와 연결되나요?" 박제 + always-send 강제 룰 차별화 카피**)
 
 ## 라이센스 / 출처
 

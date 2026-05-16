@@ -118,6 +118,23 @@ powershell -Command "Get-ChildItem 'C:\todo\today\.claude\sessions\session_*.md'
 
 **중요: 오늘 작업보고서(YYYY-MM-DD_작업보고서.md)의 "오늘 할일" 섹션에 위 통합 테이블을 Edit 도구로 반영한다.**
 
+### 4-A. Notion 동기화 (작업보고서 통합 직후 필수)
+
+작업보고서 통합 테이블을 새로 작성·반영한 직후 즉시 Notion으로 단방향 sync한다. `SessionStart` hook(`settings.json`)은 새 세션 진입 시 1회만 실행되므로, 동일 세션에서 `/work-start`로 재통합한 경우 hook이 다시 실행되지 않아 Notion이 stale 상태가 된다. 본 단계가 그 갭을 메운다.
+
+```bash
+python "C:/todo/today/.claude/hooks/notion-sync.py"
+```
+
+**정책 (단방향 sync, memory `feedback_todo_notion_sync.md` 참조)**:
+- 생성: 작업보고서 → Notion
+- 완료: Notion → 작업보고서 (Notion 체크 항목 → 작업보고서 ✅ + ~~취소선~~)
+- Claude는 임의로 작업보고서 ⬜→✅ 변경 금지 (본 sync 결과로만 변경)
+
+**출력 표시**: 결과 라인(`완료 정리 N건 / 상태 동기화 N건 / 작업보고서→Notion N건 추가 / Notion→작업보고서 N건 추가 / 번호 재정렬 N건`)을 사용자에게 보고. 0건이 아닌 항목은 어떤 변화가 일어났는지 풀어서 설명한다.
+
+**역전파로 작업보고서가 변경되면**: 4단계에서 사용자에게 보여준 통합 테이블과 실제 작업보고서가 달라지므로 **최신 잔여 할일 테이블을 재표시**한다.
+
 ### 5. myWiki 세컨드 브레인 상태 확인
 
 `C:\todo\today\myWiki\second-brain\log.md`에서 마지막 로그 날짜를 확인한다.

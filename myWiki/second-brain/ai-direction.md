@@ -132,6 +132,8 @@ LED 무선 제어 (BLE Mesh, 2016~2023)
 | 2026-05-07 | 3.5-Stage → 4.5-Stage 패키지 확장 (Stage 4 On-Device AI 신설) | 사용자 강점(임베디드 38년 + AI 통합) + 시장 트렌드(Hailo·Jetson·SLM) + microGPT 검증으로 타당성 입증. 단가 1,500만/4주, 매출 5,800만→7,300만(+26%). Stage 0 견적서 옵션 섹션 갱신. 첫 수주 후보: 한국기계 Hailo-8 예측정비 | 결정 ([[uttec-stage-package]]) |
 | 2026-05-12 | **위키 ingest 누락 방지 3계층 자동화 패턴 채택** | revitaProject Claude의 SessionStart hook + work-start 강화 + `_remote-cache/`. "수동 절차의 자동 1차 방어선 + 정밀 분류 + 심층 분석 도구" 패턴 → Claude 협업 전반에 적용 가능. myWiki에도 multi-agent `_inbox/` + `check-inbox.py` 같은 패턴으로 확장 (사용자 broker 부담 0) | 가동 중 ([[revita]] / `myWiki/_inbox/PROTOCOL.md`) |
 | 2026-05-12 | **원격 모니터링 풀스택 = 사업 라인 발견** | Solar Monitor (RAK4631 + INA219 + LoRa SF12 + Flask + Chart.js + systemd) ↔ [[한림용인cc-고가수조]] (1,000만원 시공 직전) 동일 아키텍처 확인. "센서→LoRa→RPi Flask Web UI→현장 운용"이 농업·양식·산업 시설로 확장 가능 | 실증 진행 중 ([[2026-05-12_원격모니터링-사업라인]]) |
+| 2026-05-15 | **제품별 vault 통합 패턴 채택 (3-vault → 2-vault)** | onDevice_AI vault에 구 uttecBizWiki(비즈니스 전용 vault) 흡수 → 한 제품(AI FanStick + Stage 4)의 기술 검증과 비즈니스 운영을 같은 vault에서 일직선 추적. cross-link 비용 단순화. revita 패턴(별도 private repo + multi-agent)을 적용해 ondevice-claude 합류 (3 Claude 시스템). 통합 vault가 검증 모델 — 차후 다른 제품 라인에도 동일 패턴 적용 가능 | 가동 중 ([[onDevice-ai]] / `_inbox/PROTOCOL.md` 합의 이력 5/15) |
+| 2026-05-15 | **n8n 표준 = Docker (npm install 비표준화)** | Ubuntu에 npm 글로벌 n8n 설치 시 Node 20 호환 마지막 버전(2.8.4)으로 silent downgrade 발견 → Docker 컨테이너(n8n 2.20.7-exp.0 / Node v24)로 마이그레이션. odroidc2(교육)와 Ubuntu(실전) 둘 다 Docker로 일관성 — 워크플로우 마이그레이션 호환 + Node 격리. 향후 n8n 신규 서버는 무조건 Docker 1순위 | 표준 정착 (`/todo/today/n8n/`, Tailscale 100.90.158.36:5678) |
 
 ## 위시캣 시장 인사이트
 

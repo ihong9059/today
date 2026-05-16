@@ -76,13 +76,15 @@ updated: 2026-05-09
 | [[uttec-stage-package]] | UTTEC 영업 패키지 4.5-Stage — Stage 0(500만)+1(300만)+2(2,500만)+3(2,500만)+4(1,500만) 풀 7,300만, Foundry 1/100 가격 |
 | [[강사양성_파일럿]] | 강사양성 옵션 2 표준 5일 코스 — 2026-06-15~19 시범, 시나리오 A 무료+잠재고객, 본인부담 320만, 수강생 4~10명 |
 | [[정부지원_교육사업]] | 정부지원 9채널 매트릭스 — 톱 3 즉시 진입(디지털배움터·서울시·NIPA AX 바우처) + 4건 자격 보강 후 + 2건 장기 |
-| [[onDevice-ai]] | onDevice_AI vault — microGPT + AI FanStick 차세대 + Stage 4 통합 검증, ESP32-S3 SRAM 520KB 1%로 microGPT 탑재 가설 |
-| [[uttecBizWiki]] | uttecBizWiki vault — **onDevice AI 제품(AI FanStick + Stage 4) 비즈니스 전용**. 다른 사업 영역 미포함. onDevice_AI과 기술↔비즈니스 한 쌍 |
+| [[onDevice-ai]] | onDevice_AI vault — **AI FanStick + Stage 4 제품 통합 (기술 + 비즈니스)**, `/todo/onDevice_AI/` 별도 private repo, ondevice-claude 식별자 (5/15 repo 분리 + uttecBizWiki 흡수 + multi-agent 합류) |
+| [[uttecBizWiki]] | ⚠️ **DEPRECATED (5/15)** — `onDevice_AI/business/`로 흡수 완료. redirect anchor 역할만 보존 |
 | [[oldProject]] | UTTEC 과거 프로젝트 아카이브 — 1,200 files / 575 MB (태양광·일본·rfTech·whybiz·회로도). private repo `ihong9059/oldProject` |
 | [[일본-시장]] | 일본 영업 트랙 — AMANO BLE Mesh 3,800대 양산(nRF52832) + 도카이 자전거주차장 + Patron 제안서 |
 | [[whybiz-tracker]] | whybiz GPS Tracker IoT IP — LTE+GPS+Zigbee+LoRa+Modbus+BLE 모듈러 솔루션, 모듈 즉시 재조합 가능 |
 | [[군사업]] | 군 사업 IP — ITM-G3 RF 통신기(Qorvo QPG6105) + 60Channel 군대충전기 + 함상통신기·지뢰감시센서 |
 | [[한림용인cc-고가수조]] | ⭐ 한림용인CC 고가수조 자동급수 무선제어 (★ 시공 직전, 1,000만원, 한림그룹 6년 만의 재거래·영역 확장) |
+| [[n8n-uttec]] | ⭐ n8nUttec vault (Ubuntu 호스트, 5/16~) — UTTEC n8n 자동화 학습 + 영업·사업화 통합, n8n-claude 합류 (4 Claude) |
+| [[shield]] | ⭐ shield vault (RPi Linux 호스트, 5/16~) — RPi shield 보드 응용 (LoRa·RS485·RS422·MESH·I2C), shield-claude 합류 (5 Claude) + work-end always-send 강제 룰 |
 
 ## 생각 (Thoughts)
 | 페이지 | 요약 |
@@ -95,3 +97,5 @@ updated: 2026-05-09
 | [[2026-05-07_OOK-두-응용-영역]] | OOK 두 응용 영역(공중파 RF + RF feeder in-band) 통합 → 통신 프로토콜 포팅 사업 라인 발견 |
 | [[2026-05-12_revitaWiki-myWiki-비대칭]] | revitaWiki 자료의 90%가 myWiki 사업 자산으로 미전환 → CLAUDE.md에 "외부 위키 흡수" 5단계 정책 신설 |
 | [[2026-05-12_원격모니터링-사업라인]] | ⭐ Solar Monitor + 한림용인CC 골프수조 = 동일 풀스택 → "원격 모니터링" 사업 라인 발견, 7종 응용 영역 매트릭스 |
+| [[2026-05-15_제품별-vault-통합-패턴]] | 제품별 vault 통합 패턴 — revita + onDevice 2 사례로 패턴 검증, 시나리오 D 첫 적용 |
+| [[2026-05-16_n8n-claude-합류]] | ⭐ n8n-claude 합류 — 4 Claude 시스템 + 분산 호스트 검증 + myWikiSetup 시나리오 D 두 번째 적용 (메타 검증) |

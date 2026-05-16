@@ -2,10 +2,107 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-15 (onDevice_AI repo 분리 + uttecBizWiki 흡수 + ondevice-claude 합류)
+updated: 2026-05-16 (shield-claude 합류 — 5 Claude 시스템 + 분산 호스트 3 사례 + myWikiSetup 시나리오 D 세 번째 검증)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-16] migrate+setup | shield-claude 합류 — 5 Claude 시스템 + 분산 호스트 3 사례 + myWikiSetup 시나리오 D 세 번째 적용
+
+- 참조: [[shield]], [[2026-05-16_shield-claude-합류]] (mywiki-claude 측 박제 예정), [[n8n-uttec]], [[revita]]
+- **사용자 동기 (5/16 prompt)**:
+  > shield 폴더(`/home/uttec/project/shield/`)의 진행사항이 myWiki와 연결되어 UTTEC의 비지니스에 참고가 되도록 하면 됨. 옵션 "혼합" (myWikiSetup 풀 셋업 + work-end § 5-F always-send 강제 룰).
+- **인프라 변경 (RPi 분산 호스트, 새로운 OS·hardware 사례)**:
+  - 신규 vault `/home/uttec/project/shield/` (RPi Linux, ssh shield, Tailscale 100.120.255.34)
+  - 12 파일 신설 (second-brain/ 7 + _inbox/ 4 + .claude/hooks/check-inbox.py)
+  - work-end SKILL § 5-F **always-send 강제 룰** 커스텀 — myWiki와 항상 자동 연결 보장
+  - SELF_ID="shield-claude" 등록, 5 Claude 시스템으로 확장
+  - myWikiSetup `templates/` 변수 치환 명시적 적용 (시나리오 D 세 번째 적용 사례)
+- **myWiki 측 영향**:
+  - `_inbox/PROTOCOL.md` § 활성 Claude 4→5 갱신 + 합의 이력 § 2026-05-16 shield-claude 합류 항목 추가
+  - `_inbox/SYSTEM_GUIDE.md` 5 Claude 구성도 + 핵심 자산 표 갱신 + shield-claude 박스 신설
+  - `entities/shield.md` 신설 (~7KB) — UTTEC 사업 자산화 관점 (revita / 한림용인CC / aiHardStudy 매칭)
+  - 본 log.md 항목 박제
+  - n8n-claude 위치 정정: `/home/uttec/uttec/n8nUttec/` → `/home/uttec/project/n8nUttec/` (5/16 megasession에서 잘못 박제됨)
+- **revita / ondevice / n8n 측 영향**:
+  - 각 vault `_inbox/PROTOCOL.md` + `_inbox/SYSTEM_GUIDE.md` 5 vault 동기 사본 갱신 (md5 일치 검증 9c822fa5 / 78f3ed3d)
+  - 각 vault `_inbox/pending/2026-05-16-NNN-shield-claude-join.md` 합류 통보 카드 발송 (mywiki #002 / revita #003 / ondevice #003 / n8n #001)
+- **myWikiSetup 패키지 영향 (사업 자산화)**:
+  - `EXAMPLES_shield.md` 신설 예정 (시나리오 D 세 번째 사례 박제)
+  - README.md 검증 사례 표 갱신 — 시나리오 D 3 사례 누적 (Windows × 1 + Linux × 2)
+  - 패키지 메타 검증 강화: 분산 호스트 다양성 (Mac→Ubuntu + RPi) + 도메인 다양성 (자동화 + 하드웨어 시험)
+- **shield 자산 보존**:
+  - 자기-완결 평면 파일 (`CLAUDE.md`, `_진행로그.md`, `_다음할일.md`, `사용법.md`) 그대로 유지
+  - 5/10 셋업된 `.claude/skills/work-{start,end}/SKILL.md` (일반화 버전) → multi-agent 통합 버전으로 업그레이드
+- **핵심 차별점 — 강제 absorb 룰**:
+  - 기존 myWikiSetup § 5-F: 판단 기반 ("알림 가치 있나?")
+  - shield 특화 § 5-F: **always send absorb card** (빈 세션 heartbeat 포함)
+  - 사용자 query "이 folder의 myWiki와 연결되나요?" → **확실하게 ✅** 답 가능
+
+## [2026-05-16] migrate+setup | n8n-claude 합류 — 4 Claude 시스템 + 분산 호스트 + myWikiSetup 시나리오 D 두 번째 적용
+
+- 참조: [[n8n-uttec]], [[2026-05-16_n8n-claude-합류]], [[2026-05-15_제품별-vault-통합-패턴]], [[n8n]], [[ai-direction]]
+- **사용자 동기 (5/16 prompt 원본)**:
+  > "예제를 하나 만들어 file:///c:/todo/today/obsidian/myWikiSetup folder에 추가했으면 좋겠읍니다. 현재 ssh ubuntu에 접속하면 mac hardware에 ubuntu가 설치된 pc가 있고, 그곳에 n8n이 setup되어있읍니다. 그리고 /uttec/n8nUttec folder가 있어요, 그곳에 새로운 work flow들을 만들면서 n8n을 공부하고, 더 나은 자동화 work flow를 생성하여 전체적으로 uttec의 영업및 사업화에 기여할려고 합니다. 그곳에 wiki를 만들어 진행사항을 다른 agent들과 같이 myWiki와 협업할려고 합니다."
+- **인프라 변경 (Ubuntu 분산 호스트)**:
+  - 신규 vault `/home/uttec/uttec/n8nUttec/` (Ubuntu 22.04, ssh ubuntu, Tailscale 100.90.158.36)
+  - 22 파일 / 1,588 insertions / 초기 commit 6f17aa3 (main 브랜치)
+  - SELF_ID="n8n-claude" 등록, 4 Claude 시스템으로 확장
+  - myWikiSetup `templates/` 변수 치환 명시적 적용 (시나리오 D 두 번째 적용 사례)
+- **myWiki 측 영향**:
+  - `_inbox/PROTOCOL.md` 합의 이력 § 2026-05-16 추가 + 활성 Claude 4 항목
+  - `_inbox/SYSTEM_GUIDE.md` 4 Claude 구성도 + 핵심 자산 표 + 합의 이력 갱신
+  - `entities/n8n-uttec.md` 신설 (~9KB)
+  - `thoughts/2026-Q2/2026-05-16_n8n-claude-합류.md` 신설 (시나리오 D 두 사례 비교 + 메타 검증)
+  - `index.md` entities + thoughts 표에 등재
+  - 본 log.md 항목 박제
+- **revita / onDevice_AI 측 영향**:
+  - `revitaProject/_inbox/PROTOCOL.md` 합의 이력 § 2026-05-16 + 활성 Claude 4 항목
+  - `onDevice_AI/_inbox/PROTOCOL.md` 합의 이력 § 2026-05-16
+- **myWikiSetup 패키지 영향 (사업 자산화)**:
+  - `obsidian/myWikiSetup/EXAMPLES_n8nUttec.md` 신설 (사용자 prompt 원본 박제 포함, ~12KB) — **두 번째 검증 사례 박제**
+  - `obsidian/myWikiSetup/README.md` § "검증된 실 사례" 표 갱신 (시나리오 D 첫·두 번째 등재)
+- **합류 통보 카드 3건 발송**:
+  - `myWiki/_inbox/pending/2026-05-16-001-n8n-claude-join.md` (n8n → mywiki, request)
+  - `revitaProject/_inbox/pending/2026-05-16-001-n8n-claude-join.md` (n8n → revita, request)
+  - `onDevice_AI/_inbox/pending/2026-05-16-001-n8n-claude-join.md` (n8n → ondevice, request)
+- **사이클 의미**:
+  - **myWikiSetup 패키지 메타 검증** — 시나리오 D 2 사례 누적 = 검증된 모델 (호오컨설팅·인프런·강사양성 컨설팅 deliverable 후보)
+  - **분산 호스트 검증** — Windows 3 + Linux 1 환경에서 _inbox 메일박스 패턴 + tar-stream 전송 + Python hook 모두 정상 작동
+  - **자동화 사업 라인 신설 가능성** — UTTEC AI 3대 사업 라인 + 자동화 사업 라인(4순위) 후보
+- **다음 단계**:
+  - 가동 중 n8n 워크플로우 2건(Test_Ubuntu_n8n_동작확인 + chain 2) export → `n8nUttec/workflows/` 박제
+  - 첫 학습 노트 `n8nUttec/학습/00_n8n-기초.md` 작성
+  - GitHub `ihong9059/n8nUttec` private repo 생성 + push (사용자 직접)
+  - 합류 카드 3건 lifecycle 종료 (수신측 다음 세션 처리)
+
+---
+
+## [2026-05-16] absorb | _inbox 카드 5/15-001 ondevice-claude 합류 통보 — 5단계 흡수 완료
+
+- 카드: `_inbox/pending/2026-05-15-001-ondevice-claude-join.md` (from: ondevice-claude, type: request, priority: normal)
+- **5단계 흡수 체크리스트 결과**:
+  1. **신규 entity** — `entities/onDevice-ai.md` + `entities/uttecBizWiki.md` 5/15 megasession 시 갱신 완료 확인. 별도 신규 entity 없음
+  2. **신규 gotcha** → `gaps.md § 자동화/스크립팅 함정 패턴 (2026-05-15 신설 — onDevice_AI ingest #1 흡수)` 신규 섹션 3건 추가:
+     - bash heredoc 변수 expansion 손실 (n8n expression 사고)
+     - n8n npm silent downgrade → Docker 표준
+     - Gmail App Password 채팅 노출
+  3. **신규 decision** → `ai-direction.md § 판단 로그` 2건 추가:
+     - 2026-05-15 "제품별 vault 통합 패턴 채택 (3-vault → 2-vault)"
+     - 2026-05-15 "n8n 표준 = Docker (npm install 비표준화)"
+  4. **매칭 패턴** → `thoughts/2026-Q2/2026-05-15_제품별-vault-통합-패턴.md` 신설 (revita 패턴 검증 + onDevice 적용 = 2 사례 = 패턴 검증, A+B→C+D 패턴 도출)
+  5. **revita entity** — 직접 영향 없음. revita 패턴이 onDevice에 적용되었다는 메타 정보는 [[onDevice-ai]] entity와 thoughts에 박제됨
+- **인프라 갱신 후속 점검**:
+  - `_inbox/PROTOCOL.md` 합의 이력 § 2026-05-15 ondevice-claude 합류 — ✅ 갱신 확인 (5/15 megasession 시 처리됨)
+  - `_inbox/SYSTEM_GUIDE.md` 핵심 자산 표 + 3 Claude 구성도 — ✅ 갱신 확인
+  - `index.md` line 79~80 — uttecBizWiki entry → DEPRECATED 표시 + onDevice-ai 설명 갱신 (이번 사이클에서 처리)
+  - `raw/onDevice_AI` junction → `/c/todo/onDevice_AI` 재연결 — ✅ 5/15 08:29 갱신 확인
+  - `raw/uttecBizWiki` junction → 제거 완료 (raw/ 디렉토리 목록 부재 확인)
+  - `second-brain/CLAUDE.md § 디렉토리 구조` — ✅ 5/15 갱신 확인 (`raw/onDevice_AI/` 항목 "2026-05-15 위치 변경 + 정체성 확장" 명시됨)
+- **카드 lifecycle 종료**:
+  - 카드 → `_inbox/processed/2026-05-15-001-ondevice-claude-join.md` 이동 + frontmatter `status: done`
+  - 발신측 회신: `/todo/onDevice_AI/_inbox/pending/2026-05-16-001-ack-ondevice-join.md` (type: done)
+- **사이클 의미**: 3 Claude 시스템의 **첫 흡수 사이클 lifecycle 정상 종료** (mywiki ↔ revita 5/12 첫 사이클에 이은 두 번째 사이클). 5/15 megasession의 큰 인프라 변경(repo 분리 + 흡수 + 합류) 후속 점검 완료. 향후 ondevice→mywiki 카드 패턴(Phase 2 검증 결과 / 영업 이벤트 / Stage 4 첫 수주 / 매칭 패턴)이 본 사이클 통로로 전파 시작 가능.
 
 ## [2026-05-15] migrate+absorb | onDevice_AI repo 분리 + uttecBizWiki 흡수 + multi-agent 합류 (3-vault → 2-vault)
 
