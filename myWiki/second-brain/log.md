@@ -7,6 +7,35 @@ updated: 2026-05-16 (#155381 PLC 산업자동화 지원서 + shield-claude 합�
 
 # Second Brain 위키 로그
 
+## [2026-05-16] setup | wishket-claude multi-agent 합류 — 6 Claude 시스템 + 사업 트랙 vault 첫 사례 (시나리오 D 4번째 적용)
+
+- 참조: [[위시캣활동]], [[wishket-platform|wishketProject/second-brain/entities/wishket-platform.md]]
+- **사용자 동기**: "wishketProject에서 작업을 하면 myWiki에 작용되도록 되어있나요?" → 옵션 B (multi-agent 합류) 선택
+- **인프라 변경 (6 Claude 시스템 확장)**:
+  - wishketProject `second-brain/` mini-vault 6 파일 (CLAUDE + log + index + me + entities/wishket-platform + thoughts/2026-Q2/2026-05-16_wishket-claude-합류)
+  - wishketProject `_inbox/` 4 항목 (PROTOCOL + SYSTEM_GUIDE + pending/ + processed/)
+  - wishketProject `.claude/hooks/check-inbox.py` (SELF_ID="wishket-claude") + `settings.local.json` (SessionStart hook)
+- **6 vault PROTOCOL/SYSTEM_GUIDE 동기 sync**:
+  - 4 Windows vault (mywiki + revita + ondevice + wishket): md5 PROTOCOL `b963aae8` / SYSTEM_GUIDE `cc5067f4` 일치 ✅
+  - n8n (Ubuntu mac): scp 완료, md5 일치 ✅
+  - shield (RPi): ssh timeout, 다음 세션 처리 ⏸
+- **합류 카드 4건 발송**:
+  - mywiki `_inbox/pending/2026-05-16-003-wishket-claude-join.md` (priority: normal, 5단계 흡수 요청)
+  - revita `_inbox/pending/2026-05-16-004-wishket-claude-join.md` (정보 공유)
+  - ondevice `_inbox/pending/2026-05-16-004-wishket-claude-join.md` (정보 공유)
+  - n8n `_inbox/pending/2026-05-16-002-wishket-claude-join.md` (priority: high, 자매 시스템 분담 협업 시작)
+- **myWiki 측 영향**:
+  - 본 log.md 박제
+  - `entities/위시캣활동.md` "저장 위치" 섹션 갱신 (분리 lifecycle 3단계 진화 + SELF_ID + 자매 시스템 + always-send)
+  - n8n 위치 정정 (`/home/uttec/uttec/n8nUttec/` → `/home/uttec/project/n8nUttec/`, PROTOCOL.md sync 시 반영)
+- **myWikiSetup 패키지 영향 (사업 자산화)**:
+  - `EXAMPLES_wishket.md` 신설 (~9KB) — **사용자 5단계 의사결정 lifecycle 박제** (분리 제안 → 실행 → 절대 경로화 지적 → multi-agent 합류 질문 → "B로 진행")
+  - README 검증 사례 표 4번째 사례로 갱신 (시나리오 D 4 사례 누적)
+  - **사업 트랙 vault 첫 사례** 정립 → 향후 다른 사업 라인 (uttec-edu 등) 확장 패턴
+  - **분리 lifecycle 3단계 진화** 패턴 정립 (분리 → 절대 경로화 → multi-agent 합류) → 향후 분리 시 표준
+  - **자매 시스템 분담 협업** 패턴 정립 (n8n-claude cron 자동검색 + wishket-claude 정밀 작성 + mywiki-claude 종합)
+- **누적 효과**: OS 3종 (Windows·Ubuntu·RPi) + 도메인 4종 (제품·자동화·하드웨어·영업) + 트랙 4종 (제품·학습·자동화·사업) — myWikiSetup 패키지 메타 검증 강화
+
 ## [2026-05-16] cleanup | today/위시캣 junction 삭제 (SKILL.md 절대 경로화로 분리 의미 명확화)
 
 - 참조: [[위시캣활동]]

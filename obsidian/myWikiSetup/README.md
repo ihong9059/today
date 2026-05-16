@@ -133,11 +133,13 @@ myWikiSetup/
 | **시나리오 D 첫 적용** (2026-05-15) | onDevice_AI vault 별도 repo 분리 + ondevice-claude 합류 | 3 Claude 시스템 + 제품별 vault 통합 패턴 검증 |
 | **시나리오 D 두 번째 적용** ⭐ (2026-05-16) | n8nUttec vault 신설 (Ubuntu) + n8n-claude 합류 | 4 Claude 시스템 + **분산 호스트 (Windows ↔ Linux) 검증** + 패키지 메타 검증 |
 | **시나리오 D 세 번째 적용** ⭐⭐ (2026-05-16) | shield vault 신설 (RPi Linux) + shield-claude 합류 + **work-end § 5-F always-send 강제 룰 커스텀** | 5 Claude 시스템 + **분산 호스트 3 사례 (Windows × 1 + Linux × 2)** + 도메인 다양성 (자동화 + 하드웨어 시험) + "myWiki 연결" 확실 보장 패턴 |
+| **시나리오 D 네 번째 적용** ⭐⭐⭐ (2026-05-16) | wishketProject vault 신설 (위시캣 영업 자산 분리) + wishket-claude 합류 + **분리 lifecycle 3단계 진화 (분리 → 절대 경로화 → multi-agent 합류) 첫 완전 사례** | 6 Claude 시스템 + **사업 트랙 vault 첫 사례** (기존은 제품·학습·자동화 트랙) + 자매 시스템 분담 협업 (n8n-claude cron 09:00 자동검색 + wishket-claude 정밀 작성) + 패키지 도메인 다양성 (제품·자동화·하드웨어·영업 4 트랙 누적) |
 
 상세:
 - `EXAMPLES.md` — 첫 사례 (5/12 UTTEC + REVITA + 시나리오 D 첫 적용)
 - `EXAMPLES_n8nUttec.md` — 두 번째 사례 (5/16 n8n-claude 합류, **사용자 prompt 원본 박제 포함**)
 - `EXAMPLES_shield.md` — 세 번째 사례 (5/16 shield-claude 합류, **사용자 query "myWiki와 연결되나요?" 박제 + always-send 강제 룰 차별화 카피**)
+- `EXAMPLES_wishket.md` — 네 번째 사례 (5/16 wishket-claude 합류, **분리 lifecycle 3단계 진화 + 사업 트랙 vault 첫 사례 + 자매 시스템 분담 협업 패턴**)
 
 ## 라이센스 / 출처
 
