@@ -120,6 +120,11 @@ aiHardStudy/aiEspMini/build/
 revita/
 # 별도 private repo (today에 흡수 금지)
 onDevice_AI/
+# 위시캣 — junction to C:/todo/wishketProject/위시캣 (2026-05-16 이동, source-of-truth는 wishketProject)
+위시캣/
+# 위시캣 skill — junction to C:/todo/wishketProject/.claude/skills/wishket-{check,apply} (2026-05-16 이동)
+.claude/skills/wishket-check/
+.claude/skills/wishket-apply/
 
 # Obsidian 메타 (외부 vault)
 유투브/.obsidian/

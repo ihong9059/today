@@ -2,10 +2,52 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-16 (shield-claude 합류 — 5 Claude 시스템 + 분산 호스트 3 사례 + myWikiSetup 시나리오 D 세 번째 검증)
+updated: 2026-05-16 (#155381 PLC 산업자동화 지원서 + shield-claude 합류)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-16] migrate | 위시캣 영업 자산 분리 — today/위시캣 + .claude/skills/wishket-* → wishketProject (옵션 B junction 패턴 재활용)
+
+- 참조: [[위시캣활동]], [[2026-05-16_shield-claude-합류]] (어제 옵션 B 패턴 참조)
+- **분리 배경**: today repo 슬림화 + 영업 자산(매출 직결, NDA) private 분리 + multi-agent `wishket-claude` 합류 후보. onDevice_AI 분리 패턴과 일치 (영업 자산 → 별도 private repo).
+- **신규 private repo**: `ihong9059/wishketProject` (private, 39.7MB / 162 tracked / commit `<initial>`)
+- **이동 자산**:
+  - `today/위시캣/` (39.7MB / 162 files — 지원서 27건 + 가능프로젝트 35건 + ref/ 이력서/보유기술) → `wishketProject/위시캣/`
+  - `today/.claude/skills/wishket-check/SKILL.md` → `wishketProject/.claude/skills/wishket-check/`
+  - `today/.claude/skills/wishket-apply/SKILL.md` → `wishketProject/.claude/skills/wishket-apply/`
+- **SKILL.md 갱신**: 내부 `지원서류/` (today에 부재 폴더) 참조 → `위시캣/ref/` (실제 파일 위치)로 일괄 정정
+- **NTFS Junction 3개 생성**:
+  - `today/위시캣` → `wishketProject/위시캣`
+  - `today/.claude/skills/wishket-check` → `wishketProject/...`
+  - `today/.claude/skills/wishket-apply` → `wishketProject/...`
+- **검증**: today에서 `/wishket-check`·`/wishket-apply` skill 등록 유지 (junction 통해 wishketProject SKILL.md 실행). myWiki `raw/위시캣` symlink (`/c/todo/today/위시캣`)도 junction 통해 본 repo 접근 (수정 불요).
+- **today/.gitignore 갱신**: `위시캣/`, `.claude/skills/wishket-check/`, `.claude/skills/wishket-apply/` 추가 (junction 추적 방지)
+- **다음 단계**: wishket-claude 5 Claude 시스템 합류 (시나리오 D 4번째 적용 후보, 사용자 결정 시)
+
+## [2026-05-16] update | 위시캣 #155365 농장 바이러스 확산 STGNN AI 알고리즘 고도화 지원서 작성 (정직 평가)
+
+- 참조: [[위시캣활동]]
+- 프로젝트: 농장 바이러스 확산 방역 내비게이션 AI 알고리즘 고도화
+- 예산/기간: 1,300만 / 60일 / 외주(계약) / 서울 도봉구
+- 매칭: **7/10 + 2 인접** — Python AI 양산(MobileNetV3/EasyOCR/MNIST) + 농업·축산 IoT 도메인(한림용인CC 고가수조 + #153090 nRF52 스마트팜 양산 진행 중 + 일본 자전거주차장 3,800대) + 운영 중 SaaS 무중단 확장(양산 5종 동시 유지보수) + 시공간 시각화(Three.js 3D + Canvas 2D + Plotly 양산)
+- 정직한 약점 명시: STGNN 학술 모델 직접 양산 없음 → 60일 중 첫 2주 PyTorch Geometric/DGL 학습 일정 명시 + 바이러스 역학 도메인 전무 → 클라이언트 전문가 협업 채널 제안
+- 8주 4 마일스톤(분석·베이스라인 → 그래프 표현 고도화 → XAI 데이터 적응 → SaaS 무중단 배포) 분할 청구 제안
+- 자가 점검 grep 통과(회사명/URL 노출 0건)
+- 지원자 13명. 마감 5/29 (D-13). 가능프로젝트 분류 "⚠️ 검토 필요"에서 사용자 명시 요청으로 작성
+- **사이트 제출 완료 (5/16)**
+
+## [2026-05-16] update | 위시캣 #155381 PLC 산업자동화 PC 제어 + X/Y 좌표 시각화 + Recipe 지원서 작성
+
+- 참조: [[위시캣활동]]
+- 프로젝트: PLC 연동 산업 자동화 PC 제어 및 좌표 시각화 프로그램 개발
+- 예산/기간: 1,000만 / 30일 / 외주(계약) / 인천 연수구
+- 매칭: **9/9** — RPi3 V-Cut 양산(X/Y 2축 좌표 가공 동일 패턴) + CM4 EtherCAT 양산(이더넷 PLC 산업 표준) + STM32F756 Modbus RTU 양산(KC) + 임호균 MFC Controller 제안 양산 + 대한전선 WINDER(X/Y 모터 제어)
+- 차별화: **X/Y 좌표 가공 양산 직접 보유** (V-Cut → 펀칭 좌표 이식) + 2인 팀 분담(홍광선 PLC/Recipe + 임호균 MFC GUI) + 30일 단기 외주 적합
+- 검토 범위: #155348~#155401 (54건, 공개 21건 / 비공개 33건, 적합 1건 + 검토 1건 + 추적 1건 = 5.6%)
+- 자가 점검 grep 통과 (회사명/URL 노출 0건)
+- 위시캣 #155220 PLC/SCADA 지원서 구조 재활용 (90일 → 30일, PLC/SCADA 통합 → PC 응용 단일)
+- **사이트 제출 완료 (5/16)**
 
 ## [2026-05-16] migrate+setup | shield-claude 합류 — 5 Claude 시스템 + 분산 호스트 3 사례 + myWikiSetup 시나리오 D 세 번째 적용
 
