@@ -7,6 +7,15 @@ updated: 2026-05-16 (#155381 PLC 산업자동화 지원서 + shield-claude 합�
 
 # Second Brain 위키 로그
 
+## [2026-05-16] cleanup | today/onDevice_AI 잔재 폴더 삭제 (5/15 분리 잔재)
+
+- 참조: [[onDevice-ai]]
+- **삭제 대상**: `C:\todo\today\onDevice_AI\` (291KB, `microGPT/karpathy_원본/{input.txt, run_output.log}` 2 파일)
+- **상태**: 5/15 onDevice_AI repo 분리 시 빠뜨린 잔재. 별도 `C:\todo\onDevice_AI\` (private repo)에 동일 파일 + 더 많은 파일 (superset) 존재. md5 양측 완전 동일 (`401b3c4c` + `796bb75d`).
+- **검증**: git 추적 0 (.gitignore line 122) + myWiki entity 참조 0 (이미 "이전 위치 5/14"로 박제). 데이터 손실 위험 0.
+- **추가 정리**: `.gitignore` line 62-63 `onDevice_AI/.claude/` + `onDevice_AI/.obsidian/` 중복 제거 (line 122 `onDevice_AI/`에 포함되므로 불필요).
+- **사용자 의도**: today에서 onDevice_AI/ 경로 혼동 제거 + repo 청결성 유지.
+
 ## [2026-05-16] migrate | 위시캣 영업 자산 분리 — today/위시캣 + .claude/skills/wishket-* → wishketProject (옵션 B junction 패턴 재활용)
 
 - 참조: [[위시캣활동]], [[2026-05-16_shield-claude-합류]] (어제 옵션 B 패턴 참조)
