@@ -2,10 +2,46 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-16 (#155381 PLC 산업자동화 지원서 + shield-claude 합류)
+updated: 2026-05-17 (Tier 2 sub-vault 패턴 정립 + 한림용인CC 1번째 적용)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-17] decision | 프로젝트 Tier 분류 정책 정립 + Tier 2 sub-vault 패턴 신설 (한림용인CC 1번째 적용)
+
+- 참조: [[한림용인cc-고가수조]], `templates/sub-vault-template/README.md`, `templates/sub-vault-template/wiki/CLAUDE.md`
+- **배경**: today repo에 단발 SI/위탁 프로젝트가 자주 발생 (INDEX.md 비즈니스 10개 + 제품·기술 4개). 매번 "분리할까/직접 박제할까" 고민이 비용 → 결정 자동화 필요. 사용자 질문 "이런 형태의 project가 자주 발생하거나 진행할 때를 생각한다면 어떤 방향이 좋을까?"가 트리거.
+- **3-Tier 표준 정립** (CLAUDE.md "프로젝트 Tier 분류 정책" 섹션):
+  - Tier 1 (≤ 1,000만, ≤ 30일) — `project/{name}/` 직접 + myWiki entity 1개, 5분 셋업
+  - Tier 2 (1,000만~5,000만, 30~120일, 산출물 多) — `project/{name}/wiki/` sub-vault, 20분 셋업 ⭐ NEW
+  - Tier 3 (≥ 5,000만 또는 자체 코드베이스) — 별도 repo + multi-agent 합류, 1h+ 셋업
+- **승격 경로**: Tier 1 → 2 → 3 (한 방향, 강등 없음)
+- **현재 매핑**:
+  - Tier 1: 위시캣 단기 외주 / 단발 컨설팅
+  - Tier 2: 한림용인CC ⭐ (1번째) · 위시캣 #155381 PLC · #155365 STGNN · xerix MFC
+  - Tier 3: revita / onDevice_AI / wishket / shield / n8n (이미 분리 완료)
+- **Tier 2 sub-vault 표준 템플릿 신설**:
+  - `templates/sub-vault-template/README.md` — Tier 분류 정책 + 사용법 + 라이프사이클
+  - `templates/sub-vault-template/wiki/CLAUDE.md` — 프로젝트별 Claude 가이드 (action 정의: start/decision/purchase/site/firmware/revenue/milestone/complete/absorb)
+  - `templates/sub-vault-template/wiki/log.md` — 시간순 박제 single source of truth
+  - `templates/sub-vault-template/wiki/{entities,thoughts,archive}/` — 표준 폴더 구조
+- **한림용인CC 1번째 적용**:
+  - `project/골프_수조_물관리/wiki/` 신설 (robocopy 대신 직접 작성, ~20분)
+  - `wiki/CLAUDE.md` — 한림용인CC 고유 컨텍스트 (시공 진행 우선순위 + 완료 후 myWiki 흡수 체크리스트 + 후속 골프장 재사용)
+  - `wiki/log.md` — start + decision 박제 (라이프사이클 측정 대상 정의)
+  - myWiki [[한림용인cc-고가수조]] entity에 cross-link 추가 (subvault 필드 + 메타 섹션 + Tier 2 운영 정책 섹션)
+- **라이프사이클 측정 시나리오** (한림용인CC 사례):
+  - 1. 셋업 (5/17, 완료) → 실측 ~20분
+  - 2. 시공 진행 박제 (5/17~5/20) → 카드 발송 vs 직접 박제 효율
+  - 3. 시공 완료 (5/20 이후) → sub-vault 산출물 양·질
+  - 4. myWiki 흡수 (5/21~) → 흡수 비용 + 정보 손실률
+  - 5. archive 결정 (1~2주 후) → "분리할 가치 있었나" 평가
+- **자산화 계획**: 사례 검증 후 `obsidian/myWikiSetup/EXAMPLES_tier2_subvault.md` 신설 → myWikiSetup 5번째 사례 (Tier 3 4 사례 + Tier 2 1 사례 = 5 트랙)
+- **Tier 2의 myWiki와 관계 (정책 핵심)**:
+  - sub-vault = 시공·진행 박제 (격리)
+  - myWiki entity = 사업 자산 (재거래·매출·영업 전략)
+  - 완료 시 sub-vault → myWiki 흡수 + sub-vault는 archive로 보존
+- **사용자 의사결정 lifecycle 박제 후보** (시공 완료 후): "이런 형태가 자주 발생할 때 어떤 방향이 좋을까" 질문 → 3-Tier 표준 정립 → 한림용인CC 1번째 적용 → 검증 → 자산화. EXAMPLES_tier2_subvault.md 또는 thoughts/2026-Q2/에 박제 예정.
 
 ## [2026-05-16] setup | wishket-claude multi-agent 합류 — 6 Claude 시스템 + 사업 트랙 vault 첫 사례 (시나리오 D 4번째 적용)
 

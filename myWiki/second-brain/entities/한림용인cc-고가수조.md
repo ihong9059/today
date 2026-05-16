@@ -2,11 +2,12 @@
 title: 한림용인CC 고가수조 자동급수 무선제어 시스템
 type: entity
 created: 2026-05-10
-updated: 2026-05-12
-tags: [project, customer, golf, lora, e22, 수위제어, 펌프제어, 시공직전, 한림그룹]
+updated: 2026-05-17
+tags: [project, customer, golf, lora, e22, 수위제어, 펌프제어, 시공직전, 한림그룹, tier2-subvault]
 links: [revita, 회사소개, 영업전략, uttec-stage-package, smartFactory]
 status: 시공직전
 financial: 매출직전 1,000만원 (VAT 별도)
+subvault: project/골프_수조_물관리/wiki/
 ---
 
 # 한림용인CC 고가수조 자동급수 무선제어 시스템
@@ -176,6 +177,22 @@ financial: 매출직전 1,000만원 (VAT 별도)
 | 항목 | 값 |
 |---|---|
 | 폴더 위치 | `C:\todo\today\project\골프_수조_물관리\` |
+| ⭐ sub-vault (Tier 2) | `C:\todo\today\project\골프_수조_물관리\wiki\` (2026-05-17 신설, 표준 패턴 1번째 적용) |
 | 핵심 참조 자료 | `README.md` (10KB), `시공_체크리스트.md`, `설계_요구자료.md`, `references/견적서_초경제형_1000만원.pdf`, `references/급수인프라_지도.png`, `설계/수위측정_방법.md` |
+| 시공 진행 로그 | `wiki/log.md` — 단계별 박제 (purchase/site/firmware/milestone/complete) |
 | 신설일 (today repo) | 2026-05-10 |
 | myWiki 흡수일 | 2026-05-12 (★ 신설 후 2일 지연 — 흡수 사이클 명시화의 정확한 필요 증거) |
+| sub-vault 신설일 | 2026-05-17 (Tier 2 표준 패턴 1번째 적용 — 라이프사이클 측정 대상) |
+
+## Tier 2 sub-vault 운영 정책
+
+본 프로젝트는 **Tier 2 sub-vault 패턴**의 1번째 적용 사례다. 정책 정의 참조: `templates/sub-vault-template/README.md`.
+
+**역할 분담**:
+- 본 entity (myWiki) = **사업 자산 측면** (한림그룹 재거래·매출·영업 전략·기술 적용 사례)
+- `wiki/log.md` (sub-vault) = **시공 진행 측면** (단계별 박제, 자재 발주, 현장 답사, 펌웨어 포팅, 시공)
+
+**완료 후 흡수 흐름**:
+1. `wiki/log.md`의 핵심 결과 → 본 entity "사업 자산화" 섹션에 통합
+2. `wiki/entities/` 중 사업 자산 가치 있는 객체 → myWiki entities로 승격 (예: KC 인증 사양·LoRa 시공 노하우 등)
+3. `wiki/` 폴더 자체는 `wiki/archive/` 산출물과 함께 보존 (후속 골프장 시공 시 참조)

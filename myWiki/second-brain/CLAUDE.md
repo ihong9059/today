@@ -197,6 +197,40 @@ links: [관련 페이지 파일명]
   - `onDevice_AI/business/` 영업 이벤트 발생 시 매칭 패턴 분석 카드 발송
   - Phase 검증 결과 발생 시 entities/onDevice-ai.md, ai-fanstick.md 갱신 카드 발송
 
+### 프로젝트 Tier 분류 정책 (2026-05-17 추가) ⭐
+
+**배경**: today repo에 단발 SI/위탁 프로젝트가 자주 발생 (INDEX.md 비즈니스 10개 + 제품·기술 4개). 매번 "분리할까 말까" 고민이 비용. **결정 자동화** 필요.
+
+**3-Tier 표준**:
+
+| Tier | 금액 | 기간 | 코드량 | 구조 | 셋업 비용 |
+|:-:|---|---|---|---|---|
+| **1 — 단발** | ≤ 1,000만 | ≤ 30일 | 거의 없음 | `project/{name}/` + myWiki entity 1개 | 5분 |
+| **2 — 중간** | 1,000만~5,000만 | 30~120일 | 산출물 多 | `project/{name}/wiki/` sub-vault | 20분 |
+| **3 — 장기/제품** | ≥ 5,000만 | ≥ 6개월 | 자체 코드베이스 | 별도 repo + multi-agent 합류 | 1시간+ |
+
+**Tier 결정 절차** (3축 분류):
+
+1. **금액·기간** — 위 표 기준 1차 분류
+2. **코드량** — 자체 펌웨어·앱·솔루션 코드베이스 있나? 있으면 한 단계 승격
+3. **호스트** — Windows 단일이면 Tier 1~2, 다른 호스트(Ubuntu/RPi) 필요하면 Tier 3
+
+**승격 경로**: Tier 1 → Tier 2 → Tier 3. **강등 없음** (한 방향).
+
+**Tier 2 sub-vault 표준 템플릿**: `templates/sub-vault-template/` (2026-05-17 신설).
+
+**현재 매핑**:
+- **Tier 1**: 위시캣 단기 외주 (#153090 등) · 단발 컨설팅
+- **Tier 2** ⭐: [[한림용인cc-고가수조]] (1,000만/D-3 시공, 1번째 적용) · 위시캣 #155381 PLC · #155365 STGNN · xerix MFC
+- **Tier 3**: revita · onDevice_AI · wishket · shield · n8n (분리 lifecycle 3단계 진화 패턴)
+
+**적용 모델**: 한림용인CC가 Tier 2 1번째 사례. 라이프사이클(셋업 → 진행 박제 → 시공 완료 → myWiki 흡수 → archive)을 측정하여 패턴 검증 후 myWikiSetup 5번째 사례로 자산화 예정.
+
+**Tier 2 sub-vault의 myWiki와 관계**:
+- sub-vault = 시공·진행 박제 (격리)
+- myWiki entity = 사업 자산 (재거래·매출·영업 전략·기술 적용 사례)
+- 완료 시 sub-vault → myWiki entity 흡수 + sub-vault는 archive로 보존
+
 ### today/ 신규 폴더 → myWiki entity 검토 정책 (2026-05-12 추가)
 
 **배경**: 2026-05-12에 `today/project/골프_수조_물관리/` (한림용인CC 1,000만원 매출 직전 프로젝트)가 myWiki entity로 흡수되지 않은 채 2일 방치된 사건 박제. revitaWiki만의 문제가 아닌 today/ 전반의 흡수 부재 패턴.

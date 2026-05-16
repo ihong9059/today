@@ -20,7 +20,7 @@
 | [장민하/](장민하/) | 외부 협업 |
 | [이진서/](이진서/) | 이진서 협업 — 창업 프로젝트 도전 |
 | [전시회/](전시회/) | COEX 등 전시회 자료 |
-| ⭐ [project/골프_수조_물관리/](project/골프_수조_물관리/) | **한림용인CC 고가수조 자동급수 무선제어 (★ 시공 직전, 1,000만원)** → [[한림용인cc-고가수조]] |
+| ⭐ [project/골프_수조_물관리/](project/골프_수조_물관리/) | **한림용인CC 고가수조 자동급수 무선제어 (★ 시공 직전, 1,000만원, Tier 2 sub-vault)** → [[한림용인cc-고가수조]] + [wiki/log.md](project/골프_수조_물관리/wiki/log.md) |
 
 ## ⚙️ 제품·기술 프로젝트
 
@@ -49,7 +49,7 @@
 | [tailscale/](tailscale/) | Tailscale 장비 네트워크 |
 | [pem/](pem/) | 보안 인증 키 (PEM) |
 | [skill/](skill/) | 자동화 skill 목록 |
-| [templates/](templates/) | 템플릿 모음 |
+| [templates/](templates/) | 템플릿 모음 (claude_project_template + ⭐ **sub-vault-template** Tier 2용, 2026-05-17 신설) |
 | [ffmpeg/](ffmpeg/) | FFmpeg 도구 + HongLab AI |
 | [notion/](notion/) | Notion 업로드 스크립트 |
 | [obsidian/](obsidian/) | Obsidian 6편 시리즈 (배경 지식) |
