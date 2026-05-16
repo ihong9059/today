@@ -1,4 +1,4 @@
-# Claude Code 설정 (skills, hooks, settings, memory 포함)
+﻿# Claude Code 설정 (skills, hooks, settings, memory 포함)
 .claude/*
 !.claude/skills/
 !.claude/hooks/
@@ -115,3 +115,6 @@ aiHardStudy/aiEspMini/build/
 **/build/reports/
 **/build/test-results/
 **/build/.transforms/
+
+# revita/ — junction to C:/todo/revitaProject/orgRevita (2026-05-16 이동, source-of-truth는 revitaProject)
+revita/
