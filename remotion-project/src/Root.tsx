@@ -191,6 +191,30 @@ import {
   Slide17,
   Slide18,
 } from "./BaekhwajeomSlides";
+import {
+  Wishket155381PitchVideo,
+  WISHKET_155381_DURATION,
+} from "./Wishket155381PitchVideo";
+import {
+  Slide01 as W155381_Slide01,
+  Slide02 as W155381_Slide02,
+  Slide03 as W155381_Slide03,
+  Slide04 as W155381_Slide04,
+  Slide05 as W155381_Slide05,
+  Slide06 as W155381_Slide06,
+  Slide07 as W155381_Slide07,
+  Slide08 as W155381_Slide08,
+  Slide09 as W155381_Slide09,
+  Slide10 as W155381_Slide10,
+  Slide11 as W155381_Slide11,
+  Slide12 as W155381_Slide12,
+  Slide13 as W155381_Slide13,
+  Slide14 as W155381_Slide14,
+  Slide15 as W155381_Slide15,
+  Slide16 as W155381_Slide16,
+  Slide17 as W155381_Slide17,
+  Slide18 as W155381_Slide18,
+} from "./Wishket155381Slides";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -1444,6 +1468,34 @@ export const RemotionRoot: React.FC = () => {
       <Still id="Baekhwajeom-Slide-16" component={Slide16} width={1920} height={1080} />
       <Still id="Baekhwajeom-Slide-17" component={Slide17} width={1920} height={1080} />
       <Still id="Baekhwajeom-Slide-18" component={Slide18} width={1920} height={1080} />
+
+      {/* ============ 위시캣 #155381 — LS XGT PLC 부스바 가공 PC 응용 제안 ============ */}
+      <Composition
+        id="Wishket155381Pitch"
+        component={Wishket155381PitchVideo}
+        durationInFrames={WISHKET_155381_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Still id="Wishket155381-Slide-01" component={W155381_Slide01} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-02" component={W155381_Slide02} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-03" component={W155381_Slide03} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-04" component={W155381_Slide04} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-05" component={W155381_Slide05} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-06" component={W155381_Slide06} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-07" component={W155381_Slide07} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-08" component={W155381_Slide08} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-09" component={W155381_Slide09} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-10" component={W155381_Slide10} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-11" component={W155381_Slide11} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-12" component={W155381_Slide12} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-13" component={W155381_Slide13} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-14" component={W155381_Slide14} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-15" component={W155381_Slide15} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-16" component={W155381_Slide16} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-17" component={W155381_Slide17} width={1920} height={1080} />
+      <Still id="Wishket155381-Slide-18" component={W155381_Slide18} width={1920} height={1080} />
     </>
   );
 };

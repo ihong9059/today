@@ -126,3 +126,6 @@ onDevice_AI/
 # Obsidian 메타 (외부 vault)
 유투브/.obsidian/
 위시캣/2026-05-12_프로젝트155057_미팅준비/temp.txt
+
+# Remotion 대용량 산출물 (재생성 가능, repo에 commit 안 함)
+remotion-project/out/Wishket155381/

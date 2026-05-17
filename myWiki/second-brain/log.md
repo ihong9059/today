@@ -2,10 +2,22 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-17 (Tier 2 sub-vault 패턴 정립 + 한림용인CC 1번째 적용)
+updated: 2026-05-17 (위시캣 #155381 미팅 제안 + 미팅 자료 14건 + Remotion 동영상 deliverable + wishketProject SKILL 정합화)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-17] revenue-pipeline | 위시캣 #155381 (LS XGT PLC + 부스바 가공 PC) 미팅 제안 도착 + 준비 megasession
+
+- 참조: `wishketProject/위시캣/2026-05-17_프로젝트155381_미팅준비/`, `wishketProject/second-brain/entities/부스바.md`, `myWiki/_inbox/pending/2026-05-17-001-wishket-megasession-absorb.md`
+- **계기**: 5/16 #155381 PLC 산업자동화 PC 제어 + 좌표 시각화 (1,000만/30일, 매칭 9/9) 사이트 제출 → 5/17 미팅 제안 수신.
+- **작업 분담 (병행 megasession)**:
+  - **today/mywiki-claude 세션 (11:45~13:00)**: 미팅 준비 9 표준 문서 + README 작성 (76 KB, 5/12 #155057 패턴 차용) + wishketProject `/work-start`·`/work-end` 통합 SKILL.md 설치 (244 + 404줄, n8nUttec 5/16 패턴 4번째 재사용) + RAG 사용자 학습
+  - **wishket-claude 세션 (병행)**: 부스바 entity 신설(vault 첫 entity, 15 §) + 미팅 자료 5건 추가(#10 LS XGT 가이드 / #11 언어 선택 / #12 시각화 / #13 Controller vs PLC 교육자료 md+html / #14 동영상 시나리오) + Remotion 5분 동영상(pitch.mp4 19MB) + 18 슬라이드(slides.pdf)
+- **vault scope 격리 첫 본격 적용**: 본 작업은 today cwd에서 시작했으나 위시캣 작업은 wishketProject에서 진행 (memory `feedback_vault_scope_isolation.md` 정책 적용). 사용자에게 작업 위치 판단 근거 5가지 보고 후 진행.
+- **multi-agent 자산화↔매출화 lifecycle 실증**: wishket-claude가 mywiki entity(v-cut / three-js / modbus / ethercat / STM32 5종)를 영업 무기로 활용한 첫 사례. 5/17 박제 매칭 트리거 4건 검증 (사업 트랙 vault가 제품 트랙 vault 자산을 영업 무기로 활용).
+- **흡수 카드 도착**: `myWiki/_inbox/pending/2026-05-17-001-wishket-megasession-absorb.md` (priority: high) — 부스바 entity 신설 권장 + v-cut/three-js/modbus/ethercat cross-link 갱신 + 위시캣활동.md 갱신 + EXAMPLES_wishket.md 신설 (예상 1~2h, 다음 work-start 위임)
+- **다음 단계**: 미팅 일정 협의 (도착 시점부터 24h 내 PLC 모델·메모리맵 공유 요청) + 시연 자료(V-Cut 영상·EtherCAT 사진·Modbus RTU) 정리 + #001 카드 흡수.
 
 ## [2026-05-17] decision | 프로젝트 Tier 분류 정책 정립 + Tier 2 sub-vault 패턴 신설 (한림용인CC 1번째 적용)
 
