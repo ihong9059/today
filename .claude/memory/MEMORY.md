@@ -17,3 +17,4 @@
 - [2-vault 분리 운영 (5/15 재구성)](project_3vault_분리.md) — myWiki(today repo) + onDevice_AI(/todo 별도 private repo, AI FanStick+Stage 4 통합). uttecBizWiki는 onDevice_AI/business/로 흡수. multi-agent: mywiki/revita/ondevice-claude
 - [vault scope 격리](feedback_vault_scope_isolation.md) — vault 안 작업 시 외부 자산 자동 동기화 금지, /vault-end ≠ /work-end (책임 분리)
 - [응답 진행 로그 분리](feedback_progress_log_isolation.md) — 매 응답은 이번 prompt 내용만 (자세하게 OK), 이전 prompt 재서술 금지, 전체 누적은 _current_progress.md에
+- [할일·프롬프트 표시 — 사용자 행동 구분](feedback_todo_display_user_action.md) — 할일 테이블+응답 본문 전체. 사용자 직접 행동은 👤 (🔴+👤 시급), Claude 처리 가능은 🤖. 액션 요청·결정·확인 prompt에도 동일 적용

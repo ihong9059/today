@@ -2,10 +2,39 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-17 (위시캣 #155381 미팅 제안 + 미팅 자료 14건 + Remotion 동영상 deliverable + wishketProject SKILL 정합화)
+updated: 2026-05-18 (표시 규칙 신설 + Windows 탐색기 default = C:\todo + 위시캣 비공개 100% 패턴 박제)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-18] decision | 할일·프롬프트 표시 시각 구분 규칙 신설 (👤/🤖/🔴+👤)
+
+- 참조: `~/.claude/projects/C--todo-today/memory/feedback_todo_display_user_action.md`
+- **배경**: 작업보고서 23건 + Notion sync 결과 + 잔여 할일 + 사용자 prompt 등 화면 표시량 누적 → 사용자 직접 행동 항목이 묻혀 누락 위험. 사용자 트리거: "display되는 부분이 많아서 헷갈립니다".
+- **규칙**:
+  - 🔴 👤 — 시급 + 사용자 직접 행동 (D-day)
+  - 👤 — 사용자 직접 행동 (Claude 대신 못 함 — 발주·결제·미팅 참석·서명·승인·결정·외부 회신)
+  - 🤖 — Claude 처리 가능 (코드·문서·박제·sync)
+  - 노란 인용블록(>)으로 사용자 항목 모아 표시
+- **확장**: 할일 테이블뿐 아니라 **응답 본문 전체**까지 적용 (사용자 추가 지시) — 응답 중간 "확인 부탁드립니다"·"결정 부탁드립니다"·"수동 단계" 같은 요청에도 prefix.
+- **적용 시작**: 2026-05-18 후반 세션부터 즉시. 모든 work-start/end·일반 응답·작업보고서 표기에 일관 적용.
+
+## [2026-05-18] market | 위시캣 신규 등록 비공개 100% — 2일 연속 패턴
+
+- 참조: `wishketProject/위시캣/2026-05/가능프로젝트/2026-05-18_가능프로젝트.md`, `2026-05-16_가능프로젝트.md`
+- **검토 범위**: #155402 ~ #155419 (18 IDs, 5/17~5/18 신규 등록분)
+- **결과**: 비공개 13건 + 미존재 5건 → **공개 0건**
+- **추세 변화**: 5/16 검토(54건 중 33건 비공개, 61%) → 5/18(13건 중 13건 비공개, **100%**). 표본 작아 일시적일 수 있으나 위시캣 정책 변경(공개 → 회원 한정 전환) 가능성 박제.
+- **검증 방법**: 다음 검토(5/19 이후) 패턴 지속 여부 + n8n-claude Ubuntu cron 09:00 자동검색 카드와 교차 확인.
+- **사업 영향**: 일일 검토 효율 저하 (평가 가능 표본 감소). 자동검색은 비공개에 막혀 의미 있는 매칭 발굴 불가.
+
+## [2026-05-18] use | Windows 탐색기 default folder = C:\todo 리매핑 (HKCU Win+E 단축키)
+
+- 참조: `backup/rollback-explorer-default-folder-20260518.reg`
+- **변경**: HKCU\Software\Classes\CLSID\{52205fd8-5dfb-447d-801a-d0b52f2e83e1}\shell\OpenNewWindow\Command 신규 생성. `(default)` = `explorer.exe "C:\todo"`, `DelegateExecute` = `""` (위임 실행 차단).
+- **효과**: Win+E → 즉시 C:\todo 폴더 오픈. 사용자 확인 ✅.
+- **롤백**: `.reg` 파일 더블클릭 (CLSID 키 전체 삭제) — reversible 보장.
+- **한계**: Win11 작업표시줄 시스템 핀은 .lnk 수정 불가. 바탕화면 `todo 탐색기.lnk` 커스텀 shortcut 생성하여 사용자 수동 핀 단계로 우회.
 
 ## [2026-05-17] revenue-pipeline | 위시캣 #155381 (LS XGT PLC + 부스바 가공 PC) 미팅 제안 도착 + 준비 megasession
 
