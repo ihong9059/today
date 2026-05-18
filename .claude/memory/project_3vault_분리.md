@@ -1,20 +1,23 @@
 ---
-name: 2-vault 분리 운영 (myWiki + onDevice_AI) — 5/15 재구성
-description: 사용자 second-brain 운영 구조. 5/7 3-vault → 5/15 2-vault 재구성. 작업 요청 시 어느 vault에 속하는지 먼저 판단 후 진행
+name: 3-vault 분리 운영 (myWiki + onDevice_AI + lemonLabs) — 5/19 확장
+description: 사용자 second-brain 운영 구조. 5/7 3-vault → 5/15 2-vault → 5/19 3-vault 확장 (lemonLabs 합류). 작업 요청 시 어느 vault인지 먼저 판단 후 진행
 type: project
 originSessionId: b3245c42-bf7b-4dd3-a682-cd49deb90641
 ---
-사용자는 **2개 vault**를 분리 운영한다 (2026-05-15 재구성).
+사용자는 **3개 vault**를 분리 운영한다 (2026-05-19 lemonLabs 합류로 확장).
 
 | vault | 위치 | 역할 | scope |
 |---|---|---|---|
 | `myWiki/second-brain/` | `C:\todo\today\myWiki\` (today repo 안) | 학습+개인+도구+범 사업 영역 통합 | second-brain (영구, 매일) |
 | **`onDevice_AI/`** | **`C:\todo\onDevice_AI\` (별도 git repo, private, ihong9059/onDevice_AI)** | **AI FanStick + Stage 4 제품 통합 (기술 검증 + 비즈니스)** | 한 제품의 처음부터 끝까지 |
+| **`lemonLabs/`** ⭐ NEW | **`C:\todo\lemonLabs\` (별도 git repo, private, ihong9059/lemonLabs, 2026-05-19 신설)** | **이진서 51% + UTTEC 49% 협업 신규 법인 — AI 응원봉/교육/Consulting/Studio 4 트랙** | 창업 트랙 — 2027 Q1 법인 설립 |
 | (참고) `revitaProject/` | `C:\todo\revitaProject\` (별도 repo) | REVITA 제품 (기술 + 위키) | 별도 제품 |
 
 **Why (5/7 결정)**: 기술↔비즈니스 분리 + 외부 공개 안전. 3-vault로 시작.
 
 **Why (5/15 재구성)**: 한 제품(AI FanStick + Stage 4)의 기술과 비즈니스가 두 vault에 분리되어 cross-link 비용이 컸음. 한 vault에서 검증→영업→수주 흐름을 일직선으로 단순화. uttecBizWiki는 컨텐츠 0에 가까운 schema 선언 상태 (1주 정전, 영업 이벤트 0건)였기 때문에 흡수 비용 낮음. revita 패턴(별도 repo + multi-agent _inbox) 검증된 모델 적용.
+
+**Why (5/19 확장 — lemonLabs 합류)**: 이진서 협업이 5/9 결정 → 5/15 1차 신청 → 5/19 회사명 "레몬랩스" 채택 + 4 트랙 분류 + 5/20~6/12 5건 동시 지원 단계로 진입. 별도 법인(2027 Q1 설립) 자산은 UTTEC 자산과 법적·재무적으로 분리되어야 하므로 myWiki 안에 누적하면 안 됨. Tier 3 패턴 (별도 repo + multi-agent) 적용. **창업 트랙 vault 첫 사례** (기존: 제품 트랙 5 + 사업 트랙 1).
 
 **구 3-vault → 신 2-vault 재구성**:
 - `today/uttecBizWiki/` (5/7 신설, 5/14 정전) → `onDevice_AI/business/` (5/15 흡수)
@@ -26,10 +29,12 @@ originSessionId: b3245c42-bf7b-4dd3-a682-cd49deb90641
 
 ```
 사용자 요청 도착 → "이 작업은 무엇에 관한가?"
-   ├── AI FanStick 차세대 / Stage 4 비즈니스 (영업·매출·고객·시장)
+   ├── AI FanStick 차세대 / Stage 4 비즈니스 (UTTEC 단독 영업)
    │      → /todo/onDevice_AI/business/
-   ├── ESP32-S3 + microGPT 기술 검증 (코드·실측·포팅·hardware)
+   ├── ESP32-S3 + microGPT 기술 검증 (UTTEC 코드·실측·포팅·hardware)
    │      → /todo/onDevice_AI/ (검증 영역)
+   ├── 이진서 협업 — 레몬랩스 사업·지원사업·콘텐츠·법인·UTTEC 의뢰
+   │      → /todo/lemonLabs/
    ├── REVITA 제품 (기술·위키·LoRa·BLE 등)
    │      → /todo/revitaProject/
    └── 그 외 모든 작업 (학습·도구·다른 사업·다른 제품)
@@ -53,13 +58,18 @@ originSessionId: b3245c42-bf7b-4dd3-a682-cd49deb90641
 | 새로운 학습·연구 | myWiki |
 | 새 사업 라인 검토 (자영업 AI 등) | myWiki/entities (새 entity) |
 | REVITA LoRa 거리 테스트 | revitaProject/project/lora_range/ |
+| 이진서 협업 지원사업 신청 | lemonLabs/사업/지원사업/ |
+| 이진서 응원봉 콘텐츠 작업 (영상·SNS) | lemonLabs/콘텐츠/ |
+| 이진서 → UTTEC 기술 의뢰 (BLE Mesh 펌웨어 등) | lemonLabs/UTTEC협업/의뢰과제/pending/ |
+| 레몬랩스 4 트랙 (응원봉/교육/Consulting/Studio) | lemonLabs/트랙_* |
+| 레몬랩스 IR Deck·발표자료 | lemonLabs/사업/IR_pitch/ |
 
 ### Multi-agent 통신 (vault 간)
 
-- `mywiki-claude` (today/myWiki) ↔ `ondevice-claude` (/todo/onDevice_AI) ↔ `revita-claude` (/todo/revitaProject)
+- 7 Claude 시스템: `mywiki-claude` · `ondevice-claude` · `revita-claude` · `n8n-claude` · `shield-claude` · `wishket-claude` · **`lemonlabs-claude`** (5/19 합류)
 - 각 vault `_inbox/{pending,processed}/` + `.claude/hooks/check-inbox.py`
 - 통신 표준: 각 vault `_inbox/PROTOCOL.md` (동일 사본)
-- 합의 일자: 2026-05-12 (mywiki+revita) + 2026-05-15 (ondevice 합류)
+- 합의 일자: 2026-05-12 (mywiki+revita) + 2026-05-15 (ondevice) + 2026-05-16 (n8n·shield·wishket) + **2026-05-19 (lemonlabs)**
 
 ### Claude 작업 시 주의
 

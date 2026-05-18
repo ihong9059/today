@@ -14,7 +14,7 @@
 - [Memory MCP 설치](reference_memory_mcp.md) — Anthropic 공식 지식 그래프 서버, myWiki/ontology/memory.json 저장, Claude Code 등록 완료 (2026-05-05)
 - [PDF 이메일 자동화 Hybrid](feedback_pdf_email_hybrid.md) — 한글 PDF는 PC Chrome headless 렌더 + n8n 서버 SMTP 발송 (서버 도구 부재 + Windows 폰트 우수)
 - [uttec@192.168.0.23 서버](reference_uttec_192_168_0_23.md) — Debian 13 ARM64 LAN 서버, SSH 키 등록·Claude Code v2.1.132 설치 (2026-05-07)
-- [2-vault 분리 운영 (5/15 재구성)](project_3vault_분리.md) — myWiki(today repo) + onDevice_AI(/todo 별도 private repo, AI FanStick+Stage 4 통합). uttecBizWiki는 onDevice_AI/business/로 흡수. multi-agent: mywiki/revita/ondevice-claude
+- [3-vault 분리 운영 (5/19 lemonLabs 확장)](project_3vault_분리.md) — myWiki(today) + onDevice_AI(별도 repo, UTTEC 제품) + **lemonLabs**(별도 repo, 이진서×UTTEC 협업 법인, 4트랙). multi-agent 7 Claude: mywiki/revita/ondevice/n8n/shield/wishket/lemonlabs-claude
 - [vault scope 격리](feedback_vault_scope_isolation.md) — vault 안 작업 시 외부 자산 자동 동기화 금지, /vault-end ≠ /work-end (책임 분리)
 - [응답 진행 로그 분리](feedback_progress_log_isolation.md) — 매 응답은 이번 prompt 내용만 (자세하게 OK), 이전 prompt 재서술 금지, 전체 누적은 _current_progress.md에
 - [할일·프롬프트 표시 — 사용자 행동 구분](feedback_todo_display_user_action.md) — 할일 테이블+응답 본문 전체. 사용자 직접 행동은 👤 (🔴+👤 시급), Claude 처리 가능은 🤖. 액션 요청·결정·확인 prompt에도 동일 적용

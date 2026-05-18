@@ -2,10 +2,32 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-18 (표시 규칙 신설 + Windows 탐색기 default = C:\todo + 위시캣 비공개 100% 패턴 박제)
+updated: 2026-05-19 (lemonLabs vault 신설 — 7번째 Tier 3 multi-agent, 이진서×UTTEC 협업 법인)
 ---
 
 # Second Brain 위키 로그
+
+## [2026-05-19] setup | lemonLabs vault 신설 — Tier 3 분리 + 7번째 multi-agent ⭐⭐
+
+- 참조: [[lemonLabs]], `C:/todo/lemonLabs/CLAUDE.md`, `C:/todo/lemonLabs/00_정의_LemonLabs.md`, [[2026-05-09_이진서협업-창업프로젝트도전]]
+- **계기**: 5/19 `today/이진서/지원사업List.txt` 신규 작성 (7개 지원사업 + "레몬랩스" 회사명 사용 시작 + 5/20~5/27 동시 지원 5건). 본격 multi-application + 회사 정체성 단계 진입 → 별도 vault 분리 적기 판단.
+- **사용자 결정 7건 합의**:
+  1. vault 이름: **lemonLabs**
+  2. 위치: `C:/todo/lemonLabs/` (onDevice_AI 옆)
+  3. GitHub: ihong9059/lemonLabs private repo 신설
+  4. 이진서 본인 합의: 완료
+  5. **정체성 4 트랙**: AI 응원봉 / AI 교육 / AI Consulting / AI Studio 병행 운영
+  6. 법인 설립 시점: **2027년 초**
+  7. 지분: 이진서 51% + UTTEC 49% 확정 (5/9 검토안 재확인)
+- **vault 구조**: onDevice_AI 패턴 차용 + 4 트랙 분류축 + **UTTEC협업 영역 경계 명시** (기술지원/의뢰과제/정산)
+- **Multi-agent**: `lemonlabs-claude` 신설. **7번째 vault** (6 Claude → 7 Claude). **창업 트랙 vault 첫 사례** (기존: 제품 트랙 5 + 사업 트랙 1).
+- **자산 이관**: `today/이진서/` → lemonLabs/ 분산 (트랙별 + 사업/지원사업/ + 콘텐츠/디자인/ + archive/). 원본은 사용자 확인 후 삭제 검토.
+- **myWiki 측 박제**: entities/lemonLabs.md 신설 + INDEX 갱신 예정 + PROTOCOL.md 7 Claude 동기화 예정.
+- **다음 단계**:
+  - Tier 분류 매핑 갱신 (CLAUDE.md "프로젝트 Tier 분류 정책")
+  - PROTOCOL.md 7 Claude 동기화 (6 vault 모두)
+  - 의뢰과제 첫 lifecycle 검증 (실제 의뢰 발생 시)
+  - 2-vault → **4-vault** 분리 운영 (myWiki + onDevice_AI + lemonLabs + 외부 6 협업 Claude vault)
 
 ## [2026-05-18] decision | 할일·프롬프트 표시 시각 구분 규칙 신설 (👤/🤖/🔴+👤)
 

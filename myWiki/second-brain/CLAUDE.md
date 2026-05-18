@@ -222,7 +222,7 @@ links: [관련 페이지 파일명]
 **현재 매핑**:
 - **Tier 1**: 위시캣 단기 외주 (#153090 등) · 단발 컨설팅
 - **Tier 2** ⭐: [[한림용인cc-고가수조]] (1,000만/D-3 시공, 1번째 적용) · 위시캣 #155381 PLC · #155365 STGNN · xerix MFC
-- **Tier 3**: revita · onDevice_AI · wishket · shield · n8n (분리 lifecycle 3단계 진화 패턴)
+- **Tier 3**: revita · onDevice_AI · wishket · shield · n8n · **lemonLabs** (분리 lifecycle 3단계 진화 패턴, 6개 — 2026-05-19 lemonLabs 합류, 창업 트랙 첫 사례)
 
 **적용 모델**: 한림용인CC가 Tier 2 1번째 사례. 라이프사이클(셋업 → 진행 박제 → 시공 완료 → myWiki 흡수 → archive)을 측정하여 패턴 검증 후 myWikiSetup 5번째 사례로 자산화 예정.
 
