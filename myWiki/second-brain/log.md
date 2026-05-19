@@ -2,8 +2,27 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-19 (E22 함정 3중 박제 + LoRa v3 loopback / lemonLabs vault 신설)
+updated: 2026-05-19 (uttecHome Tier 3 vault 분리 + Obsidian 도입 + 김포나진초 동영상 시나리오)
 ---
+
+## [2026-05-19] setup | uttecHome Tier 3 vault 분리 + Obsidian second-brain 도입 ⭐
+
+- 참조: [[uttec-homepage]], `C:\todo\uttecHome\`, `~/.claude/projects/C--todo-today/memory/project_3vault_분리.md`
+- 사건: today/homepage (nested git) → `C:\todo\uttecHome\` 별도 vault로 분리. today에 junction 유지로 호환성 보장. myWiki/raw/회사소개 이중 traversal 검증 OK.
+- 결과:
+  - GitHub `ihong9059/uttecHome` private repo 신설 (구 `uttecHome-backup` 제거)
+  - `_folder_work_template` 적용 → `/work-start`·`/work-end` workflow 활성
+  - Obsidian vault 도입 (Phase A·B·C 완주) — 30 atomic notes + JSON data layer + 6 컴포넌트 갱신
+  - 정합성 갭 7건 모두 web 반영 (LoRa 추가, AI FanStick 신설, 정체성 확장, Partners 섹션, Smart Factory 차별화, 사전빌드 구체화, lemonLabs 명시)
+- 분류: **Tier 3 vault 8번째** (myWiki 본체 제외, multi-agent 후보 추가)
+- 미완료: DigitalOcean 재배포 / 회사소개서 PDF 갱신 / 5 신규 client 노출 결정
+
+## [2026-05-19] task | 김포나진초등학교 5·6학년 AI 바이브코딩 4주 동영상 시나리오·나레이션 작성
+
+- 참조: `aiHardStudy/초등학교강의/video/scripts/`
+- 산출: 시나리오 1 + 나레이션 6 scene + visual guide (총 8 파일)
+- 다음 단계: Remotion 컴포넌트 6개 + TTS 생성 (사용자 confirm 후 진행)
+- 톤: `ko-KR-SunHiNeural` 다정한 여성 음성, 5·6학년 친근체
 
 ## [2026-05-19] gotcha | E22 LoRa Config 모드 baud 9600 함정 — 3중 박제 ⭐
 
