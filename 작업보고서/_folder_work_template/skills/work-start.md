@@ -1,15 +1,16 @@
 ---
-description: 작업 시작 시 호출. 작업보고서 폴더 점검 + 전 세션 인계 파악 + git 동기화 + 다음 할일 표시. ihong9059 GitHub 계정 사용.
+description: 작업 시작 시 호출. 작업보고서 폴더 점검 + 전 세션 인계 파악 + git 동기화 + 다음 할일 표시 + (vault hook 있으면 자동 chain). ihong9059 GitHub 계정 사용.
 trigger: /work-start, "작업 시작", "이어서 진행"
 ---
 
 # /work-start — 폴더 작업 시작 표준
 
-본 폴더(현재 cwd)에서 작업을 시작할 때 호출. 4 단계 자동 실행.
+본 폴더(현재 cwd)에서 작업을 시작할 때 호출. 6 단계 자동 실행.
 
 ## 핵심 원칙
 
 > **현재 cwd 폴더가 "작업 단위"**. 모든 작업보고서·git·인계는 이 폴더 안에서만 처리.
+> **vault 특화 자동화**(예: lemonLabs의 _inbox 카드, 트랙 컨텍스트)는 같은 폴더의 `vault-start.md`에 격리. work-start는 마지막에 그것을 자동 chain.
 
 ---
 
@@ -106,7 +107,34 @@ gh repo create "ihong9059/$folder_name" --private --source . --remote ihong --pu
 
 ---
 
-## Step 5 — 사용자 질문
+## Step 5 — Vault hook chain (있으면 자동 실행)
+
+본 폴더가 vault일 수도 있고, vault 특화 자동화가 필요할 수도 있다. 다음 경로를 **순서대로** 확인:
+
+1. `.claude/skills/vault-start/SKILL.md`
+2. `.claude/commands/vault-start.md`
+
+### 존재하면
+- 그 파일을 읽고 본문 절차를 **본 work-start 후속 단계로 그대로 실행**
+- vault 특화 로직 (예: `_inbox/pending` 카드 확인, 트랙 컨텍스트 복원, multi-agent 협업 hook, 지원사업 마감 알림) 흡수
+- vault hook 결과를 사용자에게 통합 보고
+- vault hook이 추가로 "다음에 할 일"을 제시하면 Step 4의 할일 테이블에 통합
+
+### 없으면
+- skip — 일반 폴더로 간주
+- Step 6 (사용자 질문)으로 진행
+
+### 호출 형식 예
+```bash
+# vault-start hook 존재 확인
+test -f .claude/skills/vault-start/SKILL.md || test -f .claude/commands/vault-start.md
+```
+
+존재하면 파일 본문의 절차를 본 Claude 세션이 직접 실행 (별도 프로세스 X, 같은 컨텍스트).
+
+---
+
+## Step 6 — 사용자 질문
 
 ```
 이번 세션 작업 결정:
@@ -114,6 +142,8 @@ gh repo create "ihong9059/$folder_name" --private --source . --remote ihong --pu
   B. 다른 작업 (구체적으로 알려주세요)
   C. 빠른 점검 후 종료
 ```
+
+vault hook이 우선 처리할 카드·미팅·마감을 제시한 경우, 사용자 결정 전 그것을 명시.
 
 ---
 
@@ -140,3 +170,4 @@ gh repo create "ihong9059/$folder_name" --private --source . --remote ihong --pu
 
 - `/work-end` — 작업 종료 시 호출 (인계 저장 + git push)
 - `_folder_work_template` — 본 스킬을 임의 폴더에 적용하는 템플릿 패키지 (출처)
+- **Vault hook**: `.claude/skills/vault-start/SKILL.md` 또는 `.claude/commands/vault-start.md` — 본 work-start가 Step 5에서 자동 chain. vault 특화 자동화(예: lemonLabs의 _inbox 카드, 4 트랙 컨텍스트, multi-agent 협업)는 모두 여기에 격리해서 작성.

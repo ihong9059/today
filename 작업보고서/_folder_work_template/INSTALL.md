@@ -152,6 +152,25 @@ Remove-Item -Recurse -Force "$target\.claude\skills\work-end"
 
 ---
 
+## Vault 특화 자동화 추가 (선택)
+
+target 폴더가 vault(_inbox, 트랙 컨텍스트, multi-agent 협업 등)이면, vault 특화 절차를 다음 경로 중 하나에 작성:
+
+- `<target>\.claude\skills\vault-start\SKILL.md` (권장 — skill 형식)
+- `<target>\.claude\commands\vault-start.md` (slash command 형식도 인식됨)
+
+동일하게 `vault-end.md`도 작성. `/work-start`는 Step 5에서, `/work-end`는 Step 4(git 직전)에서 자동 chain.
+
+vault hook 파일이 없으면 work-start/work-end는 일반 폴더용 공통 동작만 수행 → 일반 폴더는 별도 작업 불필요.
+
+vault hook 예시 — lemonLabs(이진서 × UTTEC 협업 vault)의 `vault-start.md`:
+- `_inbox/pending/*` 카드 확인 (multi-agent 통신)
+- 4 트랙(AI 응원봉 / 교육 / Consulting / Studio) 컨텍스트 복원
+- 지원사업 D-7 마감 알림
+- UTTEC 의뢰과제 pending 알림
+
+---
+
 ## 다음 단계
 
 → **target 폴더에서 `/work-start` 첫 사용** + 결과 확인

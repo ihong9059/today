@@ -1,15 +1,16 @@
 ---
-description: 작업 종료 시 호출. 오늘 작업보고서 작성 + 다음 세션 인계 저장 + git commit + push (ihong9059).
+description: 작업 종료 시 호출. 오늘 작업보고서 작성 + 다음 세션 인계 저장 + (vault hook 있으면 자동 chain) + git commit + push (ihong9059).
 trigger: /work-end, "작업 종료", "마무리"
 ---
 
 # /work-end — 폴더 작업 종료 표준
 
-본 폴더(현재 cwd)에서 작업 종료 시 호출. 5 단계 자동 실행. 다음 세션이 중단된 작업을 이어갈 수 있도록 인계 저장.
+본 폴더(현재 cwd)에서 작업 종료 시 호출. 6 단계 자동 실행. 다음 세션이 중단된 작업을 이어갈 수 있도록 인계 저장.
 
 ## 핵심 원칙
 
 > **모든 진행 사항을 폴더 안에 영구 박제** + **git에 push** → 다음 세션·다른 PC에서 동일하게 이어갈 수 있게.
+> **vault 특화 종료 절차**(예: lemonLabs의 log.md 박제, _inbox 회신, multi-agent 카드 발송)는 같은 폴더의 `vault-end.md`에 격리. work-end는 git commit 직전에 그것을 자동 chain → vault 박제 결과물도 같은 commit에 포함.
 
 ---
 
@@ -94,7 +95,35 @@ trigger: /work-end, "작업 종료", "마무리"
 
 ---
 
-## Step 4 — git commit + push (ihong9059)
+## Step 4 — Vault hook chain (있으면 자동 실행)
+
+본 폴더가 vault일 수도 있고, vault 특화 종료 절차가 필요할 수도 있다. 다음 경로를 **순서대로** 확인:
+
+1. `.claude/skills/vault-end/SKILL.md`
+2. `.claude/commands/vault-end.md`
+
+### 존재하면
+- 그 파일을 읽고 본문 절차를 **Step 5 (git commit + push) 직전에 그대로 실행**
+- vault 특화 로직 흡수 (예시):
+  - `log.md`에 시간순 entry 박제
+  - `_inbox/pending` 카드 처리 → `_inbox/processed/`로 이동 + done 회신
+  - 외부 vault(`mywiki-claude`, `ondevice-claude` 등) inbox에 협업 박제 카드 발송
+  - vault 헌법 갱신 (트랙 우선순위 변경, 의사결정 박제)
+- vault hook이 만들어낸 변경사항(`log.md`, `_inbox/processed/*`, 외부 vault inbox 카드)도 Step 5 git commit에 자연스럽게 포함
+
+### 없으면
+- skip — 일반 폴더로 간주
+- Step 5 (git commit + push)로 진행
+
+### 순서가 중요한 이유
+vault hook의 모든 결과물은 본 폴더 안에서 발생한 변경 → **반드시 git commit 직전에 실행**해야 commit에 포함됨. work-end Step 1~3의 작업보고서·인계 저장과 묶여서 한 commit으로 떨어지는 게 깔끔.
+
+### 외부 vault 측 inbox 카드 발송 (vault hook 안에서 처리)
+vault-end가 외부 vault inbox에 카드를 떨어뜨릴 수 있음 (예: `today/myWiki/_inbox/pending/...`). 그 카드들은 **외부 vault의 git이 별도**이므로 본 폴더 commit과 무관 — 외부 vault의 다음 work-end가 처리.
+
+---
+
+## Step 5 — git commit + push (ihong9059)
 
 ### 4-A. git status 확인
 ```bash
@@ -147,7 +176,7 @@ git push ihong main 2>&1 | tail -5
 
 ---
 
-## Step 5 — 결과 보고
+## Step 6 — 결과 보고
 
 ```
 =====================================
@@ -162,10 +191,15 @@ git push ihong main 2>&1 | tail -5
 💾 인계 저장: 작업보고서/.context/YYYY-MM-DD.session.md
    다음 세션 /work-start 가 자동 읽음
 
+🧩 Vault hook: 실행됨 / skip
+   - log.md 박제: N entry
+   - _inbox 처리: N건 회신
+   - 외부 vault 카드: M건 (mywiki/ondevice/...)
+
 🔀 Git:
    - Commit: <hash> "<message 첫 줄>"
    - Push: ihong9059/<폴더명> → 성공 / 실패
-   - 변경 파일: N개
+   - 변경 파일: N개 (vault hook 결과물 포함)
 
 ✅ 본 세션 완료 사항
 - (목록)
@@ -209,5 +243,6 @@ git push ihong main 2>&1 | tail -5
 
 ## 관련 스킬
 
-- `/work-start` — 작업 시작 시 호출 (인계 읽기 + git pull)
+- `/work-start` — 작업 시작 시 호출 (인계 읽기 + git pull + vault-start hook chain)
 - `_folder_work_template` — 본 스킬을 임의 폴더에 적용하는 템플릿 패키지 (출처)
+- **Vault hook**: `.claude/skills/vault-end/SKILL.md` 또는 `.claude/commands/vault-end.md` — 본 work-end가 Step 4에서 자동 chain. vault 특화 종료 절차(log.md 박제, _inbox 회신, multi-agent 카드 발송)는 모두 여기에 격리해서 작성.

@@ -8,8 +8,18 @@
 
 ## 한 줄 정의
 
-> **`/work-start` = 작업 진입 (작업보고서 폴더 + 전 세션 인계 파악 + git pull/init + 다음 할일 표시)**
-> **`/work-end` = 작업 종료 (오늘 작업보고서 작성 + 다음 세션 인계 저장 + git commit & push)**
+> **`/work-start` = 작업 진입 (작업보고서 폴더 + 전 세션 인계 파악 + git pull/init + 다음 할일 표시 + vault hook chain)**
+> **`/work-end` = 작업 종료 (오늘 작업보고서 작성 + 다음 세션 인계 저장 + vault hook chain + git commit & push)**
+
+## Vault hook chain (자동)
+
+본 템플릿은 **공통 부트스트랩**만 책임진다. 폴더가 vault(예: lemonLabs, myWiki)일 때 필요한 vault 특화 자동화는 **각 vault의 `vault-start.md` / `vault-end.md`에 격리**해서 작성한다.
+
+- `/work-start` Step 5에서 `.claude/skills/vault-start/SKILL.md` 또는 `.claude/commands/vault-start.md`가 있으면 그 절차를 그대로 chain
+- `/work-end` Step 4에서 동일하게 `vault-end.md` chain (단, git commit 직전 → vault 박제도 한 commit에)
+- vault hook 파일이 없으면 자동 skip → 일반 폴더는 영향 받지 않음
+
+→ 사용자는 어떤 폴더에서든 `/work-start` / `/work-end` 두 명령만 알면 됨. vault 특화 동작은 폴더가 알아서 자기 vault-*.md를 흡수.
 
 ---
 
@@ -56,10 +66,12 @@ target 폴더 구조 추가:
 
 target 폴더 내에서 Claude 세션 시작 후:
 ```
-/work-start    → 작업 시작 (자동: 작업보고서 폴더 + 전 세션 인계 읽기 + git pull + 할일 표시)
+/work-start    → 작업 시작 (자동: 작업보고서 폴더 + 전 세션 인계 + git pull + 할일 표시 + vault hook chain)
 ... 작업 진행 ...
-/work-end      → 작업 종료 (자동: 오늘 보고서 + 인계 저장 + git commit + push)
+/work-end      → 작업 종료 (자동: 오늘 보고서 + 인계 저장 + vault hook chain + git commit + push)
 ```
+
+vault 특화 자동화가 필요한 폴더는 같은 폴더에 `vault-start.md` / `vault-end.md`를 추가하면 자동으로 흡수됨 (위 "Vault hook chain" 섹션 참조).
 
 ---
 

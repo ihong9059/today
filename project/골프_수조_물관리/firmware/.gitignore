@@ -1,0 +1,8 @@
+# Zephyr / west build artifacts
+build/
+*.o
+*.bin
+*.hex
+*.elf
+*.map
+zephyr.d
