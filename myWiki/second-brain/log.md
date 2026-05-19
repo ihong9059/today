@@ -2,8 +2,68 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-19 (uttecHome Tier 3 vault 분리 + Obsidian 도입 + 김포나진초 동영상 시나리오)
+updated: 2026-05-20 (잔여 12장 카드 일괄 lifecycle + 외부 vault 카드 우선 정책 + raw/ 19 junction 복구)
 ---
+
+## [2026-05-20] absorb | 잔여 12장 카드 일괄 lifecycle megasession (n8n·shield·wishket·revita·ondevice·lemonLabs) ⭐⭐
+
+- 참조: [[부스바]] (신설), [[건물통합관제플랫폼]] (신설), [[rtu-remocon]] (신설), [[shield]] (5/16 신설 확인), [[위시캣활동]] / [[revita]] / [[lemonLabs]] / [[영업전략]] (갱신), [[2026-05-20_rtuRemocon-shield-n8n-시공자산화]] (신설), `myWiki/_inbox/processed/2026-05-{16,17,18,19}-*-*.md`
+- 사건: onDevice 6장 흡수 megasession 직후 사용자 지시 "외부 vault 카드는 우선 처리"로 잔여 12장 lifecycle 일괄 정리. 6 발신측(n8n·shield·wishket·revita·ondevice·lemonlabs) × 1~3장 카드 묶음 일괄 처리.
+- 처리 카드 12장: 5/16-001 gotcha-expression / 5/16-001 n8n-join / 5/16-002 shield-join / 5/16-003 wishket-join / 5/17-001 revita-orgRevita-partial-done / 5/17-001 wishket-megasession-absorb (high) / 5/17-002 ondevice-broker-request / 5/17-003 mywiki-absorb-shield-매칭-노드카탈로그 / 5/17-003 revita-ingest-9-absorb / 5/18-001 wishket-tier3-pattern (high) / 5/19-001 lemonlabs-join / 5/19-002 lemonlabs-batch (high)
+- 5단계 lifecycle 결과:
+  1. **신규 entity 3 신설**: `entities/부스바.md` (위시캣 #155381 자산 mywiki 일반화) / `entities/건물통합관제플랫폼.md` (Tier 3 영업 패턴) / `entities/rtu-remocon.md` (revita 산업 통합 제어)
+  2. **신규 gotcha 6+** → `gaps.md § revita ingest #9 함정 5종` (PCB 역배선 / Soft UART / J-Link / pristine / 역전류 / stty -hupcl) + `§ WebFetch 본문 함정`
+  3. **신규 decision 5건** → `ai-direction.md`: 외부 vault 카드 = 최우선 정책 / raw/ 19 junction 일괄 복구 / 사업 트랙 vault 정립 5축 / Tier 3 정부사업 단순화 안 / 분기 정부지원 점검 SOP / shield × n8n 시공 자산화 사업 라인
+  4. **매칭 패턴** → `thoughts/2026-Q2/2026-05-20_rtuRemocon-shield-n8n-시공자산화.md` (UTTEC 턴키 사업 모델 1순위 cascade)
+  5. **entity 4건 갱신**: 위시캣활동.md (5/17·5/18 megasession + 매칭 키워드 박제) / revita.md (rtuRemocon + tower_DK) / lemonLabs.md (지원사업 11건 + 4 트랙 갭 + 정부지원 단계별 매트릭스) / 영업전략.md (Tier 3 단순화 안 + 분기 점검 SOP 5채널)
+- 카드 lifecycle 완료:
+  - 12장 모두 `_inbox/pending/` → `_inbox/processed/` 이동 + `status: done`
+  - 4 발신측 직접 done 회신 (Windows-가까운 vault): wishketProject·revitaProject·onDevice_AI·lemonLabs
+  - 2 발신측 staging (SSH 접근 불가): n8n-claude(Ubuntu hostname 미해결) / shield-claude(Tailscale timeout) → `myWiki/_inbox/outbox-staging/` 임시 보관, 사용자 broker 또는 SSH config 셋업 필요
+  - ondevice 5/17-002 broker 위임은 mywiki도 SSH 불가로 escalate 처리 (ondevice/_inbox/2026-05-20-002-broker-escalate-ssh-config.md)
+- 통신 인프라 정상화:
+  - `myWiki/raw/` **19 junction 일괄 복구** (위시캣→wishketProject / 회사소개→uttecHome/회사소개 / revitaProject→/todo/revitaProject / 나머지 16개→today 내부)
+  - check-raw-junctions.py 검증 통과
+- 정책 박제 (사용자 지시 5/20 "외부 vault 카드 우선 처리"):
+  - memory `feedback_inbox_lifecycle.md` § 규칙 2 강화 (pending ≥ 5 → ≥ 1 임계치)
+  - work-start SKILL § 1-C 표 갱신 (1장이라도 다음 작업 디폴트)
+  - Claude가 "다음 뭐 할까요?" 결정 시 외부 카드 흡수를 첫 옵션 제시 의무
+
+## [2026-05-20] absorb | onDevice 카드 6장 일괄 흡수 megasession (5/17~19 누락분 + 5/20 새벽 esp32c6/Round 10·11) ⭐⭐
+
+- 참조: [[onDevice-ai]], [[ai-fanstick]], [[uttec-stage-package]], [[2026-05-20_esp32-arm-family-스펙트럼]], `myWiki/_inbox/processed/2026-05-{17,18,19}-*-ondevice-*.md`
+- 사건: 5/17~19 ondevice-claude 카드 6장 발송 후 mywiki-claude가 lifecycle 5단계 흡수를 한 번도 수행하지 않은 채 작업보고서에 ~~strikethrough~~ 표시만 한 사건 발견 (사용자 질문 트리거). 5/20 megasession으로 일괄 처리 + 정책 박제.
+- 처리 카드 6장: 5/17-004 (tablet·smartphone·프로젝트_보드한계모델·education 13파일) / 5/17-005 (마스터플랜 v2.0 + 1차 mandate 전환) / 5/18-002 (18 PC-only baseline + 응원봉 SLM 최종 권장) / 5/19-001 (v2.2 mandate 12보드 34셀) / 5/19-003 (1일 5보드 18셀 + Round 6) / 5/19-004 (Round 7~9 + esp32s3 메인 타겟). 5/20 새벽 esp32c6 + Round 10·11 추가분은 vault 직접 읽어 동시 흡수.
+- 5단계 lifecycle 결과:
+  1. 신규 entity (보드 추가) → `entities/onDevice-ai.md` 13보드 매트릭스 통합
+  2. 신규 gotcha 17건 → `gaps.md § "임베디드 측정·빌드 함정 패턴"` 카테고리 신설 (Windows ESP-IDF 7 / S3 monitor 2 / Pi 셋업 4 / PowerShell 1 / smartphone 1 / 측정 코드 4 / vault 운영 2)
+  3. 신규 decision 6건 → `ai-direction.md` (mandate 전환 / vault scope / 응원봉 SLM / Round 9·10·11 / lifecycle 정책)
+  4. 매칭 패턴 → `thoughts/2026-Q2/2026-05-20_esp32-arm-family-스펙트럼.md` 신설 (Round 1~11 + 8년 ARM 진화 46× + Stage 4 cascade)
+  5. 본 vault entity 갱신 권장 모두 적용 → `onDevice-ai.md` (5/15→5/20 전면) + `ai-fanstick.md` (5/9→5/20) + `uttec-stage-package.md` (5/7→5/20)
+- 통신 인프라 정상화:
+  - `myWiki/raw/onDevice_AI` junction 복구 (5/15 vault 위치 변경 시 누락됨)
+  - `.claude/hooks/check-raw-junctions.py` 신설 (스키마 vs 실제 정합성 자동 검증)
+  - 발견: `myWiki/raw/` 19 junction 모두 missing — schema와 실제 상태 큰 불일치. 별도 megasession 후보 todo로 분리.
+- 회신: ondevice 측 `_inbox/pending/2026-05-20-001-mywiki-megasession-absorb-done.md` 발송 (type: ack)
+- 정책 박제 (재발 방지) ⭐:
+  - memory `feedback_inbox_lifecycle.md` 신설 — strikethrough = 5단계 완료만 허용 + pending ≥ 5 강제 트리거 + 5단계 체크리스트
+  - work-start SKILL § 1-C 강화 (임계치 표 + 금지 명시)
+  - work-start SKILL § 1-D 추가 (raw/ junction 정합성 검증 자동화)
+  - ai-direction.md decision 박제 (lifecycle 정책 자체가 의사결정 자산)
+- 원인 분석: (1) megasession 4 트랙 동시 진행으로 후순위, (2) strikethrough 의미 혼용 (인지 vs 완료), (3) lifecycle 자동 트리거 부재 → 위 정책으로 차단
+
+## [2026-05-20] task | 김포나진초 5·6학년 AI 바이브코딩 4주 동영상 Remotion 구현 완성
+
+- 참조: `aiHardStudy/초등학교강의/video/scripts/`, `remotion-project/src/GimpoNajinIntroVideo.tsx`, `remotion-project/src/GimpoNajinThumbnail.tsx`
+- 사건: 5/19 야간 시나리오 작성 후 톤·학교명·진입 confirm 대기였던 작업을 5/20 work-start 직후 confirm 받아 일괄 완성.
+- 결과:
+  - TTS 6 mp3 생성 (`generate_gimpo_najin_voice.py` 신설) — `ko-KR-SunHiNeural`, scene별 분리, 총 251.78s
+  - `GimpoNajinIntroVideo.tsx` 신설 — DumulmeoriTravel 패턴 미러, 6 Scene 통합, 7800 frames @ 30fps = 4분 20초
+  - `GimpoNajinThumbnail.tsx` 신설 + Root.tsx `GimpoNajinIntro`·`GimpoNajin-Thumbnail` 등록
+  - `npx remotion compositions` 인식 OK + 썸네일 PNG 1장 렌더 검증 완료
+- 디자인 결정: Week별 컬러(노랑→청록→보라 마법→무지개→석양) + 인터랙티브 미니 애니메이션 3종(OLED 타이핑·라면 타이머 카운트다운·작품 카드 3D flip)
+- 분류: aiHardStudy 강사양성 사례 보강 (단발 강의·영상 자산). 매출 직전 단계 아니므로 별도 entity 신설은 보류, 향후 매출 확정 시 entity 검토.
+- 전체 mp4 렌더 완료: `remotion-project/out/gimpo-najin-intro.mp4` (31.4 MB · 7800 frames · 4분 20초, exit code 0)
 
 ## [2026-05-19] setup | uttecHome Tier 3 vault 분리 + Obsidian second-brain 도입 ⭐
 

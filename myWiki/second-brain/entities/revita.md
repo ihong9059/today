@@ -2,9 +2,9 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-05-12
-tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject]
-links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활��]
+updated: 2026-05-20 (rtuRemocon + tower_DK 흡수 — revita ingest #9, RS485 Modbus + RF 통합)
+tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어]
+links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조]
 ---
 
 # REVITA
@@ -12,7 +12,14 @@ links: [claude-code, experience, projects, skills, tailscale네트워크, 양산
 ## 한 줄 정의
 IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**.
 
-## 현재 상태 (2026-05-08 동기화)
+## 현재 상태 (2026-05-15 갱신 — ingest #9 흡수 5/20)
+
+- **rtuRemocon end-to-end 검증 완료** (2026-05-15) ⭐ — RS485 Modbus RTU(0x20) + CC1101 OOK 447.925 MHz + Flask Web UI(:5003) 통합. 단순 RF Replay → **산업 통합 제어 시스템**으로 격상. 자세히: [[rtu-remocon]]
+- **tower_DK 신규** (2026-05-12~15) — RAK4631 단독 SBC 토글 앱, MCP 시퀀스 재사용 (rail 80ms + boost 120ms + cam 40ms + mux + reset)
+- 응용 매칭: AISG 3.0 #155057 / 한림용인CC 8노드 / shield × n8n 통합 / 시설농업 IoT
+- 영업 카피 격상: "단순 RF Replay 데모" → "검증된 RF 자산을 Modbus 슬레이브로 패키징한 운용 가능 제품"
+
+## 이전 상태 (2026-05-08 동기화)
 - RAK4630/RAK4631 펌웨어 프로젝트 (Zephyr RTOS NCS v2.x)
 - LoRa 프로토콜 v2 (16B 통일) — 양방향 TX/RX, ACK 상태머신 완료
 - KC RS485 Modbus RTU **인증 Testbed 완성** (Modbus 슬레이브 + Flask Web UI 마스터)

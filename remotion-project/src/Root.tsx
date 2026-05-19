@@ -215,6 +215,8 @@ import {
   Slide17 as W155381_Slide17,
   Slide18 as W155381_Slide18,
 } from "./Wishket155381Slides";
+import { GimpoNajinIntroVideo, GIMPO_NAJIN_DURATION } from "./GimpoNajinIntroVideo";
+import { GimpoNajinThumbnail } from "./GimpoNajinThumbnail";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -1496,6 +1498,22 @@ export const RemotionRoot: React.FC = () => {
       <Still id="Wishket155381-Slide-16" component={W155381_Slide16} width={1920} height={1080} />
       <Still id="Wishket155381-Slide-17" component={W155381_Slide17} width={1920} height={1080} />
       <Still id="Wishket155381-Slide-18" component={W155381_Slide18} width={1920} height={1080} />
+
+      {/* ============ 김포나진초 5·6학년 AI 바이브코딩 4주 소개 ============ */}
+      <Composition
+        id="GimpoNajinIntro"
+        component={GimpoNajinIntroVideo}
+        durationInFrames={GIMPO_NAJIN_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Still
+        id="GimpoNajin-Thumbnail"
+        component={GimpoNajinThumbnail}
+        width={1920}
+        height={1080}
+      />
     </>
   );
 };

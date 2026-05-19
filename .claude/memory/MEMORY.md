@@ -19,3 +19,5 @@
 - [응답 진행 로그 분리](feedback_progress_log_isolation.md) — 매 응답은 이번 prompt 내용만 (자세하게 OK), 이전 prompt 재서술 금지, 전체 누적은 _current_progress.md에
 - [할일·프롬프트 표시 — 사용자 행동 구분](feedback_todo_display_user_action.md) — 할일 테이블+응답 본문 전체. 사용자 직접 행동은 👤 (🔴+👤 시급), Claude 처리 가능은 🤖. 액션 요청·결정·확인 prompt에도 동일 적용
 - [E22 Config 모드 baud 9600 고정 ⭐](feedback_e22_900t_config_baud.md) — E22-400T/900T LoRa register read/write 시 **무조건 9600 baud**(REG0 무관) + Mapping B(Config=M0=0 M1=1 / Sleep=M0=1 M1=1 UART OFF). 5/9·5/10·5/19 같은 함정 3회 반복
+- [_inbox 카드 lifecycle 정책 ⭐](feedback_inbox_lifecycle.md) — `~~strikethrough~~`는 5단계 lifecycle 완료에만 허용. pending ≥ 5 시 흡수 megasession이 다른 작업보다 우선. 5/17~19 onDevice 카드 6장 누락 사건 박제
+- [uttecHome DigitalOcean 이관 — 보류](project_uttechome_deploy_hold.md) — 5/20 사용자 결정. local 정리 완료 후 적용. 그때까지 vault 로컬 진화만, deploy 권고 금지

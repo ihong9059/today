@@ -1,168 +1,208 @@
 ---
-title: onDevice_AI vault — AI FanStick + Stage 4 제품 통합
+title: onDevice_AI vault — AI FanStick + Stage 4 + 보드한계모델
 type: entity
 created: 2026-05-07
-updated: 2026-05-15 (repo 분리 + uttecBizWiki 흡수 + multi-agent 합류 — 제품 통합 vault로 정체성 확장)
-status: ✅ Phase 1A·1B 완료 (PC PoC) / vault foundation v1.0 완료 (5/15) / **별도 repo + business/ 흡수 + ondevice-claude 합류 완료 (5/15)** / Phase 1 (E1·E9·E10) 진입 가능
-tags: [vault, On-Device AI, microGPT, AI FanStick, ESP32-S3, Stage4, 정지선, foundation, multi-agent, ondevice-claude]
-links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_응원봉-온디바이스AI-정지선, revita]
+updated: 2026-05-20 (mandate v2.3 = 37셀, 10/13 보드 78%, Round 1~11 진화, esp32s3 메인 + esp32c6 + 4-vault multi-agent)
+status: ✅ 1차 mandate 전환 완료 (5/17, Phase 1~4 → 보드한계모델 21→37셀) / **78% 진행 (29/37, 10/13 보드)** / esp32s3 메인 타겟 + esp32c6 완료 (5/19~20) / 남은 3보드 = esp32wroom + Nordic 2개 / W6 종료 6/22~28 후 Stage 4 영업 자산화 6/29
+tags: [vault, On-Device AI, 보드한계모델, AI FanStick, ESP32-S3, ESP32-C6, RISC-V, Xtensa, ARM, Stage4, 정지선, multi-agent, ondevice-claude]
+links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_응원봉-온디바이스AI-정지선, revita, 2026-05-20_esp32-arm-family-스펙트럼]
 ---
 
-> **2026-05-15 인프라 변경 3건 동시**: (1) repo 분리 (today/onDevice_AI → /todo/onDevice_AI, private), (2) 구 today/uttecBizWiki 전체를 business/ 폴더로 흡수 (제품별 분리 — 한 제품 = 한 vault), (3) multi-agent 합류 (ondevice-claude 식별자 등록, _inbox 통신 셋업). **검증 목표·계획·정지선·인재상 100% 보존**, 인프라만 변경.
+> **2026-05-17 mandate 전환**: 옛 "AI FanStick + Stage 4 영업 4 Phase 12 실험" → 새 **"보드한계모델 37셀 측정 (W0~W6)"** 단일 strand. 응용·영업은 W6 종료 후 후속(C 단계)으로 분리. 단일 출처 = `0_마스터플랜.md v2.0`.
+> **2026-05-20 흡수 완료**: 5/17~20 ondevice-claude 카드 6장 + 5/20 새벽 esp32c6/Round 10·11 추가분 일괄 흡수. junction 복구 (myWiki/raw/onDevice_AI). 본 entity 5/15→5/20 갱신.
 
-# onDevice_AI vault — AI FanStick + Stage 4 제품 통합
+# onDevice_AI vault — AI FanStick + Stage 4 + 보드한계모델
 
 ## 한 줄 정의
 
-**AI FanStick + Stage 4 제품의 기술 검증 + 비즈니스 운영 통합 vault** — 검증부터 영업·수주까지 한 vault에서 추적. ESP32-S3 + On-Device AI 통합 검증 영역 + 제품 비즈니스 영역(`business/`, 구 uttecBizWiki 흡수)을 같은 vault에 둠.
+**AI FanStick + Stage 4 제품의 기술 검증 + 비즈니스 운영 통합 vault**. 1차 mandate = **보드한계모델 37셀 측정** (8 보드 → 13 보드 확장, 3 아키텍처 × 4 크기, 추론 전용 + synthetic random weights). 결과를 Stage 4 영업 자산으로 cascade.
 
-## 위치 (2026-05-15 변경)
+## 위치
 
-- **현재**: `C:\todo\onDevice_AI\` (myWiki 외부, 별도 git repo, private, ihong9059/onDevice_AI)
-- **이전**: `C:\todo\today\onDevice_AI\` (today repo의 일부, 5/7~5/14)
-- **흡수**: 구 `C:\todo\today\uttecBizWiki\` 전체 → `business/` 폴더로 통합
+- **현재**: `C:\todo\onDevice_AI\` (myWiki 외부, 별도 git repo, private, `ihong9059/onDevice_AI`)
+- myWiki traversal: `myWiki/raw/onDevice_AI/` junction (5/20 복구)
+- 단일 출처: `0_마스터플랜.md v2.0` (5/17 신설, 8 § ~250줄)
 
 ## Multi-agent 식별자
 
 - Claude 식별자: `ondevice-claude`
-- 통신 채널: `_inbox/{pending,processed}/` + `.claude/hooks/check-inbox.py`
-- 상대 Claude: `mywiki-claude` (본 myWiki), `revita-claude` (revitaProject)
-- PROTOCOL: 본 myWiki `_inbox/PROTOCOL.md` 합의 이력 § 2026-05-15 등재
+- 통신 채널: `_inbox/{pending,processed}/`
+- 4-vault 운영 중 (myWiki + onDevice_AI + lemonLabs + uttecHome)
+- PROTOCOL: `myWiki/_inbox/PROTOCOL.md` § 2026-05-15
 
-## 통합 의미
+## 핵심 mandate — 보드한계모델 (v2.3, 5/19 확정)
 
-3개 작업 항목을 하나의 검증 사이클로 통합:
+**목적**: 13 보드 × 3 아키텍처(MLP·CNN·Transformer) × 4 크기 = **37 셀**의 한계 envelope 측정. 추론 전용. 학습 0회. synthetic random weights (weight 의미 무관, 메모리·연산 envelope만).
+**방법론**: Binary Search Wall Finding + 동일 ANSI C99 스켈레톤 + 자동화 Makefile + boards/ scripts/ 빌드 자동화.
+**일정**: 5주 → 6주 (W0~W6, 5/17~6/22~28) — W5 → W6로 1주 연장.
+**Stage 4 영업 자산화 시점**: 2026-06-29 (W6 종료 익일).
 
-| 출처 | 본질 |
-|---|---|
-| 작업보고서 #18 microGPT 직접 실행 | **검증 1**: Karpathy 200줄 PC 실행 + ESP32-S3 포팅 |
-| Notion #21 AI FanStick SLM 통합 | **검증 2**: ESP32-S3 hello_world + SLM 통합 |
-| 작업보고서 #23 UTTEC 사업용 새 vault | **운영 형태**: 본 vault |
+## 13 보드 진행 매트릭스 (10/13 ✅, 78%)
 
-## 핵심 가설
+| # | 보드 | 정식 W | 실제 측정 | 측정 셀 | 핵심 |
+|:-:|---|:-:|:-:|:-:|---|
+| 1 | **pc (uttecMac)** | W1 | 5/18 | 3 + 4 sweep | x86 baseline · AVX2 · gcc 11.4 · Ubuntu 22.04 |
+| 2 | **pc-windows** | W1 | 5/18 | 12 sweep ✅ | 같은 Haswell + Win11 — OS·툴체인 차이 정량화 |
+| 3 | **rpi5** | W5 | 5/19 ✅ 1개월↑ | 12 sweep | ARM baseline · A76 · gcc 14.2 · asimddp |
+| 4 | **tablet** | W4 | 5/19 ✅ 1개월↑ | 12 | A75 clang · Helio G80 · NPU 부재 |
+| 5 | **smartphone** | W4 | 5/19 ✅ 1개월↑ | 12 | A77 clang · Exynos 980 · NPU 2.1 TOPS |
+| 6 | **rpi4** | W5 | 5/19 ✅ 1개월↑ | 12 | A72 1세대 big · gcc 14.2 · asimddp 없음 |
+| 7 | **rpi3** | W5 | 5/19 ✅ 1개월↑ | 12 | A53 1세대 little · in-order · LAN ethernet |
+| 8 | **rpizero** | W5 | 5/19 ✅ 1개월↑ | 11 + 1 RAM wall | ARMv6 single · NEON 없음 · USB OTG 동글 |
+| 9 ⭐ | **esp32s3** (메인 타겟) | W2 | 5/19 ✅ 5일↑ | 5 RAM_safe + 1 lat + 1 timeout + 5 RAM | ESP32-S3 dual + Embedded PSRAM 8MB + Flash 16MB |
+| 10 ⭐ | **esp32c6** (W3 첫 진입) | W3 | 5/20 ✅ 12일↑ | 3 RAM_safe + 1 lat + 8 RAM | RISC-V single 160MHz + **PSRAM 없음** + 512KB SRAM |
+| 11 | esp32wroom | W3 | — | 3 | ESP32 baseline (LX6 dual · 가속 없음 · 520KB) |
+| 12 | pca10056 | W3 | — | 3 | Nordic nRF52840 (M4F · 256KB) |
+| 13 | pca10040 | W4 | — | 3 | Nordic nRF52832 (M4F · 64KB) |
 
-> microGPT 4,192 파라미터 = ESP32-S3 SRAM 520KB의 1% 미만 → 탑재 가능 → AI FanStick "외부 인터넷 0% 카피" 검증 가능 → Stage 4 (1,500만) 영업 패키지의 기술 근거.
+**진행률**: 10/13 보드 ✅ (77%) / **29/37 셀 (78%)**. **메인 타겟 esp32s3 + RISC-V esp32c6 완료**. 1일 5보드 18셀 (5/19) + 1일 4보드 (5/19 야간 esp32s3) + esp32c6 (5/20) 누적 페이스 입증.
 
-## vault 폴더 구조 (5/15 갱신)
+## ⭐ 가설 진화 — Round 1~11 (v2.10)
+
+mandate 가설 11회 반증·정제. 매 보드 추가 시 가설 1개씩 정제.
+
+| Round | 가설 | 검증 환경 | 결과 |
+|:-:|---|---|:-:|
+| 1 | "5× 느림" (artifact) | 초기 | ❌ uninitialized stack |
+| 2 | "i586-tune SIMD" | rpi5 | ❌ rpi5에 i586 무관 |
+| 3 | "L3 cache 영향" | tablet | △ 부분 반증 (clang으로 가려짐) |
+| 4 | "clang vs gcc" | rpi5 vs tablet | ✅ **2.2× 부분 확정** |
+| 5 | "+ ARM 코어 세대 clang (A75→A77)" | tablet → smartphone | ✅ **1.85× 합성 4×** |
+| 6 | "+ 같은 gcc 1세대 (A72→A76)" | rpi4 → rpi5 | ✅ **1.75× + CNN L3 cache +0.41× 부활** |
+| 7 | "+ ARMv8 1세대 little vs big (A53→A72)" | rpi3 → rpi4 | ✅ **3.0~3.8×** |
+| 8 | "+ ARMv6 vs ARMv8 + NEON 없음 + single" | rpizero → rpi3 | ✅ 2.0~2.7× (NEON 영향 한정) |
+| 9 ⭐ | "+ Xtensa LX7 plain C는 ARM 9~38× 느림 + PSRAM 8MB 새 한계점" | esp32s3 → rpi3·rpi4 | ✅ MLP/CNN/TF 9~38×, PSRAM 8MB가 5/12 cells RAM wall |
+| **10** | "+ RISC-V plain C는 Xtensa LX7과 클럭 normalize 시 동급" | esp32c6 → esp32s3 | ✅ 시간 0.97~1.36× / **CNN 32 RISC-V 1.5× 우위** |
+| **11** ⭐ | "+ **PSRAM 유무가 mandate RAM_safe 셀 결정타**" | esp32c6(없음) ↔ esp32s3(8MB) | ✅ **3 RAM_safe ↔ 5 RAM_safe = 60% 격차** (MLP 1024+ / TF 484+ 모두 esp32c6 wall) |
+
+### 핵심 발견 (Stage 4 영업 카피 원료)
+
+1. **smartphone(0.58×) → rpizero(26.65×) = 46× 스펙트럼** (CNN 128, 8 보드 1줄 정렬)
+2. **8년 ARM 진화 = 46× 속도 차이** (ARMv6 → A77, rpizero → smartphone)
+3. **Xtensa LX7 plain C는 ARM 대비 9~38× 느림** (INT8 SIMD intrinsics 미사용 시) — Round 9 의외 발견
+4. **RISC-V vs Xtensa는 plain C에서 동급** (클럭 normalize 시 CNN 32 1.5× 우위 — Round 10)
+5. **PSRAM 유무 = mandate RAM_safe 셀 결정타** (60% 격차 — Round 11)
+6. **AI FanStick mandate 영업 카피 정량화**: MLP 1024 = 96ms / CNN 32 = 547ms / TF 484 = 255ms — 모두 1초 안. 6MB 이하 모델은 esp32s3에서 1초 응답 가능.
+7. **응원봉 SLM 최종 권장**: INT8 + 1s threshold + single-core + **ESP-DSP dotprod** + ~100K params → **Korean-Small 154K (150KB) 적합** (SRAM 30%)
+
+## vault 폴더 구조 (5/20 갱신)
 
 ```
 /todo/onDevice_AI/                  ← 별도 git repo (private)
-├── README.md                       네비게이션
-├── CLAUDE.md                       schema (multi-agent + 통합)
+├── README.md / CLAUDE.md / 0_마스터플랜.md v2.0 (단일 출처)
 ├── 00_정의_OnDeviceAI.md           헌법 (5축 15질문)
-├── 0_실험계획서.md                 Master Plan (12 실험 + Phase 1~4)
-├── 0_인재상.md                     채용·평가·자가진단
-├── 0_검증계획.md                   sub-plan
-├── 00_검토순서.md                  reading order
-├── log.md                          시간순 기록 (검증+비즈니스 통합)
+├── log.md                          시간순 기록 (84.6KB)
 │
-├── hardware/                       7 보드 spec + matrix (5/15 신설)
-├── microGPT/                       Karpathy 200줄 검증
-├── aiFanStick_차세대/              AI FanStick + SLM 통합
-├── 통합검증/                       두 검증의 교집합
-├── 시장조사/                       산업 동향
+├── hardware/                       ⭐ 13 보드 spec + matrix (esp32c6 5/20 신설)
+│   ├── pc/ pc-windows/ rpi5/ rpi4/ rpi3/ rpizero/ tablet/ smartphone/
+│   ├── esp32s3/ ⭐ esp32c6/ ⭐NEW
+│   ├── esp32wroom/ pca10056/ pca10040/ (skeleton)
+│   └── _README.md _matrix.md
 │
-├── business/                       ⭐ 제품 비즈니스 (5/15 흡수, 구 uttecBizWiki)
-│   ├── README.md, CLAUDE.md
-│   ├── entities/AI_FanStick.md
-│   └── raw/, thoughts/
+├── 프로젝트_보드한계모델/          ⭐ 1차 mandate strand (5/17 신설)
+│   ├── 00_계획서.md v2.3
+│   ├── 0_마스터플랜.md v2.0 (단일 출처)
+│   ├── _RESULTS_SCHEMA.md (측정 1회 → 7위치 cascading update)
+│   ├── 아키텍처_3종_비교.md + .html (470줄 + 580줄 + SVG 3)
+│   ├── src/                        ANSI C99 3 아키텍처 스켈레톤 (820줄, 외부 의존성 0)
+│   ├── boards/ scripts/            ESP-IDF v5.5.1 + Zephyr v2.9.2 빌드 자동화
+│   └── 03_보드별_실행/{보드명}/    각 보드 5+1 분할 (01목적·02test방법·03결과해석·04용도·05일지·06확장계획)
 │
-├── _inbox/                         multi-agent 통신
-│   ├── pending/, processed/
-│   ├── PROTOCOL.md, SYSTEM_GUIDE.md
+├── education/                      ⭐ 후계자 교육 13 파일 (5/17 신설, 영구)
+│   └── 01~10 챕터 + HTML 시각가이드 (15 SVG, 3Blue1Brown 한국어 재구성)
 │
-├── .claude/
-│   ├── commands/work-start.md, work-end.md
-│   ├── hooks/check-inbox.py (SELF_ID=ondevice-claude)
-│   └── settings.local.json
+├── microGPT/ aiFanStick_차세대/ 통합검증/ 시장조사/
 │
-└── 작업보고서/
+├── business/                       제품 비즈니스 (5/15 흡수, 구 uttecBizWiki)
+│   └── entities/AI_FanStick.md
+│
+└── _inbox/ .claude/ 작업보고서/
 ```
 
-## 진행 상태
+## ssh 머신 컨벤션
 
-| Phase | 단계 | 상태 |
-|:-:|---|:-:|
-| 0 | vault 골격 작성 | ✅ (5/7) |
-| 1A | microGPT PC 직접 실행 | ✅ (5/8, Loss 3.37→2.65, 4192 params) |
-| 1B | 포팅 가능성 분석 | ✅ (5/8, FP32 16.4KB / INT8 4.1KB / 추론 0.1~5ms 추정) |
-| 1B+ | 모델 확장 시뮬레이션 | ✅ (5/8, Korean-Small 154K params 권장) |
-| 2 | ESP32-S3 보드 입수 | ⬜ (사용자 직접) |
-| 2 | ESP32-S3 hello_world | ⬜ |
-| 2 | microGPT ESP32-S3 포팅 | ⬜ |
-| 3 | AI FanStick SLM 통합 결정 | 🔄 1차 (5/8, Korean-Small 권장 / 칩 변경 불필요) |
-| 3 | Stage 4 영업 자료 갱신 | ✅ 1차 동기화 (5/8, Stage4_OnDeviceAI_검토.md 실측 추가) |
+| alias | 실체 | OS / toolchain | 역할 |
+|---|---|---|---|
+| `ssh ubuntu` = `ssh mac` | MBP11,4 (uttecMac) | Ubuntu 22.04 + gcc 11.4 | x86 baseline |
+| `ssh uttecRpi5` | Pi 5 (Tailscale) | Debian 13 + gcc 14.2 (asimddp) | ARM 최신 baseline |
+| `ssh uttecRpi4` | Pi 4 Model B (Tailscale 100.112.133.101) | Debian 13 + gcc 14.2 (asimddp 없음) | ARM 1세대 비교 |
+| `ssh uttecRpi3` | Pi 3 B+ (LAN 192.168.0.51) | Debian 13 + gcc 14.2 | ARM little 1세대 |
+| (LAN) | Pi Zero W (192.168.0.53 USB OTG 동글) | Raspbian 12 + gcc 12.2 armhf | ARMv6 single |
 
-## Phase 1A·1B 검증 결과 요약 (2026-05-08)
+## 진행 상태 (옛 Phase 1~4 + 새 보드한계모델)
 
-| 항목 | 측정/추정 |
+| 트랙 | 상태 |
 |---|---|
-| microGPT 학습 (PC) | Loss 3.37 → 2.65 (-21%, 1000 step, ~3분 Windows Python 3.13) |
-| 추론 샘플 | 20개 영문 이름 (anna, lara, anton 등 — 패턴 학습 확인) |
-| 파라미터 수 | 4,192 (가이드 일치, 공식 검증) |
-| 메모리 | FP32 16.4KB / INT8 4.1KB / INT4 2.0KB → SRAM 520KB의 0.39~3.15% |
-| PC 추론 시간 | token당 0.510 ms / sample(16t) 8.16 ms (Python 순수) |
-| ESP32-S3 추정 | token당 0.1~5 ms (FPU/SIMD 가정) — 인터랙티브 응답 OK |
-| C++ 포팅 분량 | 약 500~700줄, 1~2주 1인 작업 |
-| **결론** | **포팅 가능 (압도적 여유), Phase 2 즉시 진행 권장** |
-| **AI FanStick 권장 모델** | **Korean-Small (154K params, INT8 155KB) → 칩 변경 불필요** |
+| Phase 0 vault 골격 | ✅ (5/7) |
+| Phase 1A·1B microGPT PC | ✅ (5/8, Loss 3.37→2.65, 4192 params, INT8 4.1KB) |
+| Phase 1B+ 모델 확장 시뮬레이션 | ✅ (5/8, Korean-Small 154K 권장) |
+| **1차 mandate 전환** | ✅ (5/17, Phase 2~4 → 보드한계모델로 통합) |
+| 보드한계모델 W0 (계획) | ✅ (5/17) |
+| 보드한계모델 W1 (pc baseline) | ✅ (5/18, 18 PC-only baseline) |
+| 보드한계모델 W2 (esp32s3) | ✅ (5/19, 5일 앞당김) |
+| 보드한계모델 W3 (esp32c6 + esp32wroom + pca10056) | △ 1/3 (5/20 esp32c6 완료) |
+| 보드한계모델 W4 (pca10040 + 모바일 W4 정식) | △ 모바일 5/19 앞당김, pca10040 미진행 |
+| 보드한계모델 W5 (rpi family) | ✅ (5/19, 1개월 앞당김) |
+| 보드한계모델 W6 종합 (04_종합_비교.md) | ⬜ (6/22~28) |
+| Stage 4 영업 자산화 | ⬜ (6/29 W6 종료 익일) |
 
-## 검증 → 영업 자산 흐름
+## vault 정책 (5/17~18 신설 박제)
 
-본 vault 결과 → 다음 4곳에 영구 반영:
+1. **🔴 결단 마커**: Claude 응답 시 사용자 결단 필요 부분은 분리 박스 + 🔴 마커
+2. **md + html 쌍**: 모든 설명문은 md + html 동시 작성 (`아키텍처_3종_비교.html` 스타일)
+3. **단일 출처 원칙**: `0_마스터플랜.md` = 진행·실험·검증·읽기의 단일 출처. 충돌 시 본 문서 정답.
+4. **점진적 backbone**: A(완료) → B(W1~W6 보드한계모델) → C(후속 응용) → ⛔ 정지선
+5. **schema 통일**: 13 보드 모두 동일 `pc/` 양식 (01~06 분할)
+6. **outbox-staging 잔존 청산**: 회신 도착 시 staging 정리
 
-1. `영업/Stage4_OnDeviceAI_검토.md` — §3·§4·§6 실측 데이터 보강
-2. `entities/uttec-stage-package.md` — Stage 4 사례 신규 (시나리오 E)
-3. `entities/ai-fanstick.md` — 차세대 버전 섹션 신설
-4. 강사양성 Day 5 / 호오컨설팅 / 인프런 — 사례 1건 신설
+## 검증 → 영업 자산 흐름 (6/29 cascade 예정)
 
-## 영업 임팩트 (검증 성공 시)
+1. `영업/Stage4_OnDeviceAI_검토.md` § 3·4·6 — 보드한계모델 37셀 비교표 + Round 1~11 가설 변천
+2. `entities/uttec-stage-package.md` — Stage 4 카피 갱신 (1인 1일 18셀 + 보드/컴파일러 8× + Xtensa 9~38× + PSRAM 결정타)
+3. `entities/ai-fanstick.md` — 차세대 BOM 영향 + Korean-Small 154K 적합성 확정
+4. 강사양성 Day 5 / 호오컨설팅 / 인프런 — Round 1~11 진행 과정 = 측정 과학 진행 과정 사례
 
-- Stage 4 첫 수주 가능: 1,500만/4주 (한국기계 또는 임베디드 스타트업)
+## 영업 임팩트 (W6 종료 후 6/29~)
+
+- Stage 4 첫 수주: 1,500만/4주 (한국기계 또는 임베디드 스타트업, ESP32 + AI 자산 보유)
+- 위시캣 임베디드 IoT 공고: 본 vault src/ ANSI C 820줄 + 보드한계모델 비교표 인용 가능
 - 강사양성 Day 5 + 호오컨설팅 + 인프런: 6개월 누계 2,000~3,500만
 
-## uttecBizWiki와의 관계 (5/15 변경 — 흡수 완료)
+## 마케팅 정지선 (2026-05-08, 본 mandate 전환 후에도 유효)
 
-- **uttecBizWiki**: 5/15 본 vault `business/` 폴더로 흡수 완료 (구 today/uttecBizWiki/ 폴더 제거)
-- **본 vault (onDevice_AI)**: 같은 제품(AI FanStick + Stage 4)의 **기술+비즈니스 통합 vault**로 정체성 확장
-- **흡수 동기**: 한 제품이 두 vault에 분리되어 cross-link 비용이 컸음. 한 vault에서 검증→영업→수주 흐름 일직선으로 단순화. uttecBizWiki는 컨텐츠 0에 가까운 schema 선언 상태였음 (1주 정전).
-- **이력**: 5/7~5/14 = 3-vault (myWiki + uttecBizWiki + onDevice_AI). 5/15 = 2-vault (myWiki + onDevice_AI).
-- 관련 entity: [[uttecBizWiki]] (DEPRECATED 표시)
+본 vault는 **응원봉 양산 적용 트랙이 아니라 "회사의 기술 자산·B2B 영업 무기·PR 콘텐츠" 트랙**. 정지선 = **Phase 2 종료** = **현 보드한계모델 W6 종료 시점과 정렬**.
 
-## 마케팅 정지선 (2026-05-08)
+근거: microGPT 4K 파라미터 = 응원봉 사용자 기대 응답 품질에 6~7자릿수 미달. 응원봉 양산 방향은 newMvp 결론(Gemma 2B 하이브리드)으로 잠금.
 
-본 vault는 **응원봉 양산 적용 트랙이 아니라 "회사의 기술 자산·B2B 영업 무기·PR 콘텐츠" 트랙**으로 운영. 정지선은 **Phase 2 종료**.
+자세한 의사결정: [[2026-05-08_응원봉-온디바이스AI-정지선]]
 
-| Phase | 상태 | 정지선 |
-|:-:|---|:-:|
-| 1A·1B | ✅ 완료 | — |
-| 2 (보드 1대 PoC) | 🔵 진행 권장 | — |
-| 3 (Korean-Small 154K 양산 적용) | ⛔ 정지 | ★ 정지선 |
-| 3 (양산 칩 ESP32-S3 교체) | ⛔ 정지 | ★ 정지선 |
-| 3 (양산 펌웨어 SLM 통합) | ⛔ 정지 | ★ 정지선 |
+## 5/17~20 카드 흡수 lifecycle (5단계 모두 완료, 5/20)
 
-근거:
-- microGPT 4K 파라미터 = 응원봉 사용자 기대 응답 품질에 6~7자릿수 미달
-- 응원봉 양산 방향은 newMvp/온디바이스_AI_검토서 결론(스마트폰 Gemma 2B 하이브리드)으로 잠금
-- 양산 BOM +1,500원/대 영향, 사용자 가치 미입증
-
-자세한 의사결정 기록: [[2026-05-08_응원봉-온디바이스AI-정지선]]
-1차 자료: `응원봉/마케팅검토/2026-05-08_온디바이스AI_정렬도검토.md`
+myWiki `_inbox/pending/` → `_inbox/processed/` 이동 + done 회신 1장 발송:
+- 2026-05-17-004: tablet 추가·smartphone·프로젝트_보드한계모델·education 13파일
+- 2026-05-17-005: 마스터플랜 v2.0 + 보드한계모델 W1 wrap + 1차 mandate 전환
+- 2026-05-18-002: 18 PC-only baseline + 응원봉 SLM 최종 권장
+- 2026-05-19-001: v2.2 mandate 12보드 34셀 + W6 연장
+- 2026-05-19-003: 1일 5보드 18셀 + Round 6 가설
+- 2026-05-19-004: Round 7~9 + esp32s3 메인 타겟
+- (5/20 새벽 esp32c6 + Round 10·11은 카드 없이 vault 직접 흡수, ondevice 측 외부 발송 부담 차단)
 
 ## 관련 페이지
-- [[ai-fanstick]] — 특허 출원 완료, 양산 방향은 Gemma 2B 하이브리드로 잠금
-- [[uttec-stage-package]] — Stage 4 영업 패키지 (본 vault 검증 결과 반영)
+
+- [[ai-fanstick]] — 5/20 갱신 (기술 근거 정량화 1초 안 보증)
+- [[uttec-stage-package]] — 5/20 갱신 (Stage 4 카피 1인 1일 18셀 + Xtensa 9~38× + PSRAM 결정타)
 - [[On-Device AI]] — 핵심 기술 트렌드
-- [[claude-code]] — 본 vault 운영 도구
-- [[2026-05-08_응원봉-온디바이스AI-정지선]] — 정지선 의사결정 기록
+- [[2026-05-08_응원봉-온디바이스AI-정지선]]
+- [[2026-05-20_esp32-arm-family-스펙트럼]] — 매칭 패턴 박제 (Round 1~11 + ARM 8년 진화 + RISC-V vs Xtensa)
 
 ## 메타
 
 | 항목 | 값 |
 |---|---|
 | vault 시작 | 2026-05-07 |
-| 통합 항목 | 작업보고서 #18·#23 + Notion #21 |
-| 핵심 가설 | microGPT 4K 파라미터 = ESP32-S3 SRAM 1% 미만 사용 |
-| 즉시 진행 가능 | Phase 1A (PC만 필요) |
-| 사용자 직접 필요 | ESP32-S3 보드 입수 (1~2주) |
+| 1차 mandate 전환 | 2026-05-17 |
+| 현재 진행률 | **29/37 셀 (78%) · 10/13 보드 (77%)** |
+| W6 종료 예정 | 2026-06-22~28 |
+| Stage 4 영업 자산화 | 2026-06-29 (W6 종료 익일) |
 | 예상 매출 임팩트 | 6개월 2,000~3,500만 |
+| 본 entity 갱신 주기 | 카드 흡수 시마다 (5/20 megasession 후 다음 = ondevice-claude 새 카드 도착 시) |

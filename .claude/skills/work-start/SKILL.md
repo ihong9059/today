@@ -49,39 +49,66 @@ python3 ~/path/to/today/.claude/hooks/setup-memory-sync.py
 
 이 단계는 **신규 PC에서 첫 work-start 시 자동으로 link 생성**하여, 사용자가 별도 작업 없이 메모리 동기화가 즉시 시작되도록 한다.
 
-### 1-C. multi-agent _inbox 카드 확인 (2026-05-12 도입)
+### 1-C. multi-agent _inbox 카드 확인 (2026-05-12 도입, 2026-05-20 강화)
 
 **시스템 가이드**: `myWiki/_inbox/SYSTEM_GUIDE.md` (전체 개요·합의 이력·다음 Claude를 위한 빠른 진입점)
+**lifecycle 정책**: `~/.claude/projects/C--todo-today/memory/feedback_inbox_lifecycle.md` ⭐ (필독)
 
-myWiki는 다른 Claude(revita-claude 등)와 `_inbox/` 메일박스로 비동기 협업한다. 미처리 카드 우선 처리.
+myWiki는 다른 Claude(revita-claude·ondevice-claude·lemonlabs-claude 등)와 `_inbox/` 메일박스로 비동기 협업한다. **카드는 발송만으로 끝이 아니다. 받는 쪽이 5단계 lifecycle 모두 수행해야 처리 완료**.
 
 ```bash
-ls "C:/todo/today/myWiki/_inbox/pending/" 2>/dev/null
+ls "C:/todo/today/myWiki/_inbox/pending/" 2>/dev/null | wc -l
 ```
 
-**판단 후 행동:**
-- **빈 폴더 또는 없음** → 침묵 (보고 생략, 다음 단계 진행)
-- **미처리 카드 있음** → 사용자에게 알림:
-  ```
-  📬 myWiki/_inbox/pending/ 미처리 카드 N건 — multi-agent 통신
-    - [priority/type] from {발신측} | {subject}
-  처리: 카드 본문 읽기 → 5단계 흡수 (외부 위키 흡수 정책) → processed/로 이동 + status: done
-  발신측 inbox에 done 회신 카드 발송 (PROTOCOL: myWiki/_inbox/PROTOCOL.md)
-  ```
-- 사용자가 처리 결정 → 카드 본문 읽고 5단계 흡수 수행. 처리 후 다음 단계 진행
-- 사용자가 보류 → 다음 work-start에서 다시 알림
+**외부 vault 카드 우선 정책 (2026-05-20 사용자 지시) ⭐⭐**:
 
-**5단계 흡수 체크리스트** (myWiki/CLAUDE.md § "외부 위키 흡수" 참조):
-1. 신규 entity → skills.md / strengths.md
-2. 신규 gotcha → gaps.md
-3. 신규 decision → ai-direction.md 판단 로그
-4. 매칭 패턴 → thoughts/2026-Q{N}/
-5. revita entity → entities/revita.md
+| pending 수 | 행동 |
+|:-:|---|
+| 0 | 침묵 |
+| **≥ 1** | ⭐ **다음 작업 슬롯의 디폴트 = 흡수**. work-start 통합 todo 테이블에서 "_inbox 흡수"를 다른 신규 todo보다 위에 배치 + 🟠 이상 우선순위. 사용자가 다른 작업을 명시적으로 지시하지 않는 한 megasession 진행 권고. |
+| ≥ 5 | **강제 권고 + 통합 테이블 #1 자동 등록**: "흡수 megasession이 다른 작업보다 우선합니다. 진행할까요? (Y/n)" 사용자가 명시적으로 "보류"하지 않으면 즉시 진행 |
+| ≥ 10 | 위급: 시스템 정합성 부채 누적, work-start 최우선 작업으로 분류 + work-end에 미흡수 카드 ≥ 5장 경고 |
 
-처리 완료 시:
-1. 카드 → `_inbox/processed/` 이동 + frontmatter `status: done`
-2. 발신측 inbox에 `done` 회신 카드 발송
-3. `myWiki/log.md`에 `## [날짜] absorb | ...` 박제
+**Claude가 사용자에게 "다음 뭐 할까요?" 같은 결정 prompt를 던질 때 반드시 외부 카드 흡수를 첫 옵션으로 제시**한다.
+
+**알림 형식**:
+```
+📬 myWiki/_inbox/pending/ 미처리 카드 N건 — multi-agent 통신
+  - [priority/type] from {발신측} | {subject}
+처리: 5단계 lifecycle (entity·gaps·decision·thoughts + 발신측 entity) → processed/ + status: done
+     + 발신측 inbox에 done 회신 카드 발송 (PROTOCOL: myWiki/_inbox/PROTOCOL.md)
+```
+
+**5단계 흡수 체크리스트** (`myWiki/CLAUDE.md` § "외부 위키 흡수" + `feedback_inbox_lifecycle.md`):
+
+1. 신규 entity → `entities/` 신설 또는 기존 갱신 (skills.md / strengths.md cross-link 포함)
+2. 신규 gotcha → `gaps.md` 카테고리 추가
+3. 신규 decision → `ai-direction.md` 판단 로그
+4. 매칭 패턴 → `thoughts/YYYY-QN/YYYY-MM-DD_{topic}.md`
+5. 발신측 entity 갱신 → 카드 § "myWiki/entities/ 갱신 권장" 가이드 따름
+
+**처리 완료 후 (전부 수행 필수)**:
+1. 카드 → `_inbox/processed/` 이동
+2. 카드 frontmatter `status: pending` → `status: done`
+3. 발신측 inbox에 `done` 회신 카드 발송 (`from: mywiki-claude, to: {원래 발신}, type: ack`)
+4. `myWiki/log.md`에 `## [날짜] absorb | {카드 id}` 1줄 박제
+
+**🚫 strikethrough 표시 금지 규칙** (5/20 박제):
+작업보고서·log·세션·메모 어디서든 `~~카드~~` 취소선 표시는 위 5단계 + 후처리 4단계가 **모두 완료된 경우에만** 허용. 단순 검토·인지·다음 megasession 후보 추가만으로 strikethrough 사용 시 lifecycle 실패로 간주.
+
+### 1-D. raw/ junction 정합성 검증 (2026-05-20 신설)
+
+`myWiki/second-brain/CLAUDE.md` 스키마에 등재된 `raw/{name}/` junction이 실재하는지 검증한다.
+
+```bash
+python "C:/todo/today/.claude/hooks/check-raw-junctions.py" 2>/dev/null || echo "(check-raw-junctions.py 미생성)"
+```
+
+**판단**:
+- 모두 OK → 침묵
+- broken/missing 발견 → 알림 + 복구 가이드 1줄 제시 (`New-Item -ItemType Junction -Path "..." -Target "..."`)
+
+vault 위치 변경 시 junction 재생성 누락이 잦으므로 자동 검증으로 차단한다.
 
 ### 2. 최근 세션 파일 확인 및 복원
 

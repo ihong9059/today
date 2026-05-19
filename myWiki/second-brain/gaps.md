@@ -137,6 +137,112 @@ E22-400T/900T LoRa 모듈 펌웨어 작성 시 Config 모드(M0=0, M1=1)의 UART
 
 → **AI·임베디드 강의 자산** + 1인 운영 함정 시리즈 핵심 사례 (Mapping 부정확성 + UART runtime 전환 + 디버그 채널 분리 복합 함정).
 
+## 임베디드 측정·빌드 함정 패턴 (2026-05-20 신설 — onDevice ingest 6장 + esp32c6 흡수)
+
+> 보드한계모델 측정 W1~W3에서 발견된 빌드·측정·셋업 함정 11+건. 강사양성 Day 5 / 호오컨설팅 / 위시캣 임베디드 견적 자산 가치.
+> 출처: `onDevice_AI/_inbox/카드 6장` + `프로젝트_보드한계모델/03_보드별_실행/*/`
+
+### Windows ESP-IDF 빌드 함정 (esp32s3·esp32c6, 5/19~20 발견)
+
+- **한글 경로 ccache 실패** — `Cannot convert character sequence: Illegal byte sequence`. 우회: xcopy로 영어 사본(`C:\esp32_project`)으로 빌드. 한글 경로는 PowerShell·gcc·ccache 모두 깨짐.
+- **CMakeLists `if/endif` 한 줄 parse error** — CMake 3.16+ 멀티라인 강제. `if(COND) cmd() endif()` 같은 한 줄 표기 금지.
+- **`#pragma omp parallel` xtensa-gcc unknown-pragmas error** — esp32-gcc는 OpenMP 미지원. `-Wno-error=unknown-pragmas`로 우회.
+- **`%u` vs `uint32_t` (xtensa long unsigned 차이)** — esp32-gcc에서 `uint32_t`는 long. `%u`가 format error. `-Wno-error=format=` 또는 `%lu` 사용.
+- **3 skeleton multiple definition** — main/CMakeLists.txt에서 MLP·CNN·TF 모두 SRCS에 넣으면 main() 중복. ARCH별 한 skeleton만 분기 등록.
+- **PowerShell 5.1 한글 경로 `Illegal characters in path`** — sweep script가 한글 경로 만나면 깨짐. 영어 경로 강제.
+- **PowerShell ASCII script + UTF-8 BOM 없음 → 한글 주석 parser 오류** — sweep script는 ASCII only.
+
+### ESP32-S3 USB-Serial-JTAG monitor 함정
+
+- **RTS reset 시퀀스 명시 필요** — `monitor.py`에서 RTS True 100ms → False 정확히 안 하면 펌웨어 진입 불가.
+- **monitor stdout `  | <line>` prefix → `^CSV` 매칭 실패** — sweep regex가 prefix 때문에 매칭 못 함. plain CSV column 0 출력 추가.
+
+### Raspberry Pi 셋업 함정 (5/19 rpi3·rpi4·rpizero 발견)
+
+- **USB ethernet 동글 사용 시 Pi MAC OUI(`b8:27:eb`) 미노출 (rpizero)** — LAN 식별이 Pi OUI 기반이면 Realtek `00:e0:4c` 동글 사용 시 false negative. OUI 화이트리스트 확장 필요.
+- **Pi Zero W에 git 없음 (Raspbian Lite)** — 일반 setup script가 git pull 가정 시 실패. tar/sshpass로 23KB minimal package 우회.
+- **ARMv8.2-A SIMD 옵션은 rpi5만, rpi4 빌드 실패** — `-march=armv8.2-a+dotprod`는 A72(rpi4)에서 illegal instruction. asimddp는 A76(rpi5) / A75(tablet) / A77(smartphone)에만.
+- **모니터 직접 작업 ↔ ssh 자동 인증은 별개** — 사용자가 보드 앞에서 직접 작업했다고 Windows PC ↔ Pi ssh가 자동 인증되지 않음. publickey 1회 등록 필요.
+
+### PowerShell·Bash 측정 함정
+
+- **PowerShell `<` 리다이렉트 함정 (큰따옴표 안에서도 검사)** — `ssh host "echo OK_$(wc -l < ~/.ssh/authorized_keys)"`가 PowerShell 5.1에서 reserved operator 파싱 에러. ssh remote에서 `<` 절대 금지. `wc -l file` 또는 `cat | wc -l` 사용.
+
+### Smartphone 측정 함정
+
+- **smartphone CPU 토폴로지 측정 시점 함정** — idle 시 `/proc/cpuinfo`에 big core(A77 0xd0d) parked, 모든 코어가 A55(0xd05)로만 표시. 부하 인가 + thermal headroom 확보 후 측정 권장.
+
+### 측정 코드 함정
+
+- **`metrics_t.param_count` uint32 한계** — > 4.29B에서 wrap-around. 향후 uint64 변환. 임시 대응: params 표시 부정확 → size²로 재계산.
+- **10s threshold sweep 시 100 forward 시간 매우 김** — 8~17분/size. `EXTRA_DEF="-DMEASURE_RUNS=10 -DWARMUP_RUNS=2"` 환경변수로 단축.
+- **MLP 10s hidden 70000+ RAM 19.6 GB > 16 GB** — uttecMac swap 사용으로 RAM_safe 표시되지만 정확한 wall 못 잡음. swap 비활성화 후 재측정 필요.
+- **Transformer skeleton의 argmax attention 단순화** — 실제 softmax 보다 RAM·scratch 작음 → 측정 envelope는 lower bound. 실제 모델은 약간 더 큼. 측정 단순화는 명시 의무.
+
+### vault 운영 함정 (방법론)
+
+- **vault 옛 mandate 잔존 문제** — 14개 파일에 "7 보드 / Phase 2 보드 도착 후" 같은 옛 가정이 남음 → 진입자가 옛 가정으로 회귀. 단일 출처(`0_마스터플랜.md`) + 옛 파일 ⚠️ 헤더 + archive/ 보존.
+- **계획서 다중 파일 충돌 위험** — `0_검증계획.md` + `0_실험계획서.md` + `00_검토순서.md` + `00_진행순서.md` 4 파일 동시 존재 → 정답 모호. 단일 마스터플랜 원칙 + archive.
+
+→ 본 17건은 **강사양성 Day 5 사례 자산**. "측정 결과 단일 원인 단정 위험" + "ablation 변수 통제 환경 셋업" + "1인 시공 빌드 함정 패턴" 강의 교재로 직접 활용 가능.
+
+## revita ingest #9 함정 5종 (2026-05-20 흡수 — rtuRemocon + tower_DK)
+
+> 5/15 rtuRemocon end-to-end 검증에서 발견된 임베디드 함정. 강의·교재 자산화 가치 ★ (현장 시행착오 → 일반화 가능 패턴).
+> 출처: `revitaProject/application/revitaWiki/log.md` ingest #9, `entities/entity-rtu-remocon.md`
+
+### (A) PCB PA2/PA3 RS485 역배선
+
+PCB 회로도 기준 STM32 PA2(HW USART2_TX) → MAX3485 RO, PA3(HW USART2_RX) → MAX3485 DI **반대 배선** → **하드웨어 USART 사용 불가**, 소프트웨어 UART(TIM4 1MHz bit-bang) 필수.
+
+- 강의 가치: "PCB 시그널 매핑 vs MCU 표준 핀맵 검증 필수"
+
+### (B) 소프트웨어 UART 수신 중 printf 금지
+
+115200 bps debug printf가 9600 bps 수신 byte 간격(104µs)을 초과 → 다음 byte start bit 누락. **프레임 완료 후에만** 디버그 출력.
+
+- 강의 가치: "Soft UART 디버깅 — 출력 시점이 동작에 영향"
+
+### (C) J-Link `--dev-id` 비호환 (V9.24a 등)
+
+`west flash --dev-id <SN>` → 일부 J-Link 버전에서 **연결 실패**. `--tool-opt="-SelectEmuBySN <SN>"`로 직접 지정.
+
+- 강의 가치: "임베디드 빌드/플래시 체인 — 옵션 호환성 함정"
+
+### (D) `ninja: no work to do` 캐시 함정
+
+소스 수정 후에도 빌드 시스템이 변경 감지 못 함 → 오래된 바이너리 플래시. **pristine 빌드** (`west build -p always`) 필수.
+
+- 강의 가치: "Zephyr/CMake 빌드 캐시 — 의심되면 pristine"
+
+### (E) Blue Pill USB 5V ↔ MAX8881 12V 3.3V 역전류
+
+USB 연결 시 MAX8881 출력이 VCC3V3 레일을 sink → **USB 먹통**. **12V 전용 운용** + Schottky BAT54 다이오드 추가 권장.
+
+- 강의 가치: "전원 토폴로지 — 다중 입력 시 역전류 차단 다이오드"
+
+### (F) `stty -hupcl` 필수 (현장 배포 함정)
+
+```bash
+stty -F /dev/ttyUSBx 115200 raw -echo -hupcl clocal
+```
+
+`-hupcl` 없으면 `cat` 종료 시 DTR 드롭 → 다음 회 시리얼 수신 실패. **현장 배포 함정** 시리즈 확장 (8건 누적).
+
+## WebFetch 본문 함정 (2026-05-17 흡수 — wishket #155381 + #155235)
+
+위시캣 공고 페이지를 WebFetch로 가져와 LLM에 입력 시 사이트 공통 배너·UI 텍스트가 프로젝트 본문에 섞여 LLM이 잘못 해석:
+
+- 5/15 #155235: "기간제(상주)..." 배너를 프로젝트 메타로 오해석 (memory 박제 완료)
+- 5/17 #155381: 본문 일부 누락 + LS XGT PLC 우대 항목을 필수 사양으로 오인
+
+**대응**:
+- 근무형태는 카테고리 아이콘 라벨만 신뢰
+- WebFetch 결과는 항상 사용자 1회 검수 후 매칭에 반영
+- 본문 길이 < 1000자 시 누락 의심
+
+→ 위시캣 자동 매칭 SOP (n8n-claude 자동검색 + wishket-claude 정밀 작성) 안에 검수 단계 명시.
+
 ## 업데이트 방법
 새로운 갭을 발견하거나, 기존 갭을 채웠을 때 이 페이지를 업데이트한다.
 채운 갭은 삭제하지 않고 ~~취소선~~으로 표시하여 성장 기록을 남긴다.

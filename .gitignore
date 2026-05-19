@@ -118,6 +118,9 @@ aiHardStudy/aiEspMini/build/
 revita/
 # 별도 private repo (today에 흡수 금지)
 onDevice_AI/
+# myWiki/raw/ 안의 모든 junction은 다른 폴더(today 내부·외부)를 가리키는 reparse point.
+# add 시 target 내용이 today repo에 흡수되어 위험. 전체 ignore (2026-05-20 박제).
+myWiki/raw/
 # 위시캣 skill — junction to C:/todo/wishketProject/.claude/skills/wishket-{check,apply} (2026-05-16 이동)
 # (today/위시캣 데이터 junction은 SKILL.md 절대 경로화로 제거됨 — myWiki/raw/위시캣만 wishketProject 가리킴)
 .claude/skills/wishket-check/

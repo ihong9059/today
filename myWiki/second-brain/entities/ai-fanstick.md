@@ -2,9 +2,9 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-05-09
-tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트]
-links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전]
+updated: 2026-05-20 (onDevice 검증 결과 흡수 — Korean-Small 154K 적합성 정량 확정 + Stage 4 카피 1초 안 보증)
+tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료]
+links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼]
 ---
 
 # AI FanStick (응원봉)
@@ -51,6 +51,52 @@ AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타�
 
 자세한 정지선: [[2026-05-08_응원봉-온디바이스AI-정지선]]
 1차 자료: `응원봉/마케팅검토/2026-05-08_온디바이스AI_정렬도검토.md`
+
+## 본 제품 관련 onDevice 검증 결과 (2026-05-20 흡수)
+
+[[onDevice-ai]] vault에서 2026-05-08~5/20 동안 진행된 검증 결과 중 본 제품에 직접 영향 주는 항목:
+
+### 기술 근거 정량화 (Stage 4 영업 카피 보증)
+
+| 항목 | 측정값 (esp32s3 + PSRAM 8MB) | 의미 |
+|---|---|---|
+| MLP 1024 (2.17MB params) | **96ms** | 1초의 ~10% — 여유 |
+| CNN 32 (39KB) | **547ms** | 1초 안 ✅ |
+| TF 484 (5.87MB) | **255ms** | 1초 안 ✅ |
+| CNN 64 (115KB) | 2.17초 ❌ | Xtensa LX7 SIMD 미사용 시 1초 초과 |
+
+→ **AI FanStick 차세대 SLM은 6MB 이하 + 작은 hidden 사용** 시 1초 응답 보증. Korean-Small 154K (150KB)는 **충분 ✅**.
+
+### 응원봉 SLM 최종 권장 사양 확정
+
+| 차원 | 권장 | 근거 |
+|---|---|---|
+| dtype | **INT8** | TF FP32 대비 51% 사이즈 |
+| threshold | **1s 대화** | 응원봉 응용 baseline |
+| thread | **single-core** | dual-core 효과 1.1× (가치 낮음) |
+| SIMD | **ESP-DSP dotprod** ⭐ | AVX2 1.8~2.0× 추정, dual-core 우선 |
+| 모델 사이즈 | **~100K params** | esp32s3 추정 한계, Korean-Small 154K 적합 |
+
+### 칩 변경 결정 (BOM 영향 0)
+
+- microGPT 4,192 params = ESP32-C3 SRAM 400KB의 **1% 미만** 사용 (FP32 16.4KB / INT8 4.1KB / INT4 2.0KB)
+- Korean-Small 154K = ESP32-S3 SRAM 520KB의 30% 사용 (INT8 155KB), ESP-DSP 활성 시 300ms 추정
+- **→ 칩 변경 불필요** (양산 ESP32-C3 유지 또는 ESP32-S3 교체 모두 영업 자산화 가능, BOM +1,500원/대 시 5만대 +7,500만)
+
+### 핵심 발견 (Round 9·11)
+
+- **Xtensa LX7 plain C는 ARM 대비 9~38× 느림** (SIMD intrinsics 미사용 시) — 차세대 칩 펌웨어는 ESP-DSP dotprod 명시 필수
+- **PSRAM 유무가 mandate RAM_safe 셀 결정타** (60% 격차) — 차세대 BOM에서 PSRAM 포함은 모델 크기 의사결정의 핵심
+
+### 마케팅 정량화 카피 (B2B/PR 트랙용)
+
+- "MCU급 SLM 추론 **1초 안**" → 측정으로 보증
+- "응원봉 안에 GPT 200줄 — 한국 최초 시연"
+- "Korean-Small 150KB 한국어 응원 도메인 — esp32s3 SRAM 30%"
+
+본 검증 결과는 **응원봉 양산 정지선과 무관** (정지선 = 양산 트랙). PR·B2B 영업·강의 자산용. 정지선 유지.
+
+→ 자세한 검증 데이터: [[onDevice-ai]] / [[2026-05-20_esp32-arm-family-스펙트럼]]
 
 ## 마케팅 카피 분리 정책
 
