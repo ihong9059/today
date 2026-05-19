@@ -124,6 +124,19 @@ Claude 세션 중 SMTP 셋업하면서 App Password를 평문으로 노출. Anth
 
 → **이 3건은 자동화 강의 자산** + 1인 운영 함정 시리즈에 추가 가능. multi-core/AI 자동화 코스 사례로 직접 활용.
 
+### E22 LoRa Config 모드 baud 9600 함정 (2026-05-19 박제)
+
+E22-400T/900T LoRa 모듈 펌웨어 작성 시 Config 모드(M0=0, M1=1)의 UART baud를 **REG0 SPED 값과 무관하게 9600 고정**으로 처리해야 함. 다른 baud로 시도하면 응답 0 byte → "모듈 lock" 잘못된 결론 → 시간 손실 반복.
+- **같은 함정 3회 반복**: 5/9 (반나절) / 5/19 1차 (수 시간) / 5/19 2차 (mode mapping 추가 잘못)
+- **회피책**: ① Config 모드 진입 즉시 `uart_configure(baud=9600)` ② Mapping B 확정 (Config=M0=0 M1=1 / Sleep=M0=1 M1=1 UART OFF) ③ AUX HIGH 폴링 ④ 응답 prefix 항상 C1
+- **대응 정책 — 3중 박제**:
+  1. `~/.claude/projects/C--todo-today/memory/feedback_e22_900t_config_baud.md` (MEMORY.md 인덱스, 모든 세션 자동 로드)
+  2. `oldProject/test/bleModule/lora_e22/GOTCHA.md` (폴더 재작업 시 즉시 시야, gitignored 로컬)
+  3. `oldProject/test/bleModule/lora_e22/AT_COMMANDS.md` (5/10 박제)
+- **관련 사례**: 한림용인CC 1,000만 시공 D-day 검증 (5/19) — 같은 함정 ~수 시간 손실 → 5/20 시공에 영향 없도록 박제 강화.
+
+→ **AI·임베디드 강의 자산** + 1인 운영 함정 시리즈 핵심 사례 (Mapping 부정확성 + UART runtime 전환 + 디버그 채널 분리 복합 함정).
+
 ## 업데이트 방법
 새로운 갭을 발견하거나, 기존 갭을 채웠을 때 이 페이지를 업데이트한다.
 채운 갭은 삭제하지 않고 ~~취소선~~으로 표시하여 성장 기록을 남긴다.

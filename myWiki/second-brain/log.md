@@ -2,8 +2,28 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-19 (lemonLabs vault 신설 — 7번째 Tier 3 multi-agent, 이진서×UTTEC 협업 법인)
+updated: 2026-05-19 (E22 함정 3중 박제 + LoRa v3 loopback / lemonLabs vault 신설)
 ---
+
+## [2026-05-19] gotcha | E22 LoRa Config 모드 baud 9600 함정 — 3중 박제 ⭐
+
+- 참조: [[gaps]], `~/.claude/projects/C--todo-today/memory/feedback_e22_900t_config_baud.md`, `oldProject/test/bleModule/lora_e22/GOTCHA.md`
+- **함정**: E22-400T/900T Config 모드 UART baud는 **REG0 SPED 값과 무관하게 9600 고정**. 잘못된 baud 시도 시 응답 0 byte → "모듈 lock" 잘못된 결론.
+- **3회 반복 이력**: 5/9 (반나절) / 5/19 1차 (수 시간) / 5/19 2차 (mode mapping 추가 잘못)
+- **3중 박제**:
+  1. memory `feedback_e22_900t_config_baud.md` (MEMORY.md 인덱스, 모든 세션 자동 로드)
+  2. `oldProject/test/bleModule/lora_e22/GOTCHA.md` (gitignored 로컬, 폴더 재작업 시 즉시 시야)
+  3. `project/골프_수조_물관리/firmware/README.md` 🔴 박스 (한림용인CC 재방문 시)
+- **의미**: 1인 임베디드 작업의 함정 시리즈에 추가. AI 자동화 강의 자산.
+
+## [2026-05-19] absorb | LoRa v3 loopback 양방향 펌웨어 + 박제 강화 (한림용인CC D-day)
+
+- 참조: `project/골프_수조_물관리/firmware/pca10040_e22_900t_{tx,rx}/`
+- **v3 변경**: RX 수신 즉시 echo back + LED1 toggle / TX LED1 송신 ON + LED2 echo 수신 toggle → 거리 테스트 1인 운영 가능
+- **타이밍 정량화**: air 0.3 kbps 12-byte one-way ~870ms, round-trip ~1.74s. TX_PERIOD 2초 → 4초 (PER 48% → 안정)
+- **5/9~5/19 함정 박제 완료**: 다음 E22 작업 시 0초 회피 보증
+- **다음**: 5/20 D-2 현장 8 노드 RSSI/PER 실측 (사용자 직접 행동)
+
 
 # Second Brain 위키 로그
 
