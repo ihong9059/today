@@ -2,8 +2,37 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-21 (shield-claude Tailscale IP 갱신 + SKILL.md template 동기화 + wishket USB 시리얼 자산 흡수 대기)
+updated: 2026-05-21 (wishket 5/21 megasession 카드 lifecycle 5단계 흡수 완료 — USB 시리얼 자산 + 본문 표준 3개 룰 + 자산 인덱스 완전성 함정 박제)
 ---
+
+## [2026-05-21] absorb | wishket 5/21 megasession 카드 lifecycle 5단계 — USB 시리얼 자산 + 본문 표준 3개 룰 + 자산 인덱스 완전성 함정 박제 ⭐
+
+- 참조: `_inbox/processed/2026-05-21-002-wishket-megasession-usb-serial-standards.md` (status: done), [[위시캣활동]] § 5/21 megasession (신설), [[gaps]] § 본 vault 자산 인덱스 완전성 함정 (신설), [[ai-direction]] § 판단 로그 2026-05-21 (2건 추가), [[2026-05-21_자산-인덱스-완전성-함정]] thought (신설), `wishketProject/_inbox/pending/2026-05-21-001-mywiki-ack-usb-serial-standards.md` (회신 발송)
+- 사건: wishket-claude 5/21 megasession에서 #155517+#155539 두 모집 지원서 작성 중 사용자 지적 cascade 3건 발생. (1) nRF52832 USB 시리얼 자산 누락, (2) 위시캣·번호 마스킹 부족, (3) 내부 메타 표현 본문 노출. 모두 영구 룰화. myWiki second-brain 3 파일(skills/strengths/experience)은 wishket-claude가 직접 갱신 완료. 본 work-start 1-C 단계에서 5단계 lifecycle + processed/ + done 회신 처리.
+
+### 5단계 lifecycle 결과
+
+1. **신규 entity**: [[위시캣활동]] § "5/21 megasession" 박제 (자산 누락 + 본문 표준 3개 룰 + 신규 지원서 2건 + 자산 인덱스 완전성 함정 cross-link). frontmatter `updated:` 2026-05-21 + 태그 USB시리얼/클라이언트본문표준 추가.
+2. **신규 gotcha**: [[gaps]] § "본 vault 자산 인덱스 완전성 함정" 신설. 5/20 정부 R&D 1억 + 5/21 USB 시리얼 = 2건 연속 cascade. 회피책 3축(룰 3 / work-end 자산 점검 SOP / wishket-apply 사용자 confirm) + 강의 자산 가치.
+3. **신규 decision** 2건 (ai-direction.md 판단 로그):
+   - "위시캣 지원서 클라이언트 본문 표준 3개 룰 박제" — wishketProject memory 3건 + grep 자가 검증 SOP
+   - "본 vault 자산 인덱스 완전성 함정 박제" — 1인 운영 second-brain 시스템 결함 입증 + 강사양성·obsidian 시리즈 강의 자산 가치
+4. **매칭 패턴**: [[2026-05-21_자산-인덱스-완전성-함정]] thought 신설 — 사용자 검증 cascade의 가치, 38년 경력 vs 38일 vault 비대칭, 1개월 4건 = 분기당 ~12건 추정, 강의 모듈 자산화 시나리오 (2026-Q3 후보), 회피 전략 3계층(단기/중기/장기).
+5. **발신측 entity 갱신**: (1)과 통합 ([[위시캣활동]] 자체가 발신측 entity).
+
+### 후처리
+- 카드 → `_inbox/processed/` 이동 + frontmatter `status: done` + `processed_outcome` 5건 박제
+- 발신측 회신: `wishketProject/_inbox/pending/2026-05-21-001-mywiki-ack-usb-serial-standards.md` 발송 (5단계 결과 + 3가지 요청 응답 + 본 vault 후속 권장)
+
+### 판단
+- **5/19 카드 6장 megasession 패턴 정착 검증** — 5/19 onDevice + 5/20 ondevice/wishket/lemonlabs + 5/21 uttechome + 5/21 wishket = 4 megasession 연속 5단계 lifecycle 정상 수행. inbox 정책(feedback_inbox_lifecycle.md) 효과 확인.
+- **사용자 cascade 누적 4건 (한 달 안)** = 분기당 ~12건 추정. 누적 임계점 도달 시점에 work-end 정기 자산 점검 SOP 정식 도입 결정 예정.
+
+### 결과
+- 카드 lifecycle 5단계 완료 ✅
+- 1개월 cascade 4건 시스템 결함 정량화 ✅
+- 강사양성·obsidian 시리즈 강의 자산 1건 신설 ✅
+- 발신측 ACK 회신 발송 ✅
 
 ## [2026-05-21] infra | shield-claude Tailscale IP 갱신(100.120.255.34→100.110.51.14) + SKILL.md template 동기화
 - 참조: `C:\Users\lenovo\.ssh\config` Host shield (갱신), `/home/uttec/project/shield/.claude/skills/{work-start,work-end}/SKILL.md` (template 동기화, 백업 `.bak.20260521_143104`), [[shield]] (entity Tailscale IP 갱신 권고 — next vault 작업 슬롯)

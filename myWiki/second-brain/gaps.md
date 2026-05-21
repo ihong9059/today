@@ -2,12 +2,42 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-04-19
-tags: [부족, 개선, 학습]
-links: [me, skills, ai-direction, strengths, goals]
+updated: 2026-05-21 (자산 인덱스 완전성 함정 신설 — 5/20 + 5/21 사용자 지적 cascade 2건 연속)
+tags: [부족, 개선, 학습, 자산인덱스완전성]
+links: [me, skills, ai-direction, strengths, goals, 위시캣활동]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 본 vault 자산 인덱스 완전성 함정 (2026-05-21 신설)
+
+본 vault + myWiki 자산 인덱스가 **자가 검증으로는 완전성 보장 안 됨** — 사용자 검증 cascade 없이 자산 누락 검출 실패. 5/20 + 5/21 사용자 직접 지적 cascade 2건 연속 발생 → 시스템 결함 입증.
+
+### 누락 cascade 2건
+
+| 날짜 | 누락 자산 | 발견 경로 | 영향 |
+|---|---|---|---|
+| 2026-05-20 | 정부 R&D 1억 PLC 4축 GMC 직접 수행 (2016~2017, 99.1% 집행률, 특허 10-2017-0138381) | 사용자 PDF 제공 | [[정부R&D실증사업]] entity 신설 (Tier 3 정부 R&D 입찰 표준 패턴 1순위 자산) |
+| 2026-05-21 | nRF52832 USB 시리얼 (USB CDC ACM) + 연동 모바일 앱 수년간 양산 | 사용자 직접 지적 ("수년간 nRF52832를 통하여 USB 시리얼 통신을 구현해 왔고…") | myWiki 3 파일 갱신 (skills 행 신설 / strengths § 7 8종 / experience 박제) + #155539 솔직 약점 → 직접 양산 자산 격상 |
+
+### 함정 본질
+
+1. wishket-claude / mywiki-claude는 본 vault 인덱스만 보고 자산 평가 → 인덱스에 없으면 "없는 자산"으로 단정
+2. 사용자(38년 임베디드 경력)의 머릿속 자산 → 본 vault 인덱스 = 비대칭 (사용자가 박제 안 하면 vault 모름)
+3. 위시캣 지원서 작성처럼 자산 매칭이 직접 매출에 영향 주는 시점에만 결락이 노출됨
+4. 매칭 못한 자산을 "솔직 약점"으로 잘못 기재 → 사용자 정정 cascade로 정정
+
+### 회피책
+
+- **룰 3 — 솔직 약점 명시 전 사용자 자산 확인** (`wishketProject memory/feedback_check_user_assets_before_weakness.md`): myWiki에서 모집 자격 자산을 매칭 못해도 "직접 양산 없음" 단정 금지. 사용자에게 1차 확인 후 박제 또는 약점 명시 결정
+- **work-end 정기 자산 점검 SOP 신설 권장**: 영업 영역별 자산 자동 인벤토리 (USB 시리얼 / 산업 통신 / 영상 / AI / 모바일 / 풀스택 등)
+- **wishket-apply 스킬 단계 추가 검토**: 모집 자격 매칭 시 약점 명시 전 사용자 confirm 단계 삽입
+
+### 강의·교재 자산 가치
+
+본 함정 패턴은 **1인 운영 second-brain 시스템 한계 사례**로 강사양성·obsidian 시리즈 강의 직접 자산. "자산 인덱스는 매번 자가 검증으로 보강해야 한다" 메시지의 모범 사례.
+
+→ 관련 thought: [[2026-05-21_자산-인덱스-완전성-함정]]
 
 ## ESP-DSP intrinsics 함정 패턴 (2026-05-21 신설, Round 17/17.5 흡수)
 
