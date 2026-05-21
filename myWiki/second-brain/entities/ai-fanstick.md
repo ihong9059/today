@@ -2,9 +2,9 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-05-20 (onDevice 검증 결과 흡수 — Korean-Small 154K 적합성 정량 확정 + Stage 4 카피 1초 안 보증)
-tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료]
-links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼]
+updated: 2026-05-21 (Round 17/17.5 흡수 — 차세대 양산 방향 재전환 C3→S3+DSP+PSRAM SLM, 5/8 결정 뒤집힘)
+tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환]
+links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭]
 ---
 
 # AI FanStick (응원봉)
@@ -40,17 +40,34 @@ AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타�
 | 2/27 | 특허 출원 문서 완성 |
 | 4/17 | 앱 개선 (텍스트 입력, WebSocket) |
 
-## 양산 방향 잠금 (2026-05-08)
+## 양산 방향 진화 (2-Stage)
+
+### 1차 잠금 (2026-05-08, 폐기됨)
 
 응원봉 양산은 **"스마트폰 Gemma 2B + Cloud Gemini 하이브리드"**로 방향 고정. 응원봉 본체는 BLE 명령 수신·LED 제어만.
 
-근거:
+근거 (당시):
 - newMvp/온디바이스_AI_검토서(2026-02-27) §10 결론과 일치
 - onDevice_AI(2026-05-08) microGPT 4K 파라미터 = 응원봉 사용자 기대 응답 품질에 6~7자릿수 미달
 - 양산 칩 교체(ESP32-C3 → ESP32-S3-N16R8) +1,500원/대 = 5만 대 +7,500만 BOM, 사용자 가치 미입증
 
-자세한 정지선: [[2026-05-08_응원봉-온디바이스AI-정지선]]
+### 2차 재전환 ⭐⭐⭐ (2026-05-20, 현재)
+
+Round 17 결정타 (ESP-DSP `dsps_dp_s8_aes3` 활성 시 MLP 13.4× / C3→S3+DSP 24.8×) + Round 11 (PSRAM 결정타) + Round 17.5 (TF 10.8× / CNN 별도 가속) 누적으로 **5/8 결정 뒤집힘**:
+
+| 단계 | ESP32-C3 (양산) | ESP32-S3 + DSP (차세대) | 우위 |
+|:-:|---:|---:|:-:|
+| 1. 단순 칩 교체 (plain C) | 2,677us | 1,452us | 1.84× |
+| 2. **+ ESP-DSP intrinsics** | 2,677us | **108us** | **24.8× ⭐⭐⭐** |
+| 3. + PSRAM Korean-Small 154K | (적재 불가, 400KB SRAM) | **~150ms 추정** | 양산 가능 |
+
+→ **차세대 양산 = ESP32-S3-N16R8 + ESP-DSP + PSRAM SLM**
+→ **사용자 가치 입증됨**: "외부 인터넷 0% 음성 명령" + 응답 ~150ms 자연스러움
+→ **BOM 수용**: C3 $1.5 → S3-N16R8 $5~6 (3~4×). K-POP Premium 5~10만원 가격대에서 흡수 가능
+
+자세한 정지선 (1차): [[2026-05-08_응원봉-온디바이스AI-정지선]]
 1차 자료: `응원봉/마케팅검토/2026-05-08_온디바이스AI_정렬도검토.md`
+2차 재전환 근거: `onDevice_AI/프로젝트_보드한계모델_v2.5/Round17_ESP-DSP/03_결론.md` · `Round17.5_CNN_TF_ESP-DSP/03_결론.md`
 
 ## 본 제품 관련 onDevice 검증 결과 (2026-05-20 흡수)
 
@@ -77,24 +94,41 @@ AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타�
 | SIMD | **ESP-DSP dotprod** ⭐ | AVX2 1.8~2.0× 추정, dual-core 우선 |
 | 모델 사이즈 | **~100K params** | esp32s3 추정 한계, Korean-Small 154K 적합 |
 
-### 칩 변경 결정 (BOM 영향 0)
+### 칩 변경 결정 (2-Stage 진화)
 
-- microGPT 4,192 params = ESP32-C3 SRAM 400KB의 **1% 미만** 사용 (FP32 16.4KB / INT8 4.1KB / INT4 2.0KB)
-- Korean-Small 154K = ESP32-S3 SRAM 520KB의 30% 사용 (INT8 155KB), ESP-DSP 활성 시 300ms 추정
-- **→ 칩 변경 불필요** (양산 ESP32-C3 유지 또는 ESP32-S3 교체 모두 영업 자산화 가능, BOM +1,500원/대 시 5만대 +7,500만)
+**1차 (5/8, 폐기)**: microGPT 4K params는 SRAM 400KB의 1% 미만. 칩 변경 불필요.
 
-### 핵심 발견 (Round 9·11)
+**2차 (5/20, 현재)** ⭐: Round 17 ESP-DSP 24.8× + Round 11 PSRAM 결정타 + Round 17.5 TF 10.8× 종합 = **칩 변경 필수**. C3 + ESP-DSP는 ansi fallback으로 손해 (LX6/RISC-V 1.54× 느림). S3-N16R8 (LX7 + PSRAM 8MB)로 교체 시 Korean-Small 154K INT8 응답 ~150ms.
+- BOM: $1.5 → $5~6 (3~4×). 5만 대 +7,500만 미흡 영향 → K-POP Premium 5~10만원에서 수용 가능.
 
-- **Xtensa LX7 plain C는 ARM 대비 9~38× 느림** (SIMD intrinsics 미사용 시) — 차세대 칩 펌웨어는 ESP-DSP dotprod 명시 필수
-- **PSRAM 유무가 mandate RAM_safe 셀 결정타** (60% 격차) — 차세대 BOM에서 PSRAM 포함은 모델 크기 의사결정의 핵심
+### 핵심 발견 (Round 9·11·17·17.5)
+
+- **Round 9**: Xtensa LX7 plain C는 ARM 대비 9~38× 느림 (SIMD intrinsics 미사용 시)
+- **Round 11**: PSRAM 유무가 mandate RAM_safe 셀 결정타 (60% 격차)
+- **Round 17** ⭐⭐⭐: ESP-DSP `dsps_dp_s8_aes3` 활성 시 LX7 AI Vector Instruction MLP 13.4× / C3→S3+DSP 종합 **24.8× 가속** — 영업 결정타
+- **Round 17.5** ⭐: TF SRAM **10.8× 가속** (SLM 핵심 워크로드 MLP+Attention 모두 ~20× 가속). CNN strided access는 적용 불가 (esp-nn 대안). PSRAM 가득 모델은 가속 무효 또는 손해.
+- **ESP-DSP 효과 = 3조건 곱** (Round 17.5 매칭): LX7 + SRAM (또는 small PSRAM) + contiguous matvec. C3·esp32wroom·RISC-V에서 적용은 손해. 자세히 [[2026-05-21_esp-dsp-3조건-매칭]]
+
+### 응원봉 SLM 최종 권장 사양 (5/21 갱신)
+
+| 차원 | 권장 | 근거 |
+|---|---|---|
+| dtype | **INT8** | TF FP32 대비 51% 사이즈 |
+| threshold | **1s 대화** | 응원봉 응용 baseline |
+| thread | **single-core** | dual-core 효과 1.1× (가치 낮음) |
+| SIMD | **ESP-DSP dotprod** ⭐ | MLP 24.8× / TF 19.1× 정량 확정 (Round 17·17.5) |
+| 모델 사이즈 | **~100K params (~600KB)** | esp32s3 SRAM + 작은 PSRAM sweet spot, Korean-Small 154K 적합 |
+| KWS wake word | esp-nn 또는 TFLM esp-nn delegate | CNN strided access는 ESP-DSP 적용 불가 |
 
 ### 마케팅 정량화 카피 (B2B/PR 트랙용)
 
 - "MCU급 SLM 추론 **1초 안**" → 측정으로 보증
 - "응원봉 안에 GPT 200줄 — 한국 최초 시연"
 - "Korean-Small 150KB 한국어 응원 도메인 — esp32s3 SRAM 30%"
+- ⭐⭐⭐ "**ESP-DSP intrinsics 24.8× 가속** — C3→S3 칩 교체로 응답 150ms 달성" (5/20 신규)
+- ⭐ "**외부 인터넷 0% 음성 명령**" (Round 17·17.5 종합)
 
-본 검증 결과는 **응원봉 양산 정지선과 무관** (정지선 = 양산 트랙). PR·B2B 영업·강의 자산용. 정지선 유지.
+본 검증 결과는 **양산 트랙 본체**로 전환됨 (5/20 결정). 1차 정지선(5/8) 폐기. PR·B2B 영업·강의 자산은 24.8× 카피 신규 활용.
 
 → 자세한 검증 데이터: [[onDevice-ai]] / [[2026-05-20_esp32-arm-family-스펙트럼]]
 

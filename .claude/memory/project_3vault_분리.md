@@ -75,10 +75,11 @@ originSessionId: b3245c42-bf7b-4dd3-a682-cd49deb90641
 
 ### Multi-agent 통신 (vault 간)
 
-- 7 Claude 시스템: `mywiki-claude` · `ondevice-claude` · `revita-claude` · `n8n-claude` · `shield-claude` · `wishket-claude` · **`lemonlabs-claude`** (5/19 합류)
-- 각 vault `_inbox/{pending,processed}/` + `.claude/hooks/check-inbox.py`
-- 통신 표준: 각 vault `_inbox/PROTOCOL.md` (동일 사본)
-- 합의 일자: 2026-05-12 (mywiki+revita) + 2026-05-15 (ondevice) + 2026-05-16 (n8n·shield·wishket) + **2026-05-19 (lemonlabs)**
+- **8 Claude 시스템**: `mywiki-claude` · `ondevice-claude` · `revita-claude` · `n8n-claude` · `shield-claude` · `wishket-claude` · `lemonlabs-claude` (5/19 합류) · **`uttechome-claude`** (5/21 합류, 영업 트랙 첫 사례)
+- 각 vault `_inbox/{pending,processed,outbox-staging}/` + `.claude/hooks/check-inbox.py`
+- 통신 표준: 각 vault `_inbox/PROTOCOL.md` (8 vault 사본)
+- 합의 일자: 2026-05-12 (mywiki+revita) + 2026-05-15 (ondevice) + 2026-05-16 (n8n·shield·wishket) + 2026-05-19 (lemonlabs) + **2026-05-21 (uttechome)**
+- **uttechome-claude 합류 사유**: 5/19 vault 분리 후 Phase D `_inbox/` 미도입 상태로 5/15 이후 onDevice·wishket·lemonlabs 측 신기술·영업 자료 cascading 차단됨 (Round 11/12/17/17.5 + 정부 R&D 1억 자료 + 6/12 폴더 모두 미반영). 5/21 사용자 진단 후 양방향 통신 확립.
 
 ### Claude 작업 시 주의
 

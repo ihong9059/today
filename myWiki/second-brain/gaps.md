@@ -9,6 +9,20 @@ links: [me, skills, ai-direction, strengths, goals]
 
 # 부족한 부분 (채워야 할 것)
 
+## ESP-DSP intrinsics 함정 패턴 (2026-05-21 신설, Round 17/17.5 흡수)
+
+### #18 — `dsps_dp_s8_aes3` API 4 args 고정
+5번째 인자 `0` 추가 시 `too many arguments to function` build fail. ESP-DSP MLP 패치 (`mlp_skeleton_dsp.c`)의 호출 형식이 ground truth: `(src1, src2, &result, N)`. 4 args 외 사용 금지.
+
+### #19 — PSRAM 안에서 ESP-DSP intrinsics 효과 무효
+TF 484 PSRAM에서 가속 0.94× (6% 느림). memory bandwidth bottleneck이 compute 가속을 상쇄. MLP 1024 PSRAM은 예외적으로 2.66× (large contiguous access pattern 덕분). → 차세대 SLM은 SRAM 또는 작은 PSRAM 모델 sweet spot.
+
+### #20 — CNN conv strided access는 dsps_dp_s8 직접 적용 불가
+W[oc,ic,ky,kx] × in[ic,y+ky,x+kx]는 stride 9 (W) + spatial offset (in). contiguous N elements dot product API와 호환 안 됨. im2col + matmul 변환 필요 (mandate 범위 외). esp-nn 또는 TFLM esp-nn delegate가 대안.
+
+### #21 — LX6/RISC-V에서 ESP-DSP 적용은 손해
+esp32wroom (LX6) MLP 128: plain C 2,458us → ESP-DSP ansi fallback 3,793us = **1.54× 느림**. 함수 호출 overhead + boundary check가 단순 for 루프보다 비쌈. ESP-DSP는 esp32s3 LX7 (`aes3` AI Vector Instruction) 전용 가치. **C3 양산 보드에서 ESP-DSP 적용 = 손해 → 칩 교체 (C3→S3) 동반 필수**.
+
 ## 기술적 갭
 
 ### 딥러닝/ML 심화

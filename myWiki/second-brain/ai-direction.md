@@ -9,6 +9,29 @@ links: [me, ai-landscape, skills, goals, strengths, gaps]
 
 # AI 시대 방향 판단
 
+## 판단 로그 (2026-05-21) — uttechome-claude 8th multi-agent 합류 + 양방향 통신 확립 ⭐
+
+**사건**: uttecHome vault 5/19 분리 후 Phase D `_inbox/` 미도입 상태로 5/15~5/20 동안 onDevice·wishket·lemonlabs 측 신기술·영업 자료 cascading 0건. 5/21 사용자 진단 → 옵션 A megasession.
+
+**해소 정책**:
+- uttechome-claude 5/21 8th 합류 (multi-agent 7 → 8 Claude 시스템). 영업 트랙 vault 첫 사례.
+- CLAUDE.md send-only → 양방향 (송신 1~4 + 수신 5~8 + 자동 트리거)
+- 새 vault 분리 시 `_inbox/` + 양방향 CLAUDE.md를 Phase A/B와 동시 도입 정책 박제 (memory `feedback_uttechome_inbox_required.md`)
+- 외부 vault 카드 = 최우선 정책 (5/20) 효과 입증 — uttechome 8th 합류로 cascading 비대칭 해소
+
+**판단 패턴**: vault 분리 시 통신 인프라(_inbox + check-inbox.py)와 정책(양방향 CLAUDE.md)을 동시 도입하지 않으면 N일 cascading 차단 위험. 5일치 5건 자료 미반영 사건 = 구조적 결함. 향후 새 vault 분리 시 본 패턴 반복 차단.
+
+## 판단 로그 (2026-05-21) — Round 17·17.5 ESP-DSP 결정타 4건 ⭐⭐⭐
+
+| # | decision | 근거 | 영향 |
+|:-:|---|---|---|
+| 1 | **AI FanStick 차세대 양산 방향 재전환 (5/8 잠금 폐기)** — C3 유지 → ESP32-S3-N16R8 + ESP-DSP + PSRAM SLM | Round 17: `dsps_dp_s8_aes3` 활성 시 LX7 AI Vector Instruction MLP 13.4× / C3→S3+DSP 24.8× | BOM C3 $1.5 → S3 $5~6 (3~4×), K-POP Premium 5~10만원 가격대 수용. 응답 ~150ms 자연스러움 보증 |
+| 2 | **차세대 SLM sweet spot ≤ 500KB (SRAM 또는 작은 PSRAM)** | Round 17.5: TF 64 SRAM 10.8× vs TF 484 PSRAM 0.94× — PSRAM 가득 모델은 ESP-DSP 효과 무효 | Korean-Small 154K (~600KB) 적정. 1~5M params 적재는 PSRAM 큰 모델 가속 무효 영역 |
+| 3 | **KWS wake word는 ESP-DSP 외 별도 가속 방안 (esp-nn 또는 TFLM esp-nn delegate)** | Round 17.5: CNN conv strided access는 dsps_dp_s8 직접 적용 불가 (im2col 필요) | AI FanStick KWS 트랙은 별도 라이브러리 검토 필요 |
+| 4 | **C3 양산 보드에서 ESP-DSP 적용 = 손해, 칩 교체 (C3→S3) 동반 필수** | Round 17.5: esp32wroom 12셀 ansi fallback 1.54× 느림 검증. 함수 호출 + boundary check overhead | 양산 보드 펌웨어 ESP-DSP 적용 시 반드시 LX7 (S3) 동반 |
+
+→ 매칭 패턴: [[2026-05-21_esp-dsp-3조건-매칭]] — LX7 AI Vector Instruction × 메모리 계층 × 접근 패턴 3조건 곱
+
 ## 사업 전환 선언 (2026-04-22)
 
 > **기존 LED 조명제어 사업 → AI 3대 사업으로 전환**

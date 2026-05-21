@@ -2,8 +2,53 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-20 (잔여 12장 카드 일괄 lifecycle + 외부 vault 카드 우선 정책 + raw/ 19 junction 복구)
+updated: 2026-05-21 (5장 카드 흡수 megasession — Round 17·17.5 + 정부 R&D 1억 + 6/12 폴더 + uttechome 8th 합류)
 ---
+
+## [2026-05-21] absorb | 5장 카드 일괄 흡수 megasession (ondevice ×2 + wishket + lemonlabs + uttechome) ⭐⭐⭐
+
+- 참조: [[정부R&D실증사업]] (신설), [[세주에프에이]] (신설), [[2026-05-21_esp-dsp-3조건-매칭]] (신설), [[onDevice-ai]] / [[ai-fanstick]] / [[uttec-stage-package]] / [[회사소개]] / [[영업전략]] / [[위시캣활동]] / [[양산제품]] / [[lemonLabs]] / [[uttec-homepage]] (갱신), `_inbox/processed/2026-05-20-001·002·003-*.md` + `2026-05-21-001-uttechome-*.md`
+- 사건: 5/20~21 발신된 외부 vault 카드 5장 일괄 흡수. 5/20 카드 4장 (ondevice Round 17 + 17.5, wishket 5/20 megasession, lemonlabs 6/12 폴더) + 5/21 카드 1장 (uttechome Phase D/E join).
+
+### 5단계 lifecycle 결과
+
+1. **신규 entity 2건 신설**:
+   - `entities/정부R&D실증사업.md` — PLC 4축 GMC 1억 직접 수행 (2016~2017, 99.1% 집행률) + 특허 10-2017-0138381 + 기업부설연구소 C0442235. Tier 3 정부 R&D 입찰 표준 패턴 1순위 자산.
+   - `entities/세주에프에이.md` — FA 산업 자동화 협업 업체 (1억 사업 공동 수행).
+2. **신규 gotcha 4건** (ESP-DSP 함정 패턴, gaps.md § "ESP-DSP intrinsics 함정 패턴 (2026-05-21 신설)"):
+   - #18 `dsps_dp_s8_aes3` API 4 args 고정
+   - #19 PSRAM 안에서 ESP-DSP intrinsics 효과 무효 (TF 484 PSRAM 0.94×)
+   - #20 CNN conv strided access는 dsps_dp_s8 직접 적용 불가 (esp-nn 대안)
+   - #21 LX6/RISC-V에서 ESP-DSP 적용은 손해 (1.54× 느림)
+3. **신규 decision 5건** (`ai-direction.md` § 판단 로그 2026-05-21):
+   - Round 17/17.5 ESP-DSP 결정타 4건: AI FanStick 양산 방향 재전환 (C3 → S3+DSP+PSRAM SLM, 5/8 결정 폐기) / SLM sweet spot ≤ 500KB / KWS esp-nn 별도 / C3 적용 손해
+   - uttechome-claude 8th 합류 (multi-agent 7→8 Claude) + 양방향 통신 확립
+4. **신규 매칭 패턴** → `thoughts/2026-Q2/2026-05-21_esp-dsp-3조건-매칭.md` — ESP-DSP 효과 = LX7 AI Vector × 메모리 계층 × 접근 패턴 3조건 곱. 분해 + 영업·시너지 매칭 + 후속 검토 박제.
+5. **entity 6건 갱신**: 
+   - `onDevice-ai.md` — mandate v2.5 진입, 가설 진화 Round 12·15·17·17.5 추가, 핵심 발견 8~10 추가
+   - `ai-fanstick.md` — 양산 방향 진화 2-Stage (1차 5/8 폐기 + 2차 5/20 ⭐), 칩 변경 결정 2-Stage, SLM 최종 권장 5/21
+   - `uttec-stage-package.md` — Stage 4 검증 자산 카피 3건 추가 (24.8× / 3조건 곱 / 외부 인터넷 0%) + C3→S3+DSP 영업 결정타 표
+   - `회사소개.md` — 기업부설연구소 C0442235 + 정부 R&D 1억 99.1% + 특허 10-2017-0138381 추가
+   - `영업전략.md` — Tier 3 비용 압축 표준 패턴 (3축) + 보유자산 다회 활용 패턴 (4 자산 × N 입찰)
+   - `위시캣활동.md` — 5/20 megasession 단일 일자 최다 7건 산출 + 임베디드 펌웨어 단발 외주 흐름 + #155360 1.7억 안
+   - `양산제품.md` — 제목 갱신 + 정부 R&D 카테고리 신설 (별도)
+   - `lemonLabs.md` — 4 트랙 비중 5/9 1차 + 5/20 옵션 B 가정 박제 + 6/12 창업패키지 v1 (PSST 86점) 박제 + 5/22 사용자 결정 대기 명시
+   - `uttec-homepage.md` 4/19→5/21 전면 갱신 — Phase D/E 박제 + 갭 7→9 + Phase F 후속 박제
+
+### 카드 lifecycle 완료
+
+- 5장 모두 `_inbox/pending/` → `_inbox/processed/` 이동 + `status: done`
+- 발신측 done 회신 카드 발송:
+  - → `ondevice-claude`: `2026-05-21-002-mywiki-round17-17.5-absorbed-done.md`
+  - → `wishket-claude`: `2026-05-21-001-mywiki-megasession-1.7억-govrnd-absorbed-done.md`
+  - → `lemonlabs-claude`: `2026-05-21-001-mywiki-6_12-folder-absorbed-done.md`
+  - uttechome-claude 측은 5/21 발신 카드가 `type: done`이라 응답 불요 (cascading 박제 완료)
+
+### 인사이트 박제
+
+- **외부 vault 카드 우선 처리 정책 (5/20 신설)** 효과 검증: 본 megasession이 5/20 정책 박제 후 첫 적용 사례. 5장 발신 후 1일 안 흡수 lifecycle 완료 = 5/15~5/20 5일치 누락 사건 (Round 11/12/17/17.5 미반영) 재발 차단.
+- **uttechome-claude 5/21 8th 합류** = multi-agent 시스템 확장 + cascading 비대칭 해소. 영업 트랙 vault (회사 홈페이지) 첫 사례.
+- **mywiki ↔ uttechome 양방향 source link 확립**: 정부R&D실증사업·ai-fanstick·uttec-stage-package 등 cross-vault 갱신 카드로 동기화.
 
 ## [2026-05-20] absorb | 잔여 12장 카드 일괄 lifecycle megasession (n8n·shield·wishket·revita·ondevice·lemonLabs) ⭐⭐
 

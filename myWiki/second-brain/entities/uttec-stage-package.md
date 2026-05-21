@@ -2,9 +2,9 @@
 title: UTTEC 영업 패키지 (4.5-Stage)
 type: entity
 created: 2026-05-05
-updated: 2026-05-20 (Stage 4 카피 정량화 — 1인 1일 18셀 + 보드/컴파일러 8× + 1초 안 SLM)
-tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료]
-links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, 2026-05-20_esp32-arm-family-스펙트럼]
+updated: 2026-05-21 (Round 17/17.5 ESP-DSP 24.8× 카피 추가 — Stage 4 영업 결정타 정량 확보)
+tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP]
+links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭]
 ---
 
 # UTTEC 영업 패키지 (4.5-Stage)
@@ -93,9 +93,19 @@ Palantir Foundry 라이선스 연 수억~수십억 → UTTEC 4.5-Stage 풀 7,300
 | "**Xtensa LX7 plain C는 ARM 9~38× 느림**" | esp32s3 → rpi3·rpi4 비교 (SIMD 미사용 시) — Round 9 발견 |
 | "**PSRAM 유무가 RAM_safe 셀 60% 결정**" | esp32c6(없음) 3 ↔ esp32s3(8MB) 5 — Round 11 |
 | "외부 의존성 0 ANSI C 820줄 추론 코드" | `프로젝트_보드한계모델/src/` 자체 보유 (MLP·CNN·Transformer) |
-| "Korean-Small 154K (150KB) esp32s3 적합" | INT8 + ESP-DSP dotprod 활성 시 300ms 추정 |
+| "Korean-Small 154K (150KB) esp32s3 적합" | INT8 + ESP-DSP dotprod 활성 시 ~150ms (Round 17 확정) |
+| ⭐⭐⭐ "**ESP-DSP intrinsics 24.8× 가속** — C3→S3 칩 교체로 응답 150ms" | Round 17: `dsps_dp_s8_aes3` MLP 13.4× / TF 10.8× (Round 17.5) — 영업 결정타 |
+| ⭐ "**ESP-DSP 효과 = 3조건 곱** (LX7 × SRAM × contiguous matvec)" | Round 17.5 매칭 — C3·esp32wroom·RISC-V는 ESP-DSP 손해 (적용 시 1.54× 느림). KWS는 esp-nn 별도 가속 |
+| ⭐ "**외부 인터넷 0% 음성 명령**" | Korean-Small 154K INT8 + S3 PSRAM = ~150ms 응답 |
 
 → **Stage 4 카피 결정 메시지**: "1인이 4주에 ESP32 + Pi family + 모바일 13보드 한계 측정 1장 표 박제" — 임베디드 스타트업 컨설팅 패키지 차별화.
+
+→ **AI FanStick C3→S3+DSP 영업 결정타 표** (Round 15+17 종합):
+
+| 단계 | ESP32-C3 (양산) | ESP32-S3 + DSP (차세대) | 우위 |
+|:-:|---:|---:|:-:|
+| 1. 단순 칩 교체 (plain C) | 2,677us | 1,452us | 1.84× |
+| 2. **+ ESP-DSP intrinsics** | 2,677us | **108us** | **24.8× ⭐⭐⭐** |
 
 ## 영업 시나리오
 

@@ -2,14 +2,15 @@
 title: onDevice_AI vault — AI FanStick + Stage 4 + 보드한계모델
 type: entity
 created: 2026-05-07
-updated: 2026-05-20 (mandate v2.3 = 37셀, 10/13 보드 78%, Round 1~11 진화, esp32s3 메인 + esp32c6 + 4-vault multi-agent)
-status: ✅ 1차 mandate 전환 완료 (5/17, Phase 1~4 → 보드한계모델 21→37셀) / **78% 진행 (29/37, 10/13 보드)** / esp32s3 메인 타겟 + esp32c6 완료 (5/19~20) / 남은 3보드 = esp32wroom + Nordic 2개 / W6 종료 6/22~28 후 Stage 4 영업 자산화 6/29
-tags: [vault, On-Device AI, 보드한계모델, AI FanStick, ESP32-S3, ESP32-C6, RISC-V, Xtensa, ARM, Stage4, 정지선, multi-agent, ondevice-claude]
-links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_응원봉-온디바이스AI-정지선, revita, 2026-05-20_esp32-arm-family-스펙트럼]
+updated: 2026-05-21 (mandate v2.5 진입 = Round 17·17.5 결정타 흡수 — ESP-DSP MLP 24.8× / TF 10.8×, AI FanStick 양산 방향 재전환 C3→S3+DSP)
+status: ✅ 1차 mandate 전환 완료 (5/17) / **78% 진행 (29/37, 10/13 보드)** / esp32s3 메인 타겟 + esp32c6 완료 / **mandate v2.5 진입 (Round 16~17.5 ESP-DSP intrinsics 트랙 신설)** / W6 종료 6/22~28 후 Stage 4 영업 자산화 6/29
+tags: [vault, On-Device AI, 보드한계모델, AI FanStick, ESP32-S3, ESP-DSP, ESP32-C6, RISC-V, Xtensa, ARM, Stage4, 정지선, multi-agent, ondevice-claude]
+links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_응원봉-온디바이스AI-정지선, revita, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭]
 ---
 
 > **2026-05-17 mandate 전환**: 옛 "AI FanStick + Stage 4 영업 4 Phase 12 실험" → 새 **"보드한계모델 37셀 측정 (W0~W6)"** 단일 strand. 응용·영업은 W6 종료 후 후속(C 단계)으로 분리. 단일 출처 = `0_마스터플랜.md v2.0`.
-> **2026-05-20 흡수 완료**: 5/17~20 ondevice-claude 카드 6장 + 5/20 새벽 esp32c6/Round 10·11 추가분 일괄 흡수. junction 복구 (myWiki/raw/onDevice_AI). 본 entity 5/15→5/20 갱신.
+> **2026-05-20 흡수 완료**: 5/17~20 ondevice-claude 카드 6장 + 5/20 새벽 esp32c6/Round 10·11 추가분 일괄 흡수.
+> **2026-05-21 흡수 완료**: Round 17·17.5 ESP-DSP intrinsics 결정타 흡수 — MLP 13.4× / C3→S3+DSP 24.8× / TF 10.8× / CNN strided 적용 불가 / PSRAM 가속 무효. **AI FanStick 양산 방향 5/8 결정 뒤집힘** (C3 유지 → S3-N16R8 + ESP-DSP + PSRAM SLM).
 
 # onDevice_AI vault — AI FanStick + Stage 4 + 보드한계모델
 
@@ -74,6 +75,10 @@ mandate 가설 11회 반증·정제. 매 보드 추가 시 가설 1개씩 정제
 | 9 ⭐ | "+ Xtensa LX7 plain C는 ARM 9~38× 느림 + PSRAM 8MB 새 한계점" | esp32s3 → rpi3·rpi4 | ✅ MLP/CNN/TF 9~38×, PSRAM 8MB가 5/12 cells RAM wall |
 | **10** | "+ RISC-V plain C는 Xtensa LX7과 클럭 normalize 시 동급" | esp32c6 → esp32s3 | ✅ 시간 0.97~1.36× / **CNN 32 RISC-V 1.5× 우위** |
 | **11** ⭐ | "+ **PSRAM 유무가 mandate RAM_safe 셀 결정타**" | esp32c6(없음) ↔ esp32s3(8MB) | ✅ **3 RAM_safe ↔ 5 RAM_safe = 60% 격차** (MLP 1024+ / TF 484+ 모두 esp32c6 wall) |
+| 12 | "+ LX6→LX7 코어 진화 영향" | esp32wroom → esp32s3 | ✅ 정량화 (1차 양산 방향 5/8 결정 근거 보강) |
+| **15** | "+ AI FanStick C3→S3 단순 칩 교체 정량화" | esp32c3 → esp32s3 (plain C) | ✅ MLP 128 = 1.84× (2,677us → 1,452us) — 영업 카피 1단계 |
+| **17** ⭐⭐⭐ | "+ ESP-DSP `dsps_dp_s8_aes3` 활성 시 LX7 AI Vector Instruction" | esp32s3 (plain C vs +DSP) | ✅ **MLP 128 13.4× (1,452us → 108us)** / MLP 1024 PSRAM 2.66× / **C3→S3+DSP 24.8× ⭐ 결정타** |
+| **17.5** ⭐ | "+ TF/CNN/PSRAM ESP-DSP 적용 한계" | esp32s3 + DSP 후속 | ✅ **TF SRAM 10.8× ⭐** / CNN strided 1.00× (적용 불가) / PSRAM 가득 모델 가속 무효 또는 손해 / LX6·RISC-V에서 적용 시 1.54× 느림 |
 
 ### 핵심 발견 (Stage 4 영업 카피 원료)
 
@@ -84,6 +89,9 @@ mandate 가설 11회 반증·정제. 매 보드 추가 시 가설 1개씩 정제
 5. **PSRAM 유무 = mandate RAM_safe 셀 결정타** (60% 격차 — Round 11)
 6. **AI FanStick mandate 영업 카피 정량화**: MLP 1024 = 96ms / CNN 32 = 547ms / TF 484 = 255ms — 모두 1초 안. 6MB 이하 모델은 esp32s3에서 1초 응답 가능.
 7. **응원봉 SLM 최종 권장**: INT8 + 1s threshold + single-core + **ESP-DSP dotprod** + ~100K params → **Korean-Small 154K (150KB) 적합** (SRAM 30%)
+8. ⭐⭐⭐ **Round 17 결정타**: ESP-DSP `dsps_dp_s8_aes3` 활성 시 LX7 AI Vector Instruction MLP 13.4× / C3→S3+DSP 종합 **24.8× 가속** — AI FanStick C3 → S3-N16R8 양산 방향 5/8 결정 뒤집힘
+9. ⭐ **Round 17.5 후속**: TF SRAM **10.8× 가속** (SLM 핵심 워크로드 MLP+Attention 모두 ~20× 가속) / CNN conv strided access는 dsps_dp_s8 적용 불가 (im2col 필요 또는 esp-nn 대안) / PSRAM 가득 모델은 가속 무효 또는 손해 (memory bottleneck) / **C3·esp32wroom·RISC-V에서 ESP-DSP 적용은 손해** (LX6/RISC-V ansi fallback 1.54× 느림)
+10. **ESP-DSP 효과 = 3조건 곱** ⭐ (Round 17.5 매칭): LX7 AI Vector Instruction × 메모리 계층 (SRAM 우위) × 접근 패턴 (contiguous matvec) — 자세한 분석 `thoughts/2026-Q2/2026-05-21_esp-dsp-3조건-매칭.md`
 
 ## vault 폴더 구조 (5/20 갱신)
 
@@ -189,11 +197,12 @@ myWiki `_inbox/pending/` → `_inbox/processed/` 이동 + done 회신 1장 발�
 
 ## 관련 페이지
 
-- [[ai-fanstick]] — 5/20 갱신 (기술 근거 정량화 1초 안 보증)
-- [[uttec-stage-package]] — 5/20 갱신 (Stage 4 카피 1인 1일 18셀 + Xtensa 9~38× + PSRAM 결정타)
+- [[ai-fanstick]] — 5/21 갱신 (양산 방향 재전환 C3→S3+DSP+PSRAM SLM + Round 17/17.5 결정타)
+- [[uttec-stage-package]] — 5/21 갱신 (Stage 4 카피 + ESP-DSP 24.8× 추가)
 - [[On-Device AI]] — 핵심 기술 트렌드
 - [[2026-05-08_응원봉-온디바이스AI-정지선]]
 - [[2026-05-20_esp32-arm-family-스펙트럼]] — 매칭 패턴 박제 (Round 1~11 + ARM 8년 진화 + RISC-V vs Xtensa)
+- [[2026-05-21_esp-dsp-3조건-매칭]] ⭐ — Round 17.5 매칭 패턴 (LX7 AI Vector × 메모리 계층 × 접근 패턴)
 
 ## 메타
 

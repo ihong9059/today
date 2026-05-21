@@ -14,7 +14,12 @@
 - [Memory MCP 설치](reference_memory_mcp.md) — Anthropic 공식 지식 그래프 서버, myWiki/ontology/memory.json 저장, Claude Code 등록 완료 (2026-05-05)
 - [PDF 이메일 자동화 Hybrid](feedback_pdf_email_hybrid.md) — 한글 PDF는 PC Chrome headless 렌더 + n8n 서버 SMTP 발송 (서버 도구 부재 + Windows 폰트 우수)
 - [uttec@192.168.0.23 서버](reference_uttec_192_168_0_23.md) — Debian 13 ARM64 LAN 서버, SSH 키 등록·Claude Code v2.1.132 설치 (2026-05-07)
-- [4-vault 분리 운영 (5/19 후반 uttecHome 분리)](project_3vault_분리.md) — myWiki(today) + onDevice_AI + lemonLabs + **uttecHome**(별도 repo, Tier 3, Obsidian second-brain + JSON data layer, 5/19 분리). multi-agent 7 Claude (uttechome-claude 합류 후보)
+- [4-vault 분리 운영 (5/19 후반 uttecHome 분리)](project_3vault_분리.md) — myWiki(today) + onDevice_AI + lemonLabs + **uttecHome**(별도 repo, Tier 3, Obsidian second-brain + JSON data layer, 5/19 분리). multi-agent **8 Claude** (uttechome-claude 5/21 합류)
+- [uttecHome cascading 차단 사건](feedback_uttechome_inbox_required.md) — vault 분리 시 _inbox + 양방향 CLAUDE.md 정책 동시 도입 필수. send-only는 cascading 비대칭 = 회사 홈페이지에 신기술 0% 반영 위험
+- [DigitalOcean SSH 진단 SOP ⭐](feedback_digitalocean_ssh_recovery.md) — ssh digital 실패 시: port test → Cloud Firewall → **Recovery Console** (Settings → Reset Root → Launch Console) → `systemctl status ssh`. Restart는 함정 (disabled면 무효). Web Console ≠ Recovery Console
+- [RPi USB ethernet 직결 셋업](reference_rpi_usb_ethernet_direct.md) — PC ↔ RPi 1:1 SSH (10.0.0.1 ↔ 10.0.0.2). Tailscale·Wi-Fi 무관. 본 PC `Host rasp_b3_direct` alias + 이더넷 9 (Realtek USB GbE) 이미 셋업. 새 RPi 추가 시 RPi 측만 셋업하면 즉시 사용
+- [RPi 본체 ethernet + ICS DHCP 셋업](reference_rpi_ics_dhcp_setup.md) — 본체 이더넷 6 (Intel I219-V) + Wi-Fi 4 ICS 활성화 → RPi DHCP 192.168.137.x 자동 + 인터넷 공유. RPi 측 셋업 변경 0. ncpa.cpl → Wi-Fi 4 공유 탭 5단계 GUI. RPi 3 B+ 검증 완료 (192.168.137.248, MAC B8-27-EB-25-F8-4C, hostname uttec)
+- [Terminal 기본 디렉토리 C:\todo](reference_terminal_default_dir.md) — myhome-lenovo cmd registry AutoRun + PowerShell $PROFILE 적용 (5/21). 새 PC 셋업 시 같은 절차 재적용
 - [vault scope 격리](feedback_vault_scope_isolation.md) — vault 안 작업 시 외부 자산 자동 동기화 금지, /vault-end ≠ /work-end (책임 분리)
 - [응답 진행 로그 분리](feedback_progress_log_isolation.md) — 매 응답은 이번 prompt 내용만 (자세하게 OK), 이전 prompt 재서술 금지, 전체 누적은 _current_progress.md에
 - [할일·프롬프트 표시 — 사용자 행동 구분](feedback_todo_display_user_action.md) — 할일 테이블+응답 본문 전체. 사용자 직접 행동은 👤 (🔴+👤 시급), Claude 처리 가능은 🤖. 액션 요청·결정·확인 prompt에도 동일 적용
