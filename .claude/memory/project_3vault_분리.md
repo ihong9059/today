@@ -1,17 +1,18 @@
 ---
-name: 4-vault 분리 운영 (myWiki + onDevice_AI + lemonLabs + uttecHome) — 5/19 후반 확장
-description: 사용자 second-brain 운영 구조. 5/7 3-vault → 5/15 2-vault → 5/19 오전 3-vault (lemonLabs 합류) → 5/19 후반 4-vault (uttecHome 분리). 작업 요청 시 어느 vault인지 먼저 판단 후 진행
+name: 5-vault 분리 운영 (myWiki + onDevice_AI + lemonLabs + uttecHome + search) — 5/21 search 합류
+description: 사용자 second-brain 운영 구조. 5/7 3-vault → 5/15 2-vault → 5/19 오전 3-vault (lemonLabs 합류) → 5/19 후반 4-vault (uttecHome 분리) → 5/21 5-vault (search 신설). 작업 요청 시 어느 vault인지 먼저 판단 후 진행
 type: project
 originSessionId: b3245c42-bf7b-4dd3-a682-cd49deb90641
 ---
-사용자는 **4개 vault**를 분리 운영한다 (2026-05-19 후반 uttecHome 합류로 확장).
+사용자는 **5개 vault**를 분리 운영한다 (2026-05-21 search 신설로 확장).
 
 | vault | 위치 | 역할 | scope |
 |---|---|---|---|
 | `myWiki/second-brain/` | `C:\todo\today\myWiki\` (today repo 안) | 학습+개인+도구+범 사업 영역 통합 | second-brain (영구, 매일) |
 | **`onDevice_AI/`** | **`C:\todo\onDevice_AI\` (별도 git repo, private, ihong9059/onDevice_AI)** | **AI FanStick + Stage 4 제품 통합 (기술 검증 + 비즈니스)** | 한 제품의 처음부터 끝까지 |
 | **`lemonLabs/`** | **`C:\todo\lemonLabs\` (별도 git repo, private, ihong9059/lemonLabs, 2026-05-19 오전 신설)** | **이진서 51% + UTTEC 49% 협업 신규 법인 — AI 응원봉/교육/Consulting/Studio 4 트랙** | 창업 트랙 — 2027 Q1 법인 설립 |
-| **`uttecHome/`** ⭐ NEW | **`C:\todo\uttecHome\` (별도 git repo, private, ihong9059/uttecHome, 2026-05-19 후반 분리)** | **UTTEC 회사 홈페이지 + Obsidian second-brain (30 atomic notes + JSON data layer)** | 영업 첫 접점 — 장기 운영 |
+| **`uttecHome/`** | **`C:\todo\uttecHome\` (별도 git repo, private, ihong9059/uttecHome, 2026-05-19 후반 분리)** | **UTTEC 회사 홈페이지 + Obsidian second-brain (30 atomic notes + JSON data layer)** | 영업 첫 접점 — 장기 운영 |
+| **`search/`** ⭐ NEW | **`C:\todo\search\` (별도 git repo, private, ihong9059/search, 2026-05-21 신설)** | **myWiki AI 검색·정리 web 서비스 (prompt-driven, FastAPI + React + Claude API)** | 사용자 노출 트랙 — 장기 운영 |
 | (참고) `revitaProject/` | `C:\todo\revitaProject\` (별도 repo) | REVITA 제품 (기술 + 위키) | 별도 제품 |
 
 **Why (5/7 결정)**: 기술↔비즈니스 분리 + 외부 공개 안전. 3-vault로 시작.
@@ -21,6 +22,8 @@ originSessionId: b3245c42-bf7b-4dd3-a682-cd49deb90641
 **Why (5/19 확장 — lemonLabs 합류)**: 이진서 협업이 5/9 결정 → 5/15 1차 신청 → 5/19 회사명 "레몬랩스" 채택 + 4 트랙 분류 + 5/20~6/12 5건 동시 지원 단계로 진입. 별도 법인(2027 Q1 설립) 자산은 UTTEC 자산과 법적·재무적으로 분리되어야 하므로 myWiki 안에 누적하면 안 됨. Tier 3 패턴 (별도 repo + multi-agent) 적용. **창업 트랙 vault 첫 사례** (기존: 제품 트랙 5 + 사업 트랙 1).
 
 **Why (5/19 후반 — uttecHome 분리)**: today/homepage (nested git, `uttecHome-backup`) 가 4/25 이후 24일 정체. myWiki 정합성 갭 7건 발견(LoRa·AI FanStick·정체성·lemonLabs 등 미반영). 장기 개선 작업이 필요하나 today/ 안에 두면 다른 영역과 섞여 작업 비용 증가. **이미 별도 git repo로 50% 분리된 상태** + 사용자 명시 "장기간 작업" → Tier 3 승격 비용 매우 낮음. wishketProject·revitaProject·lemonLabs 패턴 미러 적용. 분리와 동시에 Obsidian second-brain 도입 + JSON data layer 빌드로 노트-코드 단방향 흐름 확립.
+
+**Why (5/21 — search 신설)**: myWiki second-brain 위에 동작하는 prompt-driven 검색·정리·요약 web 서비스. 자체 코드베이스(FastAPI + React + Claude API) + ≥ 6개월 장기 + 멀티호스트(로컬 → DigitalOcean droplet) → 3축 모두 Tier 3 신호. **사용자 노출 트랙 vault 첫 사례** (기존: 제품 5 + 사업 1 + 창업 1 + 영업 1). search vault가 myWiki 자료를 읽기 위해 `raw/myWiki` + `raw/uttecHome` junction. myWiki 역방향 `raw/search` + `second-brain/raw/search` junction. 9th multi-agent (search-claude) 합류.
 
 **구 3-vault → 신 2-vault 재구성**:
 - `today/uttecBizWiki/` (5/7 신설, 5/14 정전) → `onDevice_AI/business/` (5/15 흡수)
@@ -40,6 +43,8 @@ originSessionId: b3245c42-bf7b-4dd3-a682-cd49deb90641
    │      → /todo/lemonLabs/
    ├── UTTEC 회사 홈페이지·회사소개서·web 컨텐츠·사례연구
    │      → /todo/uttecHome/  (또는 junction /todo/today/homepage)
+   ├── search web 서비스 (backend FastAPI · frontend React · 검색·prompt·UI)
+   │      → /todo/search/
    ├── REVITA 제품 (기술·위키·LoRa·BLE 등)
    │      → /todo/revitaProject/
    └── 그 외 모든 작업 (학습·도구·다른 사업·다른 제품)
@@ -72,14 +77,18 @@ originSessionId: b3245c42-bf7b-4dd3-a682-cd49deb90641
 | 회사소개서 PDF 갱신 | uttecHome/회사소개/ |
 | 사례연구 신규 (Solutions Cases) | uttecHome/uttec-web/public/cases/ + entities/clients/*.md |
 | UTTEC 새 사업 영역(Solutions) 신설 | uttecHome/second-brain/entities/solutions/*.md → JSON 자동 빌드 |
+| search backend prompt 템플릿 / API 라우트 | search/backend/app/ |
+| search frontend UI / 검색창 / 출력창 | search/frontend/src/ |
+| myWiki 검색 인덱스 갱신 | search/backend/app/services/wiki_search.py |
 
 ### Multi-agent 통신 (vault 간)
 
-- **8 Claude 시스템**: `mywiki-claude` · `ondevice-claude` · `revita-claude` · `n8n-claude` · `shield-claude` · `wishket-claude` · `lemonlabs-claude` (5/19 합류) · **`uttechome-claude`** (5/21 합류, 영업 트랙 첫 사례)
+- **9 Claude 시스템**: `mywiki-claude` · `ondevice-claude` · `revita-claude` · `n8n-claude` · `shield-claude` · `wishket-claude` · `lemonlabs-claude` (5/19 합류) · `uttechome-claude` (5/21 합류) · **`search-claude`** (5/21 합류, 사용자 노출 트랙 첫 사례)
 - 각 vault `_inbox/{pending,processed,outbox-staging}/` + `.claude/hooks/check-inbox.py`
-- 통신 표준: 각 vault `_inbox/PROTOCOL.md` (8 vault 사본)
-- 합의 일자: 2026-05-12 (mywiki+revita) + 2026-05-15 (ondevice) + 2026-05-16 (n8n·shield·wishket) + 2026-05-19 (lemonlabs) + **2026-05-21 (uttechome)**
-- **uttechome-claude 합류 사유**: 5/19 vault 분리 후 Phase D `_inbox/` 미도입 상태로 5/15 이후 onDevice·wishket·lemonlabs 측 신기술·영업 자료 cascading 차단됨 (Round 11/12/17/17.5 + 정부 R&D 1억 자료 + 6/12 폴더 모두 미반영). 5/21 사용자 진단 후 양방향 통신 확립.
+- 통신 표준: 각 vault `_inbox/PROTOCOL.md` (9 vault 사본)
+- 합의 일자: 2026-05-12 (mywiki+revita) + 2026-05-15 (ondevice) + 2026-05-16 (n8n·shield·wishket) + 2026-05-19 (lemonlabs) + 2026-05-21 (uttechome) + **2026-05-21 (search)**
+- **uttechome-claude 합류 사유**: 5/19 vault 분리 후 Phase D `_inbox/` 미도입 상태로 5/15 이후 onDevice·wishket·lemonlabs 측 신기술·영업 자료 cascading 차단됨. 5/21 사용자 진단 후 양방향 통신 확립.
+- **search-claude 합류 사유**: myWiki second-brain 위에 동작하는 prompt-driven 검색·정리·요약 web 서비스. 자체 코드베이스 + 장기 운영 → 9번째 Tier 3 vault 분리. 사용자 노출 트랙 첫 사례.
 
 ### Claude 작업 시 주의
 

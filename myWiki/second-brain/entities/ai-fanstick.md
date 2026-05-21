@@ -84,6 +84,22 @@ Round 17 결정타 (ESP-DSP `dsps_dp_s8_aes3` 활성 시 MLP 13.4× / C3→S3+DS
 
 → **AI FanStick 차세대 SLM은 6MB 이하 + 작은 hidden 사용** 시 1초 응답 보증. Korean-Small 154K (150KB)는 **충분 ✅**.
 
+### 3계열 AI 가속 매트릭스 (2026-05-22 Round 19 NNAPI 결정타 추가) ⭐⭐⭐
+
+본 제품 application class (small/medium dense + batch=1 + plain INT8) 에서 3계열 가속의 일관 우월 입증:
+
+| 계열 | 칩 / 가속 | 결과 | Round |
+|---|---|---|---|
+| MCU LX7 + ESP-DSP | esp32s3 + ESP-DSP `dotprod` | **+13.4× 가속** | Round 17 (결정타) |
+| MCU Cortex-M4F + CMSIS-NN | pca10056 (nRF52840) | [측정 예정] | Round 18 |
+| Mobile NPU NNAPI | Galaxy A51 5G Eden NPU (Samsung 2.1 TOPS 광고) | **‒79~421× 느림** | Round 19 (결정타 손해) |
+| CPU baseline | Cortex-A77 + asimddp (NDK clang `-O2`) | 모바일 응용 충분 (NPU 보다 빠름) | Round 19 |
+
+**영업 카피 갱신**:
+- "AI FanStick 양산 = MCU 가속 (ESP-DSP) 으로 mobile NPU 대비 일관 우월"
+- "vendor 광고는 best-case 기준 — application class 사전 확인 + 벤치마크 우선 원칙"
+- Stage 4 패키지: mobile NPU 적극 제안 X, MCU 가속 매트릭스로 전개
+
 ### 응원봉 SLM 최종 권장 사양 확정
 
 | 차원 | 권장 | 근거 |

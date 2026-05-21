@@ -67,6 +67,7 @@ second-brain/
     ├── 회사소개/       # UTTEC 회사소개서 PDF/HTML (→ junction homepage/회사소개, 2026-04-22 추가)
     ├── multiCore/     # 멀티코어 Claude 교육 시스템 (→ junction, 2026-04-28 추가)
     ├── onDevice_AI/   # AI FanStick + Stage 4 제품 통합 vault — 기술 검증 + 비즈니스(business/) (→ junction → C:\todo\onDevice_AI\, 2026-05-15 위치 변경 + 정체성 확장)
+    ├── search/        # myWiki AI 검색·정리 web 서비스 vault — 9th Tier 3 vault (→ junction → C:\todo\search\, 2026-05-21 추가)
     └── articles/      # 인상 깊은 기사, 영상 메모, 스크랩
 ```
 

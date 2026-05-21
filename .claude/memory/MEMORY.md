@@ -14,7 +14,7 @@
 - [Memory MCP 설치](reference_memory_mcp.md) — Anthropic 공식 지식 그래프 서버, myWiki/ontology/memory.json 저장, Claude Code 등록 완료 (2026-05-05)
 - [PDF 이메일 자동화 Hybrid](feedback_pdf_email_hybrid.md) — 한글 PDF는 PC Chrome headless 렌더 + n8n 서버 SMTP 발송 (서버 도구 부재 + Windows 폰트 우수)
 - [uttec@192.168.0.23 서버](reference_uttec_192_168_0_23.md) — Debian 13 ARM64 LAN 서버, SSH 키 등록·Claude Code v2.1.132 설치 (2026-05-07)
-- [4-vault 분리 운영 (5/19 후반 uttecHome 분리)](project_3vault_분리.md) — myWiki(today) + onDevice_AI + lemonLabs + **uttecHome**(별도 repo, Tier 3, Obsidian second-brain + JSON data layer, 5/19 분리). multi-agent **8 Claude** (uttechome-claude 5/21 합류)
+- [5-vault 분리 운영 (5/21 search 신설)](project_3vault_분리.md) — myWiki(today) + onDevice_AI + lemonLabs + uttecHome + **search**(별도 repo, Tier 3, FastAPI+React+Claude API, 5/21 신설, 사용자 노출 트랙 첫 사례). multi-agent **9 Claude** (search-claude 5/21 합류)
 - [uttecHome cascading 차단 사건](feedback_uttechome_inbox_required.md) — vault 분리 시 _inbox + 양방향 CLAUDE.md 정책 동시 도입 필수. send-only는 cascading 비대칭 = 회사 홈페이지에 신기술 0% 반영 위험
 - [DigitalOcean SSH 진단 SOP ⭐](feedback_digitalocean_ssh_recovery.md) — ssh digital 실패 시: port test → Cloud Firewall → **Recovery Console** (Settings → Reset Root → Launch Console) → `systemctl status ssh`. Restart는 함정 (disabled면 무효). Web Console ≠ Recovery Console
 - [RPi USB ethernet 직결 셋업](reference_rpi_usb_ethernet_direct.md) — PC ↔ RPi 1:1 SSH (10.0.0.1 ↔ 10.0.0.2). Tailscale·Wi-Fi 무관. 본 PC `Host rasp_b3_direct` alias + 이더넷 9 (Realtek USB GbE) 이미 셋업. 새 RPi 추가 시 RPi 측만 셋업하면 즉시 사용

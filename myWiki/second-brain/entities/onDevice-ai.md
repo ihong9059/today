@@ -203,6 +203,26 @@ myWiki `_inbox/pending/` → `_inbox/processed/` 이동 + done 회신 1장 발�
 - [[2026-05-08_응원봉-온디바이스AI-정지선]]
 - [[2026-05-20_esp32-arm-family-스펙트럼]] — 매칭 패턴 박제 (Round 1~11 + ARM 8년 진화 + RISC-V vs Xtensa)
 - [[2026-05-21_esp-dsp-3조건-매칭]] ⭐ — Round 17.5 매칭 패턴 (LX7 AI Vector × 메모리 계층 × 접근 패턴)
+- [[2026-05-22_npu-vendor-광고-실측-격차]] ⭐⭐ — Round 19 결정타 패턴 (Eden NPU NNAPI 79~421× 손해 + 일반화 원칙)
+
+## Mobile NPU 부적합 case — Round 19 결정타 (2026-05-22 흡수) ⭐⭐⭐
+
+**Galaxy A51 5G Eden NPU NNAPI** 는 plain INT8 MLP 128~16384 전 범위에서 CPU Cortex-A77 + asimddp 대비 **79~421× 느림**.
+
+- NNAPI device 정상 노출 (`eden-drv`, ACCELERATOR/NPU, EdenDriver_1_3, featureLevel=30)
+- auto-pick = explicit `createForDevices(eden)` 동일 latency → NPU 이미 선택 중, dispatch 자체 비효율
+- Samsung 2.1 TOPS 광고 vs 실측 격차
+
+**원인**: NPU = 표준 ML model (MobileNet conv-dominant, batch>1) 전용. plain INT8 small dense = NPU dispatch overhead 큼. CPU asimddp `sdot` = 16 MACs/cycle 우월.
+
+**영업 함의 (Stage 4 패키지)**:
+- mobile NPU 적극 제안 X — MCU 가속 (ESP-DSP / CMSIS-NN) 매트릭스 우월
+- 3계열 가속 매트릭스: LX7 ESP-DSP +13.4× (R17) / Cortex-M4F CMSIS-NN [예정 R18] / Eden NPU **‒79~421×** (R19 손해)
+
+**본 vault skeleton application class 정의** (mlp/cnn/transformer + batch=1 + plain INT8):
+- ✅ MCU 가속 (ESP-DSP/CMSIS-NN): 5~25× 일관
+- ⚠️ Mobile NPU NNAPI: 손해 또는 효과 없음
+- ✅ CPU SIMD (NDK clang `-O2` asimddp): NPU 보다 빠름
 
 ## 메타
 
@@ -214,4 +234,4 @@ myWiki `_inbox/pending/` → `_inbox/processed/` 이동 + done 회신 1장 발�
 | W6 종료 예정 | 2026-06-22~28 |
 | Stage 4 영업 자산화 | 2026-06-29 (W6 종료 익일) |
 | 예상 매출 임팩트 | 6개월 2,000~3,500만 |
-| 본 entity 갱신 주기 | 카드 흡수 시마다 (5/20 megasession 후 다음 = ondevice-claude 새 카드 도착 시) |
+| 본 entity 갱신 주기 | 카드 흡수 시마다 (5/22 Round 19 NNAPI 흡수 — 다음 = Round 18 CMSIS-NN 또는 v2.5 완료 카드) |

@@ -46,6 +46,23 @@ Stage 0 (0.5) + Stage 1 (1) + Stage 2 (1) + Stage 3 (1) + Stage 4 (1) = 4.5
 
 Palantir Foundry 라이선스 연 수억~수십억 → UTTEC 4.5-Stage 풀 7,300만.
 
+## Stage 4 칩 선택 가이드 (2026-05-22 Round 19 NNAPI 결정타) ⭐⭐⭐
+
+**Mobile NPU 적극 제안 X — MCU 가속 매트릭스로 전개**
+
+Galaxy A51 5G Eden NPU NNAPI 측정 결과 plain INT8 MLP 전 범위에서 CPU Cortex-A77 + asimddp 대비 **79~421× 느림**. "Mobile NPU 항상 빠르다" 통념 정량 반증. Samsung 2.1 TOPS 광고 vs 실측 격차.
+
+**application class별 권장 가속**:
+
+| Application | 권장 가속 | 영업 패키지 |
+|---|---|---|
+| 응원봉 양산 (small/medium dense + batch=1 + INT8) | **ESP32-C3 → S3 + ESP-DSP** (+13.4×) | AI FanStick |
+| B2B Stage 4 임베디드 (M4F + Bluetooth) | **Nordic nRF52840 + CMSIS-NN** [Round 18 측정 예정] | Stage 4 임베디드 |
+| Mobile T3 응용 (Android 앱) | **CPU plain (`-O2` asimddp)** — NPU 사용 X | Stage 4 모바일 |
+| 표준 CV (MobileNet 등 conv-dominant) | Mobile NPU 적합 | (드문 케이스, 별도 검토) |
+
+**영업 카피 결정타**: "벤치마크 없이 vendor 광고 신뢰 X" + "UTTEC 자체 측정 자산 (Round 17·18·19) 기반 칩 선택"
+
 ## 영업 흐름 (단계별 도입)
 
 ```

@@ -2,8 +2,42 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-21 (wishket 5/21 megasession 카드 lifecycle 5단계 흡수 완료 — USB 시리얼 자산 + 본문 표준 3개 룰 + 자산 인덱스 완전성 함정 박제)
+updated: 2026-05-22 (search-claude 9th 합류 + Round 19 NNAPI 결정타 2 카드 megasession 흡수 완료)
 ---
+
+## [2026-05-22] absorb | 2 카드 megasession (search-claude 9th 합류 + Round 19 NNAPI 79~421× 손해 결정타) ⭐⭐⭐
+
+- 참조: `_inbox/processed/2026-05-21-005-search-claude-join.md` (status: done) + `_inbox/processed/2026-05-22-001-round19-nnapi-decisive.md` (status: done)
+- 신설/갱신: [[search]] (Phase 0/1 ✅ + 메모리 공유 정책), [[onDevice-ai]] (§ Mobile NPU 부적합 case), [[ai-fanstick]] (§ 3계열 AI 가속 매트릭스), [[uttec-stage-package]] (§ Stage 4 칩 선택 가이드), [[gaps]] (§ search vault 셋업 함정 + § Mobile NPU NNAPI 부적합 함정), [[ai-direction]] (판단 로그 5건 추가: 5/21 search 분리 + 5/22 메모리 공유 / Mobile NPU 불사용 / Vendor 광고 vs 실측)
+- thoughts 신설 2건: [[2026-05-22_npu-vendor-광고-실측-격차]] ⭐⭐ + [[2026-05-22_claude-max-cli-subprocess-pattern]]
+- 회신 카드 2건: `search/_inbox/pending/2026-05-22-001-mywiki-ack-search-join.md` + `onDevice_AI/_inbox/pending/2026-05-22-001-mywiki-ack-round19-nnapi.md`
+- PROTOCOL.md § 활성 Claude 6 → **9 시스템** 갱신 + 합의 이력 lemonlabs(5/19) + uttechome(5/21 오전) + search(5/21 야간) 3건 추가. raw/ 스키마에 search/ 등재.
+
+### Card B (search-claude 합류) — 5단계 결과 요약
+
+| 단계 | 결과 |
+|:-:|---|
+| 1. entity | search.md Phase 0/1 ✅ + 메모리 공유 정책 신설 + PROTOCOL/raw 스키마 동기화 |
+| 2. gotcha | gaps § search vault 셋업 함정 (A: junction 루프 / B: SDK→OAuth / C: fabricate 차단) |
+| 3. decision | ai-direction 2건 (5/21 search 분리 + 5/22 메모리 공유 예외) |
+| 4. thought | claude-max-cli-subprocess-pattern (재사용 가능 vault 6개 + 영업·강의 자산) |
+| 5. 발신측 | (1)과 통합 |
+
+### Card C (Round 19 NNAPI) — 5단계 결과 요약
+
+| 단계 | 결과 |
+|:-:|---|
+| 1. entity | onDevice-ai/ai-fanstick/uttec-stage-package 3건 갱신 (§ Mobile NPU 부적합 case / § 3계열 매트릭스 / § Stage 4 칩 선택 가이드) |
+| 2. gotcha | gaps § Mobile NPU NNAPI 부적합 함정 (A: 광고 vs 실측 / B: auto-pick 반증 / C: PowerShell 함정 3건) |
+| 3. decision | ai-direction 2건 (5/22 Mobile NPU 불사용 + Vendor 광고 vs 실측 원칙) |
+| 4. thought | npu-vendor-광고-실측-격차 (5축 적용처 + 강의 자산 1순위 후보) |
+| 5. 발신측 | onDevice-ai 갱신 시 application class 정의 cross-link |
+
+### 인사이트
+
+- **9 vault multi-agent 시스템 통신 양방향 정합성 확립** — 5/22 본 흡수로 search ↔ myWiki 인지 갭 해소. 다른 8 vault 측 PROTOCOL.md 동기화 후속 필요 (별도 megasession).
+- **Stage 4 영업 결정타** — Mobile NPU 광고 vs 실측 79~421× 손해는 단순 함정이 아니라 **칩 선택 가이드 자체를 결정하는 자산**. 위시캣·강사양성·REVITA·uttecHome 영업 모두에 즉시 활용 가능.
+- **벤치마크 우선 원칙** — Round 9·10·11·19 매칭 패턴 누적으로 일반화 박제. 향후 vendor 광고 검토 SOP 의 1단계.
 
 ## [2026-05-21] absorb | wishket 5/21 megasession 카드 lifecycle 5단계 — USB 시리얼 자산 + 본문 표준 3개 룰 + 자산 인덱스 완전성 함정 박제 ⭐
 

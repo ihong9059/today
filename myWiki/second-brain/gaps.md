@@ -287,6 +287,52 @@ stty -F /dev/ttyUSBx 115200 raw -echo -hupcl clocal
 
 → 위시캣 자동 매칭 SOP (n8n-claude 자동검색 + wishket-claude 정밀 작성) 안에 검수 단계 명시.
 
+## Mobile NPU NNAPI 부적합 함정 (2026-05-22 흡수 — ondevice Round 19 결정타) ⭐⭐⭐
+
+### (A) Mobile NPU 광고 vs 실측 격차 (Galaxy A51 5G Eden NPU)
+
+- **증상**: Samsung 2.1 TOPS 광고. NNAPI 표준 호출로 plain INT8 MLP 128~16384 (5셀) 측정 시 CPU Cortex-A77 + asimddp 대비 **79~421× 느림**. cross-over point 없음 (큰 셀일수록 더 손해).
+- **원인**:
+  1. NPU는 표준 ML model (MobileNet conv-dominant, batch>1, fixed graph fusion) 전용
+  2. plain INT8 small dense layer는 NPU dispatch path overhead 큼 (per-forward execution_create / setIn/Out / Event_wait / memory copy)
+  3. CPU asimddp `sdot` (NDK clang `-O2` auto-vectorize) = 1 cycle 4-way INT8 MAC × 4 lanes = 16 MACs/cycle
+  4. `setReusable(true)` + `BurstCompute` 등 overhead 격리해도 효과 미미
+- **회피책**:
+  1. **application class 사전 확인** — small/medium dense + batch=1 + plain INT8 = NPU 부적합. MobileNet · large conv-dominant = NPU 적합
+  2. **벤치마크 우선** — vendor 광고 신뢰 X, 자체 측정 필수
+  3. Stage 4 패키지 영업 시 mobile NPU 제안 X — MCU 가속 (ESP-DSP / CMSIS-NN) 매트릭스로 전개
+
+### (B) NNAPI auto-pick은 NPU 이미 선택 중 (잘못된 의심 차단)
+
+`ANeuralNetworksCompilation_create` (auto) vs `ANeuralNetworksCompilation_createForDevices(eden)` (강제) 동일 latency (0.3% 차이). auto-pick fail 가설 반증. **200× 손해는 NPU dispatch 자체 비효율, dispatch failure 아님.**
+
+### (C) PowerShell 5.1 함정 3건 (Round 19 신규)
+
+- `-DBOARD_ID_STR="x"` 따옴표 벗김 → `'-DBOARD_ID_STR=\"x\"'` (single-quote + backslash escape)
+- 한글 경로 `New-Item -Path` / `.NET CreateDirectory` 거부 → 영어 경로 사본 패턴 (`C:\ondevice_android\`)
+- native stderr `2>&1` → NativeCommandError wrap → `$ErrorActionPreference='Continue'` + `cmd /c "... 2>&1"` 우회
+
+→ 영업 적용: 위시캣 클라이언트 "AI 가속 NPU 칩" 요청 시 application class 사전 확인. 강사양성 Day 5 비교 사례에 본 데이터 추가. REVITA 모바일 응용 검토 시 본 패턴 적용.
+
+## search vault 셋업 함정 (2026-05-21 흡수 — search-claude 합류) ⭐
+
+### (A) Junction 루프 (search/raw/myWiki ↔ myWiki/raw/search)
+
+- **증상**: search vault `.gitignore` 에 `raw/` 미등록 시 `git add -A` 가 양방향 junction 을 따라가 "Filename too long" 무한 재귀.
+- **원인**: search 측이 `raw/myWiki` junction 으로 today/myWiki 를 마운트, today/myWiki 도 `raw/search` 역방향 junction 으로 search 를 마운트 → 양쪽 모두 git tracked 상태면 cycle.
+- **회피책**: vault 분리 시 `.gitignore` 에 `raw/` 무조건 추가. junction 은 로컬 마운트 전용, commit 대상 아님.
+
+### (B) Anthropic SDK API key 인증 vs Claude Max OAuth
+
+- **증상**: backend 가 `anthropic` SDK 로 API 호출 시 별도 sk-ant-... key 필요. 사용자가 이미 Claude Max 구독 중이면 추가 비용 부담 + 키 관리 부담.
+- **회피책**: `claude --print --output-format json --system-prompt "..." --strict-mcp-config --setting-sources project` subprocess 패턴으로 Max OAuth 그대로 활용. 다른 vault backend 도 동일 패턴 재사용 가능. (`--bare` 는 ANTHROPIC_API_KEY 강제라 제외, `--strict-mcp-config` 없으면 사용자 MCP 서버 의도치 않게 로드되어 Calendar fabricate 등 사고)
+
+### (C) Claude CLI 가 사용자 MCP / global CLAUDE.md / memory 자동 로드 (fabricate 사고)
+
+- **증상**: search backend 가 `claude --print` 만 호출 → 위키에 답 없는 질의 ("오늘 할일") 에 Google Calendar 인증 안내 fabricate.
+- **원인**: 사용자 `~/.claude.json` 에 등록된 MCP (Calendar 등) 가 자동 로드 → 모델이 그 tool 목록을 보고 "도움이 되려" 안내 생성.
+- **회피책**: `--strict-mcp-config` (no `--mcp-config`) + `--setting-sources project` + system prompt 에 "외부 도구·인증 언급 금지" 명시 + fabricate 차단 응답 형식 강제.
+
 ## 업데이트 방법
 새로운 갭을 발견하거나, 기존 갭을 채웠을 때 이 페이지를 업데이트한다.
 채운 갭은 삭제하지 않고 ~~취소선~~으로 표시하여 성장 기록을 남긴다.
