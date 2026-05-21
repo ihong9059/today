@@ -111,12 +111,13 @@ links: [me, skills, projects]
 - BLE OTA 무선 업데이트 시스템 설계 및 구현
 - 272개 펌웨어 항목 빌드/관리
 - nRF52832 BLE 온도 컨트롤러 (양산 판매 중)
+- **nRF52832 USB 시리얼 통신 (USB CDC ACM) — 수년간 직접 구현 + 연동 모바일 앱 다수 제작** ★ 2026-05-21 박제 (wishket-claude #155539 지원서 작성 중 본 vault/myWiki 자산 누락 발견, 사용자 정정 지시로 정식 등재). 펌웨어 측 USB CDC ACM + 모바일 측 Android USB Host API / UsbSerialForAndroid 통합 운영. 스마트폰 ↔ 센서 직결 외주 정조준 자산.
 - STM32 컴프레서/세탁기 컨트롤러 (양산 판매 중)
 - Raspberry Pi CM4 EtherCAT 컨트롤러 (양산 판매 중)
 - RS485/Modbus RTU 산업 통신
 - LoRa/MQTT/CAN/EtherCAT 통신 프로토콜
 - OOK 변조 직접 구현 (CC1101 447.925MHz Replay, REVITA 2026-05)
-- AISG 3.0 안테나 인터페이스 분석 완료 (위시캣 #155057, 2026-05) — [[aisg]]
+- AISG 3.0 안테나 인터페이스 분석 완료 (외주 분석, 2026-05) — [[aisg]]
 
 ### 교육 시스템
 - UTTEC Edu 온라인 교육 플랫폼 (37개 코스, 765일 커리큘럼)

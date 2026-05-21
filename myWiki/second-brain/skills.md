@@ -18,6 +18,7 @@ links: [me, projects, ai-direction, strengths, gaps]
 | BLE (NimBLE, nRF52832) | 상 | OTA, 온도 컨트롤러 (양산) | 높음 |
 | Raspberry Pi (3B/4/5/CM4/Zero) | 상 | EtherCAT (양산), 서버, 교육 | 높음 |
 | MQTT/RS485/Modbus RTU | 상 | 산업 통신, KC 인증 | 높음 |
+| **nRF52832 USB 시리얼 통신 (USB CDC ACM) + 연동 모바일 앱** | 상 | **수년간 직접 구현 + 연동 앱 다수 제작 (Android USB Host API / UsbSerialForAndroid 통합). 펌웨어 측 CDC ACM + 모바일 측 시리얼 표준 자산 (2026-05-21 박제 — wishket-claude 지원서 작성 중 누락 발견 후 사용자 정정 지시로 정식 등재)** | 활성 |
 | CAN 통신 | 중상 | 대한전선 Winder Controller | 과거 |
 | LoRa/Zigbee | 중상 | REVITA, IoT 통신, **[[한림용인cc-고가수조]] (2026-05 시공 직전, 1,000만원)** | 활성 |
 | LoRa E22 EByte 920MHz 풀스택 | 중상 | [[한림용인cc-고가수조]] 노드·중계기·게이트웨이 / oldProject bleModule (config read/write 검증·mode mapping 정정·air rate 0.3k 통일) | 신규(2026-05) |

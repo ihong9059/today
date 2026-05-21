@@ -2,8 +2,13 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-21 (5장 카드 흡수 megasession — Round 17·17.5 + 정부 R&D 1억 + 6/12 폴더 + uttechome 8th 합류)
+updated: 2026-05-21 (shield-claude Tailscale IP 갱신 + SKILL.md template 동기화 + wishket USB 시리얼 자산 흡수 대기)
 ---
+
+## [2026-05-21] infra | shield-claude Tailscale IP 갱신(100.120.255.34→100.110.51.14) + SKILL.md template 동기화
+- 참조: `C:\Users\lenovo\.ssh\config` Host shield (갱신), `/home/uttec/project/shield/.claude/skills/{work-start,work-end}/SKILL.md` (template 동기화, 백업 `.bak.20260521_143104`), [[shield]] (entity Tailscale IP 갱신 권고 — next vault 작업 슬롯)
+- 판단: Tailscale IP는 일회성 변경이 아닐 수 있음 (재인증·재설치·노드 재발급). 다른 7 호스트(uttecMac·revita·joon·uttecRpi5/4/3·n8n) 검증 필요성 인지. shield SKILL은 본 PC `_folder_work_template` 단일 source 통일.
+- 결과: ssh config 갱신 ✅, shield SKILL md5 양쪽 일치 ✅, 본 PC `ssh shield` alias 정상 작동 ✅
 
 ## [2026-05-21] absorb | 5장 카드 일괄 흡수 megasession (ondevice ×2 + wishket + lemonlabs + uttechome) ⭐⭐⭐
 
