@@ -2,9 +2,9 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-05-21 (Round 17/17.5 흡수 — 차세대 양산 방향 재전환 C3→S3+DSP+PSRAM SLM, 5/8 결정 뒤집힘)
-tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환]
-links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭]
+updated: 2026-05-22 야간 (Round 18 후속 pca10040 64KB RAM wall 흡수 — Nordic 2 보드 RAM tier 분리, B2B 시나리오 nRF52840 256KB 필수 박제)
+tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성]
+links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차]
 ---
 
 # AI FanStick (응원봉)
@@ -84,21 +84,25 @@ Round 17 결정타 (ESP-DSP `dsps_dp_s8_aes3` 활성 시 MLP 13.4× / C3→S3+DS
 
 → **AI FanStick 차세대 SLM은 6MB 이하 + 작은 hidden 사용** 시 1초 응답 보증. Korean-Small 154K (150KB)는 **충분 ✅**.
 
-### 3계열 AI 가속 매트릭스 (2026-05-22 Round 19 NNAPI 결정타 추가) ⭐⭐⭐
+### 3계열 AI 가속 매트릭스 (2026-05-22 Round 18 CMSIS-NN 측정 완료 — 두 번째 축 채움) ⭐⭐⭐
 
-본 제품 application class (small/medium dense + batch=1 + plain INT8) 에서 3계열 가속의 일관 우월 입증:
+본 제품 application class (small/medium dense + batch=1 + plain INT8) 에서 3계열 가속의 일관 우월 입증. **5/22 Round 18 측정으로 Cortex-M4F 행이 [측정 예정] → 실측 +3.23× 채워져 매트릭스 완성**:
 
 | 계열 | 칩 / 가속 | 결과 | Round |
 |---|---|---|---|
-| MCU LX7 + ESP-DSP | esp32s3 + ESP-DSP `dotprod` | **+13.4× 가속** | Round 17 (결정타) |
-| MCU Cortex-M4F + CMSIS-NN | pca10056 (nRF52840) | [측정 예정] | Round 18 |
-| Mobile NPU NNAPI | Galaxy A51 5G Eden NPU (Samsung 2.1 TOPS 광고) | **‒79~421× 느림** | Round 19 (결정타 손해) |
+| MCU LX7 + ESP-DSP | esp32s3 + ESP-DSP `dsps_dp_s8_aes3` | **+13.4× 가속** ⭐⭐⭐ (1,452μs → 108μs) | Round 17 (5/21) |
+| **MCU Cortex-M4F + CMSIS-NN (256KB tier)** ⭐ | **pca10056 (nRF52840 256KB)** + SMLAD DSP extension | **+3.23× 가속** ⭐⭐ (7,367μs → 2,285μs) ✅ | Round 18 (5/22) |
+| **MCU Cortex-M4F (64KB tier — AI 부적합)** ⚠️NEW | pca10040 (nRF52832 64KB) | **전셀 RAM wall 12/12** (weights > heap, CMSIS-NN .bss 34KB 차지) | Round 18 후속 (5/22 야간) |
+| Mobile NPU NNAPI | Galaxy A51 5G Eden NPU (Samsung 2.1 TOPS 광고) | **‒79~421× 느림** ⚠️ | Round 19 (5/22) |
 | CPU baseline | Cortex-A77 + asimddp (NDK clang `-O2`) | 모바일 응용 충분 (NPU 보다 빠름) | Round 19 |
 
-**영업 카피 갱신**:
-- "AI FanStick 양산 = MCU 가속 (ESP-DSP) 으로 mobile NPU 대비 일관 우월"
-- "vendor 광고는 best-case 기준 — application class 사전 확인 + 벤치마크 우선 원칙"
-- Stage 4 패키지: mobile NPU 적극 제안 X, MCU 가속 매트릭스로 전개
+**클럭 normalize 단위 효율** (5/22 Round 18 신규): LX7 25,920 cycles vs M4F 146,240 cycles = **LX7 5.64× M4F 우위**. AI 가속 = ISA-specific instruction 폭 (128-bit AI vector > 32-bit SMLAD).
+
+**영업 카피 갱신** (5/22):
+- 본 양산 트랙: "AI FanStick C3→S3+ESP-DSP **24.8×** (Round 17/17.5, 응원봉 SLM 핵심)"
+- **별도 B2B 시나리오**: "**B2B 통합 SoC = nRF52840 (256KB) 필수 (nRF52832 부적합)** + CMSIS-NN +3.23× (Round 18·후속, KWS / anomaly detection / BLE+AI)"
+- "vendor 광고는 best-case 기준 — application class 사전 확인 + **RAM tier 적합도** 4번째 조건"
+- Stage 4 패키지: mobile NPU 적극 제안 X, MCU 가속 매트릭스로 전개 (S3+DSP 또는 nRF52840+CMSIS-NN 분기, **nRF52832는 BLE-only 트랙 분리**)
 
 ### 응원봉 SLM 최종 권장 사양 확정
 

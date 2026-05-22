@@ -2,12 +2,82 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-04-22
-tags: [AI, 방향, 전략, 판단]
+updated: 2026-05-22 (Round 18 CMSIS-NN 흡수 — 3계열 AI 가속 매트릭스 완성 + "AI 가속 = ISA-specific instruction 폭 + workload class 매칭" 원칙 확립)
+tags: [AI, 방향, 전략, 판단, 3계열매트릭스, ISA, instruction-set]
 links: [me, ai-landscape, skills, goals, strengths, gaps]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-05-22 야간) — Round 18 후속 흡수: 13/13 보드 완성 + RAM tier 4조건 곱 원칙 + Nordic 함정 11건 cross-vendor 인벤토리 ⭐⭐
+
+**사건**: 2026-05-22 14:30 ondevice-claude Round 18 후속 카드. pca10040 (nRF52832 64KB) 12/12 sweep **전셀 RAM wall** 측정 완료. mywiki ACK 카드 (5/23-001) 의 후속 권고 "pca10040 측정 → 13/13 보드 완료" 가 같은 날 오후 즉시 수행됨 (12 셀 sweep 가 모두 RAM wall 이라 ~10분 안 완료). **mandate 보드한계모델 13/13 보드 100% 완성** (5/17 mandate 신설 후 5일).
+
+**핵심 발견 2건**:
+
+1. **pca10040 64KB tier 전셀 RAM wall** — Round 14 plain C 결과 100% 재현. CMSIS-NN library 추가 시 static .bss 34KB / 64KB = 52.34% 차지, runtime heap ~30KB < weights ~42KB+. "vendor 광고 (Cortex-M4F + neural network frameworks 지원) vs 실제 RAM 적합도" 격차 정량 박제. **AI 응용 ≠ MCU 라벨** = vendor "supports" 광고는 toolchain·library 호환만 검증, 실제 RAM 적합도는 sweep 측정 필수.
+
+2. **Nordic 보드별 setup 차이 자산화** — pca10040 보드별 unique 함정 2건 (R18-F APPROTECT recover + R18-G post-recover USB COM 재assignment). 미래 신규 Nordic 보드 (nRF52833 / nRF5340 등) 추가 시 본 SOP 자동 적용. 본 vault Nordic 함정 11건 cross-vendor 인벤토리 완성.
+
+**원칙 보강** — 5/22 본편 3조건 곱 → **4조건 곱 진화**:
+
+**"AI 가속 = ISA-specific instruction 폭 × workload class 매칭 × 메모리 계층 × RAM tier 적합도"** (4조건 곱)
+
+- 본편 3조건 (5/22 본편): Round 17/18 ISA 우위 + Round 19 NPU dispatch overhead + Round 17.5 메모리 계층
+- 후속 4번째 조건 (5/22 야간): **RAM tier 적합도** = AI mandate 의 최소 RAM 요구치. nRF52840 (256KB) ✅ vs nRF52832 (64KB) ❌. "AI 가속 효과 있어도 RAM 부족하면 mandate 불가" 의미.
+
+**판단 패턴 (5/22 megasession 완성형)**:
+- 5/21 Round 17 → 5/22 본편 Round 18·19 cascade → 5/22 야간 후속 4번째 조건 보강 = **5일 동안 mandate 13/13 보드 완성 + Stage 4 칩 선택 가이드 정량 근거 완성 + AI 가속 4조건 곱 원칙 박제**.
+- 사용자 노출 트랙 vault (search) 9th 합류와 동시에 본 vault (onDevice_AI) mandate 완성 = **multi-vault 시스템 통신 + 내부 mandate 동시 추진 사이클** 입증. 둘 다 5/22 야간 cascade 완료.
+
+**다음 cascade** (mywiki → 외부):
+- 위시캣 영업 SOP § "AI 가속 칩 application class + RAM tier 사전 확인" 단계 추가 (#13 todo 연장)
+- 강사양성 Day 5 비교 사례 모듈 § "RAM tier 4번째 조건" 추가 (#14 todo 연장)
+
+→ 관련 thought: [[2026-05-22_npu-vendor-광고-실측-격차]] § 매칭 사례 표 pca10040 행 추가 권고.
+
+## 판단 로그 (2026-05-22 야간) — search Phase 2 = Claude Max CLI 세션 모델 표준 채택 ⭐⭐
+
+**사건**: 2026-05-22 19:30 search-claude Phase 2 완료 카드. WebSocket + `--resume` + 70/80% 자동 핸드오프 model 검증 완료 (PLAN 12 task 통과, commit `28d0a5d`). 같은 날 셋업·완성 (Phase 0 셋업 5/21 야간 → Phase 1 closeout 5/22 새벽 → Phase 2 완성 5/22 야간 = **3 Phase in 24h**).
+
+**결정**: **"Claude Max CLI subprocess 패턴 + WebSocket 세션 model"** = UTTEC 내부 multi-turn backend 표준 1순위 채택. SDK + API key + 외부 Redis 의존 방식 폐기.
+
+**근거 (검증된 정량)**:
+- D1 통신: WebSocket (`/ws/chat`) → HTTP 폴링 대비 latency 우위 + push 지원
+- D2 저장: 메모리 dict (lifespan-scoped) → Redis 등 외부 의존 0, 단일 instance 검증 단계 적합
+- D3 Claude 연속: CLI `--resume <session_id>` 활용 → Claude session 안에 history·system_prompt 자동 박제 (input_tokens 거의 0, cache 100% 활용 = 매우 저렴)
+- D4 측정: `last_input` + `last_cache_read` + `last_cache_creation` 추적 → 70/80% 임계값 판정 정확도 확보
+- D5 핸드오프: 70% 도달 → 커스텀 요약 → 80% 도달 → 새 session preamble 로 자동 전환 → multi-day 대화 가능
+
+**함정 동반 박제**: `--resume` + 긴 `--system-prompt` fork 함정 ([[gaps]] § 신설). 첫 호출에만 system_prompt 전달, 후속은 생략 패턴. 본 함정 회피 없이 backend 구현 시 사용자 답변에 history 끊김 = "대화가 안 됨" 버그.
+
+**재사용 vault 6 후보**: uttecHome 챗봇 / lemonLabs 4 트랙 도구 / REVITA web 사용 가이드 / n8nUttec workflow / wishket 자동매칭 추가 질의 / 강사양성 LMS. 각 vault 진입 시 본 패턴 cascade.
+
+**판단 패턴**: search vault 가 9th vault 합류 직후 24h 안에 Phase 0~2 완성 = **multi-vault 시스템 통신 + 내부 backend 표준 동시 검증 사이클** 입증. 사용자 노출 트랙 vault 첫 사례가 가장 빠른 cascade 자산 생산. obsidian 강의 시리즈 Day 6~7 직접 자산.
+
+→ 관련 매칭 패턴: [[2026-05-22_claude-max-cli-subprocess-pattern]] § Phase 2 후속 (WebSocket + --resume 세션 모델 일반화).
+
+## 판단 로그 (2026-05-22) — Round 18 CMSIS-NN 흡수: 3계열 AI 가속 매트릭스 완성 + Stage 4 칩 선택 정량 근거 확립 ⭐⭐⭐
+
+**사건**: 5/22 ondevice-claude Round 18 (pca10056 Cortex-M4F + CMSIS-NN SMLAD MLP 128 = **3.23× 가속**, 7,367μs → 2,285μs) 12셀 sweep 완료. 5/21 Round 17 (LX7 ESP-DSP 13.4×) + 5/22 Round 19 (Eden NPU NNAPI ‒79~421×) 와 결합하여 **3계열 AI 가속 매트릭스의 두 번째 축**이 채워져 완성.
+
+**핵심 발견 (5/22 신규)**:
+
+1. **CMSIS-NN SMLAD = 3.23× 가속** (Optimistic 가설 2.5~4× 적중) — DSP extension (`__SMLAD(__PKHBT(a,b,16), __PKHBT(c,d,16), acc)`) 활용으로 plain C MLP MAC loop 가속. 32-bit register 안에 2 × 16-bit MAC 동시 실행.
+
+2. **클럭 normalize LX7 5.64× M4F 우위** — MLP 128 LX7 25,920 cycles vs M4F 146,240 cycles. **AI 가속은 ISA-specific instruction 폭이 결정타** (LX7 128-bit AI vector `dsps_dp_s8_aes3` > M4F 32-bit SMLAD). clock speed / vendor TOPS 광고가 아니라 instruction set design이 진짜 변수.
+
+3. **3계열 매트릭스 완성으로 Stage 4 칩 선택 가이드 정량 근거 확립**:
+   - 응원봉 / wearable / small SLM → ESP32-S3 + ESP-DSP (LX7 +13.4×)
+   - **B2B BLE+AI 통합 SoC (KWS / anomaly detection) → nRF52840 + CMSIS-NN (M4F +3.23×)** ⭐ Round 18 신규
+   - Mobile T3 응용 → CPU plain `-O2` asimddp (NPU ‒79~421× 손해)
+   - 표준 CV → Mobile NPU 적합 (드문 케이스)
+
+**원칙 확립**: **"AI 가속 = ISA-specific instruction 폭 × workload class 매칭 × 메모리 계층"** 3조건 곱 — Round 17 (LX7 +13.4×) + Round 18 (M4F +3.23×) + Round 19 (NPU ‒79~421×) 종합. vendor TOPS 광고는 best-case 기준이고 실제 application class와 다르면 가속이 손해로 뒤집힘. 위시캣 클라이언트 "AI 가속 칩" 요청 시 application class 사전 확인 SOP 필수.
+
+**판단 패턴**: 매 Round 추가 시 가설 1개 정제 + 영업 자산 cascade. Round 17·18·19 3회 cascade로 Stage 4 패키지 영업 카피가 일반론("MCU급 SLM 추론 1초 안") → 정량 매트릭스(application class별 3계열 선택)로 진화. W6 종료 6/29 자산화 이전에 이미 1차 영업 자산 확보.
+
+**다음 cascade**: 위시캣 영업 SOP 갱신 (#13 todo) + 강사양성 Day 5 모듈 비교 사례 (#14 todo) — 본 결정타 데이터 직접 활용.
 
 ## 판단 로그 (2026-05-21) — uttechome-claude 8th multi-agent 합류 + 양방향 통신 확립 ⭐
 

@@ -2,8 +2,98 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-22 (search-claude 9th 합류 + Round 19 NNAPI 결정타 2 카드 megasession 흡수 완료)
+updated: 2026-05-22 (Round 18 흡수 + cascade 2건 — 위시캣 영업 SOP 룰 4 / 강사양성 Day 5 비교 사례 모듈 자산화)
 ---
+
+## [2026-05-22 야간 후속] cascade | Round 18 후속 → 위시캣 영업 SOP § 1-A "RAM tier" + 강사양성 Day 5 모듈 § "RAM tier + Nordic 함정 11건" 진화 ⭐⭐
+
+5/22 야간 흡수의 직접 cascade (#13 + #14 todo 연장).
+
+- **위시캣 영업 SOP 진화**:
+  - `wishketProject memory/feedback_ai_accel_application_class.md` — 1-A단계 (RAM tier 적합도) 추가 + 4조건 곱 원칙 박제 + Nordic 함정 11건 인벤토리 cross-link
+  - `wishketProject memory/MEMORY.md` — 인덱스 갱신 (룰 4 → 4조건 곱)
+  - [[위시캣활동]] § "5/22 cascade" 진화 — SOP 1-A 단계 추가 + 4조건 곱 표 + 인용 가능 정량 자산 표 RAM tier 부적합 사례 행 + 매칭 키워드 (nRF52832 / nRF52840 / Cortex-M4F / Nordic) 4그룹째 추가
+- **강사양성 Day 5 모듈 진화**:
+  - [[강사양성_파일럿]] § "Day 5 비교 사례 모듈 자산" 3사례 → **4사례 확장** (Round 18 후속 추가)
+  - 모듈 컨셉 "벤치마크 우선" → **"벤치마크 우선 + 4조건 곱"**
+  - § "RAM tier 적합도 표" 신설 (8MB PSRAM / 256KB / 512KB / 64KB tier)
+  - § "Nordic 함정 11건 cross-vendor 인벤토리 모듈" 신설
+  - 강의 시간 90 → 120분 (RAM tier 30분 + Nordic 함정 15분 추가)
+  - 모듈 산출물 5종 → 7종 (RAM tier PDF + Nordic 함정 인벤토리 PDF 추가)
+- **인사이트**: Round 18 후속 (RAM tier 4번째 조건) 이 위시캣 영업 + 강사양성 강의 동시 cascade. 5/22 야간 megasession (search Phase 2 + Round 18 후속) 의 영업·강의 자산화 완성. 다음 위시캣 Nordic 관련 모집 + 6/15~19 첫 시범 코스 Day 5 모듈 직접 적용 준비.
+
+## [2026-05-22] absorb | search Phase 2 (세션 기반 대화 model) + Round 18 후속 (pca10040 13/13 완성) 2 카드 야간 megasession 흡수 ⭐⭐⭐
+
+5/22 야간 신규 카드 2장 흡수 완료. 두 카드 모두 같은 날 cascade 발생 — search vault (사용자 노출 트랙) Phase 2 완성 + onDevice_AI vault (제품 트랙) mandate 13/13 완성. **multi-vault 동시 추진 사이클 입증**.
+
+### Card A — search Phase 2 (세션 기반 대화 model 완성, 5/22 19:30)
+
+- 참조: `_inbox/processed/2026-05-22-003-search-phase2-handoff-model-complete.md` (status: done, 5/22 20:00)
+- 갱신:
+  - [[search]] § Phase 진행 전면 재배치 (Phase 2 신설, 기존 Phase 2/3/4 → 3/4/5 shift) + § "Phase 2 ⭐ 세부" 신설 (D1~D5 결정 표 + audit 저장 위치)
+  - [[gaps]] § "Claude CLI `--resume` + 긴 `--system-prompt` fork 함정" 신설 (A 증상 / B 해결 패턴 / C 재사용 vault 6 / D thought cross-link)
+  - [[ai-direction]] 판단 로그 "(2026-05-22 야간) search Phase 2 = Claude Max CLI 세션 모델 표준 채택" 신설
+  - [[2026-05-22_claude-max-cli-subprocess-pattern]] § "Phase 2 후속" 합본 신설 (8 sub-section: D1~D5 / 함정 / 핸드오프 / 구성 요소 / 재사용 vault / 영업·강의 자산화 / 박제 위치 / cascade 미래)
+- 회신: `search/_inbox/pending/2026-05-23-002-mywiki-ack-search-phase2.md`
+- **인사이트**: search vault 9th 합류 직후 24h 안에 Phase 0~2 완성 = "사용자 노출 트랙 vault 가 가장 빠른 cascade 자산 생산" 입증. multi-turn backend 표준 패턴 박제 → 6 재사용 vault (uttecHome / lemonLabs / REVITA / n8nUttec / wishketProject / 강사양성 LMS) cascade 가능.
+
+### Card B — Round 18 후속 (pca10040 12/12 RAM wall, mandate 13/13 완성, 5/22 14:30)
+
+- 참조: `_inbox/processed/2026-05-22-003-round18-pca10040-13of13-complete.md` (status: done, 5/22 20:30)
+- 갱신:
+  - [[onDevice-ai]] 13/13 보드 100% 완성 + 핵심 발견 #13 + § "RAM tier 결정타 — AI 응용 ≠ MCU 라벨" 신설 (RAM tier 4단계 표)
+  - [[ai-fanstick]] § 3계열 매트릭스 Cortex-M4F 행 분리 (256KB ✅ / 64KB ❌) + 영업 카피 갱신
+  - [[uttec-stage-package]] § Stage 4 칩 선택 가이드 § "저전력 BLE-only (AI 불가)" 행 신설 + 영업 카피 결정타 2건 신규 (RAM tier 4조건 곱 / AI 응용 ≠ MCU 라벨)
+  - [[gaps]] § "Round 18 후속 Nordic 보드별 setup 함정" 신설 (R18-F APPROTECT recover + R18-G post-recover USB COM 재assignment) → **Nordic 함정 11건 cross-vendor 인벤토리 완성**
+  - [[ai-direction]] 판단 로그 "(2026-05-22 야간) Round 18 후속 흡수: 13/13 보드 완성 + RAM tier 4조건 곱 원칙" 신설 — **AI 가속 4조건 곱 = ISA × workload × 메모리 계층 × RAM tier 적합도**
+  - [[2026-05-22_npu-vendor-광고-실측-격차]] § 매칭 사례 표 nRF52832 64KB 행 추가 + § "원칙 강화 — vendor 광고 검증 SOP 3축" 신설
+- 회신: `onDevice_AI/_inbox/pending/2026-05-23-003-mywiki-ack-round18-pca10040.md`
+- **인사이트**: mandate 13/13 보드 100% 완성 (5/17 mandate 신설 후 5일). Stage 4 칩 선택 가이드 모든 application class + RAM tier 정량 근거 채워짐. "AI 가속 4조건 곱" 원칙 박제.
+
+### 통합 인사이트 (2 카드 megasession)
+
+1. **multi-vault 동시 추진 사이클** — search Phase 0~2 (24h) + onDevice mandate 13/13 (5일) 같은 날 야간 cascade 완료. 사용자 노출 트랙 + 제품 트랙 동시 자산화 패턴 입증.
+2. **AI 가속 4조건 곱 원칙** — Round 17 (ISA) + Round 17.5 (메모리 계층) + Round 18 본편 (workload class) + Round 18 후속 (RAM tier) = 4조건 곱 완성. UTTEC 차별화 1순위 패턴.
+3. **Cross-vendor 함정 11건 인벤토리** — Espressif (ESP-DSP 4) + Nordic (Round 18 본편 5 + 후속 2) = vendor toolchain 2종 누적. 강사양성·임베디드 견적 자산.
+4. **multi-turn backend 표준 패턴 박제** — WebSocket + `--resume` + 70/80% 자동 핸드오프 + audit. 6 재사용 vault cascade 가능.
+
+## [2026-05-22] sync | 7 vault PROTOCOL.md 9 Claude 시스템 동기화 — 8/9 완료 (shield staging)
+
+5/21 야간 search-claude 9th 합류 후 잔여 7 vault PROTOCOL.md 동기화. **8/9 완료 (89%)** — myWiki 정본 + revita / onDevice / wishket / lemonLabs / uttecHome / search 6 local 직접 갱신 + n8nUttec Tailscale scp + shield staging.
+
+- 본 PC 6 vault 갱신: revita (헤더+활성 Claude 9 + 합의 이력 4건 보강) / onDevice / wishket (둘 다 revita 갱신본 그대로 복사) / lemonLabs (7→9, 합의 2건 추가) / uttecHome (8→9, search 1건 추가) / search (이미 9, 변경 없음)
+- Ubuntu n8nUttec: `scp uttec@100.90.158.36:/home/uttec/project/n8nUttec/_inbox/PROTOCOL.md` 갱신 완료
+- RPi shield: SSH 접근 불가 (192.168.0.23 port 22 Unknown error) → `myWiki/_inbox/outbox-staging/2026-05-22-shield-protocol-sync-pending.md` staging — RPi 복구 시 사용자 broker scp
+
+## [2026-05-22] delegate | onDevice_AI Round 9 cascade evolution 위임 카드 발송 (mywiki-claude → ondevice-claude)
+
+myWiki todo #6 "onDevice_AI W1 → W2 후속 (Round 9 ESP-DSP/ESP-DL intrinsics, Round 17/19 cascade 후 재검토)" — vault scope 격리 정책상 mywiki-claude 직접 진입 금지. ondevice-claude 위임:
+
+- 위임 카드: `onDevice_AI/_inbox/pending/2026-05-23-002-mywiki-round9-cascade-revisit.md`
+- 위임 내용: (1) Round 9 → R17·17.5·18·19 cascade evolution 종합 박제 (`04_종합_비교.md` § 11 신설 권고) / (2) ESP-DL·esp-nn 대안 옵션 A~D 사용자 결정 요청 (CNN strided access — R17.5 보류 영역) / (3) 클럭 normalize 단위 효율 종합 표 신설 권고
+- 응답 예정: ondevice-claude → `myWiki/_inbox/pending/2026-05-2X-XXX-ack-round9-cascade-evolution.md`
+
+## [2026-05-22] cascade | Round 18·19 → 위시캣 영업 SOP 룰 4 + 강사양성 Day 5 비교 사례 모듈 자산화 ⭐⭐
+
+본 흡수의 직접 cascade. 5/22 #15 (Round 18 CMSIS-NN 흡수) 직후 진행.
+
+- **위시캣 영업 SOP 룰 4 신설**: [[위시캣활동]] § "5/22 cascade — Round 18·19 흡수 → 영업 SOP 룰 4 신설" — application class 4단계 SOP (식별 → 본문 작성 시 의견 제시 → 자체 측정 자산 인용 → misuse 정중 대안). 매칭 키워드 트리거 4그룹 신규 추가 (AI 가속 / KWS·anomaly / CMSIS-NN·ESP-DSP / NPU·TOPS). wishket-claude memory 4번째 feedback `feedback_ai_accel_application_class.md` 박제 (자동 로드).
+- **강사양성 Day 5 비교 사례 모듈 자산화**: [[강사양성_파일럿]] § "Day 5 비교 사례 모듈 자산 — Round 17·18·19 vendor 광고 vs 실측 격차" — 60~90분 모듈, 3사례 비교 표 + 클럭 normalize 단위 효율 + application class 매트릭스 + 수강생 토론. 산출물 5종 (PPT / 그래프 / PDF 매트릭스 / 측정 영상 / 워크북). 영업·확장 3차원 가치.
+
+→ 본 cascade로 5/22 megasession (search 9th + Round 19 NNAPI + Round 18 CMSIS-NN) 의 영업·강의 자산화 완료. 잔여 #12 (7 vault PROTOCOL 동기화) 만 후속 작업으로 분리.
+
+## [2026-05-22] absorb | Round 18 Cortex-M4F CMSIS-NN MLP 3.23× — 3계열 AI 가속 매트릭스 두 번째 축 완성 ⭐⭐
+
+- 참조: `_inbox/processed/2026-05-22-002-round18-cmsis-nn-mcu-acceleration-axis2.md` (status: done, 5/22 12:30)
+- 갱신:
+  - [[onDevice-ai]] § "MCU AI 가속 매트릭스 — 3계열 완성" 신설 (LX7 +13.4× / M4F +3.23× / Eden NPU ‒79~421×) + 13보드 매트릭스 pca10056 12 sweep ✅ (진행률 81%) + 가설 Round 18 행 + 핵심 발견 #11·#12
+  - [[ai-fanstick]] § "3계열 AI 가속 매트릭스" Cortex-M4F 행 [측정 예정] → **+3.23× 채움** + 영업 카피 갱신 (B2B 시나리오 nRF52840 + CMSIS-NN 분기)
+  - [[uttec-stage-package]] § "Stage 4 칩 선택 가이드" 5행 매트릭스 + 클럭 normalize 표 + 영업 카피 결정타 4건 + 검증 자산 표 6건 신규 카피
+  - [[gaps]] § "Round 18 Nordic 빌드·monitor 함정 패턴" 신설 (R18-A~E 5건) → Round 17 ESP-DSP 4건 + Round 18 Nordic 5건 = MCU AI 가속 빌드 함정 cross-vendor 인벤토리 완성
+  - [[ai-direction]] 판단 로그 "(2026-05-22) Round 18 CMSIS-NN 흡수: 3계열 매트릭스 완성 + Stage 4 정량 근거" 신설 — **원칙 확립: "AI 가속 = ISA-specific instruction 폭 × workload class × 메모리 계층" 3조건 곱**
+  - [[2026-05-22_npu-vendor-광고-실측-격차]] § "instruction set design = AI 가속의 진짜 변수" 원칙 강화 섹션 신설 (LX7 5.64× M4F 클럭 normalize) + 매칭 사례 표 Round 18 행 추가 + Stage 4 매트릭스 두 번째 행 정량 채움
+- 회신: `onDevice_AI/_inbox/pending/2026-05-23-001-mywiki-ack-round18-cmsis-nn.md` 발송 (type: done)
+- 인사이트: **Stage 4 칩 선택 가이드 모든 칸 채워짐** — 5/21 LX7 + 5/22 M4F + 5/22 NPU 손해 = application class별 영업 카피 신뢰도 결정타. AI FanStick 외 **별도 B2B 시나리오 (nRF52840 KWS / anomaly detection)** 독립 영업 자산화. "clock speed ≠ AI 가속 성능" 원칙 정량 근거 확보.
 
 ## [2026-05-22] absorb | 2 카드 megasession (search-claude 9th 합류 + Round 19 NNAPI 79~421× 손해 결정타) ⭐⭐⭐
 

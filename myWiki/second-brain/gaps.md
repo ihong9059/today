@@ -2,8 +2,8 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-05-21 (자산 인덱스 완전성 함정 신설 — 5/20 + 5/21 사용자 지적 cascade 2건 연속)
-tags: [부족, 개선, 학습, 자산인덱스완전성]
+updated: 2026-05-22 (Claude CLI --resume + 긴 system-prompt fork 함정 신규 박제 — search Phase 2 T2/T3 spike, multi-vault 재사용 가치)
+tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume]
 links: [me, skills, ai-direction, strengths, goals, 위시캣활동]
 ---
 
@@ -313,6 +313,112 @@ stty -F /dev/ttyUSBx 115200 raw -echo -hupcl clocal
 - native stderr `2>&1` → NativeCommandError wrap → `$ErrorActionPreference='Continue'` + `cmd /c "... 2>&1"` 우회
 
 → 영업 적용: 위시캣 클라이언트 "AI 가속 NPU 칩" 요청 시 application class 사전 확인. 강사양성 Day 5 비교 사례에 본 데이터 추가. REVITA 모바일 응용 검토 시 본 패턴 적용.
+
+## Round 18 Nordic 빌드·monitor 함정 패턴 (2026-05-22 흡수 — ondevice Round 18 CMSIS-NN 측정 시 발견) ⭐⭐
+
+> pca10056 (nRF52840 Cortex-M4F) Round 18 CMSIS-NN MLP 3.23× 측정 ✅ 결과 도달까지 8차 시도 누적, ~3.5시간 빌드 함정 우회 비용 발생. Nordic 보드 측정 ecosystem 자산.
+> 출처: `onDevice_AI/프로젝트_보드한계모델_v2.5/Round18_CMSIS-NN/03_결론.md` + `_inbox/processed/2026-05-22-002-round18-cmsis-nn-mcu-acceleration-axis2.md`
+
+### (R18-A) Zephyr `CONFIG_STDOUT_CONSOLE=y` 누락 → printf newlib stdout 손실
+
+`prj.conf` 에 `CONFIG_STDOUT_CONSOLE=y` 미설정 시 newlib `printf` 가 stdout 으로 emit 안 됨. 빌드는 성공, 펌웨어 동작, 그러나 monitor 측에 0 byte. console 침묵을 "보드 hang" 으로 잘못 진단 위험.
+
+- **회피책**: Nordic + Zephyr 빌드 시 `prj.conf` 표준 항목 — `CONFIG_STDOUT_CONSOLE=y` + `CONFIG_PRINTK=y` + `CONFIG_CONSOLE=y` 3종 묶음 기본 포함.
+
+### (R18-B) Zephyr newlib stdout fully buffered → `fflush(stdout)` 필요
+
+Zephyr newlib stdout 은 line buffered 아닌 fully buffered. `printf("CSV,...\n")` 만으로는 flush 안 됨 → monitor 가 첫 줄 결과 못 받음.
+
+- **회피책**: 각 측정 결과 emit 직후 `fflush(stdout);` 명시. 또는 `setvbuf(stdout, NULL, _IOLBF, 0);` 으로 line buffered 강제 (boot 시 1회).
+
+### (R18-C) ⭐⭐ Zephyr 4.3.99 newlib console redirect 결함 의심 — `printk` 우회
+
+Zephyr 4.3.99 (nRF Connect SDK 통합 버전) 에서 `printf` + `fflush` + `CONFIG_STDOUT_CONSOLE=y` 3종 모두 설정해도 console 출력 무효. **`printk` 로 직접 emit 해야 정상 동작**. newlib console redirect 경로의 board-specific 결함 추정.
+
+- **증상**: `printf("CSV,%s\n", buf); fflush(stdout);` → 0 byte. `printk("CSV,%s\n", buf);` → 정상.
+- **회피책**: Nordic pca10056 + Zephyr 4.3.99 측정 코드는 measurement emit 부분만 `printk` 사용. application 다른 부분은 `printf` 유지 가능.
+- **추후 검증**: Zephyr 4.4+ 또는 nRF Connect SDK 다음 메이저 릴리스에서 재현 여부 확인 필요.
+
+### (R18-D) `esp32_monitor.py` `CSV,esp32` prefix → Nordic 매칭 실패
+
+기존 sweep monitor (`esp32_monitor.py`) 가 ESP32 board ID 가정으로 `^CSV,esp32` regex 사용 → Nordic 출력 `CSV,pca10056,...` 미매칭 → 결과 파싱 0건.
+
+- **회피책**: monitor regex 를 `^CSV,` 만으로 완화 (board ID 별도 column 으로 parse). board prefix 가정 제거.
+- **일반화**: 측정 자동화 파이프 cross-board 호환은 board-agnostic prefix 가 표준.
+
+### (R18-E) ⭐⭐ monitor race — 보드 emit ms 단위 → connect 전 종료
+
+pca10056 (Cortex-M4F + CMSIS-NN) MLP 128 측정 = **2,285μs** = 2.3ms. 보드 boot → 측정 emit → 종료가 ms 단위로 끝남. monitor 가 USB CDC ACM 연결 완료하기 전에 보드가 이미 emit 완료 후 idle. driver buffer 잔존 없음 → 결과 0 byte.
+
+- **증상**: pyserial open() 직후 readline() timeout. 보드 reset 다시 안 누르면 결과 못 받음.
+- **회피책**: monitor 시작 후 **1.5초 backoff** + background `nrfjprog --reset` trigger. monitor 가 connect 완료한 후에 보드 reset → 측정 emit 안전하게 capture.
+- **일반화**: 빠른 보드 (μs~ms 측정) 일수록 race window 작음. monitor first / reset second 시퀀스 표준화 필요.
+
+→ **5건 모두 강사양성 Day 5 사례 자산** + 1인 시공 함정 시리즈 확장. "측정 자동화 시 monitor↔보드 race / console redirect 결함 / 빌드 옵션 누락" 패턴을 임베디드 견적·강의 모듈로 활용 가능.
+
+→ **Round 17 ESP-DSP 함정 (#18~#21) + Round 18 Nordic 함정 (R18-A~E) = MCU AI 가속 빌드 함정 10건 누적** (각각 별도 vendor toolchain → cross-vendor 함정 인벤토리 완성).
+
+### Round 18 후속 — Nordic 보드별 setup 함정 (2026-05-22 야간 흡수, pca10040 12/12 RAM wall 측정 시 발견) ⭐
+
+pca10056 본편 sweep 때 없던 2건. pca10040 보드별 unique 함정. Nordic 함정 11건 누적 cross-vendor 인벤토리 완성.
+
+#### (R18-F) ⭐ pca10040 APPROTECT (readback protection) 활성 → flash 시 `nrfjprog error -90`
+
+`nrfjprog --program ... -f NRF52 --snr <SN>` → **`Access protection is enabled, must be recovered`**. pca10056 는 unprotected, pca10040 은 protected = 보드별 vendor 출고 default 설정 차이.
+
+- **회피책**: sweep 시작 전 1회 `nrfjprog --recover -f NRF52 --snr <SN>` (~30초, AP protect 해제 + UICR/flash erase)
+- **일반화**: Nordic 신규 보드 추가 시 첫 flash 시도에서 `error -90` 발생하면 본 함정 의심. recover 후 다시 시도.
+
+#### (R18-G) ⭐ `--recover` 후 USB re-enumeration → VCOM 번호 변경
+
+recover 직후 보드 USB 재enumerate → VCOM0/VCOM1 COM 번호 변경 (예: COM33/COM34 → COM35/COM36). 동일 보드, SN 그대로, **COM port 만 바뀜** = USB host driver 의 device descriptor 재할당 추정.
+
+- **증상**: recover 성공 후 기존 sweep script 가 옛 COM port (`COM33`) 로 연결 시도 → device not found
+- **회피책**: recover 직후 `nrfjprog --com` 재실행 → 새 COM port 재detect → `$env:NRF_COM` (콘솔 primary VCOM0 번호) 갱신 후 sweep 시작
+- **일반화**: AP recover 후에는 반드시 COM 재assignment 확인. 미래 Nordic 보드 추가 시 본 SOP 자동 적용.
+
+→ **누적 11건 (Round 17 ESP-DSP 4 + Round 18 본편 5 + Round 18 후속 R18-F·G 2) = MCU AI 가속 cross-vendor 함정 인벤토리 완성** (Espressif + Nordic 2종 vendor toolchain). 미래 신규 Nordic 보드 (nRF52833 / nRF5340 등) 추가 시 본 함정 11건 SOP 자동 적용.
+
+→ **강의 자산**: 강사양성 Day 5 비교 사례 모듈에 본 11건 cross-vendor 인벤토리 추가 가능 — "임베디드 견적 시 1인 셋업 함정 ~3.5시간/보드" 정량 (Round 18 본편 8차 시도 누적 사례).
+
+## Claude CLI `--resume` + 긴 `--system-prompt` fork 함정 (2026-05-22 흡수 — search Phase 2 T2/T3 spike) ⭐⭐
+
+### (A) 증상
+
+`claude --print --resume <session_id> --system-prompt "<긴 prompt>"` 동시 전달 시 CLI 가 **fork** 처럼 동작 → 새 session_id 발급 → history 끊김. resume 의도 무효.
+
+- 짧은 prompt + resume: `sid 동일`, history 유지 ✅
+- **긴 prompt + resume**: `sid 다름`, history 끊김 ❌
+
+`--system-prompt` 가 짧으면 정상 동작 (search T2 spike ~70자 OK). search 의 SYSTEM_PROMPT (1334자, strict 룰) 같이 길면 발생. 임계값은 명확하지 않으나 ~수백 자 부근에서 trigger 추정.
+
+### (B) 해결 패턴 (검증 완료)
+
+| 호출 시점 | 처리 |
+|:-:|---|
+| **첫 호출** (`claude_session_id=None`) | `--system-prompt <긴 prompt>` 전달 → Claude session 에 prompt 박제 + 새 session_id 발급 → 응답 + session_id 저장 |
+| **후속 호출** (`--resume <session_id>`) | `--system-prompt` **생략** — Claude session 안에 박제된 prompt 자동 적용 |
+
+**부가 이점**: 후속 호출 `input_tokens` 거의 0 (cache 100% 활용) → 매우 저렴. 사용자 Max 구독자에게도 측정 가능.
+
+**검증 코드**: `C:/todo/search/.tmp/spike_t3_no_sysprompt_resume.py` (재실행 가능).
+
+### (C) 재사용 가능 vault (multi-turn Claude backend 모두)
+
+| Vault | 적용 시나리오 |
+|---|---|
+| uttecHome backend | UTTEC 챗봇 (사용자 노출 트랙, 회사 소개·제품 질문 multi-turn) |
+| lemonLabs 도구 | 4 트랙 (Bridge / Mentor / Daily / Strategy) 챗봇 |
+| REVITA web | 제품 사용 가이드 챗봇 |
+| n8nUttec | n8n workflow trigger 후 Claude 와 대화형 점검 |
+| wishketProject | 자동매칭 결과 + 사용자 추가 질의 대화 |
+| 강사양성 LMS | 학생-튜터 대화 (Day 5~7 모듈) |
+
+→ **multi-turn Claude backend 표준 패턴 박제**. search Phase 2 가 첫 검증 사례. 본 함정 회피 없이 backend 구현 시 사용자 답변에 history 끊김 → "대화가 안 됨" 버그 발생 위험.
+
+### (D) 관련 thought
+
+[[2026-05-22_claude-max-cli-subprocess-pattern]] § 후속 (WebSocket + --resume 세션 모델) — multi-turn backend 일반화 패턴.
 
 ## search vault 셋업 함정 (2026-05-21 흡수 — search-claude 합류) ⭐
 

@@ -2,9 +2,9 @@
 title: search vault (myWiki AI 검색·정리 web)
 type: entity
 created: 2026-05-21
-updated: 2026-05-21 (search-claude 9th 합류 — Phase 0 셋업 megasession)
-tags: [웹, 검색, 위키노출, vault, Tier3, multi-agent, search-claude, prompt-driven, claude-api, FastAPI, React]
-links: [me, skills, uttec-homepage, claude-code, memory-mcp, obsidian-시리즈-사업화, ai-education-web]
+updated: 2026-05-22 (Phase 2 ✅ 세션 기반 대화 model 완성 — WebSocket + --resume + 70/80% 자동 핸드오프 + Phase 재배치)
+tags: [웹, 검색, 위키노출, vault, Tier3, multi-agent, search-claude, prompt-driven, claude-api, FastAPI, React, WebSocket, 세션모델, --resume, 핸드오프]
+links: [me, skills, uttec-homepage, claude-code, memory-mcp, obsidian-시리즈-사업화, ai-education-web, 2026-05-22_claude-max-cli-subprocess-pattern]
 ---
 
 # search vault (myWiki AI 검색·정리 web)
@@ -61,13 +61,32 @@ frontend 출력창 표시 (markdown + 출처 카드)
 - [[obsidian-시리즈-사업화]] — search는 obsidian + AI 검색 데모 자산
 - [[ai-education-web]] — 동일한 React+TS 패턴 재활용
 
-## Phase 진행
+## Phase 진행 (2026-05-22 재배치)
 
 - **Phase 0** (2026-05-21) ✅ — vault 셋업 완료: 디렉토리·git·.gitignore·CLAUDE.md·_inbox·junction·skills·hooks·myWiki entity·memory 갱신·GitHub repo·backend/frontend skeleton (38 files, commit `40adc7c`)
-- **Phase 1** (2026-05-21) ✅ — MVP 동작: backend FastAPI `/api/query` + grep wiki_search + Claude Max CLI subprocess (OAuth, API 키 불요) + React Vite frontend + Tailwind + 출처 토글 UI + 포트 8888/8889 swap (Vite/FastAPI) + fabricate 차단 (`--strict-mcp-config` + `--setting-sources project` + system prompt 강화 + 작업보고서 SEARCH_DIRS + 날짜 가중치)
-- **Phase 2** — UI 다듬기: shadcn/ui · 검색 결과 카드 · 다크모드 · 모바일 · 검색 히스토리
-- **Phase 3** — 검색 정확도: prompt caching · 임베딩 · 인덱스 캐시 · BM25
-- **Phase 4** — 배포: Tailscale → DigitalOcean 별도 droplet (uttecHome 7777과 분리)
+- **Phase 1** (2026-05-21~22 새벽) ✅ — MVP 동작: backend FastAPI `/api/query` + grep wiki_search + Claude Max CLI subprocess (OAuth, API 키 불요) + React Vite frontend + Tailwind + 출처 토글 UI + 포트 8888/8889 swap (Vite/FastAPI) + fabricate 차단 (`--strict-mcp-config` + `--setting-sources project` + system prompt 강화 + 작업보고서 SEARCH_DIRS + 날짜 가중치)
+- **Phase 2** (2026-05-22) ✅ — **세션 기반 대화 model** 완성. stateless single-query → 한 client = 한 WebSocket session, 컨텍스트 자동 핸드오프. PLAN 12 task 모두 검증 통과 (T1~T5 backend / T6~T9 frontend / T10·T11 cleanup·E2E / T12 박제·commit). commit `28d0a5d`. 핵심 결정 D1~D5 (통신 WebSocket / 저장 메모리 dict lifespan-scoped / Claude 연속 CLI `--resume` ⭐ / 측정 last_input + last_cache_read + last_cache_creation / 핸드오프 커스텀 요약 + 새 session preamble) + audit 저장 (`작업보고서/handoffs/<YYYY-MM-DD>_<sid_prefix>.md`)
+- **Phase 3** (구 Phase 2 흡수) — UI 다듬기: shadcn/ui 핵심 · 모바일 · 세션 UI 미세조정 · 다크모드 (Step 1 선행 완료)
+- **Phase 4** (구 Phase 3) — 검색 정확도: prompt caching · 임베딩 · 인덱스 캐시 · BM25
+- **Phase 5** (구 Phase 4) — 배포: Tailscale → DigitalOcean 별도 droplet (uttecHome 7777과 분리)
+
+### Phase 2 ⭐ 세부 — 세션 기반 대화 model (2026-05-22)
+
+stateless single-query API 의 follow-up 불가 문제 (사용자가 "1, 2, 3, 4 중 어떤 것?" 답변 불가능) 해결. WebSocket 세션 + 70/80% 자동 핸드오프 model.
+
+**핵심 결정 5건 (D1~D5)**:
+
+| # | 결정 | 내용 |
+|:-:|---|---|
+| D1 | 통신 | WebSocket (`/ws/chat`) — HTTP 폴링 대비 latency 우위 + push 지원 |
+| D2 | 저장 | 메모리 dict (lifespan-scoped) — Redis 등 외부 의존 0, 단일 instance 검증 단계 적합 |
+| D3 | Claude 연속 | CLI `--resume <session_id>` 활용 — Claude session 안에서 history·system_prompt 자동 박제 (input_tokens 거의 0) |
+| D4 | 측정 | `last_input` + `last_cache_read` + `last_cache_creation` 추적 → 70/80% 임계값 판정 |
+| D5 | 핸드오프 | 70% 도달 시 커스텀 요약 → 80% 도달 시 새 session preamble 로 자동 전환 |
+
+**audit 저장**: 매 세션 종료 후 `작업보고서/handoffs/<YYYY-MM-DD>_<sid_prefix>.md` 박제 (재현 가능 + 측정 데이터 누적).
+
+**Phase 3 후속**: UI 다듬기 (shadcn/ui 핵심 + 모바일 + 세션 UI 미세조정). 다크모드 Step 1 은 Phase 2 진행 전 선행 완료.
 
 ## 메모리 공유 정책 (2026-05-22 결정) ⭐
 

@@ -2,9 +2,9 @@
 title: UTTEC 영업 패키지 (4.5-Stage)
 type: entity
 created: 2026-05-05
-updated: 2026-05-21 (Round 17/17.5 ESP-DSP 24.8× 카피 추가 — Stage 4 영업 결정타 정량 확보)
-tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP]
-links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭]
+updated: 2026-05-22 야간 (Round 18 후속 pca10040 64KB RAM wall 흡수 — Stage 4 칩 선택 가이드 § "저전력 BLE-only (AI 불가)" 행 신설 + RAM tier 4조건 곱 원칙)
+tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스]
+links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차]
 ---
 
 # UTTEC 영업 패키지 (4.5-Stage)
@@ -46,22 +46,39 @@ Stage 0 (0.5) + Stage 1 (1) + Stage 2 (1) + Stage 3 (1) + Stage 4 (1) = 4.5
 
 Palantir Foundry 라이선스 연 수억~수십억 → UTTEC 4.5-Stage 풀 7,300만.
 
-## Stage 4 칩 선택 가이드 (2026-05-22 Round 19 NNAPI 결정타) ⭐⭐⭐
+## Stage 4 칩 선택 가이드 (2026-05-22 Round 18·19 흡수 — 3계열 매트릭스 완성) ⭐⭐⭐
 
-**Mobile NPU 적극 제안 X — MCU 가속 매트릭스로 전개**
+**Mobile NPU 적극 제안 X — MCU 가속 매트릭스로 전개 (5/22 두 번째 축 정량 채움)**
 
-Galaxy A51 5G Eden NPU NNAPI 측정 결과 plain INT8 MLP 전 범위에서 CPU Cortex-A77 + asimddp 대비 **79~421× 느림**. "Mobile NPU 항상 빠르다" 통념 정량 반증. Samsung 2.1 TOPS 광고 vs 실측 격차.
+5/22 Round 19 (Eden NPU NNAPI 79~421× 손해) + Round 18 (Cortex-M4F CMSIS-NN +3.23×) 동시 흡수로 3계열 가속 매트릭스가 application class별 정량 근거를 갖춰 완성. "Mobile NPU 항상 빠르다" 통념 정량 반증 + MCU 가속 일관 우월 입증.
 
-**application class별 권장 가속**:
+**application class별 권장 가속 (3계열 매트릭스 + RAM tier 분리)**:
 
-| Application | 권장 가속 | 영업 패키지 |
-|---|---|---|
-| 응원봉 양산 (small/medium dense + batch=1 + INT8) | **ESP32-C3 → S3 + ESP-DSP** (+13.4×) | AI FanStick |
-| B2B Stage 4 임베디드 (M4F + Bluetooth) | **Nordic nRF52840 + CMSIS-NN** [Round 18 측정 예정] | Stage 4 임베디드 |
-| Mobile T3 응용 (Android 앱) | **CPU plain (`-O2` asimddp)** — NPU 사용 X | Stage 4 모바일 |
-| 표준 CV (MobileNet 등 conv-dominant) | Mobile NPU 적합 | (드문 케이스, 별도 검토) |
+| Application | 권장 가속 | 정량 근거 | 영업 패키지 |
+|---|---|---|---|
+| 응원봉 / wearable / small SLM (dense + batch=1 + INT8) | **ESP32-S3 + ESP-DSP + PSRAM 8MB** | **+13.4×** (R17 5/21) / C3→S3+DSP 종합 **+24.8×** | AI FanStick 양산 |
+| **B2B BLE+AI 통합 SoC** (KWS / anomaly detection / 산업 IoT) | **Nordic nRF52840 (256KB) + CMSIS-NN** ⭐ | **+3.23×** (R18 5/22, SMLAD DSP extension) | **Stage 4 B2B 임베디드** (1순위 적용 후보) |
+| **저전력 BLE-only (AI 불가)** ⚠️NEW | **Nordic nRF52832 (64KB) — AI mandate 부적합** | **전셀 RAM wall 12/12** (R18 후속 5/22 야간) | BLE/sensor-only 트랙 분리 |
+| Mobile T3 응용 (Android 앱) | **CPU plain (`-O2` asimddp)** — NPU 사용 X | (R19 5/22) NPU 대비 79~421× 빠름 | Stage 4 모바일 |
+| 표준 CV (MobileNet 등 conv-dominant + batch>1) | Mobile NPU 적합 | (드문 케이스, 별도 검토) | — |
+| 본 vault skeleton (small dense, batch=1) | CPU SIMD (asimddp / SMLAD) | baseline | — |
 
-**영업 카피 결정타**: "벤치마크 없이 vendor 광고 신뢰 X" + "UTTEC 자체 측정 자산 (Round 17·18·19) 기반 칩 선택"
+**클럭 normalize 단위 효율 (5/22 Round 18 신규)** — Stage 4 칩 선택 결정타:
+
+| ISA | 클럭 | MLP 128 측정 | 클럭 normalize cycles | 단위 효율 |
+|---|---|---:|---:|:-:|
+| **LX7** (esp32s3) | 240MHz | 108μs (ESP-DSP) | 25,920 | **5.64× M4F 우위** ⭐ |
+| Cortex-M4F (pca10056) | 64MHz | 2,285μs (CMSIS-NN) | 146,240 | baseline |
+
+→ AI 가속 = **ISA-specific instruction 폭 + workload class 매칭**이 결정타 (128-bit AI vector vs 32-bit SMLAD). vendor TOPS 광고가 아닌 instruction set design이 진짜 변수.
+
+**영업 카피 결정타** (5/22 완성형 + 야간 후속):
+- "벤치마크 없이 vendor 광고 신뢰 X — UTTEC 자체 측정 자산 (Round 17·18·18후속·19) 기반 칩 선택"
+- "**B2B 임베디드 = nRF52840 (256KB) 필수** + CMSIS-NN +3.23× (정량 검증) — nRF52832 (64KB) 는 AI 부적합"
+- "응원봉/wearable = ESP32-S3 + ESP-DSP +13.4× (정량 검증)"
+- "Mobile NPU 일률 적용 X — application class 사전 확인 SOP 필수"
+- "**AI 가속 = ISA × workload × 메모리 계층 × RAM tier 4조건 곱**" ⭐⭐ (5/22 야간 후속 4번째 조건 추가)
+- "**AI 응용 ≠ MCU 라벨** — vendor 'supports neural network frameworks' 광고는 toolchain·library 호환만 검증, 실제 RAM 적합도는 sweep 측정 필수"
 
 ## 영업 흐름 (단계별 도입)
 
@@ -114,6 +131,9 @@ Galaxy A51 5G Eden NPU NNAPI 측정 결과 plain INT8 MLP 전 범위에서 CPU C
 | ⭐⭐⭐ "**ESP-DSP intrinsics 24.8× 가속** — C3→S3 칩 교체로 응답 150ms" | Round 17: `dsps_dp_s8_aes3` MLP 13.4× / TF 10.8× (Round 17.5) — 영업 결정타 |
 | ⭐ "**ESP-DSP 효과 = 3조건 곱** (LX7 × SRAM × contiguous matvec)" | Round 17.5 매칭 — C3·esp32wroom·RISC-V는 ESP-DSP 손해 (적용 시 1.54× 느림). KWS는 esp-nn 별도 가속 |
 | ⭐ "**외부 인터넷 0% 음성 명령**" | Korean-Small 154K INT8 + S3 PSRAM = ~150ms 응답 |
+| ⭐⭐ "**nRF52840 + CMSIS-NN MLP +3.23× 가속** — B2B BLE+AI 통합 SoC 결정타" (5/22 신규) | Round 18: SMLAD DSP extension MLP 128 = 7,367μs → 2,285μs (Optimistic 가설 2.5~4× 적중) |
+| ⭐⭐ "**3계열 AI 가속 매트릭스 완성** — application class별 정량 칩 선택" (5/22 신규) | LX7 ESP-DSP +13.4× / M4F CMSIS-NN +3.23× / Mobile NPU NNAPI ‒79~421× |
+| ⭐ "**LX7 단위 효율 5.64× Cortex-M4F 우위** — clock 아닌 instruction set design 결정타" (5/22 신규) | Round 18 클럭 normalize: 25,920 cycles (LX7) vs 146,240 cycles (M4F) |
 
 → **Stage 4 카피 결정 메시지**: "1인이 4주에 ESP32 + Pi family + 모바일 13보드 한계 측정 1장 표 박제" — 임베디드 스타트업 컨설팅 패키지 차별화.
 

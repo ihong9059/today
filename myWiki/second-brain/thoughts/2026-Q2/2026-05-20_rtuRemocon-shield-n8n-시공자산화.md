@@ -2,6 +2,7 @@
 title: rtuRemocon + shield + n8n = 시공 자산화 사업 라인 1순위
 type: thought
 created: 2026-05-20
+updated: 2026-05-20
 tags: [revita, shield, n8n, 한림용인CC, 시공자산화, 산업통합제어, 사업라인, 매칭패턴]
 links: [rtu-remocon, shield, n8n-uttec, 한림용인cc-고가수조, revita, 영업전략, 위시캣활동]
 ---

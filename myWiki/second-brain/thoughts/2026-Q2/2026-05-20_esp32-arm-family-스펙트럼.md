@@ -2,6 +2,7 @@
 title: ESP32·ARM 패밀리 8년 진화 46× 스펙트럼 — Round 1~11 종합
 type: thought
 created: 2026-05-20
+updated: 2026-05-20
 tags: [onDevice, 측정, ARM, Xtensa, RISC-V, PSRAM, Stage4, 강사양성, 매칭패턴]
 links: [onDevice-ai, ai-fanstick, uttec-stage-package, ai-direction, gaps, uttec-edu]
 ---
