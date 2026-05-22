@@ -5,6 +5,18 @@ created: 2026-04-19
 updated: 2026-05-22 (Round 18 흡수 + cascade 2건 — 위시캣 영업 SOP 룰 4 / 강사양성 Day 5 비교 사례 모듈 자산화)
 ---
 
+## [2026-05-22 야간 신규 세션] diagnose | search vault 검색 정확도 결함 진단 + 협의 카드 발송 (main vault 책임 박제) ⭐
+
+사용자 web UI 에서 "오늘 할일" query 시 5/17 등 과거 보고서가 답변/출처에 나오는 사고. mywiki-claude가 main vault 책임으로 직접 진단:
+
+- `search/backend/diag_idx.py` + `diag_query.py` 작성·실행 → 알고리즘 자체는 정상 (5/22 작업보고서 score 1.48 #1)
+- 디스크 cache 16:07 → 진단 호출로 20:27 갱신 (incremental 자동)
+- **원인 추정**: `_TIME_KEYWORDS` 너무 strict + `date_bonus * 0.05` 가중치 약함 + 작업보고서 authority 디부스트 (0.6) 가 time-oriented 분기 없이 일률 적용
+- **협의 카드 발송**: `search/_inbox/pending/2026-05-23-001-mywiki-search-accuracy-today-rescue-weak.md` — 4 패치 제안 (A: 키워드 확장 / B: 가중치 강화 / C: 약 rescue 디폴트 / D: score breakdown UI 디버그)
+- **신규 메모리 박제**: `feedback_mywiki_main_vault_role.md` — myWiki = 5-vault hub, mywiki-claude = 진단·카드·cascade 능동 주도. "할까요?" 묻기 최소화 정책
+
+cascade: search-claude 처리 후 done 카드 도착 시 5단계 lifecycle 흡수 (search.md Phase 4.2 후속 + gaps.md today rescue 함정 + ai-direction 판단 로그 + thought 신설).
+
 ## [2026-05-22 야간 후속] cascade | Round 18 후속 → 위시캣 영업 SOP § 1-A "RAM tier" + 강사양성 Day 5 모듈 § "RAM tier + Nordic 함정 11건" 진화 ⭐⭐
 
 5/22 야간 흡수의 직접 cascade (#13 + #14 todo 연장).
