@@ -5,6 +5,17 @@ created: 2026-04-19
 updated: 2026-05-22 (Round 18 흡수 + cascade 2건 — 위시캣 영업 SOP 룰 4 / 강사양성 Day 5 비교 사례 모듈 자산화)
 ---
 
+## [2026-05-22 야간 2차] diagnose | cross-vault 운영 결함 종합 진단 + search vault 2번째 카드 (answer source 일관성 6 패치) + 메모리 박제 ⭐⭐
+
+사용자 명시 "주변 vault 결함은 즉시 오늘 할일에 추가" 정책 발생. mywiki-claude 가 9 vault 상태 점검:
+
+- ⚠️ lemonLabs 2일 정지 + pending 2장 미흡수 / search source 일관성 결함 / uttecHome·search log 형식 비통일 / shield+revita 인프라 끊김
+- 가장 시급 = search vault 답변이 mywiki 답변과 갈라짐 (사용자 노출 트랙 신뢰도)
+- 진단: search 가 second-brain + 작업보고서만 source. `.claude/memory/*` (30 files) + `.claude/sessions/*` (carry-over) 0% 반영. 모델도 haiku.
+- **2번째 카드 발송**: `search/_inbox/pending/2026-05-23-002-mywiki-search-answer-source-consistency.md` — E~J 6 패치 (메모리 인덱싱 / 세션 인덱싱 / 모델 업그레이드 / system prompt myWiki=main hub 명시 / context 확장 / 답변 일치성 regression test)
+- **신규 메모리 박제**: `feedback_cross_vault_to_todo.md` — cross-vault 결함 발견 즉시 작업보고서 todo 추가 + Notion sync 까지가 main vault 책임 완결
+- 작업보고서 신규 todo 5건 (#21~#25) 추가 — cross-vault 진단 결과 박제
+
 ## [2026-05-22 야간 신규 세션] diagnose | search vault 검색 정확도 결함 진단 + 협의 카드 발송 (main vault 책임 박제) ⭐
 
 사용자 web UI 에서 "오늘 할일" query 시 5/17 등 과거 보고서가 답변/출처에 나오는 사고. mywiki-claude가 main vault 책임으로 직접 진단:

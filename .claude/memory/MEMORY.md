@@ -11,6 +11,7 @@
 - [할일 Notion 동기화 — 단방향](feedback_todo_notion_sync.md) — **생성=작업보고서 source / 완료=Notion source**. Claude는 작업보고서 ⬜→✅ 임의 변경 절대 금지. Notion에서 사용자 체크 시에만 작업보고서 ✅ 전파
 - [myWiki 반영 필수](feedback_mywiki_sync.md) — 작업 중/종료 시 myWiki second-brain에 반드시 반영, 누락 금지
 - [myWiki = main vault ⭐](feedback_mywiki_main_vault_role.md) — 5-vault hub. mywiki-claude는 다른 vault 문제·결정·진단 능동 주도 (카드 발송·진단·cascade). "할까요?" 묻기 최소화, 사용자 결단 필요 항목만 보고
+- [cross-vault 결함 → 즉시 오늘 할일 ⭐](feedback_cross_vault_to_todo.md) — 외부 vault 진단·문제 발견 시 메모리·log만으로 끝내지 말고 작업보고서 todo 추가 + Notion sync까지 완결. 사용자 업무 = main vault 상황 기반
 - [브라우저 Chrome 선호](feedback_browser_chrome.md) — URL 열 때 chrome.exe 명시 호출 (기본 브라우저는 Edge라 그냥 열면 Edge로 뜸)
 - [Memory MCP 설치](reference_memory_mcp.md) — Anthropic 공식 지식 그래프 서버, myWiki/ontology/memory.json 저장, Claude Code 등록 완료 (2026-05-05)
 - [PDF 이메일 자동화 Hybrid](feedback_pdf_email_hybrid.md) — 한글 PDF는 PC Chrome headless 렌더 + n8n 서버 SMTP 발송 (서버 도구 부재 + Windows 폰트 우수)
