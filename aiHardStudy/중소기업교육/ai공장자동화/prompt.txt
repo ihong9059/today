@@ -1,5 +1,1 @@
-obsidian skills
-
-ALD
- 
-AISG 3.0 과 2.0의 차이
+claude CLI를 subprocess로 호출하
