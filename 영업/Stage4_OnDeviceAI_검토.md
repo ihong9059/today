@@ -2,8 +2,8 @@
 title: Stage 4 (On-Device AI) 신설 검토 + 4.5-Stage 패키지 확장
 type: business-decision
 created: 2026-05-07
-updated: 2026-05-08
-status: 채택 (4.5-Stage 패키지로 확장) + Phase 1A·1B 검증 데이터 반영
+updated: 2026-05-22 (v2.5 mandate 5/6 Round 완료 + 3계열 매트릭스 + 13/13 보드 cascade § 10 신설)
+status: 채택 (4.5-Stage 패키지로 확장) + v2.5 정량 검증 데이터 반영 (Round 16~19)
 related:
   - 영업/Stage0_Core_Services_견적서.md
   - myWiki/second-brain/entities/uttec-stage-package.md
@@ -227,6 +227,133 @@ myWiki ontology에 명시된 신설 후보:
 
 ---
 
+## 10. v2.5 mandate 검증 결과 통합 (2026-05-22 갱신)
+
+> 본 § 10은 **2026-05-20~22 v2.5 mandate 5/6 Round 완료** 시점에 추가된 정량 박제. § 1~9는 2026-05-07 1차 검토 결정 그대로 보존, § 10은 영업 자료 cascade.
+
+### 10.1 한 줄 핵심
+
+⭐⭐⭐ **3계열 AI 가속 매트릭스 완성** (LX7 ESP-DSP **+13.4×** / Cortex-M4F CMSIS-NN **+3.23×** / Mobile NPU NNAPI **‒79~421× 손해**) + **13/13 보드 측정 완료** (197 측정 셀 박제) + **Stage 4 칩 선택 가이드 application class별 RAM tier 정량 근거 확립**. AI FanStick 차세대 결정타 = **C3→S3+ESP-DSP 24.8× 가속** (SLM 응답 1초 → 0.07초).
+
+### 10.2 v2.5 mandate 완료 매트릭스
+
+| Round | 검증 결과 | 영업 가치 |
+|:-:|---|---|
+| 16 sanity | INT8 saturation 5보드 공통 quirk = 본 vault skeleton 자체 한계 박제 | 측정 신뢰성 보강 |
+| **17 ESP-DSP** ⭐⭐⭐ | esp32s3 `dsps_dp_s8_aes3` MLP 128 **1,452μs → 108μs = 13.4×** | **AI FanStick 결정타** |
+| 17.5 CNN/TF | TF 64 SRAM **10.8×** / PSRAM 효과 무효 / CNN 1.00× | TF Attention 가속 박제 |
+| **18 CMSIS-NN** ⭐⭐ | pca10056 (Cortex-M4F) `arm_fully_connected_s8` MLP 128 **7,367μs → 2,285μs = 3.23×** | **B2B nRF52840 SoC 정량 근거** |
+| 18 후속 | pca10040 (64KB) 12/12 RAM wall = "nRF52832 부적합, nRF52840 필수" | RAM tier 결정타 |
+| **19 NNAPI** ⭐⭐⭐ | Galaxy A51 5G Eden NPU MLP 128~16384 **5/5 셀 79~421× 손해** | **Mobile NPU 부적합 박제** |
+| 20 LoRA | 보류 (별도 환경 셋업 3~7일) | AI FanStick 개인화 |
+
+→ 5/6 Round 완료, ~3일 진행, 빌드 함정 ~15건 박제 (Espressif 4 + Nordic 11).
+
+### 10.3 3계열 AI 가속 매트릭스 (단일 클럭 normalize)
+
+| ISA | 클럭 | MLP 128 latency | cycle-per-MAC normalize | 효율 |
+|---|---|---:|---:|---|
+| **Xtensa LX7** (esp32s3) | 240MHz | **108μs** (ESP-DSP) | 25,920 cycles | ⭐⭐⭐ **13.4×** |
+| **Cortex-M4F** (pca10056) | 64MHz | **2,285μs** (CMSIS-NN) | 146,240 cycles | ⭐⭐ **3.23×** |
+| Cortex-A77 + NPU (smartphone) | 2.2GHz | 51μs CPU baseline / NPU 79~421× 손해 | — | ⚠️ NPU 부적합 |
+| Xtensa LX6 (esp32wroom) | 240MHz | 3,793μs (ansi fallback) | 910,320 cycles | ⚠️ 0.65× 손해 |
+
+→ **AI 가속 = ISA-specific instruction 폭 결정타** (LX7 128-bit AI Vector ≫ M4F 32-bit DSP SMLAD ≫ Mobile NPU). 클럭 normalize 시 LX7 **5.64× M4F 단위 효율 우위**.
+
+### 10.4 ⭐⭐⭐ Stage 4 칩 선택 가이드 (application class별, 5/22 완성형)
+
+| 응용 class | RAM tier | 권장 칩 | 가속 |
+|---|---|---|---|
+| **응원봉 SLM** (Korean-Small 154K) | 512KB+ PSRAM | **ESP32-S3 + PSRAM 8MB** | ESP-DSP **24.8×** (C3→S3+DSP 종합) |
+| **B2B BLE+AI 통합 SoC** (KWS / anomaly / vital sign) | 256KB | **nRF52840** | CMSIS-NN **3.23×** + BLE5 + USB + NFC |
+| **Mobile T3 응용** (앱 통합 AI) | GB | **smartphone CPU SIMD** (asimddp) | NPU NNAPI 피하기 |
+| **저전력 BLE-only** | 64KB | nRF52832 | ❌ **AI 불가** (mandate 12/12 RAM wall) |
+| **표준 CV** (MobileNet 등) | NPU | Mobile NPU (별도 모델 형식 필요) | NNAPI OK (skeleton class 외) |
+
+### 10.5 시나리오별 권장 갱신 (5/22 v2.5)
+
+#### 시나리오 A (한국기계 스마트팩토리) — § 6.A
+v2.5 보강: **이상감지 KWS / 진동 anomaly detection → nRF52840 + CMSIS-NN (3.23× 가속, BLE5 통합)**. 1,500만 단가 정당화 = "검증된 3.23× 가속 + 11건 빌드 함정 인벤토리 즉시 적용 (시행착오 비용 절감)".
+
+#### 시나리오 C (임베디드 스타트업 / IoT) — § 6.C
+v2.5 보강: **칩 선택 컨설팅 자체가 영업 차별화**. 클라이언트가 "AI 가속 칩 필요" 요청 시:
+1. application class 사전 확인 (KWS / anomaly / SLM / CV?)
+2. RAM 요구사항 측정 (mandate 셀 fit/wall 패턴 참조)
+3. ISA 가속 매칭 (LX7 / M4F / NPU / CPU SIMD 중 선택)
+4. cross-vendor 빌드 함정 인벤토리 즉시 적용
+
+→ 클라이언트는 "AI 칩 = NPU = TOPS 광고" 함정 회피 가능 → **vendor 광고 vs 실측 격차 검증 SOP** 자체가 영업 자산.
+
+#### 신규 시나리오 E — AI FanStick 차세대 양산 (양산 트랙)
+
+| 항목 | 현재 (ESP32-C3 클라우드 API) | 차세대 (ESP32-S3 + ESP-DSP) |
+|---|:-:|:-:|
+| 칩 | ESP32-C3 (RISC-V 160MHz) | **ESP32-S3 (Xtensa LX7 240MHz) + PSRAM 8MB** |
+| AI | 클라우드 API (Claude/GPT) | **microGPT/SLM on-chip (외부 인터넷 0%)** |
+| MLP 128 latency | RAM wall (400KB) | **108μs (ESP-DSP)** ⭐ |
+| SLM 응답 (Korean-Small 154K) | ~3~5초 (네트워크) | **~70ms (on-chip)** ⭐⭐⭐ |
+| 차별화 | 음성+AI+BLE | **+ 외부 인터넷 0% + 응원봉 자체 GPT** |
+| BOM 변화 | 1.84× 칩가격 (PSRAM 8MB 추가) | 종합 24.8× 가속 효과 (5/20+22 실측 박제) |
+
+### 10.6 ⚠️ Mobile NPU 부적합 박제 (영업 결정타)
+
+**Round 19 결과**: Galaxy A51 5G Eden NPU (NNAPI) MLP 128~16384 **5/5 셀 모두 CPU + asimddp 대비 79~421× 손해**. eden-drv (ACCELERATOR/NPU, EdenDriver_1_3) auto-pick + v2 reusable+burst 최적화 후에도 변화 미미 → NPU dispatch path 자체 비효율 (overhead가 아닌 구조적 부적합).
+
+→ **영업 결정타**: 클라이언트가 "Mobile NPU 활용 AI 앱" 요청 시 application class 사전 확인 필수:
+- ✅ NPU OK = MobileNet conv / batch>1 / fixed graph (표준 ML model)
+- ❌ NPU 손해 = plain INT8 small dense / batch=1 (본 vault skeleton class) → **CPU + SIMD (asimddp) 권장**
+
+→ vendor TOPS 광고 신뢰성 검증 SOP: "TOPS 수치 ≠ application 성능". Round 17/18/19 3 회 누적 = "AI 가속 = ISA-specific instruction 폭 × workload class 매칭 × RAM tier 적합도" 3조건 곱 원칙 박제.
+
+### 10.7 Nordic + Espressif 빌드 함정 인벤토리 (강사양성 자산)
+
+**11건 Nordic (5/21~22) + 4건 Espressif (5/20) = 15건 cross-vendor 인벤토리**:
+
+| Vendor | 카테고리 | 함정 수 | 강사양성 모듈 |
+|---|---|:-:|---|
+| Espressif | 한글 경로 / ESP-DSP API / esp-dsp dependency / PSRAM 효과 | 4 | Day 5 — ESP-IDF 빌드 환경 |
+| Nordic | Claude Code cwd / Zephyr config / newlib stdio / monitor race / USB CDC / APPROTECT / USB re-enum | 11 | Day 5 — Zephyr 빌드 환경 |
+
+→ **자료 활용**:
+- **위시캣 임베디드 견적**: "검증된 빌드 함정 인벤토리 15건 즉시 적용 — 시행착오 ~3일 절감" 제안 가능
+- **강사양성 Day 5 모듈**: ESP-IDF + Zephyr 2 vendor 빌드 함정 비교 강의 (실제 6 vault Claude 인스턴스 누적 박제)
+- **Stage 4 영업**: cross-vendor 인벤토리 자체가 "현장 경험" 증명 자료
+
+### 10.8 영업 자산 우선순위 (5/22 갱신)
+
+| 항목 | 영업 사용 시점 | 자산화 위치 |
+|---|---|---|
+| **3계열 매트릭스 (LX7 / M4F / NPU)** | Stage 4 칩 선택 컨설팅 첫 미팅 | 본 § 10.3 |
+| **Stage 4 칩 선택 가이드 5행** | 응용 class 매칭 결정 | 본 § 10.4 |
+| **AI FanStick 24.8× 결정타** | K-POP B2B 라이센스 협상 | 본 § 10.5 시나리오 E |
+| **Mobile NPU 부적합 박제** | "AI 가속 = NPU" 함정 클라이언트 교정 | 본 § 10.6 |
+| **빌드 함정 15건 인벤토리** | 임베디드 견적 차별화 / 강사양성 차수 신규 | 본 § 10.7 |
+
+### 10.9 후속 (Stage 4 첫 수주 준비)
+
+| 시점 | 액션 | 담당 |
+|:-:|---|:-:|
+| 즉시 | 본 § 10 외부 영업 자료 cascade ✅ (본 작업) | Claude |
+| T-1주 | mywiki 흡수 카드 ack 추적 (Round 18 후속 = 13/13 보드 완성) | Claude |
+| T-1주 | 한국기계 다음 미팅 시 § 10.4 칩 선택 가이드 안내 (구두) | 사용자 |
+| T-2주 | 강사양성 Day 5 모듈 — 15건 빌드 함정 강의안 1차 작성 | 사용자 + Claude |
+| T-1개월 | 첫 Stage 4 수주 시도 (한국기계 또는 임베디드 스타트업) | 사용자 |
+| T-2개월 | Round 20 (esp32s3 on-device LoRA fine-tuning) 시작 → AI FanStick 차별화 (개인화) | 사용자 + Claude |
+
+### 10.10 cross-link (v2.5 단일 출처)
+
+본 § 10 cascade 본 vault의 다음 단일 출처와 일관:
+
+- `onDevice_AI/프로젝트_보드한계모델_v2.5/99_종합_v2.5.md` — v2.5 mandate 종합 (5/6 Round, 3계열 매트릭스, 13/13 보드, 15건 함정 단일 출처)
+- `onDevice_AI/프로젝트_보드한계모델_v2.5/99_종합_v2.5.html` — 다크 테마 HTML cascade (동일 내용 시각화)
+- `onDevice_AI/business/entities/AI_FanStick.md` "기술 근거" + "영업 진행 상태" 표 (Round 17/18/18후속/19 행)
+- `onDevice_AI/프로젝트_보드한계모델/04_종합_비교.md § 9 (R17)·§ 10 (R18)` — v2.4 종료 박제 후속
+- `myWiki/second-brain/entities/onDevice-ai.md` § "MCU AI 가속 매트릭스" + `entities/ai-fanstick.md` 3계열 매트릭스 행 + `entities/uttec-stage-package.md` Stage 4 칩 선택 가이드 (mywiki 5/22 5단계 흡수 완료, 5/23-001 ACK 수신)
+
+→ **단일 출처 원칙**: 본 § 10이 외부 영업 자료의 cascade 단일 출처. 다른 영업 자료(견적서·미팅 자료)는 본 § 10 참조 또는 cascade 진행.
+
+---
+
 ## 메타
 
 | 항목 | 값 |
@@ -239,3 +366,6 @@ myWiki ontology에 명시된 신설 후보:
 | Phase 1B 결과 | ESP32-S3 추정 token당 0.1~5ms / C++ 500~700줄 / 1~2주 / 포팅 가능 |
 | 권장 모델 | Korean-Small 154K params INT8 (한국어 짧은 응원 응답) |
 | myWiki 갱신 | log.md decision, ai-direction.md 판단 로그, entities/uttec-stage-package.md 신설 |
+| **v2.5 cascade (5/22)** | **§ 10 신설** — 3계열 매트릭스 (LX7 13.4× / M4F 3.23× / NPU 손해) + 13/13 보드 (197 셀) + Stage 4 칩 선택 가이드 5행 + 빌드 함정 15건 인벤토리 + 시나리오 E (AI FanStick 양산 트랙) |
+| **v2.5 단일 출처** | `onDevice_AI/프로젝트_보드한계모델_v2.5/99_종합_v2.5.{md,html}` (5/6 Round 종결 시점 카드) |
+| **mywiki 흡수 완료** | 4건 (Round 16/17/18/19 + Round 18 후속 = 13/13 보드 완성) |
