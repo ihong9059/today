@@ -85,6 +85,8 @@ updated: 2026-05-09
 | [[한림용인cc-고가수조]] | ⭐ 한림용인CC 고가수조 자동급수 무선제어 (★ 시공 직전, 1,000만원, 한림그룹 6년 만의 재거래·영역 확장) |
 | [[n8n-uttec]] | ⭐ n8nUttec vault (Ubuntu 호스트, 5/16~) — UTTEC n8n 자동화 학습 + 영업·사업화 통합, n8n-claude 합류 (4 Claude) |
 | [[shield]] | ⭐ shield vault (RPi Linux 호스트, 5/16~) — RPi shield 보드 응용 (LoRa·RS485·RS422·MESH·I2C), shield-claude 합류 (5 Claude) + work-end always-send 강제 룰 |
+| [[vault-portability]] | ⭐⭐⭐ vault Cross-Platform Portability (5/23 신설) — today vault = UTTEC product candidate 재정의, L1 Mac dry-run / L2 CI matrix / L3 Cloud 탑재 (~10~16일 계획) |
+| [[uttec-search]] | ⭐⭐⭐ uttec-search vault (5/23 야간 4차 신설, 10th vault, Mac/Ubuntu) — search 9th vault cross-platform 첫 fork, uttec-vault 비즈니스 hub 위 AI 검색·정리 web (FastAPI + React + sentence-transformers + Claude CLI), vault portability 트랙 첫 실증 |
 
 ## 생각 (Thoughts)
 | 페이지 | 요약 |

@@ -2,7 +2,7 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-05-22 야간 (Round 18 후속 pca10040 64KB RAM wall 흡수 — Nordic 2 보드 RAM tier 분리, B2B 시나리오 nRF52840 256KB 필수 박제)
+updated: 2026-05-23 야간 (Round 21 esp-nn CNN 2.93× 흡수 — 차세대 firmware stack 확정 / KWS wake word 547ms → 187ms / 3계열 매트릭스 CNN 행 채움)
 tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성]
 links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차]
 ---
@@ -11,6 +11,22 @@ links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, 
 
 ## 한 줄 정의
 AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타겟. **특허 출원 완료.**
+
+## 2026-05-23 야간 — 차세대 firmware stack 확정 ⭐⭐ (Round 21 esp-nn CNN 흡수)
+
+| 응용 | 라이브러리 | 칩 | 가속배 | Round |
+|---|---|---|:-:|:-:|
+| 칩 교체 (baseline) | — | C3 → S3 | **+1.84×** | R15 |
+| MLP Dense (Korean-Small SLM) | ESP-DSP | ESP32-S3 LX7 | **+13.4×** | R17 |
+| **CNN Conv2D (KWS wake word)** ⭐ | **esp-nn** | ESP32-S3 LX7 | **+2.93×** | **R21** |
+| TF Attention+MLP SRAM | ESP-DSP | ESP32-S3 LX7 | **+10.8×** | R17.5 |
+
+**종합 가속**:
+- MLP: **24.8×** (1.84 × 13.4)
+- CNN: **3.19×** (1.09 × 2.93, 칩 교체 + esp-nn)
+- TF: **19.1×** (1.84 × 10.8)
+
+**UX 결정타**: KWS wake word 응답 **547ms → 187ms** (3× 단축) — 사용자 체감 직결 영업 카피.
 
 ## 왜 중요한가
 - 블루오션 확인: BTS ARMY Bomb, SM Beyond Live, PixMob 모두 AI 통합 없음

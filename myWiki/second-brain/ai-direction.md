@@ -2,12 +2,166 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-05-22 (Round 18 CMSIS-NN 흡수 — 3계열 AI 가속 매트릭스 완성 + "AI 가속 = ISA-specific instruction 폭 + workload class 매칭" 원칙 확립)
-tags: [AI, 방향, 전략, 판단, 3계열매트릭스, ISA, instruction-set]
-links: [me, ai-landscape, skills, goals, strengths, gaps]
+updated: 2026-05-23 야간 4차 (uttec-search vault 신설 — search cross-platform 첫 fork / vault portability 트랙 첫 실증)
+tags: [AI, 방향, 전략, 판단, 3계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, onDevice-business, 5조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork]
+links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, onDevice-ai, search, ai-fanstick, 위시캣활동]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-05-23 야간 4차) — uttec-search vault 신설 (search cross-platform 첫 fork) ⭐⭐⭐
+
+**사건**: 사용자 지시 "C:\todo\search 와 같은 기능을 원격 mac의 uttec-vault에 적용하는 web 개발 vault를 mac에 설치". 결단 D1~D5 (A·A·A·C·B) 즉시 진행.
+
+### 결정 1: vault portability 트랙 — 첫 단기 실증으로 신규 vault 신설 선택
+
+[[vault-portability]] entity 는 4/5 부터 "장기 진화 트랙" 으로 박제됐지만 단기 측정 지표가 없었음. 본 신설로 **6개월 트랙의 첫 비용/효과 측정 케이스** 확보.
+
+- search vault (Windows) tar pipe → Mac/Ubuntu (~/uttec-search) 62 파일 (584KB) 전송
+- 변환 비용: backend config 1 + .env 1 + search_index.py SEARCH_DIRS/FILES 1 + vite.config.ts 1 + hooks 2 + CLAUDE.md + README.md = **7 핵심 + 부수**
+- 환경 격차: python3-venv 미설치 + sudo 패스워드 필요 → **uv 0.11.16 우회** (vault portability 트랙의 새 베스트 프랙티스)
+- Junction → symlink, PowerShell → bash 변환은 미완 (skills/SKILL.md 4 개)
+
+### 결정 2: dogfooding-via-self 모델 두 번째 케이스로 uttec-vault 데이터 선택
+
+[[search]] 정체성 D = 본인이 myWiki 자료로 dogfooding. [[uttec-search]] = 본인이 uttec-vault 비즈니스 자료로 dogfooding. **격차 줄여 외부 회사 적용 prototype 충실도 ↑**.
+
+- 1차 사용자 = 본인 (홍광선), 데이터 = uttec-vault 7 비즈니스 영역
+- 궁극 목표 = onDevice 제품 hub 의 web 검색 인터페이스
+- 메모리 정책 = uttec-vault 와 공유 (D3=A) — vault 데이터 dogfooding 일관성
+
+### 결정 3: D4 권장 A 대신 C 선택 = Phase 0~4.2 전체 fork
+
+사용자 결단으로 Phase 0 skeleton 만(권장 A) 이 아닌 **Phase 4.2 까지 검색 정확도 hot-fix 포함 전체 fork**. 의미: search 측 38일치 진화 자산 (sentence-transformers + hybrid α=0.7 + path-level 집계 + filename rescue + 시간 keyword 휴리스틱 + 표시 버그 G fix) 을 첫날부터 uttec-search 에서 작동 가능. 단기 검증 비용 ↑ 이지만 portability 트랙 실증값 ↑.
+
+### 결정 4: backend port 8891 / frontend 8890 = search 와 동시 가동 보장
+
+search (8888/8889) 와 uttec-search (8890/8891) 가 동일 Mac 또는 동일 사용자 PC 에서 동시 가동 가능. dogfooding 시 두 web 을 나란히 띄워 검색 결과 비교가 가능 — **portability 트랙의 핵심 측정 도구**.
+
+### 결정 5: 9 → 10 vault PROTOCOL 정합화는 차후 (vault scope 격리 유지)
+
+`_inbox/PROTOCOL.md` 는 search 9 vault 사본 그대로 사용. 10번째 합류 정합화는 mywiki-claude 가 9 vault 에 cascade 카드 발송으로 별도 수행. 본 셋업 세션은 vault scope 격리.
+
+### 의미
+
+1. **vault portability = 4 차원 비용** 으로 정량화: 경로 hardcoding (sed) + shell 도구 (bash↔PowerShell) + path 토큰 (junction↔symlink) + 환경 의존 (uv 대체 도구)
+2. **dogfooding 두 번째 케이스 가동** — myWiki (38일치) + uttec-vault (5/23 신설 후 1주). 데이터 양·구조 차이 → 검색 정확도 영향 측정 가능
+3. **외부 회사 적용 prototype 충실도 ↑** — 두 cluster (myWiki second-brain 표준 schema / uttec-vault 비즈니스 영역 schema) 에서 동등 동작 보이면 generality 입증
+4. **10 vault multi-agent topology** 진입 — 양방향 통신, cross-vault hook, vault portability 트랙 모두 active
+
+---
+
+## 판단 로그 (2026-05-23 야간 3차) — today 6 카드 megasession 5 결정 통합 박제 ⭐⭐⭐
+
+**사건**: 5/23 야간 today 6 카드 megasession 흡수. 5 카테고리 결정 통합 박제.
+
+### 결정 1: AI 가속 5조건 곱 진화 (Round 21 흡수)
+- 5/22 야간: 4조건 곱 = ISA × workload × 메모리 계층 × RAM tier
+- 5/23 야간: **5조건 곱 = + library selection by workload**
+- 실증: ESP-DSP MLP (R17 +13.4×) + esp-nn CNN (R21 +2.93×) + CMSIS-NN MCU MLP (R18 +3.23×) = 라이브러리 선택이 5번째 차별화 변수
+- mandate v2.5 trajectory: 5/6 → **6/7** (Round 20 LoRA 별도 결단 대기)
+- **AI FanStick 차세대 firmware stack 확정**: MLP=ESP-DSP 13.4× + CNN=esp-nn 2.93× + TF=ESP-DSP 10.8× = KWS wake word 547ms → 187ms (3× UX 단축)
+
+### 결정 2: search 작은 코퍼스 hybrid 임베딩 패턴 표준 채택
+- 정량 결과: α=0.7 (sem 70% + lex 30%), recall@5 0.396 (lexical only 0.375 대비 +5% 보정)
+- MiniLM L12 v2 (118M, CPU) + 디스크 캐시 + mtime incremental
+- semantic only 한국어 strict 키워드 매우 약함 (10% recall) — lexical baseline 유지가 핵심
+- **재사용 vault 6 후보**: uttecHome / lemonLabs / REVITA / n8nUttec / wishketProject / 강사양성 LMS
+- 외부 임베딩 API · 무거운 vector DB (FAISS/Chroma) 안 씀
+
+### 결정 3: search vault 정체성 D 인지 (dogfooding-via-self)
+- 1차 사용자 = 본인 / 궁극 목표 = 외부 회사 web 서비스 prototype / 본인이 dogfooder
+- E·F (메모리·세션 인덱싱) 본인용 적용 — 격차 줄임
+- 외부 deploy 시 turn-off 옵션 / web UX·검색 정확도·category 라우팅은 외부 사용자 기준 평가
+- 답변 품질 격차 재진단: 모델 아닌 컨텍스트·메모리·세션 (Phase 4.3 E·F·A·B·C·D·H·I·J 9 패치)
+- 모델 표시 버그 자가 진단 fix 사이클 패턴 = "모델 격하 가설" → "표시 버그 가설 → 자가 진단 fix" 일반화 (search G 패치 사례)
+
+### 결정 4: Python 산업 자동화 PC GUI 영역 확장 (#155381 PLC 흡수)
+- 양산 자산 (Python 자동화 + Claude API + On-Device AI + 노지 스마트팜) → 산업 자동화 PC GUI 영역 이식 패턴
+- 검증 사례: PySide6 + pyqtgraph + SQLite + PyInstaller 단일 .exe
+- LS XGT FEnet 프로토콜 + XG5000 IDE + Recipe 운영 패러다임 도메인 지식 확보
+- **신규 등록 패턴 변화**: 84% 상주 + 56% 비공개 → 재택 외주 발굴 어려움 = AI 3대 사업 자체 영업 강화 필요 signal
+
+### 결정 5: 양방향 통신 첫 round trip 도달 (uttec-vault Day 5 → ondevice)
+- ondevice Round 21 카드 = myWiki + uttec-vault 동시 발신 첫 사례
+- mywiki ↔ ondevice ↔ uttec-vault 3 vault 양방향 cascade 가동 확인
+- main vault hub 책임: round trip 인지 + log 박제 + 다른 vault 동기화 trigger
+
+### 원칙 보강
+1. **5조건 곱 = 영업 자료 결정타** — vendor TOPS 광고는 단일 metric, 5조건 곱 측정이 진짜 변수
+2. **hybrid 임베딩 표준** — semantic-only 는 한국어에 약함, lexical + semantic α-tuning 필수
+3. **양방향 broker 가 main vault 책임** — mywiki-claude 가 ondevice ⇄ uttec-vault round trip 도달 후 cascade 인지
+4. **자가 진단 사이클** — Claude (search-claude) 가 자기 코드 버그 자체 진단 + fix + 정정 박제 카드 발송 = governance 패턴 모범
+5. **외부 등록 패턴 변화는 영업 전략 trigger** — 위시캣 84% 상주 = AI 3대 사업 자체 영업 강화 signal
+
+**참조**: today/_inbox/processed/ 6 카드 (2026-05-22-004 / 005 / 2026-05-23-001 / 002 / 003 ×2) + ack 카드 4건 발송 (ondevice ×2 + search + wishket)
+
+---
+
+## 판단 로그 (2026-05-23 야간) — uttec-vault mission pivot: onDevice 제품 비즈니스 hub + 3 vault 역할 분리 ⭐⭐⭐
+
+**사건**: 사용자 명시 (2026-05-23 야간) — onDevice_AI vault 가 기술 R&D 검토 중인 상태에서, uttec-vault 의 목표를 **"onDevice 제품 개발 + 판매 + 비즈니스 전반"** 으로 구체화. 이전 추상 "UTTEC product candidate" → 구체 "onDevice 비즈니스 hub" 로 정체성 L2 진화.
+
+**3 vault 역할 분리**:
+- onDevice_AI = 기술 R&D (측정·가속·검증·함정 인벤토리, 현재 그대로)
+- **uttec-vault = onDevice product + business** (7 영역: Product / Sales / Customer / Supply / Marketing / Operations / Finance)
+- today (myWiki) = 회사 운영 hub + 9 vault 종합
+
+**정보 흐름 양방향화**:
+- 이전: onDevice → myWiki 단방향
+- 이제: onDevice ⇄ uttec-vault ⇄ today (양방향)
+
+**즉시 priority 상승 (deferred → immediate)**:
+- 9 vault PROTOCOL 합류 (전 M9 → Day 4-5)
+- inbox 통신 채널 (전 빈 골격 → 즉시)
+- second-brain entities seed (전 0 → Day 5-7)
+- docs/product-strategy.md (없음 → 즉시)
+
+**전략적 의미**:
+- vault 자체가 product → uttec-vault 의 **UTTEC 매출 직접 기여** 트랙으로 격상
+- onDevice_AI 의 측정 자산 (Round 17·18·19 등) 이 **product 카피·견적·계약** 으로 즉시 cascade 가능
+- "AI 가속 4조건 곱 원칙" + Stage 4 칩 선택 가이드 = 영업 결정타 자산이 uttec-vault 영업 SOP 에 직접 박힐 수 있음
+- today vault (myWiki) 의 회사 운영 hub 역할은 유지 — uttec-vault 가 sub-hub 로 분담
+
+**원칙 확립**:
+1. **vault = product**: 단순 toolbox 가 아닌 매출 기여 자산. dogfooding 도 "단순 사용" → "product hypothesis 검증"
+2. **역할 분리**: R&D / product+business / 회사 운영 hub = 3 vault 가 명확히 다른 책임
+3. **양방향 broker 우선**: 단방향 통보는 산출물 흡수 누락 위험 (5/22 lemonLabs 정지 사례 참조). 양방향 + ack 카드 강제
+4. **mission 우선, toolbox 차순**: Day 1-3 의 toolbox 1시간 폭주는 인상적이지만 mission 미정의 = "잘 만든 엔진이 묻히는" 위험. mission 명문화가 dogfooding 보다 우선
+
+**참조**: [[uttec-vault]] (entity 신설) + 작업보고서/계획서_vault-cross-platform-이관_2026-05-23.md + [[onDevice-ai]] + [[vault-portability]] (engineering sub-track)
+
+---
+
+## 판단 로그 (2026-05-23) — vault = UTTEC product candidate 재정의 + cross-platform/cloud 이관 트랙 신설 ⭐⭐⭐
+
+**사건**: 사용자 명시 (2026-05-23) — "이 vault도 어떻게 보면, 다른 용도로 사용하기 전에 uttec이라는 회사를 기반으로 개발하고 있다고 생각해야합니다. 또한 다른 시스템에서도 이상없이 동작하는지를 확인하는 과정을 확인하여야하고, 궁극적으로는 cloud에 탑재할 예정입니다."
+
+**핵심 전환**: vault 의 본질 재정의.
+- **이전**: 개인 second-brain + 9 vault multi-agent hub (개인 운영 자산)
+- **이후**: **UTTEC 회사 product candidate** + 회사 운영 hub. vault 자체가 R&D 대상.
+
+**baseline 진단** (2026-05-23 자동 audit):
+- 경로 hardcoding `C:\todo\today` — **58건 / 12 SKILL** 파일
+- PowerShell 종속 — **10건 / 5 SKILL** + 1 `.ps1` 파일
+- NTFS Junction — 7+ 위치 (raw/* + .claude/memory)
+- 6 hook 중 5개 이미 Python = cross-platform 우호 자산 (head-start 약 60%)
+
+**원칙 확립**:
+1. **vault 는 product** — 신규 hook/skill 작성 시 portability 영향 점검 필수, hardcoded 경로 금지
+2. **Windows single-source 유지 (단기)** — Phase 5 정책 합의 시점까지 (~6일 후) 정책 변경 X
+3. **Cloud target = DigitalOcean 우선** — 기존 인프라 정합 (uttecHome 7777 / search / Ubuntu n8n)
+4. **단계적 진화** — L1 (Mac dry-run, ~7일) → L2 (CI matrix, ~11일) → L3 (cloud, ~16일)
+5. **search-claude 일부 위임** — Phase 7 web UI 는 search vault 패턴 재사용 (FastAPI+Vite+Claude API)
+
+**전략적 의미**:
+- vault 자체가 **Stage 4 영업 자산화 가능성** (multi-agent orchestration + second-brain product) — L3 도달 후 검토
+- "AI 가속 4조건 곱" (5/22 박제) 와 같은 박제 자산이 cross-platform 환경에서도 유효함을 검증 = 패턴 강화
+- 9 vault PROTOCOL 정책의 "PC 경계 ≠ vault 경계" 분리 (Phase 5) — multi-cloud / multi-machine 운영 모델 박제
+
+**참조**: `작업보고서/계획서_vault-cross-platform-이관_2026-05-23.md` (8 Phase 상세 + D1~D6 결단 항목) + `entities/vault-portability.md` (장기 추적)
+
+---
 
 ## 판단 로그 (2026-05-22 야간) — Round 18 후속 흡수: 13/13 보드 완성 + RAM tier 4조건 곱 원칙 + Nordic 함정 11건 cross-vendor 인벤토리 ⭐⭐
 

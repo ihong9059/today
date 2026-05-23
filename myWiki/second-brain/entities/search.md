@@ -2,7 +2,7 @@
 title: search vault (myWiki AI 검색·정리 web)
 type: entity
 created: 2026-05-21
-updated: 2026-05-22 (Phase 2 ✅ 세션 기반 대화 model 완성 — WebSocket + --resume + 70/80% 자동 핸드오프 + Phase 재배치)
+updated: 2026-05-23 야간 (Phase 3 ✅ UI 다듬기 + Phase 4 ✅ hybrid 임베딩 검색 정확도 + Phase 4.2 ✅ G 모델 표시 버그 fix + 정체성 D dogfooding-via-self 박제)
 tags: [웹, 검색, 위키노출, vault, Tier3, multi-agent, search-claude, prompt-driven, claude-api, FastAPI, React, WebSocket, 세션모델, --resume, 핸드오프]
 links: [me, skills, uttec-homepage, claude-code, memory-mcp, obsidian-시리즈-사업화, ai-education-web, 2026-05-22_claude-max-cli-subprocess-pattern]
 ---
@@ -11,6 +11,45 @@ links: [me, skills, uttec-homepage, claude-code, memory-mcp, obsidian-시리즈-
 
 ## 한 줄 정의
 **myWiki second-brain (38일치 누적 자료) 위에서 동작하는 prompt-driven 검색·정리·요약 web 서비스**. 사용자가 자연어 질의 → Claude API + wiki 자료 검색 → web 출력. 2026-05-21 **9번째 Tier 3 vault 분리** + **search-claude 9th multi-agent 합류**.
+
+## 2026-05-23 야간 — Phase 3·4 ✅ + Phase 4.2 G 패치 정정 + 정체성 D 박제 ⭐⭐
+
+### Phase 3 ✅ — UI 다듬기 (commit `0107578`)
+- shadcn/ui 6 컴포넌트 (Button/Card/Textarea/Badge/Skeleton/Tooltip 수동 도입, CLI 안 씀)
+- 360/768/1280 viewport 대응 + TokenGauge header+inline + HandoffToast safe-area
+- a11y label + Tab navigation + WCAG AA
+- deps 2개만 (class-variance-authority + @radix-ui/react-tooltip)
+
+### Phase 4 ✅ — 검색 정확도 hybrid 임베딩 (commit `44be3c6`)
+- 로컬 sentence-transformers multilingual MiniLM L12 v2 (384dim, CPU)
+- heading 기반 chunking 3단계 fallback (paragraph → line → hard cut)
+- 디스크 캐시 ~9MB pkl + mtime incremental
+- hybrid scoring α=0.7 (sem 70% + lex 30%) — S8 평가셋 튜닝 결과 (recall@5 0.396)
+- 첫 빌드 257s (4406 chunks, 260 파일) / incremental 75ms / warm query ~100ms
+
+### Phase 4.2 ✅ — 모델 표시 버그 fix ⭐ (commit `8f0dba9`, 5/23)
+
+**정정 박제**: 이전 mywiki 5/22 야간 인식 "haiku-4-5 회귀" → **실제는 sonnet-4-6 정상**. 표시 버그였음.
+
+- 버그: `claude_client.py:110` `next(iter(model_usage.keys()))` (Python 3.7+ dict insertion-ordered, claude CLI 가 haiku 호출 먼저 등록 → first key = haiku → UI 표시만 깨짐)
+- 실제 main 응답: 줄곧 `claude-sonnet-4-6` (cache read 2131 + create 3818 = main session)
+- haiku 는 CLI 내부 보조 (routing, cost 비율 sonnet:haiku = 37:1)
+- Fix: `_pick_main_model()` 헬퍼 (substring 매칭 → cache 사용량 fallback). 5 단위 케이스 + REST 통합 검증 ✅
+
+### 정체성 D 박제 (사용자 결단)
+> **D 옵션 (dogfooding-via-self)**: 1차 사용자 = 본인 / 궁극 목표 = 외부 회사 web 서비스 prototype / 본인이 dogfooder
+
+→ memory·session 인덱싱 (E·F) 본인용 적용 (격차 줄임) / 외부 deploy 시 turn-off 옵션 / web UX·검색 정확도·category 라우팅은 외부 사용자 기준 평가.
+
+### 답변 품질 격차 재진단 (모델 → 컨텍스트로)
+| 차원 | 격차 | 패치 |
+|---|---|---|
+| 컨텍스트 | top-8 hits × 2KB = 16KB max (vs mywiki 수십~수백 KB) | A·B·C·D·H·I |
+| **메모리 인덱싱 0%** | mywiki 30 files auto-load | **E** ⭐ |
+| **세션 carry-over 인덱싱 0%** | mywiki Read 자유 | **F** ⭐ |
+| 모델 | sonnet-4-6 정상 | ~~G~~ ✅ Phase 4.2 fix 완료 |
+
+→ Phase 4.3 megasession E·F·A·B·C·D·H·I·J 9 패치 일괄 (G 제외) 진행 예정.
 
 ## 위치 / Git
 - **실제 위치**: `C:\todo\search\` (5/21 신설)

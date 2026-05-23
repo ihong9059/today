@@ -28,3 +28,5 @@
 - [E22 Config 모드 baud 9600 고정 ⭐](feedback_e22_900t_config_baud.md) — E22-400T/900T LoRa register read/write 시 **무조건 9600 baud**(REG0 무관) + Mapping B(Config=M0=0 M1=1 / Sleep=M0=1 M1=1 UART OFF). 5/9·5/10·5/19 같은 함정 3회 반복
 - [_inbox 카드 lifecycle 정책 ⭐](feedback_inbox_lifecycle.md) — `~~strikethrough~~`는 5단계 lifecycle 완료에만 허용. pending ≥ 5 시 흡수 megasession이 다른 작업보다 우선. 5/17~19 onDevice 카드 6장 누락 사건 박제
 - [uttecHome DigitalOcean 이관 — 보류](project_uttechome_deploy_hold.md) — 5/20 사용자 결정. local 정리 완료 후 적용. 그때까지 vault 로컬 진화만, deploy 권고 금지
+- [uttec-search vault 신설 (10th)](project_uttec_search.md) — Mac/Ubuntu ~/uttec-search/, search 9th cross-platform 첫 fork, backend 8891/frontend 8890, uv venv 우회, uttec-vault 인덱싱
+- [search backend 장시간 → STATUS_DLL_INIT_FAILED](feedback_backend_long_uptime_dll_init_failed.md) — exit 3221225794 (0xC0000142) 반복 시 backend kill + 재시작이 즉효. Windows desktop heap 누적, ~9h 가동 후 발생 (2026-05-23 첫 확인)

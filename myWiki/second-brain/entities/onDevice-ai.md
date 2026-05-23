@@ -2,7 +2,7 @@
 title: onDevice_AI vault — AI FanStick + Stage 4 + 보드한계모델
 type: entity
 created: 2026-05-07
-updated: 2026-05-22 야간 (Round 18 후속 pca10040 12/12 RAM wall 흡수 — 13/13 보드 완성 + RAM tier 4조건 곱 원칙 + Nordic 함정 11건 cross-vendor 인벤토리)
+updated: 2026-05-23 야간 (Round 21 esp-nn CNN 2.93~2.95× 흡수 — 3계열 매트릭스 CNN 행 채움 + mandate v2.5 6/7 + AI 가속 5조건 곱 진화 + Round 9 evolution 시계열 + 14 보드 클럭 normalize)
 status: ✅ 1차 mandate 전환 완료 (5/17) / **mandate 13/13 보드 100% 완성 (5/22 야간) / 42/49 셀 86%** / esp32s3 메인 타겟 + esp32c6 + Cortex-M4F 2 보드 완료 / mandate v2.5 Round 18 CMSIS-NN 트랙 종료 / W6 종료 6/22~28 후 Stage 4 영업 자산화 6/29
 tags: [vault, On-Device AI, 보드한계모델, AI FanStick, ESP32-S3, ESP-DSP, ESP32-C6, RISC-V, Xtensa, ARM, Cortex-M4F, CMSIS-NN, Nordic, Stage4, 정지선, multi-agent, ondevice-claude]
 links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_응원봉-온디바이스AI-정지선, revita, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차]
@@ -13,6 +13,7 @@ links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_
 > **2026-05-21 흡수 완료**: Round 17·17.5 ESP-DSP intrinsics 결정타 흡수 — MLP 13.4× / C3→S3+DSP 24.8× / TF 10.8× / CNN strided 적용 불가 / PSRAM 가속 무효. **AI FanStick 양산 방향 5/8 결정 뒤집힘** (C3 유지 → S3-N16R8 + ESP-DSP + PSRAM SLM).
 > **2026-05-22 흡수 완료**: Round 18 Cortex-M4F CMSIS-NN MLP 128 = 3.23× 가속 (7,367μs → 2,285μs). **3계열 AI 가속 매트릭스 두 번째 축 완성** (LX7 ESP-DSP +13.4× ⭐⭐⭐ / M4F CMSIS-NN +3.23× ⭐⭐ / Eden NPU NNAPI ‒79~421× ⚠️). 클럭 normalize 시 LX7 단위 효율 5.64× M4F 우위. CNN/TF skeleton 미패치 (1.01×). Nordic 빌드 함정 5건 신규 박제.
 > **2026-05-22 야간 흡수 완료**: Round 18 후속 pca10040 (nRF52832 64KB) 12/12 RAM wall = **13/13 보드 완성 (100%)**. Round 14 plain C 100% 재현 — CMSIS-NN library 추가해도 RAM tier 한계 동일. "AI 응용 = nRF52840 (256KB)+ 또는 ESP32-S3 (PSRAM 8MB) 필수" 정량 박제. Stage 4 칩 선택 가이드 § "저전력 BLE-only (AI 불가)" 행 신설. Nordic 함정 11건 cross-vendor 인벤토리 (Round 17 ESP-DSP 4 + Round 18 본편 5 + Round 18 후속 R18-F/G 2). **AI 가속 4조건 곱 = ISA × workload × 메모리 계층 × RAM tier 적합도**.
+> **2026-05-23 야간 흡수 완료**: ondevice-claude 5/22 카드 (Round 9 cascade revisit + v2.5 종합 단일 출처 99_종합_v2.5) + 5/23 Round 21 esp-nn CNN 2.93~2.95× 카드 2건 통합 흡수. **3계열 AI 가속 매트릭스 CNN 행 채움** (esp-nn CNN LX7 +2.93× = ESP-DSP MLP/TF + CMSIS-NN MLP 옆 4번째 사례). **mandate v2.5 trajectory 5/6 → 6/7** (Round 20 LoRA 별도 결단 대기). **AI 가속 5조건 곱 진화 = ISA × workload × 메모리 계층 × RAM tier × library selection by workload** (5/22 4조건에서 library selection 1조건 추가). Round 9 evolution 시계열 6단계 박제 (Round 9 → 17 → 17.5 → 18 → 18후속 → 19 → 21). 14 보드 클럭 normalize cycle-per-MAC ranking (LX7 25,920 = MCU 최고 단위 효율, M4F 146,240 = MCU 2위, 자기자신 plain 의 5.64× 우위). esp-nn 빌드 함정 3건 신규 (R21-1 ninja PRE_LINK cd . cwd reset / R21-2 sections.ld-*.bat 상대 경로 / R21-3 PowerShell 5.1 UTF-8 BOM CP949 fallback). cross-vendor 빌드 함정 누적 **19건** (Espressif 8 + Nordic 11). **AI FanStick 차세대 firmware stack 확정**: MLP=ESP-DSP 13.4× + CNN=esp-nn 2.93× + TF=ESP-DSP 10.8× = KWS wake word 547ms → 187ms (3× 단축).
 
 # onDevice_AI vault — AI FanStick + Stage 4 + 보드한계모델
 

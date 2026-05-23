@@ -2,8 +2,164 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-22 (Round 18 흡수 + cascade 2건 — 위시캣 영업 SOP 룰 4 / 강사양성 Day 5 비교 사례 모듈 자산화)
+updated: 2026-05-23 야간 4차 (uttec-search vault 신설 — search cross-platform 첫 fork, 10th vault. Mac/Ubuntu 설치 + Phase 0~4.2 fork + 첫 query 동작 확인)
 ---
+
+## [2026-05-23 야간 4차] new-vault | uttec-search 10th vault 신설 — search cross-platform 첫 fork ⭐⭐⭐
+
+**사건**: 사용자 지시 "C:\todo\search 와 같은 기능을 원격 mac의 uttec-vault에 적용하는 web 개발 vault를 mac에 설치". 결단 D1~D5 (A·A·A·C·B) 즉시 진행.
+
+### 신설 내용
+
+- **위치**: `~/uttec-search/` on uttecMac (Tailscale 100.90.158.36, Ubuntu 22.04)
+- **10th vault** (기존 9 + uttec-vault), **uttec-search-claude** = 10th 또는 11th Claude agent
+- **D1~D5 결단**: A(이름=`uttec-search`)·A(인덱싱=uttec-vault 만)·A(메모리=uttec-vault 공유)·**C**(Phase 0~4.2 전체 fork)·B(scp 전송)
+
+### 설치 단계
+
+1. search vault tar pipe → Mac (62 파일, 584KB)
+2. raw/uttec-vault symlink (`~/uttec-vault`)
+3. **uv 0.11.16 우회** (python3-venv 미설치 + sudo NOPASSWD 없음) — vault portability 트랙 새 베스트 프랙티스
+4. backend reconfig: PORT=8891, WIKI_ROOT, SEARCH_DIRS = uttec-vault 7 영역 + entities/thoughts, SEARCH_FILES = uttec-vault 5 root .md
+5. frontend reconfig: vite dev 8890, proxy → 8891
+6. `.claude/hooks`: SELF_ID=`uttec-search-claude`, memory link → `~/.claude/projects/-home-uttec-uttec-vault/memory` (8 파일 visible)
+7. CLAUDE.md + README.md 새로 작성
+8. git init + initial commit `801446c`
+
+### 검증
+
+- `/api/status` OK: auth_mode=claude-cli-oauth, claude_cli_available=true, model=sonnet
+- **첫 query 동작** ✅: HF 모델 458MB download + 인덱스 빌드 + Claude API 응답 200 OK
+- search 측과 동시 가동 보장 (port 충돌 없음)
+
+### today 측 박제
+
+- entities/[[uttec-search]] 신설
+- ai-direction.md 판단 로그 (5 결정 — vault portability 트랙 첫 실증 / dogfooding 두 번째 케이스 / D4=C 결단 / port 분리 / PROTOCOL 정합화 후속)
+- 작업보고서 #22 추가
+- log.md 본 항목
+
+### 의미
+
+1. **vault portability = 4 차원 비용** 정량화 (경로 + shell + path 토큰 + 환경 의존)
+2. **dogfooding-via-self 두 번째 케이스** 가동 (myWiki 38일 + uttec-vault 1주, 데이터 양·구조 차이 측정 가능)
+3. **외부 회사 적용 prototype 충실도 ↑** — 두 schema 에서 동등 동작 입증 가능 시 generality 확보
+4. **10 vault multi-agent topology** 진입 — 양방향 통신 + cross-vault hook + vault portability 트랙 동시 가동
+
+---
+
+## [2026-05-23 야간 3차] absorb | today 6 카드 megasession 흡수 + ack 4 카드 발송 — Round 21 esp-nn + search Phase 3·4 + G 정정 + wishket PLC + ondevice ack ⭐⭐⭐
+
+5/22~5/23 누적 6 카드 megasession 5단계 lifecycle 흡수. ondevice ⇄ uttec-vault 양방향 첫 round trip 도달 인지.
+
+### 흡수한 카드 6장
+1. **2026-05-22-004 ondevice** — Round 9 cascade revisit 응답 + v2.5 종합 단일 출처 (99_종합_v2.5) + esp-nn 옵션 D Round 21 권장
+2. **2026-05-22-005 search** — Phase 3 (UI shadcn/ui 6 컴포넌트) + Phase 4 (hybrid α=0.7 임베딩) + 박제 요청 2건
+3. **2026-05-23-001 wishket** — #155381 PLC megasession (Python pivot, LS XGT 자산) + #155570 신규 지원서
+4. **2026-05-23-002 ondevice ack** — uttec-vault 합류 인지 + 향후 발신 패턴 동의 (Day 5 진입 후 양방향)
+5. **2026-05-23-003 search ack** — G 패치 정정 (haiku 가 아니라 sonnet-4-6 정상, 표시 버그 fix Phase 4.2)
+6. **2026-05-23-003 ondevice** — Round 21 esp-nn CNN 2.93~2.95× + 3계열 매트릭스 CNN 행 채움 + uttec-vault Day 5 양방향 첫 발신
+
+### 5단계 lifecycle 박제 결과
+- entities: onDevice-ai (Round 21 + 5조건 곱 + 14 보드 클럭 normalize), ai-fanstick (CNN 행 + 차세대 firmware stack 확정 + KWS UX 547→187ms), search (Phase 3·4 + Phase 4.2 G correction + 정체성 D), 위시캣활동 (#155381 + #155570 + 신규 등록 패턴 변화)
+- ai-direction: 판단 로그 5 결정 통합 박제 (5조건 곱 / hybrid 임베딩 표준 / 정체성 D / Python 산업 자동화 GUI / 양방향 round trip)
+- gaps: Round 9 evolution 시계열 + R21-1/2/3 + 위시캣 신규 등록 패턴 변화
+- thoughts deferred — 다음 사이클 (R21 + hybrid 임베딩 + 위시캣 패턴)
+
+### ack 카드 4건 발송
+- `onDevice_AI/_inbox/pending/2026-05-23-002-mywiki-ack-round9-cascade-v25-synthesis.md`
+- `onDevice_AI/_inbox/pending/2026-05-23-003-mywiki-ack-round21-esp-nn-cnn.md`
+- `search/_inbox/pending/2026-05-23-002-mywiki-ack-phase3-4-plus-g-correction.md`
+- `wishketProject/_inbox/pending/2026-05-23-002-mywiki-ack-plc155381-pivot-plus-155570.md`
+
+### 의미
+1. **AI 가속 5조건 곱 박제** = Stage 4 영업 자료 결정타 자산 + 위시캣 영업 SOP 차순 진화 후보
+2. **AI FanStick 차세대 firmware stack 확정** = KWS UX 3× 단축 영업 카피 결정타
+3. **search 정체성 D 인지** = dogfooding-via-self 박제 + Phase 4.3 E/F 패치 우선 priority
+4. **양방향 round trip 첫 도달** = mywiki-claude main vault 역할 정합성 입증 (3 vault cascade 인지)
+5. **Python 산업 자동화 PC GUI 영역 확장** = 양산 자산 이식 패턴 (PLC 외주 → AI 3대 사업 자체 영업 강화 signal)
+
+## [2026-05-23 야간 2차] absorb | Mac Claude Day 4 mission pivot 5 산출물 + audit 8건 완료 확인 + Day 5 진행 중 ⭐⭐⭐
+
+mywiki-claude monitoring 으로 Mac Claude (uttec-vault-claude, Ubuntu) 가 mission pivot prompt 받은 후 ~1시간 안에 다음을 완료한 것을 확인:
+
+### Mission pivot 5 산출물 (commit `b9bff29` Day 4 mission pivot)
+1. ✅ `HANDOFF.md` mission 갱신 (§ 10 today 측 박제 항목 + M9 cross-vault 시점)
+2. ✅ `README.md` 헤더 = "UTTEC onDevice 제품 + 비즈니스 hub" + L0→L1→L2 진화표 + 단계 A~E
+3. ✅ `docs/product-strategy.md` 신설 (6.9KB, 7 영역 + entity template + 3 vault 다이어그램)
+4. ✅ `PLAN.md` M5-M9 우선순위 재배치 (M9 Day 5 priority)
+5. ✅ `DECISIONS.md` D'6 mission 추가
+
+### Audit 8건 (Day 4 진행 직전 보너스)
+- #1 partial .venv 정리 / #2 Dockerfile non-root USER (1000:1000) / #4 work_end 실가동 → Day 4 dogfooding 시작 / #5 inbox/ + second-brain/ 디렉토리 / #6 session cleanup N=3 / #7 reports/ append policy / #8 .gitignore 한 줄로
+- 8 commits atomic
+
+### Day 5 일부 선행 (예상치 못한 보너스)
+- `inbox/{pending,processed}/` ✅ 디렉토리 + `.gitkeep`
+- `second-brain/{entities,thoughts}/` ✅ 디렉토리 + `.gitkeep`
+- `reports/dogfood-2026-05-23.md` ✅ 3.5KB 박제
+
+### CI 상태
+- `b9bff29` Day 4 mission pivot CI green ✅ (44s, run 26324309207)
+- 누적 CI: M3 도달 후 모든 push green 유지
+
+### Day 5 진행 시작 (사용자 broker)
+- 사용자가 Mac Claude 에 Day 5 진행 prompt 전달
+- 예상 산출물: `inbox/PROTOCOL.md` + `bin/inbox_check.py` + README/PLAN 운용 가이드 추가
+- Day 5 종료 = M9 (9 vault PROTOCOL 합류) 도달 시점
+
+### 의미
+- L1 toolbox (4건 audit) + L2 mission pivot (5 산출물) + Day 5 일부 선행 = 사실상 **Day 4-5 통합 처리**
+- "audit + mission + 다음 단계 일부" 를 같은 1시간 사이클에 처리 = Mac Claude 효율성 매우 우수
+- L2 (비즈니스 hub) 진입 + 양방향 통신 채널 직전 단계 도달
+
+## [2026-05-23 야간] mission | uttec-vault L2 정체성 박제 — onDevice 제품 비즈니스 hub + 3 vault 역할 분리 + 양방향 통신 ⭐⭐⭐
+
+사용자 결정: uttec-vault 의 목표를 **"onDevice 제품 개발 + 판매 + 비즈니스 전반"** 으로 구체화. 이전 L1 (toolbox) → L2 (mission hub).
+
+- 3 vault 역할 분리:
+  - onDevice_AI = 기술 R&D (현재 그대로, ondevice-claude)
+  - uttec-vault = product + business 7 영역 (uttec-vault-claude, 10번째 합류 예정)
+  - today (myWiki) = 회사 운영 hub + 9 vault 종합 (mywiki-claude)
+- 양방향 통신 도입 (이전 onDevice → myWiki 단방향 → onDevice ⇄ uttec ⇄ today)
+- Plan 우선순위 재배치: 9 vault PROTOCOL 합류 deferred → immediate (Day 4-5)
+- 단계 A~E (정체성 → 통신 채널 → entity → 운영 dogfood → cloud)
+- 박제 4건 (이 세션):
+  - `entities/uttec-vault.md` 신설 (mission entity)
+  - `entities/vault-portability.md` 진화 (engineering sub-track 으로 재정의)
+  - `ai-direction.md` 판단 로그 신규 (5/23 야간)
+  - `log.md` 본 항목
+  - `작업보고서/2026-05-23` #18 진화 + #19 신설
+- onDevice 측 broker 카드 발송: `onDevice_AI/_inbox/pending/2026-05-23-001-uttec-vault-join-bilateral.md`
+- Mac Claude 측: `MISSION_PIVOT.md` ubuntu scp 완료, 사용자 broker 로 instruction 전달
+
+## [2026-05-23 오후] handoff | uttec-vault Ubuntu PC 핸드오프 완료 (A+C+U 피벗) ⭐⭐⭐
+
+원안 (이관) → 신규 연습용 vault (A+C, search 선례) → Ubuntu primary (+U, 24/7 private cloud) 까지 2번 피벗. 사용자가 Ubuntu PC 직접 접근하여 Mac Claude 가 자동 작업하도록 핸드오프 자료 배치.
+
+- Ubuntu PC 환경 검증: 22.04 / Python 3.10.12 / Claude 2.1.141 / 415G 여유 / `~/uttec-vault/` 신규
+- 핸드오프 4 파일 배치 (`scp uttecMac:~/uttec-vault/`):
+  - `README.md` (1.7KB) — quickstart
+  - `HANDOFF.md` (9.9KB) — ⭐ self-contained 컨텍스트 (당신 identity / 사용자 / vault 목적 / 6 설계 원칙 / 카리오버 메모리 5건 / 절대 하지말 것)
+  - `PLAN.md` (6.5KB) — Day 1~10 + M1~M6
+  - `DECISIONS.md` (3.5KB) — D'1~D'5 사용자 결단 (default 답변 시 자동 적용)
+- entity `vault-portability.md` 진화 박제 (A+C+U 피벗 + handoff 완료)
+- 격리 정책: uttec-vault-claude ↔ mywiki-claude 직접 통신 X (M5 이후 9 vault PROTOCOL 합류 검토)
+- 사용자 다음 행동: `ssh ubuntu` → `cd ~/uttec-vault` → `claude` → 자동 진행
+
+## [2026-05-23] plan | vault Cross-Platform 이관 + Cloud 탑재 계획서 작성 (UTTEC product candidate 재정의) ⭐⭐⭐
+
+사용자 명시 (2026-05-23): "이 vault도 어떻게 보면, ... uttec이라는 회사를 기반으로 개발하고 있다 ... 궁극적으로는 cloud에 탑재할 예정". vault 본질을 개인 second-brain → **UTTEC 회사 product candidate** 로 재정의.
+
+- 계획서: `작업보고서/계획서_vault-cross-platform-이관_2026-05-23.md` (8 Phase + D1~D6 결단)
+- entity 신설: `entities/vault-portability.md` (planning L0, 장기 추적)
+- ai-direction 판단 로그 신설 (5/23 — 본 항목과 cross-link)
+- 메모리 박제: `~/.claude/projects/C--todo-today/memory/project_vault_portability.md`
+- baseline 자동 audit: 경로 hardcoding 58건 / 12 SKILL + PowerShell 10건 / 5 SKILL + Junction 7+ 위치
+- 6 hook 중 5개 이미 Python (cross-platform 우호 head-start ~60%)
+- 단계: L1 Mac dry-run (~7일) → L2 CI matrix green (~11일) → L3 Cloud 탑재 (~16일)
+- 5/23 작업보고서 신규 todo 행 추가 (Phase 0 audit trigger 대기)
+- **결단 대기 (D1~D6)**: 작업 슬롯 우선순위 / Mac 실체 / Cloud target / 정책 모델 / 자산화 범위 / 위임 모델
 
 ## [2026-05-22 야간 2차] diagnose | cross-vault 운영 결함 종합 진단 + search vault 2번째 카드 (answer source 일관성 6 패치) + 메모리 박제 ⭐⭐
 

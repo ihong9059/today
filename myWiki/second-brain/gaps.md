@@ -2,12 +2,47 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-05-22 (Claude CLI --resume + 긴 system-prompt fork 함정 신규 박제 — search Phase 2 T2/T3 spike, multi-vault 재사용 가치)
-tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume]
-links: [me, skills, ai-direction, strengths, goals, 위시캣활동]
+updated: 2026-05-23 야간 (today 6 카드 megasession 흡수 — Round 9 evolution 시계열 + R21-1/2/3 esp-nn 빌드 함정 + 위시캣 신규 등록 패턴 변화)
+tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화]
+links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-05-23 야간 — Round 9 → v2.5 cascade evolution 시계열 박제 ⭐⭐
+
+**원칙 박제**: "raw ISA baseline ≠ AI 가속 효과" 일반화 패턴.
+
+| Round | 일자 | 핵심 결론 | 일반화 |
+|:-:|:-:|---|---|
+| 9 | 5/19 | LX7 plain C는 ARM 대비 9~38× 느림 | raw baseline (가속 ISA 미활용) |
+| 17 | 5/20 | esp32s3 + ESP-DSP MLP +13.4× ⭐⭐⭐ | **LX7 = AI Vector ISA 우위 입증 (반전)** |
+| 17.5 | 5/20 | TF SRAM +10.8× / CNN strided 적용 불가 | application class 한계 |
+| 18 | 5/22 | pca10056 CMSIS-NN MLP +3.23× | LX7 단위 클럭 효율 5.64× M4F 우위 |
+| 18후 | 5/22 | pca10040 64KB 12/12 RAM wall | RAM tier 적합도 = 4번째 조건 |
+| 19 | 5/22 | Eden NPU NNAPI ‒79~421× | "Mobile NPU 항상 빠르다" 통념 반증 |
+| **21** | **5/23** | **esp-nn CNN +2.93~2.95×** | **library selection by workload = 5번째 조건** |
+
+**진짜 원칙 (5조건 곱)**: AI 가속 = ISA-specific instruction 폭 × workload class 매칭 × 메모리 계층 × RAM tier 적합도 × **library selection by workload**.
+
+## 2026-05-23 야간 — esp-nn 빌드 함정 3건 (Round 21 신규)
+
+| ID | 함정 | 회피 |
+|:-:|---|---|
+| R21-1 | ninja PRE_LINK/POST_BUILD `cd .` Claude Code harness cwd reset (Nordic R14 와 cross-vendor 동일 패턴) | wrapper script 안에서 cd 명시 |
+| R21-2 | sections.ld-*.bat 상대 경로 fail | 절대 경로 변환 또는 `idf.py` 가 자동 처리하는 위치 |
+| R21-3 ⭐ | **PowerShell 5.1 UTF-8 BOM 없으면 한글/em-dash CP949 fallback → parser 균형 깨짐** (cross-vendor 공통) | Out-File `-Encoding utf8` 명시 (이미 메모리 박제 reference_terminal_default_dir.md 와 일관) |
+
+**누적 cross-vendor 빌드 함정**: Espressif 8 + Nordic 11 = **19건**. 강사양성 Day 5 모듈 자산.
+
+## 2026-05-23 야간 — 위시캣 신규 등록 패턴 변화 (재택 외주 시장 축소 signal)
+
+- 5/23 일상 검토: 신규 등록 45건 중 **공개 19건 = 84% 상주 + 비공개 25건 = 56% 비공개**
+- 본 vault 영업 영역 (재택 펌웨어/IoT) 과 불일치 심화
+- **함의**: 재택 외주 발굴 어려워지는 신호 → **AI 3대 사업 자체 영업 강화 필요한 시점**
+- 다음 단계: thoughts/2026-Q2/위시캣-신규등록-패턴-변화-2026-05.md 신설 검토
+
+
 
 ## 본 vault 자산 인덱스 완전성 함정 (2026-05-21 신설)
 
