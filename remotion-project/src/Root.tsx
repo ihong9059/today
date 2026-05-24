@@ -217,10 +217,28 @@ import {
 } from "./Wishket155381Slides";
 import { GimpoNajinIntroVideo, GIMPO_NAJIN_DURATION } from "./GimpoNajinIntroVideo";
 import { GimpoNajinThumbnail } from "./GimpoNajinThumbnail";
+import { SearchIntroVideo, SEARCH_INTRO_DURATION } from "./SearchIntroVideo";
+import { MiralEduVideo, MIRAL_EDU_DURATION } from "./MiralEduVideo";
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="MiralEdu"
+        component={MiralEduVideo}
+        durationInFrames={MIRAL_EDU_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="SearchIntro"
+        component={SearchIntroVideo}
+        durationInFrames={SEARCH_INTRO_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
       <Composition
         id="BleOtaPitch"
         component={BleOtaPitchVideo}

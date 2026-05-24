@@ -2,7 +2,41 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-23 야간 4차 (uttec-search vault 신설 — search cross-platform 첫 fork, 10th vault. Mac/Ubuntu 설치 + Phase 0~4.2 fork + 첫 query 동작 확인)
+updated: 2026-05-24 (Remotion 동영상 파이프라인 표준화 — search vault 5분 + 헬렌켈러 출석관리 11분 19초 일괄 제작, miral-edu 정체 파악)
+---
+
+## [2026-05-24] asset | Remotion 동영상 파이프라인 2회 연속 검증 ⭐⭐
+
+**사건**: 사용자 오전 2회 연속 지시로 사용 설명 동영상 2건 일괄 제작. 시나리오→나레이션→edge-tts(ko-KR-SunHiNeural)→Remotion Composition→렌더링 워크플로우가 같은 패턴으로 두 번 성공 — 표준화 1단계 완성.
+
+### 산출물 2건
+1. **search vault 소개 동영상** — 6 scene, 5분 7초, 17.8MB (`out/Search_Intro/video.mp4`)
+2. **헬렌켈러 출석관리 사용법 동영상** — 9 scene, 11분 19초, 29.2MB (`out/Miral_Edu/video.mp4`)
+
+### 표준화된 자산 구조
+- `remotion-project/scripts/{slug}/SCENARIO.md` (시나리오+나레이션+컬러+재생산 절차 통합)
+- `scripts/{slug}/scene{N}_*.txt` (나레이션 분리)
+- `scripts/{slug}/generate-tts.py` (edge-tts ko-KR-SunHiNeural)
+- `src/{Slug}Video.tsx` (Composition + GlobalOverlay + fadeIn/slideUp/scaleIn 헬퍼)
+- 표준 컬러 토큰 + Sequence + Audio + visual 분리
+
+### 부가 인사이트
+- 한국어 TTS 품질 양호 (ko-KR-SunHiNeural 자연스러움 확인)
+- 외부 차트 라이브러리 없이 SVG 도넛/라인 차트 자체 구현 가능 (miral-edu Scene 7)
+- 향후 사용 설명 동영상 의뢰 → 즉시 같은 파이프라인 적용 가능
+
+### 부가 분석 — miral-edu.streamlit.app 정체 파악
+- viewer auth 비공개 앱이라 외부에서 콘텐츠 접근 불가 (`/healthz` 200, `/_stcore/*` 303 → `/-/login`)
+- 사용자 제공 main.py (2,924줄) 분석으로 정체 확정: **헬렌켈러 시청각장애인 학습지원센터 출석관리 web**
+- Streamlit + Google Sheets + plotly, ver.26.04-1
+- 보안 이슈 6건 발견 (관리자 비번 `0101` 평문 하드코딩 등) — 외부 제3자 시스템이라 myWiki entity 신설은 보류
+
+### 다음 세션 흡수 대상 (_inbox pending 3건)
+- `2026-05-23-011-round20-lora-mandate-v25-complete.md` (어제 도착)
+- `2026-05-24-001-mandate-v26-complete.md` (R23 Adam + R25 KWS, mandate v2.6 4/4 ✅)
+- `2026-05-24-003-r26-kws-accuracy.md` (mandate v2.7 R26 KWS 정확도)
+→ ondevice-claude 가 v2.5→v2.6→v2.7 까지 1일 폭주. AI FanStick Premium Plus 양산 trigger 카드 누적.
+
 ---
 
 ## [2026-05-23 야간 4차] new-vault | uttec-search 10th vault 신설 — search cross-platform 첫 fork ⭐⭐⭐

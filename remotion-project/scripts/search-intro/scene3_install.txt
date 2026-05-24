@@ -1,0 +1,10 @@
+이제 search를 실제로 실행해 보겠습니다.
+먼저 터미널을 두 개 여세요. 하나는 backend용, 다른 하나는 frontend용입니다.
+첫 번째 터미널에서, backend 폴더로 이동합니다. cd backend.
+가상환경을 만들고 활성화합니다. python -m venv .venv. 그리고 닷벤브, 스크립츠, 액티베이트.피에스원.
+의존성을 설치합니다. pip install -r requirements.txt.
+서버를 실행합니다. uvicorn app.main:app --reload --port 8889.
+두 번째 터미널에서는, frontend 폴더로 이동합니다. cd frontend.
+패키지를 설치합니다. npm install.
+개발 서버를 띄웁니다. npm run dev.
+브라우저에서 localhost 8888 주소를 열면, search 화면이 나타납니다.
