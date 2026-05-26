@@ -2,12 +2,50 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-05-23 야간 (today 6 카드 megasession 흡수 — Round 9 evolution 시계열 + R21-1/2/3 esp-nn 빌드 함정 + 위시캣 신규 등록 패턴 변화)
-tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화]
-links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai]
+updated: 2026-05-26 (Wave 10/11/12/13 흡수 — STM32 11 함정 single-day cluster + mobile clang vectorizer 정책 negative + Zephyr API change carry-over silent breakage)
+tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change]
+links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-05-26 — STM32 14번째 보드 11 함정 single-day cluster ⭐⭐⭐ (Wave 12/13 흡수)
+
+본 vault 첫 STM32H7 진입 시점에 단일 day 11 함정 cluster 박제 — 보드 첫 작업의 typical 함정 밀도. 12번째 함정은 Wave 13에서 minor 1건만 발현 (carry-over 효과 입증).
+
+| # | 함정 | 카테고리 |
+|---|---|---|
+| STM-1 | 한글 경로 cmake 0xC0000409 | OS/path |
+| STM-2 | 함정 #14 cd . cwd 보존 (Espressif carry-over) | toolchain |
+| STM-3 | **dual-core boot** (M4 wwdg 잔존 console 점유) | dual-core ⭐NEW class |
+| STM-4 | STM32CubeProgrammer halt 거부 | flasher |
+| STM-5 | **보드명 자가진단** (사용자 "H746" → 실제 H745) | governance/self-diagnosis ⭐ |
+| STM-6 | ST 사전 빌드 .hex segmented binary | vendor sample |
+| STM-7 | LTDC backlight + display enable 누락 | LCD/peripheral ⭐NEW |
+| STM-8 | 480×272 RGB565 framebuffer DTCM overflow | memory tier ⭐NEW |
+| STM-9 | LD8 (PD3) active HIGH polarity (LD6/7과 반대) | board variant |
+| STM-10 | PowerShell function scope New-Object cast | PowerShell (recurring) |
+| STM-11 | USB silk-screen 확인 (H745 = CN13 USB FS NOT HS ULPI) | board variant ⭐ |
+| **STM-12** ⭐ | **Zephyr 4.3 `net_mgmt_event_handler_t` uint32_t → uint64_t signature change (silent breakage 가능)** | **vendor API change** |
+
+**일반화 함정 카테고리 (5/26 신규 박제)**:
+- **dual-core boot**: M0/M4 partner 누락 시 wwdg 잔존 console 점유 (STM-3) — Hybrid SoC 시 패턴 재발생 우려
+- **보드명 자가진단**: 사용자가 잘못된 이름을 알려도 3중 교차 검증 SOP (STM-5) — flasher + DAPLink + Zephyr board 정의
+- **LCD/peripheral 활성 명시**: vendor sample이 backlight·display enable·polarity 누락 (STM-7/9)
+- **memory tier overflow**: DTCM 128KB 같은 fast-access tier가 framebuffer 부족 (STM-8) — AXI SRAM 0x24000000 직접 + SCB_CleanDCache
+- **vendor API silent breakage**: `net_mgmt_event_handler_t` uint32_t → uint64_t 같은 signature change가 warning만 (STM-12) — carry-over 시 silent breakage 위험
+
+→ entity [[build-gotcha-inventory]] § STM32 12건 상세. thought [[2026-05-25_STM32H745-Zephyr-통합-cross-vendor]] + [[2026-05-26_STM32H745-LAN-path-Stage4-결정타]].
+
+## 2026-05-24 Wave 11 — NDK clang vectorizer 정책 함정 ⭐⭐⭐
+
+| # | 함정 | 회피 |
+|---|---|---|
+| E1 ⭐ | NDK clang 18 `-O3 -march=armv8.2-a+dotprod` flag 인식하나 INT8 src를 `smlal` (INT16 promote) path 선택 → `sdot` 자동 미선택 (rpi5 gcc 14.2 같은 flag로 6.7× 가속과 정반대 0.97×) | 대안 없음 — mobile CPU/NPU 추가 SDK 도입 가치 없음 확정 (3 path 모두 negative) |
+
+**일반화 원칙 (toolchain vectorizer 정책 = AI 가속 본질의 4번째 변수)**: same SIMD HW (asimddp) 보유라도 컴파일러 vectorizer 정책 차이로 6.9× gap 발생. AI 가속 본질 = HW + library + **toolchain 정책**. 다른 vectorize-dependent 작업에 일반화: LLM kernel (llama.cpp matmul), Scientific compute (BLAS, FFTW), Mobile/embedded 응용 (NDK clang 정책).
+
+→ thought [[2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질]].
 
 ## 2026-05-23 야간 — Round 9 → v2.5 cascade evolution 시계열 박제 ⭐⭐
 

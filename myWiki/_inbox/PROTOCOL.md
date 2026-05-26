@@ -109,19 +109,20 @@ status: pending                   # pending | in_progress | done | rejected
 - 본 § "합의 이력"에 합류 일자·식별자 등재
 - 모든 기존 Claude의 PROTOCOL.md에도 동일 등재 (N Claude 동기화)
 
-**현재 활성 Claude (11 시스템, 2026-05-24~)**:
+**현재 활성 Claude (13 시스템, 2026-05-26~)**:
 - `mywiki-claude` — `today/myWiki/` (Windows) — 학습·도구·범 사업 허브
 - `revita-claude` — `revitaProject/orgRevita/` (Windows) — REVITA 제품
 - `ondevice-claude` — `/todo/onDevice_AI/` (Windows, 5/15 합류) — AI FanStick + Stage 4 제품 통합
 - `n8n-claude` — `/home/uttec/project/n8nUttec/` (Ubuntu, 5/16 합류) — n8n 자동화 + UTTEC 영업·사업화 vault
-- `shield-claude` — `/home/uttec/project/shield/` (RPi Linux, 5/16 합류) — RPi shield 응용 개발
+- `shield-claude` — `/home/uttec/project/shield/` on shield-rpi4 (Tailscale 100.110.51.14, LAN 192.168.0.3, 5/16 합류) — RPi shield 응용 개발 (E32-433 LoRa + RS485/422/MESH)
 - `wishket-claude` — `wishketProject/` (Windows, 5/16 합류) — 위시캣 영업 자산
 - `lemonlabs-claude` — `/todo/lemonLabs/` (Windows, 5/19 합류) — 이진서 협업 신규 법인 (4 트랙)
 - `uttechome-claude` — `/todo/uttecHome/` (Windows, 5/21 합류) — UTTEC 회사 홈페이지 + Obsidian second-brain
 - `search-claude` — `/todo/search/` (Windows, 5/21 합류) — myWiki AI 검색·정리 web 서비스 (prompt-driven, FastAPI + React + Claude API)
 - `uttec-vault-claude` — `~/uttec-vault/` on uttecMac (Ubuntu, 5/23 합류) — UTTEC 비즈니스 second-brain (cross-platform fork base)
-- **`uttec-search-claude` — `~/uttec-search/` on uttecMac (Ubuntu, 5/23 합류) — uttec-vault 비즈니스 자료 검색 web (search Windows fork)** ⭐ 10th
-- **`uttec-rag-local-claude` — `~/uttec-rag-local/` on uttecMac (Ubuntu, 5/24 합류) — uttec-search sibling, Ollama qwen2.5:7b local RAG (port 8892/8893)** ⭐ 11th NEW
+- `uttec-search-claude` — `~/uttec-search/` on uttecMac (Ubuntu, 5/23 합류) — uttec-vault 비즈니스 자료 검색 web (search Windows fork) — 10th
+- `uttec-rag-local-claude` — `~/uttec-rag-local/` on uttecMac (Ubuntu, 5/24 합류) — uttec-search sibling, Ollama qwen2.5:7b local RAG (port 8892/8893) — 11th
+- **`uttec-factory-claude` — `/home/uttec/project/uttec-factory/` on factory-rpi4 (Tailscale 100.109.84.79, LAN 192.168.0.23, 5/26 합류) — UTTEC Shield AI 공장자동화 교육 vault (E22-900T30D LoRa + 9 컴포넌트 + 8일 교육 커리큘럼 + 영업 자산)** ⭐ **13th NEW** (분산 호스트 4 사례 누적: Linux × 3 + 본 PC × 1)
 
 ## 합의 이력
 
@@ -137,6 +138,7 @@ status: pending                   # pending | in_progress | done | rejected
 - **2026-05-21 야간** ⭐: **search-claude 합류** — search vault (`C:/todo/search/`, Windows, ihong9059/search private repo) multi-agent 합류. **사용자 노출 트랙 vault 첫 사례** — myWiki second-brain 위에서 동작하는 prompt-driven 검색·정리·요약 web 서비스 (FastAPI + React + Claude Max CLI subprocess). SELF_ID="search-claude". **9 Claude 시스템**. myWiki 메모리 공유 정책 (5/22, 다른 vault 와 다른 예외 — today 와 거의 동일 수준 운영 위해). search 측 PROTOCOL.md 사본 동기화 + myWiki/raw/search · second-brain/raw/search 역방향 junction + entities/search.md 신설.
 - **2026-05-23 야간** ⭐⭐: **uttec-vault-claude + uttec-search-claude 합류 (2 vault 동시)** — uttec-vault (`~/uttec-vault/` on uttecMac, Ubuntu 22.04, Tailscale 100.90.158.36) = UTTEC 비즈니스 second-brain (cross-platform fork base, 5/15 신설). uttec-search (`~/uttec-search/` on uttecMac, Ubuntu) = search Windows fork (10th vault, vault portability 트랙 첫 실증, 8890/8891 port). SELF_ID="uttec-vault-claude" + "uttec-search-claude". **10 Claude 시스템 도달**. cross-platform fork 4 차원 비용 (경로 hardcoding + shell 도구 + path 토큰 + 환경 의존) 정량화 + uv 0.11.16 venv 우회 best practice. broker = 사용자 (scp 또는 사본 path) — 격리 호스트 첫 사례.
 - **2026-05-24** ⭐⭐⭐: **uttec-rag-local-claude 합류 (11th)** — uttec-rag-local (`~/uttec-rag-local/` on uttecMac, Ubuntu) = uttec-search sibling, **Ollama qwen2.5:7b local LLM 기반 RAG vault** (비용 0 + 외부 인터넷 0% dogfooding 트랙). port 8892 (frontend) / 8893 (backend). SELF_ID="uttec-rag-local-claude". **11 Claude 시스템 도달**. mywiki-claude 결단 **대안 B 채택** — myWiki 메타 갱신만 (vault 카운트 / entities/uttec-rag-local.md / ai-direction 로그), 디렉토리 신설 + 코드 복제 + Ollama 통합은 uttec-search-claude 위임 (uttec-vault outbox/2026-05-24-003 별도 발송). dogfooding 의도: Claude API (uttec-search) vs Ollama (uttec-rag-local) A/B 비교 1주.
+- **2026-05-26** ⭐⭐⭐: **uttec-factory-claude 합류 (13th)** — uttec-factory (`/home/uttec/project/uttec-factory/` on factory-rpi4, Tailscale 100.109.84.79, LAN 192.168.0.23) = **UTTEC Shield AI 공장자동화 교육 vault** (E22-900T30D LoRa + 9 컴포넌트 (3 완료 / 6 잔여) + 회로도 V1.0 + 8일 교육 커리큘럼 + 영업 자산 9 문서). SELF_ID="uttec-factory-claude". **13 Claude 시스템 도달**. **hardware + 교육 + 영업 통합 트랙 첫 사례** (shield는 hardware-only, ondevice는 hardware+R&D, wishket/uttechome은 비즈니스 트랙). mywiki-claude가 cross-vault 셋업 (`aiHardStudy/중소기업교육/ai공장자동화/` source → factory-rpi4 deploy + .claude/skills/{work-start, work-end, vault-start, vault-end} shield 패턴 미러 + _inbox/{pending,processed,outbound} + check-inbox.py SELF_ID + PROTOCOL.md). 분산 호스트 4 사례 누적 (Linux × 3 + Windows × 1). ⭐ **broker 자동화 첫 진화** — outbound → mywiki pending sync 스크립트 (`today/.claude/hooks/pull-multi-agent-outbound.py`, 5/26 신설). 12th는 결번 (uttec-factory가 13th로 직접 등재).
 
 ## 참고
 

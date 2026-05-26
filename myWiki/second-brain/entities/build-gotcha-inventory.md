@@ -2,16 +2,16 @@
 title: 빌드 함정 인벤토리 (cross-vendor 누적 박제)
 type: entity
 created: 2026-05-24
-updated: 2026-05-24 (신설 — onDevice mandate v2.7 흡수 시점, Espressif 16 + Nordic 18 = 누적 34건)
-tags: [빌드함정, debugging-자산, esp32s3, ESP-IDF, Nordic, Zephyr, CMSIS-NN, cmake, ninja, Windows-cmd, PowerShell, governance-신뢰성, 자기진단정정, 함정14-v3]
-links: [onDevice-ai, ai-fanstick, uttec-stage-package, gaps, ai-direction]
+updated: 2026-05-26 (Wave 10/11/12/13 흡수 — Espressif 16 + Nordic 18 + NDK 1 + STM32 12 = 누적 47건)
+tags: [빌드함정, debugging-자산, esp32s3, ESP-IDF, Nordic, Zephyr, CMSIS-NN, cmake, ninja, Windows-cmd, PowerShell, governance-신뢰성, 자기진단정정, 함정14-v3, NDK, clang, vectorizer, STM32, STM32H745, carry-over-효과]
+links: [onDevice-ai, ai-fanstick, uttec-stage-package, gaps, ai-direction, stm32h745-disco, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor]
 ---
 
 # 빌드 함정 인벤토리 (cross-vendor)
 
 ## 한 줄 정의
 
-onDevice_AI vault 의 보드한계모델 측정 사이클에서 누적 박제한 **vendor toolchain·OS·cmake 결함 함정 인벤토리**. **34건** (Espressif 16 + Nordic 18). 5/24 mandate v2.7 종결 시점 박제.
+onDevice_AI vault 의 보드한계모델 측정 사이클에서 누적 박제한 **vendor toolchain·OS·cmake·vectorizer 결함 함정 인벤토리**. **47건** (Espressif 16 + Nordic 18 + NDK 1 + STM32 12). 5/24 mandate v2.7 종결 시점 신설 → 5/26 Wave 10/11/12/13 흡수 확장.
 
 ## 의의 (영업·R&D)
 
@@ -25,7 +25,9 @@ onDevice_AI vault 의 보드한계모델 측정 사이클에서 누적 박제한
 |---|:-:|---|
 | **Espressif (esp32s3 / esp32c6)** | **16** | ESP-IDF v5.5.1 / Windows cmd.exe / PowerShell 5.1 / ninja / cmake 3.30 |
 | **Nordic (pca10056 / pca10040)** | **18** | Zephyr v2.9.2 / 4.3.99 / west / CMSIS-NN |
-| **합계** | **34** | — |
+| **NDK (smartphone Android)** ⭐NEW (5/24 Wave 11) | **1** | NDK clang 18 / Android / `+dotprod` vectorizer 정책 (E1) |
+| **STM32 (STM32H745I-DISCO 14th)** ⭐NEW (5/25 Wave 12 + 5/26 Wave 13) | **12** | Zephyr + STM32CubeProgrammer + STM32CubeIDE headless / DAPLink / LTDC / AXI SRAM / USB FS |
+| **합계** | **47** | — |
 
 ## Espressif 16건 상세
 
@@ -52,6 +54,38 @@ onDevice_AI vault 의 보드한계모델 측정 사이클에서 누적 박제한
 | 17 | R28-1 (5/24) | **Zephyr 4.3.99 CMSIS-NN module `arm_convolve_s8` 에 `upscale_dims` argument 추가됨** (이전 버전과 signature 불일치) | **`arm_convolve_wrapper_s8` 사용 우회** (자동 dispatch, signature 호환 보장) |
 | 18 | R28-2 (5/24) | **Bash → PowerShell env var transfer 함정** (`$` 변수 치환 = bash 와 PS 모두 `$` prefix 사용, escape 충돌) | **별도 wrapper script** 사용 (bash 측 env 파일 export → PS 측 source) |
 
+## NDK 1건 상세 (Wave 11, 5/24)
+
+| # | Round | 함정 | 우회 |
+|:-:|:-:|---|---|
+| E1 ⭐ | R30 (5/24) | **clang vs gcc INT8 vectorizer 정책 차이** — Galaxy A51 5G NDK clang 18 `-O3 -march=armv8.2-a+dotprod` 시 `+dotprod` flag 인식하나 INT8 src를 `smlal` (INT16 promote) path 선택 → `sdot` 자동 미선택 (rpi5 gcc 14.2 같은 flag로 6.7× 가속과 정반대 0.97×) | 대안 없음 — mobile CPU/NPU 추가 SDK 도입 가치 없음 확정 (3 path 모두 negative). 자세한 일반화 [[2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질]] |
+
+## STM32 12건 상세 (Wave 12 + 13, 5/25~26)
+
+| # | Wave | 함정 | 우회 |
+|:-:|:-:|---|---|
+| STM-1 | 12 | 한글 경로 cmake 0xC0000409 (ESP-IDF #1 carry-over) | `C:\stm32_proj\` 영어 사본 |
+| STM-2 | 12 | 함정 #14 cd . cwd 보존 결함 (Espressif #14 v3 carry-over) | patch_ninja.ps1 매 reconfigure 후 |
+| STM-3 | 12 | **dual-core boot 함정** (M4 wwdg 잔존 console 점유) | mass erase 매 셀 |
+| STM-4 | 12 | STM32CubeProgrammer halt 거부 | mode=UR reset=HWrst |
+| STM-5 | 12 | **보드명 자가진단** (사용자 "H746" → 실제 H745) | STM32CubeProgrammer 식별 + DAPLink label + Zephyr board 정의 3중 교차 |
+| STM-6 | 12 | ST 사전 빌드 .hex segmented binary (Sector[0] fail) | STM32CubeIDE headless build sample 직접 빌드 |
+| STM-7 | 12 | LTDC sample backlight (PK0) + display enable (PK7) 누락 | main.c에 직접 GPIO set |
+| STM-8 | 12 | 480×272 RGB565 framebuffer 261KB → DTCM 128KB overflow | AXI SRAM 0x24000000 직접 + SCB_CleanDCache |
+| STM-9 | 12 | LD8 (PD3) active HIGH polarity (LD6/LD7 active LOW와 반대) | 직접 GPIO + SET=ON |
+| STM-10 | 12 | PowerShell sweep monitor function scope New-Object cast fail | monitor inline (function scope 회피) |
+| STM-11 | 12 | USB silk-screen 확인 — H745 = CN13 USB FS (NOT HS ULPI) | nucleo_h745zi_q carry-over (PA11/PA12 internal PHY) |
+| **STM-12** ⭐ | **13** | **Zephyr API change**: `net_mgmt_event_handler_t` 시그니처 4.3에서 `uint32_t mgmt_event` → `uint64_t` 변경. 옛 시그니처 사용 시 warning만 (error 아님, runtime 정상). 다른 보드 carry-over 시 **silent breakage 가능성**. | 시그니처 갱신 (uint64_t 사용) |
+
+### carry-over 효과 정량화 (Wave 13 입증)
+
+11 STM32 함정 (STM-1~11) 박제 후 Wave 13 PoC 2건 진행 → 신규 함정 **1건 (STM-12 minor)** 만 발현.
+
+- R36 sweep = 3차 시도
+- 본 PoC (Ethernet + Bridge) = **1차 success** ⭐
+- 패턴: **"환경 셋업 함정은 보드 첫 작업에 집중, 이후 PoC는 carry-over로 1차 success"**
+- 영업 카피: "vendor 함정 인벤토리 보유 → 외부 회사 도입 시 first-try success ratio 향상"
+
 ## 자기 진단 정정 사이클 = governance 신뢰성 모범
 
 | 사례 | 가설 | 정정 | 의의 |
@@ -75,6 +109,6 @@ onDevice_AI vault 의 보드한계모델 측정 사이클에서 누적 박제한
 | 항목 | 값 |
 |---|---|
 | 신설 | 2026-05-24 (mandate v2.7 종결 megasession 흡수) |
-| 현재 누적 | 34건 (Espressif 16 + Nordic 18) |
+| 5/26 Wave 10~13 흡수 | 47건 (Espressif 16 + Nordic 18 + NDK 1 + STM32 12) |
 | 다음 갱신 | 새 보드 / 새 라이브러리 / 새 cmake 버전 측정 시 |
 | 영업 자산화 시점 | 6/29 W6 종료 익일 (Stage 4 영업 자료 통합) |

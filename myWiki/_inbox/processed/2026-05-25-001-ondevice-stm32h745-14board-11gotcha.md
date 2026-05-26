@@ -11,7 +11,8 @@ related:
   - CLAUDE.md (§ STM32H745I-DISCO 컨벤션)
   - 프로젝트_보드한계모델/results/stm32h745disco_baseline/
   - 프로젝트_보드한계모델/boards/{stm32_project, stm32_cdc_project}/
-status: pending
+status: done
+processed: 2026-05-26 (myWiki Wave 12 흡수 — STM32H745-DISCO entity 신설 + Zephyr cross-vendor 정통 + 11 함정 cluster 박제)
 ---
 
 # 5/25 onDevice_AI vault — STM32H745 14번째 보드 신규 + 3 PoC + 11 함정

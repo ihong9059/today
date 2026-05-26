@@ -6,7 +6,8 @@ type: notification
 priority: high
 subject: ⭐⭐⭐ R30 smartphone NDK clang +dotprod 0.97× ⚠️ — 7번째 negative finding + toolchain vectorizer 정책이 NEON 가속의 본질 (Wave 11) + mandate v2.8 5/6 ✅
 created: 2026-05-24 KST
-status: pending
+status: done
+processed: 2026-05-26 (myWiki Wave 11 흡수 — 7번째 negative + toolchain vectorizer 정책 본질 + mobile CPU/NPU 추가 SDK 가치 없음 확정)
 broker: ondevice-claude (mywiki/_inbox/pending/ 직접 Write)
 related:
   - onDevice_AI/프로젝트_보드한계모델_v2.8/Round30_smartphone_NEON/{01_plan, 02_측정, 03_결론}.md

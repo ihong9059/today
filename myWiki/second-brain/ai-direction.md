@@ -2,12 +2,78 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-05-24 (6 카드 megasession 흡수 — mandate v2.7 4/4 ✅ 100% 종결 + 11th vault uttec-rag-local 신설 + 3계열 매트릭스 완성 + Hybrid SoC carrier + 6조건 곱 진화 + 5 negative finding 누적)
-tags: [AI, 방향, 전략, 판단, 3계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, Hybrid-SoC, application별-SoC, negative-finding-자산]
-links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory]
+updated: 2026-05-26 (4 카드 megasession 흡수 — Wave 10/11/12/13 mandate v2.8 4~5/6 ✅ + 5계열 매트릭스 완성 + 7번째 negative finding + toolchain vectorizer 정책 본질 + STM32H745 14번째 보드 정통 Zephyr 통합 + Stage 4 LAN path)
+tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path]
+links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-05-26 megasession) — Wave 10/11/12/13 흡수 ⭐⭐⭐
+
+**사건**: 5/24~26 ondevice-claude 4 카드 일괄 흡수. (1) Wave 10 mandate v2.8 4/6 ✅ — R34 Hybrid SoC PoC + R33 esp-nn TF SRAM/PSRAM 분기 + R32 64KB tier 6번째 negative + R31 rpi5 NEON 6.7× + R31.5 sdot 효과 분리 + **5계열 매트릭스 완성** (ARM-A 행 추가). (2) Wave 11 R30 smartphone NDK clang `+dotprod` **0.97× 7번째 negative** + toolchain vectorizer 정책 본질 + mandate v2.8 5/6 ✅. (3) Wave 12 STM32H745I-DISCO **14번째 보드 신규 + 11 함정 single-day cluster** + Zephyr cross-vendor 통합. (4) Wave 13 STM32H745 Ethernet TCP + USB-CDC↔TCP Bridge PoC + Stage 4 LAN path 신설.
+
+### 결정 8: ⭐⭐⭐ 5계열 AI 가속 매트릭스 완성 — ARM-A NEON+dotprod 행 추가 (Wave 10)
+
+| 계열 | 하드웨어 | MLP | CNN | TF |
+|---|---|:-:|:-:|:-:|
+| LX7 ESP-DSP | esp32s3 | 13.4× | 1.00× | 10.8× SRAM |
+| M4F CMSIS-NN | pca10056 | 3.26× | ⭐ 14× | 1.85× |
+| esp-nn (R33) | esp32s3 | (-) | 2.93× | 3.78× / **2.62× PSRAM** |
+| **ARM-A NEON+dotprod** ⭐⭐⭐ | rpi5 A76 | **8.35×** | 3.85× | **7.64×** |
+| NPU NNAPI | Eden NPU | -79~421× | (-) | (-) |
+
+- R34 ⭐⭐⭐ Hybrid SoC PoC firmware 측정 → 실제 작동 변환 (16 cycle × 8 keyword × ACK 100%)
+- R33 ⭐⭐ esp-nn TF **SRAM은 ESP-DSP / PSRAM은 esp-nn** 분기 신규 finding
+- R32 6번째 negative — pca10040 64KB Static RAM 89.8% (Stage 4 시나리오 C nRF52833/40 권장 필수)
+- R31 rpi5 NEON 6.7× = **Stage 4 시나리오 D Edge AI Gateway 신설** ($15~30만원, Cloud 대안 정량 근거)
+
+### 결정 9: ⭐⭐⭐ mobile CPU/NPU 추가 SDK 도입 가치 없음 확정 (Wave 11)
+
+R30 smartphone NDK clang 18 `-O3 -march=armv8.2-a+dotprod` **12셀 평균 0.97×** = 가속 효과 없음. R31 rpi5 같은 flag로 6.7× 가속과 정반대.
+
+| 항목 | rpi5 (R31) | smartphone (R30) |
+|---|---|---|
+| 컴파일러 | gcc 14.2 (Linux native) | clang 18 (Android NDK) |
+| asimddp HW | ✅ | ✅ |
+| `+dotprod` 시 NEON 명령 | **`sdot` 자동 vectorize** ⭐ | `smlal` (INT16 path) |
+| `+dotprod` 가속률 | **6.7× ⭐⭐⭐** | **0.97×** ⚠️ |
+
+⭐ **6.9× gap 본질 = toolchain vectorizer 정책 차이.** SIMD HW (asimddp)는 양쪽 모두 보유 → AI 가속 본질 = HW + library + **toolchain 정책**.
+
+7번째 negative finding 누적 (R&D 신뢰성 자산):
+
+| # | Round | 발견 |
+|:-:|---|---|
+| 7 ⭐ | **R30** | **mobile clang 18 `+dotprod` flag 무효 (0.97×)** — 3 mobile 가속 path (NPU + NEON 명시 + baseline) 모두 negative |
+
+→ **mobile CPU/NPU 추가 SDK 도입 결단 = 가치 없음 확정** (3 path 측정 검증 후).
+
+### 결정 10: ⭐⭐ STM32H745 14번째 보드 정통 Zephyr 통합 + 11 함정 single-day cluster (Wave 12)
+
+- **본 vault 정통 = Zephyr** (5/25 사용자 명시 합의) — Nordic + STM32 같은 toolchain 일관성 + carry-over 자산
+- ESP-IDF (Espressif) ↔ Zephyr (Nordic + STM32) 2-track 정착
+- 11 보드 → 14 보드 매트릭스 확장 (Cortex-M tier 행 강화: M4F 64MHz pca10056 → M7 480MHz STM32H745)
+- 11 함정 single-day cluster 박제 → 함정 인벤토리 47건으로 확장 (Espressif 16 + Nordic 18 + NDK 1 + **STM32 12**)
+- R35 keyword 재구성: KsponSpeech 일반 대화 corpus (네/아니/좋아/싫어/다시/가자/잠깐/꺼)
+
+### 결정 11: ⭐⭐⭐ Stage 4 영업 데모 전략 — USB CDC + Ethernet 동시 streaming 단일 firmware (Wave 13)
+
+- STM32H745 = USB CDC + Ethernet **단일 firmware** 동시 streaming 가능 → Stage 4 데모 **두 시나리오** 모두 demo 가능 (직접 PC = USB CDC / LAN 네트워크 통합 = TCP)
+- AI FanStick 응원봉 외 **B2B 산업 노드 영업 추가 path** (한국기계 등 LAN 인프라 영업)
+- 보드 영업 매칭 baseline: **esp32-S3 → WiFi/BT / Nordic → BLE / STM32H7 → 산업 LAN**
+- **carry-over 효과 정량화**: 11 함정 박제 후 Wave 13 PoC 2건 → 신규 함정 1건 (minor)만, R36 sweep 3차 시도 → 본 PoC **1차 success**. 영업 카피: "vendor 함정 인벤토리 보유 → first-try success ratio 향상"
+- **신규 entity 신설**: [[stm32h745-disco]] (Wave 12 + 13 통합)
+
+### 의미 (5/26 megasession 추가)
+
+6. **5계열 매트릭스 완성** — ARM-A 행 추가로 LX7 / M4F / esp-nn / ARM-A / NPU 정량 완료 (Stage 4 영업 자료 결정타)
+7. **toolchain vectorizer 정책 = AI 가속 본질의 4번째 변수** — same SIMD HW(asimddp)로도 컴파일러 정책으로 6.9× gap. mobile CPU/NPU 추가 SDK 가치 없음 확정 (3 path negative)
+8. **본 vault 정통 = Zephyr** (Nordic + STM32 통합) — ESP-IDF ↔ Zephyr 2-track 정착
+9. **STM32H745 = 한국 산업 노드 영업 결정타** — USB CDC + LAN 단일 firmware, AI FanStick 외 B2B 산업 노드 path 추가
+10. **carry-over 효과 정량화** — 함정 인벤토리 R&D 신뢰성 영업 자산 (first-try success ratio 향상)
+
+---
 
 ## 판단 로그 (2026-05-24 megasession) — mandate v2.7 4/4 ✅ 100% 종결 + 11th vault uttec-rag-local 신설 ⭐⭐⭐⭐
 

@@ -45,6 +45,8 @@ updated: 2026-05-09
 | [[uttec-edu]] | UTTEC Edu 플랫폼 — 37개 코스, 765일 커리큘럼 |
 | [[claude-code]] | Claude Code — 핵심 개발 도구, Skill 시스템 |
 | [[ai-fanstick]] | AI FanStick — 응원봉 제품, 특허 출원 |
+| [[stm32h745-disco]] | STM32H745I-DISCO — 14번째 보드, Cortex-M7+M4 dual / LCD + USB CDC + Ethernet, Stage 4 산업 노드 path (5/25~26 신설) |
+| [[uttec-factory]] | **uttec-factory vault** — UTTEC Shield (AI 공장자동화 교육용) hardware 검증 + 8일 교육 + 영업 통합. 13th multi-agent vault (factory-rpi4 100.109.84.79, 5/26 신설) ⭐ broker 자동화 첫 진화 |
 | [[xerix]] | Xerix MFC Controller — EtherCAT 제안 4,970만원 |
 | [[revita]] | REVITA — IoT, LoRa, KC 인증 |
 | [[위시캣활동]] | 위시캣 프리랜서 — 16건+ 지원, 시장 분석 |

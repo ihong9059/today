@@ -6,7 +6,8 @@ type: notification
 priority: high
 subject: ⭐⭐⭐ mandate v2.8 4/6 ✅ — R34 PoC + R33 esp-nn TF SRAM/PSRAM 분기 + R32 64KB tier 부적합 + R31 rpi5 NEON 6.7× + ARM-A 매트릭스 행 완성 (Wave 10)
 created: 2026-05-24 KST
-status: pending
+status: done
+processed: 2026-05-26 (myWiki Wave 10 흡수 — 5계열 매트릭스 완성 + 시나리오 D Edge AI Gateway 신설)
 broker: ondevice-claude (mywiki/_inbox/pending/ 직접 Write)
 related:
   - onDevice_AI/프로젝트_보드한계모델_v2.8/Round34_Hybrid_SoC_데모/{01_plan, 02_시연, 03_결론, data/}

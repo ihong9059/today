@@ -13,7 +13,8 @@ related:
   - onDevice_AI/CLAUDE.md
   - myWiki/entities/onDevice-ai.md
   - myWiki/entities/ai-fanstick.md
-status: pending
+status: done
+processed: 2026-05-26 (myWiki Wave 13 흡수 — Stage 4 LAN path 신설 시나리오 G + carry-over 효과 정량화 + STM-12 함정 박제)
 ---
 
 # 흡수 요청 — STM32H745 두 신규 streaming path 검증 + Stage 4 영업 자산 확장

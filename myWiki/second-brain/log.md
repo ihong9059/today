@@ -2,7 +2,81 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-26 RPi3 192.168.1.20 신규 호스트 + UTTEC Shield 3 컴포넌트 동작 검증 (OLED/LED/WS2812) + WS2812 PWM0/audio 충돌 SOP 박제
+updated: 2026-05-26 야간 (uttec-factory vault 신설 13th + broker 자동화 첫 진화 + Wave 10/11/12/13 megasession)
+---
+
+## [2026-05-26 야간] new-vault | uttec-factory-claude 합류 (13th) + broker 자동화 첫 진화 ⭐⭐⭐
+
+**사건**: 5/26 오전 신규 RPi3 (192.168.1.20) + UTTEC Shield 검증 시작 → 외출 중 hardware factory-rpi4 (100.109.84.79)로 이전 → 사용자 알림 → mywiki-claude가 factory-rpi4에 `/home/uttec/project/uttec-factory/` 본 vault 신설 + multi-agent 합류 + broker 자동화 첫 진화.
+
+**shield A vs B hardware 분리 발견**:
+- shield A (shield-rpi4 100.110.51.14): E32-433 LoRa + RS485/422/MESH + 정통 shield vault (5/16 합류, shield-claude)
+- **shield B (factory-rpi4 100.109.84.79)**: **UTTEC Shield AI 공장자동화 교육용** — E22-900T30D LoRa + 9 컴포넌트 (OLED + LED 3색 + WS2812 + 부저 + 스피커 + 스위치 + AHT20 + LoRa) + 회로도 V1.0 + 8일 교육 + 영업 자산 통합
+
+**5/26 오전 진단 정정**: "shield-claude SSH 끊김" → 실제 정상, LAN IP 192.168.0.51 → 192.168.0.3 변경 (DHCP)였을 뿐. 신규 RPi3 작업은 무의미 X — shield B 별도 트랙 정당.
+
+**uttec-factory vault 신설** (mywiki-claude cross-vault 진행):
+- 디렉토리 6 하위 폴더 (회로도 / 구현 / 교육자료 / 매뉴얼 / 영업 / 작업보고서) + `.claude/{hooks, skills/{work-start, work-end, vault-start, vault-end}}` + `_inbox/{pending, processed, outbound}`
+- 본 PC source 자료 일괄 scp (3 batch, 25MB) — 회로도 PDF V1.0 + port_map.py + 교육자료 메인 PDF 6.9MB + LoRa 매뉴얼 + 영업 9 문서
+- 메타 파일 8건 작성 — README + CLAUDE + 진행로그 + 다음할일 + 핀맵 + 검증진행상태 + SETUP + 작업보고서
+- `.claude/skills` shield 패턴 미러 — work-start/work-end는 폴더 범용 그대로, vault-start/end는 uttec-factory 특화 신규
+- `check-inbox.py` SELF_ID="uttec-factory-claude" + settings.local.json (SessionStart hook + permissions)
+- factory-rpi4 환경 셋업 — I2C 활성화 + audio off + i2c-tools + luma.oled + ws281x venv + reboot
+
+**broker 자동화 첫 진화** ⭐⭐⭐:
+- 기존 분산 호스트 vault (shield, n8n, uttec-vault, uttec-search, uttec-rag-local)는 **사용자가 수동 broker** (scp 또는 사본 path)
+- 본 vault부터 **자동 broker** — `today/.claude/hooks/pull-multi-agent-outbound.py` 신설
+  - factory-rpi4 outbound/*.md ssh로 list
+  - frontmatter `to: mywiki-claude` 카드만 scp pull → `myWiki/_inbox/pending/`
+  - 원격 outbound → outbound-archived/ 이동 (재발송 방지)
+  - 결과: pulled / skipped / errored 요약 출력
+- **첫 동작 검증 성공** — `2026-05-26-001-uttec-factory-claude-join.md` factory → myWiki pending 자동 sync 완료. 라이프사이클 4단계 (vault-end 작성 → ssh list → scp pull → archived 이동) 모두 정상
+
+**myWiki cascade**:
+- `_inbox/PROTOCOL.md` § 활성 Claude 11→13 + 합의 이력 5/26 uttec-factory-claude 13th 등재
+- `second-brain/entities/uttec-factory.md` 신설 (운영지 + 9 컴포넌트 + shield A vs B 비교 + broker 자동화 패턴 + cascade 권고)
+- `second-brain/index.md` 등재
+- 본 log.md 박제 (본 항목)
+
+**Tier 분류**: Tier 3 6번째 (revita, onDevice_AI, wishket, shield, n8n, lemonLabs, **uttec-factory**). 분산 호스트 4번째 (Linux × 3 + Windows × 1).
+
+**의의**:
+1. **hardware + 교육 + 영업 통합 트랙 첫 사례** — shield는 hardware-only, ondevice는 hardware+R&D, wishket/uttechome은 비즈니스 트랙
+2. **broker 자동화 패턴 = 분산 호스트 vault 운영 모델 진화** — 다른 분산 vault (shield, uttec-vault, uttec-search, uttec-rag-local)에도 확장 가능 (스크립트 REMOTE_VAULTS 추가)
+3. **AI 공장자동화 교육 트랙 핵심 자산화** — 강사양성 Day 5 모듈 + 중소기업 8일 교육 + 영업 패키지 cascade 후보
+
+**다음 카드 후보 (uttec-factory 측 발신)**:
+- 9/9 검증 완료 시 매트릭스 보고
+- 0x68/0x77 hardware 부재 확정 시 회로도 V1.0 정합성 박제
+- E22-900T30D Config 모드 통신 성공 시 LoRa 트랙 cross-link
+- 8일 교육 ↔ 강사양성 cascade 매칭 발견 시
+
+---
+
+## [2026-05-26] megasession | 4 카드 흡수 — Wave 10/11/12/13 mandate v2.8 5/6 ✅ + STM32H745 14번째 보드 + 5계열 매트릭스 완성 ⭐⭐⭐
+
+## [2026-05-26] megasession | 4 카드 흡수 — Wave 10/11/12/13 mandate v2.8 5/6 ✅ + STM32H745 14번째 보드 + 5계열 매트릭스 완성 ⭐⭐⭐ (오후 작업)
+
+**사건**: 5/24~26 도착한 _inbox/pending 4 카드 (ondevice 5/24-011 + 5/24-013 + 5/25-001 + 5/26-001) 일괄 megasession 흡수. ondevice-claude 가 mandate v2.8 R30~R34 5 Round 진행 + STM32H745I-DISCO 14번째 보드 신규 진입 + Ethernet/Bridge PoC 까지 폭주.
+
+**Wave 10 (5/24)** — R34 Hybrid SoC PoC firmware 실작동 (16 cycle × 8 keyword × ACK 100%) + R33 esp-nn TF SRAM/PSRAM 분기 신규 finding (PSRAM은 esp-nn 2.62× 우월) + R32 pca10040 64KB 부적합 6번째 negative + R31 rpi5 ARM NEON+dotprod 6.73× + R31.5 A72 vs A76 sdot 효과 분리 + **5계열 매트릭스 완성** (LX7/M4F/esp-nn/**ARM-A NEW**/NPU). Stage 4 시나리오 D Edge AI Gateway 신설 ($15~30만원).
+
+**Wave 11 (5/24)** — R30 smartphone NDK clang 18 `+dotprod` **0.97× 7번째 negative**. rpi5 gcc 6.7× vs smartphone clang 0.97× = **6.9× gap 본질 = toolchain vectorizer 정책 차이** (gcc `sdot` 자동 / clang `smlal` INT16 promote path). 3 mobile 가속 path 모두 negative → mobile CPU/NPU 추가 SDK 도입 가치 없음 확정.
+
+**Wave 12 (5/25)** — **STM32H745I-DISCO 14번째 보드 신규** + 본 vault 정통 = Zephyr 합의 (Nordic + STM32 cross-vendor 통합) + 11 함정 single-day cluster (STM-1~11) + 3 PoC (R36 baseline 12셀 + LCD R/G/B + USB CDC ACM streaming). R35 keyword KsponSpeech 일반 대화 재구성 (네/아니/좋아/싫어/다시/가자/잠깐/꺼).
+
+**Wave 13 (5/26)** — STM32H745 Ethernet TCP echo (LAN8742A onboard, DHCP 2.1s, FLASH 132KB / RAM 67KB) + USB-CDC↔TCP Bridge PoC (ring_buf 2개 + ISR 1개 + thread 1개, 단일 firmware 동시 streaming, FLASH 150KB / RAM 80KB) + STM-12 minor (Zephyr 4.3 net_mgmt API uint32→uint64 silent breakage). **carry-over 효과 정량화**: R36 3차 시도 → 본 PoC 1차 success. **Stage 4 영업 path 확장**: USB CDC + LAN 단일 firmware → 한국 산업 노드 path 추가 (시나리오 G 신설).
+
+**myWiki 갱신 9건**:
+- 신규 entity: [[stm32h745-disco]] (Wave 12 + 13 통합)
+- 갱신 entity: [[onDevice-ai]] (14/14 보드 + 5계열 매트릭스 + STM32H745 § 신설) + [[ai-fanstick]] (Wave 10/11/12/13 카피 추가) + [[uttec-stage-package]] (시나리오 F/G 신설 + 5계열 매트릭스 정량 근거 추가) + [[build-gotcha-inventory]] (34 → 47건, NDK 1 + STM32 12)
+- 신규 thought 4건: [[2026-05-24_5계열-AI가속-매트릭스-완성]] + [[2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질]] + [[2026-05-25_STM32H745-Zephyr-통합-cross-vendor]] + [[2026-05-26_STM32H745-LAN-path-Stage4-결정타]]
+- 갱신 ai-direction.md (결정 8/9/10/11 신규) + gaps.md (STM32 11 함정 cluster + NDK clang vectorizer 정책 박제) + index.md (stm32h745-disco 등재)
+
+**후처리**: 4 카드 → processed/ 이동 + status: done + onDevice_AI/_inbox/pending/ done 회신 4장 발송 + log.md 본 항목 박제.
+
+**다음 카드 후보**: R35 한국어 KWS Phase 2 학습 결과 / Stage 4 영업 이벤트 발생 / STM32H7 family 추가 진입.
+
 ---
 
 ## [2026-05-26] asset | 신규 RPi3 192.168.1.20 + UTTEC Shield 3 컴포넌트 동작 검증 + WS2812 PWM0/audio 충돌 SOP

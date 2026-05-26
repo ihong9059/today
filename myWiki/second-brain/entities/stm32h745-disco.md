@@ -1,0 +1,125 @@
+---
+title: STM32H745I-DISCO (14번째 보드)
+type: entity
+created: 2026-05-26
+updated: 2026-05-26 megasession (Wave 12 + Wave 13 통합 흡수 — 14번째 보드 신규 + 11 함정 single-day cluster + 3 PoC + Ethernet TCP + USB-CDC↔TCP Bridge PoC)
+tags: [STM32, STM32H745, Cortex-M7, Cortex-M4, dual-core, Zephyr, LCD, USB-CDC, Ethernet, LAN, LAN8742A, B2B, Stage4, ondevice, mandate-v2.8, mandate-v2.9, 14th-board, carry-over]
+links: [onDevice-ai, ai-fanstick, uttec-stage-package, build-gotcha-inventory, gaps, ai-direction, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타]
+---
+
+# STM32H745I-DISCO (14번째 보드)
+
+## 한 줄 정의
+
+ST `STM32H745I-DISCO` discovery 보드 — **Cortex-M7 480MHz + Cortex-M4 240MHz dual-core, 1MB internal RAM + 8MB external SDRAM, DP FPU + L1 cache + DSP intrinsics**. onDevice 14번째 보드. 5/25 신규 진입 (Wave 12) + 5/26 Ethernet/Bridge PoC (Wave 13). **Stage 4 산업 노드 (USB CDC + LAN 동시 streaming)** 영업 결정타.
+
+## 진입 컨텍스트 (Wave 12, 5/25)
+
+- **본 vault 정통 = Zephyr** 합의 후 첫 cross-vendor 통합 사례 (Nordic + STM32 같은 toolchain 일관성)
+- 11 보드 → 14 보드 매트릭스 확장 (Cortex-M tier 행 강화)
+- 같은 12셀 schema 비교 = 5계열 매트릭스 ARM tier 행 강화 (pca10056 M4F 64MHz → STM32H745 M7 480MHz)
+
+## 측정 결과 — R36 baseline + 3 PoC (Wave 12, 5/25)
+
+| 항목 | 값 |
+|---|---|
+| baseline R36 | 12셀 sweep 완료 |
+| CNN 32 | 238 ms |
+| TF 64 | 1.5 ms |
+| LCD R/G/B PoC | ✅ (480×272 RGB565) |
+| USB CDC ACM streaming PoC | ✅ (38400 bps) |
+
+## Wave 13 추가 PoC (5/26) ⭐⭐⭐
+
+### Ethernet TCP echo
+
+| 항목 | 값 |
+|---|---|
+| Ethernet PHY | Microchip **LAN8742A** (ID 0x7C111) onboard, MII 100Mb full duplex |
+| DHCP 시간 | ~2.1 s (PHY link up + IP 할당) |
+| TCP echo Memory | FLASH 132 KB / RAM 67 KB (12.6% / 12.9% of 1MB / 512KB AXI) |
+| 검증 도구 | PowerShell TcpClient + SerialPort (단일 세션 양방향 round-trip) |
+
+### USB-CDC ↔ TCP Bridge (single firmware)
+
+| 항목 | 값 |
+|---|---|
+| Bridge Memory | FLASH 150 KB / RAM 80 KB (USB stack + Net stack 동시 동작) |
+| 구조 | **ring_buf 2개 + ISR 1개 + thread 1개** 양방향 |
+| 영업 의미 | USB CDC + Ethernet **단일 firmware** 동시 streaming → Stage 4 데모 두 시나리오(직접 PC = CDC / LAN 통합 = TCP) 동시 만족 |
+
+## 영업 매칭 (Cortex-M tier 차별화)
+
+| 보드 | wireless / wired | 영업 시나리오 |
+|---|---|---|
+| pca10056 (M4F 64MHz 256KB) | **BLE wireless** (UART/USB-CDC, Ethernet 없음) | KWS / B2B BLE+AI 통합 SoC |
+| **STM32H745 (M7 480MHz, 512KB AXI + 1MB internal)** | ⭐ **Ethernet onboard + USB OTG 동시** | **한국 산업 환경 (LAN 인프라 + STM32 선호)** + Stage 4 통합 노드 |
+| esp32s3 | WiFi + BT | 응원봉 / Personalization |
+
+**시너지 카피**: AI FanStick 응원봉 외 **B2B 산업 노드 영업 추가 path** (한국기계 등 LAN 기반 Stage 4).
+
+## carry-over 효과 정량화 (Wave 13 발견)
+
+- 11 STM32 함정 (STM-1~11) 박제 후 본 세션 PoC 2건 진행 → 신규 함정 **1건 (STM-12 minor)** 만 발현
+- 패턴: **"환경 셋업 함정은 보드 첫 작업에 집중, 이후 PoC는 carry-over로 1차 success"**
+- 첫 R36 sweep = 3차 시도, 본 PoC = **1차 success** ⭐
+- 정량 근거: 함정 인벤토리의 R&D 신뢰성 영업 자산 가치
+
+## 11 함정 cluster (single-day, 5/25 박제)
+
+| # | 함정 | 우회 |
+|---|---|---|
+| STM-1 | 한글 경로 cmake 0xC0000409 (ESP-IDF #1 carry-over) | C:\stm32_proj\ 영어 사본 |
+| STM-2 | 함정 #14 cd . cwd 보존 결함 | patch_ninja.ps1 매 reconfigure 후 |
+| STM-3 | dual-core boot 함정 (M4 wwdg 잔존 console 점유) | mass erase 매 셀 |
+| STM-4 | STM32CubeProgrammer halt 거부 | mode=UR reset=HWrst |
+| STM-5 | 보드명 자가진단 (사용자 "H746" → 실제 H745) | STM32CubeProgrammer 식별 + DAPLink label + Zephyr board 정의 3중 교차 |
+| STM-6 | ST 사전 빌드 .hex segmented binary (Sector[0] fail) | STM32CubeIDE headless build sample 직접 빌드 |
+| STM-7 | LTDC sample backlight (PK0) + display enable (PK7) 누락 | main.c에 직접 GPIO set |
+| STM-8 | 480×272 RGB565 framebuffer 261KB → DTCM 128KB overflow | AXI SRAM 0x24000000 직접 + SCB_CleanDCache |
+| STM-9 | LD8 (PD3) active HIGH polarity (LD6/LD7 active LOW와 반대) | 직접 GPIO + SET=ON |
+| STM-10 | PowerShell sweep monitor function scope New-Object cast fail | monitor inline (function scope 회피) |
+| STM-11 | USB silk-screen 확인 — H745 = CN13 USB FS (NOT HS ULPI) | nucleo_h745zi_q carry-over (PA11/PA12 internal PHY) |
+
+## Wave 13 추가 함정 (5/26, minor)
+
+- **STM-12** (Zephyr API change): `net_mgmt_event_handler_t` 시그니처 4.3에서 `uint32_t mgmt_event` → `uint64_t` 변경. 옛 시그니처 사용 시 `-Wincompatible-pointer-types` warning만 (error 아님, runtime 정상). 다른 보드 carry-over 시 silent breakage 가능성.
+
+→ STM32 함정 누적 **12건** (5/25 cluster 11 + 5/26 minor 1). cross-vendor 함정 인벤토리 갱신: [[build-gotcha-inventory]].
+
+## 매칭 패턴 (시너지)
+
+| 패턴 | 시너지 |
+|---|---|
+| **USB CDC streaming = R35 KWS 결과 영업 데모** | R35 한국어 KWS → STM32H745 보드 → CDC streaming → PC visualization → Stage 4 영업 결정타 (한국 기업 STM32 친화 + 한국어 응원봉 PoC) |
+| **Cortex-M tier 정량 비교 매트릭스 확장** | pca10056 R18 (M4F 64MHz) → STM32H745 R36 (M7 480MHz) → 같은 12셀 schema 비교 = 5계열 매트릭스 ARM tier 행 강화 |
+| **함정 11건 cluster carry-over 자산** | 미래 STM32H7 family 진입 (H7Bx, H7Sx, H723 등) 시 같은 함정 → 박제로 시간 절약 |
+| **Zephyr USB CDC sample carry-over** | `boards/stm32_cdc_project/` 패턴 = 다른 STM32 보드(F4/L4/G0 등) overlay만 변경 → 즉시 재사용 |
+| **BSD socket + USB CDC ring_buf 동일 구조** | `uart_irq_callback + ring_buf` = `zsock_recv + ring_buf` → 양방향 bridge는 ring_buf 2개 + ISR 1개 + thread 1개로 구현. 다른 보드(esp32-S3 + ethernet, F4xx) carry-over 가능 |
+
+## 박제 commit (5/25 단일 day, ondevice 측)
+
+- `f31d398` R36 smoke + STM-1~5
+- `b735870` R35 keyword 8개 확정
+- `e6a3f28` LCD R/G/B PoC + STM-6/7/8
+- `a850e5e` R36 12셀 sweep + STM-10
+- `ac75300` USB CDC ACM PoC + STM-11
+
+## 관련 페이지
+
+- [[onDevice-ai]] — 14 보드 매트릭스 갱신
+- [[ai-fanstick]] — STM32H745 응원봉 후속 PoC 가능 path (Cortex-M7 + USB CDC streaming + LCD)
+- [[uttec-stage-package]] — Stage 4 영업 데모 path (CNN 32 238ms / TF 64 1.5ms / USB CDC + LAN 동시 streaming)
+- [[build-gotcha-inventory]] — STM32 12건 cluster
+- [[2026-05-25_STM32H745-Zephyr-통합-cross-vendor]]
+- [[2026-05-26_STM32H745-LAN-path-Stage4-결정타]]
+
+## 메타
+
+| 항목 | 값 |
+|---|---|
+| 진입 일자 | 2026-05-25 (Wave 12, ondevice 5/25-001) |
+| 확장 일자 | 2026-05-26 (Wave 13, ondevice 5/26-001) |
+| 박제 commit | 5건 (5/25 single day) + Wave 13 추가 2건 (TCP + Bridge) |
+| 신규 entity 등재 일자 | 2026-05-26 (본 megasession 흡수) |
+| 다음 갱신 | mandate v2.9 진입 시 / 한국 산업 노드 첫 영업 이벤트 발생 시 |

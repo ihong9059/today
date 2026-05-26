@@ -2,10 +2,10 @@
 title: onDevice_AI vault — AI FanStick + Stage 4 + 보드한계모델
 type: entity
 created: 2026-05-07
-updated: 2026-05-24 megasession (Round 20 LoRA 7/7 + mandate v2.6 4/4 ✅ R23/R25 + mandate v2.7 4/4 ✅ 100% 종결 R26/R27/R28/R29 + 3계열 매트릭스 완성 + on-device 학습 4번째 축 + R28 CNN 14× 예측 5배 초과 + 5 negative finding 누적 + 34 빌드 함정)
-status: ✅ 1차 mandate 전환 완료 (5/17) / **mandate v2.5 7/7 ✅ (5/23 야간) + v2.6 4/4 ✅ (5/24) + v2.7 4/4 ✅ 100% 종결 (5/24)** / 13/13 보드 100% 완성 + 33 cell + 27 PHASE row 누적 / 3계열 AI 가속 매트릭스 완성 (LX7 ESP-DSP + M4F CMSIS-NN + esp-nn) / on-device 학습 4번째 축 (esp32s3 + PSRAM 8MB 유일) / W6 종료 6/22~28 후 Stage 4 영업 자산화 6/29
-tags: [vault, On-Device AI, 보드한계모델, AI FanStick, ESP32-S3, ESP-DSP, ESP32-C6, RISC-V, Xtensa, ARM, Cortex-M4F, CMSIS-NN, Nordic, Stage4, 정지선, multi-agent, ondevice-claude, mandate-v2.5-종결, mandate-v2.6-종결, mandate-v2.7-종결, LoRA, fast-adam, KWS, selective-personalization, Hybrid-SoC, 3계열매트릭스완성, 5-negative-finding, 6조건곱, 34빌드함정]
-links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, build-gotcha-inventory, 2026-05-08_응원봉-온디바이스AI-정지선, revita, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_selective-personalization-pattern]
+updated: 2026-05-26 Wave 10/11/12/13 흡수 (mandate v2.8 4~5/6 ✅ — R34 Hybrid SoC PoC + R33 esp-nn SRAM/PSRAM 분기 + R32 64KB 6번째 negative + R31 rpi5 NEON 6.7× + R31.5 sdot 분리 + R30 mobile 7번째 negative + STM32H745 14th 보드 + 11 함정 cluster + Ethernet/Bridge PoC + Stage 4 LAN path)
+status: ✅ 1차 mandate 전환 완료 (5/17) / **v2.5 7/7 + v2.6 4/4 + v2.7 4/4 ✅ + v2.8 5/6 ✅ (R30~R34 5 Round)** / **14/14 보드 100% 완성** (STM32H745 14번째 신규 5/25) / 5계열 AI 가속 매트릭스 완성 (LX7 ESP-DSP + M4F CMSIS-NN + esp-nn + **ARM-A NEON+dotprod** + NPU NNAPI) / on-device 학습 4번째 축 / W6 종료 6/22~28 후 Stage 4 영업 자산화 6/29
+tags: [vault, On-Device AI, 보드한계모델, AI FanStick, ESP32-S3, ESP-DSP, ESP32-C6, RISC-V, Xtensa, ARM, ARM-A, NEON, dotprod, Cortex-M4F, Cortex-M7, CMSIS-NN, Nordic, STM32, STM32H745, Zephyr-cross-vendor, Stage4, LAN-path, 정지선, multi-agent, ondevice-claude, mandate-v2.5-종결, mandate-v2.6-종결, mandate-v2.7-종결, mandate-v2.8, LoRA, fast-adam, KWS, selective-personalization, Hybrid-SoC, 5계열매트릭스완성, 7-negative-finding, 6조건곱, 47빌드함정, vectorizer-정책]
+links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, build-gotcha-inventory, stm32h745-disco, 2026-05-08_응원봉-온디바이스AI-정지선, revita, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_selective-personalization-pattern, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타]
 ---
 
 > **2026-05-17 mandate 전환**: 옛 "AI FanStick + Stage 4 영업 4 Phase 12 실험" → 새 **"보드한계모델 37셀 측정 (W0~W6)"** 단일 strand. 응용·영업은 W6 종료 후 후속(C 단계)으로 분리. 단일 출처 = `0_마스터플랜.md v2.0`.
@@ -14,6 +14,13 @@ links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, build-gotch
 > **2026-05-22 흡수 완료**: Round 18 Cortex-M4F CMSIS-NN MLP 128 = 3.23× 가속 (7,367μs → 2,285μs). **3계열 AI 가속 매트릭스 두 번째 축 완성** (LX7 ESP-DSP +13.4× ⭐⭐⭐ / M4F CMSIS-NN +3.23× ⭐⭐ / Eden NPU NNAPI ‒79~421× ⚠️). 클럭 normalize 시 LX7 단위 효율 5.64× M4F 우위. CNN/TF skeleton 미패치 (1.01×). Nordic 빌드 함정 5건 신규 박제.
 > **2026-05-22 야간 흡수 완료**: Round 18 후속 pca10040 (nRF52832 64KB) 12/12 RAM wall = **13/13 보드 완성 (100%)**. Round 14 plain C 100% 재현 — CMSIS-NN library 추가해도 RAM tier 한계 동일. "AI 응용 = nRF52840 (256KB)+ 또는 ESP32-S3 (PSRAM 8MB) 필수" 정량 박제. Stage 4 칩 선택 가이드 § "저전력 BLE-only (AI 불가)" 행 신설. Nordic 함정 11건 cross-vendor 인벤토리 (Round 17 ESP-DSP 4 + Round 18 본편 5 + Round 18 후속 R18-F/G 2). **AI 가속 4조건 곱 = ISA × workload × 메모리 계층 × RAM tier 적합도**.
 > **2026-05-23 야간 흡수 완료**: ondevice-claude 5/22 카드 (Round 9 cascade revisit + v2.5 종합 단일 출처 99_종합_v2.5) + 5/23 Round 21 esp-nn CNN 2.93~2.95× 카드 2건 통합 흡수. **3계열 AI 가속 매트릭스 CNN 행 채움** (esp-nn CNN LX7 +2.93× = ESP-DSP MLP/TF + CMSIS-NN MLP 옆 4번째 사례). **mandate v2.5 trajectory 5/6 → 6/7** (Round 20 LoRA 별도 결단 대기). **AI 가속 5조건 곱 진화 = ISA × workload × 메모리 계층 × RAM tier × library selection by workload** (5/22 4조건에서 library selection 1조건 추가). Round 9 evolution 시계열 6단계 박제 (Round 9 → 17 → 17.5 → 18 → 18후속 → 19 → 21). 14 보드 클럭 normalize cycle-per-MAC ranking (LX7 25,920 = MCU 최고 단위 효율, M4F 146,240 = MCU 2위, 자기자신 plain 의 5.64× 우위). esp-nn 빌드 함정 3건 신규 (R21-1 ninja PRE_LINK cd . cwd reset / R21-2 sections.ld-*.bat 상대 경로 / R21-3 PowerShell 5.1 UTF-8 BOM CP949 fallback). cross-vendor 빌드 함정 누적 **19건** (Espressif 8 + Nordic 11). **AI FanStick 차세대 firmware stack 확정**: MLP=ESP-DSP 13.4× + CNN=esp-nn 2.93× + TF=ESP-DSP 10.8× = KWS wake word 547ms → 187ms (3× 단축).
+> **2026-05-26 megasession 흡수 완료 ⭐⭐⭐ Wave 10/11/12/13** (4 카드 일괄 — 5/24-011 + 5/24-013 + 5/25-001 + 5/26-001):
+> **(Wave 10, 5/24)** mandate v2.8 4/6 ✅ — R34 Hybrid SoC PoC firmware 실작동 (16 cycle × 8 keyword × ACK 100%, UART jumper 38400 bps) + R33 esp-nn TF SRAM/PSRAM 분기 신규 finding (SRAM은 ESP-DSP 우월 / PSRAM은 esp-nn 2.62× 우월) + R32 pca10040 64KB 부적합 6번째 negative finding (Static RAM 89.8%, MLP 1KB도 fit 불가) + R31 rpi5 ARM NEON+dotprod 6.73× (MLP 128 11.75× / TF 64 7.64×, GCC 14.2 + `+dotprod` flag만으로) + R31.5 A72 vs A76 sdot 효과 분리 (dense matmul 2.6~3.7× / strided conv 동등) + **5계열 매트릭스 완성** (LX7 / M4F / esp-nn / ARM-A / NPU). Stage 4 시나리오 D Edge AI Gateway 신설 ($15~30만원, rpi5 gcc 6.7× Cloud 대안 정량 근거).
+> **(Wave 11, 5/24)** R30 smartphone NDK clang 18 `-O3 -march=armv8.2-a+dotprod` 12셀 평균 **0.97× = 가속 효과 없음** (7번째 negative). same asimddp HW + rpi5 6.7× 가속과 정반대 → **6.9× gap 본질 = toolchain vectorizer 정책 차이** (gcc는 `sdot` 자동 / clang은 `smlal` INT16 promote path). 3 mobile 가속 path (NPU + NEON 명시 + baseline) 모두 negative → **mobile CPU/NPU 추가 SDK 도입 가치 없음 확정**. mandate v2.8 5/6 ✅.
+> **(Wave 12, 5/25)** **STM32H745I-DISCO 14번째 보드 신규** + 본 vault 정통 = Zephyr 합의 (Nordic + STM32 cross-vendor 통합) + 11 함정 single-day cluster 박제 (STM-1 한글 cmake / STM-2 cd cwd / STM-3 dual-core boot / STM-4 CubeProgrammer halt / STM-5 보드명 자가진단 H746→H745 / STM-6 segmented binary / STM-7 LTDC backlight / STM-8 framebuffer DTCM overflow / STM-9 LD8 polarity / STM-10 PowerShell function scope / STM-11 USB FS not HS ULPI) + 3 PoC (R36 baseline 12셀 + LCD R/G/B + USB CDC ACM streaming). R35 keyword KsponSpeech 일반 대화 재구성 (네/아니/좋아/싫어/다시/가자/잠깐/꺼).
+> **(Wave 13, 5/26)** STM32H745 Ethernet TCP echo (Microchip LAN8742A onboard, MII 100Mb full duplex, DHCP ~2.1s, FLASH 132KB / RAM 67KB) + USB-CDC↔TCP Bridge PoC (ring_buf 2개 + ISR 1개 + thread 1개, 단일 firmware 동시 streaming, FLASH 150KB / RAM 80KB) + STM-12 minor (Zephyr 4.3 `net_mgmt_event_handler_t` uint32_t → uint64_t signature change). **carry-over 효과 정량화**: R36 3차 시도 → 본 PoC **1차 success** (11 함정 박제 후 신규 1건 minor만). **Stage 4 영업 path 확장**: USB CDC + LAN 동시 단일 firmware → 한국 산업 노드 (LAN 인프라 + STM32 선호) B2B path 추가.
+> **(누적)** 빌드 함정 **47건** (Espressif 16 + Nordic 18 + NDK 1 + STM32 12). 신규 entity [[stm32h745-disco]] 신설 + thoughts/2026-Q2/ 4건 박제 (5계열 매트릭스 / toolchain vectorizer / STM32H745 Zephyr 통합 / Stage 4 LAN path).
+
 > **2026-05-24 megasession 흡수 완료 ⭐⭐⭐⭐** (6 카드 일괄 — #011 + #001 + #003 + #005 + #007 + uttec-vault #002): 
 > **(1) mandate v2.5 7/7 ✅ 종결** — Round 20 LoRA on-device 9 cell esp32s3 + PSRAM 8MB PASS (MLP 128 r=8 1,949μs, 100 step 0.20초 학습 / PC numpy 검증 gradient rel error 1.78e-10 / Adam 78 step 99.9954% loss 감소). **4번째 축 (on-device 학습) 신설** — 13 보드 중 esp32s3 + PSRAM 8MB 유일 학습 가능 칩.
 > **(2) mandate v2.6 4/4 ✅ 종결** — R22 (LoRA phase 분리, Adam 60~92% dominance 발견) + **R23 ⭐⭐⭐⭐ Adam optimizer 5.87× 가속 → Tiny MLP 128 r=8 = 0.05초 "즉시 학습" carrier** (fast_rsqrtf + bias precompute) + R24 INT16 negative finding (1.65~4.25× 느림, esp32s3 FP division ~10 cycles/elem) + **R25 ⭐⭐⭐⭐ CNN+LoRA KWS personalization C16 r=4 = 0.37초 carrier** + "CNN forward 92~99% dominant, LoRA fine-tune 1~8% only = 사실상 무료" 신규 finding. 33 cell + 27 PHASE row 누적.
@@ -67,6 +74,7 @@ links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, build-gotch
 | 11 | esp32wroom | W3 | — | 3 | ESP32 baseline (LX6 dual · 가속 없음 · 520KB) |
 | 11⭐ | **pca10056** (Round 18 CMSIS-NN ⭐⭐) | W3 | 5/22 ✅ | 12 sweep | Nordic nRF52840 (M4F 64MHz · 256KB · CMSIS-NN SMLAD MLP 3.23×) |
 | 13⭐ | **pca10040** (Round 18 후속 ⭐) | W4 | 5/22 ✅ | 12 **전셀 RAM wall** | Nordic nRF52832 (M4F · 64KB · **AI 응용 부적합** 정량 박제) |
+| **14⭐** | **STM32H745I-DISCO** (Wave 12+13, R36) | — | **5/25** ✅ | 12 baseline + 3 PoC + Ethernet | ST **Cortex-M7 480MHz + M4 240MHz dual** · 1MB internal + 8MB SDRAM · LCD + USB CDC + **Ethernet (LAN8742A onboard)** · Stage 4 산업 노드 path |
 
 **진행률**: **13/13 보드 ✅ (100%)** / **42/49 셀 (86%, v2.4 baseline + v2.5 Round 18 누적)**. **메인 타겟 esp32s3 + RISC-V esp32c6 + Cortex-M4F 2 보드 (pca10056 ✅ / pca10040 RAM wall) 완료**. 1일 5보드 18셀 (5/19) + esp32s3 (5/19) + esp32c6 (5/20) + pca10056 + pca10040 (5/22) = **mandate 13/13 보드 완성**. v2.5 Round 18 CMSIS-NN 트랙 종료 (cnn/tf skeleton CMSIS-NN 패치 별도 후속 Round 18.5 후보).
 
@@ -308,6 +316,36 @@ vendor 광고 "Cortex-M4F + neural network frameworks 지원" 만으로 AI 응�
 - **클럭 normalize LX7 5.64× M4F** — ISA 단위 효율 우위 정량화 (Stage 4 칩 선택 결정타)
 - **Nordic 빌드 함정 5건 신규 박제** (gaps.md `## Round 18 Nordic 빌드·monitor 함정 패턴` 참조)
 
+## 5계열 AI 가속 매트릭스 완성 (2026-05-26 Wave 10/11 흡수) ⭐⭐⭐
+
+5/26 mandate v2.8 R30/R31/R33 흡수로 **ARM-A NEON+dotprod 행 + mobile clang vectorizer 정책 negative** 추가. 5계열 완성.
+
+| 계열 | 하드웨어 | MLP | CNN | TF | 결정 application |
+|---|---|:-:|:-:|:-:|---|
+| **LX7 ESP-DSP** | esp32s3 240MHz | 13.4× | 1.00× (한계) | 10.8× SRAM | SLM / Personalization |
+| **M4F CMSIS-NN** | pca10056 64MHz | 3.26× | ⭐ 14.02× | 1.85× | KWS / CNN application |
+| **esp-nn** (R33) | esp32s3 240MHz | (-) | 2.93× | 3.78× / **2.62× PSRAM** | esp32s3 PSRAM SLM alternative |
+| **ARM-A NEON+dotprod** ⭐⭐⭐ NEW | rpi5 A76 (gcc 14.2 Linux) | **8.35×** | 3.85× | **7.64×** | **Edge AI Gateway (rpi5 native)** |
+| **Mobile A77 NEON+dotprod** ⚠️ NEW (R30 negative) | smartphone (clang 18 NDK) | **1.00×** ⚠️ | **0.98×** ⚠️ | **0.81×** ⚠️ | (사용 안 함, mobile NEON 가치 없음) |
+| **NPU NNAPI** | Eden NPU | -79~421× | (-) | (-) | (사용 안 함) |
+
+⭐ **R33 신규 finding (memory tier 분기)**: TF 64 SRAM은 ESP-DSP 우월 (381 vs 1,089μs) / TF 484 PSRAM은 esp-nn 우월 (270,527 vs 103,410μs **2.62×**). AI FanStick SLM (PSRAM 적재) 응답 시간 60% 단축.
+
+⭐⭐ **R30/R31 toolchain vectorizer 정책 본질 (Wave 11)**: same asimddp HW + 같은 `-O3 -march=armv8.2-a+dotprod` flag로도 gcc 14.2 (rpi5)는 `sdot` 자동 vectorize → 6.7× 가속, clang 18 (NDK Android)는 `smlal` INT16 promote path → 0.97×. **6.9× gap = vectorizer 정책 차이**. mobile CPU/NPU 추가 SDK 도입 가치 없음 확정 (3 path 모두 negative). 자세히 [[2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질]].
+
+⭐⭐⭐ **R34 Hybrid SoC PoC firmware**: 측정 → 실제 작동 firmware 변환 (16 cycle × 8 keyword × 양방향 ACK 100% / `demo_trace_v3.log` 28초). UART jumper 3-line 38400 bps. BOM 3 시나리오 + ASCII 회로도. Stage 4 영업 결정타.
+
+## STM32H745 14번째 보드 + Stage 4 LAN path (2026-05-26 Wave 12/13 흡수) ⭐⭐⭐
+
+- **본 vault 정통 = Zephyr** 합의 (5/25, Nordic + STM32 cross-vendor 통합) — ESP-IDF ↔ Zephyr 2-track 정착
+- **14번째 보드 STM32H745I-DISCO 신규**: Cortex-M7 480MHz + M4 240MHz dual / 1MB + 8MB SDRAM / DP FPU + L1 cache + DSP intrinsics
+- R36 baseline 12셀 sweep + LCD R/G/B PoC + USB CDC ACM streaming + Ethernet TCP echo + USB-CDC↔TCP Bridge (단일 firmware)
+- **11 함정 single-day cluster (5/25)** + STM-12 minor (5/26, Zephyr API change) → 함정 47건 (Espressif 16 + Nordic 18 + NDK 1 + STM32 12)
+- **carry-over 효과 정량화**: R36 3차 시도 → 본 PoC 1차 success (11 함정 박제 효과)
+- **Stage 4 영업 path 확장**: USB CDC + LAN 동시 단일 firmware → **한국 산업 노드** (LAN 인프라 + STM32 선호) B2B path 추가
+- 보드 영업 매칭 baseline: esp32-S3 → WiFi/BT / Nordic → BLE / **STM32H7 → 산업 LAN**
+- 자세히 [[stm32h745-disco]] · [[2026-05-25_STM32H745-Zephyr-통합-cross-vendor]] · [[2026-05-26_STM32H745-LAN-path-Stage4-결정타]]
+
 ## 3계열 AI 가속 매트릭스 완성 (2026-05-24 R28 흡수) ⭐⭐⭐
 
 | 계열 | 하드웨어 | MLP | CNN | TF | 결정 application |
@@ -344,15 +382,17 @@ Cloud GPT-4 API (3~10초) 대비 8~27× 빠름 + 외부 의존 0%. R26 selective
 
 → R23 채택 결정이 4 대안 측정 비교 후 도출. 자세히 [[2026-05-24_negative-finding-누적-신뢰성-자산]].
 
-## 빌드 함정 34건 누적 (2026-05-24 갱신)
+## 빌드 함정 47건 누적 (2026-05-26 Wave 11/12/13 흡수 갱신)
 
-| Vendor | 누적 | 신규 (5/23~24) |
+| Vendor | 누적 | 신규 |
 |---|:-:|---|
-| Espressif (esp32s3) | **16** | R20-1 (PowerShell 한글경로 ASCII 깨짐) + R21-1/2/3 (esp-nn 빌드 함정) + R27-1/2 (sweep 첫 cell race) + **함정 #14 v3 진단 정정** (ESP-IDF/cmake/Windows cmd.exe cwd 결함, Claude Code harness 책임 아님) |
-| Nordic (Zephyr) | **18** | R28-1 (Zephyr 4.3.99 arm_convolve_s8 upscale_dims argument 추가 → arm_convolve_wrapper_s8 우회) + R28-2 (Bash → PowerShell env var $ 치환 함정) |
-| **합계** | **34** | — |
+| Espressif (esp32s3) | **16** | (5/24 mandate v2.7 시점 박제 유지) |
+| Nordic (Zephyr) | **18** | (5/24 mandate v2.7 시점 박제 유지) |
+| **NDK (Android)** ⭐NEW | **1** | E1 — clang 18 vectorizer 정책 `+dotprod` flag 무효 (R30 Wave 11, sdot 자동 미선택) |
+| **STM32 (STM32H745I-DISCO)** ⭐NEW | **12** | STM-1~11 single-day cluster (5/25 Wave 12) + STM-12 Zephyr 4.3 net_mgmt API change (5/26 Wave 13 minor) |
+| **합계** | **47** | — |
 
-→ entity 신설: [[build-gotcha-inventory]] (5/24).
+→ entity: [[build-gotcha-inventory]] (5/26 47건 갱신).
 
 ## 메타
 
@@ -360,12 +400,13 @@ Cloud GPT-4 API (3~10초) 대비 8~27× 빠름 + 외부 의존 0%. R26 selective
 |---|---|
 | vault 시작 | 2026-05-07 |
 | 1차 mandate 전환 | 2026-05-17 |
-| 현재 진행률 | **13/13 보드 ✅ 100% + 33 cell + 27 PHASE row 누적 (5/24 megasession)** |
+| 현재 진행률 | **14/14 보드 ✅ 100% + 5계열 매트릭스 완성 (5/26 megasession)** |
 | mandate v2.5 종결 | 2026-05-23 야간 (Round 20 LoRA 7/7 ✅) |
 | mandate v2.6 종결 | 2026-05-24 (R22 + R23 + R24 + R25, 4/4 ✅) |
-| mandate v2.7 종결 ⭐⭐⭐ | **2026-05-24 (R26 + R27 + R28 + R29, 4/4 ✅, 12시간 소요)** |
-| **mandate v2.8 진입 + R34 Hybrid SoC PoC firmware** ⭐⭐ | **2026-05-24 Wave 8** — pca10056 `main_nrf_r34.c` (~200) + esp32s3 `main_esp32_r34.c` (~180) + UART 3-line jumper protocol + A/B/C BOM 3 시나리오 ($12/$16.70/$9.50). 측정 → 실제 PoC firmware 변환 = Stage 4 영업 결정타. Day 4 시연 영상 사용자 broker 대기 |
+| mandate v2.7 종결 ⭐⭐⭐ | 2026-05-24 (R26 + R27 + R28 + R29, 4/4 ✅, 12시간 소요) |
+| **mandate v2.8 5/6 ✅** ⭐⭐⭐ | **2026-05-24~26 Wave 8/10/11** — R34 Hybrid SoC PoC firmware + R33 esp-nn SRAM/PSRAM 분기 + R32 64KB 6번째 negative + R31 rpi5 NEON 6.7× + R31.5 sdot 분리 + R30 mobile 0.97× 7번째 negative. 5계열 매트릭스 완성. 잔여 R35 한국어 KWS Phase 2 학습. |
+| **STM32H745 14th 보드 + Stage 4 LAN path** ⭐⭐⭐ | **2026-05-25/26 Wave 12/13** — Zephyr cross-vendor 정통 + 11 함정 cluster + Ethernet/Bridge PoC. 한국 산업 노드 영업 path 추가. |
 | W6 종료 예정 | 2026-06-22~28 |
 | Stage 4 영업 자산화 | 2026-06-29 (W6 종료 익일) |
-| 예상 매출 임팩트 | 6개월 2,000~3,500만 (Hybrid SoC carrier 추가 시 +α) |
-| 본 entity 갱신 주기 | 카드 흡수 시마다 (5/24 megasession 흡수 완료 — 다음 = mandate v2.8 영업 데모 진입 or 양산 진입 결단) |
+| 예상 매출 임팩트 | 6개월 2,000~3,500만 (Hybrid SoC + Edge AI Gateway + 산업 노드 carrier 추가 시 +α) |
+| 본 entity 갱신 주기 | 카드 흡수 시마다 (5/26 megasession Wave 10/11/12/13 흡수 완료 — 다음 = R35 한국어 KWS 결과 or 영업 이벤트 발생 시) |

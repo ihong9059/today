@@ -312,6 +312,37 @@ python "C:\todo\today\.claude\hooks\notion-cleanup.py"
 파일이 없으면:
 - wiki 작업이 없었으므로 스킵
 
+### 6-Z. Multi-agent broker 양방향 자동 sync ⭐ (2026-05-26 신설)
+
+분산 호스트 vault (factory-rpi4, shield-rpi4 등)와 myWiki 간 카드 sync. 사용자 broker 행동 불요.
+
+**push 방향 (myWiki → 분산 vault)**:
+세션 중 작성한 응답·통보·요청 카드를 `myWiki/_inbox/outbox-staging/`에 두면 자동 push.
+
+```bash
+python "C:\todo\today\.claude\hooks\push-multi-agent-pending.py"
+```
+
+- frontmatter `to:` 필드 기준 라우팅 (uttec-factory-claude → factory-rpi4 / shield-claude → shield-rpi4 / 기타)
+- 성공 시 outbox-staging → `sent-archived/` 이동 (재발송 방지)
+
+**pull 방향 (분산 vault → myWiki)**:
+원격 vault가 outbound에 작성한 카드를 myWiki/_inbox/pending/로 자동 pull.
+
+```bash
+python "C:\todo\today\.claude\hooks\pull-multi-agent-outbound.py"
+```
+
+- ssh + scp 패턴
+- 성공 시 원격 outbound → `outbound-archived/` 이동
+
+**판단 후 행동**:
+- 출력에 `push 완료`/`pull 완료` 건수 + 파일명 사용자에게 보고
+- skip/error 있으면 표시 (frontmatter 누락, 라우팅 미정의, ssh 실패 등)
+- 처리한 카드는 git commit § 7에서 함께 add (myWiki/_inbox/{pending,outbox-staging}/sent-archived/outbound-archived 전부 git 추적)
+
+**참고**: 본 broker 패턴은 2026-05-26 uttec-factory-claude 13th 합류 시점에 신설된 분산 호스트 운영 모델 진화. 기존 분산 vault (shield, n8n, uttec-vault, uttec-search, uttec-rag-local)도 라우팅 추가 시 동일 sync 가능 (현재는 uttec-factory + shield만 라우팅 등록).
+
 ### 7. git 커밋 및 푸시
 
 ```bash

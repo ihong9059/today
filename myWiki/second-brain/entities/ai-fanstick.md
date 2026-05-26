@@ -2,15 +2,55 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-05-24 megasession (mandate v2.5 + v2.6 + v2.7 4/4 ✅ 100% 종결 흡수 — Premium Plus 4 tier 양산 trigger R23 fast_adam 확정 + R25 KWS personalization 0.37초 + R26 selective +11.4% + R28 Hybrid SoC carrier)
-tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결]
-links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산]
+updated: 2026-05-26 Wave 10/11/12/13 흡수 (mandate v2.8 5/6 ✅ — 5계열 매트릭스 완성 + esp-nn TF PSRAM 2.62× / mobile 3 path 모두 negative / Edge AI Gateway 시나리오 D 신설 / 산업 노드 영업 path 추가)
+tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative]
+links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타]
 ---
 
 # AI FanStick (응원봉)
 
 ## 한 줄 정의
-AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타겟. **특허 출원 완료.** **5/24 mandate v2.7 4/4 ✅ 100% 종결 + Premium Plus 4 tier 양산 trigger 완성**.
+AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타겟. **특허 출원 완료.** **5/24 mandate v2.7 4/4 ✅ 100% 종결 + Premium Plus 4 tier 양산 trigger 완성 + 5/26 mandate v2.8 5/6 ✅ + 5계열 매트릭스 완성 + Stage 4 시나리오 D Edge AI Gateway + STM32H745 산업 노드 path 신설**.
+
+## 2026-05-26 Wave 10/11/12/13 흡수 — 5계열 매트릭스 완성 + 시나리오 D/E 신설 ⭐⭐⭐
+
+### Wave 10 (5/24) — R34 Hybrid SoC PoC firmware 실작동 + R33 esp-nn PSRAM 2.62× + R31 rpi5 NEON 6.7×
+
+| Round | 핵심 | 영업 영향 |
+|---|---|---|
+| R34 ⭐⭐⭐ | Hybrid SoC PoC firmware 실작동 (16 cycle × 8 keyword × ACK 100%, UART jumper 38400 bps) | Stage 4 시나리오 B Hybrid SoC 시연 trace 박제 ✅ |
+| R33 ⭐⭐ | esp-nn TF 484 PSRAM 2.62× (ESP-DSP 대비) — **memory tier 분기 신규 finding** | AI FanStick SLM (PSRAM 적재) 응답 시간 60% 단축 |
+| R32 | pca10040 64KB 부적합 6번째 negative | Stage 4 시나리오 C nRF52833/40 권장 필수 |
+| R31 ⭐⭐⭐ | rpi5 ARM NEON+dotprod 6.73× (GCC 14.2 + flag만으로) | **Stage 4 시나리오 D Edge AI Gateway 신설** ($15~30만원, Cloud 대안 정량 근거) |
+| R31.5 | A72 vs A76 sdot 효과 분리 (dense 2.6~3.7× / strided 동등) | CNN strided 한계 cross-vendor 일관 (LX7 + ARM-A) |
+
+### Wave 11 (5/24) — R30 mobile NEON 7번째 negative
+
+- Galaxy A51 5G NDK clang 18 `-O3 -march=armv8.2-a+dotprod` 12셀 평균 **0.97×** = 가속 효과 없음
+- rpi5 gcc 6.7× vs smartphone clang 0.97× = **6.9× gap 본질 = toolchain vectorizer 정책 차이**
+- 3 mobile 가속 path 모두 negative (NPU + NEON 명시 + baseline)
+- **마케팅 카피 강화**: mobile NEON 1.0× 대비 MCU 가속 13.4~14× = **14×↑ 우월성 정량 근거**
+- 자세히 [[2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질]]
+
+### Wave 12/13 (5/25~26) — STM32H745 14번째 보드 + Stage 4 산업 노드 path 신설
+
+- 본 vault 정통 = Zephyr 통합 (Nordic + STM32)
+- STM32H745I-DISCO 신규 (Cortex-M7 480MHz + M4 240MHz dual / 1MB + 8MB SDRAM)
+- USB CDC + LAN **단일 firmware** 동시 streaming → **B2B 산업 노드 영업 path 추가** (한국기계 등 LAN 인프라 영업)
+- 응원봉 후속 PoC 가능 path: Cortex-M7 + USB CDC streaming + LCD R/G/B 기반
+- 보드 영업 매칭 baseline: esp32-S3 → WiFi/BT / Nordic → BLE / **STM32H7 → 산업 LAN**
+- 자세히 [[stm32h745-disco]] · [[2026-05-26_STM32H745-LAN-path-Stage4-결정타]]
+
+### 마케팅 카피 추가 (5/26)
+
+- ⭐⭐⭐ "**rpi5 gcc NEON 6.7× vs mobile clang 0.97× = 6.9× gap, toolchain vectorizer 정책이 본질**" (R30/R31 cross-vendor)
+- ⭐⭐⭐ "**Mobile NPU + NEON + baseline 3 path 모두 negative — UTTEC MCU 가속이 14× 우월**" (R19 + R30 누적)
+- ⭐⭐⭐ "**esp-nn TF PSRAM 2.62× 가속 = SLM 응답 60% 단축**" (R33 신규 finding)
+- ⭐⭐ "**Stage 4 시나리오 D Edge AI Gateway**" — Cloud 대안 정량 근거 ($15~30만원, rpi5 gcc native)
+- ⭐⭐ "**STM32H745 산업 노드 path = USB CDC + LAN 단일 firmware**" — 한국 산업 환경 B2B 영업
+- ⭐⭐ "**11 함정 cluster 박제 후 1차 success**" — vendor 함정 인벤토리 47건 carry-over 효과 정량화
+
+## 2026-05-24 megasession — Premium Plus 4 tier 양산 trigger 완성 ⭐⭐⭐⭐ (mandate v2.5 + v2.6 + v2.7 종결 흡수)
 
 ## 2026-05-24 megasession — Premium Plus 4 tier 양산 trigger 완성 ⭐⭐⭐⭐ (mandate v2.5 + v2.6 + v2.7 종결 흡수)
 

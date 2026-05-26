@@ -2,9 +2,9 @@
 title: UTTEC 영업 패키지 (4.5-Stage)
 type: entity
 created: 2026-05-05
-updated: 2026-05-24 megasession (mandate v2.7 4/4 ✅ 100% 종결 + 3계열 매트릭스 완성 + R28 CNN 14× M4F CMSIS-NN + application별 SoC 결정 가이드 + Hybrid SoC carrier + on-device 학습 4번째 축 + 6조건 곱)
-tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스, application별-SoC, Hybrid-SoC, on-device-학습-4번째축, 6조건곱, mandate-v2.7-종결]
-links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, build-gotcha-inventory, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산]
+updated: 2026-05-26 Wave 10/11/12/13 흡수 (mandate v2.8 5/6 ✅ — 5계열 매트릭스 완성 ARM-A 행 추가 + mobile NEON 3 path negative + Stage 4 시나리오 D Edge AI Gateway 신설 + 시나리오 E STM32H7 산업 노드 신설 + 함정 47건)
+tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스, 5계열매트릭스, application별-SoC, Hybrid-SoC, on-device-학습-4번째축, 6조건곱, mandate-v2.7-종결, mandate-v2.8, ARM-A-NEON, rpi5, Edge-AI-Gateway, STM32H745, 산업노드, LAN-path, vectorizer-정책, carry-over-효과]
+links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, build-gotcha-inventory, stm32h745-disco, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타]
 ---
 
 # UTTEC 영업 패키지 (4.5-Stage)
@@ -45,6 +45,58 @@ Stage 0 (0.5) + Stage 1 (1) + Stage 2 (1) + Stage 3 (1) + Stage 4 (1) = 4.5
 > **"Foundry급 인프라를 1/100 가격에 구축합니다."**
 
 Palantir Foundry 라이선스 연 수억~수십억 → UTTEC 4.5-Stage 풀 7,300만.
+
+## ⭐⭐⭐ Stage 4 5계열 매트릭스 완성 + 시나리오 D/E 신설 (2026-05-26 Wave 10/11/12/13 흡수)
+
+### 5계열 AI 가속 매트릭스 (Stage 4 칩 선택 정량 근거)
+
+| 계열 | 하드웨어 | MLP | CNN | TF | Stage 4 시나리오 |
+|---|---|:-:|:-:|:-:|---|
+| LX7 ESP-DSP | esp32s3 240MHz | 13.4× | 1.00× | 10.8× SRAM | A esp32s3 단일 |
+| M4F CMSIS-NN | pca10056 64MHz | 3.26× | ⭐ **14×** | 1.85× | B Hybrid SoC / C M4F 단독 |
+| esp-nn (R33) | esp32s3 240MHz | (-) | 2.93× | **2.62× PSRAM** | A 보조 (PSRAM 가속) |
+| **ARM-A NEON+dotprod** ⭐⭐⭐ NEW | rpi5 A76 (gcc 14.2) | **8.35×** | 3.85× | **7.64×** | **D Edge AI Gateway 신설** |
+| Mobile A77 NEON ⚠️ NEW (R30 negative) | smartphone (clang 18 NDK) | 1.00× | 0.98× | 0.81× | (사용 안 함, mobile 부적합) |
+| NPU NNAPI | Eden NPU | -79~421× | (-) | (-) | (사용 안 함) |
+
+### A/B/C/D/E 시나리오 매트릭스 (확장형)
+
+| 시나리오 | 본질 | BOM | 소비자가 | 영업 채널 |
+|---|---|:-:|:-:|---|
+| A | esp32s3 단일 | $12.00 | 3~5만원 | K-POP B2C |
+| **B** ⭐⭐⭐ | **Hybrid SoC** (KWS frontend M4F + Personalization backend esp32s3) | **$16.70** | **5~8만원** | **Stage 4 B2B (1,500만 패키지)** |
+| C | M4F 단독 (nRF52833/40, **64KB 부적합 확정**) | $9.50 | 2~4만원 | Matter IoT |
+| **D** ⭐⭐⭐ NEW (5/26) | **Edge AI Gateway** (rpi5 + gcc NEON+dotprod 6.7×) | **$15~30만** | $15~30만 | **Cloud 대안 정량 근거** — 한국기계·임베디드 스타트업 |
+| **E** ⭐⭐⭐ NEW (5/26) | **STM32H7 산업 노드** (USB CDC + LAN 단일 firmware) | TBD | TBD | **한국 산업 환경** (LAN 인프라 + STM32 선호) B2B |
+
+→ 시나리오 D = R31 rpi5 6.7× 가속 (Cloud GPT-4 API 외부 의존 0% 대안). 시나리오 E = STM32H745 LAN8742A onboard + Wave 13 PoC 검증.
+
+### ⭐⭐ mobile NEON 3 path negative — Stage 4 mobile 결단
+
+R30 Wave 11 흡수로 mobile CPU/NPU 추가 SDK 도입 가치 없음 확정:
+
+| Path | 결과 | 의미 |
+|---|---|---|
+| Mobile NPU NNAPI (R19) | -79~421× | NPU dispatch 비효율 |
+| Mobile NEON 명시 `+dotprod` (R30) | **0.97×** ⚠️ | clang vectorizer `smlal` INT16 path 선택 |
+| Mobile CPU baseline (-O2) | 0.97×와 동등 | memory bandwidth bound |
+
+→ **3 path 모두 negative → mobile CPU/NPU 추가 SDK 도입 가치 없음 확정**. UTTEC Stage 4 mobile은 **CPU plain (`-O2` asimddp) baseline만 사용**.
+
+### ⭐ 보드 영업 매칭 baseline (5/26 Wave 13 박제)
+
+| 보드 family | 강점 | 영업 시나리오 |
+|---|---|---|
+| esp32-S3 | WiFi + BT wireless | 응원봉 (B2C) |
+| Nordic nRF52840 | BLE 강점 | B2B BLE+AI 통합 SoC (KWS / anomaly detection) |
+| **STM32H7** ⭐ NEW | **산업 LAN 강점** | **한국 산업 환경 B2B 통합 노드** |
+| rpi5 | Linux native + NEON+dotprod 6.7× | Edge AI Gateway (Cloud 대안) |
+
+### ⭐ carry-over 효과 정량화 (Wave 13 입증, 영업 카피)
+
+- 11 STM32 함정 박제 후 Wave 13 PoC 2건 진행 → 신규 함정 1건 (minor)만
+- R36 sweep 3차 시도 → 본 PoC 1차 success
+- **영업 카피: "vendor 함정 인벤토리 47건 (Espressif 16 + Nordic 18 + NDK 1 + STM32 12) 보유 → 외부 회사 도입 시 first-try success ratio 향상 + ~40~80시간 직접 디버깅 비용 절감"**
 
 ## ⭐⭐⭐ Stage 4 application별 SoC 결정 가이드 (2026-05-24 R28 + mandate v2.7 종결 흡수)
 
@@ -211,6 +263,13 @@ mandate v2.7 종결 직후 v2.8 R34 진입 = **실제 PoC firmware 양측 작성
 | ⭐⭐ "**Tiny 0.05초 즉시 학습 + KWS 0.37초 personalization + 어려운 사용자 +11.4% 정확도**" (5/24 신규) | R23 fast_adam + R25 KWS + R26 selective. Cloud GPT-4 (3~10초) 대비 8~27× 빠름 |
 | ⭐⭐ "**4 negative finding 측정 검증 후 R23 양산 확정**" (5/24 신규) | NPU/INT16/FP16/Multi-layer LoRA 모두 negative — "vendor 광고 신뢰 X, 자체 측정 자산화" R&D 신뢰성 영업 |
 | ⭐ "**6조건 곱 = ISA × workload × 메모리 × RAM tier × library × on-device 학습**" (5/24 신규) | mandate v2.7 4/4 ✅ 100% 종결 도달 (5/23 5조건 + 5/24 on-device 학습 4번째 축 신설) |
+| ⭐⭐⭐ "**5계열 매트릭스 완성 — ARM-A NEON+dotprod 행 추가, 6.73× rpi5 가속**" (5/26 신규) | R31 (Wave 10): rpi5 A76 + gcc 14.2 + `+dotprod` flag만으로 MLP 11.75× / TF 7.64× / 평균 6.73× 가속. Stage 4 시나리오 D Edge AI Gateway 정량 근거 |
+| ⭐⭐⭐ "**toolchain vectorizer 정책 = AI 가속 본질의 4번째 변수**" (5/26 신규) | R30/R31 (Wave 11): same asimddp HW + 같은 flag로 gcc 6.7× vs clang 0.97× = 6.9× gap. mobile CPU/NPU 추가 SDK 가치 없음 확정 (3 path negative) |
+| ⭐⭐⭐ "**esp-nn TF PSRAM 2.62× = AI FanStick SLM 응답 60% 단축**" (5/26 신규) | R33 (Wave 10): TF 484 PSRAM 270,527 → 103,410μs. memory tier 분기 신규 finding (SRAM은 ESP-DSP / PSRAM은 esp-nn) |
+| ⭐⭐⭐ "**STM32H7 = 한국 산업 노드 영업 결정타, USB CDC + LAN 단일 firmware**" (5/26 신규) | Wave 13: STM32H745 + LAN8742A onboard + DHCP 2.1s + Bridge PoC FLASH 150KB/RAM 80KB. 시나리오 E 신설 |
+| ⭐⭐ "**carry-over 효과 = first-try success ratio 향상**" (5/26 신규) | Wave 12 11 함정 single-day cluster 박제 → Wave 13 PoC 1차 success (신규 1건 minor만) |
+| ⭐⭐ "**Stage 4 시나리오 D Edge AI Gateway 신설**" (5/26 신규) | rpi5 gcc NEON 6.7× = Cloud 대안 정량 근거 ($15~30만원, 한국기계·임베디드 스타트업) |
+| ⭐ "**빌드 함정 47건 인벤토리 — 외부 회사 도입 시 ~40~80시간 절감**" (5/26 신규) | Espressif 16 + Nordic 18 + NDK 1 + STM32 12 cross-vendor 누적 |
 
 → **Stage 4 카피 결정 메시지**: "1인이 4주에 ESP32 + Pi family + 모바일 13보드 한계 측정 1장 표 박제" — 임베디드 스타트업 컨설팅 패키지 차별화.
 
@@ -241,6 +300,18 @@ mandate v2.7 종결 직후 v2.8 R34 진입 = **실제 PoC firmware 양측 작성
 - Stage 0 + Stage 4 (tablet baseline 측정 자산)
 - 매출: 1,500 ~ 2,000만
 - 영업 핵심: "예산형 모바일 키오스크 + NPU 없이 추론" 차별화
+
+### 시나리오 F — Edge AI Gateway ⭐⭐⭐ NEW (5/26 Wave 10 흡수, rpi5 NEON 6.7×)
+- Stage 0 + Stage 4 (rpi5 + gcc NEON+dotprod 6.7× 측정 자산)
+- 매출: 2,000 ~ 3,500만 (단가 $15~30만)
+- 영업 핵심: "Cloud GPT-4 외부 의존 0% 대안 — rpi5 gcc native 6.7× 가속 정량 근거" + "mobile NEON 3 path 모두 negative 대조" + R31 vs R30 (6.9× gap toolchain vectorizer 정책 본질)
+- 타겟: 한국기계·임베디드 스타트업·산업 IoT (LAN 인프라 보유)
+
+### 시나리오 G — STM32H7 산업 노드 ⭐⭐⭐ NEW (5/26 Wave 13 흡수, USB CDC + LAN 단일 firmware)
+- Stage 0 + Stage 4 (STM32H745 + LAN8742A + Bridge PoC 자산)
+- 매출: 1,500 ~ 2,500만
+- 영업 핵심: "한국 산업 환경 = LAN 인프라 + STM32 선호 → STM32H7 산업 노드 path 첫 사례" + "USB CDC + Ethernet 단일 firmware 동시 streaming" + "11 함정 cluster carry-over 1차 success"
+- 타겟: 한국기계 (LAN 기반 Stage 4) + 산업 자동화 통합 SI
 
 ### 시나리오 D — 풀스택 (대형 고객)
 - Stage 0 + 1 + 2 + 3 + 4 = 7,300만
