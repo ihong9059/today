@@ -1,0 +1,10 @@
+{
+  "id": "REQ-20260525-0690",
+  "text": "Todo Web title을  UTTEC Todo로 바꾸어 주세요.",
+  "status": "done",
+  "created": "2026-05-25T08:40:50.690Z",
+  "category": "frontend",
+  "assignedAgents": ["frontend-builder"],
+  "result": "index.html의 <title>과 <h1>을 'UTTEC Todo'로 변경 (이모지 유지)",
+  "completedAt": "2026-05-25T08:55:00.000Z"
+}

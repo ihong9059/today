@@ -109,7 +109,7 @@ status: pending                   # pending | in_progress | done | rejected
 - 본 § "합의 이력"에 합류 일자·식별자 등재
 - 모든 기존 Claude의 PROTOCOL.md에도 동일 등재 (N Claude 동기화)
 
-**현재 활성 Claude (9 시스템, 2026-05-21~)**:
+**현재 활성 Claude (11 시스템, 2026-05-24~)**:
 - `mywiki-claude` — `today/myWiki/` (Windows) — 학습·도구·범 사업 허브
 - `revita-claude` — `revitaProject/orgRevita/` (Windows) — REVITA 제품
 - `ondevice-claude` — `/todo/onDevice_AI/` (Windows, 5/15 합류) — AI FanStick + Stage 4 제품 통합
@@ -118,7 +118,10 @@ status: pending                   # pending | in_progress | done | rejected
 - `wishket-claude` — `wishketProject/` (Windows, 5/16 합류) — 위시캣 영업 자산
 - `lemonlabs-claude` — `/todo/lemonLabs/` (Windows, 5/19 합류) — 이진서 협업 신규 법인 (4 트랙)
 - `uttechome-claude` — `/todo/uttecHome/` (Windows, 5/21 합류) — UTTEC 회사 홈페이지 + Obsidian second-brain
-- **`search-claude` — `/todo/search/` (Windows, 5/21 합류) — myWiki AI 검색·정리 web 서비스 (prompt-driven, FastAPI + React + Claude API)** ⭐ NEW
+- `search-claude` — `/todo/search/` (Windows, 5/21 합류) — myWiki AI 검색·정리 web 서비스 (prompt-driven, FastAPI + React + Claude API)
+- `uttec-vault-claude` — `~/uttec-vault/` on uttecMac (Ubuntu, 5/23 합류) — UTTEC 비즈니스 second-brain (cross-platform fork base)
+- **`uttec-search-claude` — `~/uttec-search/` on uttecMac (Ubuntu, 5/23 합류) — uttec-vault 비즈니스 자료 검색 web (search Windows fork)** ⭐ 10th
+- **`uttec-rag-local-claude` — `~/uttec-rag-local/` on uttecMac (Ubuntu, 5/24 합류) — uttec-search sibling, Ollama qwen2.5:7b local RAG (port 8892/8893)** ⭐ 11th NEW
 
 ## 합의 이력
 
@@ -132,6 +135,8 @@ status: pending                   # pending | in_progress | done | rejected
 - **2026-05-19**: **lemonlabs-claude 합류** — lemonLabs vault (`C:/todo/lemonLabs/`, Windows, ihong9059/lemonLabs private repo) multi-agent 합류. **창업 트랙 vault 첫 사례** — 이진서 51% + UTTEC 49% 협업 신규 법인 (AI 응원봉/교육/Consulting/Studio 4 트랙). SELF_ID="lemonlabs-claude". **7 Claude 시스템**. 2027 Q1 법인 설립 + 자산 법적·재무적 분리 필요. 합류 카드: 각 vault `_inbox/pending/2026-05-19-NNN-lemonlabs-claude-join.md`.
 - **2026-05-21 오전**: **uttechome-claude 합류** — uttecHome vault (`C:/todo/uttecHome/`, Windows, ihong9059/uttecHome private repo) multi-agent 합류. **영업 트랙 vault 첫 사례** — UTTEC 회사 홈페이지 + Obsidian second-brain (30 atomic notes + JSON data layer). SELF_ID="uttechome-claude". **8 Claude 시스템**. 5/19 vault 분리 후 5/15 이후 cascading 차단 사건 발견 → 양방향 통신 확립. 합류 카드: 각 vault `_inbox/pending/2026-05-21-NNN-uttechome-claude-join.md`.
 - **2026-05-21 야간** ⭐: **search-claude 합류** — search vault (`C:/todo/search/`, Windows, ihong9059/search private repo) multi-agent 합류. **사용자 노출 트랙 vault 첫 사례** — myWiki second-brain 위에서 동작하는 prompt-driven 검색·정리·요약 web 서비스 (FastAPI + React + Claude Max CLI subprocess). SELF_ID="search-claude". **9 Claude 시스템**. myWiki 메모리 공유 정책 (5/22, 다른 vault 와 다른 예외 — today 와 거의 동일 수준 운영 위해). search 측 PROTOCOL.md 사본 동기화 + myWiki/raw/search · second-brain/raw/search 역방향 junction + entities/search.md 신설.
+- **2026-05-23 야간** ⭐⭐: **uttec-vault-claude + uttec-search-claude 합류 (2 vault 동시)** — uttec-vault (`~/uttec-vault/` on uttecMac, Ubuntu 22.04, Tailscale 100.90.158.36) = UTTEC 비즈니스 second-brain (cross-platform fork base, 5/15 신설). uttec-search (`~/uttec-search/` on uttecMac, Ubuntu) = search Windows fork (10th vault, vault portability 트랙 첫 실증, 8890/8891 port). SELF_ID="uttec-vault-claude" + "uttec-search-claude". **10 Claude 시스템 도달**. cross-platform fork 4 차원 비용 (경로 hardcoding + shell 도구 + path 토큰 + 환경 의존) 정량화 + uv 0.11.16 venv 우회 best practice. broker = 사용자 (scp 또는 사본 path) — 격리 호스트 첫 사례.
+- **2026-05-24** ⭐⭐⭐: **uttec-rag-local-claude 합류 (11th)** — uttec-rag-local (`~/uttec-rag-local/` on uttecMac, Ubuntu) = uttec-search sibling, **Ollama qwen2.5:7b local LLM 기반 RAG vault** (비용 0 + 외부 인터넷 0% dogfooding 트랙). port 8892 (frontend) / 8893 (backend). SELF_ID="uttec-rag-local-claude". **11 Claude 시스템 도달**. mywiki-claude 결단 **대안 B 채택** — myWiki 메타 갱신만 (vault 카운트 / entities/uttec-rag-local.md / ai-direction 로그), 디렉토리 신설 + 코드 복제 + Ollama 통합은 uttec-search-claude 위임 (uttec-vault outbox/2026-05-24-003 별도 발송). dogfooding 의도: Claude API (uttec-search) vs Ollama (uttec-rag-local) A/B 비교 1주.
 
 ## 참고
 

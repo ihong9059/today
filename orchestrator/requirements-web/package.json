@@ -1,0 +1,16 @@
+{
+  "name": "orchestrator-requirements-web",
+  "version": "1.0.0",
+  "description": "사용자 요구사항 입력 Web — Claude 오케스트레이터의 진입점",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "license": "MIT"
+}

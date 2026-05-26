@@ -1,0 +1,17 @@
+{
+  "name": "orchestrator-todo-web",
+  "version": "1.0.0",
+  "description": "Claude Code 오케스트레이터 패턴으로 4개 서브에이전트가 협업하여 만든 Todo Web 데모",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "license": "MIT"
+}

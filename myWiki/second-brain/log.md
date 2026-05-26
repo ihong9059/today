@@ -2,7 +2,58 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-24 (Remotion 동영상 파이프라인 표준화 — search vault 5분 + 헬렌켈러 출석관리 11분 19초 일괄 제작, miral-edu 정체 파악)
+updated: 2026-05-26 RPi3 192.168.1.20 신규 호스트 + UTTEC Shield 3 컴포넌트 동작 검증 (OLED/LED/WS2812) + WS2812 PWM0/audio 충돌 SOP 박제
+---
+
+## [2026-05-26] asset | 신규 RPi3 192.168.1.20 + UTTEC Shield 3 컴포넌트 동작 검증 + WS2812 PWM0/audio 충돌 SOP
+
+**사건**: 신규 RPi3 (Raspberry Pi 3 Model B Plus Rev 1.3, 4/21 신규 SD) 셋업 + UTTEC Shield 부분 동작 검증. 기존 shield 호스트(192.168.0.51 / `ssh shield`)가 5/22 이후 SSH 끊김으로 source 회수 불가 → 본 PC `aiHardStudy/중소기업교육/ai공장자동화/교육자료/port_map.py` + `ai_smart_factory_schematic.pdf` V1.0 기반으로 테스트 코드 신규 작성.
+
+**검증 컴포넌트 (3/9)**:
+- OLED (U3 I2C 0x3C) ✅ detect 스크립트(SSD1306/SH1106 × 128×64/128×32)로 표시 확인
+- LED 3색 RYB (U16/17/18 GPIO17/27/22) ✅ 신호등 시퀀스 정상
+- WS2812 ×4 (U4/U8/U9/U10 GPIO12) ✅ PWM0/audio 충돌 진단 후 정상
+
+**WS2812 PWM0/audio 충돌 박제 (재현 차단 자산)** — GPIO12/18(PWM0)에 WS2812 + onboard audio(`snd_bcm2835`) 충돌. 라이브러리 init OK이지만 LED 무동작. `dtparam=audio=on` off + reboot이 표준 해결. [[feedback_rpi_ws2812_pwm0_audio_conflict]] memory 박제.
+
+**부수 발견**: I2C 4 디바이스 검출(0x3C OLED ✅ / 0x38 AHT20 ✅ / 0x68·0x77 회로도 V1.0 미명시 — 보드는 V1.0 이후 리비전 가능성).
+
+**잔여 6 컴포넌트 (carry)**: 부저(GPIO5) · 스피커(GPIO13) · 스위치(GPIO4) · AHT20(0x38) · LoRa E22-900T30D(UART+M0/M1/AUX) · 0x68/0x77 정체 식별. 외출로 RPi3 + shield 물리 분리, 다음 세션 재장착 후 재개.
+
+**관련 파일**: `aiHardStudy/중소기업교육/ai공장자동화/shield_test/{oled_test, oled_detect, led_test, ws2812_test}.py` (4 자산 신설) + memory 2건 + `reference_uttec_192_168_1_20.md`.
+
+---
+
+## [2026-05-24] megasession | 7 카드 흡수 — mandate v2.5/v2.6/v2.7 4/4 ✅ 100% 종결 + v2.8 R34 진입 + 11th vault ⭐⭐⭐⭐
+
+**사건**: 5/22 야간 이후 도착한 _inbox/pending 7 카드 (ondevice 6 + uttec-vault 1) 일괄 megasession 흡수. ondevice-claude 가 5/22~5/24 까지 mandate v2.5 (Round 20) → v2.6 (R22+R23+R24+R25) → v2.7 (R26+R27+R28+R29) → v2.8 (R34 Hybrid SoC PoC firmware) 까지 폭주. uttec-vault-claude 가 5/24 11:30 사용자 결단으로 11th vault `uttec-rag-local` (Ollama qwen2.5:7b local RAG) 신설 의뢰.
+
+**흡수 카드 (processed/ 이동 + status: done)**:
+- 2026-05-23-011 Round 20 LoRA mandate v2.5 7/7 ✅
+- 2026-05-24-001 mandate v2.6 4/4 ✅ (R23 fast_adam 0.05초 + R25 KWS 0.37초 carrier)
+- 2026-05-24-002 11th vault uttec-rag-local 신설 (uttec-vault → mywiki)
+- 2026-05-24-003 R26 KWS +11.4% + Selective personalization
+- 2026-05-24-005 R27 FP16 + 함정 #14 v3 진단 정정
+- 2026-05-24-007 ⭐⭐⭐ mandate v2.7 4/4 ✅ 100% 종결 (R28 CNN 14× 예측 5배 초과 + 3계열 매트릭스 완성)
+- 2026-05-24-009 R34 Hybrid SoC PoC firmware 양측 ✅ (mandate v2.8 진입 Wave 8)
+
+**done 회신 카드 (7장 발송)**: ondevice 6 (C:\todo\onDevice_AI\_inbox\pending\2026-05-24-101~106) + uttec-vault 1 (scp uttecMac:~/uttec-vault/inbox/pending/2026-05-24-100).
+
+**핵심 흡수 결과**:
+
+1. **mandate v2.7 4/4 ✅ 100% 종결** (12시간 소요) + **3계열 AI 가속 매트릭스 완성** (LX7 ESP-DSP MLP 13.4×/CNN 1.00×/TF 10.8× | M4F CMSIS-NN MLP 3.26×/**CNN 14.02× ⭐⭐⭐**/TF 1.85× | NPU NNAPI -79~421× | esp-nn CNN 2.93×)
+2. **AI FanStick Premium Plus 4 tier 양산 trigger 완성** (R23 fast_adam): Tiny 0.05초/Small 0.76초/Medium 4.36초/Large 8.17초 학습 + R25 KWS personalization 0.37~5.37초 + R26 어려운 화자 +11.4% 정확도. Cloud GPT-4 API (3~10초) 대비 8~27× 빠름
+3. **⭐⭐ Hybrid SoC carrier** (single SoC mindset 탈피): KWS frontend (M4F CMSIS-NN 14×) + Personalization backend (esp32s3 LoRA 0.05초) — Stage 4 영업 결정타
+4. **R34 PoC firmware 양측 ready** (mandate v2.8 Wave 8): pca10056 `main_nrf_r34.c` ~200 line + esp32s3 `main_esp32_r34.c` ~180 line + UART 38400bps 1byte protocol + A/B/C BOM 3 시나리오 ($12/$16.70/$9.50). Day 4 시연 영상 사용자 broker 대기
+5. **6조건 곱 진화** = ISA × workload × 메모리 계층 × RAM tier × library × **on-device 학습 가능 여부 (4번째 축, esp32s3 + PSRAM 8MB 유일)**
+6. **5 negative finding 누적 R&D 신뢰성 자산** (R19+R24+R27+R29+R28) → R23 양산 결정이 4 대안 측정 비교 후 도출
+7. **함정 #14 v3 진단 정정 = governance 신뢰성 모범**: 5/21~24 잘못된 진단 ("Claude Code harness cwd reset") → 5/24 진짜 원인 (ESP-IDF/cmake/Windows cmd.exe cwd 결함, 일반 PowerShell 에서도 fail) → 빌드 함정 인벤토리 34건 (Espressif 16 + Nordic 18) entity 신설
+8. **11th vault uttec-rag-local 신설** (대안 B 채택 = mywiki 메타만, uttec-search-claude 위임): Ollama qwen2.5:7b local RAG, port 8892/8893, ~/uttec-rag-local/ on uttecMac. 비용 0 + 외부 인터넷 0% dogfooding 트랙. **외부 의존 0% 양 축 가동** (응원봉 ESP-DSP + uttec-rag-local Ollama PC). Claude API vs Ollama A/B 비교 1주 대기
+
+**갱신 myWiki 페이지** (10개): _inbox/PROTOCOL.md / second-brain/entities/{onDevice-ai, ai-fanstick, uttec-stage-package, uttec-rag-local 신설, build-gotcha-inventory 신설}.md / second-brain/ai-direction.md / second-brain/thoughts/2026-Q2/{2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_selective-personalization-pattern} 3건 신설 / second-brain/log.md (본 항목).
+
+**참조**: today/_inbox/processed/ 7 카드 + ack 카드 7장 발송.
+
 ---
 
 ## [2026-05-24] asset | Remotion 동영상 파이프라인 2회 연속 검증 ⭐⭐

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>요구사항 입력 — Claude Orchestrator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>📥 요구사항 입력</h1>
+      <p class="subtitle">사용자가 입력한 요구사항을 Claude 오케스트레이터가 처리합니다</p>
+    </header>
+
+    <section class="hint" role="note" aria-label="사용법 안내">
+      <strong>흐름:</strong>
+      <ol>
+        <li>아래 입력창에 자연어로 요구사항을 입력</li>
+        <li>Claude에게 <code>"요구사항 처리해줘"</code>라고 말함</li>
+        <li>오케스트레이터가 자동 분류 → 적절한 에이전트들이 병렬로 todo-web 수정</li>
+        <li>완료된 요구사항은 ✅로 표시됨</li>
+      </ol>
+    </section>
+
+    <section class="input-row" role="form" aria-label="요구사항 입력">
+      <textarea
+        id="req-input"
+        placeholder='예: "다크모드 토글 버튼 추가해줘" / "할일 검색 기능 넣어줘" / "API에 우선순위(priority) 필드 추가"'
+        aria-label="요구사항 입력"
+        rows="3"
+        maxlength="500"
+      ></textarea>
+      <button id="add-btn" aria-label="추가">요구사항 추가</button>
+    </section>
+
+    <section class="counter" aria-live="polite">
+      <span id="counter">전체 0개</span>
+    </section>
+
+    <ul id="req-list" role="list" aria-label="요구사항 목록"></ul>
+
+    <footer>
+      <small>
+        📂 큐 저장소: <code>requirements/REQ-*.json</code><br>
+        🤖 처리 에이전트: <code>requirement-handler</code> →
+        <code>frontend-builder</code> · <code>backend-builder</code> · <code>test-writer</code> · <code>doc-writer</code>
+      </small>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

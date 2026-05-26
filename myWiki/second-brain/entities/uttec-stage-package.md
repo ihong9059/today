@@ -2,9 +2,9 @@
 title: UTTEC 영업 패키지 (4.5-Stage)
 type: entity
 created: 2026-05-05
-updated: 2026-05-22 야간 (Round 18 후속 pca10040 64KB RAM wall 흡수 — Stage 4 칩 선택 가이드 § "저전력 BLE-only (AI 불가)" 행 신설 + RAM tier 4조건 곱 원칙)
-tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스]
-links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차]
+updated: 2026-05-24 megasession (mandate v2.7 4/4 ✅ 100% 종결 + 3계열 매트릭스 완성 + R28 CNN 14× M4F CMSIS-NN + application별 SoC 결정 가이드 + Hybrid SoC carrier + on-device 학습 4번째 축 + 6조건 곱)
+tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스, application별-SoC, Hybrid-SoC, on-device-학습-4번째축, 6조건곱, mandate-v2.7-종결]
+links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, build-gotcha-inventory, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산]
 ---
 
 # UTTEC 영업 패키지 (4.5-Stage)
@@ -45,6 +45,78 @@ Stage 0 (0.5) + Stage 1 (1) + Stage 2 (1) + Stage 3 (1) + Stage 4 (1) = 4.5
 > **"Foundry급 인프라를 1/100 가격에 구축합니다."**
 
 Palantir Foundry 라이선스 연 수억~수십억 → UTTEC 4.5-Stage 풀 7,300만.
+
+## ⭐⭐⭐ Stage 4 application별 SoC 결정 가이드 (2026-05-24 R28 + mandate v2.7 종결 흡수)
+
+**Stage 4 영업 결정타 = single SoC 선택 mindset 탈피 → application별 정량 최적 칩 매칭 + Hybrid SoC carrier**
+
+### application별 최적 SoC 매트릭스 (R28 흡수, 5/24)
+
+| application | 최적 SoC | 가속 | Round |
+|---|---|:-:|:-:|
+| **KWS / Voice command** | **pca10056 (nRF52840) + CMSIS-NN `arm_convolve_wrapper_s8`** | **14.02×** ⭐⭐⭐ | R28 (5/24) |
+| Anomaly detection (CNN-based) | pca10056 + CMSIS-NN | 14× | R28 (5/24) |
+| **SLM / Transformer** | **esp32s3 + ESP-DSP** | **10.8×** | R17.5 (5/21) |
+| **Personalization (MLP)** | **esp32s3 + ESP-DSP** | **13.4×** | R17 (5/21) |
+| **on-device 학습 (LoRA)** | **esp32s3 + PSRAM 8MB** (유일) | **0.05초 Tiny** | R20/R23/R25 (5/23~24) |
+| esp32s3 CNN alternative | esp32s3 + esp-nn | 2.93× | R21 (5/23) |
+| Mobile Android 응용 | CPU plain (`-O2` asimddp) | NPU 대비 79~421× 빠름 | R19 (5/22) |
+
+### ⭐⭐⭐ Stage 4 데모 자산 — R34 Hybrid SoC PoC firmware ready (5/24 Wave 8)
+
+mandate v2.7 종결 직후 v2.8 R34 진입 = **실제 PoC firmware 양측 작성 완료** (측정 → 실제 시연 변환).
+
+| 보드 | 역할 | firmware |
+|---|---|---|
+| pca10056 (nRF52840) | KWS frontend | `main_nrf_r34.c` (~200 line) — R28 CMSIS-NN CNN 14× |
+| esp32s3 (LilyGo T-Display) | Personalization backend | `main_esp32_r34.c` (~180 line) — R25 cnn_lora + R23 fast_adam 0.05초 |
+
+**총 latency**: ~230~550 ms (KWS detect 167ms + UART 10ms + personalization 50~370ms + ACK 5ms).
+
+**A/B/C BOM 3 시나리오** = Stage 4 영업 자료 핵심:
+
+| 시나리오 | BOM | 소비자가 | 영업 채널 |
+|---|:-:|:-:|---|
+| A — esp32s3 단일 | $12.00 | 3~5만원 | K-POP B2C |
+| **B — Hybrid SoC** ⭐⭐⭐ | **$16.70** | **5~8만원** | **Stage 4 B2B (1,500만 패키지)** |
+| C — M4F 단독 | $9.50 | 2~4만원 | Matter IoT |
+
+→ Day 2 build/flash + Day 4 시연 영상 사용자 broker 대기. 완성 시 Stage 4 영업 자료 cascade Wave 9.
+
+### ⭐⭐ Hybrid SoC carrier (single SoC mindset 탈피, 5/24)
+
+| 역할 | 칩 + 가속 | 측정값 |
+|---|---|---|
+| **KWS frontend** (Voice command 우선 수신) | pca10056 (nRF52840) + CMSIS-NN | **14.02× 가속** (예측 5배 초과) |
+| **Personalization backend** (사용자 응원 학습) | esp32s3 + ESP-DSP + LoRA | **0.05초 (Tiny)** |
+| **SLM / 응답 generation** | esp32s3 + ESP-DSP | 10.8× |
+
+→ "vendor 단일 칩 광고 X — application 별 정량 칩 매칭" UTTEC 차별화 영업 카피. 자세히 [[2026-05-24_application별-SoC-결정-Hybrid-SoC]].
+
+### 5 negative finding 누적 = R&D 신뢰성 자산 (5/24)
+
+| Round | finding |
+|---|---|
+| R19 | Eden NPU NNAPI -79~421× |
+| R24 | INT16 dynamic scale -1.65~4.25× |
+| R27 | FP16 R23 미달 -1.08~1.88× |
+| R29 | Multi-layer LoRA -7.7~-9.3% |
+| R28 | TF 1.85×만 (attn_causal argmax 비가속) |
+
+→ "vendor 광고 신뢰 X — UTTEC 자체 측정 자산 기반 칩 선택" 영업 카피. 자세히 [[2026-05-24_negative-finding-누적-신뢰성-자산]].
+
+### 6조건 곱 진화 (5/24)
+
+**AI 가속 = ISA × workload × 메모리 계층 × RAM tier × library selection × on-device 학습 가능 여부**
+
+| 조건 | 적용 |
+|---|---|
+| ISA | LX7 (128-bit AI vector) vs M4F (32-bit SMLAD) vs RISC-V (가속 없음) |
+| workload | MLP (matmul) vs CNN (im2col + conv) vs TF (attention) |
+| 메모리 계층 | SRAM (esp32s3 512KB) vs PSRAM (8MB) vs Flash |
+| RAM tier | 64KB (BLE-only) vs 256KB (B2B AI) vs PSRAM (응원봉 SLM) |
+| library | ESP-DSP (LX7) vs CMSIS-NN (M4F) vs esp-nn (LX7 CNN alt) vs NNAPI (NPU 부적합) |
+| **on-device 학습 ⭐NEW** | **esp32s3 + PSRAM 8MB 유일 (4번째 축)** |
 
 ## Stage 4 칩 선택 가이드 (2026-05-22 Round 18·19 흡수 — 3계열 매트릭스 완성) ⭐⭐⭐
 
@@ -134,6 +206,11 @@ Palantir Foundry 라이선스 연 수억~수십억 → UTTEC 4.5-Stage 풀 7,300
 | ⭐⭐ "**nRF52840 + CMSIS-NN MLP +3.23× 가속** — B2B BLE+AI 통합 SoC 결정타" (5/22 신규) | Round 18: SMLAD DSP extension MLP 128 = 7,367μs → 2,285μs (Optimistic 가설 2.5~4× 적중) |
 | ⭐⭐ "**3계열 AI 가속 매트릭스 완성** — application class별 정량 칩 선택" (5/22 신규) | LX7 ESP-DSP +13.4× / M4F CMSIS-NN +3.23× / Mobile NPU NNAPI ‒79~421× |
 | ⭐ "**LX7 단위 효율 5.64× Cortex-M4F 우위** — clock 아닌 instruction set design 결정타" (5/22 신규) | Round 18 클럭 normalize: 25,920 cycles (LX7) vs 146,240 cycles (M4F) |
+| ⭐⭐⭐ "**M4F CMSIS-NN CNN = 14× 가속 (예측 5배 초과)**" (5/24 신규) | Round 28: pca10056 + `arm_convolve_wrapper_s8` CNN 32 = 14.02× — KWS / anomaly detection application 결정 |
+| ⭐⭐ "**Hybrid SoC = single SoC 선택 mindset 탈피**" (5/24 신규) | KWS frontend (M4F CMSIS-NN 14×) + Personalization backend (S3 LoRA 0.05초) — application 별 정량 칩 매칭 |
+| ⭐⭐ "**Tiny 0.05초 즉시 학습 + KWS 0.37초 personalization + 어려운 사용자 +11.4% 정확도**" (5/24 신규) | R23 fast_adam + R25 KWS + R26 selective. Cloud GPT-4 (3~10초) 대비 8~27× 빠름 |
+| ⭐⭐ "**4 negative finding 측정 검증 후 R23 양산 확정**" (5/24 신규) | NPU/INT16/FP16/Multi-layer LoRA 모두 negative — "vendor 광고 신뢰 X, 자체 측정 자산화" R&D 신뢰성 영업 |
+| ⭐ "**6조건 곱 = ISA × workload × 메모리 × RAM tier × library × on-device 학습**" (5/24 신규) | mandate v2.7 4/4 ✅ 100% 종결 도달 (5/23 5조건 + 5/24 on-device 학습 4번째 축 신설) |
 
 → **Stage 4 카피 결정 메시지**: "1인이 4주에 ESP32 + Pi family + 모바일 13보드 한계 측정 1장 표 박제" — 임베디드 스타트업 컨설팅 패키지 차별화.
 

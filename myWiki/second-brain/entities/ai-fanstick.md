@@ -2,15 +2,93 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-05-23 야간 (Round 21 esp-nn CNN 2.93× 흡수 — 차세대 firmware stack 확정 / KWS wake word 547ms → 187ms / 3계열 매트릭스 CNN 행 채움)
-tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성]
-links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차]
+updated: 2026-05-24 megasession (mandate v2.5 + v2.6 + v2.7 4/4 ✅ 100% 종결 흡수 — Premium Plus 4 tier 양산 trigger R23 fast_adam 확정 + R25 KWS personalization 0.37초 + R26 selective +11.4% + R28 Hybrid SoC carrier)
+tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결]
+links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산]
 ---
 
 # AI FanStick (응원봉)
 
 ## 한 줄 정의
-AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타겟. **특허 출원 완료.**
+AI 음성 비서 + LED 응원봉 + BLE 통합 제품. K-POP 1.5억+ 팬덤 타겟. **특허 출원 완료.** **5/24 mandate v2.7 4/4 ✅ 100% 종결 + Premium Plus 4 tier 양산 trigger 완성**.
+
+## 2026-05-24 megasession — Premium Plus 4 tier 양산 trigger 완성 ⭐⭐⭐⭐ (mandate v2.5 + v2.6 + v2.7 종결 흡수)
+
+### Premium Plus 4 tier 양산 라인업 (R23 fast_adam + R25 KWS + R26 selective 결합)
+
+| tier | MLP 학습 (R23) | KWS personalization (R25 C16) | 정확도 개선 (R26) | 종합 carrier |
+|---|---|---|---|---|
+| **Tiny** ⭐⭐⭐ | **0.05 초** | **0.37 초** | +11.4% (어려운 화자만) | "즉시 학습 + 음성 personalization" |
+| Small | 0.76 초 | 0.55 초 | +5~10% | "5 응원 + 음성 1초" |
+| Medium | 4.36 초 | 1.59 초 | +5~10% | "20 응원 + 음성 4초" |
+| Large | 8.17 초 | 5.37 초 | +5~10% | "전체 personalization 8초" |
+
+- **Cloud GPT-4 API (3~10초) 대비 8~27× 빠름** + 외부 인터넷 0%
+- **R26 Selective personalization 신규 finding** (5/24): baseline 정확도 <70% 사용자에게만 자동 제안 — "내 목소리로 학습할까요?" UX trigger
+- 카타스트로픽 포겟팅 <1.1% ✅
+
+### ⭐⭐⭐ R34 Hybrid SoC PoC firmware ready (5/24 Wave 8, mandate v2.8 진입)
+
+**측정 → 실제 PoC firmware 변환 완료** (R28 정량 매트릭스 → 실제 양측 firmware):
+
+| 보드 | 역할 | firmware | 라인 수 | 핵심 자산 |
+|---|---|---|---|---|
+| **pca10056 (nRF52840)** | KWS frontend | `main_nrf_r34.c` | ~200 | R28 CMSIS-NN CNN 14× 가속 |
+| **esp32s3 (LilyGo T-Display)** | Personalization backend | `main_esp32_r34.c` | ~180 | R25 cnn_lora_skeleton + R23 fast_adam 0.05초 |
+
+**통신**: UART 3-line jumper (P1.02/P1.01/GND ↔ GPIO 18/17/GND), 38400 bps, 8N1, no flow control. 1 byte exchange (keyword index 0~7 / ACK·error).
+
+**응답 시간 예상 (R28 + R25 실측 데이터 기반)**:
+
+| 단계 | 시간 |
+|---|---:|
+| pca10056 KWS detect (R28 CMSIS-NN CNN 32) | 167 ms |
+| UART transit (1 byte + overhead) | ~10 ms |
+| esp32s3 personalization 1-step (R23 fast_adam Tiny/Small) | 50~370 ms |
+| UART ACK | ~5 ms |
+| **총 wake word → backend ACK latency** | **~230~550 ms** |
+
+### A/B/C BOM 3 시나리오 (Stage 4 영업 자료 핵심, 5/24 Wave 8)
+
+| 시나리오 | 본질 | BOM | 소비자가 | 영업 채널 |
+|---|---|:-:|:-:|---|
+| A | esp32s3 단일 | $12.00 | 3~5만원 | K-POP B2C |
+| **B** ⭐⭐⭐ | **Hybrid SoC** | **$16.70** | **5~8만원** | **Stage 4 B2B** |
+| C | M4F 단독 | $9.50 | 2~4만원 | Matter IoT |
+
+→ 시나리오 B = mandate v2.4~v2.7 (4 mandate) 누적 결과 100% 활용 = Stage 4 패키지 1,500만원 가치의 정량 근거. Day 4 시연 영상 사용자 broker 대기.
+
+### ⭐⭐ Hybrid SoC carrier (5/24 R28 흡수, single SoC mindset 탈피)
+
+| 역할 | 칩 + 가속 | 측정값 |
+|---|---|---|
+| **KWS frontend** (Voice command) | pca10056 (nRF52840) + CMSIS-NN `arm_convolve_wrapper_s8` | **14.02× 가속** (예측 5배 초과) |
+| **Personalization backend** (사용자 응원 학습) | esp32s3 + ESP-DSP + LoRA | 0.05초 (Tiny) |
+
+→ KWS 우선 수신 (M4F 저전력 + 14× 가속) + 학습/SLM 응답은 esp32s3 위임. UTTEC Stage 4 영업 결정타.
+
+### 양산 확정 = R23 fast_adam (4 negative finding 측정 검증)
+
+| 대안 | 결과 | 차이 |
+|---|---|---|
+| R19 Mobile NPU NNAPI | ❌ | -79~421× 느림 |
+| R24 INT16 dynamic scale | ❌ | -1.65~4.25× 느림 (FP division ~10 cycles/elem) |
+| **R27 FP16 Adam state** | ❌ | -1.08~1.88× 느림 (R23 baseline 우월) |
+| R29 Multi-layer LoRA | ❌ | -7.7~-9.3% 정확도 손실 |
+| **R23 fast_adam** | ✅ | baseline (Tiny 0.05초 carrier) |
+
+→ "vendor 광고 신뢰 X, 자체 측정 자산 (Round 17·18·19·24·27·28·29) 기반 양산 결정" = R&D 신뢰성 영업 카피. 자세히 [[2026-05-24_negative-finding-누적-신뢰성-자산]].
+
+### 차세대 firmware stack 갱신 (3계열 매트릭스 완성)
+
+| 응용 | 라이브러리 | 칩 | 가속배 | Round |
+|---|---|---|:-:|:-:|
+| 칩 교체 (baseline) | — | C3 → S3 | +1.84× | R15 |
+| MLP Dense (Korean-Small SLM) | ESP-DSP | ESP32-S3 LX7 | **+13.4×** | R17 |
+| CNN Conv2D (KWS wake word) | esp-nn | ESP32-S3 LX7 | +2.93× | R21 |
+| **CNN Conv2D (KWS Hybrid SoC) ⭐** | **CMSIS-NN** | **pca10056 (nRF52840) M4F** | **+14.02×** | **R28** |
+| TF Attention+MLP SRAM | ESP-DSP | ESP32-S3 LX7 | +10.8× | R17.5 |
+| **on-device 학습 (LoRA + fast_adam) ⭐** | **자체 (R23 + R25)** | **ESP32-S3 + PSRAM 8MB** | **Tiny 0.05초** | **R23/R25** |
 
 ## 2026-05-23 야간 — 차세대 firmware stack 확정 ⭐⭐ (Round 21 esp-nn CNN 흡수)
 
@@ -163,6 +241,10 @@ Round 17 결정타 (ESP-DSP `dsps_dp_s8_aes3` 활성 시 MLP 13.4× / C3→S3+DS
 - "Korean-Small 150KB 한국어 응원 도메인 — esp32s3 SRAM 30%"
 - ⭐⭐⭐ "**ESP-DSP intrinsics 24.8× 가속** — C3→S3 칩 교체로 응답 150ms 달성" (5/20 신규)
 - ⭐ "**외부 인터넷 0% 음성 명령**" (Round 17·17.5 종합)
+- ⭐⭐⭐ "**Tiny 0.05초 즉시 학습 (R23 fast_adam) + KWS 0.37초 personalization (R25)**" (5/24 신규) — Cloud GPT-4 (3~10초) 대비 8~27× 빠름
+- ⭐⭐⭐ "**어려운 사용자에게만 +11.4% 정확도 자동 학습**" (R26 selective personalization, 5/24 신규)
+- ⭐⭐ "**Hybrid SoC = KWS frontend (M4F CMSIS-NN 14×) + Personalization backend (S3 LoRA 0.05초)**" (R28 Hybrid SoC, 5/24 신규) — 예측 5배 초과 가속
+- ⭐⭐ "**4 대안 측정 검증 후 R23 양산 확정**" (NPU/INT16/FP16/Multi-layer LoRA 모두 negative, 5/24 신규) — vendor 광고 신뢰 X, 자체 측정 자산화
 
 본 검증 결과는 **양산 트랙 본체**로 전환됨 (5/20 결정). 1차 정지선(5/8) 폐기. PR·B2B 영업·강의 자산은 24.8× 카피 신규 활용.
 

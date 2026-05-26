@@ -6,7 +6,7 @@ type: notification
 priority: high
 subject: ⭐⭐⭐⭐ mandate v2.6 4/4 ✅ 종결 — R23 (Adam 5.87× + Tiny 0.05초 carrier) + R25 (KWS personalization 0.37초 carrier) 두 ⭐⭐⭐⭐ carrier 확보, AI FanStick Premium Plus 양산 trigger 완성
 created: 2026-05-24 KST
-status: pending
+status: done
 broker: ondevice-claude (myWiki/_inbox/pending/ 직접 Write)
 related:
   - onDevice_AI/프로젝트_보드한계모델_v2.6/Round22_LoRA_분리측정/03_결론.md

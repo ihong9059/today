@@ -2,10 +2,10 @@
 title: onDevice_AI vault — AI FanStick + Stage 4 + 보드한계모델
 type: entity
 created: 2026-05-07
-updated: 2026-05-23 야간 (Round 21 esp-nn CNN 2.93~2.95× 흡수 — 3계열 매트릭스 CNN 행 채움 + mandate v2.5 6/7 + AI 가속 5조건 곱 진화 + Round 9 evolution 시계열 + 14 보드 클럭 normalize)
-status: ✅ 1차 mandate 전환 완료 (5/17) / **mandate 13/13 보드 100% 완성 (5/22 야간) / 42/49 셀 86%** / esp32s3 메인 타겟 + esp32c6 + Cortex-M4F 2 보드 완료 / mandate v2.5 Round 18 CMSIS-NN 트랙 종료 / W6 종료 6/22~28 후 Stage 4 영업 자산화 6/29
-tags: [vault, On-Device AI, 보드한계모델, AI FanStick, ESP32-S3, ESP-DSP, ESP32-C6, RISC-V, Xtensa, ARM, Cortex-M4F, CMSIS-NN, Nordic, Stage4, 정지선, multi-agent, ondevice-claude]
-links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_응원봉-온디바이스AI-정지선, revita, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차]
+updated: 2026-05-24 megasession (Round 20 LoRA 7/7 + mandate v2.6 4/4 ✅ R23/R25 + mandate v2.7 4/4 ✅ 100% 종결 R26/R27/R28/R29 + 3계열 매트릭스 완성 + on-device 학습 4번째 축 + R28 CNN 14× 예측 5배 초과 + 5 negative finding 누적 + 34 빌드 함정)
+status: ✅ 1차 mandate 전환 완료 (5/17) / **mandate v2.5 7/7 ✅ (5/23 야간) + v2.6 4/4 ✅ (5/24) + v2.7 4/4 ✅ 100% 종결 (5/24)** / 13/13 보드 100% 완성 + 33 cell + 27 PHASE row 누적 / 3계열 AI 가속 매트릭스 완성 (LX7 ESP-DSP + M4F CMSIS-NN + esp-nn) / on-device 학습 4번째 축 (esp32s3 + PSRAM 8MB 유일) / W6 종료 6/22~28 후 Stage 4 영업 자산화 6/29
+tags: [vault, On-Device AI, 보드한계모델, AI FanStick, ESP32-S3, ESP-DSP, ESP32-C6, RISC-V, Xtensa, ARM, Cortex-M4F, CMSIS-NN, Nordic, Stage4, 정지선, multi-agent, ondevice-claude, mandate-v2.5-종결, mandate-v2.6-종결, mandate-v2.7-종결, LoRA, fast-adam, KWS, selective-personalization, Hybrid-SoC, 3계열매트릭스완성, 5-negative-finding, 6조건곱, 34빌드함정]
+links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, build-gotcha-inventory, 2026-05-08_응원봉-온디바이스AI-정지선, revita, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_selective-personalization-pattern]
 ---
 
 > **2026-05-17 mandate 전환**: 옛 "AI FanStick + Stage 4 영업 4 Phase 12 실험" → 새 **"보드한계모델 37셀 측정 (W0~W6)"** 단일 strand. 응용·영업은 W6 종료 후 후속(C 단계)으로 분리. 단일 출처 = `0_마스터플랜.md v2.0`.
@@ -14,6 +14,15 @@ links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, 2026-05-08_
 > **2026-05-22 흡수 완료**: Round 18 Cortex-M4F CMSIS-NN MLP 128 = 3.23× 가속 (7,367μs → 2,285μs). **3계열 AI 가속 매트릭스 두 번째 축 완성** (LX7 ESP-DSP +13.4× ⭐⭐⭐ / M4F CMSIS-NN +3.23× ⭐⭐ / Eden NPU NNAPI ‒79~421× ⚠️). 클럭 normalize 시 LX7 단위 효율 5.64× M4F 우위. CNN/TF skeleton 미패치 (1.01×). Nordic 빌드 함정 5건 신규 박제.
 > **2026-05-22 야간 흡수 완료**: Round 18 후속 pca10040 (nRF52832 64KB) 12/12 RAM wall = **13/13 보드 완성 (100%)**. Round 14 plain C 100% 재현 — CMSIS-NN library 추가해도 RAM tier 한계 동일. "AI 응용 = nRF52840 (256KB)+ 또는 ESP32-S3 (PSRAM 8MB) 필수" 정량 박제. Stage 4 칩 선택 가이드 § "저전력 BLE-only (AI 불가)" 행 신설. Nordic 함정 11건 cross-vendor 인벤토리 (Round 17 ESP-DSP 4 + Round 18 본편 5 + Round 18 후속 R18-F/G 2). **AI 가속 4조건 곱 = ISA × workload × 메모리 계층 × RAM tier 적합도**.
 > **2026-05-23 야간 흡수 완료**: ondevice-claude 5/22 카드 (Round 9 cascade revisit + v2.5 종합 단일 출처 99_종합_v2.5) + 5/23 Round 21 esp-nn CNN 2.93~2.95× 카드 2건 통합 흡수. **3계열 AI 가속 매트릭스 CNN 행 채움** (esp-nn CNN LX7 +2.93× = ESP-DSP MLP/TF + CMSIS-NN MLP 옆 4번째 사례). **mandate v2.5 trajectory 5/6 → 6/7** (Round 20 LoRA 별도 결단 대기). **AI 가속 5조건 곱 진화 = ISA × workload × 메모리 계층 × RAM tier × library selection by workload** (5/22 4조건에서 library selection 1조건 추가). Round 9 evolution 시계열 6단계 박제 (Round 9 → 17 → 17.5 → 18 → 18후속 → 19 → 21). 14 보드 클럭 normalize cycle-per-MAC ranking (LX7 25,920 = MCU 최고 단위 효율, M4F 146,240 = MCU 2위, 자기자신 plain 의 5.64× 우위). esp-nn 빌드 함정 3건 신규 (R21-1 ninja PRE_LINK cd . cwd reset / R21-2 sections.ld-*.bat 상대 경로 / R21-3 PowerShell 5.1 UTF-8 BOM CP949 fallback). cross-vendor 빌드 함정 누적 **19건** (Espressif 8 + Nordic 11). **AI FanStick 차세대 firmware stack 확정**: MLP=ESP-DSP 13.4× + CNN=esp-nn 2.93× + TF=ESP-DSP 10.8× = KWS wake word 547ms → 187ms (3× 단축).
+> **2026-05-24 megasession 흡수 완료 ⭐⭐⭐⭐** (6 카드 일괄 — #011 + #001 + #003 + #005 + #007 + uttec-vault #002): 
+> **(1) mandate v2.5 7/7 ✅ 종결** — Round 20 LoRA on-device 9 cell esp32s3 + PSRAM 8MB PASS (MLP 128 r=8 1,949μs, 100 step 0.20초 학습 / PC numpy 검증 gradient rel error 1.78e-10 / Adam 78 step 99.9954% loss 감소). **4번째 축 (on-device 학습) 신설** — 13 보드 중 esp32s3 + PSRAM 8MB 유일 학습 가능 칩.
+> **(2) mandate v2.6 4/4 ✅ 종결** — R22 (LoRA phase 분리, Adam 60~92% dominance 발견) + **R23 ⭐⭐⭐⭐ Adam optimizer 5.87× 가속 → Tiny MLP 128 r=8 = 0.05초 "즉시 학습" carrier** (fast_rsqrtf + bias precompute) + R24 INT16 negative finding (1.65~4.25× 느림, esp32s3 FP division ~10 cycles/elem) + **R25 ⭐⭐⭐⭐ CNN+LoRA KWS personalization C16 r=4 = 0.37초 carrier** + "CNN forward 92~99% dominant, LoRA fine-tune 1~8% only = 사실상 무료" 신규 finding. 33 cell + 27 PHASE row 누적.
+> **(3) mandate v2.7 4/4 ✅ 100% 종결 ⭐⭐⭐** — R26 KWS personalization 정확도 검증 (실제 mini_speech_commands 8 keyword × 1,000 sample, **어려운 화자 K=5 +11.4% improvement / Selective personalization 신규 finding**: baseline <70% 사용자에게만 효과) + R27 FP16 Adam state 측정 (R23 baseline 우월 확정 1.08~1.88×, R24 negative 우월 대안 1.37~2.25× 빠름, RAM 50% 절감 carrier, **함정 #14 v3 진단 정정**: ESP-IDF/cmake/Windows cmd.exe 결함 — Claude Code harness 책임 아님) + **R28 ⭐⭐⭐ pca10056 Cortex-M4F + CMSIS-NN `arm_convolve_wrapper_s8` CNN 32 = 14.02× 가속 (예측 5배 초과)** — im2col + SMLAD SIMD 가 LX7 ESP-DSP CNN strided 한계 완벽 압도 + R29 Multi-layer LoRA negative (-7.7~-9.3%). mandate v2.7 = 12시간 소요 (5/24 1일).
+> **(4) 3계열 AI 가속 매트릭스 완성 + Hybrid SoC carrier** — LX7 ESP-DSP (MLP 13.4× + TF 10.8× + CNN 1.00× 한계) / M4F CMSIS-NN (MLP 3.26× + **CNN 14.02× ⭐** + TF 1.85×) / NPU NNAPI (‒79~421× 부적합) / esp-nn (CNN 2.93×). **Hybrid SoC carrier**: KWS frontend (M4F CMSIS-NN 14×) + Personalization backend (esp32s3 ESP-DSP + LoRA 0.05초) — single SoC mindset 탈피.
+> **(5) AI FanStick Premium Plus 4 tier 양산 확정 (R23 fast_adam)** — Tiny 0.05초/Small 0.76초/Medium 4.36초/Large 8.17초 학습 + KWS personalization 0.37~5.37초 + selective +11.4% 정확도. Cloud GPT-4 API (3~10초) 대비 8~27× 빠름 + 외부 의존 0%.
+> **(6) 6조건 곱 진화** — 5/24 = ISA × workload × 메모리 계층 × RAM tier × library × **on-device 학습 가능 여부** (R20/R23 esp32s3 + PSRAM 8MB 유일 학습 칩).
+> **(7) 5 negative finding 누적 R&D 신뢰성 자산** — R19 (NPU) + R24 (INT16) + R27 (FP16) + R29 (Multi-layer LoRA) + R28 (TF 1.85×만). R23 채택 결정이 4 대안 측정 비교 후 도출.
+> **(8) 빌드 함정 34건 누적** — Espressif 16 (R20-1 PowerShell 한글경로, R21-1/2/3, R27-1/2/v3 등) + Nordic 18 (R28-1 Zephyr 4.3.99 arm_convolve_s8 upscale_dims 추가, R28-2 Bash↔PowerShell env var, R18 Nordic 5 + 후속 R18-F/G 등) → entities/build-gotcha-inventory.md 신설.
 
 # onDevice_AI vault — AI FanStick + Stage 4 + 보드한계모델
 
@@ -83,6 +92,16 @@ mandate 가설 11회 반증·정제. 매 보드 추가 시 가설 1개씩 정제
 | **17** ⭐⭐⭐ | "+ ESP-DSP `dsps_dp_s8_aes3` 활성 시 LX7 AI Vector Instruction" | esp32s3 (plain C vs +DSP) | ✅ **MLP 128 13.4× (1,452us → 108us)** / MLP 1024 PSRAM 2.66× / **C3→S3+DSP 24.8× ⭐ 결정타** |
 | **17.5** ⭐ | "+ TF/CNN/PSRAM ESP-DSP 적용 한계" | esp32s3 + DSP 후속 | ✅ **TF SRAM 10.8× ⭐** / CNN strided 1.00× (적용 불가) / PSRAM 가득 모델 가속 무효 또는 손해 / LX6·RISC-V에서 적용 시 1.54× 느림 |
 | **18** ⭐⭐ | "+ Cortex-M4F CMSIS-NN SMLAD (DSP extension) MLP 가속 = 2.5~4× (Optimistic 가설 안)" | pca10056 (plain C vs +CMSIS-NN) | ✅ **MLP 128 3.23× (7,367μs → 2,285μs)** / CNN/TF 1.01× (skeleton 미패치, im2col 필요) / 클럭 normalize 시 **LX7 5.64× M4F 단위 효율 우위** (25,920 vs 146,240 cycles MLP 128) |
+| **20** ⭐⭐ (v2.5 종결) | "+ LoRA on-device fine-tune esp32s3 + PSRAM 8MB 9 cell PASS" | esp32s3 (3 hidden × 3 rank) | ✅ MLP 128 r=8 1,949μs (100 step = **0.20초**) / RAM_safe + sanity 9/9 PASS / gradient rel error 1.78e-10 / Adam 78 step 99.9954% loss 감소 / **13 보드 중 유일 학습 가능 칩 = on-device 학습 4번째 축 신설** |
+| **21** | "+ esp-nn CNN LX7 가속" | esp32s3 | ✅ CNN 16/32 = **2.93~2.95×** (3계열 매트릭스 CNN 행 채움, ESP-DSP CNN strided 한계 우회) |
+| **22** | "+ LoRA phase 분리 측정 → Adam dominance" | esp32s3 | ✅ Adam phase **60~92% dominant** (forward+backward 합보다 큼) — fast_adam 가속 trigger |
+| **23** ⭐⭐⭐⭐ (v2.6) | "+ Adam optimizer fast_rsqrtf + bias precompute 가속" | esp32s3 | ✅ MLP 128 r=8 = **3.94× (1,949 → 495μs) / Tiny 0.05초 "즉시 학습" carrier** + MLP 4096 r=16 1.71× |
+| **24** ❌ (negative) | "+ INT16 Adam state quantize → RAM 50% 절감" | esp32s3 | ❌ **1.65~4.25× 느림** (FP32 division ~10 cycles/elem × dynamic scale requantize 2/elem = ~20 cycles → R23 회피한 비용 재도입). RAM 50% 절감 확인 (실용 가치 0) |
+| **25** ⭐⭐⭐⭐ (v2.6) | "+ CNN+LoRA KWS personalization" | esp32s3 | ✅ **C16 r=4 = 0.37초 "즉시 학습" carrier** + CNN forward 92~99% dominant → LoRA fine-tune 1~8% only = **"사실상 무료" 신규 finding** |
+| **26** ⭐⭐⭐ (v2.7) | "+ KWS personalization 실제 정확도 검증 (mini_speech_commands 8 keyword × 1000 sample)" | esp32s3 + PC | ✅ baseline 78.7% / **어려운 화자 K=5 +11.4% improvement (max +23.1%) / catastrophic forgetting <1.1%** / **Selective personalization 신규 finding** (baseline <70% 사용자에게만 effect) |
+| **27** ❌ (negative + 함정 #14 v3) | "+ FP16 Adam state RAM 50% 절감 carrier 대안" | esp32s3 | ❌ R23 baseline 우월 (R27/R23 1.08~1.88× 느림) but **R24 negative 우월 대안 입증 (R27 vs R24 1.37~2.25× 빠름)** / RAM 50% 절감 carrier 확인 / **함정 #14 v3 진단 정정**: ESP-IDF/cmake/Windows cmd.exe 결함 (Claude Code harness 책임 아님) |
+| **28** ⭐⭐⭐ (v2.7) | "+ pca10056 Cortex-M4F + CMSIS-NN `arm_convolve_wrapper_s8` CNN 가속 (Optimistic 2~3×)" | pca10056 64MHz | ✅ ⭐⭐⭐ **CNN 32 = 14.02× 가속 (예측 5배 초과)** — im2col + SMLAD SIMD 가 LX7 ESP-DSP CNN strided 한계 (R17.5 1.00×) 완벽 압도 / MLP 3.26× / TF 1.85× |
+| **29** ❌ (negative, v2.7) | "+ Multi-layer LoRA (마지막 + intermediate fc)" | esp32s3 | ❌ **-7.7~-9.3%** (single LoRA 우월, 표현력 trade-off 부정적) |
 
 ### 핵심 발견 (Stage 4 영업 카피 원료)
 
@@ -99,6 +118,15 @@ mandate 가설 11회 반증·정제. 매 보드 추가 시 가설 1개씩 정제
 11. **Cortex-M4F CMSIS-NN MLP +3.23× 가속** (Round 18, 5/22) — SMLAD `__SMLAD(__PKHBT(a,b,16), __PKHBT(c,d,16), acc)` DSP extension 활용. Optimistic 가설 (2.5~4×) 안에 적중. CNN/TF는 skeleton 미패치 (im2col 필요 또는 별도 conv API).
 12. **LX7 단위 효율 5.64× Cortex-M4F 우위** ⭐⭐ (Round 18 클럭 normalize) — MLP 128 LX7 25,920 cycles vs M4F 146,240 cycles. **AI 가속 = ISA-specific instruction 폭 결정타** (LX7 128-bit AI vector > M4F 32-bit SMLAD). clock speed / vendor TOPS 광고가 아닌 instruction set design이 진짜 변수.
 13. **pca10040 (nRF52832 64KB) 전셀 RAM wall** ⭐⭐ (Round 18 후속, 5/22 오후) — MLP/CNN/TF 12셀 모두 RAM wall (weights ~42KB+ > heap ~30KB 부족, CMSIS-NN static .bss 34KB 차지). **Round 14 plain C 100% 재현** = CMSIS-NN library 추가해도 RAM tier 한계 동일. **vendor "supports neural network frameworks" 광고 vs 실제 RAM 적합도 격차** 정량 박제. **AI 응용 = nRF52840 (256KB)+ 또는 ESP32-S3 (PSRAM 8MB) 필수**. nRF52832 = BLE-only / sensor-only 트랙 분리.
+14. **Round 20 LoRA on-device 학습 4번째 축 신설** ⭐⭐ (5/23 야간, v2.5 종결) — esp32s3 + PSRAM 8MB 9 cell PASS, 13 보드 중 유일 학습 가능 칩. PC numpy 검증 (gradient rel error 1.78e-10 + Adam 78 step 99.9954% loss 감소).
+15. **Round 23 fast_adam "즉시 학습" carrier** ⭐⭐⭐⭐ (5/23~24, v2.6) — Adam optimizer 5.87× 가속 (fast_rsqrtf + bias precompute). **Tiny MLP 128 r=8 = 100 step 0.05초** (R20 0.20초의 4× 추가 가속). AI FanStick Premium Plus 양산 trigger.
+16. **Round 25 KWS personalization "사실상 무료" finding** ⭐⭐⭐⭐ (5/24, v2.6) — CNN+LoRA C16 r=4 = 0.37초 carrier. **CNN forward 92~99% dominant → LoRA fine-tune 1~8% only** = R23 fast_adam이 만든 "Adam이 너무 빨라 그림자 사라짐" 의외 결과.
+17. **Round 26 Selective personalization 신규 finding** ⭐⭐⭐ (5/24, v2.7) — 실제 mini_speech_commands 8 keyword × 1,000 sample 검증. baseline 78.7% / **어려운 화자 (acc<70%) K=5 +11.4% improvement** (max +23.1%) / 카타스트로픽 포겟팅 <1.1%. **AI FanStick UX 결정**: baseline <70% 사용자에게만 "내 목소리로 학습할까요?" 자동 제안.
+18. **Round 27 FP16 negative + 함정 #14 v3 진단 정정** ⭐⭐ (5/24, v2.7) — R23 baseline 우월 확정 (1.08~1.88× 느림) but R24 우월 대안 입증 (1.37~2.25× 빠름) + RAM 50% 절감 carrier 확인. **함정 #14 v3 진단 정정**: ESP-IDF/cmake/Windows cmd.exe `cmd /C "cd . && tool ... && cd ."` cwd 보존 결함 — 일반 PowerShell 에서도 동일 fail (Claude Code harness 책임 아님).
+19. **Round 28 ⭐⭐⭐ M4F CMSIS-NN CNN 14× 가속 (예측 5배 초과)** (5/24, v2.7 종결) — pca10056 (Cortex-M4F @ 64MHz) + `arm_convolve_wrapper_s8` CNN 32 = **14.02× 가속**. ARM CMSIS-NN im2col + SMLAD SIMD 가 LX7 ESP-DSP CNN strided 한계 (R17.5 1.00×) 완벽 압도. **application별 SoC 결정 가이드 신설**: KWS=pca10056 14× / SLM=esp32s3 10.8× / Personalization=esp32s3 13.4×.
+20. **Hybrid SoC carrier ⭐⭐ (5/24, v2.7 종결)** — KWS frontend (M4F CMSIS-NN 14×) + Personalization backend (esp32s3 LoRA 0.05초) = single SoC mindset 탈피. Stage 4 영업 자료 결정타.
+21. **5 negative finding 누적 R&D 신뢰성 자산 (5/24)** — R19 (NPU 79~421×) + R24 (INT16 1.65~4.25×) + R27 (FP16 1.08~1.88×) + R29 (Multi-layer LoRA -7.7~-9.3%) + R28 (TF 1.85×만, attn_causal argmax 비가속). **R23 채택 결정이 4 대안 측정 비교 후 도출** = "vendor 광고 신뢰 X, 자체 측정 자산화" 영업 신뢰성.
+22. **6조건 곱 진화 (5/24)** — AI 가속 = ISA × workload × 메모리 계층 × RAM tier × library selection × **on-device 학습 가능 여부**. R20/R23/R25 esp32s3 + PSRAM 8MB 가 4번째 축 (학습) 유일 검증 사례.
 
 ## vault 폴더 구조 (5/20 갱신)
 
@@ -280,14 +308,64 @@ vendor 광고 "Cortex-M4F + neural network frameworks 지원" 만으로 AI 응�
 - **클럭 normalize LX7 5.64× M4F** — ISA 단위 효율 우위 정량화 (Stage 4 칩 선택 결정타)
 - **Nordic 빌드 함정 5건 신규 박제** (gaps.md `## Round 18 Nordic 빌드·monitor 함정 패턴` 참조)
 
+## 3계열 AI 가속 매트릭스 완성 (2026-05-24 R28 흡수) ⭐⭐⭐
+
+| 계열 | 하드웨어 | MLP | CNN | TF | 결정 application |
+|---|---|:-:|:-:|:-:|---|
+| **LX7 ESP-DSP** | esp32s3 240MHz | **13.4×** | 1.00× (한계) | **10.8×** | SLM / Personalization |
+| **M4F CMSIS-NN** | pca10056 64MHz | 3.26× | ⭐⭐⭐ **14.02×** | 1.85× | **KWS / CNN application** |
+| **NPU NNAPI** | Eden NPU | ‒79~421× ❌ | (미측정) | (미측정) | (사용 안 함) |
+| **esp-nn** | esp32s3 240MHz | (미측정) | 2.93× | (미측정) | esp32s3 alternative |
+
+→ R28 예측 5배 초과 (Optimistic 2~3× → 14.02×) = ARM CMSIS-NN im2col + SMLAD SIMD 가 LX7 ESP-DSP CNN strided access 한계 완벽 압도. 자세히 [[2026-05-24_application별-SoC-결정-Hybrid-SoC]].
+
+## On-device 학습 4번째 축 (2026-05-23 R20 + 5/24 R23/R25 흡수)
+
+13 보드 한계모델 중 **esp32s3 + PSRAM 8MB 만 학습 가능** = 4번째 축 신설.
+
+| tier | MLP 학습 (R23 fast_adam) | KWS personalization (R25 C16) |
+|---|---|---|
+| Tiny ⭐⭐⭐ | **0.05초** | **0.37초** |
+| Small | 0.76초 | 0.55초 |
+| Medium | 4.36초 | 1.59초 |
+| Large | 8.17초 | 5.37초 |
+
+Cloud GPT-4 API (3~10초) 대비 8~27× 빠름 + 외부 의존 0%. R26 selective personalization +11.4% 정확도 개선 (어려운 화자 K=5). [[ai-fanstick]] § Premium Plus 4 tier 참조.
+
+## 5 negative finding 누적 (2026-05-24 R&D 신뢰성 자산)
+
+| Round | finding | application 의미 |
+|---|---|---|
+| R19 | Eden NPU NNAPI -79~421× | smartphone NPU 비효율 |
+| R24 | INT16 dynamic scale -1.65~4.25× | RAM 절감 carrier 미달 |
+| R27 | FP16 R23 미달 -1.08~1.88× | R23 baseline 우월 |
+| R29 | Multi-layer LoRA -7.7~-9.3% | single LoRA 우월 |
+| **R28** | TF 1.85×만 (attn_causal argmax 비가속) | MLP/CNN 가속 대비 절반 |
+
+→ R23 채택 결정이 4 대안 측정 비교 후 도출. 자세히 [[2026-05-24_negative-finding-누적-신뢰성-자산]].
+
+## 빌드 함정 34건 누적 (2026-05-24 갱신)
+
+| Vendor | 누적 | 신규 (5/23~24) |
+|---|:-:|---|
+| Espressif (esp32s3) | **16** | R20-1 (PowerShell 한글경로 ASCII 깨짐) + R21-1/2/3 (esp-nn 빌드 함정) + R27-1/2 (sweep 첫 cell race) + **함정 #14 v3 진단 정정** (ESP-IDF/cmake/Windows cmd.exe cwd 결함, Claude Code harness 책임 아님) |
+| Nordic (Zephyr) | **18** | R28-1 (Zephyr 4.3.99 arm_convolve_s8 upscale_dims argument 추가 → arm_convolve_wrapper_s8 우회) + R28-2 (Bash → PowerShell env var $ 치환 함정) |
+| **합계** | **34** | — |
+
+→ entity 신설: [[build-gotcha-inventory]] (5/24).
+
 ## 메타
 
 | 항목 | 값 |
 |---|---|
 | vault 시작 | 2026-05-07 |
 | 1차 mandate 전환 | 2026-05-17 |
-| 현재 진행률 | **29/37 셀 (78%) · 10/13 보드 (77%)** |
+| 현재 진행률 | **13/13 보드 ✅ 100% + 33 cell + 27 PHASE row 누적 (5/24 megasession)** |
+| mandate v2.5 종결 | 2026-05-23 야간 (Round 20 LoRA 7/7 ✅) |
+| mandate v2.6 종결 | 2026-05-24 (R22 + R23 + R24 + R25, 4/4 ✅) |
+| mandate v2.7 종결 ⭐⭐⭐ | **2026-05-24 (R26 + R27 + R28 + R29, 4/4 ✅, 12시간 소요)** |
+| **mandate v2.8 진입 + R34 Hybrid SoC PoC firmware** ⭐⭐ | **2026-05-24 Wave 8** — pca10056 `main_nrf_r34.c` (~200) + esp32s3 `main_esp32_r34.c` (~180) + UART 3-line jumper protocol + A/B/C BOM 3 시나리오 ($12/$16.70/$9.50). 측정 → 실제 PoC firmware 변환 = Stage 4 영업 결정타. Day 4 시연 영상 사용자 broker 대기 |
 | W6 종료 예정 | 2026-06-22~28 |
 | Stage 4 영업 자산화 | 2026-06-29 (W6 종료 익일) |
-| 예상 매출 임팩트 | 6개월 2,000~3,500만 |
-| 본 entity 갱신 주기 | 카드 흡수 시마다 (5/22 Round 19 NNAPI + Round 18 CMSIS-NN + **Round 18 후속 pca10040 13/13 완성** 흡수 완료 — 다음 = Round 18.5 cnn/tf CMSIS-NN 패치 또는 v2.5 종합 카드) |
+| 예상 매출 임팩트 | 6개월 2,000~3,500만 (Hybrid SoC carrier 추가 시 +α) |
+| 본 entity 갱신 주기 | 카드 흡수 시마다 (5/24 megasession 흡수 완료 — 다음 = mandate v2.8 영업 데모 진입 or 양산 진입 결단) |

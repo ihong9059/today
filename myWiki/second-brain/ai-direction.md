@@ -2,12 +2,107 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-05-23 야간 4차 (uttec-search vault 신설 — search cross-platform 첫 fork / vault portability 트랙 첫 실증)
-tags: [AI, 방향, 전략, 판단, 3계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, onDevice-business, 5조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork]
-links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, onDevice-ai, search, ai-fanstick, 위시캣활동]
+updated: 2026-05-24 (6 카드 megasession 흡수 — mandate v2.7 4/4 ✅ 100% 종결 + 11th vault uttec-rag-local 신설 + 3계열 매트릭스 완성 + Hybrid SoC carrier + 6조건 곱 진화 + 5 negative finding 누적)
+tags: [AI, 방향, 전략, 판단, 3계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, Hybrid-SoC, application별-SoC, negative-finding-자산]
+links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-05-24 megasession) — mandate v2.7 4/4 ✅ 100% 종결 + 11th vault uttec-rag-local 신설 ⭐⭐⭐⭐
+
+**사건**: 6 카드 megasession 흡수 (ondevice 5장 + uttec-vault 1장). ondevice-claude 가 5/22 야간~5/24 까지 mandate v2.5 → v2.6 → v2.7 까지 폭주로 12 Round 완주 (R20~R28 + 누적 33 cell + 27 PHASE row). uttec-vault-claude 가 5/24 11:30 사용자 결단으로 11th vault `uttec-rag-local` (Ollama local RAG) 신설 의뢰.
+
+### 결정 1: mandate v2.7 4/4 ✅ 100% 종결 — 3계열 매트릭스 완성
+
+| 계열 | 하드웨어 | MLP | CNN | TF | 결정 application |
+|---|---|:-:|:-:|:-:|---|
+| **LX7 ESP-DSP** | esp32s3 240MHz | **13.4×** | 1.00× (한계) | **10.8×** | SLM / Personalization |
+| **M4F CMSIS-NN** | pca10056 64MHz | 3.26× | ⭐⭐⭐ **14.02×** | 1.85× | **KWS / CNN application** |
+| **NPU NNAPI** | Eden NPU | ‒79~421× ❌ | (미측정) | (미측정) | (사용 안 함) |
+| **esp-nn** | esp32s3 240MHz | (미측정) | 2.93× | (미측정) | esp32s3 alternative |
+
+- R28 ⭐⭐⭐ pca10056 + CMSIS-NN CNN 32 = **14.02× 가속** (예측 5배 초과). ARM CMSIS-NN im2col + SMLAD SIMD 가 LX7 ESP-DSP CNN strided 한계 (R17.5 1.00×) 완벽 압도
+- R26 KWS personalization +11.4% (어려운 화자 K=5) + **selective personalization 신규 finding**
+- R27 FP16 Adam R23 미달 (1.08~1.88×) + R24 negative 우월 대안 (RAM 50% 절감 carrier) + **함정 #14 v3 진단 정정** (ESP-IDF/cmake/Windows 결함, Claude Code harness 책임 아님)
+- mandate v2.7 = 12시간 소요 (5/24 1일)
+
+### 결정 2: ⭐⭐ Hybrid SoC carrier — single SoC 선택 mindset 탈피
+
+**application별 최적 SoC 결정 가이드 (Stage 4 영업 결정타)**:
+
+| application | 최적 SoC | 가속 |
+|---|---|:-:|
+| **KWS / Voice command** | **pca10056 (nRF52840) + CMSIS-NN** | **14×** |
+| Anomaly detection | pca10056 + CMSIS-NN | 14× |
+| **SLM / Transformer** | **esp32s3 + ESP-DSP** | 10.8× |
+| **Personalization (MLP)** | **esp32s3 + ESP-DSP** | 13.4× |
+
+**신규 carrier**: KWS frontend (M4F + CMSIS-NN, 14×) + Personalization backend (esp32s3 + LoRA 0.05초 즉시 학습) = **Hybrid SoC**. Stage 4 영업 자료 결정타.
+
+### 결정 3: 6조건 곱 진화 — on-device 학습 가능 여부 추가
+
+- 5/22 야간: 4조건 곱 = ISA × workload × 메모리 계층 × RAM tier
+- 5/23 야간: **5조건 곱 = + library selection by workload** (ESP-DSP MLP + esp-nn CNN + CMSIS-NN MCU MLP)
+- **5/24: 6조건 곱 = + on-device 학습 가능 여부** (esp32s3 + PSRAM 8MB 가 13 보드 중 유일 학습 가능 칩, R20 LoRA + R23 fast_adam Tiny 0.05초 + R25 KWS 0.37초)
+- 영업 카피: "AI 가속 = ISA × workload × 메모리 계층 × RAM tier × library selection × **on-device 학습 가능 여부**" 6조건 곱
+
+### 결정 4: ⭐⭐ AI FanStick Premium Plus 4 tier 양산 trigger — R23 fast_adam 확정
+
+R27 측정 결과 R23 fast_adam baseline 우월 확정 (4 대안 모두 negative 입증):
+- R19 Mobile NPU NNAPI ‒79~421×
+- R24 INT16 dynamic scale 1.65~4.25× 느림
+- R29 Multi-layer LoRA -7.7~-9.3%
+- R27 FP16 R23 미달 (1.08~1.88×)
+
+→ **AI FanStick Premium Plus 4 tier 라인업** (R23 + R25 + R26 결합):
+| tier | MLP 학습 (R23) | KWS personalization (R25 C16) | 종합 carrier |
+|---|---|---|---|
+| Tiny ⭐⭐⭐ | **0.05 초** | **0.37 초** | "즉시 학습 + 음성 personalization" |
+| Small | 0.76 초 | 0.55 초 | "5 응원 + 음성 1초" |
+| Medium | 4.36 초 | 1.59 초 | "20 응원 + 음성 4초" |
+| Large | 8.17 초 | 5.37 초 | "전체 personalization 8초" |
+
+Cloud GPT-4 API (3~10초) 대비 **8~27× 빠름** + 외부 의존 0% + 어려운 사용자 +11.4% 정확도 개선 (R26 selective personalization).
+
+### 결정 5: ⭐ negative finding 누적 = R&D 신뢰성 자산 (5건 박제)
+
+"R23 채택 결정이 4 대안 모두 실측 비교 후 도출" — vendor 광고 (best-case) 신뢰 X, 자체 측정 자산 (Round 17·18·19·24·27·28·29) 기반 양산 결정.
+
+| Round | finding | application 의미 |
+|---|---|---|
+| R19 | Eden NPU NNAPI -79~421× | smartphone NPU 비효율 |
+| R24 | INT16 dynamic scale -1.65~4.25× | RAM 절감 carrier 미달 |
+| R27 | FP16 R23 미달 -1.08~1.88× | R23 baseline 우월 |
+| R29 | Multi-layer LoRA -7.7~-9.3% | single LoRA 우월 |
+| **R28** | **TF 1.85×만 (attn_causal argmax 비가속)** | MLP/CNN 가속 대비 절반 |
+
+### 결정 6: 11th vault uttec-rag-local 신설 — Ollama 비용 0 트랙 (대안 B 채택)
+
+- uttec-search (10th, Claude API) 의 sibling 으로 **Ollama qwen2.5:7b local RAG** 신설 (port 8892/8893, ~/uttec-rag-local/ on uttecMac)
+- **대안 B 채택**: mywiki-claude 는 메타 갱신만 (vault 카운트 / entities/uttec-rag-local.md / ai-direction 로그) + 디렉토리 신설·코드 복제·Ollama 통합은 uttec-search-claude 위임
+- **A/B 비교 dogfooding 1주**: Claude API (uttec-search) vs Ollama (uttec-rag-local) 동일 코퍼스, 외부 회사 적용 시 비용 부담 케이스의 대안 정량 보고 가능
+- **온디바이스 AI 시리즈 통합**: 응원봉 (ESP-DSP + LoRA 0.05초) + uttec-rag-local (Ollama qwen2.5:7b PC) — **외부 의존 0% 양 축 가동**
+
+### 결정 7: 함정 #14 v3 진단 정정 = governance 신뢰성 모범
+
+- **5/21~24 잘못된 진단**: "Claude Code harness 가 ninja → cmd chain 의 cwd reset"
+- **진짜 원인 (5/24 R27 sweep 3차 발견)**: ESP-IDF/cmake 3.30/Windows cmd.exe 의 `cmd /C "cd . && tool ... && cd ."` 패턴 cwd 보존 결함 — 일반 PowerShell 에서도 동일하게 fail
+- → 자체 진단 사이클 패턴 모범 (search G 패치 5/22 → ondevice 함정 #14 v3 5/24 두 번째 케이스)
+- 빌드 함정 누적 **34건** (esp32s3 16 + Nordic 18) → `entities/build-gotcha-inventory.md` 신설 박제
+
+### 의미
+
+1. **3계열 매트릭스 = Stage 4 영업 결정타** — application class 별 정량 칩 매칭 (KWS=M4F 14× / SLM=LX7 10.8× / Personalization=LX7 13.4×)
+2. **Hybrid SoC carrier = single SoC mindset 탈피** — UTTEC 차별화 카피 ("vendor 단일 칩 광고 X, application 별 정량 칩 매칭")
+3. **R23 fast_adam 양산 확정 = 4 대안 측정 검증** = R&D 신뢰성 자산화 (negative finding 5건 누적)
+4. **6조건 곱 진화** — vendor TOPS 광고가 아닌 ISA × workload × 메모리 계층 × RAM tier × library × on-device 학습 가능 여부
+5. **uttec-rag-local 11th vault** — 외부 의존 0% 양 축 (응원봉 + PC), 비용 0 dogfooding 트랙, A/B 비교 1주 검증
+6. **함정 진단 자체 정정 사이클** — Claude 자기 가설 검증 + 정정 박제 = governance 신뢰성 모범
+
+**참조**: today/_inbox/processed/ 6 카드 (2026-05-23-011 / 2026-05-24-001 / 002 / 003 / 005 / 007) + ack 카드 6장 발송 (ondevice ×5 + uttec-vault ×1)
+
+---
 
 ## 판단 로그 (2026-05-23 야간 4차) — uttec-search vault 신설 (search cross-platform 첫 fork) ⭐⭐⭐
 

@@ -6,7 +6,7 @@ type: notification
 priority: high
 subject: ⭐⭐ Round 20 LoRA on-device 9 cell esp32s3 PASS + mandate v2.5 7/7 ✅ 완성 — 4번째 축 (on-device 학습) 신설, AI FanStick Premium Plus 4 tier 차별화 자산
 created: 2026-05-23 21:50 KST
-status: pending
+status: done
 broker: ondevice-claude (myWiki/_inbox/pending/ 직접 Write — today repo 동일 머신)
 related:
   - onDevice_AI/프로젝트_보드한계모델_v2.5/Round20_LoRA/01_plan.md
