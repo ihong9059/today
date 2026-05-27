@@ -2,9 +2,54 @@
 title: UTTEC 영업 패키지 (4.5-Stage)
 type: entity
 created: 2026-05-05
-updated: 2026-05-27 Wave 14 흡수 (R36 ✅ + mandate v2.9 종결 — Stage 4 시나리오 E STM32H7 산업 노드 정량 결과 박제 CMSIS-NN CNN 17.58× + Cortex-M tier 비교 매트릭스 + SLM 50~60MB 적재 가능 + 본 vault 6/6 mandate 모두 종결)
-tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스, 5계열매트릭스, application별-SoC, Hybrid-SoC, on-device-학습-4번째축, 6조건곱, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, 6mandate-모두종결, ARM-A-NEON, rpi5, Edge-AI-Gateway, STM32H745, 산업노드, LAN-path, vectorizer-정책, carry-over-효과, Cortex-M-tier-최강, SLM-적재]
-links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, build-gotcha-inventory, stm32h745-disco, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드]
+updated: 2026-05-28 R37 정정 + 04_종합비교 영업카피 흡수 (Stage 4 시나리오 E $70 → $70~150 BOM 정정 / Jetson Orin Nano Super $249 (1.66× 차이 정정) / LiteRT rebrand / Stage 4 시나리오 C nRF52840 우선 / vendor 광고 cross-check 5단계 정책 신설 / negative 6건 유지 (R37 positive 정정))
+tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스, 5계열매트릭스, application별-SoC, Hybrid-SoC, on-device-학습-4번째축, 6조건곱, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, 6mandate-모두종결, ARM-A-NEON, rpi5, Edge-AI-Gateway, STM32H745, 산업노드, LAN-path, vectorizer-정책, carry-over-효과, Cortex-M-tier-최강, SLM-적재, R37-정정사이클, LiteRT, Jetson-Super, vendor-광고-cross-check, asymmetric-multiprocessing]
+links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, build-gotcha-inventory, stm32h745-disco, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
+---
+
+## 2026-05-28 R37 정정 + 04_종합비교 영업카피 흡수 — Stage 4 영업 카피 정정 + vendor 광고 cross-check 5단계 정책 ⭐⭐⭐
+
+### Stage 4 시나리오 정정 (영업 카피 직결)
+
+| 시나리오 | 옛 박제 | 정정값 (5/28) |
+|---|---|---|
+| **C** (M4F 단독 ~$5 BOM) | nRF52833 (128KB) 또는 nRF52840 (256KB) 둘 다 권장 | **nRF52840 (pca10056 실측 ✅) 우선 / nRF52833 = spec 추정 (본 vault 미측정) 분리** |
+| **D** (rpi5 + Hailo HAT) | $150 BOM vs Orin Nano $499 = **3.3× 차이** | **$150 BOM 유지 vs Orin Nano Super $249 = 1.66× 차이만** ⚠️ 영업 결정타 정정 |
+| **E** ⭐⭐ (stm32h745 산업 노드) | **$70 BOM** | **$70~150 BOM** (산업 + 케이스 + I/O 포함 ~$150 정확) |
+
+### Cortex-M tier 영업 가이드 정정 (R37 M4 단독 positive 정정)
+
+옛 박제 ❌ (취소): "H745 M4 단독 권장 안 함 — effective ≈ pca10056 64MHz, BOM 더 비쌈"
+
+✅ 정정 메시지:
+- **H745 M4 단독도 정상** — pca10056 대비 3.71× 빠름 (clock-norm 0.99×)
+- **M7 same-chip 3.56× 추가 우월** → AI 단독 워크로드 M7 우선 권장
+- ⭐ **H745 진가 = M7 + M4 dual-core 동시 운영 (asymmetric multiprocessing)** — M7 AI inference + M4 sensor/control, 단일 칩 R34 Hybrid SoC carrier 실현
+- ⭐ M7 baseline IPC gain 1.78× = Cortex-M7 카탈로그 정상치 (dual-issue + L1 + ART) — Cortex-M tier 최강 영업 정확성 강화
+
+### 외부 vendor 가격 갱신 (영업 카피 stale 정정)
+
+| 영역 | 옛 박제 (사용 금지) | 정정값 (5/28) | 출처 |
+|---|---|---|---|
+| **TFLM 명명** | TensorFlow Lite Micro | **LiteRT for Microcontrollers** | Google 2024-09 rebrand |
+| **Jetson Orin Nano** | $499 / 40 TOPS | **$249 / 67 TOPS Super** | NVIDIA 2024-12 가격 인하 |
+| **Jetson AGX Orin 64GB** | $2,999 | **$2,499** | NVIDIA 정정 |
+| **Jetson AGX Thor (NEW 2025)** | (미박제) | **$3,499 / 2,070 FP4 TFLOPS** (humanoid robot 최강) | NVIDIA 2025 발표 |
+
+### vendor 광고 cross-check 5단계 정책 신설 ⭐⭐⭐
+
+1. **vendor 광고 신뢰 X** UTTEC 자체 측정 자산
+2. 본 vault Round 1~37 누적 박제 → 모든 영업 카피 = 본 vault § 2-1 표 + § 3 비교 짝 표 + § 14-x Round 결론 cross-reference 필수
+3. 영업 시 **모호 카피 ("AI 가속 가능") 금지** → 정량 박제 ("Round X: 변수 Y → ratio Z×") 사용 필수
+4. **vendor 광고 / wiki / 추정 출처 박제 시 cross-check 의무화**: vendor 공식 datasheet + 5/28 web search + master 박제
+5. **외부 추정 박제 시 † footnote 필수**: "본 vault 미측정, 외부 X 표준 자료 추정"
+
+### negative finding 6건 유지 (R37 positive 정정)
+
+R19 NPU / R24 INT16 Adam / R27 FP16 / R29 Multi-layer LoRA / R30 mobile clang dotprod / R32 64KB. **R37 제외** (positive로 분류 — clock-norm 0.99× 정상). 본 vault 박제 정확성 일관성 영업 자산 강화.
+
+자세히 [[2026-05-28_본vault-영업카피-신뢰성-강화]] + [[2026-05-28_R36-R37-baseline-artifact-paired-check-fix]].
+
 ---
 
 ## ⭐⭐⭐ 2026-05-27 Wave 14 흡수 — Stage 4 시나리오 E STM32H7 산업 노드 정량 결과 + Cortex-M tier 비교 매트릭스

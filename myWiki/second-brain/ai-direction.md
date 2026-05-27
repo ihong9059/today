@@ -2,12 +2,47 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-05-27 (외주(도급) 필터 v3 cascade 결정 15 — 검색 통로 다양화 원칙 + ID 단조 증가 가정 거짓 + broker 양방향 in_reply_to 첫 사이클 / 5/27 Wave 14 흡수 R36 + mandate v2.9 종결 + 6/6 mandate 모두 종결)
-tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path]
-links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타]
+updated: 2026-05-28 (R37/R36 baseline 정정 사이클 — 결정 16 박제 정확성 SOP + 결정 17 vendor 광고 cross-check 5단계 정책 / 결정 18 사용자 challenge = 정정 trigger 가치 박제 / 6 negative finding 유지 R37 제외)
+tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger]
+links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-05-28 cascade) — R37/R36 baseline 정정 사이클 + 04_종합비교 영업카피 정정 ⭐⭐⭐
+
+**사건**: ondevice-claude 카드 5장 (R37 M4 negative supersede + R37 correction + R36 paired-check + 04_종합_비교_해설 23§ 검토 + 영업카피 cascade) 일괄 megasession 흡수. 5/27 14:00 R37 "M4 clock-norm 0.27× 미달 / 7번째 negative finding" 박제 → 5/27 16:00 사용자 challenge "M4 속도가 지금 최선인가?" → 펌웨어 INFO emit 진단 4행 추가 → 실측 pca10056 R18 baseline 7,367μs 재확인 → 옛 추정값 ~1,798μs artifact 정정. R37 M4 positive (clock-norm 0.99×) + R36 M7 baseline IPC 1.76× 정정 + STM-15 새 함정 발견. negative finding 6건 유지 (R37 제외). 04_종합_비교_해설 49건 영업 카피 정정 (LiteRT rebrand + Jetson Super $249 + stm32h745 메모리 + Exynos 8nm).
+
+### 결정 16: ⭐⭐⭐ 박제 정확성 SOP — baseline 단일 출처 (실측 CSV) 기반 의무화
+
+본 vault 모든 baseline 박제는 **단일 출처 (실측 CSV 파일 경로) 명시** + 다른 박제와 비율 검증 시 같은 단일 출처 참조. 추정값 사용 금지. derivative 박제 모두 artifact 위험 (R36/R37 사이클 입증). carry-over: 다른 보드 measurement (Nordic / ESP32 / Linux PC / STM32 family) baseline 박제 시 동일.
+
+### 결정 17: ⭐⭐⭐ vendor 광고 cross-check 5단계 정책 신설 — 영업 카피 신뢰성 강화
+
+영업 카피 박제 시 5단계 cross-check 의무:
+1. vendor 광고 신뢰 X → UTTEC 자체 측정 자산
+2. 본 vault Round 1~37 누적 박제 cross-reference 필수
+3. 모호 카피 ("AI 가속 가능") 금지 → 정량 박제 ("Round X: 변수 Y → ratio Z×")
+4. vendor 광고 / wiki / 추정 출처 박제 시 vendor 공식 datasheet + web search + master 박제
+5. 외부 추정 박제 시 † footnote 필수 ("본 vault 미측정, 외부 X 표준 자료 추정")
+
+→ 옛 vendor 광고 stale (LiteRT rebrand 미반영 / Jetson Super 가격 인하 미반영 / 한국마사회 농업 무관 등) 정정 49건이 본 정책 근거. 다른 vault (uttechome / wishket / lemonLabs) 영업 카피 박제 시 동일.
+
+### 결정 18: ⭐⭐ 사용자 challenge = 정정 trigger 가치 박제 (governance 신뢰성 carrier)
+
+사용자 challenge ("M4 속도가 지금 최선인가?")가 R36/R37 정정 trigger. **자가 진단 정정 사이클 3번째 사례** (search G 패치 + 함정 #14 v3 + R37/R36). Claude가 자기 박제 자가 정정 + 발신측 cascade 카드 발신 = governance 신뢰성 vault carrier. work-end 시 사용자 단순 confirm 후 박제 X → 사용자 challenge 능동 응답 SOP.
+
+### 의미 (5/28 추가)
+
+16. **박제 정확성 SOP** — baseline 단일 출처 (실측 CSV) 기반 의무화 + 카탈로그 IPC 일관성 검증 (R37/R36 사이클 carrier)
+17. **vendor 광고 cross-check 5단계 정책** — 영업 카피 박제 시 의무 SOP (다른 vault 영업 자료 carry-over)
+18. **사용자 challenge = 정정 trigger 가치** — 자가 진단 정정 사이클 3번째 사례 = governance 신뢰성 carrier (모든 vault carry)
+19. **negative finding 6건 유지 (R37 제외)** — R37 positive 정정으로 박제 정확성 일관성 확보. CMSIS-NN 17.58× 결정타 영업 메시지 변경 없음
+20. **검토 단위 = 파일 패턴** — 단일 거대 파일 → § 분리 = 검토/git diff/cherry-pick 효율 carry (다른 vault 큰 문서 적용 가능)
+
+→ thought [[2026-05-28_R36-R37-baseline-artifact-paired-check-fix]] + [[2026-05-28_본vault-영업카피-신뢰성-강화]] + entity [[stm32h745-disco]] § 5/28 정정 cascade + [[build-gotcha-inventory]] § 자가 진단 정정 3번째 사례 + [[gaps]] § baseline 추정값 cross-check 부재 + § vendor 광고 cross-check 누락.
+
+---
 
 ## 판단 로그 (2026-05-27 cascade) — 위시캣 외주(도급) 필터 사전 단계 v3 ⭐⭐
 

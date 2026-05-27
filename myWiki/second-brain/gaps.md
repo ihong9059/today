@@ -2,12 +2,48 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-05-27 (위시캣 외주 필터 cascade — ID 단조 증가 가정 거짓 + #155421 1.5억 외주 누락 사고 + 검색 통로 다양화 원칙)
-tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴]
-links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, 2026-05-27_위시캣-외주필터-사전확인-SOP]
+updated: 2026-05-28 (R37/R36 baseline artifact 정정 사이클 — 추정값 cross-check 부재 + STM-15 INFO emit cache 영향 + 04_종합비교 vendor 광고 cross-check 누락 49건 정정)
+tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale]
+links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-05-28 — baseline 추정값 cross-check 부재 함정 (R36/R37 artifact 정정 사이클) ⭐⭐⭐
+
+5/27 R36 (Wave 14) + R37 (Wave 15) 박제 두 건 모두 **잘못된 pca10056 baseline 추정값 (~1,798μs)에서 비롯된 artifact**. 실측 CSV 단일 출처 (`results/pca10056/MLP/128_20260520-093645.csv` = 7,367μs) 재확인 후 정정:
+- R37 M4 단독 "clock-norm 0.27× 미달 / 7번째 negative finding" → **0.99× ≈ 1.00× 정상** (positive 정정, negative 등재 취소)
+- R36 M7 baseline "clock-norm 0.43× 미달 / DTCM 미배치 본질 분리 R37 후속" → **1.76× 빠름** (Cortex-M7 IPC gain 1.78× 카탈로그 매칭)
+
+| 함정 | 회피 |
+|---|---|
+| baseline 박제 시 정확한 단일 출처 (실측 CSV) 대신 **추정값** 사용 → derivative 박제 모두 artifact (가설 검증·결단 trigger·negative finding 모두 영향) | baseline 박제 시 **단일 출처 (실측 CSV 파일 경로)** 명시 + 다른 박제와 비율 검증 시 같은 단일 출처 참조 |
+| **비정상치** 발견 시 (Cortex-M4F 240MHz가 64MHz와 effective 동급은 카탈로그상 불가능) 그냥 박제 | 카탈로그 IPC 일관성 + 실측 baseline 재확인 + 펌웨어 진단 INFO emit (sys_clock + HAL_RCC + __OPTIMIZE_SIZE__) 추가 |
+
+**일반화 원칙**: 박제 정확성 확보 = **단일 출처 (실측 CSV) 기반 박제 + 카탈로그 IPC 일관성 검증 + 사용자 challenge trigger 응답 SOP**. 다른 보드 measurement (Nordic / ESP32 / Linux PC / 다른 STM32 family) baseline 박제 시 동일 패턴.
+
+→ thought [[2026-05-28_R36-R37-baseline-artifact-paired-check-fix]] + entity [[stm32h745-disco]] § 5/28 정정 cascade + [[build-gotcha-inventory]] § 자가 진단 정정 사이클 3번째 사례.
+
+## 2026-05-28 — STM-15 INFO emit 위치 cache 영향 (측정 진단 코드 위치 효과) ⭐⭐
+
+R36 paired-check 발견. printk + HAL_RCC peripheral access **위치**가 측정 결과 24% 영향:
+
+| ID | 함정 | 회피 |
+|:-:|---|---|
+| **STM-15** ⭐⭐ | INFO emit (printk + HAL_RCC peripheral access) `model_run_bench` **전** 배치 시 I-cache layout 변동 + RCC register access first-trial cache cold → latency_avg 24%↑ (557→692μs) + p99 2.6×↑ (7400→19500μs). 5회 range 0 = 결정론적 build/cache 효과 (측정 잡음 아님) | INFO emit은 `model_run_bench` **후** 배치 (CSV 출력 후 DONE 전). 측정 직전 cache state 유지 |
+
+**carrier 자산 (모든 보드 carry-over 가치)**: 본 vault 모든 보드 measurement 일관성 표준. Nordic / ESP32 / Linux PC / 다른 STM32 family 측정 시 동일 패턴 적용 (printk emit 위치 검증 SOP 필수). → entity [[build-gotcha-inventory]] § STM-15.
+
+## 2026-05-28 — vendor 광고 cross-check 누락 위험 (영업 카피 49건 정정) ⭐⭐⭐
+
+04_종합_비교_해설 23 § 전체 검토 시 영업 카피 stale 박제 다수 발견 (LiteRT rebrand 미반영 / Jetson Super 가격 인하 미반영 / stm32h745 메모리 spec 오류 / Exynos 980 process node 오류 / 한국마사회 = 농업 무관 등). 본 vault 박제 다수 출처 = vendor 광고 / wiki / 추정 → **5/28 검토 시 cross-check 필수**.
+
+| 함정 | 회피 |
+|---|---|
+| 영업 카피 박제 시 vendor 공식 datasheet **단일 출처 확인 없이** 박제 → vendor 광고 stale + wiki / 추정 출처 잔존 위험 | 영업 카피 박제 시 **5단계 cross-check 의무화** (vendor 공식 datasheet + 5/28 web search + master 박제 + 본 vault 측정 자산 + 외부 추정 시 † footnote) |
+| **본 vault 미측정 외부 추정** (TinyML 6 case 모델 크기 등) 박제 시 출처 명시 없음 → 영업 시 신뢰성 손상 | 외부 추정 박제 시 **† footnote 필수**: "본 vault 미측정, 외부 X 표준 자료 추정. 실제 model architect별 ±2×~5× 범위" |
+
+→ thought [[2026-05-28_본vault-영업카피-신뢰성-강화]] + entity [[ai-fanstick]] § 영업 카피 직결 정정 + [[uttec-stage-package]] § vendor 광고 cross-check 5단계 정책.
 
 ## 2026-05-27 — 외부 시스템 ID 단조 증가 가정 함정 (위시캣 #155421 누락) ⭐⭐
 

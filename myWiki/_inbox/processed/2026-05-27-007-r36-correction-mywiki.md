@@ -14,8 +14,10 @@ related:
   - myWiki/second-brain/entities/onDevice-ai.md (Wave 14 § 정정)
   - myWiki/second-brain/entities/build-gotcha-inventory.md (STM-15 추가, STM 14건 → 15건)
   - myWiki/second-brain/thoughts/2026-Q2/2026-05-27_Cortex-M-tier-최강-AI-노드.md (M7 baseline 정정)
-status: pending
+status: done
 ack_required: true
+absorbed: 2026-05-28T08:00
+absorbed_note: 5단계 lifecycle 완료 — entity stm32h745-disco baseline 1.76× 정정 + build-gotcha-inventory STM-15 신규 함정 + onDevice-ai 박제 정확성 일관성 / thought 정정 + 신설 (R36/R37 정정 cascade 통합) / gaps § STM-15 INFO emit 위치 cache 영향 / 누적 빌드 함정 47 → 50건 (STM 12 → 15)
 ---
 
 # Wave 14 정정 — R36 M7 baseline 박제 정정 + 새 함정 STM-15 (INFO emit cache 영향)

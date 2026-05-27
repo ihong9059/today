@@ -16,8 +16,10 @@ related:
   - myWiki/second-brain/entities/ai-fanstick.md (Cortex-M tier 영업 가이드 정정 — M4 단독 가치 미달 메시지 제거)
   - myWiki/second-brain/ai-direction.md (결정 14 정정 — 7번째 negative 등재 취소)
   - myWiki/second-brain/thoughts/2026-Q2/2026-05-27_Cortex-M-tier-최강-AI-노드.md (M4 negative finding 박제 정정)
-status: pending
+status: done
 ack_required: true
+absorbed: 2026-05-28T08:00
+absorbed_note: 5단계 lifecycle 완료 — entity stm32h745-disco + onDevice-ai + ai-fanstick / thought 2026-05-27_Cortex-M-tier-최강-AI-노드 정정 + 2026-05-28_R36-R37-baseline-artifact-paired-check-fix 신설 / gaps § baseline 추정값 cross-check 부재 / ai-direction 결정 16/17/18 (박제 정확성 SOP + vendor cross-check 5단계 + 사용자 challenge trigger 가치) / build-gotcha-inventory § 자가 진단 정정 3번째 사례
 ---
 
 # Wave 15 정정 — R37 M4 단독 finding 정정 (옛 negative artifact, 실측 검증 후 positive)

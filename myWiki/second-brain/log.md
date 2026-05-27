@@ -2,7 +2,106 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-27 (외주(도급) 필터 v3 cascade — wishket-claude #002 in_reply_to #001 흡수 + #155421 1.5억 외주 누락 사고 박제 + ID 단조 증가 가정 거짓 / Wave 14 흡수 R36 + mandate v2.9 종결 + 6/6 mandate 모두 종결)
+updated: 2026-05-28 (megasession 7장 흡수 — ondevice R37 정정 cascade + R36 paired-check + 04_종합비교 23§ + 영업카피 cascade + revita ingest #10/#11 / 박제 정확성 SOP + vendor 광고 cross-check 5단계 정책 + IQC 자동화 인프라 thought 신설 / 누적 빌드 함정 47 → 50건 / negative finding 6건 유지 R37 제외 / broker revita 라우팅 path 정정)
+---
+
+## [2026-05-28] absorb ⭐⭐⭐ | megasession 7장 흡수 — ondevice 5장 (R37 정정 cascade + R36 paired-check + 04_종합비교 23§ + 영업카피) + revita 2장 (ingest #10/#11)
+
+**사건**: 5/27 자정 이후 multi-agent _inbox/pending 7장 누적 (≥ 5 정책 강제 권고) → 5/28 megasession 흡수. 5단계 lifecycle 모두 완료 + 회신 카드 2건 (ondevice + revita) 발신 + broker revita 라우팅 path stale 정정.
+
+### A. ondevice R37 정정 cascade (#003 supersede + #005 R37 correction + #007 R36 paired-check 3장 통합)
+
+**핵심 정정**:
+- R37 M4 단독 — 옛 "clock-norm 0.27× / 7번째 negative finding" 박제 = pca10056 baseline 추정값 (~1,798μs) artifact. 실측 CSV 7,367μs 기반 재계산 시 **clock-norm 0.99× = 정상 클럭 비례** (M4 240MHz 활용 정확). negative finding 등재 취소, M4 positive 박제
+- R36 M7 baseline — paired-check: 옛 "0.43× 미달" artifact 정정 → **1.76× 빠름** (Cortex-M7 IPC gain 1.78× 카탈로그 매칭, dual-issue + L1 cache + ART)
+- STM-15 ⭐⭐ 새 함정 발견 — INFO emit (printk + HAL_RCC) 위치 `model_run_bench` 전 배치 시 latency_avg 24%↑ + p99 2.6×↑ (5회 range 0 = 결정론적 build/cache 효과). carrier 자산 = 모든 보드 measurement 일관성 표준
+- STM 함정 누적 12 → **15건** (STM-13 dual-core boot + STM-14 M4 console UART + STM-15 INFO emit cache) → 누적 cross-vendor 빌드 함정 47 → **50건**
+- negative finding **6건 유지** (R37 제외)
+
+**박제 cascade**:
+- entity stm32h745-disco § "2026-05-28 R37 정정 cascade 흡수" 신설 (M4 0.99× + M7 1.76× + STM-15 + asymmetric multiprocessing path + R&D 신뢰성 자산 강화)
+- entity build-gotcha-inventory STM-13/14/15 행 추가 + 자가 진단 정정 사이클 3번째 사례 (search G 패치 + 함정 #14 v3 + R37/R36) 박제
+- entity onDevice-ai 상단 quote 박스 추가
+- thought 2026-05-27_Cortex-M-tier-최강-AI-노드 § "5/28 정정 박제" 추가
+- thought **2026-05-28_R36-R37-baseline-artifact-paired-check-fix 신설** (meta finding + 3축 일반화 원칙 + 자가 진단 정정 사이클 3번째 사례)
+- gaps § "baseline 추정값 cross-check 부재 함정" + § "STM-15 INFO emit 위치 cache 영향" 2건 신설
+- ai-direction 결정 16 (박제 정확성 SOP) + 결정 18 (사용자 challenge = 정정 trigger 가치)
+
+**의미**: 자가 진단 정정 사이클 3번째 사례 박제 = governance 신뢰성 vault carrier. 사용자 challenge ("M4 속도가 지금 최선인가?")가 정정 trigger.
+
+### B. ondevice 04_종합_비교_해설 23§ 검토 흡수 (#2026-05-28-001)
+
+**핵심 정정 49건 (영업 카피 직결)**:
+- **LiteRT for Microcontrollers** (Google 2024-09 rebrand, 옛 TFLM 명명)
+- **Jetson Orin Nano Super $249 / 67 TOPS** (NVIDIA 2024-12, 옛 $499 / 40 TOPS) — rpi5+Hailo vs Orin Super = 1.66× 차이만 (3.3× 아님, 영업 결정타 정정)
+- **Jetson AGX Thor $3,499 / 2,070 FP4 TFLOPS** (NEW 2025, humanoid robot 최강) — 본 vault 미박제 추가
+- **stm32h745 메모리 정정**: QSPI 16MB → 64MB / SDRAM 16MB → 8MB / RAM 총합 9.04MB ≈ 9.2 라운드
+- **Exynos 980** 5nm → **8nm LPP** (Samsung 공식 datasheet)
+- **한국마사회 IoT** (horse racing 기관, 농업 무관) → **농촌진흥청** 정정
+- **esp32s3 PSRAM** = in-package PSRAM 8MB Octal @ 80MHz (T3 tier SLM 1~5M params) — stm32h745 (T4 tier SLM 50~60MB) 별도 path 분리
+- **Stage 4 시나리오 C nRF52840 우선** (pca10056 실측 ✅) / nRF52833 = spec 추정 (미측정) 분리
+- **R35 한국어 KWS carry 표현 정확화**: personalization 속도 100% / 정확도 50% 강도 / 8번째 negative finding 추가 (한국어 KWS = capacity 보강 무효)
+
+**박제 cascade**:
+- entity onDevice-ai 상단 quote 박스 추가 (04_종합비교 23§ 검토 + 49건 정정 핵심)
+- entity ai-fanstick § "영업 카피 직결 정정" + § "vendor 광고 cross-check 정책 강화 5/28" 신설
+- entity uttec-stage-package § "Stage 4 시나리오 정정 + vendor 광고 cross-check 5단계 정책" 신설
+- thought **2026-05-28_본vault-영업카피-신뢰성-강화 신설** (49건 정정 + 검토 단위 = 파일 패턴 + † footnote 표준 + 5채널 매칭)
+- gaps § "vendor 광고 cross-check 누락 위험" 신설
+- ai-direction 결정 17 (vendor 광고 cross-check 5단계 정책)
+
+### C. ondevice 영업카피 cascade → uttec-vault routing (#2026-05-28-002) — mywiki routing hub 처리
+
+- mywiki 측 영업카피 정정 흡수 완료 (#6와 같은 megasession에서 entity 정정 박제)
+- **uttec-vault 측 cascade 보류** — broker 라우팅 미정의 + uttec-vault 본 PC 부재 (Mac 측). 다음 cascade 가능 시점 (broker uttec-vault scp 라우팅 정의 또는 사용자 uttecMac 직접 scp) 재시도
+
+### D. revita ingest #10 + #11 흡수 (#005 + #006 2장 통합)
+
+**ingest #10 (5/22 commit `56b6f051`)**:
+- 신규 entity link_v2_test_tower — link_v2 DUT 시험용 LoRa 게이트웨이 + Host FastAPI Web/CLI
+- 갱신: entity-link-v2 / entity-solar-monitoring / entity-module-lifecycle / entity-tower (Tower 펌웨어 정본 채택 + 두 하향 경로 동일 규약)
+
+**ingest #11 (5/22~27, commit `a5e3ea22` + `1693ab13` + `0da632f2`)**:
+- 신규 entity kc_cert_link_v2 + kc_cert_tower — KC 인증 통합 트랙 (3단 구조 + Flask Web :5010 + AUTO 모드 자동 진입)
+- tower_DK deprecated (디렉토리 완전 제거, KCT_CMD_SBC_ACTIVE 명령으로 흡수)
+
+**4축 패턴 박제 (thought 신설)**:
+- 축 1: DUT 다중 + 브리지 단일 (kc_cert_link_v2/bridge_app 하나로 링크 + 타워 시험)
+- 축 2: 양산 IQC 자동화 인프라 (Flask Web :5010 + AUTO 모드 + 빌드 프로파일 3종)
+- 축 3: 두 하향 경로 (LoRa + LTE/MQTT) 동일 `bool` 규약
+- 축 4: BLE pairing 표준 L2 + user 토글
+
+**박제 cascade**:
+- entity revita § "2026-05-28 ingest #10 + #11 흡수" 신설 (신규 3건 + 갱신 5건 + 사업 가치 5채널 매칭)
+- thought **2026-05-27_revita-IQC-자동화-인프라 신설** (4축 패턴 + KC 인증 후속 시험 트랙 분리 + tower_DK deprecated 단순화 가치 + multi-agent 5건 매칭)
+
+**사업 가치 5채널 매칭**: uttechome (제품 신뢰도) / 위시캣 (펌웨어 품질) / 한림용인CC (IQC 확장) / shield-claude (RPi 자동화) / n8n-claude (다중 path 자동화).
+
+### E. broker revita 라우팅 path stale 정정
+
+push-multi-agent-pending.py:
+- 옛 stale: `C:/todo/revitaProject/orgRevita/_inbox/pending` (5/24 이전 revita 구조)
+- 정정: `C:/todo/revitaProject/_inbox/pending`
+
+→ broker 양방향 자동화 정합성 유지.
+
+### F. 후처리 완료
+
+- 7장 _inbox/pending/ → processed/ 이동 + frontmatter status: pending → done flip
+- 회신 카드 2건 outbox-staging 신설:
+  - ondevice-claude megasession ack (5장 통합) — broker 자동 push 성공
+  - revita-claude #10 + #11 absorbed ack — broker path stale 발견 후 직접 push + sent-archived/ 이동
+- broker push-multi-agent-pending.py 라우팅 정정 (revita)
+
+### G. 메가세션 핵심 carry
+
+- ⭐⭐⭐ **자가 진단 정정 사이클 3번째 사례** = governance 신뢰성 vault carrier (search G + 함정 #14 v3 + R37/R36)
+- ⭐⭐ **박제 정확성 SOP** = baseline 단일 출처 (실측 CSV) 기반 의무화 (모든 vault carry)
+- ⭐⭐ **vendor 광고 cross-check 5단계 정책** = 영업 카피 신뢰성 강화 (다른 vault carry)
+- ⭐⭐ **revita IQC 자동화 4축 패턴** = uttechome + 위시캣 + 한림용인CC + shield + n8n 5채널 매칭
+- ⭐ **사용자 challenge = 정정 trigger 가치** = R&D 신뢰성 governance 모범
+- ⭐ **검토 단위 = 파일 패턴** = 단일 거대 파일 → § 분리 효율 carry
+
 ---
 
 ## [2026-05-27] absorb ⭐⭐ | wishket-claude #2026-05-27-002 외주(도급) 필터 v3 cascade (in_reply_to #001)

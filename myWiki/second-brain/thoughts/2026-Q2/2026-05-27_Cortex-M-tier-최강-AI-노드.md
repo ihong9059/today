@@ -2,9 +2,22 @@
 title: Cortex-M tier 최강 AI 노드 — stm32h745 + CMSIS-NN 17.58×의 본질
 type: thought
 created: 2026-05-27
-updated: 2026-05-27
-tags: [thought, Cortex-M, Cortex-M7, STM32H745, CMSIS-NN, AI-가속, 클럭, DSP-intrinsics, L1-cache, SLM-적재, mandate-v2.9-종결, 6mandate-모두종결]
-links: [onDevice-ai, ai-fanstick, uttec-stage-package, stm32h745-disco, ai-direction, build-gotcha-inventory, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_application별-SoC-결정-Hybrid-SoC]
+updated: 2026-05-28 (R37/R36 paired-check 정정 반영 — M7 baseline IPC 1.76× 정정 박제 + asymmetric multiprocessing path 추가)
+tags: [thought, Cortex-M, Cortex-M7, STM32H745, CMSIS-NN, AI-가속, 클럭, DSP-intrinsics, L1-cache, SLM-적재, mandate-v2.9-종결, 6mandate-모두종결, baseline-IPC-1.76x, asymmetric-multiprocessing, R37-정정사이클]
+links: [onDevice-ai, ai-fanstick, uttec-stage-package, stm32h745-disco, ai-direction, build-gotcha-inventory, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix]
+---
+
+## 2026-05-28 정정 박제 (R37/R36 paired-check 흡수)
+
+본 thought 작성 시점 (5/27) 박제 "M7 baseline IPC 우위" 표 항목은 정성적 표현이었음. 5/27~28 R37 정정 cascade로 정량 박제 추가:
+
+- **M7 baseline vs pca10056 = 1.76× 빠름** (실측 7,367μs / (557μs × 7.5 클럭비) = 1.76×). 옛 박제 "0.43× 미달" artifact 정정. **Cortex-M7 IPC gain 1.78× 카탈로그 정확 매칭** (dual-issue 1.4× + L1 cache 1.2× + ART 1.05~1.1×).
+- **R37 M4 단독 positive 정정** — clock-norm 0.99× = 정상 클럭 비례 (M4 240MHz 활용 정확). negative finding 등재 취소.
+- **asymmetric multiprocessing path 확정** — H745 진가 = M7 AI inference + M4 sensor/control 동시 운영. 단일 칩에 R34 Hybrid SoC carrier 실현 (R28 KWS frontend + R25 personalization backend) = Stage 4 시나리오 E 정량 강화.
+- **STM-15 carrier 자산 박제** — INFO emit cache 영향 24% 발견. 본 vault 모든 보드 measurement 일관성 표준 (printk emit 위치 검증 필수).
+
+→ 본 vault baseline 박제 정확성 일관성 확보. CMSIS-NN 17.58× 결정타 영업 메시지 변경 없음. 자세히 [[2026-05-28_R36-R37-baseline-artifact-paired-check-fix]].
+
 ---
 
 # Cortex-M tier 최강 AI 노드 — stm32h745 + CMSIS-NN 17.58×의 본질

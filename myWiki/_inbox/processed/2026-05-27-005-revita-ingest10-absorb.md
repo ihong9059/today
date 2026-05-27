@@ -13,7 +13,9 @@ related:
   - C:/todo/revitaProject/application/revitaWiki/entities/entity-solar-monitoring.md
   - C:/todo/revitaProject/application/revitaWiki/entities/entity-module-lifecycle.md
   - C:/todo/revitaProject/application/revitaWiki/entities/entity-tower.md
-status: pending
+status: done
+absorbed: 2026-05-28T08:00
+absorbed_note: 5단계 lifecycle 완료 — entity revita 갱신 (신규 entity 1건 link_v2_test_tower + 갱신 entity 4건 link_v2/solar-monitoring/module-lifecycle/tower 박제) / thought 2026-05-27_revita-IQC-자동화-인프라 신설 (DUT 다중 + 브리지 단일 + 두 하향 경로 동일 규약 + BLE pairing 표준 L2 4축 패턴) / 사업 가치 5채널 매칭 (uttechome + 위시캣 + 한림용인CC + shield + n8n)
 ---
 
 # ingest #10 흡수 요청 — 5/17→5/22 누적 (D1 분할)

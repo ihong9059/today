@@ -11,7 +11,9 @@ related:
   - C:/todo/revitaProject/application/revitaWiki/entities/entity-kc-cert-link-v2.md
   - C:/todo/revitaProject/application/revitaWiki/entities/entity-kc-cert-tower.md
   - C:/todo/revitaProject/application/revitaWiki/entities/entity-tower-dk.md (deprecated)
-status: pending
+status: done
+absorbed: 2026-05-28T08:00
+absorbed_note: 5단계 lifecycle 완료 — entity revita 갱신 (신규 entity 2건 kc_cert_link_v2 + kc_cert_tower 박제 + 갱신 entity 3건 tower-dk deprecated + link_v2_test_tower + tower 박제) / thought 2026-05-27_revita-IQC-자동화-인프라에 KC 인증 통합 트랙 분리 + DUT 다중 + 브리지 단일 패턴 흡수 / tower_DK deprecated 단순화 가치 박제
 ---
 
 # ingest #11 흡수 요청 — 5/22→5/27 후속 (KC 인증 통합 트랙)

@@ -2,11 +2,35 @@
 title: onDevice_AI vault — AI FanStick + Stage 4 + 보드한계모델
 type: entity
 created: 2026-05-07
-updated: 2026-05-27 Wave 14 흡수 (R36 ✅ + mandate v2.9 종결 + 본 vault 6/6 mandate 모두 종결 — STM32H745 CMSIS-NN CNN 17.58× = Cortex-M tier 최강 + 메모리 4-tier 정정 RW 9.2MB / Flash XIP 65MB / SLM 50~60MB 적재 가능)
-status: ✅ 1차 mandate 전환 완료 (5/17) / **v2.5 7/7 + v2.6 4/4 + v2.7 4/4 + v2.8 6/6 + v2.9 R36 ✅ = 6/6 mandate 모두 종결** (5/27 R36 mandate v2.9 종결) / **14/14 보드 100% 완성** / 5계열 AI 가속 매트릭스 완성 + ARM tier 행 확장 (M4F 64MHz → M7 480MHz 7.5× 클럭 + CNN 17.58× ⭐) / on-device 학습 4번째 축 / **응용 진입 직전 마지막 측정 mandate 완성** — 사용자 결단 (b 영업 데모 진입 / c 양산 진입)
-tags: [vault, On-Device AI, 보드한계모델, AI FanStick, ESP32-S3, ESP-DSP, ESP32-C6, RISC-V, Xtensa, ARM, ARM-A, NEON, dotprod, Cortex-M4F, Cortex-M7, CMSIS-NN, Nordic, STM32, STM32H745, Zephyr-cross-vendor, Stage4, LAN-path, 정지선, multi-agent, ondevice-claude, mandate-v2.5-종결, mandate-v2.6-종결, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, 6mandate-모두종결, 17x-가속, SLM-적재, LoRA, fast-adam, KWS, selective-personalization, Hybrid-SoC, 5계열매트릭스완성, 7-negative-finding, 6조건곱, 47빌드함정, vectorizer-정책, Cortex-M-tier-최강]
-links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, build-gotcha-inventory, stm32h745-disco, 2026-05-08_응원봉-온디바이스AI-정지선, revita, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_selective-personalization-pattern, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드]
+updated: 2026-05-28 R37 정정 cascade + 04_종합비교_해설 흡수 (R37 M4 positive 0.99× / R36 baseline IPC 1.76× 정정 / STM-15 신규 함정 / negative 6건 유지 / 04_종합_비교_해설 폴더 23§ 검토 + 49건 정정 — LiteRT rebrand / Jetson Super $249 / stm32h745 SDRAM 8MB·QSPI 64MB / Exynos 8nm / nRF52840 우선)
+status: ✅ 1차 mandate 전환 완료 (5/17) / **v2.5 7/7 + v2.6 4/4 + v2.7 4/4 + v2.8 6/6 + v2.9 R36 ✅ = 6/6 mandate 모두 종결** (5/27 R36 mandate v2.9 종결) / **R37 후속 ✅ (M4 단독 positive + 정정 사이클 박제)** (5/28 정정 cascade 흡수) / **14/14 보드 100% 완성** / 5계열 AI 가속 매트릭스 완성 + ARM tier 행 확장 + R37 15번째 행 (M4 single-core positive) / on-device 학습 4번째 축 / **응용 진입 직전 마지막 측정 mandate 완성** + R37 정정 사이클 박제 = R&D 신뢰성 자산 강화 — 사용자 결단 (b 영업 데모 진입 / c 양산 진입)
+tags: [vault, On-Device AI, 보드한계모델, AI FanStick, ESP32-S3, ESP-DSP, ESP32-C6, RISC-V, Xtensa, ARM, ARM-A, NEON, dotprod, Cortex-M4F, Cortex-M7, CMSIS-NN, Nordic, STM32, STM32H745, Zephyr-cross-vendor, Stage4, LAN-path, 정지선, multi-agent, ondevice-claude, mandate-v2.5-종결, mandate-v2.6-종결, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, 6mandate-모두종결, R37-positive, R37-정정사이클, baseline-artifact-정정, STM-15-INFO-emit-cache, 17x-가속, SLM-적재, LoRA, fast-adam, KWS, selective-personalization, Hybrid-SoC, 5계열매트릭스완성, 6-negative-finding, 6조건곱, 50빌드함정, vectorizer-정책, Cortex-M-tier-최강, LiteRT, Jetson-Super, asymmetric-multiprocessing]
+links: [ai-fanstick, uttec-stage-package, On-Device AI, claude-code, build-gotcha-inventory, stm32h745-disco, 2026-05-08_응원봉-온디바이스AI-정지선, revita, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_selective-personalization-pattern, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
 ---
+
+> **2026-05-28 R37 정정 cascade 흡수 ⭐⭐⭐** (ondevice-claude 카드 #2026-05-27-003 supersede + #2026-05-27-005 R37 correction + #2026-05-27-007 R36 paired-check):
+> **R37 M4 단독 positive 정정** — 5/27 14:00 첫 발신 "M4 clock-norm 0.27× / 7번째 negative" → 옛 pca10056 baseline 추정 (~1,798μs) artifact. 실측 7,367μs 재확인 → **clock-norm 0.99× ≈ 1.00× 정상** + M7 same-chip IPC gain 1.78× 카탈로그 매칭 (dual-issue 1.4× + L1 cache 1.2× + ART 1.05~1.1×). **negative finding 등재 취소 → positive로 분류**.
+> **R36 M7 baseline 정정** — paired-check: M7 vs pca10056 = 7,367 / (557 × 7.5) = **1.76× 빠름** (옛 "0.43× 미달" artifact 정정). 측정값 자체 (557μs / 5회 range 0) 정확. CMSIS-NN CNN 17.58× 결정타 변경 없음.
+> **STM-15 새 함정** ⭐⭐ — INFO emit (printk + HAL_RCC) 위치가 cache state 영향: `model_run_bench` 전 배치 시 latency_avg 24%↑ (557→692μs) + p99 2.6×↑ (7400→19500μs). 5회 range 0 = 결정론적 build/cache 효과. carrier 표준: 모든 보드 measurement 일관성 표준 (printk emit 위치 검증 필수).
+> **negative finding 6건 유지** — R19/R24/R27/R29/R30/R32 (R37 제외). 본 vault 박제 정확성 일관성 확보.
+> **STM 함정 누적 12 → 15건** (STM-13 dual-core boot + STM-14 M4 console UART + STM-15 INFO emit cache). cross-vendor 50건 (Espressif 16 + Nordic 18 + NDK 1 + STM32 15).
+> **R37 정정 사이클 자체 = R&D 신뢰성 자산 강화** — 사용자 challenge ("M4 속도가 지금 최선인가?") → 펌웨어 INFO emit 진단 4행 추가 → 실측 검증 → 옛 박제 artifact 정정. 자가 진단 정정 사이클 3번째 사례 (search G 패치 + 함정 #14 v3 + R37/R36 baseline). governance 신뢰성 패턴 carrier.
+
+> **2026-05-28 04_종합_비교_해설 23§ 검토 흡수 ⭐⭐⭐** (ondevice-claude #2026-05-28-001):
+> **검토 단위 = 파일 패턴 박제** — 옛 단일 4,454 line `04_종합_비교_해설.md` → 23 § 파일 + README + _archive 폴더 분리. 사용자 검토 frame 개선 trigger. 자율 검토 frame 박제 (axis A-F: 보드 식별 / 비즈니스 위치 / 가능 vs 불가능 / 영업 카피 / R&D detail / 한 문장 결론). 거대 단일 파일 검토/git diff/cherry-pick 부담 → 보드/항목별 분리 효율 영구 carry.
+> **영업 카피 49건 정정 (vendor 광고 cross-check 누락 위험 박제)**:
+> - **LiteRT rebrand** — TFLM → LiteRT for Microcontrollers (Google 2024-09 공식)
+> - **Jetson Orin Nano Super $249 / 67 TOPS** (옛 $499 / 40 TOPS, NVIDIA 2024-12 가격 인하). rpi5+Hailo $150 vs Orin Super = 1.66× 차이만 (3.3× 아님, 영업 결정타 정정)
+> - **Jetson AGX Thor $3,499 / 2,070 FP4 TFLOPS** (NEW 2025, humanoid robot 최강) — 본 vault 미박제 → 추가
+> - **stm32h745 메모리 정정**: QSPI Flash ~~16MB~~ → **64MB** (Macronix MX25LM51245G) / SDRAM ~~16MB~~ → **8MB** (IS42S16400J) / RAM 총합 9.04MB ≈ 9.2MB 라운드 (DTCM 128 + ITCM 64 + AXI 512 + SRAM1-3 288 + SRAM4 64 + Backup 4 + SDRAM 8MB)
+> - **Exynos 980** ~~5nm~~ → **8nm LPP** (Samsung 공식 datasheet)
+> - **한국마사회 IoT** (horse racing 기관, 농업 무관) → **농촌진흥청** 정정
+> - **esp32s3 PSRAM 정확화**: in-package PSRAM 8MB Octal @ 80MHz (T3 tier SLM 1~5M params) — stm32h745 (T4 tier SLM 50~60MB Q4) 별도 path 분리
+> - **Stage 4 시나리오 C nRF52840 우선** (pca10056 본 vault 실측 ✅) / nRF52833 = spec 추정 중간 후보 (본 vault 미측정) 분리
+> - **R35 한국어 KWS carry 표현 정확화**: personalization 속도 100% carry / 정확도 개선 50% 강도 (R26 영어 +11.4% → R35 한국어 +5.38%) / 8번째 negative finding "한국어 KWS는 capacity 보강 무효"
+> **신규 gotcha 박제**: 영업 카피 박제 시 vendor 공식 datasheet / web search / master cross-check 의무화. vendor 광고 / wiki / 추정 출처는 사실 오류 잔존 위험.
+> **결정 신설**: 본 vault Round 1~37 누적 박제 → 모든 영업 카피 = 본 vault § 2-1 표 + § 3 비교 짝 표 + § 14-x Round 결론 cross-reference 필수. 영업 시 모호 카피 ("AI 가속 가능") 금지 → 정량 박제 ("Round X: 변수 Y → ratio Z×") 사용.
+> **자세히**: [[2026-05-28_본vault-영업카피-신뢰성-강화]] + [[ai-fanstick]] § 9 esp32s3 차세대 BOM + [[uttec-stage-package]] § Stage 4 시나리오 갱신.
 
 > **2026-05-27 Wave 14 흡수 ⭐⭐⭐** (5/26 #005 sweep 진입 통보 + 5/27-001 R36 + mandate v2.9 종결 카드 통합):
 > **R36 STM32H745 + CMSIS-NN 정량** — MLP 128 2.05× / **CNN 32 17.7×** ⭐⭐⭐ / **CNN 64 17.58×** ⭐⭐⭐ (일관된 ~17.6×) / TF 64 1.36×. **Cortex-M tier 최강 = stm32h745 + CMSIS-NN** (M4F pca10056 14.02× 상회 25%). 5계열 매트릭스 ARM tier 행 확장: pca10056 (M4F 64MHz 256KB) → stm32h745 (M7 480MHz 9.2MB) = 7.5× 클럭 + RAM 36× + CNN 가속 25% 추가.

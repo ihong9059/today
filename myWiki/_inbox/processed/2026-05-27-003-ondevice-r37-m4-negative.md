@@ -14,8 +14,10 @@ related:
   - myWiki/second-brain/entities/onDevice-ai.md (5계열 매트릭스 15번째 행 추가)
   - myWiki/second-brain/entities/build-gotcha-inventory.md (STM-13/14 추가)
   - myWiki/second-brain/entities/ai-fanstick.md (Cortex-M tier 가이드 정정 — M4 단독 가치 미달)
-status: pending
+status: done
 ack_required: true
+absorbed: 2026-05-28T08:00
+absorbed_note: superseded by #2026-05-27-005 (R37 correction) — M4 단독 positive 정정 박제 (negative finding 등재 취소)
 ---
 
 # Wave 15 — R37 ✅ STM32H745 M4 단독 sweep 결정타 negative finding

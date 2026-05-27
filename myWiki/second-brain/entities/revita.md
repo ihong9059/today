@@ -2,15 +2,75 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-05-20 (rtuRemocon + tower_DK 흡수 — revita ingest #9, RS485 Modbus + RF 통합)
-tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어]
-links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조]
+updated: 2026-05-28 (revita ingest #10 + #11 흡수 — link_v2_test_tower LoRa 게이트웨이 신설 + Tower 펌웨어 정본 채택 + KC 인증 통합 트랙 kc_cert_link_v2 + kc_cert_tower 신규 + tower_DK deprecated)
+tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어, link_v2_test_tower, 회귀시험자동화, kc_cert_link_v2, kc_cert_tower, KC인증통합트랙, BLE-pairing-L2, DUT-다중-브리지-단일, IQC자동화, Flask-Web-5010, tower_DK-deprecated, 두-하향-경로-동일-규약, 펌웨어모듈-단일진실]
+links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조, 2026-05-27_revita-IQC-자동화-인프라]
 ---
 
 # REVITA
 
 ## 한 줄 정의
 IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**.
+
+## 2026-05-28 ingest #10 + #11 흡수 — LoRa 게이트웨이 신설 + KC 인증 통합 트랙 ⭐⭐⭐
+
+### 신규 entity (3건, revitaWiki 박제)
+
+#### `entity-link-v2-test-tower` (ingest #10, 5/22 commit `56b6f051`)
+
+- 위치: `zephyr_workspace/apps/system/link_v2_test_tower/` (30 파일 / +2,164줄)
+- 본질: link_v2 DUT 시험용 **LoRa 게이트웨이 타워** (RAK4631 + LoRa async RX + 상향 ACK + 하향 ACK 테이블 + NOTIFY decoder + Shell `gw` + Host FastAPI Web/CLI)
+- 사양: 922 MHz / SF7 / BW 125 kHz / CR 4/5 / 14 dBm / 16B PDU (link_v2와 동일)
+- node_id: gw 0x0001, dev 0x001F. ACK 테이블 16 slot · 2s timeout · retry 3
+- Host: FastAPI Web (REST API v1) + tower_cli.py + uart_bridge.py (UART 단일 점유)
+- 하드웨어: J-Link S/N 683449679, UART `/dev/ttyUSB1`
+- **사업 가치**: 회귀 시험 자동화 (1분) + 수입검사 JIG + n8n cron 통합 + 위시캣 사례연구 (펌웨어 품질 트랙)
+
+#### `entity-kc-cert-link-v2` (ingest #11, commit `a5e3ea22`)
+
+- 위치: `apps/kc_cert_link_v2/` (23 파일 / +3,500줄)
+- 본질: KC 인증 통합 링크 v2 — 3단 구조 (PC + bridge_app + link_app) + Flask Web :5010 + RS485 Modbus master + BLE pairing L2
+- **와이어 프로토콜 KC2** (`kc_lora2_proto.h`, 매직 0x4B 0x32, 7B 헤더 + 32B max payload + XOR checksum)
+- **AUTO 모드 자동 진입** (전원 인가 즉시) — X축 5초 교대 + 배터리/RS485/리프 주기 EVT
+- 다운링크 **최소만 처리** (AUTO + VALVE STOP만, 그 외 UNSUPPORTED — 안전 강화)
+- 빌드 프로파일 3종 (FULL / BLE_ONLY / RS485_ONLY)
+- 물리 버튼: 짧게 = AUTO 토글, 5초 = 딥슬립
+
+#### `entity-kc-cert-tower` (ingest #11, commit `1693ab13` + 후속)
+
+- 위치: `apps/system/kc_cert_tower/` (약 1,500줄)
+- **PC 브리지는 `kc_cert_link_v2/bridge_app` 공유** (KCT=KC2 와이어 동일) — DUT 다중 + 브리지 단일 패턴
+- 구현: LED / 부저 / 배터리(AIN7) / 진동(P1.04 + 50ms 디바운스) / **SBC active 명령(KCT_CMD_SBC_ACTIVE)** / 버튼 EVT
+- BLE pairing L2 (link_v2와 동일 코드 사본)
+- **tower_DK 흡수**: 기존 SBC 토글 단독 앱이 KCT_CMD_SBC_ACTIVE 명령으로 흡수됨 → tower_DK deprecated 2026-05-27 (-587줄, commit `0da632f2`)
+
+### 갱신 entity (revitaWiki 박제)
+
+- **`entity-link-v2`**: build.sh +168줄 신규 (standalone 빌드) + lora_byte_proto.h v2 ACK 게이트 inline 함수 + DM NOTIFY 상태 매크로 5종 + README +25줄
+- **`entity-solar-monitoring`**: 5/18 차트 Y축 + 10분 자동 새로고침 + 5/22 Current Y축 고정 + 시정수 40→80mA 변경 의도 박제 (변경 위치 미확정, 사용자 입력 대기 5/27)
+- **`entity-module-lifecycle`**: Tower 펌웨어 정본 채택 (`doc/revita_tower_firmware/01_모듈_공통구성.md` +321줄). Link 정본 동일 4 상태 + NVS `[5]` `session_lifecycle` + DM 경유 NVS API + CONFIG_* 라운드 + B안 커밋. 두 하향 경로 (LoRa+LTE/MQTT) 동일 `bool` 규약
+- **`entity-tower`**: 00_적용범위 +98줄 (펌웨어 단위 10개 + 외부 시스템 관계 + 트리거 분류 + 3계층 구성 블록) + 02_Device_Manager +304줄 (DM 시간 동기 게이트 + NVS 32B blob + *_force_session_off 명명 규약)
+- **`entity-tower-dk`**: deprecated 2026-05-27 (디렉토리 완전 제거, historical 보존 audit trail)
+
+### 사업 가치 후보 패턴 ⭐⭐ (myWiki 매칭)
+
+| 패턴 | revita 사례 | myWiki 매칭 |
+|---|---|---|
+| **DUT 다중 + 브리지 단일** | kc_cert_link_v2/bridge_app 하나로 링크 + 타워 시험 | shield-claude (RPi 자동화 DUT 다중) / n8n-claude (자동화 학습) |
+| **양산 IQC 자동화 인프라** ★★★ | link_v2_test_tower 회귀 시험 + Flask Web :5010 + AUTO 모드 자동 진입 | **uttechome 영업 자료 (제품 신뢰도 증빙) + 위시캣 사례연구 + 한림용인CC IQC 트랙 확장** |
+| **회귀 시험 자동화** | link_v2 빌드 → 1분 시험 → Web PASS/FAIL → CI 통합 | 위시캣 펌웨어 품질 영업 자산 + shield-claude RPi 하드웨어 자동화 |
+| **두 하향 경로 동일 규약** | LoRa + LTE/MQTT `bool` 규약 (Tower 펌웨어 정본) | n8n-claude (다중 경로 자동화) + shield-claude (RPi 다중 path) |
+| **BLE pairing 표준 L2 + user 토글** | link_v2 / kc_cert_tower 동일 코드 사본 | 양산 BLE 워크플로우 정본화 (n8n-claude 페어링 자동화) |
+| **KC 인증 후속 시험 트랙 분리** | 옛 kc_cert_link_app → kc_cert_link_v2 후속, 안전 강화 | uttechome (KC EMI fail 대응 후속 시험 자산화) |
+
+→ thought [[2026-05-27_revita-IQC-자동화-인프라]] (DUT 다중 + 브리지 단일 + IQC 자동화 풀스택 + KC 인증 통합 분리 패턴 박제).
+
+### intentionally skipped (#10 + #11 흡수 범위 외)
+
+- 작업보고서 5/18/5/20/5/22 (메타) — 사실은 entity로 흡수
+- `doc/revita_tower_firmware_old/` (+429줄 구버전 archive) — `ignore_paths` 추가
+- `ref/MeshCore` / `ref/meshtastic` submodule
+- `.claude/settings.local.json` 변경 — 5/24 cleanup 이전 별도 정책
 
 ## 현재 상태 (2026-05-15 갱신 — ingest #9 흡수 5/20)
 

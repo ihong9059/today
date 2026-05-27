@@ -2,9 +2,85 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-05-27 Wave 14 흡수 (R36 ✅ + mandate v2.9 종결 + 본 vault 6/6 mandate 모두 종결 — Cortex-M7 + CMSIS-NN CNN 17.58× = Cortex-M tier 최강 + 응용 진입 직전 마지막 측정 완료)
-tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, 6mandate-모두종결, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative, Cortex-M-tier-최강, 17x-CNN-가속, SLM-적재]
-links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드]
+updated: 2026-05-28 R37 정정 cascade + 04_종합비교 영업카피 흡수 (M4 단독 positive 정정 / Cortex-M tier 영업 가이드 정정 / LiteRT rebrand / Jetson Super $249 / stm32h745 SDRAM 8MB·QSPI 64MB / esp32s3 in-package PSRAM 8MB Octal @ 80MHz / Stage 4 시나리오 C nRF52840 우선 / 한국어 KWS personalization 100% carry / 정확도 50% 강도)
+tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, 6mandate-모두종결, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative, Cortex-M-tier-최강, 17x-CNN-가속, SLM-적재, R37-positive-정정, asymmetric-multiprocessing, LiteRT, Jetson-Super, 영업카피-신뢰성-강화]
+links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
+---
+
+## 2026-05-28 R37 정정 + 04_종합비교 영업카피 흡수 — Cortex-M tier 영업 가이드 정정 + 영업 카피 신뢰성 강화 ⭐⭐⭐
+
+### Cortex-M tier 영업 가이드 정정 (R37 M4 단독 positive 정정 흡수)
+
+옛 박제 ❌ (취소): "H745 M4 단독 권장 안 함 — effective ≈ pca10056 64MHz, BOM 더 비쌈"
+
+✅ 정정 메시지:
+- **H745 M4 단독도 정상** — pca10056 대비 3.71× 빠름 (240MHz 클럭 비례 정확)
+- **M7이 same-chip 3.56× 추가 우월** → AI 단독 워크로드는 **M7 우선** 권장
+- ⭐ **H745 진가 = M7 + M4 dual-core 동시 운영** (M7 AI inference + M4 sensor/control = **asymmetric multiprocessing**, 단일 칩에 R34 Hybrid SoC carrier 실현)
+- ⭐ M7 baseline IPC gain 1.78× = Cortex-M7 카탈로그 정상치 (dual-issue + L1 + ART) — Cortex-M tier 최강 영업 정확성 강화
+
+### 영업 카피 직결 정정 (04_종합비교_해설 49건 정정 중 영업 핵심)
+
+#### 1. 외부 toolchain / 가격 갱신 (vendor 공식 발표)
+
+| 영역 | 옛 박제 (영업 시 사용 금지) | 정정값 (5/28 영업 카피) |
+|---|---|---|
+| **TFLM 명명** | TensorFlow Lite Micro / TFLM | **LiteRT for Microcontrollers** (Google 2024-09 rebrand, https://ai.google.dev/edge/litert/microcontrollers/overview) |
+| **Jetson Orin Nano** | $499 / 40 TOPS @ INT8 | **$249 / 67 TOPS @ INT8** (NVIDIA 2024-12 Super, Llama 3.1 8B 적재 baseline) |
+| **Jetson AGX Orin 64GB** | $2,999 | **$2,499** |
+| **Jetson AGX Thor** (NEW 2025) | (미박제) | **$3,499 / 2,070 FP4 TFLOPS / Blackwell GPU / 128GB** (humanoid robot 최강) |
+| **rpi5 + Hailo HAT vs Orin Nano Super 비교** | 3.3× 가격 차이 ($150 vs $499) | **1.66× 가격 차이만** ($150 vs $249, 영업 결정타 정정) |
+| **pca10040 Dev kit** | ~$50 | **$51~58** (Mouser/eBay 5/28 확인) |
+
+#### 2. 본 vault 박제 정확화 (master cross-check)
+
+| 영역 | 옛 박제 | 정정값 (5/28) |
+|---|---|---|
+| **stm32h745 QSPI Flash** | 16MB | **64MB Macronix MX25LM51245G** (512 Mbit Octal SPI/Octal DDR) |
+| **stm32h745 SDRAM** | 16MB (sample c 주석 오류) | **8MB IS42S16400J** (ST UM2381 user manual + master 일치) |
+| **stm32h745 RAM 총합** | 9.2 MB (불변) | DTCM 128 + ITCM 64 + AXI 512 + SRAM1-3 288 + SRAM4 64 + Backup 4 + SDRAM 8MB = **9.04 MB ≈ 9.2 라운드** |
+| **Exynos 980** | 5nm | **8nm LPP** (Samsung 공식 datasheet) |
+| **esp32s3 PSRAM** | "외장 PSRAM" 또는 "단일 chip 최대 SLM" | **in-package PSRAM 8MB Octal @ 80MHz (T3 tier SLM 1~5M params)** — stm32h745 (T4 tier SLM 50~60MB Q4) 별도 path 분리 |
+
+#### 3. Stage 4 시나리오 권장 SoC 정정
+
+| 시나리오 | 옛 박제 (분리 부족) | 정정값 (5/28) |
+|---|---|---|
+| **시나리오 C** (M4F 단독 ~$5 BOM) | nRF52833 (128KB) 또는 nRF52840 (256KB) 둘 다 권장 | **nRF52840 (pca10056, 본 vault 실측 ✅) 우선 권장 / nRF52833 (128KB) = spec 추정 중간 후보 (본 vault 미측정)** 분리 |
+| **시나리오 D** (rpi5 + Hailo HAT) | $150 BOM | **$150 BOM 유지** — 단 Jetson Orin Nano Super $249 vs 1.66× 차이만 (대안 분석) |
+| **시나리오 E** ⭐ NEW (stm32h745 산업 노드) | $70 BOM (옛 박제) | **$70~150 BOM** (산업 + 케이스 + I/O 포함 ~$150 정확) |
+
+#### 4. R35 한국어 KWS carry 표현 영업 카피 정확화 ⭐⭐
+
+옛 단순 카피 ❌: "한국어 KWS 정확도 우월" — **사실 부정확**.
+
+정정:
+- **personalization 속도 carry 100%** (esp32s3 0.37초 = 영어/한국어 동일 알고리즘) ✅
+- **정확도 개선 carry 강도 50%** (R26 영어 K=5 +11.4% → R35 한국어 +5.38%)
+- **8번째 negative finding 추가**: 한국어 KWS는 capacity 보강 무효 (MLP 130K vs CNN 35K 4× 차이 동일 ceiling -0.3%p)
+- 영업 시 "personalization은 동작 / 정확도 carry는 50% 강도" 분리 박제 필수
+
+#### 5. § 9 esp32s3 차세대 BOM (K-POP 시장)
+
+- esp32s3 SLM + LoRA → **BOM $10 / retail $25~50** (K-POP 시장 정량 박제)
+- § 6 esp32c3 → esp32s3 Round 15 정량 근거: **+$1.5/대 × 5만 대 = +$75k 양산 BOM** (5/8 정지선 정정 근거)
+
+### 영업 카피 † footnote 표준 신설 (본 vault 미측정 명시)
+
+본 vault § 2~3 TinyML 6 case 매트릭스 (anomaly / gesture / fall / 환경 / 이미지 / CNN 등) — **본 vault 미측정 외부 추정**:
+- "anomaly ~10KB / gesture ~15KB / fall ~5KB" 등 모델 크기 박제 = TinyML Foundation / Edge Impulse / LiteRT 공식 example 기준 추정
+- **영업 시 † footnote 필수**: "본 vault 미측정, 외부 TinyML 표준 자료 추정. 실제 model architect별 ±2×~5× 범위"
+
+### vendor 광고 cross-check 정책 강화 5/28 ⭐⭐⭐
+
+- "vendor 광고 신뢰 X UTTEC 자체 측정 자산" 영업 메시지 강화
+- 본 vault Round 1~37 누적 박제 → 모든 영업 카피 = 본 vault § 2-1 표 + § 3 비교 짝 표 + § 14-x Round 결론 cross-reference 필수
+- 영업 시 모호 카피 ("AI 가속 가능") 금지 → 정량 박제 ("Round X: 변수 Y → ratio Z×") 사용 필수
+- **5계열 AI 가속 매트릭스** = 본 vault 영업 결정타 자산 (CMSIS-NN 14×/17.6× / ESP-DSP 13.4× / esp-nn 2.93× / NEON+dotprod 6.7× / NPU R19 negative)
+- **6 negative finding** (R19 NPU / R24 INT16 Adam / R27 FP16 / R29 Multi-layer LoRA / R28 TF / R32 64KB / R30 mobile clang dotprod) = R&D 신뢰성 영업 자산 — **R37 NEGATIVE에서 제외 ✅ (positive 정정)**
+
+자세히 [[2026-05-28_본vault-영업카피-신뢰성-강화]] + [[2026-05-28_R36-R37-baseline-artifact-paired-check-fix]].
+
 ---
 
 ## 2026-05-27 R35 한국어 KWS detail 흡수 — 영업 카피 정확성 박제 ⭐⭐⭐

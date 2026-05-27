@@ -2,9 +2,44 @@
 title: 빌드 함정 인벤토리 (cross-vendor 누적 박제)
 type: entity
 created: 2026-05-24
-updated: 2026-05-27 Wave 14 흡수 (R36 sweep race fix 패턴 + CNN 64 monitor 부족 진단 추가, STM32 12 그대로)
-tags: [빌드함정, debugging-자산, esp32s3, ESP-IDF, Nordic, Zephyr, CMSIS-NN, cmake, ninja, Windows-cmd, PowerShell, governance-신뢰성, 자기진단정정, 함정14-v3, NDK, clang, vectorizer, STM32, STM32H745, carry-over-효과, sweep-race-fix, monitor-시간계산]
-links: [onDevice-ai, ai-fanstick, uttec-stage-package, gaps, ai-direction, stm32h745-disco, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-27_Cortex-M-tier-최강-AI-노드]
+updated: 2026-05-28 R37/R36 정정 cascade 흡수 (STM-13 dual-core boot 시퀀스 + STM-14 M4 console UART + STM-15 INFO emit cache 영향 24% — STM 12 → 15건, 누적 47 → 50건)
+tags: [빌드함정, debugging-자산, esp32s3, ESP-IDF, Nordic, Zephyr, CMSIS-NN, cmake, ninja, Windows-cmd, PowerShell, governance-신뢰성, 자기진단정정, 함정14-v3, NDK, clang, vectorizer, STM32, STM32H745, carry-over-효과, sweep-race-fix, monitor-시간계산, dual-core-boot, M4-console-UART, INFO-emit-cache, baseline-artifact-정정, paired-check]
+links: [onDevice-ai, ai-fanstick, uttec-stage-package, gaps, ai-direction, stm32h745-disco, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix]
+---
+
+## 2026-05-28 R37/R36 정정 cascade 흡수 — STM-13/14/15 신규 함정 3건 + 자기 진단 정정 사이클 1건 ⭐⭐⭐
+
+### STM-13 ⭐⭐ — H745 dual-core boot 시퀀스
+
+- **원인**: Zephyr H7 SoC init (`soc_m7.c:53`)이 M7 init에서 BCM4 option byte 체크 후 M4 release 시퀀스 가정. M7 빈 상태 + M4 firmware만 flash → console 0 bytes (silent boot fail).
+- **우회**: M7 stub firmware (`boards/stm32_m7_stub_project/`) Bank 1 flash 필수. dual-core flash sequence: **mass erase → M7 stub flash → M4 cell flash**.
+- **carry-over**: 다른 H745 M4 측정 + 다른 dual-core Cortex-M family (H755 / H7Sx 등) 진입 시 동일 패턴.
+
+### STM-14 minor — M4 console UART
+
+- **원인**: M4 dts default `zephyr,console = &usart2`. H745I-DISCO USART2 외부 노출 미확인 → M4 측 console 미작동.
+- **우회**: M4 overlay에서 USART3 console redirect (PB10/PB11 ST-Link Virtual COM 활용).
+
+### STM-15 ⭐⭐ — INFO emit cache 영향 24% (carrier 자산)
+
+R36 paired-check 정정 시 발견 (5/27 16:30~17:00):
+
+- **원인**: INFO emit (printk + HAL_RCC peripheral access)을 `model_run_bench` **전**에 배치 시 I-cache layout 변동 + RCC register access → first-trial cache cold → **latency_avg 24% 증가** (557→692μs) + **p99 2.6× 증가** (7400→19500μs). 5회 측정 range 0 → 측정 잡음 아닌 결정론적 build/cache 효과.
+- **우회**: INFO emit은 `model_run_bench` 호출 **후** (CSV 출력 후 DONE 전)에 배치. 측정 직전 cache state를 진단 코드 없는 빌드와 동일하게 유지.
+- **carry-over**: 본 vault 모든 보드 measurement 일관성 표준. Nordic / ESP32 / Linux PC 측정 시 동일 패턴 (printk emit 위치 검증 필수).
+
+→ STM 함정 누적 12 → **15건**. 누적 cross-vendor 빌드 함정 47 → **50건** (Espressif 16 + Nordic 18 + NDK 1 + STM32 15).
+
+### 자기 진단 정정 사이클 3번째 사례 — R37 → R36 baseline artifact paired-check
+
+| 사례 | 가설 | 정정 | 의의 |
+|---|---|---|---|
+| search G 패치 (5/22) | Sonnet 모델 격하 | 프론트엔드 표시 버그 정정 | 자가 진단 fix |
+| 함정 #14 v3 (5/24) | Claude Code harness cwd reset | ESP-IDF/cmake/Windows cmd.exe 결함 | harness 책임 가설 → vendor toolchain 결함 정정 |
+| **R37/R36 baseline (5/27~28)** ⭐⭐ | M4 clock-norm 0.27× 미달 (7번째 negative) + M7 clock-norm 0.43× 미달 | **pca10056 R18 실측 baseline 추정값 함정 → 실측 7,367μs 재확인 → M4 0.99×·M7 1.76× 정상** | 박제 정확성 정정 + negative finding 6건 유지 + 사용자 challenge가 정정 trigger |
+
+→ governance 신뢰성 패턴 박제: **"측정값 의심 시 단일 출처 (실측 CSV) 재확인 후 정정"**. Claude가 자기 박제 자가 정정 + 발신측 cascade 카드 발신 = 외부 회사 도입 시 시연 자산. 자세히 [[2026-05-28_R36-R37-baseline-artifact-paired-check-fix]].
+
 ---
 
 ## 2026-05-27 uttec-factory 세션 2+3 흡수 — RPi family 함정 2건 추가
@@ -70,9 +105,9 @@ onDevice_AI vault 의 보드한계모델 측정 사이클에서 누적 박제한
 |---|:-:|---|
 | **Espressif (esp32s3 / esp32c6)** | **16** | ESP-IDF v5.5.1 / Windows cmd.exe / PowerShell 5.1 / ninja / cmake 3.30 |
 | **Nordic (pca10056 / pca10040)** | **18** | Zephyr v2.9.2 / 4.3.99 / west / CMSIS-NN |
-| **NDK (smartphone Android)** ⭐NEW (5/24 Wave 11) | **1** | NDK clang 18 / Android / `+dotprod` vectorizer 정책 (E1) |
-| **STM32 (STM32H745I-DISCO 14th)** ⭐NEW (5/25 Wave 12 + 5/26 Wave 13) | **12** | Zephyr + STM32CubeProgrammer + STM32CubeIDE headless / DAPLink / LTDC / AXI SRAM / USB FS |
-| **합계** | **47** | — |
+| **NDK (smartphone Android)** (5/24 Wave 11) | **1** | NDK clang 18 / Android / `+dotprod` vectorizer 정책 (E1) |
+| **STM32 (STM32H745I-DISCO 14th)** (5/25~28 Wave 12+13+14+15) | **15** ⭐ | Zephyr + STM32CubeProgrammer + STM32CubeIDE headless / DAPLink / LTDC / AXI SRAM / USB FS / dual-core boot / M4 console / INFO emit cache |
+| **합계** | **50** ⭐ | — |
 
 ## Espressif 16건 상세
 
@@ -121,6 +156,9 @@ onDevice_AI vault 의 보드한계모델 측정 사이클에서 누적 박제한
 | STM-10 | 12 | PowerShell sweep monitor function scope New-Object cast fail | monitor inline (function scope 회피) |
 | STM-11 | 12 | USB silk-screen 확인 — H745 = CN13 USB FS (NOT HS ULPI) | nucleo_h745zi_q carry-over (PA11/PA12 internal PHY) |
 | **STM-12** ⭐ | **13** | **Zephyr API change**: `net_mgmt_event_handler_t` 시그니처 4.3에서 `uint32_t mgmt_event` → `uint64_t` 변경. 옛 시그니처 사용 시 warning만 (error 아님, runtime 정상). 다른 보드 carry-over 시 **silent breakage 가능성**. | 시그니처 갱신 (uint64_t 사용) |
+| **STM-13** ⭐⭐ | **15 (R37)** | **H745 dual-core boot 시퀀스**: Zephyr H7 SoC init (`soc_m7.c:53`)이 M7 init에서 BCM4 option byte 체크 후 M4 release 가정. M7 빈 상태 + M4 firmware만 flash → console 0 bytes (silent boot fail). | M7 stub firmware (`boards/stm32_m7_stub_project/`) Bank 1 flash 필수. dual-core flash: mass erase → M7 stub → M4 cell. carry-over: H755 / H7Sx |
+| **STM-14** | **15 (R37)** | **M4 console UART**: M4 dts default `zephyr,console = &usart2`. H745I-DISCO USART2 외부 노출 미확인 → M4 측 console 미작동. | M4 overlay USART3 console redirect (PB10/PB11 ST-Link Virtual COM) |
+| **STM-15** ⭐⭐ | **14 (R36 paired-check)** | **INFO emit cache 영향 24%**: printk + HAL_RCC peripheral access 를 `model_run_bench` **전** 배치 시 I-cache layout + RCC register access → first-trial cache cold → latency_avg 24%↑ (557→692μs) + p99 2.6×↑ (7400→19500μs). 5회 range 0 = 결정론적 build/cache 효과 (측정 잡음 아님). | INFO emit은 `model_run_bench` **후** 배치 (CSV 출력 후 DONE 전). carry-over: 본 vault 모든 보드 measurement 일관성 표준 |
 
 ### carry-over 효과 정량화 (Wave 13 입증)
 
