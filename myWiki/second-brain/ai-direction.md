@@ -9,6 +9,42 @@ links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, utt
 
 # AI 시대 방향 판단
 
+## 판단 로그 (2026-05-27 megasession) — Wave 14 흡수 ⭐⭐⭐ R36 ✅ + mandate v2.9 종결 + 본 vault 6/6 mandate 모두 종결
+
+**사건**: ondevice-claude 5/26~27 카드 2건 (#005 R36 sweep 진입 통보 + #5/27-001 R36 + mandate v2.9 종결 cascade) 일괄 megasession 흡수. STM32H745 Cortex-M7 + CMSIS-NN CNN 17.58× = **Cortex-M tier 최강 AI 노드** 박제 + 메모리 4-tier 정정 (RW 9.2MB / Flash XIP 65MB) → **GPT-2 mini / Phi-2 mini Q4 50~60MB SLM 적재 가능** + 본 vault 6/6 mandate 모두 종결.
+
+### 결정 12: ⭐⭐⭐ KWS / 큰 CNN application = stm32h745 + CMSIS-NN (Cortex-M tier 최강 AI 노드)
+
+| application | 최적 SoC | 가속 | BOM | Round |
+|---|---|:-:|:-:|:-:|
+| **KWS / Voice command (소형)** | pca10056 (M4F + CMSIS-NN) | 14.02× | ~$15 | R28 (5/24) |
+| **KWS / 큰 CNN application (대형)** ⭐⭐⭐ NEW | **stm32h745 (M7 + CMSIS-NN)** | **17.58×** | **~$70** | **R36 (5/27)** |
+| **SLM 50~60MB 적재 (GPT-2 mini / Phi-2 mini Q4)** ⭐⭐⭐ NEW | **stm32h745 (QSPI XIP 65MB)** | (적재 path) | ~$70 | R36 (5/27) |
+
+⭐⭐⭐ "**Cortex-M 단일 칩에서 SLM 50~60MB 적재 + CNN 17.58× 가속**" = 영업 결정타. M4F pca10056 (14.02× / 256KB / $15)와 분리된 두 tier path:
+- 소형 (BLE+AI 통합 SoC) = pca10056
+- 대형 (산업 LAN + SLM 적재) = **stm32h745**
+
+### 결정 13: ⭐⭐⭐ 본 vault `프로젝트_보드한계모델/` 6/6 mandate 모두 종결 — 응용 진입 결단 시점
+
+본 vault 6 mandate (v2.4 + v2.5 + v2.6 + v2.7 + v2.8 + v2.9) 모두 종결. **응용 진입 직전 마지막 측정 mandate 완성** → 사용자 결단 시점:
+- **b 영업 데모 진입** — 5계열 매트릭스 + Hybrid SoC + Cortex-M tier 최강 = Stage 4 영업 자료 결정타 완비
+- **c 양산 진입** — AI FanStick Premium Plus 4 tier (mandate v2.7 carrier) + STM32H7 B2B path
+
+### 결정 14: ⭐⭐ carry-over 효과 = R&D 신뢰성 영업 자산 정량화 (Wave 14 입증)
+
+R36 sweep 진행 중 신규 함정 = race fix 패턴 + CNN 64 monitor 부족 2건 (모두 minor). 함정 인벤토리 47건 carry-over 효과 정량 입증:
+- **carry-over 영업 카피**: "vendor 함정 인벤토리 47건 (Espressif 16 + Nordic 18 + NDK 1 + STM32 12) 보유 → first-try success ratio 향상 + ~40~80시간 직접 디버깅 비용 절감"
+- Wave 13 (3차 시도 → 1차 success) + Wave 14 (sweep 신규 함정 2건만) = **R&D 신뢰성 자산 영업 매트릭스** 갱신 근거
+
+### 의미 (Wave 14 추가)
+
+11. **Cortex-M tier 최강 = stm32h745 + CMSIS-NN** — Cortex-M 단일 칩 SLM 50~60MB 적재 + CNN 17.58×. 영업 새 path = 산업 LAN + 큰 모델 통합 노드
+12. **본 vault 6/6 mandate 모두 종결** — 응용 진입 직전 마지막 측정 mandate 완성. 영업·양산 결단 trigger 준비 완료
+13. **carry-over 효과 정량화** — R36 sweep에서 신규 함정 2건만 (minor) = 함정 인벤토리 47건 R&D 신뢰성 자산 가치 입증
+
+---
+
 ## 판단 로그 (2026-05-26 megasession) — Wave 10/11/12/13 흡수 ⭐⭐⭐
 
 **사건**: 5/24~26 ondevice-claude 4 카드 일괄 흡수. (1) Wave 10 mandate v2.8 4/6 ✅ — R34 Hybrid SoC PoC + R33 esp-nn TF SRAM/PSRAM 분기 + R32 64KB tier 6번째 negative + R31 rpi5 NEON 6.7× + R31.5 sdot 효과 분리 + **5계열 매트릭스 완성** (ARM-A 행 추가). (2) Wave 11 R30 smartphone NDK clang `+dotprod` **0.97× 7번째 negative** + toolchain vectorizer 정책 본질 + mandate v2.8 5/6 ✅. (3) Wave 12 STM32H745I-DISCO **14번째 보드 신규 + 11 함정 single-day cluster** + Zephyr cross-vendor 통합. (4) Wave 13 STM32H745 Ethernet TCP + USB-CDC↔TCP Bridge PoC + Stage 4 LAN path 신설.

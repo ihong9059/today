@@ -2,11 +2,68 @@
 title: uttec-factory vault — UTTEC Shield AI 공장자동화 교육 + hardware 검증
 type: entity
 created: 2026-05-26
-updated: 2026-05-26 (vault 신설 + multi-agent 합류 13th + broker 자동화 첫 진화)
-status: 검증 단계 (9 컴포넌트 中 3 완료 / 6 잔여) + 교육·영업 자산 통합 운영지
-tags: [vault, UTTEC-Shield, AI-공장자동화, 교육, 강사양성, factory-rpi4, Raspberry-Pi-4, E22-900T30D, LoRa, multi-agent, uttec-factory-claude, 분산호스트, broker-자동화, hardware-검증, 8일-교육커리큘럼]
-links: [shield, onDevice-ai, ai-fanstick, 강사양성_파일럿, uttec-edu, claude-code, build-gotcha-inventory, 위시캣활동, 영업전략, 2026-05-26_uttec-factory-vault-신설]
+updated: 2026-05-27 (세션 2+3 흡수 — 실장 7/7 검증 ✅ + gotcha 3건 + 보드 변종 발견 + git repo ihong9059/uttec-factory private 신설 완료)
+status: 실장 7/7 ✅ 완료 + LoRa 미탑재 / 보드 변종 존재 + git repo ihong remote 활성 + 교육·영업 자산 통합 운영지
+tags: [vault, UTTEC-Shield, AI-공장자동화, 교육, 강사양성, factory-rpi4, Raspberry-Pi-4, E22-900T30D, LoRa, multi-agent, uttec-factory-claude, 분산호스트, broker-자동화, hardware-검증, 8일-교육커리큘럼, 실장-7/7-완료, 보드-변종, GPIO7-SPI충돌, WS2812-NOPASSWD, git-private-repo]
+links: [shield, onDevice-ai, ai-fanstick, 강사양성_파일럿, uttec-edu, claude-code, build-gotcha-inventory, gaps, 위시캣활동, 영업전략, 2026-05-26_uttec-factory-vault-신설]
 ---
+
+## 2026-05-27 흡수 — 세션 2+3 (실장 7/7 ✅ + gotcha 3건 + 보드 변종 발견) ⭐⭐
+
+### 세션 2 (5/26 야간, factory-rpi4 직접 검증 스프린트)
+
+**신규 검증 4종**: AHT20(0x38) · 부저(GPIO5) · 스위치(GPIO4) · 스피커(GPIO13) + 통합 데모(AHT20→OLED).
+
+**매트릭스**: 3/9 → **실장 7/7 ✅** (OLED·LED·WS2812·AHT20·부저·스피커·스위치). LoRa E22-900T30D는 **코드 완성, 모듈 물리 미탑재** → 장착 후 즉시 검증.
+
+**결과 정량**: AHT20 CRC 5/5 / 부저 S-O-S / 스위치 5회 edge / 스피커 2.7kHz+음계 — 전부 정상.
+
+### 세션 3 (5/26 야간, WS2812 전용 새 보드 재검증)
+
+**중대 발견** ⭐: **UTTEC Shield는 단일 고정 보드가 아니라 여러 변종 존재**. 최소 2종 확인:
+- **V1.0 풀 보드**: I2C 0x38(AHT20)+0x3C(OLED) + GPIO LED/부저/스피커/스위치 + WS2812
+- **WS2812 전용 보드**: I2C 빈 버스, WS2812(GPIO12)만 탑재
+
+**운영 함정**: 세션 시작 시 어느 보드가 장착됐는지 모름 → **`i2cdetect -y 1`로 현재 보드 먼저 식별 필수**.
+
+### gotcha 3건 박제 (build-gotcha-inventory + gaps cascade)
+
+| # | 함정 | 우회 |
+|---|---|---|
+| 1 | **0x68 · BMP280(0x77) · EEPROM(0x50) 부재 확정** — 회로도 V1.0 I2C = AHT20+OLED 2종만이 ground truth | shield A vs B carry-over 잘못, 매트릭스에서 8/9 row 정정 (BMP280 + 0x68 = hardware 부재 row 삭제 또는 ❌ 표기) |
+| 2 | **GPIO7(LoRa AUX) = SPI0 CE1 충돌** (`dtparam=spi=on` → spidev0.1 점유) | LoRa AUX GPIO read 불가, `dtoverlay=spi0-1cs` 해제 필요 |
+| 3 | **WS2812 root 불가피** (`/dev/mem` PWM/DMA, SPI 우회는 GPIO12 배선이라 불가) | `/etc/sudoers.d/ws2812-uttec`로 tty 없는 자동화에서도 직접 구동 (NOPASSWD SOP) |
+
+### 매트릭스 정정 (실장 기준, 회로도 V1.0 ground truth)
+
+| # | 카테고리 | 컴포넌트 | 인터페이스 | GPIO / 주소 | 검증 |
+|:-:|---|---|---|---|:--:|
+| 1 | 디스플레이 | OLED (SSD1306/SH1106) | I2C | 0x3C | ✅ (V1.0 풀 보드) |
+| 2 | LED | 3색 RYB | GPIO | 17/27/22 | ✅ |
+| 3 | NeoPixel | WS2812 ×4 | PWM0 | GPIO12 | ✅ (V1.0 + WS2812 전용 보드 양쪽 동작, NOPASSWD SOP) |
+| 4 | 부저 | BUZ1 능동 | GPIO | 5 | ✅ S-O-S 정상 |
+| 5 | 스피커 | Q1 BCX56 | software PWM | 13 | ✅ 2.7kHz + 음계 정상 |
+| 6 | 스위치 | SW1 TS-1088 | GPIO input | 4 | ✅ 5회 edge 정상 |
+| 7 | 센서 | AHT20 | I2C | 0x38 | ✅ CRC 5/5 정상 (V1.0 풀 보드만) |
+| ~~8~~ | ~~센서~~ | ~~BMP280~~ | ~~I2C~~ | ~~0x77~~ | ❌ **hardware 부재 확정** (회로도 V1.0 미명시) |
+| 9 | LoRa | E22-900T30D | UART + GPIO | TX=14/RX=15/M0=21/M1=20/AUX=7 | ⬜ 코드 완성 / **모듈 물리 미탑재** (장착 후 즉시 검증) |
+
+**실장 진행률**: **7/7 (100%) ✅** (LoRa 제외, 모듈 장착 후 8/8 가능).
+
+### git private repo 신설 ✅ (todo #11 사용자 직접 완료)
+
+- GitHub `ihong9059/uttec-factory` (private, 5/26 11:10 생성)
+- factory-rpi4 remote `ihong` 활성 (3 commit pushed: 초기 + 검증 스프린트 + WS2812 전용 보드 재검증)
+
+### broker 자동화 양방향 동작 검증 완료 ✅
+
+- factory → myWiki pull: 5/26 야간 첫 동작 + 5/27 본 cascade 2장 자동 sync
+- myWiki → factory push: ack 카드 자동 도착 (uttec-factory-claude 측 확인)
+- 분산 vault git 공유 repo 자체 구축 계획 = **중복 폐기** (broker 자동화로 대체 충분)
+
+---
+
+
 
 # uttec-factory vault — UTTEC Shield AI 공장자동화 교육 + hardware 검증
 

@@ -2,7 +2,75 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-26 야간 (uttec-factory vault 신설 13th + broker 자동화 첫 진화 + Wave 10/11/12/13 megasession)
+updated: 2026-05-27 (Wave 14 흡수 — R36 ✅ + mandate v2.9 종결 + 본 vault 6/6 mandate 모두 종결 + Cortex-M tier 최강 AI 노드 박제)
+---
+
+## [2026-05-27] absorb ⭐⭐ | R35 한국어 KWS detail + uttec-factory 세션 2+3 일괄 흡수 (broker 자동화 첫 부수 효과)
+
+**사건**: pull-multi-agent-outbound.py에 본 PC vault `_outbox/` 라우팅 확장 (ondevice 활성화) 후 첫 실행 → 13장 자동 pull (9장 중복/이미 흡수 즉시 archive + 4장 신규 megasession).
+
+**R35 한국어 KWS detail 흡수** (Wave 14 부분 박제 후 detail 보완):
+- entities/ai-fanstick.md § R35 한국어 path 박제 — 영업 카피 정확성 매트릭스 (78.7% 영어 카피 금지 + CNN LoRA +5.38% + 0.37초 carry + 53× 불균형 dataset)
+- thoughts/2026-Q2/2026-05-26_한국어-KWS-architecture-ceiling.md 신설 — "MLP↔CNN 동일 ceiling = capacity 보강 무효" 본질 finding + carrier carry 강도 분기 (architecture identity 100% / task 의존 50~60% / capacity 본질 한계) + 8번째 negative finding 누적
+
+**uttec-factory 세션 2+3 흡수**:
+- entities/uttec-factory.md § 5/27 흡수 — 실장 7/7 ✅ 완료 + LoRa 미탑재 + gotcha 3건 (0x68/BMP280/EEPROM 부재 / GPIO7-SPI 충돌 / WS2812 NOPASSWD) + **보드 변종 발견** (V1.0 풀 보드 vs WS2812 전용 보드) + git private repo `ihong9059/uttec-factory` 신설 ✅ + broker 양방향 동작 검증
+- entities/build-gotcha-inventory.md § RPi family 함정 2건 추가 (GPIO7 SPI0 CE1 충돌 + WS2812 NOPASSWD SOP)
+
+**broker 자동화 확장**:
+- `today/.claude/hooks/pull-multi-agent-outbound.py` — LOCAL_VAULTS dict 추가 (본 PC vault `_outbox/` 컨벤션 + `_outbox-archived/` 자동 이동), skip 시에도 원격 archive 진행
+- ondevice 라우팅 활성화 (wishket/lemonlabs는 주석, 필요 시 추가)
+- `today/.claude/hooks/push-multi-agent-pending.py` — ondevice-claude는 이미 LOCAL_VAULTS에 존재 (5/26 야간 초기 구현)
+
+**outbox-staging 정리** (5/20~24 stale 3건):
+- TO-n8n / TO-shield / 5/24-100-uttec-vault ack → sent-archived/ 보존 이동
+- outbox-staging 깨끗 (활성 0)
+
+**후처리**:
+- 카드 4장 (5/26-001 R35 Phase1 + 5/26-003 R35 mandate v2.8 종결 + 5/26-002 factory 세션2 + 5/26-003 factory 세션3) → processed/ + status flip
+- ondevice + uttec-factory 측 done 회신 카드 발신 (2장)
+
+---
+
+## [2026-05-27] absorb ⭐⭐⭐ | Wave 14 — R36 ✅ + mandate v2.9 종결 + 본 vault 6/6 mandate 모두 종결 + Cortex-M tier 최강 AI 노드 박제
+
+**사건**: ondevice-claude 5/26~27 카드 2건 (#005 R36 sweep 진입 통보 + #5/27-001 R36 + mandate v2.9 종결 cascade) 일괄 megasession 흡수.
+
+**R36 정량 결과** (STM32H745 Cortex-M7 480MHz, 4 RAM_safe 셀):
+- MLP 128: 557μs → **272μs (2.05× CMSIS-NN, M4F 3.23× 대비 baseline IPC 우월)**
+- **CNN 32: 238.6ms → 13.4ms (⭐⭐⭐ 17.7×)**
+- **CNN 64: 959.9ms → 54.6ms (⭐⭐⭐ 17.58×)** ← 본 vault Cortex-M tier 최대 가속
+- TF 64: 1.5ms → 1.1ms (1.36×, TF dense 부분만 cmsis 적용 가능 한계)
+
+**Cortex-M tier 비교 (5계열 매트릭스 14번째 행 갱신)**:
+
+| 보드 | 클럭 | RAM | MLP 가속 | CNN 가속 | TF 가속 |
+|---|---:|---:|:-:|:-:|:-:|
+| pca10040 (M4F 64MHz 64KB) | 64 | 64 KB | RAM wall | RAM wall | RAM wall |
+| pca10056 (M4F 64MHz 256KB + CMSIS-NN) | 64 | 256 KB | 3.23× | 14.02× | 1.85× |
+| **stm32h745 (M7 480MHz 9.2MB + CMSIS-NN)** | **480** | **9.2 MB** | **2.05×** | **⭐ 17.58×** | **1.36×** |
+
+→ Cortex-M tier 최강 = **stm32h745 + CMSIS-NN** (클럭 7.5× + RAM 36× + CNN 가속 25% 추가). 본 vault 5계열 매트릭스 ARM tier 행 확장 완료.
+
+**메모리 4-tier 정정 ⚠️** (stm32h745-disco.md 옛 박제 정정):
+- QSPI Flash **16MB → 64MB** (Macronix MX25LM51245G)
+- 총 RW RAM **9.2 MB** (DTCM 128 + ITCM 64 + AXI 512 + SRAM1-3 288 + SRAM4 64 + SDRAM2 8192)
+- 총 Flash XIP **65 MB** (internal 1 + QSPI 64)
+- **AI 모델 적재 가능성 4× 상향 — GPT-2 mini / Phi-2 mini Q4 (50~60MB) 가능** (QSPI XIP read-only)
+
+**본 vault `프로젝트_보드한계모델/` 6/6 mandate 모두 종결**:
+- v2.4 (14 보드 baseline) ✅ / v2.5 (R17 ESP-DSP + R18 CMSIS-NN + R19 NPU + R20 LoRA + R21 esp-nn) ✅ / v2.6 (R22~R25 LoRA + KWS personalization) ✅ / v2.7 (R26~R29) ✅ / v2.8 (R30~R35) ✅ / **v2.9 (R36 STM32H745) ✅**
+- → **응용 진입 직전 마지막 측정 mandate 완성** — 사용자 결단 (b 영업 데모 진입 / c 양산 진입) 시점
+
+**myWiki 갱신 6건**:
+- entity 갱신 5건: `entities/onDevice-ai.md` (Wave 14 박제 + 5계열 매트릭스 14번째 행 갱신 + 6/6 mandate 모두 종결) / `entities/stm32h745-disco.md` (R36 cmsis 결과 + 메모리 4-tier 정정 + 7.5× 클럭 비교) / `entities/ai-fanstick.md` (Cortex-M7 tier 영업 carry) / `entities/uttec-stage-package.md` (Stage 4 시나리오 E STM32H7 산업 노드 R36 결과 + Cortex-M tier 비교 매트릭스) / `entities/build-gotcha-inventory.md` (sweep race fix 패턴 + CNN 64 monitor 부족 진단)
+- 신규 thought 1건: `thoughts/2026-Q2/2026-05-27_Cortex-M-tier-최강-AI-노드.md`
+- `ai-direction.md` (결정 12 신규: KWS / 큰 CNN application = stm32h745 + CMSIS-NN, $70 BOM, 50~60MB SLM 적재 가능)
+
+**후처리**:
+- 카드 2장 (005 + 5/27-001) `status: pending` → `status: done` + `_inbox/processed/` 이동
+- onDevice_AI/_inbox/pending/에 done 회신 1장 통합 발신 (005 + 5/27-001 ack)
+
 ---
 
 ## [2026-05-26 야간] new-vault | uttec-factory-claude 합류 (13th) + broker 자동화 첫 진화 ⭐⭐⭐

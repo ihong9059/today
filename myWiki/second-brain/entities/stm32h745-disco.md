@@ -1,17 +1,75 @@
 ---
-title: STM32H745I-DISCO (14번째 보드)
+title: STM32H745I-DISCO (14번째 보드, Cortex-M tier 최강 AI 노드)
 type: entity
 created: 2026-05-26
-updated: 2026-05-26 megasession (Wave 12 + Wave 13 통합 흡수 — 14번째 보드 신규 + 11 함정 single-day cluster + 3 PoC + Ethernet TCP + USB-CDC↔TCP Bridge PoC)
-tags: [STM32, STM32H745, Cortex-M7, Cortex-M4, dual-core, Zephyr, LCD, USB-CDC, Ethernet, LAN, LAN8742A, B2B, Stage4, ondevice, mandate-v2.8, mandate-v2.9, 14th-board, carry-over]
-links: [onDevice-ai, ai-fanstick, uttec-stage-package, build-gotcha-inventory, gaps, ai-direction, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타]
+updated: 2026-05-27 Wave 14 흡수 (R36 ✅ + mandate v2.9 종결 + CMSIS-NN CNN 17.58× = Cortex-M tier 최강 + 메모리 4-tier 정정 QSPI 64MB / RW RAM 9.2MB / Flash XIP 65MB / SLM 50~60MB 적재 가능)
+tags: [STM32, STM32H745, Cortex-M7, Cortex-M4, dual-core, Zephyr, LCD, USB-CDC, Ethernet, LAN, LAN8742A, B2B, Stage4, ondevice, mandate-v2.8, mandate-v2.9-종결, 14th-board, carry-over, CMSIS-NN, 17x-가속, SLM-적재, 6mandate-종결]
+links: [onDevice-ai, ai-fanstick, uttec-stage-package, build-gotcha-inventory, gaps, ai-direction, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드]
+---
+
+## 2026-05-27 Wave 14 흡수 — R36 ✅ + mandate v2.9 종결 + Cortex-M tier 최강 AI 노드 박제 ⭐⭐⭐
+
+### R36 정량 결과 (CMSIS-NN 4 RAM_safe 셀)
+
+| 셀 | baseline (plain C) | CMSIS-NN | 가속 | 비고 |
+|---|---|---|:-:|---|
+| **MLP 128** | 557 μs | 272 μs | **2.05×** | H2 ✅ 부분 PASS (M4F 3.23× 대비 M7 baseline IPC 우월) |
+| **CNN 32** | 238.6 ms | 13.4 ms | **⭐⭐⭐ 17.7×** | H3 ✅ — 본 vault Cortex-M tier 최대 가속 |
+| **CNN 64** | 959.9 ms | 54.6 ms | **⭐⭐⭐ 17.58×** | H3 ✅ 확정 — CNN 32와 일관된 ~17.6× |
+| TF 64 | 1.5 ms | 1.1 ms | 1.36× | TF dense 부분만 cmsis 적용 가능 한계 |
+
+→ 본 vault Cortex-M tier 가장 강력한 ANN inference 노드 박제. **M4F pca10056 R28 14.02× 상회 25%**.
+
+### Cortex-M tier 비교 (7.5× 클럭 + RAM 36× + CNN 25% 추가)
+
+| 보드 | 클럭 | RAM | MLP 가속 | CNN 가속 | TF 가속 |
+|---|---:|---:|:-:|:-:|:-:|
+| pca10040 (M4F 64KB) | 64 MHz | 64 KB | RAM wall | RAM wall | RAM wall |
+| pca10056 (M4F 256KB + CMSIS-NN) | 64 MHz | 256 KB | 3.23× | 14.02× | 1.85× |
+| **stm32h745 (M7 + CMSIS-NN)** | **480 MHz** | **9.2 MB** | **2.05×** | **⭐ 17.58×** | **1.36×** |
+
+→ Cortex-M tier 최강 = **stm32h745 + CMSIS-NN** (클럭 7.5× + RAM 36× + CNN 가속 25% 추가).
+
+### 메모리 4-tier 정정 ⚠️ (옛 박제 정정)
+
+| 항목 | 값 |
+|---|---|
+| QSPI Flash | ~~16 MB~~ → **64 MB** (Macronix MX25LM51245G, DTS `mt25ql512ab1 DT_SIZE_M(64)` 확인) |
+| 총 RW RAM | **9.2 MB** (DTCM 128 + ITCM 64 + AXI 512 + SRAM1-3 288 + SRAM4 64 + SDRAM2 8192) |
+| 총 Flash XIP | **65 MB** (internal 1 + QSPI 64) |
+| **AI 모델 적재** | **GPT-2 mini / Phi-2 mini Q4 (50~60MB) 가능** (QSPI XIP read-only) — 4× 상향 |
+
+### R36 신규 gotcha (sweep race fix + CNN 64 진단)
+
+⭐ **race fix 단일 cell 패턴** (sweep [1] first-cell timing 회피):
+```
+mass erase + flash → port.Open() + DiscardInBuffer() → 300ms 대기 → reset trigger → monitor loop
+```
+→ `sweep12_stm32.ps1` carry-over 가치 (다른 STM32 board sweep에 즉시 carry).
+
+⭐ **CNN 64 진단 finding** (5/27 e1-2): "hang" 의심 → 단순 monitor 시간 부족 확정. bench loop 100회 × ~960ms ≈ 96초 (LATENCY_WALL_US 1초 직전), 30s/40s/90s monitor 모두 부족이었음. **150s monitor에서 정상 emit.** 패턴: `monitor 시간 < bench 총 시간`이면 silent loss → 셀별 monitor budget 계산 필수.
+
+### mandate v2.9 종결 → 본 vault 6/6 mandate 모두 종결 ⭐⭐⭐
+
+본 vault `프로젝트_보드한계모델/` 6 mandate 모두 종결:
+- v2.4 (14 보드 baseline) ✅
+- v2.5 (R17 ESP-DSP + R18 CMSIS-NN + R19 NPU + R20 LoRA + R21 esp-nn) ✅
+- v2.6 (R22~R25 LoRA + KWS personalization) ✅
+- v2.7 (R26 KWS 정확도 + R27 FP16 + R28 pca10056 + R29 multi-layer negative) ✅
+- v2.8 (R30 mobile + R31 rpi NEON + R32 pca10040 + R33 esp-nn TF + R34 Hybrid SoC + R35 한국어 KWS) ✅
+- **v2.9 (R36 STM32H745) ✅ 5/27 종결**
+
+→ **응용 진입 직전 마지막 측정 mandate 완성** — 사용자 결단 (b 영업 데모 진입 / c 양산 진입) 시점.
+
 ---
 
 # STM32H745I-DISCO (14번째 보드)
 
+# STM32H745I-DISCO (14번째 보드, Cortex-M tier 최강 AI 노드)
+
 ## 한 줄 정의
 
-ST `STM32H745I-DISCO` discovery 보드 — **Cortex-M7 480MHz + Cortex-M4 240MHz dual-core, 1MB internal RAM + 8MB external SDRAM, DP FPU + L1 cache + DSP intrinsics**. onDevice 14번째 보드. 5/25 신규 진입 (Wave 12) + 5/26 Ethernet/Bridge PoC (Wave 13). **Stage 4 산업 노드 (USB CDC + LAN 동시 streaming)** 영업 결정타.
+ST `STM32H745I-DISCO` discovery 보드 — **Cortex-M7 480MHz + Cortex-M4 240MHz dual-core, 9.2 MB RW RAM (1MB internal + 8MB SDRAM) + 65 MB Flash XIP (internal 1 + QSPI 64), DP FPU + L1 cache + DSP intrinsics + CMSIS-NN CNN 17.58× 가속**. onDevice 14번째 보드. 5/25 신규 진입 (Wave 12) + 5/26 Ethernet/Bridge PoC (Wave 13) + **5/27 R36 ✅ + mandate v2.9 종결 (Wave 14) — Cortex-M tier 최강 AI 노드 박제 + SLM 50~60MB 적재 가능**. **Stage 4 산업 노드 (USB CDC + LAN 동시 streaming) + Cortex-M7 KWS/CNN application 결정타**.
 
 ## 진입 컨텍스트 (Wave 12, 5/25)
 

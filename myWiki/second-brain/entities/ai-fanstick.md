@@ -2,10 +2,84 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-05-26 Wave 10/11/12/13 흡수 (mandate v2.8 5/6 ✅ — 5계열 매트릭스 완성 + esp-nn TF PSRAM 2.62× / mobile 3 path 모두 negative / Edge AI Gateway 시나리오 D 신설 / 산업 노드 영업 path 추가)
-tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative]
-links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타]
+updated: 2026-05-27 Wave 14 흡수 (R36 ✅ + mandate v2.9 종결 + 본 vault 6/6 mandate 모두 종결 — Cortex-M7 + CMSIS-NN CNN 17.58× = Cortex-M tier 최강 + 응용 진입 직전 마지막 측정 완료)
+tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, 6mandate-모두종결, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative, Cortex-M-tier-최강, 17x-CNN-가속, SLM-적재]
+links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드]
 ---
+
+## 2026-05-27 R35 한국어 KWS detail 흡수 — 영업 카피 정확성 박제 ⭐⭐⭐
+
+### R35 한국어 path 박제 (영업 카피 정확성 필수)
+
+본 vault Wave 14 흡수에서 R35는 부분 박제만. detail 흡수로 영업 정확성 확보:
+
+| 가설 | 임계값 | 측정 | 판정 |
+|---|---|---|:-:|
+| H1 한국어 baseline ≥ 70% | ≥ 70% | MLP 48.3% / CNN 48.0% | **❌ FAIL** |
+| H1' 어려운 화자 +5% | +5% | **CNN +5.38%** (improved 70%) | ✅ PASS |
+| H2 LoRA K=5 +5% | +5% | CNN +5.38% | ✅ PASS |
+| H4 esp32s3 inference < 30ms | < 30ms | 52.9ms (R25 carry) | ❌ FAIL (학술) |
+| **H4' personalization total < 1초** ⭐ | < 1초 | **0.37초** (R25 carry) | **✅ PASS** |
+
+### R35 3대 finding (영업 직결)
+
+1. **architecture 보강 무효** — MLP 130K vs CNN 35K (4× 차이) 동일 ceiling (-0.3%p) → 한국어 KWS는 capacity 보강 불가 본질 한계
+2. **CNN LoRA carrier 부분 carry-over** — K=5 +5.38% / K=10 +6.60%. R26 영어 +11.4%의 **50%** = 절대 수치는 약하나 방향성 ✅
+3. **esp32s3 latency carrier 완전 carry-over** — R35 CNN ↔ R25 C16 r=4 architecture 1:1 → **personalization total 0.37초 (외부 0%)**
+
+### ⚠️ 영업 카피 금지 (정확성 필수)
+
+| 금지 카피 | 이유 |
+|---|---|
+| ~~"한국어 KWS baseline 78.7% 정확도"~~ | R26 영어 baseline은 한국어 1:1 carry 불가 (48% ceiling). 실제 한국어 ≈ 48% |
+| ~~"한국어 KWS LoRA +11.4% 정확도 향상"~~ | R26 영어 +11.4% 카피 금지. 한국어 CNN LoRA = +5.38% (50% 강도) |
+| ~~"capacity 보강으로 한국어 정확도 향상"~~ | MLP↔CNN 본질 ceiling 동일, capacity 보강 무효 |
+
+### ✅ 영업 카피 정확 박제
+
+- ⭐ "**esp32s3 personalization total 0.37초 — Cloud GPT-4 API 대비 8~27× 빠름 (외부 의존 0%)**" (한국어 100% carry)
+- ⭐ "**한국어 응원봉 명령 LoRA personalization +5.38% 정확도 향상**" (CNN LoRA K=5)
+- ⭐ "**KsponSpeech 23,731 WAV × 8 keyword × 496 화자 dataset 보유**" (R26 영어 8,000 sample 대비 3× 풍부, 화자 수 ~500 동등)
+
+### dataset 자산화
+
+- **KsponSpeech 한국어 일반 대화 corpus + wav2vec2-large-xlsr-korean + ctc-segmentation 추출 first-success 패턴**
+- 8 keyword UX 매핑: 네(확인) / 아니(취소) / 좋아 / 싫어 / 다시(replay) / 가자(start) / 잠깐(pause) / 꺼(OFF)
+- **53× 불균형** (아니 14,986 ↔ 꺼 281) → Phase 2 class weight balancing 필수
+
+### mandate v2.9 후속 검증 후보
+
+- R35 한국어 모델 + esp-nn 가속 (R21 carry) → H4 < 30ms 검증 (Cortex-M7 R36 + 한국어 esp-nn 후속 가능)
+- R35 본질 한계 원인 검증 (KsponSpeech 일반 대화 vs KWS-specific 녹음 본질 차이)
+
+---
+
+## 2026-05-27 Wave 14 흡수 — Cortex-M7 tier 영업 메시지 ⭐⭐⭐
+
+### R36 STM32H745 + CMSIS-NN 영업 carry
+
+| 항목 | 값 | 영업 의미 |
+|---|---|---|
+| CNN 32 가속 | **17.7×** ⭐⭐⭐ | KWS / image classify Cortex-M tier 최강 |
+| CNN 64 가속 | **17.58×** ⭐⭐⭐ | 큰 모델도 일관된 ~17.6× — pca10056 14.02× 상회 25% |
+| RW RAM | **9.2 MB** (DTCM 128 + ITCM 64 + AXI 512 + SRAM1-3 288 + SRAM4 64 + SDRAM2 8192) | esp32s3 PSRAM 8MB 동급 |
+| Flash XIP | **65 MB** (internal 1 + QSPI 64) | **GPT-2 mini / Phi-2 mini Q4 (50~60MB) 적재 가능** |
+| 클럭 | 480 MHz | M4F 64MHz × 7.5× |
+| BOM | ~$70 | Cortex-M 단일 칩 SLM 적재 + CNN 17× — 신규 영업 path |
+
+### 마케팅 카피 추가 (5/27)
+
+- ⭐⭐⭐ "**Cortex-M7 + CMSIS-NN CNN 17.58× — pca10056 M4F 14.02× 상회 25%**" (Cortex-M tier 최강 AI 노드)
+- ⭐⭐⭐ "**Cortex-M 단일 칩에서 GPT-2 mini / Phi-2 mini Q4 50~60MB SLM 적재 가능**" (STM32H745 QSPI XIP 65MB)
+- ⭐⭐ "**본 vault 6/6 mandate 모두 종결 — 응용 진입 직전 마지막 측정 mandate 완성**" (영업·양산 결단 trigger 준비 완료)
+
+### 응원봉 후속 PoC path (Cortex-M7)
+
+- 기존: esp32s3 + ESP-DSP + LoRA (mandate v2.7 4 tier)
+- 신규 path: **STM32H745 + CMSIS-NN CNN 17.6× + USB CDC + LCD R/G/B + Ethernet** (Wave 13+14 PoC stack 박제 완료)
+- 한국 산업 LAN 환경 = AI FanStick B2B 산업 노드 path (응원봉 B2C 외 추가 channel)
+
+자세히 [[stm32h745-disco]] · [[2026-05-27_Cortex-M-tier-최강-AI-노드]].
 
 # AI FanStick (응원봉)
 

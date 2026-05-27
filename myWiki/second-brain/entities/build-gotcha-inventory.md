@@ -2,10 +2,55 @@
 title: 빌드 함정 인벤토리 (cross-vendor 누적 박제)
 type: entity
 created: 2026-05-24
-updated: 2026-05-26 (Wave 10/11/12/13 흡수 — Espressif 16 + Nordic 18 + NDK 1 + STM32 12 = 누적 47건)
-tags: [빌드함정, debugging-자산, esp32s3, ESP-IDF, Nordic, Zephyr, CMSIS-NN, cmake, ninja, Windows-cmd, PowerShell, governance-신뢰성, 자기진단정정, 함정14-v3, NDK, clang, vectorizer, STM32, STM32H745, carry-over-효과]
-links: [onDevice-ai, ai-fanstick, uttec-stage-package, gaps, ai-direction, stm32h745-disco, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor]
+updated: 2026-05-27 Wave 14 흡수 (R36 sweep race fix 패턴 + CNN 64 monitor 부족 진단 추가, STM32 12 그대로)
+tags: [빌드함정, debugging-자산, esp32s3, ESP-IDF, Nordic, Zephyr, CMSIS-NN, cmake, ninja, Windows-cmd, PowerShell, governance-신뢰성, 자기진단정정, 함정14-v3, NDK, clang, vectorizer, STM32, STM32H745, carry-over-효과, sweep-race-fix, monitor-시간계산]
+links: [onDevice-ai, ai-fanstick, uttec-stage-package, gaps, ai-direction, stm32h745-disco, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-27_Cortex-M-tier-최강-AI-노드]
 ---
+
+## 2026-05-27 uttec-factory 세션 2+3 흡수 — RPi family 함정 2건 추가
+
+### ⭐ GPIO7 = SPI0 CE1 충돌 (LoRa AUX 함정)
+
+- **함정**: UTTEC Shield 회로도 LoRa AUX = GPIO7. 그러나 `dtparam=spi=on` 시 GPIO7이 spidev0.1로 점유 → LoRa AUX GPIO read 불가
+- **우회**: `dtoverlay=spi0-1cs` 명시적으로 한 줄로 disable (또는 `dtparam=spi=off`)
+- **carry-over**: RPi family 일반 함정, shield A/B 양쪽 + 기타 RPi GPIO7 사용 시 모두 발현
+
+### ⭐ WS2812 root 불가피 — NOPASSWD SOP
+
+- **함정**: WS2812 NeoPixel은 `/dev/mem` PWM/DMA 직접 액세스 필요 → root 권한 필수. SPI 우회 방식도 있으나 본 UTTEC Shield는 GPIO12(PWM0) 배선이라 SPI 우회 불가
+- **우회**: `/etc/sudoers.d/ws2812-uttec` 신설:
+  ```
+  uttec ALL=(root) NOPASSWD: /usr/bin/python3 /home/uttec/project/uttec-factory/구현/ws2812_test.py
+  ```
+- **효과**: tty 없는 자동화 (work-start/work-end hook + cron + Claude Code skill)에서도 password 없이 직접 구동
+- **carry-over**: RPi WS2812 일반 함정, shield A/B + 기타 RPi 자동화 환경 모두 적용
+
+(WS2812 PWM0/audio 충돌은 `feedback_rpi_ws2812_pwm0_audio_conflict.md` 별도 박제)
+
+---
+
+## 2026-05-27 Wave 14 추가 진단 패턴 (sweep race fix + CNN 64 monitor 부족)
+
+### ⭐ sweep race fix 단일 cell 패턴 (carry-over 가치)
+
+R36 sweep [1] first-cell timing fail → 단일 cell 표준 패턴 박제:
+
+```
+mass erase → flash → port.Open() + DiscardInBuffer() → 300ms 대기 → reset trigger → monitor loop
+```
+
+- **원인**: flash 직후 즉시 monitor 진입 시 reset 전 garbage UART data + first-cell이 prior session console noise mix
+- **우회**: `DiscardInBuffer()` + 300ms 대기 + 명시적 reset trigger
+- **carry-over**: `sweep12_stm32.ps1` → 다른 STM32 board sweep 즉시 carry 가능
+
+### ⭐ CNN 64 monitor 부족 진단 (silent loss 패턴)
+
+5/27 e1-2 "hang" 의심 → **단순 monitor 시간 부족 확정**:
+- bench loop 100회 × ~960ms ≈ **96초** (LATENCY_WALL_US 1초 직전)
+- 30s/40s/90s monitor 모두 부족 → silent loss (timeout 시 garbage)
+- 150s monitor에서 정상 emit
+- **패턴**: `monitor 시간 < bench 총 시간`이면 silent loss → **셀별 monitor budget 계산 필수**
+- carry: sweep_cell의 monitor budget = `bench_iter × estimated_latency × 1.5 (safety)` 공식
 
 # 빌드 함정 인벤토리 (cross-vendor)
 

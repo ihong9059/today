@@ -2,10 +2,45 @@
 title: UTTEC 영업 패키지 (4.5-Stage)
 type: entity
 created: 2026-05-05
-updated: 2026-05-26 Wave 10/11/12/13 흡수 (mandate v2.8 5/6 ✅ — 5계열 매트릭스 완성 ARM-A 행 추가 + mobile NEON 3 path negative + Stage 4 시나리오 D Edge AI Gateway 신설 + 시나리오 E STM32H7 산업 노드 신설 + 함정 47건)
-tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스, 5계열매트릭스, application별-SoC, Hybrid-SoC, on-device-학습-4번째축, 6조건곱, mandate-v2.7-종결, mandate-v2.8, ARM-A-NEON, rpi5, Edge-AI-Gateway, STM32H745, 산업노드, LAN-path, vectorizer-정책, carry-over-효과]
-links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, build-gotcha-inventory, stm32h745-disco, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타]
+updated: 2026-05-27 Wave 14 흡수 (R36 ✅ + mandate v2.9 종결 — Stage 4 시나리오 E STM32H7 산업 노드 정량 결과 박제 CMSIS-NN CNN 17.58× + Cortex-M tier 비교 매트릭스 + SLM 50~60MB 적재 가능 + 본 vault 6/6 mandate 모두 종결)
+tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스, 5계열매트릭스, application별-SoC, Hybrid-SoC, on-device-학습-4번째축, 6조건곱, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, 6mandate-모두종결, ARM-A-NEON, rpi5, Edge-AI-Gateway, STM32H745, 산업노드, LAN-path, vectorizer-정책, carry-over-효과, Cortex-M-tier-최강, SLM-적재]
+links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, build-gotcha-inventory, stm32h745-disco, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드]
 ---
+
+## ⭐⭐⭐ 2026-05-27 Wave 14 흡수 — Stage 4 시나리오 E STM32H7 산업 노드 정량 결과 + Cortex-M tier 비교 매트릭스
+
+### R36 정량 결과 박제 (Stage 4 시나리오 E 갱신)
+
+| 셀 | baseline | CMSIS-NN | 가속 | 영업 의미 |
+|---|---|---|:-:|---|
+| MLP 128 | 557μs | 272μs | 2.05× | M4F 3.23× 대비 baseline IPC 우월 |
+| **CNN 32** | 238.6ms | 13.4ms | **⭐ 17.7×** | KWS / image classify Cortex-M tier 최강 |
+| **CNN 64** | 959.9ms | 54.6ms | **⭐ 17.58×** | 큰 모델 일관된 가속 |
+| TF 64 | 1.5ms | 1.1ms | 1.36× | TF dense 부분만 cmsis 적용 가능 |
+
+### Cortex-M tier 비교 매트릭스 (영업 카피)
+
+| 보드 | BOM | 클럭 | RAM | CNN 가속 | Stage 4 application |
+|---|---:|---:|---:|:-:|---|
+| pca10040 (M4F 64KB) | ~$8 | 64 MHz | 64 KB | RAM wall | (AI 부적합) |
+| pca10056 (M4F + CMSIS-NN) | ~$15 | 64 MHz | 256 KB | 14.02× | KWS / B2B BLE+AI 통합 SoC |
+| **stm32h745 (M7 + CMSIS-NN)** | **~$70** | **480 MHz** | **9.2 MB** | **⭐ 17.58×** | **KWS / 큰 CNN application / SLM 50~60MB 적재 / 한국 산업 LAN B2B** |
+
+→ ⭐⭐⭐ "**Cortex-M 단일 칩에서 GPT-2 mini / Phi-2 mini Q4 50~60MB SLM 적재 가능**" (QSPI XIP 64MB + internal 1MB = 65MB) — Cortex-M tier 영업 결정타.
+
+### Stage 4 시나리오 E 갱신 (5/27 박제)
+
+| 시나리오 | 본질 | BOM | 영업 채널 |
+|---|---|:-:|---|
+| **E** ⭐⭐⭐ (5/26 신설, 5/27 정량 박제) | **STM32H7 산업 노드** (USB CDC + LAN + CMSIS-NN CNN 17.58× + SLM 50~60MB 적재) | **~$70** | **한국 산업 환경** (LAN 인프라 + STM32 선호) B2B + Cortex-M 단일 칩 SLM 적재 path |
+
+### 본 vault 6/6 mandate 모두 종결 — 응용 진입 결단 ⭐⭐⭐
+
+본 vault `프로젝트_보드한계모델/` 6 mandate (v2.4 + v2.5 + v2.6 + v2.7 + v2.8 + v2.9) 모두 종결 → **응용 진입 직전 마지막 측정 mandate 완성**. 사용자 결단 시점:
+- **b 영업 데모 진입** — 5계열 매트릭스 + Hybrid SoC + Cortex-M tier 최강 결정타 → Stage 4 영업 자료 결정타 완비
+- **c 양산 진입** — AI FanStick Premium Plus 4 tier (mandate v2.7 4 tier carrier) + STM32H7 B2B path 추가
+
+자세히 [[stm32h745-disco]] · [[2026-05-27_Cortex-M-tier-최강-AI-노드]].
 
 # UTTEC 영업 패키지 (4.5-Stage)
 
