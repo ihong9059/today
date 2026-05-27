@@ -2,7 +2,34 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-27 (Wave 14 흡수 — R36 ✅ + mandate v2.9 종결 + 본 vault 6/6 mandate 모두 종결 + Cortex-M tier 최강 AI 노드 박제)
+updated: 2026-05-27 (외주(도급) 필터 v3 cascade — wishket-claude #002 in_reply_to #001 흡수 + #155421 1.5억 외주 누락 사고 박제 + ID 단조 증가 가정 거짓 / Wave 14 흡수 R36 + mandate v2.9 종결 + 6/6 mandate 모두 종결)
+---
+
+## [2026-05-27] absorb ⭐⭐ | wishket-claude #2026-05-27-002 외주(도급) 필터 v3 cascade (in_reply_to #001)
+
+**사건**: wishket-claude 5/27 본일 `/wishket-check` catch-up 중 **#155421 (1.5억 / 200일 / 외주, 5/26 활성) 누락 사고** 발견 → mywiki #001 (5/27 09:00 SKILL 정정 가이드)에 대한 in_reply_to cascade 카드 발신.
+
+**핵심 정정 (v3 신설)**:
+- `wishketProject/.claude/skills/wishket-check/SKILL.md` § 3 **사전 단계 — 외주(도급) 필터 우선 확인** 신설 (`?employee_type=projc_term` WebFetch + 비공개 redirect 우회 + ID sequential 보조 격하)
+- today 측 SKILL.md 자동 동기 (inode 동일, 심볼릭/하드 링크)
+
+**누락 3축**:
+1. ID 1씩 sequential 검색이 단조 증가 가정에 의존 → `#155421` (5/26) < `#155593` (5/23) 비단조
+2. 본문 직접 fetch 비공개 redirect (PRIME·PRO·BOOST 한정 매칭)
+3. 외주 필터 페이지 미사용 → 비공개 우회 채널 누락
+
+**myWiki 갱신 6건**:
+- entities/위시캣활동.md § "2026-05-27 cascade — 외주(도급) 필터 사전 단계 v3 + #155421 누락 사고" 신설
+- gaps.md § "2026-05-27 — 외부 시스템 ID 단조 증가 가정 함정" 신설 (일반화: GitHub org PR / Notion DB / Asana 등 적용)
+- ai-direction.md 결정 15 신규 + 의미 14/15 추가 (검색 통로 다양화 원칙 + broker 양방향 in_reply_to 첫 사이클)
+- thoughts/2026-Q2/2026-05-27_위시캣-외주필터-사전확인-SOP.md 신설
+- memory `feedback_wishket_outsourcing_filter.md` 신설 + MEMORY.md 인덱스 갱신
+- log.md 본 entry 박제
+
+**multi-agent 의미**: **broker 양방향 + in_reply_to 첫 사이클** = vault 간 정정/보강 사이클 정착. 다음 사이클 출발점 후보 (n8n-claude prompt 권고 / wishketProject CLAUDE.md 신설 권고).
+
+**후처리**: 카드 → `_inbox/processed/` 이동 + status flip / ack_required=false (회신 불필요, 정보 공유성).
+
 ---
 
 ## [2026-05-27] absorb ⭐⭐ | R35 한국어 KWS detail + uttec-factory 세션 2+3 일괄 흡수 (broker 자동화 첫 부수 효과)

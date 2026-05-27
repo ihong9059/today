@@ -2,12 +2,25 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-05-26 (Wave 10/11/12/13 흡수 — STM32 11 함정 single-day cluster + mobile clang vectorizer 정책 negative + Zephyr API change carry-over silent breakage)
-tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change]
-links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory]
+updated: 2026-05-27 (위시캣 외주 필터 cascade — ID 단조 증가 가정 거짓 + #155421 1.5억 외주 누락 사고 + 검색 통로 다양화 원칙)
+tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴]
+links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, 2026-05-27_위시캣-외주필터-사전확인-SOP]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-05-27 — 외부 시스템 ID 단조 증가 가정 함정 (위시캣 #155421 누락) ⭐⭐
+
+`/wishket-check` 5/24 catch-up이 `#155593 ~ #155613` 검색 → **#155421 (1.5억 외주, 5/26 활성)을 시작 ID 미만으로 검색 범위 외** = 영업 손실 (잠재 Tier 2~3 외주 1건).
+
+| 함정 | 회피 |
+|---|---|
+| ID 1씩 sequential 검색이 **단조 증가 가정**에 의존 — 위시캣은 외주 풀 별도 채번 / 비공개→공개 전환 시 옛 ID 재노출 가능 | 카테고리/필터 페이지 우선 검색 (외주(도급) 필터 = `?employee_type=projc_term`), ID sequential은 보조 |
+| **비공개 redirect 함정** (PRIME/PRO/BOOST 한정 매칭) — 본문 fetch는 redirect되지만 목록 페이지는 비로그인 노출 | 등급별 매칭 인지 시 사용자 위시캣 등급 확인 트리거 + 목록 페이지로 우회 |
+
+**일반화 원칙**: 외부 시스템의 ID 단조 증가 가정은 검증 없이 신뢰 금지. catch-up 패턴 작성 시 카테고리/필터 페이지 우선 + ID sequential 보조. GitHub PR (organization-wide), Notion DB (UUID), Asana/Trello 카드 ID 등 다른 도메인에도 적용 가능.
+
+→ thought [[2026-05-27_위시캣-외주필터-사전확인-SOP]] + memory `feedback_wishket_outsourcing_filter.md` + entity [[위시캣활동]] § 검색 방식 진화.
 
 ## 2026-05-26 — STM32 14번째 보드 11 함정 single-day cluster ⭐⭐⭐ (Wave 12/13 흡수)
 

@@ -2,7 +2,7 @@
 title: n8nUttec vault — UTTEC n8n 자동화 학습+사업화
 type: entity
 created: 2026-05-16
-updated: 2026-05-16
+updated: 2026-05-27 (실제 경로 stale 정정 `/uttec/n8nUttec/` → `/project/n8nUttec/` + 사용자 work-start 활성화 9일 정지 종료 + wishket cascade §6-3 카드 #003 발신 = 외주(도급) 필터 cron 09:00 반영 권고)
 status: ✅ vault foundation v1.0 + n8n-claude 합류 완료 (5/16) / Phase 1 학습 진행 가능
 tags: [vault, n8n, automation, multi-agent, n8n-claude, ubuntu, uttecAutomation, 사업화]
 links: [n8n, ai-direction, ai-fanstick, 영업전략, 회사소개, claude-code, revita]
@@ -21,7 +21,7 @@ links: [n8n, ai-direction, ai-fanstick, 영업전략, 회사소개, claude-code,
 | 항목 | 값 |
 |---|---|
 | 호스트 | Ubuntu 22.04 (Mac→Linux 컨버전, MBP11,4 i7-4770HQ 16GB) |
-| 절대 경로 | `/home/uttec/uttec/n8nUttec/` |
+| 절대 경로 | `/home/uttec/project/n8nUttec/` (5/27 정정 — 기존 stale path `/uttec/n8nUttec/` 폐기) |
 | 접속 | `ssh ubuntu` (Tailscale 100.90.158.36 / LAN 192.168.0.7) |
 | Claude 식별자 | `n8n-claude` |
 | git repo | (예정) ihong9059/n8nUttec (private) |
@@ -40,7 +40,7 @@ n8n Docker 컨테이너(`~/n8n/`, 5/15 가동)는 **런타임**. 본 vault는 **
 ## vault 폴더 구조 (5/16 신설)
 
 ```
-/home/uttec/uttec/n8nUttec/         ← Ubuntu, 별도 git repo 예정
+/home/uttec/project/n8nUttec/       ← Ubuntu, 별도 git repo `ihong9059/n8nUttec` (private)
 ├── README.md                       진입점
 ├── CLAUDE.md                       schema + workflow JSON 박제 정책 + multi-agent
 ├── log.md                          시간순 (학습+워크플로우+흡수 통합)
@@ -90,7 +90,7 @@ n8n Docker 컨테이너(`~/n8n/`, 5/15 가동)는 **런타임**. 본 vault는 **
 mywiki-claude (today/myWiki, Windows)         ← 학습·도구·범 사업 허브
 ├── revita-claude (revitaProject, Windows)    ← REVITA 제품
 ├── ondevice-claude (/todo/onDevice_AI, Win)  ← AI FanStick + Stage 4
-└── n8n-claude (Ubuntu /uttec/n8nUttec)       ⭐ 본 vault (5/16 신규)
+└── n8n-claude (Ubuntu /project/n8nUttec)    ⭐ 본 vault (5/16 신규)
 ```
 
 n8nUttec ↔ myWiki 흡수 패턴:

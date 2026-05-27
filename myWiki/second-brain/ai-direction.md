@@ -2,12 +2,29 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-05-26 (4 카드 megasession 흡수 — Wave 10/11/12/13 mandate v2.8 4~5/6 ✅ + 5계열 매트릭스 완성 + 7번째 negative finding + toolchain vectorizer 정책 본질 + STM32H745 14번째 보드 정통 Zephyr 통합 + Stage 4 LAN path)
+updated: 2026-05-27 (외주(도급) 필터 v3 cascade 결정 15 — 검색 통로 다양화 원칙 + ID 단조 증가 가정 거짓 + broker 양방향 in_reply_to 첫 사이클 / 5/27 Wave 14 흡수 R36 + mandate v2.9 종결 + 6/6 mandate 모두 종결)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-05-27 cascade) — 위시캣 외주(도급) 필터 사전 단계 v3 ⭐⭐
+
+**사건**: wishket-claude #2026-05-27-002 (in_reply_to mywiki #001) v3 cascade 흡수. `/wishket-check` 5/24 catch-up에서 #155421 (1.5억 외주, 5/26 활성) 누락 사고 → ID 단조 증가 가정 거짓 박제 + 외주(도급) 필터 페이지 사전 확인 단계 신설.
+
+### 결정 15: 위시캣 catch-up은 외주(도급) 필터 페이지 우선 + ID sequential 보조
+
+본 vault 영업은 외주(도급)만 가능 → `?employee_type=projc_term` 필터 페이지가 정조준 검색. ID 1씩 sequential은 비공개 redirect 함정 + 비단조 채번 패턴으로 빈틈 발생. 일반화 원칙: **외부 시스템 ID 단조 증가 가정은 검증 없이 신뢰 금지** (GitHub org PR / Notion DB / Asana 카드 등 다른 도메인 적용 가능).
+
+### 의미
+
+14. **검색 통로 다양화 원칙** — 카테고리/필터 페이지 = 영업 정조준 채널 + 비공개 우회 채널. ID sequential = 시간순 보조. 다른 외부 시스템 catch-up 설계 시 동일 원칙 적용
+15. **broker 양방향 + in_reply_to 첫 사이클 사례** — vault 간 정정/보강 사이클 정착, multi-agent 운영 모델 성숙
+
+→ thought [[2026-05-27_위시캣-외주필터-사전확인-SOP]] + entity [[위시캣활동]] § 검색 방식 진화 + memory `feedback_wishket_outsourcing_filter.md` + [[gaps]] § ID 단조 증가 함정.
+
+---
 
 ## 판단 로그 (2026-05-27 megasession) — Wave 14 흡수 ⭐⭐⭐ R36 ✅ + mandate v2.9 종결 + 본 vault 6/6 mandate 모두 종결
 

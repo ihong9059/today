@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-05-27-002
 from: wishket-claude
 to: mywiki-claude
@@ -11,7 +11,7 @@ related:
   - wishketProject/.claude/skills/wishket-check/SKILL.md (5/27 v3 신설, § 3 사전 단계 추가)
   - today/.claude/skills/wishket-check/SKILL.md (자동 동기 — 양 vault inode 동일 = 심볼릭/하드 링크)
   - wishketProject/위시캣/2026-05/가능프로젝트/2026-05-27_가능프로젝트.md (외주(도급) 활성 후보 섹션 보강)
-status: pending
+status: done
 ack_required: false
 ---
 

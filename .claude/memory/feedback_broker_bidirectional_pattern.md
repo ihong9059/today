@@ -15,10 +15,10 @@ originSessionId: 79c08776-ba5b-46d3-a9fd-cea60372b44b
    - push (myWiki → 분산): `today/.claude/hooks/push-multi-agent-pending.py`
    - 자동 호출: `today/.claude/skills/work-end/SKILL.md § 6-Z` (git commit 직전)
 
-2. **라우팅 (5/27 시점 활성)**:
-   - **ssh+scp**: factory-rpi4 (100.109.84.79) + shield-rpi4 (100.110.51.14)
+2. **라우팅 (5/27 11:00 시점 활성)**:
+   - **ssh+scp**: factory-rpi4 (100.109.84.79) + shield-rpi4 (100.110.51.14) + **n8n-claude (100.90.158.36)** ⭐NEW 5/27
    - **본 PC vault file copy**: ondevice / wishket / lemonlabs / uttechome / search / revita (6 vault)
-   - **미정의**: n8n / uttec-vault / uttec-search / uttec-rag-local (오늘 todo #12에서 확장 예정)
+   - **미정의**: uttec-vault / uttec-search / uttec-rag-local (필요 시 추가)
 
 3. **카드 발신 컨벤션**:
    - frontmatter `to:` 필드 기준 자동 라우팅 (예: `to: mywiki-claude`, `to: ondevice-claude`)
@@ -34,6 +34,13 @@ originSessionId: 79c08776-ba5b-46d3-a9fd-cea60372b44b
    - frontmatter 없는 legacy 카드 (수동 정리)
    - 본 PC 외부 vault인데 ssh 미설정 (라우팅 추가 전)
 
+6. **fact-check 룰** ⭐ (5/27 §6-4 발견 박제):
+   - 발신측 vault 자체 점검 미흡 → in_reply_to 카드 §"잔여 결단" 박제 시 자기 진행상황 누락 가능 (사례: wishket-claude #002 §6-4가 09:01에 자기 vault CLAUDE.md 신설했음에도 09:58 카드 작성 시 "결단 보류 중"으로 기재)
+   - **수신측 (mywiki-claude) 처리 룰**: 카드 §"권고/결단 후보"에 따라 새 카드 발신 또는 vault 측 작업 트리거 직전, **발신측 vault 실제 상태 cross-check** (파일 존재, mtime, git log 등) → stale 결단이면 카드 발송 회피 + thought/entity에 "stale 결단 확인" 박제
+   - 일반화: 카드 작성 시 자기 vault 진행상황 자체 점검 + 수신측은 trust-but-verify 적용
+
 **관련 사건**:
 - 5/26 야간 broker 첫 진화 (factory-rpi4 join + shield 9 outbound 일괄 흡수)
+- 5/27 n8n-claude 라우팅 활성화 (push 스크립트 line 43 주석 → 실 라우팅, scp 발송 검증 후 자동화 전환)
+- 5/27 §6-4 fact-check 발견 = wishket-claude CLAUDE.md 자율 신설 stale 결단 + 룰 6 신설
 - onDevice_AI/_outbox/ (`_outbox` 경로 컨벤션) ↔ broker가 사용하는 `_inbox/outbound` 차이 — onDevice_AI 라우팅 추가 시 어댑터 필요
