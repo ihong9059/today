@@ -2,8 +2,38 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-28 (megasession 7장 흡수 — ondevice R37 정정 cascade + R36 paired-check + 04_종합비교 23§ + 영업카피 cascade + revita ingest #10/#11 / 박제 정확성 SOP + vendor 광고 cross-check 5단계 정책 + IQC 자동화 인프라 thought 신설 / 누적 빌드 함정 47 → 50건 / negative finding 6건 유지 R37 제외 / broker revita 라우팅 path 정정)
+updated: 2026-05-28 (megasession 7장 흡수 + ondevice-claude AI test 우선순위 통보 카드 발송 — 사용자 onDevice_AI vault 진입 직전)
 ---
+
+## [2026-05-28] ingest ⭐⭐⭐ | DGIST ESCO사업 LED 조명제어 신규사업 진입 (Tier 1, 듀얼 시스템 기술 제안 4문서 작성)
+
+**컨텍스트**: ESCO 사업자가 UTTEC에 DGIST 사업설명서 (시방서 page 31~33) 관련 기술자료 요청 — §2.1 IR 통신 LED 센서등 (354등) + §2.2 IoT 기반 무선 조명제어 (917등) 듀얼 시스템 계통도·구현 방법.
+
+**결정**: BLE Mesh (§2.2, 일본 자전거주차장 사례 참조) + IR chain (§2.1, UTTEC 자체 NEC v2 확장 32bit 프로토콜 설계) 듀얼 시스템 제안. 통합 관제는 Node-RED + InfluxDB + Grafana (UTTEC n8n broker carry).
+
+**산출물**: `C:/todo/today/신규사업/DGIST_ESCO_LED제어/` 폴더 신설 + 4 메인 문서 + 원본자료 발췌:
+1. README.md (개요, 협력 모델 A/B/C/D)
+2. 01_시스템개요.md (통합 계통도, 역할 분담, 시방서 매핑)
+3. 02_BLE_Mesh_IoT_제어시스템.md (§2.2 BLE Mesh 1.1, Light LC Server, AES-CCM, 일본 Jinnan campus 자전거주차장 사례)
+4. 03_IR_통신_그룹제어시스템.md (§2.1 NEC v2 확장 프로토콜, chain TTL 3 hop, DIP 5bit + 22키 리모컨)
+5. 04_계통도_및_구현방법.md (통합 BOM 2,260만원, Phase 0~8 7개월 일정, KC/KCC, ESG 절감률 매핑)
+6. 원본자료/시방서_2장_LED제어_원문발췌.md
+
+**myWiki 흡수**: `entities/dgist-esco-led.md` 신설 (Tier 1 단발 SI, 협력 모델 확정 시 Tier 2/3 승격 후보) + 작업보고서 #15 todo 추가.
+
+**carry 자산**: STM32H745 14번째 보드 (Cortex-M tier AI) + nRF52 14 보드 매트릭스 (BLE Mesh) + 빌드 함정 50건 cross-vendor 인벤토리 + IQC 자동화 4축 패턴 (양산 검증) + n8n broker (관제 SW).
+
+**의미**: UTTEC ESCO 직접 입찰 부적합 (등록 부재) → ESCO 사업자 협력 path로 진입. 본 vault 14 보드 매트릭스 + 50건 함정 인벤토리가 영업 차별화 자산으로 첫 직접 활용 사례.
+
+## [2026-05-28] route | ondevice-claude STM32H745I-DISCO AI test 권장 우선순위 4건 통보 (사용자 vault 진입 직전)
+
+**컨텍스트**: 사용자가 mywiki 세션에서 stm32h745-disco AI test 가능 항목 횡단 정리 요청 → 4 우선순위 도출 (🔴 R35 한국어 KWS + LCD + USB CDC / 🟠 CNN MNIST·Person detection / 🟡 AMP dual-core M7+M4 / 🟢 SLM Phi-2 Q4 QSPI XIP) → 사용자가 곧 onDevice_AI vault로 직접 이동하여 ondevice-claude와 협의·결단 예정. 본 vault는 사전 컨텍스트 정리 통보 (type: done, priority: high).
+
+**카드**: `2026-05-28-003-ondevice-claude-stm32h745-ai-test-우선순위-통보.md` (broker push 완료, ondevice/_inbox/pending/ 도달 + outbox-staging/sent-archived/ 사본 보관).
+
+**ondevice-claude 행동 가이드**: 사용자 도착 전 사전 결정 금지, 도착 시 즉시 R35+R36 carry 컨텍스트 + 인프라 PoC 5건 + STM 함정 15건 cross-link 가용 상태로 대기.
+
+**5/28 본 vault 박제 cascade 매칭**: stm32h745-disco entity (M4 positive 정정 + M7 IPC 1.78× + STM-15 신규 함정) → AI test 권장 #1 = R35 KWS 응원봉 PoC (영업 결정타).
 
 ## [2026-05-28] absorb ⭐⭐⭐ | megasession 7장 흡수 — ondevice 5장 (R37 정정 cascade + R36 paired-check + 04_종합비교 23§ + 영업카피) + revita 2장 (ingest #10/#11)
 
