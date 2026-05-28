@@ -2,12 +2,32 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-05-28 (R37/R36 baseline artifact 정정 사이클 — 추정값 cross-check 부재 + STM-15 INFO emit cache 영향 + 04_종합비교 vendor 광고 cross-check 누락 49건 정정)
-tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale]
-links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
+updated: 2026-05-28 (R38 흡수 — STM-16 Zephyr fmc_sdram Kconfig 함정 + dts upstream 박제 정정 패턴: SFDP 실측 vs dts 정의 격차 64→128MB)
+tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream]
+links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-05-28 — Zephyr stm32 fmc_sdram driver Kconfig 활성 누락 (STM-16) ⭐
+
+R38 Phase A 진입 시 발현. dts node `status="okay"`만으로 SDRAM access 시 Imprecise BUS FAULT → ZEPHYR FATAL ERROR 26. build·boot 정상이라 사전 검출 불가.
+
+| 함정 | 회피 |
+|---|---|
+| Zephyr stm32 family SDRAM 사용 시 dts node만 활성하고 `prj.conf` Kconfig 누락 → 첫 access 시 panic, no recovery | `prj.conf`에 `CONFIG_MEMC=y + CONFIG_MEMC_STM32_SDRAM=y` 추가 (FLASH +1.5KB). dts + Kconfig **양쪽** 활성 체크리스트 박제 |
+
+→ entity [[build-gotcha-inventory]] § STM-16 + 다른 STM32 + SDRAM 보드 (H7Sx / H7Bx / F4xx) 동일 패턴.
+
+## 2026-05-28 — dts upstream 정의 vs SFDP 실측 격차 (Macronix QSPI 64→128MB) ⭐⭐
+
+Zephyr upstream `boards/st/stm32h745i_disco/...dts` line 47-50 `DT_SIZE_M(64)` + ST UM2381 (MX25LM51245G 512Mbit) 박제 → **SFDP 실측 128 MiByte** (MX66LM1G45G 1Gbit 추정). 본 vault도 5/27 Wave 14 흡수 시점에 dts 기반 "64MB" 박제했다가 R38 정정.
+
+| 함정 | 회피 |
+|---|---|
+| 보드 메모리 capacity 박제 시 vendor user manual + Zephyr dts upstream만 신뢰 → 실제 보드 revision 차이 / SFDP 실측 격차 잔존 | 측정 가능한 자원 (Flash / RAM / Clock / PHY) 박제 시 **실측 검증 우선** (Zephyr boot log / SFDP / measurement) + dts·UM 사용 시 † footnote ("dts upstream 기반, SFDP 미실측") |
+
+→ thought [[2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]] + entity [[stm32h745-disco]] § R38 absorb + [[ai-fanstick]] § 시나리오 E 박제 정정.
 
 ## 2026-05-28 — baseline 추정값 cross-check 부재 함정 (R36/R37 artifact 정정 사이클) ⭐⭐⭐
 

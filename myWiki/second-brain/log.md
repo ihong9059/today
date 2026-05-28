@@ -2,8 +2,53 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-28 (megasession 7장 흡수 + ondevice-claude AI test 우선순위 통보 카드 발송 — 사용자 onDevice_AI vault 진입 직전)
+updated: 2026-05-28 (megasession #2 3장 흡수 — ondevice R38 SDRAM+QSPI 정량 실증 + Stage 4 broker 영업자료 갱신 + wishket 크몽 heartbeat)
 ---
+
+## [2026-05-28] absorb ⭐⭐⭐⭐ | megasession #2 3장 흡수 — ondevice R38 SDRAM+QSPI 정량 실증 (mywiki 권장 #4 70% 완성) + Stage 4 broker 영업자료 갱신 + wishket 크몽 heartbeat
+
+**사건**: 5/28 megasession #1 (오전~오후 R37 정정 cascade + 04_종합비교 + 영업카피 + revita ingest 7장) 종료 후 저녁 시점 _inbox/pending/에 3장 신규 카드 누적 → 5/28 megasession #2 흡수 (단일 트랙). 5단계 lifecycle 모두 완료 + 회신 카드 2장 발신 (ondevice + wishket).
+
+### A. ondevice #002 R38 SDRAM+QSPI 정량 실증 흡수 ⭐⭐⭐⭐
+
+mandate v2.10 R38 진입 (5/28 오후 4시간 단일 세션, ondevice-claude 측). mywiki 권장 #4 (SLM Phi-2 mini Q4 QSPI XIP) 부분 정량 실증 4 Phase 완료 (A SDRAM read / B QSPI throughput / C D-cache / D SDRAM weights forward):
+
+- **QSPI 64 → 128 MB 박제 정정** (SFDP 실측, MX25LM51245G 512Mbit → MX66LM1G45G 1Gbit 추정). 총 Flash XIP 65 → **129 MB**. Zephyr upstream dts `DT_SIZE_M(64)` + ST UM2381 모두 upstream 정정 필요 → upstream PR 기여 후보
+- **Phi-2 mini Q4 50MB 적재 정량 실증** — boot 3.22s / 15.51 MB/s throughput. multi-SLM capacity 2× 적재 가능
+- **3-tier 메모리 모델 정량 정의** — DTCM 128KB (1.0×) + SDRAM 8MB (1.28× slow only) + QSPI 128MB (15.51 MB/s) + D-cache SDRAM 4.19× / DTCM 2.82×
+- ⭐⭐⭐ **Phase D 영업 결정타** — 857K params MLP SDRAM 배치 forward = 10.1ms, latency ratio 18.14× < param ratio 20.29× = **11% 더 효율적**. "SLM SDRAM 적재 = DTCM 적재와 거의 동등 효율" 영업 카피 신설
+- **STM-16 신규 함정** — Zephyr stm32 fmc_sdram driver Kconfig 필수 (`CONFIG_MEMC=y + CONFIG_MEMC_STM32_SDRAM=y`). dts node `status="okay"`만으로 부족. STM 함정 15 → **16건**, 누적 cross-vendor 50 → **51건**
+
+### B. ondevice #001 Stage 4 영업 자료 broker 갱신
+
+`C:\todo\today\영업\Stage4_OnDeviceAI_검토.md` 최상단에 "2026-05-28 R38 cascade 흡수" § 신설 (시나리오 4 → 5 / 6계열 매트릭스 / R36/R37/R38 / 7 negative finding / STM-15/16 / vendor 가격 갱신 / cross-check 5단계). `single_source_of_truth` frontmatter 신설 (onDevice_AI vault `business/entities/AI_FanStick.md` + mywiki entity 5건 단일 출처).
+
+### C. wishket #003 크몽 등록가이드 heartbeat
+
+향후 트리거 3건 박제 대기 (첫 판매 도달 → `entities/크몽활동.md` 신설 / 사이트 등록 완료 → 사이트 URL + 상품 ID 박제 / UTTEC 사업자 등록 → 세금계산서 발행 영역 영업 자산 확장).
+
+### D. mywiki 측 cascade (entity 5건 + supporting 3건)
+
+| 영역 | 박제 |
+|---|---|
+| entity 5건 | stm32h745-disco § R38 absorb / ai-fanstick § 시나리오 E 5 항목 우위 / uttec-stage-package § 시나리오 E QSPI 65→129MB 정정 / onDevice-ai § R38 quote / build-gotcha-inventory § STM-16 |
+| gaps.md | § STM-16 + § dts upstream vs SFDP 실측 격차 |
+| ai-direction.md | 결정 19 (3-tier 메모리 영업 결정타) + 결정 20 (dts upstream contribution 가치) |
+| thought | `thoughts/2026-Q2/2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증.md` 신설 |
+
+### E. 후처리
+
+- 3장 _inbox/pending → processed/ + status: pending → done flip
+- 회신 카드 2장 발신 (`outbox-staging/2026-05-28-004` ondevice ack + `2026-05-28-005` wishket ack)
+- broker push 자동 라우팅 → `C:/todo/onDevice_AI/_inbox/pending/` + `C:/todo/wishketProject/_inbox/pending/` 도달 확인 ✅
+
+### carry 자산 (다른 vault 적용 가능)
+
+- ⭐⭐⭐⭐ **3-tier 메모리 모델 정량 실증 패턴** — Cortex-M tier 영업 결정타 자산. 다른 Cortex-M family (H7Sx / H7Bx / 추후 진입) measurement 시 동일 정량 패턴
+- ⭐⭐⭐ **SDRAM weights forward penalty zero finding** — single read와 다른 actual workload 측정 필수성 carrier
+- ⭐⭐ **dts upstream vs SFDP 실측 격차** — vendor upstream 박제 오류 발견 시 upstream PR 기여 path (governance + community 기여 확장)
+- ⭐⭐ **STM-16 fmc_sdram Kconfig carrier** — 다른 STM32 + SDRAM 보드 (F4xx + SDRAM HAL 등) 동일 패턴
+- ⭐ **broker 양건 동시 흡수 패턴** — 단일 megasession에서 R38 entity cascade + 외부 영업 자료 broker 갱신 동시 처리 효율 carry
 
 ## [2026-05-28] ingest ⭐⭐⭐ | DGIST ESCO사업 LED 조명제어 신규사업 진입 (Tier 1, 듀얼 시스템 기술 제안 4문서 작성)
 

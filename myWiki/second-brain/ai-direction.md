@@ -2,12 +2,40 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-05-28 (R37/R36 baseline 정정 사이클 — 결정 16 박제 정확성 SOP + 결정 17 vendor 광고 cross-check 5단계 정책 / 결정 18 사용자 challenge = 정정 trigger 가치 박제 / 6 negative finding 유지 R37 제외)
-tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger]
-links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
+updated: 2026-05-28 (R38 SDRAM+QSPI 정량 실증 — 결정 19 3-tier 메모리 모델 정량 실증 후 Cortex-M tier 영업 기준 변경 / 결정 20 dts upstream 정정 == upstream contribution 가치 박제)
+tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측]
+links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-05-28 cascade #2) — R38 SDRAM+QSPI 정량 실증 → 3-tier 메모리 영업 결정타 ⭐⭐⭐⭐
+
+**사건**: ondevice-claude 카드 #2026-05-28-002 흡수. mywiki 5/28-003 통보 (STM32H745 AI test 4 우선순위) → 사용자 옵션 b 결단 → mandate v2.10 R38 진입 (5/28 14:00~18:30 단일 세션). mywiki 권장 #4 (SLM Phi-2 mini Q4 QSPI XIP) 부분 정량 실증 4 Phase 완료. QSPI 64MB → 128MB 박제 정정 + Phi-2 50MB 적재 boot 3.22s 정량 실증 + 3-tier 메모리 모델 + Phase D SDRAM weights MLP forward penalty 거의 zero finding + STM-16 신규 함정.
+
+### 결정 19: ⭐⭐⭐ 3-tier 메모리 모델 정량 실증 → Cortex-M tier 영업 결정타 신설
+
+옛 박제 "Cortex-M 단일 칩 SLM 50~60MB 적재 가능 가설" → ✅ **정량 실증**:
+- DTCM 128KB (1.0×) + SDRAM 8MB (1.28× slow only) + QSPI 128MB (15.51 MB/s)
+- D-cache 효과 SDRAM 4.19× / DTCM 2.82× (DTCM도 D-cache 효과 큼 — 본 vault 가정 "DTCM = single-cycle 미미" 반증)
+- Phase D 결정타: 857K params MLP SDRAM 배치 forward = 10.1ms / latency ratio 18.14× < param ratio 20.29× → SDRAM penalty 거의 zero (11% 더 효율적)
+
+→ Stage 4 시나리오 E "5 항목 우위" (4 → 5) 박제 + 영업 카피 신설 "SLM SDRAM 적재 = DTCM 적재와 거의 동등 효율". 다른 Cortex-M tier 보드 (H7Sx / H7Bx / 추후 진입할 family) measurement 시 동일 3-tier 메모리 정량 패턴 적용.
+
+### 결정 20: ⭐⭐ dts upstream 정정 == upstream contribution 가치 박제
+
+R38에서 발견: Zephyr upstream `boards/st/stm32h745i_disco/...dts` line 47-50 `DT_SIZE_M(64)` + ST UM2381 (MX25LM51245G 512Mbit) → **SFDP 실측 128 MiByte** (MX66LM1G45G 1Gbit 추정). upstream PR 기여 후보.
+
+**일반화 원칙**: 본 vault measurement 사이클에서 vendor upstream 박제 오류 발견 시 → (1) 본 vault 정정 박제 + (2) upstream PR 기여 후보로 등재. governance 신뢰성 자산 외에 upstream community 기여로 확장 — R&D 시연 자산 + 회사 reputation 강화 path.
+
+### 의미 (5/28 추가 #2)
+
+19. **3-tier 메모리 모델 정량 실증** — Cortex-M tier 영업 결정타 (DTCM + SDRAM + QSPI XIP) 정량 박제. SLM SDRAM 적재 penalty zero finding이 Phi-2 50MB 적재 가능성 영업 결정타로 carry
+20. **dts upstream 정정 == upstream contribution 가치** — measurement 사이클에서 vendor upstream 오류 발견 시 upstream PR 기여 후보 등재 (governance + community 기여 path)
+
+→ thought [[2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]] + entity [[stm32h745-disco]] § R38 absorb + [[ai-fanstick]] § 시나리오 E 5 항목 우위 + [[uttec-stage-package]] § 시나리오 E 박제 정정 + [[build-gotcha-inventory]] § STM-16.
+
+---
 
 ## 판단 로그 (2026-05-28 cascade) — R37/R36 baseline 정정 사이클 + 04_종합비교 영업카피 정정 ⭐⭐⭐
 

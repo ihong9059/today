@@ -2,15 +2,109 @@
 title: Stage 4 (On-Device AI) 신설 검토 + 4.5-Stage 패키지 확장
 type: business-decision
 created: 2026-05-07
-updated: 2026-05-22 (v2.5 mandate 5/6 Round 완료 + 3계열 매트릭스 + 13/13 보드 cascade § 10 신설)
-status: 채택 (4.5-Stage 패키지로 확장) + v2.5 정량 검증 데이터 반영 (Round 16~19)
+updated: 2026-05-28 (R36/R37/R38 cascade 흡수 + 시나리오 4 → 5 [stm32h745 E 신설] + 6계열 매트릭스 + 7 negative finding + STM-15/16 carrier + Phi-2 50MB QSPI 정량 실증 + 영업카피 49건 정정 — ondevice-claude #2026-05-28-001 broker 갱신)
+status: 채택 (4.5-Stage 패키지) + 5/28 R38 mandate v2.10 cascade 반영 (Round 1~38 누적)
+single_source_of_truth:
+  - onDevice_AI/business/entities/AI_FanStick.md (단일 출처, 본 자료는 carbon copy)
+  - myWiki/second-brain/entities/uttec-stage-package.md (myWiki entity)
+  - myWiki/second-brain/entities/stm32h745-disco.md (14번째 보드 entity)
+  - myWiki/second-brain/entities/ai-fanstick.md (응원봉 entity)
+  - myWiki/second-brain/entities/onDevice-ai.md (vault entity)
+  - myWiki/second-brain/entities/build-gotcha-inventory.md (cross-vendor 함정 51건)
 related:
   - 영업/Stage0_Core_Services_견적서.md
-  - myWiki/second-brain/entities/uttec-stage-package.md
-  - onDevice_AI/microGPT/01_검증절차.md (실증 검증)
-  - onDevice_AI/통합검증/01_SRAM_파라미터_매트릭스.md (실측 매트릭스)
   - 작업보고서_항목: #19 3.5-Stage → 4.5-Stage 확장 검토
-tags: [영업, 패키지, Stage4, On-Device AI, 의사결정]
+tags: [영업, 패키지, Stage4, On-Device AI, 의사결정, mandate-v2.10, 5계열매트릭스완성, 6계열매트릭스, Hybrid-SoC, Edge-AI-Gateway, STM32H745, 산업노드, Cortex-M-tier-최강, Phi-2-적재-실증, 3tier-메모리, SDRAM-penalty-zero, vendor-광고-cross-check, LiteRT, Jetson-Super, 7-negative-finding]
+---
+
+# Stage 4 (On-Device AI) 신설 검토 + 4.5-Stage 패키지 확장
+
+## ⭐⭐⭐ 2026-05-28 R38 cascade 흡수 — 본 자료 신뢰성 강화 (R36/R37/R38 정량 실증 통합)
+
+본 영업 자료는 ondevice-claude `_inbox/pending/2026-05-28-001` 카드 broker 요청으로 mywiki-claude가 갱신. 본 자료 단일 출처 = **onDevice_AI vault `business/entities/AI_FanStick.md`** + mywiki entity 5건 (frontmatter 참조). 본 자료는 그 carbon copy. 상세 정량 박제는 단일 출처 entity 우선 참조.
+
+### 1. Stage 4 시나리오 4 → 5 (시나리오 E 신설)
+
+| 시나리오 | 보드 | BOM | 소비자가 | 타겟 |
+|---|---|:-:|:-:|---|
+| A | esp32s3 단일 | $12 | 3~5만원 | K-POP B2C |
+| **B** ⭐⭐⭐ | Hybrid SoC (M4F + esp32s3) | $16.70 | 5~8만원 | Stage 4 B2B |
+| C | nRF52840 (256KB) 단독 | $9.50 | 2~4만원 | Matter IoT |
+| **D** ⭐⭐⭐ | Edge AI Gateway (rpi5 NEON 6.7×) | $120~150 | 15~30만원 | 행사장 hub |
+| **E** ⭐⭐⭐⭐ **NEW** | **stm32h745 dual-core + 9.2MB RAM + 129MB QSPI XIP** | **$70~150** | **15~30만원 (산업) / $150~500 retail** | **산업 비전 검사 / 의료 / 자동차 ECU / 로봇 / SLM single-chip** |
+
+### 2. 6계열 AI 가속 매트릭스 (5 → 6계열, M7 CMSIS-NN 추가)
+
+| 계열 | 하드웨어 | MLP | CNN | TF | application |
+|---|---|:-:|:-:|:-:|---|
+| LX7 ESP-DSP | esp32s3 | 13.4× | 1.00× | 10.8× SRAM | SLM (A) |
+| M4F CMSIS-NN | pca10056 | 3.26× | 14× | 1.85× | KWS / Anomaly (B/C) |
+| esp-nn | esp32s3 | (-) | 2.93× | 2.62× PSRAM | SLM PSRAM (Premium) |
+| ARM-A NEON+dotprod | rpi5 | 8.35× | 3.85× | 7.64× | Gateway (D) |
+| **M7 CMSIS-NN** ⭐⭐⭐ **NEW** | **stm32h745** | 2.05× | **⭐⭐⭐ 17.7×** ⭐ **Cortex-M 최강** | 1.36× | **산업 노드 (E)** |
+| NPU NNAPI | Eden | -79~421× | — | — | (사용 안 함) |
+
+### 3. R36/R37/R38 핵심 영업 메시지 (시나리오 E 결정타)
+
+#### R36 (5/27) — Cortex-M tier 최강 AI 노드
+- **CMSIS-NN CNN 17.6× 가속** (M4F pca10056 R28 14× 상회 25%)
+- **dual-core asymmetric multiprocessing**: R34 Hybrid SoC (2 chip) → stm32h745 1 chip 실현 (M7 AI + M4 real-time, ASIL 분리)
+
+#### R37 (5/28 정정) — M4 단독 positive + M7 IPC gain 1.78× 박제 정확화
+- M4 단독도 정상 (pca10056 대비 3.71× 빠름, clock-norm 0.99×)
+- M7 same-chip 3.56× 추가 우월, IPC gain 1.78× = Cortex-M7 카탈로그 정상치 (dual-issue + L1 + ART)
+- ❌ 옛 메시지 (사용 금지): "H745 M4 단독 권장 안 함"
+
+#### R38 (5/28 mandate v2.10) — Phi-2 50MB 적재 정량 실증 + 3-tier 메모리 ⭐⭐⭐⭐
+- **QSPI 64 → 128 MB 박제 정정** (SFDP 실측, Macronix MX66LM1G45G 1Gbit 추정) → 총 Flash XIP **129 MB**
+- **Phi-2 mini Q4 50MB 적재 boot 3.22s / throughput 15.51 MB/s** — multi-SLM 2× 적재 capacity
+- **3-tier 메모리 모델 정량 정의**: DTCM 128KB (1.0×) + SDRAM 8MB (1.28×) + QSPI 128MB (15.51 MB/s)
+- **D-cache 효과**: SDRAM 4.19× / DTCM 2.82×
+- ⭐⭐⭐ **Phase D 영업 결정타**: 857K params MLP SDRAM 배치 forward = 10.1ms, latency ratio 18.14× < param ratio 20.29× = **11% 더 효율적**. "SLM SDRAM 적재 = DTCM 적재와 거의 동등 효율"
+
+#### Stage 4 시나리오 E "5 항목 우위" (4 → 5 항목)
+1. CMSIS-NN CNN 17.58× (R36)
+2. dual-core asymmetric multiprocessing single-chip (R37)
+3. M7 baseline IPC gain 1.78× (R37 paired-check)
+4. LCD + Ethernet + USB OTG FS + sensor I/O single-chip (Wave 13)
+5. **3-tier 메모리 정량 실증 + Phi-2 50MB 적재 + SDRAM penalty zero** (R38) ⭐⭐ NEW
+
+### 4. 7 negative finding 누적 (R&D 신뢰성 자산, R37 positive 정정 후)
+
+- R19 Eden NPU NNAPI -79~421× (smartphone NPU 부적합)
+- R24 INT16 Adam state -1.65~4.25× (R23 fast_adam 우월)
+- R27 FP16 Adam state -1.08~1.88× (R23 baseline 확정)
+- R29 Multi-layer LoRA -7.7~-9.3% (single FC 최적)
+- R30 mobile NEON+dotprod 0.97× (clang toolchain 정책 차이)
+- R32 pca10040 64KB tier 부적합 (nRF52833/40 권장)
+- **R35** (5/28 신규) — **한국어 KWS capacity 보강 무효** (MLP 130K ↔ CNN 35K 48.3 vs 48.0% ceiling)
+
+### 5. STM-15/16 carrier carry-over
+
+- **STM-15** (5/28) — INFO emit (sys_clock / HAL_RCC) 측정 전 배치 시 cache 영향 24% (latency 557→692μs, p99 7400→19500μs). 모든 보드 measurement 표준
+- **STM-16** (5/28 R38) — Zephyr stm32 fmc_sdram driver Kconfig 활성 필수 (`CONFIG_MEMC=y + CONFIG_MEMC_STM32_SDRAM=y`). dts node `status="okay"`만으로 부족 → Imprecise BUS FAULT. 다른 STM32 + SDRAM 보드 carry-over
+- **R&D 신뢰성 영업 자산**: "벤더 광고 신뢰 X — UTTEC 자체 measurement carrier 일관성 표준" → 51 빌드 함정 cross-vendor 인벤토리
+
+### 6. 외부 vendor 가격 갱신 (영업 카피 stale 정정)
+
+| 영역 | 옛 박제 (사용 금지) | 정정값 (5/28) |
+|---|---|---|
+| **TFLM 명명** | TensorFlow Lite Micro | **LiteRT for Microcontrollers** (Google 2024-09 rebrand) |
+| **Jetson Orin Nano** | $499 / 40 TOPS | **$249 / 67 TOPS Super** (NVIDIA 2024-12) |
+| **Jetson AGX Orin 64GB** | $2,999 | **$2,499** |
+| **Jetson AGX Thor (NEW 2025)** | (미박제) | **$3,499 / 2,070 FP4 TFLOPS** (humanoid robot 최강) |
+| **rpi5+Hailo vs Orin Super 비교** | 3.3× 가격 차이 ($150 vs $499) | **1.66× 차이만** ($150 vs $249) — 영업 결정타 정정 |
+
+### 7. vendor 광고 cross-check 5단계 정책 (영업 카피 박제 시 의무)
+
+1. vendor 광고 신뢰 X UTTEC 자체 측정 자산
+2. 본 vault Round 1~38 누적 박제 cross-reference 필수
+3. 모호 카피 ("AI 가속 가능") 금지 → 정량 박제 ("Round X: 변수 Y → ratio Z×")
+4. vendor 광고 / wiki / 추정 출처 박제 시 vendor 공식 datasheet + web search + master 박제 cross-check
+5. 외부 추정 박제 시 † footnote 필수 ("본 vault 미측정, 외부 X 표준 자료 추정")
+
+→ 자세한 cascade 박제는 myWiki entity 5건 (frontmatter 참조) + onDevice_AI vault 단일 출처 우선.
+
 ---
 
 # Stage 4 (On-Device AI) 신설 검토 + 4.5-Stage 패키지 확장

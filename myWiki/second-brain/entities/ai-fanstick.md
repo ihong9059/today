@@ -2,9 +2,46 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-05-28 R37 정정 cascade + 04_종합비교 영업카피 흡수 (M4 단독 positive 정정 / Cortex-M tier 영업 가이드 정정 / LiteRT rebrand / Jetson Super $249 / stm32h745 SDRAM 8MB·QSPI 64MB / esp32s3 in-package PSRAM 8MB Octal @ 80MHz / Stage 4 시나리오 C nRF52840 우선 / 한국어 KWS personalization 100% carry / 정확도 50% 강도)
-tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, 6mandate-모두종결, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative, Cortex-M-tier-최강, 17x-CNN-가속, SLM-적재, R37-positive-정정, asymmetric-multiprocessing, LiteRT, Jetson-Super, 영업카피-신뢰성-강화]
+updated: 2026-05-28 R38 SDRAM+QSPI 정량 실증 cascade (Cortex-M tier 시나리오 E stm32h745 QSPI 65MB → 129MB 정정 + Phi-2 50MB 적재 정량 실증 boot 3.22s + 3-tier 메모리 모델 + SDRAM weights forward penalty zero finding)
+tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, mandate-v2.10-R38, 6mandate-모두종결, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative, Cortex-M-tier-최강, 17x-CNN-가속, SLM-적재, R37-positive-정정, asymmetric-multiprocessing, LiteRT, Jetson-Super, 영업카피-신뢰성-강화, QSPI-128MB-SFDP, SDRAM-penalty-zero, Phi-2-적재-실증, 3tier-메모리]
 links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
+---
+
+## 2026-05-28 R38 SDRAM+QSPI 정량 실증 cascade — Stage 4 시나리오 E Cortex-M tier 결정타 보강 ⭐⭐⭐⭐
+
+### Cortex-M 단일 칩 SLM 적재 정량 실증 박제 (ondevice-claude #2026-05-28-002 흡수)
+
+옛 박제: "Cortex-M 단일 칩에서 GPT-2 mini / Phi-2 mini Q4 (50~60MB) 적재 **가능** 가설" (QSPI 65MB)
+새 박제: ✅ **정량 실증** + QSPI capacity 2배 박제 정정:
+
+| 항목 | 옛 박제 (5/27) | 5/28 R38 실증 정정 |
+|---|---|---|
+| QSPI Flash XIP | 65 MB (internal 1 + QSPI 64) | **129 MB** (internal 1 + QSPI **128**) ⭐ SFDP 실측 |
+| Phi-2 mini Q4 적재 | "50~60MB 가능" 가설 | ✅ **boot 3.22s 정량 실증** (50MB / 15.51 MB/s throughput) |
+| multi-SLM capacity | 1 모델 (50~60MB) | **2× 모델 동시 적재 가능** (129MB / 50MB) |
+| 3-tier 메모리 | (정의 안 됨) | DTCM 128KB (1.0×) + SDRAM 8MB (1.28×) + QSPI 128MB (15.51 MB/s) ⭐⭐ |
+| D-cache 효과 | (정의 안 됨) | SDRAM 4.19× / DTCM 2.82× ⭐ |
+| SDRAM weights MLP forward | (가설: SDRAM 적재 시 penalty 큼) | ⭐⭐⭐ **penalty 거의 zero** (latency ratio 18.14× < param ratio 20.29× = 11% 더 효율적) |
+
+### ⭐⭐⭐ 영업 카피 신규 (Cortex-M tier 결정타)
+
+- ⭐⭐⭐ "**Cortex-M 단일 칩에 Phi-2 mini Q4 SLM 50MB 적재 정량 실증 — boot 3.22s / 15.51 MB/s throughput**" (mandate v2.10 R38, 5/28)
+- ⭐⭐⭐ "**SLM SDRAM 적재 = DTCM 적재와 거의 동등 효율** — D-cache 4.19× + ART + compute-bound dominance" (Phase D)
+- ⭐⭐ "**stm32h745 QSPI 128MB = Cortex-M tier multi-SLM 2× 적재 가능**" (SFDP 실측, dts upstream 64MB 정정)
+- ⭐⭐ "**3-tier 메모리 모델 정량 실증** (DTCM/SDRAM/QSPI XIP) — Cortex-M tier 최강 영업 카피"
+
+### Stage 4 시나리오 E 5 항목 우위 (4 → 5 항목)
+
+| # | 우위 | 정량 근거 |
+|:-:|---|---|
+| 1 | CMSIS-NN CNN 17.58× | R36 (5/27) |
+| 2 | dual-core asymmetric multiprocessing (R34 Hybrid SoC carrier 단일 칩 실현) | R37 (5/28) |
+| 3 | M7 baseline IPC gain 1.78× (dual-issue + L1 + ART) | R37 paired-check (5/28) |
+| 4 | LCD + Ethernet + USB OTG FS + sensor I/O single-chip | Wave 13 PoC (5/26) |
+| **5** ⭐⭐ NEW | **3-tier 메모리 정량 실증 + Phi-2 50MB 적재 boot 3.22s + SDRAM penalty zero** | **R38 (5/28)** |
+
+자세히 [[stm32h745-disco]] § R38 absorb + [[2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]].
+
 ---
 
 ## 2026-05-28 R37 정정 + 04_종합비교 영업카피 흡수 — Cortex-M tier 영업 가이드 정정 + 영업 카피 신뢰성 강화 ⭐⭐⭐

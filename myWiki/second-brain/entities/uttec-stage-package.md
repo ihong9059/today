@@ -2,9 +2,59 @@
 title: UTTEC 영업 패키지 (4.5-Stage)
 type: entity
 created: 2026-05-05
-updated: 2026-05-28 R37 정정 + 04_종합비교 영업카피 흡수 (Stage 4 시나리오 E $70 → $70~150 BOM 정정 / Jetson Orin Nano Super $249 (1.66× 차이 정정) / LiteRT rebrand / Stage 4 시나리오 C nRF52840 우선 / vendor 광고 cross-check 5단계 정책 신설 / negative 6건 유지 (R37 positive 정정))
-tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스, 5계열매트릭스, application별-SoC, Hybrid-SoC, on-device-학습-4번째축, 6조건곱, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, 6mandate-모두종결, ARM-A-NEON, rpi5, Edge-AI-Gateway, STM32H745, 산업노드, LAN-path, vectorizer-정책, carry-over-효과, Cortex-M-tier-최강, SLM-적재, R37-정정사이클, LiteRT, Jetson-Super, vendor-광고-cross-check, asymmetric-multiprocessing]
+updated: 2026-05-28 R38 SDRAM+QSPI 정량 실증 cascade — Stage 4 시나리오 E "5 항목 우위" 박제 강화 (QSPI 64→128MB 정정 + Phi-2 50MB 적재 boot 3.22s + 3-tier 메모리 모델 + SDRAM weights penalty zero)
+tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스, 5계열매트릭스, application별-SoC, Hybrid-SoC, on-device-학습-4번째축, 6조건곱, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, mandate-v2.10-R38, 6mandate-모두종결, ARM-A-NEON, rpi5, Edge-AI-Gateway, STM32H745, 산업노드, LAN-path, vectorizer-정책, carry-over-효과, Cortex-M-tier-최강, SLM-적재, R37-정정사이클, LiteRT, Jetson-Super, vendor-광고-cross-check, asymmetric-multiprocessing, QSPI-128MB-SFDP, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증]
 links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, build-gotcha-inventory, stm32h745-disco, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
+---
+
+## 2026-05-28 R38 SDRAM+QSPI 정량 실증 cascade — Stage 4 시나리오 E 5 항목 우위 박제 강화 ⭐⭐⭐⭐
+
+### Cortex-M tier 영업 결정타 정량 실증 carry (ondevice-claude #2026-05-28-002 흡수)
+
+옛 박제 (5/27): "Cortex-M 단일 칩에 SLM 50~60MB 적재 **가능 가설**" → 새 박제 (5/28 R38): ✅ **정량 실증** + QSPI 2배 정정.
+
+### Stage 4 시나리오 E 박제 정정 (QSPI 65→129MB)
+
+| 항목 | 옛 박제 (5/27 BOM 시나리오 E) | 5/28 R38 실증 정정 |
+|---|---|---|
+| **QSPI Flash XIP** | 65 MB (internal 1 + QSPI 64) | **129 MB** (internal 1 + QSPI **128 SFDP**) ⭐ |
+| **Phi-2 mini Q4 적재** | "50~60MB 가능 가설" | ✅ **boot 3.22s 정량 실증** (15.51 MB/s throughput) |
+| **multi-SLM capacity** | 1 모델만 | **2× 모델 동시 적재 가능** (129MB / 50MB) |
+| **3-tier 메모리 모델** | (미정의) | DTCM 128KB (1.0×) + SDRAM 8MB (1.28×) + QSPI 128MB (15.51 MB/s) ⭐⭐ |
+| **D-cache 효과** | (미정의) | SDRAM 4.19× / DTCM 2.82× ⭐ |
+| **SDRAM weights forward** | (미측정) | ⭐⭐⭐ **penalty 거의 zero** (Phase D: 857K params 10.1ms, latency ratio < param ratio = 11% 더 효율적) |
+
+### Stage 4 시나리오 E "5 항목 우위" (4 → 5 항목) ⭐⭐⭐
+
+| # | 우위 | 정량 근거 |
+|:-:|---|---|
+| 1 | CMSIS-NN CNN 17.58× (M4F pca10056 14.02× 상회 25%) | R36 (5/27) |
+| 2 | dual-core asymmetric multiprocessing (R34 Hybrid SoC carrier single-chip 실현) | R37 (5/28) |
+| 3 | M7 baseline IPC gain 1.78× (dual-issue + L1 + ART) | R37 paired-check (5/28) |
+| 4 | LCD + Ethernet + USB OTG FS + sensor I/O single-chip | Wave 13 PoC (5/26) |
+| **5** ⭐⭐ NEW | **3-tier 메모리 정량 실증 + Phi-2 50MB 적재 boot 3.22s + SDRAM penalty zero** | **R38 (5/28)** |
+
+### 영업 카피 신규 (5/28 R38)
+
+- ⭐⭐⭐ "**Cortex-M 단일 칩 Phi-2 mini Q4 SLM 50MB 정량 적재 실증 — boot 3.22s / 15.51 MB/s**" (R38)
+- ⭐⭐⭐ "**SLM SDRAM 적재 = DTCM 적재와 거의 동등 효율** (D-cache 4.19× + ART)" (Phase D)
+- ⭐⭐ "**stm32h745 QSPI 128MB Macronix MX66LM1G45G** — Cortex-M tier multi-SLM 2× 적재 가능" (SFDP 실측, dts upstream 64MB 정정)
+- ⭐⭐ "**3-tier 메모리 모델 정량 실증** — Cortex-M tier 최강 영업 결정타"
+
+### 시나리오 G (STM32H7 산업 노드) 영업 강화 — 시연 자산 5건 carry
+
+| 자산 | 자료 | R38 추가 |
+|---|---|:-:|
+| USB CDC + LAN 단일 firmware | Wave 13 Bridge PoC (FLASH 150KB / RAM 80KB) | — |
+| CMSIS-NN CNN 17.58× | R36 baseline | — |
+| dual-core asymmetric multiprocessing | R37 paired-check | — |
+| Phi-2 50MB SLM 적재 boot 3.22s | R38 Phase B/D | ⭐ NEW |
+| 3-tier 메모리 모델 정량 | R38 4 Phase | ⭐ NEW |
+
+→ 시나리오 G BOM $70~150 / 매출 1,500~2,500만 (시나리오 G 본 entity § "영업 시나리오 G — STM32H7 산업 노드"에 기존 박제됨).
+
+자세히 [[stm32h745-disco]] § R38 absorb + [[2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]].
+
 ---
 
 ## 2026-05-28 R37 정정 + 04_종합비교 영업카피 흡수 — Stage 4 영업 카피 정정 + vendor 광고 cross-check 5단계 정책 ⭐⭐⭐

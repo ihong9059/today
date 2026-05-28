@@ -2,9 +2,27 @@
 title: 빌드 함정 인벤토리 (cross-vendor 누적 박제)
 type: entity
 created: 2026-05-24
-updated: 2026-05-28 R37/R36 정정 cascade 흡수 (STM-13 dual-core boot 시퀀스 + STM-14 M4 console UART + STM-15 INFO emit cache 영향 24% — STM 12 → 15건, 누적 47 → 50건)
-tags: [빌드함정, debugging-자산, esp32s3, ESP-IDF, Nordic, Zephyr, CMSIS-NN, cmake, ninja, Windows-cmd, PowerShell, governance-신뢰성, 자기진단정정, 함정14-v3, NDK, clang, vectorizer, STM32, STM32H745, carry-over-효과, sweep-race-fix, monitor-시간계산, dual-core-boot, M4-console-UART, INFO-emit-cache, baseline-artifact-정정, paired-check]
-links: [onDevice-ai, ai-fanstick, uttec-stage-package, gaps, ai-direction, stm32h745-disco, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix]
+updated: 2026-05-28 R38 흡수 — STM-16 Zephyr stm32 fmc_sdram driver Kconfig 필수 (dts status okay만으로 부족 → Imprecise BUS FAULT). STM 15 → 16건, 누적 50 → 51건
+tags: [빌드함정, debugging-자산, esp32s3, ESP-IDF, Nordic, Zephyr, CMSIS-NN, cmake, ninja, Windows-cmd, PowerShell, governance-신뢰성, 자기진단정정, 함정14-v3, NDK, clang, vectorizer, STM32, STM32H745, carry-over-효과, sweep-race-fix, monitor-시간계산, dual-core-boot, M4-console-UART, INFO-emit-cache, baseline-artifact-정정, paired-check, STM-16-fmc-sdram-Kconfig, R38-SDRAM]
+links: [onDevice-ai, ai-fanstick, uttec-stage-package, gaps, ai-direction, stm32h745-disco, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]
+---
+
+## 2026-05-28 R38 SDRAM+QSPI 흡수 — STM-16 신규 함정 ⭐ (Zephyr fmc_sdram Kconfig 필수)
+
+### STM-16 (R38-A1) ⭐ — Zephyr stm32 fmc_sdram driver Kconfig 활성 필수
+
+- **원인**: H745I-DISCO SDRAM2 (IS42S16400J 8MB @ 0xD0000000) 사용 시 dts node `status="okay"`만으로 **부족**. SDRAM access 시 Imprecise BUS FAULT → ZEPHYR FATAL ERROR 26 (panic, no recovery).
+- **우회**: `prj.conf`에 다음 두 Kconfig 활성화 필수:
+  ```
+  CONFIG_MEMC=y
+  CONFIG_MEMC_STM32_SDRAM=y
+  ```
+  FLASH 사이즈 영향: +1.5KB (FMC controller driver).
+- **발현 시점**: R38 Phase A 진입 시 첫 SDRAM read attempt. dts만 점검하던 표준 절차로는 사전 검출 불가 (build 정상 + boot 정상 → 첫 access 시 panic).
+- **carry-over**: 다른 STM32 + SDRAM 보드 (H7Sx / H7Bx / F4xx + SDRAM HAL) 동일 패턴. Zephyr stm32 family 전체 → SDRAM 사용 시 Kconfig 체크리스트 박제.
+
+→ STM 함정 누적 15 → **16건**. cross-vendor 빌드 함정 누적 50 → **51건** (Espressif 16 + Nordic 18 + NDK 1 + STM32 16).
+
 ---
 
 ## 2026-05-28 R37/R36 정정 cascade 흡수 — STM-13/14/15 신규 함정 3건 + 자기 진단 정정 사이클 1건 ⭐⭐⭐
@@ -106,8 +124,8 @@ onDevice_AI vault 의 보드한계모델 측정 사이클에서 누적 박제한
 | **Espressif (esp32s3 / esp32c6)** | **16** | ESP-IDF v5.5.1 / Windows cmd.exe / PowerShell 5.1 / ninja / cmake 3.30 |
 | **Nordic (pca10056 / pca10040)** | **18** | Zephyr v2.9.2 / 4.3.99 / west / CMSIS-NN |
 | **NDK (smartphone Android)** (5/24 Wave 11) | **1** | NDK clang 18 / Android / `+dotprod` vectorizer 정책 (E1) |
-| **STM32 (STM32H745I-DISCO 14th)** (5/25~28 Wave 12+13+14+15) | **15** ⭐ | Zephyr + STM32CubeProgrammer + STM32CubeIDE headless / DAPLink / LTDC / AXI SRAM / USB FS / dual-core boot / M4 console / INFO emit cache |
-| **합계** | **50** ⭐ | — |
+| **STM32 (STM32H745I-DISCO 14th)** (5/25~28 Wave 12+13+14+15+R38) | **16** ⭐ | Zephyr + STM32CubeProgrammer + STM32CubeIDE headless / DAPLink / LTDC / AXI SRAM / USB FS / dual-core boot / M4 console / INFO emit cache / fmc_sdram Kconfig |
+| **합계** | **51** ⭐ | — |
 
 ## Espressif 16건 상세
 
