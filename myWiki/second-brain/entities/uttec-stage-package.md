@@ -2,9 +2,50 @@
 title: UTTEC 영업 패키지 (4.5-Stage)
 type: entity
 created: 2026-05-05
-updated: 2026-05-28 R38 SDRAM+QSPI 정량 실증 cascade — Stage 4 시나리오 E "5 항목 우위" 박제 강화 (QSPI 64→128MB 정정 + Phi-2 50MB 적재 boot 3.22s + 3-tier 메모리 모델 + SDRAM weights penalty zero)
+updated: 2026-05-29 R41 Path A 본격 진입 cascade — 시나리오 E E1/E2/E3 분리 박제 + 시나리오 E1 영업 자산 회복 path 확정 (vanilla Zephyr STM32H7 DMIC 정식 지원 0 → 본 vault custom patch chain 11.5/12 PASS + SAI4 register 결정타 + PC1+PE2 2핀 Ethernet 충돌)
 tags: [영업, 패키지, Stage, foundry, business-model, onDevice-검증완료, ESP-DSP, CMSIS-NN, 3계열매트릭스, 5계열매트릭스, application별-SoC, Hybrid-SoC, on-device-학습-4번째축, 6조건곱, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, mandate-v2.10-R38, 6mandate-모두종결, ARM-A-NEON, rpi5, Edge-AI-Gateway, STM32H745, 산업노드, LAN-path, vectorizer-정책, carry-over-효과, Cortex-M-tier-최강, SLM-적재, R37-정정사이클, LiteRT, Jetson-Super, vendor-광고-cross-check, asymmetric-multiprocessing, QSPI-128MB-SFDP, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증]
 links: [영업전략, Stage0_Core_Services_견적서, On-Device AI, Foundry 5층 아키텍처, onDevice-ai, ai-fanstick, build-gotcha-inventory, stm32h745-disco, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
+---
+
+## 2026-05-29 R41 Path A 본격 진입 cascade — 시나리오 E E1/E2/E3 분리 박제 + 시나리오 E1 영업 자산 회복 ⭐⭐⭐⭐⭐
+
+### 시나리오 E E1/E2/E3 분리 박제 (ondevice-claude #2026-05-29-002 흡수)
+
+옛 박제 (~5/28 시점): "시나리오 E (stm32h745 산업 노드)" 단일 묶음
+새 박제 (5/29 R41): **DMIC + Ethernet 동시 활성 본질 충돌 확정 박제 → 3 분리**:
+
+| 시나리오 | DMIC | ETH | 본질 | BOM | 영업 path |
+|:-:|:-:|:-:|---|---|---|
+| **E1** | ✅ | ❌ | Voice/KWS firmware 단독 | $70~120 | Stage 4 응원봉 + 산업 voice 단독 |
+| **E2** | ❌ | ✅ | LAN AI 산업 노드 (R36 TCP PoC carry) | $70~150 | 한국 산업 노드 (시나리오 G와 통합) |
+| **E3** | ✅ | ✅ | ⚠️ hw modification 필수 (PC1+PE2 절단 + redirect) | $150+ | Phase 4 ship 옵션 (별도 BOM) |
+
+영업 라인업 = **E1 + E2 명시 카탈로그** (E3 별도 옵션).
+
+### 시나리오 E1 영업 자산 회복 path 확정 (옛 "본질 불가" 박제 정정)
+
+옛 박제 (5/24): "stm32h745 single chip + DMIC voice command 본질 불가능"
+새 박제 (5/29): ✅ **vanilla Zephyr STM32H7 + SAI4 + BDMA + mpxxdtyy 11.5/12 단계 PASS** + 본 vault custom Zephyr patch chain (binding 1 + driver 8 + overlay v3 + main.c) carry.
+
+### ⭐⭐⭐ 영업 카피 회복 (시나리오 E1 + 시나리오 G 통합 강화)
+
+- ⭐⭐⭐ "**stm32h745 single chip + CMSIS-NN CNN 17.6× + DMIC voice command + 본 vault custom Zephyr patch chain R&D 자산**" — Cortex-M tier 최강 + R&D 차별화 (R41 본격 path 종결 시 carry)
+- ⭐⭐ "**Zephyr upstream PR contribution carrier**" (i2s_stm32_sai BDMA aware + mpxxdtyy STM32 H7 정식 지원) — 외부 회사 영업 자산
+- ⭐⭐ "**vanilla Zephyr STM32 DMIC 정식 지원 0 → 본 vault patch chain 11.5/12 PASS 검증**" (governance 신뢰성 + R&D 능력 자산)
+
+### Stage 4 시나리오 E1 6 항목 우위 (5 → 6 항목) ⭐⭐⭐
+
+| # | 우위 | 정량 근거 |
+|:-:|---|---|
+| 1 | CMSIS-NN CNN 17.58× | R36 (5/27) |
+| 2 | dual-core asymmetric multiprocessing | R37 (5/28) |
+| 3 | M7 baseline IPC gain 1.78× | R37 paired-check (5/28) |
+| 4 | LCD + USB OTG FS + sensor I/O single-chip (E1) / + Ethernet single-chip (E2) | Wave 13 PoC (5/26) |
+| 5 | 3-tier 메모리 + Phi-2 50MB + SDRAM penalty zero | R38 (5/28) |
+| **6** ⭐⭐ NEW | **DMIC voice command 본 vault custom Zephyr patch chain 11.5/12 PASS + Zephyr upstream PR contribution carrier** | **R41 (5/29)** |
+
+자세히 [[stm32h745-disco]] § R41 absorb + [[2026-05-29_R41-Path-A-본격-진입-stm32h745-SAI4-BDMA]].
+
 ---
 
 ## 2026-05-28 R38 SDRAM+QSPI 정량 실증 cascade — Stage 4 시나리오 E 5 항목 우위 박제 강화 ⭐⭐⭐⭐

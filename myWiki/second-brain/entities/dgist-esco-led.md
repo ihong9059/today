@@ -2,12 +2,33 @@
 title: DGIST 에너지절약 ESCO사업 LED 조명제어 (Tier 1 단발 SI, 신규사업)
 type: entity
 created: 2026-05-28
-updated: 2026-05-28
-tags: [DGIST, ESCO, LED, 조명제어, IR, BLE-Mesh, IoT, 신규사업, Tier1, 영업, B2B, 산학협력, 기술자문]
+updated: 2026-05-30
+tags: [DGIST, ESCO, LED, 조명제어, IR, BLE-Mesh, IoT, 신규사업, Tier1, 영업, B2B, 산학협력, 기술자문, PDF자동화, PyMuPDF]
 links: [aisg, onDevice-ai, stm32h745-disco, revita, n8n, uttec-stage-package, ai-fanstick, 영업전략, skills, 회사소개]
 ---
 
 # DGIST 에너지절약 ESCO사업 LED 조명제어
+
+## 2026-05-30 도면 LED 위치 자동 표시 cascade ⭐⭐⭐
+
+ESCO 사업자 회신 가능 산출물 확보: **E1~E6 7개 도면 31p 470개 LED 위치 파란 원 자동 표시** (`{E1~E7}_LED표시_claude.pdf`). E7만 carry (디밍제어용 zone + 미표시 zone 4p).
+
+**3가지 알고리즘 도출** (도면 구조별):
+
+| 방식 | 적용 | 검출 수 |
+|---|---|:-:|
+| A. 사용자 ink → 원 변환 | E1, E2 | 161 |
+| B. PE/PN 텍스트 라벨 매칭 (strict zone) | E3, E5, E6 | 270 |
+| C. 도형 매칭 + PolyLine ㄷ자 strip 분해 | E4 | 39 |
+
+**구역 종류 분류 (2가지)**: 조명제어구역(E1~E6) + 디밍제어용 센서등 교체구역(E7만).
+
+**핵심 알고리즘 신설 — PolyLine vertex segment 분해 → 평행 line 쌍 추출**:
+- E4 p4 PolyLine bbox 100×694 (강의실 전체 포함 false zone) → vertex 6개를 평행 segment 쌍으로 분해 → 좁은 strip 71×15 + 15×664 정확 추출
+- 결과: 172개 false positive → 25개 정확 검출
+- **다른 PDF 도면 비정형 strip 처리에도 재사용 가능** (재사용 자산)
+
+**참조**: `c:\todo\today\신규사업\DGIST_ESCO_LED제어\조명제어\작업기록_2026-05-30.md` (알고리즘 + 함정 + 다음 작업)
 
 ## 한 줄 정의
 

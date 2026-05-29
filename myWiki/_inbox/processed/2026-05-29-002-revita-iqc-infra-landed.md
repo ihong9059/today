@@ -11,7 +11,7 @@ related:
   - application/revitaWiki/.ingest-state.json (ingest #11)
   - C:/todo/today/myWiki/second-brain/entities/revita.md (5/28 ingest #10+#11 § 갱신 요청)
   - C:/todo/today/myWiki/second-brain/thoughts/2026-Q2/2026-05-27_revita-IQC-자동화-인프라.md (5/27 신설, 본 카드는 그 후속)
-status: pending
+status: done
 ack_required: true
 ---
 

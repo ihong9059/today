@@ -2,7 +2,7 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-05-28 (revita ingest #10 + #11 흡수 — link_v2_test_tower LoRa 게이트웨이 신설 + Tower 펌웨어 정본 채택 + KC 인증 통합 트랙 kc_cert_link_v2 + kc_cert_tower 신규 + tower_DK deprecated)
+updated: 2026-05-29 양산 IQC 자동화 인프라 정착 완료 흡수 (5/27 "정착 직전" → 5/29 "정착 완료" — 32 시험 카드 + 4 자동화 모듈 + 17 PASS + EVT 수신 1.75초 + 수신율 99.1% + 디버그 사이클 3분 + 5채널 영업 가치 실측 데이터 carry + I2C 핀 충돌 RAK4631 gotcha + PyMuPDF 회로도 풀스택)
 tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어, link_v2_test_tower, 회귀시험자동화, kc_cert_link_v2, kc_cert_tower, KC인증통합트랙, BLE-pairing-L2, DUT-다중-브리지-단일, IQC자동화, Flask-Web-5010, tower_DK-deprecated, 두-하향-경로-동일-규약, 펌웨어모듈-단일진실]
 links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조, 2026-05-27_revita-IQC-자동화-인프라]
 ---
@@ -11,6 +11,100 @@ links: [claude-code, experience, projects, skills, tailscale네트워크, 양산
 
 ## 한 줄 정의
 IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**.
+
+## 2026-05-29 양산 IQC 자동화 인프라 정착 완료 흡수 ⭐⭐⭐⭐ (revita-claude 카드 #2026-05-29-002)
+
+5/27 ingest #11 "정착 직전" 상태 → 5/29 "정착 완료" — 실측 데이터 carry로 5채널 영업 가치 활성화.
+
+### 정착 신호 (구체 실측)
+
+| 항목 | 5/27 박제 | **5/29 정착 실측** |
+|---|---|---|
+| 상태 | "정착 직전" | **정착 완료** ⭐⭐⭐ |
+| 시험 카드 | 0 | **32** (test_kc_v2/ 22 + newTest/ 10) |
+| 자동화 모듈 | 계획만 | **4 .py** (proto_kc2 + tc_kc_01 + tc_kc_l2 + tc_kc_20) |
+| JSON 증적 | 0 | **4건** + reports/ 구조 |
+| PASS 누적 | 0 | **17 PASS** (test_kc_v2 11/12 + newTest 6/10) |
+| EVT 수신 시간 | 미측정 | **1.75초** (예상 5~15초보다 3~8× 빠름) |
+| 수신율 | 미측정 | **99.1%** (2분 윈도우, 68 EVT) |
+| 디버그 사이클 | 미측정 | **3분** (FAIL → 재실행 → PASS, 양산 라인 작동 증명) |
+| MVP 시점까지 | 예상 3~4일 | **약 3시간 (32× 빠름)** |
+
+### 사업 가치 5채널 — 실측 데이터 carry ⭐⭐⭐
+
+| 채널 | 5/28 박제 | **5/29 갱신 (실측 데이터)** |
+|---|---|---|
+| **uttechome 영업** ⭐ | "단순 RF Replay → 운용 가능 제품" | **월 7,200대 생산 가능** (모드 A 1대 1분 15초) — EMI fail 회복 영업 결정타 + I2C 핀 충돌 운영 노하우 |
+| **위시캣 사례연구** ⭐ | "1분 자동 시험 + Web PASS/FAIL + CI 통합" | **17 PASS / 2h 40m / 99.1% / 4 자동화 모듈 / 디버그 사이클 3분** — 사례연구 결정타 |
+| **한림용인CC IQC 확장** | "Flask + AUTO 모드 = 시공 풀스택" | bridge_cli + Web UI :5010 + 두 트랙 (wire + 모듈) 풀스택 실제 작동 |
+| **shield-claude RPi 자동화** | "DUT 다중 + 브리지 단일" | `scenarios/` Python 러너 패턴 (proto + bridge_io + tc_xx + reports) carry 가능 |
+| **n8n-claude 다중 path** | "두 하향 경로 동일 규약 + BLE pairing" | KC2 wire + bridge_app UART 표준화 — 다중 path 자동화 패턴 carry |
+
+→ **숫자가 영업 카피로 직결**:
+- uttechome: "월 7,200대 자동 검사 가능" / "EMI fail 회복 운영 노하우 + I2C 핀 충돌 양산 대응"
+- 위시캣: "FAIL 자동 catch → 3분 재시험 → PASS" (양산 라인 cycle 핵심)
+
+### 양산 캐파 재산정 (실측 1.75초 EVT 기반)
+
+| 모드 | 1대 cycle | 일 캐파(8h) | 월 캐파(20d) |
+|---|---:|---:|---:|
+| A. 빠른 (자동만) | **1분 15초** | ~360대 | **~7,200대** |
+| B. 표준 (+HW EVT) | **1분 40초** | ~270대 | ~5,400대 |
+| C. 완전 (+물리/재부팅) | **3분 45초** | ~120대 | ~2,400대 |
+
+이전 본 OVERVIEW 추정 (모드 B 약 3분 = 월 3,000대)을 **약 2× 상향**.
+
+### 운영 노하우 신규 — gotcha 신설 (강의·교재 자산화) ⭐
+
+#### 1) I2C 핀 충돌 (RAK4631 link 계열 전체) ★
+
+- RAK4631 기본 DTS에서 I2C0(P0.13/14)·I2C1(P0.24/25) 활성
+- Valve X(P0.13/14), Buzzer(P0.24), Valve Y(P0.25)와 핀 충돌
+- 해결: overlay에 `&i2c0 { status = "disabled"; }; &i2c1 { status = "disabled"; };` 추가
+- carry 대상: `system/link_v2`, `kc_cert_link/link_app`, `kc_cert_link_v2/link_app` (적용됨), 기타 link 계열 전체
+
+→ [[gaps]] § "RAK4631 I2C 핀 충돌" 박제 + 강의·교재 자산화 가치.
+
+#### 2) 외부 J-Link 프로그래머 운영 패턴
+
+- RAK4631 자체 J-Link OB 대신 별도 pca10056 (nRF52840 DK) SW9 외부 타깃 모드
+- `west flash` 안정성 문제 → `JLinkExe -SelectEmuBySN <SN>` 직접 호출
+- 양산 라인 적용 가능: 검사 jig에 J-Link OB 1대 고정 + DUT 교체
+
+#### 3) PyMuPDF 도입 (revita-claude 측 본 vault 신 도구)
+
+- 본 vault PC에 `fitz` (PyMuPDF) 발견
+- PDF 시각화 풀스택: reportlab (생성, 5/27 NanoVNA) + PyMuPDF (분석, 5/29 회로도)
+- 회로도 v3 21페이지 → PNG 변환 → 인스턴스 카운트 분석
+
+### 디렉토리 풀세트 (두 트랙 구조 carry)
+
+```
+~/revita/doc/revita_link_firmware/
+├── test/                  (기존 system/link_v2 트랙, historical)
+├── test_kc_v2/            ★ 5/29 신규 — wire/기능 검증 22 TC (417줄 22KB OVERVIEW + TC-KC-00~42)
+└── newTest/               ★ 5/29 신규 — 모듈별 깊이 시험 10 TC (TC-10/11/20/21/30/31/40/41/42/50)
+
+~/revita/zephyr_workspace/apps/kc_cert_link_v2/scenarios/
+├── proto_kc2.py        (KC2 wire Python 포팅 4 KB)
+├── tc_kc_01.py         (L1 스모크 3.4 KB)
+├── tc_kc_l2.py         (L2 다운링크 라우팅 통합 7.8 KB)
+├── tc_kc_20.py         (L3 AUTO_TLM 3.6 KB)
+├── logs/               (UART 캡처)
+└── reports/            (YYYYMMDD_HHMMSS_<tc>.json 4건)
+```
+
+### ingest #12 대기 (다음 사이클)
+
+- BASE `0da632f2` (5/27 ingest #11) → HEAD `05f36b56` (5/29 work-end)
+- 약 60+ 파일 (43 시험 문서 + scenarios + link_app 재작성 + bridge_app overlay + 작업보고서)
+- **D1 분할 권장**:
+  - #12-a: 시험 문서 + 자동화 (entity-kc-cert-link-v2 갱신 + 신규 entity-kc-cert-link-v2-test)
+  - #12-b: 펌웨어 재작성 (entity-kc-cert-link-v2 본문 + I2C 핀 충돌 gotcha 신설)
+
+자세히 [[2026-05-27_revita-IQC-자동화-인프라]] § 5/29 정착 완료 + [[2026-05-29_revita-IQC-5채널-실측-carry]] + [[strengths]] § "양산 IQC 자동화 인프라 풀스택 운영 능력" + [[gaps]] § "RAK4631 I2C 핀 충돌".
+
+---
 
 ## 2026-05-28 ingest #10 + #11 흡수 — LoRa 게이트웨이 신설 + KC 인증 통합 트랙 ⭐⭐⭐
 

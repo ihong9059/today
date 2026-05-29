@@ -2,9 +2,36 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-05-28 R38 SDRAM+QSPI 정량 실증 cascade (Cortex-M tier 시나리오 E stm32h745 QSPI 65MB → 129MB 정정 + Phi-2 50MB 적재 정량 실증 boot 3.22s + 3-tier 메모리 모델 + SDRAM weights forward penalty zero finding)
+updated: 2026-05-29 R41 Path A 본격 진입 cascade (Stage 4 시나리오 E E1/E2/E3 분리 박제 + 시나리오 E1 영업 자산 회복 path 확정 + 옛 "stm32h745 DMIC 본질 불가" 박제 완전 정정 + SAI4 register 결정타 ACR1.DMAEN bit17=0 진단 + 본 vault custom Zephyr patch chain R&D 자산)
 tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, mandate-v2.10-R38, 6mandate-모두종결, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative, Cortex-M-tier-최강, 17x-CNN-가속, SLM-적재, R37-positive-정정, asymmetric-multiprocessing, LiteRT, Jetson-Super, 영업카피-신뢰성-강화, QSPI-128MB-SFDP, SDRAM-penalty-zero, Phi-2-적재-실증, 3tier-메모리]
 links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
+---
+
+## 2026-05-29 R41 Path A 본격 진입 cascade — Stage 4 시나리오 E E1/E2/E3 분리 + E1 영업 자산 회복 ⭐⭐⭐⭐⭐
+
+### 시나리오 E1 영업 자산 회복 path 확정 (ondevice-claude #2026-05-29-002 흡수)
+
+옛 박제 (5/24 시점): "stm32h745 single chip + DMIC voice command 본질 불가능"
+새 박제 (5/29 R41): ✅ **vanilla Zephyr STM32H7 + SAI4 + BDMA + mpxxdtyy 11.5/12 단계 PASS** + 본 vault custom Zephyr patch chain (binding 1 + driver 8 + overlay v3 + main.c) carry. 다음 세션 ACR1.DMAEN write protection 우회 patch 시 R41 본격 종결.
+
+### 시나리오 E E1/E2/E3 분리 박제 ⭐⭐⭐
+
+| 시나리오 | DMIC | ETH | 본질 | 영업 path |
+|:-:|:-:|:-:|---|---|
+| **E1** | ✅ | ❌ | Voice/KWS firmware 단독 | **Stage 4 응원봉 후속 PoC 메인 path** |
+| **E2** | ❌ | ✅ | LAN AI 산업 노드 | uttec-stage-package 시나리오 G 별도 트랙 |
+| **E3** | ✅ | ✅ | ⚠️ hw modification 필수 | Phase 4 ship 옵션 |
+
+→ PC1+PE2 2핀 Ethernet 양방향 충돌 확정 (PC1 eth_mdc + PE2 eth_txd3) — MII 모드 활성 시 MEMS DMIC 절대 불가. 영업 카탈로그 = **E1 + E2 명시** (E3 별도).
+
+### ⭐⭐⭐ 영업 카피 회복 (Stage 4 응원봉 후속 PoC path)
+
+- ⭐⭐⭐ "**stm32h745 single chip + CMSIS-NN CNN 17.6× + DMIC voice command + 본 vault custom Zephyr patch chain R&D 자산**" — Cortex-M tier 최강 + R&D 차별화 (R41 본격 path 종결 시 carry)
+- ⭐⭐⭐ "**vanilla Zephyr STM32H7 DMIC 정식 지원 0 → 본 vault patch chain 11.5/12 PASS 검증**" (governance 신뢰성 자산)
+- ⭐⭐ "**Zephyr upstream PR contribution carrier**" (i2s_stm32_sai BDMA aware + mpxxdtyy STM32 H7 정식 지원) — 본 vault R&D R&D governance 외부 회사 영업 자산
+
+자세히 [[stm32h745-disco]] § R41 absorb + [[2026-05-29_R41-Path-A-본격-진입-stm32h745-SAI4-BDMA]].
+
 ---
 
 ## 2026-05-28 R38 SDRAM+QSPI 정량 실증 cascade — Stage 4 시나리오 E Cortex-M tier 결정타 보강 ⭐⭐⭐⭐

@@ -2,7 +2,7 @@
 title: 강점 분석
 type: identity
 created: 2026-04-19
-updated: 2026-04-19
+updated: 2026-05-29 (양산 IQC 자동화 인프라 풀스택 운영 능력 신설 — revita 정착 32 시험카드 / 17 PASS / EVT 1.75초 / 수신율 99.1% / 디버그 사이클 3분)
 tags: [강점, 분석]
 links: [me, skills, ai-direction, gaps]
 ---
@@ -75,6 +75,24 @@ OOK 변조 두 응용 영역(공중파 RF + RF feeder in-band) 모두 경험은 
 - **[[ai-fanstick]]**: 음성+AI+BLE 통합 제품 특허 출원
 
 → 위시캣 #155091 (AI 오디오 믹싱 PoC) 매칭률 8/10 → 9/10 격상 핵심 자산. 위키 검색 워크플로우가 발견한 셀프 디스카운트.
+
+### 9. 양산 IQC 자동화 인프라 풀스택 운영 능력 (2026-05-29 신설)
+
+revita 양산 IQC 자동화 인프라 정착 (5/29 ingest #12) — 단순 시험 자동화 수준이 아닌 **양산 검사 라인 풀스택 운영 능력** 실증:
+
+- **시험 카드 32개** 박제 (test_kc_v2/ 22 + newTest/ 10) + **자동화 모듈 4 .py** (proto_kc2 + tc_kc_01 + tc_kc_l2 + tc_kc_20)
+- **17 PASS / 2h 40m / 99.1% 수신율 / EVT 1.75초** (예상 5~15초보다 3~8× 빠름) / **디버그 사이클 3분** (FAIL → 재실행 → PASS 양산 라인 cycle 핵심)
+- **양산 캐파 실측**: 모드 A 1대 1분 15초 = **월 7,200대 자동 검사 가능** (이전 모드 B 추정 월 3,000대 2× 상향)
+- **DUT 다중 + 브리지 단일 패턴** (kc_cert_link_v2/bridge_app 하나로 링크 + 타워 두 DUT 시험)
+- **Flask Web :5010 + AUTO 모드 자동 진입** (전원 인가 즉시 X축 5초 교대 + 배터리/RS485/리프 주기 EVT)
+- **빌드 프로파일 3종** (FULL / BLE_ONLY / RS485_ONLY) 양산 라인 분기
+
+영업 카피 직결:
+- ⭐⭐⭐ **위시캣 펌웨어 품질 사례연구 결정타** — "FAIL 자동 catch → 3분 재시험 → PASS" + "17 PASS / 99.1% / 4 자동화 모듈"
+- ⭐⭐⭐ **uttechome 제품 신뢰도 증빙** — "월 7,200대 자동 검사 가능" + "EMI fail 회복 운영 노하우 + I2C 핀 충돌 양산 대응"
+- ⭐⭐ **한림용인CC IQC 트랙 확장** — Flask + AUTO 모드 = 시공 풀스택 확장
+
+→ entity [[revita]] § 5/29 정착 + thought [[2026-05-27_revita-IQC-자동화-인프라]] § 5/29 갱신 + [[2026-05-29_revita-IQC-5채널-실측-carry]] + [[gaps]] § "RAK4631 I2C 핀 충돌" carrier.
 
 ## 현장 배포 운용 자산 (2026-05-12 신설 — revitaWiki ingest #8 흡수)
 

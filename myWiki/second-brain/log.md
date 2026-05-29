@@ -2,8 +2,52 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-28 (megasession #2 3장 흡수 — ondevice R38 SDRAM+QSPI 정량 실증 + Stage 4 broker 영업자료 갱신 + wishket 크몽 heartbeat)
+updated: 2026-05-30 (DGIST ESCO LED E1~E6 도면 LED 위치 자동 표시 470개 + 알고리즘 3종 + PolyLine ㄷ자 strip 분해 재사용 자산)
 ---
+
+## [2026-05-30] work ⭐⭐⭐ | DGIST ESCO LED E1~E6 도면 LED 위치 자동 표시 470개 + 알고리즘 3종 도출
+
+DGIST ESCO 사업자 회신 산출물 `{E1~E7}_LED표시_claude.pdf` 7개 생성 (E7만 carry). **3가지 알고리즘** 도면 구조별 적용:
+
+- A. 사용자 ink → 원 변환 (E1=63 + E2=98 = 161)
+- B. PE/PN 텍스트 라벨 매칭 strict zone (E3=86 + E5=93 + E6=91 = 270)
+- C. 도형 매칭 + **PolyLine vertex segment 분해 → 평행 line 쌍 추출** 신설 (E4=39)
+
+**구역 종류 분류**: 조명제어구역(E1~E6) + 디밍제어용 센서등 교체구역(E7).
+
+**재사용 자산**: PolyLine 분해 알고리즘은 비정형 strip을 가진 다른 PDF 도면 LED/심볼 검출에도 적용 가능. E4 p4에서 172개 false positive → 25개 정확 검출로 검증.
+
+박제: `entities/dgist-esco-led.md § 2026-05-30 cascade` + `신규사업/DGIST_ESCO_LED제어/조명제어/작업기록_2026-05-30.md`.
+
+## [2026-05-29] absorb ⭐⭐⭐⭐⭐ | megasession #3 3장 흡수 — wishket #001 모바일 앱 양산 자산 5/21 재발 cross-vault corroboration + ondevice #002 R41 Path A 본격 진입 (11.5/12 PASS + SAI4 register 결정타 + 시나리오 E E1/E2/E3 분리 + STM-17~21 5건) + revita #002 양산 IQC 자동화 인프라 정착 완료 (32 시험카드 + 17 PASS + EVT 1.75초 + 월 7,200대 캐파 + 5채널 영업 가치 실측)
+
+**사건**: 5/29 work-start 시점 _inbox/pending/ 3장 도착 (5/29 work-end 시점 누적) → 5/29 megasession #3 단일 트랙 흡수. 5단계 lifecycle 모두 완료 + 회신 카드 3장 발신 (wishket + ondevice + revita).
+
+### A. wishket #001 모바일 앱 양산 자산 5/21 재발 정정 cascade noted ⭐⭐⭐
+
+5/29 wishket-claude #155622 (DJ MVP) 작성 중 같은 패턴 (Android 양산 자산 분류 오류 → 사용자 정정) 재현 + wishketProject vault 측 me.md § 6 핵심 차별화 6번째 신설. **mywiki 측 5/29 동시 진단** (session_20260529_1952 § C 트랙) 같은 사건 독립 박제 → cross-vault corroboration. 4-day half-life 패턴 (5/21 → 5/29) 박제 = "본 vault 인덱스 정정만으로 cascade 마지막 단계 불완전" 직접 증거. entities/위시캣활동.md § 자산 누락 (1)에 "2026-05-29 동형 재발 박제" 단락 신설.
+
+### B. ondevice #002 R41 Path A 본격 진입 cascade ⭐⭐⭐⭐⭐
+
+5/29 work-start #2 ~6시간 누적 — vanilla Zephyr STM32H7 + SAI4 + BDMA + mpxxdtyy **11.5/12 단계 PASS** + 옛 박제 "stm32h745 Zephyr DMIC 본질 불가" 완전 정정 + SAI4 register 결정타 진단 (ACR1.DMAEN bit17=0 HAL BDMA path 결함). entity cascade 4건 (stm32h745-disco + ai-fanstick + uttec-stage-package + onDevice-ai 최상단 § 신설) + build-gotcha-inventory § STM-17~21 신규 함정 5건 (R41-2 binding + R41-3 SRAM4 nocache + R41-4 BDMA 미지원 + ACR1.DMAEN write protection + BDMA SRAM4 D3 buffer 제약). STM 함정 16 → 21건, cross-vendor 51 → **56건**. **Stage 4 시나리오 E1 영업 자산 회복 path 확정** — 옛 "본질 불가" 박제 정정 + 6 항목 우위 (5 → 6) + 영업 카피 회복 (single chip + CMSIS-NN + DMIC + 본 vault custom Zephyr patch chain R&D 자산). PC1+PE2 2핀 Ethernet 양방향 충돌 확정 박제 정정 (5/28 0핀 → 5/29 #1 1핀 → 5/29 #2 2핀) → 시나리오 E **E1/E2/E3 분리 박제** (E1 Voice 단독 / E2 LAN 산업 / E3 hw modification 필수). 자기 진단 정정 사이클 4번째 사례 (search G + 함정 #14 v3 + R37/R36 baseline + R41 본격 진입).
+
+### C. revita #002 양산 IQC 자동화 인프라 정착 완료 흡수 ⭐⭐⭐⭐
+
+5/27 박제 "정착 직전" → 5/29 ingest #12 "**정착 완료**" — 실측 8축 정량: **32 시험 카드** + **4 자동화 모듈** + **17 PASS** / 2h 40m / **EVT 1.75초** (예상 3~8× 빠름) / **수신율 99.1%** / **디버그 사이클 3분** (양산 라인 cycle 핵심) / **MVP 시점까지 약 3시간 (32× 빠름)**. **양산 캐파 실측 월 7,200대** (모드 A 1.25분/대, 이전 추정 3,000대 **2× 상향**). entity-revita § "2026-05-29 양산 IQC 정착" 최상단 신설 + thoughts/2026-05-27_revita-IQC § "정착 완료 표시" 갱신 + thoughts/2026-05-29_revita-IQC-5채널-실측-carry 신설 (full 9 §) + gaps § "RAK4631 I2C 핀 충돌" 신설 + **strengths § 9 "양산 IQC 자동화 인프라 풀스택 운영 능력" 신설** (9번째 강점 정식 박제). 5채널 영업 가치 실측 carry: uttechome "월 7,200대" + 위시캣 사례연구 "FAIL → 3분 → PASS" + 한림용인CC IQC 확장 + shield/n8n carry.
+
+### D. 후처리
+
+- 3장 _inbox/pending → processed/ + status: pending → done flip
+- 회신 카드 3장 발신 (`outbox-staging/2026-05-29-001` wishket noted + `2026-05-29-002` ondevice absorbed + `2026-05-29-003` revita absorbed)
+- broker push 자동 라우팅 → wishketProject/_inbox/ + onDevice_AI/_inbox/ + revitaProject 측 도달 예정 (work-end 시 trigger)
+
+### E. carry 자산 (다른 vault 적용 가능)
+
+- ⭐⭐⭐ **cross-vault corroboration 박제 패턴** (5/29 wishket #001 + mywiki C 트랙) — 같은 사건 양측 독립 박제 첫 사례, vault scope 격리 + broker 양방향 자동화 결과. 다른 vault 협업 시 corroboration 카드 발송 SOP 박제 가치
+- ⭐⭐⭐⭐ **"vendor upstream 0 coverage → 본 vault custom patch chain → upstream PR contribution carrier" 패턴** (R41) — 다른 vendor zero-coverage 영역 진입 시 carry. R&D 신뢰성 외부 회사 영업 자산
+- ⭐⭐⭐ **양산 IQC 자동화 풀스택 패턴** (revita 정착) — 단순 시험 자동화가 아닌 라인 운영 능력 실증. 위시캣 사례연구 + uttechome 영업 + 한림용인CC 시공 5채널 직결 영업 카피
+- ⭐⭐ **자기 진단 정정 사이클 누적 4번째 사례** (R41) — governance 신뢰성 vault carrier
+- ⭐ **broker namespace 정책 박제 후보** — ondevice + revita 둘 다 "2026-05-29-002" id 충돌 → broker prefix 또는 sequence reset 정책 사용자 결정 권고
 
 ## [2026-05-28] absorb ⭐⭐⭐⭐ | megasession #2 3장 흡수 — ondevice R38 SDRAM+QSPI 정량 실증 (mywiki 권장 #4 70% 완성) + Stage 4 broker 영업자료 갱신 + wishket 크몽 heartbeat
 

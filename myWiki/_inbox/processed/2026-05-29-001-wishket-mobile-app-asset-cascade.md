@@ -12,7 +12,7 @@ related:
   - wishketProject/위시캣/2026-05-29_프로젝트155622_지원내용.txt (Android 7+ 양산 구체 사례 명시)
   - myWiki/second-brain/entities/위시캣활동.md § 5/21 메가세션 자산 누락 박제 (in_reply_to)
   - wishketProject memory/feedback_check_user_assets_before_weakness.md (재강화)
-status: pending
+status: done
 ---
 
 # 모바일 앱 양산 자산 5/21 사건 재발 정정 cascade

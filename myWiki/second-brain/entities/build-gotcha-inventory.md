@@ -2,9 +2,49 @@
 title: 빌드 함정 인벤토리 (cross-vendor 누적 박제)
 type: entity
 created: 2026-05-24
-updated: 2026-05-28 R38 흡수 — STM-16 Zephyr stm32 fmc_sdram driver Kconfig 필수 (dts status okay만으로 부족 → Imprecise BUS FAULT). STM 15 → 16건, 누적 50 → 51건
+updated: 2026-05-29 R41 흡수 — STM-17~21 신규 함정 5건 (R41-2 Zephyr binding 자기모순 / R41-3 SRAM4 nocache 누락 / R41-4 i2s_stm32_sai BDMA 미지원 / ACR1.DMAEN write protection / BDMA SRAM4 D3 domain buffer 제약). STM 16 → 21건, 누적 51 → 56건
 tags: [빌드함정, debugging-자산, esp32s3, ESP-IDF, Nordic, Zephyr, CMSIS-NN, cmake, ninja, Windows-cmd, PowerShell, governance-신뢰성, 자기진단정정, 함정14-v3, NDK, clang, vectorizer, STM32, STM32H745, carry-over-효과, sweep-race-fix, monitor-시간계산, dual-core-boot, M4-console-UART, INFO-emit-cache, baseline-artifact-정정, paired-check, STM-16-fmc-sdram-Kconfig, R38-SDRAM]
 links: [onDevice-ai, ai-fanstick, uttec-stage-package, gaps, ai-direction, stm32h745-disco, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]
+---
+
+## 2026-05-29 R41 Path A 본격 진입 흡수 — STM-17~21 신규 함정 5건 ⭐⭐⭐ (vanilla Zephyr STM32 DMIC 정식 지원 0 → custom patch chain)
+
+R41 Phase 1-10 본격 진입 시 발현. vanilla Zephyr 4.3.99 STM32 DMIC 정식 지원 0건 확인 → 본 vault custom patch chain (Zephyr binding 1 + driver 8 + overlay v3 + main.c) 적용 중 함정 5건 박제.
+
+### STM-17 ⭐⭐ — R41-2 Zephyr binding 자기모순
+
+- **원인**: `i2s_stm32_sai.yaml` `bus: i2s` 선언했지만 SAI4 node의 `child` binding 불일치. DT parser silent build OK + runtime device 0건 (`device_get_binding("DT_NODELABEL(sai4_a)")` NULL).
+- **우회**: binding `child` schema 자기모순 직접 정정 또는 `compatible:` 강제 일치 + sai4 node `child-binding` override.
+- **carry-over**: Zephyr custom driver binding 작성 시 schema 자가 검증 SOP 박제 (다른 SAI/I2S/I2C/SPI custom binding 적용 시 동일 패턴).
+
+### STM-18 ⭐ — R41-3 SRAM4 nocache 누락 (BDMA D3 domain D-cache stale)
+
+- **원인**: BDMA controller가 SRAM4 D3 domain buffer access 시 M7 D-cache write-back 부재 → stale data. dts `chosen` `zephyr,sram-nocache = &sram4;` 누락 시 silent data corruption.
+- **우회**: dts에 `chosen { zephyr,sram-nocache = &sram4; };` 추가 또는 manual `Z_GENERIC_SECTION(.nocache)` buffer 배치.
+- **carry-over**: STM32H7 family + Ethernet/USB/SAI DMA buffer 전체 → D-cache aware buffer 배치 표준 SOP 박제.
+
+### STM-19 ⭐⭐⭐ — R41-4 i2s_stm32_sai BDMA 미지원 (driver fork 필요)
+
+- **원인**: Zephyr `i2s_stm32_sai.c` driver는 **GPDMA만 지원**, BDMA 없음. SAI4 (D3 domain) 는 BDMA만 가능 → driver level mismatch. build OK + runtime DMA channel allocation 실패.
+- **우회**: driver fork + BDMA aware 적용 (8 driver 패치). 본 vault custom patch chain 적용 중.
+- **carry-over**: Zephyr upstream PR 기여 후보 (i2s_stm32_sai BDMA aware 정식 지원) — 외부 회사 영업 자산.
+
+### STM-20 ⭐⭐ — ACR1.DMAEN write protection (RM0399 누락 spec)
+
+- **원인**: ACR1 write 시 SAI disable 상태에서도 DMAEN bit17 set 거부. ST RM0399 reference manual 명시 spec 누락. HAL `__HAL_SAI_ENABLE_DMA` 함수 호출 시도해도 무효. 11.5/12 단계 PASS 후 마지막 0.5 단계 블로킹.
+- **우회**: 다음 세션 ~수시간 patch — write protection 우회 시퀀스 발견 + Zephyr driver 측 ACR1 access strategy 변경.
+- **carry-over**: STM32 H7 + SAI 군 전체 (H7Sx, H7Bx, H723) 동일 패턴 가능성 — vendor reference manual 누락 spec 직접 발견 R&D 가치 박제.
+
+### STM-21 ⭐ — BDMA SRAM4 D3 domain buffer 제약
+
+- **원인**: BDMA controller는 D3 domain access만 가능, AXI SRAM (0x24000000) 접근 시 silent transfer 0. build OK + runtime DMA transfer 0 bytes.
+- **우회**: SRAM4 (0x38000000) 강제 배치 + `Z_GENERIC_SECTION(.sram4)` linker section.
+- **carry-over**: STM32H7 family + BDMA 사용 (LP UART / I2C4 / SAI4) 전체 → D-domain buffer 배치 SOP 박제.
+
+→ STM 함정 누적 16 → **21건**. cross-vendor 빌드 함정 누적 51 → **56건** (Espressif 16 + Nordic 18 + NDK 1 + STM32 21).
+
+자세히 [[stm32h745-disco]] § R41 absorb + [[2026-05-29_R41-Path-A-본격-진입-stm32h745-SAI4-BDMA]].
+
 ---
 
 ## 2026-05-28 R38 SDRAM+QSPI 흡수 — STM-16 신규 함정 ⭐ (Zephyr fmc_sdram Kconfig 필수)

@@ -1,13 +1,39 @@
 ---
-title: revita IQC 자동화 인프라 — DUT 다중 + 브리지 단일 + 두 하향 경로 동일 규약 패턴
+title: revita IQC 자동화 인프라 — DUT 다중 + 브리지 단일 + 두 하향 경로 동일 규약 패턴 (5/27 직전 → 5/29 정착 완료)
 type: thought
 created: 2026-05-27
-updated: 2026-05-28
-tags: [thought, revita, IQC자동화, DUT-다중, 브리지-단일, Flask-Web-5010, AUTO모드, link_v2_test_tower, kc_cert_link_v2, kc_cert_tower, BLE-pairing-L2, 두-하향-경로-동일규약, 회귀시험자동화, n8n-cron, 위시캣-사례연구, uttechome-제품신뢰도, 한림용인CC-IQC-확장, 시공자산화]
-links: [revita, shield, ai-direction, projects, 양산제품, 위시캣활동, 한림용인cc-고가수조, 2026-05-12_원격모니터링-사업라인, 2026-05-20_rtuRemocon-shield-n8n-시공자산화]
+updated: 2026-05-29 정착 완료 — 5/27 "정착 직전" → 5/29 "정착 완료" / 32 시험 카드 + 4 자동화 모듈 + 17 PASS + EVT 1.75초 + 수신율 99.1% + 디버그 사이클 3분 + 월 7,200대 캐파 + 5채널 영업 가치 실측 carry
+tags: [thought, revita, IQC자동화, DUT-다중, 브리지-단일, Flask-Web-5010, AUTO모드, link_v2_test_tower, kc_cert_link_v2, kc_cert_tower, BLE-pairing-L2, 두-하향-경로-동일규약, 회귀시험자동화, n8n-cron, 위시캣-사례연구, uttechome-제품신뢰도, 한림용인CC-IQC-확장, 시공자산화, 정착완료-2026-05-29, 32시험카드, 17PASS, EVT-1.75초, 수신율-99.1%, 디버그사이클-3분, 월7200대-캐파, I2C핀충돌-RAK4631, PyMuPDF]
+links: [revita, shield, ai-direction, projects, 양산제품, 위시캣활동, 한림용인cc-고가수조, 2026-05-12_원격모니터링-사업라인, 2026-05-20_rtuRemocon-shield-n8n-시공자산화, 2026-05-29_revita-IQC-5채널-실측-carry]
 ---
 
 # revita IQC 자동화 인프라 — DUT 다중 + 브리지 단일 + 두 하향 경로 동일 규약 패턴
+
+## 2026-05-29 정착 완료 표시 ⭐⭐⭐⭐
+
+5/27 박제 "정착 직전" → 5/29 ingest #12 완료 시점 **정착 완료** 박제. 본 thought 4축 패턴이 **실제 시험 풀스택**으로 정착:
+
+| 항목 | 5/27 박제 (정착 직전) | **5/29 정착 완료 (실측)** |
+|---|---|---|
+| 시험 카드 | 0 | **32** (test_kc_v2/ 22 + newTest/ 10) |
+| 자동화 모듈 | 계획만 | **4 .py** (proto_kc2 + tc_kc_01 + tc_kc_l2 + tc_kc_20) |
+| JSON 증적 | 0 | **4건** + reports/ 구조 |
+| PASS 누적 | 0 | **17 PASS** (test_kc_v2 11/12 + newTest 6/10) |
+| EVT 수신 시간 | 미측정 | **1.75초** (예상 5~15초보다 3~8× 빠름) |
+| 수신율 | 미측정 | **99.1%** (2분 윈도우, 68 EVT) |
+| 디버그 사이클 | 미측정 | **3분** (FAIL → 재실행 → PASS) |
+| MVP 시점까지 | 예상 3~4일 | **약 3시간 (32× 빠름)** |
+| 양산 캐파 | 추정 월 3,000대 | **월 7,200대** (모드 A, 실측 2× 상향) |
+
+### 신규 운영 노하우 (gotcha 박제)
+
+1. **RAK4631 I2C 핀 충돌** — I2C0(P0.13/14)·I2C1(P0.24/25)이 Valve/Buzzer와 충돌 → overlay disable 필수. [[gaps]] § "RAK4631 I2C 핀 충돌" 박제.
+2. **외부 J-Link 프로그래머 운영 패턴** — RAK4631 자체 J-Link OB 대신 별도 pca10056 SW9 외부 타깃 + `JLinkExe -SelectEmuBySN <SN>` 직접 호출. 양산 jig 적용 가능.
+3. **PyMuPDF 도입** — 회로도 v3 21페이지 PNG 변환 + 인스턴스 카운트 분석 (reportlab 생성 + PyMuPDF 분석 풀스택).
+
+자세히 [[revita]] § 5/29 정착 + [[2026-05-29_revita-IQC-5채널-실측-carry]] + [[strengths]] § 9 양산 IQC 자동화 인프라 풀스택.
+
+---
 
 ## 한 줄
 

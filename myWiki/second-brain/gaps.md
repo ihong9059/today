@@ -2,12 +2,33 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-05-28 (R38 흡수 — STM-16 Zephyr fmc_sdram Kconfig 함정 + dts upstream 박제 정정 패턴: SFDP 실측 vs dts 정의 격차 64→128MB)
+updated: 2026-05-29 (R41 흡수 — STM-17~21 신규 함정 5건 / vanilla Zephyr STM32 DMIC 정식 지원 0 함정 / vendor reference manual 누락 spec 발견 패턴 (ACR1.DMAEN write protection RM0399 누락) + revita 양산 IQC 정착 — RAK4631 I2C 핀 충돌 함정)
 tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream]
 links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-05-29 — vanilla Zephyr STM32 DMIC 정식 지원 0 + vendor reference manual 누락 spec (R41) ⭐⭐⭐
+
+R41 Path A 본격 진입 시 발현. vanilla Zephyr 4.3.99 STM32 DMIC 정식 지원 0건 확인 (`samples/drivers/audio/dmic/boards = STM32 0 보드` + `dmic_stm32 driver 0건`). 본 vault custom Zephyr patch chain (binding 1 + driver 8 + overlay v3 + main.c) carry로 11.5/12 단계 PASS 검증.
+
+| 함정 | 회피 |
+|---|---|
+| Zephyr upstream에 vendor driver 정식 지원이 있을 것이라는 가정 → 실제 zero coverage (특정 driver/board) 발견 시 본 vault custom patch chain 필요 | upstream sample/driver coverage **사전 grep 검증** (`west grep` / `find . -name "*.c"`) + 0 발견 시 custom patch chain 1~2주 작업 시간 박제 |
+| vendor reference manual (ST RM0399 등)에 명시 spec이 있을 것이라는 가정 → 실제 누락 spec 발견 시 R&D 가치 (Zephyr upstream PR 기여) | vendor doc 검증 시 실측 register dump cross-check 의무화. 누락 spec 발견 시 Zephyr upstream PR 후보 + 외부 영업 자산화 |
+
+→ entity [[build-gotcha-inventory]] § STM-17~21 (R41-2 binding / R41-3 SRAM4 nocache / R41-4 i2s_stm32_sai BDMA / ACR1.DMAEN write protection / BDMA SRAM4 D3 buffer) + [[stm32h745-disco]] § R41 absorb + thought [[2026-05-29_R41-Path-A-본격-진입-stm32h745-SAI4-BDMA]].
+
+## 2026-05-29 — RAK4631 I2C 핀 충돌 (link 계열 전체 적용) ⭐
+
+revita ingest #12 정착 시 발견. RAK4631 기본 DTS의 I2C0(P0.13/14)·I2C1(P0.24/25) 활성이 Valve X(P0.13/14), Buzzer(P0.24), Valve Y(P0.25)와 핀 충돌 → silent build OK + runtime valve/buzzer 동작 0.
+
+| 함정 | 회피 |
+|---|---|
+| RAK4631 default DTS의 I2C 핀 점유가 valve/buzzer/sensor와 silent 충돌 → build/boot OK + runtime device 0건 | overlay에 `&i2c0 { status = "disabled"; }; &i2c1 { status = "disabled"; };` 추가 + RAK4631 default DTS 핀 점유 표 박제 (강의·교재 자산화 가치) |
+
+→ entity [[revita]] § 5/29 정착 + thought [[2026-05-27_revita-IQC-자동화-인프라]] § 5/29 갱신.
 
 ## 2026-05-28 — Zephyr stm32 fmc_sdram driver Kconfig 활성 누락 (STM-16) ⭐
 

@@ -2,9 +2,82 @@
 title: STM32H745I-DISCO (14번째 보드, Cortex-M tier 최강 AI 노드)
 type: entity
 created: 2026-05-26
-updated: 2026-05-28 R38 SDRAM+QSPI 정량 실증 흡수 (QSPI 64MB → 128MB SFDP 실측 정정 / Phi-2 50MB 적재 boot 3.22s 정량 실증 / 3-tier 메모리 모델 정의 / D-cache SDRAM 4.19× DTCM 2.82× / Phase D MLP SDRAM weights penalty 거의 zero / STM-16 Zephyr fmc_sdram Kconfig 함정)
+updated: 2026-05-29 R41 Path A 본격 진입 흡수 (vanilla Zephyr STM32H7 SAI4 + BDMA + mpxxdtyy 11.5/12 단계 PASS + 옛 "본질 불가" 박제 완전 정정 + SAI4 register 결정타 진단 ACR1.DMAEN bit17=0 HAL BDMA path 결함 + PC1+PE2 2핀 Ethernet 양방향 충돌 확정 + 시나리오 E E1/E2/E3 분리 박제 + STM-17~21 신규 함정 5건 + Stage 4 시나리오 E1 영업 자산 회복 path 확정)
 tags: [STM32, STM32H745, Cortex-M7, Cortex-M4, dual-core, Zephyr, LCD, USB-CDC, Ethernet, LAN, LAN8742A, B2B, Stage4, ondevice, mandate-v2.8, mandate-v2.9-종결, mandate-v2.10-R38, 14th-board, carry-over, CMSIS-NN, 17x-가속, SLM-적재, 6mandate-종결, R37-정정사이클, baseline-artifact, paired-check, STM-15-INFO-emit-cache, STM-16-fmc-sdram-Kconfig, M4-positive, asymmetric-multiprocessing, 3tier-메모리, D-cache, SDRAM-penalty-zero, QSPI-128MB-SFDP, Phi-2-적재-실증]
 links: [onDevice-ai, ai-fanstick, uttec-stage-package, build-gotcha-inventory, gaps, ai-direction, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]
+---
+
+## 2026-05-29 R41 Path A 본격 진입 흡수 ⭐⭐⭐⭐⭐ (ondevice-claude 카드 #2026-05-29-002)
+
+5/29 work-start #2 ~6시간 누적 — **vanilla Zephyr STM32H7 + SAI4 + BDMA + mpxxdtyy 11.5/12 단계 PASS** + 옛 박제 "STM32 Zephyr DMIC 본질 불가" 완전 정정 + SAI4 register 정확 진단 ACR1.DMAEN bit17=0 (HAL BDMA path 결함 결정타) + Stage 4 시나리오 E1 영업 자산 회복 path 확정.
+
+### R41 Phase 1-10 본격 진입 (옛 "본질 불가" 정정)
+
+vanilla Zephyr 4.3.99 STM32 DMIC 정식 지원 0건 확인 (samples/drivers/audio/dmic/boards = STM32 0 보드 / dmic_stm32 driver 0건) — 옛 박제 "path A 1~2일 작업" 가설 → 본 vault custom patch chain (Zephyr binding 1 + driver 8 + overlay v3 + main.c) carry로 **11.5/12 단계 PASS** 검증.
+
+### PC1 + PE2 2핀 Ethernet 양방향 충돌 확정 박제 정정 ⭐⭐⭐⭐
+
+| 박제 시점 | 충돌 핀 수 | 결론 |
+|---|:-:|---|
+| 5/28 work-end #3 | 0 | ❌ "PE4 ≠ PC1 → 충돌 없음" |
+| 5/29 work-end #1 | 1 | ⚠️ "PC1 충돌 가능" |
+| **5/29 work-start #2** | **2** | ⭐⭐⭐⭐ **PC1 + PE2 양방향 확정** |
+
+Zephyr default `stm32h745i_disco m7.dts` line 131~155:
+- PC1 = `eth_mdc_pc1` (mdio node)
+- PE2 = `eth_txd3_pe2` (mac node)
+
+→ Ethernet MII 모드 활성 시 MEMS DMIC 절대 불가 (SW `status="disabled"` 필수).
+
+### 시나리오 E E1/E2/E3 분리 박제 ⭐⭐⭐
+
+| 시나리오 | DMIC | ETH | 본질 | 영업 path |
+|:-:|:-:|:-:|---|---|
+| **E1** | ✅ | ❌ | Voice/KWS firmware 단독 | Stage 4 영업 카탈로그 메인 |
+| **E2** | ❌ | ✅ | LAN AI 산업 노드 (R36 TCP PoC carry) | Stage 4 별도 트랙 |
+| **E3** | ✅ | ✅ | ⚠️ hw modification 필수 (PC1+PE2 절단 + redirect) | Phase 4 ship 옵션 |
+
+영업 라인업 = **E1 + E2 명시 카탈로그** (E3 별도).
+
+### SAI4 register 결정타 진단 ⭐⭐⭐
+
+| Register | 값 | 의미 |
+|---|:-:|---|
+| RCC.APB4ENR bit21 | 1 | ✅ SAI4 clock enable |
+| PDMCR | 0x00000101 | ✅ PDMEN + CKEN1 (PDM mode 활성) |
+| **ACR1** | **0x000B1281** | ⚠️ SAIAEN=1 + **DMAEN bit17 = 0** ❌ |
+
+본질: ST HAL의 BDMA path가 ACR1.DMAEN bit 자동 set 안 함 (HAL 결함). ACR1 write protection 때문에 disable→set→enable 시퀀스도 변화 0 — 다음 세션 ~수시간 patch.
+
+### 신규 STM 함정 5건 박제 (STM-17~21) ⭐⭐
+
+- **STM-17** R41-2 Zephyr binding 자기모순 — `i2s_stm32_sai.yaml` `bus: i2s` 선언했지만 SAI4 node의 `child` binding 불일치 → DT parser silent build OK + runtime device 0건. binding `child` schema 자기모순 carry-over.
+- **STM-18** R41-3 SRAM4 nocache 누락 — BDMA SRAM4 D3 domain buffer는 D-cache write-back 시 stale data. dts `chosen` `zephyr,sram-nocache = &sram4;` 또는 manual `Z_GENERIC_SECTION(.nocache)` 필수.
+- **STM-19** R41-4 i2s_stm32_sai BDMA 미지원 — Zephyr `i2s_stm32_sai.c` driver는 GPDMA만 지원, BDMA 없음. SAI4 (D3 domain)는 BDMA만 가능 → driver fork + BDMA aware 적용.
+- **STM-20** ACR1.DMAEN write protection — ACR1 write 시 SAI disable 상태에서도 DMAEN bit17 set 거부 (RM0399 reference manual 누락 spec). HAL `__HAL_SAI_ENABLE_DMA` 함수 호출 시도해도 무효.
+- **STM-21** BDMA SRAM4 D3 domain buffer 제약 — BDMA controller는 D3 domain access만 가능, AXI SRAM (0x24000000) 접근 시 silent transfer 0. SRAM4 (0x38000000) 강제 배치 필수.
+
+→ STM 함정 누적 16 → **21건**. cross-vendor 누적 51 → **56건**.
+
+### Stage 4 시나리오 E1 영업 자산 회복 path 확정 ⭐⭐⭐
+
+옛 박제 (5/24 시점): "stm32h745 single chip + DMIC voice command 본질 불가능"
+새 박제 (5/29 R41): ✅ **11.5/12 단계 PASS + 본 vault custom Zephyr patch chain R&D 자산** + 다음 세션 ACR1.DMAEN write protection 우회 patch 시 R41 본격 종결 (~수시간).
+
+→ Stage 4 시나리오 E1 영업 카피 회복: "stm32h745 single chip + CMSIS-NN 17.6× + DMIC voice command + 본 vault custom Zephyr patch chain" = Cortex-M tier 최강 + 본 vault R&D 자산 차별화.
+
+### 영업 매칭 패턴 ★ (위시캣 / 강사양성 carry)
+
+본 vault custom Zephyr patch chain = **Zephyr upstream PR carry 가치 큼** (i2s_stm32_sai BDMA aware + mpxxdtyy STM32 H7 정식 지원). 위시캣 또는 강사양성 측 Zephyr/STM32 customer engagement 발생 시 본 patch chain 카드 가치 carry.
+
+### 다음 세션 carry
+
+- 사용자 STM32 DK 분해 + 이동 + 재시작 → 다음 세션 fresh state
+- Zephyr 본체 patch chain 재적용 (`10_Path_A_progress.md` § 1 carry)
+- ACR1.DMAEN write protection 우회 patch = MIC test 본격 종결 (~수시간)
+
+자세히 [[2026-05-29_R41-Path-A-본격-진입-stm32h745-SAI4-BDMA]].
+
 ---
 
 ## 2026-05-28 R38 SDRAM+QSPI 정량 실증 흡수 ⭐⭐⭐⭐ (ondevice-claude 카드 #2026-05-28-002)

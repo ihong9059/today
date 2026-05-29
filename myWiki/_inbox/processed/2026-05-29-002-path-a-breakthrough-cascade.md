@@ -11,7 +11,7 @@ related:
   - 프로젝트_AI_FanStick_차세대_PoC/Phase1_Plan/09_dmic_verify_SOP.md
   - business/entities/AI_FanStick.md
   - log.md
-status: pending
+status: done
 ---
 
 # R41 Phase 1-10 본격 본격 본격 본격 본격 진전 cascade
