@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>DGIST 조명제어 통합 대시보드 — Grafana</title>
+<style>
+  :root {
+    --bg: #0b1220;
+    --panel: #111a2c;
+    --panel-2: #16243b;
+    --line: #1f2f4a;
+    --text: #e6edf6;
+    --muted: #8aa0bf;
+    --accent: #ff6b1a;
+    --green: #2ec27e;
+    --blue: #5aa5ff;
+    --yellow: #f5c84b;
+    --red: #ff5b6a;
+    --purple: #b48cff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--text);
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    font-size: 13px; -webkit-font-smoothing: antialiased;
+  }
+  header.top {
+    display: flex; align-items: center; padding: 12px 20px;
+    background: #07101e; border-bottom: 1px solid var(--line);
+  }
+  .logo { font-weight: 700; letter-spacing: .5px; }
+  .logo .dgist { color: var(--accent); }
+  .nav { margin-left: 24px; display: flex; gap: 16px; color: var(--muted); }
+  .nav .active { color: var(--text); border-bottom: 2px solid var(--accent); padding-bottom: 6px; }
+  .live { margin-left: auto; display: flex; gap: 14px; align-items: center; color: var(--muted); font-size: 12px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; box-shadow: 0 0 8px var(--green); }
+  .grid {
+    display: grid; gap: 12px; padding: 16px;
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+    padding: 14px;
+  }
+  .card h3 { margin: 0 0 10px; font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .5px; }
+  .kpi { font-size: 28px; font-weight: 700; line-height: 1; }
+  .kpi small { font-size: 12px; color: var(--muted); font-weight: 400; margin-left: 4px; }
+  .row-3 { grid-column: span 3; }
+  .row-4 { grid-column: span 4; }
+  .row-6 { grid-column: span 6; }
+  .row-8 { grid-column: span 8; }
+  .row-12 { grid-column: span 12; }
+  .delta-up { color: var(--green); }
+  .delta-down { color: var(--red); }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+  .pill.ir { background: rgba(255,107,26,.15); color: var(--accent); border: 1px solid rgba(255,107,26,.4); }
+  .pill.mesh { background: rgba(90,165,255,.15); color: var(--blue); border: 1px solid rgba(90,165,255,.4); }
+  .pill.green { background: rgba(46,194,126,.15); color: var(--green); border: 1px solid rgba(46,194,126,.4); }
+  .pill.yellow { background: rgba(245,200,75,.18); color: var(--yellow); border: 1px solid rgba(245,200,75,.4); }
+  .pill.red { background: rgba(255,91,106,.15); color: var(--red); border: 1px solid rgba(255,91,106,.4); }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th, td { text-align: left; padding: 7px 6px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 500; font-size: 11.5px; text-transform: uppercase; letter-spacing: .3px; }
+  td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; }
+  .bar-bg { background: var(--panel-2); height: 6px; border-radius: 3px; overflow: hidden; }
+  .bar-fg { height: 100%; }
+  .legend { display: flex; gap: 14px; font-size: 11px; color: var(--muted); }
+  .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+  .alert-row { display: flex; align-items: flex-start; padding: 8px 0; gap: 10px; border-bottom: 1px dashed var(--line); }
+  .alert-row:last-child { border-bottom: 0; }
+  .alert-row .ic { width: 24px; text-align: center; }
+  .alert-row .time { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .small { font-size: 11.5px; color: var(--muted); }
+  .progress-row { display: grid; grid-template-columns: 110px 1fr 70px; gap: 8px; align-items: center; padding: 5px 0; }
+  .footer { padding: 10px 20px; color: var(--muted); font-size: 11px; border-top: 1px solid var(--line); display: flex; gap: 16px;}
+  svg text { fill: var(--muted); font-size: 10px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><span class="dgist">DGIST</span> · 조명제어 통합 관제</div>
+  <nav class="nav">
+    <span class="active">개요</span>
+    <span>건물별 상세</span>
+    <span>지하주차장</span>
+    <span>스케줄/룰</span>
+    <span>알림</span>
+    <span>리포트</span>
+    <span>관리</span>
+  </nav>
+  <div class="live">
+    <span style="background:rgba(245,200,75,.18); color:var(--yellow); padding:3px 8px; border-radius:3px; border:1px solid rgba(245,200,75,.4); font-weight:600;">⚠ MOCKUP · 시뮬레이션 데이터 (Phase 5 PoC 전)</span>
+    <span><span class="dot"></span> Gateway A · LIVE</span>
+    <span>2026-05-30 14:23:08 KST</span>
+    <span>운영자: 시설운영팀장</span>
+  </div>
+</header>
+
+<section class="grid">
+  <!-- Row 1: KPI cards -->
+  <div class="card row-3">
+    <h3>전체 LED 운영 현황</h3>
+    <div class="kpi">1,271<small>등</small></div>
+    <div class="small" style="margin-top:6px;">
+      <span class="pill mesh">BLE Mesh 917</span> &nbsp;
+      <span class="pill ir">IR 354</span>
+    </div>
+    <div class="small" style="margin-top:8px;">통신 정합성 <span class="delta-up">99.6%</span> · 5등 단절</div>
+  </div>
+
+  <div class="card row-3">
+    <h3>현재 점등 분포</h3>
+    <div class="kpi">620<small>등 점등 (48.8%)</small></div>
+    <div style="display:flex; gap:8px; margin-top:10px;">
+      <div style="flex:1;">
+        <div class="small">점등 100%</div>
+        <div class="bar-bg"><div class="bar-fg" style="width:48%; background:var(--green);"></div></div>
+      </div>
+      <div style="flex:1;">
+        <div class="small">디밍 30~70%</div>
+        <div class="bar-bg"><div class="bar-fg" style="width:24%; background:var(--blue);"></div></div>
+      </div>
+      <div style="flex:1;">
+        <div class="small">소등</div>
+        <div class="bar-bg"><div class="bar-fg" style="width:28%; background:#3a4d6e;"></div></div>
+      </div>
+    </div>
+    <div class="small" style="margin-top:8px;">점심 시간대 자동 디밍 정책 적용 중</div>
+  </div>
+
+  <div class="card row-3">
+    <h3>실시간 소비전력</h3>
+    <div class="kpi">8.4<small>kWh/h</small></div>
+    <div class="small" style="margin-top:6px;"><span class="delta-up">▼ −62.1%</span> 기존 대비 (baseline 22.2 kWh/h)</div>
+    <svg width="100%" height="38" viewBox="0 0 280 38" preserveAspectRatio="none" style="margin-top:8px;">
+      <polyline points="0,30 14,28 28,22 42,15 56,10 70,8 84,14 98,22 112,28 126,30 140,28 154,24 168,18 182,12 196,9 210,11 224,16 238,22 252,28 266,30 280,32"
+        fill="none" stroke="var(--accent)" stroke-width="2"/>
+      <polyline points="0,30 14,28 28,22 42,15 56,10 70,8 84,14 98,22 112,28 126,30 140,28 154,24 168,18 182,12 196,9 210,11 224,16 238,22 252,28 266,30 280,32 280,38 0,38"
+        fill="rgba(255,107,26,.15)" stroke="none"/>
+    </svg>
+    <div class="small">최근 24h · 출퇴근/점심 peak 가시화</div>
+  </div>
+
+  <div class="card row-3">
+    <h3>오늘 누적 절감</h3>
+    <div class="kpi">331<small>kWh · ₩49,650</small></div>
+    <div class="small" style="margin-top:6px;">월 누적 <strong style="color:var(--text)">9,124 kWh / ₩1,368,600</strong></div>
+    <div class="small">연간 환산 <strong style="color:var(--text)">≈ 109,500 kWh / ₩16.4M</strong></div>
+    <div class="small" style="margin-top:6px;">CO2 감축 환산 <strong style="color:var(--green)">≈ 51.2 ton/년</strong></div>
+  </div>
+
+  <!-- Row 2: System split cards -->
+  <div class="card row-6">
+    <h3>§2.2 BLE Mesh — 본관·E2~E7동 복도·중앙기기센터 (917등)</h3>
+    <div style="display:flex; gap:16px; align-items:flex-end;">
+      <div>
+        <div class="kpi" style="color:var(--blue);">488<small>점등</small></div>
+        <div class="small">디밍 215 · 소등 214</div>
+      </div>
+      <div style="flex:1; padding-left:16px; border-left:1px solid var(--line);">
+        <div class="progress-row">
+          <span class="small">E1 컨퍼런스·통합행정 지하1</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:84%; background:var(--blue);"></div></div>
+          <span class="small r">53 / 63</span>
+        </div>
+        <div class="progress-row">
+          <span class="small">E2 신물질과학부 1~6F</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:62%; background:var(--blue);"></div></div>
+          <span class="small r">61 / 98</span>
+        </div>
+        <div class="progress-row">
+          <span class="small">E3 정보통신융합 1~6F</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:71%; background:var(--blue);"></div></div>
+          <span class="small r">61 / 86</span>
+        </div>
+        <div class="progress-row">
+          <span class="small">E4 뇌과학부 1~2F</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:38%; background:var(--blue);"></div></div>
+          <span class="small r">15 / 39</span>
+        </div>
+        <div class="progress-row">
+          <span class="small">E5 로봇공학부 1~6F</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:55%; background:var(--blue);"></div></div>
+          <span class="small r">51 / 93</span>
+        </div>
+        <div class="progress-row">
+          <span class="small">E6 에너지시스템 1~6F</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:48%; background:var(--blue);"></div></div>
+          <span class="small r">44 / 91</span>
+        </div>
+        <div class="progress-row">
+          <span class="small">E7 컨실리언스 1~3F</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:67%; background:var(--blue);"></div></div>
+          <span class="small r">203 / 303</span>
+        </div>
+      </div>
+    </div>
+    <div class="small" style="margin-top:10px;">평균 Mesh hop 1.8 · 평균 응답 78ms · self-heal 이벤트 24h 0건</div>
+  </div>
+
+  <div class="card row-6">
+    <h3>§2.1 IR Chain — 컨실리언스센터 지하주차장 (354등)</h3>
+    <div style="display:flex; gap:16px; align-items:flex-end;">
+      <div>
+        <div class="kpi" style="color:var(--accent);">132<small>점등</small></div>
+        <div class="small">디밍 87 · 소등 135</div>
+      </div>
+      <div style="flex:1; padding-left:16px; border-left:1px solid var(--line);">
+        <div class="progress-row">
+          <span class="small">G01 입구 램프</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:82%; background:var(--accent);"></div></div>
+          <span class="small r">28 / 34</span>
+        </div>
+        <div class="progress-row">
+          <span class="small">G02~G05 동측 row</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:46%; background:var(--accent);"></div></div>
+          <span class="small r">52 / 112</span>
+        </div>
+        <div class="progress-row">
+          <span class="small">G06~G09 서측 row</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:36%; background:var(--accent);"></div></div>
+          <span class="small r">38 / 105</span>
+        </div>
+        <div class="progress-row">
+          <span class="small">G10~G12 차량 동선</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:13%; background:var(--accent);"></div></div>
+          <span class="small r">14 / 103</span>
+        </div>
+      </div>
+    </div>
+    <div class="small" style="margin-top:10px;">chain hop avg 1.4단 · 평균 latency 32ms · PIR 트리거 24h 1,287회</div>
+  </div>
+
+  <!-- Row 3: 24h time series + zone map -->
+  <div class="card row-8">
+    <h3>24h 소비전력 시계열 (kWh/h)</h3>
+    <svg viewBox="0 0 800 220" width="100%" height="220" preserveAspectRatio="none">
+      <!-- grid -->
+      <g stroke="var(--line)" stroke-width="0.5">
+        <line x1="40" y1="20" x2="40" y2="200"/>
+        <line x1="40" y1="200" x2="780" y2="200"/>
+        <line x1="40" y1="160" x2="780" y2="160" stroke-dasharray="3,3"/>
+        <line x1="40" y1="120" x2="780" y2="120" stroke-dasharray="3,3"/>
+        <line x1="40" y1="80" x2="780" y2="80" stroke-dasharray="3,3"/>
+        <line x1="40" y1="40" x2="780" y2="40" stroke-dasharray="3,3"/>
+      </g>
+      <!-- y labels -->
+      <text x="34" y="204" text-anchor="end">0</text>
+      <text x="34" y="164" text-anchor="end">5</text>
+      <text x="34" y="124" text-anchor="end">10</text>
+      <text x="34" y="84" text-anchor="end">15</text>
+      <text x="34" y="44" text-anchor="end">20</text>
+      <!-- x labels -->
+      <text x="40" y="215">00</text>
+      <text x="194" y="215">06</text>
+      <text x="348" y="215">12</text>
+      <text x="502" y="215">18</text>
+      <text x="656" y="215">22</text>
+      <text x="780" y="215" text-anchor="end">현재</text>
+      <!-- baseline (no control) -->
+      <polyline points="40,80 100,80 160,80 220,80 280,80 340,80 400,80 460,80 520,80 580,80 640,80 700,80 780,80"
+        fill="none" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="780" y="76" text-anchor="end" fill="var(--muted)">baseline 22.2 kWh/h</text>
+      <!-- actual: low at night, peak morning + lunch + evening -->
+      <polyline points="40,194 80,192 120,190 160,186 200,170 240,140 280,90 320,78 360,86 400,92 440,118 480,128 520,82 560,76 600,82 640,90 680,114 720,138 760,170 780,184"
+        fill="none" stroke="var(--accent)" stroke-width="2.2"/>
+      <polyline points="40,194 80,192 120,190 160,186 200,170 240,140 280,90 320,78 360,86 400,92 440,118 480,128 520,82 560,76 600,82 640,90 680,114 720,138 760,170 780,184 780,200 40,200"
+        fill="rgba(255,107,26,.18)" stroke="none"/>
+      <text x="780" y="190" text-anchor="end" fill="var(--accent)">실측 평균 8.4 kWh/h</text>
+      <!-- now marker -->
+      <line x1="708" y1="20" x2="708" y2="200" stroke="var(--yellow)" stroke-width="1" stroke-dasharray="2,2"/>
+      <text x="710" y="34" fill="var(--yellow)">14:23 현재</text>
+    </svg>
+    <div class="legend" style="margin-top:6px;">
+      <span><span class="swatch" style="background:var(--accent);"></span>실측 (제어 적용)</span>
+      <span><span class="swatch" style="background:var(--muted);"></span>baseline (제어 없을 때 추정치)</span>
+      <span style="margin-left:auto;">표시 구간: 24h · 5분 평균</span>
+    </div>
+  </div>
+
+  <div class="card row-4">
+    <h3>스케줄·자동 룰 (요약)</h3>
+    <table>
+      <tr><th>시각·트리거</th><th>구역</th><th class="r">동작</th></tr>
+      <tr><td>06:00 평일</td><td>본관·E2~E7 복도</td><td class="r"><span class="pill mesh">30% 사전점등</span></td></tr>
+      <tr><td>07:30 PIR</td><td>각 Zone</td><td class="r"><span class="pill green">100%</span></td></tr>
+      <tr><td>12:00 ± 5분</td><td>전체</td><td class="r"><span class="pill yellow">30% 디밍</span></td></tr>
+      <tr><td>18:00 PIR off 15분</td><td>각 Zone</td><td class="r"><span class="pill">소등</span></td></tr>
+      <tr><td>22:00 평일</td><td>전체</td><td class="r"><span class="pill yellow">대기 30%</span></td></tr>
+      <tr><td>차량 진입 PIR</td><td>지하주차장</td><td class="r"><span class="pill ir">chain 100%</span></td></tr>
+      <tr><td>점유 1h 무</td><td>전체</td><td class="r"><span class="pill">10% → 30분 후 OFF</span></td></tr>
+      <tr><td>주말·공휴일</td><td>본관·E2~E7</td><td class="r"><span class="pill">상시 소등 (PIR ONLY)</span></td></tr>
+    </table>
+  </div>
+
+  <!-- Row 4: alerts + history -->
+  <div class="card row-6">
+    <h3>실시간 알림 · 이벤트 (최근 24h)</h3>
+    <div>
+      <div class="alert-row">
+        <span class="ic" style="color:var(--red);">●</span>
+        <div style="flex:1;">
+          <div><strong>Light B-23 통신 단절</strong> · BLE Mesh self-heal 우회 적용됨</div>
+          <div class="time">14:18 · E3 4F 복도 · 점검 작업 발행 (#T-2026-0530-014)</div>
+        </div>
+      </div>
+      <div class="alert-row">
+        <span class="ic" style="color:var(--yellow);">▲</span>
+        <div style="flex:1;">
+          <div><strong>Zone 4 평균 디밍 시간</strong> 전월 대비 +18% 증가</div>
+          <div class="time">13:00 · 일일 분석 룰 · 이상 동선 분석 요청 (#A-2026-0530-008)</div>
+        </div>
+      </div>
+      <div class="alert-row">
+        <span class="ic" style="color:var(--blue);">i</span>
+        <div style="flex:1;">
+          <div>OTA 펌웨어 v1.4.2 · 1개 Zone(E5 3F) 배포 완료 — 24h 모니터링 중</div>
+          <div class="time">11:42 · A/B partition 정상 · rollback 0건</div>
+        </div>
+      </div>
+      <div class="alert-row">
+        <span class="ic" style="color:var(--green);">✓</span>
+        <div style="flex:1;">
+          <div>지하주차장 IR chain G02~G05 자가진단 통과 (HEARTBEAT 1,287회)</div>
+          <div class="time">10:00 · 일일 자가진단 · 단등 고장 0건</div>
+        </div>
+      </div>
+      <div class="alert-row">
+        <span class="ic" style="color:var(--purple);">⇩</span>
+        <div style="flex:1;">
+          <div>주차장 G10 입출구 PIR 트리거 폭주 (정상 범위 1.4×)</div>
+          <div class="time">09:14 · 일시적 · 정책 변경 불요</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card row-6">
+    <h3>Zone 점유율 히트맵 (오늘)</h3>
+    <table>
+      <tr>
+        <th>건물 / 시간대</th>
+        <th class="r">06</th><th class="r">09</th><th class="r">12</th><th class="r">15</th><th class="r">18</th><th class="r">21</th>
+      </tr>
+      <tr><td>E1 컨퍼런스</td>
+        <td class="r"><span style="background:rgba(46,194,126,.25); padding:2px 8px; border-radius:3px;">12</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.7); padding:2px 8px; border-radius:3px;">62</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.45); padding:2px 8px; border-radius:3px;">38</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.8); padding:2px 8px; border-radius:3px;">71</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.55); padding:2px 8px; border-radius:3px;">44</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.15); padding:2px 8px; border-radius:3px;">6</span></td>
+      </tr>
+      <tr><td>E2 신물질과학부</td>
+        <td class="r"><span style="background:rgba(46,194,126,.15); padding:2px 8px; border-radius:3px;">4</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.6); padding:2px 8px; border-radius:3px;">52</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.3); padding:2px 8px; border-radius:3px;">22</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.7); padding:2px 8px; border-radius:3px;">61</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.4); padding:2px 8px; border-radius:3px;">31</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.1); padding:2px 8px; border-radius:3px;">3</span></td>
+      </tr>
+      <tr><td>E3 정보통신융합</td>
+        <td class="r"><span style="background:rgba(46,194,126,.18); padding:2px 8px; border-radius:3px;">7</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.75); padding:2px 8px; border-radius:3px;">68</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.35); padding:2px 8px; border-radius:3px;">27</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.85); padding:2px 8px; border-radius:3px;">76</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.5); padding:2px 8px; border-radius:3px;">39</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.18); padding:2px 8px; border-radius:3px;">8</span></td>
+      </tr>
+      <tr><td>E4 뇌과학부</td>
+        <td class="r"><span style="background:rgba(46,194,126,.1); padding:2px 8px; border-radius:3px;">2</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.5); padding:2px 8px; border-radius:3px;">39</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.25); padding:2px 8px; border-radius:3px;">14</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.65); padding:2px 8px; border-radius:3px;">54</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.45); padding:2px 8px; border-radius:3px;">35</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.1); padding:2px 8px; border-radius:3px;">3</span></td>
+      </tr>
+      <tr><td>E5 로봇공학부</td>
+        <td class="r"><span style="background:rgba(46,194,126,.18); padding:2px 8px; border-radius:3px;">8</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.6); padding:2px 8px; border-radius:3px;">54</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.32); padding:2px 8px; border-radius:3px;">24</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.7); padding:2px 8px; border-radius:3px;">62</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.45); padding:2px 8px; border-radius:3px;">33</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.15); padding:2px 8px; border-radius:3px;">5</span></td>
+      </tr>
+      <tr><td>E6 에너지시스템</td>
+        <td class="r"><span style="background:rgba(46,194,126,.15); padding:2px 8px; border-radius:3px;">6</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.55); padding:2px 8px; border-radius:3px;">48</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.28); padding:2px 8px; border-radius:3px;">19</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.65); padding:2px 8px; border-radius:3px;">58</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.42); padding:2px 8px; border-radius:3px;">31</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.1); padding:2px 8px; border-radius:3px;">4</span></td>
+      </tr>
+      <tr><td>E7 컨실리언스 (지상)</td>
+        <td class="r"><span style="background:rgba(46,194,126,.2); padding:2px 8px; border-radius:3px;">9</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.75); padding:2px 8px; border-radius:3px;">67</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.4); padding:2px 8px; border-radius:3px;">29</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.8); padding:2px 8px; border-radius:3px;">72</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.55); padding:2px 8px; border-radius:3px;">42</span></td>
+        <td class="r"><span style="background:rgba(46,194,126,.2); padding:2px 8px; border-radius:3px;">9</span></td>
+      </tr>
+      <tr><td>E7 지하주차장 (IR)</td>
+        <td class="r"><span style="background:rgba(255,107,26,.25); padding:2px 8px; border-radius:3px;">14</span></td>
+        <td class="r"><span style="background:rgba(255,107,26,.85); padding:2px 8px; border-radius:3px;">82</span></td>
+        <td class="r"><span style="background:rgba(255,107,26,.35); padding:2px 8px; border-radius:3px;">23</span></td>
+        <td class="r"><span style="background:rgba(255,107,26,.55); padding:2px 8px; border-radius:3px;">45</span></td>
+        <td class="r"><span style="background:rgba(255,107,26,.95); padding:2px 8px; border-radius:3px;">91</span></td>
+        <td class="r"><span style="background:rgba(255,107,26,.4); padding:2px 8px; border-radius:3px;">28</span></td>
+      </tr>
+    </table>
+    <div class="small" style="margin-top:8px;">셀 값 = 해당 건물·시간대 평균 점유 LED 비율(%) · 출퇴근 peak 가시화</div>
+  </div>
+
+</section>
+
+<footer class="footer">
+  <span>UTTEC × DGIST · 운영 대시보드 mockup v1.0 · 2026-05-30</span>
+  <span style="margin-left:auto;">Node-RED 4.x · InfluxDB 2.x · Grafana 10.x · Mosquitto MQTT 5</span>
+</footer>
+</body>
+</html>

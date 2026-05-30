@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>스케줄·자동 룰 편집 — DGIST 조명제어</title>
+<style>
+  :root {
+    --bg:#0b1220; --panel:#111a2c; --panel-2:#16243b; --line:#1f2f4a;
+    --text:#e6edf6; --muted:#8aa0bf; --accent:#ff6b1a; --green:#2ec27e;
+    --blue:#5aa5ff; --yellow:#f5c84b; --red:#ff5b6a;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif; font-size:13px; }
+  header.top { display:flex; align-items:center; padding:12px 20px; background:#07101e; border-bottom:1px solid var(--line); }
+  .logo { font-weight:700; } .logo .dgist { color:var(--accent); }
+  .nav { margin-left:24px; display:flex; gap:16px; color:var(--muted); }
+  .nav .active { color:var(--text); border-bottom:2px solid var(--accent); padding-bottom:6px; }
+  .live { margin-left:auto; display:flex; gap:14px; color:var(--muted); font-size:12px; align-items:center; }
+  .dot { width:8px; height:8px; border-radius:50%; background:var(--green); display:inline-block; box-shadow:0 0 8px var(--green); }
+  .grid { display:grid; grid-template-columns:1fr 380px; gap:12px; padding:14px 16px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px; }
+  .card h3 { margin:0 0 10px; font-size:12px; color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:.5px; }
+  .tab { display:flex; gap:18px; border-bottom:1px solid var(--line); margin-bottom:10px; padding-bottom:8px; }
+  .tab span { color:var(--muted); cursor:pointer; font-weight:600; }
+  .tab .active { color:var(--text); border-bottom:2px solid var(--accent); padding-bottom:6px; }
+  .small { font-size:11.5px; color:var(--muted); }
+  .timeline { position:relative; padding:10px 0; }
+  .timeline-bar { height:46px; background:var(--panel-2); border-radius:5px; position:relative; }
+  .timeline-hours { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); padding:6px 0 0; }
+  .seg { position:absolute; top:6px; bottom:6px; border-radius:3px; padding:6px 8px; font-size:11px; color:white; font-weight:600; cursor:pointer; }
+  .seg.on { background:var(--green); }
+  .seg.dim { background:var(--yellow); color:#3a2c00; }
+  .seg.off { background:#3a4d6e; }
+  .seg.scene { background:var(--accent); }
+  .rule-card { background:var(--panel-2); border-radius:4px; padding:12px; margin:8px 0; display:flex; gap:12px; align-items:center; }
+  .rule-card .ic { width:36px; height:36px; border-radius:50%; background:rgba(90,165,255,.2); display:flex; align-items:center; justify-content:center; color:var(--blue); font-weight:700; }
+  .rule-card .title { font-weight:600; }
+  .rule-card .meta { font-size:11px; color:var(--muted); margin-top:2px; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; margin-left:4px; }
+  .pill.green { background:rgba(46,194,126,.15); color:var(--green); }
+  .pill.gray { background:rgba(138,160,191,.15); color:var(--muted); }
+  .pill.blue { background:rgba(90,165,255,.15); color:var(--blue); }
+  .toggle { width:34px; height:18px; background:#4a5d80; border-radius:9px; position:relative; cursor:pointer; }
+  .toggle.on { background:var(--green); }
+  .toggle::after { content:''; width:14px; height:14px; background:white; border-radius:50%; position:absolute; top:2px; left:2px; transition:left .15s; }
+  .toggle.on::after { left:18px; }
+  .scene-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+  .scene-card { background:var(--panel-2); border-radius:4px; padding:10px; cursor:pointer; border:1px solid transparent; }
+  .scene-card:hover { border-color:var(--accent); }
+  .scene-card .title { font-weight:600; }
+  .scene-card .desc { font-size:11px; color:var(--muted); margin-top:3px; }
+  .btn { background:var(--accent); color:white; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; font-weight:600; font-size:12px; }
+  .btn.sec { background:transparent; color:var(--blue); border:1px solid var(--blue); }
+  .editor { background:#0a1322; border:1px solid var(--line); border-radius:4px; padding:14px; font-family:'Consolas',monospace; font-size:12px; color:var(--muted); line-height:1.6; }
+  .editor .k { color:var(--blue); }
+  .editor .s { color:var(--yellow); }
+  .editor .n { color:var(--accent); }
+  .editor .c { color:#5a7baa; font-style:italic; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><span class="dgist">DGIST</span> · 조명제어 통합 관제</div>
+  <nav class="nav">
+    <span>개요</span>
+    <span>건물별 상세</span>
+    <span>지하주차장</span>
+    <span class="active">스케줄/룰</span>
+    <span>알림</span>
+    <span>리포트</span>
+    <span>관리</span>
+  </nav>
+  <div class="live">
+    <span style="background:rgba(245,200,75,.18); color:var(--yellow); padding:3px 8px; border-radius:3px; border:1px solid rgba(245,200,75,.4); font-weight:600;">⚠ MOCKUP</span>
+    <span><span class="dot"></span> Node-RED v4.1</span>
+    <span>2026-05-30 14:23</span>
+  </div>
+</header>
+
+<section class="grid">
+  <!-- Left: schedule timeline + rule list -->
+  <div>
+    <div class="card">
+      <div class="tab">
+        <span class="active">시각표 (E3 정보통신융합)</span>
+        <span>전체 건물 비교</span>
+        <span>장기 스케줄 (월/연)</span>
+      </div>
+      <div class="small">선택: <strong style="color:var(--text)">E3 정보통신융합공학부</strong> · <strong style="color:var(--text)">평일</strong> · 4F 복도 Zone Z-E3-04 적용</div>
+
+      <h3 style="margin-top:14px;">일일 시각표 (00:00 ~ 24:00)</h3>
+      <div class="timeline">
+        <div class="timeline-bar">
+          <!-- segments: 00-06 off, 06-07:30 dim 30%, 07:30-12 on, 12-13 dim 30%, 13-18 on, 18-22 dim then off, 22-24 standby -->
+          <div class="seg off" style="left:0%; width:25%;">00:00–06:00  소등 (PIR 100%만)</div>
+          <div class="seg dim" style="left:25%; width:6.25%;">06–07:30  사전 30%</div>
+          <div class="seg on" style="left:31.25%; width:18.75%;">07:30–12:00  100% (PIR)</div>
+          <div class="seg dim" style="left:50%; width:4.166%;">12–13  점심 30%</div>
+          <div class="seg on" style="left:54.166%; width:20.83%;">13–18  100% (PIR)</div>
+          <div class="seg dim" style="left:75%; width:16.66%;">18–22  점진 디밍 (PIR 100%)</div>
+          <div class="seg off" style="left:91.66%; width:8.34%;">22–24  소등</div>
+        </div>
+        <div class="timeline-hours">
+          <span>00</span><span>03</span><span>06</span><span>09</span><span>12</span><span>15</span><span>18</span><span>21</span><span>24</span>
+        </div>
+      </div>
+      <div class="small">⚙ PIR 트리거는 모든 시간대에서 즉시 100% 점등 우선 (자동 디밍 정책은 무동작 timer 만료 시 적용)</div>
+
+      <h3 style="margin-top:18px;">자동화 룰 (Active 7건)</h3>
+
+      <div class="rule-card">
+        <div class="ic">⏰</div>
+        <div style="flex:1;">
+          <div class="title">평일 06:00 사전 점등 <span class="pill green">활성</span> <span class="pill blue">스케줄</span></div>
+          <div class="meta">cron: <code>0 6 * * 1-5</code> · 대상: 본관·E2~E7 복도 zone 27개 · 동작: 디밍 30% set</div>
+        </div>
+        <div class="toggle on"></div>
+      </div>
+
+      <div class="rule-card">
+        <div class="ic">⏰</div>
+        <div style="flex:1;">
+          <div class="title">매일 12:00 점심 디밍 <span class="pill green">활성</span> <span class="pill blue">스케줄</span></div>
+          <div class="meta">cron: <code>0 12 * * *</code> · 대상: 본관·E2~E7 복도 zone 27개 · 동작: 디밍 30%, 13:00 자동 복원</div>
+        </div>
+        <div class="toggle on"></div>
+      </div>
+
+      <div class="rule-card">
+        <div class="ic">⏰</div>
+        <div style="flex:1;">
+          <div class="title">매일 22:00 야간 대기 <span class="pill green">활성</span> <span class="pill blue">스케줄</span></div>
+          <div class="meta">cron: <code>0 22 * * *</code> · 대상: 전체 · 동작: PIR ONLY (기본 0%, 트리거 시 100%)</div>
+        </div>
+        <div class="toggle on"></div>
+      </div>
+
+      <div class="rule-card">
+        <div class="ic">👤</div>
+        <div style="flex:1;">
+          <div class="title">PIR 무동작 → 자동 디밍 <span class="pill green">활성</span> <span class="pill blue">점유</span></div>
+          <div class="meta">trigger: <code>no_motion(zone) &gt; 60s</code> · 동작: 디밍 10% · 추가 30분 무동작 시 소등</div>
+        </div>
+        <div class="toggle on"></div>
+      </div>
+
+      <div class="rule-card">
+        <div class="ic">🚗</div>
+        <div style="flex:1;">
+          <div class="title">주차장 차량 진입 → chain 점등 <span class="pill green">활성</span> <span class="pill blue">PIR·IR</span></div>
+          <div class="meta">trigger: <code>parking.zone.* PIR</code> · 동작: IR chain (TTL=3, PARAM=70) · 30s 후 자동 디밍</div>
+        </div>
+        <div class="toggle on"></div>
+      </div>
+
+      <div class="rule-card">
+        <div class="ic">📅</div>
+        <div style="flex:1;">
+          <div class="title">공휴일 자동 야간 모드 <span class="pill green">활성</span> <span class="pill blue">달력</span></div>
+          <div class="meta">trigger: <code>is_holiday(today)</code> · 동작: 06:00~22:00에도 PIR ONLY 모드 강제</div>
+        </div>
+        <div class="toggle on"></div>
+      </div>
+
+      <div class="rule-card">
+        <div class="ic">⚠</div>
+        <div style="flex:1;">
+          <div class="title">통신 단절 시 자동 알림 <span class="pill green">활성</span> <span class="pill blue">진단</span></div>
+          <div class="meta">trigger: <code>node.heartbeat &gt; 5min lost</code> · 동작: 알림 + 작업 티켓 자동 발행</div>
+        </div>
+        <div class="toggle on"></div>
+      </div>
+
+      <div class="rule-card" style="opacity:.5;">
+        <div class="ic">🌞</div>
+        <div style="flex:1;">
+          <div class="title">조도 보정 (BH1750 옵션) <span class="pill gray">비활성</span> <span class="pill blue">센서</span></div>
+          <div class="meta">trigger: <code>illumination_lux &lt; 200</code> · 옵션 — 본 사업 미적용</div>
+        </div>
+        <div class="toggle"></div>
+      </div>
+
+      <div style="display:flex; gap:8px; margin-top:14px;">
+        <button class="btn">+ 새 룰 추가</button>
+        <button class="btn sec">Node-RED Flow 보기</button>
+        <button class="btn sec">변경 이력</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+      <h3>룰 YAML 미리보기 (Git 관리)</h3>
+      <pre class="editor"><span class="c"># rules/weekday_morning_pre_dim.yaml</span>
+<span class="k">id</span>: weekday_morning_pre_dim
+<span class="k">trigger</span>:
+  <span class="k">type</span>: <span class="s">schedule</span>
+  <span class="k">cron</span>: <span class="s">"0 6 * * 1-5"</span>     <span class="c"># 평일 06:00</span>
+<span class="k">target</span>:
+  <span class="k">zones</span>: [<span class="s">"E1-*"</span>, <span class="s">"E2-*"</span>, <span class="s">"E3-*"</span>, <span class="s">"E4-*"</span>, <span class="s">"E5-*"</span>, <span class="s">"E6-*"</span>, <span class="s">"E7-1F"</span>, <span class="s">"E7-2F"</span>, <span class="s">"E7-3F"</span>]
+<span class="k">action</span>:
+  <span class="k">command</span>: <span class="s">"dim_set"</span>
+  <span class="k">level</span>: <span class="n">30</span>
+  <span class="k">duration_min</span>: <span class="n">90</span>
+<span class="k">fallback_on_error</span>:
+  <span class="k">level</span>: <span class="n">50</span>
+  <span class="k">alert</span>: <span class="s">"weekday_morning rule failed"</span>
+<span class="k">audit</span>:
+  <span class="k">created_by</span>: <span class="s">"esco-admin"</span>
+  <span class="k">last_modified</span>: <span class="s">"2026-05-30T09:14:00+09:00"</span></pre>
+    </div>
+  </div>
+
+  <!-- Right: scenes + audit -->
+  <div>
+    <div class="card">
+      <h3>Scene (한 번 클릭으로 호출)</h3>
+      <div class="scene-grid">
+        <div class="scene-card">
+          <div class="title">🧹 청소 모드</div>
+          <div class="desc">대상 zone 100% 강제 · 2시간 후 자동 복원 · 시설팀 작업용</div>
+        </div>
+        <div class="scene-card">
+          <div class="title">🎓 시험 기간</div>
+          <div class="desc">강의실 zone 22:00 → 24:00 연장 · 학사일정 매년 자동</div>
+        </div>
+        <div class="scene-card">
+          <div class="title">🎉 행사·세미나</div>
+          <div class="desc">강당·로비 zone 즉시 100% · 행사 종료 시 자동 복원</div>
+        </div>
+        <div class="scene-card">
+          <div class="title">🛠 점검</div>
+          <div class="desc">대상 zone OFF · 작업자 안전 · 작업 티켓 발행</div>
+        </div>
+        <div class="scene-card">
+          <div class="title">🌙 야간 보안 순찰</div>
+          <div class="desc">전 구간 PIR 100% (정상 야간 모드 무시) · 보안팀용</div>
+        </div>
+        <div class="scene-card">
+          <div class="title">🚨 비상 점등</div>
+          <div class="desc">전체 즉시 100% · 1시간 무동작 후 자동 복원 · 권한 = 관리자</div>
+        </div>
+        <div class="scene-card">
+          <div class="title">📺 야간 강의 (방송)</div>
+          <div class="desc">방송통신대 zone 19:00~23:00 100% · 평일</div>
+        </div>
+        <div class="scene-card">
+          <div class="title">⛔ 휴교일</div>
+          <div class="desc">전체 PIR ONLY · 디밍 stair 무시 · 24h 적용</div>
+        </div>
+      </div>
+      <button class="btn" style="margin-top:10px;">+ Scene 만들기</button>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+      <h3>변경 감사 (최근 7일)</h3>
+      <div class="rule-card" style="background:transparent; padding:8px 0; border-bottom:1px solid var(--line);">
+        <div style="flex:1;">
+          <div class="title" style="font-size:12.5px;">"평일 22:00 야간 대기" 시간 변경</div>
+          <div class="meta">2026-05-28 14:32 · operator: esco-admin · 22:30 → 22:00 (15분 앞당김) · 사유: 시방서 §3.1 절감 강화</div>
+        </div>
+      </div>
+      <div class="rule-card" style="background:transparent; padding:8px 0; border-bottom:1px solid var(--line);">
+        <div style="flex:1;">
+          <div class="title" style="font-size:12.5px;">"점심 디밍" 활성화</div>
+          <div class="meta">2026-05-25 11:18 · operator: facility-team · 신규 추가 · 사유: 점심 시간 절감 검증</div>
+        </div>
+      </div>
+      <div class="rule-card" style="background:transparent; padding:8px 0; border-bottom:1px solid var(--line);">
+        <div style="flex:1;">
+          <div class="title" style="font-size:12.5px;">Scene "시험 기간" 시각 변경</div>
+          <div class="meta">2026-05-23 09:00 · operator: esco-admin · 22:00 → 23:50 연장 · 학사일정 반영</div>
+        </div>
+      </div>
+      <div class="rule-card" style="background:transparent; padding:8px 0;">
+        <div style="flex:1;">
+          <div class="title" style="font-size:12.5px;">"통신 단절 알림" 임계값 변경</div>
+          <div class="meta">2026-05-20 16:44 · operator: esco-admin · 10min → 5min (조기 감지)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+      <h3>권한·역할 (시방서 §2.2 라항)</h3>
+      <table style="width:100%; font-size:12px;">
+        <tr><th>역할</th><th>스케줄</th><th>Scene</th><th>강제</th><th>Provis</th></tr>
+        <tr><td>관리자</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+        <tr><td>운영자</td><td>✓</td><td>✓</td><td>✓</td><td>—</td></tr>
+        <tr><td>시설팀</td><td>—</td><td>Scene 호출만</td><td>긴급만</td><td>—</td></tr>
+        <tr><td>ESCO 감사</td><td>읽기</td><td>읽기</td><td>—</td><td>—</td></tr>
+        <tr><td>외부</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      </table>
+      <div class="small" style="margin-top:8px;">Keycloak OAuth2 + 2FA · 모든 변경은 InfluxDB audit log · Grafana 보기 가능</div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

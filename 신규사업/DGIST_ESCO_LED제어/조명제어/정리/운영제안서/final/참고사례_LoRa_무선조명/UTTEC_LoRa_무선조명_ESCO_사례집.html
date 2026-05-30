@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>UTTEC LoRa 무선조명 ESCO 사례집</title>
+<style>
+@page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+    @bottom-center {
+        content: counter(page) " / " counter(pages);
+        font-size: 9pt;
+        color: #888;
+    }
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Noto Sans KR', sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    color: #1a1a1a;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+}
+
+h1 {
+    font-size: 22pt;
+    color: #0b3d91;
+    border-bottom: 3px solid #0b3d91;
+    padding-bottom: 6px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    page-break-before: always;
+}
+
+h1:first-of-type { page-break-before: avoid; }
+
+h2 {
+    font-size: 16pt;
+    color: #1565c0;
+    border-bottom: 1.5px solid #cfd8dc;
+    padding-bottom: 4px;
+    margin-top: 26px;
+    margin-bottom: 12px;
+}
+
+h3 {
+    font-size: 13pt;
+    color: #283593;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+h4 {
+    font-size: 11.5pt;
+    color: #37474f;
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+
+p { margin: 6px 0 10px; }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0 16px;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+}
+
+th, td {
+    border: 1px solid #b0bec5;
+    padding: 6px 9px;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: linear-gradient(180deg, #1565c0 0%, #0d47a1 100%);
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+}
+
+tr:nth-child(even) td { background: #f5f8fb; }
+tr:hover td { background: #e3f2fd; }
+
+ul, ol { margin: 6px 0 10px; padding-left: 22px; }
+li { margin: 3px 0; }
+
+code {
+    background: #eceff1;
+    padding: 1.5px 5px;
+    border-radius: 3px;
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    font-size: 9pt;
+    color: #c62828;
+}
+
+pre {
+    background: #263238;
+    color: #eceff1;
+    padding: 12px 14px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-size: 9pt;
+    line-height: 1.45;
+    page-break-inside: avoid;
+}
+
+pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+}
+
+blockquote {
+    border-left: 4px solid #1565c0;
+    background: #e3f2fd;
+    margin: 12px 0;
+    padding: 8px 14px;
+    color: #1a237e;
+    border-radius: 0 4px 4px 0;
+    page-break-inside: avoid;
+}
+
+blockquote p { margin: 4px 0; }
+
+hr {
+    border: 0;
+    border-top: 1.5px dashed #b0bec5;
+    margin: 24px 0;
+}
+
+strong { color: #0d47a1; }
+
+img {
+    max-width: 95%;
+    height: auto;
+    display: block;
+    margin: 12px auto;
+    page-break-inside: avoid;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    border-radius: 3px;
+}
+
+a { color: #1565c0; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── 표지 (첫 div align center) ── */
+div[align="center"] {
+    text-align: center;
+    padding: 40px 20px 30px;
+    page-break-after: always;
+    min-height: 90vh;
+}
+
+div[align="center"] h1 {
+    border: none;
+    page-break-before: avoid;
+    font-size: 30pt;
+    margin-top: 60px;
+    margin-bottom: 8px;
+    color: #0b3d91;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+div[align="center"] h2 {
+    border: none;
+    font-size: 22pt;
+    color: #1565c0;
+    margin: 8px 0 6px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+div[align="center"] h2 strong {
+    color: #c62828;
+}
+
+div[align="center"] h3 {
+    font-size: 13pt;
+    color: #546e7a;
+    font-weight: 400;
+    margin: 18px 0 30px;
+    font-style: italic;
+}
+
+div[align="center"] > p {
+    font-size: 12pt;
+    color: #37474f;
+    margin: 6px 0;
+    font-weight: 600;
+}
+
+div[align="center"] > p:last-of-type {
+    font-size: 10pt;
+    color: #546e7a;
+    font-weight: 400;
+    margin-top: 28px;
+}
+
+div[align="center"] table {
+    margin: 36px auto 24px;
+    max-width: 620px;
+    font-size: 10.5pt;
+    border: 2px solid #0d47a1;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(13, 71, 161, 0.15);
+}
+
+div[align="center"] table th {
+    background: linear-gradient(180deg, #0d47a1 0%, #0b3d91 100%);
+    padding: 10px 14px;
+}
+
+div[align="center"] table td {
+    padding: 9px 16px;
+    text-align: left;
+    border: 1px solid #cfd8dc;
+}
+
+div[align="center"] table td:first-child {
+    background: #eceff1;
+    font-weight: 700;
+    color: #0d47a1;
+    text-align: right;
+    width: 28%;
+}
+
+div[align="center"] table tr:nth-child(even) td:first-child {
+    background: #e0e7ed;
+}
+
+div[align="center"] table tr:nth-child(even) td:last-child {
+    background: #f5f8fb;
+}
+</style>
+</head>
+<body>
+<div align="center" style="padding:60px 20px;">
+<h1 id="esco">ESCO 사업 적용 참고 사례</h1>
+<h2 id="lora-uslc">LoRa 무선 조명제어 시스템 <strong>(USLC) 사례집</strong></h2>
+<h3 id="uttec-lora">— UTTEC LoRa 무선 통합 관제 양산 트랙레코드 —</h3>
+<p><strong>ESCO 사업자(귀사)와의 협력 모델 검토용 참고 자료</strong>
+<strong>DGIST ESCO 운영 제안서 v5.0 동봉 자료</strong></p>
+<p><br/><br/></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">항목</th>
+<th style="text-align: center;">값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>문서번호</strong></td>
+<td style="text-align: center;">UTTEC-ESCO-REF-2026-001</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>문서 버전</strong></td>
+<td style="text-align: center;">v1.0</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>작성일</strong></td>
+<td style="text-align: center;">2026-05-30</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>발신</strong></td>
+<td style="text-align: center;">UTTEC (㈜유티텍)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>수신</strong></td>
+<td style="text-align: center;">ESCO 사업자(귀사) — DGIST ESCO 사업 또는 향후 확장 사업 검토용</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>관련 문서</strong></td>
+<td style="text-align: center;"><code>운영제안서_v5.0.pdf</code> (DGIST ESCO §2.2 BLE Mesh + §2.1 IR 운영 제안서)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>본 사례집 위치</strong></td>
+<td style="text-align: center;"><code>final/참고사례_LoRa_무선조명/</code></td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<p><strong>문의·후속 협의</strong>
+UTTEC | E-mail: ihong9059@gmail.com | 담당: 기술영업 책임자</p>
+</div>
+<hr />
+<blockquote>
+<h2 id="_1">📌 본 사례집의 목적</h2>
+<p>본 문서는 UTTEC이 보유한 <strong>LoRa 무선 조명제어 시스템(USLC: UTTEC Smart Lighting Control)</strong> 의 양산·운영 트랙레코드를 ESCO 사업자(귀사)에 사례 형태로 제시하기 위한 참고 자료입니다.</p>
+<p><strong>본 사례집의 적용 가능 영역</strong>:
+1. DGIST ESCO 사업 — §2.2 BLE Mesh / §2.1 IR과 별개로 <strong>LoRa 무선이 더 적합한 구역</strong>(옥외등·외곽 야간 조명·캠퍼스 보행로 등)이 발생할 경우 대안
+2. ESCO 사업자(귀사)의 <strong>다른 건물·시설 단지 LED 조명제어 사업</strong> 검토 시 UTTEC 기술 자산 활용
+3. <strong>건물 외주 조명 + 야외등 + 지하주차장 환경 감시</strong> 통합 ESCO 사업 협력 모델</p>
+<p>DGIST 본 사업의 메인 제안은 <code>운영제안서_v5.0.pdf</code>(BLE Mesh + IR 듀얼 시스템)이며, 본 사례집은 <strong>UTTEC의 무선 조명 양산 트랙레코드 폭</strong> 을 보여주는 보조 자료입니다.</p>
+</blockquote>
+<hr />
+<h2 id="exec-executive-summary-1">📋 EXEC. Executive Summary (의사결정자 1분 요약)</h2>
+<h3 id="uttec-lora-uslc">UTTEC LoRa 무선 조명제어 시스템 (USLC) — 핵심 가치</h3>
+<table>
+<thead>
+<tr>
+<th>가치</th>
+<th>본 시스템 구현</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>무선 통합</strong></td>
+<td>LoRa 922.1MHz — 배선 공사 없이 옥외·실내 통합 관제 (Gateway 1대당 최대 254 노드, 1km 도달)</td>
+</tr>
+<tr>
+<td><strong>에너지 절감</strong></td>
+<td>자동 디밍 + PIR 점유 감지 + 시간대별 시나리오 — <strong>종합 절감률 약 60%</strong></td>
+</tr>
+<tr>
+<td><strong>양산 검증</strong></td>
+<td>2018 국내 최초 LoRa 조명 콘트롤러 상용화 + 8년 양산 트랙레코드</td>
+</tr>
+<tr>
+<td><strong>시공 ROI</strong></td>
+<td>배선 공사 없음 → ESCO 시공 비용 30~50% 절감 (현장 의존)</td>
+</tr>
+<tr>
+<td><strong>5년 사후관리</strong></td>
+<td>자동 알림 + 원격 진단 + 부품 5년 보장</td>
+</tr>
+</tbody>
+</table>
+<h3 id="uttec-lora-8">UTTEC LoRa 양산 실적 (8년+ 누적)</h3>
+<table>
+<thead>
+<tr>
+<th>적용처</th>
+<th>적용 영역</th>
+<th style="text-align: center;">규모</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>하나금융 글로벌캠퍼스</strong></td>
+<td>무선 조명제어 시스템</td>
+<td style="text-align: center;">사옥 전체</td>
+</tr>
+<tr>
+<td><strong>필로스GC</strong> (한림그룹)</td>
+<td>골프장 무선 조명</td>
+<td style="text-align: center;">코스 전체</td>
+</tr>
+<tr>
+<td><strong>광릉CC</strong> (한림그룹)</td>
+<td>골프장 무선 조명</td>
+<td style="text-align: center;">코스 전체</td>
+</tr>
+<tr>
+<td><strong>하네다공항</strong> (일본)</td>
+<td>자전거주차장 BLE 무선 조명</td>
+<td style="text-align: center;">500대</td>
+</tr>
+<tr>
+<td><strong>나고야 사카에역</strong> (일본)</td>
+<td>자전거주차장 BLE 무선 조명</td>
+<td style="text-align: center;"><strong>3,300대</strong></td>
+</tr>
+<tr>
+<td><strong>현대건설·롯데·한화·LH</strong></td>
+<td>EMS IoT 모듈 공급</td>
+<td style="text-align: center;">다수 단지</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⭐ <strong>2018년 국내 최초 LoRa 조명 콘트롤러 상용화</strong> — 한국·일본 특허 보유</p>
+</blockquote>
+<h3 id="dgist">DGIST 본 제안서와의 관계</h3>
+<p>본 사례집은 DGIST 본 사업의 메인 제안(§2.2 BLE Mesh + §2.1 IR)과 <strong>별개의 기술 라인</strong>(LoRa)을 다룹니다. UTTEC는 다음 3가지 무선 조명제어 기술을 모두 양산해 본 회사입니다:</p>
+<table>
+<thead>
+<tr>
+<th>기술</th>
+<th style="text-align: center;">DGIST 본 제안</th>
+<th style="text-align: center;">본 사례집</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BLE Mesh</td>
+<td style="text-align: center;">✅ §2.2 (917등)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>IR Chain</td>
+<td style="text-align: center;">✅ §2.1 (354등)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>LoRa</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅ <strong>본 사례집</strong></td>
+</tr>
+</tbody>
+</table>
+<p>ESCO 사업자(귀사)는 본 사례집을 통해 UTTEC의 <strong>무선 조명제어 기술 포트폴리오 전반</strong>을 확인하실 수 있습니다.</p>
+<hr />
+<h2 id="1-uttec">🏢 1. UTTEC 회사 소개 (간단)</h2>
+<p>UTTEC(㈜유티텍)는 IoT 임베디드 H/W·펌웨어·관제 SW 통합 양산 경험을 보유한 한국형 중소기업입니다.</p>
+<p><strong>LoRa 분야 핵심</strong>:
+- 2018년 국내 최초 LoRa 조명 콘트롤러 상용화
+- 한국·일본 LoRa 조명 특허 보유
+- 8년 LoRa 양산 누적 (조명·자전거주차장·EMS IoT)
+- KC / TELEC(일본) / CE(유럽) 인증 기 취득</p>
+<p><strong>UTTEC 전체 회사 정보</strong>: DGIST 본 제안서 <code>운영제안서_v5.0.pdf</code> § CORP 섹션 참조 (UTSOL 2011년 전신 + 지하주차장 LED 디밍 12년+/10만 등기 등 종합 트랙레코드 포함).</p>
+<hr />
+<h2 id="2-lora-uslc">🗺️ 2. LoRa 무선 조명제어 시스템 (USLC) 개요</h2>
+<h3 id="21">2.1 시스템 컨셉 — "배선 공사 없이, 무선으로 통합 관제"</h3>
+<p>USLC는 <strong>3개 계층의 무선 통합 관제 시스템</strong>입니다. 기존 인프라(AC 220V)만 사용하고 추가 통신 배선이 필요 없습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">계층</th>
+<th>구성요소</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">☁️ <strong>Cloud 관제 서버</strong></td>
+<td>조명 관제 대시보드 · 환경 감시 대시보드 · 모바일 알림 (운영자)</td>
+<td>통합 시각화 · 알림 발송 · 데이터 누적</td>
+</tr>
+<tr>
+<td style="text-align: center;">⬇ <em>통신</em></td>
+<td><strong>LTE (4G)</strong></td>
+<td>Gateway ↔ Cloud 양방향 통신</td>
+</tr>
+<tr>
+<td style="text-align: center;">🌐 <strong>Gateway</strong> (관리실/사무실)</td>
+<td>AC 콘센트 연결만으로 완료</td>
+<td><strong>별도 통신 인프라 불요</strong> — LoRa ↔ LTE 브리지</td>
+</tr>
+<tr>
+<td style="text-align: center;">⬇ <em>통신</em></td>
+<td><strong>LoRa 무선 (922.1MHz)</strong></td>
+<td><strong>배선 없음 / 최대 1km / Gateway 1대당 최대 254 노드</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">📡 <strong>노드 (Node) 3종</strong></td>
+<td>조명 Node · 환경 감시 Node · 전력 관리 Node</td>
+<td>현장 센싱 · 디밍 제어 · 환경 감시</td>
+</tr>
+</tbody>
+</table>
+<p><strong>노드 3종 세부</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>노드 종류</th>
+<th>적용처</th>
+<th>내장 센서·제어</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>조명 Node</strong></td>
+<td>옥외등 · 보안등 · 보행등</td>
+<td>PWM 디밍 0~100% (0-10V/DALI/PWM) + PIR 동체감지 + 조도 + 온도</td>
+</tr>
+<tr>
+<td><strong>환경 감시 Node</strong></td>
+<td>지하주차장 · 실내 환경</td>
+<td>CO / CO₂ / 온습도 / VOC / 연기</td>
+</tr>
+<tr>
+<td><strong>전력 관리 Node</strong></td>
+<td>분전반</td>
+<td>CT 클램프 비접촉 계측 + 피크 관리</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>📐 <strong>상세 시각화 다이어그램</strong>: 본 폴더 내 <code>USLC_시스템_구성도.html</code> (브라우저 인터랙티브 보기) 또는 <code>USLC_시스템_구성도.pdf</code> (인쇄용 4페이지) 참조. 4개 섹션 — 3계층 구성도 / 통합 대시보드 mockup / 시간대별 운영 시나리오 / 기존 방식 vs USLC 비교.</p>
+</blockquote>
+<h3 id="22">2.2 핵심 기술 사양</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>사양</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>통신</strong></td>
+<td>LoRa 922.1MHz (국내 ISM 대역, 무선, 최대 1km)</td>
+</tr>
+<tr>
+<td><strong>보안</strong></td>
+<td>AES-128 암호화</td>
+</tr>
+<tr>
+<td><strong>조명 제어</strong></td>
+<td>PWM 디밍 0~100% (0-10V / DALI / PWM 호환)</td>
+</tr>
+<tr>
+<td><strong>조명 센서</strong></td>
+<td>조도(럭스), PIR 동체감지, 온도</td>
+</tr>
+<tr>
+<td><strong>환경 센서</strong></td>
+<td>CO/CO₂ 가스, VOC, 온습도, 연기</td>
+</tr>
+<tr>
+<td><strong>전력 계측</strong></td>
+<td>CT 클램프 방식 (비접촉, 분전반 무수정 설치)</td>
+</tr>
+<tr>
+<td><strong>전원</strong></td>
+<td>기존 AC 220V 활용 (별도 전원 공사 불요)</td>
+</tr>
+<tr>
+<td><strong>방수 등급</strong></td>
+<td>IP65 (옥외) / IP44 (실내·지하)</td>
+</tr>
+<tr>
+<td><strong>동작 온도</strong></td>
+<td>-20℃ ~ +60℃</td>
+</tr>
+<tr>
+<td><strong>노드 수용</strong></td>
+<td>Gateway 1대당 최대 <strong>254 노드</strong></td>
+</tr>
+<tr>
+<td><strong>관제</strong></td>
+<td>웹 대시보드 + 모바일 앱</td>
+</tr>
+<tr>
+<td><strong>인증</strong></td>
+<td>KC (국내), TELEC (일본), CE (유럽) 기 취득 경험</td>
+</tr>
+</tbody>
+</table>
+<h3 id="23-esco">2.3 ESCO 시공 관점의 차별화</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>기존 유선 시스템</th>
+<th>USLC (LoRa 무선)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>시공 기간</td>
+<td>2~4주 (배선 공사 포함)</td>
+<td><strong>3~5일 (노드 설치만)</strong></td>
+</tr>
+<tr>
+<td>통신 배선</td>
+<td>케이블 신규 포설 필요</td>
+<td><strong>없음 (LoRa 무선)</strong></td>
+</tr>
+<tr>
+<td>야간 시공</td>
+<td>빌딩 비중지 어려움</td>
+<td><strong>노드 설치만 → 야간 가능</strong></td>
+</tr>
+<tr>
+<td>기존 등기구 활용</td>
+<td>등기구 교체 필요</td>
+<td><strong>0-10V/DALI 호환 등기구는 즉시 활용</strong></td>
+</tr>
+<tr>
+<td>확장성</td>
+<td>추가 배선 공사</td>
+<td><strong>노드 추가만 (Gateway당 254개)</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-esco">📡 3. ESCO 사업 적용 시나리오</h2>
+<h3 id="31">3.1 적용 가능 영역 (체크리스트)</h3>
+<p>ESCO 사업자(귀사)의 사업장 또는 향후 확장 사업에서 다음 영역에 USLC 적용 검토 가능:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>영역</th>
+<th>적용 가치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td><strong>캠퍼스·사업장 옥외등</strong> (보안등·가로등·보행등)</td>
+<td>야간 자동 디밍 + 고장 자동 감지</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td><strong>건물 외주 조명</strong> (외벽 무대조명·간판등)</td>
+<td>시간대별 시나리오 + 절전</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td><strong>공원·산책로 조명</strong></td>
+<td>PIR 점유 감지 + 보행자 동선 점등</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><strong>주차장 일반 조명</strong> (지상)</td>
+<td>차량·보행 동선 기반 디밍</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td><strong>지하주차장 환경 감시</strong></td>
+<td>CO/CO₂ + 온습도 + 환기 시스템 연동</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td><strong>공장·창고 작업등</strong></td>
+<td>작업 시간 + 보행 동선 자동 점등</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td><strong>사옥 옥상·외부 통로</strong></td>
+<td>야간 자동 점소등 + 모바일 원격 제어</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td><strong>분산 시설 통합 관제</strong></td>
+<td>1개 Gateway로 1km 반경 통합 관제</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32">3.2 시간대별 운영 시나리오 (옥외 조명 기준)</h3>
+<table>
+<thead>
+<tr>
+<th>시간대</th>
+<th>동작</th>
+<th style="text-align: center;">디밍</th>
+<th style="text-align: center;">에너지 절감</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>일몰 (점등 자동)</td>
+<td>점등 시작</td>
+<td style="text-align: center;">80%</td>
+<td style="text-align: center;">표준</td>
+</tr>
+<tr>
+<td>22시</td>
+<td>점등 유지</td>
+<td style="text-align: center;">50%</td>
+<td style="text-align: center;">50% 절감</td>
+</tr>
+<tr>
+<td>자정 ~ 04시</td>
+<td>야간 모드</td>
+<td style="text-align: center;">20%</td>
+<td style="text-align: center;">80% 절감</td>
+</tr>
+<tr>
+<td>움직임 감지 (PIR)</td>
+<td>일시 밝게</td>
+<td style="text-align: center;"><strong>100%</strong></td>
+<td style="text-align: center;">동선 시 표준</td>
+</tr>
+<tr>
+<td>일출 (소등 자동)</td>
+<td>소등</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">100%</td>
+</tr>
+</tbody>
+</table>
+<p>→ <strong>종합 절감률 약 60%</strong> (시간대 가중평균)</p>
+<h3 id="33">3.3 자동 알림 정책</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">등급</th>
+<th>정의</th>
+<th>예시</th>
+<th>대응</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>CRIT</strong></td>
+<td>즉시 영향·안전</td>
+<td>통신 단절 / 단등 고장 / 환경 위험</td>
+<td>즉시 출동</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>WARN</strong></td>
+<td>24h 내 처리 권고</td>
+<td>이상 디밍 패턴 / PIR 폭주</td>
+<td>24h 내</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>INFO</strong></td>
+<td>알림만 (감사용)</td>
+<td>자가진단 통과 / 룰 변경</td>
+<td>감사 로그만</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-roi">📊 4. 양산 효과·ROI 사례</h2>
+<h3 id="41-500">4.1 옥외 조명 절감 효과 (500세대 규모 단지 기준 — 산업 평균 추정)</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th style="text-align: center;">기존 (연간)</th>
+<th style="text-align: center;">USLC (연간)</th>
+<th style="text-align: center;">절감</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>옥외 조명 전기요금</td>
+<td style="text-align: center;">약 3,600만원</td>
+<td style="text-align: center;">약 1,440만원</td>
+<td style="text-align: center;"><strong>2,160만원</strong></td>
+</tr>
+<tr>
+<td>순찰 인건비</td>
+<td style="text-align: center;">약 1,200만원</td>
+<td style="text-align: center;">약 400만원</td>
+<td style="text-align: center;"><strong>800만원</strong></td>
+</tr>
+<tr>
+<td>LED 교체 비용</td>
+<td style="text-align: center;">약 500만원</td>
+<td style="text-align: center;">약 200만원</td>
+<td style="text-align: center;"><strong>300만원</strong></td>
+</tr>
+<tr>
+<td><strong>연간 총 절감</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>약 3,260만원+</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>※ 본 수치는 산업 평균 추정치이며, ESCO 사업자(귀사)의 사업 규모·운영 조건에 따라 달라집니다. 실제 적용 시 Phase 5 PoC(1 Zone 30일 측정)로 baseline 확정 권장.</p>
+</blockquote>
+<h3 id="42-roi">4.2 시공 ROI (배선 공사 회피)</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>유선 시스템</th>
+<th>USLC (LoRa 무선)</th>
+<th>회피 비용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>통신 배선 공사</td>
+<td>약 30~50만원/노드 (현장 의존)</td>
+<td>0원 (무선)</td>
+<td><strong>30~50만원/노드</strong></td>
+</tr>
+<tr>
+<td>야간 시공 가능 여부</td>
+<td>어려움</td>
+<td>가능</td>
+<td>시공 기간 단축</td>
+</tr>
+<tr>
+<td>기존 등기구 활용</td>
+<td>교체 필요</td>
+<td>0-10V/DALI 호환 시 즉시 사용</td>
+<td>등기구 비용 회피</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-uttec-esco">🤝 5. UTTEC × ESCO 사업자 협력 모델</h2>
+<p>본 사례집의 USLC를 ESCO 사업에 적용 시 다음 4가지 협력 모델 가능 (DGIST 본 제안서 § H.2와 동일 구조):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">모델</th>
+<th>역할 분담</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>A) 기술자문</strong></td>
+<td>UTTEC = 컨설팅·기술 검토 / ESCO = 자체 양산·시공·운영</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>B) OEM</strong></td>
+<td>UTTEC = H/W·펌웨어 공급 / ESCO = 시공·운영 SaaS</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>C) 통합 플랫폼</strong></td>
+<td>UTTEC = H/W + 펌웨어 + 관제 SaaS 통합 / ESCO = 영업·운영</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D) PoC + 단계 결정</strong></td>
+<td>1 Zone 시범 PoC 후 단계별 협력 모델 확정</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-uttec-lora">📎 부록 1. UTTEC LoRa 무선 조명 양산 일람 (재정리)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">연도</th>
+<th>적용처</th>
+<th>영역</th>
+<th>규모</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">2018</td>
+<td>국내 최초 LoRa 조명 콘트롤러 상용화 + 클라우드 서버</td>
+<td>산업 첫 사례</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">2019</td>
+<td>하나금융 글로벌캠퍼스</td>
+<td>무선 조명 시스템</td>
+<td>사옥 전체</td>
+</tr>
+<tr>
+<td style="text-align: center;">2020</td>
+<td>필로스GC (한림그룹)</td>
+<td>골프장 무선 조명</td>
+<td>코스 전체</td>
+</tr>
+<tr>
+<td style="text-align: center;">2020</td>
+<td>광릉CC (한림그룹)</td>
+<td>골프장 무선 조명</td>
+<td>코스 전체</td>
+</tr>
+<tr>
+<td style="text-align: center;">2022</td>
+<td>하네다공항 아나모리나역 (일본)</td>
+<td>자전거주차장 BLE 무선 조명 (초도수출)</td>
+<td><strong>500대</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">2023</td>
+<td>나고야 사카에역 (일본)</td>
+<td>자전거주차장 BLE 무선 조명</td>
+<td><strong>3,300대</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">다수</td>
+<td>현대건설·롯데·한화·LH</td>
+<td>EMS IoT 모듈 공급</td>
+<td>다수 단지</td>
+</tr>
+</tbody>
+</table>
+<p><strong>누적 양산 트랙레코드</strong>: 8년+ / 국내 최초 LoRa 상용화 + 일본 직접 양산 수출 + 국내 대형 건설사 EMS IoT 공급</p>
+<hr />
+<h2 id="2">📎 부록 2. 인증 일람</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">인증</th>
+<th>시장</th>
+<th style="text-align: center;">상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>KC</strong> (국내 전기·전자)</td>
+<td>한국</td>
+<td style="text-align: center;">✅ 기 취득</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>TELEC</strong> (일본 전파)</td>
+<td>일본</td>
+<td style="text-align: center;">✅ 기 취득</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>CE</strong> (유럽)</td>
+<td>유럽</td>
+<td style="text-align: center;">✅ 기 취득</td>
+</tr>
+<tr>
+<td style="text-align: center;">KCC (국내 전파)</td>
+<td>한국</td>
+<td style="text-align: center;">신규 사업 시 적용</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-dgist">📎 부록 3. 본 사례집과 DGIST 본 제안서의 관계</h2>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>DGIST 본 제안서 (<code>운영제안서_v5.0.pdf</code>)</th>
+<th>본 사례집</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>대상 사업</td>
+<td>DGIST 에너지절약 ESCO사업 (확정 입찰)</td>
+<td>UTTEC 기술 자산 참고 사례 (협력 모델 검토용)</td>
+</tr>
+<tr>
+<td>기술</td>
+<td>§2.2 BLE Mesh (917등) + §2.1 IR (354등)</td>
+<td><strong>LoRa 무선 (USLC)</strong> — 별개 기술 라인</td>
+</tr>
+<tr>
+<td>양산 트랙레코드</td>
+<td>UTSOL 2011~ / 12년+ / 10만 등기 지하주차장 디밍</td>
+<td>2018 국내 최초 LoRa 상용화 + 8년+ 무선 조명 양산</td>
+</tr>
+<tr>
+<td>발송 형태</td>
+<td>ESCO 사업자(귀사)에 정식 제안</td>
+<td>동봉 참고 자료</td>
+</tr>
+<tr>
+<td>분량</td>
+<td>1,131 lines / 60 KB (PDF 4.9 MB)</td>
+<td>약 250 lines (본 사례집)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_2">📞 연락처</h2>
+<p><strong>㈜유티텍 (UTTEC Inc.)</strong>
+- 대표: 홍광선
+- 본사: 경기도 용인시 기흥구 흥덕중앙로 120 흥덕유타워 2404호
+- 대표전화: 031-627-2250
+- 기술 문의: <strong>ihong9059@gmail.com</strong>
+- 홈페이지: www.uttec.co.kr</p>
+<hr />
+<p><em>본 사례집은 UTTEC의 LoRa 무선 조명제어 양산 트랙레코드를 ESCO 사업자(귀사)와의 협력 모델 검토 시 참고하실 수 있도록 정리한 자료입니다.</em></p>
+<p><em>DGIST 본 제안의 BLE Mesh + IR 듀얼 시스템과 별개로, 향후 확장 사업 또는 다른 ESCO 사업 검토 시 UTTEC의 LoRa 기술 자산이 활용될 수 있는 사례를 보여드립니다.</em></p>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>건물별 상세 — E3 정보통신융합공학부</title>
+<style>
+  :root {
+    --bg:#0b1220; --panel:#111a2c; --panel-2:#16243b; --line:#1f2f4a;
+    --text:#e6edf6; --muted:#8aa0bf; --accent:#ff6b1a; --green:#2ec27e;
+    --blue:#5aa5ff; --yellow:#f5c84b; --red:#ff5b6a;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif; font-size:13px; }
+  header.top { display:flex; align-items:center; padding:12px 20px; background:#07101e; border-bottom:1px solid var(--line); }
+  .logo { font-weight:700; } .logo .dgist { color:var(--accent); }
+  .nav { margin-left:24px; display:flex; gap:16px; color:var(--muted); }
+  .nav .active { color:var(--text); border-bottom:2px solid var(--accent); padding-bottom:6px; }
+  .live { margin-left:auto; display:flex; gap:14px; color:var(--muted); font-size:12px; align-items:center; }
+  .dot { width:8px; height:8px; border-radius:50%; background:var(--green); display:inline-block; box-shadow:0 0 8px var(--green); }
+  .breadcrumb { padding:12px 20px; color:var(--muted); border-bottom:1px solid var(--line); font-size:12px; }
+  .breadcrumb a { color:var(--blue); text-decoration:none; }
+  .grid { display:grid; grid-template-columns:240px 1fr 320px; gap:12px; padding:12px 16px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px; }
+  .card h3 { margin:0 0 10px; font-size:12px; color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:.5px; }
+  .floor-list { display:flex; flex-direction:column; gap:6px; }
+  .floor-item { padding:10px 12px; background:var(--panel-2); border-radius:4px; cursor:pointer; border-left:3px solid transparent; }
+  .floor-item.active { border-left-color:var(--accent); background:#1a2740; }
+  .floor-item .fname { font-weight:600; }
+  .floor-item .fmeta { font-size:11px; color:var(--muted); margin-top:2px; }
+  .badge { display:inline-block; padding:1px 7px; border-radius:8px; font-size:10.5px; }
+  .b-on { background:rgba(46,194,126,.2); color:var(--green); }
+  .b-dim { background:rgba(245,200,75,.2); color:var(--yellow); }
+  .b-off { background:rgba(138,160,191,.15); color:var(--muted); }
+  .canvas { background:#0e1828; border-radius:4px; padding:18px; position:relative; min-height:520px; border:1px solid var(--line); }
+  .canvas-title { color:var(--text); font-weight:600; margin-bottom:12px; }
+  .floor-svg { width:100%; height:auto; }
+  .led-on { fill:var(--green); filter:drop-shadow(0 0 4px var(--green)); }
+  .led-dim { fill:var(--yellow); opacity:.8; }
+  .led-off { fill:#3a4d6e; }
+  .led-fault { fill:var(--red); animation:blink 1.2s infinite; }
+  @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:.3; } }
+  .zone-border { fill:none; stroke:var(--red); stroke-width:3; stroke-dasharray:8,4; }
+  .info-panel .row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--line); font-size:12.5px; }
+  .info-panel .row:last-child { border-bottom:0; }
+  .info-panel .row .k { color:var(--muted); }
+  .info-panel .row .v { font-weight:600; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th, td { text-align:left; padding:6px 4px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase; }
+  td.r, th.r { text-align:right; font-variant-numeric:tabular-nums; }
+  .btn { background:var(--accent); color:white; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; font-weight:600; font-size:12px; }
+  .btn.sec { background:transparent; color:var(--blue); border:1px solid var(--blue); }
+  .controls { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .small { font-size:11.5px; color:var(--muted); }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><span class="dgist">DGIST</span> · 조명제어 통합 관제</div>
+  <nav class="nav">
+    <span>개요</span>
+    <span class="active">건물별 상세</span>
+    <span>지하주차장</span>
+    <span>스케줄/룰</span>
+    <span>알림</span>
+    <span>리포트</span>
+    <span>관리</span>
+  </nav>
+  <div class="live">
+    <span style="background:rgba(245,200,75,.18); color:var(--yellow); padding:3px 8px; border-radius:3px; border:1px solid rgba(245,200,75,.4); font-weight:600;">⚠ MOCKUP</span>
+    <span><span class="dot"></span> LIVE</span>
+    <span>2026-05-30 14:23:08</span>
+  </div>
+</header>
+<div class="breadcrumb">
+  <a>건물별 상세</a> &nbsp;/&nbsp; <a>E3 정보통신융합공학부</a> &nbsp;/&nbsp; <strong>4F</strong> &nbsp;·&nbsp; LED 86등 중 4F = 14등 · BLE Mesh Zone Z-E3-04
+</div>
+
+<section class="grid">
+  <!-- left: floor list -->
+  <div class="card">
+    <h3>E3 정보통신융합공학부</h3>
+    <div class="floor-list">
+      <div class="floor-item">
+        <div class="fname">B1F 지하1층</div>
+        <div class="fmeta">제어구역 없음 · 도면 page 1</div>
+      </div>
+      <div class="floor-item">
+        <div class="fname">1F (A)</div>
+        <div class="fmeta">제어구역 없음 · 도면 page 2</div>
+      </div>
+      <div class="floor-item">
+        <div class="fname">1F (B) <span class="badge b-on">14 ON</span></div>
+        <div class="fmeta">Zone Z-E3-01 · PE/PN 14등 · 도면 p3</div>
+      </div>
+      <div class="floor-item">
+        <div class="fname">2F <span class="badge b-on">10</span> <span class="badge b-dim">3</span></div>
+        <div class="fmeta">Zone Z-E3-02 · 13등 · 도면 p4</div>
+      </div>
+      <div class="floor-item">
+        <div class="fname">3F <span class="badge b-on">12</span> <span class="badge b-dim">4</span></div>
+        <div class="fmeta">Zone Z-E3-03 · 16등 · 도면 p5</div>
+      </div>
+      <div class="floor-item active">
+        <div class="fname">4F <span class="badge b-on">11</span> <span class="badge b-dim">2</span> <span class="badge b-off">1</span></div>
+        <div class="fmeta">Zone Z-E3-04 · 14등 · 도면 p6 · 1 fault</div>
+      </div>
+      <div class="floor-item">
+        <div class="fname">5F <span class="badge b-on">9</span> <span class="badge b-dim">3</span> <span class="badge b-off">2</span></div>
+        <div class="fmeta">Zone Z-E3-05 · 14등 · 도면 p7</div>
+      </div>
+      <div class="floor-item">
+        <div class="fname">6F <span class="badge b-on">8</span> <span class="badge b-off">7</span></div>
+        <div class="fmeta">Zone Z-E3-06 · 15등 · 도면 p8</div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn">건물 전체 100%</button>
+      <button class="btn sec">청소 Scene</button>
+    </div>
+  </div>
+
+  <!-- center: floor canvas -->
+  <div class="card">
+    <div class="canvas">
+      <div class="canvas-title">E3 정보통신융합공학부 4F · BLE Mesh Zone Z-E3-04 · 14등</div>
+      <svg viewBox="0 0 800 520" class="floor-svg">
+        <!-- floor outline (rough room layout from drawings) -->
+        <rect x="60" y="60" width="680" height="400" fill="#0a1322" stroke="#243957" stroke-width="2"/>
+        <!-- corridor rectangle (PE/PN strip) -->
+        <rect x="120" y="200" width="560" height="50" fill="rgba(50,80,140,.18)" stroke="#2c4471" stroke-dasharray="4,3"/>
+        <text x="400" y="232" text-anchor="middle" fill="#5a7baa" font-size="11">복도 (corridor) — PE/PN strip</text>
+
+        <!-- zone border (red) — emphasized -->
+        <rect x="115" y="195" width="570" height="60" class="zone-border"/>
+        <text x="120" y="190" fill="var(--red)" font-size="11" font-weight="700">⬛ 조명제어구역 · §2.2 BLE Mesh</text>
+
+        <!-- 14 LEDs in a row -->
+        <g>
+          <circle cx="160" cy="225" r="8" class="led-on"/>
+          <text x="160" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PE1</text>
+          <circle cx="200" cy="225" r="8" class="led-on"/>
+          <text x="200" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PE2</text>
+          <circle cx="240" cy="225" r="8" class="led-on"/>
+          <text x="240" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PE3</text>
+          <circle cx="280" cy="225" r="8" class="led-on"/>
+          <text x="280" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PE4</text>
+          <circle cx="320" cy="225" r="8" class="led-on"/>
+          <text x="320" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PE5</text>
+          <circle cx="360" cy="225" r="8" class="led-dim"/>
+          <text x="360" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PE6</text>
+          <circle cx="400" cy="225" r="8" class="led-dim"/>
+          <text x="400" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PN1</text>
+          <circle cx="440" cy="225" r="8" class="led-on"/>
+          <text x="440" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PN2</text>
+          <circle cx="480" cy="225" r="8" class="led-on"/>
+          <text x="480" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PN3</text>
+          <circle cx="520" cy="225" r="8" class="led-fault"/>
+          <text x="520" y="245" text-anchor="middle" fill="var(--red)" font-size="10" font-weight="600">PN4 ⚠</text>
+          <circle cx="560" cy="225" r="8" class="led-on"/>
+          <text x="560" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PN5</text>
+          <circle cx="600" cy="225" r="8" class="led-on"/>
+          <text x="600" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PN6</text>
+          <circle cx="640" cy="225" r="8" class="led-on"/>
+          <text x="640" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PN7</text>
+          <circle cx="680" cy="225" r="8" class="led-on"/>
+          <text x="680" y="245" text-anchor="middle" fill="#7c9ac8" font-size="10">PN8</text>
+        </g>
+
+        <!-- PIR sensors with detection area -->
+        <g>
+          <circle cx="220" cy="180" r="4" fill="var(--blue)"/>
+          <circle cx="220" cy="180" r="35" fill="rgba(90,165,255,.08)" stroke="rgba(90,165,255,.3)" stroke-dasharray="3,2"/>
+          <text x="220" y="172" text-anchor="middle" fill="var(--blue)" font-size="10">PIR-1</text>
+
+          <circle cx="450" cy="180" r="4" fill="var(--blue)"/>
+          <circle cx="450" cy="180" r="35" fill="rgba(90,165,255,.18)" stroke="var(--blue)"/>
+          <text x="450" y="172" text-anchor="middle" fill="var(--blue)" font-size="10">PIR-2 활성</text>
+
+          <circle cx="620" cy="180" r="4" fill="var(--blue)"/>
+          <circle cx="620" cy="180" r="35" fill="rgba(90,165,255,.08)" stroke="rgba(90,165,255,.3)" stroke-dasharray="3,2"/>
+          <text x="620" y="172" text-anchor="middle" fill="var(--blue)" font-size="10">PIR-3</text>
+        </g>
+
+        <!-- rooms around corridor -->
+        <rect x="80" y="80" width="160" height="100" fill="#0d1a2e" stroke="#2c3e5d"/>
+        <text x="160" y="135" text-anchor="middle" fill="#6b86ad" font-size="11">강의실 A (411)</text>
+        <rect x="260" y="80" width="160" height="100" fill="#0d1a2e" stroke="#2c3e5d"/>
+        <text x="340" y="135" text-anchor="middle" fill="#6b86ad" font-size="11">강의실 B (412)</text>
+        <rect x="440" y="80" width="120" height="100" fill="#0d1a2e" stroke="#2c3e5d"/>
+        <text x="500" y="135" text-anchor="middle" fill="#6b86ad" font-size="11">교수실 (413)</text>
+        <rect x="580" y="80" width="140" height="100" fill="#0d1a2e" stroke="#2c3e5d"/>
+        <text x="650" y="135" text-anchor="middle" fill="#6b86ad" font-size="11">실험실 (414)</text>
+
+        <rect x="80" y="270" width="120" height="170" fill="#0d1a2e" stroke="#2c3e5d"/>
+        <text x="140" y="360" text-anchor="middle" fill="#6b86ad" font-size="11">화장실</text>
+        <rect x="220" y="270" width="200" height="170" fill="#0d1a2e" stroke="#2c3e5d"/>
+        <text x="320" y="360" text-anchor="middle" fill="#6b86ad" font-size="11">대형 강의실 (415)</text>
+        <rect x="440" y="270" width="280" height="170" fill="#0d1a2e" stroke="#2c3e5d"/>
+        <text x="580" y="360" text-anchor="middle" fill="#6b86ad" font-size="11">실험실 (416)</text>
+
+        <!-- legend -->
+        <g transform="translate(60,480)">
+          <circle cx="6" cy="6" r="5" class="led-on"/><text x="16" y="10" fill="var(--muted)" font-size="10">점등 100%</text>
+          <circle cx="86" cy="6" r="5" class="led-dim"/><text x="96" y="10" fill="var(--muted)" font-size="10">디밍 30%</text>
+          <circle cx="166" cy="6" r="5" class="led-off"/><text x="176" y="10" fill="var(--muted)" font-size="10">소등</text>
+          <circle cx="216" cy="6" r="5" class="led-fault"/><text x="226" y="10" fill="var(--red)" font-size="10">통신 단절</text>
+          <circle cx="316" cy="6" r="4" fill="var(--blue)"/><text x="326" y="10" fill="var(--muted)" font-size="10">PIR 센서</text>
+          <line x1="400" y1="6" x2="430" y2="6" stroke="var(--red)" stroke-width="2" stroke-dasharray="4,2"/>
+          <text x="438" y="10" fill="var(--red)" font-size="10">조명제어구역</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- right: details / control -->
+  <div class="card info-panel">
+    <h3>Zone Z-E3-04 정보</h3>
+    <div class="row"><span class="k">Zone ID</span><span class="v">Z-E3-04</span></div>
+    <div class="row"><span class="k">위치</span><span class="v">E3 4F 복도</span></div>
+    <div class="row"><span class="k">시스템</span><span class="v">§2.2 BLE Mesh</span></div>
+    <div class="row"><span class="k">Mesh hop avg</span><span class="v">1.6</span></div>
+    <div class="row"><span class="k">평균 응답</span><span class="v">72 ms</span></div>
+    <div class="row"><span class="k">전체 LED</span><span class="v">14등</span></div>
+    <div class="row"><span class="k">점등 / 디밍 / 소등</span><span class="v">11 / 2 / 1</span></div>
+    <div class="row"><span class="k">단절 노드</span><span class="v" style="color:var(--red)">1 (PN4)</span></div>
+    <div class="row"><span class="k">PIR 트리거 24h</span><span class="v">186 회</span></div>
+    <div class="row"><span class="k">현재 점유</span><span class="v">PIR-2 활성</span></div>
+    <div class="row"><span class="k">현 디밍</span><span class="v">평균 87%</span></div>
+    <div class="row"><span class="k">소비전력</span><span class="v">0.42 kWh/h</span></div>
+    <div class="row"><span class="k">절감률</span><span class="v" style="color:var(--green)">−61%</span></div>
+
+    <h3 style="margin-top:18px;">조작</h3>
+    <div class="controls">
+      <button class="btn">100% 강제</button>
+      <button class="btn sec">30% 디밍</button>
+      <button class="btn sec">소등</button>
+      <button class="btn sec">자동 복원</button>
+    </div>
+
+    <h3 style="margin-top:18px;">스케줄 (이 Zone)</h3>
+    <table>
+      <tr><th>시각</th><th>동작</th></tr>
+      <tr><td>06:00</td><td>30% 사전점등</td></tr>
+      <tr><td>07:30+</td><td>PIR 100%</td></tr>
+      <tr><td>12:00</td><td>30% 디밍</td></tr>
+      <tr><td>22:00</td><td>10% / PIR 100%</td></tr>
+    </table>
+
+    <h3 style="margin-top:18px;">고장 처리</h3>
+    <div class="small" style="color:var(--red); padding:8px; background:rgba(255,91,106,.08); border-radius:4px;">
+      <strong>PN4 통신 단절</strong> · 14:18 부터<br/>
+      Mesh self-heal로 인접 PN3·PN5가 우회 중<br/>
+      현장 점검 작업 #T-2026-0530-014 발행됨
+    </div>
+    <div class="controls">
+      <button class="btn">현장 출동 요청</button>
+      <button class="btn sec">로그 보기</button>
+    </div>
+  </div>
+</section>
+</body>
+</html>

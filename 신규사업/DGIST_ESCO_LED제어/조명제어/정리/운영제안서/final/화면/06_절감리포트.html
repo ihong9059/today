@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>월간 에너지 절감 리포트 — 2026-05</title>
+<style>
+  :root {
+    --bg:#0b1220; --panel:#111a2c; --panel-2:#16243b; --line:#1f2f4a;
+    --text:#e6edf6; --muted:#8aa0bf; --accent:#ff6b1a; --green:#2ec27e;
+    --blue:#5aa5ff; --yellow:#f5c84b; --red:#ff5b6a;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif; font-size:13px; }
+  header.top { display:flex; align-items:center; padding:12px 20px; background:#07101e; border-bottom:1px solid var(--line); }
+  .logo { font-weight:700; } .logo .dgist { color:var(--accent); }
+  .nav { margin-left:24px; display:flex; gap:16px; color:var(--muted); }
+  .nav .active { color:var(--text); border-bottom:2px solid var(--accent); padding-bottom:6px; }
+  .live { margin-left:auto; display:flex; gap:14px; color:var(--muted); font-size:12px; align-items:center; }
+  .report-head { padding:16px 20px; background:linear-gradient(to right, #0c1729, #0b1220); border-bottom:1px solid var(--line); }
+  .report-head h1 { margin:0; font-size:22px; }
+  .report-head .meta { color:var(--muted); margin-top:4px; }
+  .btn { background:var(--accent); color:white; border:none; padding:7px 14px; border-radius:4px; cursor:pointer; font-weight:600; font-size:12px; }
+  .btn.sec { background:transparent; color:var(--blue); border:1px solid var(--blue); }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:14px 20px 0; }
+  .stat { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:16px; }
+  .stat .label { color:var(--muted); font-size:11px; text-transform:uppercase; }
+  .stat .v { font-size:30px; font-weight:700; margin-top:4px; }
+  .stat .v.green { color:var(--green); }
+  .stat .v.orange { color:var(--accent); }
+  .stat .v.blue { color:var(--blue); }
+  .stat .meta { font-size:11px; color:var(--muted); margin-top:4px; }
+  .grid { display:grid; grid-template-columns:7fr 5fr; gap:12px; padding:12px 20px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:16px; }
+  .card h3 { margin:0 0 10px; font-size:12px; color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:.5px; }
+  table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  th, td { text-align:left; padding:7px 6px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase; }
+  td.r, th.r { text-align:right; font-variant-numeric:tabular-nums; }
+  .bar-bg { background:var(--panel-2); height:8px; border-radius:4px; overflow:hidden; }
+  .bar-fg { height:100%; }
+  .small { font-size:11.5px; color:var(--muted); }
+  .legend { display:flex; gap:14px; font-size:11px; color:var(--muted); margin-top:8px; }
+  .swatch { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:middle; }
+  .pill { display:inline-block; padding:1px 7px; border-radius:10px; font-size:11px; }
+  .pill.good { background:rgba(46,194,126,.15); color:var(--green); }
+  .pill.warn { background:rgba(245,200,75,.15); color:var(--yellow); }
+  .kpi-row { display:grid; grid-template-columns:140px 1fr 90px 60px; gap:8px; align-items:center; padding:5px 0; border-bottom:1px solid var(--line); }
+  .kpi-row:last-child { border-bottom:0; }
+  .footer-note { padding:10px 20px; color:var(--muted); font-size:11.5px; border-top:1px solid var(--line); }
+  svg text { fill:var(--muted); font-size:10px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><span class="dgist">DGIST</span> · 조명제어 통합 관제</div>
+  <nav class="nav">
+    <span>개요</span>
+    <span>건물별 상세</span>
+    <span>지하주차장</span>
+    <span>스케줄/룰</span>
+    <span>알림</span>
+    <span class="active">리포트</span>
+    <span>관리</span>
+  </nav>
+  <div class="live">
+    <span style="background:rgba(245,200,75,.18); color:var(--yellow); padding:3px 8px; border-radius:3px; border:1px solid rgba(245,200,75,.4); font-weight:600;">⚠ MOCKUP · 시뮬레이션 데이터</span>
+    <span>2026-06-01 09:00 발행</span>
+    <button class="btn" style="margin-left:8px;">PDF 내려받기</button>
+  </div>
+</header>
+
+<div class="report-head">
+  <div style="display:flex; align-items:center;">
+    <div>
+      <h1>월간 에너지 절감 리포트 · 2026년 5월</h1>
+      <div class="meta">DGIST 에너지절약 ESCO사업 — LED 조명제어 시스템 · 1,271등 운영 30일차 · baseline 대비 절감 분석</div>
+    </div>
+    <div style="margin-left:auto; display:flex; gap:8px;">
+      <button class="btn sec">월 비교</button>
+      <button class="btn sec">CSV 내보내기</button>
+    </div>
+  </div>
+</div>
+
+<section class="stats">
+  <div class="stat">
+    <div class="label">월 절감 전력량</div>
+    <div class="v green">14,820 <small style="font-size:14px; color:var(--muted)">kWh</small></div>
+    <div class="meta">baseline 22,250 kWh → 실측 7,430 kWh</div>
+  </div>
+  <div class="stat">
+    <div class="label">월 절감 비용</div>
+    <div class="v green">₩ 2,223,000</div>
+    <div class="meta">단가 ₩150/kWh (산업용 표준) · 누적 +₩9.8M / 4개월</div>
+  </div>
+  <div class="stat">
+    <div class="label">평균 절감률</div>
+    <div class="v orange">−66.6%</div>
+    <div class="meta">목표 −55% 달성 · KPI 통과 ✓</div>
+  </div>
+  <div class="stat">
+    <div class="label">CO2 감축</div>
+    <div class="v blue">6.82 <small style="font-size:14px; color:var(--muted)">ton</small></div>
+    <div class="meta">전력 평균 환산 0.46 kg-CO2/kWh</div>
+  </div>
+</section>
+
+<section class="grid">
+  <div class="card">
+    <h3>월간 일별 절감량 (kWh/일)</h3>
+    <svg viewBox="0 0 800 280" width="100%">
+      <g stroke="var(--line)" stroke-width="0.5">
+        <line x1="40" y1="20" x2="40" y2="250"/>
+        <line x1="40" y1="250" x2="780" y2="250"/>
+        <line x1="40" y1="200" x2="780" y2="200" stroke-dasharray="3,3"/>
+        <line x1="40" y1="150" x2="780" y2="150" stroke-dasharray="3,3"/>
+        <line x1="40" y1="100" x2="780" y2="100" stroke-dasharray="3,3"/>
+        <line x1="40" y1="50" x2="780" y2="50" stroke-dasharray="3,3"/>
+      </g>
+      <text x="34" y="54" text-anchor="end">800</text>
+      <text x="34" y="104" text-anchor="end">600</text>
+      <text x="34" y="154" text-anchor="end">400</text>
+      <text x="34" y="204" text-anchor="end">200</text>
+      <text x="34" y="254" text-anchor="end">0</text>
+      <text x="40" y="270">5/1</text>
+      <text x="160" y="270">5/5</text>
+      <text x="280" y="270">5/10</text>
+      <text x="400" y="270">5/15</text>
+      <text x="520" y="270">5/20</text>
+      <text x="640" y="270">5/25</text>
+      <text x="780" y="270" text-anchor="end">5/31</text>
+
+      <line x1="40" y1="80" x2="780" y2="80" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="6,3"/>
+      <text x="780" y="76" text-anchor="end" fill="var(--muted)">baseline ≈ 740 kWh/일</text>
+
+      <!-- Saved per day bars (height = saved kWh) — visually ~250-580 -->
+      <g fill="var(--green)" opacity="0.85">
+        <rect x="44" y="92" width="20" height="158"/>
+        <rect x="68" y="98" width="20" height="152"/>
+        <rect x="92" y="220" width="20" height="30"/>   <!-- weekend -->
+        <rect x="116" y="220" width="20" height="30"/>  <!-- weekend -->
+        <rect x="140" y="90" width="20" height="160"/>
+        <rect x="164" y="88" width="20" height="162"/>
+        <rect x="188" y="92" width="20" height="158"/>
+        <rect x="212" y="90" width="20" height="160"/>
+        <rect x="236" y="86" width="20" height="164"/>
+        <rect x="260" y="220" width="20" height="30"/>
+        <rect x="284" y="220" width="20" height="30"/>
+        <rect x="308" y="92" width="20" height="158"/>
+        <rect x="332" y="88" width="20" height="162"/>
+        <rect x="356" y="86" width="20" height="164"/>
+        <rect x="380" y="84" width="20" height="166"/>
+        <rect x="404" y="88" width="20" height="162"/>
+        <rect x="428" y="220" width="20" height="30"/>
+        <rect x="452" y="220" width="20" height="30"/>
+        <rect x="476" y="84" width="20" height="166"/>
+        <rect x="500" y="82" width="20" height="168"/>
+        <rect x="524" y="86" width="20" height="164"/>
+        <rect x="548" y="84" width="20" height="166"/>
+        <rect x="572" y="80" width="20" height="170"/>
+        <rect x="596" y="220" width="20" height="30"/>
+        <rect x="620" y="220" width="20" height="30"/>
+        <rect x="644" y="82" width="20" height="168"/>
+        <rect x="668" y="80" width="20" height="170"/>
+        <rect x="692" y="84" width="20" height="166"/>
+        <rect x="716" y="80" width="20" height="170"/>
+        <rect x="740" y="82" width="20" height="168"/>
+      </g>
+
+      <text x="780" y="40" text-anchor="end" fill="var(--green)">평균 절감 494 kWh/일</text>
+    </svg>
+    <div class="legend">
+      <span><span class="swatch" style="background:var(--green);"></span>일별 절감량 (실측)</span>
+      <span><span class="swatch" style="background:var(--muted);"></span>baseline 추정 (제어 없을 시)</span>
+      <span style="margin-left:auto;">주말은 PIR ONLY 모드라 baseline 자체가 낮아 절감폭 좁음</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>건물·시스템별 KPI</h3>
+    <div class="kpi-row" style="font-weight:600; border-bottom:1px solid var(--line);">
+      <span>건물 / 시스템</span><span>월 절감량 (kWh)</span><span class="r">절감률</span><span class="r">달성</span>
+    </div>
+    <div class="kpi-row">
+      <span>E1 컨퍼런스 (BLE Mesh)</span>
+      <div class="bar-bg"><div class="bar-fg" style="width:62%; background:var(--blue);"></div></div>
+      <span class="r">−62%</span>
+      <span class="r"><span class="pill good">✓</span></span>
+    </div>
+    <div class="kpi-row">
+      <span>E2 신물질과학부</span>
+      <div class="bar-bg"><div class="bar-fg" style="width:58%; background:var(--blue);"></div></div>
+      <span class="r">−58%</span>
+      <span class="r"><span class="pill good">✓</span></span>
+    </div>
+    <div class="kpi-row">
+      <span>E3 정보통신융합</span>
+      <div class="bar-bg"><div class="bar-fg" style="width:67%; background:var(--blue);"></div></div>
+      <span class="r">−67%</span>
+      <span class="r"><span class="pill good">✓</span></span>
+    </div>
+    <div class="kpi-row">
+      <span>E4 뇌과학부</span>
+      <div class="bar-bg"><div class="bar-fg" style="width:52%; background:var(--blue);"></div></div>
+      <span class="r">−52%</span>
+      <span class="r"><span class="pill warn">근접</span></span>
+    </div>
+    <div class="kpi-row">
+      <span>E5 로봇공학부</span>
+      <div class="bar-bg"><div class="bar-fg" style="width:64%; background:var(--blue);"></div></div>
+      <span class="r">−64%</span>
+      <span class="r"><span class="pill good">✓</span></span>
+    </div>
+    <div class="kpi-row">
+      <span>E6 에너지시스템</span>
+      <div class="bar-bg"><div class="bar-fg" style="width:59%; background:var(--blue);"></div></div>
+      <span class="r">−59%</span>
+      <span class="r"><span class="pill good">✓</span></span>
+    </div>
+    <div class="kpi-row">
+      <span>E7 컨실리언스 (지상)</span>
+      <div class="bar-bg"><div class="bar-fg" style="width:68%; background:var(--blue);"></div></div>
+      <span class="r">−68%</span>
+      <span class="r"><span class="pill good">✓</span></span>
+    </div>
+    <div class="kpi-row" style="border-top:1px dashed var(--line); padding-top:8px;">
+      <span style="color:var(--accent);"><strong>E7 B1 지하주차장 (IR)</strong></span>
+      <div class="bar-bg"><div class="bar-fg" style="width:71%; background:var(--accent);"></div></div>
+      <span class="r" style="color:var(--accent);"><strong>−71%</strong></span>
+      <span class="r"><span class="pill good">✓✓</span></span>
+    </div>
+    <div class="small" style="margin-top:10px;">목표 절감률: 일반 zone ≥ 55%, 지하주차장 ≥ 65% (시방서 §3.1 기준)</div>
+  </div>
+
+  <div class="card" style="grid-column: 1 / -1;">
+    <h3>출퇴근·점심·야간 패턴 분석</h3>
+    <svg viewBox="0 0 1100 220" width="100%">
+      <g stroke="var(--line)" stroke-width="0.5">
+        <line x1="60" y1="20" x2="60" y2="200"/>
+        <line x1="60" y1="200" x2="1080" y2="200"/>
+        <line x1="60" y1="150" x2="1080" y2="150" stroke-dasharray="3,3"/>
+        <line x1="60" y1="100" x2="1080" y2="100" stroke-dasharray="3,3"/>
+        <line x1="60" y1="50" x2="1080" y2="50" stroke-dasharray="3,3"/>
+      </g>
+      <text x="54" y="54" text-anchor="end">100</text>
+      <text x="54" y="104" text-anchor="end">75</text>
+      <text x="54" y="154" text-anchor="end">50</text>
+      <text x="54" y="204" text-anchor="end">0 (%)</text>
+
+      <!-- Hourly bars: time of day distribution of energy -->
+      <!-- average usage as % of baseline -->
+      <g fill="var(--accent)" opacity=".85">
+        <rect x="65" y="190" width="34" height="10"/><text x="82" y="218" text-anchor="middle">00</text>
+        <rect x="105" y="188" width="34" height="12"/><text x="122" y="218" text-anchor="middle">01</text>
+        <rect x="145" y="186" width="34" height="14"/><text x="162" y="218" text-anchor="middle">02</text>
+        <rect x="185" y="184" width="34" height="16"/><text x="202" y="218" text-anchor="middle">03</text>
+        <rect x="225" y="182" width="34" height="18"/><text x="242" y="218" text-anchor="middle">04</text>
+        <rect x="265" y="180" width="34" height="20"/><text x="282" y="218" text-anchor="middle">05</text>
+        <rect x="305" y="170" width="34" height="30"/><text x="322" y="218" text-anchor="middle">06</text>
+        <rect x="345" y="130" width="34" height="70"/><text x="362" y="218" text-anchor="middle">07</text>
+        <rect x="385" y="70" width="34" height="130"/><text x="402" y="218" text-anchor="middle">08</text>
+        <rect x="425" y="44" width="34" height="156"/><text x="442" y="218" text-anchor="middle">09</text>
+        <rect x="465" y="60" width="34" height="140"/><text x="482" y="218" text-anchor="middle">10</text>
+        <rect x="505" y="68" width="34" height="132"/><text x="522" y="218" text-anchor="middle">11</text>
+        <rect x="545" y="140" width="34" height="60"/><text x="562" y="218" text-anchor="middle">12</text>
+        <rect x="585" y="160" width="34" height="40"/><text x="602" y="218" text-anchor="middle">13</text>
+        <rect x="625" y="52" width="34" height="148"/><text x="642" y="218" text-anchor="middle">14</text>
+        <rect x="665" y="58" width="34" height="142"/><text x="682" y="218" text-anchor="middle">15</text>
+        <rect x="705" y="68" width="34" height="132"/><text x="722" y="218" text-anchor="middle">16</text>
+        <rect x="745" y="74" width="34" height="126"/><text x="762" y="218" text-anchor="middle">17</text>
+        <rect x="785" y="100" width="34" height="100"/><text x="802" y="218" text-anchor="middle">18</text>
+        <rect x="825" y="140" width="34" height="60"/><text x="842" y="218" text-anchor="middle">19</text>
+        <rect x="865" y="160" width="34" height="40"/><text x="882" y="218" text-anchor="middle">20</text>
+        <rect x="905" y="168" width="34" height="32"/><text x="922" y="218" text-anchor="middle">21</text>
+        <rect x="945" y="178" width="34" height="22"/><text x="962" y="218" text-anchor="middle">22</text>
+        <rect x="985" y="186" width="34" height="14"/><text x="1002" y="218" text-anchor="middle">23</text>
+      </g>
+
+      <line x1="60" y1="40" x2="1080" y2="40" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="6,3"/>
+      <text x="1080" y="36" text-anchor="end" fill="var(--muted)">baseline 100% (제어 없을 시)</text>
+    </svg>
+    <div class="small">출근 peak 09시 · 점심 12시 디밍 정책 효과 가시화 · 야간 22시~06시는 PIR ONLY로 90%+ 절감</div>
+  </div>
+
+  <div class="card">
+    <h3>비용·환경 효과 환산</h3>
+    <table>
+      <tr><th>지표</th><th class="r">5월</th><th class="r">누적 4개월</th><th class="r">연간 환산</th></tr>
+      <tr><td>전력 절감 (kWh)</td><td class="r">14,820</td><td class="r">58,420</td><td class="r">177,840</td></tr>
+      <tr><td>비용 절감 (₩)</td><td class="r">2,223,000</td><td class="r">8,763,000</td><td class="r">26,676,000</td></tr>
+      <tr><td>CO2 감축 (ton)</td><td class="r">6.82</td><td class="r">26.87</td><td class="r">81.81</td></tr>
+      <tr><td>가용성 (%)</td><td class="r">99.6%</td><td class="r">99.4%</td><td class="r">99.4%</td></tr>
+      <tr><td>OTA 배포 (회)</td><td class="r">2</td><td class="r">5</td><td class="r">15</td></tr>
+      <tr><td>현장 출동 (건)</td><td class="r">3</td><td class="r">12</td><td class="r">36</td></tr>
+      <tr><td>리포트 자동 발행</td><td class="r">31일</td><td class="r">122일</td><td class="r">365일</td></tr>
+    </table>
+    <div class="small" style="margin-top:8px;">단가 ₩150/kWh (산업용 평균), CO2 0.46 kg/kWh (한전 평균 발전계수)</div>
+  </div>
+
+  <div class="card">
+    <h3>관찰·권고 사항</h3>
+    <ul style="padding-left:18px; line-height:1.7; font-size:12.5px;">
+      <li><strong>E4 뇌과학부 절감률 −52%</strong> (목표 −55% 근접): 야간 강의 사용 빈도 증가 추정. 스케줄 19:00 → 21:00 연장 검토</li>
+      <li><strong>지하주차장 G07-L6 단등 고장</strong> 1건 발생. UTTEC 측 OTA 진단 → 7일 내 교체 권고. 양산 1년 단등률 0.3% / 표준 범위 (시방서 §2.1 SOP 충족)</li>
+      <li><strong>22:00 야간 모드</strong> 시간 변경 (22:30 → 22:00) 이후 야간 절감 +12% 개선 확인 — 변경 적정성 입증</li>
+      <li><strong>점심 디밍 정책 신규 효과</strong>: 5/25 활성화 이후 일 평균 +18 kWh 절감</li>
+      <li><strong>차후 검토</strong>: STM32H745 점유 패턴 학습 적용 시 예상 추가 절감 −8% (PoC 권장)</li>
+      <li><strong>인증 일정</strong>: KC/KCC 양산 인증 분기 2 완료. 다음 분기 보고에 첨부</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="footer-note">
+  본 리포트는 자동 생성됨 · InfluxDB raw 데이터 기반 · Node-RED 검증 룰 통과 · Grafana PDF 내보내기 v10.4 · 발행자 esco-admin
+</footer>
+</body>
+</html>

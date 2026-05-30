@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USLC 시스템 구성도 — UTTEC LoRa 무선 조명제어 (ESCO 사업 적용 참고)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f0f4f8;padding:40px 20px;color:#1a202c}
+.page{max-width:1100px;margin:0 auto}
+h1{text-align:center;color:#0b3d91;font-size:28px;margin-bottom:8px;font-weight:800;letter-spacing:-0.5px}
+.subtitle{text-align:center;color:#4a5568;font-size:14px;margin-bottom:8px}
+.ref{text-align:center;color:#718096;font-size:12px;margin-bottom:36px;font-style:italic}
+
+.section{background:#fff;border-radius:16px;padding:36px;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:28px}
+.section h2{color:#0d47a1;font-size:22px;margin-bottom:24px;text-align:center;border-bottom:2px solid #e0e7ed;padding-bottom:12px}
+.section h3{color:#1565c0;font-size:16px;margin:20px 0 12px;border-left:4px solid #1565c0;padding-left:12px}
+
+.layer{border:2px solid #e2e8f0;border-radius:12px;padding:24px;margin-bottom:18px;position:relative}
+.layer-label{position:absolute;top:-12px;left:24px;background:#fff;padding:0 12px;font-size:13px;color:#0d47a1;font-weight:bold}
+.cloud{border-color:#bee3f8;background:linear-gradient(135deg,#ebf8ff,#e6fffa)}
+.gw{border-color:#c6f6d5;background:linear-gradient(135deg,#f0fff4,#e6fffa)}
+.nodes{border-color:#fefcbf;background:linear-gradient(135deg,#fffff0,#fefce8)}
+.env-layer{border-color:#bee3f8;background:linear-gradient(135deg,#ebf8ff,#e0f7fa)}
+
+.cards{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+.card{background:#fff;border-radius:10px;padding:16px 20px;flex:1;min-width:200px;max-width:300px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.card h4{font-size:14px;margin-bottom:8px;font-weight:700}
+.card ul{list-style:none;font-size:12px;color:#4a5568}
+.card ul li{padding:3px 0}
+.card ul li::before{content:"•";margin-right:6px}
+.card-blue h4{color:#2b6cb0}.card-blue ul li::before{color:#4299e1}
+.card-green h4{color:#276749}.card-green ul li::before{color:#48bb78}
+.card-purple h4{color:#553c9a}.card-purple ul li::before{color:#9f7aea}
+
+.conn{text-align:center;padding:12px;font-size:13px;color:#718096}
+.conn .arrow{font-size:24px;color:#1565c0;display:block;line-height:1}
+.conn .label{background:#e3f2fd;padding:4px 16px;border-radius:20px;display:inline-block;font-size:11px;font-weight:bold;color:#0d47a1;margin-top:4px}
+
+.gw-boxes{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;padding:8px 0}
+.gw-box{background:#fff;border-radius:10px;padding:20px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);min-width:200px}
+.gw-box .icon{font-size:36px;margin-bottom:8px}
+.gw-box h4{color:#276749;font-size:15px;margin-bottom:4px}
+.gw-box p{color:#718096;font-size:11px;margin-top:3px}
+
+.node-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+.node-card{background:#fff;border-radius:10px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);border-left:4px solid #ecc94b}
+.node-card .icon{font-size:30px;margin-bottom:6px}
+.node-card h4{color:#744210;font-size:13px}
+.node-card .role{color:#d69e2e;font-size:13px;font-weight:bold;margin:4px 0}
+.node-card .feat{color:#718096;font-size:11px;line-height:1.5}
+
+.env-card{border-left-color:#4299e1}
+.env-card h4{color:#2c5282}
+.env-card .role{color:#3182ce}
+
+.note{border-radius:8px;padding:14px 20px;margin-top:18px;text-align:center;font-size:13px;font-weight:600}
+.note-yellow{background:#fffbeb;border:1px solid #fefcbf;color:#92400e}
+.note-blue{background:#e3f2fd;border:1px solid #bbdefb;color:#0d47a1}
+
+/* Dashboard */
+.dash{background:#1a202c;border-radius:12px;padding:24px;color:#fff}
+.dash-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;border-bottom:1px solid #2d3748;padding-bottom:12px}
+.dash-hdr h3{font-size:16px;color:#fff}
+.dash-hdr .date{color:#a0aec0;font-size:12px}
+.dash-row{display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.dash-grp{flex:1;min-width:220px}
+.dash-grp-title{font-size:11px;color:#a0aec0;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px}
+.stat{background:#2d3748;border-radius:8px;padding:12px;text-align:center}
+.stat .num{font-size:22px;font-weight:bold}
+.stat .num.g{color:#68d391}.stat .num.y{color:#f6e05e}.stat .num.r{color:#fc8181}.stat .num.b{color:#63b3ed}
+.stat .lbl{font-size:10px;color:#a0aec0;margin-top:3px}
+.alerts{background:#2d3748;border-radius:8px;padding:16px;margin-top:8px}
+.alerts h4{color:#63b3ed;font-size:13px;margin-bottom:10px}
+.alert{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #4a5568;font-size:12px;color:#cbd5e0}
+.alert:last-child{border:none}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-r{background:#fc8181}.dot-y{background:#f6e05e}.dot-g{background:#68d391}
+
+/* Timeline */
+.time-bar{display:flex;height:50px;border-radius:8px;overflow:hidden;margin:12px 0 14px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.tb{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;color:#fff;flex-direction:column;padding:4px}
+.tb .pct{font-size:14px}
+.tb .tm{font-size:10px;opacity:.9;margin-top:2px}
+.time-legend{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:11px;color:#4a5568;padding:6px 0}
+
+/* Compare */
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.cmp-old,.cmp-new{border-radius:12px;padding:22px}
+.cmp-old{background:#fff5f5;border:2px solid #fed7d7}
+.cmp-new{background:#f0fff4;border:2px solid #c6f6d5}
+.cmp-old h3{color:#c53030;font-size:16px;margin-bottom:14px;border:none;padding:0}
+.cmp-new h3{color:#276749;font-size:16px;margin-bottom:14px;border:none;padding:0}
+.cmp-item{padding:8px 0;font-size:13px;color:#4a5568;border-bottom:1px solid rgba(0,0,0,.05);line-height:1.5}
+.cmp-item:last-child{border:none}
+
+@media(max-width:768px){.cmp-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.node-grid{grid-template-columns:repeat(2,1fr)}}
+@media print{body{background:#fff;padding:0}.page{max-width:100%}.section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>USLC 시스템 구성도</h1>
+<p class="subtitle">UTTEC LoRa 무선 조명제어 시스템 — Cloud · Gateway · 노드 3계층 통합 관제</p>
+<p class="ref">DGIST ESCO 운영 제안서 v5.0 동봉 참고 자료 · UTTEC-ESCO-REF-2026-001 v1.0</p>
+
+<!-- 시스템 구성도 -->
+<div class="section">
+<h2>1. 시스템 3계층 구성도</h2>
+
+<div class="layer cloud">
+<div class="layer-label">☁️ Cloud 관제</div>
+<div class="cards">
+  <div class="card card-blue"><h4>📊 조명 관제</h4><ul><li>등기구 현황 (지도·뷰)</li><li>고장 자동 감지 → 알림</li><li>에너지 리포트 자동 생성</li></ul></div>
+  <div class="card card-purple"><h4>🌡️ 환경 감시</h4><ul><li>지하주차장 CO/CO₂ 실시간</li><li>온습도 + VOC + 연기</li><li>환기 시스템 연동 가능</li></ul></div>
+  <div class="card card-green"><h4>📱 모바일</h4><ul><li>관제실 외 원격 알림</li><li>운영자 강제 조작 가능</li><li>야간 당직자 푸시 알림</li></ul></div>
+</div>
+</div>
+
+<div class="conn"><span class="arrow">↕</span><br><span class="label">LTE (4G) 통신</span></div>
+
+<div class="layer gw">
+<div class="layer-label">🏢 운영실/관제실</div>
+<div class="gw-boxes">
+  <div class="gw-box"><div class="icon">📡</div><h4>Gateway (주)</h4><p>관제실 설치</p><p>AC 콘센트 연결만</p></div>
+  <div class="gw-box"><div class="icon">📡</div><h4>Gateway (백업)</h4><p>이중화 옵션</p><p>자동 페일오버</p></div>
+</div>
+</div>
+
+<div class="conn"><span class="arrow">↕</span><br><span class="label">LoRa 무선 (922.1MHz) — 배선 없음, 최대 1km, Gateway당 254 노드</span></div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+<div class="layer nodes">
+<div class="layer-label">💡 옥외 조명 (예시)</div>
+<div class="node-grid">
+  <div class="node-card"><div class="icon">🔦</div><h4>보안등</h4><div class="role">자동 디밍</div><div class="feat">PIR 감지 + 시간대 시나리오</div></div>
+  <div class="node-card"><div class="icon">🌳</div><h4>산책로</h4><div class="role">보행자 감지</div><div class="feat">움직임 시 100% 점등</div></div>
+  <div class="node-card"><div class="icon">🛣️</div><h4>가로등</h4><div class="role">시간제 운영</div><div class="feat">일출/일몰 자동 점소등</div></div>
+  <div class="node-card"><div class="icon">🚪</div><h4>출입구</h4><div class="role">상시 80%+</div><div class="feat">안전 우선 영역</div></div>
+</div>
+<div class="note note-yellow">배선 공사 없이 기존 등기구에 LoRa 노드 설치 — 0-10V/DALI/PWM 호환</div>
+</div>
+
+<div class="layer env-layer">
+<div class="layer-label">🌡️ 환경 감시 (지하주차장 등)</div>
+<div class="node-grid">
+  <div class="node-card env-card"><div class="icon">🫧</div><h4>가스 감시</h4><div class="role">CO / CO₂</div><div class="feat">실시간 농도 + 임계치 알림<br>환기 시스템 자동 연동</div></div>
+  <div class="node-card env-card"><div class="icon">🌡️</div><h4>온습도</h4><div class="role">구역별</div><div class="feat">결로 예방 + 화재 조기 징후<br>월간 추세 리포트</div></div>
+  <div class="node-card env-card"><div class="icon">⚡</div><h4>전력 계측</h4><div class="role">CT 클램프</div><div class="feat">분전반 무수정 설치<br>피크 부하 관리</div></div>
+</div>
+<div class="note note-blue">조명 + 환경을 단일 LoRa 플랫폼에서 통합 관제 — 운영실 부담 최소화</div>
+</div>
+</div>
+</div>
+
+<!-- 관리자 대시보드 -->
+<div class="section">
+<h2>2. 운영자 통합 대시보드 (예시)</h2>
+<div class="dash">
+<div class="dash-hdr"><h3>USLC 통합 관제 — 2026-05-30 09:15</h3><span class="date">실시간 mock 데이터</span></div>
+<div class="dash-row">
+  <div class="dash-grp">
+    <div class="dash-grp-title">💡 옥외 조명</div>
+    <div class="stats">
+      <div class="stat"><div class="num g">137</div><div class="lbl">정상</div></div>
+      <div class="stat"><div class="num y">2</div><div class="lbl">주의</div></div>
+      <div class="stat"><div class="num r">1</div><div class="lbl">고장</div></div>
+      <div class="stat"><div class="num b">180만</div><div class="lbl">이번 달 절감 (원)</div></div>
+    </div>
+  </div>
+  <div class="dash-grp">
+    <div class="dash-grp-title">🌡️ 환경 감시</div>
+    <div class="stats">
+      <div class="stat"><div class="num g">CO 12</div><div class="lbl">ppm (정상)</div></div>
+      <div class="stat"><div class="num g">CO₂ 680</div><div class="lbl">ppm (정상)</div></div>
+      <div class="stat"><div class="num g">22°C</div><div class="lbl">평균 온도</div></div>
+      <div class="stat"><div class="num b">42kW</div><div class="lbl">총 전력</div></div>
+    </div>
+  </div>
+</div>
+<div class="alerts">
+  <h4>🔔 최근 알림 (예시)</h4>
+  <div class="alert"><span class="dot dot-r"></span> 산책로 #12 LED 단등 고장 감지 — 교체 권장 (~2주 내)</div>
+  <div class="alert"><span class="dot dot-y"></span> 보안등 #07 디밍 패턴 이상 (정상보다 30% 더 밝게 동작) — 룰 검토 권고</div>
+  <div class="alert"><span class="dot dot-g"></span> B1 주차장 환경 모두 정상 범위 — CO/CO₂/온습도 안정</div>
+</div>
+</div>
+</div>
+
+<!-- 시간대별 운영 -->
+<div class="section">
+<h2>3. 시간대별 운영 시나리오 — "관리자 조작 없음, 완전 자동"</h2>
+<h3>옥외 조명 (보안등·가로등·산책로)</h3>
+<div class="time-bar">
+  <div class="tb" style="flex:2;background:#1a365d"><span class="pct">0%</span><span class="tm">일출~일몰</span></div>
+  <div class="tb" style="flex:2;background:#dd6b20"><span class="pct">80%</span><span class="tm">일몰~22시</span></div>
+  <div class="tb" style="flex:1;background:#d69e2e"><span class="pct">50%</span><span class="tm">22~24시</span></div>
+  <div class="tb" style="flex:2;background:#2d3748"><span class="pct">20%</span><span class="tm">0~4시</span></div>
+  <div class="tb" style="flex:1;background:#4a5568"><span class="pct">40%</span><span class="tm">4시~일출</span></div>
+</div>
+<div class="time-legend">
+  <span>🌅 일출/일몰 GPS 자동 계산</span>
+  <span>🚶 PIR 감지 시 100% 일시 (30초)</span>
+  <span>📊 종합 절감률 약 60% (가중평균)</span>
+</div>
+
+<h3>환경 감시 (지하주차장)</h3>
+<div class="time-bar">
+  <div class="tb" style="flex:1;background:#4299e1"><span class="pct">상시</span><span class="tm">24시간 연속 모니터링</span></div>
+  <div class="tb" style="flex:1;background:#276749"><span class="pct">CO/CO₂</span><span class="tm">임계치 시 환기 시스템 트리거</span></div>
+  <div class="tb" style="flex:1;background:#dd6b20"><span class="pct">알림</span><span class="tm">CRIT/WARN 등급별 자동 발송</span></div>
+</div>
+<div class="time-legend">
+  <span>🌡️ 24시간 환경 데이터 누적</span>
+  <span>🔔 임계치 자동 알림 + 환기 시스템 연동</span>
+  <span>📈 월간 환경 리포트 자동 생성</span>
+</div>
+</div>
+
+<!-- 비교 -->
+<div class="section">
+<h2>4. 기존 방식 vs USLC (LoRa 무선)</h2>
+<div class="cmp-grid">
+<div class="cmp-old">
+  <h3>❌ 기존 방식</h3>
+  <div class="cmp-item">📋 매일 야간 순찰로 등기구 고장 확인</div>
+  <div class="cmp-item">⏰ 계절마다 타이머 수동 조정</div>
+  <div class="cmp-item">🔌 통신 배선 신규 포설 (수일~수주 공사)</div>
+  <div class="cmp-item">📝 에너지 보고서 수작업 집계</div>
+  <div class="cmp-item">🚫 분산 시설 통합 관제 어려움</div>
+  <div class="cmp-item">⚠️ 환경 위험 (가스 등) 사후 인지</div>
+</div>
+<div class="cmp-new">
+  <h3>✅ USLC (UTTEC LoRa)</h3>
+  <div class="cmp-item">📡 고장 자동 감지 → 즉시 알림</div>
+  <div class="cmp-item">🌅 일출/일몰 GPS 자동, 계절 조정 불요</div>
+  <div class="cmp-item">📶 <b>LoRa 무선 — 배선 공사 0원</b></div>
+  <div class="cmp-item">📊 월간 리포트 자동 생성 (PDF 발송)</div>
+  <div class="cmp-item">🌐 1개 Gateway로 1km 반경 통합 관제</div>
+  <div class="cmp-item">🔔 환경 24시간 자동 감시 + 임계치 알림</div>
+</div>
+</div>
+</div>
+
+<!-- Footer -->
+<div class="section" style="text-align:center;color:#718096;font-size:12px">
+<p><b>본 시스템 구성도는 UTTEC LoRa 무선 조명제어 시스템(USLC)의 표준 아키텍처입니다.</b></p>
+<p style="margin-top:6px">실제 적용 시 ESCO 사업자(귀사)의 사업장 규모·운영 요구에 맞춰 노드 종류·수량·관제 화면을 커스터마이즈합니다.</p>
+<p style="margin-top:12px;color:#0d47a1;font-weight:600">㈜유티텍 (UTTEC Inc.) · ihong9059@gmail.com · www.uttec.co.kr</p>
+</div>
+
+</div>
+</body>
+</html>

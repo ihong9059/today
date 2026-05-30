@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>지하주차장 IR Chain — 컨실리언스센터 B1</title>
+<style>
+  :root {
+    --bg:#0b1220; --panel:#111a2c; --panel-2:#16243b; --line:#1f2f4a;
+    --text:#e6edf6; --muted:#8aa0bf; --accent:#ff6b1a; --green:#2ec27e;
+    --blue:#5aa5ff; --yellow:#f5c84b; --red:#ff5b6a;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif; font-size:13px; }
+  header.top { display:flex; align-items:center; padding:12px 20px; background:#07101e; border-bottom:1px solid var(--line); }
+  .logo { font-weight:700; } .logo .dgist { color:var(--accent); }
+  .nav { margin-left:24px; display:flex; gap:16px; color:var(--muted); }
+  .nav .active { color:var(--text); border-bottom:2px solid var(--accent); padding-bottom:6px; }
+  .live { margin-left:auto; display:flex; gap:14px; color:var(--muted); font-size:12px; align-items:center; }
+  .dot { width:8px; height:8px; border-radius:50%; background:var(--green); display:inline-block; box-shadow:0 0 8px var(--green); }
+  .grid { display:grid; grid-template-columns:1fr 340px; gap:12px; padding:14px 16px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px; }
+  .card h3 { margin:0 0 10px; font-size:12px; color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:.5px; }
+  .info-panel .row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--line); font-size:12.5px; }
+  .info-panel .row:last-child { border-bottom:0; }
+  .info-panel .row .k { color:var(--muted); }
+  .info-panel .row .v { font-weight:600; }
+  .info-panel .row .v.ir { color:var(--accent); }
+  .canvas { background:#0a1322; border-radius:4px; padding:14px; min-height:560px; border:1px solid var(--line); position:relative; }
+  .led-on   { fill:var(--accent); filter:drop-shadow(0 0 7px var(--accent)); }
+  .led-d70  { fill:#e0892a; opacity:.85; }
+  .led-d50  { fill:#9b6422; opacity:.7; }
+  .led-d30  { fill:#5a3d15; opacity:.6; }
+  .led-off  { fill:#3a4d6e; }
+  .led-pir  { fill:var(--yellow); filter:drop-shadow(0 0 10px var(--yellow)); }
+  .ir-beam  { stroke:var(--accent); stroke-width:1.2; stroke-dasharray:6,3; opacity:.55; }
+  .ir-beam-fwd { stroke:var(--blue); stroke-width:1; stroke-dasharray:4,3; opacity:.5; }
+  .ttl-label { fill:var(--yellow); font-size:11px; font-weight:700; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th, td { text-align:left; padding:6px 4px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase; }
+  td.r, th.r { text-align:right; font-variant-numeric:tabular-nums; }
+  .ttl-pill { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600; }
+  .ttl-3 { background:var(--accent); color:white; }
+  .ttl-2 { background:rgba(255,107,26,.6); color:white; }
+  .ttl-1 { background:rgba(255,107,26,.35); color:var(--accent); }
+  .ttl-0 { background:rgba(138,160,191,.15); color:var(--muted); }
+  .btn { background:var(--accent); color:white; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; font-weight:600; font-size:12px; }
+  .btn.sec { background:transparent; color:var(--blue); border:1px solid var(--blue); }
+  .controls { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .pkt { font-family:'Consolas',monospace; font-size:11px; padding:6px 8px; background:#0a1322; border:1px solid var(--line); border-radius:3px; margin:3px 0; color:var(--muted); }
+  .pkt .ok { color:var(--accent); font-weight:700; }
+  .small { font-size:11.5px; color:var(--muted); }
+  .legend { display:flex; gap:14px; font-size:11px; color:var(--muted); margin-top:10px; flex-wrap:wrap; }
+  .swatch { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><span class="dgist">DGIST</span> · 조명제어 통합 관제</div>
+  <nav class="nav">
+    <span>개요</span>
+    <span>건물별 상세</span>
+    <span class="active">지하주차장</span>
+    <span>스케줄/룰</span>
+    <span>알림</span>
+    <span>리포트</span>
+    <span>관리</span>
+  </nav>
+  <div class="live">
+    <span style="background:rgba(245,200,75,.18); color:var(--yellow); padding:3px 8px; border-radius:3px; border:1px solid rgba(245,200,75,.4); font-weight:600;">⚠ MOCKUP</span>
+    <span><span class="dot"></span> IR Bridge · LIVE</span>
+    <span>2026-05-30 14:23:08</span>
+  </div>
+</header>
+
+<section class="grid">
+  <!-- left main: chain visualization -->
+  <div class="card">
+    <h3>컨실리언스센터 B1 지하주차장 IR Chain (354등 · 12 row × 평균 30등)</h3>
+    <div class="canvas">
+      <svg viewBox="0 0 1100 580" width="100%" style="display:block;">
+        <!-- floor outline -->
+        <rect x="20" y="20" width="1060" height="540" fill="#0c1729" stroke="#243957" stroke-width="1.5"/>
+        <text x="40" y="44" fill="var(--muted)" font-size="11">B1 평면 (스케일 1:1200)</text>
+
+        <!-- entrance ramp -->
+        <path d="M 20 250 L 80 250 L 90 230 L 90 220 L 110 220 L 110 250 L 130 250" fill="none" stroke="#3a5a8a" stroke-width="2"/>
+        <text x="60" y="270" fill="var(--blue)" font-size="11">입구 램프</text>
+
+        <!-- row labels at left -->
+        <text x="34" y="100" fill="var(--muted)" font-size="11" font-weight="600">G02 동측</text>
+        <text x="34" y="150" fill="var(--muted)" font-size="11" font-weight="600">G03 동측</text>
+        <text x="34" y="320" fill="var(--muted)" font-size="11" font-weight="600">G06 서측</text>
+        <text x="34" y="370" fill="var(--muted)" font-size="11" font-weight="600">G07 서측</text>
+        <text x="34" y="490" fill="var(--muted)" font-size="11" font-weight="600">G10 동선</text>
+
+        <!-- car icon (current trigger source) -->
+        <g transform="translate(450,290)">
+          <rect x="-22" y="-8" width="44" height="16" rx="2" fill="var(--yellow)"/>
+          <rect x="-16" y="-6" width="11" height="6" fill="#3a3a3a"/>
+          <rect x="5" y="-6" width="11" height="6" fill="#3a3a3a"/>
+          <text x="0" y="22" text-anchor="middle" fill="var(--yellow)" font-size="11" font-weight="700">차량 진입 ⚡</text>
+        </g>
+
+        <!-- Row G02 (동측, top) — L1..L12 -->
+        <g>
+          <!-- light positions -->
+          <circle cx="170" cy="100" r="6" class="led-d30"/>
+          <circle cx="220" cy="100" r="6" class="led-d50"/>
+          <circle cx="270" cy="100" r="6" class="led-d70"/>
+          <circle cx="320" cy="100" r="6" class="led-on"/>
+          <circle cx="370" cy="100" r="6" class="led-d70"/>
+          <circle cx="420" cy="100" r="6" class="led-d50"/>
+          <circle cx="470" cy="100" r="6" class="led-d30"/>
+          <circle cx="520" cy="100" r="6" class="led-off"/>
+          <circle cx="570" cy="100" r="6" class="led-off"/>
+          <circle cx="620" cy="100" r="6" class="led-off"/>
+          <circle cx="670" cy="100" r="6" class="led-off"/>
+          <circle cx="720" cy="100" r="6" class="led-off"/>
+        </g>
+
+        <!-- Row G03 — has PIR trigger at L4 (cy=150, cx=320) -->
+        <g>
+          <circle cx="170" cy="150" r="6" class="led-d30"/>
+          <text x="170" y="170" text-anchor="middle" class="ttl-label">30%</text>
+          <circle cx="220" cy="150" r="6" class="led-d50"/>
+          <text x="220" y="170" text-anchor="middle" class="ttl-label">50%</text>
+          <circle cx="270" cy="150" r="6" class="led-d70"/>
+          <text x="270" y="170" text-anchor="middle" class="ttl-label">70%</text>
+          <!-- L4 trigger -->
+          <circle cx="320" cy="150" r="9" class="led-pir"/>
+          <text x="320" y="170" text-anchor="middle" fill="var(--yellow)" font-size="11" font-weight="700">100% PIR</text>
+          <text x="320" y="184" text-anchor="middle" fill="var(--muted)" font-size="10">L3-G03 ◉</text>
+          <circle cx="370" cy="150" r="6" class="led-d70"/>
+          <text x="370" y="170" text-anchor="middle" class="ttl-label">70%</text>
+          <circle cx="420" cy="150" r="6" class="led-d50"/>
+          <text x="420" y="170" text-anchor="middle" class="ttl-label">50%</text>
+          <circle cx="470" cy="150" r="6" class="led-d30"/>
+          <text x="470" y="170" text-anchor="middle" class="ttl-label">30%</text>
+          <circle cx="520" cy="150" r="6" class="led-off"/>
+          <circle cx="570" cy="150" r="6" class="led-off"/>
+          <circle cx="620" cy="150" r="6" class="led-off"/>
+          <circle cx="670" cy="150" r="6" class="led-off"/>
+          <circle cx="720" cy="150" r="6" class="led-off"/>
+          <!-- IR beams from L4 -->
+          <line x1="313" y1="150" x2="277" y2="150" class="ir-beam"/>
+          <line x1="327" y1="150" x2="363" y2="150" class="ir-beam"/>
+          <line x1="270" y1="146" x2="225" y2="146" class="ir-beam-fwd"/>
+          <line x1="370" y1="146" x2="415" y2="146" class="ir-beam-fwd"/>
+          <line x1="220" y1="142" x2="175" y2="142" class="ir-beam-fwd" opacity=".3"/>
+          <line x1="420" y1="142" x2="465" y2="142" class="ir-beam-fwd" opacity=".3"/>
+        </g>
+
+        <!-- TTL markers above row G03 -->
+        <g transform="translate(0,80)">
+          <text x="170" y="0" text-anchor="middle"><tspan class="ttl-label" font-size="9">TTL=1</tspan></text>
+          <text x="220" y="0" text-anchor="middle"><tspan class="ttl-label" font-size="9">TTL=2</tspan></text>
+          <text x="270" y="0" text-anchor="middle"><tspan class="ttl-label" font-size="9">TTL=3</tspan></text>
+          <text x="320" y="0" text-anchor="middle" fill="var(--yellow)" font-weight="700" font-size="10">◉ source</text>
+          <text x="370" y="0" text-anchor="middle"><tspan class="ttl-label" font-size="9">TTL=3</tspan></text>
+          <text x="420" y="0" text-anchor="middle"><tspan class="ttl-label" font-size="9">TTL=2</tspan></text>
+          <text x="470" y="0" text-anchor="middle"><tspan class="ttl-label" font-size="9">TTL=1</tspan></text>
+        </g>
+
+        <!-- Middle: car lane -->
+        <rect x="60" y="220" width="1000" height="170" fill="rgba(50,80,140,.06)" stroke="#243957" stroke-dasharray="4,3"/>
+        <text x="900" y="240" fill="var(--muted)" font-size="11" text-anchor="middle">주차 구역 · 차로</text>
+
+        <!-- Row G06 (서측 중간) -->
+        <g>
+          <circle cx="170" cy="320" r="6" class="led-off"/>
+          <circle cx="220" cy="320" r="6" class="led-off"/>
+          <circle cx="270" cy="320" r="6" class="led-off"/>
+          <circle cx="320" cy="320" r="6" class="led-off"/>
+          <circle cx="370" cy="320" r="6" class="led-off"/>
+          <circle cx="420" cy="320" r="6" class="led-off"/>
+          <circle cx="470" cy="320" r="6" class="led-off"/>
+          <circle cx="520" cy="320" r="6" class="led-off"/>
+          <circle cx="570" cy="320" r="6" class="led-off"/>
+          <circle cx="620" cy="320" r="6" class="led-off"/>
+          <circle cx="670" cy="320" r="6" class="led-off"/>
+          <circle cx="720" cy="320" r="6" class="led-off"/>
+        </g>
+
+        <!-- Row G07 — has a faulty light -->
+        <g>
+          <circle cx="170" cy="370" r="6" class="led-off"/>
+          <circle cx="220" cy="370" r="6" class="led-off"/>
+          <circle cx="270" cy="370" r="6" class="led-off"/>
+          <circle cx="320" cy="370" r="6" class="led-off"/>
+          <circle cx="370" cy="370" r="6" class="led-off"/>
+          <circle cx="420" cy="370" r="9" fill="var(--red)" stroke="var(--red)">
+            <animate attributeName="opacity" values="1;0.3;1" dur="1.2s" repeatCount="indefinite"/>
+          </circle>
+          <text x="420" y="390" text-anchor="middle" fill="var(--red)" font-size="10" font-weight="700">⚠ G07-L6</text>
+          <circle cx="470" cy="370" r="6" class="led-off"/>
+          <circle cx="520" cy="370" r="6" class="led-off"/>
+          <circle cx="570" cy="370" r="6" class="led-off"/>
+          <circle cx="620" cy="370" r="6" class="led-off"/>
+          <circle cx="670" cy="370" r="6" class="led-off"/>
+          <circle cx="720" cy="370" r="6" class="led-off"/>
+        </g>
+
+        <!-- Row G10 동선 (lower) — entrance scene partially on -->
+        <g>
+          <circle cx="170" cy="490" r="6" class="led-on"/>
+          <circle cx="220" cy="490" r="6" class="led-on"/>
+          <circle cx="270" cy="490" r="6" class="led-d70"/>
+          <circle cx="320" cy="490" r="6" class="led-d50"/>
+          <circle cx="370" cy="490" r="6" class="led-d30"/>
+          <circle cx="420" cy="490" r="6" class="led-off"/>
+          <circle cx="470" cy="490" r="6" class="led-off"/>
+          <circle cx="520" cy="490" r="6" class="led-off"/>
+          <circle cx="570" cy="490" r="6" class="led-off"/>
+          <circle cx="620" cy="490" r="6" class="led-off"/>
+          <circle cx="670" cy="490" r="6" class="led-off"/>
+          <circle cx="720" cy="490" r="6" class="led-off"/>
+        </g>
+
+        <!-- IR Bridge marker -->
+        <g transform="translate(960,300)">
+          <rect x="-50" y="-30" width="100" height="60" fill="#1a2945" stroke="var(--accent)" stroke-width="2"/>
+          <text x="0" y="-6" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="700">IR Bridge</text>
+          <text x="0" y="10" text-anchor="middle" fill="var(--muted)" font-size="10">STM32G4</text>
+          <text x="0" y="24" text-anchor="middle" fill="var(--muted)" font-size="10">TSOP × 8 + LTE</text>
+        </g>
+        <!-- Bridge to cloud arrow -->
+        <line x1="960" y1="270" x2="960" y2="50" stroke="var(--blue)" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="970" y="60" fill="var(--blue)" font-size="11">MQTT ↑ 클라우드</text>
+
+        <!-- exit -->
+        <text x="1060" y="500" text-anchor="end" fill="var(--blue)" font-size="11">출구 →</text>
+
+        <!-- legend -->
+        <g transform="translate(40, 540)">
+          <circle cx="6" cy="6" r="5" class="led-pir"/><text x="16" y="10" fill="var(--muted)" font-size="10">PIR 트리거 100%</text>
+          <circle cx="116" cy="6" r="5" class="led-on"/><text x="126" y="10" fill="var(--muted)" font-size="10">100%</text>
+          <circle cx="172" cy="6" r="5" class="led-d70"/><text x="182" y="10" fill="var(--muted)" font-size="10">70%</text>
+          <circle cx="222" cy="6" r="5" class="led-d50"/><text x="232" y="10" fill="var(--muted)" font-size="10">50%</text>
+          <circle cx="272" cy="6" r="5" class="led-d30"/><text x="282" y="10" fill="var(--muted)" font-size="10">30%</text>
+          <circle cx="322" cy="6" r="5" class="led-off"/><text x="332" y="10" fill="var(--muted)" font-size="10">소등</text>
+          <line x1="386" y1="6" x2="410" y2="6" class="ir-beam"/><text x="416" y="10" fill="var(--muted)" font-size="10">IR broadcast (TTL감쇠)</text>
+          <line x1="550" y1="6" x2="574" y2="6" class="ir-beam-fwd"/><text x="580" y="10" fill="var(--muted)" font-size="10">forward hop</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- right: trigger info, packet log -->
+  <div class="card info-panel">
+    <h3>현재 chain 이벤트</h3>
+    <div class="row"><span class="k">Trigger 시각</span><span class="v">14:23:07.412</span></div>
+    <div class="row"><span class="k">Source</span><span class="v ir">L3-G03 (PIR)</span></div>
+    <div class="row"><span class="k">초기 명령</span><span class="v">CHAIN_ON_BY_PIR · 70%</span></div>
+    <div class="row"><span class="k">TTL 초기값</span><span class="v">3</span></div>
+    <div class="row"><span class="k">총 응답 노드</span><span class="v">6등 (L1·L2·L3·L4·L5·L6)</span></div>
+    <div class="row"><span class="k">평균 hop latency</span><span class="v">31 ms</span></div>
+    <div class="row"><span class="k">총 chain 완료</span><span class="v">93 ms</span></div>
+    <div class="row"><span class="k">Auto OFF 예상</span><span class="v">14:24:37 (30초 무동작 시)</span></div>
+
+    <h3 style="margin-top:14px;">IR 패킷 로그 (실시간)</h3>
+    <div class="pkt"><span class="ok">[14:23:07.412]</span> L3-G03 PIR_TRIG · 자체 100%</div>
+    <div class="pkt"><span class="ok">→ TX</span> GID=03 TTL=3 SRC=L3 CMD=0x10 PARAM=70</div>
+    <div class="pkt"><span class="ok">[14:23:07.443]</span> L2-G03 RX · GID match · 70% set · forward</div>
+    <div class="pkt"><span class="ok">[14:23:07.443]</span> L4-G03 RX · GID match · 70% set · forward</div>
+    <div class="pkt"><span class="ok">→ TX</span> GID=03 TTL=2 SRC=L2 (or L4) · forward</div>
+    <div class="pkt"><span class="ok">[14:23:07.475]</span> L1-G03 RX · TTL=2 · 50% (PARAM−20)</div>
+    <div class="pkt"><span class="ok">[14:23:07.476]</span> L5-G03 RX · TTL=2 · 50%</div>
+    <div class="pkt"><span class="ok">[14:23:07.505]</span> L0/L6 RX · TTL=1 · 30%</div>
+    <div class="pkt"><span class="ok">[14:23:07.505]</span> TTL=0 reached · forward stop</div>
+    <div class="pkt"><span class="ok">[14:23:07.512]</span> IR Bridge collected 6 ack · MQTT publish</div>
+
+    <h3 style="margin-top:14px;">현장팀 조작</h3>
+    <div class="controls">
+      <button class="btn">전체 100% 강제 (긴급)</button>
+      <button class="btn sec">진단 모드</button>
+      <button class="btn sec">G07-L6 점검</button>
+    </div>
+
+    <h3 style="margin-top:14px;">리모컨 학습 모드</h3>
+    <div class="small" style="padding:8px; background:var(--panel-2); border-radius:4px;">
+      현장팀이 리모컨 SET 키 5초 누름 → luminaire LED 깜박임 → 그룹 번호 키(1~16) → NVM 저장.<br/>
+      <strong>현재 그룹 매핑</strong>: G02=01 · G03=02 · G04=03 · ... · G10=09 · G11=10 · G12=11<br/>
+      <span class="small">시방서 §2.1 다항 그룹·연동·단독 제어 모두 충족</span>
+    </div>
+
+    <h3 style="margin-top:14px;">통계 (24h)</h3>
+    <div class="row"><span class="k">PIR 트리거 총수</span><span class="v">1,287 회</span></div>
+    <div class="row"><span class="k">chain 평균 latency</span><span class="v">32 ms</span></div>
+    <div class="row"><span class="k">절감률</span><span class="v" style="color:var(--green)">−71%</span></div>
+    <div class="row"><span class="k">고장 등기구</span><span class="v" style="color:var(--red)">1 (G07-L6)</span></div>
+  </div>
+</section>
+</body>
+</html>

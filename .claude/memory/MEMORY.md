@@ -35,3 +35,4 @@
 - [uttec-search vault 신설 (10th)](project_uttec_search.md) — Mac/Ubuntu ~/uttec-search/, search 9th cross-platform 첫 fork, backend 8891/frontend 8890, uv venv 우회, uttec-vault 인덱싱
 - [search backend 장시간 → STATUS_DLL_INIT_FAILED](feedback_backend_long_uptime_dll_init_failed.md) — exit 3221225794 (0xC0000142) 반복 시 backend kill + 재시작이 즉효. Windows desktop heap 누적, ~9h 가동 후 발생 (2026-05-23 첫 확인)
 - [broker 양방향 자동화 패턴 ⭐](feedback_broker_bidirectional_pattern.md) — 분산 vault ↔ myWiki sync는 pull/push 스크립트 자동, frontmatter `to:` 라우팅, 사용자 broker 0건 (5/26 야간 첫 진화, work-end § 6-Z 자동 통합)
+- [문서 버전 별도 파일 분리 ⭐](feedback_document_version_separate_file.md) — 외부 발송 문서 버전 업데이트 시 in-place 금지. `{문서명}_v{버전}_{날짜}.md` 별도 생성 + 원본은 latest로 동기. 5/30 운영제안서 v3.0 in-place 실수 박제

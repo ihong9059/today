@@ -2,12 +2,34 @@
 title: DGIST 에너지절약 ESCO사업 LED 조명제어 (Tier 1 단발 SI, 신규사업)
 type: entity
 created: 2026-05-28
-updated: 2026-05-30
-tags: [DGIST, ESCO, LED, 조명제어, IR, BLE-Mesh, IoT, 신규사업, Tier1, 영업, B2B, 산학협력, 기술자문, PDF자동화, PyMuPDF]
-links: [aisg, onDevice-ai, stm32h745-disco, revita, n8n, uttec-stage-package, ai-fanstick, 영업전략, skills, 회사소개]
+updated: 2026-05-30 (UTTEC 원조사업 — 지하주차장 디밍 12년+ 트랙레코드 매칭 박제 + 운영제안서 검토본 신설)
+tags: [DGIST, ESCO, LED, 조명제어, IR, BLE-Mesh, IoT, 신규사업, Tier1, 영업, B2B, 산학협력, 기술자문, PDF자동화, PyMuPDF, 지하주차장디밍, UTSOL]
+links: [aisg, onDevice-ai, stm32h745-disco, revita, n8n, uttec-stage-package, ai-fanstick, 영업전략, skills, 회사소개, 양산제품]
 ---
 
 # DGIST 에너지절약 ESCO사업 LED 조명제어
+
+## 2026-05-30 ⭐⭐ UTTEC 원조사업 매칭 박제 — §2.1 IR 354등 = 지하주차장 디밍 12년+ / **10만 등기 이상** 트랙레코드
+
+DGIST ESCO §2.1 컨실리언스센터 지하주차장 354등 IR 디밍 = **UTTEC 원조사업과 도메인 100% 일치**. 운영제안서 v2.0 (2026-05-30) CORP 섹션에 누락되어 있던 핵심 트랙레코드를 검토본에 추가:
+
+| 항목 | 내용 |
+|---|---|
+| 전신 | **㈜UTSOL (2011년 설립)** — 대한민국 지하주차장 LED 디밍 시스템 **최초 도입사** |
+| 양산 기간 | 2011 ~ 2023 (12년+) |
+| **누적 수량** | **10만 등기 이상** |
+| **납품 구조** | **등기구 제조사 OEM 납품** → 등기구 제조사 경유 final delivery (롯데건설·양우건설 등 신축 아파트·오피스·복합시설) |
+| 지자체 지원사업 | **경기도 안산** + **경상남도 진해** 등 |
+| 유통 후방창고 | 홈플러스 후방창고 조명제어 |
+| 2016 | UTTEC 법인 전환 (CTO 홍광선 합류 시점, UTSOL IP·기술·인력·고객 관계 승계) |
+| 2023 사업 종료 | 중국 제품 단가 인하로 가격 경쟁 한계 → 무선 제어·BLE Mesh·LoRa 영역 전환. **DGIST ESCO는 가격이 아닌 기술/시방서 충족이 핵심 → UTTEC 강점 회복 가능 영역** |
+
+**영업 임팩트** (대폭 강화):
+- 본 사업의 IR 디밍 354등 부분 = UTTEC 신규 진입이 아닌 **국내 1세대 도입사의 12년+ / 10만+ 등기 know-how 적용**
+- **등기구 제조사 OEM 검증**: 다수 등기구 제조사와의 호환성·인터페이스 표준화 경험 → DGIST 사업의 LED 등기구 공급사와의 통합 검증 신속 진행 가능
+- ESCO 사업자 입장에서 단순 시방서 구현 SI 대비 **운영 단계 함정 누적 해결 자산 + 등기구 OEM 검증 트랙레코드** 압도적 차별화
+
+**산출물**: `신규사업/DGIST_ESCO_LED제어/조명제어/정리/운영제안서/운영제안서_검토본_2026-05-30.md` (CORP 섹션에 ➕ 마커로 추가 + 🟡 사업 쇠퇴 사유 노출 여부 결정 코멘트, v3.0 통합 시 보존)
 
 ## 2026-05-30 도면 LED 위치 자동 표시 cascade ⭐⭐⭐
 

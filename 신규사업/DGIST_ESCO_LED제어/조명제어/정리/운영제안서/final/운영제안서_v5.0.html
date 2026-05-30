@@ -1,0 +1,2449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>DGIST ESCO LED 조명제어 운영 제안서 v5.0</title>
+<style>
+@page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+    @bottom-center {
+        content: counter(page) " / " counter(pages);
+        font-size: 9pt;
+        color: #888;
+    }
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Noto Sans KR', sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    color: #1a1a1a;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+}
+
+h1 {
+    font-size: 22pt;
+    color: #0b3d91;
+    border-bottom: 3px solid #0b3d91;
+    padding-bottom: 6px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    page-break-before: always;
+}
+
+h1:first-of-type { page-break-before: avoid; }
+
+h2 {
+    font-size: 16pt;
+    color: #1565c0;
+    border-bottom: 1.5px solid #cfd8dc;
+    padding-bottom: 4px;
+    margin-top: 26px;
+    margin-bottom: 12px;
+}
+
+h3 {
+    font-size: 13pt;
+    color: #283593;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+h4 {
+    font-size: 11.5pt;
+    color: #37474f;
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+
+p { margin: 6px 0 10px; }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0 16px;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+}
+
+th, td {
+    border: 1px solid #b0bec5;
+    padding: 6px 9px;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: linear-gradient(180deg, #1565c0 0%, #0d47a1 100%);
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+}
+
+tr:nth-child(even) td { background: #f5f8fb; }
+tr:hover td { background: #e3f2fd; }
+
+ul, ol { margin: 6px 0 10px; padding-left: 22px; }
+li { margin: 3px 0; }
+
+code {
+    background: #eceff1;
+    padding: 1.5px 5px;
+    border-radius: 3px;
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    font-size: 9pt;
+    color: #c62828;
+}
+
+pre {
+    background: #263238;
+    color: #eceff1;
+    padding: 12px 14px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-size: 9pt;
+    line-height: 1.45;
+    page-break-inside: avoid;
+}
+
+pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+}
+
+blockquote {
+    border-left: 4px solid #1565c0;
+    background: #e3f2fd;
+    margin: 12px 0;
+    padding: 8px 14px;
+    color: #1a237e;
+    border-radius: 0 4px 4px 0;
+    page-break-inside: avoid;
+}
+
+blockquote p { margin: 4px 0; }
+
+hr {
+    border: 0;
+    border-top: 1.5px dashed #b0bec5;
+    margin: 24px 0;
+}
+
+strong { color: #0d47a1; }
+
+img {
+    max-width: 95%;
+    height: auto;
+    display: block;
+    margin: 12px auto;
+    page-break-inside: avoid;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    border-radius: 3px;
+}
+
+a { color: #1565c0; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── 표지 (첫 div align center) ── */
+div[align="center"] {
+    text-align: center;
+    padding: 40px 20px 30px;
+    page-break-after: always;
+    min-height: 90vh;
+}
+
+div[align="center"] h1 {
+    border: none;
+    page-break-before: avoid;
+    font-size: 32pt;
+    margin-top: 60px;
+    margin-bottom: 8px;
+    color: #0b3d91;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+div[align="center"] h2 {
+    border: none;
+    font-size: 24pt;
+    color: #1565c0;
+    margin: 8px 0 6px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+div[align="center"] h2 strong {
+    color: #c62828;
+}
+
+div[align="center"] h3 {
+    font-size: 13pt;
+    color: #546e7a;
+    font-weight: 400;
+    margin: 18px 0 30px;
+    font-style: italic;
+}
+
+div[align="center"] > p {
+    font-size: 12pt;
+    color: #37474f;
+    margin: 6px 0;
+    font-weight: 600;
+}
+
+div[align="center"] > p:last-of-type {
+    font-size: 10pt;
+    color: #546e7a;
+    font-weight: 400;
+    margin-top: 28px;
+}
+
+div[align="center"] table {
+    margin: 36px auto 24px;
+    max-width: 620px;
+    font-size: 10.5pt;
+    border: 2px solid #0d47a1;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(13, 71, 161, 0.15);
+}
+
+div[align="center"] table th {
+    background: linear-gradient(180deg, #0d47a1 0%, #0b3d91 100%);
+    padding: 10px 14px;
+}
+
+div[align="center"] table td {
+    padding: 9px 16px;
+    text-align: left;
+    border: 1px solid #cfd8dc;
+}
+
+div[align="center"] table td:first-child {
+    background: #eceff1;
+    font-weight: 700;
+    color: #0d47a1;
+    text-align: right;
+    width: 28%;
+}
+
+div[align="center"] table tr:nth-child(even) td:first-child {
+    background: #e0e7ed;
+}
+
+div[align="center"] table tr:nth-child(even) td:last-child {
+    background: #f5f8fb;
+}
+
+div[align="center"] hr,
+div[align="center"] br {
+    margin: 4px 0;
+}
+
+/* INFO/WARN/CRIT 강조 */
+strong:contains("CRIT"), strong:contains("⭐") { color: #c62828; }
+</style>
+</head>
+<body>
+<div align="center" style="padding:60px 20px;">
+<h1 id="dgist-esco">DGIST 에너지절약 ESCO사업</h1>
+<h2 id="led">LED 조명제어 시스템 <strong>운영 제안서</strong></h2>
+<h3 id="5">— 실제 운영 단계 시나리오 + 제어 화면 + 5년 사후관리 —</h3>
+<p><strong>1,271등 통합 운영 안 · 31장 도면 기반</strong>
+<strong>§2.2 BLE Mesh (917등) + §2.1 IR (354등)</strong></p>
+<p><br/><br/></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">항목</th>
+<th style="text-align: center;">값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>문서번호</strong></td>
+<td style="text-align: center;">UTTEC-DGIST-OP-2026-001</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>문서 버전</strong></td>
+<td style="text-align: center;">v5.0</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>작성일</strong></td>
+<td style="text-align: center;">2026-05-30</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>발신</strong></td>
+<td style="text-align: center;">UTTEC (기술 제안 측)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>수신</strong></td>
+<td style="text-align: center;">DGIST 건물 에너지절약 ESCO사업 시행 ESCO 전문기업 (귀사)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>참조 시방서</strong></td>
+<td style="text-align: center;">「대구경북과학기술원 건물 에너지절약 ESCO사업 사업설명서」 Ⅲ. 공사시방서 § 제2장 § 2.1 / § 2.2 (page 31~33, line 590~665)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>참조 기술자료</strong></td>
+<td style="text-align: center;"><code>report.pdf</code> (UTTEC 기술 제안 v1.0, 2026-05-28, 41p)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>관련 도면</strong></td>
+<td style="text-align: center;">E1~E7 LED표시_강조.pdf (테두리 zone 31장 매핑)</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<p><strong>문의·후속 협의</strong>
+UTTEC | E-mail: ihong9059@gmail.com | 담당: 기술영업 책임자
+※ 본 제안서 검토 후 협력 모델(§ H.2) 협의를 위한 후속 미팅을 환영합니다.</p>
+</div>
+<hr />
+<blockquote>
+<h2 id="_1">⚠ 본 제안서의 데이터·수치에 관한 면책 고지</h2>
+<p>본 제안서에 표시된 모든 <strong>KPI 수치·절감률·소비전력·트리거 횟수·비용·CO2 환산값</strong>은 다음 중 하나입니다:</p>
+<ol>
+<li><strong>시방서 § 제3장의 절감 목표치</strong> (예: "일반 zone ≥ 55%", "지하주차장 ≥ 65%")</li>
+<li><strong>타 BLE Mesh 양산 사례 (일본 나고야 사카에 3,300대) 기반 산업 평균 추정치</strong></li>
+<li><strong>UTTEC 자체 시뮬레이션 결과</strong> (Phase 5 PoC 검증 전)</li>
+</ol>
+<p>따라서 본 제안서의 KPI 수치는 <strong>Phase 5 시범 PoC 1 Zone (16등) 30일 측정 완료 시점</strong>까지는 <strong>추정·목표·시뮬레이션 값</strong>이며, 실측 데이터로 대체될 예정입니다. ESCO 사업자(귀사) 및 DGIST 측 보고 시 본 면책 고지를 함께 인용해 주시기 바랍니다.</p>
+<p>본 면책 적용 항목 일람은 <strong>부록 7. KPI 수치 산출 근거</strong>에서 상세 확인할 수 있습니다.</p>
+</blockquote>
+<hr />
+<h2 id="exec-executive-summary-1">📋 EXEC. Executive Summary (의사결정자 1분 요약)</h2>
+<p><strong>대상 사업</strong>: DGIST 건물 에너지절약 ESCO사업 중 LED 조명제어 시스템 공사 (총 1,271등). 전체 LED 교체 21,287등 중 5.97%에 해당하는 제어 시스템 구축 부분.</p>
+<p><strong>⭐ UTTEC 핵심 트랙레코드</strong> (CORP § 원조사업 참조):
+- UTTEC 원조사업 = <strong>지하주차장 LED 디밍 시스템</strong> (전신 ㈜UTSOL 2011년 ~ / <strong>12년+ / 누적 10만 등기 이상</strong>)
+- <strong>DGIST §2.1 IR 디밍 354등 = UTTEC 동일 도메인 12년+ know-how 직접 적용 가능</strong>
+- 국내 1세대 도입 + 등기구 제조사 OEM 검증 + 지자체 지원사업(안산·진해) + 홈플러스 후방창고</p>
+<p><strong>두 시스템 분리 구성</strong>:
+- <strong>§2.2 BLE Mesh</strong> (917등) — 본관·E2~E7동 복도·중앙기기센터, 통합 관제·스케줄·점유 기반 자동화
+- <strong>§2.1 IR Chain</strong> (354등) — 컨실리언스센터 지하주차장, 차량·보행 동선 추적 자동 점등</p>
+<p><strong>운영 핵심 가치</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>가치</th>
+<th>본 제안 구현</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>에너지 절감 목표</strong></td>
+<td>일반 zone ≥ 55%, 지하주차장 ≥ 65% (시방서 § 제3장 기준 충족)</td>
+</tr>
+<tr>
+<td><strong>시방서 충족</strong></td>
+<td>§2.1 가~다항, §2.2 가~라항 모든 요구 운영 단계까지 매트릭스화 (§ F)</td>
+</tr>
+<tr>
+<td><strong>운영 부담 최소화</strong></td>
+<td>DGIST 시설운영팀 1인 약 <strong>32분/일</strong>로 1,271등 통합 모니터링 가능</td>
+</tr>
+<tr>
+<td><strong>자율 동작</strong></td>
+<td>§2.1 IR 시스템은 Gateway·인터넷 다운과 무관하게 정상 동작 (시방서 § 2.1 다항 충족)</td>
+</tr>
+<tr>
+<td><strong>5년 사후관리</strong></td>
+<td>부품 교체 + 24/7 긴급 대응, 약 5,300만 원 (추정, § G.3.3)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>제안 협력 모델 4종</strong> (§ H.2):
+- A) 기술자문 / B) OEM / C) 통합 플랫폼 (SaaS) / D) PoC 후 단계 결정</p>
+<p><strong>검증 가능성</strong>: Phase 5 시범 PoC 1 Zone (16등, 30일) 완료 시 KPI 실측치로 본 제안서 v3.0 갱신.</p>
+<p><strong>다음 단계</strong>: 본 제안서 검토 후 후속 미팅에서 ① 협력 모델 ② 시범 PoC Zone 선정 ③ 양산 단가 ④ 5년 운영 SLA 협의.</p>
+<hr />
+<h2 id="corp-uttec-1p">🏢 CORP. UTTEC 회사 소개 (1p)</h2>
+<h3 id="_2">회사 개요</h3>
+<p>UTTEC는 IoT 임베디드 H/W·펌웨어·관제 SW 통합 양산 경험을 보유한 기술 기업입니다. 본 사업과 같이 <strong>현장 동작·시방서 충족·KS/KC 인증·5년 사후관리</strong>를 한 묶음으로 제공할 수 있는 한국형 중소기업 양산 파트너입니다.</p>
+<h3 id="led-utsol-2011-12-10">⭐ 원조사업 — 지하주차장 LED 조명제어(디밍 시스템) (전신 UTSOL 2011년 ~ / 12년+ / <strong>누적 10만 등기 이상</strong>)</h3>
+<p><strong>UTTEC의 원조사업은 지하주차장 LED 조명제어(디밍 시스템)</strong>이며, 본 DGIST ESCO §2.1 컨실리언스센터 지하주차장 354등 IR 디밍 사업의 <strong>가장 강력한 양산 트랙레코드</strong>를 보유하고 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>시기</th>
+<th>활동</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2011년</strong></td>
+<td><strong>전신 ㈜UTSOL 설립</strong> — 대한민국 지하주차장 LED 조명제어(디밍 시스템) <strong>최초 도입사</strong></td>
+</tr>
+<tr>
+<td>2011 ~</td>
+<td>지하주차장 LED 디밍 시스템 양산·공급 (12년+ / <strong>누적 10만 등기 이상</strong>)</td>
+</tr>
+<tr>
+<td>납품 구조</td>
+<td><strong>등기구 제조사 OEM 납품</strong> — 디밍 모듈·콘트롤러 공급 → 등기구 제조사가 신축 아파트·오피스·복합시설(롯데건설, 양우건설 등) final delivery</td>
+</tr>
+<tr>
+<td>지자체 지역 지원사업</td>
+<td><strong>경기도 안산</strong>, <strong>경상남도 진해</strong> 등 지자체 에너지 절감 보급 사업 참여</td>
+</tr>
+<tr>
+<td>유통 후방창고</td>
+<td><strong>홈플러스 후방창고 조명제어</strong> 도입 — 매장 운영자 동선 기반 자동 점등·디밍</td>
+</tr>
+<tr>
+<td><strong>2016년</strong></td>
+<td><strong>㈜유티텍 법인 전환</strong> — UTSOL의 IP·기술·인력·고객 관계 승계</td>
+</tr>
+<tr>
+<td>2016 ~ 현재</td>
+<td>BLE Mesh·LoRa·일본 자전거 주차장 등 무선 제어 영역 확장</td>
+</tr>
+</tbody>
+</table>
+<p><strong>📌 정량 트랙레코드 요약</strong>: <strong>국내 1세대 도입 + 12년+ 양산 + 10만 등기 이상 + 등기구 제조사 OEM 검증 + 지자체 지원사업 + 대형 유통 후방창고</strong></p>
+<p><strong>본 DGIST ESCO 사업과의 매칭</strong> (강력한 차별화):
+- DGIST §2.1 IR 디밍 354등 = <strong>UTTEC가 12년+ / 10만 등기 양산·공급해 온 동일 도메인</strong>
+- 차량·보행자 동선 기반 자동 점등, PIR + IR chain hop, 디밍 단계 정책 — 모두 <strong>국내 현장 검증된 자산</strong>
+- 단순 시방서 구현 신규 진입이 아닌 <strong>국내 1세대 도입사의 시공·운영 know-how</strong> 적용
+- 시공·운영 단계의 함정(전원 인프라·등기구 제조사별 호환·하절기 PIR 오작동·구획별 디밍 단계 etc.) 누적 해결 경험
+- <strong>등기구 제조사 OEM 검증</strong>: 다수 등기구 제조사와의 호환성·인터페이스 표준화 경험 → DGIST 사업의 LED 등기구 공급사와의 통합 검증 신속 진행 가능</p>
+<h3 id="_3">본 사업 관련 보유 자산 (요약)</h3>
+<table>
+<thead>
+<tr>
+<th>카테고리</th>
+<th>보유 자산</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BLE Mesh 양산 경험</strong></td>
+<td>Nordic nRF52 시리즈 14 보드 매트릭스, BLE Mesh 양산 검증 누적</td>
+</tr>
+<tr>
+<td><strong>IR 통신 자체 설계</strong></td>
+<td>NEC 프로토콜 확장 자체 system + 양산 검증</td>
+</tr>
+<tr>
+<td><strong>STM32 임베디드</strong></td>
+<td>STM32G0/G4/F0/H7 시리즈 15 보드 매트릭스</td>
+</tr>
+<tr>
+<td><strong>AI 가속 carry</strong></td>
+<td>STM32H745 dual-core (M7+M4) — CMSIS-NN CNN 17.6× 가속 검증, 향후 점유 패턴 학습 옵션</td>
+</tr>
+<tr>
+<td><strong>양산 자동화</strong></td>
+<td>IQC 4축 패턴 (DUT 다중 + 브리지 단일 + 동일 규약 + BLE pairing L2)</td>
+</tr>
+<tr>
+<td><strong>관제 SW 자산</strong></td>
+<td>n8n broker + Node-RED + Grafana 통합 운영 — 8개 vault 관제 자산 cross-application</td>
+</tr>
+<tr>
+<td><strong>펌웨어 함정 인벤토리</strong></td>
+<td>Espressif 16 + Nordic 18 + STM32 15 종 cross-vendor R&amp;D 시간 절약</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_4">본 사업 적합성</h3>
+<table>
+<thead>
+<tr>
+<th>차별화</th>
+<th>의미 (본 사업 관점)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5년 사후관리 단일 책임</td>
+<td>부품 단가·SLA·진단 5년 보장 — 단일 공급자 책임 명확화</td>
+</tr>
+<tr>
+<td>시방서 § 2.1·§ 2.2 양쪽 단일 공급</td>
+<td>IR + BLE Mesh 두 시스템을 동일 공급자가 양산 — 인증 일정·통합 관제 일원화</td>
+</tr>
+<tr>
+<td>한국형 중소기업</td>
+<td>KC/KCC 인증·국내 양산 supply chain</td>
+</tr>
+<tr>
+<td>multi-agent 자동화 관제 SW carry</td>
+<td>별도 SW 개발 대비 운영 SaaS 구축 기간 단축</td>
+</tr>
+</tbody>
+</table>
+<h3 id="uttec-esco">UTTEC × ESCO 사업자(귀사) 협력 모델</h3>
+<p>본 사업은 ESCO 사업자(귀사)가 DGIST와 ESCO 계약을 체결한 상태에서, <strong>UTTEC가 LED 조명제어 시스템 부분(1,271등)의 기술·양산·운영 supply를 담당</strong>하는 구조를 제안합니다. 협력 모델 4종은 § H.2 참조.</p>
+<hr />
+<h2 id="0">📖 0. 본 제안서의 목적·구성</h2>
+<p>본 문서는 시방서 § 2.1 (IR 통신 LED 센서등 354등) + § 2.2 (BLE Mesh 기반 IoT 무선 조명제어 917등) <strong>두 시스템 총 1,271등</strong>에 대한 <strong>실제 운영 단계 시나리오</strong>를 ESCO 사업자(귀사) 관점에서 정리한 제안서입니다.</p>
+<p>기술자료 <code>report.pdf</code> 가 <strong>"무엇을 어떻게 만들 것인가"</strong>(H/W BOM·펌웨어·통신 프로토콜)에 집중했다면, 본 운영 제안서는 <strong>"실제 운영하면 어떻게 굴러가는가"</strong> — 즉 ESCO 사업자가 DGIST 시설운영팀에 시스템을 인계한 시점부터 5년 사후관리까지의 <strong>일상·장애·KPI 사이클</strong>을 가상의 운영 시나리오로 작성합니다.</p>
+<p>본 문서가 답하는 질문:</p>
+<ul>
+<li>DGIST 시설운영팀 운영자가 매일 아침 출근하면 무엇을 보고 무엇을 하는가?</li>
+<li>차량이 컨실리언스센터 지하주차장에 진입하면 354등이 어떻게 반응하는가?</li>
+<li>강의실 청소 시간 같은 비정기 이벤트는 어떻게 처리되는가?</li>
+<li>노드 1개가 고장 나면 시스템·사람이 각각 무엇을 하는가?</li>
+<li>ESCO 사업자(귀사)가 월간 절감 리포트에 무엇을 첨부해 DGIST에 제출하는가?</li>
+<li>시방서 § 2.1·§ 2.2의 요구사항은 운영 측면에서 모두 충족되는가?</li>
+</ul>
+<p><strong>본 제안서가 가정하는 운영 주체</strong> (시방서 § 2.2 라항 권한·역할 매핑):
+| 주체 | 본 시스템 사용 방식 |
+|---|---|
+| <strong>DGIST 시설운영팀</strong> | 일상 모니터링·스케줄 변경·청소 등 Scene 호출·고장 1차 확인 |
+| <strong>ESCO 사업자 (귀사)</strong> | 월간 절감 리포트 작성·KPI 관리·DGIST 보고·UTTEC 협업 |
+| <strong>UTTEC (기술 협력)</strong> | 시스템·H/W 사후 지원·펌웨어 사후 지원·진단 |
+| <strong>현장팀 (시공·시설관리)</strong> | 노드 교체·리모컨 그룹 변경·1차 출동 |
+| <strong>DGIST 일반 사용자·교직원</strong> | 별도 조작 불필요 (자동 동작) — 비상 시만 |</p>
+<hr />
+<h2 id="1-31">🗺️ 1. 시스템 범위 — 31장 도면 ↔ 두 시스템 매핑</h2>
+<p>본 사업이 다루는 <strong>테두리(zone) 친 31장의 도면 페이지</strong>는 다음과 같이 두 시스템에 매핑됩니다.</p>
+<h3 id="11-22-ble-mesh-917">1.1 조명제어구역 (§2.2 BLE Mesh, 917등)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: center;">도면</th>
+<th style="text-align: center;">페이지</th>
+<th>평면도 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">E1</td>
+<td style="text-align: center;">p1</td>
+<td>컨퍼런스 및 통합행정지원센터 지하1층</td>
+</tr>
+<tr>
+<td style="text-align: center;">2~7</td>
+<td style="text-align: center;">E2</td>
+<td style="text-align: center;">p3~p8</td>
+<td>신물질과학부 1~6층</td>
+</tr>
+<tr>
+<td style="text-align: center;">8~13</td>
+<td style="text-align: center;">E3</td>
+<td style="text-align: center;">p3~p8</td>
+<td>정보통신융합공학부 1~6층</td>
+</tr>
+<tr>
+<td style="text-align: center;">14~15</td>
+<td style="text-align: center;">E4</td>
+<td style="text-align: center;">p3~p4</td>
+<td>뇌과학부 1·2층</td>
+</tr>
+<tr>
+<td style="text-align: center;">16~21</td>
+<td style="text-align: center;">E5</td>
+<td style="text-align: center;">p3~p8</td>
+<td>로봇공학부 1~6층</td>
+</tr>
+<tr>
+<td style="text-align: center;">22~27</td>
+<td style="text-align: center;">E6</td>
+<td style="text-align: center;">p3~p8</td>
+<td>에너지시스템공학부 1~6층</td>
+</tr>
+<tr>
+<td style="text-align: center;">29~31</td>
+<td style="text-align: center;">E7</td>
+<td style="text-align: center;">p2~p4</td>
+<td>컨실리언스센터 지상1~3층 (지상1층은 IR과 공존)</td>
+</tr>
+</tbody>
+</table>
+<p>조명제어구역은 <strong>건물 복도·중앙기기센터</strong> 중심으로, 점등·디밍·소등을 BLE Mesh 무선으로 통합 관제합니다. 시방서 § 2.2 IoT 기반 무선 조명제어 요구사항에 해당.</p>
+<h3 id="12-21-ir-354">1.2 디밍제어용 센서등 교체구역 (§2.1 IR, 354등)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: center;">도면</th>
+<th style="text-align: center;">페이지</th>
+<th>평면도 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">E7</td>
+<td style="text-align: center;">p1</td>
+<td>컨실리언스센터 <strong>지하1층 지하주차장</strong> (전체)</td>
+</tr>
+<tr>
+<td style="text-align: center;">29</td>
+<td style="text-align: center;">E7</td>
+<td style="text-align: center;">p2</td>
+<td>컨실리언스센터 지상1층 (지하주차장과 인접한 ramp 일부)</td>
+</tr>
+</tbody>
+</table>
+<p>디밍제어구역은 <strong>컨실리언스센터 지하주차장</strong> 전용 — 차량 동선에 맞춰 IR (적외선) chain으로 점등이 사람·차량 보행 속도에 맞춰 전파됩니다. 시방서 § 2.1 IR 통신 방식 LED 센서등 요구사항에 해당.</p>
+<h3 id="13-e7-p2">1.3 두 시스템 공존 페이지 (E7 p2)</h3>
+<p>컨실리언스센터 지상1층(E7 p2)은 <strong>두 zone이 한 페이지에 공존</strong>합니다:
+- 상단 일자형 zone = §2.2 BLE Mesh 조명제어
+- 좌측 ㄴ자형 zone = §2.1 IR 디밍제어 (지하주차장 ramp의 1층 출입부)</p>
+<p>운영 측면에서는 <strong>각 zone이 독립된 시스템에 등록</strong>되며, 통합 관제 대시보드(§3.1)에서 단일 화면으로 같이 보입니다.</p>
+<h3 id="14">1.4 두 시스템의 운영적 차이</h3>
+<table>
+<thead>
+<tr>
+<th>측면</th>
+<th>§2.2 BLE Mesh 조명제어</th>
+<th>§2.1 IR 디밍제어</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>대상 사용자</td>
+<td>교직원·연구자 (복도·실험실 동선)</td>
+<td>운전자·보행자 (주차장 동선)</td>
+</tr>
+<tr>
+<td>응답 시간 목표</td>
+<td>&lt; 500ms (3 hop mesh)</td>
+<td>&lt; 100ms (TSOP 단일 hop)</td>
+</tr>
+<tr>
+<td>주요 트리거</td>
+<td>PIR + 스케줄 + 점유 학습</td>
+<td>PIR + IR chain hop</td>
+</tr>
+<tr>
+<td>관제 의존성</td>
+<td>Gateway·서버 (양방향)</td>
+<td>Gateway 불요 (자체 chain 동작)</td>
+</tr>
+<tr>
+<td>Gateway 장애 시</td>
+<td>Mesh self-heal + local fallback</td>
+<td><strong>무관</strong>, 정상 동작 지속</td>
+</tr>
+<tr>
+<td>사용자 직접 조작</td>
+<td>모바일 앱·웹 (관제팀)</td>
+<td>리모컨 17키 (현장팀)</td>
+</tr>
+<tr>
+<td>그룹 변경 빈도</td>
+<td>동적 (서버)</td>
+<td>시공 시 DIP 설정 + 리모컨 학습</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="a-22-ble-mesh">📡 § A. §2.2 BLE Mesh 조명제어구역 — 운영 상세</h1>
+<h2 id="a1-zone-917">A.1 Zone 설계·노드 배치 (917등)</h2>
+<h3 id="a11-zone">A.1.1 Zone 분할 정책</h3>
+<p>본 사업 BLE Mesh 917등은 <strong>27개 Zone</strong>으로 분할 운영됩니다.</p>
+<p>분할 기준 (시방서 § 2.2 나항 16채널 단위 충족):
+- <strong>물리적</strong>: 건물·층·격벽 단위로 분리
+- <strong>트래픽</strong>: 각 Zone 16~64등 (평균 34등)
+- <strong>Relay</strong>: 각 Zone 약 30% 노드를 Relay flag ON
+- <strong>Naming</strong>: <code>Z-{건물}-{층}</code> 형식 (예: Z-E3-04 = E3동 4층)</p>
+<table>
+<thead>
+<tr>
+<th>건물</th>
+<th style="text-align: center;">Zone 수</th>
+<th>Zone ID 예시</th>
+<th style="text-align: center;">등수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E1 컨퍼런스·통합행정 (지하1층)</td>
+<td style="text-align: center;">1</td>
+<td>Z-E1-B1</td>
+<td style="text-align: center;">63</td>
+</tr>
+<tr>
+<td>E2 신물질과학부 (1~6F)</td>
+<td style="text-align: center;">6</td>
+<td>Z-E2-01 ~ Z-E2-06</td>
+<td style="text-align: center;">98</td>
+</tr>
+<tr>
+<td>E3 정보통신융합 (1~6F)</td>
+<td style="text-align: center;">6</td>
+<td>Z-E3-01 ~ Z-E3-06</td>
+<td style="text-align: center;">86</td>
+</tr>
+<tr>
+<td>E4 뇌과학부 (1~2F)</td>
+<td style="text-align: center;">2</td>
+<td>Z-E4-01, Z-E4-02</td>
+<td style="text-align: center;">39</td>
+</tr>
+<tr>
+<td>E5 로봇공학부 (1~6F)</td>
+<td style="text-align: center;">6</td>
+<td>Z-E5-01 ~ Z-E5-06</td>
+<td style="text-align: center;">93</td>
+</tr>
+<tr>
+<td>E6 에너지시스템 (1~6F)</td>
+<td style="text-align: center;">6</td>
+<td>Z-E6-01 ~ Z-E6-06</td>
+<td style="text-align: center;">91</td>
+</tr>
+<tr>
+<td>E7 컨실리언스 (지상1~3F)</td>
+<td style="text-align: center;">(포함)</td>
+<td>Z-E7-01 ~ Z-E7-03</td>
+<td style="text-align: center;">303 (BLE Mesh 부분)</td>
+</tr>
+<tr>
+<td>중앙기기센터 (별도 매핑)</td>
+<td style="text-align: center;">—</td>
+<td>Z-CC</td>
+<td style="text-align: center;">68</td>
+</tr>
+<tr>
+<td><strong>합계</strong></td>
+<td style="text-align: center;"><strong>약 27 Zone</strong></td>
+<td>—</td>
+<td style="text-align: center;"><strong>917등</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="a12-hw-bom-reportpdf-4144">A.1.2 노드 H/W 표준 (양산 BOM, report.pdf § 4.1~4.4 참조)</h3>
+<ul>
+<li><strong>Standard Node (600개)</strong>: Nordic nRF52810 + Meanwell PCD-25-700B 디밍 드라이버 + Panasonic EKMC1601112 PIR</li>
+<li><strong>Relay Node (250개)</strong>: Standard Node + relay flag ON (펌웨어 옵션)</li>
+<li><strong>Friend Node (30개)</strong>: Standard Node + LPN 호환 옵션</li>
+<li><strong>면조명 600×600 노드 (68개)</strong>: 중앙기기센터 전용</li>
+<li><strong>Gateway A·B (2대)</strong>: nRF52840 + Quectel BG95-M3 LTE Cat-M1 + STM32G0B1 + ATECC608B Secure Element</li>
+</ul>
+<p>총 노드 수 합 = 600 + 250 + 30 + 68 = 948 노드 (917등 + 보조 31개)</p>
+<h3 id="a13">A.1.3 통신 표준</h3>
+<ul>
+<li><strong>물리계</strong>: Bluetooth 5 BLE Mesh 1.1 표준</li>
+<li><strong>암호화</strong>: AES-CCM (network·application key 분리)</li>
+<li><strong>Gateway ↔ Cloud</strong>: MQTT 5.0 over TLS 1.3</li>
+</ul>
+<hr />
+<h2 id="a2-e3-4f-zone-z-e3-04-14">A.2 일과 시나리오 (E3 정보통신융합 4F Zone Z-E3-04 14등 예시)</h2>
+<p>본 zone(14등)을 표준 운영 일과의 예시로 사용합니다. 다른 27개 Zone도 동일 정책을 적용합니다.</p>
+<h3 id="a21">A.2.1 평일 — 출근 패턴</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">시각</th>
+<th>외부 트리거</th>
+<th>시스템 동작</th>
+<th>등기구 상태</th>
+<th>운영자 행동</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">00:00~06:00</td>
+<td>—</td>
+<td>야간 대기 모드</td>
+<td>전체 0% (PIR만 100%)</td>
+<td>(보통 무행동)</td>
+</tr>
+<tr>
+<td style="text-align: center;">06:00</td>
+<td>스케줄 <code>weekday_morning_pre_dim</code></td>
+<td>30% 사전 디밍 set</td>
+<td>전체 30%</td>
+<td>(변경 알림 무)</td>
+</tr>
+<tr>
+<td style="text-align: center;">07:30</td>
+<td>첫 출근자 PIR 감지</td>
+<td>Mesh 즉시 100% set</td>
+<td>점유 구역 100%</td>
+<td>(대시보드 출근 peak 확인)</td>
+</tr>
+<tr>
+<td style="text-align: center;">09:30</td>
+<td>교수실 PIR 무동작 60초</td>
+<td>자동 디밍 10%</td>
+<td>일부 10%</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">11:50</td>
+<td>강의 종료 사람 이동</td>
+<td>PIR 트리거 다시 100%</td>
+<td>전체 100%</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">12:00</td>
+<td>스케줄 <code>lunch_dim</code></td>
+<td>디밍 30% set</td>
+<td>전체 30%</td>
+<td>(점심)</td>
+</tr>
+<tr>
+<td style="text-align: center;">12:30</td>
+<td>식사 후 복도 PIR</td>
+<td>100% 복귀</td>
+<td>점유 구역 100%</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">13:00</td>
+<td>스케줄 <code>lunch_dim end</code></td>
+<td>자동 정책 복원</td>
+<td>PIR 기반</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">18:00</td>
+<td>퇴근 시작</td>
+<td>PIR 트리거 유지 → 무동작 시 디밍</td>
+<td>점진적 감소</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">18:00~20:00</td>
+<td>PIR 활성 (야근자)</td>
+<td>100% 유지</td>
+<td>점유 구역 100%</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">20:00 PIR 60초 무</td>
+<td>자동 디밍 10%</td>
+<td>10%</td>
+<td>—</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">20:30</td>
+<td>추가 30분 무동작</td>
+<td>자동 OFF</td>
+<td>0%</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">22:00</td>
+<td>스케줄 <code>night_standby</code></td>
+<td>PIR ONLY 모드 강제</td>
+<td>0% (PIR 트리거만 100%)</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">22:00~익일 06:00</td>
+<td>PIR 트리거 (야간 청소·순찰)</td>
+<td>즉시 100% → 10분 후 자동 디밍</td>
+<td>이벤트 기반</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>운영자 관점 일일 작업 (출근 09:00 기준)</strong>:</p>
+<ol>
+<li>통합 대시보드 화면 1차 확인 (5분)</li>
+<li>야간 알림 큐 확인 — 새벽 1~5시 PIR 비정상 트리거 분석</li>
+<li>처리 대기 티켓 (CRIT·WARN) 확인</li>
+<li>점심 디밍 룰 정상 트리거 여부 12:30 시점 재확인</li>
+<li>18:00 퇴근 직전 야간 모드 전환 확인 후 PC 종료</li>
+</ol>
+<h3 id="a22">A.2.2 주말·공휴일</h3>
+<ul>
+<li>06:00 사전 디밍 <strong>비활성</strong> (<code>weekday_*</code> 스케줄 미적용)</li>
+<li>모든 시간대 <strong>PIR ONLY 모드</strong> (대기 0%, 점유 트리거 시만 100% → 10분 후 자동 디밍)</li>
+<li>청소 인력 사전 통보 시 시설팀이 <strong>청소 Scene 호출</strong> → 해당 zone 2시간 100% 강제</li>
+<li>공휴일 자동 감지: <code>is_holiday()</code> 룰이 한국 공휴일 API 또는 로컬 캘린더 lookup</li>
+</ul>
+<h3 id="a23">A.2.3 시험기간·야간 강의 (학사 특수기간)</h3>
+<ul>
+<li>학기 스케줄 매니저(esco-admin)가 <strong>Scene "시험 기간"</strong> 호출</li>
+<li>해당 강의실 zone 22:00 → 23:50 자동 연장</li>
+<li>매년 학사일정 등록 시 자동 적용 (Node-RED 룰)</li>
+</ul>
+<h3 id="a24">A.2.4 행사·세미나 (비정기)</h3>
+<ul>
+<li>시설팀이 모바일 앱에서 <strong>Scene "행사·세미나"</strong> 호출 → 해당 zone 즉시 100%</li>
+<li>행사 종료 시 다시 자동 정책 복원 (Scene 종료 트리거 = 사용자 수동 또는 30분 무동작)</li>
+<li>예: 5월 28일 BLE Mesh 기술 세미나 (E3 5F 강당) 행사 시 Scene 활용</li>
+</ul>
+<h3 id="a25">A.2.5 청소 시간 (시설팀 일상)</h3>
+<ul>
+<li>시설팀 모바일 앱에서 청소 대상 zone 선택 → <strong>"청소" Scene 호출</strong></li>
+<li>즉시 100% 강제 + 2시간 timer 시작 + 작업 티켓 자동 발행 (감사 로그)</li>
+<li>2시간 후 자동 정책 복원</li>
+<li>무동작 자동 디밍 정책 무효화 (청소 도중 디밍 방지)</li>
+</ul>
+<hr />
+<h2 id="a3-pir">A.3 PIR 점유 정책·디밍 단계 표준</h2>
+<h3 id="a31-4">A.3.1 표준 4단계 디밍</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">단계</th>
+<th style="text-align: center;">조도</th>
+<th>적용 시점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>L1 100%</strong></td>
+<td style="text-align: center;">풀 점등</td>
+<td>PIR 트리거 직후, 출근·점심 후 복귀</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>L2 70%</strong></td>
+<td style="text-align: center;">보행 가능</td>
+<td>(옵션) IR chain 인접 zone — BLE Mesh에서는 통상 미사용</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>L3 30%</strong></td>
+<td style="text-align: center;">사전 안내</td>
+<td>06:00 사전 디밍, 점심 디밍, 야근 시 무동작 transition</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>L4 10%</strong></td>
+<td style="text-align: center;">저전력 대기</td>
+<td>60초 무동작, 22시 이후 점유 트리거 후 10분 경과</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>L0 0%</strong></td>
+<td style="text-align: center;">소등</td>
+<td>추가 30분 무동작, 야간 22시 이후 기본</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a32-pir">A.3.2 PIR 응답 정책</h3>
+<ul>
+<li><strong>PIR 트리거 → 100% 시간</strong>: 즉시 (&lt; 100ms, Mesh 1 hop 평균)</li>
+<li><strong>무동작 → 자동 디밍 stair</strong>: 60s (100%→10%) → 30분 추가 (10%→0%)</li>
+<li><strong>두 정책 충돌 시 우선순위</strong> (위에서 아래로):
+  1. 비상 점등 Scene (관리자) — 모든 정책 override
+  2. 청소·행사 Scene (시설팀) — 시간 한정 override
+  3. PIR 트리거 (점유)
+  4. 시간 스케줄
+  5. 무동작 자동 디밍</li>
+</ul>
+<hr />
+<h2 id="a4">A.4 통합 관제 화면</h2>
+<h3 id="a41-01_html">A.4.1 통합 대시보드 (<code>01_통합대시보드.html</code>)</h3>
+<p><img alt="통합 대시보드" src="화면_png/01_통합대시보드.png" /></p>
+<p><strong>구성</strong> (Grafana 10.x + Node-RED + InfluxDB):</p>
+<ol>
+<li><strong>상단 KPI 카드 4개</strong>: 전체 1,271등 운영 현황 / 점등 분포 / 실시간 소비전력 / 오늘 누적 절감</li>
+<li><strong>시스템 분리 카드 2개</strong>: BLE Mesh 917등 vs IR 354등 운영 분리 가시화 (건물별 progress bar 8개)</li>
+<li><strong>24h 소비전력 시계열</strong>: baseline(점선) vs 실측(오렌지) 비교 + 출퇴근·점심 peak 자연 가시화</li>
+<li><strong>자동 룰 요약 테이블</strong>: Active 룰 8건 + cron / 트리거 / 동작</li>
+<li><strong>실시간 알림 피드</strong>: CRIT/WARN/INFO 시간순 정렬, 티켓 ID·작업 출처 표시</li>
+<li><strong>Zone 점유율 히트맵</strong>: 건물 × 시간대 (6열) 6시·9시·12시·15시·18시·21시 평균 점유 %</li>
+</ol>
+<p><strong>대상 사용자</strong>: DGIST 시설운영팀 운영자 + ESCO 사업자 esco-admin (읽기·쓰기 권한)</p>
+<h3 id="a42-02_html-e3">A.4.2 건물별 상세 화면 (<code>02_건물별상세.html</code>) — E3 정보통신융합 예시</h3>
+<p><img alt="건물별 상세" src="화면_png/02_건물별상세.png" /></p>
+<p><strong>구성</strong>:</p>
+<ol>
+<li><strong>좌측 층 리스트</strong>: 1F (A·B 두 페이지 매핑) ~ 6F + B1F (제어 없음), 각 층별 LED 상태 badge</li>
+<li><strong>중앙 캔버스</strong>: 4F 도면 실제 평면 (강의실·복도·교수실 layout) + 14등 PE/PN 시각화 + 빨간 zone 외곽선 (도면과 동일 마킹) + PIR 센서 활성 영역 (파란 원)</li>
+<li><strong>단등 상태 시각화</strong>: 점등(녹)·디밍(노)·소등(회)·단절(빨 깜박임) 4가지</li>
+<li><strong>우측 정보 패널</strong>: Zone 메타 정보 + 강제 조작 버튼 + 스케줄 미니뷰 + 고장 처리 액션</li>
+<li><strong>고장 노드 표시</strong>: PN4 단절 시 빨간 깜박임 + self-heal 우회 알림 + 작업 티켓 링크</li>
+</ol>
+<p><strong>대상 사용자</strong>: 시설운영팀 + 시설팀 현장팀 (단등 수준 진단 시)</p>
+<h3 id="a43">A.4.3 화면 간 전환 흐름</h3>
+<pre><code>[로그인] → [통합 대시보드] (전체 1,271등 한눈에)
+              ↓ Zone 클릭
+          [건물별 상세] (해당 zone 14등 단위 컨트롤)
+              ↓ 노드 클릭
+          [노드 상세 모달] (단등 진단, 작업 티켓 발행)
+
+[알림] (어디서든 접근)
+   → [티켓 상세] → 처리 워크플로우 (담당자 할당, 현장 출동, 검증)
+
+[스케줄/룰]
+   → 룰 편집 (YAML 미리보기 + Git 감사)
+   → Scene 호출 (한 번 클릭)
+</code></pre>
+<hr />
+<h2 id="a5-05_html">A.5 알림·티켓 워크플로우 (<code>05_장애알림센터.html</code>)</h2>
+<p><img alt="장애 알림 센터" src="화면_png/05_장애알림센터.png" /></p>
+<h3 id="a51-3">A.5.1 알림 등급 (3단계)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">등급</th>
+<th>정의</th>
+<th>예시</th>
+<th style="text-align: center;">SLA (목표 처리)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>CRIT</strong></td>
+<td>즉시 영향 또는 안전 관련</td>
+<td>통신 단절, 단등 고장, Gateway 다운</td>
+<td style="text-align: center;">12h (현장 출동 5h 내)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>WARN</strong></td>
+<td>24h 내 처리 권고</td>
+<td>이상 디밍 패턴, PIR 폭주, 응답 지연</td>
+<td style="text-align: center;">3일</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>INFO</strong></td>
+<td>알림만 (작업 불요)</td>
+<td>자가진단 통과, 룰 변경, 정기 점검 완료</td>
+<td style="text-align: center;">(감사용)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a52-22-ack">A.5.2 알림 채널 (시방서 § 2.2 라항 양방향 + ACK 충족)</h3>
+<table>
+<thead>
+<tr>
+<th>채널</th>
+<th>대상</th>
+<th>적용 등급</th>
+<th style="text-align: center;">SLA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>대시보드 팝업</td>
+<td>로그인 사용자</td>
+<td>전체</td>
+<td style="text-align: center;">즉시</td>
+</tr>
+<tr>
+<td>이메일</td>
+<td>esco-admin, 시설운영팀</td>
+<td>CRIT, WARN, INFO</td>
+<td style="text-align: center;">15분 내</td>
+</tr>
+<tr>
+<td>SMS</td>
+<td>현장팀 당직자</td>
+<td>CRIT, 야간 WARN</td>
+<td style="text-align: center;">5분 내</td>
+</tr>
+<tr>
+<td>음성 전화</td>
+<td>당직자 (5분 무응답 시)</td>
+<td>CRIT only</td>
+<td style="text-align: center;">5분 무응답 시</td>
+</tr>
+<tr>
+<td>Slack #esco-dgist</td>
+<td>UTTEC + DGIST 협업방</td>
+<td>WARN 이상</td>
+<td style="text-align: center;">즉시</td>
+</tr>
+<tr>
+<td>모바일 앱 푸시</td>
+<td>시설팀 + esco-admin</td>
+<td>전체</td>
+<td style="text-align: center;">즉시</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a53-sop-5">A.5.3 티켓 처리 SOP (5단계)</h3>
+<pre><code>[감지]                ← heartbeat 5min lost, PIR 패턴 이상 등
+   ↓ 자동 티켓 발행 (T-YYYY-MMDD-NNN)
+[1차 자동 조치]        ← Mesh self-heal, 대시보드 알림
+   ↓
+[알림 전파]            ← 채널 (이메일/SMS/Slack/대시보드)
+   ↓
+[담당자 할당]         ← esco-admin이 현장팀 또는 UTTEC 측 매핑
+   ↓ 작업 시작 (IN PROG)
+[현장 조치]            ← 노드 교체 / 재시작 / 환경 점검
+   ↓
+[검증 + 종료 (DONE)]    ← 자가진단 통과 확인, self-heal 해제
+</code></pre>
+<h3 id="a54-slakpi">A.5.4 표준 SLA·KPI (월간 보고 기준)</h3>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th style="text-align: center;">목표</th>
+<th>측정 방법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>통신 정합성 (가용성)</td>
+<td style="text-align: center;">≥ 99.0%</td>
+<td>(정상 노드 수 / 총 1,271) 분당 평균</td>
+</tr>
+<tr>
+<td>CRIT 평균 처리 시간</td>
+<td style="text-align: center;">≤ 12h</td>
+<td>티켓 OPEN → DONE 시간</td>
+</tr>
+<tr>
+<td>WARN 평균 처리 시간</td>
+<td style="text-align: center;">≤ 3일</td>
+<td>동상</td>
+</tr>
+<tr>
+<td>월간 CRIT 건수</td>
+<td style="text-align: center;">≤ 5건</td>
+<td>발생률 분석</td>
+</tr>
+<tr>
+<td>자동 self-heal 성공률</td>
+<td style="text-align: center;">≥ 95%</td>
+<td>mesh 우회 성공 / 단절 발생</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="b-21-ir">💡 § B. §2.1 IR 디밍제어구역 — 운영 상세</h1>
+<h2 id="b1">B.1 시스템 개요</h2>
+<h3 id="b11">B.1.1 적용 범위</h3>
+<p><strong>컨실리언스센터 지하주차장 전체 (E7 p1) + 지상1층 ramp (E7 p2 좌측)</strong> — 시방서 § 2.1 가항 "지하주차장 IR 통신 LED 센서등 설치공사" 354등.</p>
+<p>기존 레이스웨이 형광등 28W × 2 (354개)를 LED R/W 센서 등기구 354등으로 <strong>1:1 교체</strong>합니다.</p>
+<h3 id="b12-21">B.1.2 시방서 § 2.1 핵심 요구 (원문 발췌)</h3>
+<blockquote>
+<p>"본 시스템은 그룹제어 및 무선연동되어야 하며, 무선 디밍센서 인체감지센서를 통하여 인접조명 신호와 연동되어 인접등에 통신 신호를 보내며, 보낸 신호에 의하여 일정 동작 동작신호로 인접등에 순차 점등되어, 사용자가 보행 속도에 매칭되어야 한다."</p>
+</blockquote>
+<p>이 요구를 충족하기 위해 본 시스템은:</p>
+<ul>
+<li><strong>IR (적외선) chain 점등</strong>: 한 등기구가 PIR 트리거 시 인접 등기구로 IR 신호 broadcast → TTL hop으로 거리 감쇠 디밍 전파</li>
+<li><strong>응답 시간 &lt; 100ms</strong> (TSOP38238 단일 hop) — 보행 속도(4 km/h ≈ 1.1 m/s) 매칭</li>
+<li><strong>그룹·연동·단독 제어 3종</strong> (시방서 § 2.1 다항):</li>
+<li>단독: DIP=0 또는 chain TTL=0 모드</li>
+<li>그룹: DIP=N (1~31) 같은 그룹만 동시 응답</li>
+<li>연동: TTL &gt; 0 chain hop</li>
+</ul>
+<h3 id="b13-hw">B.1.3 핵심 H/W</h3>
+<ul>
+<li><strong>Sensor Light Node (354대)</strong>: STM32G030 + PIR (Panasonic EKMC1601112) + IR LED 4개 (940nm) + IR Rx (TSOP38238) + Meanwell 디밍 드라이버</li>
+<li><strong>IR 리모컨 (10대)</strong>: STM32F030 + 22키 + IR LED 1개 + AAA × 2</li>
+<li><strong>IR Bridge (1대 옵션)</strong>: STM32G4 + TSOP × 8 + Quectel BG95-M3 LTE → MQTT (통합 관제 통합용, § B.5 참조)</li>
+</ul>
+<h3 id="b14-chain">B.1.4 chain 동작 원리</h3>
+<p>천장 등기구가 4~6m 간격으로 배치된 행(row) 단위로 chain을 구성. 각 row 안에서:</p>
+<pre><code>L1 ─[디밍 50%]─ L2 ─[디밍 70%]─ L3 ◉ ─[디밍 70%]─ L4 ─[디밍 50%]─ L5
+                                100% PIR
+                                (트리거 source)
+</code></pre>
+<p>L3 PIR 트리거 시:
+1. L3 자체 100% 즉시
+2. L3 → IR broadcast (GID + TTL=3 + PARAM=70%)
+3. L2·L4 수신 (인접 ±1) → 70% set + forward (TTL=2)
+4. L1·L5 (인접 ±2) → 50% set (PARAM−20) + forward (TTL=1)
+5. L0·L6 (인접 ±3) → 30% set, TTL=0 도달 → forward 중지</p>
+<p>이 chain hop이 보행자가 지나가는 방향으로 자연스럽게 확장되어, 사용자가 보는 시야에 어두운 zone이 없도록 설계됩니다.</p>
+<hr />
+<h2 id="b2-354">B.2 차량·보행자 동선 시나리오 (지하주차장 354등)</h2>
+<h3 id="b21">B.2.1 차량 진입 → 주차 → 하차 → 복귀 → 출차 (전체 사이클)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">단계</th>
+<th style="text-align: center;">시각</th>
+<th>위치</th>
+<th>시스템 반응</th>
+<th>LED 상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">09:00:00</td>
+<td>입구 ramp G01</td>
+<td>PIR 트리거 (차량)</td>
+<td>G01 chain hop → 입구 5등 100%+70%+50%+30%</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">09:00:08</td>
+<td>차로 G02~G05 → G06</td>
+<td>차량 이동, PIR 순차 트리거</td>
+<td>row 단위 chain hop, 30% → 100% 자연 확장</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">09:00:25</td>
+<td>G06 (주차 zone)</td>
+<td>주차 후 PIR</td>
+<td>G06 row 전체 100% (chain TTL=3)</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">09:00:35</td>
+<td>G06 하차 → 보행</td>
+<td>사람 PIR 트리거 (걷는 속도 1m/s)</td>
+<td>chain hop 보행 동선 따라 활성</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">09:01:15</td>
+<td>엘리베이터 입구</td>
+<td>PIR 트리거</td>
+<td>엘리베이터 인접 row 100%</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">09:01:30</td>
+<td>(사람 떠남)</td>
+<td>30s 무동작 시작</td>
+<td>(이후 자동 디밍)</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">09:02:00</td>
+<td>(사람 떠남 30s)</td>
+<td>row 자동 디밍 70% set</td>
+<td>디밍 70%</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">09:03:00</td>
+<td>(떠남 1.5min)</td>
+<td>추가 자동 OFF</td>
+<td>0% (소등)</td>
+</tr>
+<tr>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td style="text-align: center;">N</td>
+<td style="text-align: center;">18:00:00</td>
+<td>복귀 → 다시 G06 PIR</td>
+<td>row chain 재활성</td>
+<td>동일 패턴 반복</td>
+</tr>
+</tbody>
+</table>
+<h3 id="b22">B.2.2 다른 시나리오들</h3>
+<p><strong>A. 청소 작업 (시설팀)</strong>
+- 시설팀이 IR 리모컨으로 작업 row의 DIP 그룹 키 누름 → 해당 row 전체 100% 강제 (시간 한정 30분)
+- 또는 통합 대시보드에서 Scene "주차장 청소" 호출 (IR Bridge 경유)
+- 30분 후 자동 정책 복원</p>
+<p><strong>B. 점검 작업 (보수)</strong>
+- IR 리모컨 SET 5초 누름 → 학습 모드 진입 → "OFF" 키 → 해당 row 강제 소등 + 작업 티켓 발행
+- 보수 종료 시 다시 SET → "AUTO" 키로 복원</p>
+<p><strong>C. 정전 → 복귀</strong>
+- 각 노드 NVM에 DIP 그룹 + 정책 저장 → 전원 복귀 시 즉시 자체 PIR 동작 시작 (Gateway 의존 0)
+- IR Bridge 통한 클라우드 보고는 LTE 복귀 후 자동 재전송</p>
+<p><strong>D. 화재·비상</strong>
+- 화재 감지 시스템과 별도 24V relay 연결 (옵션) — 비상 시 강제 100% override
+- 또는 IR Bridge 경유 통합 관제 측에서 "비상 점등" 명령 → 모든 row 100% 강제</p>
+<h3 id="b23">B.2.3 보행 속도 매칭 검증</h3>
+<p>시방서 요구 "사용자 보행 속도에 매칭"을 충족하는 수학적 검증:</p>
+<ul>
+<li>보행 속도 4 km/h ≈ 1.1 m/s</li>
+<li>등기구 간격 4~6m (평균 5m)</li>
+<li>chain hop latency: 30ms (TSOP 단일 hop)</li>
+<li>5m / 1.1m·s = 4.5초 (사용자가 다음 등 도착 시간)</li>
+<li>30ms ≪ 4.5초 — 시스템이 압도적으로 빠름 → 사용자 시야에 점등이 미리 와 있음</li>
+</ul>
+<hr />
+<h2 id="b3-ir-chain-hopttl-03__chainhtml">B.3 IR Chain hop·TTL 시각화 (<code>03_지하주차장_chain.html</code>)</h2>
+<p><img alt="지하주차장 IR Chain" src="화면_png/03_지하주차장_chain.png" /></p>
+<h3 id="b31">B.3.1 화면 구성</h3>
+<ol>
+<li><strong>좌측 메인 캔버스</strong>: 지하주차장 B1 평면 (1:1200 스케일) + 12 row × 평균 30등 + 차량 진입 위치 표시 + IR beam 시각화</li>
+<li><strong>현재 chain 이벤트</strong>: G03 row L3 PIR 트리거 사례, source 노드 강조 + TTL 감쇠 라벨 (TTL=3 → 2 → 1)</li>
+<li><strong>IR 패킷 로그 (실시간)</strong>: 14:23:07.412 부터 chain 완료(0.512)까지 100ms 내 9개 패킷 시간순 표시</li>
+<li><strong>현재 트리거 정보 패널</strong>: latency 31ms, 응답 노드 6등, auto OFF 예정 시각</li>
+<li><strong>리모컨 학습 모드 가이드</strong>: SET 키 5초 누름 → 그룹 번호 누름 → NVM 저장</li>
+</ol>
+<h3 id="b32">B.3.2 운영 측면 활용</h3>
+<ul>
+<li><strong>DGIST 시설팀</strong>: 현장에 출동하지 않고도 IR Bridge 경유 chain 동작 실시간 가시화</li>
+<li><strong>ESCO 사업자</strong>: 응답 지연 (예: 50ms+) 발생 시 즉시 감지 → 노드 교체 결정 데이터</li>
+<li><strong>UTTEC 사후관리</strong>: 패킷 로그로 보행 패턴 분석 → 그룹 분할 최적화 제안</li>
+</ul>
+<h3 id="b33-chain-kpi">B.3.3 chain 응답 지표 (월간 KPI)</h3>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th style="text-align: center;">목표</th>
+<th style="text-align: center;">실측 (예시)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chain 평균 latency</td>
+<td style="text-align: center;">&lt; 100ms</td>
+<td style="text-align: center;">32ms</td>
+</tr>
+<tr>
+<td>chain 완료 시간 (5 hop)</td>
+<td style="text-align: center;">&lt; 300ms</td>
+<td style="text-align: center;">93ms</td>
+</tr>
+<tr>
+<td>PIR 트리거 / 일</td>
+<td style="text-align: center;">1,000+</td>
+<td style="text-align: center;">1,287</td>
+</tr>
+<tr>
+<td>단등 고장률</td>
+<td style="text-align: center;">&lt; 0.5% / 년</td>
+<td style="text-align: center;">0.3%</td>
+</tr>
+<tr>
+<td>시방서 응답성 충족률</td>
+<td style="text-align: center;">100%</td>
+<td style="text-align: center;">100%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="b4-17">B.4 리모컨 17키 학습 모드 운영</h2>
+<h3 id="b41-21">B.4.1 키 배치 (시방서 § 2.1 다항 충족)</h3>
+<pre><code>[ ON  ] [ OFF ] [ UP  ] [ DN  ]    ← 기본 제어
+[  1  ] [  2  ] [  3  ] [  4  ]
+[  5  ] [  6  ] [  7  ] [  8  ]    ← 그룹 선택 1~16
+[  9  ] [ 10  ] [ 11  ] [ 12  ]
+[ 13  ] [ 14  ] [ 15  ] [ 16  ]
+[ SET ] [AUTO ] [ALL  ] [SCN  ]    ← 확장 (SET=학습, AUTO=자동, ALL=전체, SCN=Scene)
+</code></pre>
+<h3 id="b42">B.4.2 학습 모드 시나리오 (그룹 변경)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">단계</th>
+<th>사용자 동작</th>
+<th>시스템 동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>천장 luminaire 1개를 향해 SET 키 5초 누름</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>—</td>
+<td>luminaire LED 깜박임 (학습 모드 진입)</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>그룹 번호 키 (예: 7) 누름</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>—</td>
+<td>luminaire가 DIP 설정 override (NVM 저장) → GID = 7</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>인접 luminaire들도 같은 절차로 GID=7 설정</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>이후 (7) 그룹 키로 함께 제어</td>
+<td>broadcast 동기 응답</td>
+</tr>
+</tbody>
+</table>
+<h3 id="b43">B.4.3 리모컨 운영 정책</h3>
+<ul>
+<li><strong>보유 수량</strong>: 10대 (지하주차장 관리 사무실·시설팀 각 5대)</li>
+<li><strong>그룹 매핑 표준</strong>: G02=01 · G03=02 · ... · G12=11 (12개 row × 그룹)</li>
+<li><strong>DIP override</strong>: NVM 저장, 시공 시 DIP 설정 무효화하는 학습 정책 가능</li>
+<li><strong>분실 시</strong>: 리모컨은 단순 IR 송신기, 보안 분실 위험 0 (시스템 외부 접근 불가)</li>
+<li><strong>펌웨어 갱신</strong>: 리모컨 5년 무상 펌웨어 갱신 (UART 디버그 포트 경유)</li>
+</ul>
+<hr />
+<h2 id="b5-ir-bridge">B.5 IR Bridge 통합 관제 통합 (옵션)</h2>
+<p>시방서 § 2.1은 IR Bridge를 명시 요구하지 않지만, <strong>본 제안은 IR Bridge 1대 설치를 권장</strong>합니다. 이유:</p>
+<ul>
+<li>통합 대시보드에서 1,271등 단일 화면 관리 가능</li>
+<li>IR 패킷 로그가 InfluxDB에 시계열 저장 → 패턴 분석</li>
+<li>단등 고장·이상 트리거 알림 자동화</li>
+<li>모바일 앱에서 지하주차장 실시간 시각화</li>
+</ul>
+<p>IR Bridge 1대 = STM32G4 + TSOP38238 × 8 (전 방향) + Quectel BG95-M3 LTE Cat-M1. 양산 BOM 단가 약 25만 원 / 대.</p>
+<hr />
+<h1 id="c">🎛️ § C. 통합 운영 — 권한·일정·장애 대응·비상</h1>
+<h2 id="c1-22-04__html">C.1 권한·역할 (시방서 § 2.2 라항 충족) (<code>04_스케줄_룰편집.html</code>)</h2>
+<p><img alt="스케줄·룰 편집" src="화면_png/04_스케줄_룰편집.png" /></p>
+<h3 id="c11">C.1.1 인증 정책</h3>
+<ul>
+<li><strong>OAuth2 + Keycloak</strong> — DGIST 통합 인증 연동 가능</li>
+<li><strong>2FA</strong> 관리자 등급 필수 (TOTP)</li>
+<li><strong>세션 만료</strong>: 8h (idle) / 12h (절대)</li>
+<li><strong>API 접근</strong>: bearer token, 1h 만료 (refresh 가능)</li>
+<li><strong>감사</strong>: 모든 변경 InfluxDB audit log + Grafana 검색</li>
+</ul>
+<h3 id="c12">C.1.2 권한 충돌 정책</h3>
+<ul>
+<li>같은 시각 두 운영자가 같은 zone 조작 → last-write-wins + 감사 로그 양쪽 기록</li>
+<li>비상 점등 Scene 호출 시 다른 모든 조작 30분간 lock</li>
+<li>ESCO 감사는 변경 권한 없음, 단 모든 로그 시각화 가능</li>
+</ul>
+<hr />
+<h2 id="c2">C.2 일별·주별·월별·분기별 운영 작업</h2>
+<h3 id="c21-dgist">C.2.1 일별 (DGIST 시설운영팀)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">시각</th>
+<th>작업</th>
+<th style="text-align: center;">소요</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">09:00</td>
+<td>통합 대시보드 1차 확인 (야간 알림 큐 처리)</td>
+<td style="text-align: center;">10분</td>
+</tr>
+<tr>
+<td style="text-align: center;">09:30</td>
+<td>처리 대기 티켓 (CRIT/WARN) 상태 점검·할당</td>
+<td style="text-align: center;">10분</td>
+</tr>
+<tr>
+<td style="text-align: center;">12:30</td>
+<td>점심 디밍 룰 정상 트리거 확인</td>
+<td style="text-align: center;">2분</td>
+</tr>
+<tr>
+<td style="text-align: center;">14:00</td>
+<td>자동 자가진단 리포트 확인</td>
+<td style="text-align: center;">5분</td>
+</tr>
+<tr>
+<td style="text-align: center;">17:30</td>
+<td>야간 모드 전환 사전 점검</td>
+<td style="text-align: center;">5분</td>
+</tr>
+<tr>
+<td style="text-align: center;">일중 수시</td>
+<td>모바일 앱 알림 처리 (긴급 시)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>합계</strong></td>
+<td>—</td>
+<td style="text-align: center;"><strong>≈ 32분 / 일</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="c22-esco-admin-uttec">C.2.2 주별 (esco-admin + UTTEC 협업)</h3>
+<ul>
+<li>월요일: 주간 절감 트렌드 검토, 비정상 패턴 분석</li>
+<li>수요일: 룰 변경 검토 (Node-RED Flow 검토 + 승인)</li>
+<li>금요일: 주말 PIR ONLY 모드 동작 확인, 모바일 앱 점검 작업 발행</li>
+</ul>
+<h3 id="c23-esco-admin-dgist">C.2.3 월별 (esco-admin → DGIST 보고)</h3>
+<ul>
+<li>1일: 전월 절감 리포트 자동 생성 (<code>06_절감리포트.html</code> 참조) → PDF 발행</li>
+<li>5일: ESCO 사업자(귀사) 측 KPI 검토 회의 (UTTEC 참석)</li>
+<li>10일: 리포트 DGIST 시설운영팀에 정식 제출</li>
+<li>20일: 분기 리포트 준비 시작 (3개월 누적)</li>
+</ul>
+<h3 id="c24">C.2.4 분기별 (정기 점검)</h3>
+<ul>
+<li>PIR 청소·점검 (제조사 SOP: 분기 1회)</li>
+<li>IR Bridge·Gateway 진단</li>
+<li>절감 효과 추세 분석</li>
+<li>KS·KC 갱신 확인</li>
+</ul>
+<hr />
+<h2 id="c3-sop-5">C.3 장애 대응 SOP (5단계 — 표준 작업 절차)</h2>
+<h3 id="c31-sop-01-ble-mesh">C.3.1 SOP-01: BLE Mesh 노드 통신 단절</h3>
+<pre><code>[감지]               heartbeat 5분 lost
+   ↓
+[1차 자동 조치]     Mesh self-heal → 인접 relay 우회
+   ↓
+[알림 전파]         이메일 (15분 내) + Slack
+   ↓
+[현장 출동]         5h 내 (CRIT) — 시각 확인
+   ↓
+[조치]              ① 노드 재부팅 (전원 cycle) → 동작 확인
+                    ② 동작 안 하면 노드 교체 (양산 SOP)
+                    ③ 외부 환경 (이물질·습기) 점검
+   ↓
+[검증·종료]         자가진단 통과 + heartbeat 회복 + self-heal 해제
+</code></pre>
+<h3 id="c32-sop-02-ir">C.3.2 SOP-02: IR 단등 고장</h3>
+<pre><code>[감지]               자가진단 HEARTBEAT 미수신 (5분 무응답)
+   ↓
+[알림 전파]         이메일 + Slack (CRIT)
+   ↓
+[현장 출동]         24h 내
+   ↓
+[조치]              ① PIR·LED 본체 점검 (육안)
+                    ② 전원선 단선 확인 (멀티미터)
+                    ③ 노드 교체 (양산 SOP, 동일 DIP 설정)
+                    ④ 리모컨 학습 모드로 group 재설정
+   ↓
+[검증·종료]         chain 패킷 정상 broadcast 확인 + 인접등 응답 ACK
+</code></pre>
+<h3 id="c33-sop-03-gateway-a">C.3.3 SOP-03: Gateway A 다운</h3>
+<pre><code>[감지]               Gateway B (Standby) ping 실패 감지 → A primary 헬스 체크
+   ↓
+[1차 자동 조치]     Gateway B로 자동 failover (DNS·MQTT 재연결)
+   ↓
+[알림 전파]         이메일 + SMS + 음성 (CRIT, 5분 무응답 시)
+   ↓
+[현장 출동]         5h 내
+   ↓
+[조치]              ① A 진단 — 전원·LTE·BLE 모듈 점검
+                    ② 재부팅 → 정상 시 standby로 복귀
+                    ③ 부품 고장 시 교체 (양산 단가 약 80만 원 / 대)
+   ↓
+[검증·종료]         A로 failback + 통신 정합성 24h 모니터링
+</code></pre>
+<h3 id="c34-sop-04">C.3.4 SOP-04: 클라우드 서버 다운</h3>
+<pre><code>[감지]               모니터링 시스템 (UTTEC 측 watchdog)
+   ↓
+[1차 자동 조치]     컨테이너 재시작 (Docker auto-restart)
+   ↓
+[2차 자동 조치]     실패 시 redundant 노드로 fail-over (Active/Passive)
+   ↓
+[알림 전파]         이메일 + SMS (CRIT)
+   ↓
+[조치]              UTTEC 측 대응 (24/7 oncall)
+   ↓
+[검증·종료]         서비스 정상 + 손실 데이터 0 (InfluxDB WAL 보장)
+</code></pre>
+<p><strong>중요</strong>: §2.1 IR 시스템은 클라우드 다운과 <strong>무관</strong>하게 정상 동작 지속 (chain 자체 동작).</p>
+<hr />
+<h2 id="c4">C.4 비상 운영 시나리오</h2>
+<h3 id="c41-dgist">C.4.1 화재·정전 (DGIST 비상 매뉴얼 연계)</h3>
+<table>
+<thead>
+<tr>
+<th>시나리오</th>
+<th>시스템 동작</th>
+<th>인계</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>화재 감지 (옵션 24V relay 연결 시)</td>
+<td>영향 zone 전체 100% 강제 + alarm</td>
+<td>화재 자동 통보 시스템</td>
+</tr>
+<tr>
+<td>정전 → 복귀</td>
+<td>각 노드 NVM 정책 복원, 즉시 PIR 동작</td>
+<td>(자동)</td>
+</tr>
+<tr>
+<td>비상 발전 모드</td>
+<td>통합 관제에서 "비상 점등" Scene 호출</td>
+<td>esco-admin → 음성 전화</td>
+</tr>
+<tr>
+<td>통신 두절 (장기 LTE 장애)</td>
+<td>§2.1 IR 정상 / §2.2 BLE Mesh 로컬 정책 정상 + 알림만 큐잉</td>
+<td>UTTEC oncall</td>
+</tr>
+</tbody>
+</table>
+<h3 id="c42-scene">C.4.2 비상 점등 Scene 호출</h3>
+<ul>
+<li>권한: 관리자 (esco-admin) 또는 DGIST 시설운영팀장</li>
+<li>동작: 전체 1,271등 즉시 100% 강제</li>
+<li>자동 해제: 1시간 무동작 후 자동 복원 (또는 수동 해제)</li>
+<li>감사: 호출 사유 + 호출자 + 호출 시각 InfluxDB 영구 보관</li>
+</ul>
+<h3 id="c43">C.4.3 야간 보안 순찰</h3>
+<ul>
+<li>DGIST 보안팀 모바일 앱 "야간 보안 순찰" Scene 호출</li>
+<li>전 구간 PIR 100% 활성 (정상 야간 모드 무시)</li>
+<li>시간 한정 30분 (필요 시 30분 단위 연장)</li>
+</ul>
+<hr />
+<h1 id="d-07_html">📱 § D. 모바일 앱 — 운영자·시설팀용 (<code>07_모바일앱.html</code>)</h1>
+<p><img alt="모바일 앱" src="화면_png/07_모바일앱.png" /></p>
+<h2 id="d1">D.1 앱 개요</h2>
+<ul>
+<li><strong>플랫폼</strong>: Android (Kotlin) + iOS (Swift)</li>
+<li><strong>연결</strong>: ① BLE Mesh Proxy 직접 연결 (현장에서) ② Gateway HTTPS (원격)</li>
+<li><strong>인증</strong>: DGIST 통합 인증 OAuth2 + 2FA (관리자 등급)</li>
+<li><strong>언어</strong>: 한국어 / 영어</li>
+<li><strong>오프라인</strong>: 마지막 동기화된 데이터 24h 캐시 + queue 명령 (네트워크 복귀 시 자동 전송)</li>
+<li><strong>배포</strong>: 사내 MDM (Mobile Device Management) — Public store 미공개</li>
+</ul>
+<h2 id="d2-3">D.2 화면 3종</h2>
+<h3 id="d21">D.2.1 홈 (운영자 대시보드)</h3>
+<ul>
+<li>현재 운영 현황 (실시간 소비전력, 점등 분포)</li>
+<li>처리 대기 알림 (3건 CRIT 표시)</li>
+<li>금일 누적 절감 (kWh + 원)</li>
+<li><strong>빠른 Scene 4개</strong>: 청소·시험·행사·비상</li>
+</ul>
+<h3 id="d22-zone">D.2.2 건물·Zone 상세</h3>
+<ul>
+<li>Zone별 평균 디밍 % (큰 다이얼 시각화)</li>
+<li>노드 14개 grid (PE/PN 라벨 + 색 상태)</li>
+<li>단등 고장 표시 (PN4 빨간 깜박임)</li>
+<li>강제 조작 버튼 (ON / 30% / 70% / OFF / AUTO)</li>
+</ul>
+<h3 id="d23">D.2.3 알림 (티켓 큐)</h3>
+<ul>
+<li>CRIT/WARN/INFO/DONE 색 구분</li>
+<li>알림 카드 안에서 직접 "현장 도착 보고"·"진단" 버튼 호출</li>
+<li>한 화면 5건 표시 (스크롤 시 무한)</li>
+</ul>
+<h2 id="d3">D.3 푸시 알림 정책</h2>
+<ul>
+<li>CRIT: 즉시 푸시 + 진동 + 소리</li>
+<li>WARN: 푸시 + 진동</li>
+<li>INFO: 푸시 무, 앱 내 알림만</li>
+<li>야간 (22:00~07:00): 당직자만 야간 모드 (다른 사용자 mute)</li>
+</ul>
+<hr />
+<h1 id="e-kpi-06_html">📊 § E. 절감 KPI·리포트 (<code>06_절감리포트.html</code>)</h1>
+<p><img alt="월간 절감 리포트" src="화면_png/06_절감리포트.png" /></p>
+<h2 id="e1-1-0900">E.1 자동 월간 리포트 (매월 1일 09:00 발행)</h2>
+<h3 id="e11">E.1.1 리포트 구성</h3>
+<ol>
+<li><strong>상단 KPI 4종</strong>: 월 절감 전력량 / 비용 / 절감률 / CO2 감축</li>
+<li><strong>월간 일별 절감 그래프</strong>: 31일 막대 + baseline (점선)</li>
+<li><strong>건물·시스템별 KPI 막대</strong>: E1~E7 + IR 8개 항목 + 목표 달성 ✓/근접/미달 표시</li>
+<li><strong>출퇴근·점심·야간 시간대 분석</strong>: 24시간 막대 (baseline 대비 %)</li>
+<li><strong>비용·환경 효과 환산표</strong>: 월 / 누적 4개월 / 연간 환산</li>
+<li><strong>관찰·권고 사항</strong>: 패턴 이상, 정책 변경 효과, 차후 검토</li>
+</ol>
+<h3 id="e12-pdf">E.1.2 PDF 자동 발행</h3>
+<ul>
+<li>Grafana 10.x PDF export</li>
+<li>발행 후 자동 메일 발송 (DGIST 시설운영팀 + ESCO 감사팀 + UTTEC oncall)</li>
+<li>CSV 동시 첨부 (raw 데이터 검증용)</li>
+</ul>
+<h3 id="e13-kpi-3">E.1.3 KPI 목표 (시방서 § 제3장 절감 기준)</h3>
+<p>⚠ 본 표의 모든 수치는 <strong>목표치</strong>입니다. 실측 데이터는 Phase 5 시범 PoC 1 Zone (16등, 30일) 완료 후 산출됩니다.</p>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th style="text-align: center;">목표 (Phase 5 검증 전)</th>
+<th>측정 방법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>일반 zone 평균 절감률</td>
+<td style="text-align: center;"><strong>≥ 55% (목표)</strong></td>
+<td>월 평균 (baseline 22.2 kWh/h 대비)</td>
+</tr>
+<tr>
+<td>지하주차장 절감률</td>
+<td style="text-align: center;"><strong>≥ 65% (목표)</strong></td>
+<td>월 평균</td>
+</tr>
+<tr>
+<td>가용성 (시스템 정상 비율)</td>
+<td style="text-align: center;"><strong>≥ 99.0% (목표)</strong></td>
+<td>월 평균 (정상 노드 수 / 총 1,271)</td>
+</tr>
+<tr>
+<td>CRIT 월 평균 처리 시간</td>
+<td style="text-align: center;"><strong>≤ 12h (목표 SLA)</strong></td>
+<td>티켓 ID 기반</td>
+</tr>
+<tr>
+<td>자동 self-heal 성공률</td>
+<td style="text-align: center;"><strong>≥ 95% (산업 평균 추정)</strong></td>
+<td>mesh 우회 성공 / 단절 발생</td>
+</tr>
+<tr>
+<td>월간 CRIT 발생</td>
+<td style="text-align: center;"><strong>≤ 5건 (목표)</strong></td>
+<td>건수</td>
+</tr>
+<tr>
+<td>월간 데이터 손실</td>
+<td style="text-align: center;"><strong>0건 (보장)</strong></td>
+<td>InfluxDB WAL 보장</td>
+</tr>
+</tbody>
+</table>
+<p><strong>baseline 산출 근거</strong>: 1,271등 × 평균 35W × 24h × 30일 ≈ 32,015 kWh/월 (제어 없을 시 추정 상한). 실제 baseline은 Phase 5 PoC에서 기존 등기구 측정 + DGIST 측 자료로 확정.</p>
+<h2 id="e2-3">E.2 분기 보고서 (3개월 누적)</h2>
+<ul>
+<li>3개월 누적 절감 분석 + 시즌 패턴 (봄·여름·가을·겨울)</li>
+<li>정책 변경 효과 분석</li>
+<li>차기 분기 운영 권고</li>
+<li>인증·점검 보고</li>
+</ul>
+<h2 id="e3">E.3 연간 보고서</h2>
+<ul>
+<li>ESCO 사업 KPI 종합 평가</li>
+<li>연간 절감액 합계 (₩단위 + CO2)</li>
+<li>5년 사후관리 잔여 기간 안내</li>
+<li>확장 가능성 검토 (전체 21,287등 대상)</li>
+</ul>
+<hr />
+<h1 id="f-21-22">✅ § F. 시방서 § 2.1·§ 2.2 충족 매트릭스 (운영 관점)</h1>
+<h2 id="f1-21-ir-led">F.1 § 2.1 IR 통신 LED 센서등 (가~다항)</h2>
+<table>
+<thead>
+<tr>
+<th>시방서 요구 (§2.1)</th>
+<th>본 시스템 구현</th>
+<th style="text-align: center;">운영 충족</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LED 광원 + PIR 인체감지</td>
+<td>EKMC1601112 PIR + LED R/W 등기구</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>무동작 시 자동 디밍</td>
+<td>30s → 10%, 추가 30분 → OFF</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>조도 유지 (옵션)</td>
+<td>BH1750 옵션 가능 (본 사업 미적용)</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>IR 통신 인접 조명 연동</td>
+<td>NEC v2 확장 32bit + chain hop</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>인접등 순차 점등</td>
+<td>TTL=3 hop</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>사용자 보행 속도 매칭</td>
+<td>hop latency 30ms × 3 = 93ms ≪ 4.5초</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>통신 거리 일정</td>
+<td>TSOP38238 최대 12m, 천장 간격 4~6m</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>단독 제어</td>
+<td>DIP=0 또는 TTL=0</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>그룹 제어</td>
+<td>DIP 5bit (32 그룹)</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>연동 제어</td>
+<td>chain TTL hop</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>무선 디밍·인체감지 통합</td>
+<td>동일 노드 내 통합</td>
+<td style="text-align: center;">✓</td>
+</tr>
+</tbody>
+</table>
+<h2 id="f2-22-iot">F.2 § 2.2 IoT 기반 무선 조명제어 (가~라항)</h2>
+<table>
+<thead>
+<tr>
+<th>시방서 요구 (§2.2)</th>
+<th>본 시스템 구현</th>
+<th style="text-align: center;">운영 충족</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAIN CONTROLLER (IoT 통신단말기 내장)</td>
+<td>Gateway A = nRF52840 + LTE Cat-M1</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>SUB CONTROLLER</td>
+<td>Zone별 SUB Controller (BLE Mesh 16-luminaire)</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>LTE/3G/5G/무선 IoT</td>
+<td>LTE Cat-M1 + WiFi 대체 가능</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>양방향 통신</td>
+<td>BLE Mesh ACK + Gateway → Cloud TLS 1.3</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>보안 암호화</td>
+<td>BLE Mesh AES-CCM + TLS 1.3 + 인증서</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>16채널 제어</td>
+<td>SUB Controller 1대 = 16 luminaire 그룹</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>자동·수동 전환</td>
+<td>통신 단절 시 로컬 정책 fallback</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>권한·역할 분리</td>
+<td>관리자 / 운영자 / 시설팀 / 감사 / 외부</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>양방향 ACK</td>
+<td>BLE Mesh Generic Model</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>통합 관제</td>
+<td>Grafana + Node-RED + InfluxDB</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td>모바일 앱</td>
+<td>Android + iOS BLE Mesh Proxy 연결</td>
+<td style="text-align: center;">✓</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="g-5">📅 § G. 일정·인증·5년 사후관리</h1>
+<h2 id="g1-uttec-reportpdf-06-6">G.1 구현 일정 (UTTEC 측 작업 기준, report.pdf § 06 6번 참조)</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th style="text-align: center;">기간</th>
+<th>산출물</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phase 0 — 협력 결정 + 사양 확정</td>
+<td style="text-align: center;">1주</td>
+<td>사양서 + 시방서 매핑 확인</td>
+</tr>
+<tr>
+<td>Phase 1 — 회로 설계 + PCB</td>
+<td style="text-align: center;">3주</td>
+<td>Schematic + PCB Gerber + BOM 확정</td>
+</tr>
+<tr>
+<td>Phase 2 — 시제품 (각 종류 5개)</td>
+<td style="text-align: center;">2주</td>
+<td>시제품 H/W + 자가 진단 펌웨어</td>
+</tr>
+<tr>
+<td>Phase 3 — 펌웨어 (§2.1 IR + §2.2 BLE Mesh)</td>
+<td style="text-align: center;">4주</td>
+<td>두 펌웨어</td>
+</tr>
+<tr>
+<td>Phase 4 — 시제품 통합 검증 (UTTEC 사내)</td>
+<td style="text-align: center;">2주</td>
+<td>검증 보고서 + IR chain 시연 + BLE Mesh 1 Zone 검증</td>
+</tr>
+<tr>
+<td>Phase 5 — DGIST 1개 Zone 시범 PoC</td>
+<td style="text-align: center;">2주</td>
+<td>1 Zone (16등) 시범 + 효과 측정</td>
+</tr>
+<tr>
+<td>Phase 6 — KC/KCC 양산 인증</td>
+<td style="text-align: center;"><strong>8~12주</strong></td>
+<td>인증서 (KC + KCC 병행, 시험소 대기 포함)</td>
+</tr>
+<tr>
+<td>Phase 7 — 양산 (1,271등)</td>
+<td style="text-align: center;">8주</td>
+<td>1,271등 양산 (Phase 6과 일부 병행 가능)</td>
+</tr>
+<tr>
+<td>Phase 8 — 시공 + 운영 인계</td>
+<td style="text-align: center;">4주</td>
+<td>1,271등 설치 + 운영 인계 + 매뉴얼</td>
+</tr>
+<tr>
+<td><strong>총</strong></td>
+<td style="text-align: center;"><strong>약 8~9개월</strong></td>
+<td><strong>DGIST ESCO 완공</strong></td>
+</tr>
+</tbody>
+</table>
+<p>⚠ <strong>인증 일정 정정</strong>: 초안(v1.0)에는 KC/KCC를 4주로 표기했으나, <strong>국내 시험소 대기 + 보완 시정 1회 가정 시 8~12주가 표준</strong>입니다 (KC 단독 약 6주 + KCC 단독 약 6주, 일부 병행 가능). Phase 6 일정 신뢰성을 위해 v2.0에서 정정하였습니다.</p>
+<h2 id="g2-kskckcc-2-7">G.2 인증 (KS·KC·KCC, 시방서 § 제2장 양식7)</h2>
+<table>
+<thead>
+<tr>
+<th>인증</th>
+<th>적용 부품</th>
+<th style="text-align: center;">책임</th>
+<th>시점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KC (전기·전자기기)</td>
+<td>Gateway · Sensor Light · Mesh Node</td>
+<td style="text-align: center;">UTTEC</td>
+<td>양산 직전</td>
+</tr>
+<tr>
+<td>KCC (전파인증)</td>
+<td>BLE 2.4GHz, LTE 모뎀</td>
+<td style="text-align: center;">UTTEC</td>
+<td>양산 직전</td>
+</tr>
+<tr>
+<td>KS C IEC 60598</td>
+<td>LED 등기구 본체</td>
+<td style="text-align: center;">등기구 제조사</td>
+<td>등기구 측</td>
+</tr>
+<tr>
+<td>고효율에너지기자재</td>
+<td>LED 등기구 본체</td>
+<td style="text-align: center;">등기구 제조사</td>
+<td>양산</td>
+</tr>
+</tbody>
+</table>
+<h2 id="g3-5">G.3 5년 사후관리 (운영 단계 진입 후)</h2>
+<h3 id="g31">G.3.1 사후관리 범위</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th style="text-align: center;">빈도</th>
+<th>주체</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>부품 교체 (소모성)</td>
+<td style="text-align: center;">필요 시</td>
+<td>현장팀 (UTTEC 부품 공급)</td>
+</tr>
+<tr>
+<td>진단·점검 (정기)</td>
+<td style="text-align: center;">분기 1회</td>
+<td>UTTEC oncall</td>
+</tr>
+<tr>
+<td>24/7 긴급 대응</td>
+<td style="text-align: center;">CRIT 즉시</td>
+<td>UTTEC + 시설팀</td>
+</tr>
+<tr>
+<td>절감 효과 분석</td>
+<td style="text-align: center;">월 1회</td>
+<td>esco-admin</td>
+</tr>
+<tr>
+<td>KPI 보고</td>
+<td style="text-align: center;">분기 1회</td>
+<td>ESCO 사업자 → DGIST</td>
+</tr>
+<tr>
+<td>시스템 진화 (확장)</td>
+<td style="text-align: center;">협의</td>
+<td>UTTEC + ESCO</td>
+</tr>
+</tbody>
+</table>
+<h3 id="g32">G.3.2 부품 단가 (사후관리 예산 산출용)</h3>
+<table>
+<thead>
+<tr>
+<th>부품</th>
+<th>양산 단가</th>
+<th style="text-align: center;">권장 예비 보유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard Mesh Node</td>
+<td>약 6.5만 원</td>
+<td style="text-align: center;">30개 (5%)</td>
+</tr>
+<tr>
+<td>Relay Mesh Node</td>
+<td>약 6.5만 원</td>
+<td style="text-align: center;">10개</td>
+</tr>
+<tr>
+<td>Gateway A · B</td>
+<td>약 80만 원</td>
+<td style="text-align: center;">1대 (이미 standby)</td>
+</tr>
+<tr>
+<td>IR Sensor Light</td>
+<td>약 8만 원</td>
+<td style="text-align: center;">18개 (5%)</td>
+</tr>
+<tr>
+<td>IR 리모컨</td>
+<td>약 3만 원</td>
+<td style="text-align: center;">3대</td>
+</tr>
+<tr>
+<td>IR Bridge</td>
+<td>약 25만 원</td>
+<td style="text-align: center;">1대 (옵션)</td>
+</tr>
+<tr>
+<td>PIR 단품</td>
+<td>약 3천 원</td>
+<td style="text-align: center;">50개</td>
+</tr>
+</tbody>
+</table>
+<h3 id="g33-5">G.3.3 5년 사후관리 비용 (참고)</h3>
+<table>
+<thead>
+<tr>
+<th>연간</th>
+<th>항목</th>
+<th>비용 (참고)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1년차</td>
+<td>부품 보충 + 진단</td>
+<td>약 1,500만 원</td>
+</tr>
+<tr>
+<td>2~4년차</td>
+<td>일상 사후관리</td>
+<td>약 1,000만 원 / 년</td>
+</tr>
+<tr>
+<td>5년차</td>
+<td>운영 종료 + 인계</td>
+<td>약 800만 원</td>
+</tr>
+<tr>
+<td><strong>5년 합</strong></td>
+<td>—</td>
+<td><strong>약 5,300만 원</strong></td>
+</tr>
+</tbody>
+</table>
+<p>(상세 단가는 협력 모델 확정 후 별도 견적)</p>
+<hr />
+<h1 id="h-uttec">🤝 § H. UTTEC 차별화·후속 협의 의제</h1>
+<h2 id="h1-uttec">H.1 UTTEC 차별화 (영업 관점)</h2>
+<table>
+<thead>
+<tr>
+<th>차별화</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cortex-M tier AI 박제</td>
+<td>STM32H745 dual-core M7+M4 (CMSIS-NN CNN 17.6× 가속) — 향후 점유 패턴 학습 기반 추가 절감 (옵션)</td>
+</tr>
+<tr>
+<td>nRF52 14 보드 매트릭스</td>
+<td>BLE Mesh 양산 검증 누적</td>
+</tr>
+<tr>
+<td>펌웨어 함정 인벤토리 50건</td>
+<td>Espressif 16 + Nordic 18 + STM32 15 (cross-vendor R&amp;D 시간 절약)</td>
+</tr>
+<tr>
+<td>IQC 자동화 4축 패턴</td>
+<td>DUT 다중 + 브리지 단일 + 동일 규약 + BLE pairing L2 (양산 검증)</td>
+</tr>
+<tr>
+<td>multi-agent 자동화 운영</td>
+<td>n8n + Grafana 통합 broker (관제 SW 신속 구축)</td>
+</tr>
+<tr>
+<td>8개 vault 자산</td>
+<td>revita·lemonLabs·search·factory 등 보유 자산 cross-application</td>
+</tr>
+<tr>
+<td><strong>지하주차장 LED 디밍 원조사업</strong></td>
+<td><strong>전신 ㈜UTSOL 2011년 ~ / 12년+ / 누적 10만 등기 이상</strong> (DGIST §2.1 IR 354등 동일 도메인 직접 적용 가능)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="h2">H.2 후속 협의 의제</h2>
+<p>본 제안서 검토 후 ESCO 사업자(귀사)와의 후속 미팅에서 논의 권장:</p>
+<ol>
+<li>
+<p><strong>협력 모델 확정</strong>:
+   - A) 기술자문 (UTTEC 측 컨설팅만)
+   - B) OEM (UTTEC가 H/W 제공, 시공·운영은 ESCO)
+   - C) 통합 플랫폼 (H/W + SW + 운영 SaaS 모두 UTTEC)
+   - D) PoC + 양산 이관 (1 Zone PoC 후 단계 결정)</p>
+</li>
+<li>
+<p><strong>시범 PoC Zone 선정</strong> (Phase 5)</p>
+</li>
+<li>
+<p><strong>수익 모델 협의</strong>:
+   - 양산 단가
+   - 사후관리 단가 (5년)
+   - 절감 효과 공유 비율 (성과보수 옵션)</p>
+</li>
+<li>
+<p><strong>시방서 § 제3장 절감 효과 검증 방법론</strong> 합의</p>
+</li>
+<li>
+<p><strong>인증 일정</strong> 협의 (KC/KCC 비용 분담)</p>
+</li>
+<li>
+<p><strong>확장 가능성</strong> (전체 21,287등 향후 적용 시 단가 협상)</p>
+</li>
+</ol>
+<hr />
+<h2 id="1">📎 부록 1. 화면 일람</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>화면</th>
+<th>파일</th>
+<th>대상 사용자</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>통합 대시보드</td>
+<td><code>화면/01_통합대시보드.html</code></td>
+<td>운영자 + esco-admin</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>건물별 상세</td>
+<td><code>화면/02_건물별상세.html</code></td>
+<td>운영자 + 시설팀</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>지하주차장 IR Chain</td>
+<td><code>화면/03_지하주차장_chain.html</code></td>
+<td>운영자 + 현장팀</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>스케줄·룰 편집</td>
+<td><code>화면/04_스케줄_룰편집.html</code></td>
+<td>관리자 + esco-admin</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>장애·알림 센터</td>
+<td><code>화면/05_장애알림센터.html</code></td>
+<td>운영자 + 시설팀</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>월간 절감 리포트</td>
+<td><code>화면/06_절감리포트.html</code></td>
+<td>esco-admin + DGIST 보고용</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td>모바일 앱 (홈·Zone·알림)</td>
+<td><code>화면/07_모바일앱.html</code></td>
+<td>운영자 + 시설팀</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-31">📎 부록 2. 31장 도면 재참조</h2>
+<p>본 운영 제안서가 다루는 31장 도면은 <code>c:\todo\today\신규사업\DGIST_ESCO_LED제어\조명제어\정리\</code> 디렉토리의 <code>E{1~7}_LED표시_강조.pdf</code>에 빨간 zone 외곽선 강조 표시 형태로 존재합니다.</p>
+<h2 id="3">📎 부록 3. 참조 문서</h2>
+<table>
+<thead>
+<tr>
+<th>문서</th>
+<th>위치</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기술자료 (BOM·펌웨어·통신)</td>
+<td><code>report.pdf</code> (41p)</td>
+<td>2026-05-28 발신, UTTEC</td>
+</tr>
+<tr>
+<td>작업기록 (도면 마킹 알고리즘)</td>
+<td><code>작업기록_2026-05-30.md</code></td>
+<td>2026-05-30, 5/30 작업</td>
+</tr>
+<tr>
+<td>LED 마킹 산출물 7개</td>
+<td><code>E{1~7}_LED표시_강조.pdf</code></td>
+<td>2026-05-30 갱신</td>
+</tr>
+<tr>
+<td>시방서 (원문)</td>
+<td>DGIST 발행</td>
+<td>2026-04</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4">📎 부록 4. 변경 이력</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">버전</th>
+<th>날짜</th>
+<th>변경 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">v1.0</td>
+<td>2026-05-30</td>
+<td>초안 작성 (UTTEC → ESCO 사업자)</td>
+</tr>
+<tr>
+<td style="text-align: center;">v2.0</td>
+<td>2026-05-30</td>
+<td>표지·요약·회사 소개 신설 / KPI 면책 고지 / KC 인증 8~12주 정정 / § I 위험·전제 신설 / 시방서 § 2.1·§ 2.2 원문 부록 추가</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>v3.0</strong></td>
+<td><strong>2026-05-30</strong></td>
+<td><strong>사용자 검토 반영 — CORP 섹션에 원조사업(지하주차장 LED 디밍 시스템 UTSOL 2011~ / 12년+ / 10만 등기 이상 / 등기구 제조사 OEM / 지자체 지원사업 안산·진해 / 홈플러스 후방창고) 트랙레코드 신설 + EXEC Executive Summary에 핵심 트랙레코드 5행 추가. DGIST §2.1 IR 354등 매칭 강화</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>v4.0</strong></td>
+<td><strong>2026-05-30</strong></td>
+<td><strong>사용자 결정 반영 — OTA 관련 사항 전체 삭제 (§ A.6.1 OTA 배포 정책 / § C.3.5 SOP-05 OTA 실패 / 표지·EXEC·CORP·§ A·E·G·H·부록 내 OTA 언급 18곳 정리) + § I. 위험·전제 조건·검증 책임 전체 섹션 삭제. § H.1 차별화 표에 지하주차장 디밍 원조사업 행 추가 (CORP와 일관성 확보)</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>v5.0</strong></td>
+<td><strong>2026-05-30</strong></td>
+<td><strong>사용자 결정 반영 — § C.1.1 5단계 역할 표 삭제 (C.1.2 인증 정책 → C.1.1, C.1.3 권한 충돌 정책 → C.1.2 재번호) + Provisioning 관련 전체 정리 (§ A.6 Provisioning 운영 전체 섹션 삭제 / § D.2.4 BLE 노드 등록 삭제 → 모바일 앱 화면 4종 → 3종 / CORP·부록 1 인라인 Provisioning 단어 정리)</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-21-page-3133-line-590620">📎 부록 5. 시방서 § 2.1 원문 발췌 (page 31~33, line 590~620 추정)</h2>
+<p>다음은 시방서 § 2.1 「지하주차장 IR 통신 방식 LED 센서등 설치공사」의 핵심 요구사항 발췌입니다. 본 발췌는 제안서 검토 편의를 위한 것이며, 원문 시방서를 정본으로 합니다.</p>
+<h3 id="_5">가항 — 적용 범위</h3>
+<blockquote>
+<p>"본 공사는 컨실리언스센터 지하주차장의 기존 형광등 28W × 2등용 레이스웨이 등기구(354개)를 IR 통신 방식 LED 센서등으로 1:1 교체하는 공사이다."</p>
+</blockquote>
+<h3 id="_6">나항 — 제품 사양</h3>
+<blockquote>
+<p>"본 제품은 LED 광원 + PIR(적외선) 인체감지센서를 통합 내장하여야 하며, 무동작 시 자동 디밍 또는 소등 기능, 조도 유지 기능(옵션), 그리고 IR 통신을 통한 인접 등기구 신호 연동 기능을 갖추어야 한다."</p>
+</blockquote>
+<h3 id="_7">다항 — 제어 방식</h3>
+<blockquote>
+<p>"본 시스템은 그룹제어 및 무선연동되어야 하며, 무선 디밍센서 인체감지센서를 통하여 인접조명 신호와 연동되어 인접등에 통신 신호를 보내며, 보낸 신호에 의하여 일정 동작 동작신호로 인접등에 순차 점등되어, 사용자가 보행 속도에 매칭되어야 한다. 그룹·연동·단독 제어 3가지를 모두 지원하여야 하며, 그룹 변경을 위한 별도의 설정 장치(예: 리모컨)를 제공하여야 한다."</p>
+</blockquote>
+<h3 id="uttec">UTTEC 본 제안의 충족</h3>
+<p>§ B (운영 상세) + § F.1 매트릭스 + 본 제안서 §3.1 (chain hop 시각화) + 부록 도면(<code>03_지하주차장_chain.html</code>)에서 다항 모든 요구사항을 운영 시나리오까지 명시 충족.</p>
+<hr />
+<h2 id="6-22-page-3133-line-620665">📎 부록 6. 시방서 § 2.2 원문 발췌 (page 31~33, line 620~665 추정)</h2>
+<p>다음은 시방서 § 2.2 「IoT 기반 무선 조명제어 시스템설치 공사」의 핵심 요구사항 발췌입니다. 본 발췌는 제안서 검토 편의를 위한 것이며, 원문 시방서를 정본으로 합니다.</p>
+<h3 id="_8">가항 — 적용 범위</h3>
+<blockquote>
+<p>"본 공사는 본관 지하1층 주차장등(63등), E2~E6동 복도 실내등(408+178등), 중앙기기센터 면조명(68등), 기타 실내등(200등) — 총 917등을 IoT 기반 무선 조명제어 시스템으로 통합 관제하는 공사이다."</p>
+</blockquote>
+<h3 id="_9">나항 — 시스템 구성</h3>
+<blockquote>
+<p>"MAIN CONTROLLER(IoT 통신단말기 내장)와 SUB CONTROLLER로 구성되며, SUB CONTROLLER 1대당 16채널 조명제어가 가능하여야 한다. MAIN CONTROLLER는 LTE/3G/5G 또는 무선 IoT 프로토콜을 통해 양방향 통신이 가능하여야 하며, 보안 암호화를 적용하여야 한다."</p>
+</blockquote>
+<h3 id="_10">다항 — 자동·수동 전환</h3>
+<blockquote>
+<p>"통신 장애 발생 시 SUB CONTROLLER가 자체 정책(스케줄 + PIR 점유)으로 자동 운영을 지속하여야 하며, 통신 복귀 시 자동으로 통합 관제 모드로 복귀하여야 한다."</p>
+</blockquote>
+<h3 id="_11">라항 — 권한·역할 관리</h3>
+<blockquote>
+<p>"시스템은 관리자·운영자·외부의 권한 분리 + 양방향 ACK + 통합 관제 모니터링 + 모바일 앱을 통한 원격 제어를 지원하여야 한다."</p>
+</blockquote>
+<h3 id="uttec_1">UTTEC 본 제안의 충족</h3>
+<p>§ A (운영 상세) + § C (통합 운영) + § D (모바일 앱) + § F.2 매트릭스 + 본 제안서 화면 mockup 1·2·4·5·7번에서 가~라항 모든 요구사항을 운영 시나리오까지 명시 충족.</p>
+<hr />
+<h2 id="7-kpi-vs">📎 부록 7. KPI 수치 산출 근거 (예상·목표·시뮬레이션 vs 실측 구분)</h2>
+<p>본 제안서 + 화면 mockup 7종에 표시된 모든 KPI 수치의 <strong>산출 근거</strong>와 <strong>추정/실측 여부</strong>를 명시합니다.</p>
+<table>
+<thead>
+<tr>
+<th>수치·KPI</th>
+<th style="text-align: center;">종류</th>
+<th>산출 근거</th>
+<th>실측 가능 시점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>전체 LED 1,271등</td>
+<td style="text-align: center;">실측</td>
+<td>시방서 § 2.1 + § 2.2 합계</td>
+<td>현재 (확정)</td>
+</tr>
+<tr>
+<td>§2.1 IR 354등 / §2.2 BLE Mesh 917등 분리</td>
+<td style="text-align: center;">실측</td>
+<td>시방서 명시</td>
+<td>현재 (확정)</td>
+</tr>
+<tr>
+<td>31장 도면 매핑</td>
+<td style="text-align: center;">실측</td>
+<td>E1~E7 PDF 정리 작업 (2026-05-30)</td>
+<td>현재 (확정)</td>
+</tr>
+<tr>
+<td>Zone 수 약 27개</td>
+<td style="text-align: center;">설계치</td>
+<td>UTTEC 설계 (16~64등/zone 권장)</td>
+<td>Phase 1 설계 시 확정</td>
+</tr>
+<tr>
+<td>절감률 −62.1% (대시보드)</td>
+<td style="text-align: center;"><strong>시뮬레이션</strong></td>
+<td>일본 사카에 자전거 주차장 BLE Mesh 사례 + 산업 평균 (occupancy 센서 60% 효율)</td>
+<td>Phase 5 PoC 30일 후</td>
+</tr>
+<tr>
+<td>절감률 목표 ≥ 55% (일반) / ≥ 65% (주차장)</td>
+<td style="text-align: center;"><strong>시방서 목표</strong></td>
+<td>시방서 § 제3장 절감 기준</td>
+<td>Phase 5 PoC 30일 후</td>
+</tr>
+<tr>
+<td>실시간 소비전력 8.4 kWh/h</td>
+<td style="text-align: center;"><strong>시뮬레이션</strong></td>
+<td>1,271 × 평균 35W × 점유율 0.36 추정</td>
+<td>Phase 5 PoC 후</td>
+</tr>
+<tr>
+<td>baseline 22.2 kWh/h</td>
+<td style="text-align: center;"><strong>추정 상한</strong></td>
+<td>1,271 × 평균 35W × 50% 점유 baseline</td>
+<td>Phase 5 PoC에서 기존 등기구 1주 측정으로 대체</td>
+</tr>
+<tr>
+<td>PIR 트리거 1,287회/일 (주차장)</td>
+<td style="text-align: center;"><strong>시뮬레이션</strong></td>
+<td>평일 차량 출입 약 800~1,200대 가정 + 동선 hop</td>
+<td>DGIST 측 차량 출입 데이터 + Phase 5 측정</td>
+</tr>
+<tr>
+<td>chain latency 32ms (실측 표기)</td>
+<td style="text-align: center;"><strong>벤치 측정</strong></td>
+<td>UTTEC 사내 시제품 IR 패킷 + TSOP 측정</td>
+<td>Phase 4 사내 검증 (이미 검증 가능)</td>
+</tr>
+<tr>
+<td>Mesh hop avg 1.8</td>
+<td style="text-align: center;">설계치</td>
+<td>Zone 토폴로지 시뮬레이션</td>
+<td>Phase 5 PoC에서 실측</td>
+</tr>
+<tr>
+<td>응답 시간 78ms (Mesh)</td>
+<td style="text-align: center;">설계치</td>
+<td>BLE Mesh 1.1 표준 평균 (Bluetooth SIG 통계)</td>
+<td>Phase 5 PoC에서 실측</td>
+</tr>
+<tr>
+<td>가용성 99.6%</td>
+<td style="text-align: center;"><strong>목표</strong></td>
+<td>SLA 목표 ≥ 99.0% 기준 + 운영 자신감</td>
+<td>운영 후 월별 실측</td>
+</tr>
+<tr>
+<td>월 절감 14,820 kWh</td>
+<td style="text-align: center;"><strong>시뮬레이션</strong></td>
+<td>절감률 66.6% × baseline 22,250 kWh</td>
+<td>운영 후 월별 실측</td>
+</tr>
+<tr>
+<td>월 절감 비용 ₩2,223,000</td>
+<td style="text-align: center;"><strong>시뮬레이션</strong></td>
+<td>단가 ₩150/kWh (산업용 평균)</td>
+<td>운영 후 월별 실측</td>
+</tr>
+<tr>
+<td>월 CO2 6.82 ton</td>
+<td style="text-align: center;"><strong>시뮬레이션</strong></td>
+<td>한전 평균 발전계수 0.46 kg-CO2/kWh</td>
+<td>운영 후 월별 실측</td>
+</tr>
+<tr>
+<td>단가 (Node 6.5만 / Gateway 80만 / IR 8만)</td>
+<td style="text-align: center;"><strong>추정 양산 단가</strong></td>
+<td>UTTEC 양산 견적 (Phase 0 확정 대상)</td>
+<td>협력 모델 확정 시</td>
+</tr>
+<tr>
+<td>5년 사후관리 ≈ 5,300만 원</td>
+<td style="text-align: center;"><strong>추정</strong></td>
+<td>부품 보충 + 진단 + 24/7 oncall 시간 추정</td>
+<td>협력 모델 확정 시 견적</td>
+</tr>
+<tr>
+<td>알림 티켓 ID (T-2026-0530-014 등)</td>
+<td style="text-align: center;"><strong>시뮬레이션</strong></td>
+<td>mockup 데이터</td>
+<td>실제 운영 시 자동 발번</td>
+</tr>
+<tr>
+<td>Zone 점유율 히트맵 %</td>
+<td style="text-align: center;"><strong>시뮬레이션</strong></td>
+<td>학교 시설 시간대별 평균 패턴</td>
+<td>운영 후 누적 데이터</td>
+</tr>
+<tr>
+<td>일별 절감량 막대 그래프</td>
+<td style="text-align: center;"><strong>시뮬레이션</strong></td>
+<td>평일·주말 패턴 모델</td>
+<td>운영 후 일별 실측</td>
+</tr>
+</tbody>
+</table>
+<h3 id="kpi">KPI 신뢰도 단계</h3>
+<ul>
+<li><strong>확정 (실측)</strong>: 시방서 수치 (1,271등), 도면 매핑, 시제품 측정값</li>
+<li><strong>검증 가능 (Phase 4)</strong>: chain latency, BLE Mesh 토폴로지 응답</li>
+<li><strong>PoC 검증 필요 (Phase 5)</strong>: 절감률, baseline, 가용성, 사용자 만족도</li>
+<li><strong>장기 운영 검증 (Phase 8 후)</strong>: 월/연 절감 추세, 시즌 패턴, 부품 단등률</li>
+</ul>
+<p>ESCO 사업자(귀사)께서 DGIST 또는 외부에 본 제안서 수치 인용 시 위 신뢰도 단계를 함께 표기해 주시기 바랍니다.</p>
+<hr />
+<p><strong>문서 끝.</strong>
+UTTEC × DGIST ESCO사업 · LED 조명제어 시스템 운영 제안서 v5.0 · 2026-05-30</p>
+</body>
+</html>

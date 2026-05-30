@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>장애·알림 센터 — DGIST 조명제어</title>
+<style>
+  :root {
+    --bg:#0b1220; --panel:#111a2c; --panel-2:#16243b; --line:#1f2f4a;
+    --text:#e6edf6; --muted:#8aa0bf; --accent:#ff6b1a; --green:#2ec27e;
+    --blue:#5aa5ff; --yellow:#f5c84b; --red:#ff5b6a; --purple:#b48cff;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif; font-size:13px; }
+  header.top { display:flex; align-items:center; padding:12px 20px; background:#07101e; border-bottom:1px solid var(--line); }
+  .logo { font-weight:700; } .logo .dgist { color:var(--accent); }
+  .nav { margin-left:24px; display:flex; gap:16px; color:var(--muted); }
+  .nav .active { color:var(--text); border-bottom:2px solid var(--accent); padding-bottom:6px; }
+  .live { margin-left:auto; display:flex; gap:14px; color:var(--muted); font-size:12px; align-items:center; }
+  .dot { width:8px; height:8px; border-radius:50%; background:var(--green); display:inline-block; box-shadow:0 0 8px var(--green); }
+  .stats { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; padding:14px 16px 0; }
+  .stat { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px; }
+  .stat .label { font-size:11px; color:var(--muted); text-transform:uppercase; }
+  .stat .v { font-size:24px; font-weight:700; margin-top:4px; }
+  .stat .meta { font-size:11px; color:var(--muted); margin-top:2px; }
+  .v.crit { color:var(--red); }
+  .v.warn { color:var(--yellow); }
+  .v.ok { color:var(--green); }
+  .grid { display:grid; grid-template-columns:1fr 380px; gap:12px; padding:12px 16px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px; }
+  .card h3 { margin:0 0 10px; font-size:12px; color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:.5px; }
+  .filters { display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+  .filter { padding:5px 12px; border-radius:14px; font-size:11px; border:1px solid var(--line); cursor:pointer; color:var(--muted); }
+  .filter.active { background:var(--accent); color:white; border-color:var(--accent); }
+  table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  th, td { text-align:left; padding:9px 6px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase; }
+  .sev { display:inline-block; width:8px; height:8px; border-radius:50%; vertical-align:middle; margin-right:6px; }
+  .sev.crit { background:var(--red); box-shadow:0 0 6px var(--red); animation:blink 1.4s infinite; }
+  .sev.warn { background:var(--yellow); }
+  .sev.info { background:var(--blue); }
+  .sev.ok { background:var(--green); }
+  @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+  .pill { display:inline-block; padding:1px 7px; border-radius:10px; font-size:11px; }
+  .pill.open { background:rgba(255,91,106,.15); color:var(--red); border:1px solid rgba(255,91,106,.4); }
+  .pill.prog { background:rgba(245,200,75,.18); color:var(--yellow); border:1px solid rgba(245,200,75,.4); }
+  .pill.done { background:rgba(46,194,126,.18); color:var(--green); border:1px solid rgba(46,194,126,.4); }
+  .pill.assg { background:rgba(180,140,255,.15); color:var(--purple); }
+  .small { font-size:11.5px; color:var(--muted); }
+  .ticket-detail { background:var(--panel-2); border-radius:4px; padding:14px; }
+  .ticket-detail .row { padding:5px 0; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; }
+  .ticket-detail .row .k { color:var(--muted); }
+  .ticket-detail .row:last-child { border-bottom:0; }
+  .ticket-detail h2 { margin:0 0 6px; font-size:15px; color:var(--text); }
+  .timeline-vert { margin-top:14px; }
+  .timeline-vert .ev { display:flex; gap:10px; padding:6px 0; align-items:flex-start; }
+  .timeline-vert .ev .ic { width:24px; text-align:center; color:var(--blue); }
+  .timeline-vert .ev .t { font-size:11px; color:var(--muted); width:64px; }
+  .timeline-vert .ev .body { font-size:12px; flex:1; }
+  .btn { background:var(--accent); color:white; border:none; padding:7px 12px; border-radius:4px; cursor:pointer; font-weight:600; font-size:12px; }
+  .btn.sec { background:transparent; color:var(--blue); border:1px solid var(--blue); }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><span class="dgist">DGIST</span> · 조명제어 통합 관제</div>
+  <nav class="nav">
+    <span>개요</span>
+    <span>건물별 상세</span>
+    <span>지하주차장</span>
+    <span>스케줄/룰</span>
+    <span class="active">알림</span>
+    <span>리포트</span>
+    <span>관리</span>
+  </nav>
+  <div class="live">
+    <span style="background:rgba(245,200,75,.18); color:var(--yellow); padding:3px 8px; border-radius:3px; border:1px solid rgba(245,200,75,.4); font-weight:600;">⚠ MOCKUP</span>
+    <span><span class="dot"></span> LIVE</span>
+    <span>2026-05-30 14:23</span>
+  </div>
+</header>
+
+<section class="stats">
+  <div class="stat">
+    <div class="label">OPEN 티켓</div>
+    <div class="v crit">3</div>
+    <div class="meta">24h 신규 5건 · 처리 2건</div>
+  </div>
+  <div class="stat">
+    <div class="label">IN PROGRESS</div>
+    <div class="v warn">2</div>
+    <div class="meta">평균 처리 시간 4h 12m</div>
+  </div>
+  <div class="stat">
+    <div class="label">금주 RESOLVED</div>
+    <div class="v ok">14</div>
+    <div class="meta">평균 SLA 98% 달성</div>
+  </div>
+  <div class="stat">
+    <div class="label">통신 단절 노드</div>
+    <div class="v warn">5</div>
+    <div class="meta">전체 1,271등 중 0.4%</div>
+  </div>
+  <div class="stat">
+    <div class="label">월 평균 가용성</div>
+    <div class="v ok">99.6%</div>
+    <div class="meta">2026-05 (목표 ≥99.0%)</div>
+  </div>
+</section>
+
+<section class="grid">
+  <div class="card">
+    <h3>알림·티켓 목록</h3>
+    <div class="filters">
+      <span class="filter active">전체 (19)</span>
+      <span class="filter">CRITICAL (3)</span>
+      <span class="filter">WARNING (2)</span>
+      <span class="filter">INFO (14)</span>
+      <span class="filter">§2.1 IR</span>
+      <span class="filter">§2.2 BLE Mesh</span>
+      <span class="filter">미할당</span>
+      <span class="filter">내 할당</span>
+    </div>
+
+    <table>
+      <tr><th>심각도</th><th>티켓 ID</th><th>제목</th><th>위치</th><th>상태</th><th>담당</th><th>SLA</th></tr>
+
+      <tr>
+        <td><span class="sev crit"></span>CRIT</td>
+        <td><strong>T-2026-0530-014</strong></td>
+        <td>Light B-23 통신 단절 (BLE Mesh)</td>
+        <td>E3 4F PN4</td>
+        <td><span class="pill open">OPEN</span></td>
+        <td><span class="pill assg">현장팀-A</span></td>
+        <td>4h 남음</td>
+      </tr>
+
+      <tr>
+        <td><span class="sev crit"></span>CRIT</td>
+        <td>T-2026-0530-013</td>
+        <td>지하주차장 G07-L6 단등 고장</td>
+        <td>E7 B1 G07</td>
+        <td><span class="pill prog">IN PROG</span></td>
+        <td><span class="pill assg">현장팀-B</span></td>
+        <td>2h 남음</td>
+      </tr>
+
+      <tr>
+        <td><span class="sev crit"></span>CRIT</td>
+        <td>T-2026-0530-012</td>
+        <td>E5 5F Zone 통신 지연 평균 320ms 초과</td>
+        <td>E5 5F</td>
+        <td><span class="pill open">OPEN</span></td>
+        <td><span class="pill">미할당</span></td>
+        <td>6h 남음</td>
+      </tr>
+
+      <tr>
+        <td><span class="sev warn"></span>WARN</td>
+        <td>T-2026-0530-011</td>
+        <td>Zone 4 평균 디밍 시간 전월 대비 +18% (이상 동선)</td>
+        <td>E3 전체</td>
+        <td><span class="pill prog">IN PROG</span></td>
+        <td><span class="pill assg">esco-admin</span></td>
+        <td>1d 남음</td>
+      </tr>
+
+      <tr>
+        <td><span class="sev warn"></span>WARN</td>
+        <td>T-2026-0530-010</td>
+        <td>주차장 G10 PIR 트리거 폭주 (정상 범위 1.4×)</td>
+        <td>E7 B1 G10</td>
+        <td><span class="pill prog">IN PROG</span></td>
+        <td><span class="pill assg">esco-admin</span></td>
+        <td>1d 남음</td>
+      </tr>
+
+      <tr>
+        <td><span class="sev info"></span>INFO</td>
+        <td>T-2026-0530-009</td>
+        <td>OTA 펌웨어 v1.4.2 — E5 3F 배포 완료, 24h 모니터링</td>
+        <td>E5 3F</td>
+        <td><span class="pill done">DONE</span></td>
+        <td><span class="pill assg">UTTEC</span></td>
+        <td>—</td>
+      </tr>
+
+      <tr>
+        <td><span class="sev info"></span>INFO</td>
+        <td>T-2026-0530-008</td>
+        <td>지하주차장 자가진단 통과 (HEARTBEAT 1,287회)</td>
+        <td>E7 B1 전체</td>
+        <td><span class="pill done">DONE</span></td>
+        <td><span class="pill assg">시스템</span></td>
+        <td>—</td>
+      </tr>
+
+      <tr>
+        <td><span class="sev info"></span>INFO</td>
+        <td>T-2026-0530-007</td>
+        <td>Mosquitto MQTT broker 재시작 — 메모리 정리</td>
+        <td>관제 서버</td>
+        <td><span class="pill done">DONE</span></td>
+        <td><span class="pill assg">시스템</span></td>
+        <td>—</td>
+      </tr>
+
+      <tr>
+        <td><span class="sev info"></span>INFO</td>
+        <td>T-2026-0529-019</td>
+        <td>Gateway B (Standby) 자동 failover 검증 성공</td>
+        <td>관제 서버</td>
+        <td><span class="pill done">DONE</span></td>
+        <td><span class="pill assg">시스템</span></td>
+        <td>—</td>
+      </tr>
+
+      <tr>
+        <td><span class="sev info"></span>INFO</td>
+        <td>T-2026-0529-018</td>
+        <td>E4 2F 강의실 청소 Scene 호출됨 (시설팀 작업)</td>
+        <td>E4 2F</td>
+        <td><span class="pill done">DONE</span></td>
+        <td><span class="pill assg">시설팀</span></td>
+        <td>—</td>
+      </tr>
+
+      <tr>
+        <td><span class="sev info"></span>INFO</td>
+        <td>T-2026-0529-017</td>
+        <td>일일 절감 리포트 자동 발행 (PDF)</td>
+        <td>전체</td>
+        <td><span class="pill done">DONE</span></td>
+        <td><span class="pill assg">시스템</span></td>
+        <td>—</td>
+      </tr>
+    </table>
+
+    <h3 style="margin-top:18px;">알림 채널 (시방서 §2.2 라항 양방향 + ACK)</h3>
+    <table>
+      <tr><th>채널</th><th>대상</th><th>심각도</th><th>SLA</th></tr>
+      <tr><td>SMS</td><td>현장팀 당직자</td><td>CRIT, 야간 WARN</td><td>5분 내</td></tr>
+      <tr><td>이메일</td><td>esco-admin, 시설운영팀</td><td>CRIT, WARN, INFO</td><td>15분 내</td></tr>
+      <tr><td>대시보드 팝업</td><td>로그인 사용자</td><td>전체</td><td>즉시</td></tr>
+      <tr><td>음성 전화</td><td>당직자 (CRIT 5분 무응답 시)</td><td>CRIT only</td><td>5분 무응답 시</td></tr>
+      <tr><td>Slack #esco-dgist</td><td>UTTEC + DGIST 협업방</td><td>WARN 이상</td><td>즉시</td></tr>
+    </table>
+  </div>
+
+  <div class="card ticket-detail">
+    <h3>티켓 상세 · T-2026-0530-014</h3>
+    <h2>Light B-23 통신 단절</h2>
+    <div class="row"><span class="k">심각도</span><span><span class="sev crit"></span>CRITICAL</span></div>
+    <div class="row"><span class="k">상태</span><span><span class="pill open">OPEN</span></span></div>
+    <div class="row"><span class="k">위치</span><span>E3 4F · Zone Z-E3-04 · 노드 PN4</span></div>
+    <div class="row"><span class="k">시스템</span><span>§2.2 BLE Mesh</span></div>
+    <div class="row"><span class="k">감지 시각</span><span>2026-05-30 14:18:32</span></div>
+    <div class="row"><span class="k">담당</span><span>현장팀-A 담당자</span></div>
+    <div class="row"><span class="k">SLA</span><span style="color:var(--yellow)">4h 18m 남음 (목표 12h)</span></div>
+    <div class="row"><span class="k">자동 조치</span><span>Mesh self-heal (PN3·PN5 우회)</span></div>
+    <div class="row"><span class="k">영향</span><span>해당 zone 운영 정상 (단등만 단절)</span></div>
+
+    <h3 style="margin-top:16px;">진행 타임라인</h3>
+    <div class="timeline-vert">
+      <div class="ev">
+        <div class="ic">●</div>
+        <div class="t">14:18</div>
+        <div class="body"><strong>감지</strong> · heartbeat 5분 lost · 자동 티켓 발행</div>
+      </div>
+      <div class="ev">
+        <div class="ic">●</div>
+        <div class="t">14:18</div>
+        <div class="body">Mesh self-heal 자동 발동 · 인접 PN3·PN5 우회 ACK</div>
+      </div>
+      <div class="ev">
+        <div class="ic">●</div>
+        <div class="t">14:19</div>
+        <div class="body">esco-admin 알림 수신 (이메일 + 대시보드)</div>
+      </div>
+      <div class="ev">
+        <div class="ic">●</div>
+        <div class="t">14:22</div>
+        <div class="body">현장팀-A 할당 · SMS 발송</div>
+      </div>
+      <div class="ev">
+        <div class="ic">○</div>
+        <div class="t">예정</div>
+        <div class="body">현장 도착 → 시각 확인 → 노드 교체 또는 재시작</div>
+      </div>
+      <div class="ev">
+        <div class="ic">○</div>
+        <div class="t">예정</div>
+        <div class="body">검증 통신 복귀 후 self-heal 해제 + 자가진단</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px; display:flex; gap:6px; flex-wrap:wrap;">
+      <button class="btn">현장 도착 보고</button>
+      <button class="btn sec">진단 명령</button>
+      <button class="btn sec">강제 재시작</button>
+      <button class="btn sec">에스컬레이션</button>
+    </div>
+
+    <h3 style="margin-top:18px;">관련 노드 자가진단</h3>
+    <pre style="background:#0a1322; padding:10px; border-radius:3px; font-family:'Consolas',monospace; font-size:11.5px; color:var(--muted); margin:0;">
+PN4 (faulty):
+  last_heartbeat: 2026-05-30T14:13:21
+  rssi:           -82 dBm (정상 -65)
+  battery:        N/A (mains)
+  led_driver_ok:  unknown (no response)
+  next_action:    physical inspection
+
+PN3 (relay):     OK · forwarded 87 packets
+PN5 (relay):     OK · forwarded 91 packets
+Mesh self-heal:  Active · route bypass via PN3</pre>
+  </div>
+</section>
+</body>
+</html>
