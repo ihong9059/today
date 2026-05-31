@@ -1,0 +1,132 @@
+/*
+ * UTTEC BLE Module — 5-channel UART bring-up test (3 TX + 2 RX, 9600 8N1).
+ *
+ * J28 14-pin 핀맵 (2026-05-31 사용자 실측 확정):
+ *   Pin 1  P0.11  TX1   HW UART0 TX → LoRa E22 RXD
+ *   Pin 2  P0.15  TX2   SW-UART (SPI1 MOSI) → MAX485 DI (RS485)
+ *   Pin 3  P0.13  RX1   HW UART0 RX ← LoRa E22 TXD
+ *   Pin 4  P0.02  RX2   SW-UART (GPIO INT) ← MAX485 RO (RS485)
+ *   Pin 5  P0.08  (free)
+ *   Pin 6  P0.17  LoRa M0   GPIO OUT
+ *   Pin 7  P0.22  TX3   SW-UART (SPI2 MOSI) → Debug console
+ *   Pin 8  P0.19  LoRa M1   GPIO OUT
+ *   Pin 9  P0.24  DE/RE     GPIO OUT (MAX485 direction)
+ *   Pin 10 P0.20  LoRa AUX  GPIO IN + pull-up (busy signal)
+ *   Pin 11 VDDA_3.3V        MAX485 VCC
+ *   Pin 12 P0.04  (free)
+ *   Pin 13 GND
+ *   Pin 14 (PCB 미연결)
+ *
+ * LED (회로도 net 확정 — lora_tx reference):
+ *   D21 BLUE = P0.23  ACTIVE_LOW
+ *   D22 RED  = P0.18  ACTIVE_LOW
+ */
+
+&pinctrl {
+	/* UART0 = LoRa 데이터 통신 (TX=P0.11, RX=P0.13, 9600 8N1) */
+	uart0_default: uart0_default {
+		group1 {
+			psels = <NRF_PSEL(UART_TX, 0, 11)>;
+		};
+		group2 {
+			psels = <NRF_PSEL(UART_RX, 0, 13)>;
+			bias-pull-up;
+		};
+	};
+
+	uart0_sleep: uart0_sleep {
+		group1 {
+			psels = <NRF_PSEL(UART_TX, 0, 11)>,
+				<NRF_PSEL(UART_RX, 0, 13)>;
+			low-power-enable;
+		};
+	};
+
+	/* SPI1 MOSI = SW-UART TX2 (MAX485 DI, P0.15, 1 MHz SPI for 9600 baud) */
+	spi1_default_alt: spi1_default_alt {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 12)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 15)>;
+			bias-pull-up;
+		};
+	};
+
+	spi1_sleep_alt: spi1_sleep_alt {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 12)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 15)>;
+			low-power-enable;
+			bias-pull-up;
+		};
+	};
+
+	/* SPI2 MOSI = SW-UART TX3 (Debug console, P0.22, 1 MHz SPI for 9600 baud) */
+	spi2_default_alt: spi2_default_alt {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 14)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 22)>;
+			bias-pull-up;
+		};
+	};
+
+	spi2_sleep_alt: spi2_sleep_alt {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 14)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 22)>;
+			low-power-enable;
+			bias-pull-up;
+		};
+	};
+};
+
+&uart0 {
+	status = "okay";
+	current-speed = <9600>;
+	pinctrl-0 = <&uart0_default>;
+	pinctrl-1 = <&uart0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&i2c0 { status = "disabled"; };
+&i2c1 { status = "disabled"; };
+
+&spi0 { status = "disabled"; };  /* slot 0 = UART0 */
+
+&spi1 {
+	status = "okay";
+	compatible = "nordic,nrf-spim";
+	pinctrl-0 = <&spi1_default_alt>;
+	pinctrl-1 = <&spi1_sleep_alt>;
+	pinctrl-names = "default", "sleep";
+};
+
+&spi2 {
+	status = "okay";
+	compatible = "nordic,nrf-spim";
+	pinctrl-0 = <&spi2_default_alt>;
+	pinctrl-1 = <&spi2_sleep_alt>;
+	pinctrl-names = "default", "sleep";
+};
+
+/* PCA10040 board DT가 P0.13을 sw0 (button0)으로 reserve.
+ * UART0 RX와 충돌 막기 위해 button0 비활성. */
+&button0 { status = "disabled"; };
+
+/ {
+	aliases {
+		uttec-led-red = &uttec_led_red;
+		uttec-led-blue = &uttec_led_blue;
+	};
+
+	uttec_leds {
+		compatible = "gpio-leds";
+		uttec_led_red: led_red {
+			gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
+			label = "UTTEC RED D22";
+		};
+		uttec_led_blue: led_blue {
+			gpios = <&gpio0 23 GPIO_ACTIVE_LOW>;
+			label = "UTTEC BLUE D21";
+		};
+	};
+};

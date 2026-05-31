@@ -26,6 +26,7 @@
 - [RPi USB ethernet 직결 셋업](reference_rpi_usb_ethernet_direct.md) — PC ↔ RPi 1:1 SSH (10.0.0.1 ↔ 10.0.0.2). Tailscale·Wi-Fi 무관. 본 PC `Host rasp_b3_direct` alias + 이더넷 9 (Realtek USB GbE) 이미 셋업. 새 RPi 추가 시 RPi 측만 셋업하면 즉시 사용
 - [RPi 본체 ethernet + ICS DHCP 셋업](reference_rpi_ics_dhcp_setup.md) — 본체 이더넷 6 (Intel I219-V) + Wi-Fi 4 ICS 활성화 → RPi DHCP 192.168.137.x 자동 + 인터넷 공유. RPi 측 셋업 변경 0. ncpa.cpl → Wi-Fi 4 공유 탭 5단계 GUI. RPi 3 B+ 검증 완료 (192.168.137.248, MAC B8-27-EB-25-F8-4C, hostname uttec)
 - [Terminal 기본 디렉토리 C:\todo](reference_terminal_default_dir.md) — myhome-lenovo cmd registry AutoRun + PowerShell $PROFILE 적용 (5/21). 새 PC 셋업 시 같은 절차 재적용
+- [NCS 빌드 ↔ cmd AutoRun 충돌 ⭐](feedback_ncs_build_cmd_autorun_conflict.md) — NCS/Zephyr 빌드 시 AutoRun이 ninja/ar.exe CWD를 망가뜨려 빌드 실패. 빌드 전후 AutoRun 일시 해제 패턴 필수
 - [vault scope 격리](feedback_vault_scope_isolation.md) — vault 안 작업 시 외부 자산 자동 동기화 금지, /vault-end ≠ /work-end (책임 분리)
 - [응답 진행 로그 분리](feedback_progress_log_isolation.md) — 매 응답은 이번 prompt 내용만 (자세하게 OK), 이전 prompt 재서술 금지, 전체 누적은 _current_progress.md에
 - [할일·프롬프트 표시 — 사용자 행동 구분](feedback_todo_display_user_action.md) — 할일 테이블+응답 본문 전체. 사용자 직접 행동은 👤 (🔴+👤 시급), Claude 처리 가능은 🤖. 액션 요청·결정·확인 prompt에도 동일 적용
