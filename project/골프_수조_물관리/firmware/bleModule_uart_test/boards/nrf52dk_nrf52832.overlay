@@ -1,14 +1,14 @@
 /*
- * UTTEC BLE Module — 5-channel UART bring-up test (3 TX + 2 RX, 9600 8N1).
+ * UTTEC BLE Module — 7-channel UART bring-up test (4 TX + 3 RX, 9600 / 115200 8N1).
  *
  * J28 14-pin 핀맵 (2026-05-31 사용자 실측 확정):
  *   Pin 1  P0.11  TX1   HW UART0 TX → LoRa E22 RXD
  *   Pin 2  P0.15  TX2   SW-UART (SPI1 MOSI) → MAX485 DI (RS485)
  *   Pin 3  P0.13  RX1   HW UART0 RX ← LoRa E22 TXD
  *   Pin 4  P0.02  RX2   SW-UART (GPIO INT) ← MAX485 RO (RS485)
- *   Pin 5  P0.08  (free)
+ *   Pin 5  P0.08  RX4   SW-UART (GPIO INT) ← PCA10040 USB-VCOM RX (9600)
  *   Pin 6  P0.17  LoRa M0   GPIO OUT
- *   Pin 7  P0.22  TX3   SW-UART (SPI2 MOSI) → Debug console
+ *   Pin 7  P0.22  TX3   SW-UART (SPI2 MOSI) → Debug console (115200, CP210x)
  *   Pin 8  P0.19  LoRa M1   GPIO OUT
  *   Pin 9  P0.24  DE/RE     GPIO OUT (MAX485 direction)
  *   Pin 10 P0.20  LoRa AUX  GPIO IN + pull-up (busy signal)
@@ -16,6 +16,13 @@
  *   Pin 12 P0.04  (free)
  *   Pin 13 GND
  *   Pin 14 (PCB 미연결)
+ *
+ * J23 (SWD/UART 헤더, 양산보드만):
+ *   Pin 2  P0.06  TX4   SW-UART (SPI0 MOSI) → PCA10040 USB-VCOM TX (9600)
+ *   Pin 3  P0.08  RX4   = J28 Pin 5 동일 net
+ *
+ * PCA10040 onboard J-Link OB VCOM 직결:
+ *   P0.06 (TX) / P0.08 (RX) → USB CDC. HyperTerminal 9600 8N1로 직접 PC↔MCU.
  *
  * LED (회로도 net 확정 — lora_tx reference):
  *   D21 BLUE = P0.23  ACTIVE_LOW
@@ -60,7 +67,7 @@
 		};
 	};
 
-	/* SPI2 MOSI = SW-UART TX3 (Debug console, P0.22, 1 MHz SPI for 9600 baud) */
+	/* SPI2 MOSI = SW-UART TX3 (Debug console, P0.22, 8 MHz SPI for 115200 baud) */
 	spi2_default_alt: spi2_default_alt {
 		group1 {
 			psels = <NRF_PSEL(SPIM_SCK, 0, 14)>,
@@ -73,6 +80,26 @@
 		group1 {
 			psels = <NRF_PSEL(SPIM_SCK, 0, 14)>,
 				<NRF_PSEL(SPIM_MOSI, 0, 22)>;
+			low-power-enable;
+			bias-pull-up;
+		};
+	};
+
+	/* SPI0 MOSI = SW-UART TX4 (USB-VCOM, P0.06, 1 MHz SPI for 9600 baud).
+	 * PCA10040 onboard J-Link OB VCOM 직결 (P0.06 TX / P0.08 RX).
+	 * dummy SCK = P0.16 (J28 미노출, free). */
+	spi0_default_alt: spi0_default_alt {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 16)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 6)>;
+			bias-pull-up;
+		};
+	};
+
+	spi0_sleep_alt: spi0_sleep_alt {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 16)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 6)>;
 			low-power-enable;
 			bias-pull-up;
 		};
@@ -90,7 +117,13 @@
 &i2c0 { status = "disabled"; };
 &i2c1 { status = "disabled"; };
 
-&spi0 { status = "disabled"; };  /* slot 0 = UART0 */
+&spi0 {
+	status = "okay";
+	compatible = "nordic,nrf-spim";
+	pinctrl-0 = <&spi0_default_alt>;
+	pinctrl-1 = <&spi0_sleep_alt>;
+	pinctrl-names = "default", "sleep";
+};
 
 &spi1 {
 	status = "okay";

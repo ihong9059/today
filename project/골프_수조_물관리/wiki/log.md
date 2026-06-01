@@ -351,6 +351,45 @@ nRF52832 SPIM은 Product Anomaly 58 (RXD.MAXCNT==1 + TXD.MAXCNT<=1 시 추가 by
 - `firmware/bleModule_uart_test/src/sw_uart_rx.{h,c}` — GPIO INT 기반 SW RX
 - `firmware/bleModule_uart_test/src/main.c` — 5-channel 통합 + RX→TX3 monitor
 
+## [2026-06-01] firmware ⭐⭐⭐ | SW-UART TX 깨짐 root cause 확정 + baud-dependent fix
+
+5/31 deep-dive 9 iteration이 미해결 상태로 종료된 TX2 SW-UART (9600) 깨짐 문제, 6/1 오전 사용자 HyperTerminal 재확인을 통해 root cause 확정 + 양 baud 안정 동작 fix 완료.
+
+### Root cause (확정)
+
+`sw_uart_write()` 가 byte마다 별도 `spi_write()` 호출 → byte 사이 SPI peripheral이 MOSI driver 해제하는 순간 brief LOW glitch 발생. 9600 baud bit period (104 µs) 의 큰 비율이라 CP210x 16x oversampling이 false start로 인식 → 첫 byte 후 모두 깨짐.
+
+TX2→RX2 internal loopback이 100% OK였던 이유: `sw_uart_rx` 가 busy-wait single sample이라 glitch 미감지. **internal 검증이 우리를 5/31 9 iteration으로 오도**.
+
+### Fix — baud-dependent 분기
+
+| baud | 전략 | 이유 |
+|:-:|---|---|
+| 9600 | Single concatenated SPI transaction | inter-transaction gap glitch 제거 |
+| 115200 | Per-byte SPI transaction | back-to-back byte 사이 idle 부족 회피 (glitch 자체는 bit period 짧음으로 무영향) |
+
+같은 물리 glitch가 baud rate에 따라 정반대 영향 → universal fix가 새 bug 도입 가능성 박제.
+
+### 검증 (HyperTerminal CP210x)
+
+- TX2 (9600) ✅ 깔끔 ("TX2: N\r\n" 100% 정상)
+- TX3 (115200) ✅ 깔끔 ("TX3:", "RX2:", stats 모두 정상)
+- jumper noise로 false_start ~2/sec, framing ~1/sec — MAX485 양산 시 해소 예상
+
+### Interrupt 부하 분석 (양산 안전 확인)
+
+`sw_uart_rx` ISR busy-wait 1 ms/byte (Zephyr ISR nested 안 함). 현 부하 12 ISR/sec = 1.2% CPU. **Modbus 1 Hz polling 양산 시나리오 1% CPU avg, 안전**. continuous burst 시만 위험하나 실제 sensor는 burst 아님.
+
+### 산출물
+
+- `firmware/bleModule_uart_test/src/sw_uart.c` — baud-dependent 분기 적용
+- `firmware/bleModule_uart_test/README.md` — 1단계 stale → 현 5-channel + per-baud strategy 정확히 갱신
+- `wiki/thoughts/2026-Q2/2026-06-01_sw-uart-tx-debug-cp210x.md` — 디버그 전 과정 박제 (Hypothesis A/B/C 진화, root cause, fix, 교훈)
+
+### 양산 PCB 영향
+
+본 fix는 디버그 환경 (CP210x 단일-ended) 정상 동작 보장. 양산 MAX485 + RS485 차동 환경은 transceiver hysteresis + 차동 noise rejection으로 본 fix 없이도 더 robust 가능. 그러나 **6/2 (화) 수조 sensing test 시 HyperTerminal raw Modbus frame 모니터 가능** = 디버그 가치.
+
 ## 다음 박제 예정 (할 일 큐)
 
 - `## [2026-05-19] milestone | LoRa 통신 거리·상태 검증 + 계약서 사인` ⭐ D-day

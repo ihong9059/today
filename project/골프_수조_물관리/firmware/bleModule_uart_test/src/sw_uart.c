@@ -116,6 +116,21 @@ int sw_uart_init(struct sw_uart *u, const struct device *spi_dev, enum sw_uart_b
 	return 0;
 }
 
+/* Per-baud TX strategy (CP210x USB-UART observed):
+ *   9600  : single concatenated SPI transaction. Inter-transaction MOSI gap
+ *           (~수십 µs) was being read as false start by 16x-oversampling
+ *           receivers because 9600 bit period (104 µs) is much longer than
+ *           the glitch. Solution: pack whole string into one transaction so
+ *           MOSI is continuously driven.
+ *   115200: per-byte transactions. Bit period (8.7 µs) is shorter than
+ *           inter-transaction glitch, so receiver doesn't see false starts.
+ *           Conversely, single-transaction back-to-back bytes leave only ~2
+ *           SPI bits (0.25 µs) of inter-byte idle, which CP210x fails to
+ *           resync on — alternating bytes come out 1-bit shifted. Per-byte
+ *           transactions restore the implicit software gap that the
+ *           receiver needs. */
+#define MAX_LINE_UART_BYTES 80U
+
 int sw_uart_write(struct sw_uart *u, const uint8_t *data, size_t len)
 {
 	if (u == NULL || u->spi_dev == NULL) {
@@ -127,16 +142,42 @@ int sw_uart_write(struct sw_uart *u, const uint8_t *data, size_t len)
 
 	const struct spi_config *cfg = get_cfg(u->baud);
 	const uint8_t *bres = get_bres(u->baud);
-	uint16_t total_bytes = get_spi_bytes(u->baud);
+	uint16_t per_byte = get_spi_bytes(u->baud);
 
-	uint8_t buf[SPI_BYTES_MAX];
-	for (size_t i = 0; i < len; i++) {
-		encode_uart_byte(data[i], buf, bres, total_bytes);
-		struct spi_buf tx = { .buf = buf, .len = total_bytes };
-		struct spi_buf_set tx_set = { .buffers = &tx, .count = 1 };
-		int rc = spi_write(u->spi_dev, cfg, &tx_set);
-		if (rc < 0) {
-			return rc;
+	if (u->baud == SW_UART_BAUD_9600) {
+		/* Single concatenated SPI transaction (no inter-byte gap) */
+		static uint8_t big_buf[MAX_LINE_UART_BYTES * SPI_BYTES_MAX]; /* 16 KB */
+		size_t remaining = len;
+		const uint8_t *p = data;
+		while (remaining > 0) {
+			size_t chunk = (remaining > MAX_LINE_UART_BYTES) ? MAX_LINE_UART_BYTES : remaining;
+			size_t total = (size_t)chunk * per_byte;
+
+			for (size_t i = 0; i < chunk; i++) {
+				encode_uart_byte(p[i], &big_buf[i * per_byte], bres, per_byte);
+			}
+
+			struct spi_buf tx = { .buf = big_buf, .len = total };
+			struct spi_buf_set tx_set = { .buffers = &tx, .count = 1 };
+			int rc = spi_write(u->spi_dev, cfg, &tx_set);
+			if (rc < 0) {
+				return rc;
+			}
+
+			p += chunk;
+			remaining -= chunk;
+		}
+	} else {
+		/* Per-byte SPI transactions (implicit inter-byte gap for receiver resync) */
+		uint8_t buf[SPI_BYTES_MAX];
+		for (size_t i = 0; i < len; i++) {
+			encode_uart_byte(data[i], buf, bres, per_byte);
+			struct spi_buf tx = { .buf = buf, .len = per_byte };
+			struct spi_buf_set tx_set = { .buffers = &tx, .count = 1 };
+			int rc = spi_write(u->spi_dev, cfg, &tx_set);
+			if (rc < 0) {
+				return rc;
+			}
 		}
 	}
 	return 0;
