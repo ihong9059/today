@@ -115,18 +115,49 @@ static void drain_rx2_to_tx3(void)
 	}
 }
 
-static void drain_rx4_to_tx3(void)
+static void drain_rx4_to_tx3_and_tx4(void)
 {
+	/* RX4 (P0.08, USB-VCOM input) line-buffered echo:
+	 *   - byte를 line_buf에 누적
+	 *   - Enter ('\r' 또는 '\n') 수신 시 line 완성 → 한 번에 echo:
+	 *       TX3 (debug 115200): "RX4: <line>\r\n"
+	 *       TX4 (USB-VCOM 9600): "<line>\r\n"   (loopback)
+	 *   - byte 1개씩 SW-UART 시작/종료 반복하는 대신 single transaction 1번
+	 *     → timing margin 확보, glitch 감소
+	 */
+	/* line_buf에 trailing "\r\n" 자리 2 byte 남김 → flush 시 한 transaction으로 전송 */
+	static uint8_t line_buf[128];
+	static size_t line_len = 0;
+
 	uint8_t b;
-	bool any = false;
 	while (sw_uart_rx_get(&rx4, &b) == 1) {
-		if (!any) {
-			sw_uart_write_str(&tx3, "RX4: ");
-			any = true;
-		}
-		sw_uart_write(&tx3, &b, 1);
-		if (b == '\n') {
-			any = false;
+		if (b == '\r' || b == '\n') {
+			if (line_len > 0) {
+				/* Append CRLF in place → single SPI transaction */
+				line_buf[line_len++] = '\r';
+				line_buf[line_len++] = '\n';
+
+				/* TX3 debug: "RX4: " + line + "\r\n" — 2 transaction OK
+				 *   (TX3=115200, per-byte transaction이라 gap 영향 없음) */
+				sw_uart_write_str(&tx3, "RX4: ");
+				sw_uart_write(&tx3, line_buf, line_len);
+
+				/* TX4 loopback: line + "\r\n" — single transaction
+				 *   (TX4=9600, single transaction 정책. inter-tx gap 방지) */
+				sw_uart_write(&tx4, line_buf, line_len);
+
+				line_len = 0;
+			}
+		} else if (line_len < sizeof(line_buf) - 2) {  /* 2 byte 자리 남김 */
+			line_buf[line_len++] = b;
+		} else {
+			/* overflow — append CRLF then flush */
+			line_buf[line_len++] = '\r';
+			line_buf[line_len++] = '\n';
+			sw_uart_write_str(&tx3, "RX4-OVF: ");
+			sw_uart_write(&tx3, line_buf, line_len);
+			sw_uart_write(&tx4, line_buf, line_len);
+			line_len = 0;
 		}
 	}
 }
@@ -166,9 +197,9 @@ int main(void)
 	sw_uart_write_str(&tx3, "TX2->RX2 internal loopback: jumper Pin 2 <-> Pin 4\r\n");
 	sw_uart_write_str(&tx3, "TX4->USB-VCOM: open PCA10040 J-Link COM port @ 9600 8N1\r\n");
 
-	/* Boot banner on TX4 (9600 USB-VCOM) */
-	sw_uart_write_str(&tx4, "\r\nUTTEC BLE Module — USB-VCOM channel (TX4/RX4 @ 9600 8N1)\r\n");
-	sw_uart_write_str(&tx4, "Type any key — echoed to TX3 debug as 'RX4: x'\r\n");
+	/* Boot banner on TX4 (9600 USB-VCOM) — ASCII only (UTF-8 multi-byte 깨짐 회피) */
+	sw_uart_write_str(&tx4, "\r\nUTTEC BLE Module - USB-VCOM (TX4/RX4 @ 9600 8N1)\r\n");
+	sw_uart_write_str(&tx4, "Loopback: every key you type is echoed back here (and to TX3 debug as 'RX4: x')\r\n");
 
 	uint32_t counter = 0;
 	char buf[80];
@@ -215,7 +246,7 @@ int main(void)
 			k_msleep(100);
 			drain_rx1_to_tx3();
 			drain_rx2_to_tx3();
-			drain_rx4_to_tx3();
+			drain_rx4_to_tx3_and_tx4();
 		}
 	}
 	return 0;

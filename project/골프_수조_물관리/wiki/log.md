@@ -2,7 +2,7 @@
 title: 한림용인CC 시공 진행 로그
 type: log
 created: 2026-05-17
-updated: 2026-05-17 (실제 일정 박제 — D-day 5/19, 완료 ~7/19)
+updated: 2026-06-01 (TX4/RX4 USB-VCOM bring-up + line-buffered loopback 검증)
 ---
 
 # 한림용인CC 고가수조 자동급수 무선제어 — 진행 로그
@@ -10,6 +10,40 @@ updated: 2026-05-17 (실제 일정 박제 — D-day 5/19, 완료 ~7/19)
 > Tier 2 sub-vault. 시공·진행·결정 단계별 박제.
 >
 > action: start / decision / purchase / site / firmware / revenue / milestone / complete / absorb
+
+## [2026-06-01] firmware | TX4/RX4 USB-VCOM 양방향 + line-buffered loopback 검증 ✅
+
+**증분**: 5/31 5-channel UART bring-up → 7-channel (TX4 P0.06 + RX4 P0.08, 9600). PCA10040 onboard J-Link OB **USB-VCOM 직결** 활용 — 별도 CP210x 케이블 없이 PC↔MCU 9600 양방향.
+
+**구현**:
+- SPI0 MOSI = SW-UART TX4 (9600 single transaction) — TX2와 동일 방식
+- GPIO INT + DWT = SW-UART RX4 (9600) — RX2와 동일 방식
+- overlay: `&spi0 status="okay"` + pinctrl SPIM_MOSI=P0.06 dummy SCK=P0.16
+- main.c: tx4/rx4 인스턴스 + `drain_rx4_to_tx3_and_tx4()` line-buffered loopback
+
+**검증**:
+- ✅ TX4 → USB-VCOM 카운터 정상 출력 (`TX4: N`)
+- ✅ PC 키 입력 → RX4 수신 → TX4 line echo (loopback) + TX3 debug echo (`RX4: <line>`)
+- ⚠️ 일부 byte (특히 영문 'o', 'y') bit 3 일관 flip (예: o→g) — SW-UART TX 9600 timing margin 부족
+- ⚠️ Enter 처리 초기 버전에서 `\r\n`이 별도 transaction → false-start trigger → **single transaction (line + CRLF 한 번)으로 fix 완료**
+
+**핵심 박제 — single transaction CRLF**:
+9600 SW-UART에서 line + "\r\n"을 두 번 호출하면 transaction 간 MOSI gap이 receiver의 false-start trigger. **buffer에 \r\n append 후 한 transaction**으로 묶어야 함. 같은 패턴이 향후 모든 line-based SW-UART 출력에 적용.
+
+**리소스**:
+- FLASH: 27 → **28.7 KB** / 512 KB (5.48%)
+- RAM: 22 → **23.0 KB** / 64 KB (35.16%, line_buf 128 byte 포함)
+- 빌드: 정상 / 플래시: 4회 반복 모두 verify OK
+
+**다음 (6/2 화)**:
+- ⭐ **MAX485 + QDY30A-B Modbus 통합** (sensing-test-2026-06-02.md 시퀀스 따라)
+- TX2/RX2 + TX1/RX1(LoRa) + TX3 + TX4/RX4 모든 채널 동시 검증
+- bit 3 깨짐 → MAX485 차동 hysteresis로 회복 여부 (5/31 글리치 가설 실전 검증)
+
+**박제**:
+- firmware/bleModule_uart_test/{overlay, main.c, README.md} 갱신
+- wiki/thoughts/2026-Q2/2026-06-01_sw-uart-tx-debug-cp210x.md
+- 작업보고서 6/1 #18 TX4/RX4 검증 완료
 
 ## [2026-05-12] site | 1차 현장 방문 — 담당자와 가능성 확인 ✅
 
