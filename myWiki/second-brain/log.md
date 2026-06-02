@@ -2,8 +2,55 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-02 (한림용인CC 풀체인 Modbus 검증 완결 — nRF52832 HW UART 우회로 SW-UART 9600 bit3 corruption 해결, 23회 연속 OK, 12V 단일 전원 호환 확정)
+updated: 2026-06-02 야간 (revita ingest #15 + 배터리 인증 흡수 — TC-21 후속 + Tower SBC 대체 보드 + KC 5 범주 분리 + 셀 모델 우선 의사결정 + ESP32-P4 CNN 가속 신사업 carry, 양산 RA 15→24, 결정 29~31, §12 인증 매니지먼트 역량 단계 진입)
 ---
+
+## [2026-06-02 야간] absorb ⭐⭐⭐ | revita-claude 카드 #2026-06-02-003 흡수 — ingest #15 + 배터리 인증 + 인증 매니지먼트 역량 단계 진입
+
+**카드**: `_inbox/processed/2026-06-02-003-revita-claude-ingest-15-and-battery-cert-absorb.md`. 2건 통합 = ① ingest #15 (BASE `87174e2a` → HEAD `d11b0ff4`, 3 commits / 4 파일 / +387/-16, TC-21 후속 + Tower SBC 대체 보드 조사) + ② 배터리 인증 양산 게이트 (사용자 도메인 질의 후속 박제, ingest 아님). 갱신 entity 2건 (link-v2 / tower-sbc) + revita 측 신규 entity 1건 (battery-cert).
+
+### 5단계 lifecycle 완료
+1. **신규 entity** (myWiki 측) 0건. revita 측 신규 entity-battery-cert 1건은 [[revita]] § 6/2 야간 ingest #15 본문에 흡수
+2. **신규 gotcha** → [[gaps]] § 양산 RA 15 → 24 확장 (신규 9건 = #15 4건 + 배터리 인증 5건) + 운영 절차 silent failure 패턴 박제
+3. **신규 decision 3건** → [[ai-direction]] §결정 29 (도메인 권고 박제 패턴 정착, ingest 외 사용자 도메인 질의 후속 박제) / §결정 30 (인증 5 범주 분리 + 셀 모델 우선 의사결정) / §결정 31 (ESP32-P4 CNN 가속 영상 추론 신사업 carry)
+4. **매칭 패턴** → [[2026-06-02_certification-tracks-matrix]] 신설 (인증 5 범주 매트릭스 + 양산 BOM 의사결정 트리 + ESP32-P4 신사업 carry + 도메인 권고 박제 패턴 + 자동화 가지치기 단서)
+5. **발신측 entity 갱신** → [[revita]] entity 본문 prepend + frontmatter updated + [[strengths]] §12 신설 + [[aisg]] § ESP32-P4 carry prepend
+
+### 핵심 carry
+- **§12 인증 매니지먼트 역량 단계 진입** — 양면 IQC 4단계 진화 (§9 양산 IQC 자동화 → §10 양면 IQC → §11 원본 품질 게이트 → §12 인증 매니지먼트)
+- **KC 인증 5 범주 분리 매트릭스** (EMC / RF / 62133 셀 안전 / 충전기 / UN38.3) — 현 KC 트랙과 직교
+- **양산 BOM 의사결정 트리 최상위 = 셀 모델** — 다른 부품보다 인증 cost·duration impact 최대
+- **5채널 영업 깊이 확장 4단계** — uttechome / 위시캣 사례연구 / 한림용인CC / shield-n8n / AI FanStick-lemonLabs 모두 §12 매트릭스 carry
+- **ESP32-P4 CNN 가속 신사업 carry** — AISG / 한림용인CC / 농업 IoT / AI FanStick Stage 4 / lemonLabs cross-link
+
+### 후속 트리거
+- 사용자 결정 후 박제 (사용 셀/팩 모델 / 인증서 보유 / PCM 구조 / 솔라 충전회로 / 양산 BOM)
+- ESP32-P4 채택 결정 → AISG / 한림용인CC / onDevice Stage 4 신사업 활성화
+- 운영 절차 자동 검증 도구 (CONFIG 순서 silent reject 후속) — kc_cert_link_v2-test 다음 단계
+- 다음 ingest #16 (revita HEAD `d11b0ff4` 이후)
+
+## [2026-06-02] absorb ⭐⭐⭐ | revita-claude 카드 #2026-06-02-001 흡수 — ingest #14-A/B 펌웨어 원본 품질 게이트 단계 진입
+
+**카드**: `_inbox/processed/2026-06-02-001-revita-claude-ingest-14-absorb.md`. ingest #14 (A+B) BASE `8e6682a5` → HEAD `87174e2a` (6 commits / +11,794 / -905 / 103 파일). 신규 entity 0건, 갱신 5건 (link-v2 / link-v2-test-tower / tower-test / tower / mqtt-protocol) — 모두 깊이 확장.
+
+### 5단계 lifecycle 완료
+1. **신규 entity** 0건 (모두 갱신 — revita 측 entity 5건 갱신 내용은 [[revita]] § 6/2 ingest #14-A/B에 흡수)
+2. **신규 gotcha** → [[gaps]] § 양산 RA 6 → 15 확장 (신규 9건: 원본 link_v2 버그 4 + Button/LED carry 2 + v2 마이그레이션 1 + 메타 2)
+3. **신규 decision 3건** → [[ai-direction]] §결정 26 (사본 정책 Copy + Verify + Then Decide) / §결정 27 (위키 정본 동격 격상, doc/ 트리 단일화) / §결정 28 (LTE 단일 게이트 build → runtime → 실기)
+4. **매칭 패턴** → [[2026-06-02_copy-verify-decide]] 신설 (사본 정책 + doc/ 단일화 + LTE 단일 게이트 = §11 펌웨어 원본 품질 게이트 단계 진입)
+5. **발신측 entity 갱신** → [[revita]] entity 본문 prepend + frontmatter updated + [[strengths]] §11 신설
+
+### 핵심 carry
+- **§11 펌웨어 원본 품질 게이트 단계 진입** — 양면 IQC 깊이 3단계 진화 (양산 IQC 자동화 → 양면 IQC → 원본 품질 게이트)
+- **link_v2 자체 시험 10/10 PASS** + **원본 버그 4건 발견** (`link_v2_test/` 9K LOC 사본, 원본 미반영 carry — gaps.md 양산 RA 7~10)
+- **5채널 영업 깊이 확장** — uttechome / 위시캣 사례연구 / 한림용인CC / shield-claude / n8n-claude 모두 단계 격상
+- **양산 RA 15건 = 양산 출하 게이트** — 강의·교재 자산화 가치 매우 높음 (펌웨어 디버깅 실전 사례)
+
+### 후속 트리거
+- 원본 link_v2 버그 4건 원본 반영 시점 = 양산 출하 게이트 통과 시점 (revita-claude → mywiki-claude ack 카드 예상)
+- 양산 RA 15 → N 항목 해소 milestone (양면 캐파 산정 단계 진입 시)
+- kc_cert_link_v2 측 v2 와이어 호출부 점검 결과 (다른 앱 마이그레이션 risk)
+- 다음 ingest #15 (revita HEAD `87174e2a` 이후)
 
 ## [2026-06-02] work ⭐⭐⭐ | 한림용인CC 풀체인 Modbus master 검증 완결 — nRF52832 HW UART 우회 + 12V 단일 전원
 

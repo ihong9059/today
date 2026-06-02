@@ -2,7 +2,7 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-06-01 ingest #13-A 흡수 — Tower 펌웨어 모듈러 재작성 풀세트 정착 + 양면 IQC (Link + Tower) 단계 진입 + 신규 entity 4 (lux-module + mqtt-protocol + tower-test + lte-module 실구현) + 아키텍처 결정 7건 + 양산 RA 6 carry 위험 + 신규 모듈 4 함수 표준화 통합 비용 명확
+updated: 2026-06-02 야간 ingest #15 + 배터리 인증 흡수 — TC-21 후속 (CONFIG 순서 정본화 SESSION_OFF only + qty=3 reg1=0x0108 실측 + TC-21 판정 누적 5회) + Tower SBC 대체 보드 조사 (ESP32-P4+C6 vs Core3506) + 배터리 인증 5 범주 매트릭스 신설 (entity-battery-cert) + 양산 RA 15 → 24 (신규 9건) + 결정 29~31 신규 (도메인 권고 박제 / 인증 5 범주 분리 / ESP32-P4 CNN 가속 신사업 carry)
 tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어, link_v2_test_tower, 회귀시험자동화, kc_cert_link_v2, kc_cert_tower, KC인증통합트랙, BLE-pairing-L2, DUT-다중-브리지-단일, IQC자동화, Flask-Web-5010, tower_DK-deprecated, 두-하향-경로-동일-규약, 펌웨어모듈-단일진실]
 links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조, 2026-05-27_revita-IQC-자동화-인프라]
 ---
@@ -11,6 +11,114 @@ links: [claude-code, experience, projects, skills, tailscale네트워크, 양산
 
 ## 한 줄 정의
 IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**.
+
+## 2026-06-02 야간 ingest #15 + 배터리 인증 흡수 — TC-21 후속 + Tower SBC 대체 보드 조사 + 인증 매니지먼트 단계 진입 ⭐⭐⭐ (revita-claude 카드 #2026-06-02-003)
+
+**한 줄**: 2건 통합 = ① ingest #15 (BASE `87174e2a` → HEAD `d11b0ff4`, 3 commits / 4 파일 / +387/-16, 단일 영역 newTest/) + ② 배터리 인증 양산 게이트 (사용자 도메인 질의 후속 박제, ingest 아님). 갱신 entity 2건 (link-v2 / tower-sbc) + revita 측 신규 entity 1건 (battery-cert). 위험 carry 9건 → 양산 RA 15 → 24. 결정 29~31 신규.
+
+### ingest #15 — TC-21 후속 + Tower SBC 대체 보드 조사
+
+**갱신 entity 2건** (revita 측):
+
+| entity | § | 핵심 |
+|---|---|---|
+| `entity-link-v2` | §TC-21 후속 — CONFIG 순서 정본화 + qty=3 실측정값 reg1 | **CONFIG_CREATE 는 SESSION_OFF 일 때만 허용** (`sensor_module.c:1287`), SESSION_ON 에서 silent reject. qty=3 변경 시 `collect_status=0x31`, reg1=0x0108 (264) 실측정값. DATA PDU 정본 갱신. TC-21 판정 누적 5회 |
+| `entity-tower-sbc` | §대체 보드 후보 조사 — JC-ESP32P4-M3-DEV | Core3506 (RK3506B/Linux/$17) vs ESP32-P4+C6 (FreeRTOS/$14). 장점 6 (RS-485/Ethernet/WiFi/MIPI-CSI+ISP/H.264/CNN + 부팅 1~2s + $3 절감) + 우려 5 (Linux→RTOS 포팅 + RAM 32MB + 전원 + BSP + C6 의존). **채택 미결정 carry** |
+
+**위험 carry 4건** ([[gaps]] RA #16~19): CONFIG 순서 silent reject / 센서 qty 양 트랙 통일 / 센서 레지스터 맵 미확정 / Tower SBC 대체 결정.
+
+### 배터리 인증 양산 게이트 (사용자 도메인 질의 후속)
+
+**사용자 질의**: *"battery로 구동되는 제품인데, kc인증에서 배터리 관련사항은 test하지 않아도 되나요?"* — revita-claude 도메인 권고 정리 + 양산 게이트 박제.
+
+**KC 인증 5 범주 매트릭스** (현 KC 트랙과 직교):
+
+| 범주 | 배터리 직접 시험? | 현 entity-kc-cert family |
+|---|:-:|:-:|
+| KC EMC (5/19 RE fail 회복) | ❌ | ⭕ |
+| KC RF (LoRa SRD) | ❌ | ⭕ |
+| **KC 62133 (셀 안전)** | ⭕ 필수 | ❌ (트랙 부재) |
+| **충전기 KC (솔라/외부)** | ⭕ 조건부 | ❌ (트랙 부재) |
+| **UN38.3 (운송)** | ⭕ 필수 | ❌ (트랙 부재) |
+
+**revita 측 신규 entity**: `entity-battery-cert` (~210줄). 양산 출하 게이트 5건 ([[gaps]] RA #20~24).
+
+**분기점** (양산 BOM 의사결정 트리 최상위):
+- 셀/팩 외부 인증품 구매 → 완제품 측 시험 면제 (인증서 보관만)
+- 자체 셀 조립 + PCM 직접 설계 → 자체 인증 필요 (KTL/KTC, 비용 수백~수천만원, 8~12주)
+
+**위키 누락 carry** (사용자 결정 후 박제 필요):
+- 사용 셀/팩 모델 (Link / Tower 각각)
+- KC 62133 + UN38.3 인증서 보유 여부
+- PCM 보호회로 구조 (자체 vs 셀 인증서 포함)
+- 솔라 충전회로 완제품 내장 여부 + 회로 구조 (MPPT/PWM)
+- Tower 측 배터리 (Link 와 동일 셀?)
+- 양산 BOM 의 배터리·충전 부품 항목
+
+### 매칭 패턴 (myWiki 흡수 결과)
+
+1. **인증 트랙 분리 일반화** → strengths.md §12 인증 매니지먼트 역량 신설 (KC 5 범주 + 셀 모델 우선 의사결정)
+2. **양산 캐파 산정 진입 전 셀 모델 우선순위** → ai-direction §결정 30 (의사결정 우선순위 트리, 다른 양산 진입 프로젝트도 동일 패턴)
+3. **ESP32-P4 CNN 가속 신사업 carry** → ai-direction §결정 31 + [[aisg]] § ESP32-P4 carry (AI + 농업 IoT, 영상 추론 노드 진화)
+4. **CONFIG 순서 silent reject = 운영 절차 자동 검증 단서** → gaps.md § 자동화 가지치기 단서 (kc_cert_link_v2-test 다음 단계)
+5. **도메인 권고 박제 패턴 정착** → ai-direction §결정 29 (ingest 외 사용자 도메인 질의 후속 박제, AI ↔ 사용자 양방향 지식 정착)
+
+### 영업 가치 — 인증 매니지먼트 역량 (5채널 carry)
+
+- **uttechome / 위시캣 사례연구 결정타**: "인증 5 범주 분리 + 셀 모델 우선 의사결정" — 다른 1인 컨설팅 대비 단계 격차 (인증 외주 비용/기간 추정 가능)
+- **한림용인CC**: 시공 자료 + 인증 자료 + 운영 매뉴얼 단일 doc/ 트리 (결정 27 + 결정 30 결합)
+- **AI FanStick / Stage 4 / onDevice**: 배터리 인증 트랙 carry, 셀/팩 모델 결정 = 양산 BOM 의사결정 트리 최상위
+- **lemonLabs (AI 응원봉)**: 동일 패턴 — 배터리 내장 제품 인증 매니지먼트 cross-vault carry
+
+자세히 [[strengths]] §12 + [[ai-direction]] §결정 29~31 + [[gaps]] § RA 15→24 + [[aisg]] § ESP32-P4 carry + [[2026-06-02_certification-tracks-matrix]] (신규).
+
+---
+
+## 2026-06-02 ingest #14-A/B 흡수 — link_v2 자체 시험 10/10 + 원본 버그 4건 + 사본 정책 + checklist 정본 격상 ⭐⭐⭐⭐ (revita-claude 카드 #2026-06-02-001)
+
+**한 줄**: ingest #14 (A+B) — BASE `8e6682a5` (#13-D, 6/1) → HEAD `87174e2a` (#14-C, 6/2), 6 commits / +11,794 / -905 / 103 파일. **신규 entity 0건, 갱신 5건** (link-v2 / link-v2-test-tower / tower-test / tower / mqtt-protocol). **link_v2 자체 시험 10/10 PASS** + **원본 버그 4건 발견** (`link_v2_test/` 사본 정책, 원본 미반영 carry) + **체크리스트 디렉토리 위키 정본 동격 격상** (`apps/system/tower/test/` 삭제 → `doc/revita_tower_firmware/checklist/` 8건) + **LTE 단일 게이트** (build/runtime 분리, Static 8/8 PASS).
+
+### 갱신 entity 5건 (revita 측, depth 확장)
+
+| revita entity | 갱신 핵심 | myWiki carry |
+|---|---|---|
+| `entity-link-v2` | §자체 시험 10/10 PASS + 원본 버그 4건 발견 (5.5/5.6/5.7/5.8) + 사본 정책 | strengths §11 펌웨어 원본 품질 게이트 |
+| `entity-link-v2-test-tower` | §v2 와이어 PATCH 11건 (#13-C 후속 fallout) | skills.md v2 마이그레이션 검증 패턴 (carry) |
+| `entity-tower-test` | §체크리스트 디렉토리 위키 정본 격상 + LTE 분할 + Static 8/8 PASS | strengths §10 양산 IQC 인프라 자산화 완결 표기 |
+| `entity-tower` | §모듈러 재작성 후속 fix (LTE_PDU_SIZE→MQTT_PDU_SIZE 전 모듈 리네임 + K_MSGQ static 제거 + lux_rs485_exchange_begin) | skills.md 정본 식별자 정합 패턴 |
+| `entity-mqtt-protocol` | §코드 상수명 정합 (LTE 종속 → MQTT 정본) | skills.md 와이어 정본 식별자 분리 (LoRa LORA_PDU_SIZE vs MQTT MQTT_PDU_SIZE) |
+
+### 원본 link_v2 버그 4건 (사본 검증 → 원본 미반영 carry) ★★
+
+| # | 위치 | 진단 | fix |
+|:-:|---|---|---|
+| 5 | `sensor_module.c:271` | NVS push chunk `MIN(9U, remain)` → `device_manager_nvs_write_cfg` 가 `n_apply > 8U` 거절 → sensor CFG NVS 쓰기 항상 실패 → CONFIG_END=NVM_FAILED | `MIN(8U, remain)` |
+| 6 | `device_manager.c:783,830` | `nvs_write` 반환값 오판 — Zephyr `nvs_write` 미변경 시 `ret=0`. 코드는 `ret == buf_size` 만 성공 | `ret >= 0` |
+| 7 | `sensor_module.c:248 + dm_build_factory_blob` | NVS 비어있을 때 sensor CFG `memset(0)` → hmask=0/mmask=0 → CRON 정상 스케줄 불가, 10분 fallback | `sensor_cfg_valid` 에 all-zero 무효 체크 추가 |
+| 8 | `rs485.c:290` | wait_rx drain 응답 유실 — TX 완료 직후 응답 첫 1~2B FIFO 도착, drain 루프 폐기 | wait_rx drain 제거 |
+
+→ gaps.md 양산 RA 7~10 박제, 양산 출하 게이트 통과 시점 원본 반영.
+
+### 결정 3건 (ai-direction §결정 26~28 흡수)
+
+1. **결정 26 ★★★ 사본 정책 (Copy + Verify, Then Decide)** — `link_v2_test/` 9K LOC 사본, 양산 출하 게이트 전까지 원본 미반영
+2. **결정 27 ★★★ 위키 정본 동격 격상 (doc/ 트리 단일화)** — KC 인증 + 양산 IQC + 운영 매뉴얼 단일 doc/ 트리
+3. **결정 28 LTE 단일 게이트** — `lte_build` + `lte_runtime` 분리 + README §LTE 완료 기준 (모듈 간 의존 단일 판정)
+
+### 양산 RA 6 → 15 확장 (gaps.md 갱신)
+
+기존 6건 + 신규 9건 (원본 link_v2 버그 4 + Button/LED carry 2 + v2 마이그레이션 1 + 메타 2) = **15건 양산 출하 게이트**. 강의·교재 자산화 가치 매우 높음 (펌웨어 디버깅 실전 사례).
+
+### 영업 가치 — 양면 IQC 깊이 확장 (5채널 carry)
+
+- **uttechome 영업**: "양산 IQC 자동화 → 양면 IQC → 원본 품질 게이트 + 양산 RA 15 자산화" 3단계 차별화
+- **위시캣 사례연구 결정타**: 펌웨어 디버깅 실전 사례 15건 박제 (다른 1인 컨설팅 대비 단계 격차 결정타)
+- **한림용인CC IQC 확장**: doc/ 트리 단일화 패턴 — 시공 자료 + 운영 매뉴얼 + 회로도 단일 export
+- **shield-claude / n8n-claude**: 사본 정책 + 모듈 간 의존 단일 게이트 패턴 carry
+
+자세히 [[strengths]] §11 + [[ai-direction]] §결정 26~28 + [[gaps]] § 양산 RA 6→15 + [[2026-06-02_copy-verify-decide]] (신규).
+
+---
 
 ## 2026-06-01 ingest #13-A 흡수 — Tower 펌웨어 모듈러 재작성 풀세트 + 양면 IQC (Link + Tower) ⭐⭐⭐⭐⭐ (revita-claude 카드 #2026-06-01-003)
 

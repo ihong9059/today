@@ -2,7 +2,7 @@
 title: 강점 분석
 type: identity
 created: 2026-04-19
-updated: 2026-06-01 (§10 양면 IQC 풀스택 운영 능력 — Link + Tower 양면 신설, revita ingest #13-A Tower 모듈러 재작성 풀세트 정착 / 정본 .md 18건 + tower/test/ 7건 체크리스트 + Static Review sbc 11/security 12/lux 8 PASS / 5채널 영업 양면 카피 격상)
+updated: 2026-06-02 야간 (§12 인증 매니지먼트 역량 신설 — KC 5 범주 분리 + 배터리 직교 트랙 박제 + 셀 모델 양산 BOM 의사결정 우선순위, revita ingest #15 + 배터리 인증 흡수, 양산 RA 15→24)
 tags: [강점, 분석]
 links: [me, skills, ai-direction, gaps]
 ---
@@ -10,6 +10,70 @@ links: [me, skills, ai-direction, gaps]
 # 강점 분석
 
 ## 핵심 강점
+
+### 12. 인증 매니지먼트 역량 — KC 5 범주 분리 + 셀 모델 우선 의사결정 (2026-06-02 야간) ⭐⭐⭐ NEW
+
+revita ingest #15 + 배터리 인증 흡수 (사용자 도메인 질의 후속 박제). 단순 인증 통과 능력이 아닌 **인증 트랙 매니지먼트 역량** 자산화 — 양산 BOM 의사결정 우선순위 + 인증 비용·기간 추정 가능 단계.
+
+**KC 인증 5 범주 분리 매트릭스**:
+
+| 범주 | 배터리 직접 시험? | 현 `entity-kc-cert` family 다룸 |
+|---|:-:|:-:|
+| KC EMC (5/19 RE fail 회복) | ❌ | ⭕ |
+| KC RF (LoRa SRD) | ❌ | ⭕ (모듈 인증 활용) |
+| **KC 62133 (셀 안전)** | ⭕ 필수 | ❌ (트랙 부재) |
+| **충전기 KC (솔라/외부)** | ⭕ 조건부 | ❌ (트랙 부재) |
+| **UN38.3 (운송)** | ⭕ 필수 | ❌ (트랙 부재) |
+
+→ **현 KC 트랙 (EMC/기능시험 중심) 과 직교**. 양산 출하 전 별도 해소 필요.
+
+**의사결정 분기점** (양산 BOM 결정 트리 최상위):
+
+- **셀/팩 외부 인증품 구매** → 완제품 측 시험 면제 (인증서 보관만, 비용 0)
+- **자체 셀 조립 + PCM 직접 설계** → 자체 인증 필요 (KTL/KTC, 비용 수백~수천만원, 8~12주)
+
+→ **셀 모델 확정이 다른 부품 (BLE/LoRa/MCU) 보다 인증 cost·duration impact 가장 큼**. 양산 캐파 산정 진입 시 우선 의사결정 항목.
+
+**5채널 영업 carry**:
+
+- ⭐⭐⭐ **uttechome / 위시캣 사례연구**: "인증 5 범주 분리 + 셀 모델 우선 의사결정" — 다른 1인 컨설팅 대비 단계 격차 결정타 (인증 외주 비용/기간 추정 가능)
+- ⭐⭐ **한림용인CC**: 시공 자료 + 인증 자료 + 운영 매뉴얼 단일 doc/ 트리 (결정 27 doc/ 단일화 + 결정 30 인증 5 범주 분리 결합)
+- ⭐ **AI FanStick / Stage 4 / onDevice**: 배터리 인증 트랙 carry — 셀/팩 모델 결정이 양산 BOM 의사결정 트리 최상위
+- ⭐ **shield-claude / lemonLabs (AI 응원봉)**: 동일 패턴 — 배터리 내장 제품의 인증 매니지먼트 자산 cross-vault carry
+
+**재학습 비용 차단 가치**: 인증 관련 표준·시험소 조사 재발 = 8~12주. 본 매트릭스 박제로 다음 사업/제품 확장 시 즉시 활용 가능.
+
+자세히 [[revita]] § 6/2 ingest #15 + [[ai-direction]] §결정 30 + [[gaps]] § 양산 RA 15→24 (#20~24 배터리 인증) + [[2026-06-02_certification-tracks-matrix]] (신규).
+
+---
+
+### 11. 펌웨어 원본 품질 게이트 단계 진입 — 사본 정책 + 양산 RA 15 + doc/ 트리 단일화 (2026-06-02) ⭐⭐⭐ NEW
+
+revita ingest #14-A/B 흡수 (link_v2 자체 시험 10/10 PASS + 원본 버그 4건 발견). §10 양면 IQC (양산 IQC 자동화 + Tower 양면)에 **세 번째 단계** = 펌웨어 원본 품질 게이트 추가:
+
+| 단계 | 의미 | 자산 |
+|:-:|---|---|
+| 1 (5/29 §9) | 양산 IQC 자동화 (Link 단면) | scenarios/ 17 PASS, 캐파 월 7,200대 |
+| 2 (6/1 §10) | 양면 IQC (Link + Tower) | Static 31 PASS (sbc 11 + security 12 + lux 8), 인증 자산 18 정본 |
+| **3 (6/2 §11 신규)** ⭐ | **펌웨어 원본 품질 게이트** | **사본 디버깅 → 원본 결정 정책 + 양산 RA 15 + doc/ 트리 단일화** |
+
+**핵심 자산**:
+- **link_v2 자체 시험 10/10 PASS** — 양산 출하 게이트 통과 직전 단계
+- **원본 link_v2 버그 4건 발견** (sensor_module NVS chunk / device_manager nvs_write 반환값 / sensor_cfg all-zero / rs485 wait_rx drain) — 사본 검증으로 발견, 원본 미반영 carry
+- **사본 정책 (Copy + Verify, Then Decide)** — 양산 출하 게이트 전까지 사본·원본 병행 운영 (ai-direction §결정 26)
+- **doc/ 트리 단일화** — KC 인증 + 양산 IQC + 운영 매뉴얼 + 디버깅 사례 (양산 RA 15) 단일 doc/ 트리 export 가능 (외부 제공 시 부분 누락 risk 차단)
+- **LTE 단일 게이트** — `lte_build` + `lte_runtime` 분리 + README §LTE 완료 기준 (모듈 간 의존 단일 판정)
+
+**5채널 영업 깊이 확장**:
+- **uttechome**: "양산 IQC 자동화" → "양면 IQC" → "원본 품질 게이트 + 양산 RA 15 자산화" 3단계 차별화
+- **위시캣 사례연구 결정타**: 펌웨어 디버깅 실전 사례 15건 (양산 출하 전 RA 박제) — 다른 1인 컨설팅 대비 단계 격차
+- **한림용인CC IQC 확장**: doc/ 트리 단일화 패턴 — 시공 자료 + 운영 매뉴얼 + 회로도 단일 export
+- **shield-claude**: 사본 정책 — RPi 자동화 검증 후 원본 반영 정책 carry 가능
+- **n8n-claude**: 모듈 간 의존 단일 게이트 — 다중 path 자동화 패턴에 일반화 가능
+
+자세히 [[revita]] § 6/2 ingest #14-A/B + [[ai-direction]] §결정 26~28 + [[gaps]] § 양산 RA 6 → 15 + [[2026-06-02_copy-verify-decide]] (신규).
+
+---
 
 ### 10. 양면 IQC 풀스택 운영 능력 — Link + Tower 양면 (2026-06-01) ⭐⭐⭐ NEW
 

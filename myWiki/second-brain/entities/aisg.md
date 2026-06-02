@@ -2,12 +2,33 @@
 title: AISG (Antenna Interface Standards Group)
 type: entity
 created: 2026-05-07
-updated: 2026-05-13 (OOK PHY + Bias-T + MAX11947 심층 자료 + UTTEC × AISG 3.0 Pitch 동영상 자산 신설)
-tags: [프로토콜, 통신, 임베디드, 기지국, 안테나, OOK, RS-485, HDLC]
-links: [revita, 위시캣활동, skills, 양산제품, experience]
+updated: 2026-06-02 야간 (ESP32-P4 CNN 가속 영상 추론 신사업 carry — revita ingest #15 Tower SBC 대체 보드 조사 단서 / AI + 농업 IoT 진화 옵션)
+tags: [프로토콜, 통신, 임베디드, 기지국, 안테나, OOK, RS-485, HDLC, ESP32-P4, CNN-가속, 영상-추론, 농업-IoT-신사업]
+links: [revita, 위시캣활동, skills, 양산제품, experience, 한림용인cc-고가수조, ai-fanstick, onDevice-ai]
 ---
 
 # AISG (Antenna Interface Standards Group)
+
+## 2026-06-02 야간 — ESP32-P4 CNN 가속 영상 추론 신사업 carry ⭐⭐ (revita ingest #15-2)
+
+revita-claude 카드 #2026-06-02-003 흡수 (ingest #15-2 Tower SBC 대체 보드 조사). **ESP32-P4+C6 RTOS $14** (Core3506 Linux $17 대비) — RS-485 / Ethernet / WiFi / **MIPI-CSI+ISP / H.264 / CNN 가속** + 부팅 1~2s. 본 entity AISG 측면 신사업 carry 단서.
+
+### 신사업 carry 매칭
+
+- **AI + 농업 IoT**: 현 LoRa 센서 노드 (텍스트/숫자 metric) → **영상 추론 노드** 진화 옵션. ESP32-P4 CNN 가속으로 작물 상태/병해충 엣지 추론 가능
+- **시설농업 IoT**: [[한림용인cc-고가수조]] 시설 IoT 확장 — 수위 sensor 노드 옆에 영상 추론 노드 (탁도/이물질/구조물 변형) 옵션
+- **AISG 3.0 확장**: 본 AISG는 기지국 안테나 표준. CNN 가속 노드는 안테나 정렬·환경 모니터링·고장 예측에 적용 가능 (RET / TMA / GLS / ASD 측면 영상 분석 추가)
+- **AI FanStick / Stage 4 cross-link**: onDevice_AI Stage 4 영상 추론 트랙 ($14 ESP32-P4 BOM path 후보)
+
+### 채택 미결정 carry
+
+- Core3506 Linux $17 vs ESP32-P4+C6 RTOS $14 — Linux→RTOS 포팅 비용 + RAM 32MB + 전원 + BSP + C6 의존 우려
+- revita 측 Core3506 Linux 앱 코드량 확인 후 결정
+- myWiki 측에서는 "신사업 단서" 박제만 — 채택 결정은 revita 측
+
+→ [[revita]] § 6/2 야간 ingest #15 + [[ai-direction]] §결정 31 + [[2026-06-02_certification-tracks-matrix]] § AISG CNN 가속 carry.
+
+---
 
 ## 한 줄 정의
 이동통신 기지국 안테나 라인 디바이스(ALD)를 원격 제어/모니터링하는 국제 표준 프로토콜. **위시캣 #155057 (2026-05-07)** 사전 학습으로 분석 완료.

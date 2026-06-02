@@ -41,9 +41,11 @@ plain C가 gcc 12.2 `-Os`에 이미 SMLAD vectorize 잘 됨 추정. **API 단위
 
 → ESP32 함정 #14 family (Windows cmd `cd .` cwd reset)가 cmake/ninja 환경 다양한 영역에서 발현 — #17/#18 모두 같은 root cause 다른 표현. **"Windows cmd path semantics" 패턴 박제 가치** (thought 후보).
 
-## 2026-06-01 — Tower 양산 출하 전 RA 6 항목 (revita ingest #13-A) ⭐⭐ NEW
+## 2026-06-02 — Tower 양산 출하 전 RA 6 → 15 확장 (revita ingest #14-A/B) ⭐⭐⭐ UPDATED
 
-revita-claude 카드 #2026-06-01-003 흡수. ingest #13-A Tower 모듈러 재작성 풀세트 정착 시 carry 위험 6건 박제.
+revita-claude 카드 #2026-06-02-001 흡수. ingest #14-A/B (link_v2 자체 시험 10/10 PASS + 원본 버그 4건 발견 + Button/LED carry 2건 + v2 마이그레이션 1건 + 메타 2건) carry 위험 **9건 신규** 추가. 6/1 ingest #13-A 6건 + 6/2 9건 = **15건 양산 출하 게이트**.
+
+### 기존 6건 (2026-06-01 ingest #13-A, carry)
 
 | # | 위험 | 양산 영향 |
 |:-:|---|---|
@@ -54,7 +56,78 @@ revita-claude 카드 #2026-06-01-003 흡수. ingest #13-A Tower 모듈러 재작
 | 5 | BLE module 전체 stub (15줄 LOG only) — OTA·등록·상태 조회 | 양산 페어링 경로 부재 |
 | 6 | `TOWER_DM_BOOT_TEST` mode 1 양산 빌드 혼입 risk — auto UPDATE seed 양산 섞이면 sync_lost 가시성 상실 | 빌드 정책 강화 필요 |
 
-→ revita Tower 양산 출하 전 RA 체크리스트로 carry. [[revita]] § 6/1 ingest #13-A.
+### 신규 9건 (2026-06-02 ingest #14-A/B) ⭐⭐⭐
+
+**원본 link_v2 버그 4건 (link_v2_test/ 사본에서 fix 검증, 원본 미반영 carry)**:
+
+| # | 위험 | 양산 영향 |
+|:-:|---|---|
+| 7 | `sensor_module.c:271` NVS push chunk `MIN(9U, remain)` → `device_manager_nvs_write_cfg` 가 `n_apply > 8U` 거절 → sensor CFG NVS 쓰기 **항상 실패** → CONFIG_END=NVM_FAILED. fix: `MIN(8U, remain)` ★ | sensor CFG NVS 영구 실패, 양산 boot trap |
+| 8 | `device_manager.c:783,830` `nvs_write` 반환값 오판 — Zephyr `nvs_write` 미변경 시 `ret=0` (정상). 코드는 `ret == buf_size`만 성공. fix: `ret >= 0` ★ | NVS write idempotent 케이스 false fail |
+| 9 | `sensor_module.c:248 + dm_build_factory_blob` — NVS 비어있을 때 sensor CFG `memset(0)` → hmask=0/mmask=0 → CRON 정상 스케줄 불가, 10분 fallback. fix: `sensor_cfg_valid` 에 all-zero 무효 체크 추가 ★ | 신규 device boot 시 CRON 부정확 (10분 fallback) |
+| 10 | `rs485.c:290` wait_rx drain 응답 유실 — TX 완료 직후 응답 첫 1~2B 가 빠르게 FIFO 도착, wait_rx의 drain 루프가 폐기. fix: wait_rx drain 제거 ★ | RS485 Modbus 응답 첫 byte loss → CRC fail |
+
+**Button/LED carry 2건**:
+
+| # | 위험 | 양산 영향 |
+|:-:|---|---|
+| 11 | GPIOTE handler 수 부족 (`CONFIG_NRFX_GPIOTE_NUM_OF_EVT_HANDLERS=1`) — LoRa DIO1 단독 점유 → 버튼 P0.05 GPIO 인터럽트 등록 실패 → 무반응. fix: `=4` | 버튼 무반응, 사용자 인터페이스 fail |
+| 12 | Button LED 12V 부스트 미활성 — `btn_handle_short()` 가 LED GPIO set 만, 12V (P0.17) 미요청. LED 회로 12V 필요 → 미점등. fix: `power_12v_request(POWER_12V_REQ_BUTTON)` 추가 | LED 미점등, 시각 피드백 0 |
+
+**v2 마이그레이션 carry 1건**:
+
+| # | 위험 | 양산 영향 |
+|:-:|---|---|
+| 13 | link_v2 v2 와이어 (dest+src 4B) **다른 앱 미반영 점검** — link_v2_test_tower 는 PATCH 11건 (#14-A 정착) 으로 정합, **kc_cert_link_v2 등 다른 앱 호출부 점검 필요**. 컴파일 에러 (`src_node_id` 인자 미반영) 패턴 동일 가능 | 인증 트랙 빌드 break, 양산 fork 위험 |
+
+**메타 carry 2건**:
+
+| # | 위험 | 양산 영향 |
+|:-:|---|---|
+| 14 | 디버그 로그 잔존 (`tower_lora.c` LOG_WRN / `rs485.c` / `sensor_module.c`) — 통신 안정 후 제거 | 양산 시 LOG 노이즈 / FLASH 낭비 |
+| 15 | `k_msleep(500)` 12V 안정화 누락 — 1차 추정 원인 (실제 원인 아니지만 마진 확보 검토) | 초기화 안정성 margin 부족 가능 |
+
+→ **15건 양산 출하 게이트** = revita 양산 라인 onboard 자산. 강의·교재 자산화 가치 매우 높음 (펌웨어 디버깅 실전 사례 15건). [[revita]] § 6/2 ingest #14-A/B + [[strengths]] §11 펌웨어 원본 품질 게이트.
+
+## 2026-06-02 (야간) — 양산 RA 15 → 24 확장 (revita ingest #15 + 배터리 인증) ⭐⭐⭐ NEW
+
+revita-claude 카드 #2026-06-02-003 흡수. ingest #15 TC-21 후속 (4건) + 배터리 인증 5 범주 분리 (5건) = **9건 신규** 추가. RA 15 → 24.
+
+### #15 신규 4건 (TC-21 후속 + Tower SBC 조사)
+
+| # | 위험 | 양산 영향 |
+|:-:|---|---|
+| 16 | CONFIG 순서 silent reject — `sensor_module.c:1287` CONFIG_CREATE 는 SESSION_OFF 일 때만 허용, SESSION_ON 에서 silent reject (코드 alert 없음) | 운영 매뉴얼 의존 함정, 양산 IQC 절차 매뉴얼화 가치 |
+| 17 | 센서 qty 양 트랙 통일 누락 — link_v2 측 qty=3 정착, kc_cert_link_v2-test 도 동일 갱신 필요 | 인증 트랙 fork → 양산 회귀 risk |
+| 18 | 센서 레지스터 맵 미확정 (reg0/reg2 의미, reg1 물리량 미확정 — 실측 0x0108=264만 박제) | 신규 sensor 모델 도입 시 의미 부재 carry |
+| 19 | Tower SBC 대체 결정 (Core3506 Linux $17 vs ESP32-P4+C6 RTOS $14) — 채택 미결정 | Core3506 Linux 앱 코드량 확인 후 결정 carry |
+
+### 배터리 인증 5 범주 신규 5건 (현 KC 트랙 직교) ★★★
+
+배터리 직접 시험 = KC 62133 (셀 안전) + 충전기 KC (솔라/외부) + UN38.3 (운송) — **현 `entity-kc-cert` family (EMC/RF/기능시험 중심)와 직교**. 양산 출하 전 별도 해소.
+
+| # | 위험 | 양산 영향 |
+|:-:|---|---|
+| 20 | 셀/팩 모델 확정 + KC 62133 인증서 확보 — 양산 BOM 확정 시 우선 의사결정 항목 | 인증 비용/기간 (KTL/KTC, 비용 수백~수천만원, 8~12주) 좌우 |
+| 21 | UN38.3 시험성적서 확보 — 양산 출하 전 항공/해상 운송 필수 | 미확보 시 양산 출하 자체 차단 |
+| 22 | PCM 보호회로 검증 — 셀 인증서 범위 일치 확인 (셀 인증품 사용 시 보호회로 동일성 검증) | 자체 PCM 설계 시 별도 시험 필요 |
+| 23 | 솔라 충전회로 → 충전기 KC 적용 여부 결정 — 솔라 회로 확정 시 (MPPT/PWM 구조에 따라 분기) | 완제품 내장 솔라 시 충전기 KC 적용 가능 |
+| 24 | 외부 어댑터 (있으면) KC 인증 어댑터 사용 확인 | 미인증 어댑터 사용 시 양산 출하 게이트 fail |
+
+### 분기점 (핵심 의사결정)
+
+- **셀/팩 외부 인증품 구매** → 완제품 측 시험 면제 (인증서 보관만)
+- **자체 셀 조립 + PCM 직접 설계** → 자체 인증 필요 (KTL/KTC, 비용 수백~수천만원, 8~12주)
+
+→ **양산 캐파 산정 진입 시 셀 모델 확정이 우선 의사결정 항목**. 다른 부품 (BLE/LoRa/MCU)보다 인증 cost·duration impact 가장 큼.
+
+→ **24건 양산 출하 게이트** (#15 4건 + 배터리 5건 추가). [[revita]] § 6/2 ingest #15 + [[strengths]] §12 인증 매니지먼트 역량 + [[2026-06-02_certification-tracks-matrix]] (신규) + [[ai-direction]] §결정 29~31.
+
+### 운영 절차 silent failure 패턴 (#15 #16 일반화)
+
+CONFIG 순서 silent reject = 운영 매뉴얼 의존 + 코드 alert 없음. **양산 IQC 자동화 인프라 (kc_cert_link_v2-test)의 다음 단계 = 운영 절차 자동 검증 도구** 단서. 다른 영역도 동일 패턴 가능 (NVS slot 순서, 12V boost 의존성 등).
+
+→ thought [[2026-06-02_certification-tracks-matrix]] § 자동화 가지치기 단서 + 강의·교재 자산화.
 
 ## 2026-06-01 — search 외부 mode 메모리·세션 turn-off 옵션 미구현 ⭐ (Phase 5/6 candidate)
 

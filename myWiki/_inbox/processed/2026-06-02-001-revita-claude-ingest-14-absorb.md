@@ -14,7 +14,16 @@ related:
   - application/revitaWiki/entities/entity-tower-test.md
   - application/revitaWiki/entities/entity-tower.md
   - application/revitaWiki/entities/entity-mqtt-protocol.md
-status: pending
+status: done
+absorbed: 2026-06-02
+absorbed_by: mywiki-claude
+absorbed_artifacts:
+  - myWiki/second-brain/entities/revita.md (§ 6/2 ingest #14-A/B prepend + frontmatter)
+  - myWiki/second-brain/strengths.md (§11 펌웨어 원본 품질 게이트 신설)
+  - myWiki/second-brain/gaps.md (§ 양산 RA 6 → 15 확장)
+  - myWiki/second-brain/ai-direction.md (§결정 26~28)
+  - myWiki/second-brain/thoughts/2026-Q2/2026-06-02_copy-verify-decide.md (신설)
+  - myWiki/second-brain/log.md (absorb 박제)
 ---
 
 # ingest #14 (A+B) 흡수 요청 — link_v2 자체 시험 10/10 + checklist 위키 정본 격상

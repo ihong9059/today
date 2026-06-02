@@ -2,12 +2,101 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-01 megasession (결정 21 BOM Path B-2 영업 신설 [pca10056 단독 $16 K-POP 저가형/OEM/매스마켓, R46 CMSIS-NN 3.14× = esp32s3 plain C 동급] / 결정 22 CMSIS-NN port 표준 = arm_nn_vec_mat_mult_t_s8 / 결정 23 가속 가설 검증 framework [fused operation vs separate 본질] / 결정 24 cross-vault feedback loop 정착 [search Phase 4.3 정체성 D 검증] / 결정 25 revita 양면 IQC 진입 [Link 단면 → Link+Tower 양면])
+updated: 2026-06-02 야간 (결정 29 도메인 권고 박제 패턴 정착 [ingest 외 사용자 도메인 질의 후속 박제 → log.md 별도 카테고리] / 결정 30 인증 5 범주 분리 + 셀 모델 우선 의사결정 [KC EMC/RF/배터리/충전기/UN38.3 직교 트랙, 배터리 인증 cost·duration impact 최대] / 결정 31 ESP32-P4 CNN 가속 영상 추론 신사업 carry [작물 상태/병해충 엣지 추론, LoRa 센서 노드 → 영상 노드 진화 옵션] — revita ingest #15 + 배터리 인증 흡수, 인증 매니지먼트 역량 단계 진입)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-02 야간) — revita ingest #15 + 배터리 인증 흡수: 인증 매니지먼트 역량 단계 진입 ⭐⭐⭐
+
+**사건**: revita-claude 카드 #2026-06-02-003 흡수. 2건 통합 = ① ingest #15 (TC-21 후속 + Tower SBC 대체 보드 조사, 3 commits / 4 파일 / +387/-16) + ② 배터리 인증 양산 게이트 (사용자 도메인 질의 후속 — *"battery로 구동되는 제품인데, kc인증에서 배터리 관련사항은 test하지 않아도 되나요?"*). 갱신 entity 2건 (link-v2 / tower-sbc) + 신규 entity 1건 (battery-cert). RA 15 → 24. 결정 29~31 신규.
+
+### 결정 29: ⭐⭐ 도메인 권고 박제 패턴 정착 — ingest 외 사용자 도메인 질의 후속 박제
+
+revita-claude가 이번 카드에서 도입한 신규 패턴 = **ingest (코드/문서 변경 흡수) 외에 사용자 도메인 질의 후속 박제** 별도 카테고리. log.md 별도 분류 운용 시작.
+
+> "코드/문서 변경 흡수만 자산화하면 도메인 권고 (인증·규제·시장) 누락. 사용자 질의 후속 박제로 정착."
+
+**Why**: AI와 사용자 양방향 지식 정착 흐름 — 사용자가 던지는 도메인 질의 (인증 / 규제 / 시장 / 운영) 가 ingest 사이클에 들어오지 않으면 vault 자산화 누락. revita-claude 능동 박제 결단 → mywiki 흡수.
+
+**How to apply**: myWiki도 동일 패턴 — 사용자 질의 후속 박제는 thoughts/ 또는 ai-direction 의 판단 로그 카테고리로 운용. 다른 vault (ondevice / wishket / lemonLabs / search / uttechome) 사용자 도메인 질의도 동일 박제 가치.
+
+### 결정 30: ⭐⭐⭐ 인증 5 범주 분리 + 셀 모델 우선 의사결정 — 인증 매니지먼트 역량 단계 진입
+
+KC 인증 5 범주 매트릭스 (EMC / RF / 62133 셀 안전 / 충전기 / UN38.3 운송) — **현 `entity-kc-cert` family (EMC/기능시험 중심) 와 직교 트랙**. 배터리 직접 시험 3개 (62133 + 충전기 + UN38.3) 양산 출하 전 별도 해소.
+
+> "양산 캐파 산정 진입 시 셀 모델 확정이 우선 의사결정 항목. 다른 부품 (BLE/LoRa/MCU) 보다 인증 cost·duration impact 가장 큼."
+
+**Why**:
+- 셀/팩 외부 인증품 구매 → 완제품 측 시험 면제 (인증서 보관만)
+- 자체 셀 조립 + PCM 직접 설계 → 자체 인증 필요 (KTL/KTC, 비용 수백~수천만원, 8~12주)
+- 셀 모델이 인증 비용·기간·단가 모두 좌우 = 양산 BOM 결정의 의사결정 트리 최상위
+
+**How to apply**: 다른 양산 진입 프로젝트 (한림용인CC sensor 노드 / shield AI 공장자동화 / AI FanStick) 도 동일 패턴 — 부품 모델 결정이 인증 트랙 결정. 의사결정 우선순위 트리 자산화. strengths §12 인증 매니지먼트 역량 신설.
+
+### 결정 31: ⭐⭐ ESP32-P4 CNN 가속 영상 추론 신사업 carry — LoRa 센서 노드 → 영상 노드 진화
+
+ingest #15-2 Tower SBC 대체 보드 조사 (Core3506 Linux $17 vs **ESP32-P4+C6 RTOS $14**) — **CNN 가속 내장** = 작물 상태/병해충 엣지 추론 가능성. 현 LoRa 센서 노드 (텍스트/숫자 metric) → 영상 추론 노드로 진화 옵션.
+
+> "센서 노드의 CNN 가속 = AI + 농업 IoT / 시설농업 / 양식장 신사업 carry. AISG 측면 자산화 가치."
+
+**Why**: 본 vault AISG (#155057 외주 분석 완료 후 carry) + 한림용인CC (시설 IoT) + onDevice_AI (Stage 4 영상 추론 트랙) 3개와 매칭. ESP32-P4 채택 결정 미정이지만 신사업 단서 박제 가치 ★★.
+
+**How to apply**: AISG entity prepend (CNN 가속 신사업 carry) + 한림용인CC entity 미래 옵션 carry + onDevice_AI Stage 4 영상 추론 트랙과 cross-link.
+
+### 의미 (6/2 야간 추가)
+
+29. **도메인 권고 박제 패턴 정착** — ingest 외 사용자 도메인 질의 후속 박제 (AI ↔ 사용자 양방향 지식 정착)
+30. **인증 5 범주 분리 + 셀 모델 우선 의사결정** — 인증 매니지먼트 역량 신설 (strengths §12). 양산 BOM 결정 트리 최상위 = 셀 모델
+31. **ESP32-P4 CNN 가속 영상 추론 신사업 carry** — LoRa 센서 노드 진화 옵션, AISG/한림용인CC/onDevice Stage 4 cross-link
+
+→ thought [[2026-06-02_certification-tracks-matrix]] (신규) + [[revita]] § 6/2 ingest #15 + [[strengths]] §12 인증 매니지먼트 + [[gaps]] § 양산 RA 15 → 24 + [[aisg]] § ESP32-P4 carry.
+
+---
+
+## 판단 로그 (2026-06-02) — revita ingest #14-A/B 흡수: 펌웨어 원본 품질 게이트 단계 진입 ⭐⭐⭐
+
+**사건**: revita-claude 카드 #2026-06-02-001 흡수. ingest #14 (A+B) — link_v2 자체 시험 10/10 PASS + 원본 버그 4건 발견 + checklist 위키 정본 격상 + LTE 단일 게이트. BASE `8e6682a5` (#13-D, 6/1) → HEAD `87174e2a` (#14-C, 6/2), 6 commits / +11,794 / -905 / 103 파일. **신규 entity 0건, 갱신 5건** — 모두 깊이 확장. 결정 26~28 신규.
+
+### 결정 26: ⭐⭐⭐ 사본 정책 (Copy + Verify, Then Decide) — 펌웨어 원본 품질 게이트
+
+`link_v2_test/` (9K LOC) = `link_v2` 본체의 사본. PATCH + fix 검증 후 **원본 반영은 별도 결정** (양산 출하 게이트 통과 시점).
+
+> "검증된 fix 의 원본 반영은 즉시 하지 않고 별도 결정. 양산 출하 게이트 전까지 사본·원본 병행 운영."
+
+**Why**: 원본을 직접 수정하면 (a) 다른 시험에서 회귀 가능 (b) 원본의 stability 보장 무너짐. 사본에서 검증 → 원본 반영 시점은 양산 출하 게이트 통과 시점으로 정책화.
+
+**How to apply**: link_v2 / kc_cert_link_v2 / 다른 펌웨어 시험에서도 동일 패턴. AI FanStick·shield·search vault 측 원본/사본 분리 디버깅 영역에도 적용 가능 (모델 fork → 검증 → merge / 강의안 사본 → 검증 → 원본 / 사업계획서 사본 → 검증 → 원본).
+
+### 결정 27: ⭐⭐⭐ 위키 정본 동격 격상 (doc/ 트리 단일화)
+
+`apps/system/tower/test/` (code 옆, 개발 자료) → `doc/revita_tower_firmware/checklist/` (정본 문서 옆, 인증·운영 자료) 통합.
+
+> "시험 자료 = code 옆에서 doc/ 옆으로 격상. KC 인증 + 양산 IQC + 운영 매뉴얼 단일 doc/ 트리."
+
+**Why**: KC 인증 자료 + 양산 라인 검사 자료 + 운영 매뉴얼이 분산되어 있으면 외부 (인증 기관, 양산 라인) 제공 시 부분 누락 위험. doc/ 트리 단일화로 자산화 1단계 완결.
+
+**How to apply**: 다른 자체 시험 트랙 (kc_cert_link_v2-test, link_v2 자체 시험) 동일 정책. uttec 사업 자산화 운영 정책 — 외부 제공 시 단일 트리 export 가능 (KC 기관·양산 라인·영업 자료 공통).
+
+### 결정 28: ⭐⭐ LTE 단일 게이트 (build → runtime → 실기)
+
+`lte_build` (CMake/Kconfig/TODO) + `lte_runtime` (FSM 8 시나리오) 분리 + README §LTE 완료 기준 (단일 판정). 모듈 간 LTE 의존 항목 PASS 게이트 단일화.
+
+> "모듈 간 의존 단일 게이트 = 분기 폭증 방지 + 책임 분리 (빌드 vs 런타임 vs 실기)."
+
+**Why**: Security/Power/Lux/SBC 의 LTE 관련 항목이 각자 독립 판정하면 분기 폭증. 단일 게이트로 의존 가시화 + 부분 판정 명확화.
+
+### 의미 (6/2 추가)
+
+26. **사본 정책 (Copy + Verify, Then Decide)** — 펌웨어 원본 품질 게이트 신설 (양면 IQC 깊이 확장: 양산 IQC 자동화 → 양면 IQC → 펌웨어 원본 품질 게이트 3단계)
+27. **doc/ 트리 단일화** — 인증·양산·운영·디버깅 사례 단일 트리 export, uttec 사업 자산화 운영 정책
+28. **LTE 단일 게이트** — 모듈 간 의존 단일 판정 정책, 다른 모듈 간 의존 패턴에도 일반화 가능 (분기 폭증 방지 원칙)
+
+→ thought [[2026-06-02_copy-verify-decide]] + [[revita]] § 6/2 ingest #14-A/B + [[strengths]] §11 펌웨어 원본 품질 게이트 + [[gaps]] § 양산 RA 6 → 15 확장.
+
+---
 
 ## 판단 로그 (2026-06-01 megasession) — R44/R45/R46 verdict + BOM 3-path + search Phase 4.3 + revita Tower 모듈러 ⭐⭐⭐⭐⭐
 
