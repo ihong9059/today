@@ -11,7 +11,7 @@ related:
   - wishketProject/위시캣/2026-05-31_프로젝트155724_지원내용.txt
   - wishketProject/위시캣/2026-05-31_프로젝트155736_지원내용.txt
   - wishketProject/second-brain/log.md (5/31 entry)
-status: pending
+status: done
 ---
 
 # 위시캣 5/31 영업 활동 종합

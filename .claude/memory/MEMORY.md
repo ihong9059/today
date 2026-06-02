@@ -38,3 +38,4 @@
 - [broker 양방향 자동화 패턴 ⭐](feedback_broker_bidirectional_pattern.md) — 분산 vault ↔ myWiki sync는 pull/push 스크립트 자동, frontmatter `to:` 라우팅, 사용자 broker 0건 (5/26 야간 첫 진화, work-end § 6-Z 자동 통합)
 - [문서 버전 별도 파일 분리 ⭐](feedback_document_version_separate_file.md) — 외부 발송 문서 버전 업데이트 시 in-place 금지. `{문서명}_v{버전}_{날짜}.md` 별도 생성 + 원본은 latest로 동기. 5/30 운영제안서 v3.0 in-place 실수 박제
 - [UTTEC_SSD 외장 disk + /backup skill](reference_uttec_ssd_backup.md) — G:\ exFAT 라벨 UTTEC_SSD. /backup skill 호출. PowerShell 전용 (Git Bash path mangling exit 16) + /XJ junction 무시 필수
+- [search 외부 mode 메모리·세션 turn-off 옵션 미구현 ⭐](project_search_external_mode_gap.md) — Phase 4.3 E·F 본인용 dogfooding 만 OK. 외부 deploy 전 환경변수/mode toggle 신설 필수. 위시캣 마스킹·세션 carry-over 누설 위험

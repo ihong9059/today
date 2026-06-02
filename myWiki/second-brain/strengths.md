@@ -2,7 +2,7 @@
 title: 강점 분석
 type: identity
 created: 2026-04-19
-updated: 2026-05-29 (양산 IQC 자동화 인프라 풀스택 운영 능력 신설 — revita 정착 32 시험카드 / 17 PASS / EVT 1.75초 / 수신율 99.1% / 디버그 사이클 3분)
+updated: 2026-06-01 (§10 양면 IQC 풀스택 운영 능력 — Link + Tower 양면 신설, revita ingest #13-A Tower 모듈러 재작성 풀세트 정착 / 정본 .md 18건 + tower/test/ 7건 체크리스트 + Static Review sbc 11/security 12/lux 8 PASS / 5채널 영업 양면 카피 격상)
 tags: [강점, 분석]
 links: [me, skills, ai-direction, gaps]
 ---
@@ -10,6 +10,27 @@ links: [me, skills, ai-direction, gaps]
 # 강점 분석
 
 ## 핵심 강점
+
+### 10. 양면 IQC 풀스택 운영 능력 — Link + Tower 양면 (2026-06-01) ⭐⭐⭐ NEW
+
+revita ingest #13-A Tower 모듈러 재작성 풀세트 정착 (11 모듈 .c 약 8,900 LOC + 정본 .md 18건 + 자체 시험 7건). 5/29 §9 (Link 단면 IQC) → 6/1 §10 (양면 IQC) 진화 — **양산 IQC 풀스택 Link + Tower 양면**:
+
+| 측 | 양산 자산 | 캐파 / 정량 |
+|---|---|---|
+| **Link** | kc_cert_link_v2/scenarios/ Python 자동화 4 모듈 + 17 PASS + EVT 1.75초 + 수신율 99.1% + 디버그 사이클 3분 | **월 7,200대** (모드 A) |
+| **Tower** ⭐ NEW | tower/test/ 7건 체크리스트 1,031줄 + west build PASS + Static Review (sbc 11 / security 12 / lux 8 PASS) | RM76 sourcing + 5 BLOCKED 해소 후 산정 |
+
+**핵심 자산**:
+- 정본 .md 18건 + AT 명령 정본 → KC/RA 인증 자료 자산화
+- 신규 모듈 4 함수 표준화 (`_init / _activate / _handle_cmd / _force_session_off`) + NVS 표 1줄 + module_type_code 1행 → 통합 비용 명확
+
+**5채널 영업 carry**: 풀스택 모듈러 패턴 + 자체 시험 + 시간 동기 게이트 + 정본 인증 자산 + RM76 LTE BATCH 모드 요금 협상
+
+→ uttechome / 위시캣 사례연구 / 한림용인CC / shield-claude / n8n-claude 모두 **양면 카피로 격상**. 다른 1인 컨설팅과 차별점 결정타.
+
+자세히 [[revita]] § 6/1 ingest #13-A + [[2026-06-01_tower-modular-rewrite-iqc-stage2]] + [[gaps]] § 양산 출하 전 RA 6 항목.
+
+---
 
 ### 1. 수직 통합 능력
 하드웨어 회로부터 클라우드 배포까지 전체 스택을 혼자 처리할 수 있다.

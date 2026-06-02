@@ -2,12 +2,71 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-05-28 (R38 SDRAM+QSPI 정량 실증 — 결정 19 3-tier 메모리 모델 정량 실증 후 Cortex-M tier 영업 기준 변경 / 결정 20 dts upstream 정정 == upstream contribution 가치 박제)
+updated: 2026-06-01 megasession (결정 21 BOM Path B-2 영업 신설 [pca10056 단독 $16 K-POP 저가형/OEM/매스마켓, R46 CMSIS-NN 3.14× = esp32s3 plain C 동급] / 결정 22 CMSIS-NN port 표준 = arm_nn_vec_mat_mult_t_s8 / 결정 23 가속 가설 검증 framework [fused operation vs separate 본질] / 결정 24 cross-vault feedback loop 정착 [search Phase 4.3 정체성 D 검증] / 결정 25 revita 양면 IQC 진입 [Link 단면 → Link+Tower 양면])
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-01 megasession) — R44/R45/R46 verdict + BOM 3-path + search Phase 4.3 + revita Tower 모듈러 ⭐⭐⭐⭐⭐
+
+**사건**: 6/1 _inbox 8장 흡수 megasession (ondevice 3 + search 2 + revita 1 + wishket 2). cross-vault feedback loop 첫 풀사이클 완결 — main vault → 각 vault 능동 카드 발송 → 각 vault 자율 진행 → ack 카드 회신 → mywiki 흡수. 결정 21~25 추가.
+
+### 결정 21: ⭐⭐⭐ BOM Path B-2 영업 신설 — pca10056 단독 ~$16 K-POP 저가형 / OEM / 매스마켓
+
+R44 verdict (Path A esp32s3 단독 $25 / Path B esp32s3+nRF52840 $31) + R46 finding으로 추가:
+
+| Path | BOM | 영업 포지션 | 정량 근거 |
+|:-:|---:|---|---|
+| A | ~$25 | 양산 표준 | R44 esp32s3 build PASS (Flash 428KB) |
+| B | ~$31 | Premium (BLE5 + AI 분리) | R44 verdict |
+| **B-2** ⭐ NEW | **~$16** | **K-POP 저가형 / OEM / 매스마켓** | R46 CMSIS-NN 3.14× = esp32s3 plain C 동급 latency |
+
+→ **"$15 M4F + CMSIS-NN 가속 = $5 LX7 plain C 동급"** 영업 본질 finding이 Path B-2 신설 근거. AI FanStick 가격대 다층화 → 시장 segment 확장.
+
+### 결정 22: ⭐⭐⭐ CMSIS-NN port 표준 = `arm_nn_vec_mat_mult_t_s8` 채택
+
+본 vault weights layout `[out × in]` row-major 일관 → `arm_fully_connected_s8` wrapper는 별도 transpose 필요 (R46-nrf1 filter_dims layout mismatch 함정). 향후 모든 CMSIS-NN port (R47+, 다른 모델) default = `vec_mat_mult_t_s8`. 영구 자산 — 미래 port 즉시 우회.
+
+### 결정 23: ⭐⭐ 가속 가설 검증 framework — mandate Round 박제 시 H1/H2/H3 명시 + 결과 박제
+
+R45 negative (CMSIS-DSP dot only 1.077×) → R46 검증 동기 부여 → CMSIS-NN full FC 3.14× = R18 carry 3.23× 재현 ✅. **가속 가설 검증 framework 일반화**:
+- mandate Round 박제 시 가설 H1/H2/H3 명시 의무
+- 가설 검증 결과 (적중 / 부분 / 미달) 본질 박제
+- negative finding도 가치 (R45 → R46 동기)
+- **API 단위 가속 본질 = fused operation vs separate** (dot/matmul 단독은 vectorizer 이미 잘 함)
+
+### 결정 24: ⭐⭐⭐ 정체성 D (search-claude dogfooding-via-self) 검증 사례 — vault scope 결함 진단 cross-vault feedback loop
+
+5/22 정체성 D 결단 ("1차 사용자 = 본인, 외부 deploy 시 turn-off 옵션") → 5/23 megasession 메모리·세션 인덱싱 패치 발송 → 6/1 search-claude 9 패치 일괄 적용 완결 (A·B·C·D today rescue + E·F·H·I·J answer source) → time-oriented query top-1 margin 0.11 → 1.7~1.8 (**15배 향상**) + 메모리 44 files 인덱싱 + 위시캣 마스킹 룰 검색 가능.
+
+**일반화 원칙**: vault scope 결함 진단 시 main vault 능동 카드 발송 → 별도 vault 자율 진행 + ack 회신 → mywiki 흡수 풀사이클 = cross-vault feedback loop 정착. 다른 vault (uttechome / wishket / lemonLabs / revita / ondevice) 결함 발견 시 동일 패턴 적용.
+
+**carry gap**: search 외부 deploy 전 `SEARCH_EXTERNAL_MODE=1` 환경변수 toggle 필수 (Phase 5/6). 위시캣 마스킹·세션 carry 누설 위험.
+
+### 결정 25: ⭐⭐⭐ revita 양면 IQC (Link + Tower) 진입 — 5채널 영업 카피 양면화
+
+ingest #13-A Tower 모듈러 재작성 풀세트 정착 (11 모듈 .c 약 8,900 LOC + 정본 .md 18건 + 자체 시험 7건). 5/29 §9 (Link 단면 IQC) → 6/1 §10 (양면 IQC) 진화:
+
+| 측 | 양산 자산 | 캐파 |
+|---|---|---|
+| Link | kc_cert_link_v2/scenarios/ Python 자동화 4 모듈 + 17 PASS | 월 7,200대 (모드 A) |
+| **Tower** ⭐ NEW | tower/test/ 7건 체크리스트 + west build PASS + Static Review (sbc 11 / security 12 / lux 8 PASS) | RM76 sourcing + 5 BLOCKED 해소 후 산정 |
+
+→ uttechome 영업 / 위시캣 사례연구 / 한림용인CC IQC 확장 / shield-claude RPi 자동화 / n8n-claude 다중 path 모두 **양면 카피로 격상**. 양산 onboard 시간 단축 근거 결정타.
+
+### 의미 (6/1 추가)
+
+21. **BOM 3-path 영업 자산** — Path A/B/B-2 3층 가격대 차별화. R46 CMSIS-NN finding이 $16 매스마켓 path 신설 근거
+22. **CMSIS-NN port 표준 = `arm_nn_vec_mat_mult_t_s8`** — vault weights layout 일관성 영구 자산
+23. **가속 가설 검증 framework** — API 단위 가속 본질 = fused operation vs separate
+24. **cross-vault feedback loop 정착** — main vault 능동 카드 → 각 vault 자율 → ack 회신 → mywiki 흡수 풀사이클
+25. **revita 양면 IQC (Link + Tower)** — 5채널 영업 카피 양면화 단계 진입
+
+→ thought [[2026-06-01_R44-3board-verdict-CMSIS-NN-fused]] + [[2026-06-01_search-Phase4.3-time-oriented-boost]] + [[2026-06-01_tower-modular-rewrite-iqc-stage2]] (3건 신규) + [[onDevice-ai]] § 6/1 + [[ai-fanstick]] § BOM 3-path + [[search]] § Phase 4.3 + [[revita]] § ingest #13-A.
+
+---
 
 ## 판단 로그 (2026-05-28 cascade #2) — R38 SDRAM+QSPI 정량 실증 → 3-tier 메모리 영업 결정타 ⭐⭐⭐⭐
 

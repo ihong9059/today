@@ -2,12 +2,69 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-05-29 (R41 흡수 — STM-17~21 신규 함정 5건 / vanilla Zephyr STM32 DMIC 정식 지원 0 함정 / vendor reference manual 누락 spec 발견 패턴 (ACR1.DMAEN write protection RM0399 누락) + revita 양산 IQC 정착 — RAK4631 I2C 핀 충돌 함정)
+updated: 2026-06-01 megasession (R46-nrf1 CMSIS-NN filter_dims layout mismatch [향후 모든 CMSIS-NN port 표준 = arm_nn_vec_mat_mult_t_s8] + R45 CMSIS-DSP sub-option Kconfig 명시 + R45 dot product negative finding [fused vs separate 본질] + esp32 #17~19 carry 함정 + revita Tower 양산 RA 6 항목 + search 외부 mode turn-off 미구현 Phase 5/6 candidate)
 tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream]
 links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-06-01 — CMSIS-NN API filter_dims layout mismatch + CMSIS-DSP sub-option 명시 + esp32 carry 3 함정 (R44/R45/R46) ⭐⭐⭐
+
+ondevice-claude 카드 3장 일괄 흡수 (5/30 R41 Path B SW carry + R42 신설 + 6/1 R44 INT8 PASS + R44/R45/R46 verdict).
+
+### gotcha R46-nrf1 — CMSIS-NN `arm_fully_connected_s8` filter_dims layout mismatch ⭐⭐ (영구 자산)
+
+| 함정 | 회피 |
+|---|---|
+| CMSIS-NN `arm_fully_connected_s8` API expected filter_dims = `[in_dim, 1, 1, out_dim]`, memory layout = `[in_dim × out_dim]` (in_dim major) ↔ 본 vault carry weights = `[out_dim × in_dim]` row-major → API가 weights 잘못 해석 → accuracy random (~1/N_classes) + latency 정상 (조용한 실패) | **진단 단서**: "accuracy random + latency 정상" → first-check filter layout. 우회: `arm_nn_vec_mat_mult_t_s8` ([out × in] row-major 직접 호환, 동등 가속). 향후 모든 CMSIS-NN port (R47+) default = `vec_mat_mult_t_s8` |
+
+### gotcha R45 — CMSIS-DSP sub-option Kconfig 명시 필수 ⭐
+
+| 함정 | 회피 |
+|---|---|
+| `CONFIG_CMSIS_DSP=y` 만으로 부족, `CONFIG_CMSIS_DSP_STATISTICS=y` 명시 필수 → 1차 build "undefined reference to `arm_dot_prod_q7`" (Nordic § #16 carry 패턴 일관) | sub-option 카테고리별 Kconfig 명시 체크리스트 박제 |
+
+### gotcha R45 본질 — CMSIS-DSP dot product 단독 가속 미미 (negative finding) ⭐⭐
+
+plain C가 gcc 12.2 `-Os`에 이미 SMLAD vectorize 잘 됨 추정. **API 단위 가속 본질 ≠ library 차이 본질** (CMSIS-DSP / CMSIS-NN 모두 SMLAD 활용). 진짜 본질: **fused operation (matmul + bias + requant) vs separate** (dot then requant). R46 CMSIS-NN full FC 3.14× vs R45 dot only 1.077× 비교가 입증.
+
+→ 향후 가속 API 선택 시 "fused vs separate" 본질 평가 의무. dot/matmul 단독은 vectorizer 이미 잘 함.
+
+### esp32s3 신규 함정 3건 (R44 carry — Windows 환경 cmake/ninja 영역) ⭐
+
+| # | 증상 | 우회 |
+|:-:|---|---|
+| #17 | bootloader build.ninja race — 첫 patch_ninja → main만 patch, 첫 build에서 bootloader/build.ninja 생성됨 → ar fail | 첫 build fail 후 patch_ninja 재실행 |
+| #18 | CMakeTestCCompiler 우회 (함정 #14 새 발현) | 사용자 CMakeLists.txt `set(CMAKE_C_COMPILER_WORKS TRUE)` + `_CXX_` 명시 |
+| #19 | Initialize-Idf.ps1 PythonCommand fail — idf-env config null 반환 | `export.ps1` 직접 호출 |
+
+→ ESP32 함정 #14 family (Windows cmd `cd .` cwd reset)가 cmake/ninja 환경 다양한 영역에서 발현 — #17/#18 모두 같은 root cause 다른 표현. **"Windows cmd path semantics" 패턴 박제 가치** (thought 후보).
+
+## 2026-06-01 — Tower 양산 출하 전 RA 6 항목 (revita ingest #13-A) ⭐⭐ NEW
+
+revita-claude 카드 #2026-06-01-003 흡수. ingest #13-A Tower 모듈러 재작성 풀세트 정착 시 carry 위험 6건 박제.
+
+| # | 위험 | 양산 영향 |
+|:-:|---|---|
+| 1 | LTE 미완 4 TODO (LWT/KMQTTPUB/mTLS/E2E) — RM76 실기 검증 대기 | 양산 일정 risk |
+| 2 | ADC 배터리 실측 stub (`power_module.c #if 0`) — AIN7 분압 ×5.545 박제됨 | 양산 전 반드시 해소 |
+| 3 | USB CDC RX handler 미등록 | Core3506 통신 운영 즉시 fix 필요 |
+| 4 | Button LONG 미정의 (≥3000ms) — 공장 초기화·BLE 페어링 후보 | 미합의 carry |
+| 5 | BLE module 전체 stub (15줄 LOG only) — OTA·등록·상태 조회 | 양산 페어링 경로 부재 |
+| 6 | `TOWER_DM_BOOT_TEST` mode 1 양산 빌드 혼입 risk — auto UPDATE seed 양산 섞이면 sync_lost 가시성 상실 | 빌드 정책 강화 필요 |
+
+→ revita Tower 양산 출하 전 RA 체크리스트로 carry. [[revita]] § 6/1 ingest #13-A.
+
+## 2026-06-01 — search 외부 mode 메모리·세션 turn-off 옵션 미구현 ⭐ (Phase 5/6 candidate)
+
+search-claude 카드 #2026-06-01-002 (E·F·H·I·J) 흡수. 정체성 D (dogfooding-via-self) 결단 → `.claude/memory/*.md` + `.claude/sessions/session_*.md` 인덱싱 본인용 OK. **단 외부 deploy 시 turn-off 옵션 필수** — 위시캣 마스킹·세션 carry-over 누설 위험.
+
+| 함정 | 회피 |
+|---|---|
+| search vault 본인용 dogfooding mode (memory + session 인덱싱 ON)를 외부 deploy 시 그대로 노출 → 회사명·세션 carry 룰·내부 결단 누설 | 환경변수 `SEARCH_EXTERNAL_MODE=1` 시 memory_root + session_root collect 스킵. Phase 5 또는 6 신설 필수 |
+
+→ memory `project_search_external_mode_gap.md` 박제 완료. [[search]] § Phase 4.3 megasession.
 
 ## 2026-05-29 — vanilla Zephyr STM32 DMIC 정식 지원 0 + vendor reference manual 누락 spec (R41) ⭐⭐⭐
 

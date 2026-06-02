@@ -13,7 +13,7 @@ related:
   - wishketProject/위시캣/2026-05-14_프로젝트155220_미팅준비/08_Recipe_PLC_의미.md
   - wishketProject/second-brain/log.md § [2026-05-30]
   - mywiki second-brain/entities/위시캣활동.md § #155220 진행 단락 (갱신 후보)
-status: pending
+status: done
 ---
 
 # #155220 PET 두께 측정기 미팅 6/5 확정 + 학습 자료 시리즈 박제

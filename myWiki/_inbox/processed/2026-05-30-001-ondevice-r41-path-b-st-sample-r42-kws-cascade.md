@@ -11,7 +11,7 @@ related:
   - prj-onDevice_AI/CLAUDE.md § STM32H745 (STM-17~21 신규)
   - prj-onDevice_AI/프로젝트_보드한계모델_v2.10/Round42_STM32H745_KWS_평가/
   - prj-onDevice_AI/프로젝트_AI_FanStick_차세대_PoC/Phase1_Plan/11_Path_B_plan.md
-status: pending
+status: done
 ---
 
 # R41 Path B SW carry + ST sample 검증 + R42 신설 — 흡수 요청

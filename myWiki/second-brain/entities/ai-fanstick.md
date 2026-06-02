@@ -2,9 +2,57 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-05-29 R41 Path A 본격 진입 cascade (Stage 4 시나리오 E E1/E2/E3 분리 박제 + 시나리오 E1 영업 자산 회복 path 확정 + 옛 "stm32h745 DMIC 본질 불가" 박제 완전 정정 + SAI4 register 결정타 ACR1.DMAEN bit17=0 진단 + 본 vault custom Zephyr patch chain R&D 자산)
+updated: 2026-06-01 R44/R45/R46 흡수 (BOM 3-path 양산 자산 [A $25 / B $31 / B-2 $16] + INT8 quantization 0pp 손실 + 5중 일치 75% 무손실 + R46 CMSIS-NN full FC 3.14× = esp32s3 plain C 동급 latency + Path B-2 K-POP 저가형/OEM/매스마켓 신설)
 tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, mandate-v2.10-R38, 6mandate-모두종결, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative, Cortex-M-tier-최강, 17x-CNN-가속, SLM-적재, R37-positive-정정, asymmetric-multiprocessing, LiteRT, Jetson-Super, 영업카피-신뢰성-강화, QSPI-128MB-SFDP, SDRAM-penalty-zero, Phi-2-적재-실증, 3tier-메모리]
 links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
+---
+
+## 2026-06-01 R44 양산 verdict + R46 CMSIS-NN 가속 + BOM 3-path 영업 자산 ⭐⭐⭐⭐⭐
+
+### R44 esp32s3 + pca10056 3-board KWS 매트릭스 양산 verdict (ondevice-claude 카드 #2026-06-01-001 + #2026-06-01-002 megasession 흡수)
+
+**핵심 finding**: pca10056 + CMSIS-NN ≈ esp32s3 plain C **동급 latency** ($15 M4F + 가속 = $5 LX7 plain C). 양산 결단: **esp32s3 메인 + pca10056 BLE 결합**.
+
+### BOM 3-path 양산 자산 (영업 차별화 결정타)
+
+| Path | 칩 구성 | BOM | 영업 포지션 | 정량 근거 |
+|:-:|---|---:|---|---|
+| **A** | esp32s3 단독 | ~$25 | 양산 표준 | R26 carry 75% / R44 esp32s3 build PASS |
+| **B** | esp32s3 + nRF52840 | ~$31 | Premium (BLE5 + AI 분리) | R44 verdict |
+| **B-2** ⭐ NEW | pca10056 (nRF52840) 단독 | ~$16 | **K-POP 저가형 / OEM / 매스마켓** | R46 CMSIS-NN 3.14× (esp32s3 plain C 동급 latency) |
+
+### INT8 quantization 0pp 손실 ⭐⭐⭐ (영업 카피 결정타)
+
+MLP 1024→128→8 symmetric per-tensor INT8 양자화:
+- PC float32: **75.0%** (120/160) ↔ PC INT8 simulation: **75.0%** (120/160) → delta +0.00pp
+- per_keyword 패턴 동일 (down/stop 85% / right 55%, R26 baseline 보존)
+
+→ **AI FanStick 차세대 INT8 양산 path 사실상 무손실** 영업 카피. CMSIS-NN / ESP-DSP 활용 안전 확정.
+
+### 5중 일치 75% — 모델 transfer + 양산 path 4 layer 무손실 검증 ⭐⭐⭐
+
+| Layer | 환경 | 정확도 |
+|---|---|---:|
+| 1 | R26 PyTorch 원본 | 75.0% |
+| 2 | R42 STM32 carry | 75.0% |
+| 3 | R44 esp32s3 (plain C INT8) | 75.0% |
+| 4 | R44 pca10056 (plain C) | 75.0% |
+| 5 | R46 CMSIS-NN full FC | 75.0% (3.14× 가속) |
+
+→ **"edge AI 모델 양산 path 4 layer 무손실 검증"** 강사양성 Day 5 / 정부지원 결정타 자료.
+
+### esp32s3 Path B 검증 통과 (R44)
+
+esp32_kws.bin 507KB: Flash .rodata 332KB (INT8 weights 132KB + MFCC 160KB) + .text 96KB / DRAM 13KB (520KB SRAM 중 **2.5%**) / IRAM 16KB → **PSRAM 불필요** = 부록 D Path B 양산 표준 정량 검증. AI FanStick 차세대 esp32s3 ($5) 메인 보드 가능성 강화.
+
+### 영업 카피 신규 (Path B-2 + R46 CMSIS-NN)
+
+- ⭐⭐⭐ "**nRF52840 단독 SoC + CMSIS-NN = ESP32-S3 plain C 동급 latency** (BOM $16, BLE5 + KWS 단일 칩)" — Path B-2 매스마켓·OEM 결정타
+- ⭐⭐⭐ "**5중 일치 75% — 모델 transfer + INT8 + 보드 + library port 4 layer 무손실 검증**" — 양산 신뢰성 카피
+- ⭐⭐ "API 단위 가속 본질 = fused operation (matmul + bias + requant) vs separate" — R45/R46 본질 결단 (CMSIS-DSP 1.077× 미미 / CMSIS-NN 3.14× 결정적 차이)
+
+자세히 [[onDevice-ai]] § 6/1 R44/R45/R46 흡수 + [[2026-06-01_R44-3board-verdict-CMSIS-NN-fused]] + [[ai-direction]] § BOM Path B-2 + 가속 가설 검증 framework.
+
 ---
 
 ## 2026-05-29 R41 Path A 본격 진입 cascade — Stage 4 시나리오 E E1/E2/E3 분리 + E1 영업 자산 회복 ⭐⭐⭐⭐⭐

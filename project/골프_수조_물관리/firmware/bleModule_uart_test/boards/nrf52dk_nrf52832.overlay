@@ -30,30 +30,32 @@
  */
 
 &pinctrl {
-	/* UART0 = LoRa 데이터 통신 (TX=P0.11, RX=P0.13, 9600 8N1) */
+	/* UART0 = RS485 (TX=P0.15, RX=P0.02, 9600 8N1) — HW UART for robust Modbus.
+	 * SW-UART 9600 bit3 corruption (5/31) 우회. LoRa P0.11/P0.13 미사용. */
 	uart0_default: uart0_default {
 		group1 {
-			psels = <NRF_PSEL(UART_TX, 0, 11)>;
+			psels = <NRF_PSEL(UART_TX, 0, 15)>;
 		};
 		group2 {
-			psels = <NRF_PSEL(UART_RX, 0, 13)>;
+			psels = <NRF_PSEL(UART_RX, 0, 2)>;
 			bias-pull-up;
 		};
 	};
 
 	uart0_sleep: uart0_sleep {
 		group1 {
-			psels = <NRF_PSEL(UART_TX, 0, 11)>,
-				<NRF_PSEL(UART_RX, 0, 13)>;
+			psels = <NRF_PSEL(UART_TX, 0, 15)>,
+				<NRF_PSEL(UART_RX, 0, 2)>;
 			low-power-enable;
 		};
 	};
 
-	/* SPI1 MOSI = SW-UART TX2 (MAX485 DI, P0.15, 1 MHz SPI for 9600 baud) */
+	/* SPI1 MOSI — unused in Modbus master demo (UART0가 RS485 직접 처리).
+	 * dummy pinmap (P0.12 SCK, P0.04 MOSI) to keep SPI peripheral alive. */
 	spi1_default_alt: spi1_default_alt {
 		group1 {
 			psels = <NRF_PSEL(SPIM_SCK, 0, 12)>,
-				<NRF_PSEL(SPIM_MOSI, 0, 15)>;
+				<NRF_PSEL(SPIM_MOSI, 0, 4)>;
 			bias-pull-up;
 		};
 	};
@@ -61,7 +63,7 @@
 	spi1_sleep_alt: spi1_sleep_alt {
 		group1 {
 			psels = <NRF_PSEL(SPIM_SCK, 0, 12)>,
-				<NRF_PSEL(SPIM_MOSI, 0, 15)>;
+				<NRF_PSEL(SPIM_MOSI, 0, 4)>;
 			low-power-enable;
 			bias-pull-up;
 		};

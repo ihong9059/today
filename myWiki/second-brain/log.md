@@ -2,8 +2,85 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-05-30 (UTTEC 원조사업 — 지하주차장 LED 디밍 시스템 UTSOL 2011~2023 12년+ 누적 박제 + DGIST ESCO §2.1 IR 354등 매칭)
+updated: 2026-06-02 (한림용인CC 풀체인 Modbus 검증 완결 — nRF52832 HW UART 우회로 SW-UART 9600 bit3 corruption 해결, 23회 연속 OK, 12V 단일 전원 호환 확정)
 ---
+
+## [2026-06-02] work ⭐⭐⭐ | 한림용인CC 풀체인 Modbus master 검증 완결 — nRF52832 HW UART 우회 + 12V 단일 전원
+
+**컨텍스트**: 5/31 sensor 6/6 + J28 14-pin pinmap + 5-ch UART bring-up → 6/2 한림용인CC 통합 sensing test (#1) 단일 트랙 집중. nRF52832 (UTTEC BLE Module) + RS485 auto-DE dongle + QDY30A-B 수위센서 완전 통합.
+
+### A. QDY30A-B sensor 단독 통신 검증 (PC 경로) — 10회 측정
+- COM44 USB-RS485 + Slave 1 + 9600 8N1 + reg 0x0004
+- 공기 3회: **24V·12V·새 전원 모두 bit-perfect 동일** (mean=3 std=0.00) → ⭐ 12V 단일 전원 운용 확정
+- 수중 7회: 601→494→393.4→321→195→93→654 mm 동적 추적, LSB 1mm 안정, turbulence 시 std=7.52 정확 감지
+- offset +3 mm → 5/31 batch #5번과 일치
+
+### B. nRF52832 Modbus master 1차 — SW-UART 시도 FAIL
+- 펌웨어: CRC16 + FC 0x03 + 4ms idle silence + TX4 USB-VCOM display
+- 결과: `NO/BAD RESP n=0` 반복 + TX4 자체에 X→P / l→d / O→G 깨짐 (XOR=0x08 = bit 3 1→0 flip)
+- 진단: SW-UART 9600 path 자체 결함. TX2가 sensor에 보낸 Modbus frame도 같은 corruption → invalid → 무응답
+
+### C. ⭐⭐⭐ nRF52832 Modbus master 2차 — HW UART0 pinmux 재배치 SUCCESS
+**핵심 우회**: overlay `uart0_default` pinctrl P0.11/P0.13 (LoRa) → **P0.15/P0.02** (RS485 결선된 핀, 변경 0). main.c SW-UART TX2/RX2 제거 + HW UART0 polling TX + ISR RX + ring_buf.
+
+**결과**: `Level: 676/677 mm` **23회 연속 출력 / CRC ERR 0건 / NO RESP 0건** ✅
+
+### D. 디스플레이 cosmetic carry
+TX4 USB-VCOM에 `Level: 676 -m` (m→- XOR=0x40 bit 6 flip) 약 50% 혼재. RS485 path (HW UART) 무결성 확인 — Modbus CRC 23/23 통과. **SW-UART 9600 bit 위치 고정 아닌 일반 timing 결함 박제** (이전 bit 3, 이제 bit 6). 해결: TX4 baud 9600 → 115200 (양산 검증된 path) carry.
+
+### 박제 / 갱신 후보
+- **strengths.md / skills.md** § "HW UART pinmux 재배치 SOP" — overlay 한 군데 수정으로 SW-UART path 결함 우회. nRF NCS 양산 패턴 자산화 가치
+- **gaps.md** § "SW-UART 9600 inherent timing 결함" — bit 위치 고정 아닌 systematic 1→0 flip. 다음 SW-UART 9600 사용 검토 시 우회 우선
+- **entities/uttec-ble-module.md** — HW UART pinmux 재배치 검증 운영 패턴 추가
+- **entities/한림용인cc-고가수조** (있다면) — 풀체인 sensor 검증 완결 마일스톤 + 12V 단일 전원 양산 설계 단순화
+- **ai-direction.md** 판단 로그 — "검증된 path 우선 (HW UART) vs 새 path 디버깅 (SW UART)" 의사결정 패턴
+
+### 임팩트
+1. 한림용인CC 시공 트랙 — sensor + nRF52832 통합 마일스톤 도달
+2. 12V 단일 전원 검증 → 양산 PCB 설계 단순화 가능 (BOM 24V 어댑터 제거)
+3. UTTEC BLE Module v1 양산 capability 재확인 (HW UART + SW UART 115200 + GPIO 자유)
+4. RS485 auto-DE dongle 운용 검증 — MCU GPIO 토글 코드 0
+
+## [2026-06-01] absorb ⭐⭐⭐⭐⭐ | _inbox 8장 흡수 megasession — cross-vault feedback loop 풀사이클 첫 완결 (ondevice 3 + search 2 + revita 1 + wishket 2)
+
+**카드**: 5/30·5/31 carry 3장 + 6/1 신규 5장 = pending 8장 일괄 흡수 (5단계 lifecycle 완료).
+
+### ondevice 3장 — R41 Path B SW carry / R44 INT8 PASS + esp32s3 build / R44 verdict + R45/R46 CMSIS-NN
+- **R41 Path B SW carry (5/30)**: Zephyr 4.3.99 WM8994 codec driver 신규 작성 + ST sample 활용으로 보드 audio output 100% 검증 + R42 신설 (한국어 KWS 평가, kspon_kw 23,731 sample mic 우회) + STM-17~21 신규 함정 5건
+- **R44 INT8 PASS + esp32s3 build (6/1 #1)**: INT8 quantization 정확도 손실 **0.00pp** (MLP 1024→128→8 symmetric per-tensor) + esp32s3 Path B 검증 통과 (Flash 428KB / DRAM 13KB / PSRAM 불필요) + 신규 함정 #17 bootloader build.ninja race / #18 CMakeTestCCompiler / #19 export.ps1 대체
+- **R44 verdict + R46 CMSIS-NN (6/1 #2)**: 3-board KWS 매트릭스 **양산 verdict (esp32s3 메인 + pca10056 BLE 결합)** + R46 CMSIS-NN full FC **3.14× 가속** (R18 carry 3.23× 정확 재현 ✅) + R45 CMSIS-DSP dot only **1.077× negative** + 본질 finding "pca10056 + CMSIS-NN ≈ esp32s3 plain C 동급 latency" + **5중 일치 75%** (R26 PyTorch + R42 STM32 + R44 esp32s3 + R44 pca10056 + R46 CMSIS-NN) + R46-nrf1 filter_dims layout mismatch gotcha (영구 우회: `arm_nn_vec_mat_mult_t_s8` 표준)
+
+### search 2장 — Phase 4.3 megasession 9 패치 일괄 적용 완결
+- **A·B·C·D today rescue (#001)**: `_TIME_KEYWORDS` 14 신규 / `_date_bonus * 0.15` (기존 0.05 × 3) / authority 0.6→1.0 time-oriented / SourceHit score breakdown 노출 → "오늘 할일을 알려주세요" top-1 score **3.584** / margin **1.7~1.8 (5/22 사고 0.11 대비 15배 향상)** / pytest 19/19
+- **E·F·H·I·J answer source (#002)**: `.claude/memory/*.md` **44 files** 인덱싱 + `.claude/sessions/session_*.md` 최근 3개 인덱싱 + SYSTEM_PROMPT 5 원칙 + context 8→12 hits / 2000→4000 chars + `test_answer_consistency.py` 19 tests all PASS. G 패치 Phase 4.2 선행 완료 (sonnet-4-6 정상)
+
+### revita 1장 — ingest #13-A Tower 모듈러 재작성 풀세트 → 양면 IQC (Link + Tower) 진입
+- BASE `05f36b56` → HEAD `8e6682a5`, 7 commits / +18,468 / -3,282 / 106 파일 중 ~14K LOC tower 분할
+- 11 모듈 .c **약 8,900 LOC** + 정본 .md **18건 1,950줄** + 자체 시험 7건 1,031줄 (Static Review sbc 11 / security 12 / lux 8 PASS)
+- LTE stub → 실구현 2,307줄 (RM76 AT 5 STEP + URC + CME + FSM 7 + TX ring 256 DROP_OLDEST + BATCH 10분)
+- 신규 entity 4건 (lux-module + mqtt-protocol + tower-test + lte-module 갱신) → skills.md § RS485/Modbus + MQTT + LTE 흡수 + strengths.md **§10 양면 IQC 신설**
+- 양산 RA 6 carry 위험 (LTE 4 TODO + ADC stub + USB RX + Button LONG + BLE stub + `TOWER_DM_BOOT_TEST`)
+
+### wishket 2장 — #155220 PET 두께 측정기 6/5 미팅 확정 + 5/31 catch-up 31건
+- **#155220 미팅 (5/30 #001)**: 6/5(금) 15:00 부천 동아정밀공업 확정 + 매니저 3축 (턴키 / 핵심 기술 시연 / **예산 분리 + 역제안 ⭐**) + TCO 3-Plan 영업 자산 (A 미쓰비시 / B LS 역제안 -15~25% / C 자체 -40~55%) + 학습 자료 시리즈 4건 (ISA-95/88 + Recipe + Chromatic Confocal) → 다른 PLC/SCADA 미팅 재활용 가능
+- **5/31 catch-up (5/31 #001)**: #155719~#155749 31건 (외주 0 / ⚠️ 2 / ❌ 7 / 🔒 22 = **71% 비공개 역대 최고**) + 신규 지원 2건 (#155724 Nest/Gemini 백엔드 + #155736 층간소음 측정 NDK) + client Q&A 5건 + **정직 명시 패턴 영업 표준화** trigger 누적 (5/29~5/31 4건)
+
+### myWiki 갱신 (5단계 lifecycle)
+
+| 단계 | 갱신 |
+|---|---|
+| 1. entity | onDevice-ai.md / ai-fanstick.md / search.md / revita.md / 위시캣활동.md |
+| 2. gotcha | gaps.md § R46-nrf1 + R45 + esp32 #17~19 + revita 양산 RA 6 + search 외부 mode turn-off |
+| 3. decision | ai-direction.md § 결정 21~25 (BOM Path B-2 / CMSIS-NN port 표준 / 가속 가설 framework / cross-vault feedback loop / revita 양면 IQC) |
+| 4. thought | thoughts/2026-Q2/ 3건 신설 (R44-3board-verdict-CMSIS-NN-fused / search-Phase4.3-time-oriented-boost / tower-modular-rewrite-iqc-stage2) |
+| 5. strengths | strengths.md **§10 양면 IQC 풀스택 운영 능력 (Link + Tower 양면) 신설** |
+
+### 의미
+
+- **cross-vault feedback loop 풀사이클 첫 완결** — main vault 능동 카드 → 각 vault 자율 진행 → ack 카드 회신 → mywiki 흡수. 정체성 D (search-claude dogfooding-via-self) 검증 사례. 다른 vault 결함 발견 시 동일 패턴 carry.
+- **API 단위 가속 본질 = fused operation vs separate** (R45 negative + R46 positive 일반화). 향후 가속 API 평가 표준 패턴.
+- **revita 양면 IQC 단계 진입** — 5/29 §9 단면 → 6/1 §10 양면. 5채널 영업 카피 양면화.
+- **AI FanStick BOM 3-path** (A $25 / B $31 / B-2 $16) — 가격대 다층화 시장 segment 확장.
 
 ## [2026-05-30] milestone ⭐⭐⭐ | DGIST ESCO 운영제안서 v5.0 발송 완료 — 영업 lifecycle Phase 2 진입
 - **발송일**: 2026-05-30 / **버전**: v5.0 (1,131 lines, 58 KB) / **패키지**: final/ 32개 파일 42 MB

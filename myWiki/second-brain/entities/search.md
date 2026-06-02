@@ -2,7 +2,7 @@
 title: search vault (myWiki AI 검색·정리 web)
 type: entity
 created: 2026-05-21
-updated: 2026-05-23 야간 (Phase 3 ✅ UI 다듬기 + Phase 4 ✅ hybrid 임베딩 검색 정확도 + Phase 4.2 ✅ G 모델 표시 버그 fix + 정체성 D dogfooding-via-self 박제)
+updated: 2026-06-01 Phase 4.3 megasession ✅ 완결 (9 패치 통합 — A·B·C·D today rescue 강화 + E·F·H·I·J answer source 일관성, G는 Phase 4.2 선행 / memory 44 files + session 최근 3개 인덱싱 / time-oriented score 15배 향상 / 외부 mode turn-off Phase 5/6 candidate gap)
 tags: [웹, 검색, 위키노출, vault, Tier3, multi-agent, search-claude, prompt-driven, claude-api, FastAPI, React, WebSocket, 세션모델, --resume, 핸드오프]
 links: [me, skills, uttec-homepage, claude-code, memory-mcp, obsidian-시리즈-사업화, ai-education-web, 2026-05-22_claude-max-cli-subprocess-pattern]
 ---
@@ -11,6 +11,51 @@ links: [me, skills, uttec-homepage, claude-code, memory-mcp, obsidian-시리즈-
 
 ## 한 줄 정의
 **myWiki second-brain (38일치 누적 자료) 위에서 동작하는 prompt-driven 검색·정리·요약 web 서비스**. 사용자가 자연어 질의 → Claude API + wiki 자료 검색 → web 출력. 2026-05-21 **9번째 Tier 3 vault 분리** + **search-claude 9th multi-agent 합류**.
+
+## 2026-06-01 — Phase 4.3 megasession ✅ 완결 (9 패치 통합) ⭐⭐⭐⭐
+
+search-claude 카드 2장 일괄 흡수 (#2026-06-01-001 + #2026-06-01-002, in_reply_to mywiki 2026-05-23-001/002 megasession).
+
+### A·B·C·D today rescue 강화 (카드 #001)
+
+- **A**: `_TIME_KEYWORDS` 14 신규 확장 ("할일/할 일/할거/todo/tasks/오늘 일정/뭐 해야/스케줄/다음에 할" 등) → 자연 표현 6 query 모두 time_oriented=True
+- **B**: `score = base * authority + chunk_richness + _date_bonus * 0.15` (기존 0.05 × 3) + 작업보고서 authority 디부스트 0.6 → time-oriented 시 1.0 → today 작업보고서 date_bonus = 20.0 × 0.15 = **3.0** (압도적 1순위)
+- **C**: 모든 query에 `_today_paths(cache.chunks)` rescue 항상 포함 (time_oriented False여도 후보 풀 누락 차단)
+- **D**: SourceHit `base_score/authority/date_bonus/chunk_richness` + QueryResponse `time_oriented` 노출
+
+**실측**: "오늘 할일을 알려주세요" top-1 score **3.584** / margin **~1.7~1.8** (5/22 사고 0.11 → **15배 향상**). pytest 19/19 통과.
+
+### E·F·H·I·J answer source 일관성 (카드 #002, G는 Phase 4.2 선행 완료)
+
+- **E** ⭐⭐ — `.claude/memory/*.md` **44 files** 인덱싱 (memory_root config 추가). 위시캣 회사명 마스킹 룰 검색 가능
+- **F** ⭐⭐ — `.claude/sessions/session_*.md` 최근 3개 인덱싱 (work-end 유지 3개 정책 일치)
+- **H** — SYSTEM_PROMPT § "답변 원칙 (Phase 4.3 — H)" 5 원칙 추가 (myWiki=5-vault main hub / 작업보고서·메모리·세션 종합 / 시간성 query 다중 참조 / 결단 대기 별도 § 강조 / 외부 도구 언급 금지)
+- **I** — context 확장 `default_max_hits 8→12` / `max_chars_per_hit 2000→4000`
+- **J** ⭐⭐⭐ — `test_answer_consistency.py` 신설, 19 tests all PASS
+
+### 답변 정합성 검증 결과
+
+| query | top-3 paths | 비고 |
+|---|---|---|
+| "오늘 할일" | 2026-06-01_작업보고서 + 5/31 + 5/26 | 작업보고서 carry-over ✓ |
+| "위시캣 회사명 노출 정책" | 위시캣활동·정부R&D실증사업·6/1 작업보고서 | entity + 메모리 dotted line ✓ |
+| "다음에 할 일" | 6/1·5/31·5/26 작업보고서 | A 신규 키워드 작동 ✓ |
+
+### 사용자 결단 carry
+
+- **메모리 source 노출 (E)**: dogfooding-via-self 정체성 D → 본인용 OK. **단 외부 deploy 시 turn-off 옵션 필요** (Phase 5/6 candidate, memory `project_search_external_mode_gap.md` 박제 완료)
+- **모델 비용 (G)**: sonnet default 유지. 결단 query만 opus 분기 검토 (Phase 5 category 시스템 연계)
+- **session 인덱싱 범위 (F)**: 최근 3개 (work-end 유지 정책 일치)
+
+### Phase 4.3 의미
+
+- **vault scope 결함 진단 → main vault 능동 카드 발송 → search-claude 흡수 megasession 완결** 정책 검증 사례 (cross-vault feedback loop 첫 1회 완결)
+- **myWiki ↔ search 답변 일관성 결정타** — 메모리·세션 인덱싱이 격차의 본질
+- **검색 정확도 vs 디부스트 균형 — time-oriented 분기 패턴** (A·B의 핵심 디자인 결단)
+
+자세히 [[2026-06-01_search-Phase4.3-time-oriented-boost]] (신규) + [[gaps]] § search 외부 mode turn-off 미구현 + [[ai-direction]] § 정체성 D dogfooding → 메모리/세션 인덱싱 사례.
+
+---
 
 ## 2026-05-23 야간 — Phase 3·4 ✅ + Phase 4.2 G 패치 정정 + 정체성 D 박제 ⭐⭐
 

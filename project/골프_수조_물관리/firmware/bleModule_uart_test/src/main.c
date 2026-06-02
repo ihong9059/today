@@ -1,24 +1,21 @@
 /*
- * UTTEC BLE Module — 7-channel UART bring-up test (4 TX + 3 RX).
+ * UTTEC BLE Module — Modbus master demo (HW UART variant)
  *
- * 동작:
- *   매 1초 카운터 N 증가, 다음 송신:
- *     TX1 (UART0,    P0.11) : "TX1: N\r\n"  ← LoRa channel        (9600)
- *     TX2 (SW SPI1,  P0.15) : "TX2: N\r\n"  ← RS485 channel       (9600)
- *     TX3 (SW SPI2,  P0.22) : "TX3: N\r\n"  ← Debug console       (115200, CP210x)
- *     TX4 (SW SPI0,  P0.06) : "TX4: N\r\n"  ← PCA10040 USB-VCOM   (9600)
- *   동시에 LED 토글 (BLUE P0.23, RED P0.18)
+ * QDY30A-B 수위센서를 RS485로 1초마다 읽어 TX4 (USB-VCOM 9600)에 표시.
  *
- *   TX3는 추가로 monitor 역할:
- *     RX1 (UART0,   P0.13) 입력 → "RX1: ..." 으로 TX3에 echo
- *     RX2 (GPIO INT, P0.02) 입력 → "RX2: ..." 으로 TX3에 echo
- *     RX4 (GPIO INT, P0.08) 입력 → "RX4: ..." 으로 TX3에 echo
+ *   HW UART0 (P0.15 TX / P0.02 RX, 9600 8N1) → RS485 dongle DI/RO (auto-DE/RE)
+ *   TX4 (SPI0 MOSI, P0.06, SW-UART 9600) → PCA10040 USB-VCOM 표시
+ *   TX3 (SPI2 MOSI, P0.22, SW-UART 115200) → Debug console (raw / CRC)
+ *   LED: BLUE P0.23 / RED P0.18 — 매 cycle 토글
  *
- * 검증 (외부 점퍼):
- *   TX1 ↔ RX1 (J28 Pin 1 ↔ Pin 3) 점퍼 → TX3에서 "RX1: TX1: N\r\n" 확인
- *   TX2 ↔ RX2 (J28 Pin 2 ↔ Pin 4) 점퍼 → TX3에서 "RX2: TX2: N\r\n" 확인
- *   TX4 → PCA10040 USB-VCOM (별도 점퍼 불필요) → HyperTerminal 9600 8N1에서 "TX4: N" 확인
- *   USB-VCOM 키 입력 → RX4 → TX3에서 "RX4: x\r\n" echo
+ * 변경 (이전 SW-UART 시도 → HW UART)
+ *   bit 3 corruption (5/31 박제) 우회를 위해 RS485 측 UART를 HW UART로 승격.
+ *   HW UART 16× oversampling 으로 신뢰성 확보. LoRa 채널 (P0.11/P0.13) 미사용.
+ *
+ * Modbus RTU 요청:
+ *   slave=1, FC=0x03 (read holding), addr=0x0004 (current level), count=1
+ *   응답 7바이트: [01][03][02][hi][lo][CRC_lo][CRC_hi]
+ *   값 = signed16(hi, lo) — Unit=17 (mm), Decimal=1
  */
 
 #include <zephyr/kernel.h>
@@ -31,31 +28,22 @@
 #include <string.h>
 
 #include "sw_uart.h"
-#include "sw_uart_rx.h"
 
-/* GPIO pin numbers (P0.X) */
-#define LORA_M0_PIN     17  /* J28 Pin 6  */
-#define LORA_M1_PIN     19  /* J28 Pin 8  */
-#define LORA_AUX_PIN    20  /* J28 Pin 10, input pullup */
-#define MAX485_DE_PIN   24  /* J28 Pin 9, MAX485 DE+RE control */
-#define SW_UART_RX2_PIN  2  /* J28 Pin 4, P0.02 — RS485 sensor RX */
-#define SW_UART_RX4_PIN  8  /* J28 Pin 5, P0.08 — PCA10040 USB-VCOM RX */
+#define MODBUS_SLAVE     1
+#define MODBUS_REG_LEVEL 0x0004
+#define MODBUS_TIMEOUT_MS 200
 
 static const struct gpio_dt_spec led_red =
 	GPIO_DT_SPEC_GET(DT_ALIAS(uttec_led_red), gpios);
 static const struct gpio_dt_spec led_blue =
 	GPIO_DT_SPEC_GET(DT_ALIAS(uttec_led_blue), gpios);
-static const struct device *gpio0 = DEVICE_DT_GET(DT_NODELABEL(gpio0));
 static const struct device *uart0 = DEVICE_DT_GET(DT_NODELABEL(uart0));
 
-static struct sw_uart tx2;  /* SPI1 MOSI = P0.15 (J28 Pin 2)  → RS485 (9600) */
-static struct sw_uart tx3;  /* SPI2 MOSI = P0.22 (J28 Pin 7)  → Debug (115200, CP210x) */
-static struct sw_uart tx4;  /* SPI0 MOSI = P0.06 (J23 Pin 2)  → USB-VCOM (9600) */
-static struct sw_uart_rx rx2;  /* GPIO INT on P0.02 (J28 Pin 4) ← RS485 */
-static struct sw_uart_rx rx4;  /* GPIO INT on P0.08 (J28 Pin 5) ← USB-VCOM */
+static struct sw_uart tx3;  /* SPI2 MOSI = P0.22 — Debug (115200) */
+static struct sw_uart tx4;  /* SPI0 MOSI = P0.06 — USB-VCOM (9600) */
 
-/* UART0 RX (RX1) ring buffer — captured by ISR */
-RING_BUF_DECLARE(rx1_rb, 256);
+/* RS485 RX ring buffer (HW UART0 ISR fills) */
+RING_BUF_DECLARE(rs485_rx_rb, 256);
 
 static void uart0_isr(const struct device *dev, void *user_data)
 {
@@ -65,189 +53,165 @@ static void uart0_isr(const struct device *dev, void *user_data)
 			uint8_t buf[32];
 			int n = uart_fifo_read(dev, buf, sizeof(buf));
 			if (n > 0) {
-				ring_buf_put(&rx1_rb, buf, n);
+				ring_buf_put(&rs485_rx_rb, buf, n);
 			}
 		}
 	}
 }
 
-/* TX1 send via HW UART0 (polling, 9600 baud) */
-static void tx1_write(const char *str)
+/* Modbus RTU CRC16 (poly 0xA001 reversed, init 0xFFFF) */
+static uint16_t modbus_crc16(const uint8_t *buf, size_t len)
 {
-	while (*str) {
-		uart_poll_out(uart0, (uint8_t)*str++);
-	}
-}
-
-/* Echo received bytes to TX3 with channel prefix.
- * Drains ring buffer / sw_uart_rx queue until empty.
- * Prefix is sent once per "line" — flushed after newline OR after gap.
- */
-static void drain_rx1_to_tx3(void)
-{
-	uint8_t b;
-	bool any = false;
-	while (ring_buf_get(&rx1_rb, &b, 1) == 1) {
-		if (!any) {
-			sw_uart_write_str(&tx3, "RX1: ");
-			any = true;
-		}
-		sw_uart_write(&tx3, &b, 1);
-		if (b == '\n') {
-			any = false;  /* next batch starts new "RX1: " prefix */
-		}
-	}
-}
-
-static void drain_rx2_to_tx3(void)
-{
-	uint8_t b;
-	bool any = false;
-	while (sw_uart_rx_get(&rx2, &b) == 1) {
-		if (!any) {
-			sw_uart_write_str(&tx3, "RX2: ");
-			any = true;
-		}
-		sw_uart_write(&tx3, &b, 1);
-		if (b == '\n') {
-			any = false;
-		}
-	}
-}
-
-static void drain_rx4_to_tx3_and_tx4(void)
-{
-	/* RX4 (P0.08, USB-VCOM input) line-buffered echo:
-	 *   - byte를 line_buf에 누적
-	 *   - Enter ('\r' 또는 '\n') 수신 시 line 완성 → 한 번에 echo:
-	 *       TX3 (debug 115200): "RX4: <line>\r\n"
-	 *       TX4 (USB-VCOM 9600): "<line>\r\n"   (loopback)
-	 *   - byte 1개씩 SW-UART 시작/종료 반복하는 대신 single transaction 1번
-	 *     → timing margin 확보, glitch 감소
-	 */
-	/* line_buf에 trailing "\r\n" 자리 2 byte 남김 → flush 시 한 transaction으로 전송 */
-	static uint8_t line_buf[128];
-	static size_t line_len = 0;
-
-	uint8_t b;
-	while (sw_uart_rx_get(&rx4, &b) == 1) {
-		if (b == '\r' || b == '\n') {
-			if (line_len > 0) {
-				/* Append CRLF in place → single SPI transaction */
-				line_buf[line_len++] = '\r';
-				line_buf[line_len++] = '\n';
-
-				/* TX3 debug: "RX4: " + line + "\r\n" — 2 transaction OK
-				 *   (TX3=115200, per-byte transaction이라 gap 영향 없음) */
-				sw_uart_write_str(&tx3, "RX4: ");
-				sw_uart_write(&tx3, line_buf, line_len);
-
-				/* TX4 loopback: line + "\r\n" — single transaction
-				 *   (TX4=9600, single transaction 정책. inter-tx gap 방지) */
-				sw_uart_write(&tx4, line_buf, line_len);
-
-				line_len = 0;
+	uint16_t crc = 0xFFFF;
+	for (size_t i = 0; i < len; i++) {
+		crc ^= buf[i];
+		for (int b = 0; b < 8; b++) {
+			if (crc & 1U) {
+				crc = (crc >> 1) ^ 0xA001;
+			} else {
+				crc >>= 1;
 			}
-		} else if (line_len < sizeof(line_buf) - 2) {  /* 2 byte 자리 남김 */
-			line_buf[line_len++] = b;
+		}
+	}
+	return crc;
+}
+
+/* FC 0x03 read holding registers — 8 byte request */
+static void modbus_build_read_holding(uint8_t *out, uint8_t slave,
+				       uint16_t addr, uint16_t count)
+{
+	out[0] = slave;
+	out[1] = 0x03;
+	out[2] = (uint8_t)(addr >> 8);
+	out[3] = (uint8_t)(addr & 0xFF);
+	out[4] = (uint8_t)(count >> 8);
+	out[5] = (uint8_t)(count & 0xFF);
+	uint16_t crc = modbus_crc16(out, 6);
+	out[6] = (uint8_t)(crc & 0xFF);
+	out[7] = (uint8_t)(crc >> 8);
+}
+
+static void rx_drain(void)
+{
+	uint8_t junk;
+	while (ring_buf_get(&rs485_rx_rb, &junk, 1) == 1) {
+		/* discard */
+	}
+}
+
+static void rs485_send(const uint8_t *data, size_t len)
+{
+	for (size_t i = 0; i < len; i++) {
+		uart_poll_out(uart0, data[i]);
+	}
+}
+
+/* End-of-frame: 4 ms idle silence after first byte. */
+static size_t modbus_wait_response(uint8_t *resp, size_t max_len,
+				    uint32_t timeout_ms)
+{
+	size_t n = 0;
+	int64_t deadline = k_uptime_get() + timeout_ms;
+	int64_t last_rx = 0;
+
+	while (k_uptime_get() < deadline) {
+		uint8_t b;
+		if (ring_buf_get(&rs485_rx_rb, &b, 1) == 1) {
+			if (n < max_len) {
+				resp[n++] = b;
+			}
+			last_rx = k_uptime_get();
+		} else if (n > 0 && (k_uptime_get() - last_rx) >= 4) {
+			return n;
 		} else {
-			/* overflow — append CRLF then flush */
-			line_buf[line_len++] = '\r';
-			line_buf[line_len++] = '\n';
-			sw_uart_write_str(&tx3, "RX4-OVF: ");
-			sw_uart_write(&tx3, line_buf, line_len);
-			sw_uart_write(&tx4, line_buf, line_len);
-			line_len = 0;
+			k_msleep(1);
 		}
 	}
+	return n;
 }
 
 int main(void)
 {
-	/* LED 초기화 (OFF since ACTIVE_LOW) */
 	gpio_pin_configure_dt(&led_red, GPIO_OUTPUT_INACTIVE);
 	gpio_pin_configure_dt(&led_blue, GPIO_OUTPUT_INACTIVE);
 
-	/* GPIO: LoRa M0/M1 LOW, AUX input pull-up, MAX485 DE LOW (RX mode) */
-	gpio_pin_configure(gpio0, LORA_M0_PIN,   GPIO_OUTPUT_LOW);
-	gpio_pin_configure(gpio0, LORA_M1_PIN,   GPIO_OUTPUT_LOW);
-	gpio_pin_configure(gpio0, LORA_AUX_PIN,  GPIO_INPUT | GPIO_PULL_UP);
-	gpio_pin_configure(gpio0, MAX485_DE_PIN, GPIO_OUTPUT_HIGH);  /* HIGH = TX-enabled during this test */
-
-	/* UART0 RX interrupt — RX1 capture */
-	uart_irq_callback_set(uart0, uart0_isr);
-	uart_irq_rx_enable(uart0);
-
-	/* SW-UART TX2 at 9600 (diagnostic — loopback to RX2 9600)
-	 * SW-UART TX3 at 115200 (proven path — debug monitor)
-	 * SW-UART TX4 at 9600 (PCA10040 USB-VCOM, same single-tx strategy as TX2) */
-	sw_uart_init(&tx2, DEVICE_DT_GET(DT_NODELABEL(spi1)), SW_UART_BAUD_9600);
+	/* SW-UART TX3 / TX4 (display channels) */
 	sw_uart_init(&tx3, DEVICE_DT_GET(DT_NODELABEL(spi2)), SW_UART_BAUD_115200);
 	sw_uart_init(&tx4, DEVICE_DT_GET(DT_NODELABEL(spi0)), SW_UART_BAUD_9600);
 
-	/* SW-UART RX2 init (P0.02 = J28 Pin 4)
-	 * SW-UART RX4 init (P0.08 = J28 Pin 5 / J23 Pin 3 = USB-VCOM RX) */
-	sw_uart_rx_init(&rx2, gpio0, SW_UART_RX2_PIN);
-	sw_uart_rx_init(&rx4, gpio0, SW_UART_RX4_PIN);
+	/* HW UART0 = RS485 (interrupt RX) */
+	uart_irq_callback_set(uart0, uart0_isr);
+	uart_irq_rx_enable(uart0);
 
-	/* Boot banner on TX3 (115200) — TX2 9600 internal-loopback test */
-	sw_uart_write_str(&tx3, "\r\nUTTEC BLE Module 7-ch UART test\r\n");
-	sw_uart_write_str(&tx3, "TX1/RX1=9600  TX2=9600 (SPI1)  RX2=9600  TX3=115200  TX4/RX4=9600 (USB-VCOM)\r\n");
-	sw_uart_write_str(&tx3, "TX1=P0.11 RX1=P0.13 TX2=P0.15 RX2=P0.02 TX3=P0.22 TX4=P0.06 RX4=P0.08\r\n");
-	sw_uart_write_str(&tx3, "TX2->RX2 internal loopback: jumper Pin 2 <-> Pin 4\r\n");
-	sw_uart_write_str(&tx3, "TX4->USB-VCOM: open PCA10040 J-Link COM port @ 9600 8N1\r\n");
+	sw_uart_write_str(&tx3, "\r\nUTTEC Modbus master (HW UART0 on P0.15/P0.02)\r\n");
+	sw_uart_write_str(&tx3, "QDY30A-B slave=1 reg=0x0004 (1 sec poll)\r\n");
+	sw_uart_write_str(&tx4, "\r\nUTTEC water level monitor\r\n");
+	sw_uart_write_str(&tx4, "Slave 1 / RS485 9600 8N1\r\n");
 
-	/* Boot banner on TX4 (9600 USB-VCOM) — ASCII only (UTF-8 multi-byte 깨짐 회피) */
-	sw_uart_write_str(&tx4, "\r\nUTTEC BLE Module - USB-VCOM (TX4/RX4 @ 9600 8N1)\r\n");
-	sw_uart_write_str(&tx4, "Loopback: every key you type is echoed back here (and to TX3 debug as 'RX4: x')\r\n");
+	uint8_t req[8];
+	modbus_build_read_holding(req, MODBUS_SLAVE, MODBUS_REG_LEVEL, 1);
 
-	uint32_t counter = 0;
-	char buf[80];
+	uint8_t resp[16];
+	char out[96];
+	uint32_t cycle = 0;
+	uint32_t ok = 0, crc_err = 0, no_resp = 0;
 
 	while (1) {
-		/* TX1, TX2, TX3 each emit their own counter line */
+		rx_drain();
+
+		rs485_send(req, sizeof(req));
+
+		size_t rx_n = modbus_wait_response(resp, sizeof(resp),
+						   MODBUS_TIMEOUT_MS);
+
 		int n;
+		if (rx_n == 7 && resp[0] == MODBUS_SLAVE && resp[1] == 0x03 &&
+		    resp[2] == 0x02) {
+			uint16_t crc_calc = modbus_crc16(resp, 5);
+			uint16_t crc_recv =
+				(uint16_t)resp[5] | ((uint16_t)resp[6] << 8);
+			if (crc_calc == crc_recv) {
+				int16_t level =
+					(int16_t)((resp[3] << 8) | resp[4]);
+				n = snprintf(out, sizeof(out),
+					     "Level: %d mm\r\n", level);
+				sw_uart_write(&tx4, (const uint8_t *)out, n);
+				sw_uart_write(&tx3, (const uint8_t *)out, n);
+				ok++;
+			} else {
+				n = snprintf(out, sizeof(out),
+					     "CRC ERR calc=%04X recv=%04X\r\n",
+					     crc_calc, crc_recv);
+				sw_uart_write(&tx4, (const uint8_t *)out, n);
+				sw_uart_write(&tx3, (const uint8_t *)out, n);
+				crc_err++;
+			}
+		} else {
+			n = snprintf(out, sizeof(out),
+				     "NO/BAD RESP n=%u\r\n", (unsigned)rx_n);
+			sw_uart_write(&tx4, (const uint8_t *)out, n);
 
-		n = snprintf(buf, sizeof(buf), "TX1: %u\r\n", counter);
-		tx1_write(buf);
-
-		n = snprintf(buf, sizeof(buf), "TX2: %u\r\n", counter);
-		sw_uart_write(&tx2, (const uint8_t *)buf, n);
-
-		n = snprintf(buf, sizeof(buf), "TX3: %u\r\n", counter);
-		sw_uart_write(&tx3, (const uint8_t *)buf, n);
-
-		n = snprintf(buf, sizeof(buf), "TX4: %u\r\n", counter);
-		sw_uart_write(&tx4, (const uint8_t *)buf, n);
-
-		/* Diagnostic: RX2/RX4 ISR stats on TX3 every 5 seconds */
-		if ((counter % 5) == 0) {
-			n = snprintf(buf, sizeof(buf),
-				"RX2-stats: isr=%u ok=%u framing=%u false=%u\r\n",
-				rx2.isr_fire_count, rx2.byte_ok_count,
-				rx2.framing_err_count, rx2.false_start_count);
-			sw_uart_write(&tx3, (const uint8_t *)buf, n);
-
-			n = snprintf(buf, sizeof(buf),
-				"RX4-stats: isr=%u ok=%u framing=%u false=%u\r\n",
-				rx4.isr_fire_count, rx4.byte_ok_count,
-				rx4.framing_err_count, rx4.false_start_count);
-			sw_uart_write(&tx3, (const uint8_t *)buf, n);
+			n = snprintf(out, sizeof(out), "  raw:");
+			sw_uart_write(&tx3, (const uint8_t *)out, n);
+			for (size_t i = 0; i < rx_n; i++) {
+				n = snprintf(out, sizeof(out), " %02X", resp[i]);
+				sw_uart_write(&tx3, (const uint8_t *)out, n);
+			}
+			sw_uart_write_str(&tx3, "\r\n");
+			no_resp++;
 		}
 
-		counter++;
+		if ((cycle % 10) == 9) {
+			n = snprintf(out, sizeof(out),
+				     "  stats: ok=%u crc=%u err=%u\r\n",
+				     ok, crc_err, no_resp);
+			sw_uart_write(&tx3, (const uint8_t *)out, n);
+		}
 
-		/* LED 토글 */
 		gpio_pin_toggle_dt(&led_red);
 		gpio_pin_toggle_dt(&led_blue);
-
-		/* 1초 동안 100ms 주기로 RX 버퍼 drain + TX3 echo */
-		for (int i = 0; i < 10; i++) {
-			k_msleep(100);
-			drain_rx1_to_tx3();
-			drain_rx2_to_tx3();
-			drain_rx4_to_tx3_and_tx4();
-		}
+		cycle++;
+		k_msleep(1000);
 	}
 	return 0;
 }

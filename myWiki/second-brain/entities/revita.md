@@ -2,7 +2,7 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-05-29 양산 IQC 자동화 인프라 정착 완료 흡수 (5/27 "정착 직전" → 5/29 "정착 완료" — 32 시험 카드 + 4 자동화 모듈 + 17 PASS + EVT 수신 1.75초 + 수신율 99.1% + 디버그 사이클 3분 + 5채널 영업 가치 실측 데이터 carry + I2C 핀 충돌 RAK4631 gotcha + PyMuPDF 회로도 풀스택)
+updated: 2026-06-01 ingest #13-A 흡수 — Tower 펌웨어 모듈러 재작성 풀세트 정착 + 양면 IQC (Link + Tower) 단계 진입 + 신규 entity 4 (lux-module + mqtt-protocol + tower-test + lte-module 실구현) + 아키텍처 결정 7건 + 양산 RA 6 carry 위험 + 신규 모듈 4 함수 표준화 통합 비용 명확
 tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어, link_v2_test_tower, 회귀시험자동화, kc_cert_link_v2, kc_cert_tower, KC인증통합트랙, BLE-pairing-L2, DUT-다중-브리지-단일, IQC자동화, Flask-Web-5010, tower_DK-deprecated, 두-하향-경로-동일-규약, 펌웨어모듈-단일진실]
 links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조, 2026-05-27_revita-IQC-자동화-인프라]
 ---
@@ -11,6 +11,53 @@ links: [claude-code, experience, projects, skills, tailscale네트워크, 양산
 
 ## 한 줄 정의
 IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**.
+
+## 2026-06-01 ingest #13-A 흡수 — Tower 펌웨어 모듈러 재작성 풀세트 + 양면 IQC (Link + Tower) ⭐⭐⭐⭐⭐ (revita-claude 카드 #2026-06-01-003)
+
+**한 줄**: ingest #13-A (BASE `05f36b56` → HEAD `8e6682a5`, 7 commits / +18,468 / -3,282 / 106 파일 중 ~14K LOC tower 분할). **Tower 펌웨어 모듈러 재작성 풀세트 정착** (11 모듈 .c 약 8,900 LOC + 정본 .md 18건 1,950줄 + 자체 시험 7건 1,031줄). LTE stub → 실구현 2,307줄 (RM76 AT). **양면 IQC 단계 진입** (Link 단면 → Link+Tower 양면).
+
+### 신규 entity 4건 (revita 측 → myWiki skills/strengths 흡수)
+
+| revita entity | myWiki 흡수 영역 | 핵심 carry |
+|---|---|---|
+| `entity-lux-module` (1,123줄) | skills.md § RS485/Modbus 마스터 / § MUX mutex 공유 | RS485 Modbus 슬레이브 0x03/0x04, FC03, MUX mutex 공유 (Lux 양보 / SBC 우선) |
+| `entity-mqtt-protocol` (204줄 정본 + 102줄 PDU) | skills.md § MQTT 와이어 프로토콜 설계 / § 토픽 계층 / § LWT | 16B PDU + 4 토픽 + 13 type_code + 메시지 허용 조합 + ACK + NOTIFY + LWT |
+| `entity-tower-test` (체크리스트 1,031줄 + Static Review sbc 11/security 12/lux 8 PASS) | strengths.md §10 양면 IQC | Tower 자체 시험 트랙 정착 |
+| `entity-lte-module` 갱신 (stub → 2,307줄 RM76) | skills.md § LTE AT 풀스택 / § MQTT 클라이언트 임베디드 | AT 5 STEP + URC + CME + FSM 7 + TX ring 256 DROP_OLDEST + BATCH 10분 |
+
+### 아키텍처 결정 7건 (정본 18 .md 박제 → ai-direction.md / me.md 흡수)
+
+1. **main.c 17줄 단일 책임** — DM 단일 진입점. `tower_create_task` 다중 스레드 직접 생성 폐기
+2. **시간 동기 게이트 LTE-먼저 정착** — sync_lost publish 가 MQTT 경로 의존 → LTE 게이트 이전 activate
+3. **12V 공유 버스 비트 OR API** — Lux + SBC 공동 사용, 세션 상태 독립
+4. **UART1 MUX mutex 협력** — Lux 양보 (mutex K_NO_WAIT 실패 → slot skip), SBC 우선 점유
+5. **LoRa AES ECB keystream XOR 채택 (CCM 아님)** — TinyCrypt 기반, 클리어 헤더 4B IV. perf/메모리 trade-off
+6. **LTE TX 큐 DROP_OLDEST 256** — 가득 시 relay 우선 evict, 양산 운영 시 데이터 손실 정책 명시
+7. **자체 시험 PASS/FAIL/BLOCKED 3단계** — Static Review 별도 박제, 실기 BLOCKED 사유 박제. KC + 양산 IQC 자료 동시 자산화
+
+### 양산 RA 6 carry 위험 (gaps.md § 양산 출하 전 RA 신설 후보)
+
+1. **LTE 미완 4 TODO** (LWT/KMQTTPUB/mTLS/E2E) — RM76 실기 검증 대기, 양산 일정 risk
+2. **ADC 배터리 실측 stub** (`power_module.c #if 0`) — 양산 전 반드시 해소, AIN7 분압 ×5.545 박제됨
+3. **USB CDC RX handler 미등록** — Core3506 통신 운영 시 즉시 fix 필요
+4. **Button LONG 미정의 (≥3000ms)** — 공장 초기화·BLE 페어링 후보 미합의
+5. **BLE module 전체 stub** (15줄 LOG only) — OTA·등록·상태 조회 미구현, 양산 페어링 경로 부재
+6. **`TOWER_DM_BOOT_TEST` mode 1 양산 빌드 혼입 risk** — auto UPDATE seed 양산 섞이면 sync_lost 가시성 상실
+
+### 영업 가치 — 양면 IQC 5채널 carry
+
+- **uttechome 영업**: "Link 양산 정착 + Tower 양산 정착" 양면 영업 메시지
+- **위시캣 사례연구**: Link 17 PASS + Tower 7건 자체 시험 + 정본 .md 18건 → 양산 onboard 시간 단축 근거 결정타
+- **strengths.md §10 (양면 IQC) 신설** — 5/29 §9 단면(Link) → 6/1 §10 양면(Link+Tower) 풀스택
+- **양면 캐파 산정 단계** — Tower 측 RM76 sourcing + ADC 실측 + USB CDC RX 등 5 BLOCKED 해소 후
+
+### Tower 신규 모듈 통합 비용 명확화 (양산 onboard 자산)
+
+신규 모듈 4 함수 표준화: `_init / _activate / _handle_cmd / _force_session_off` + NVS 표 1줄 + module_type_code 1행 → 통합 비용 명확. 정본 .md 18건 박제 → 신규 합류 인원 onboard 자산.
+
+자세히 [[strengths]] §10 양면 IQC + [[gaps]] § 양산 출하 전 RA + [[2026-06-01_tower-modular-rewrite-iqc-stage2]] (신규) + [[skills]] § RS485/Modbus + MQTT + LTE 추가.
+
+---
 
 ## 2026-05-29 양산 IQC 자동화 인프라 정착 완료 흡수 ⭐⭐⭐⭐ (revita-claude 카드 #2026-05-29-002)
 
