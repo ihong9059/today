@@ -136,3 +136,13 @@ remotion-project/out/Wishket155381/
 # DGIST ESCO PDF→DXF 변환 산출물 (재생성 가능, 287MB)
 # 원본 PDF + _pdf2dxf.py로 언제든 재생성. 고객 측이 직접 CAD 작업 결정으로 보관 가치 낮음.
 신규사업/DGIST_ESCO_LED제어/조명제어/변환/
+
+# 동영상 제작 중간 산출물 (재생성 가능, 빌드 스크립트로 복원 가능, 2026-06-03)
+# 최종 산출물(mp4, pptx, pdf, html) + 스크립트만 commit
+동영상/동아정밀_미팅/clips/
+동영상/동아정밀_미팅/audio/
+동영상/동아정밀_미팅/slides/
+동영상/동아정밀_미팅/preview/
+
+# root log 자동 생성
+log.log

@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>㈜유티텍 회사소개서 — 동아정밀공업 귀하 (2026.06)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@page { size: 1280px 720px; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Noto Sans KR', sans-serif; background: #FFFFFF; color: #1E293B; }
+.slide {
+  width: 1280px; height: 720px; margin: 0;
+  background: #FFFFFF; position: relative; overflow: hidden;
+  page-break-after: always; padding: 60px 80px;
+  border: none;
+}
+.slide::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #1E40AF, #0891B2);
+}
+.primary { color: #1E40AF; }
+.cyan { color: #0891B2; }
+.dark { color: #1E293B; }
+.muted { color: #64748B; font-size: 14px; }
+.muted-sm { color: #94A3B8; font-size: 12px; }
+.card {
+  background: #F8FAFC; border: 1px solid #E2E8F0;
+  border-radius: 12px; padding: 20px;
+}
+.card-accent {
+  background: #EFF6FF; border: 1px solid #BFDBFE;
+  border-radius: 12px; padding: 20px;
+}
+.card-cyan {
+  background: #ECFEFF; border: 1px solid #A5F3FC;
+  border-radius: 12px; padding: 20px;
+}
+.tag {
+  display: inline-block; padding: 3px 12px; border-radius: 16px;
+  font-size: 11px; font-weight: 600;
+  background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF;
+}
+.tag-cyan {
+  background: #ECFEFF; border: 1px solid #A5F3FC; color: #0891B2;
+}
+.tag-green {
+  background: #F0FDF4; border: 1px solid #BBF7D0; color: #16A34A;
+}
+.tag-purple {
+  background: #FAF5FF; border: 1px solid #E9D5FF; color: #7C3AED;
+}
+.tag-amber {
+  background: #FFFBEB; border: 1px solid #FDE68A; color: #D97706;
+}
+.tag-red {
+  background: #FEF2F2; border: 1px solid #FECACA; color: #DC2626;
+}
+.tag-industry {
+  background: #FFF7ED; border: 1px solid #FED7AA; color: #C2410C;
+}
+.card-industry {
+  background: #FFF7ED; border: 1px solid #FED7AA;
+  border-radius: 12px; padding: 20px;
+}
+.dot-industry { background: #EA580C; }
+.industry { color: #EA580C; }
+.industry-strong { color: #C2410C; }
+.proj-banner {
+  background: linear-gradient(90deg,#EA580C,#F59E0B);
+  color: white; padding: 6px 14px; border-radius: 16px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  display: inline-block;
+}
+.slide-num {
+  position: absolute; bottom: 16px; right: 40px;
+  font-size: 12px; color: #CBD5E1; font-weight: 600;
+}
+.logo-mark {
+  position: absolute; top: 24px; right: 40px;
+  font-size: 13px; color: #CBD5E1; font-weight: 700; letter-spacing: 2px;
+}
+.dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+.dot-blue { background: #1E40AF; }
+.dot-cyan { background: #0891B2; }
+.dot-green { background: #16A34A; }
+.dot-purple { background: #7C3AED; }
+.dot-amber { background: #D97706; }
+.dot-red { background: #DC2626; }
+h1 { font-size: 48px; font-weight: 900; color: #0F172A; line-height: 1.2; }
+h2 { font-size: 32px; font-weight: 800; color: #0F172A; line-height: 1.3; }
+h3 { font-size: 20px; font-weight: 700; color: #1E293B; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.grid-6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+.mt-5 { margin-top: 20px; }
+.mt-6 { margin-top: 24px; }
+.mt-8 { margin-top: 32px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-3 { margin-bottom: 12px; }
+.mb-4 { margin-bottom: 16px; }
+.mb-6 { margin-bottom: 24px; }
+.p-3 { padding: 12px; }
+.p-4 { padding: 16px; }
+.p-5 { padding: 20px; }
+.text-center { text-align: center; }
+.partner-tag {
+  padding: 4px 10px; border-radius: 6px; font-size: 11px;
+  background: #F1F5F9; border: 1px solid #E2E8F0; font-weight: 600;
+  display: inline-block;
+}
+.partner-tag-blue {
+  background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF;
+}
+@media print {
+  body { background: white; }
+  .slide { margin: 0; border: none; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: COVER -->
+<div class="slide" style="display:flex; align-items:center; justify-content:center;">
+  <div style="position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#1E40AF,#0891B2,#EA580C);"></div>
+  <div style="text-align:center;">
+    <div style="font-size:13px; letter-spacing:6px; color:#1E40AF; font-weight:700; margin-bottom:20px;">NETWORK SOLUTION &middot; INDUSTRIAL AUTOMATION</div>
+    <h1 style="font-size:72px; color:#0F172A;">UTTEC</h1>
+    <div style="width:80px; height:3px; background:linear-gradient(90deg,#1E40AF,#EA580C); margin:28px auto;"></div>
+    <h2 style="font-size:26px; font-weight:500; color:#475569;">㈜유티텍 회사소개서</h2>
+    <p style="margin-top:12px; font-size:15px; color:#94A3B8;">BLE Mesh &middot; Low Energy &middot; AI &middot; <span class="industry-strong" style="font-weight:700;">PLC &middot; SCADA &middot; 모션 제어</span></p>
+    <div style="margin-top:32px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+      <span class="tag">BLE Mesh</span>
+      <span class="tag">Low Energy</span>
+      <span class="tag tag-cyan">AI</span>
+      <span class="tag tag-industry">PLC</span>
+      <span class="tag tag-industry">SCADA</span>
+      <span class="tag tag-industry">Modbus / EtherCAT</span>
+      <span class="tag tag-industry">서보 모션</span>
+    </div>
+    <div style="margin-top:40px;">
+      <span class="proj-banner">FOR &middot; 동아정밀공업 귀하</span>
+    </div>
+    <p style="margin-top:14px; font-size:14px; color:#475569; line-height:1.7;">
+      서보 기반 비접촉식 PET 용기 두께 측정기 (2호기)<br>
+      <span style="color:#64748B;">PLC + SCADA 제어 시스템 구축 제안 &middot; 위시캣 #155220</span>
+    </p>
+    <p style="margin-top:24px; font-size:12px; color:#94A3B8;">2026年 6月</p>
+  </div>
+  <div class="slide-num">01</div>
+</div>
+
+<!-- SLIDE 2: COMPANY OVERVIEW -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:12px; letter-spacing:3px; color:#1E40AF; font-weight:700; margin-bottom:8px;">ABOUT US</div>
+    <h2>회사 <span class="primary">소개</span></h2>
+    <p class="muted" style="margin-top:8px; max-width:680px;">40년 이상의 기술 축적을 바탕으로 BLE Mesh 무선 제어와 <span class="industry-strong" style="font-weight:700;">산업 자동화(PLC · SCADA · 모션 제어)</span>를 모두 양산해 온 통합 솔루션 기업</p>
+
+    <div class="grid-2 mt-5" style="gap:28px;">
+      <div>
+        <div class="card mb-3" style="padding:16px 20px;">
+          <p style="font-size:13px; line-height:1.8; color:#475569;">
+            ㈜유티텍(UTTEC Co., Ltd.)은 2016년 설립되어
+            <strong style="color:#0F172A;">"Network Solution"</strong> 슬로건 아래 무선 통신 기반 제어 솔루션을 제공해 왔으며,
+            <strong style="color:#C2410C;">RS-485 Modbus RTU · EtherCAT · STM32 양산 6종</strong>으로 산업 자동화 영역까지 영역을 확장한 통합 솔루션 기업입니다.
+          </p>
+          <p style="font-size:13px; line-height:1.8; color:#475569; margin-top:8px;">
+            국내 최초 지하주차장 무선 디밍 시스템을 상용화하였고, 일본 하네다공항·나고야 등 해외 양산 3,800대 수출, KC·TELEC·CE 3개국 인증을 보유합니다.
+          </p>
+        </div>
+        <div class="grid-2" style="gap:8px;">
+          <div class="card" style="padding:12px 16px;"><div class="muted-sm mb-2">본사</div><div style="font-size:12px;font-weight:600;">경기도 용인시 기흥구 흥덕중앙로 120<br>흥덕유타워 2404호</div></div>
+          <div class="card" style="padding:12px 16px;"><div class="muted-sm mb-2">연락처</div><div style="font-size:12px;font-weight:600;">Tel: 031-627-2250<br>Fax: 0505-300-8065</div></div>
+          <div class="card" style="padding:12px 16px;"><div class="muted-sm mb-2">웹사이트</div><div style="font-size:12px;font-weight:600;">www.uttec.co.kr</div></div>
+          <div class="card" style="padding:12px 16px;"><div class="muted-sm mb-2">설립</div><div style="font-size:12px;font-weight:600;">2016년 06월</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="grid-2" style="gap:10px; margin-bottom:14px;">
+          <div class="card-accent text-center p-4"><div style="font-size:34px;font-weight:900;color:#1E40AF;">40+</div><div style="font-size:11px;color:#64748B;margin-top:4px;">년 합산 개발 경력</div></div>
+          <div class="card-industry text-center p-4"><div style="font-size:34px;font-weight:900;color:#C2410C;">6종</div><div style="font-size:11px;color:#64748B;margin-top:4px;">산업 양산 제품</div></div>
+          <div class="card-cyan text-center p-4"><div style="font-size:34px;font-weight:900;color:#0891B2;">3,800+</div><div style="font-size:11px;color:#64748B;margin-top:4px;">일본 수출 대수</div></div>
+          <div class="card-industry text-center p-4"><div style="font-size:34px;font-weight:900;color:#C2410C;">3개국</div><div style="font-size:11px;color:#64748B;margin-top:4px;">KC · TELEC · CE 인증</div></div>
+        </div>
+        <div class="card" style="padding:16px;">
+          <div style="font-size:11px;color:#94A3B8;margin-bottom:10px;">조직도</div>
+          <div style="text-align:center;">
+            <div style="display:inline-block;padding:6px 20px;border-radius:8px;background:#1E40AF;color:white;font-size:13px;font-weight:700;">대표이사</div>
+            <div style="display:flex;justify-content:center;gap:10px;margin-top:12px;flex-wrap:wrap;">
+              <div style="padding:7px 12px;border-radius:8px;background:#EFF6FF;border:1px solid #BFDBFE;font-size:11px;text-align:center;"><strong>연구소</strong><br><span style="color:#64748B;font-size:10px;">연구팀 · 개발팀</span></div>
+              <div style="padding:7px 12px;border-radius:8px;background:#EFF6FF;border:1px solid #BFDBFE;font-size:11px;text-align:center;"><strong>영업부</strong><br><span style="color:#64748B;font-size:10px;">영업팀 · 기획팀</span></div>
+              <div style="padding:7px 12px;border-radius:8px;background:#EFF6FF;border:1px solid #BFDBFE;font-size:11px;text-align:center;"><strong>관리부</strong><br><span style="color:#64748B;font-size:10px;">운영 · 구매 · 자재</span></div>
+              <div style="padding:7px 12px;border-radius:8px;background:#F8FAFC;border:1px solid #E2E8F0;font-size:11px;text-align:center;"><strong>생산</strong><br><span style="color:#64748B;font-size:10px;">외주</span></div>
+              <div style="padding:7px 12px;border-radius:8px;background:#F8FAFC;border:1px solid #E2E8F0;font-size:11px;text-align:center;"><strong>감사</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">02</div>
+</div>
+
+<!-- SLIDE 3: BUSINESS AREAS -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:12px; letter-spacing:3px; color:#1E40AF; font-weight:700; margin-bottom:8px;">BUSINESS AREAS</div>
+    <h2>사업 <span class="primary">영역</span></h2>
+    <p class="muted" style="margin-top:6px;">무선 제어 + 산업 자동화 통합 — 7대 핵심 사업 분야</p>
+
+    <div class="mt-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+      <!-- 조명제어 -->
+      <div class="card" style="border-left:4px solid #D97706; padding:18px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:34px;height:34px;border-radius:8px;background:#D97706;display:flex;align-items:center;justify-content:center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+          </div>
+          <div><div style="font-size:15px;font-weight:700;">조명제어</div><div class="muted-sm">Lighting Control</div></div>
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-amber"></div>건물 보안등 원격 관리</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-amber"></div>지하주차장 무선 디밍</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-amber"></div>스포츠조명 (골프장)</div>
+        </div>
+      </div>
+      <!-- 주차장 무선제어 -->
+      <div class="card" style="border-left:4px solid #1E40AF; padding:18px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:34px;height:34px;border-radius:8px;background:#1E40AF;display:flex;align-items:center;justify-content:center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M3 9h18"/></svg>
+          </div>
+          <div><div style="font-size:15px;font-weight:700;">주차장 무선제어</div><div class="muted-sm">Parking Control</div></div>
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>빈주차공간 실시간 확인</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>침수감지 시스템</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>무선 보안등 디밍</div>
+        </div>
+      </div>
+      <!-- 주륜장 -->
+      <div class="card" style="border-left:4px solid #DC2626; padding:18px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:34px;height:34px;border-radius:8px;background:#DC2626;display:flex;align-items:center;justify-content:center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+          </div>
+          <div><div style="font-size:15px;font-weight:700;">주륜장</div><div class="muted-sm">Bicycle Parking (JP)</div></div>
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-red"></div>자전거 주차장 (일본)</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-red"></div>일본 수출 3,800+ 대</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-red"></div>주차정산기 연동</div>
+        </div>
+      </div>
+      <!-- 스마트팜 -->
+      <div class="card" style="border-left:4px solid #16A34A; padding:18px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:34px;height:34px;border-radius:8px;background:#16A34A;display:flex;align-items:center;justify-content:center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div><div style="font-size:15px;font-weight:700;">스마트팜</div><div class="muted-sm">Smart Farm</div></div>
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>온도, 습도, CO2, 조도</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>커튼, 분무기 자동제어</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>생육 환경 최적화</div>
+        </div>
+      </div>
+      <!-- 스마트팩토리 -->
+      <div class="card" style="border-left:4px solid #0891B2; padding:18px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:34px;height:34px;border-radius:8px;background:#0891B2;display:flex;align-items:center;justify-content:center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M2 20h20"/><path d="M5 20V8l5-4v16"/><path d="M10 20V4l7 4v12"/><path d="M17 20V8l5 4v8"/></svg>
+          </div>
+          <div><div style="font-size:15px;font-weight:700;">스마트팩토리</div><div class="muted-sm">Smart Factory</div></div>
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>AI 모니터링</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>예측 보전 시스템</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>설비 이상 감지</div>
+        </div>
+      </div>
+      <!-- AI 교육 -->
+      <div class="card" style="border-left:4px solid #7C3AED; padding:18px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:34px;height:34px;border-radius:8px;background:#7C3AED;display:flex;align-items:center;justify-content:center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div><div style="font-size:15px;font-weight:700;">AI 교육</div><div class="muted-sm">AI Education</div></div>
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-purple"></div>AI 교육 플랫폼</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-purple"></div>진학 컨설팅</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-purple"></div>취준생 IoT/AI 교육</div>
+        </div>
+      </div>
+      <!-- 공장자동화 (NEW · 본 프로젝트 직결) -->
+      <div class="card-industry" style="border-left:4px solid #EA580C; padding:18px; position:relative;">
+        <div style="position:absolute;top:8px;right:10px;font-size:9px;font-weight:700;color:#C2410C;letter-spacing:1px;">★ FOR PROJECT</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:34px;height:34px;border-radius:8px;background:#EA580C;display:flex;align-items:center;justify-content:center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <div><div style="font-size:15px;font-weight:700;">공장자동화</div><div class="muted-sm">Industrial Automation</div></div>
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-industry"></div>PLC + SCADA 제어 시스템</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-industry"></div>Modbus / EtherCAT 산업 통신</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-industry"></div>서보 모션 + 변위센서 동기</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">03</div>
+</div>
+
+<!-- SLIDE 4: CORE TECHNOLOGY -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:12px; letter-spacing:3px; color:#1E40AF; font-weight:700; margin-bottom:8px;">CORE TECHNOLOGY</div>
+    <h2>주요 <span class="primary">핵심 기술</span></h2>
+    <p class="muted" style="margin-top:6px;">BLE Mesh, 초저전력, AI, <span class="industry-strong" style="font-weight:700;">산업 통신(Modbus·EtherCAT)</span>을 결합한 통합 제어 솔루션</p>
+
+    <!-- Technology Evolution -->
+    <div class="mt-5" style="display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:24px;">
+      <div class="card text-center" style="min-width:200px;padding:14px 20px;border:2px solid #E2E8F0;">
+        <div style="font-size:13px;font-weight:700;color:#94A3B8;">1세대</div>
+        <div style="font-size:15px;font-weight:800;color:#64748B;margin-top:4px;">General RF</div>
+        <div style="font-size:10px;color:#94A3B8;margin-top:2px;">일반 무선 통신</div>
+      </div>
+      <div style="width:40px;height:2px;background:linear-gradient(90deg,#94A3B8,#1E40AF);"></div>
+      <div class="card text-center" style="min-width:200px;padding:14px 20px;border:2px solid #BFDBFE;">
+        <div style="font-size:13px;font-weight:700;color:#1E40AF;">2세대</div>
+        <div style="font-size:15px;font-weight:800;color:#1E293B;margin-top:4px;">암호화 + 외부안테나</div>
+        <div style="font-size:10px;color:#64748B;margin-top:2px;">Encryption / External Antenna</div>
+      </div>
+      <div style="width:40px;height:2px;background:linear-gradient(90deg,#1E40AF,#0891B2);"></div>
+      <div class="card-accent text-center" style="min-width:200px;padding:14px 20px;border:2px solid #1E40AF;">
+        <div style="font-size:13px;font-weight:700;color:#0891B2;">3세대</div>
+        <div style="font-size:15px;font-weight:800;color:#1E40AF;margin-top:4px;">BLE Mesh Network</div>
+        <div style="font-size:10px;color:#1E40AF;margin-top:2px;">현재 핵심 기술</div>
+      </div>
+    </div>
+
+    <!-- Four Pillars -->
+    <div class="grid-4" style="gap:12px;">
+      <div class="card" style="border-top:4px solid #1E40AF; padding:16px;">
+        <div style="width:36px;height:36px;border-radius:9px;background:#1E40AF;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="white"/></svg>
+        </div>
+        <h3 style="font-size:15px;margin-bottom:2px;">BLE Mesh</h3>
+        <div class="muted-sm mb-3">무선 통신 인프라</div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.8;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>Mesh 그물망 구조</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>암호화 보안 통신</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>Dead → Live Zone</div>
+        </div>
+      </div>
+      <div class="card" style="border-top:4px solid #0891B2; padding:16px;">
+        <div style="width:36px;height:36px;border-radius:9px;background:#0891B2;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3 style="font-size:15px;margin-bottom:2px;">초저전력</h3>
+        <div class="muted-sm mb-3">Low Energy</div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.8;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>BLE 초저전력</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>태양광 + 배터리</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>장기간 무보수</div>
+        </div>
+      </div>
+      <div class="card" style="border-top:4px solid #7C3AED; padding:16px;">
+        <div style="width:36px;height:36px;border-radius:9px;background:#7C3AED;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3 style="font-size:15px;margin-bottom:2px;">AI 인공지능</h3>
+        <div class="muted-sm mb-3">Artificial Intelligence</div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.8;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-purple"></div>설비 이상·예측 보전</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-purple"></div>스마트팜·팩토리</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-purple"></div>의료 X-ray</div>
+        </div>
+      </div>
+      <div class="card-industry" style="border-top:4px solid #EA580C; padding:16px; position:relative;">
+        <div style="position:absolute;top:8px;right:10px;font-size:9px;font-weight:700;color:#C2410C;letter-spacing:1px;">★ FOR PROJECT</div>
+        <div style="width:36px;height:36px;border-radius:9px;background:#EA580C;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><line x1="7" y1="10" x2="7" y2="14"/><line x1="11" y1="10" x2="11" y2="14"/><line x1="15" y1="10" x2="15" y2="14"/></svg>
+        </div>
+        <h3 style="font-size:15px;margin-bottom:2px;color:#C2410C;">산업 통신 · 모션</h3>
+        <div class="muted-sm mb-3">PLC · Modbus · EtherCAT</div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.8;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-industry"></div>Modbus RTU/TCP 양산</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-industry"></div>EtherCAT 양산 운영</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-industry"></div>STM32 모션 양산</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">04</div>
+</div>
+
+<!-- SLIDE 5: SYSTEM ARCHITECTURE -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:12px; letter-spacing:3px; color:#1E40AF; font-weight:700; margin-bottom:8px;">SYSTEM ARCHITECTURE</div>
+    <h2>시스템 <span class="primary">구성도</span></h2>
+    <p class="muted" style="margin-top:6px;">센서에서 사용자까지, BLE Mesh 기반 End-to-End 무선 제어 시스템</p>
+
+    <!-- Node Detail -->
+    <div class="mt-6" style="display:flex;align-items:flex-start;gap:24px;">
+      <div class="card-accent" style="flex:1;padding:20px;">
+        <div style="font-size:14px;font-weight:700;color:#1E40AF;margin-bottom:12px;">Node (무선 디바이스)</div>
+        <div class="grid-2" style="gap:8px;">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;padding:8px 12px;background:#FFFFFF;border:1px solid #BFDBFE;border-radius:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E40AF" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><circle cx="12" cy="20" r="1" fill="#1E40AF"/></svg>
+            <span style="font-weight:600;">Wireless</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;padding:8px 12px;background:#FFFFFF;border:1px solid #BFDBFE;border-radius:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+            <span style="font-weight:600;">Solar</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;padding:8px 12px;background:#FFFFFF;border:1px solid #BFDBFE;border-radius:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2"><rect x="6" y="7" width="12" height="14" rx="2"/><line x1="10" y1="7" x2="10" y2="4"/><line x1="14" y1="7" x2="14" y2="4"/></svg>
+            <span style="font-weight:600;">Battery</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;padding:8px 12px;background:#FFFFFF;border:1px solid #BFDBFE;border-radius:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0891B2" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span style="font-weight:600;">Sensor</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;padding-top:40px;">
+        <svg width="30" height="20" viewBox="0 0 30 20"><path d="M0 10 L24 10 M18 4 L24 10 L18 16" stroke="#1E40AF" stroke-width="2" fill="none"/></svg>
+      </div>
+      <div class="card" style="flex:0.6;padding:20px;text-align:center;border:2px solid #1E40AF;">
+        <div style="font-size:14px;font-weight:700;color:#1E40AF;">Gateway</div>
+        <div style="font-size:10px;color:#64748B;margin-top:4px;">프로토콜 변환</div>
+      </div>
+      <div style="display:flex;align-items:center;padding-top:40px;">
+        <svg width="30" height="20" viewBox="0 0 30 20"><path d="M0 10 L24 10 M18 4 L24 10 L18 16" stroke="#0891B2" stroke-width="2" fill="none"/></svg>
+      </div>
+      <div class="card" style="flex:0.6;padding:20px;text-align:center;border:2px solid #0891B2;">
+        <div style="font-size:14px;font-weight:700;color:#0891B2;">Internet</div>
+        <div style="font-size:10px;color:#64748B;margin-top:4px;">클라우드 연결</div>
+      </div>
+      <div style="display:flex;align-items:center;padding-top:40px;">
+        <svg width="30" height="20" viewBox="0 0 30 20"><path d="M0 10 L24 10 M18 4 L24 10 L18 16" stroke="#6366F1" stroke-width="2" fill="none"/></svg>
+      </div>
+      <div class="card" style="flex:0.6;padding:20px;text-align:center;border:2px solid #6366F1;">
+        <div style="font-size:14px;font-weight:700;color:#6366F1;">Server</div>
+        <div style="font-size:10px;color:#64748B;margin-top:4px;">AI 분석 · 처리</div>
+      </div>
+      <div style="display:flex;align-items:center;padding-top:40px;">
+        <svg width="30" height="20" viewBox="0 0 30 20"><path d="M0 10 L24 10 M18 4 L24 10 L18 16" stroke="#7C3AED" stroke-width="2" fill="none"/></svg>
+      </div>
+      <div class="card" style="flex:0.6;padding:20px;text-align:center;border:2px solid #7C3AED;">
+        <div style="font-size:14px;font-weight:700;color:#7C3AED;">User</div>
+        <div style="font-size:10px;color:#64748B;margin-top:4px;">모니터링 · 제어</div>
+      </div>
+    </div>
+
+    <!-- 5-Step Flow -->
+    <div class="mt-8" style="display:flex;align-items:center;justify-content:center;gap:0;">
+      <div class="text-center" style="min-width:150px;">
+        <div style="width:48px;height:48px;margin:0 auto;border-radius:12px;background:#0D9488;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;">1</div>
+        <div style="font-size:13px;font-weight:700;margin-top:6px;">센서</div>
+        <div class="muted-sm">온도, 습도, 조도 등</div>
+      </div>
+      <div style="width:40px;height:2px;background:linear-gradient(90deg,#0D9488,#0891B2);"></div>
+      <div class="text-center" style="min-width:150px;">
+        <div style="width:48px;height:48px;margin:0 auto;border-radius:12px;background:#0891B2;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;">2</div>
+        <div style="font-size:13px;font-weight:700;margin-top:6px;">BLE Mesh Node</div>
+        <div class="muted-sm">무선 중계 네트워크</div>
+      </div>
+      <div style="width:40px;height:2px;background:linear-gradient(90deg,#0891B2,#1E40AF);"></div>
+      <div class="text-center" style="min-width:150px;">
+        <div style="width:48px;height:48px;margin:0 auto;border-radius:12px;background:#1E40AF;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;">3</div>
+        <div style="font-size:13px;font-weight:700;margin-top:6px;">Gateway</div>
+        <div class="muted-sm">프로토콜 변환</div>
+      </div>
+      <div style="width:40px;height:2px;background:linear-gradient(90deg,#1E40AF,#6366F1);"></div>
+      <div class="text-center" style="min-width:150px;">
+        <div style="width:48px;height:48px;margin:0 auto;border-radius:12px;background:#6366F1;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;">4</div>
+        <div style="font-size:13px;font-weight:700;margin-top:6px;">Cloud / AI</div>
+        <div class="muted-sm">데이터 분석·처리</div>
+      </div>
+      <div style="width:40px;height:2px;background:linear-gradient(90deg,#6366F1,#7C3AED);"></div>
+      <div class="text-center" style="min-width:150px;">
+        <div style="width:48px;height:48px;margin:0 auto;border-radius:12px;background:#7C3AED;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;">5</div>
+        <div style="font-size:13px;font-weight:700;margin-top:6px;">모니터링</div>
+        <div class="muted-sm">대시보드, 제어</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">05</div>
+</div>
+
+<!-- SLIDE 6: APPLICATION (적용 분야) -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:12px; letter-spacing:3px; color:#1E40AF; font-weight:700; margin-bottom:8px;">APPLICATION</div>
+    <h2>적용 <span class="primary">분야</span></h2>
+    <p class="muted" style="margin-top:6px;">BLE Mesh Network 기반 다양한 산업 분야의 무선 제어 솔루션 적용</p>
+
+    <div class="grid-3 mt-5" style="gap:20px;">
+      <!-- 스마트팜 -->
+      <div class="card" style="border-top:4px solid #16A34A; padding:20px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:#16A34A;display:flex;align-items:center;justify-content:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div><div style="font-size:16px;font-weight:700;">스마트팜</div><div class="muted-sm">Smart Farm</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="tag tag-green" style="font-size:10px;">온도센서</span>
+          <span class="tag tag-green" style="font-size:10px;">조도센서</span>
+          <span class="tag tag-green" style="font-size:10px;">습도센서</span>
+          <span class="tag tag-green" style="font-size:10px;">CO2센서</span>
+          <span class="tag tag-green" style="font-size:10px;">커튼개폐</span>
+          <span class="tag tag-green" style="font-size:10px;">분무기</span>
+          <span class="tag tag-green" style="font-size:10px;">도어개폐</span>
+        </div>
+        <div style="margin-top:14px;font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>환경 데이터 실시간 수집</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>자동 환경 제어 시스템</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>AI 기반 생육 최적화</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>원격 모니터링 대시보드</div>
+        </div>
+      </div>
+      <!-- 주차장 -->
+      <div class="card" style="border-top:4px solid #1E40AF; padding:20px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:#1E40AF;display:flex;align-items:center;justify-content:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M3 9h18"/></svg>
+          </div>
+          <div><div style="font-size:16px;font-weight:700;">주차장</div><div class="muted-sm">Parking System</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="tag" style="font-size:10px;">빈주차공간</span>
+          <span class="tag" style="font-size:10px;">보안등 무선디밍</span>
+          <span class="tag" style="font-size:10px;">침수감지</span>
+        </div>
+        <div style="margin-top:14px;font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>차량 감지 센서 연동</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>무선 조명 자동 디밍</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>침수 감지 경보 시스템</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>에너지 최대 70% 절감</div>
+        </div>
+      </div>
+      <!-- 조명 -->
+      <div class="card" style="border-top:4px solid #D97706; padding:20px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:#D97706;display:flex;align-items:center;justify-content:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+          </div>
+          <div><div style="font-size:16px;font-weight:700;">조명</div><div class="muted-sm">Lighting Control</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="tag tag-amber" style="font-size:10px;">스포츠조명</span>
+          <span class="tag tag-amber" style="font-size:10px;">건물보안등</span>
+        </div>
+        <div style="margin-top:14px;font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-amber"></div>골프장 스포츠조명 제어</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-amber"></div>건물 보안등 원격 관리</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-amber"></div>BLE Mesh 무선 디밍</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-amber"></div>스케줄 기반 자동 제어</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">06</div>
+</div>
+
+<!-- SLIDE 7: SOLUTIONS - 조명 & 주차장 -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:12px; letter-spacing:3px; color:#1E40AF; font-weight:700; margin-bottom:8px;">SOLUTIONS</div>
+    <h2>솔루션 <span class="primary">조명 &amp; 주차장</span></h2>
+
+    <div class="grid-2 mt-5" style="gap:24px;">
+      <!-- 조명시스템 -->
+      <div class="card" style="border-left:4px solid #D97706; padding:22px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:#D97706;display:flex;align-items:center;justify-content:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="9" y1="18" x2="15" y2="18"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+          </div>
+          <div><h3 style="font-size:17px;margin:0;">조명 시스템</h3><div class="muted-sm">Lighting Control System</div></div>
+        </div>
+        <!-- Network diagram -->
+        <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:14px;text-align:center;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;">
+            <span style="padding:4px 10px;background:#D97706;color:white;border-radius:6px;font-weight:600;">Gateway</span>
+            <span style="color:#D97706;">&#8594;</span>
+            <span style="padding:4px 10px;background:white;border:1px solid #FDE68A;border-radius:6px;font-weight:600;">Node</span>
+            <span style="color:#D97706;">&#8594;</span>
+            <span style="padding:4px 10px;background:white;border:1px solid #FDE68A;border-radius:6px;font-weight:600;">Monitor</span>
+          </div>
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:2;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-amber"></div>BLE Mesh 무선 디밍 네트워크</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-amber"></div>차량 감지 자동 밝기 조절</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-amber"></div>에너지 절감 최대 70%</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-amber"></div>원격 모니터링 및 제어</div>
+        </div>
+        <div style="margin-top:12px;font-size:10px;color:#94A3B8;">주요 납품처</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;">
+          <span class="tag tag-amber" style="font-size:10px;">필로스GC</span>
+          <span class="tag tag-amber" style="font-size:10px;">광릉CC</span>
+          <span class="tag tag-amber" style="font-size:10px;">현대힐스테이트</span>
+          <span class="tag tag-amber" style="font-size:10px;">홈플러스</span>
+        </div>
+      </div>
+      <!-- 주차장 -->
+      <div class="card" style="border-left:4px solid #1E40AF; padding:22px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:#1E40AF;display:flex;align-items:center;justify-content:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M3 9h18"/></svg>
+          </div>
+          <div><h3 style="font-size:17px;margin:0;">주차장 시스템</h3><div class="muted-sm">Parking Control System</div></div>
+        </div>
+        <!-- Network diagram -->
+        <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:14px;text-align:center;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;">
+            <span style="padding:4px 10px;background:#1E40AF;color:white;border-radius:6px;font-weight:600;">Gateway</span>
+            <span style="color:#1E40AF;">&#8594;</span>
+            <span style="padding:4px 10px;background:white;border:1px solid #BFDBFE;border-radius:6px;font-weight:600;">Node</span>
+            <span style="color:#1E40AF;">&#8594;</span>
+            <span style="padding:4px 10px;background:white;border:1px solid #BFDBFE;border-radius:6px;font-weight:600;">Sensor</span>
+          </div>
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:2;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>빈 주차공간 실시간 안내</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>침수 감지 경보 시스템</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>주차 유도 시스템</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>무선 보안등 디밍 연동</div>
+        </div>
+        <div style="margin-top:12px;font-size:10px;color:#94A3B8;">주요 납품처</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;">
+          <span class="tag" style="font-size:10px;">하네다공항 500대</span>
+          <span class="tag" style="font-size:10px;">나고야 3,300대</span>
+          <span class="tag" style="font-size:10px;">롯데월드</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">07</div>
+</div>
+
+<!-- SLIDE 8: SOLUTIONS - 주륜장 & 팩토리 & 팜 -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:12px; letter-spacing:3px; color:#1E40AF; font-weight:700; margin-bottom:8px;">SOLUTIONS</div>
+    <h2>솔루션 <span class="primary">주륜장 &amp; 팩토리 &amp; 팜</span></h2>
+
+    <div class="grid-3 mt-5" style="gap:16px;">
+      <!-- 주륜장 -->
+      <div class="card" style="border-top:4px solid #DC2626; padding:18px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div style="width:36px;height:36px;border-radius:8px;background:#DC2626;display:flex;align-items:center;justify-content:center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div><div style="font-size:15px;font-weight:700;">주륜장</div><div class="muted-sm">Bicycle Parking (Japan)</div></div>
+        </div>
+        <div style="font-size:12px;color:#475569;line-height:1.8;margin-bottom:12px;">
+          일본 자전거 주차장 시스템. BLE Mesh 기반 무선 제어로 주차정산기와 연동.
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-red"></div>자전거 주차장 무선 제어</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-red"></div>주차정산기 연동 시스템</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-red"></div>하네다 500대 납품</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-red"></div>나고야 3,300대 납품</div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;">
+          <span class="tag tag-red" style="font-size:10px;">도카이기켄</span>
+          <span class="tag tag-red" style="font-size:10px;">RESTAR</span>
+        </div>
+      </div>
+      <!-- 스마트팩토리 -->
+      <div class="card" style="border-top:4px solid #0891B2; padding:18px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div style="width:36px;height:36px;border-radius:8px;background:#0891B2;display:flex;align-items:center;justify-content:center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M2 20h20"/><path d="M5 20V8l5-4v16"/><path d="M10 20V4l7 4v12"/></svg>
+          </div>
+          <div><div style="font-size:15px;font-weight:700;">스마트팩토리</div><div class="muted-sm">Smart Factory</div></div>
+        </div>
+        <div style="font-size:12px;color:#475569;line-height:1.8;margin-bottom:12px;">
+          AI 기반 설비 모니터링 및 예측 보전. 이상 감지를 통한 생산성 향상.
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>설비 상태 실시간 모니터링</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>AI 이상 감지·예측 보전</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>클라우드 대시보드</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>데이터 기반 분석</div>
+        </div>
+        <div style="margin-top:10px;padding:6px 10px;border-radius:6px;background:#ECFEFF;border:1px solid #A5F3FC;font-size:10px;color:#0891B2;font-weight:600;">2025 배터리 분쇄 시스템 AI</div>
+      </div>
+      <!-- 스마트팜 -->
+      <div class="card" style="border-top:4px solid #16A34A; padding:18px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div style="width:36px;height:36px;border-radius:8px;background:#16A34A;display:flex;align-items:center;justify-content:center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div><div style="font-size:15px;font-weight:700;">스마트팜</div><div class="muted-sm">Smart Farm</div></div>
+        </div>
+        <div style="font-size:12px;color:#475569;line-height:1.8;margin-bottom:12px;">
+          환경 센서 기반 농업 자동화. AI로 생육 환경 최적화.
+        </div>
+        <div style="font-size:11px;color:#475569;line-height:1.9;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>온도/습도/CO2/조도 센서</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>자동 환경 제어</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>BLE Mesh 무선 네트워크</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>AI 기반 생육 분석</div>
+        </div>
+        <div style="margin-top:10px;padding:6px 10px;border-radius:6px;background:#F0FDF4;border:1px solid #BBF7D0;font-size:10px;color:#16A34A;font-weight:600;">2026 서울대 농지 AI Smart Farm</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">08</div>
+</div>
+
+<!-- SLIDE 9: AI & EDUCATION -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:12px; letter-spacing:3px; color:#1E40AF; font-weight:700; margin-bottom:8px;">AI &amp; EDUCATION</div>
+    <h2>AI &amp; <span class="primary">교육 사업</span></h2>
+    <p class="muted" style="margin-top:6px;">AI 기술의 산업 적용과 차세대 인재 양성을 위한 교육 플랫폼</p>
+
+    <div class="grid-2 mt-5" style="gap:24px;">
+      <!-- AI Education -->
+      <div>
+        <h3 style="font-size:16px;margin-bottom:14px;"><span class="primary">AI 교육</span> 플랫폼</h3>
+        <div class="card mb-3" style="border-left:4px solid #7C3AED;padding:18px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <div style="width:34px;height:34px;border-radius:8px;background:#7C3AED;display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <div style="font-size:14px;font-weight:700;">AI Education Platform</div>
+          </div>
+          <div style="font-size:11px;color:#475569;line-height:2;">
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-purple"></div>AI/딥러닝 온라인 교육 플랫폼</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-purple"></div>스마트 진학 컨설팅</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-purple"></div>취준생 AI·IoT 실무 교육</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-purple"></div>기업 맞춤형 기술 교육</div>
+          </div>
+        </div>
+        <div class="grid-2" style="gap:8px;">
+          <div class="card text-center" style="padding:14px;">
+            <div style="font-size:11px;color:#7C3AED;font-weight:700;">진학 컨설팅</div>
+            <div style="font-size:10px;color:#64748B;margin-top:4px;">AI 기반 맞춤 진학 가이드</div>
+          </div>
+          <div class="card text-center" style="padding:14px;">
+            <div style="font-size:11px;color:#7C3AED;font-weight:700;">취준생 IoT 교육</div>
+            <div style="font-size:10px;color:#64748B;margin-top:4px;">실무 중심 IoT/AI 과정</div>
+          </div>
+        </div>
+      </div>
+      <!-- AI Applications -->
+      <div>
+        <h3 style="font-size:16px;margin-bottom:14px;"><span class="cyan">AI 산업</span> 적용</h3>
+        <div class="card mb-3" style="border-left:4px solid #DC2626;padding:18px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <div style="width:34px;height:34px;border-radius:8px;background:#DC2626;display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:700;">의료 X-ray AI</div>
+              <div class="muted-sm">2026 신규 사업</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:#475569;line-height:2;">
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-red"></div>X-ray 영상 AI 자동 판별</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-red"></div>딥러닝 기반 진단 보조</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-red"></div>의료 현장 적용 시스템</div>
+          </div>
+        </div>
+        <div class="card" style="border-left:4px solid #0891B2;padding:18px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <div style="width:34px;height:34px;border-radius:8px;background:#0891B2;display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="10" y1="10" x2="10" y2="14"/></svg>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:700;">배터리 분쇄 AI</div>
+              <div class="muted-sm">2025 진행</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:#475569;line-height:2;">
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>분쇄 설비 AI 모니터링</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>이상 감지 및 예측 보전</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>생산성 최적화</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">09</div>
+</div>
+
+<!-- SLIDE 10: INDUSTRIAL PRODUCTION 6 (NEW · FOR PROJECT) -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="font-size:12px; letter-spacing:3px; color:#C2410C; font-weight:700;">INDUSTRIAL PRODUCTION</div>
+      <span class="proj-banner" style="font-size:9px;letter-spacing:1px;padding:3px 9px;">★ FOR PROJECT</span>
+    </div>
+    <h2>산업 <span class="industry">양산 자산</span> &amp; 공장자동화 협업</h2>
+    <p class="muted" style="margin-top:6px;">현재 판매 중인 산업 양산 제품 6종 · KC/TELEC/CE 3개국 인증 · 공장자동화 38년 협업자</p>
+
+    <!-- 양산 6종 product grid -->
+    <div class="mt-5" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <!-- 1 -->
+      <div class="card" style="border-top:3px solid #EA580C; padding:12px 14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <div style="font-size:13px;font-weight:800;color:#C2410C;">STM32F756</div>
+          <span class="tag tag-green" style="font-size:9px;padding:1px 8px;">KC 인증</span>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#1E293B;margin-bottom:4px;">컴프레서 밸브 컨트롤러</div>
+        <div style="font-size:10px;color:#64748B;line-height:1.6;">RS-485 Modbus RTU · FreeRTOS · PID · Recipe EEPROM</div>
+      </div>
+      <!-- 2 -->
+      <div class="card" style="border-top:3px solid #1E40AF; padding:12px 14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <div style="font-size:13px;font-weight:800;color:#1E40AF;">STM32F407</div>
+          <span class="tag" style="font-size:9px;padding:1px 8px;">양산</span>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#1E293B;margin-bottom:4px;">세탁기 컨트롤러</div>
+        <div style="font-size:10px;color:#64748B;line-height:1.6;">FreeRTOS · 다중 프로그램 · 모터 시퀀스 양산</div>
+      </div>
+      <!-- 3 -->
+      <div class="card" style="border-top:3px solid #0891B2; padding:12px 14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <div style="font-size:13px;font-weight:800;color:#0891B2;">RPi CM4</div>
+          <span class="tag tag-cyan" style="font-size:9px;padding:1px 8px;">양산</span>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#1E293B;margin-bottom:4px;">EtherCAT MFC 컨트롤러</div>
+        <div style="font-size:10px;color:#64748B;line-height:1.6;">산업 결정론 사이클 · MFC 정밀 제어</div>
+      </div>
+      <!-- 4 -->
+      <div class="card" style="border-top:3px solid #CA8A04; padding:12px 14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <div style="font-size:13px;font-weight:800;color:#CA8A04;">RPi 3</div>
+          <span class="tag tag-amber" style="font-size:9px;padding:1px 8px;">중국 수출</span>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#1E293B;margin-bottom:4px;">V-Cut 컨트롤러</div>
+        <div style="font-size:10px;color:#64748B;line-height:1.6;">정밀 위치 이송 · X/Y 좌표 가공 양산</div>
+      </div>
+      <!-- 5 -->
+      <div class="card" style="border-top:3px solid #1E40AF; padding:12px 14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <div style="font-size:13px;font-weight:800;color:#1E40AF;">nRF52832</div>
+          <span class="tag" style="font-size:9px;padding:1px 8px;">양산</span>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#1E293B;margin-bottom:4px;">BLE 온도 컨트롤러</div>
+        <div style="font-size:10px;color:#64748B;line-height:1.6;">저전력 BLE · 산업 온도 모니터링</div>
+      </div>
+      <!-- 6 -->
+      <div class="card" style="border-top:3px solid #DC2626; padding:12px 14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <div style="font-size:13px;font-weight:800;color:#DC2626;">AMANO BLE Mesh</div>
+          <span class="tag tag-red" style="font-size:9px;padding:1px 8px;">일본 3,800대</span>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#1E293B;margin-bottom:4px;">자전거주차장 LED Dimmer</div>
+        <div style="font-size:10px;color:#64748B;line-height:1.6;">외부안테나 200m+ · TELEC · CE 인증</div>
+      </div>
+    </div>
+
+    <!-- 협업자 + 인증 row -->
+    <div class="mt-4" style="display:grid;grid-template-columns:1.6fr 1fr;gap:14px;">
+      <div class="card-industry" style="padding:14px 16px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div style="width:32px;height:32px;border-radius:8px;background:#C2410C;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:13px;">林</div>
+          <div>
+            <div style="font-size:13px;font-weight:800;color:#1E293B;">공장자동화 협업자 — 임호균 <span style="color:#C2410C;">(38년)</span></div>
+            <div class="muted-sm">모터 제어 · 전장 배선 · 산업 패널 설계 · 모션 캘리브레이션</div>
+          </div>
+        </div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.6;">
+          삼성전자 Video/Motor Controller Board → AuthenTec(美) ARM CPU + ASIC → QuickLogic(美) FPGA → <strong style="color:#C2410C;">대한전선 WINDER CONTROLLER</strong> (CAN/RS485 + 권취기 정밀 장력·위치 피드백 양산)
+        </div>
+      </div>
+      <div class="card" style="padding:14px 16px;">
+        <div style="font-size:11px;color:#94A3B8;margin-bottom:8px;font-weight:600;letter-spacing:1px;">산업 인증 + 기업 자산</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag tag-green" style="font-size:10px;">KC 인증</span>
+          <span class="tag tag-green" style="font-size:10px;">TELEC 인증</span>
+          <span class="tag tag-green" style="font-size:10px;">CE 인증</span>
+          <span class="tag tag-cyan" style="font-size:10px;">벤처기업</span>
+          <span class="tag tag-cyan" style="font-size:10px;">기업부설연구소 (2018~)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">10</div>
+</div>
+
+<!-- SLIDE 11: PLC + SCADA + MOTION (NEW · FOR PROJECT) -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="font-size:12px; letter-spacing:3px; color:#C2410C; font-weight:700;">PLC · SCADA · MOTION</div>
+      <span class="proj-banner" style="font-size:9px;letter-spacing:1px;padding:3px 9px;">★ FOR PROJECT</span>
+    </div>
+    <h2>PLC + SCADA + <span class="industry">서보 모션</span> 통합 역량</h2>
+    <p class="muted" style="margin-top:6px;">산업 통신 양산 · SCADA 5요소 라이브 운영 · 5축 서보 동기화 + 노이즈 차폐 패턴</p>
+
+    <!-- Top: 3 capability columns -->
+    <div class="grid-3 mt-5" style="gap:14px;">
+      <!-- PLC / 산업통신 -->
+      <div class="card" style="border-top:4px solid #1E40AF; padding:16px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:32px;height:32px;border-radius:8px;background:#1E40AF;display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><line x1="7" y1="10" x2="7" y2="14"/><line x1="11" y1="10" x2="11" y2="14"/><line x1="15" y1="10" x2="15" y2="14"/></svg>
+          </div>
+          <div><h3 style="font-size:14px;margin:0;">PLC · 산업 통신</h3><div class="muted-sm">Modbus · EtherCAT</div></div>
+        </div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.85;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div><strong>RS-485 Modbus RTU 양산</strong> (KC)</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div><strong>EtherCAT MFC 양산</strong> (RPi CM4)</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>Mitsubishi · LS · Cimon 1주 적응</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>IEC 61131-3 래더 / ST</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>인터럽트 우선순위 · 결정론 사이클</div>
+        </div>
+      </div>
+      <!-- SCADA 5요소 -->
+      <div class="card" style="border-top:4px solid #0891B2; padding:16px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:32px;height:32px;border-radius:8px;background:#0891B2;display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div><h3 style="font-size:14px;margin:0;">SCADA 5요소 라이브</h3><div class="muted-sm">uttec-sensor.duckdns.org</div></div>
+        </div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.85;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div><strong>Tag Server</strong> 실시간 수집</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div><strong>HMI</strong> Three.js 3D 대시보드 25개</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div><strong>Recipe</strong> 품종별 파라미터 DB</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div><strong>Historian</strong> TimescaleDB 시계열</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div><strong>Alarm</strong> n8n + Gmail 자동화</div>
+        </div>
+      </div>
+      <!-- 모션 / 노이즈 -->
+      <div class="card-industry" style="border-top:4px solid #EA580C; padding:16px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:32px;height:32px;border-radius:8px;background:#EA580C;display:flex;align-items:center;justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h4 M17 12h4 M12 3v4 M12 17v4"/></svg>
+          </div>
+          <div><h3 style="font-size:14px;margin:0;color:#C2410C;">서보 모션 · 노이즈</h3><div class="muted-sm">5축 동기 + EMI/EMC</div></div>
+        </div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.85;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-industry"></div>대한전선 WINDER 권취기 양산</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-industry"></div>STM32 모터 컨트롤러 양산 2종</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-industry"></div>변위센서 동기 (PVDF #154780)</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-industry"></div>쉴드·접지·LPF·페라이트 4종 대응</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-industry"></div>KC + TELEC + CE 인증 검증</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: 동기화 패턴 + 엑셀 리포트 -->
+    <div class="mt-5" style="display:grid;grid-template-columns:1.5fr 1fr;gap:14px;">
+      <div class="card" style="padding:14px 16px;">
+        <div style="font-size:12px;font-weight:800;color:#1E293B;margin-bottom:8px;">⚙ 5축 서보 ⟷ 변위센서 동기화 — 3-Layer 패턴</div>
+        <div style="display:flex;gap:6px;font-size:10px;">
+          <div style="flex:1;background:#1E40AF;color:white;padding:6px 8px;border-radius:6px;text-align:center;line-height:1.4;"><strong>L1</strong><br>EtherCAT / 고속 ADC<br>동일 사이클 캡처</div>
+          <div style="flex:1;background:#0891B2;color:white;padding:6px 8px;border-radius:6px;text-align:center;line-height:1.4;"><strong>L2</strong><br>PLC 인터럽트 우선순위<br>결정론 사이클</div>
+          <div style="flex:1;background:#EA580C;color:white;padding:6px 8px;border-radius:6px;text-align:center;line-height:1.4;"><strong>L3</strong><br>이동평균 + 칼만 필터<br>위치 보간</div>
+        </div>
+      </div>
+      <div class="card-accent" style="padding:14px 16px;">
+        <div style="font-size:12px;font-weight:800;color:#1E40AF;margin-bottom:8px;">📊 실시간 트렌드 + 엑셀 CSV 리포트</div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.7;">
+          ● 실시간 두께 데이터 트렌드 그래프 표준 컴포넌트<br>
+          ● 측정 완료 시 지정 양식 엑셀 CSV 자동 출력<br>
+          ● 한국기계 공장자동화 협력 적용 사례
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">11</div>
+</div>
+
+<!-- SLIDE 12: CERTIFICATIONS & PATENTS -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:12px; letter-spacing:3px; color:#1E40AF; font-weight:700; margin-bottom:8px;">CERTIFICATIONS &amp; PATENTS</div>
+    <h2>인증 &amp; <span class="primary">특허</span></h2>
+    <p class="muted" style="margin-top:6px;">국내외 인증 및 특허를 통한 기술력 검증</p>
+
+    <div class="grid-2 mt-5" style="gap:28px;">
+      <!-- 인증 -->
+      <div>
+        <h3 style="font-size:16px;margin-bottom:14px;">국제 인증</h3>
+        <div class="grid-3" style="gap:10px;margin-bottom:16px;">
+          <div class="card-accent text-center" style="padding:20px;">
+            <div style="font-size:28px;font-weight:900;color:#1E40AF;">KC</div>
+            <div style="font-size:10px;color:#64748B;margin-top:6px;">한국 전파적합성<br>인증</div>
+          </div>
+          <div class="card-accent text-center" style="padding:20px;">
+            <div style="font-size:28px;font-weight:900;color:#1E40AF;">TELEC</div>
+            <div style="font-size:10px;color:#64748B;margin-top:6px;">일본 무선기기<br>기술기준적합 인증</div>
+          </div>
+          <div class="card-accent text-center" style="padding:20px;">
+            <div style="font-size:28px;font-weight:900;color:#1E40AF;">CE</div>
+            <div style="font-size:10px;color:#64748B;margin-top:6px;">유럽 적합성<br>인증 (CE Marking)</div>
+          </div>
+        </div>
+
+        <h3 style="font-size:16px;margin-bottom:14px;">기업 인증</h3>
+        <div class="grid-2" style="gap:10px;">
+          <div class="card" style="padding:16px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="tag tag-cyan" style="font-size:10px;">벤처기업</span>
+            </div>
+            <div style="font-size:12px;font-weight:600;margin-top:8px;">벤처기업 인증</div>
+            <div style="font-size:10px;color:#64748B;margin-top:2px;">2016년 설립 시 취득</div>
+          </div>
+          <div class="card" style="padding:16px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="tag" style="font-size:10px;">기업연구소</span>
+            </div>
+            <div style="font-size:12px;font-weight:600;margin-top:8px;">기업부설연구소</div>
+            <div style="font-size:10px;color:#64748B;margin-top:2px;">2018년~ 운영</div>
+          </div>
+        </div>
+      </div>
+      <!-- 특허 -->
+      <div>
+        <h3 style="font-size:16px;margin-bottom:14px;">특허 및 지적재산권</h3>
+        <div class="card" style="border-left:4px solid #1E40AF;padding:22px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div style="width:40px;height:40px;border-radius:10px;background:#1E40AF;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:16px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <div style="font-size:15px;font-weight:700;">한국 특허</div>
+              <div class="muted-sm">등록 특허</div>
+            </div>
+          </div>
+          <div style="padding:14px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;">
+            <div style="font-size:14px;font-weight:700;color:#1E40AF;">복합센서 디밍제어시스템</div>
+            <div style="font-size:11px;color:#475569;margin-top:6px;line-height:1.7;">
+              복합 센서(조도, 온도, 움직임 등)를 활용한 지능형 디밍 제어 시스템으로,
+              에너지 절감과 자동 조명 제어를 실현하는 핵심 특허 기술
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding:18px;background:#F8FAFC;">
+          <div style="font-size:13px;font-weight:700;margin-bottom:10px;">기술 역량 요약</div>
+          <div style="font-size:11px;color:#475569;line-height:2;">
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-blue"></div>BLE Mesh Network 자체 프로토콜 개발</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-cyan"></div>초저전력 무선 통신 회로 설계</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-purple"></div>AI/딥러닝 모델 개발·적용</div>
+            <div style="display:flex;align-items:center;gap:6px;"><div class="dot dot-green"></div>클라우드 기반 IoT 플랫폼 구축</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">12</div>
+</div>
+
+<!-- SLIDE 13: HISTORY (2016-2026) -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:12px; letter-spacing:3px; color:#1E40AF; font-weight:700; margin-bottom:8px;">HISTORY</div>
+    <h2 class="mb-4">UTTEC <span class="primary">연혁</span> <span style="font-size:16px;color:#94A3B8;">2016-2026</span></h2>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 24px;">
+      <div class="card" style="border-left:3px solid #1E40AF; padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:15px;font-weight:800;color:#1E40AF;">2016</span><span style="font-size:12px;font-weight:700;">회사 설립</span></div>
+        <div style="font-size:10px;color:#64748B;margin-top:3px;">6월 ㈜유티텍 설립 · 벤처기업 인증</div>
+      </div>
+      <div class="card" style="border-left:3px solid #4F46E5; padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:15px;font-weight:800;color:#4F46E5;">2017</span><span style="font-size:12px;font-weight:700;">국제 인증 &amp; 사업 개시</span></div>
+        <div style="font-size:10px;color:#64748B;margin-top:3px;">KC/TELEC/CE 인증 · EMS IoT 조명 (현대, 롯데, 한화, LH, 홈플러스)</div>
+        <div style="font-size:10px;color:#64748B;">클라우드 WEB LED · LUMITEC/OPTILED 수출</div>
+      </div>
+      <div class="card" style="border-left:3px solid #7C3AED; padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:15px;font-weight:800;color:#7C3AED;">2018</span><span style="font-size:12px;font-weight:700;">LoRa 상용화 &amp; 특허</span></div>
+        <div style="font-size:10px;color:#64748B;margin-top:3px;">LoRa 클라우드 국내 최초 상용화 · 기업부설연구소 설립 · 특허등록</div>
+      </div>
+      <div class="card" style="border-left:3px solid #DB2777; padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:15px;font-weight:800;color:#DB2777;">2019</span><span style="font-size:12px;font-weight:700;">사업 확장 &amp; BLE Mesh</span></div>
+        <div style="font-size:10px;color:#64748B;margin-top:3px;">골프장 무선조명 · 도카이기켄 협업 · BLE Mesh 개발 · 본사 이전</div>
+      </div>
+      <div class="card" style="border-left:3px solid #EA580C; padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:15px;font-weight:800;color:#EA580C;">2022</span><span style="font-size:12px;font-weight:700;">일본 대규모 수출</span></div>
+        <div style="font-size:10px;color:#64748B;margin-top:3px;">하네다공항 아나모리나역 주륜장 500대 · 나고야 사카에역 3,300대 수출</div>
+      </div>
+      <div class="card" style="border-left:3px solid #CA8A04; padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:15px;font-weight:800;color:#CA8A04;">2023</span><span style="font-size:12px;font-weight:700;">국내 대형 프로젝트</span></div>
+        <div style="font-size:10px;color:#64748B;margin-top:3px;">청라국제도시 하나금융글로벌캠퍼스 조명무선시스템</div>
+      </div>
+      <div class="card" style="border-left:3px solid #0891B2; padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:15px;font-weight:800;color:#0891B2;">2024</span><span style="font-size:12px;font-weight:700;">AI &amp; 스마트 사업 확장</span></div>
+        <div style="font-size:10px;color:#64748B;margin-top:3px;">Smart Factory AI · Smart Farm IoT · AI Education 플랫폼 런칭</div>
+      </div>
+      <div class="card" style="border-left:3px solid #E11D48; padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:15px;font-weight:800;color:#E11D48;">2025</span><span style="font-size:12px;font-weight:700;">AI 산업 적용 확대</span></div>
+        <div style="font-size:10px;color:#64748B;margin-top:3px;">배터리 분쇄 시스템 AI 적용 · 스마트팩토리 AI 모니터링</div>
+      </div>
+    </div>
+    <!-- 2026 Highlighted -->
+    <div class="card-industry mt-3" style="padding:14px 24px; text-align:center; border:2px solid #EA580C;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;">
+        <span style="font-size:26px;font-weight:900;color:#C2410C;">2026</span>
+        <div style="width:2px;height:28px;background:#FED7AA;"></div>
+        <div style="text-align:left;">
+          <div style="font-size:14px;font-weight:700;color:#0F172A;">AI 신규 사업 + <span style="color:#C2410C;">산업 자동화 트랙 진입</span></div>
+          <div style="font-size:11px;color:#475569;line-height:1.5;">서울대 농지 AI Smart Farm · 의료 X-ray AI · <strong style="color:#C2410C;">동아정밀공업 PET 두께 측정기 2호기 PLC/SCADA 제안</strong></div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <span class="tag tag-green" style="font-size:10px;">Smart Farm</span>
+          <span class="tag tag-red" style="font-size:10px;">X-ray AI</span>
+          <span class="tag tag-industry" style="font-size:10px;">PLC/SCADA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">13</div>
+</div>
+
+<!-- SLIDE 14: PROJECT MATCH — 동아정밀 (NEW · FOR PROJECT) -->
+<div class="slide">
+  <div class="logo-mark">UTTEC</div>
+  <div style="position:relative;z-index:1;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="font-size:12px; letter-spacing:3px; color:#C2410C; font-weight:700;">PROJECT MATCH</div>
+      <span class="proj-banner" style="font-size:9px;letter-spacing:1px;padding:3px 9px;">★ 동아정밀공업 #155220</span>
+    </div>
+    <h2><span class="industry">동아정밀공업</span> 프로젝트 매칭</h2>
+    <p class="muted" style="margin-top:6px;">서보 기반 비접촉식 PET 용기 두께 측정기 2호기 PLC + SCADA 구축 — 핵심 요구 ↔ UTTEC 자산</p>
+
+    <!-- Matching table -->
+    <div class="mt-4" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="card-industry" style="padding:11px 14px;">
+        <div style="font-size:11px;font-weight:800;color:#C2410C;margin-bottom:3px;">① 턴키 — 전장 ~ PLC ~ SCADA 한 업체</div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.5;">홍광선(펌웨어 40년) + 임호균(회로·공장자동화 38년) <strong>2인 단일 책임</strong> · 분업 리스크 0</div>
+      </div>
+      <div class="card-industry" style="padding:11px 14px;">
+        <div style="font-size:11px;font-weight:800;color:#C2410C;margin-bottom:3px;">② 5축 서보 동기 + 변위센서 노이즈 차폐</div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.5;">대한전선 WINDER + EtherCAT MFC + PVDF #154780 + KC/TELEC/CE 인증 양산 패턴</div>
+      </div>
+      <div class="card-industry" style="padding:11px 14px;">
+        <div style="font-size:11px;font-weight:800;color:#C2410C;margin-bottom:3px;">③ 인건비 2,000만 Fix + 자재비 TCO 투명</div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.5;">3-Plan 역제안 (Mitsubishi / LS XGT+Cimon / UTTEC 자체) · 자재비 별도 실비 산출</div>
+      </div>
+      <div class="card-industry" style="padding:11px 14px;">
+        <div style="font-size:11px;font-weight:800;color:#C2410C;margin-bottom:3px;">④ SCADA 실시간 트렌드 + 엑셀 CSV 리포트</div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.5;">SCADA 5요소 라이브 운영 자산 · Cimon/iX/WinCC 1주 적응 · 한국기계 협력 검증</div>
+      </div>
+      <div class="card-industry" style="padding:11px 14px;">
+        <div style="font-size:11px;font-weight:800;color:#C2410C;margin-bottom:3px;">⑤ 2호기 재개발 통제 위험 사전 식별</div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.5;">일본 자전거주차장 1차 500대 → 2차 3,300대 리비전 양산 사이클 직접 경험</div>
+      </div>
+      <div class="card-industry" style="padding:11px 14px;">
+        <div style="font-size:11px;font-weight:800;color:#C2410C;margin-bottom:3px;">⑥ 부천 현장 출장 협의 가능</div>
+        <div style="font-size:10.5px;color:#475569;line-height:1.5;">용인 기흥 → 부천 오정구 <strong>1.5시간</strong> · Phase 1·3·4 핵심 단계 현장 집중</div>
+      </div>
+    </div>
+
+    <!-- 90-day plan -->
+    <div class="mt-4" style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+      <div style="flex:1;background:#1E40AF;color:white;padding:10px 12px;border-radius:8px;">
+        <div style="font-size:10px;letter-spacing:1px;opacity:0.85;">PHASE 1 · 1~10일</div>
+        <div style="font-size:12px;font-weight:700;margin-top:2px;">현장 분석 + 설계 1차</div>
+        <div style="font-size:9.5px;opacity:0.9;margin-top:2px;">1호기 분석 · 플랫폼 선정 · 배선도 1차</div>
+      </div>
+      <svg width="16" height="14" viewBox="0 0 16 14"><path d="M0 7 L12 7 M9 3 L13 7 L9 11" stroke="#94A3B8" stroke-width="1.5" fill="none"/></svg>
+      <div style="flex:1;background:#0891B2;color:white;padding:10px 12px;border-radius:8px;">
+        <div style="font-size:10px;letter-spacing:1px;opacity:0.85;">PHASE 2 · 11~40일</div>
+        <div style="font-size:12px;font-weight:700;margin-top:2px;">PLC + SCADA 1차 개발</div>
+        <div style="font-size:9.5px;opacity:0.9;margin-top:2px;">원격 개발 · 주 1회 화상 · 현장 2~3회</div>
+      </div>
+      <svg width="16" height="14" viewBox="0 0 16 14"><path d="M0 7 L12 7 M9 3 L13 7 L9 11" stroke="#94A3B8" stroke-width="1.5" fill="none"/></svg>
+      <div style="flex:1;background:#EA580C;color:white;padding:10px 12px;border-radius:8px;">
+        <div style="font-size:10px;letter-spacing:1px;opacity:0.85;">PHASE 3 · 41~70일</div>
+        <div style="font-size:12px;font-weight:700;margin-top:2px;">전장 배선 + 시운전</div>
+        <div style="font-size:9.5px;opacity:0.9;margin-top:2px;">현장 5~7회 · 캘리브레이션</div>
+      </div>
+      <svg width="16" height="14" viewBox="0 0 16 14"><path d="M0 7 L12 7 M9 3 L13 7 L9 11" stroke="#94A3B8" stroke-width="1.5" fill="none"/></svg>
+      <div style="flex:1;background:#16A34A;color:white;padding:10px 12px;border-radius:8px;">
+        <div style="font-size:10px;letter-spacing:1px;opacity:0.85;">PHASE 4 · 71~90일</div>
+        <div style="font-size:12px;font-weight:700;margin-top:2px;">안정화 + 인수인계</div>
+        <div style="font-size:9.5px;opacity:0.9;margin-top:2px;">데이터 로깅 · 운영자 교육</div>
+      </div>
+    </div>
+
+    <!-- 3 promises -->
+    <div class="mt-4" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div class="card" style="padding:11px 14px;border-left:4px solid #1E40AF;">
+        <div style="font-size:13px;font-weight:800;color:#1E40AF;margin-bottom:3px;">✓ 안정성</div>
+        <div style="font-size:10px;color:#64748B;">양산 6종 + 일본 3,800대 검증</div>
+      </div>
+      <div class="card" style="padding:11px 14px;border-left:4px solid #EA580C;">
+        <div style="font-size:13px;font-weight:800;color:#C2410C;margin-bottom:3px;">✓ 신뢰성</div>
+        <div style="font-size:10px;color:#64748B;">KC + TELEC + CE 3개국 인증</div>
+      </div>
+      <div class="card" style="padding:11px 14px;border-left:4px solid #16A34A;">
+        <div style="font-size:13px;font-weight:800;color:#16A34A;margin-bottom:3px;">✓ 비용 투명성</div>
+        <div style="font-size:10px;color:#64748B;">인건비 Fix + 자재비 별도 + 3-Plan</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">14</div>
+</div>
+
+<!-- SLIDE 15: PARTNERS & CONTACT -->
+<div class="slide" style="display:flex;align-items:center;justify-content:center;">
+  <div style="position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#1E40AF,#0891B2);"></div>
+  <div class="logo-mark">UTTEC</div>
+  <div style="width:100%;padding:0 10px;">
+    <div style="font-size:12px; letter-spacing:3px; color:#1E40AF; font-weight:700; margin-bottom:8px; text-align:center;">PARTNERS &amp; CONTACT</div>
+    <h2 style="text-align:center;">파트너 &amp; <span class="primary">연락처</span></h2>
+
+    <!-- Partners by category -->
+    <div class="mt-5" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:18px;">
+      <div class="card-industry" style="padding:12px;">
+        <div class="muted-sm mb-2" style="color:#C2410C;font-weight:700;">★ 공장자동화</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          <span class="partner-tag" style="background:#FFF7ED;border-color:#FED7AA;color:#C2410C;">한국기계</span>
+          <span class="partner-tag" style="background:#FFF7ED;border-color:#FED7AA;color:#C2410C;">대한전선</span>
+        </div>
+      </div>
+      <div class="card" style="padding:12px;">
+        <div class="muted-sm mb-2">주륜장</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          <span class="partner-tag partner-tag-blue">도카이기켄</span>
+          <span class="partner-tag partner-tag-blue">RESTAR</span>
+        </div>
+      </div>
+      <div class="card" style="padding:12px;">
+        <div class="muted-sm mb-2">조명</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          <span class="partner-tag">삼환전기</span>
+          <span class="partner-tag">ALPS</span>
+        </div>
+      </div>
+      <div class="card" style="padding:12px;">
+        <div class="muted-sm mb-2">건설</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          <span class="partner-tag">현대건설</span>
+          <span class="partner-tag">롯데건설</span>
+        </div>
+      </div>
+      <div class="card" style="padding:12px;">
+        <div class="muted-sm mb-2">골프</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          <span class="partner-tag">필로스GC</span>
+          <span class="partner-tag">광릉CC</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dev History Timeline -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:24px;">
+      <div class="text-center" style="min-width:140px;">
+        <div style="font-size:12px;font-weight:800;color:#1E40AF;">1985~</div>
+        <div style="font-size:10px;color:#64748B;">Audio/Printer</div>
+      </div>
+      <div style="width:30px;height:2px;background:linear-gradient(90deg,#1E40AF,#4F46E5);"></div>
+      <div class="text-center" style="min-width:140px;">
+        <div style="font-size:12px;font-weight:800;color:#4F46E5;">1990s</div>
+        <div style="font-size:10px;color:#64748B;">CATV 70%</div>
+      </div>
+      <div style="width:30px;height:2px;background:linear-gradient(90deg,#4F46E5,#7C3AED);"></div>
+      <div class="text-center" style="min-width:140px;">
+        <div style="font-size:12px;font-weight:800;color:#7C3AED;">2000s</div>
+        <div style="font-size:10px;color:#64748B;">STB/Digital</div>
+      </div>
+      <div style="width:30px;height:2px;background:linear-gradient(90deg,#7C3AED,#0891B2);"></div>
+      <div class="text-center" style="min-width:140px;">
+        <div style="font-size:12px;font-weight:800;color:#0891B2;">2010s</div>
+        <div style="font-size:10px;color:#64748B;">IoT/RF/BLE</div>
+      </div>
+      <div style="width:30px;height:2px;background:linear-gradient(90deg,#0891B2,#0D9488);"></div>
+      <div class="text-center" style="min-width:140px;">
+        <div style="font-size:12px;font-weight:800;color:#0D9488;">2016~</div>
+        <div style="font-size:10px;color:#64748B;">UTTEC 설립</div>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div style="display:flex; justify-content:center; gap:24px;">
+      <div class="card" style="min-width:200px;padding:20px;">
+        <div class="muted-sm mb-2">주소</div>
+        <div style="font-size:12px;font-weight:600;">경기도 용인시 기흥구<br>흥덕중앙로 120<br>흥덕유타워 2404호</div>
+      </div>
+      <div class="card" style="min-width:180px;padding:20px;">
+        <div class="muted-sm mb-2">연락처</div>
+        <div style="font-size:12px;font-weight:600;">Tel: 031-627-2250<br>Fax: 0505-300-8065</div>
+      </div>
+      <div class="card" style="min-width:180px;padding:20px;">
+        <div class="muted-sm mb-2">웹사이트</div>
+        <div style="font-size:12px;font-weight:600;">www.uttec.co.kr</div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px; display:flex; gap:6px; justify-content:center; flex-wrap:wrap;">
+      <span class="tag">BLE Mesh</span>
+      <span class="tag">Low Energy</span>
+      <span class="tag tag-purple">AI</span>
+      <span class="tag tag-green">Smart Farm</span>
+      <span class="tag tag-cyan">Smart Factory</span>
+      <span class="tag tag-purple">AI Education</span>
+      <span class="tag tag-industry">PLC</span>
+      <span class="tag tag-industry">SCADA</span>
+      <span class="tag tag-industry">Modbus / EtherCAT</span>
+      <span class="tag tag-industry">서보 모션</span>
+    </div>
+
+    <p style="margin-top:18px; font-size:11px; color:#94A3B8; text-align:center;">
+      &copy; 2016-2026 ㈜유티텍(UTTEC Co., Ltd.). All rights reserved.  ·  For 동아정밀공업 #155220  ·  2026年 6月
+    </p>
+  </div>
+  <div class="slide-num">15</div>
+</div>
+
+</body>
+</html>

@@ -2,12 +2,60 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-03 (결정 37 [claude-code] entity 23가지 필수 기능 카탈로그 박제 — 도메인 권고 박제 패턴 3번째 사례 정착 확정, 메타프롬프팅 SOP + /copy 즉시 활용 + 강사양성 Day 5 모듈 cluster 후보 + 위시캣 매칭 키워드 확장, 코드팩토리 영상 흡수 / 결정 35~36 위성+노지 신사업 + 결정 32~34 R50 Touch MNIST + Path D 산업 응용)
+updated: 2026-06-03 저녁 (결정 39 위시캣 미팅 자료 풀세트 SOP 정착 — 동아정밀공업 #155220 미팅용 영상 5분 + PPTX 10장 + 회사소개서 PDF 15장 / 매니저 가이드 3대 어필 포인트 정조준 + 빌드 스크립트 5종 재사용 자산화 / 결정 37 Claude Code 23 + 결정 35~36 위성+노지 + 결정 32~34 R50 Path D carry)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-03 저녁) — 위시캣 미팅 자료 풀세트 SOP 정착: 동아정밀공업 #155220 실증 ⭐⭐⭐
+
+**사건**: 5/14 위시캣 #155220 (PET 두께 측정기 2호기 PLC/SCADA, 2,000만/90일) 지원 → 6/3 미팅 확정 + 매니저 이문식 가이드 입력 → 사용자 요청 "영상 + 슬라이드 + 회사소개서 제작" megasession. 19일 lead-time 후 자료 3종 풀세트 완결.
+
+### 결정 39: ⭐⭐⭐ 위시캣 미팅 자료 풀세트 SOP 정착
+
+위시캣 후속 미팅 발생 시 본 패턴 표준 SOP 적용.
+
+> "RFP + 지원서 + 매니저 가이드 → myWiki 자산 매핑 → 시나리오/나레이션 → PPTX 10장 (1920×1080) → 동영상 5분 (TTS + ffmpeg) → 회사소개서 PDF 15장 (HTML→Chrome headless). 매니저 가이드 3대 어필 포인트 ⭐ 마킹으로 정조준."
+
+**Why**:
+- 위시캣은 지원서까지만 자산화 (5/14 #155220 25KB 지원서). 미팅 자료는 매번 즉흥 작업 → 시간 비용 큼
+- 본 세션 = 후속 단계 SOP 확립 milestone. 동아정밀이 1번째 적용 사례
+- 빌드 스크립트 5종 재사용 가능 (`build_pptx.py` / `export_slides.py` / `build_audio.py` / `build_video.py` / `_patch_pptx.py`)
+- 5분 영상 = 미팅 발표용 황금 비율 (10분 v1은 흐름 끊김 → 5분 v3 = 발표 + 집중력 유지)
+
+**How to apply**:
+- 위시캣 미팅 확정 통보 입수 시 본 SOP 작동 (`매니저 가이드 흡수 → myWiki 자산 매핑 → 시나리오 → 3종 산출물`)
+- 매니저 3대 어필 포인트 (또는 N대)는 슬라이드 헤더에 ⭐ 마킹으로 정조준 보강
+- 회사소개서 신규 추가는 본 프로젝트 직결 트랙만 (기존 정체성 보존 + accent 분리 표시)
+- 영상 길이 5분 목표 = 평균 30초/슬라이드 + TTS rate +5%
+
+### 빌드 스크립트 5종 (자산 재사용)
+
+| 스크립트 | 역할 |
+|---|---|
+| `build_pptx.py` | python-pptx 1.0.2 (1920×1080) — 슬라이드 12장 빌드 |
+| `export_slides.py` | pywin32 PowerPoint COM → PNG export (1920×1080) |
+| `build_audio.py` | edge-tts 7.2.7 ko-KR-InJoonNeural rate +5% |
+| `build_video.py` | imageio-ffmpeg 0.6.0 (libx264 + AAC + concat) |
+| `_patch_pptx.py` | 슬라이드 블록 통째 삭제 + 페이지번호 자동 재매핑 패턴 |
+
+### 회사소개서 보강 패턴 (재사용)
+
+기존 회사소개서 (`homepage/회사소개/uttec_회사소개서_print_v2.html`) 위에 본 프로젝트 직결 트랙을 신규 추가하는 방식. BLE Mesh 정체성 보존 + orange accent (`#EA580C`) + `★ FOR PROJECT` 배지로 시각적 분리.
+
+- COVER / OVERVIEW / BIZ AREAS / CORE TECH 보강
+- 신규 슬라이드 3장 (산업 양산 / PLC+SCADA / 프로젝트 매칭)
+- @page 1280×720 (16:9) 변경으로 A4 landscape 빈공간 제거
+
+### links 추가
+
+- [[위시캣활동]] 동아정밀 #155220 미팅 트랙 신설
+- [[영업전략]] 위시캣 미팅 자료 SOP 박제
+- [[회사소개]] 본 프로젝트 직결 자산 강조 트랙 v1 추가
+
+---
 
 ## 판단 로그 (2026-06-03) — Claude Code 23가지 필수 기능 카탈로그 박제: 도메인 권고 박제 패턴 3번째 사례 정착 확정 ⭐⭐⭐
 
