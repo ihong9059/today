@@ -2,12 +2,65 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-03 후속 (결정 35 노지 관리 신사업 검토 trigger — revita LoRa 양산 자산 + 위성 NDVI/LST + 농림위성 2026 발사 + Google Earth Engine fusion = 마이크로+매크로 통합 SaaS 검토, 사용자 결단 "다음 사업분야 검토" + revita 카드 발송 / 결정 36 도메인 권고 박제 패턴 2번째 사례 — 결정 29 적용 정착 검증 [1번째 결정 30 인증, 2번째 결정 35 노지 관리] / 결정 32~34 R50 Touch MNIST 99.41% + Path D 산업 응용 + 위시캣 키오스크 cluster SOP)
+updated: 2026-06-03 (결정 37 [claude-code] entity 23가지 필수 기능 카탈로그 박제 — 도메인 권고 박제 패턴 3번째 사례 정착 확정, 메타프롬프팅 SOP + /copy 즉시 활용 + 강사양성 Day 5 모듈 cluster 후보 + 위시캣 매칭 키워드 확장, 코드팩토리 영상 흡수 / 결정 35~36 위성+노지 신사업 + 결정 32~34 R50 Touch MNIST + Path D 산업 응용)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-03) — Claude Code 23가지 필수 기능 카탈로그 박제: 도메인 권고 박제 패턴 3번째 사례 정착 확정 ⭐⭐⭐
+
+**사건**: 사용자 YouTube 영상 (코드팩토리 "Claude Code 필수 지식 20가지 13분 정리!") 입력 → mywiki-claude 16종 기능 카탈로그 분석 → 사용자 결단: "A 박제 진행" → [[claude-code]] entity § Claude Code 23가지 필수 기능 카탈로그 박제. **결정 29 (도메인 권고 박제 패턴 정착) 3번째 적용 사례** (1번째 결정 30 인증 / 2번째 결정 35 노지 관리 / 3번째 본 결정 37).
+
+### 결정 37: ⭐⭐⭐ 도메인 권고 박제 패턴 정착 확정 — 본 vault 자산화 표준 채널 확립
+
+3번째 적용 사례를 통해 결정 29 패턴 **정착 확정** (검증 단계 종결).
+
+> "사용자 도메인 질의 / 영상 입력 → AI 권고 답변 → 박제 가치 평가 → vault 박제 (entity/thought/log/ai-direction 결정) + 다른 vault cross-link 카드 발송 (broker 양방향) — 본 vault 자산화 표준 채널 확립."
+
+**Why**:
+- 3번째 사례로 정착 확정 (패턴 일회성·이회성 가능성 배제)
+- 본 영상은 Claude Code 도구 직접 적용 가치 ★★★ → 본 vault 즉시 SOP 3건 도출 (`/copy` / `/goal` 메타프롬프팅 / `/rewind`)
+- 박제 채널 확립 = 다음 도메인 질의/영상은 자동 흡수 워크플로우 (별도 검토 없이 5단계 lifecycle 진행)
+
+**How to apply**:
+- 향후 사용자 도메인 질의 / 영상 입력 시 자동 흡수 SOP 진행
+- 박제 가치 평가 1줄 (⭐⭐⭐ 이상 = 박제 / 미달 = carry only)
+- vault 박제 시 entity § 신설 또는 prepend + ai-direction 결정 추가 + log.md domain 박제
+- cross-vault 영향 시 카드 발송 (revita / ondevice / wishket)
+
+**박제 정착 확정 사례 카탈로그**:
+
+| # | 시기 | 도메인 | 결정 | 박제 위치 |
+|:-:|---|---|---|---|
+| 1 | 6/2 야간 | 배터리 인증 | 결정 30 | strengths §12 인증 매니지먼트 |
+| 2 | 6/3 후속 | 위성 원격탐사 + 노지 관리 | 결정 35 | thought + aisg/revita entity + revita 카드 |
+| **3** | **6/3** | **Claude Code 23가지 필수 기능** | **결정 37 (본)** | **claude-code entity § Claude Code 23가지** |
+
+→ 패턴 정착 확정. 본 vault 도메인 자산화 표준 채널.
+
+### 결정 38: ⭐⭐ 강사양성 Day 5 모듈 cluster 후보 - Claude Code 도구 도메인 4사례
+
+본 vault YouTube 분석 누적 4사례 = 강사양성 Day 5 모듈 cluster 자산화 후보:
+
+| # | 영상 | 도구 | 본질 |
+|:-:|---|---|---|
+| 1 | Ponder (NotebookLM 후속) | Ponder | 캔버스 노드 트리 + HITL + 논문 초안 자동 |
+| 2 | 랄프모드 + 딥 인터뷰 | OhMyClaude Code 플러그인 | 무한 루프 + 모호성 100→20% 인터뷰 |
+| 3 | M5 Pro Max + OMLX | Apple MLX 로컬 LLM | 117 tok/s + 캐싱 80~90% |
+| **4** ⭐ | **Claude Code 23가지** | **Claude Code (본 vault 핵심)** | **메타프롬프팅 + 슬래시 카탈로그** |
+
+→ 4사례 cluster → uttec-vault 위치 사용자 확인 후 강사양성 Day 5 모듈 cascade 재개 trigger.
+
+### 의미 (6/3 추가)
+
+37. **도메인 권고 박제 패턴 정착 확정** (3번째 사례 = 패턴 일회성 가능성 배제, 본 vault 자산화 표준 채널 확립)
+38. **강사양성 Day 5 모듈 cluster** (Ponder + OhMyClaude + M5 OMLX + Claude Code 4사례 = 깊이 ★★★)
+
+→ [[claude-code]] § Claude Code 23가지 필수 기능 + [[강사양성_파일럿]] Day 5 cluster carry + [[유투브]] § `Claude_Code_필수지식_23가지_상세.md`.
+
+---
 
 ## 판단 로그 (2026-06-03 후속) — 위성 원격탐사 + revita LoRa fusion 노지 관리 신사업 검토 trigger ⭐⭐⭐
 

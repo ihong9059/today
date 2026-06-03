@@ -2,8 +2,57 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-03 후속 (위성 원격탐사 + revita LoRa fusion 노지 관리 신사업 검토 trigger — 결정 35 [노지 관리 신사업] + 결정 36 [도메인 권고 박제 패턴 2번째 사례 정착 검증] + revita 카드 #2026-06-03-001 발송 + aisg entity § 위성 결합 carry / 6/3 새벽 ondevice R50 + wishket catch-up + 6/2 야간 revita ingest #15 carry)
+updated: 2026-06-03 (Claude Code 23가지 필수 기능 카탈로그 박제 — 결정 37 도메인 권고 박제 패턴 3번째 사례 정착 확정 + 결정 38 강사양성 Day 5 모듈 cluster 4사례 + claude-code entity § Claude Code 23가지, 코드팩토리 영상 흡수 / 6/3 후속 위성+노지 신사업 + 6/3 새벽 ondevice R50 + wishket catch-up + 6/2 야간 revita ingest #15 carry)
 ---
+
+## [2026-06-03] domain ⭐⭐⭐ | Claude Code 23가지 필수 기능 카탈로그 박제 — 도메인 권고 박제 패턴 3번째 사례 정착 확정
+
+**사건**: 사용자 YouTube 영상 (코드팩토리 "Claude Code 필수 지식 20가지 13분 정리!") 입력 → mywiki-claude 16종 기능 카탈로그 분석 → 사용자 결단: "A 박제 진행" → [[claude-code]] entity § Claude Code 23가지 필수 기능 카탈로그 박제. **결정 29 (도메인 권고 박제 패턴) 3번째 적용 사례** (1번째 결정 30 인증 / 2번째 결정 35 노지 관리 / 3번째 본 결정 37).
+
+### 결정 29 3번째 적용 — 패턴 정착 확정
+
+| 적용 사례 | 사건 | 박제 |
+|:-:|---|---|
+| 1번째 (6/2 야간) | 배터리 인증 도메인 질의 → 결정 30 | strengths §12 인증 매니지먼트 |
+| 2번째 (6/3 후속) | 위성 원격탐사 도메인 질의 → 결정 35 | thoughts + aisg/revita entity + revita 카드 |
+| **3번째 (6/3)** | **Claude Code 23가지 필수 기능 영상 → 결정 37** | **claude-code entity § Claude Code 23가지** |
+
+→ **패턴 정착 확정** (결정 37). 본 vault 도메인 자산화 표준 채널 = 향후 도메인 질의 자동 흡수 SOP.
+
+### 박제 5단계 (mywiki 측 — 자체 vault entity 갱신)
+
+1. **신규 entity 0건**. [[claude-code]] 기존 entity § 신설 (23가지 기능 카탈로그)
+2. **신규 gotcha 0건** (지식 전달 + 메타프롬프팅 SOP)
+3. **신규 decision 2건** → [[ai-direction]] §결정 37 (도메인 권고 박제 패턴 정착 확정) + §결정 38 (강사양성 Day 5 모듈 cluster 4사례)
+4. **매칭 패턴** → claude-code entity § 본문에 통합 (별도 thought 신설 미달, entity 갱신만으로 충분)
+5. **entity 갱신** → [[claude-code]] § Claude Code 23가지 필수 기능 카탈로그 prepend (frontmatter updated, tags 9 신설, [[강사양성_파일럿]] link 추가)
+
+### 핵심 16종 기능 카탈로그
+
+| 카테고리 | 기능 수 | 대표 |
+|---|---|---|
+| 워크플로우 트리오 | 3 | 딥 리서치 / 울트라 코드 / 배치 |
+| 세션 제어 | 4 | 백그라운드 / BTW+F포크 / 리와인드 / **/copy ⭐⭐⭐** |
+| 울트라 시리즈 | 2 | 울트라 플랜 (웹) / 울트라 리뷰 ($5/회) |
+| 프롬프트 최적화 | 3 | **/goal 메타프롬프팅 ⭐⭐⭐** / 코드 리뷰 / 퍼미션스 |
+| 자산화 | 2 | 스킬 크리에이터 (Deprecated 감지) / 팀 온보딩 |
+| 편의 | 2 | 파워업 / 라디오 |
+
+### 본 vault 즉시 활용 SOP 3건 ⭐⭐⭐
+
+- **`/copy`** 반복 프롬프트 즉시 (드래그 복사 불필요)
+- **`/goal` + 메타프롬프팅** — 한림용인CC 양산 펌웨어 / 위시캣 지원서 / 영업 자료 표준화
+- **`/rewind` (summarize from/up to here)** 프롬프트 실수 복구 + 컨텍스트 압축
+
+### 강사양성 Day 5 모듈 cluster 후보 (결정 38)
+
+본 vault YouTube 분석 4사례 = Day 5 모듈 cluster 자산화 — uttec-vault 위치 사용자 확인 후 cascade 재개 trigger.
+
+### 후속 trigger (carry)
+
+- 위시캣 매칭 키워드 자동 트리거 확장 (결정 34 확장) — "Claude Code / 에이전트 코딩 / 자동화 / 메타프롬프팅"
+- 본 vault 스킬 9개 표준화 (스킬 크리에이터 활용 → Deprecated 감지)
+- uttec-vault 위치 사용자 확인 후 강사양성 Day 5 cluster cascade 재개
 
 ## [2026-06-03 후속] domain ⭐⭐⭐ | 사용자 도메인 질의 후속 박제 — 위성 원격탐사 + revita LoRa fusion 노지 관리 신사업 검토 trigger
 
