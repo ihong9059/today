@@ -2,15 +2,51 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-06-02 야간 ingest #15 + 배터리 인증 흡수 — TC-21 후속 (CONFIG 순서 정본화 SESSION_OFF only + qty=3 reg1=0x0108 실측 + TC-21 판정 누적 5회) + Tower SBC 대체 보드 조사 (ESP32-P4+C6 vs Core3506) + 배터리 인증 5 범주 매트릭스 신설 (entity-battery-cert) + 양산 RA 15 → 24 (신규 9건) + 결정 29~31 신규 (도메인 권고 박제 / 인증 5 범주 분리 / ESP32-P4 CNN 가속 신사업 carry)
-tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어, link_v2_test_tower, 회귀시험자동화, kc_cert_link_v2, kc_cert_tower, KC인증통합트랙, BLE-pairing-L2, DUT-다중-브리지-단일, IQC자동화, Flask-Web-5010, tower_DK-deprecated, 두-하향-경로-동일-규약, 펌웨어모듈-단일진실]
-links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조, 2026-05-27_revita-IQC-자동화-인프라]
+updated: 2026-06-03 (위성 원격탐사 + LoRa fusion 노지 관리 신사업 검토 trigger — Sentinel-2/3 NDVI/LST + 농림위성 2026 발사 + Google Earth Engine + revita LoRa 양산 자산 fusion = 마이크로+매크로 통합 SaaS 검토, 사용자 결단 "다음 사업분야 검토" + mywiki → revita 카드 #2026-06-03-001 발송, 결정 35~36)
+tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어, link_v2_test_tower, 회귀시험자동화, kc_cert_link_v2, kc_cert_tower, KC인증통합트랙, BLE-pairing-L2, DUT-다중-브리지-단일, IQC자동화, Flask-Web-5010, tower_DK-deprecated, 두-하향-경로-동일-규약, 펌웨어모듈-단일진실, 위성-원격탐사, 노지관리-신사업, 농림위성, 마이크로매크로-fusion]
+links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조, aisg, 영업전략, 정부R&D실증사업, 2026-05-27_revita-IQC-자동화-인프라, 2026-06-03_위성-원격탐사-노지관리-신사업]
 ---
 
 # REVITA
 
 ## 한 줄 정의
-IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**.
+IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**. **6/3 결단**: revita LoRa 양산 자산 + 위성 원격탐사 fusion → 노지 관리 신사업 검토 trigger (다음 사업분야).
+
+## 2026-06-03 — 위성 원격탐사 + LoRa fusion 노지 관리 신사업 검토 trigger ⭐⭐⭐ (사용자 결단 + mywiki → revita 카드 #2026-06-03-001 발송)
+
+사용자 (홍광선) 도메인 질의 ("인공위성 영상으로 곡물/지형 온도·작황 측정 서비스") → mywiki-claude 답변 → **사용자 결단**: "이 data를 이용하여 노지의 관리를 위한 방안을 추구하도록 알려주세요. 다음 사업분야를 검토할려고 합니다." → revita-claude 카드 발송 (broker 양방향) + 본 vault 박제.
+
+### revita 자산 + 위성 fusion 시너지 (사업 검토 대상)
+
+| revita 자산 | 위성 결합 | 노지 관리 본질 |
+|---|---|---|
+| **LoRa 센서 노드 양산** (지상 ground truth) | Sentinel-2 NDVI / Sentinel-3 LST / **농림위성 2026 발사** | **위성 매크로 + 지상 마이크로 fusion = 정밀 노지 관리** ⭐⭐ |
+| **Sub-GHz BLE-LR 통신** | Google Earth Engine 클라우드 + 지상 distribution | 농가 마지막 1km 배달 인프라 |
+| **Solar 자가발전** | 위성 매주 / 지상 매일 | 인프라 부재 노지 무인 운영 결정타 |
+| **KC 인증 통합 트랙** | 양산 단가 분석 가능 | 정부 R&D (농진청/농어촌공사) Tier 3 트랙 |
+| **rtuRemocon Modbus 제어** | 위성 → 결정 → Modbus 출력 (관수·시비·차광) | **위성 → 결정 → 노지 행동 폐회로** ⭐⭐ |
+
+### 사업 진입 시나리오 매트릭스
+
+| 진입 형태 | 적합도 | 시작 timing |
+|---|:-:|---|
+| 농진청 / 농어촌공사 정부 R&D | ⭐⭐ | 공고 발견 시 |
+| **지상 LoRa IoT + 위성 fusion SaaS** | ⭐⭐⭐ | **농림위성 2026 발사 시점** |
+| Google Earth Engine + Python SaaS | ⭐ | 즉시 (Python 양산 자산) |
+| 위시캣 위성 분석 외주 | ⭐ | 매칭 시 |
+
+### 시장 타이밍 결정타
+
+- **농림위성 (차세대중형위성 4호) 2026년 발사 예정** + revita LoRa 양산 자산 = **동시 활용 가능 시점** ⭐
+- 결정 31 (ESP32-P4 CNN 영상 추론, 6/2 야간) + 본 결정 35 = **3차원 데이터 통합** (지상 metric + 영상 + 위성)
+
+### revita 측 카드 발송 (broker 양방향)
+
+`C:\todo\revitaProject\_inbox\pending\2026-06-03-001-satellite-remote-sensing-agriculture-cross-link.md` — type: request, ack_required: true. revita-claude 다음 work-start 시 인지 → 사업 검토 사이클 진입 권고.
+
+자세히 [[ai-direction]] § 결정 35~36 + [[aisg]] § 2026-06-03 위성 결합 + [[2026-06-03_위성-원격탐사-노지관리-신사업]] (신규 thought) + [[영업전략]] § 신사업 검토 carry.
+
+---
 
 ## 2026-06-02 야간 ingest #15 + 배터리 인증 흡수 — TC-21 후속 + Tower SBC 대체 보드 조사 + 인증 매니지먼트 단계 진입 ⭐⭐⭐ (revita-claude 카드 #2026-06-02-003)
 

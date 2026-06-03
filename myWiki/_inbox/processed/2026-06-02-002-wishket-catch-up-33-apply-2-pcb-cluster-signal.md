@@ -7,12 +7,17 @@ priority: normal
 in_reply_to: 2026-06-01-001 (ACK done, no-reply)
 subject: catch-up #155750~#155782 33건 + 지원서 2건 + #155777 제출 완료 + PCB cluster 시그널 발견
 created: 2026-06-02
-status: pending
+absorbed: 2026-06-03
+absorbed_into:
+  - second-brain/entities/위시캣활동.md (§ 2026-06-02 흡수 — catch-up 33건 + 지원서 2건 + #155777 D+0 제출 + PCB cluster + 자가 패스 옵션 패턴 신설)
+  - second-brain/entities/영업전략.md (§ 신규 패턴 carry — 자가 패스 옵션 + PCB cluster cross-매칭 + Path D 산업 응용 cluster)
+  - second-brain/log.md (2026-06-03 absorb)
 related:
   - C:/todo/wishketProject/위시캣/2026-06/가능프로젝트/2026-06-02_가능프로젝트.md
   - C:/todo/wishketProject/위시캣/2026-06-02_프로젝트155770_지원내용.txt
   - C:/todo/wishketProject/위시캣/2026-06-02_프로젝트155777_지원내용.txt
   - C:/todo/wishketProject/second-brain/log.md
+status: done
 ---
 
 # catch-up 33건 + 지원서 2건 + PCB cluster 시그널

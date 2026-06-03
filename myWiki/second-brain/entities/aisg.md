@@ -2,12 +2,42 @@
 title: AISG (Antenna Interface Standards Group)
 type: entity
 created: 2026-05-07
-updated: 2026-06-02 야간 (ESP32-P4 CNN 가속 영상 추론 신사업 carry — revita ingest #15 Tower SBC 대체 보드 조사 단서 / AI + 농업 IoT 진화 옵션)
-tags: [프로토콜, 통신, 임베디드, 기지국, 안테나, OOK, RS-485, HDLC, ESP32-P4, CNN-가속, 영상-추론, 농업-IoT-신사업]
-links: [revita, 위시캣활동, skills, 양산제품, experience, 한림용인cc-고가수조, ai-fanstick, onDevice-ai]
+updated: 2026-06-03 (위성 원격탐사 + 노지 관리 신사업 carry 확장 — Sentinel-2/3 NDVI/LST + 농림위성 2026 발사 + Google Earth Engine + revita LoRa 노드 fusion = 노지 마이크로 calibration + 매크로 정찰 통합 SaaS 검토 trigger, 사용자 도메인 질의 후속 박제 + revita 카드 발송)
+tags: [프로토콜, 통신, 임베디드, 기지국, 안테나, OOK, RS-485, HDLC, ESP32-P4, CNN-가속, 영상-추론, 농업-IoT-신사업, 위성-원격탐사, NDVI, LST, 노지관리, 농림위성, Google-Earth-Engine, 정부RD]
+links: [revita, 위시캣활동, skills, 양산제품, experience, 한림용인cc-고가수조, ai-fanstick, onDevice-ai, 영업전략, 2026-06-03_위성-원격탐사-노지관리-신사업]
 ---
 
 # AISG (Antenna Interface Standards Group)
+
+## 2026-06-03 — 위성 원격탐사 + 노지 관리 신사업 carry 확장 ⭐⭐⭐ (사용자 도메인 질의 후속 박제 + revita 카드 발송)
+
+사용자 도메인 질의 ("인공위성 영상으로 곡물/지형 온도·작황 측정 서비스 있나요?") + 결단 ("이 data로 노지 관리 방안 추구, 다음 사업분야 검토") → ai-direction §결정 35 신설 + revita 카드 #2026-06-03-001 발송.
+
+### 위성 원격탐사 + revita LoRa fusion 시너지
+
+| revita 자산 | 위성 결합 | 노지 관리 본질 |
+|---|---|---|
+| LoRa 센서 노드 양산 (지상 ground truth) | Sentinel-2 NDVI / Sentinel-3 LST / 농림위성 (2026 발사) | **위성 매크로 + 지상 마이크로 fusion = 정밀 노지 관리** |
+| Sub-GHz BLE-LR 통신 | Google Earth Engine 클라우드 처리 + 지상 distribution | 농가 마지막 1km 인프라 |
+| Solar 자가발전 | 위성 매주 갱신 / 지상 매일 | 인프라 부재 노지 무인 운영 |
+| rtuRemocon Modbus 제어 | 위성 → 결정 → Modbus 출력 (관수·시비·차광) | **위성 → 결정 → 노지 행동 폐회로** ⭐ |
+
+### 사업 시나리오 (영업전략 carry — 응답율 검증 누적 전 단계)
+
+| 진입 형태 | 본 vault 적합도 |
+|---|:-:|
+| 농진청 / 농어촌공사 정부 R&D | ⭐⭐ Tier 3 정부 R&D 트랙 |
+| **지상 LoRa IoT + 위성 fusion SaaS** | ⭐⭐⭐ revita / AISG / 한림용인CC 자산 직접 매칭 ⭐ |
+| 위시캣 위성 분석 외주 | ⭐ 산발 |
+
+### 시장 타이밍 결정타
+
+- **농림위성 2026년 발사** + 본 vault revita LoRa 양산 자산 = **동시 활용 가능 시점** ⭐
+- ESP32-P4 채택 결정 시 영상 노드 (결정 31) + 위성 data fusion 통합 carrier 진화
+
+자세히 [[ai-direction]] § 결정 35 + [[2026-06-03_위성-원격탐사-노지관리-신사업]] (신규 thought) + [[영업전략]] § 신사업 검토 carry.
+
+---
 
 ## 2026-06-02 야간 — ESP32-P4 CNN 가속 영상 추론 신사업 carry ⭐⭐ (revita ingest #15-2)
 

@@ -2,8 +2,94 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-02 야간 (revita ingest #15 + 배터리 인증 흡수 — TC-21 후속 + Tower SBC 대체 보드 + KC 5 범주 분리 + 셀 모델 우선 의사결정 + ESP32-P4 CNN 가속 신사업 carry, 양산 RA 15→24, 결정 29~31, §12 인증 매니지먼트 역량 단계 진입)
+updated: 2026-06-03 후속 (위성 원격탐사 + revita LoRa fusion 노지 관리 신사업 검토 trigger — 결정 35 [노지 관리 신사업] + 결정 36 [도메인 권고 박제 패턴 2번째 사례 정착 검증] + revita 카드 #2026-06-03-001 발송 + aisg entity § 위성 결합 carry / 6/3 새벽 ondevice R50 + wishket catch-up + 6/2 야간 revita ingest #15 carry)
 ---
+
+## [2026-06-03 후속] domain ⭐⭐⭐ | 사용자 도메인 질의 후속 박제 — 위성 원격탐사 + revita LoRa fusion 노지 관리 신사업 검토 trigger
+
+**사건**: 사용자 도메인 질의 ("인공위성 영상으로 곡물/지형 온도·작황 측정 서비스 있나요?") → mywiki-claude 도메인 답변 (NDVI/LST + Sentinel/Landsat/농림위성 + Google Earth Engine + 농진청 + 상용 SaaS) → **사용자 결단**: "이 data를 이용하여 노지의 관리를 위한 방안을 추구하도록 알려주세요. 다음 사업분야를 검토할려고 합니다." → revita-claude 통보 카드 발송 + 본 vault 박제.
+
+### 결정 29 (도메인 권고 박제 패턴 정착) 2번째 적용 사례
+
+| 적용 사례 | 사건 | 박제 |
+|:-:|---|---|
+| 1번째 (6/2 야간) | 배터리 인증 도메인 질의 → 결정 30 (인증 5 범주 분리 + 셀 모델 우선) | strengths §12 인증 매니지먼트 |
+| **2번째 (6/3 후속)** | **위성 원격탐사 도메인 질의 → 결정 35 (노지 관리 신사업 검토)** | **ai-direction §결정 35~36 + thoughts/2026-06-03_위성-원격탐사-노지관리-신사업 + aisg entity + revita 카드** |
+
+→ **패턴 정착 검증 완료** (결정 36). 다음 사용자 도메인 질의 표준 채널 = ai-direction 판단 로그 + 다른 vault cross-link 카드 동시 처리.
+
+### 박제 5단계 (mywiki 측 + revita 카드 발송)
+
+1. **신규 entity 0건** (mywiki 측). 신사업 단계 진입 시 신규 entity (`노지관리`, `위성-fusion`) 결단 carry
+2. **신규 gotcha 0건** (지식 전달 + 사업 결단 trigger)
+3. **신규 decision 2건** → [[ai-direction]] §결정 35 (노지 관리 신사업 검토 trigger) + §결정 36 (도메인 권고 박제 패턴 2번째 사례 — 정착 검증)
+4. **매칭 패턴** → [[2026-06-03_위성-원격탐사-노지관리-신사업]] (신규) — 4단계 농업 IoT cluster 진화 + A+B→C 복리 인사이트 4건 + 사업 자산화 매트릭스 + 시장 타이밍 분석
+5. **entity 갱신** → [[aisg]] § 2026-06-03 위성 원격탐사 + 노지 관리 신사업 carry 확장 prepend (frontmatter updated) — ESP32-P4 carry (결정 31) + 위성 결합
+
+### 후처리 — revita 카드 발송 (broker 양방향)
+
+- `C:\todo\revitaProject\_inbox\pending\2026-06-03-001-satellite-remote-sensing-agriculture-cross-link.md` (신규) — type: request, ack_required: true
+- revita-claude 다음 work-start 시 인지 → 5단계 lifecycle 진행 또는 사업 검토 단계 진입 권고
+
+### 시장 타이밍 결정타
+
+- **농림위성 (차세대중형위성 4호) 2026년 발사 예정** + revita LoRa 양산 자산 = 동시 활용 가능 시점
+- 농진청 / 농어촌공사 정부 R&D 공고 모니터링 trigger
+- 위시캣 매칭 키워드 자동 트리거 확장 (결정 34 확장) — 위성 / NDVI / 농림위성 / 노지 관리 / Earth Engine 등
+
+## [2026-06-03] absorb ⭐⭐⭐ | ondevice-claude 카드 #2026-06-03-001 흡수 — R50 Touch MNIST 99.41% PASS + AI FanStick Path D 산업 응용 신설
+
+**카드**: `_inbox/processed/2026-06-03-001-ondevice-r50-step0-pass-99pct.md`. R48 IMU carry (MPU6050 미준비) → 사용자 신규 방향 결단으로 **R50 STM32H745I-DISCO LCD touch 손글씨 MNIST CNN inference PoC** 진입. 본 vault 첫 LCD+touch+CNN 통합 PoC. Step 0 PC sanity ✅ MNIST CNN INT8 **99.41% PASS** (LeNet-5 변형 ~105K params / INT8 ~105KB / Cortex-M7 fit). AI FanStick K-POP 외 산업 응용 첫 확장 path (Path D BOM ~$30).
+
+### 5단계 lifecycle 완료
+
+1. **신규 entity** 0건 (myWiki 측). ondevice vault 측 신규 entity 3건 (Round50 Touch MNIST / MNIST CNN INT8 carrier / Path D — STM32H745 HMI) 모두 [[onDevice-ai]] § R50 + [[ai-fanstick]] § Path D 본문에 흡수
+2. **신규 gotcha 2건** → [[gaps]] § 2026-06-03 신설 (bash backslash Windows path escape — `Cr50_proj` invisible-char dir 부산물 + PyTorch 환경 박제 — Python 3.13 sandboxed vs 3.14 Programs, `where pip` 사전 확인). cross-shell 환경 함정 인벤토리 확장
+3. **신규 decision 3건** → [[ai-direction]] § 판단 로그 (2026-06-03) 결정 32 (AI FanStick Path D 산업 응용 path 신설, K-POP 외 첫 응용 확장) / §결정 33 (임베디드 AI on-device 통합 PoC = 강사양성 사례 자산, R26/R34/R36/R50 누적) / §결정 34 (위시캣 키오스크/HMI/의료 input pad cluster 자동 매칭 SOP, R50 영업 자료 정조준)
+4. **매칭 패턴** → [[2026-06-03_R50-touch-mnist-path-D-산업응용]] (신설) — 4단계 깊이 진화 (측정→매트릭스→통합→응용) + A+B→C 복리 인사이트 3건 + cross-vault cascade 5건 (onDevice/AI FanStick/위시캣/강사양성/의료AI) + cross-shell 환경 함정 자산
+5. **발신측 entity 갱신** → [[onDevice-ai]] § R50 신설 + [[ai-fanstick]] § Path D 신설 (BOM 4-path 양산 자산 확장) + [[위시캣활동]] § 6/3 키오스크/HMI cluster 자동 매칭 SOP + [[영업전략]] § Path D cluster carry
+
+### 핵심 carry
+
+- **AI FanStick BOM 4-path 양산 자산** — A $25 (K-POP 표준) / B $31 (Premium) / B-2 $16 (저가 OEM) / **D $30 (산업 응용 NEW)** = 영업 4 channel 동시 carry
+- **5계열 AI 가속 매트릭스 본 vault 응용 진입 단계 도달** (4단계 깊이 진화 완성)
+- **위시캣 키오스크/HMI/의료 input pad cluster 자동 매칭 SOP** = 결정 34 영업 정조준
+- **임베디드 AI on-device 통합 PoC = 강사양성 사례 자산** = Day 5 모듈 R50 추가 후보 (uttec-vault 위치 사용자 확인 후 cascade 재개)
+- **cross-shell 환경 함정 인벤토리** (bash backslash + Python 환경 + ESP32 #14 family) = 견적 차별화 자산
+
+### 후속 트리거
+
+- R50 Step 1~5 carry (CMSIS-NN port → BSP touch + LCD → inference → 99_결론 + 영업 cascade) — ondevice-claude 자율
+- 의료 input pad 영업 진입 시 [[의료AI]] entity IEC 62304 인증 트랙 분리 carry
+- uttec-vault 위치 사용자 확인 후 [[강사양성_파일럿]] Day 5 R50 추가
+- ondevice 측 ACK 카드 발송 (5단계 흡수 + Path D 영업 자료 완료 통보)
+
+## [2026-06-03] absorb ⭐⭐ | wishket-claude 카드 #2026-06-02-002 흡수 — catch-up 33건 + #155777 D+0 제출 + PCB cluster 시그널 + 자가 패스 옵션 패턴 carry
+
+**카드**: `_inbox/processed/2026-06-02-002-wishket-catch-up-33-apply-2-pcb-cluster-signal.md`. 위시캣 catch-up #155750~#155782 (33건, 2일 누적) + 지원서 2건 (#155770 부분방전 IoT 1,700만/90일 + #155777 DWIN HMI 협의/30일) + 사이트 제출 1건 (#155777 D+0). 비공개 농도 36% (5/31 71% 역대 최고 → 정상 회복). `ack_required: false` (정보 박제 흡수 카드, 회신 불요).
+
+### 5단계 lifecycle 완료
+
+1. **신규 entity** 0건. wishket 측 활동 박제 (지원서 2건 + 제출 1건 + PCB cluster 발견)는 [[위시캣활동]] § 6/2 흡수 본문에 통합
+2. **신규 gotcha** 0건 (운영 함정 아님 — 비공개 농도 정상 회복은 함정 해소 신호)
+3. **신규 decision 0건** (응답율 검증 누적 단계, 결단 carry only) — 다만 [[ai-direction]] § 결정 34 (위시캣 키오스크/HMI cluster 자동 매칭, R50 cross-매칭에서 신설)와 자연 연계
+4. **매칭 패턴** 0건 단독. R50 카드 §4와 cross-매칭하여 [[2026-06-03_R50-touch-mnist-path-D-산업응용]] thought 본문에 통합 흡수
+5. **발신측 entity 갱신** → [[위시캣활동]] § 6/2 흡수 (catch-up 33건 + 지원서 2건 + #155777 제출 + PCB cluster 시그널 + 자가 패스 옵션 패턴 신설 응답율 검증 누적) + [[영업전략]] § 신규 패턴 carry (자가 패스 옵션 + PCB cluster cross-매칭 + Path D 산업 응용 cluster)
+
+### 핵심 carry (응답율 검증 누적 단계, 결단 아님)
+
+- **자가 패스 옵션 명시 패턴 신설** — 직접 양산 부재 영역에 자가 패스 옵션 동시 제공 = 클라이언트 시간 절약 + 신뢰 손상 0. 5/26 #155570 + 6/2 #155777 = 2건 누적 안정화 단계 진입. 표준 패턴 박제는 응답율 안정화 시 결단
+- **PCB cluster 발견 시 즉시 cross-매칭 진행 패턴** — 6/2 첫 관측 (#155759 부분방전 PCB / #155761 절연저항 PCB / #155770 부분방전 IoT). 6/5 [[세주에프에이]] 미팅 후 [[건물통합관제플랫폼]] 또는 공장자동화 entity 신설 결단 후보
+
+### 후속 트리거
+
+| 트리거 | mywiki 갱신 |
+|---|---|
+| #155759 마감 살아있어 즉시 지원 시 | [[위시캣활동]] PCB cluster 동시 진행 박제 |
+| #155770 사이트 제출 시 | [[위시캣활동]] 제출 누적 + 부분방전 cluster 박제 |
+| #155777 응답 도착 시 | 자가 패스 옵션 패턴 응답율 검증 carry 완성 |
+| 6/5 [[세주에프에이]] 미팅 진행 | [[위시캣활동]] 미팅 단락 + [[건물통합관제플랫폼]] 또는 신규 entity 결단 |
+| PCB cluster 수주 도달 | [[회사소개]] · Tier 분류 박제 |
 
 ## [2026-06-02 야간] absorb ⭐⭐⭐ | revita-claude 카드 #2026-06-02-003 흡수 — ingest #15 + 배터리 인증 + 인증 매니지먼트 역량 단계 진입
 

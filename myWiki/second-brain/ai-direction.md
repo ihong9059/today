@@ -2,12 +2,110 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-02 야간 (결정 29 도메인 권고 박제 패턴 정착 [ingest 외 사용자 도메인 질의 후속 박제 → log.md 별도 카테고리] / 결정 30 인증 5 범주 분리 + 셀 모델 우선 의사결정 [KC EMC/RF/배터리/충전기/UN38.3 직교 트랙, 배터리 인증 cost·duration impact 최대] / 결정 31 ESP32-P4 CNN 가속 영상 추론 신사업 carry [작물 상태/병해충 엣지 추론, LoRa 센서 노드 → 영상 노드 진화 옵션] — revita ingest #15 + 배터리 인증 흡수, 인증 매니지먼트 역량 단계 진입)
-tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측]
-links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]
+updated: 2026-06-03 후속 (결정 35 노지 관리 신사업 검토 trigger — revita LoRa 양산 자산 + 위성 NDVI/LST + 농림위성 2026 발사 + Google Earth Engine fusion = 마이크로+매크로 통합 SaaS 검토, 사용자 결단 "다음 사업분야 검토" + revita 카드 발송 / 결정 36 도메인 권고 박제 패턴 2번째 사례 — 결정 29 적용 정착 검증 [1번째 결정 30 인증, 2번째 결정 35 노지 관리] / 결정 32~34 R50 Touch MNIST 99.41% + Path D 산업 응용 + 위시캣 키오스크 cluster SOP)
+tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
+links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-03 후속) — 위성 원격탐사 + revita LoRa fusion 노지 관리 신사업 검토 trigger ⭐⭐⭐
+
+**사건**: 사용자 (홍광선) 도메인 질의 ("인공위성 영상으로 곡물/지형 온도·작황 측정 서비스 있나요?") → mywiki-claude 도메인 답변 (NDVI/LST/EVI + Sentinel/Landsat/농림위성 + Google Earth Engine + 농진청 + 상용 SaaS) → **사용자 결단**: "이 data를 이용하여 노지의 관리를 위한 방안을 추구하도록 알려주세요. 다음 사업분야를 검토할려고 합니다." → revita-claude 통보 카드 발송 + 본 vault 박제. 결정 29 (도메인 권고 박제 패턴 정착) 적용 2번째 사례 (1번째 = 6/2 야간 결정 30 인증 매니지먼트).
+
+### 결정 35: ⭐⭐⭐ 노지 관리 신사업 검토 trigger — 위성 원격탐사 + revita LoRa 노드 fusion
+
+revita LoRa 양산 자산 (지상 ground truth) + 위성 광역 NDVI/LST/SMI (Sentinel-2/3, **농림위성 2026 발사**) + ESP32-P4 CNN 엣지 추론 (결정 31 carry) = **노지 마이크로 calibration + 매크로 정찰 통합 SaaS**.
+
+> "농지 관리 = 작황·가뭄·병해충·관수·시비 전 사이클 자동화. revita 자산 + 위성 fusion = 다른 1인·중소 SI 대비 단일 chip + 지상 통신 + 클라우드 fusion 차별화."
+
+**Why**:
+- 현 revita = 지상 LoRa 텍스트/숫자 metric only (단일 deployment)
+- 결정 31 carry = 영상 노드 진화 옵션 (지상 카메라 + ESP32-P4 CNN)
+- 본 결정 35 = **광역 위성 추가 = 마이크로(지상) + 매크로(위성) 통합** = 노지 관리 = 시설농업 외 무한 시장 진입
+- 농림위성 2026 발사 + revita 양산 = **동시 활용 가능 시점** (시장 타이밍 매트릭스 호기)
+- 정부 R&D (농진청 / 농어촌공사) Tier 3 진입 + 위시캣 농업 IoT cluster 매칭 동시 활용
+
+**How to apply**:
+- [[revita]] entity § 노지 관리 신사업 carry 신설 (LoRa + 위성 fusion 자산 시너지 박제) — 본 박제 직후
+- [[aisg]] entity § 위성 결합 carry 확장 (ESP32-P4 + 위성 결합) — 본 박제 직후
+- [[영업전략]] § 신사업 검토 carry 추가 (응답율 검증 누적 전 단계)
+- [[위시캣활동]] § 매칭 키워드 자동 트리거 추가 ("위성 / NDVI / 작황 / 농진청 위성 / 농림위성 / Sentinel / Earth Engine / 노지 관리") — 결정 34 확장
+- revita-claude `_inbox/pending/2026-06-03-001-satellite-remote-sensing-agriculture-cross-link.md` 카드 발송 완료 (broker 양방향)
+- **트리거 후속**: 농진청·농어촌공사 R&D 공고 발견 / 위시캣 농업 IoT+위성 모집 / 농림위성 발사 시점 → 본격 사업 결단 trigger
+
+### 결정 36: ⭐⭐ 도메인 권고 박제 패턴 2번째 사례 — 결정 29 적용 패턴 정착 검증
+
+결정 29 (6/2 야간 박제: "도메인 권고 박제 패턴 정착 — ingest 외 사용자 도메인 질의 후속 박제")의 **2번째 적용 사례**. 1번째 = 6/2 야간 배터리 인증 (결정 30) / 2번째 = **6/3 위성 원격탐사 + 노지 관리** (결정 35).
+
+> "사용자 도메인 질의 → AI 권고 답변 → 박제 가치 평가 → vault 박제 + 다른 vault cross-link 카드 발송 패턴 정착 확인 (2번째 사례)."
+
+**Why**:
+- 1번째만 박제 시 일회성 패턴 가능성 — 2번째로 패턴 정착 검증
+- 신사업 검토 trigger (결정 35) = ingest 외 박제 가치 ★★★ 입증
+- 6/3 새벽 n8n + Telegram 봇 Q&A (지식 전달 only, vault 박제 미달) 와 분리 = **박제 가치 평가 정상 작동**
+- 패턴 정착 후 일반화: ai-direction 판단 로그가 사용자 도메인 질의 후속 박제의 표준 채널
+
+**How to apply**:
+- 다음 사용자 도메인 질의 발생 시 즉시 박제 가치 평가 → 신사업 trigger 시 ai-direction 결정 + 다른 vault cross-link 카드 동시 처리 (broker 양방향) — 본 패턴 자동 적용
+- 박제 미달 판정 (n8n Q&A 같은 지식 전달 only) 도 명시적 박제 가치 평가 1줄로 박제 패턴 보강 가치
+
+### 의미 (6/3 후속 추가)
+
+35. **노지 관리 신사업 검토 trigger** — revita LoRa + 위성 fusion = 마이크로 + 매크로 통합 SaaS, 농림위성 2026 발사 + 양산 자산 동시 활용 가능 시점, 다음 사업분야 결단
+36. **도메인 권고 박제 패턴 2번째 사례 — 패턴 정착 검증** — 결정 29 적용 표준화 확인
+
+→ thought [[2026-06-03_위성-원격탐사-노지관리-신사업]] (신규) + [[aisg]] § 위성 결합 carry + [[revita]] § 노지 관리 신사업 carry (mywiki 측) + revita 카드 발송 (broker 양방향).
+
+---
+
+## 판단 로그 (2026-06-03) — ondevice R50 Touch MNIST 99.41% PASS + AI FanStick Path D 산업 응용 신설 ⭐⭐⭐
+
+**사건**: ondevice-claude 카드 #2026-06-03-001 흡수. R48 IMU carry (MPU6050 미준비) → **R50 STM32H745I-DISCO LCD touch 손글씨 MNIST CNN inference PoC** 신규 진입. Step 0 PC sanity ✅ MNIST CNN INT8 **99.41% PASS**. AI FanStick K-POP 외 산업 응용 첫 확장 path. 결정 32~34 신규.
+
+### 결정 32: ⭐⭐⭐ AI FanStick Path D 산업 응용 신설 — R50 Touch MNIST PoC carry
+
+R50 (STM32H745I-DISCO + LCD + touch + CMSIS-NN MNIST CNN INT8) → **AI FanStick Stage 4 키오스크/HMI/의료 input pad B2B narrative 신설**.
+
+> "BOM ~$30 / Cortex-M7 + LCD + touch + AI 단일 chip = K-POP 외 첫 응용 확장. PC sanity 99.41% 박제, 보드 INT8 ≥95% Step 1~5 carry."
+
+**Why**: AI FanStick 기존 path A/B/B-2 = K-POP C2C ($16~31 BOM) + Stage 4 시나리오 D Edge AI Gateway ($150 rpi5+Hailo) + 시나리오 E LAN 산업 노드 ($150 stm32h745) 위주. 산업 input pad (키오스크/HMI/의료) 영역은 R50 등장 전까지 명시적 영업 path 부재. Cortex-M7 단일 chip + LCD + touch + AI 통합 = 다른 1인 컨설팅·중소 OEM 대비 차별화 결정타.
+
+**How to apply**:
+- [[ai-fanstick]] 신규 Path D row 추가 (BOM ~$30, 산업 응용)
+- [[onDevice-ai]] 5계열 AI 가속 매트릭스 본 vault 응용 진입 단계 도달 표기
+- 위시캣 키워드 자동 매칭 트리거 신설 (결정 34) — "키오스크 AI / HMI 손글씨 / 의료 input pad / STM32 LCD touch"
+- 의료 input pad 영역은 [[의료AI]] entity carry 후보 (인증 트랙 분리 필요, IEC 62304 등)
+
+### 결정 33: ⭐⭐ 임베디드 AI on-device 통합 PoC = 강사양성 사례 자산 — Round 26/34/36/50 누적
+
+본 vault 영업 자산 누적: R26 KWS personalization 0.37초 / R34 Hybrid SoC (KWS frontend + Personalization backend) / R36 STM32H745 CMSIS-NN CNN 17.58× / **R50 LCD+touch+CMSIS-NN MNIST CNN PoC**. 강사양성 Day 5 모듈 사례로 carry.
+
+> "임베디드 AI on-device = 측정 자산 (1~50) → 실제 통합 PoC 단계 진입. 강사양성 사례 깊이 4단계 (측정 → 매트릭스 → 통합 → 응용)."
+
+**Why**: 강사양성_파일럿 트랙 Day 5 모듈은 측정 매트릭스만으로는 학습 효과 한계. R50 같은 통합 PoC = 학생들이 "측정 → 응용" 단계 직접 확인. 본 vault 차별화 자산 (Round 1~50 누적) + 강사양성 차별화 자산 동시 진화.
+
+**How to apply**: [[강사양성_파일럿]] Day 5 모듈에 R50 추가 후보. uttec-vault Day 5 cascade 재개 시점에 본 박제 활용 (위치 확인 후 — 결정 31 carry).
+
+### 결정 34: ⭐⭐ 위시캣 키오스크/HMI/의료 input pad cluster 자동 매칭 SOP
+
+`/wishket-check` 자동 매칭 키워드 추가: **키오스크 AI / HMI 손글씨 / 의료 input pad / STM32 LCD touch / Cortex-M7 LCD / 단일 chip HMI / 산업 키오스크 AI**.
+
+> "R50 결과 = $30 BOM 통합 + 99.41% sanity = 위시캣 산업 input pad 일감 영업 자료 정조준. cluster 매칭 패턴 자동화."
+
+**Why**: 5/27 외주 필터 SOP + 5/22 4조건 곱 SOP 진화 — application class 식별 단계에서 "input pad / HMI / 키오스크 + AI" 키워드 인지 시 Path D 영업 자료 자동 매칭. wishket-claude 자동 매칭 룰 5 후보.
+
+**How to apply**: [[위시캣활동]] 매칭 키워드 자동 트리거에 신설 키워드 추가 + `feedback_ai_accel_application_class.md` 룰 5 candidate. 다음 위시캣 모집 인지 시 본 SOP 자동 발동.
+
+### 의미 (6/3 추가)
+
+32. **AI FanStick Path D 산업 응용 신설** — K-POP 외 첫 응용 확장, $30 BOM Cortex-M7 + LCD + touch + AI 단일 chip
+33. **임베디드 AI on-device 통합 PoC = 강사양성 사례 자산** — R26/R34/R36/R50 누적, 측정 → 응용 단계 진입
+34. **위시캣 키오스크/HMI/의료 input pad cluster 자동 매칭** — Path D 영업 자료 정조준 매칭 SOP
+
+→ thought [[2026-06-03_R50-touch-mnist-path-D-산업응용]] (신규) + [[ai-fanstick]] § Path D + [[onDevice-ai]] § R50 + [[위시캣활동]] § 키오스크 cluster.
+
+---
 
 ## 판단 로그 (2026-06-02 야간) — revita ingest #15 + 배터리 인증 흡수: 인증 매니지먼트 역량 단계 진입 ⭐⭐⭐
 

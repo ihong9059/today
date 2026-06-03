@@ -2,12 +2,41 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-06-01 megasession (R46-nrf1 CMSIS-NN filter_dims layout mismatch [향후 모든 CMSIS-NN port 표준 = arm_nn_vec_mat_mult_t_s8] + R45 CMSIS-DSP sub-option Kconfig 명시 + R45 dot product negative finding [fused vs separate 본질] + esp32 #17~19 carry 함정 + revita Tower 양산 RA 6 항목 + search 외부 mode turn-off 미구현 Phase 5/6 candidate)
-tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream]
-links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증]
+updated: 2026-06-03 (bash backslash Windows path escape 함정 [Cr50_proj invisible-char dir 박제] + PyTorch 환경 박제 함정 [Python 3.13 sandboxed vs 3.14 Programs 분리 — where pip 사전 확인 필수], ondevice R50 Step 0 setup 발견)
+tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인]
+links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-06-03 — bash Windows path escape + PyTorch 환경 박제 함정 (R50 Step 0 carry) ⭐
+
+ondevice-claude 카드 #2026-06-03-001 흡수. R50 Step 0 setup 단계 발견 환경 함정 2건. 본 vault Windows + Python + bash 셋업 영구 자산.
+
+### gotcha — bash backslash Windows path escape ⭐
+
+| 함정 | 회피 |
+|---|---|
+| Bash에서 `mkdir C:\r50_proj` 직접 호출 시 `\r` `\s` 등 escape 깨져 부산물 (`Cr50_proj` invisible-char dir) 생성. ls/test 안 잡혀 정리 어려움 | bash에서 Windows path 인자 시 **single quote** 또는 POSIX `/c/...` path 사용. 부산물 정리는 PowerShell `Remove-Item -LiteralPath` 사용 |
+
+→ 본 vault R50 setup, NCS 빌드, Zephyr 빌드 등 cross-shell 환경에서 빈번. **cross-shell path quoting 표준화 carry** (thought 후보).
+
+### gotcha — PyTorch 환경 박제 (Python 3.13 sandboxed vs 3.14 Programs) ⭐
+
+| 함정 | 회피 |
+|---|---|
+| Microsoft Store sandboxed Python 3.13 vs Programs 3.14 — pip install 시 어느 python에 들어가는지 확인 필수. PATH `pip` first vs `python -m pip` 다름 | `C:\Users\...\Python314\` 명시 호출 + `where pip` 사전 확인. 또는 venv 활성화 후 `python -m pip`. `where python` + `where pip` 동시 검증 |
+
+→ R50 Step 1 INT8 quantization 학습 시 다시 발현 가능성. uttec-search venv (`uv venv 우회`) memory 박제와 유사 패턴. Python 환경 다중성 함정 인벤토리 추가.
+
+### 박제 가치
+
+- 본 vault Windows + Python + bash 셋업 영구 자산 (다음 신규 보드/모델 setup 즉시 재활용)
+- ESP32 #14 family (Windows cmd `cd .` cwd reset) cross-shell 함정 누적 → **cross-shell 환경 함정 인벤토리 단일 패턴 가치** (강사양성·위시캣 견적 자산)
+
+자세히 [[2026-06-03_R50-touch-mnist-path-D-산업응용]] + [[onDevice-ai]] § R50 + [[build-gotcha-inventory]].
+
+---
 
 ## 2026-06-01 — CMSIS-NN API filter_dims layout mismatch + CMSIS-DSP sub-option 명시 + esp32 carry 3 함정 (R44/R45/R46) ⭐⭐⭐
 

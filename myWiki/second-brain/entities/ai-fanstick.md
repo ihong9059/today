@@ -2,9 +2,47 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-06-01 R44/R45/R46 흡수 (BOM 3-path 양산 자산 [A $25 / B $31 / B-2 $16] + INT8 quantization 0pp 손실 + 5중 일치 75% 무손실 + R46 CMSIS-NN full FC 3.14× = esp32s3 plain C 동급 latency + Path B-2 K-POP 저가형/OEM/매스마켓 신설)
-tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, mandate-v2.10-R38, 6mandate-모두종결, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative, Cortex-M-tier-최강, 17x-CNN-가속, SLM-적재, R37-positive-정정, asymmetric-multiprocessing, LiteRT, Jetson-Super, 영업카피-신뢰성-강화, QSPI-128MB-SFDP, SDRAM-penalty-zero, Phi-2-적재-실증, 3tier-메모리]
-links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화]
+updated: 2026-06-03 Path D 산업 응용 신설 (R50 Touch MNIST PoC carry — STM32H745 + LCD + touch + CMSIS-NN MNIST CNN INT8, BOM ~$30, K-POP 외 첫 응용 확장 = 키오스크/스마트팩토리 HMI/의료 input pad B2B narrative, PC sanity 99.41% PASS / 보드 INT8 ≥95% Step 1~5 carry)
+tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, mandate-v2.10-R38, 6mandate-모두종결, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative, Cortex-M-tier-최강, 17x-CNN-가속, SLM-적재, R37-positive-정정, asymmetric-multiprocessing, LiteRT, Jetson-Super, 영업카피-신뢰성-강화, QSPI-128MB-SFDP, SDRAM-penalty-zero, Phi-2-적재-실증, 3tier-메모리, Path-D-산업응용, LCD-touch-MNIST, 키오스크-HMI-의료inputpad]
+links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-06-03_R50-touch-mnist-path-D-산업응용]
+---
+
+## 2026-06-03 Path D 산업 응용 path 신설 (R50 Touch MNIST PoC carry) ⭐⭐⭐
+
+### R50 STM32H745 Touch MNIST 손글씨 PoC — AI FanStick K-POP 외 첫 응용 확장
+
+ondevice-claude 카드 #2026-06-03-001 흡수. R48 IMU carry (MPU6050 미준비) → 사용자 신규 방향 결단으로 **R50 STM32H745I-DISCO LCD touch 손글씨 MNIST CNN inference PoC** 진입. 본 vault 첫 LCD+touch+CNN 통합 PoC.
+
+### BOM 4-path 양산 자산 — Path D 신설
+
+| Path | 칩 구성 | BOM | 영업 포지션 | 정량 근거 |
+|:-:|---|---:|---|---|
+| A | esp32s3 단독 | ~$25 | K-POP 양산 표준 | R26 carry 75% / R44 esp32s3 build PASS |
+| B | esp32s3 + nRF52840 | ~$31 | K-POP Premium (BLE5 + AI 분리) | R44 verdict |
+| B-2 | pca10056 (nRF52840) 단독 | ~$16 | K-POP 저가형 / OEM / 매스마켓 | R46 CMSIS-NN 3.14× (esp32s3 plain C 동급 latency) |
+| **D** ⭐ NEW | **STM32H745 + LCD + touch + CMSIS-NN** | **~$30** | **산업 응용 — 키오스크 / 스마트팩토리 HMI / 의료 input pad B2B** | **R50 Step 0 PC sanity 99.41%** + R36 CNN 17.58× carry |
+
+### R50 Step 0 PC sanity ✅ MNIST CNN INT8 99.41% PASS ⭐⭐⭐
+
+- LeNet-5 변형 ~105K params / INT8 ~105KB / Cortex-M7 fit
+- `artifacts/model_fp32.pt` 학습 완료
+- 보드 INT8 ≥95% 목표 (Step 1~5 carry: R46 `calibrate_int8.py` carry → MNIST 변형 + INT8 양자화 + CMSIS-NN port → STM32 BSP touch + LCD canvas → stroke normalize + inference → 99_결론 + 영업 cascade)
+
+### Path D 영업 카피 신규 ⭐⭐⭐
+
+- ⭐⭐⭐ "**Cortex-M7 단일 chip + LCD + touch + CMSIS-NN MNIST CNN INT8 = 통합 산업 input pad** (BOM ~$30, 99.41% PC sanity / 보드 INT8 ≥95% 목표)" — Path D 결정타
+- ⭐⭐⭐ "**5계열 AI 가속 매트릭스 본 vault 응용 진입 단계 도달**" — 측정 → 매트릭스 → 통합 → 응용 4단계 깊이 진화 (R26/R34/R36/R50 누적)
+- ⭐⭐ "**키오스크 / 스마트팩토리 HMI / 의료 input pad B2B narrative** — 다른 1인 컨설팅·중소 OEM 대비 단일 chip 통합 차별화"
+- ⭐⭐ "**임베디드 AI on-device 통합 PoC = 강사양성 사례 자산**" (R26 KWS + R34 Hybrid SoC + R36 STM32H745 + R50 LCD touch 누적, Day 5 모듈 carry)
+
+### 영업 cascade 후속 (Step 5 cascade carry)
+
+- 위시캣 키오스크/HMI/의료 input pad cluster 자동 매칭 SOP 발동 (결정 34)
+- 의료 input pad 영역은 [[의료AI]] entity carry 후보 (인증 트랙 분리 필요, IEC 62304 등)
+- [[강사양성_파일럿]] Day 5 모듈에 R50 통합 PoC 추가 후보
+
+자세히 [[onDevice-ai]] § R50 + [[2026-06-03_R50-touch-mnist-path-D-산업응용]] + [[ai-direction]] § 결정 32~34 + [[위시캣활동]] § 키오스크 cluster.
+
 ---
 
 ## 2026-06-01 R44 양산 verdict + R46 CMSIS-NN 가속 + BOM 3-path 영업 자산 ⭐⭐⭐⭐⭐
