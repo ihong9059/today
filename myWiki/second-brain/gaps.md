@@ -2,12 +2,96 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-06-03 (bash backslash Windows path escape 함정 [Cr50_proj invisible-char dir 박제] + PyTorch 환경 박제 함정 [Python 3.13 sandboxed vs 3.14 Programs 분리 — where pip 사전 확인 필수], ondevice R50 Step 0 setup 발견)
-tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인]
-links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
+updated: 2026-06-04 (R50-1 ⭐⭐⭐⭐ arm_nn_vec_mat_mult_t_s8 STM32H7 비결정 saturate + STM-7 v2 PK7=LCD_DE/PD7=LCD_DISP 정정 + R50 LCD overlay carry pattern + R50 Stack overflow callback flag deferral + I2C bus 충돌 AHT21↔FT5336 + numpy flatten 순서 channel-first 필수 + WHO_AM_I 5종 분기 0x74 die 변형 + PEP 668 Debian 13 venv --system-site-packages + scp wildcard 미동작 — _inbox 6장 megasession 흡수, 9 함정 박제)
+tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인, R50-1-chip-saturate, STM-7-v2, I2C-주소충돌, flatten-순서, WHO_AM_I-분기, PEP668, scp-wildcard, 데이터사이언티스트, GEE학습]
+links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용, 2026-06-04_sensor-AI-매트릭스-단일출처-mandate]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-06-04 — _inbox 6장 megasession 9 함정 박제 (R50 Step 1~3 + sensor 라이브러리 carry) ⭐⭐⭐⭐
+
+ondevice-claude 카드 005+006+007 + revita 003+004 megasession 흡수. STM32H7 CMSIS-NN 비결정 + Zephyr LCD overlay + I2C bus 충돌 + PyTorch C 포트 + Debian 13 셋업 + 데이터 사이언티스트 자산 부족.
+
+### gotcha R50-1 ⭐⭐⭐⭐ — `arm_nn_vec_mat_mult_t_s8` STM32H7 + Zephyr 4.3.99 비결정 saturate
+
+| 함정 | 회피 |
+|---|---|
+| 같은 input/model/weight으로 빌드 간 결과 다름 (a-2 → a-3 → g-3 점진적 saturate). 100 sample 시 모든 다른 label sample pred=0 (모든 L7 logit +127 saturate). memset(scratch) + scratch 2KB→8KB 확장 모두 효과 없음 (NOT cause). R46 carry (pca10056 Cortex-M4F 정상) → STM32H7 1:1 적용 불가 | **plain C 32-line FC 우회** (M7 + L1 cache + dual-issue가 plain C도 자동 vectorize → CMSIS-NN과 동등 latency, R50 8.13ms ≈ 8.28ms 검증). CMSIS-NN port = chip × library × toolchain 매트릭스 검증 필수 (결정 43) |
+
+→ M7 chip 권장 표준 = plain C FC 우회 path. M4F (pca10040/56)는 CMSIS-NN 우선 (R18/R46 3.14× 검증).
+
+### gotcha STM-7 v2 — PK7 = LCD_DE / PD7 = LCD_DISP (R36 옛 박제 정정)
+
+| 함정 | 회피 |
+|---|---|
+| 옛 박제 "PK7 = LCD_DISP_EN" 잘못. UM2488 Table 17 ground truth: PK7 = LCD_DE / PD7 = LCD_DISP. R36 sample 동작 이유 = BSP_LCD_Init이 PD7 자동 high 설정, PK7 manual set은 우연 | UM2488 Rev 10 표준 carry (`hardware/stm32h745disco/refs/UM2488_STM32H745I-DISCO.pdf` 박제) |
+
+### gotcha R50 LCD overlay — Zephyr 4.3.99 stm32h745i_disco LCD 활성화 4 항목
+
+Zephyr 4.3.99 stock 미지원, 본 vault carry source:
+- PLL3 9.6MHz pixel clock (HSE/5×96/50)
+- 28-pin LTDC pinctrl (UM2488 Table 17 정확)
+- disp-on PD7 + bl-ctrl PK0
+- `ext-sdram = &sdram2` 또는 `CONFIG_STM32_LTDC_FB_NUM=1`
+
+### gotcha R50 Stack overflow — touch callback에서 inference 직접 호출
+
+| 함정 | 회피 |
+|---|---|
+| Touch input callback의 작은 stack에서 `mnist_cnn_forward` 직접 호출 시 MPU FAULT | **flag deferral pattern** (callback에서 flag set만, main thread polling 실행) + `CONFIG_MAIN_STACK_SIZE=16384` 추가 보호 |
+
+### gotcha sensor I2C bus 충돌 — AHT21 (0x38) ↔ FT5336 (0x38) onboard touch
+
+| 함정 | 회피 |
+|---|---|
+| AHT21 (0x38) = FT5336 (0x38) onboard touch와 동일 주소 → 동시 사용 시 충돌. ENS160-AHT21 module R50 동시 사용 시 별도 I2C bus 필수 | `_STM32H745_EXPANSION/README.md` § 1.3 박제 (I2C bus 공유 함정) |
+
+### gotcha numpy flatten 순서 — PyTorch channel-first 필수 ⭐⭐⭐
+
+| 함정 | 회피 |
+|---|---|
+| PyTorch `x.flatten(1)`은 (B, C, T) → (B, C × T) 순서 (channel-major). numpy time-first reshape하면 fc1.weight (16, 112)와 input order mismatch → **accuracy 25% random** (random baseline) | C/embedded port에서도 동일 patten carry 필수 (Conv output buffer를 channel-major 순서로 flatten). R48 Path C Phase 5 진입 시 carry. 일반화: **모든 PyTorch → numpy / C 포트에서 flatten 순서 검증 필수** |
+
+### gotcha WHO_AM_I 5종 분기 — MPU-9265 0x74 die 변형 신규
+
+| 코드 | 모듈 | 비고 |
+|---|---|---|
+| 0x71 | MPU-9250 정품 (9축) | — |
+| 0x73 | MPU-9255 (9축 변형) | — |
+| **0x74** | **MPU-9265 die 변형 (6축, 자력계 없는 SKU)** ⭐ | 6/3 사용자 모듈 박제 |
+| 0x70 | MPU-6500 only re-mark | 6축 fake |
+| 0xEA | ICM-20948 (9축, 다른 register map) | — |
+
+→ 양산 입고 QC 시 WHO_AM_I 분기 표 확장 필수. sensor 검증 표준 patten.
+
+### gotcha PEP 668 Debian 13 — venv `--system-site-packages` 표준
+
+| 함정 | 회피 |
+|---|---|
+| `pip3 install torch` 직접 실행 시 PEP 668 `externally-managed-environment` 에러 (Debian 13 기본) | `python3 -m venv --system-site-packages` 패턴 carry (system numpy/smbus2 재사용 + PyTorch만 venv 격리 = 150MB) |
+
+→ factory-rpi4 셋업 표준. uttec-search venv (`uv venv 우회`) memory 박제와 유사 패턴.
+
+### gotcha scp wildcard — `{a,b}` 미동작 (`*` 사용)
+
+| 함정 | 회피 |
+|---|---|
+| Windows ssh client에서 brace expansion `{a,b,c}` 미동작 (remote shell 미적용) | `scp 'uttec@host:/path/*.npz' local/` 또는 individual scp 사용 |
+
+### gap — 데이터 사이언티스트 + GEE 학습 + 현장 PoC (노지관리 신사업 진입 자산 부족 3건)
+
+revita-claude 카드 003 §4.5 carry. 본 사업 진입 시 자산 부족 영역:
+
+| 부족 | 해소 trigger |
+|---|---|
+| 데이터 사이언티스트 협력 (NDVI 처방 모델) | 협력 발견 시 즉시 PoC 진입 |
+| Google Earth Engine 학습 (4~8주) | Python 양산 자산 단축 (uttec-search 측 GEE 통합 candidate) |
+| 현장 PoC (실제 농가 1개 사이트) | 농진청 시범사업 트리거 시 즉시 진입 |
+
+자세히 [[onDevice-ai]] § R50 Step 1~3 + [[ai-direction]] § 결정 41~43 + [[revita]] § 노지관리 신사업 + [[2026-06-04_sensor-AI-매트릭스-단일출처-mandate]] (신규 thought).
+
+---
 
 ## 2026-06-03 — bash Windows path escape + PyTorch 환경 박제 함정 (R50 Step 0 carry) ⭐
 

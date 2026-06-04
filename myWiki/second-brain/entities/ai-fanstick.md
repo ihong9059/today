@@ -2,9 +2,49 @@
 title: AI FanStick (응원봉)
 type: entity
 created: 2026-04-19
-updated: 2026-06-03 Path D 산업 응용 신설 (R50 Touch MNIST PoC carry — STM32H745 + LCD + touch + CMSIS-NN MNIST CNN INT8, BOM ~$30, K-POP 외 첫 응용 확장 = 키오스크/스마트팩토리 HMI/의료 input pad B2B narrative, PC sanity 99.41% PASS / 보드 INT8 ≥95% Step 1~5 carry)
+updated: 2026-06-04 Path D 정량 완성 + Path B-4 narrative 확정 + sensor cluster $50 통합 (R50 Step 1~3 완성 8.13ms 100% PASS, sensor 11→12 모듈 9개 pca10056 이내 양산 가능, AI 매트릭스 단일 출처 mandate carry, ondevice 005+006+007 흡수)
 tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트, onDevice-검증완료, 차세대-S3-DSP, 양산방향-재전환, 3계열매트릭스완성, 5계열매트릭스완성, Premium-Plus-4tier, 즉시학습-carrier, Hybrid-SoC, selective-personalization, mandate-v2.7-종결, mandate-v2.8-종결, mandate-v2.9-종결, mandate-v2.10-R38, 6mandate-모두종결, Edge-AI-Gateway, 산업노드, B2B, LAN-path, mobile-NEON-negative, Cortex-M-tier-최강, 17x-CNN-가속, SLM-적재, R37-positive-정정, asymmetric-multiprocessing, LiteRT, Jetson-Super, 영업카피-신뢰성-강화, QSPI-128MB-SFDP, SDRAM-penalty-zero, Phi-2-적재-실증, 3tier-메모리, Path-D-산업응용, LCD-touch-MNIST, 키오스크-HMI-의료inputpad]
 links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-06-03_R50-touch-mnist-path-D-산업응용]
+---
+
+## 2026-06-04 Path D 정량 완성 + Path B-4 narrative + sensor cluster $50 통합 (ondevice 005+006+007 megasession 흡수) ⭐⭐⭐⭐
+
+### R50 Step 1~3 본질 완성 — Path D 정량 박제
+
+- BOM $30 (R50 base) + sensor cluster $20 = **$50 통합 input pad** ($15 추가 BOM, 5 sensor)
+- 6~7ms inference (R50 plain C 8.13ms ≈ CMSIS-NN 8.28ms, M7 dual-issue + L1 cache 자동 vectorize)
+- INT8 99.37% (FP32 99.41% → INT8 -0.04pp 손실, per-tensor symmetric + p99 strategy)
+- LCD + touch (FT5336 onboard 5-point capacitive, R50 Step 3-B 검증) + CNN inference 통합
+
+### Path B-4 narrative 확정 (R48 Path C carry)
+
+- **pca10040 + MPU (6축) + battery = $8 BOM entry-level 응원봉**
+- HYBE / SM / YG K-POP 라이센스 영업 시 narrative — "**$30 (메인) vs $8 (entry) 라인 동시 출시**"
+- R48 Path C (합성 dataset) Phase 1~4 100% + delta 0pp + 3.17KB INT8 검증
+
+### BOM 5-path 양산 자산 (Path B-4 신설)
+
+| Path | 칩 구성 | BOM | 영업 포지션 |
+|:-:|---|---:|---|
+| A | esp32s3 단독 | ~$25 | K-POP 양산 표준 |
+| B | esp32s3 + nRF52840 | ~$31 | K-POP Premium |
+| B-2 | pca10056 단독 | ~$16 | K-POP 저가형/OEM |
+| **B-4** ⭐ NEW | **pca10040 + MPU(6축) + battery** | **~$8** | **K-POP entry-level (R48 Path C carry)** |
+| D | STM32H745 + LCD + touch + CMSIS-NN | ~$30 | 산업 HMI B2B (Path D Step 1~3 완성) |
+| D+ | Path D + sensor cluster (5 sensor) | ~$50 | 산업 multi-modal input pad |
+
+### sensor cluster 9개 pca10056 이내 양산 가능 (영업 결정타) ⭐⭐⭐
+
+본 vault 11 sensor 중 **9개는 pca10056 (Cortex-M4F 256KB) 이내 양산 가능** → AI FanStick 차세대 BOM에 거의 모든 sensor 추가 가능. 응원봉 sensor cluster 예시:
+
+- INMP441 KWS ($2) + MPU-9265 gesture ($3) + BH1750 자동 LED ($1) + MAX30102 흥분도 ($2) + BME680 환경 ($4) = $12 추가 → **$27 차세대 BOM**
+
+### sensor AI 매트릭스 단일 출처 mandate carry
+
+향후 project 진입 시 `onDevice_AI/sensor/AI_매트릭스.md` 우선 참조 (결정 41). 외부 module 7 카테고리 카탈로그 ($100~150 핵심 6 발주 가이드) 활용.
+
+자세히 [[onDevice-ai]] § R50 Step 1~3 + sensor 12 + AI 매트릭스 + factory-rpi4 + R48 Path C + [[ai-direction]] § 결정 41~43.
+
 ---
 
 ## 2026-06-03 Path D 산업 응용 path 신설 (R50 Touch MNIST PoC carry) ⭐⭐⭐

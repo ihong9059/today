@@ -2,14 +2,81 @@
 title: 강점 분석
 type: identity
 created: 2026-04-19
-updated: 2026-06-02 야간 (§12 인증 매니지먼트 역량 신설 — KC 5 범주 분리 + 배터리 직교 트랙 박제 + 셀 모델 양산 BOM 의사결정 우선순위, revita ingest #15 + 배터리 인증 흡수, 양산 RA 15→24)
-tags: [강점, 분석]
-links: [me, skills, ai-direction, gaps]
+updated: 2026-06-04 (§13 신사업 결합 carrier 역량 신설 — vault 분리 패턴 자체 = carrier 역량 박제, application/ 사업 응용 분류 + cross-vault 참조 규약 + 다중 vault 운영 표준 / §14 sensor 라이브러리 12 모듈 + AI 매트릭스 단일 출처 mandate — onDevice_AI 향후 project 결단 자산화)
+tags: [강점, 분석, carrier역량, vault분리, 다중vault, sensor라이브러리, AI매트릭스]
+links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick]
 ---
 
 # 강점 분석
 
 ## 핵심 강점
+
+### 14. sensor 라이브러리 12 모듈 + AI 매트릭스 단일 출처 mandate (2026-06-04) ⭐⭐⭐ NEW
+
+`C:\todo\onDevice_AI\sensor\` 카탈로그 = **본 vault project 결단 자산화 단일 출처**. ondevice-claude 카드 005+006+007 megasession 흡수 후 박제.
+
+**자산화 구성**:
+
+| 자산 | 위치 | 규모 |
+|---|---|---|
+| sensor 12 모듈 README | `sensor/{MODULE}/` | 9 모듈 (6/3 carry) + FT5336/INMP441 (R50, 6/3) + INA219 (R48 Path C, 6/3) |
+| AI 매트릭스 단일 출처 | `sensor/AI_매트릭스.md` | 491 lines, 11 sensor × 2~3 AI model × 14 보드 최저선 매핑 |
+| 외부 module 7 카테고리 카탈로그 | `sensor/_추가_module_후보/` | 8 파일 1,466 lines, 40+ module |
+
+**검증 carry 박제값 (절대 신뢰값, 6 instance)**:
+- R18 (5/22) MLP 3.23× CMSIS-NN
+- R44 (6/1) KWS 9.91ms 75%
+- R46 (6/1) FC 9.26ms 3.14×
+- R47 (6/1) esp-nn 1.06×
+- R50 (6/3) MNIST 8.13ms 100%
+- R48 Path C (6/3) Phase 1~4 100% delta 0pp
+
+**영업 narrative 결정타** ⭐⭐⭐:
+- **본 vault 11 sensor 중 9개는 pca10056 (Cortex-M4F 256KB) 이내 양산 가능** = AI FanStick 차세대 BOM에 거의 모든 sensor 추가 가능
+- Stage 4 산업 응용 sensor cluster $50 통합 ([[ai-fanstick]] § Path D+)
+- 한림용인CC 양산 노드 sensor 4종 통합 $39 + $26 = $65 단일 노드 carry
+- 위시캣 매칭 SOP 룰 5 확장 = sensor + AI model + 최저선 보드 + 외부 module 발주 즉시 응답 (cluster 8 신규)
+
+**5채널 영업 carry**:
+- ⭐⭐⭐ **본 vault 자산화 단일 출처 박제** — 결정 41 (sensor AI 매트릭스 단일 출처 mandate, ai-direction)
+- ⭐⭐⭐ **결정 42 워크플로우 §0.4 표준** — 원격 학습 + 최저선 deploy 2단계 6 step, 위시캣 영업 자산 (의뢰사 신뢰도 ↑)
+- ⭐⭐ **factory-rpi4 6번째 ssh 머신** = production QC + 데이터 수집 + 학습 통합 머신 narrative
+- ⭐⭐ **강사양성 Day 5 cluster** — R26 KWS + R34 Hybrid + R36 STM32H745 + R50 LCD touch + R48 Path C IMU (5단계)
+
+→ 자세히 [[onDevice-ai]] § R50 Step 1~3 + sensor 12 + AI 매트릭스 + [[ai-direction]] § 결정 41~43 + [[ai-fanstick]] § Path D 정량.
+
+---
+
+### 13. 신사업 결합 carrier 역량 — vault 분리 패턴 자체가 carrier 역량 박제 (2026-06-04) ⭐⭐⭐ NEW
+
+revita-claude 카드 003+004 흡수 후 박제. **사업 단위 = vault 단위** 정책 정착. revita LoRa 양산 자산 + 위성 원격탐사 + ESP32-P4 CNN = 노지관리 신사업 본격 진입 결단 → `application/노지관리Wiki/` 신규 vault 분리.
+
+**carrier 역량의 실제 박제 = vault 분리 패턴 자체**:
+
+| 요소 | 본질 |
+|---|---|
+| **application/ 산하 사업별 vault 평행 구조** | revitaWiki / 노지관리Wiki / 향후 AISG·한림용인CC·lemonLabs 사업 vault 평행 |
+| **cross-vault 참조 규약** | `[[revita:]]` `[[mywiki:]]` `[[노지관리:]]` `[[entity-X]]` 다중 vault 운영 표준 |
+| **사업 단위 박제 일관성** | 사업 단위 vault 신설 시 entities/ direction/ progress/ research/ poc/ business/ improvement/ 사전 정착 |
+| **본업 분리 명확화** | 기술 자산 vault (revita) ↔ 사업 carrier vault (노지관리) 분리 |
+
+**차별화 5 (CropX/Climate FieldView 대비)** — 본 carrier 역량 실증 사례:
+
+1. 지상 IoT 양산 자산 (revita LoRa 7,200대/월)
+2. Solar 자가발전 무인 운영 (인프라 부재 노지)
+3. Modbus 자동 처방 폐회로 (권고 SaaS → 자동화 SaaS)
+4. KC 인증 + 정부 R&D 자격 (strengths §12 인증 매니지먼트)
+5. 농림위성 (2026 발사) timing
+
+**5채널 영업 carry**:
+- ⭐⭐⭐ **uttechome / 위시캣 사례연구**: 다중 vault 운영 표준 = 다른 1인 컨설팅 대비 결정타
+- ⭐⭐⭐ **농진청 / 농어촌공사 정부 R&D**: §12 인증 + §13 carrier + sensor 매트릭스 + revita 양산 = 4 자산 통합 입찰 자격
+- ⭐⭐ **다른 신사업 trigger 확장 가능** — AISG / 한림용인CC / lemonLabs / AI FanStick 동일 패턴 적용 (templates)
+- ⭐⭐ **위시캣 농업 IoT+위성 fusion 모집 active 모니터링** (결정 34 cross-매칭 확장)
+
+→ 자세히 [[revita]] § 노지관리 신사업 + [[ai-direction]] § 결정 40 + [[aisg]] § 위성 fusion 결합 carry + [[2026-06-04_노지관리-신사업-본격진입]] (신규 thought).
+
+---
 
 ### 12. 인증 매니지먼트 역량 — KC 5 범주 분리 + 셀 모델 우선 의사결정 (2026-06-02 야간) ⭐⭐⭐ NEW
 

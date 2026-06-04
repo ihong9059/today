@@ -2,15 +2,80 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-06-03 (위성 원격탐사 + LoRa fusion 노지 관리 신사업 검토 trigger — Sentinel-2/3 NDVI/LST + 농림위성 2026 발사 + Google Earth Engine + revita LoRa 양산 자산 fusion = 마이크로+매크로 통합 SaaS 검토, 사용자 결단 "다음 사업분야 검토" + mywiki → revita 카드 #2026-06-03-001 발송, 결정 35~36)
-tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어, link_v2_test_tower, 회귀시험자동화, kc_cert_link_v2, kc_cert_tower, KC인증통합트랙, BLE-pairing-L2, DUT-다중-브리지-단일, IQC자동화, Flask-Web-5010, tower_DK-deprecated, 두-하향-경로-동일-규약, 펌웨어모듈-단일진실, 위성-원격탐사, 노지관리-신사업, 농림위성, 마이크로매크로-fusion]
-links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조, aisg, 영업전략, 정부R&D실증사업, 2026-05-27_revita-IQC-자동화-인프라, 2026-06-03_위성-원격탐사-노지관리-신사업]
+updated: 2026-06-04 (노지관리 신사업 본격 진입 결단 + `노지관리Wiki/` vault 분리 — revita-claude 카드 003+004 흡수 / 박제 위치 `노지관리Wiki/entities/entity-satellite-fusion` 참조 / cross-vault 참조 규약 `[[revita:]]` `[[mywiki:]]` `[[노지관리:]]` 정착 / 결정 40)
+tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어, link_v2_test_tower, 회귀시험자동화, kc_cert_link_v2, kc_cert_tower, KC인증통합트랙, BLE-pairing-L2, DUT-다중-브리지-단일, IQC자동화, Flask-Web-5010, tower_DK-deprecated, 두-하향-경로-동일-규약, 펌웨어모듈-단일진실, 위성-원격탐사, 노지관리-신사업, 농림위성, 마이크로매크로-fusion, vault분리, 사업단위vault, carrier역량]
+links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조, aisg, 영업전략, 정부R&D실증사업, 2026-05-27_revita-IQC-자동화-인프라, 2026-06-03_위성-원격탐사-노지관리-신사업, 2026-06-04_노지관리-신사업-본격진입]
 ---
 
 # REVITA
 
 ## 한 줄 정의
-IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**. **6/3 결단**: revita LoRa 양산 자산 + 위성 원격탐사 fusion → 노지 관리 신사업 검토 trigger (다음 사업분야).
+IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**. **6/3 결단**: revita LoRa 양산 자산 + 위성 원격탐사 fusion → 노지 관리 신사업 검토 trigger. **6/4 결단**: 노지관리 신사업 본격 진입 + `application/노지관리Wiki/` vault 분리 (사업 단위 = vault 단위).
+
+## 2026-06-04 — 노지관리 신사업 본격 진입 + `노지관리Wiki/` vault 분리 ⭐⭐⭐ (revita-claude 카드 003 + 004 megasession 흡수)
+
+사용자 명시 결단 (2026-06-03) "다음 사업분야 검토" → revita 측 사업 자산화 박제 완료 통보 (카드 003) + 노지관리 신사업 자산을 신규 vault `application/노지관리Wiki/` 분리 통보 (카드 004). myWiki 측 박제 위치 = **`노지관리Wiki/` 참조** (revitaWiki 아님).
+
+### `application/노지관리Wiki/` 신규 vault 분리
+
+```
+application/노지관리Wiki/
+├── SCHEMA.md              (cross-vault 참조 규약 + 사업 자산화 분리 정책)
+├── overview.md            (3단 결합 carrier + 차별화 5 + Phase 0~3)
+├── entities/entity-satellite-fusion.md          ← revitaWiki에서 이전
+├── direction/eval-노지관리-신사업.md             ← revitaWiki에서 이전
+├── progress/  carriers/  research/  poc/  business/  improvement/  작업보고서/
+```
+
+**분리 사유**: ① `application/` 사업 응용 분류 정책 (5/12 박제) ② 사업 단위 박제 일관성 (revitaWiki = H/W 기술 / 노지관리Wiki = 위성 노지 사업) ③ Phase 1~3 자료 누적 위치 사전 정착 ④ 본업 명확화.
+
+### cross-vault 참조 규약 신설 (다중 vault 운영 표준)
+
+| 형식 | 의미 |
+|---|---|
+| `[[revita:entity-link]]` | revitaWiki entity 인용 |
+| `[[mywiki:revita#노지-관리-신사업]]` | myWiki 사업 자산 인용 |
+| `[[노지관리:entity-satellite-fusion]]` | 노지관리Wiki entity 인용 (신규) |
+| `[[entity-satellite-fusion]]` | 동일 vault 내 (prefix 생략) |
+
+본문 wikilink: prefix 생략 자유. frontmatter `links:`: prefix 명시 (정본).
+
+### 사업 가설 (한 줄)
+
+> "위성 광역 영상 (Sentinel-2/3, 농림위성 2026 발사) + 지상 LoRa 노드 (revita 양산 자산) + ESP32-P4 CNN 엣지 추론 (ai-direction §결정 31) = **농지 마이크로 calibration + 매크로 정찰 통합 SaaS**"
+
+### 차별화 5 (CropX/Climate FieldView 대비)
+
+1. **지상 IoT 양산 자산** — 경쟁 SaaS 부재 영역
+2. **Solar 자가발전 무인 운영** — 인프라 부재 노지 진입 결정타 (한국 농업 환경 우위)
+3. **Modbus 자동 처방 폐회로** — 권고 SaaS → 자동화 SaaS 진화
+4. **KC 인증 + 정부 R&D 자격** — 국내 시장 진입 자격 ([[strengths]] §12 인증 매니지먼트)
+5. **농림위성 발사 timing** — 한국 사업자 호기 (2026 발사 예정)
+
+### revita 자산 결합 carrier (vault 분리 후 stub 참조)
+
+| revita entity | 결합 가치 | 노지관리Wiki 본본 |
+|---|---|---|
+| `entity-link` | 지상 ground truth 양산 자산 (7,200대/월) | ⭐⭐⭐ 본 사업 핵심 자산 |
+| `entity-solar-monitoring` | 무인 노지 운영 결정타 (인프라 부재) | ⭐⭐⭐ 경쟁 SaaS 미진입 영역 |
+| `entity-rtu-remocon` | Modbus 자동 처방 폐회로 | ⭐⭐ 차별화 핵심 |
+| `entity-tower-sbc` | ESP32-P4 영상 노드 진화 trigger | ⭐⭐ ai-direction §결정 31 진입점 |
+
+### trigger 후보 (active 모니터링 — 양 vault 동시)
+
+| trigger | action |
+|---|---|
+| 농진청/농어촌공사 R&D 공고 발견 | 노지관리Wiki business/ 입찰 자료 준비 + strengths §12 활용 |
+| 위시캣 농업 IoT+위성 fusion 모집 | wishket-claude cross-매칭 + 결정 34 확장 |
+| 농림위성 (2026) 발사·공개 시점 | revita LoRa 양산 자산 연계 PoC 결단 |
+| ESP32-P4 채택 결정 (Core3506 대체) | 영상 노드 진화 trigger (entity-satellite-fusion §시너지 매트릭스 활성화) |
+| 데이터 사이언티스트 협력 발견 | NDVI 처방 모델 검증 진입 |
+
+자세히 [[ai-direction]] § 결정 40 + [[aisg]] § 위성 fusion 결합 carry 확장 + [[strengths]] § 13 신사업 결합 carrier 역량 + [[영업전략]] § 노지 진입 carry + [[2026-06-04_노지관리-신사업-본격진입]] (신규 thought).
+
+---
+
+## 2026-06-03 — 위성 원격탐사 + LoRa fusion 노지 관리 신사업 검토 trigger ⭐⭐⭐ (사용자 결단 + mywiki → revita 카드 #2026-06-03-001 발송)
 
 ## 2026-06-03 — 위성 원격탐사 + LoRa fusion 노지 관리 신사업 검토 trigger ⭐⭐⭐ (사용자 결단 + mywiki → revita 카드 #2026-06-03-001 발송)
 

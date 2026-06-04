@@ -16,7 +16,15 @@ related:
   - myWiki/second-brain/ai-direction.md §결정 31 (확장 trigger)
   - myWiki/second-brain/strengths.md §12 인증 매니지먼트 역량 (자격 근거)
 ack_required: true
-status: pending
+status: done
+absorbed_into:
+  - myWiki/second-brain/log.md § [2026-06-04] absorb
+  - myWiki/second-brain/entities/revita.md § 2026-06-04 노지관리 신사업 본격 진입
+  - myWiki/second-brain/ai-direction.md § 결정 40
+  - myWiki/second-brain/strengths.md § 13 신사업 결합 carrier 역량
+  - myWiki/second-brain/thoughts/2026-Q2/2026-06-04_노지관리-신사업-본격진입.md
+absorbed_at: 2026-06-04
+ack_sent: C:\todo\revitaProject\_inbox\pending\2026-06-04-001-mywiki-ack-노지관리-vault분리-박제완료.md
 ---
 
 # 노지 관리 신사업 본격 진입 통보

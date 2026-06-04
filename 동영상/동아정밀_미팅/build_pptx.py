@@ -95,7 +95,7 @@ def add_page_footer(slide):
     add_rect(slide, Inches(0), Inches(7.35), prs.slide_width, Inches(0.15),
              fill=NAVY)
     add_text(slide, Inches(0.4), Inches(7.37), Inches(8), Inches(0.13),
-             "UTTEC · 홍광선  ihong9059@gmail.com · 010-7186-2452 · 경기 용인시 기흥구 흥덕유타워",
+             "UTTEC · 홍광선  ihong9059@gmail.com · 010-2401-9059 · 경기 용인시 기흥구 흥덕유타워",
              size=8, color=WHITE)
     add_text(slide, Inches(11.5), Inches(7.37), Inches(1.6), Inches(0.13),
              "2026-06-03",

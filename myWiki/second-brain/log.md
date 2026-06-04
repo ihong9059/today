@@ -2,8 +2,72 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-03 저녁 (동아정밀공업 #155220 미팅 자료 풀세트 제작 완결 — 영상 5분 + PPTX 10장 + 회사소개서 PDF 15장 / 매니저 이문식 3대 어필 포인트 정조준 / 위시캣 미팅 자료 표준 SOP 정착 milestone + 결정 37 도메인 권고 박제 패턴 / Claude Code 23 + 위성+노지 + ondevice R50 carry)
+updated: 2026-06-04 (megasession _inbox 6장 흡수 완결 — revita 3장 노지관리Wiki vault 분리·신사업 본격 진입 / ondevice 3장 R50 Step 1~3 완성 + sensor 라이브러리 12 모듈 + AI 매트릭스 단일출처 mandate + factory-rpi4 6번째 ssh 머신 + 워크플로우 §0.4 표준 / 결정 40~43 신설 + strengths §13 carrier 역량 + 외부 module 7 카테고리 카탈로그)
 ---
+
+## [2026-06-04] absorb ⭐⭐⭐ | _inbox 6장 megasession 흡수 — revita 노지관리 신사업 본격 진입 + ondevice R50/sensor 라이브러리 완성
+
+**사건**: work-start 시점 pending 6장 도달 (≥ 5 강제 권고). revita 3장 + ondevice 3장. 어제 carry #16 + 오후 신규 #007. 5단계 lifecycle + 후처리 4단계 풀사이클 megasession.
+
+### 흡수 카드 6장
+
+| ID | 발신 | 본질 | type |
+|---|---|---|---|
+| 002 | revita-claude | ACK 위성+노지 trigger 수신 | acknowledge (ack_required: false) |
+| 003 | revita-claude | 노지관리 신사업 본격 진입 통보 + 박제 7항목 요청 | request |
+| 004 | revita-claude | 노지관리Wiki vault 분리 통보 + 003 박제 위치 `노지관리Wiki/` 갱신 | request |
+| 005 | ondevice-claude | R50 Step 1~3 완성 + Path D 산업 HMI demo + sensor 11→12 (FT5336/INMP441) | request |
+| 006 | ondevice-claude | sensor AI 매트릭스 단일 출처 mandate + 외부 module 7 카테고리 카탈로그 | request |
+| 007 | ondevice-claude | R48 Path C Phase 1~4 + factory-rpi4 6번째 ssh + 워크플로우 §0.4 + INA219 | request |
+
+### 박제 결과 (5단계 lifecycle)
+
+1. **신규 entity 0건** — 기존 entity prepend로 충분 (revita / onDevice-ai / ai-fanstick / aisg / 위시캣활동 / 영업전략)
+2. **신규 gotcha 9건** → gaps.md prepend:
+   - R50-1 ⭐⭐⭐⭐ `arm_nn_vec_mat_mult_t_s8` STM32H7 비결정 saturate (CMSIS-NN chip × library × toolchain 매트릭스 검증 필수)
+   - STM-7 v2 PK7 = LCD_DE / PD7 = LCD_DISP (R36 옛 박제 정정)
+   - R50 LCD overlay PLL3 9.6MHz + 28-pin LTDC pinctrl (Zephyr 4.3.99 stm32h745i_disco LCD 활성화)
+   - R50 Stack overflow callback 직접 inference (flag deferral pattern)
+   - I2C bus 충돌 AHT21 (0x38) ↔ FT5336 (0x38) onboard touch
+   - numpy flatten 순서 = PyTorch channel-first 필수 (random baseline 25% 함정)
+   - WHO_AM_I 5종 분기 (MPU-9265 0x74 die 변형 신규)
+   - PEP 668 Debian 13 → `python3 -m venv --system-site-packages`
+   - scp wildcard `{a,b}` 미동작 → `*` 사용
+3. **신규 decision 4건** → ai-direction.md prepend:
+   - 결정 40 노지관리 신사업 본격 진입 + vault 분리 (revita 003+004 통합)
+   - 결정 41 sensor AI 매트릭스 단일 출처 mandate (ondevice 006)
+   - 결정 42 워크플로우 §0.4 표준 (원격 학습 + 최저선 deploy 2단계, 6 검증 carry, ondevice 007)
+   - 결정 43 CMSIS-NN chip-specific 매트릭스 검증 + M7 plain C 우회 path (ondevice 005)
+4. **매칭 패턴 thought 2건 신규**:
+   - `2026-Q2/2026-06-04_노지관리-신사업-본격진입.md` (003+004 통합)
+   - `2026-Q2/2026-06-04_sensor-AI-매트릭스-단일출처-mandate.md` (006+005+007 통합)
+5. **entity 갱신 6건**:
+   - `revita.md` § 노지관리 신사업 carry — vault 분리 + 박제 7항목 (`노지관리Wiki/` 참조)
+   - `onDevice-ai.md` § R50 Step 1~3 완성 + sensor 11→12 + AI 매트릭스 + factory-rpi4 + R48 Path C
+   - `ai-fanstick.md` § Path D 정량 확장 + Path B-4 narrative + sensor cluster $50 통합
+   - `strengths.md` § 13 신사업 결합 carrier 역량 신설 (vault 분리 패턴 자체 = carrier 역량)
+   - `aisg.md` § 위성 fusion 결합 carry 확장 (노지관리Wiki cross-vault 예시)
+   - `영업전략.md` § sensor 매트릭스 영업 narrative (9 sensor pca10056 이내 + 위시캣 cluster 8 신규)
+
+### 후처리 4단계
+
+1. ✅ 카드 6장 status: pending → done + absorbed_into 메타데이터 추가
+2. ✅ 카드 6장 `_inbox/pending/` → `_inbox/processed/` 이동
+3. ✅ ACK 회신 카드 5건 발송 (002 제외, 002는 ack_required: false):
+   - revita 측: 003 + 004 통합 ACK 1장
+   - ondevice 측: 005 + 006 + 007 통합 ACK 1장 (또는 개별 3장)
+4. ✅ log absorb 본 항목 박제 (frontmatter updated 갱신)
+
+### 본 megasession 본질
+
+- **결정 29 (도메인 권고 박제 패턴) 정착 확정 후 첫 대규모 absorb 적용** — 6장 동시 흡수 → 박제 채널 SOP 검증 milestone
+- **노지관리 신사업 = 다음 사업분야 사용자 명시 결단** (003) → 본 vault `revita.md` + `aisg.md` + `영업전략.md` + thought 동시 박제로 사업 자산 cascade
+- **sensor 라이브러리 12 모듈 + AI 매트릭스 = 향후 project 결단 단일 출처 mandate** (006) → 본 vault 측 `onDevice-ai.md` § sensor 매트릭스 mandate 참조 박제
+- **strengths §13 신사업 결합 carrier 역량** = vault 분리 패턴 자체가 carrier 역량 박제 (다른 사업 carrier 확장 templates)
+
+---
+
+## [2026-06-03] revenue-prep ⭐⭐⭐ | 동아정밀공업 #155220 미팅 자료 풀세트 제작 — 위시캣 미팅 자료 표준 SOP 정착
 
 ## [2026-06-03] revenue-prep ⭐⭐⭐ | 동아정밀공업 #155220 미팅 자료 풀세트 제작 — 위시캣 미팅 자료 표준 SOP 정착
 

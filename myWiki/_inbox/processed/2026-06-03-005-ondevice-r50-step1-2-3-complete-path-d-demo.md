@@ -15,7 +15,16 @@ related:
   - C:/todo/onDevice_AI/sensor/INMP441/
   - C:/todo/onDevice_AI/sensor/_STM32H745_EXPANSION/
   - C:/todo/onDevice_AI/log.md
-status: pending
+status: done
+absorbed_into:
+  - myWiki/second-brain/log.md § [2026-06-04] absorb
+  - myWiki/second-brain/entities/onDevice-ai.md § 2026-06-04 R50 Step 1~3 완성
+  - myWiki/second-brain/entities/ai-fanstick.md § 2026-06-04 Path D 정량 완성
+  - myWiki/second-brain/ai-direction.md § 결정 43 (CMSIS-NN chip-specific + M7 plain C)
+  - myWiki/second-brain/gaps.md § 2026-06-04 (R50-1 + STM-7 v2 + LCD overlay + Stack overflow + I2C 충돌)
+  - myWiki/second-brain/thoughts/2026-Q2/2026-06-04_sensor-AI-매트릭스-단일출처-mandate.md
+absorbed_at: 2026-06-04
+ack_sent: C:\todo\onDevice_AI\_inbox\pending\2026-06-04-001-mywiki-ack-r50-sensor-workflow-박제완료.md
 ---
 
 # R50 Step 1+2+3 본질 완성 — Path D 산업 HMI demo 검증 + sensor 확장

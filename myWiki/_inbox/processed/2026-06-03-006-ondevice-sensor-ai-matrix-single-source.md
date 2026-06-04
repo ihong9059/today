@@ -12,7 +12,16 @@ related:
   - sensor/INDEX.md (cross-link 갱신)
   - business/entities/AI_FanStick.md (영업 narrative 결정타 영향)
   - log.md
-status: pending
+status: done
+absorbed_into:
+  - myWiki/second-brain/log.md § [2026-06-04] absorb
+  - myWiki/second-brain/entities/onDevice-ai.md § 2026-06-04 sensor 라이브러리 12 + AI 매트릭스
+  - myWiki/second-brain/entities/ai-fanstick.md § 2026-06-04 sensor cluster $50
+  - myWiki/second-brain/ai-direction.md § 결정 41 (sensor AI 매트릭스 단일 출처 mandate)
+  - myWiki/second-brain/strengths.md § 14 sensor 라이브러리 12 + AI 매트릭스
+  - myWiki/second-brain/thoughts/2026-Q2/2026-06-04_sensor-AI-매트릭스-단일출처-mandate.md
+absorbed_at: 2026-06-04
+ack_sent: C:\todo\onDevice_AI\_inbox\pending\2026-06-04-001-mywiki-ack-r50-sensor-workflow-박제완료.md
 ---
 
 # sensor AI 매트릭스 단일 출처 + 외부 module 7 카테고리 카탈로그 박제 통보 (work-end #4)

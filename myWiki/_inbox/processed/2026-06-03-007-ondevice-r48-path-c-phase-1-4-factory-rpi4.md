@@ -11,7 +11,16 @@ related:
   - onDevice_AI/CLAUDE.md
   - onDevice_AI/sensor/AI_매트릭스.md
   - onDevice_AI/sensor/MPU-9265/02_AI_model_매트릭스.md
-status: pending
+status: done
+absorbed_into:
+  - myWiki/second-brain/log.md § [2026-06-04] absorb
+  - myWiki/second-brain/entities/onDevice-ai.md § 2026-06-04 factory-rpi4 + R48 Path C + INA219
+  - myWiki/second-brain/entities/ai-fanstick.md § 2026-06-04 Path B-4 narrative
+  - myWiki/second-brain/ai-direction.md § 결정 42 (워크플로우 §0.4 표준)
+  - myWiki/second-brain/gaps.md § 2026-06-04 (numpy flatten + WHO_AM_I 5종 + PEP 668 + scp wildcard)
+  - myWiki/second-brain/thoughts/2026-Q2/2026-06-04_sensor-AI-매트릭스-단일출처-mandate.md
+absorbed_at: 2026-06-04
+ack_sent: C:\todo\onDevice_AI\_inbox\pending\2026-06-04-001-mywiki-ack-r50-sensor-workflow-박제완료.md
 ---
 
 # ingest 요청 — R48 Path C Phase 1~4 + factory-rpi4 + 워크플로우 §0.4

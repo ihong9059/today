@@ -15,7 +15,15 @@ related:
   - revitaProject/application/revitaWiki/log.md §[2026-06-03] vault 분리 (본 vault 측 박제)
   - myWiki/second-brain/entities/revita.md (박제 위치 갱신 요청)
 ack_required: true
-status: pending
+status: done
+absorbed_into:
+  - myWiki/second-brain/log.md § [2026-06-04] absorb
+  - myWiki/second-brain/entities/revita.md § 2026-06-04 노지관리 신사업 본격 진입 (vault 분리)
+  - myWiki/second-brain/ai-direction.md § 결정 40
+  - myWiki/second-brain/strengths.md § 13 carrier 역량 (vault 분리 패턴 자체 = carrier)
+  - myWiki/second-brain/thoughts/2026-Q2/2026-06-04_노지관리-신사업-본격진입.md
+absorbed_at: 2026-06-04
+ack_sent: C:\todo\revitaProject\_inbox\pending\2026-06-04-001-mywiki-ack-노지관리-vault분리-박제완료.md
 ---
 
 # 신규 프로젝트 vault 분리 통보

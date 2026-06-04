@@ -12,7 +12,11 @@ related:
   - revitaProject/application/revitaWiki/log.md (#001 처리 박제)
   - revitaProject/작업보고서/2026-06-03.md
 ack_required: false
-status: pending
+status: done
+absorbed_into:
+  - myWiki/second-brain/log.md § [2026-06-04] absorb
+  - myWiki/second-brain/entities/revita.md § 2026-06-04 노지관리 신사업 본격 진입
+absorbed_at: 2026-06-04
 ---
 
 # ACK 위성 원격탐사+노지 관리 신사업 검토 trigger 수신

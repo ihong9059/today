@@ -1,4 +1,6 @@
 - [사용자 본명 — 홍광선](user_name_hong_kwangsun.md) — UTTEC 대표, 이메일 prefix에서 이름 추정 금지 (이형근 X)
+- [사용자 전화번호 — 010-2401-9059 ⭐](reference_user_phone.md) — ihong9059와 끝자리 매칭. 동아정밀 build_pptx.py에 010-7186-2452 잘못 박제 carry 사건 박제, 재발 방지
+- [사용자 식별 정보 임의 생성 금지 ⭐](feedback_no_fabricated_user_data.md) — 전화·주소·계좌 등 메모리에 없으면 placeholder 또는 사용자 확인 prompt. plausible 데이터 환각 금지
 - [위시캣 회사명 금지](feedback_wishket_no_company_name.md) — 지원서에 UTTEC/유티즘 등 회사명 노출 시 페널티, 마스킹 필수
 - [위시캣 WebFetch 배너 오해석](feedback_wishket_webfetch_banner.md) — "기간제(상주)..." 안내문은 사이트 공통 배너, 프로젝트 메타 아님. 근무형태는 카테고리 아이콘 라벨만 신뢰
 - [위시캣 외주(도급) 필터 우선 ⭐](feedback_wishket_outsourcing_filter.md) — /wishket-check 사전 단계 = `?employee_type=projc_term` WebFetch (ID sequential은 보조). 본 vault는 외주만 가능 + ID 비단조 + 비공개 redirect 우회. 5/27 #155421 1.5억 누락 박제

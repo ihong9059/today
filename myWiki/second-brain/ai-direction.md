@@ -2,12 +2,99 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-03 저녁 (결정 39 위시캣 미팅 자료 풀세트 SOP 정착 — 동아정밀공업 #155220 미팅용 영상 5분 + PPTX 10장 + 회사소개서 PDF 15장 / 매니저 가이드 3대 어필 포인트 정조준 + 빌드 스크립트 5종 재사용 자산화 / 결정 37 Claude Code 23 + 결정 35~36 위성+노지 + 결정 32~34 R50 Path D carry)
+updated: 2026-06-04 (결정 40~43 신설 — 노지관리 신사업 본격 진입+vault 분리 / sensor AI 매트릭스 단일 출처 mandate / 워크플로우 §0.4 표준 / CMSIS-NN chip-specific 매트릭스 + M7 plain C 우회 path)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-04) — _inbox 6장 megasession 박제: 결정 40~43 신설 ⭐⭐⭐
+
+**사건**: pending 6장 도달 (revita 3장 + ondevice 3장) megasession 흡수. 4 결정 동시 박제.
+
+### 결정 40: ⭐⭐⭐ 노지관리 신사업 본격 진입 + vault 분리 (revita 003+004 통합)
+
+사용자 명시 결단 (2026-06-03) "다음 사업분야 검토" → revita-claude 카드 003 (사업 본격 진입 통보 + 박제 7항목 요청) + 004 (`노지관리Wiki/` vault 분리). myWiki 측 박제 위치 = **`노지관리Wiki/` 참조 (revitaWiki 아님)**.
+
+> "revita LoRa 양산 자산 (지상) + 위성 원격탐사 (Sentinel-2/3 + 농림위성 2026) + ESP32-P4 CNN 엣지 추론 = 농지 마이크로 calibration + 매크로 정찰 통합 SaaS. **사업 단위 = vault 단위** 정책 정착 (`application/노지관리Wiki/` 신설, revita vault와 분리)."
+
+**Why**:
+- 사업 가설 차별화 5 (지상 IoT 양산 자산 / Solar 자가발전 / Modbus 자동 처방 폐회로 / KC 인증 + 정부 R&D 자격 / 농림위성 timing)
+- vault 분리 = revita (기술 자산) + 노지관리 (사업 carrier) 본업 명확화. cross-vault 참조 규약 (`[[revita:entity-link]]` / `[[mywiki:revita#노지-관리-신사업]]`) 다중 vault 운영 표준 시작
+- **strengths §13 신사업 결합 carrier 역량의 실 박제** = vault 분리 패턴 자체가 carrier 역량 (AISG / 한림용인CC / lemonLabs / AI FanStick 동일 패턴 확장 가능)
+
+**How to apply**:
+- 농진청/농어촌공사 R&D 공고 발견 시 → business/ 입찰 자료 준비 + strengths §12 인증 매니지먼트 정당화
+- 위시캣 농업 IoT+위성 fusion 모집 active 모니터링 → 결정 34 (cross-매칭 SOP) 확장
+- 농림위성 (2026 발사) timing 매트릭스 활성화 시 → revita LoRa 연계 PoC 결단
+- 다른 신사업 trigger 발생 시 동일 패턴 (사업 단위 vault 신설) 적용
+
+### 결정 41: ⭐⭐⭐ sensor AI 매트릭스 단일 출처 mandate (ondevice 006)
+
+사용자 단일 발화 mandate (절대 신뢰) — onDevice_AI 향후 project 결단 기준 = **`sensor/AI_매트릭스.md` + `sensor/_추가_module_후보/` 2 자료 단일 출처**.
+
+> "11 sensor × 2~3 AI model × 14 보드 최저선 매핑. 외부 module 7 카테고리 (40+ module, 일괄 발주 BOM $100~150 핵심 6) 카탈로그. 향후 project 후보 14건 (단기 3 carry + 중기 7 + 장기 4)."
+
+**Why**:
+- 무작위 task 진입 차단 + 검증 carry 기반 효율 진입 (R18/R44/R46/R47/R50/R48 = 6 검증 instance)
+- 본 vault 11 sensor 중 **9개는 pca10056 (Cortex-M4F 256KB) 이내 양산 가능** = AI FanStick 차세대 BOM에 거의 모든 sensor 추가 가능
+- 결정 35 (영업 narrative 확장 결정타)와 cross-link: Stage 4 산업 응용 sensor cluster $50 / 한림용인CC 양산 노드 $65
+
+**How to apply**:
+- onDevice_AI 측 project 결단 시 AI 매트릭스 §5 후보 14건 우선 검색
+- 위시캣 매칭 SOP 룰 5 확장 = sensor + AI model + 최저선 보드 + 외부 module 발주 가이드 즉시 응답
+- 한림용인CC carry 매칭 — 외부 module 발주 후보 ($26 추가 → 기존 BOM $39 + 26 = $65 단일 노드)
+
+### 결정 42: ⭐⭐⭐ 워크플로우 §0.4 표준 — 원격 학습 + 최저선 deploy 2단계 표준 (ondevice 007)
+
+`sensor/AI_매트릭스.md §0.4` 명시 박제. 모든 sensor + AI 응용 공통 적용 6 step 표준:
+
+1. 데이터 수집 (factory-rpi4 + sensor)
+2. 학습 (uttecMac 16GB / uttecRpi5 8GB asimddp / factory-rpi4 4GB / pc-windows 16GB)
+3. PC 검증 (sanity ≥ target)
+4. INT8 quantize (R46 calibrate pattern: per-tensor symmetric weight + p99 activation)
+5. MCU port (pca10040/pca10056 CMSIS-NN / esp32s3 esp-nn / stm32h745disco plain C 또는 CMSIS-NN)
+6. MCU sweep (latency / accuracy / RAM 3축 검증)
+
+**검증 carry 6 instance**: R18 (5/22 MLP 3.23×) / R44 (6/1 KWS 75% 9.91ms) / R46 (6/1 FC 9.26ms 3.14×) / R47 (6/1 esp-nn 1.06×) / R50 (6/3 MNIST 8.13ms 100%) / R48 Path C (6/3 Phase 1~4 100% delta 0pp).
+
+**factory-rpi4 = 6번째 ssh 머신** (Tailscale `100.109.84.79`, Pi 4 Model B Rev 1.5, Debian 13, gcc 14.2 aarch64, PyTorch 2.12.0+cpu venv `--system-site-packages`). 3중 역할: production QC carrier + 데이터 수집 + 작은 모델 학습/INT8 quantize.
+
+**Why**:
+- 원격 학습 = PC 자산 활용 / 최저선 deploy = 보드 latency/accuracy/RAM 정량 검증
+- 6 검증 carry로 본 vault 영업 자산 (의뢰사 신뢰도 ↑)
+- 위시캣 cluster 매칭 키워드: Edge AI MCU deploy / INT8 quantize embedded / CMSIS-NN port / TFLite Micro alternative
+
+**How to apply**:
+- 신규 sensor·AI 응용 진입 시 본 6 step 표준 따름
+- 강사양성 Day 5 사례 자산 = 5단계 cluster (R26 KWS + R34 Hybrid + R36 STM32H745 + R50 LCD touch + R48 Path C IMU)
+
+### 결정 43: ⭐⭐ CMSIS-NN chip-specific 매트릭스 검증 + M7 plain C 우회 path (ondevice 005)
+
+R46 pca10056 carry (Cortex-M4F) → R50 stm32h745 (Cortex-M7) 1:1 적용 시 R50-1 비결정 saturate 발견. 결정 43:
+
+> "CMSIS-NN port = chip × library × toolchain 매트릭스 검증 필수. Cortex-M7 + L1 cache + dual-issue 환경 = plain C가 CMSIS-NN과 동등 latency → M7에서는 plain C 우회 path 권장."
+
+R50 검증값: plain C 8.13ms ≈ CMSIS-NN 8.28ms (M7 dual-issue + L1 cache가 plain C도 자동 vectorize). Cortex-M4F (R46 pca10056 3.14× 가속)와 본질 다름.
+
+**Why**:
+- chip-specific bug 회피 + 코드 단순성 + 동등 latency
+- gotcha R50-1 ⭐⭐⭐⭐ = "같은 input/model/weight으로 빌드 간 결과 다름" + "100 sample 시 모든 다른 label sample pred=0" + memset/scratch 확장 효과 없음 = R46 carry 1:1 적용 불가
+
+**How to apply**:
+- Cortex-M7 chip port 시 plain C 우선 + CMSIS-NN은 비교 검증
+- Cortex-M4F (pca10040/56) chip은 CMSIS-NN 우선 (R18/R46 3.14× 검증)
+- 신규 chip port 시 매트릭스 (chip × library × toolchain) 사전 검증
+
+### links 추가
+
+- [[revita]] § 노지관리 신사업 carry (vault 분리)
+- [[onDevice-ai]] § R50 + sensor 12 + AI 매트릭스 + factory-rpi4 + R48 Path C
+- [[ai-fanstick]] § Path D 정량 확장 + Path B-4 narrative
+- [[strengths]] § 13 신사업 결합 carrier 역량
+
+---
 
 ## 판단 로그 (2026-06-03 저녁) — 위시캣 미팅 자료 풀세트 SOP 정착: 동아정밀공업 #155220 실증 ⭐⭐⭐
 
