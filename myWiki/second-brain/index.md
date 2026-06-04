@@ -89,6 +89,7 @@ updated: 2026-05-09
 | [[shield]] | ⭐ shield vault (RPi Linux 호스트, 5/16~) — RPi shield 보드 응용 (LoRa·RS485·RS422·MESH·I2C), shield-claude 합류 (5 Claude) + work-end always-send 강제 룰 |
 | [[vault-portability]] | ⭐⭐⭐ vault Cross-Platform Portability (5/23 신설) — today vault = UTTEC product candidate 재정의, L1 Mac dry-run / L2 CI matrix / L3 Cloud 탑재 (~10~16일 계획) |
 | [[uttec-search]] | ⭐⭐⭐ uttec-search vault (5/23 야간 4차 신설, 10th vault, Mac/Ubuntu) — search 9th vault cross-platform 첫 fork, uttec-vault 비즈니스 hub 위 AI 검색·정리 web (FastAPI + React + sentence-transformers + Claude CLI), vault portability 트랙 첫 실증 |
+| [[menugenie]] | ⭐ MenuGenie — 요식업 B2B SaaS, 키오스크+대화형 AI 주문 (2026-06-04 사용자 신사업 확정 + GCP 34.64.255.74 초안 홈페이지 + Tier 3 후보, ai-fanstick 다음 2번째 UTTEC own product) |
 
 ## 생각 (Thoughts)
 | 페이지 | 요약 |

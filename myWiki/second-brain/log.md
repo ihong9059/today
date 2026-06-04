@@ -2,8 +2,23 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-04 (megasession _inbox 6장 흡수 완결 — revita 3장 노지관리Wiki vault 분리·신사업 본격 진입 / ondevice 3장 R50 Step 1~3 완성 + sensor 라이브러리 12 모듈 + AI 매트릭스 단일출처 mandate + factory-rpi4 6번째 ssh 머신 + 워크플로우 §0.4 표준 / 결정 40~43 신설 + strengths §13 carrier 역량 + 외부 module 7 카테고리 카탈로그)
+updated: 2026-06-04 (MenuGenie entity 신설 — UTTEC 신사업 2번째 own product, 요식업 B2B SaaS, GCP 34.64.255.74 초안 홈페이지 확인 / 이전: megasession _inbox 6장 흡수 완결 + 결정 40~43 신설)
 ---
+
+## [2026-06-04] ingest | MenuGenie entity 신설 — UTTEC 신사업 (요식업 B2B SaaS 키오스크+대화 AI)
+
+**사건**: 사용자 work-start 직후 GCP 홈페이지 초안(http://34.64.255.74) 확인 요청 → curl 우회 fetch 결과 "MenuGenie" B2B SaaS 발견 → 사용자 "UTTEC 신사업" 명시 확정 → entity 신설.
+
+**검증 사실** (HTML scrape):
+- 요식업 사장님 B2B SaaS, 키오스크 + 대화형 AI 주문
+- GCP + **Gemini AI Management** (footer 명시)
+- **라즈베리파이 로컬 서버 연동** (매장 carrier — UTTEC RPi 양산 자산과 정합)
+- POS·주방 모니터 통합, 사업자등록증 검증 모달
+- Version 1.0 "정식 출시" 공지 + 시연영상 placeholder **Rickroll URL** (사용자 교체 지시)
+
+**의문점 carry (사용자 답변 대기)**: 소스 위치(local 0건) / Tier 분류 / Gemini vs 마스킹 narrative / 사업자 주체 / pilot 매장 / 모바일 앱 형태.
+
+**박제 결과**: `entities/menugenie.md` 신설 (한 줄 정의 + 상태 매트릭스 + 제품 정의 4축 + UTTEC 강점 정합성 5건 + 차별화 가설 3건 + 의문점 6건 + 즉시 todo 6건 + 관련 페이지 7건). `index.md` 엔티티 테이블에 등재.
 
 ## [2026-06-04] absorb ⭐⭐⭐ | _inbox 6장 megasession 흡수 — revita 노지관리 신사업 본격 진입 + ondevice R50/sensor 라이브러리 완성
 
