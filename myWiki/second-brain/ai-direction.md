@@ -2,12 +2,90 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-04 (결정 40~43 신설 — 노지관리 신사업 본격 진입+vault 분리 / sensor AI 매트릭스 단일 출처 mandate / 워크플로우 §0.4 표준 / CMSIS-NN chip-specific 매트릭스 + M7 plain C 우회 path)
+updated: 2026-06-06 밤 (결정 45 신설 — weldRobot 용접 로봇 신사업 vault 신설, carrier 패턴 2번째 적용 사례, Path 4 Vision seam tracking add-on box 우선 진입 + Path 3 자율 path planning 장기 carry, multi-agent 14번째 weldrobot-claude 합류 / 이전: 결정 44 자산 인덱스 우선 SOP + 6/6 #155220 견적·사양서 v1 + 결정 39 SOP 3단계 정착)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-06 저녁) — 결정 45 신설 ⭐⭐⭐ weldRobot vault 신설 (carrier 패턴 2번째 적용 사례)
+
+### 결정 45: ⭐⭐⭐ weldRobot 용접 로봇 신사업 vault 신설 + Path 4 우선 진입
+
+**사건**: 사용자 명시 결단 (06:36) — "한국기계 용접공 운영 어려움 → 용접 로봇 신사업 검토 + 별도 vault 신설 + myWiki 협업". strengths §13 신사업 결합 carrier 역량 patterns **2번째 적용 사례** (1번째 = 노지관리Wiki 2026-06-04).
+
+> "vault 위치 `C:/todo/weldRobot/`. multi-agent 14번째 합류 (weldrobot-claude). Tier 3 분류 (장기 자체 제품 + multi-agent + 별도 vault). Path 4 (Vision seam tracking + AI 비드 검사 add-on box) 우선 진입, Path 3 (AI 자율 path planning) 장기 carry."
+
+**Why** (Path 4 즉시 진입):
+- mywiki §14·15·16 자산 이식률 **90%+** (Vision 좌표 학습 + sensor AI 매트릭스 + 풀스택 + factory-rpi4 + SCADA 5요소 + LS XGT + ReportLab) → 개발 비용·시간 50% 단축
+- 진입 비용 100~150만 (Path 3 대비 **1/10**)
+- 시장 segment 분리 = Path Robotics(미국 $1.2B full system) + Vectis(cobot 패키지) 직접 경쟁 회피, add-on box mid-tier ($4K~$7K) 빈 자리
+- 한국 시장 first mover (4 글로벌 경쟁사 한국 진출 0건) + 두산 cobot SI 협업 win-win
+
+**How to apply**:
+- vault 디렉토리 9 카테고리 + 23 sub 신설 완료
+- multi-agent 등록 (broker push/pull 라우팅 + SELF_ID="weldrobot-claude")
+- mywiki 박제: entity 2건 (weldRobot + 한국기계 트랙 분리) + raw junction + 본 결정 45 + strengths §13 사례 표 2번째 행 + log [2026-06-06] ingest
+- PoC 0 착수 (2026-06): RPi 5 또는 Jetson + Basler + 라인 레이저, 한국기계 시연
+
+**carry**:
+- research/시장조사 fact-finding (Path Robotics SEC + Vectis·Hirebotics·Augmentus + IFR + 두산 가격)
+- 두산 H2017 1대 lease 견적
+- wishket-claude cross-매칭 룰 6 확장 카드 발송
+- 정부 R&D Tier 3 매칭 검토
+
+### carrier 패턴 2번째 적용 검증
+
+| 사례 | 일자 | vault | carrier 차별화 |
+|---|---|---|---|
+| 1번째 | 2026-06-04 | `revitaProject/application/노지관리Wiki/` | 지상 IoT + 위성 + ESP32-P4 CNN, 5축 차별화 |
+| **2번째** | **2026-06-06** | **`C:/todo/weldRobot/`** ⭐ | **자산 이식 90%+ Vision 좌표 학습 + SI 협업 win-win + 한국 first mover** |
+
+→ carrier 패턴 (사업 단위 = vault 단위, application/ 평행 구조, cross-vault 참조 규약, 다중 vault 운영 표준) **정착 검증 완료**. 다음 사례 (AISG / 한림용인CC 확장 / lemonLabs / AI FanStick) 적용 시 templates 활용 가능.
+
+→ 자세히 [[strengths]] § 13 사례 표 + [[entities/weldRobot]] + [[2026-06-06_carrier-단일진행-자산-인덱스-cascade]] § Path 4 carry.
+
+---
+
+## 판단 로그 (2026-06-06) — _inbox 2장 megasession 박제: 결정 44 신설 ⭐⭐⭐
+
+**사건**: pending 2장 (`2026-06-04-001` wishket AWS server cascade + `2026-06-05-001` wishket 동아정밀 D-day kit complete) megasession 흡수. AWS cascade는 5/29 모바일 앱 cascade에 이은 **2번째 자산 누락 사용자 지적** = SOP 강화 trigger.
+
+### 결정 44: ⭐⭐⭐ 자산 인덱스 우선 SOP — `/wishket-apply` cross-vault 자산 인덱스 의무 읽기
+
+5/29 모바일 앱 + 6/4 AWS 2회 누적 사용자 지적 박제. **자산 인덱스 누락 = 신뢰 손상 + 경쟁우위 누설** 동시 발생.
+
+> "`/wishket-apply` 작성 시 (a) wishketProject second-brain/me.md **전체** 우선 읽기 (b) mywiki entities/양산제품.md **전체** 우선 읽기 (c) [△] 약점 분류 전 자산 인덱스 재확인 — 사용자 박제 자산 명시 영역은 [O]로 처리 (d) 자산 인덱스 누락 발견 시 즉시 cascade 카드 발송 + 양 vault 동시 갱신."
+
+**Why**:
+- 본 vault me.md에 자산 박제됐어도 세션 시작 시 me.md 우선 읽기 SOP 미적용 시 [△] 약점 분류 재발
+- cross-vault cascade 지연 = 2번째 지적 트리거 (5/29 카드 → 6/4 mywiki 흡수 5일 지연 동안 AWS 누락 재발)
+- 풀스택 양산 자산 ([[strengths]] §15)이 위시캣 채널 결정적 경쟁우위인데 [△] 처리 시 단가·신뢰 동시 손상
+
+**How to apply**:
+- `/wishket-apply` 첫 단계 = wishketProject me.md + mywiki 양산제품.md + strengths.md 통합 읽기 (cross-vault)
+- 약점 분류 직전 자산 인덱스 재확인 단계 추가 (체크리스트)
+- 누락 발견 시 즉시 cascade 카드 발송 (양 vault 동시 갱신) → pending 누적 시 다음 작업 슬롯 흡수 우선
+
+**Carry**:
+- `/wishket-apply` skill 코드 자체에 본 SOP 4단계 hardcoding 검토 (3번째 지적 시 결단)
+- 다른 vault (revita / onDevice_AI / lemonLabs) 자산도 동일 cross-vault 인덱스 누락 위험 매트릭스 작성 carry
+
+### 결정 39 확장: 위시캣 미팅 자료 SOP 2번째 사례 정착 ⭐⭐
+
+`#2026-06-05-001` 동아정밀 D-day 키트 완성 흡수. 6/3 박제 (결정 39, [[위시캣활동]] § 동아정밀 SOP) **2번째 사례 정착 검증**.
+
+- 6/3 자료 3종 풀세트 (영상 + PPTX + 회사소개서) → 6/5 D-day 키트 확장 (SCADA 시뮬레이션 + 종합 제안서 PPT 16매 + TCO 3-Plan)
+- 22일 lead-time 도달 (5/14 지원 → 6/5 미팅)
+- 매니저 3축 가이드 매핑 패턴 표준 정립 (의견서 → 슬라이드 직접 매핑)
+- 자체 솔루션 시연 자산 (HTML Recipe 교체 패턴) = 다른 산업 자동화 미팅 재활용 가능
+
+**미팅 결과 박제 carry** (사용자 답변 대기): Q5 (1호기 C# 소스 / 측정 정밀도 / 변위 센서 모델 / Plan 선호 / 3·4호기 확장) → 결정 시 본 § 갱신 + `entities/동아정밀공업.md` 신설 검토.
+
+→ 자세히 [[위시캣활동]] § 2026-06-05 흡수 + [[2026-06-06_carrier-단일진행-자산-인덱스-cascade]] (신규 thought).
+
+---
 
 ## 판단 로그 (2026-06-04) — _inbox 6장 megasession 박제: 결정 40~43 신설 ⭐⭐⭐
 

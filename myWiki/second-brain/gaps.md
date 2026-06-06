@@ -2,12 +2,32 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-06-04 (R50-1 ⭐⭐⭐⭐ arm_nn_vec_mat_mult_t_s8 STM32H7 비결정 saturate + STM-7 v2 PK7=LCD_DE/PD7=LCD_DISP 정정 + R50 LCD overlay carry pattern + R50 Stack overflow callback flag deferral + I2C bus 충돌 AHT21↔FT5336 + numpy flatten 순서 channel-first 필수 + WHO_AM_I 5종 분기 0x74 die 변형 + PEP 668 Debian 13 venv --system-site-packages + scp wildcard 미동작 — _inbox 6장 megasession 흡수, 9 함정 박제)
-tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인, R50-1-chip-saturate, STM-7-v2, I2C-주소충돌, flatten-순서, WHO_AM_I-분기, PEP668, scp-wildcard, 데이터사이언티스트, GEE학습]
+updated: 2026-06-06 (자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제 — wishketProject me.md 박제 후 6/4 본 vault me.md 충분히 안 읽고 [△] 약점 분류 + AWS 양산 자산 본 vault 박제 부재 동시 발생, cross-vault cascade 5일 지연 = 2번째 지적 트리거. 자산 인덱스 우선 SOP 결정 44 박제. wishket-claude #2026-06-04-001 흡수 / 이전: R50-1 STM32H7 CMSIS-NN saturate + 8 함정 6/4)
+tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인, R50-1-chip-saturate, STM-7-v2, I2C-주소충돌, flatten-순서, WHO_AM_I-분기, PEP668, scp-wildcard, 데이터사이언티스트, GEE학습, 자산인덱스누락재발, cross-vault-cascade-지연, 풀스택자산]
 links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용, 2026-06-04_sensor-AI-매트릭스-단일출처-mandate]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-06-06 — 자산 인덱스 누락 재발 (5/29 모바일 앱 + 6/4 AWS 2회 누적) ⭐⭐⭐
+
+wishket-claude #2026-06-04-001 cascade 흡수. **2번째 사용자 지적 시 인덱스 보강 사건** 박제.
+
+### gotcha 인덱스-1 ⭐⭐⭐ — `/wishket-apply` 작성 시 자산 인덱스 누락 재발
+
+| 함정 | 회피 |
+|---|---|
+| 5/29 #155818 사용자 지적 직후 wishketProject me.md에 "모바일 앱 양산 자산 6" 박제. 6/4 #155818 지원서 작성 시 본 vault me.md 박제분을 충분히 안 읽고 모바일 앱 [△] 약점 분류 + AWS 양산 자산은 본 vault me.md 박제 부재 동시 발생. mywiki 양산제품.md에도 #7~8 카테고리 미반영 (cross-vault cascade 누락) | **자산 인덱스 우선 SOP** (결정 44): `/wishket-apply` 시 (a) wishketProject me.md 전체 우선 읽기 (b) mywiki entities/양산제품.md 전체 우선 읽기 (c) [△] 약점 분류 전 자산 인덱스 재확인 (d) 누락 발견 시 즉시 cascade 카드 발송. 본 vault myWiki 측 #7~8 카테고리 박제 완료 (2026-06-06) |
+
+### gotcha 인덱스-2 — cross-vault cascade 지연 = 2번째 지적 트리거
+
+| 함정 | 회피 |
+|---|---|
+| 5/29 모바일 앱 cascade 카드 → mywiki 흡수까지 5일 지연 동안 6/4 AWS 누락 재발. cascade 카드는 pending → processed 시간에 비례하여 재발 위험 ↑ | **카드 우선 흡수 정책** 메모리 박제 (`feedback_inbox_lifecycle.md` pending ≥ 1 → 다음 작업 슬롯 디폴트 = 흡수). 본 vault 풀스택 자산 추가 박제 = 5/29 cascade carry 결합 흡수 (2장 동시 megasession) |
+
+→ 자세히 [[ai-direction]] § 결정 44 + [[strengths]] § 15 풀스택 양산 자산 + [[2026-06-06_carrier-단일진행-자산-인덱스-cascade]] (신규 thought).
+
+---
 
 ## 2026-06-04 — _inbox 6장 megasession 9 함정 박제 (R50 Step 1~3 + sensor 라이브러리 carry) ⭐⭐⭐⭐
 

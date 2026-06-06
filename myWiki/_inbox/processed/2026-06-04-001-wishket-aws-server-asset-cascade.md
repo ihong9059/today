@@ -10,7 +10,17 @@ related:
   - wishketProject/위시캣/2026-06-04_프로젝트155818_지원내용.txt
   - wishketProject/second-brain/me.md (6/4 항목 7 신설)
   - today/myWiki/_inbox/processed/2026-05-29-001-wishket-mobile-app-asset-cascade.md (이전 cascade)
-status: pending
+status: done
+absorbed_into:
+  - second-brain/entities/양산제품.md § #7 모바일 + #8 AWS 신설
+  - second-brain/entities/회사소개.md § 사업 영역 5번째 행 (모바일 앱 + AWS 풀스택)
+  - second-brain/entities/영업전략.md § 2026-06-06 통합 단일 업체 narrative
+  - second-brain/strengths.md § 15 풀스택 양산 자산 통합 진행 가능
+  - second-brain/gaps.md § 2026-06-06 자산 인덱스 누락 재발
+  - second-brain/ai-direction.md § 결정 44 자산 인덱스 우선 SOP
+  - second-brain/thoughts/2026-Q2/2026-06-06_carrier-단일진행-자산-인덱스-cascade.md (신규)
+absorbed_at: 2026-06-06
+ack_sent: wishketProject/_inbox/pending/2026-06-06-001-mywiki-ack-aws-server-asset-cascade.md
 ---
 
 # AWS 서버 양산 자산 박제 정정 cascade — #155818

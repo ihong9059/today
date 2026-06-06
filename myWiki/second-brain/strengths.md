@@ -2,16 +2,66 @@
 title: 강점 분석
 type: identity
 created: 2026-04-19
-updated: 2026-06-04 (§13 신사업 결합 carrier 역량 신설 — vault 분리 패턴 자체 = carrier 역량 박제, application/ 사업 응용 분류 + cross-vault 참조 규약 + 다중 vault 운영 표준 / §14 sensor 라이브러리 12 모듈 + AI 매트릭스 단일 출처 mandate — onDevice_AI 향후 project 결단 자산화)
-tags: [강점, 분석, carrier역량, vault분리, 다중vault, sensor라이브러리, AI매트릭스]
-links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick]
+updated: 2026-06-06 밤 (§13 carrier 역량 사례 표 2번째 행 추가 — weldRobot vault 신설, Path 4 Vision seam tracking add-on box 우선 진입, 자산 이식 90%+, 결정 45 박제 / 이전 6/6: §15 풀스택 + §16 시제품 검사 도메인 + §14 sensor 매트릭스 + §13 carrier 1번째 사례 노지관리)
+tags: [강점, 분석, carrier역량, vault분리, 다중vault, sensor라이브러리, AI매트릭스, 풀스택양산, 모바일앱양산, AWS양산, 통합단일진행]
+links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick, 양산제품, 회사소개, 영업전략, 위시캣활동]
 ---
 
 # 강점 분석
 
 ## 핵심 강점
 
-### 14. sensor 라이브러리 12 모듈 + AI 매트릭스 단일 출처 mandate (2026-06-04) ⭐⭐⭐ NEW
+### 16. 시제품 검사 도메인 영업 자산 — Vision 좌표 학습 + LS XGT 가격 인덱스 + ReportLab PDF 양식 (2026-06-06 저녁) ⭐⭐ NEW
+
+wishket-claude #2026-06-06-001 흡수 (동아정밀 #155220 견적·사양서 v1 송부 단계). 본 사례에서 도출된 **다른 시제품 검사·반복 측정 외주 미팅 재활용 자산** 박제.
+
+| 자산 | 본질 | 재활용 |
+|---|---|---|
+| **Vision 좌표 학습 시스템** | 검은점 마킹 → OpenCV blob 검출 → 호모그래피 → mechanical X-Y mm → PLC D영역 Recipe 저장 → 자동 측정 | 시제품 검사 도메인 표준 — Option B USB3+OpenCV 65만원 / Option A COGNEX 290만원 |
+| **LS XGT 모듈 가격 인덱스 (2026-06)** | XGK-CPUSN Ethernet 내장 + XBF-PN08B 8축 EtherCAT | CPU 518K / 포지셔닝 379K / HSC 280K / ADC 430K / 서보 200W 드라이브 301K + 모터 209K — 다른 외주 견적 즉시 활용 |
+| **ReportLab + 맑은고딕 PDF 양식** | 사양서 11장 162KB + 견적서 140KB 재생성 스크립트 | 다른 미팅 송부용 PDF 양식 즉시 재활용 |
+| **TCO 3-Plan 분리 표준** | 인건비 vs 자재 vs 라이선스 3축 | 다른 외주 미팅 견적 표준 |
+
+→ 자세히 [[위시캣활동]] § 2026-06-06 견적·사양서 v1 송부 + [[ai-direction]] § 결정 39 확장.
+
+---
+
+### 15. 풀스택 양산 자산 통합 진행 가능 — 임베디드 + 모바일 앱 + AWS + AI (2026-06-06) ⭐⭐⭐
+
+wishket-claude 카드 #2026-06-04-001 흡수 후 박제. **5/29 모바일 앱 + 6/4 AWS 누적 사용자 지적 2회**로 박제 강화.
+
+**자산 구조** (4 트랙 한 팀 단일 진행):
+
+| 트랙 | 양산 자산 | [[양산제품]] # |
+|---|---|:-:|
+| **임베디드** | UTSOL LED 10만+ / STM32 5종 / RPi CM4 EtherCAT / AMANO BLE Mesh 3,800대 일본 양산 | #0~6 |
+| **모바일 앱** | Android Native 3 + Flutter 4 + iOS 신규+앱스토어 + BLE/USB 시리얼 연동 + FCM/APNs | #7 |
+| **AWS 서버** | IoT Core + DynamoDB + API Gateway + Lambda 다년 양산 + REST/API 설계 | #8 |
+| **AI** | sensor 12 모듈 + AI 매트릭스 491 lines + R50 Path D + R48 Path C + 음성/CNN 통합 | [[onDevice-ai]] |
+
+**차별화 본질** (위시캣 채널 결정적 경쟁우위):
+
+1. **외주 협력 의존도 0%** — PM·요건 협의·산출물 통합 책임 한 팀
+2. **1순위 일정 준수 + 2순위 산출물 완성도** — 의뢰사 가치관과 직접 부합
+3. **임베디드 + 풀스택 동시 요구 입찰** 결정타 (위시캣 #155818 홈 IoT 앱 + 음성인식 AI 3,500만 사례)
+4. **단일 견적 단일 책임** — 외주 단가 마진 제거 → 클라이언트 TCO 자연 감소
+
+**자산 인덱스 우선 SOP** (재발 방지):
+
+- `/wishket-apply` 작성 시 wishketProject me.md + mywiki 양산제품.md **전체** 우선 읽기 (cross-vault 의무)
+- [△] 약점 분류 전 자산 인덱스 재확인 — 사용자 박제 자산 명시 영역은 [O]로 처리
+- 자산 인덱스 누락 발견 시 즉시 cascade 카드 발송 + entity 갱신
+
+**5채널 영업 carry**:
+- ⭐⭐⭐ **위시캣 풀스택 일감 정조준** — 모바일·서버·AI 동시 요구 입찰 자동 매칭 룰 6 신설 후보
+- ⭐⭐⭐ **외주 비용 절감 narrative** — TCO 분리 패턴(동아정밀 미팅 자료 슬라이드 8 Plan A/B/C)과 결합 시 정량 영업 무기
+- ⭐⭐ **lemonLabs 협업 narrative 보강** — UTTEC 풀스택 + lemonLabs 디자인/마케팅 = 창업패키지 차별화
+
+→ 자세히 [[양산제품]] § #7~8 + [[영업전략]] § 통합 단일 업체 + [[ai-direction]] § 결정 44 + [[2026-06-06_carrier-단일진행-자산-인덱스-cascade]] (신규 thought).
+
+---
+
+### 14. sensor 라이브러리 12 모듈 + AI 매트릭스 단일 출처 mandate (2026-06-04) ⭐⭐⭐
 
 `C:\todo\onDevice_AI\sensor\` 카탈로그 = **본 vault project 결단 자산화 단일 출처**. ondevice-claude 카드 005+006+007 megasession 흡수 후 박제.
 
@@ -75,6 +125,15 @@ revita-claude 카드 003+004 흡수 후 박제. **사업 단위 = vault 단위**
 - ⭐⭐ **위시캣 농업 IoT+위성 fusion 모집 active 모니터링** (결정 34 cross-매칭 확장)
 
 → 자세히 [[revita]] § 노지관리 신사업 + [[ai-direction]] § 결정 40 + [[aisg]] § 위성 fusion 결합 carry + [[2026-06-04_노지관리-신사업-본격진입]] (신규 thought).
+
+**적용 사례 추적** (carrier 패턴 templates 검증) ⭐⭐⭐ NEW (2026-06-06 갱신):
+
+| # | 일자 | vault 위치 | 사업 본질 | carrier 차별화 |
+|:-:|---|---|---|---|
+| 1 | 2026-06-04 | `revitaProject/application/노지관리Wiki/` | 노지 관리 신사업 (마이크로+매크로 SaaS) | 5축 (지상 IoT + Solar + Modbus 폐회로 + KC + 농림위성) |
+| **2** | **2026-06-06** | **`C:/todo/weldRobot/`** ⭐ | **용접 로봇 신사업 (Path 4 Vision seam tracking + AI 비드 검사 add-on box)** | **자산 이식 90%+ + Add-on SI win-win + 한국 first mover + 결함 SaaS** |
+
+→ **carrier 패턴 정착 검증 완료**. 다음 사례 후보 (AISG / 한림용인CC 확장 / lemonLabs / AI FanStick) templates 적용 가능. 자세히 [[weldRobot]] + [[ai-direction]] § 결정 45.
 
 ---
 

@@ -1,4 +1,6 @@
 - [사용자 본명 — 홍광선](user_name_hong_kwangsun.md) — UTTEC 대표, 이메일 prefix에서 이름 추정 금지 (이형근 X)
+- [신사업 트랙 보류 (2026-06-06~) ⭐](project_menugenie_paused.md) — 사용자 명시 "당분간 중단, 거론 금지". carry/제안/거론 일체 금지. 재개 시점은 사용자가 명시적으로 통지
+- [한국기계 교육 트랙 보류 (2026-06-06~) ⭐](project_hankook_machinery_edu_paused.md) — 사용자 명시 "당분가 중지". carry/제안/거론 일체 금지. IDE 파일 열림도 trigger 아님
 - [사용자 전화번호 — 010-2401-9059 ⭐](reference_user_phone.md) — ihong9059와 끝자리 매칭. 동아정밀 build_pptx.py에 010-7186-2452 잘못 박제 carry 사건 박제, 재발 방지
 - [사용자 식별 정보 임의 생성 금지 ⭐](feedback_no_fabricated_user_data.md) — 전화·주소·계좌 등 메모리에 없으면 placeholder 또는 사용자 확인 prompt. plausible 데이터 환각 금지
 - [위시캣 회사명 금지](feedback_wishket_no_company_name.md) — 지원서에 UTTEC/유티즘 등 회사명 노출 시 페널티, 마스킹 필수

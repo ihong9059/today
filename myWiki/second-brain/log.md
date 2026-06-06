@@ -2,7 +2,87 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-04 (MenuGenie entity 신설 — UTTEC 신사업 2번째 own product, 요식업 B2B SaaS, GCP 34.64.255.74 초안 홈페이지 확인 / 이전: megasession _inbox 6장 흡수 완결 + 결정 40~43 신설)
+updated: 2026-06-06 밤 (weldRobot 용접 로봇 신사업 vault 신설 — strengths §13 carrier 패턴 2번째 적용 사례 정착 검증, multi-agent 14번째 weldrobot-claude 합류, Path 4 우선 진입 결단, entities 2건 신설 + 결정 45 + §13 사례 표 갱신 / 이전: 6/6 #155220 견적·사양서 v1 + §16 시제품 검사 + _inbox 2장 megasession + 풀스택 + 결정 44 + 6/4 megasession 6장)
+---
+
+## [2026-06-06] ingest 밤 ⭐⭐⭐ | weldRobot 용접 로봇 신사업 vault 신설 — carrier 패턴 2번째 적용 사례 정착 검증
+
+**사건**: 사용자 명시 결단 (06:36) — 한국기계 용접공 운영 어려움 → 용접 로봇 신사업 검토 + 별도 vault 신설 + myWiki 협업. strengths §13 신사업 결합 carrier 역량 patterns **2번째 적용 사례** (1번째 = 노지관리Wiki 2026-06-04).
+
+**vault 위치**: `C:/todo/weldRobot/` (Windows, 본 PC, GitHub 신규 repo 후보)
+
+**multi-agent**: weldrobot-claude (14번째 합류, 2026-06-06)
+
+**박제 결과**:
+- vault 디렉토리 9 카테고리 + 23 sub + core 파일 28건 (README, CLAUDE, second-brain 8건, entities 6건, thoughts 1건, application 4건, poc 1건, progress 3건, _inbox PROTOCOL + SYSTEM_GUIDE 사본 + check-inbox.py)
+- mywiki 박제: entities/weldRobot.md 신설 + entities/한국기계.md 신설 (트랙 분리 = 신사업 활성 / AI 교육 보류) + raw/weldRobot junction + index.md 갱신 + ai-direction 결정 45 + strengths §13 사례 표 2번째 행 + log [2026-06-06] ingest
+- multi-agent broker push/pull 라우팅 추가 (LOCAL_VAULTS weldrobot-claude / weldrobot)
+- PROTOCOL.md 사본 weldRobot/_inbox/ + 합의 이력 14번째 등재 carry
+
+**Path 4 우선 진입 결단**:
+- mywiki §14·15·16 자산 이식률 **90%+** → 개발 비용·시간 50% 단축
+- 진입 비용 100~150만 (Path 3 대비 1/10)
+- 시장 segment 분리 = Path Robotics(미국 $1.2B) + Vectis(cobot 패키지) 직접 경쟁 회피
+- 한국 시장 first mover + 두산 cobot SI 협업 win-win
+
+**carry**:
+- research/시장조사 fact-finding (Path Robotics SEC + Vectis·Hirebotics·Augmentus + IFR + 두산 가격)
+- 두산 H2017 1대 lease 견적
+- wishket-claude cross-매칭 룰 6 확장 카드 발송
+- 한국기계 첫 dogfood 미팅 자료
+- PoC 0 착수 (2026-06)
+
+---
+
+## [2026-06-06] absorb 저녁 | wishket-claude #2026-06-06-001 신규 카드 즉시 흡수 — #155220 견적·사양서 v1 송부 단계 도달
+
+**사건**: 본 세션 megasession (2장 흡수) 직후 wishket-claude가 같은 도메인 follow-up 카드 발송. 도메인 정합성 차원에서 work-end 직전 즉시 흡수.
+
+**박제 결과**:
+- entities/위시캣활동.md § 2026-06-06 견적·사양서 v1 송부 단계 prepend (23일 lead-time, Vision 좌표 학습 시스템, 차별화 6축, Plan B TCO 하단 적중 32,454,840)
+- strengths.md § 16 시제품 검사 도메인 영업 자산 신설 (Vision 좌표 학습 + LS XGT 가격 인덱스 + ReportLab PDF 양식 + TCO 3-Plan)
+- 카드 처리: status:done + processed/ 이동 + 회신 카드 wishketProject/_inbox/pending/2026-06-06-003 발송
+- 결정 39 패턴 **3단계 정착 검증 완료** (자료 풀세트 → D-day 키트 → Follow-up 견적·사양서)
+
+**carry**: 동아정밀공업 entity 신설 (수주 도달 시) + 견적서 발주처 회신 추적.
+
+---
+
+## [2026-06-06] absorb ⭐⭐⭐ | _inbox 2장 megasession 흡수 — wishket AWS 양산 자산 cascade + 동아정밀 D-day 키트 완성
+
+**사건**: pending 2장 (`2026-06-04-001` wishket AWS server asset cascade + `2026-06-05-001` wishket 동아정밀 #155220 미팅 D-day kit complete). AWS cascade는 5/29 모바일 앱 cascade에 이은 **2번째 자산 누락 사용자 지적** = SOP 강화 trigger. 동아정밀 D-day는 결정 39 (위시캣 미팅 자료 SOP) **2번째 사례 정착 검증**. 5단계 lifecycle + 후처리 4단계 풀사이클.
+
+### 흡수 카드 2장
+
+| ID | 발신 | 본질 | type |
+|---|---|---|---|
+| 2026-06-04-001 | wishket-claude | AWS 양산 자산 박제 정정 cascade (5/29 모바일 앱 cascade 후 2번째 자산 지적) | request |
+| 2026-06-05-001 | wishket-claude | 동아정밀 #155220 D-day 키트 완성 (SCADA 시뮬 + 종합 제안서 PPT 16매 + TCO 3-Plan, 22일 lead-time) | request |
+
+### 박제 결과 (5단계 lifecycle)
+
+- **신규 entity 0건** (기존 5 entity 갱신으로 충분)
+- **양산 카테고리 2건 신설** → entities/양산제품.md #7 모바일 + #8 AWS (양산 7종 → **9종**, 타이틀 갱신)
+- **신규 gotcha 2건** → gaps.md prepend (인덱스-1 자산 인덱스 누락 재발 + 인덱스-2 cross-vault cascade 5일 지연)
+- **신규 decision 1건** → ai-direction.md prepend (결정 44 자산 인덱스 우선 SOP) + **결정 39 확장** (위시캣 미팅 자료 SOP 2번째 사례 정착 검증)
+- **신규 thought 1건** → thoughts/2026-Q2/2026-06-06_carrier-단일진행-자산-인덱스-cascade.md (풀스택 carrier narrative + 자산 인덱스 cross-vault cascade 통합)
+- **entity 갱신 5건** (양산제품 / 회사소개 / 영업전략 / strengths §15 신설 / 위시캣활동 6/5 흡수)
+- **carry 항목 (다음 megasession)**: `/wishket-apply` skill 코드 hardcoding (3번째 지적 시 결단) + 위시캣 풀스택 매칭 룰 6 신설 + 동아정밀 미팅 결과 사용자 답변 박제
+
+### 후처리 4단계
+
+1. ✅ 카드 2장 status: pending → done + absorbed_into + absorbed_at: 2026-06-06 + ack_sent 메타데이터
+2. ✅ 카드 2장 `_inbox/pending/` → `_inbox/processed/` 이동 (pending 0)
+3. ✅ 회신 카드 2장 발송: wishketProject/_inbox/pending/2026-06-06-001 (AWS cascade ACK) + 2026-06-06-002 (동아정밀 D-day ACK)
+4. ✅ log.md [2026-06-06] absorb 박제 + frontmatter updated
+
+### 핵심 박제값
+
+- **풀스택 4 트랙 통합 단일 진행 narrative** = 임베디드 + 모바일 앱 + AWS + AI 한 팀, 외주 협력 의존도 0% (위시캣 채널 결정타)
+- **자산 인덱스 우선 SOP** (결정 44) = `/wishket-apply` cross-vault 양 vault 자산 인덱스 의무 읽기
+- **위시캣 미팅 자료 SOP 2번째 사례 정착** = HTML Recipe 교체 시연 + TCO 3-Plan 분리 + 매니저 3축 가이드 매핑 표준 자산화
+- **5/29 모바일 앱 + 6/4 AWS 누적 사용자 지적 2회 박제** → gaps.md cross-vault cascade 지연 함정 박제
+
 ---
 
 ## [2026-06-04] ingest | MenuGenie entity 신설 — UTTEC 신사업 (요식업 B2B SaaS 키오스크+대화 AI)

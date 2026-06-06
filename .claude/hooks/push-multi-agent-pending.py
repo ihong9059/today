@@ -56,6 +56,7 @@ LOCAL_VAULTS = {
     "uttechome-claude": Path("C:/todo/uttecHome/_inbox/pending"),
     "search-claude": Path("C:/todo/search/_inbox/pending"),
     "revita-claude": Path("C:/todo/revitaProject/_inbox/pending"),
+    "weldrobot-claude": Path("C:/todo/weldRobot/_inbox/pending"),
 }
 
 

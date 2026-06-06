@@ -55,6 +55,11 @@ LOCAL_VAULTS = [
         "outbound": Path("C:/todo/onDevice_AI/_outbox"),
         "archived": Path("C:/todo/onDevice_AI/_outbox-archived"),
     },
+    {
+        "name": "weldrobot",
+        "outbound": Path("C:/todo/weldRobot/_inbox/outbox-staging"),
+        "archived": Path("C:/todo/weldRobot/_inbox/sent-archived"),
+    },
     # 추후 추가 후보:
     # {"name": "wishket", "outbound": Path("C:/todo/wishketProject/_outbox"), "archived": Path("C:/todo/wishketProject/_outbox-archived")},
     # {"name": "lemonlabs", "outbound": Path("C:/todo/lemonLabs/_outbox"), "archived": Path("C:/todo/lemonLabs/_outbox-archived")},
