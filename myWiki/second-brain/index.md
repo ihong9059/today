@@ -49,6 +49,8 @@ updated: 2026-05-09
 | [[uttec-factory]] | **uttec-factory vault** — UTTEC Shield (AI 공장자동화 교육용) hardware 검증 + 8일 교육 + 영업 통합. 13th multi-agent vault (factory-rpi4 100.109.84.79, 5/26 신설) ⭐ broker 자동화 첫 진화 |
 | [[weldRobot]] | **weldRobot vault** ⭐ — UTTEC 용접 로봇 신사업 (Tier 3). Path 4 (Vision seam tracking + AI 비드 검사 add-on box) 우선 진입 + Path 3 (AI 자율 path planning) 장기 carry. 14th multi-agent (`C:/todo/weldRobot/`, 6/6 신설, carrier 패턴 2번째 사례) |
 | [[한국기계]] | 사업 관계 entity — 트랙 분리 (활성: weldRobot dogfood / ⏸ 보류: AI 교육 demo) |
+| [[ponet]] | **ponet vault** ⭐ — Ponet 광주 협력 회사 (Tier 3, 조대홍 사장). PCB 설계 풀세트 + 더존 ERP + 자체 호스팅. 15th multi-agent (`C:/todo/ponet/`, 6/6 신설, carrier 패턴 3번째 사례 정착 확정 + 자체 SSH fact-finding 신설 첫 사례) |
+| [[조대홍]] | Ponet 사장 entity (광주, UTTEC 협력 파트너) |
 | [[xerix]] | Xerix MFC Controller — EtherCAT 제안 4,970만원 |
 | [[revita]] | REVITA — IoT, LoRa, KC 인증 |
 | [[위시캣활동]] | 위시캣 프리랜서 — 16건+ 지원, 시장 분석 |

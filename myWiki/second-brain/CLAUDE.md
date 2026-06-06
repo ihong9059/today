@@ -69,6 +69,7 @@ second-brain/
     ├── onDevice_AI/   # AI FanStick + Stage 4 제품 통합 vault — 기술 검증 + 비즈니스(business/) (→ junction → C:\todo\onDevice_AI\, 2026-05-15 위치 변경 + 정체성 확장)
     ├── search/        # myWiki AI 검색·정리 web 서비스 vault — 9th Tier 3 vault (→ junction → C:\todo\search\, 2026-05-21 추가)
     ├── weldRobot/     # UTTEC 용접 로봇 신사업 vault — 14th Tier 3 (→ junction → C:\todo\weldRobot\, 2026-06-06 추가, carrier 패턴 2번째 사례)
+    ├── ponet/         # Ponet 광주 협력 회사 vault — 15th Tier 3 (→ junction → C:\todo\ponet\, 2026-06-06 추가, carrier 패턴 3번째 사례 정착 확정 + 자체 SSH fact-finding 신설 패턴 첫 사례)
     └── articles/      # 인상 깊은 기사, 영상 메모, 스크랩
 ```
 

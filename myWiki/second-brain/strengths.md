@@ -2,7 +2,7 @@
 title: 강점 분석
 type: identity
 created: 2026-04-19
-updated: 2026-06-06 밤 (§13 carrier 역량 사례 표 2번째 행 추가 — weldRobot vault 신설, Path 4 Vision seam tracking add-on box 우선 진입, 자산 이식 90%+, 결정 45 박제 / 이전 6/6: §15 풀스택 + §16 시제품 검사 도메인 + §14 sensor 매트릭스 + §13 carrier 1번째 사례 노지관리)
+updated: 2026-06-06 야간 (§13 carrier 역량 사례 표 3번째 행 추가 — ponet 광주 협력 회사 vault 신설, 자체 SSH fact-finding 신설 패턴 첫 사례, 결정 46 박제. carrier 패턴 정착 확정 / 이전 6/6: §13 weldRobot 2번째 + §15 풀스택 + §16 시제품 검사 + §14 sensor 매트릭스)
 tags: [강점, 분석, carrier역량, vault분리, 다중vault, sensor라이브러리, AI매트릭스, 풀스택양산, 모바일앱양산, AWS양산, 통합단일진행]
 links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick, 양산제품, 회사소개, 영업전략, 위시캣활동]
 ---
@@ -131,9 +131,10 @@ revita-claude 카드 003+004 흡수 후 박제. **사업 단위 = vault 단위**
 | # | 일자 | vault 위치 | 사업 본질 | carrier 차별화 |
 |:-:|---|---|---|---|
 | 1 | 2026-06-04 | `revitaProject/application/노지관리Wiki/` | 노지 관리 신사업 (마이크로+매크로 SaaS) | 5축 (지상 IoT + Solar + Modbus 폐회로 + KC + 농림위성) |
-| **2** | **2026-06-06** | **`C:/todo/weldRobot/`** ⭐ | **용접 로봇 신사업 (Path 4 Vision seam tracking + AI 비드 검사 add-on box)** | **자산 이식 90%+ + Add-on SI win-win + 한국 first mover + 결함 SaaS** |
+| 2 | 2026-06-06 낮 | `C:/todo/weldRobot/` | 용접 로봇 신사업 (Path 4 Vision seam tracking + AI 비드 검사 add-on box) | 자산 이식 90%+ + Add-on SI win-win + 한국 first mover + 결함 SaaS |
+| **3** | **2026-06-06 밤** | **`C:/todo/ponet/`** ⭐ | **Ponet 협력 회사 (광주 정보통신공사·가로등설계·도시정비·농공단지 환경설비, 조달청 MAS + 직접생산확인서, 조대홍 사장)** | **자체 SSH fact-finding 신설 패턴 첫 사례 + UTTEC LED 디밍 원조사업 자산 직접 정합 = 무선 가로등 IoT 공공 조달 first mover 결정타 (사업 본질 확정 후 가설 5축)** ⭐⭐⭐⭐ |
 
-→ **carrier 패턴 정착 검증 완료**. 다음 사례 후보 (AISG / 한림용인CC 확장 / lemonLabs / AI FanStick) templates 적용 가능. 자세히 [[weldRobot]] + [[ai-direction]] § 결정 45.
+→ **carrier 패턴 정착 확정 (3 사례 누적)**. 다음 사례 후보 (AISG / 한림용인CC 확장 / lemonLabs / AI FanStick) templates 즉시 적용 가능. 자세히 [[weldRobot]] + [[ponet]] + [[ai-direction]] § 결정 45·46.
 
 ---
 

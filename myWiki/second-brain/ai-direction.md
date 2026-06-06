@@ -2,12 +2,139 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-06 밤 (결정 45 신설 — weldRobot 용접 로봇 신사업 vault 신설, carrier 패턴 2번째 적용 사례, Path 4 Vision seam tracking add-on box 우선 진입 + Path 3 자율 path planning 장기 carry, multi-agent 14번째 weldrobot-claude 합류 / 이전: 결정 44 자산 인덱스 우선 SOP + 6/6 #155220 견적·사양서 v1 + 결정 39 SOP 3단계 정착)
+updated: 2026-06-06 야간 2회차 (결정 47 신설 — Ponet 사업 본질 확정 + UTTEC LED 디밍 원조사업 직접 정합 발견 = 무선 가로등 IoT 공공 조달 first mover 결정타, 자체 SSH fact-finding 신설 패턴 검증 (2 사이클 누적) / 이전: 결정 46 ponet vault 신설 + 결정 45 weldRobot)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-06 야간 2회차) — 결정 47 신설 ⭐⭐⭐⭐ Ponet 사업 본질 확정 + UTTEC LED 디밍 자산 직접 정합 (협력 결정타)
+
+### 결정 47: ⭐⭐⭐⭐ Ponet 사업 영역 본질 확정 + 무선 가로등 IoT 공공 조달 first mover 결정타 발견
+
+**사건**: 사용자 명시 결단 — "E: drive내용도 확인해 주세요. ponet의 사업과 진행방향에 대한 내용을 확인해 주세요." E: 드라이브 2차 SSH fact-finding 결과:
+
+**Ponet 사업 본질 확정** ⭐⭐⭐:
+
+| 영역 | 사실 근거 |
+|---|---|
+| **정보통신공사** | `정보통신공사_표준일위대가.xlsx` 15.7 MB 2 버전 보유 + 정보통신부문 시중노임단가 |
+| **가로등설계** | `E:\04. 품셈\403. 가로등설계` 폴더 직접 존재 |
+| **도시정비·농공단지** | Desktop `과업지시서_동수오량농공단지 아름다운거리 조성사업 기본 및 실시설계 용역` hwpx 13MB + 수정사업계획서 28MB |
+| **조달청 MAS** | `ASL_조달.다수공급자계약을 위한 OEM공급제안서.pdf` + `01. 포넷/100 낙찰자결정기준` |
+| **직접생산확인서** | `01. 포넷/105. 직접생산신청 및 당사제품` 폴더 |
+| **건설 감리원** | `감리원인정등급변경경력인정전자형변경신청서.hwp` |
+| **토목공사** | `2026년 조달청 시설공사 원가계산 적용기준(토목공사).pdf` |
+| **광주 + 전남 장성** | `01. 포넷/101 견적_제안_장성자료` + 환경설비협회 광주 |
+| **나라장터 입찰** | Desktop `나라장터.url` + `1. 입찰현황2026.xls` |
+
+→ **PCB 도구 (Cadence + Altium + KiCad)는 부수** (본업 여부 carry).
+
+**UTTEC LED 디밍 자산 직접 정합 발견** ⭐⭐⭐⭐:
+
+> "UTTEC가 2011~2023년 12년+ 지하주차장 LED 디밍 시스템 10만 등기 양산 원조사업 자산 ([[양산제품]] #0) + BLE Mesh + LoRa 무선제어 자산을 Ponet의 광주·전남 정보통신공사·가로등설계·조달청 MAS·직접생산확인서 채널과 결합하면, **무선 가로등 IoT 공공 조달 한국 시장 결정적 first mover** 가능."
+
+**Why (결정타 가설 검증 근거)**:
+
+| UTTEC 자산 | Ponet 자산 | 매칭 강도 |
+|---|---|:-:|
+| UTSOL 지하주차장 LED 디밍 10만 등기 (12년+) | 가로등 설계 + 정보통신공사 + 조달청 MAS + 직접생산확인서 | ⭐⭐⭐⭐ |
+| BLE Mesh + LoRa 무선제어 (2018 국내 최초 상용화) | 정보통신부문 + 표준일위대가 + 조달청 시설공사 자격 | ⭐⭐⭐⭐ |
+| KC + TELEC + CE 인증 + [[정부R&D실증사업]] 1억 자산 | 조달청 직접생산확인서 + 환경설비협회 | ⭐⭐⭐ |
+
+→ **UTTEC 원조사업 + Ponet 본업 직접 정합 = 협력 결정타.**
+
+**How to apply**:
+
+- 본 vault entities/ponet.md § 사업 본질 확정 갱신 완료 (cross-매칭 가설 4 → 5 축, 가설 1 = LED 디밍 결정타)
+- ponet/business/disk-survey/E-disk-survey.md 신설
+- ponet/progress/decision-002-사업영역-확정.md 신설
+- ponet/second-brain/log.md § 2회차 absorb 박제
+- mywiki strengths §13 사례 표 3번째 행 차별화 본질 갱신 (PCB → 무선 가로등 IoT 결정타)
+- mywiki log § ingest 야간 2회차 prepend
+
+**Carry**:
+
+- Ponet 사장 첫 미팅 자료 (무선 가로등 IoT narrative + UTTEC LED 디밍 트랙레코드)
+- `01. 포넷/105. 직접생산신청 및 당사제품/` deep dive (당사제품 라인업)
+- `04. 품셈/403. 가로등설계/` deep dive
+- `정보통신공사_표준일위대가.xlsx` 시트 목록
+- mywiki [[광주]] + [[조달청-MAS]] + [[정보통신공사]] entity 신설 후보
+- [[dgist-esco-led]] cross-link 활용 narrative 강화
+
+### 자체 SSH fact-finding 신설 패턴 검증 ⭐⭐
+
+본 결정 47 = 결정 46 (vault 신설) 직후 동일 세션 내 추가 fact-finding으로 **사업 본질 재해석 + 협력 결정타 가설 발견** 사이클 완결. 자체 SSH fact-finding 신설 patterns 검증:
+
+1. 1차 fact-finding (vault 신설 동시) — 표면 자산 박제 (디스크 매트릭스 + 도구 추정)
+2. 2차 fact-finding (사용자 의문점 trigger) — 사업 본질 확정 + 협력 narrative 결정타 발견
+3. (carry) 3차 fact-finding (사장 미팅 직전) — 의문점 검증 + 미팅 자료 자산화
+
+→ **patterns 정착 검증 완료 (2 사이클 누적)**. 다음 협력 파트너 vault 신설 시 templates 적용 가능.
+
+→ 자세히 [[entities/ponet]] § cross-매칭 가설 5축 + [[strengths]] § 13 사례 표 3번째 행 갱신 + ponet vault `progress/decision-002-사업영역-확정.md`.
+
+---
+
+## 판단 로그 (2026-06-06 밤) — 결정 46 신설 ⭐⭐⭐ ponet vault 신설 (carrier 패턴 3번째 적용 사례 정착 확정)
+
+### 결정 46: ⭐⭐⭐ ponet 광주 협력 회사 vault 신설 + SSH 첫 fact-finding 패턴 신설
+
+**사건**: 사용자 명시 결단 — "Ponet vault도 별도로 만들어야겠읍니다. 광주에서 사업을 하고있는데, 앞으로 사업을 협력하여 진행할려고 합니다. SSH로 접속하여 C, D disk 내용을 확인하여 ponet vault에 기본 사항을 wiki화 + work-start/work-end skill 적용".
+
+> "vault 위치 `C:/todo/ponet/`. multi-agent 15번째 합류 (ponet-claude). Tier 3 분류. 자체 SSH fact-finding 신설 패턴 첫 사례 (협력 파트너 측 자료 자동 수집). carrier 패턴 3번째 적용 사례 정착 확정."
+
+**Why** (vault 분리 + SSH fact-finding):
+- mywiki §13 carrier 역량 patterns **3번째 적용 사례 정착 확정** (1번째 = 노지관리Wiki, 2번째 = weldRobot)
+- 협력 파트너 측 자료 SSH 자동 수집 → 박제 = 신설 패턴 첫 사례
+- Posh-SSH + Tailscale + Windows OpenSSH = 사용자 broker 0
+- 광주 ↔ 기흥 양 거점 narrative 차별화
+
+**Ponet 측 박제 자산 (SSH 첫 fact-finding)**:
+- PCB 설계 풀세트 (Cadence + Altium + KiCad)
+- ERP·B2B (더존ICT + CoreB2B + 인포텍)
+- 자체 호스팅 (C:\ponet\ + IIS)
+- 한국 인증·자격 (NPKI + GPKI + KED + KWIC)
+- 사업 자료 D: 디스크 (한글 깨짐 carry — PowerShell native 재조사)
+- Desktop 자료 = 환경설비협회 광주 도시정비 사업 (PCB 본업 vs 부수 재해석 carry)
+
+**How to apply**:
+- vault 디렉토리 8 카테고리 + 18 sub 신설 완료
+- multi-agent 등록 (broker push/pull 라우팅 + SELF_ID="ponet-claude")
+- SSH 첫 fact-finding 박제 → `business/disk-survey/` (C: + D: + Users)
+- entities 시드 4건 ([[ponet]] + [[조대홍]] + 광주 + ponet-desktop)
+- mywiki 박제: entity 2건 (ponet + 조대홍) + raw junction + 본 결정 46 + strengths §13 사례 표 3번째 행 + log + PROTOCOL 15th 등재
+- work-start / work-end skill (weldRobot 패턴 사본 + ponet scope adapted)
+
+**UTTEC × Ponet cross-매칭 가설 4축 (검증 carry)**:
+
+| 가설 | UTTEC 자산 | Ponet 자산 |
+|---|---|---|
+| 1 ⭐⭐⭐ | [[weldRobot]] Path 4 add-on box | Cadence + Altium PCB |
+| 2 ⭐⭐ | [[revita]] LoRa 7,200대/월 | Ponet PCB 양산 capacity |
+| 3 ⭐⭐ | [[onDevice-ai]] AI 매트릭스 491 lines | 자체 호스팅 + 더존 ERP API |
+| 4 ⭐⭐ | [[위시캣활동]] PCB 일감 cluster | Ponet 양산 capacity |
+
+**carry**:
+- 결정 47 (협력 형태 결단) — Ponet 사장 미팅 후 박제
+- 결정 48 (UTTEC 자산 cross-매칭 후보) — 가설 4축 검증 후
+- D: 한글 깨짐 재조사 + C:\ponet\ deep dive
+- mywiki [[광주]] 지역 entity 신설 검토
+
+### carrier 패턴 3번째 사례 정착 확정 검증
+
+| 사례 | 일자 | vault | carrier 차별화 본질 |
+|---|---|---|---|
+| 1번째 | 2026-06-04 | `revitaProject/application/노지관리Wiki/` | 노지관리 5축 |
+| 2번째 | 2026-06-06 낮 | `C:/todo/weldRobot/` | 자산 이식 90%+ + Add-on SI + first mover |
+| **3번째** | **2026-06-06 밤** | **`C:/todo/ponet/`** ⭐ | **자체 SSH fact-finding + 협력 트랙 + 광주 거점** |
+
+→ **carrier 패턴 정착 확정**. 다음 사례 즉시 templates 적용 가능.
+
+→ 자세히 [[entities/ponet]] + [[entities/조대홍]] + [[strengths]] § 13 사례 표 3번째 행 + [[2026-06-06_carrier-단일진행-자산-인덱스-cascade]] 갱신 후보.
+
+---
 
 ## 판단 로그 (2026-06-06 저녁) — 결정 45 신설 ⭐⭐⭐ weldRobot vault 신설 (carrier 패턴 2번째 적용 사례)
 
