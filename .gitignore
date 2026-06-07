@@ -149,3 +149,6 @@ log.log
 
 # ASCII path workaround for NCS Korean path build
 _tmpbuild/
+
+# Tab M9 Linux 작업 임시 자산 (1.2GB, 재다운로드 가능)
+tablet/

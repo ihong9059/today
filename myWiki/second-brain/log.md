@@ -2,8 +2,31 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-07 (한림용인CC LoRa+Modbus time-mux 통합 펌웨어 완성 + 함정 박제 3건 + entity 갱신)
+updated: 2026-06-08 (자정 megasession Tab M9 Linux 시도 Phase A+B 완료, G3 ⏸ 주말 carry)
 ---
+
+## [2026-06-08] ingest 자정 ⭐⭐⭐ | Lenovo Tab M9 Linux 전환 시도 — Phase A+B 완료 + G3 ⏸
+
+**사건**: Tab M9 (TB310FU, Helio G80, Android 13) Linux PC 전환 시도. 사용자 의도 = "Android 안 보이게 Linux PC로". 5시간+ 작업.
+
+**완료**:
+- Phase A: Termux + Debian 13 trixie 설치 (proot, root 불필요)
+- Phase B: SSH 서버 + PC `ssh tab-m9` alias (port 2222, key 인증) ⭐ — Tab M9 = LAN 미니 Linux 서버로 즉시 활용 가능
+
+**중단 (G3 LineageOS)**:
+- Windows USB 드라이버 3중 벽 (fastboot HID 오인식 + mtkclient pyusb libusb1 + WinUSB 점유)
+- UsbDk 설치·Zadig 다운로드까지 진행, **드라이버 swap 미완**
+- 태블릿 데이터 손실 0 (unlock 0건 실행) — BROM 모드, POWER 15s로 Android 복구 가능
+- PC 측 자산 1.2 GB 확보 (`tablet/` .gitignore) — 주말 재시도 시 즉시 활용
+
+**박제 후보 (memory 권고)**:
+- `feedback_lenovo_mtk_fastboot_hid_trap.md` (신규) — Lenovo MTK tablet fastboot Windows HID 오인식
+- `feedback_mtkclient_windows_zadig.md` (신규) — Windows mtkclient = Zadig libusb-win32 사전 swap + UsbDk 필수
+- `reference_tab_m9_linux_setup.md` (신규) — Tab M9 = LAN Linux 서버 운영 + ssh tab-m9 alias
+
+**비즈니스 가치 평가**: 본 작업은 사이드 실험 (사업 직접 영향 0). D-day(6/9 한림용인CC) 임박 + 자정 megasession + 드라이버 벽 누적으로 중단 결정. 주말 G3 재시도 권고.
+
+**사용자 의도 vs 결과**: 80% 달성 (PC에서 ssh로 Linux 환경 접근), 20% 미달 (태블릿 화면 자체는 여전히 Android). 주말 G3 완료 시 100%.
 
 ## [2026-06-07] ingest ⭐⭐⭐⭐⭐ | 한림용인CC LoRa+Modbus time-multiplexed HW UART 통합 펌웨어 완성
 
