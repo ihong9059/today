@@ -7,6 +7,7 @@
  *   TX4 (SPI0 MOSI, P0.06, SW-UART 9600) → PCA10040 USB-VCOM 표시
  *   TX3 (SPI2 MOSI, P0.22, SW-UART 115200) → Debug console (raw / CRC)
  *   LED: BLUE P0.23 / RED P0.18 — 매 cycle 토글
+ *   Relay: J28 Pin 12 (P0.04) ACTIVE_HIGH — 매 cycle 토글 (1초 주기, 2026-06-07 추가)
  *
  * 변경 (이전 SW-UART 시도 → HW UART)
  *   bit 3 corruption (5/31 박제) 우회를 위해 RS485 측 UART를 HW UART로 승격.
@@ -37,6 +38,8 @@ static const struct gpio_dt_spec led_red =
 	GPIO_DT_SPEC_GET(DT_ALIAS(uttec_led_red), gpios);
 static const struct gpio_dt_spec led_blue =
 	GPIO_DT_SPEC_GET(DT_ALIAS(uttec_led_blue), gpios);
+static const struct gpio_dt_spec relay =
+	GPIO_DT_SPEC_GET(DT_ALIAS(uttec_relay), gpios);
 static const struct device *uart0 = DEVICE_DT_GET(DT_NODELABEL(uart0));
 
 static struct sw_uart tx3;  /* SPI2 MOSI = P0.22 — Debug (115200) */
@@ -134,6 +137,7 @@ int main(void)
 {
 	gpio_pin_configure_dt(&led_red, GPIO_OUTPUT_INACTIVE);
 	gpio_pin_configure_dt(&led_blue, GPIO_OUTPUT_INACTIVE);
+	gpio_pin_configure_dt(&relay, GPIO_OUTPUT_INACTIVE);
 
 	/* SW-UART TX3 / TX4 (display channels) */
 	sw_uart_init(&tx3, DEVICE_DT_GET(DT_NODELABEL(spi2)), SW_UART_BAUD_115200);
@@ -210,6 +214,7 @@ int main(void)
 
 		gpio_pin_toggle_dt(&led_red);
 		gpio_pin_toggle_dt(&led_blue);
+		gpio_pin_toggle_dt(&relay);
 		cycle++;
 		k_msleep(1000);
 	}

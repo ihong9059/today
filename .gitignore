@@ -146,3 +146,6 @@ remotion-project/out/Wishket155381/
 
 # root log 자동 생성
 log.log
+
+# ASCII path workaround for NCS Korean path build
+_tmpbuild/

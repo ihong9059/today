@@ -2,8 +2,36 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-06 (ponet-claude 카드 3 ingest — entities/광주 + 조달청-MAS + 정보통신공사 신설 + ponet entity links 5 추가 + cross-vault broker 우회 진행 cycle 첫 사례 / 이전 야간 2회차: Ponet 사업 본질 확정 + UTTEC LED 디밍 직접 정합 발견 + 결정 47)
+updated: 2026-06-07 (한림용인CC LoRa+Modbus time-mux 통합 펌웨어 완성 + 함정 박제 3건 + entity 갱신)
 ---
+
+## [2026-06-07] ingest ⭐⭐⭐⭐⭐ | 한림용인CC LoRa+Modbus time-multiplexed HW UART 통합 펌웨어 완성
+
+**사건**: 한림용인CC Tier 2 sub-vault에서 LoRa+Modbus 통합 펌웨어 작성 (`firmware/lora_tx_water_level/` + `firmware/lora_rx_display/`). nRF52832 UARTE 인스턴스 1개 한계를 **time-multiplexing (PSEL runtime 동적 변경)**으로 해결 → 양쪽 모두 HW UART 사용 → 정확성 최대. TX→RX 무손실 검증 완료 (패킷 누락 0).
+
+**기술 박제**:
+- TX (lora_tx_water_level): UART0 default=LoRa (P0.11/P0.13). 매 3초 cycle에서 uart_to_rs485() 임시 변경 → Modbus → uart_to_lora() 복원 → LoRa 송신.
+- TX node ID 빌드 시 변경 (`#define TX_NODE_ID 1/2/3`) — **9 노드 확장 base** (펌프×2 + 중계기×2 + 고가수조×2 + 저장탱크×3)
+- E22 자동 setup: REG0=0x60 (9600 baud + 0.3k air = max range LOS 15-20km, 30dBm max 1W), CH 72 (922.125 MHz Korea ISM)
+- 메시지 포맷: `tx<N>:<센서값>\r\n` 단순
+
+**함정 박제 3건 (메모리)**:
+1. `feedback_nrf_uarte_psel_time_mux.md` (신규) — 🚨 PSEL runtime 변경 + ENABLE 0/8 후 TASKS_STARTRX = 1 명시 trigger 필수. Zephyr driver 자동 안 함. 누락 시 RX 0 byte 무한 반복.
+2. `feedback_e22_900t_config_baud.md` (갱신, 4회차) — E22 Config (9600 고정) / Normal (REG0 SPED 값, default 0xE0 = 115200) baud 다름. 펌웨어가 REG0 일치 필수.
+3. `feedback_dont_assume_ask_when_unclear.md` (신규) — 🚨 짐작 금지. 5/19 검증본 (pca10040_e22_900t_tx/rx) 핀맵·setting 비교가 진단 첫 단계.
+
+**Design pattern 확정**: default = main role (LoRa), 임시 phase = 보조 role (RS485). cycle 끝 = 항상 main 상태 (sleep 안정성 + Modbus FAIL case 자동 복원). time-multiplexed 페리퍼럴 일반 패턴 — 다른 LoRa 노드·다른 골프장·다른 SI 시공 재사용.
+
+**박제 위치**:
+- `project/골프_수조_물관리/references/pinMap.md` § 11 통합 펌웨어 구조 신규
+- `project/골프_수조_물관리/wiki/log.md` § [2026-06-07] firmware ⭐⭐⭐⭐⭐
+- `entities/한림용인cc-고가수조.md` § UTTEC 자산 매칭 2026-06-07 항목 신규
+- 메모리 신규 2건 + 갱신 1건
+
+**비즈니스 가치**:
+- 한림용인CC 본 프로젝트 본질 동작 검증 = **시공 단계 진입 가능** (5/19 D-day 시공 검증)
+- 9 노드 확장 base 확보 = 한 골프장 풀체인 시공 자산화
+- 함정 박제로 한림그룹 내 다음 골프장 시공 시 시간 50%+ 절감
 
 ## [2026-06-06] absorb ⭐⭐⭐ | ponet-claude 카드 3 ingest — entities/광주 + 조달청-MAS + 정보통신공사 신설 + ponet entity links 5 추가
 

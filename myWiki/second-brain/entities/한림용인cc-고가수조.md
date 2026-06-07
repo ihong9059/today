@@ -102,6 +102,23 @@ subvault: project/골프_수조_물관리/wiki/
 
 ## UTTEC 자산 매칭 — 즉시 활용 가능
 
+### ⭐⭐⭐⭐⭐ 2026-06-07 — Modbus + LoRa time-multiplexed HW UART 통합 펌웨어 완성
+
+`firmware/lora_tx_water_level/` + `firmware/lora_rx_display/`:
+- nRF52832 UARTE 1개 인스턴스 한계를 **PSEL runtime 동적 변경 (time-multiplexing)**으로 해결
+- RS485 Modbus + LoRa 모두 HW UART 사용 (정확성 최대)
+- TX node ID 빌드 시 변경 (`#define TX_NODE_ID 1,2,3`) — **9 노드 확장 base**
+- 3초 cycle (LoRa air rate 0.3k 적합)
+- 메시지 포맷: `tx<N>:<센서값>\r\n`
+- E22 자동 setup (REG0=0x60 = 9600 + 0.3k + max range LOS 15-20km, 30dBm max 1W)
+- design pattern: default = LoRa (main), RS485 = 임시 phase
+
+검증 완료 (TX → RX 무손실, 패킷 누락 0).
+
+함정 박제 3건 — `feedback_nrf_uarte_psel_time_mux.md` (STARTRX 명시 trigger) + `feedback_e22_900t_config_baud.md` (Config 9600 / Normal REG0 baud) 갱신 + `feedback_dont_assume_ask_when_unclear.md` (5/19 검증본 reference 우선 검토).
+
+상세: `firmware/wiki/log.md` § [2026-06-07] firmware + `references/pinMap.md` § 11.
+
 ### 좀 전 완성된 펌웨어 자산 (2026-05-10)
 
 `oldProject/test/bleModule/`:
@@ -122,14 +139,16 @@ subvault: project/골프_수조_물관리/wiki/
 | 무선 통신 1~2km NLOS | 골프장 코스 가로지르는 통신 |
 | 임베디드 시공·필드 | 한림광릉CC 2020년 + 일본 자전거주차장 |
 
-## 일정 (실제 진행, 2026-05-17 갱신) ⭐
+## 일정 (실제 진행, 2026-06-07 갱신) ⭐⭐
 
 | 날짜 | 단계 | 상태 |
 |---|---|:-:|
 | 2026-05-12 | 1차 현장 방문, 담당자와 가능성 확인 | ✅ 완료 |
-| **2026-05-19** | **2차 현장 방문 — LoRa 통신 거리·상태 검증 + 계약서 사인** ⭐ D-day | ⏳ D-2 |
-| 2026-05-19 이후 | 자재 발주 (케이스 + 수위센서 2개) | ⏸ 대기 |
-| ~2026-07-19 | **시공 완료 (계약 후 2개월 이내)** | ⏸ 대기 |
+| 2026-05-19 | 2차 현장 방문 + 계약서 사인 | ✅ |
+| 2026-05-31 ~ 2026-06-07 | 펌웨어 개발 (5-ch UART → 7-ch → Modbus → LoRa → time-mux 통합) | ✅ 완료 |
+| **2026-06-09 (화) ⭐ D-day** | **3차 현장 방문 — 통합 펌웨어 실제 동작 테스트 (한림용인CC)** | ⏳ D-2 |
+| 2026-06-09 이후 | 조립 + 나머지 자재 통합 | ⏸ 대기 |
+| **~2026-06-21 ~ 06-23** | **납품 완성 (현장 테스트 + 2주 후)** | ⏸ 대기 |
 
 → **5/10 README의 D-3/D-7/D-10 가설 일정은 시공 일정 미확정 상태 추정**. 위가 실제 진행.
 → Tier 2 sub-vault (~60일 라이프사이클)에 정확히 맞음.

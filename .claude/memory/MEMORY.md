@@ -31,11 +31,14 @@
 - [RPi USB ethernet 직결 셋업](reference_rpi_usb_ethernet_direct.md) — PC ↔ RPi 1:1 SSH (10.0.0.1 ↔ 10.0.0.2). Tailscale·Wi-Fi 무관. 본 PC `Host rasp_b3_direct` alias + 이더넷 9 (Realtek USB GbE) 이미 셋업. 새 RPi 추가 시 RPi 측만 셋업하면 즉시 사용
 - [RPi 본체 ethernet + ICS DHCP 셋업](reference_rpi_ics_dhcp_setup.md) — 본체 이더넷 6 (Intel I219-V) + Wi-Fi 4 ICS 활성화 → RPi DHCP 192.168.137.x 자동 + 인터넷 공유. RPi 측 셋업 변경 0. ncpa.cpl → Wi-Fi 4 공유 탭 5단계 GUI. RPi 3 B+ 검증 완료 (192.168.137.248, MAC B8-27-EB-25-F8-4C, hostname uttec)
 - [Terminal 기본 디렉토리 C:\todo](reference_terminal_default_dir.md) — myhome-lenovo cmd registry AutoRun + PowerShell $PROFILE 적용 (5/21). 새 PC 셋업 시 같은 절차 재적용
-- [NCS 빌드 ↔ cmd AutoRun 충돌 ⭐](feedback_ncs_build_cmd_autorun_conflict.md) — NCS/Zephyr 빌드 시 AutoRun이 ninja/ar.exe CWD를 망가뜨려 빌드 실패. 빌드 전후 AutoRun 일시 해제 패턴 필수
+- [NCS 빌드 ↔ cmd AutoRun 충돌 🚨 PREEMPTIVE](feedback_ncs_build_cmd_autorun_conflict.md) — 🚨 **west build/flash, cmake --build, ninja, nrfjprog flash 호출 BEFORE 무조건 AutoRun 해제** (try/finally). 함정 발견 후 적용 X — 호출 직전 사전 비활성화. 2회 재발 박제 (5/31, 6/7)
+- [UTTEC BLE Module flash 후 POWER reset 필수 🚨](feedback_uttec_ble_module_power_reset.md) — 🚨 **west flash + soft reset 후 LED/UART/GPIO 무동작 = POWER reset 우선 권고**. chip ID/PC 정상이어도 외부 동작 0. 첫 액션 = 외부 전원 OFF/ON 1회. 6/7 박제 (SW 진단 시간 낭비 후 사용자 지적)
+- [짐작 금지 — 모호하면 무조건 질문 🚨](feedback_dont_assume_ask_when_unclear.md) — 🚨 **하드웨어 결선·핀맵·외부 모듈·사용자 의도 unspecified면 짐작 금지, 표 형식 옵션으로 질문**. dev kit 모델 보고 핀맵 추정 금지. "동일/같은" 표현 자체 해석 금지. 6/7 박제 (LoRa TX/RX dev kit 짐작 → 잘못된 펌웨어 작성·flash·재작업)
 - [vault scope 격리](feedback_vault_scope_isolation.md) — vault 안 작업 시 외부 자산 자동 동기화 금지, /vault-end ≠ /work-end (책임 분리)
 - [응답 진행 로그 분리](feedback_progress_log_isolation.md) — 매 응답은 이번 prompt 내용만 (자세하게 OK), 이전 prompt 재서술 금지, 전체 누적은 _current_progress.md에
 - [할일·프롬프트 표시 — 사용자 행동 구분](feedback_todo_display_user_action.md) — 할일 테이블+응답 본문 전체. 사용자 직접 행동은 👤 (🔴+👤 시급), Claude 처리 가능은 🤖. 액션 요청·결정·확인 prompt에도 동일 적용
-- [E22 Config 모드 baud 9600 고정 ⭐](feedback_e22_900t_config_baud.md) — E22-400T/900T LoRa register read/write 시 **무조건 9600 baud**(REG0 무관) + Mapping B(Config=M0=0 M1=1 / Sleep=M0=1 M1=1 UART OFF). 5/9·5/10·5/19 같은 함정 3회 반복
+- [E22 두 모드별 baud 함정 🚨 Config 9600 + Normal REG0](feedback_e22_900t_config_baud.md) — 🚨 **Config(M0=0,M1=1) = 9600 고정** / **Normal(M0=0,M1=0) = REG0 SPED 값 (default 0xE0 = 115200)**. 펌웨어 UART baud는 REG0 일치해야 LoRa 송수신 OK. Mapping B + Sleep(1,1)=UART OFF. 4회 박제 (5/9·5/10·5/19·6/7)
+- [nRF52 UARTE PSEL time-mux STARTRX 필수 🚨](feedback_nrf_uarte_psel_time_mux.md) — 🚨 **NRF_UARTE0 PSEL runtime 변경 + ENABLE 0/8 후 TASKS_STARTRX = 1 명시 필수**. Zephyr driver 자동 처리 안 함. 누락 시 RX 0 byte 무한 반복. 6/7 박제 (한림용인CC RS485+LoRa time-mux 첫 적용)
 - [_inbox 카드 lifecycle 정책 ⭐](feedback_inbox_lifecycle.md) — `~~strikethrough~~`는 5단계 lifecycle 완료에만 허용. pending ≥ 5 시 흡수 megasession이 다른 작업보다 우선. 5/17~19 onDevice 카드 6장 누락 사건 박제
 - [uttecHome DigitalOcean 이관 — 보류](project_uttechome_deploy_hold.md) — 5/20 사용자 결정. local 정리 완료 후 적용. 그때까지 vault 로컬 진화만, deploy 권고 금지
 - [uttec-search vault 신설 (10th)](project_uttec_search.md) — Mac/Ubuntu ~/uttec-search/, search 9th cross-platform 첫 fork, backend 8891/frontend 8890, uv venv 우회, uttec-vault 인덱싱

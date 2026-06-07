@@ -2,7 +2,7 @@
 title: 한림용인CC 시공 진행 로그
 type: log
 created: 2026-05-17
-updated: 2026-06-01 (TX4/RX4 USB-VCOM bring-up + line-buffered loopback 검증)
+updated: 2026-06-07 (LoRa + Modbus time-multiplexed HW UART 통합 펌웨어 검증 완료)
 ---
 
 # 한림용인CC 고가수조 자동급수 무선제어 — 진행 로그
@@ -10,6 +10,116 @@ updated: 2026-06-01 (TX4/RX4 USB-VCOM bring-up + line-buffered loopback 검증)
 > Tier 2 sub-vault. 시공·진행·결정 단계별 박제.
 >
 > action: start / decision / purchase / site / firmware / revenue / milestone / complete / absorb
+
+## [2026-06-07] decision ⭐⭐⭐ | 시공 일정 확정 — 6/9(화) 현장 동작 테스트 → 2주 후 완성·납품
+
+오늘 펌웨어 단계 완성 후 사용자 결단:
+
+| 일정 | 단계 |
+|---|---|
+| **2026-06-09 (화) D-day** | 한림용인CC 3차 현장 방문 — 통합 펌웨어 실제 동작 테스트 |
+| 2026-06-09 이후 | 조립 + 나머지 자재 통합 |
+| **~2026-06-21 ~ 06-23** | 납품 완성 (현장 테스트 + 2주 후) |
+
+### 6/9 현장 방문 준비 체크리스트
+
+**필수 자재**:
+- [ ] TX 보드: PCA10056 + BLE Module #1 + E22 + 안테나
+- [ ] RX 보드: PCA10100 + BLE Module #2 + E22 + 안테나
+- [ ] QDY30A-B 수위센서 + MAX485 RS485 모듈 + RS485 케이블
+- [ ] PuTTY 노트북 (양쪽 USB-VCOM 모니터링)
+- [ ] J-Link 케이블 + USB 어댑터
+- [ ] 전원 어댑터 (PCA10056·10100 USB)
+
+**보조 자산**:
+- [ ] `lora_test_tx` 펌웨어 (counter 테스트, 거리 측정용)
+- [ ] `lora_read_reg` 펌웨어 (E22 register 진단)
+- [ ] pinMap.md 인쇄본 (현장 결선 참조)
+
+**검증 항목**:
+1. 양쪽 보드 통합 펌웨어 정상 부팅 (POWER reset)
+2. Modbus 수심센서 응답 정확성 (실제 값 vs 표시)
+3. LoRa 거리 시험 (한림용인CC 노선 1, 2 점대점 통신)
+4. NLOS 환경 (코스 사이) 통신 안정성
+5. 중계기 필요 여부 결단
+
+**시공 단계 분기**:
+- 거리 OK → 중계기 축소 (2 → 1 또는 0) 가능
+- 거리 약함 → 중계기 위치 보정 + 자체조립 진행
+
+## [2026-06-07] firmware ⭐⭐⭐⭐⭐ | LoRa + Modbus time-multiplexed HW UART 통합 펌웨어 완성
+
+**증분**: 6/2 Modbus 풀체인 검증 (HW UART RS485 단독) → 6/7 저녁 **양쪽 모두 HW UART 사용 통합 완성**. nRF52832의 UARTE 인스턴스 1개 한계를 **time-multiplexing (PSEL runtime 동적 변경)**으로 해결. 한림용인CC 본 프로젝트 본질 동작 검증 완료.
+
+**구성 (TX 노드, lora_tx_water_level)**:
+- NRF_UARTE0 default = LoRa (P0.11/P0.13)
+- 매 3초 cycle: uart_to_rs485() (PSEL → P0.15/P0.02) → Modbus 폴링 → uart_to_lora() (default 복원) → LoRa 송신
+- 메시지: `tx<N>:<level>\r\n` (예: `tx1:373`)
+- TX_NODE_ID = 1 (빌드 시 변경, 9 노드 확장 base)
+- SPI0/SPI2 SW-UART = USB-VCOM display + Debug TX3 (115200)
+
+**구성 (RX 노드, lora_rx_display)**:
+- NRF_UARTE0 = LoRa (P0.11/P0.13)
+- byte 수신 → ring buffer → `\n` 만나면 line emit → USB-VCOM에 그대로 echo
+- 부팅 시 E22 자동 setup (REG0=0x60: 9600+0.3k+30dBm max)
+
+**E22 setup target_cfg (양쪽 동일)**:
+```
+ADDR=0000 NETID=00
+REG0=0x60 (9600 + 0.3k air = max range LOS 15-20km / NLOS 1-3km)
+REG1=0x00 (TX 30 dBm = max 1W)
+REG2=0x48 (CH 72 = 922.125 MHz Korea ISM 인증)
+REG3=0x80 (RSSI byte ON + transparent)
+```
+
+**검증 결과**:
+- TX: 매 3초 `R` → `n=7` (Modbus 응답) → `L` → `tx1:373` 송신 정상
+- RX: 동일 메시지 그대로 수신·표시
+- 패킷 손실 0
+- USB-VCOM SW-UART 9600 cosmetic corruption ('L'→'D', 'x'→'p', '='→'5' bit 3 flip) — LoRa 데이터 무손실 (HW UART)
+
+**핵심 발견 — 박제된 함정 3가지**:
+
+1. **PSEL runtime 변경 시 TASKS_STARTRX = 1 명시 trigger 필수** ⭐
+   - Zephyr UART driver는 ENABLE 0/8 토글 후 자동 STARTRX 안 함
+   - 누락 시 RX 0 byte 무한 반복 (Modbus 응답 안 옴)
+   - 메모리: `feedback_nrf_uarte_psel_time_mux.md` 신설
+
+2. **E22 두 모드별 baud 다름** (사용자 직접 발견)
+   - Config (M0=0, M1=1) = 9600 고정 (register read/write 시)
+   - Normal (M0=0, M1=0) = REG0 SPED 값 (default 0xE0 = 115200)
+   - 펌웨어 baud가 REG0과 일치해야 송수신 OK
+   - 메모리 갱신: `feedback_e22_900t_config_baud.md` (4회차 박제, 5/9·5/10·5/19·6/7)
+
+3. **5/19 검증본 reference 우선 검토** (사용자 지적)
+   - `firmware/pca10040_e22_900t_tx/`와 비교하여 차이점 발견 (baud)
+   - 짐작 금지 — 모르면 검증본 직접 read해서 fact 확인
+   - 메모리: `feedback_dont_assume_ask_when_unclear.md` 신설
+
+**Design pattern 확정 — default = main role**:
+- overlay uart0_default = LoRa (main)
+- RS485 = uart_to_rs485() 임시 phase
+- cycle 끝 = 항상 LoRa 상태 (sleep 중)
+- Modbus FAIL case에도 LoRa 복원 보장
+
+본 pattern은 time-multiplexed 페리퍼럴 일반 패턴. 다른 LoRa 노드·다른 골프장·다른 SI 시공 재사용 가능.
+
+**리소스**:
+- TX FLASH: 28 KB / 512 KB (5.5%)
+- TX RAM: 22 KB / 64 KB (34%)
+- RX FLASH: 26 KB / 512 KB (5%)
+- RX RAM: 22 KB / 64 KB (34%)
+
+**다음 (시공 단계)**:
+- 거리·NLOS 실측 테스트 (현장 답사)
+- TX2, TX3 노드 펌웨어 빌드 (다중 노드 확장)
+- 펌프 제어·중계기 통합
+
+**박제**:
+- references/pinMap.md § 11 통합 펌웨어 구조 신규 추가
+- firmware/lora_tx_water_level + lora_rx_display + lora_test_tx + lora_read_reg (4 펌웨어 자산)
+- 메모리 3 신설 + 1 갱신 (총 4건)
+- wiki/log.md 본 항목
 
 ## [2026-06-01] firmware | TX4/RX4 USB-VCOM 양방향 + line-buffered loopback 검증 ✅
 

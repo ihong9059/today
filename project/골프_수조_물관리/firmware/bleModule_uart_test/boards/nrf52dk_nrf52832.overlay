@@ -50,24 +50,7 @@
 		};
 	};
 
-	/* SPI1 MOSI — unused in Modbus master demo (UART0가 RS485 직접 처리).
-	 * dummy pinmap (P0.12 SCK, P0.04 MOSI) to keep SPI peripheral alive. */
-	spi1_default_alt: spi1_default_alt {
-		group1 {
-			psels = <NRF_PSEL(SPIM_SCK, 0, 12)>,
-				<NRF_PSEL(SPIM_MOSI, 0, 4)>;
-			bias-pull-up;
-		};
-	};
-
-	spi1_sleep_alt: spi1_sleep_alt {
-		group1 {
-			psels = <NRF_PSEL(SPIM_SCK, 0, 12)>,
-				<NRF_PSEL(SPIM_MOSI, 0, 4)>;
-			low-power-enable;
-			bias-pull-up;
-		};
-	};
+	/* SPI1 disabled — P0.04 freed for relay GPIO output (J28 Pin 12, 2026-06-07). */
 
 	/* SPI2 MOSI = SW-UART TX3 (Debug console, P0.22, 8 MHz SPI for 115200 baud) */
 	spi2_default_alt: spi2_default_alt {
@@ -127,13 +110,7 @@
 	pinctrl-names = "default", "sleep";
 };
 
-&spi1 {
-	status = "okay";
-	compatible = "nordic,nrf-spim";
-	pinctrl-0 = <&spi1_default_alt>;
-	pinctrl-1 = <&spi1_sleep_alt>;
-	pinctrl-names = "default", "sleep";
-};
+&spi1 { status = "disabled"; };
 
 &spi2 {
 	status = "okay";
@@ -151,6 +128,7 @@
 	aliases {
 		uttec-led-red = &uttec_led_red;
 		uttec-led-blue = &uttec_led_blue;
+		uttec-relay = &uttec_relay;
 	};
 
 	uttec_leds {
@@ -162,6 +140,14 @@
 		uttec_led_blue: led_blue {
 			gpios = <&gpio0 23 GPIO_ACTIVE_LOW>;
 			label = "UTTEC BLUE D21";
+		};
+	};
+
+	uttec_relays {
+		compatible = "gpio-leds";
+		uttec_relay: relay_0 {
+			gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
+			label = "UTTEC Relay J28 Pin 12";
 		};
 	};
 };

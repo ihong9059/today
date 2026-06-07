@@ -1,0 +1,93 @@
+/*
+ * UTTEC BLE Module — LoRa loopback test TX (단순 counter, 2026-06-07)
+ *
+ *   HW UART0 (P0.11 TX / P0.13 RX, 9600 8N1) → LoRa E22 RXD/TXD  ★ HW UART
+ *   SPI0 MOSI (P0.06) → SW-UART TX4 (9600) → PCA10040 USB-VCOM display
+ *
+ *   LoRa Normal transparent mode:
+ *     M0 = P0.17 (J28 Pin 6)
+ *     M1 = P0.19 (J28 Pin 8)
+ *
+ *   LED: BLUE P0.23 / RED P0.18 — 매 cycle 토글
+ */
+
+&pinctrl {
+	uart0_default: uart0_default {
+		group1 {
+			psels = <NRF_PSEL(UART_TX, 0, 11)>;
+		};
+		group2 {
+			psels = <NRF_PSEL(UART_RX, 0, 13)>;
+			bias-pull-up;
+		};
+	};
+
+	uart0_sleep: uart0_sleep {
+		group1 {
+			psels = <NRF_PSEL(UART_TX, 0, 11)>,
+				<NRF_PSEL(UART_RX, 0, 13)>;
+			low-power-enable;
+		};
+	};
+
+	spi0_default_alt: spi0_default_alt {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 16)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 6)>;
+			bias-pull-up;
+		};
+	};
+
+	spi0_sleep_alt: spi0_sleep_alt {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 16)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 6)>;
+			low-power-enable;
+			bias-pull-up;
+		};
+	};
+};
+
+&uart0 {
+	status = "okay";
+	current-speed = <9600>;   /* target REG0=0x60: 9600 baud + 0.3k air (max range, max TX power) */
+	pinctrl-0 = <&uart0_default>;
+	pinctrl-1 = <&uart0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&i2c0 { status = "disabled"; };
+&i2c1 { status = "disabled"; };
+
+&spi0 {
+	status = "okay";
+	compatible = "nordic,nrf-spim";
+	pinctrl-0 = <&spi0_default_alt>;
+	pinctrl-1 = <&spi0_sleep_alt>;
+	pinctrl-names = "default", "sleep";
+};
+
+&spi1 { status = "disabled"; };
+&spi2 { status = "disabled"; };
+
+/* P0.13 = button0 default. UART0 RX와 충돌 막기 위해 disable. */
+&button0 { status = "disabled"; };
+
+/ {
+	aliases {
+		uttec-led-red = &uttec_led_red;
+		uttec-led-blue = &uttec_led_blue;
+	};
+
+	uttec_leds {
+		compatible = "gpio-leds";
+		uttec_led_red: led_red {
+			gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
+			label = "UTTEC RED D22";
+		};
+		uttec_led_blue: led_blue {
+			gpios = <&gpio0 23 GPIO_ACTIVE_LOW>;
+			label = "UTTEC BLUE D21";
+		};
+	};
+};
