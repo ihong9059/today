@@ -2,7 +2,36 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-06 야간 2회차 (Ponet 사업 본질 확정 — 정보통신공사·가로등설계·도시정비 + UTTEC LED 디밍 원조사업 직접 정합 발견 = 무선 가로등 IoT 공공 조달 first mover 결정타, 결정 47 신설, 자체 SSH fact-finding 신설 패턴 검증 2 사이클 / 이전 야간: ponet vault 신설 carrier 3번째 + 결정 46)
+updated: 2026-06-06 (ponet-claude 카드 3 ingest — entities/광주 + 조달청-MAS + 정보통신공사 신설 + ponet entity links 5 추가 + cross-vault broker 우회 진행 cycle 첫 사례 / 이전 야간 2회차: Ponet 사업 본질 확정 + UTTEC LED 디밍 직접 정합 발견 + 결정 47)
+---
+
+## [2026-06-06] absorb ⭐⭐⭐ | ponet-claude 카드 3 ingest — entities/광주 + 조달청-MAS + 정보통신공사 신설 + ponet entity links 5 추가
+
+**사건**: ponet-claude (15th, [[ponet]] vault) 카드 3 발신 → mywiki `_inbox/pending/` 도착 → mywiki-claude role 본 세션 ingest (사용자 명시 결단 "a, c, d 진행 → 2 진행" — vault scope 격리 정책 cross-vault broker 우회 첫 사례).
+
+| 카드 id | subject | priority | 결과 |
+|---|---|:-:|:-:|
+| 2026-06-06-004 | mywiki entity [[광주]] 신설 — Ponet 거점 + UTTEC 거점 확장 | normal | ✅ |
+| 2026-06-06-005 | mywiki entity [[조달청-MAS]] 신설 — 공공 조달 채널 + UTTEC OEM 정합 | high | ✅ |
+| 2026-06-06-006 | mywiki entity [[정보통신공사]] 신설 — Ponet 본업 + UTTEC LED 디밍·무선 IoT 정합 | high | ✅ |
+
+**박제 결과**:
+
+- `entities/광주.md` 신설 — 광주광역시 + 전남 일대 (장성·환경설비협회) 거점 entity. UTTEC × 광주 진입 가설 4 (양 거점·R&D 가산점·제조업 클러스터·환경설비협회 채널) + 광주광역시 정부 R&D 채널 5 (산업혁신기반·테크노파크·GIST·제조업클러스터·환경설비협회 광주) + 분리 운영 모델 (분기 1회 정기 미팅 + SSH·Tailscale 일상 + 카카오톡 긴급)
+- `entities/조달청-MAS.md` 신설 — 다수공급자계약 진입 표준 패턴 + UTTEC 진입 가설 3 (LED 디밍 결정타 + R&D 1억 인증 + 양산 9종) + Ponet 보유 fact (ASL_조달 OEM 제안서 + 직접생산확인서 105 폴더 + 나라장터 + 2026 입찰 + 시설공사 원가계산 + 낙찰자결정기준)
+- `entities/정보통신공사.md` 신설 — 정보통신공사업법 + 표준일위대가 + 시중노임단가 + 본질적 채널 5 (가로등 설계 + 무선 IoT 가로등 ⭐⭐⭐⭐ + CCTV·비상방송 + 도시정비·농공단지 + 조달청 MAS) + UTTEC 정합 자산 6 + Ponet fact base 6 + narrative 결정타
+- `entities/ponet.md` links 5 추가 (광주 + 조달청-MAS + 정보통신공사 + 양산제품 + dgist-esco-led)
+
+**cross-vault broker 우회 진행 cycle 첫 사례**:
+
+vault scope 격리 정책 본질 = "본 vault scope 안 작업 시 외부 자산 자동 동기화 금지". 원칙적으로 mywiki entity 신설은 mywiki-claude 책임. 다만 사용자 명시 결단 ("2 진행")으로 ponet-claude 세션에서 cross-vault broker 우회 진행 — broker push/pull 외 직접 mywiki Write 첫 사례 (carry: 다음 mywiki 세션 audit).
+
+**다음 단계**:
+
+- ponet `_inbox/pending/` done 카드 3 회신 작성
+- broker push (mywiki outbox 없음 → 본 Claude가 직접 ponet pending 작성)
+- ponet-claude ack 흡수 → ponet `_inbox/processed/` 이동 (lifecycle 완성)
+
 ---
 
 ## [2026-06-06] use 야간 2회차 ⭐⭐⭐⭐ | Ponet 사업 본질 확정 + UTTEC LED 디밍 원조사업 직접 정합 발견 (무선 가로등 IoT 공공 조달 first mover 결정타)

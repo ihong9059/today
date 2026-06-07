@@ -4,7 +4,7 @@ type: entity
 created: 2026-06-06
 updated: 2026-06-06 야간 (E: 드라이브 2차 fact-finding 결과 사업 본질 확정 — 정보통신공사·가로등설계·도시정비·농공단지 환경설비 / UTTEC LED 디밍 원조사업 자산 직접 정합 cross-매칭 가설 1 결정타 발견 / 이전: vault 신설 carrier 3번째 사례)
 tags: [Ponet, 협력회사, 광주, 전남장성, 조대홍, vault분리, carrier3번째, 정보통신공사, 가로등설계, 도시정비, 농공단지, 환경설비공사, 조달청MAS, 직접생산확인서, 환경설비협회, 건설감리원, UTTEC-LED디밍-정합, 무선가로등IoT결정타]
-links: [strengths, ai-direction, weldRobot, revita, onDevice-ai, 위시캣활동, 정부R&D실증사업, 영업전략, 조대홍, reference_ponet_ssh]
+links: [strengths, ai-direction, weldRobot, revita, onDevice-ai, 위시캣활동, 정부R&D실증사업, 영업전략, 조대홍, 광주, 조달청-MAS, 정보통신공사, 양산제품, dgist-esco-led, reference_ponet_ssh]
 ---
 
 # Ponet — UTTEC 협력 회사
