@@ -2,8 +2,21 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-08 (자정 megasession Tab M9 Linux 시도 Phase A+B 완료, G3 ⏸ 주말 carry)
+updated: 2026-06-09 (자정 megasession tabM9 vault 신설 + B 모델 + NCS 한글 path 회피 + D-day 펌웨어 fresh 검증)
 ---
+
+## [2026-06-09] ingest 자정 ⭐⭐⭐ | Tab M9 Termux 네이티브 전환 + tabM9 vault 신설 (15th multi-agent) + D-day 펌웨어 fresh 검증
+
+- 핵심:
+  - **B 모델 (dumb terminal) 정착** — Claude Code 2.x linux-arm64-android 미지원 함정 발견 → 본 PC가 claude 호스트, Tab M9는 ssh terminal
+  - **tabM9 vault 신설** — `C:\todo\tabM9\` (weldRobot 패턴 복제, SELF_ID="tabm9-claude", 15번째 multi-agent 노드)
+  - **NCS 빌드 한글 path 인코딩 함정** — subst W: 영문 mount 회피 패턴 정착
+  - **D-day 펌웨어 lora_tx_water_level fresh 빌드 3회 결정론적 검증** (md5 DE6C24A4..., 77017 B)
+  - tabM9/test/led_blink_4/ Zephyr LED chase PoC 검증 (52619 B)
+- 다음 carry:
+  - myWiki/entities/tabM9.md 신설 (사용자 결단 후)
+  - ai-direction §결정 prepend (Tab M9 dumb terminal 모델 + tabM9 vault 신설)
+  - 메모리 박제 후보 6종 (NCS 한글 path, Claude Code arm64-android, B 모델, OpenSSH, Tab M9 ssh alias, tabM9 vault)
 
 ## [2026-06-08] ingest 자정 ⭐⭐⭐ | Lenovo Tab M9 Linux 전환 시도 — Phase A+B 완료 + G3 ⏸
 
