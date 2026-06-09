@@ -22,6 +22,7 @@
 #include <zephyr/drivers/uart.h>
 #include <zephyr/sys/ring_buffer.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "sw_uart.h"
@@ -29,6 +30,16 @@
 #define E22_M0_PIN   17
 #define E22_M1_PIN   19
 #define E22_AUX_PIN  20
+
+/* Buzzer/relay alarm — J28 Pin 12 (P0.04, active low).
+ * Line buffer 완성 시 "tx<N>:<level>\r\n" 파싱 → level 비교.
+ *   level <  ALARM_THRESHOLD → LOW (ON, beep)
+ *   level >= ALARM_THRESHOLD → HIGH (OFF)
+ * 파싱 실패 (prefix 불일치 등) 시 직전 상태 유지. */
+#define RELAY_PIN          4
+#define ALARM_THRESHOLD    400
+#define RELAY_ON_LEVEL     0
+#define RELAY_OFF_LEVEL    1
 
 #define LINE_BUF_SIZE   64
 
@@ -172,6 +183,9 @@ int main(void)
 	gpio_pin_configure_dt(&led_red, GPIO_OUTPUT_INACTIVE);
 	gpio_pin_configure_dt(&led_blue, GPIO_OUTPUT_INACTIVE);
 
+	/* Buzzer/relay P0.04 active low — 부팅 시 HIGH (OFF) */
+	gpio_pin_configure(gpio0, RELAY_PIN, GPIO_OUTPUT_HIGH);
+
 	sw_uart_init(&tx4, DEVICE_DT_GET(DT_NODELABEL(spi0)), SW_UART_BAUD_9600);
 	k_msleep(300);
 	emit("\r\nUTTEC RX: LoRa HW UART0 echo (line by \\n)\r\n");
@@ -199,6 +213,34 @@ int main(void)
 				/* line emit — 받은 그대로 (TX 메시지에 \r\n 포함되어 있음) */
 				sw_uart_write(&tx4, line_buf, line_len);
 				gpio_pin_toggle_dt(&led_blue);
+
+				/* Parse: ':' 위치만 찾고 그 뒤 숫자 → level.
+				 * Prefix tolerance — TX PSEL switch 후 첫 byte 't' 손실 함정 회피.
+				 * line_buf는 NUL 미종료라 tmp로 복사 후 strtol. */
+				char tmp[LINE_BUF_SIZE + 1];
+				size_t cp = line_len < LINE_BUF_SIZE ? line_len : LINE_BUF_SIZE;
+				memcpy(tmp, line_buf, cp);
+				tmp[cp] = '\0';
+				char *colon = strchr(tmp, ':');
+				if (colon) {
+					char *endp = NULL;
+					long level = strtol(colon + 1, &endp, 10);
+					if (endp != colon + 1) {
+						int alarm_now = (level < ALARM_THRESHOLD);
+						gpio_pin_set(gpio0, RELAY_PIN,
+							alarm_now ? RELAY_ON_LEVEL : RELAY_OFF_LEVEL);
+
+						char alm[48];
+						int an = snprintf(alm, sizeof(alm),
+							alarm_now ?
+							"*** ALARM level=%ld (<%d)\r\n" :
+							"--- ok    level=%ld (>=%d)\r\n",
+							level, ALARM_THRESHOLD);
+						if (an > 0) sw_uart_write(&tx4,
+							(const uint8_t *)alm, an);
+					}
+				}
+
 				line_len = 0;
 			}
 		} else {

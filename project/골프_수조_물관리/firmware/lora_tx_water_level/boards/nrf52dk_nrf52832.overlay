@@ -6,17 +6,21 @@
  *   SPI0 MOSI (P0.06)  → SW-UART USB-VCOM (9600) display
  *   SPI2 MOSI (P0.22)  → SW-UART Debug (115200)
  *
- *   J28 핀맵:
+ *   J28 14pin 핀맵 (사용자 박제 2026-06-09 — Pin 11/13 추가):
  *     Pin 1  P0.11  LoRa E22 RXD ← SPI1 MOSI (SW-UART)
  *     Pin 2  P0.15  MAX485 DI ← HW UART0 TX
  *     Pin 3  P0.13  (unused — TX만, LoRa RX 없음)
  *     Pin 4  P0.02  MAX485 RO → HW UART0 RX
+ *     Pin 5  (미확정)
  *     Pin 6  P0.17  LoRa M0 (Normal = LOW)
  *     Pin 7  P0.22  Debug TX (SPI2 MOSI)
  *     Pin 8  P0.19  LoRa M1 (Normal = LOW)
  *     Pin 9  P0.24  MAX485 DE/RE
  *     Pin 10 P0.20  LoRa AUX
- *     Pin 12 P0.04  Relay
+ *     Pin 11 3.3V   전원 ⭐
+ *     Pin 12 P0.04  Relay (active low buzzer, level<400 → ON)
+ *     Pin 13 GND    접지 ⭐
+ *     Pin 14 (미확정)
  *
  *   E22 setup: 별도 (lora_test_tx 또는 lora_read_reg에서 1회 setup 후 유지).
  *   REG0=0x60 (9600 + 0.3k air), REG1=0x00 (max 30 dBm), REG2=0x48 (CH72).

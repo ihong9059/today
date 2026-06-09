@@ -47,12 +47,21 @@
 #define LORA_TX_PIN   11
 #define LORA_RX_PIN   13
 
+/* Relay/buzzer alarm (P0.04, active low — overlay alias uttec_relay는 ACTIVE_HIGH
+ * 정의지만 외부 회로가 active low라 raw API로 직접 LOW/HIGH 제어).
+ *   level <  ALARM_THRESHOLD → LOW (ON, beep)
+ *   level >= ALARM_THRESHOLD → HIGH (OFF)
+ * Modbus ERR/timeout 시 상태 유지. */
+#define RELAY_PIN          4
+#define ALARM_THRESHOLD    400
+#define RELAY_ON_LEVEL     0   /* active low */
+#define RELAY_OFF_LEVEL    1
+
 static const struct gpio_dt_spec led_red =
 	GPIO_DT_SPEC_GET(DT_ALIAS(uttec_led_red), gpios);
 static const struct gpio_dt_spec led_blue =
 	GPIO_DT_SPEC_GET(DT_ALIAS(uttec_led_blue), gpios);
-static const struct gpio_dt_spec relay =
-	GPIO_DT_SPEC_GET(DT_ALIAS(uttec_relay), gpios);
+/* uttec_relay alias 는 ACTIVE_HIGH 정의지만 외부 부저가 active low → raw API 사용 */
 static const struct device *gpio0 = DEVICE_DT_GET(DT_NODELABEL(gpio0));
 static const struct device *uart0 = DEVICE_DT_GET(DT_NODELABEL(uart0));
 
@@ -171,7 +180,9 @@ int main(void)
 {
 	gpio_pin_configure_dt(&led_red, GPIO_OUTPUT_INACTIVE);
 	gpio_pin_configure_dt(&led_blue, GPIO_OUTPUT_INACTIVE);
-	gpio_pin_configure_dt(&relay, GPIO_OUTPUT_INACTIVE);
+
+	/* Buzzer/relay P0.04 active low — 부팅 시 HIGH (OFF) */
+	gpio_pin_configure(gpio0, RELAY_PIN, GPIO_OUTPUT_HIGH);
 
 	gpio_pin_configure(gpio0, LORA_M0_PIN, GPIO_OUTPUT_LOW);
 	gpio_pin_configure(gpio0, LORA_M1_PIN, GPIO_OUTPUT_LOW);
@@ -227,6 +238,10 @@ int main(void)
 				level = (int16_t)((resp[3] << 8) | resp[4]);
 				n = snprintf(msg, sizeof(msg), "tx%d:%d\r\n", TX_NODE_ID, level);
 
+				/* Alarm: level < 400 → buzzer ON (active low LOW) */
+				gpio_pin_set(gpio0, RELAY_PIN,
+					level < ALARM_THRESHOLD ? RELAY_ON_LEVEL : RELAY_OFF_LEVEL);
+
 				/* === LoRa phase === */
 				uart_to_lora();
 				sw_uart_write_str(&tx4, "L\r\n");
@@ -254,7 +269,6 @@ int main(void)
 
 		gpio_pin_toggle_dt(&led_red);
 		gpio_pin_toggle_dt(&led_blue);
-		gpio_pin_toggle_dt(&relay);
 		cycle++;
 
 		/* Cycle period control */

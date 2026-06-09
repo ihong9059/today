@@ -10,6 +10,18 @@
  *     AUX = P0.20 (J28 Pin 10, input, unused)
  *
  *   LED: BLUE P0.23 / RED P0.18 — RX byte 수신 시 RED 토글, line 완료 시 BLUE 토글
+ *
+ *   J28 14pin 핀맵 (사용자 박제 2026-06-09):
+ *     Pin 1  P0.11  LoRa E22 RXD ← UART0 TX (auto setup)
+ *     Pin 3  P0.13  LoRa E22 TXD → UART0 RX
+ *     Pin 5  (미확정)
+ *     Pin 6  P0.17  LoRa M0 (Normal = LOW)
+ *     Pin 8  P0.19  LoRa M1 (Normal = LOW)
+ *     Pin 10 P0.20  LoRa AUX (input, unused)
+ *     Pin 11 3.3V   전원 ⭐
+ *     Pin 12 P0.04  Relay (active low buzzer, level<400 → ON) ⭐ 신규
+ *     Pin 13 GND    접지 ⭐
+ *     Pin 14 (미확정)
  */
 
 &pinctrl {
