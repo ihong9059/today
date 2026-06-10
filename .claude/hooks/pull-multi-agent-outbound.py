@@ -65,6 +65,11 @@ LOCAL_VAULTS = [
         "outbound": Path("C:/todo/ponet/_inbox/outbox-staging"),
         "archived": Path("C:/todo/ponet/_inbox/sent-archived"),
     },
+    {
+        "name": "factory",
+        "outbound": Path("C:/todo/factory/_inbox/outbox-staging"),
+        "archived": Path("C:/todo/factory/_inbox/sent-archived"),
+    },
     # 추후 추가 후보:
     # {"name": "wishket", "outbound": Path("C:/todo/wishketProject/_outbox"), "archived": Path("C:/todo/wishketProject/_outbox-archived")},
     # {"name": "lemonlabs", "outbound": Path("C:/todo/lemonLabs/_outbox"), "archived": Path("C:/todo/lemonLabs/_outbox-archived")},

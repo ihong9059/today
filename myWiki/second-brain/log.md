@@ -2,8 +2,37 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-09 (자정 megasession tabM9 vault 신설 + B 모델 + NCS 한글 path 회피 + D-day 펌웨어 fresh 검증)
+updated: 2026-06-10 (#155220 cascade 4 카드 흡수 — 위시캣 영업 자산 7종 + 결정 39 확장 + XGT-prefix gotcha / 이전: factory vault 신설 + 4국 deep search)
 ---
+
+## [2026-06-10] absorb ⭐⭐⭐ | wishket-claude #155220 cascade 4 카드 흡수 (세션2 v3 EtherCAT + 세션4 신규3 + 세션5 final5 + 6/10 SCADA/정정톤)
+
+- **카드**: `2026-06-06-002` (v1폐기→v3 EtherCAT 정정 16산출물) + `003` (세션4 catch-up 48 + 신규3건 + 폴더 월별 SOP) + `007` (final 5건 + IPC/Recipe1000 S1~S5) + `2026-06-10-001` (SCADA 4컷 캡처 + 정정톤 일괄 제거). 전부 wishket-claude → mywiki-claude.
+- **5단계 흡수**: entities/위시캣활동.md § "2026-06-06~06-10 흡수" 신설 + strengths.md § 17 영업 자산 7종 + ai-direction.md 결정 39 확장 3번째(영업 신뢰성 3원칙) + gaps.md gotcha XGT-prefix(XBF↔XGF 혼동) + thoughts/2026-Q2/2026-06-10_위시캣-정정톤제거-Playwright캡처-SOP.md 신설 + index.md 등재.
+- **핵심 발견**: #155220 v1 (XGK + XBF-PN08B) 사외 경험자 검토에서 결정적 오류(XBF=XGB전용, EtherCAT 마스터 부재) → v3 EtherCAT 정정(XGF-PN4B, 32,562,211 / S3 권장 36,357,211). 정정 톤 제거 = 내부 학습자산 ↔ 클라이언트 송부본 분리 원칙.
+- **후처리**: 카드 4장 processed/ 이동 + status:done + wishket-claude inbox에 done 회신 카드(`2026-06-10-002`) push 완료.
+- **carry**: 동아정밀 entity 신설 = #155220 수주 확정 시 (현 final 5건 송부 결정 대기).
+
+## [2026-06-10] ingest ⭐⭐⭐ | factory vault 신설 — UTTEC 공장 자동화 사업화 + 분쇄·파쇄 설비 도메인 확장
+
+- **사건**: 사용자 명시 결단 — "한국기계 관련 비지니스를 다른 회사로 확장. factory vault를 todo folder에 만들어, ponet vault와 같이 myWiki와 정보 주고받기. skill도 동일. 주요 목적은 **센서 및 제어를 이용한 공장 자동화 분야 사업화**".
+- **carrier 패턴 4번째 적용 사례** (1=노지관리 6/4, 2=weldRobot 6/6낮, 3=ponet 6/6밤, **4=factory 6/10**). mywiki strengths §13.
+- **multi-agent 등재**: `factory-claude` (16th 합류, `C:/todo/factory/`)
+- **사업 도메인**: 1차 = 분쇄·파쇄 설비 (한국기계 베이스 → 동종 회사 확장), 확장 = 센서+제어 기반 공장 자동화 전반
+- **셋업 완료**:
+  - factory/ 디렉토리 26개 + .claude/ + second-brain/ + _inbox/ 4 sub + research/ + business/ + application/ + progress/
+  - ponet 패턴 fork: work-start/work-end skill + check-inbox.py SELF_ID=factory-claude + PROTOCOL.md 사본
+  - myWiki 연동: raw/factory junction + entities/factory.md + index.md + log.md + CLAUDE.md § raw/ + PROTOCOL.md 16th 등재 (별도)
+- **4국 deep search 1차**:
+  - 한국·일본·중국·독일 분쇄·파쇄 설비 제조사 deep search
+  - 핵심 10사 entity 신설 (HKPS, ZATO, KURIMOTO, Meiji, ZENITH, SANME, GEP, JEHMLICH, WEIMA, ZERMA)
+  - 전체 30+ 회사 list = factory/research/경쟁사조사/ 별도 raw 보관
+  - 발견: WEIMA 한국 진출 검증 + Shanghai SANME Sino-German JV 모델 + JEHMLICH 한국기계 1:1 대응 (벤치마크 1순위)
+- **자산 이식**:
+  - business/한국기계자산/ = today/smartFactory/업무효율화/한국기계/ 전체 카피
+  - business/smartFactory-자산/ = shredder + AI 교육 + 영업 견적서
+- **broker 라우팅**: push/pull-multi-agent-*.py LOCAL_VAULTS factory-claude 등재
+- **carry**: 확장 대상 회사 narrowing 사용자 결단 + UTTEC 자산 cross-매칭 매트릭스 thoughts 박제 + 첫 영업 narrative + progress/decision-001 정식 박제
 
 ## [2026-06-09] ingest 자정 ⭐⭐⭐ | Tab M9 Termux 네이티브 전환 + tabM9 vault 신설 (15th multi-agent) + D-day 펌웨어 fresh 검증
 

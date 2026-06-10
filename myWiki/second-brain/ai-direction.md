@@ -2,12 +2,34 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-06 야간 2회차 (결정 47 신설 — Ponet 사업 본질 확정 + UTTEC LED 디밍 원조사업 직접 정합 발견 = 무선 가로등 IoT 공공 조달 first mover 결정타, 자체 SSH fact-finding 신설 패턴 검증 (2 사이클 누적) / 이전: 결정 46 ponet vault 신설 + 결정 45 weldRobot)
+updated: 2026-06-10 (결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-10) — 결정 39 확장 3번째 ⭐⭐⭐ 위시캣 미팅 자료 SOP 4단계 정착 (사외 경험자 검토 + 단가 검증 + 송부본 분리)
+
+wishket-claude 4 카드 megasession 흡수 (#155220 v1폐기 → v3 EtherCAT 정정 → final 5건 → SCADA 캡처/정정톤 제거). 결정 39 (위시캣 미팅 자료 풀세트 SOP)의 **3번째 확장 — 사외 경험자 검토 단계 추가**.
+
+### 결정 39 확장: 위시캣 미팅 자료 SOP 4단계 정착 + 영업 신뢰성 3 원칙
+
+**SOP 진화** (기존 3단계 + 신규 4단계):
+- 1단계 지원 → 2단계 미팅 확정 → 3단계 D-day 키트 → **4단계 Follow-up (견적·사양서 → 사외 경험자 검토 → 정정 → final 송부 패키지)**
+- 사례: 한국기계 → 동아정밀 D-day(6/5) → Follow-up v1(6/6) → **v3 EtherCAT 정정 + final 5건(6/6~10)**
+
+**영업 신뢰성 3 원칙 (이번 cascade 도출)**:
+
+1. **견적·사양서 작성 시 사외 경험자 검토 1회 의무** — #155220 v1 (XGK + XBF-PN08B)에서 "XBF-PN08B는 XGB 전용, XGK 베이스 호환 불가" 결정적 오류 발견. 모듈명 1글자 차이(XBF vs XGF)지만 시리즈 완전 다름. v1 그대로 송부 시 영업 신뢰도 큰 타격. → LS XGT 시리즈 prefix 매핑 SOP 박제 ([[strengths]] § 17, [[gaps]]).
+2. **단가 근거 검증 능력 = 1억+ 견적 영업 신뢰성 핵심 자산** — 발주처 단가 근거 요청 시 4채널(엘시스/투에스케이/11번가/smauto.kr) 출처 LIST 즉시 대응. 보완 문서 분리 패턴(IPC + Recipe 1000 별도 16번)으로 견적 안정성 + 옵션 명확성 동시 확보.
+3. **정정 톤 제거 = 클라이언트 송부본 분리 원칙** — 내부 lifecycle 학습 자산(의견서/검토서, v1 정정 사유)은 내부 보존. 클라이언트 송부본은 "선정 안" 자신감 톤만 유지("XGT 표준 EtherCAT 4축 마스터 채택 안"). 자기-비판 문구는 영업 신뢰성 훼손. → [[2026-06-10_위시캣-정정톤제거-Playwright캡처-SOP]].
+
+**부수 SOP**: 지원내용 폴더 월별 그룹화(`지원내용/2026-MM/`) 정착 + Playwright HTML 시뮬레이션 캡처 자산(재현 비용 0).
+
+→ 자세히 [[위시캣활동]] § 2026-06-06~06-10 흡수 + [[strengths]] § 17 영업 자산 7종 + [[gaps]] § LS XGT prefix gotcha.
+
+---
 
 ## 판단 로그 (2026-06-06 야간 2회차) — 결정 47 신설 ⭐⭐⭐⭐ Ponet 사업 본질 확정 + UTTEC LED 디밍 자산 직접 정합 (협력 결정타)
 

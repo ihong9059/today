@@ -2,7 +2,7 @@
 title: 강점 분석
 type: identity
 created: 2026-04-19
-updated: 2026-06-06 야간 (§13 carrier 역량 사례 표 3번째 행 추가 — ponet 광주 협력 회사 vault 신설, 자체 SSH fact-finding 신설 패턴 첫 사례, 결정 46 박제. carrier 패턴 정착 확정 / 이전 6/6: §13 weldRobot 2번째 + §15 풀스택 + §16 시제품 검사 + §14 sensor 매트릭스)
+updated: 2026-06-10 (§17 신규 — 위시캣 영업 자산 7종: Playwright HTML 캡처 SOP + LS XGT 시리즈 prefix 매핑 SOP + PLC 단가 출처 4채널 검증 LIST + IPC 중급 SOP + Recipe 활성풀 + ESP32-P4 LVGL GUI + Python 비정형 데이터/정형외과 협업. wishket-claude 4 카드 megasession 흡수 / 이전 6/6 야간: §13 carrier ponet 3번째 + §15 풀스택 + §16 시제품 검사)
 tags: [강점, 분석, carrier역량, vault분리, 다중vault, sensor라이브러리, AI매트릭스, 풀스택양산, 모바일앱양산, AWS양산, 통합단일진행]
 links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick, 양산제품, 회사소개, 영업전략, 위시캣활동]
 ---
@@ -10,6 +10,24 @@ links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick, 양산
 # 강점 분석
 
 ## 핵심 강점
+
+### 17. 위시캣 영업 자산 7종 — Playwright 캡처 + LS XGT prefix SOP + PLC 단가 검증 + IPC/Recipe + ESP32-P4/비정형 데이터 (2026-06-10) ⭐⭐ NEW
+
+wishket-claude 4 카드 megasession 흡수 (#155220 v3 EtherCAT 정정 → final 5건 → SCADA 캡처/정정톤 제거 + 세션4 신규 3건). §16 시제품 검사 자산 확장 + 신규 도메인 자산.
+
+| 자산 | 본질 | 재활용 |
+|---|---|---|
+| **Playwright HTML 시뮬레이션 캡처 SOP** ⭐ | viewport 1600×1000 + device_scale_factor=2 → 3200×2000 HiDPI → A4 임베드 가독성. DOM 인터랙션(select/click/expect_download) + JS state 주입(`page.evaluate`)으로 NG/Alarm 강제 트리거 | 모든 SCADA/GUI 시뮬레이션 캡처 — 재현 비용 0 (viewport·시나리오 변경만 재캡처) |
+| **LS XGT 시리즈 prefix 매핑 SOP** ⭐ | XGK/XGI/XGR (**XGF/XGL** prefix) vs XGB (**XBF** prefix). 모듈명 1글자 차이지만 베이스 호환 불가 | 모든 LS PLC 견적 검증 필수 (v1 XBF-PN08B 오류 방지) |
+| **PLC 단가 출처 4채널 검증 LIST** | 엘시스/투에스케이/11번가/smauto.kr + LS Mecapion 공식 견적 SOP | 1억+ 견적 영업 신뢰성 핵심 — PLC 견적 표준 SOP |
+| **산업용 IPC 중급 SOP** | Advantech ARK-3520 동급 3,245,000원 합리적 중간선 | PLC+SCADA 견적 PC 본체 누락 방지 |
+| **Recipe 활성풀(Active Pool) 패턴** | HW 업그레이드 대비 비용 1/10 + 확장성 무한. STM32 EEPROM Recipe + PostgreSQL Recipe와 본질 동일 | PLC SW 차별화 자산 (양산 5종 ↔ PLC 연결) |
+| **ESP32-P4 LVGL GUI** | ESP-IDF + LVGL + UART/Serial + NVS 영구 저장 양산 | ESP32 임베디드 GUI 외주 |
+| **Python 비정형 데이터 + 정형외과 전문의 협업** | PDF/HWP/표/각주 파싱 + 계층 구조 / 의료영상 자문 직접 협업 | 데이터 구조화 외주 + 의료영상 우대 외주 |
+
+→ 자세히 [[위시캣활동]] § 2026-06-06~06-10 흡수 + [[ai-direction]] § 결정 39 확장 + [[gaps]] § LS XGT prefix gotcha + [[2026-06-10_위시캣-정정톤제거-Playwright캡처-SOP]].
+
+---
 
 ### 16. 시제품 검사 도메인 영업 자산 — Vision 좌표 학습 + LS XGT 가격 인덱스 + ReportLab PDF 양식 (2026-06-06 저녁) ⭐⭐ NEW
 

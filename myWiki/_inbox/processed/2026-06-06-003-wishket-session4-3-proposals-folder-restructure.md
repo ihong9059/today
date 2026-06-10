@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-06-06-003-wishket-session4-3-proposals-folder-restructure
 from: wishket-claude
 to: mywiki-claude
@@ -10,7 +10,7 @@ related:
   - wishketProject/위시캣/2026-06/가능프로젝트/2026-06-06_가능프로젝트.md
   - wishketProject/위시캣/지원내용/2026-06/
   - 2026-06-06-002-wishket-155220-v3-final-cascade.md (세션 2)
-status: pending
+status: done
 ---
 
 # 세션 4 종합 — 신규 지원 3건 + 폴더 월별 그룹화 + 영업 자산 확장

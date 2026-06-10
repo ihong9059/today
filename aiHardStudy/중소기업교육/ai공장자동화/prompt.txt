@@ -1,15 +1,29 @@
-Zotero
+● 잘 됐습니다. 중간에 한 줄 **"액세스가 거부되었습니다"**가 보이는데, 이건 정상이고
+  무시해도 됩니다. (윈도우가 건드릴 수 없는 레지스트리 항목 하나라서 누구나 다 그렇게
+  나옵니다. 나머지는 전부 "성공"이고, 마지막에 "다시 시작하십시오"가 떴으니 제대로 된
+  겁니다.)
 
-Done! Congratulations on your new bot. You will find it at t.me/uttec_n8n_telegram_bot. You can now add a description, about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
+  다만 아직 가장 중요한 명령 하나를 안 하셨습니다. 같은 관리자 cmd 창에서 이어서
+  실행하세요:
 
-Use this token to access the HTTP API:
-8414035567:AAGq2QV4Or7td7Ley1-ko8PJqFID_dwfj6o
+  netsh winsock reset
+  ipconfig /flushdns
 
-Keep your token secure and store it safely, it can be used by anyone to control your bot.
+  ▎ winsock reset이 핵심입니다 — "핑은 되는데 프로그램 연결만 막히는" 증상을 푸는 게
+  ▎ 바로 이 소켓 계층 초기화거든요. 방금 하신 int ip reset은 IP 설정 쪽이고, 이 둘을
+  ▎ 같이 해야 완성됩니다.
 
-For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+  이 두 개까지 실행한 뒤:
 
-8401184088
+  → 컴퓨터 재부팅
 
+  재부팅이 끝나면 다음 3가지를 확인해서 알려주세요:
 
-HaZJiyAF0e3fILEh
+  1. Claude Code가 멈춤 없이 정상으로 입력을 받는지 (ESC 안 눌러도 되는지)
+  2. 외부에서 SSH 접속이 되는지
+  3. PC 전반이 정상으로 돌아왔는지
+
+  이 세 가지가 풀렸으면 포맷할 필요 없이 끝난 겁니다. 만약 그래도 안 풀리면 — 그땐
+  백신/방화벽 쪽을 보거나, 말씀하신 대로 초기화(내 파일 유지) 단계로 넘어가면 됩니다.
+
+* Finagling… (running stop hook · 1m 9s · ↓ 4.1k tokens)

@@ -2,12 +2,26 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-06-06 (자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제 — wishketProject me.md 박제 후 6/4 본 vault me.md 충분히 안 읽고 [△] 약점 분류 + AWS 양산 자산 본 vault 박제 부재 동시 발생, cross-vault cascade 5일 지연 = 2번째 지적 트리거. 자산 인덱스 우선 SOP 결정 44 박제. wishket-claude #2026-06-04-001 흡수 / 이전: R50-1 STM32H7 CMSIS-NN saturate + 8 함정 6/4)
+updated: 2026-06-10 (LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
 tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인, R50-1-chip-saturate, STM-7-v2, I2C-주소충돌, flatten-순서, WHO_AM_I-분기, PEP668, scp-wildcard, 데이터사이언티스트, GEE학습, 자산인덱스누락재발, cross-vault-cascade-지연, 풀스택자산]
 links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용, 2026-06-04_sensor-AI-매트릭스-단일출처-mandate]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-06-10 — LS XGT 시리즈 prefix 혼동 (PLC 견적 결정적 오류) ⭐⭐⭐
+
+wishket-claude 4 카드 megasession 흡수. #155220 동아정밀 견적 v1에서 발견된 결정적 오류 박제.
+
+### gotcha XGT-prefix ⭐⭐⭐ — XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동
+
+| 함정 | 회피 |
+|---|---|
+| v1 견적: XGK-CPUSN CPU + **XBF-PN08B** 8축 EtherCAT. 그러나 **XBF prefix = XGB 시리즈 전용** → XGK 베이스 물리 호환 불가. 게다가 XGK-CPUSN으로 L7CA002U 서보 컨트롤 시 **EtherCAT 마스터 자체가 부재**. 모듈명 1글자 차이(XBF vs XGF)지만 시리즈 완전 다름 → v1 그대로 송부했으면 "PLC 누가 구성했나" 영업 신뢰도 직격 | **LS XGT 시리즈 prefix 매핑 SOP**: XGK/XGI/XGR = **XGF/XGL** prefix 모듈 / XGB = **XBF** prefix 모듈. EtherCAT 마스터 = **XGF-PN4B**(XGK용, 472,010원). 견적 작성 시 (a) CPU 베이스 시리즈 확인 (b) 모듈 prefix 일치 검증 (c) 서보 제어 방식(EtherCAT/펄스/RS-485)별 필수 마스터 모듈 존재 확인 (d) **사외 경험자 검토 1회 의무**(결정 39 확장) |
+
+→ 자세히 [[ai-direction]] § 결정 39 확장 (영업 신뢰성 3 원칙) + [[strengths]] § 17 LS XGT prefix SOP + [[위시캣활동]] § 2026-06-06~06-10 흡수.
+
+---
 
 ## 2026-06-06 — 자산 인덱스 누락 재발 (5/29 모바일 앱 + 6/4 AWS 2회 누적) ⭐⭐⭐
 

@@ -50,6 +50,7 @@ updated: 2026-05-09
 | [[weldRobot]] | **weldRobot vault** ⭐ — UTTEC 용접 로봇 신사업 (Tier 3). Path 4 (Vision seam tracking + AI 비드 검사 add-on box) 우선 진입 + Path 3 (AI 자율 path planning) 장기 carry. 14th multi-agent (`C:/todo/weldRobot/`, 6/6 신설, carrier 패턴 2번째 사례) |
 | [[한국기계]] | 사업 관계 entity — 트랙 분리 (활성: weldRobot dogfood / ⏸ 보류: AI 교육 demo) |
 | [[ponet]] | **ponet vault** ⭐ — Ponet 광주 협력 회사 (Tier 3, 조대홍 사장). PCB 설계 풀세트 + 더존 ERP + 자체 호스팅. 15th multi-agent (`C:/todo/ponet/`, 6/6 신설, carrier 패턴 3번째 사례 정착 확정 + 자체 SSH fact-finding 신설 첫 사례) |
+| [[factory]] | **factory vault** ⭐⭐ — UTTEC 공장 자동화 사업화 vault (Tier 3). 1차 진입 = 분쇄·파쇄 설비 (한국기계 베이스 → 동종 회사 확장), 확장 = 센서+제어 기반 공장 자동화 전반. 16th multi-agent (`C:/todo/factory/`, 6/10 신설, **carrier 패턴 4번째 사례** + 4국 deep search + 핵심 10사 entity + 한국기계 자산 이식) |
 | [[조대홍]] | Ponet 사장 entity (광주, UTTEC 협력 파트너) |
 | [[xerix]] | Xerix MFC Controller — EtherCAT 제안 4,970만원 |
 | [[revita]] | REVITA — IoT, LoRa, KC 인증 |
@@ -108,3 +109,4 @@ updated: 2026-05-09
 | [[2026-05-12_원격모니터링-사업라인]] | ⭐ Solar Monitor + 한림용인CC 골프수조 = 동일 풀스택 → "원격 모니터링" 사업 라인 발견, 7종 응용 영역 매트릭스 |
 | [[2026-05-15_제품별-vault-통합-패턴]] | 제품별 vault 통합 패턴 — revita + onDevice 2 사례로 패턴 검증, 시나리오 D 첫 적용 |
 | [[2026-05-16_n8n-claude-합류]] | ⭐ n8n-claude 합류 — 4 Claude 시스템 + 분산 호스트 검증 + myWikiSetup 시나리오 D 두 번째 적용 (메타 검증) |
+| [[2026-06-10_위시캣-정정톤제거-Playwright캡처-SOP]] | ⭐ 위시캣 영업 — 정정 톤 제거 = 신뢰성 회복(내부 학습자산 ↔ 클라이언트 송부본 분리) + Playwright HTML 캡처 SOP |

@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-06-06-007-wishket-155220-final-5-package-ipc-recipe-cascade
 from: wishket-claude
 to: mywiki-claude
@@ -11,7 +11,7 @@ related:
   - 위시캣/2026-05-14_프로젝트155220_미팅준비/final/15_PLC_재료비_근거_LIST.pdf
   - 위시캣/2026-05-14_프로젝트155220_미팅준비/final/16_보완_PC_IPC_Recipe1000.pdf
   - 작업보고서/2026-06-06.md (세션 5)
-status: pending
+status: done
 ---
 
 # #155220 final 송부 패키지 확장 — 5건 + IPC/Recipe 1000 보완 (세션 5 cascade)
