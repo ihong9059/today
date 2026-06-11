@@ -2,9 +2,9 @@
 title: factory — UTTEC 공장 자동화 사업화 vault (16th, carrier 4번째)
 type: entity
 created: 2026-06-10
-updated: 2026-06-10 (vault 신설 + carrier 패턴 4번째 적용 사례 + 분쇄·파쇄 설비 도메인 4국 deep search + 핵심 10사 entity 신설 + 한국기계 자산 + smartFactory 자산 이식)
-tags: [factory, vault분리, carrier4번째, 16th, 공장자동화, 분쇄설비, 파쇄설비, 한국기계확장, 사업화, 센서제어]
-links: [한국기계, weldRobot, ponet, strengths, ai-direction, shield, uttec-factory-claude, onDevice-ai, 위시캣활동, 영업전략]
+updated: 2026-06-11 (06-11 build cascade — UTTEC 자산×분쇄공정 cross-매칭 매트릭스 + 1차 영업 narrative 4개 평가 → "A로 검증, D로 확장" 2-페이즈 권고 + PoC 견적·첫 메시지 초안)
+tags: [factory, vault분리, carrier4번째, 16th, 공장자동화, 분쇄설비, 파쇄설비, 한국기계확장, 사업화, 센서제어, 영업narrative, PoC, cross매칭]
+links: [한국기계, weldRobot, ponet, strengths, ai-direction, shield, uttec-factory-claude, onDevice-ai, 위시캣활동, 영업전략, JEHMLICH, WEIMA, Shanghai-SANME, CRUTEC, 대덕메탈]
 ---
 
 # factory — UTTEC 공장 자동화 사업화 vault
@@ -77,6 +77,47 @@ links: [한국기계, weldRobot, ponet, strengths, ai-direction, shield, uttec-f
 4. ⭐⭐⭐ **한림용인CC 양산 검증** → 실제 산업 현장 안정성 narrative + Tier 2 1,000만/D-3 시공 1번째 사례
 5. ⭐⭐ **사업·영업 자산** (한국기계 entity + smartFactory 자산 + 위시캣 활동 + KC·TELEC·CE 인증)
 
+## 06-11 build — cross-매칭 매트릭스 + 1차 영업 narrative ⭐⭐⭐⭐
+
+> 06-10 신설(틀+4국 리서치) 이후 첫 진화. carry 의문점 2(자산 매트릭스)·3(영업 narrative) 정식 박제. 본 vault `thoughts/2026-Q2/2026-06-11_UTTEC자산-분쇄도메인-cross매칭매트릭스.md` + `application/사업확장/2026-06-11_1차영업narrative초안.md`.
+
+### ① UTTEC 5축 × 분쇄 공정 cross-매칭 매트릭스 (가설)
+
+분쇄 라인 표준 공정(투입→1·2차 분쇄→미분쇄→선별→집진) 각 단계는 **회전 구동부 + 마모 소모품 + 모터 부하**를 공통으로 가짐 → UTTEC IoT 노드 **단계 무관 재사용** (핵심 레버리지). 공통 모니터링 6변수 = 진동·전류/부하·온도·RPM·입도·가동률.
+
+| 축 | 분쇄 적용 | 검증 | PoC난이도 |
+|---|---|:--:|:--:|
+| 축1 LoRa+Modbus telemetry | 무선 수집(배선 0, retrofit) | 🟡 한림용인CC 6/8 결정론 | 🟢 |
+| 축2 Edge AI (Cortex-M) | 입도·결함·막힘 예지보전 | ⬜ 도메인 데이터 미확보 | 🔴 라벨 필요 |
+| 축3 Shield (RPi+RS485) | 라인 hub 노드 (다중 설비 관제) | 🟡 factory-rpi4 dogfood | 🟢 |
+| 축4 한림용인CC 양산 검증 | 현장 안정성 레퍼런스 | ✅ D-day 6/9 통과 | — 영업자산 |
+| 축5 영업·인증·도메인 | 진입 자격 + 제안서 재패키징 | ✅ 인증 / 🟡 제안서 | 🟢 |
+
+→ **전략 함의: "수집(축1+3, 🟢 MVP) → 학습(축2, 🔴 데이터 의존) 2-페이즈."** 1단계(무선 telemetry hub)는 라벨 없이 가시화만으로 과금 가능하면서 동시에 2단계 AI 학습 데이터를 축적. 한국기계 8종 중 슈레더·조크러셔·해머·터보밀 = ⭐⭐⭐ 최적 PoC.
+
+### ② 1차 영업 narrative 4개 평가 → "A로 검증, D로 확장"
+
+| narrative | 타깃 | 자산정합 | 종합 |
+|---|---|:--:|:--:|
+| **A 국내 보완재 협력** | CRUTEC·대덕메탈 + 모니터링 | ⭐⭐⭐ (축1+3 직결) | **1순위** |
+| B 일본 사료·식품 도메인 | 국내 사료·곡물 분쇄 | ⭐⭐ | 3순위 |
+| C 중국 SANME식 3자 JV | 독일+한국기계+UTTEC | ⭐⭐ | 4순위 |
+| **D 독일 JEHMLICH 진출** | JEHMLICH 한국 서비스 파트너 | ⭐⭐⭐ (고부가) | **2순위** |
+
+**권고 2-페이즈**: Phase1(0~3M) A 국내 보완재 + 한국기계 dogfood로 축1+3 MVP 현장 데이터·첫 레퍼런스 확보 → Phase2(3~9M) D 독일 JEHMLICH "독일 HW + UTTEC IoT layer" 고부가 + 축2 Edge AI 예지보전.
+
+- **첫 접촉 후보**: 0=한국기계 자체 라인 dogfood(최저 장벽) / 1=CRUTEC(재활용 분쇄 보완재) / 2=대덕메탈. ⚠️ 연락처·담당자명 미확정 placeholder (실 발송 전 사용자 확인).
+- **가치 제안 1쪽**: "라인 안 멈추고, 배선 없이, 마모·과부하·가동률 실시간." 4 Pain↔해법 매핑 + 한림용인CC 검증·KC/TELEC/CE 신뢰 근거.
+- **PoC 견적(가설)**: 분쇄기 1대 / 1~2개월 / **100~150만** / 대시보드+jam·과부하 룰 알림+데이터 리포트 (weldRobot Path4 fork). 금액은 가설 — 원가 산정 carry.
+- **첫 메시지 초안 2종**: 국문(dogfood/보완재) + 영문(JEHMLICH 한국 진출 파트너). 회사명 노출은 한국기계 트랙1(weldRobot)과 분리.
+
+### ③ 사용자 결단 carry (06-11 발생)
+
+1. 진입 경로 **A→D 2-페이즈** 권고 채택 여부
+2. 한국기계 dogfood 실행 가능성 + 연락처 확인
+3. PoC 견적 원가 산정 (가설 100~150만 → 실제)
+4. CRUTEC·대덕메탈 entity 신설 (narrative A 채택 시)
+
 ## 자체 SSH fact-finding 패턴 (선택 carry)
 
 - ponet 측 자체 SSH fact-finding 신설 패턴 첫 사례 (2026-06-06) → factory 측에도 적용 가능
@@ -93,11 +134,14 @@ links: [한국기계, weldRobot, ponet, strengths, ai-direction, shield, uttec-f
 
 ## 즉시 todo (다음 work-start)
 
-1. 확장 대상 회사 narrowing 결단 (사용자)
-2. UTTEC 자산 cross-매칭 가설 매트릭스 thoughts 박제
-3. 첫 영업 narrative (10사 중 우선 접촉 후보)
-4. progress/decision-001-vault-신설.md 정식 박제
-5. thoughts/2026-Q2/2026-06-10_factory-vault-진입.md 박제
+- ~~UTTEC 자산 cross-매칭 가설 매트릭스 thoughts 박제~~ ✅ 06-11 완료
+- ~~첫 영업 narrative (우선 접촉 후보)~~ ✅ 06-11 완료
+1. 🔴 진입 경로 A→D 2-페이즈 채택 결단 (사용자)
+2. 🔴 한국기계 dogfood 실행 + 연락처 확인 (사용자)
+3. 🟠 PoC 견적 원가 산정 (가설 100~150만 → 실제)
+4. 🟡 CRUTEC·대덕메탈 entity 신설 (narrative A 채택 시)
+5. 🟡 자산 매트릭스 2단계(축2 Edge AI 데이터 의존) 검증 계획
+6. progress/decision-001-vault-신설.md 정식 박제 (미완)
 
 ## 본 vault 측 박제 (cross-link)
 
@@ -105,6 +149,8 @@ links: [한국기계, weldRobot, ponet, strengths, ai-direction, shield, uttec-f
 - second-brain CLAUDE.md: `factory/second-brain/CLAUDE.md`
 - ai-direction: `factory/second-brain/ai-direction.md` § 결정 1
 - strengths: `factory/second-brain/strengths.md` (UTTEC 자산 5축 매트릭스)
+- **thoughts (06-11)**: `factory/second-brain/thoughts/2026-Q2/2026-06-11_UTTEC자산-분쇄도메인-cross매칭매트릭스.md`
+- **application (06-11)**: `factory/application/사업확장/2026-06-11_1차영업narrative초안.md`
 - index: `factory/second-brain/index.md`
 - log: `factory/log.md` + `factory/second-brain/log.md`
 - entities (10사): `factory/second-brain/entities/`

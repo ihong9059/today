@@ -2,8 +2,20 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-10 (#155220 cascade 4 카드 흡수 — 위시캣 영업 자산 7종 + 결정 39 확장 + XGT-prefix gotcha / 이전: factory vault 신설 + 4국 deep search)
+updated: 2026-06-11 (factory vault 06-11 megasession cascade — company/ 4사 위상판단 설명서 + 4국 TOP10 협력후보 40사 deep search + 자산×분쇄 cross-매칭 매트릭스 + 1차 영업 narrative / 이전: #155220 cascade 4 카드 흡수)
 ---
+
+## [2026-06-11] cascade ⭐⭐⭐ | factory vault 06-11 megasession — company/ 심층 + 4국 TOP10 협력후보 + 자산매칭 + 영업 narrative
+
+- **사건**: factory vault(16th 사업화) 6/10 신설 후 정체 → 6/11 대규모 재가동. myWiki `entities/factory.md` cascade 반영 (updated 06-11).
+- **company/ 폴더 신설** (회사 심층 설명서 체계, entities/=요약카드 ↔ company/=심층 분리):
+  - 한국기계 위상판단·사업방향 설명서 ("급성장 시장의 작은 길목 지킴이", 폐LIB 전처리 길목 + 3-페이즈 로드맵)
+  - 대모엔지니어링(매출 ~408억 KOSDAQ, 카테고리=이동식 어태치먼트→벤치마크/천장) + 성일하이텍(재활용 운영사=Phase2~3 등대 고객) + 한국분체기계(고정식 분체 1위, 한국기계와 공정 보완)
+- **4국 분쇄설비 TOP10 협력후보 deep search (40사)**: 병렬 리서치 4개 → `company/_분쇄설비_4국_TOP10_협력후보리스트.md`. 협력 공식 = 도메인 정합 × 디지털 공백 × 중견 규모. SHORTLIST(한=dogfood / 일=중견 OEM / 중=모듈공급 / 독=JEHMLICH 진출 파트너십). 글로벌 major(호소카와·WEIMA·GEP·Zenith)=벤치마크/경쟁.
+- **자산 매칭 매트릭스** (thoughts/2026-Q2): UTTEC 5축 × 분쇄공정 (축1+3=🟢 무선 telemetry hub MVP / 축2 Edge AI=🔴 데이터 의존) → "수집 1단계 → 학습 2단계".
+- **1차 영업 narrative 초안** (application/사업확장): 4 narrative 평가 → "A로 검증, D로 확장" 2-페이즈 + 첫 접촉(한국기계 dogfood / CRUTEC / 대덕메탈) + PoC 견적 + 첫 메시지 국·영문.
+- **vault scope 격리**: factory 자체는 비-git vault (C:/todo/factory) — /backup 의존. myWiki 측은 factory.md entity만 cascade (단일 source 유지).
+- **carry (사용자 결단)**: 진입 경로(A→D) 채택 / 한국기계 dogfood 실행·연락처 / PoC 원가 산정 / SHORTLIST 개별 심층.
 
 ## [2026-06-10] absorb ⭐⭐⭐ | wishket-claude #155220 cascade 4 카드 흡수 (세션2 v3 EtherCAT + 세션4 신규3 + 세션5 final5 + 6/10 SCADA/정정톤)
 

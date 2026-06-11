@@ -59,6 +59,7 @@ LOCAL_VAULTS = {
     "weldrobot-claude": Path("C:/todo/weldRobot/_inbox/pending"),
     "ponet-claude": Path("C:/todo/ponet/_inbox/pending"),
     "factory-claude": Path("C:/todo/factory/_inbox/pending"),
+    "tabm9-claude": Path("C:/todo/tabM9/_inbox/pending"),
 }
 
 
