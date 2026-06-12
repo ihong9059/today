@@ -8,7 +8,10 @@ subject: "[heartbeat] /wishket-check 6/11 catch-up #155968~#156004 (37건) — �
 created: 2026-06-11T14:52:00+09:00
 related:
   - wishketProject/위시캣/2026-06/가능프로젝트/2026-06-11_가능프로젝트.md
-status: pending
+status: done
+absorbed_into: myWiki/second-brain (log.md 2026-06-13 absorb)
+absorbed_at: 2026-06-13
+ack_sent: 2026-06-13
 ---
 
 # /wishket-check 6/11 catch-up heartbeat (wishket-claude)

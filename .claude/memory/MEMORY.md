@@ -41,6 +41,7 @@
 - [nRF52 UARTE PSEL time-mux STARTRX 필수 🚨](feedback_nrf_uarte_psel_time_mux.md) — 🚨 **NRF_UARTE0 PSEL runtime 변경 + ENABLE 0/8 후 TASKS_STARTRX = 1 명시 필수**. Zephyr driver 자동 처리 안 함. 누락 시 RX 0 byte 무한 반복. 6/7 박제 (한림용인CC RS485+LoRa time-mux 첫 적용)
 - [nRF DK 14-pin SWD → 외부 target nRF52832 🚨](feedback_nrf_dk_14pin_swd_target.md) — 🚨 **PCA10056(TX)·PCA10100(RX)=flash 호스트 DK 역할 명칭**. 14-pin SWD로 외부 nRF52832 target 연결. nrfjprog NRF52832 출력=정상(target). COM8=TX debug/COM47=RX debug (CP210x). 사용자가 명시하면 즉시 적용, "보드가 다르다" 보고 금지. 6/9 D-day 박제 (반복 confusing)
 - [UTTEC BLE Module J28 14pin 핀맵 ⭐](reference_uttec_ble_module_j28_pinmap.md) — TX/RX 양쪽 보드 J28 14pin header 전체 매핑. **Pin 11=3.3V, Pin 13=GND**, Pin 12=P0.04 relay/buzzer (active low). Pin 1·3·6·8·10=LoRa, Pin 2·4·9=Modbus RS485. 핀 5·14 미확정
+- [E22 전원전압·IO 레벨 설계](reference_e22_power_voltage_io.md) — **22D는 3.3V 고정**(전압-거리 무관, 풀출력) / 30D는 5V 필요(but IO=VCC라 nRF52832 직결 위험). 전원전압은 거리 변수 아님 — air rate(0.3k)·안테나·중계기 배치가 거리 결정. 한림용인CC=22D. 6/12 박제
 - [_inbox 카드 lifecycle 정책 ⭐](feedback_inbox_lifecycle.md) — `~~strikethrough~~`는 5단계 lifecycle 완료에만 허용. pending ≥ 5 시 흡수 megasession이 다른 작업보다 우선. 5/17~19 onDevice 카드 6장 누락 사건 박제
 - [uttecHome DigitalOcean 이관 — 보류](project_uttechome_deploy_hold.md) — 5/20 사용자 결정. local 정리 완료 후 적용. 그때까지 vault 로컬 진화만, deploy 권고 금지
 - [uttec-search vault 신설 (10th)](project_uttec_search.md) — Mac/Ubuntu ~/uttec-search/, search 9th cross-platform 첫 fork, backend 8891/frontend 8890, uv venv 우회, uttec-vault 인덱싱

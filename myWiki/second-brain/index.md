@@ -48,7 +48,9 @@ updated: 2026-05-09
 | [[stm32h745-disco]] | STM32H745I-DISCO — 14번째 보드, Cortex-M7+M4 dual / LCD + USB CDC + Ethernet, Stage 4 산업 노드 path (5/25~26 신설) |
 | [[uttec-factory]] | **uttec-factory vault** — UTTEC Shield (AI 공장자동화 교육용) hardware 검증 + 8일 교육 + 영업 통합. 13th multi-agent vault (factory-rpi4 100.109.84.79, 5/26 신설) ⭐ broker 자동화 첫 진화 |
 | [[weldRobot]] | **weldRobot vault** ⭐ — UTTEC 용접 로봇 신사업 (Tier 3). Path 4 (Vision seam tracking + AI 비드 검사 add-on box) 우선 진입 + Path 3 (AI 자율 path planning) 장기 carry. 14th multi-agent (`C:/todo/weldRobot/`, 6/6 신설, carrier 패턴 2번째 사례) |
-| [[한국기계]] | 사업 관계 entity — 트랙 분리 (활성: weldRobot dogfood / ⏸ 보류: AI 교육 demo) |
+| [[한국기계]] | 사업 관계 entity — 트랙 분리 (활성: weldRobot dogfood + factory 분쇄·파쇄 확장 / ⏸ 보류: AI 교육 demo) + 식별 주의 (≠한국분체기계) |
+| [[tabM9]] | **tabM9 vault** — Lenovo Tab M9 모바일 컴퓨팅 노드 (dumb terminal 모델, Termux 네이티브, 17th multi-agent `C:/todo/tabM9/`, 6/6 합류, 6/13 entity 신설) |
+| [[galaxy-a51-5g]] | Galaxy A51 5G (uttec-galaxy) — Tab M9 자매 모바일 노드 (nRF Connect BLE 역할 분담, 6/9 합류) |
 | [[ponet]] | **ponet vault** ⭐ — Ponet 광주 협력 회사 (Tier 3, 조대홍 사장). PCB 설계 풀세트 + 더존 ERP + 자체 호스팅. 15th multi-agent (`C:/todo/ponet/`, 6/6 신설, carrier 패턴 3번째 사례 정착 확정 + 자체 SSH fact-finding 신설 첫 사례) |
 | [[factory]] | **factory vault** ⭐⭐ — UTTEC 공장 자동화 사업화 vault (Tier 3). 1차 진입 = 분쇄·파쇄 설비 (한국기계 베이스 → 동종 회사 확장), 확장 = 센서+제어 기반 공장 자동화 전반. 16th multi-agent (`C:/todo/factory/`, 6/10 신설, **carrier 패턴 4번째 사례** + 4국 deep search + 핵심 10사 entity + 한국기계 자산 이식) |
 | [[조대홍]] | Ponet 사장 entity (광주, UTTEC 협력 파트너) |

@@ -13,7 +13,10 @@ related:
   - C:/todo/tabM9/second-brain/entities/tailscale.md
   - C:/todo/tabM9/second-brain/entities/sd-card.md
   - C:/todo/tabM9/progress/decision-001-vault-신설.md
-status: pending
+status: done
+absorbed_into: myWiki/second-brain (log.md 2026-06-13 absorb)
+absorbed_at: 2026-06-13
+ack_sent: 2026-06-13
 ---
 
 # mywiki 측 second-brain/entities/tabM9.md 신설 요청

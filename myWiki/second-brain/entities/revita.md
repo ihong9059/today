@@ -2,7 +2,7 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-06-04 (노지관리 신사업 본격 진입 결단 + `노지관리Wiki/` vault 분리 — revita-claude 카드 003+004 흡수 / 박제 위치 `노지관리Wiki/entities/entity-satellite-fusion` 참조 / cross-vault 참조 규약 `[[revita:]]` `[[mywiki:]]` `[[노지관리:]]` 정착 / 결정 40)
+updated: 2026-06-13 (ingest #16 흡수 — LoRa 암호화 ON(ECB keystream XOR) + BLE OTA 농가 자가 업데이트 실구현(SMP/MCUboot) + 양산 보안 게이트 2건 carry(서명키 평문 커밋 / AEAD·키 프로비저닝 부재) / 결정 48 / 이전 6/4: 노지관리 신사업 본격 진입 + vault 분리, 결정 40)
 tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어, link_v2_test_tower, 회귀시험자동화, kc_cert_link_v2, kc_cert_tower, KC인증통합트랙, BLE-pairing-L2, DUT-다중-브리지-단일, IQC자동화, Flask-Web-5010, tower_DK-deprecated, 두-하향-경로-동일-규약, 펌웨어모듈-단일진실, 위성-원격탐사, 노지관리-신사업, 농림위성, 마이크로매크로-fusion, vault분리, 사업단위vault, carrier역량]
 links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조, aisg, 영업전략, 정부R&D실증사업, 2026-05-27_revita-IQC-자동화-인프라, 2026-06-03_위성-원격탐사-노지관리-신사업, 2026-06-04_노지관리-신사업-본격진입]
 ---
@@ -11,6 +11,18 @@ links: [claude-code, experience, projects, skills, tailscale네트워크, 양산
 
 ## 한 줄 정의
 IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**. **6/3 결단**: revita LoRa 양산 자산 + 위성 원격탐사 fusion → 노지 관리 신사업 검토 trigger. **6/4 결단**: 노지관리 신사업 본격 진입 + `application/노지관리Wiki/` vault 분리 (사업 단위 = vault 단위).
+
+## 2026-06-11 — ingest #16: LoRa 암호화 ON + BLE OTA 농가 자가 업데이트 정착 ⭐⭐⭐ (revita-claude 카드 2026-06-11-001, 6/13 흡수)
+
+> § 2026-06-11 — revita LoRa 암호화 ON(ECB keystream XOR) + BLE OTA 농가 자가 업데이트 실구현(SMP/MCUboot). 양산 보안 게이트 2건 carry(서명키 평문 커밋 / AEAD·키 프로비저닝 부재).
+
+- **범위**: BASE `d11b0ff4` → HEAD `1493ae36` (18 commits / 132 파일 / +15,295). 갱신 entity 7 (lora-protocol, lora-module, ble-module, link-v2, tower, link-v2-test-tower, valve-module).
+- **BLE OTA 농가 자가 업데이트** (link_v2): SMP/mcumgr/MCUboot + 스마트폰 앱 + 검증 대시보드 + 속도 기준선 (MTU252 / 1.2KBps / 235KB≈3분) → [[strengths]] §18 운영 차별화 신설.
+- **LoRa 무선 암호화 ON**: 평문 → AES-128-ECB keystream XOR (TinyCrypt, packet_id nonce). 검토서(CCM+PSK)·아이디어(CTR) 아닌 제3경로 — "일단 켜고 점진 강화" ([[ai-direction]] § 결정 48).
+- **★ 양산 보안 게이트 2건 carry** ([[gaps]] § 2026-06-13 + 작업보고서 todo):
+  1. `gotcha-committed-signing-key` — MCUboot 서명 개인키 repo 평문 커밋 (위조 펌웨어 OTA 통과 위험)
+  2. AEAD 부재 — MIC 없음 + replay counter 없음 (packet_id 256 wrap) + 공장 root_key all-zero
+- **게이트 trigger**: 6/12 OTA 실 DUT 시험 = dogfood 배포 게이트 (결과 수신 대기). → [[2026-06-13_revita-보안게이트-인증입찰-매칭]]
 
 ## 2026-06-04 — 노지관리 신사업 본격 진입 + `노지관리Wiki/` vault 분리 ⭐⭐⭐ (revita-claude 카드 003 + 004 megasession 흡수)
 

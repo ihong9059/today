@@ -2,12 +2,47 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-06-10 (LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
+updated: 2026-06-13 (_inbox 8장 megasession — Defender CFA NCS silent killer + Android onboarding 2건 + IoT 펌웨어 보안 실패 사례 3종 세트(서명키 평문 커밋·AEAD 부재·키 미프로비저닝, revita ingest #16) / 이전 6/10: LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
 tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인, R50-1-chip-saturate, STM-7-v2, I2C-주소충돌, flatten-순서, WHO_AM_I-분기, PEP668, scp-wildcard, 데이터사이언티스트, GEE학습, 자산인덱스누락재발, cross-vault-cascade-지연, 풀스택자산]
 links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용, 2026-06-04_sensor-AI-매트릭스-단일출처-mandate]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-06-13 — _inbox 8장 megasession 함정 박제 (Defender CFA + Termux/Android + IoT 펌웨어 보안 실패 사례) ⭐⭐⭐
+
+tabm9-claude 카드 3장 + revita-claude ingest #16 카드 흡수.
+
+### gotcha Defender-CFA ⭐⭐⭐ — Windows Defender Controlled Folder Access = NCS 빌드 silent killer
+
+| 함정 | 회피 |
+|---|---|
+| `west build` archive linking 단계(`ar qc`)에서 `libisr_tables.a: No such file or directory` 일관 실패. input `.obj` 정상·매 시도 같은 위치 실패(race 아님)·ar 단독 호출 정상. sandbox/mingw/subst/짧은 path 등 모든 우회 무효. **진짜 원인 = Defender 랜섬웨어 방지 CFA**: 보호 폴더 안에서 미서명 프로세스(`arm-zephyr-eabi-ar.exe`)가 새 파일 생성 시 silent block — 콘솔엔 "No such file" 만, Defender 보호 이력에만 기록 | Windows 보안 → 랜섬웨어 방지 관리 → **보호 폴더 제외** 또는 toolchain exe "허용된 앱" 추가. 적용 권장: `C:\todo\today\` `C:\todo\weldRobot\` `C:\todo\tabM9\` `C:\todo\onDevice_AI\` `C:\b\` `C:\ncs\`. **진단 패턴**: "왜 이 PC에서만?" 시그널 → host 환경 (Defender/AV/권한) 의심 우선 |
+
+→ tabm9-claude 카드 06-09-001 (PCA10040 e2e flash 중 발견). 기존 NCS 함정 (cmd AutoRun 충돌, 메모리 박제)과 **직교하는 별개 함정** — Windows host NCS 빌드 prerequisite 2종 세트.
+
+### gotcha Android onboarding 2건 — Termux F-Droid + 백그라운드 제한 (신규 디바이스 공통)
+
+| 함정 | 회피 |
+|---|---|
+| Termux 시리즈 Play Store 2020+ deprecated — Play 설치본은 구버전 | 신규 디바이스 onboarding 시 **F-Droid 우선** (Termux + Termux:API 동일 signing key 페어 필수) |
+| Android 12+ 백그라운드 액티비티 시작 제한 — ssh 통한 `am start` 차단 | adb shell / 사용자 직접 조작 / 무선 디버깅 우회 |
+
+→ tabm9-claude 카드 06-10-001 ([[galaxy-a51-5g]] onboarding 중 발견).
+
+### gotcha committed-signing-key ★보안 ⭐⭐⭐ — IoT 펌웨어 보안 실패 사례 3종 세트 (강의·컨설팅 자산 + revita 양산 리스크)
+
+revita ingest #16 (LoRa 암호화 ON + BLE OTA 정착) 과정에서 발견된 **실제 보안 게이트 2건**:
+
+| 결함 | 본질 |
+|---|---|
+| **서명키 평문 커밋** | MCUboot 이미지 서명 개인키(`keys/revita-ec-p256.pem`)가 repo에 평문 커밋 — sysbuild.conf 주석엔 "절대 커밋 금지"인데 모순. **위조 펌웨어 OTA 통과 위험** |
+| **AEAD 부재** | 암호화 ON(AES-128-ECB keystream XOR)됐으나 **MIC 없음(위조 검출 불가) + replay counter 없음(packet_id 256 wrap → keystream 재사용) + 공장 root_key = all-zero(미프로비저닝)** |
+
+- **교재 자산 가치**: "IoT 펌웨어 보안 실패 사례" = 서명키 관리 + AEAD + 키 프로비저닝 3종 세트 — 강의·컨설팅·인증 트랙 자산
+- **실리스크**: revita 양산 출하 전 해소 필요 (작업보고서 todo 등재 2026-06-13). 해소 시 [[strengths]] §12 인증 매니지먼트 보강 → [[2026-06-13_revita-보안게이트-인증입찰-매칭]]
+
+---
 
 ## 2026-06-10 — LS XGT 시리즈 prefix 혼동 (PLC 견적 결정적 오류) ⭐⭐⭐
 

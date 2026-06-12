@@ -2,12 +2,29 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-10 (결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
+updated: 2026-06-13 (결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-13) — _inbox 8장 megasession: 결정 48 신설 ⭐⭐⭐
+
+revita-claude ingest #16 + tabm9-claude 3장 + factory-claude 2장 + wishket heartbeat 2장 흡수.
+
+### 결정 48: ⭐⭐⭐ "일단 켜고 점진 강화" 현장 실용주의 + 보안 게이트 = 인증·입찰 자산 연결
+
+**사건**: revita LoRa 암호화가 검토서(CCM+PSK)도 아이디어(CTR)도 아닌 **제3경로(AES-128-ECB keystream XOR)** 로 landed (ingest #16).
+
+**판단 2축**:
+
+1. **의사결정 패턴 박제** — "완벽 설계 < 일단 켜고 점진 강화". 평문 → 암호화 전환을 즉시 실행해 양산 보안 baseline부터 확보하고, AEAD·키 프로비저닝은 점진 강화 carry로 명시. 1인 양산 운영에서 보안 전환의 현실적 경로.
+2. **보안 게이트 = 사업 자산 연결** — ingest #16 보안 carry 2건(서명키 평문 커밋 / AEAD·키 프로비저닝 부재)은 단순 기술 부채가 아니라 **인증·입찰 신뢰도와 직결** ([[strengths]] §12 KC 인증 + 정부 R&D 자격). 해소 = 리스크 제거 + 인증 자산 승격 이중 가치. 실패 사례 자체도 강의·컨설팅 교재 자산 ([[gaps]] § 2026-06-13 3종 세트).
+
+→ [[2026-06-13_revita-보안게이트-인증입찰-매칭]] + [[strengths]] §18 + [[revita]] § 2026-06-11.
+
+---
 
 ## 판단 로그 (2026-06-10) — 결정 39 확장 3번째 ⭐⭐⭐ 위시캣 미팅 자료 SOP 4단계 정착 (사외 경험자 검토 + 단가 검증 + 송부본 분리)
 

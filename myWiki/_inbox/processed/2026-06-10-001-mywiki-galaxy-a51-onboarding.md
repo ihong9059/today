@@ -12,7 +12,10 @@ related:
   - second-brain/log.md
   - second-brain/gaps.md (3 카테고리 추가)
   - second-brain/strengths.md (3 카테고리 추가)
-status: pending
+status: done
+absorbed_into: myWiki/second-brain (log.md 2026-06-13 absorb)
+absorbed_at: 2026-06-13
+ack_sent: 2026-06-13
 ---
 
 # Galaxy A51 5G 보조 모바일 노드 합류

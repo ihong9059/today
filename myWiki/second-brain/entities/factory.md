@@ -2,7 +2,7 @@
 title: factory — UTTEC 공장 자동화 사업화 vault (16th, carrier 4번째)
 type: entity
 created: 2026-06-10
-updated: 2026-06-11 (06-11 build cascade — UTTEC 자산×분쇄공정 cross-매칭 매트릭스 + 1차 영업 narrative 4개 평가 → "A로 검증, D로 확장" 2-페이즈 권고 + PoC 견적·첫 메시지 초안)
+updated: 2026-06-13 (06-12 build cascade — company/ 국가별 구조 완성(40사 폴더화) + 42사 웹 전수 확인 + UTTEC 협업 계획안 3건(한국기계·한국분체기계·HKPS) + ⭐ HKPS↔KPSMC 관계사 가설 / 이전 06-11: cross-매칭 매트릭스 + 영업 narrative 2-페이즈)
 tags: [factory, vault분리, carrier4번째, 16th, 공장자동화, 분쇄설비, 파쇄설비, 한국기계확장, 사업화, 센서제어, 영업narrative, PoC, cross매칭]
 links: [한국기계, weldRobot, ponet, strengths, ai-direction, shield, uttec-factory-claude, onDevice-ai, 위시캣활동, 영업전략, JEHMLICH, WEIMA, Shanghai-SANME, CRUTEC, 대덕메탈]
 ---
@@ -117,6 +117,20 @@ links: [한국기계, weldRobot, ponet, strengths, ai-direction, shield, uttec-f
 2. 한국기계 dogfood 실행 가능성 + 연락처 확인
 3. PoC 견적 원가 산정 (가설 100~150만 → 실제)
 4. CRUTEC·대덕메탈 entity 신설 (narrative A 채택 시)
+
+## 06-12 build — company/ 국가별 구조 완성 + 협업 계획안 3건 + HKPS 관계사 가설 ⭐⭐⭐ (카드 2026-06-13-001, 6/13 흡수)
+
+> company/ 협력후보 트랙 (06-11 카드 2026-06-11-001 + 06-12 build 통합): entities/(요약 카드) ↔ company/(심층 설명서) 역할 분리, 4국 TOP10 40사 전체 폴더화.
+
+1. **company/ 국가별 계층 완성**: `{국가}/{회사}/`(PARTNER) + `{국가}/_벤치마크/{회사}/`(BENCHMARK·COMPETITOR). 각 진행사항.md (fit/tag/website frontmatter + status lifecycle). 대모엔지니어링 → 한국/_벤치마크/ 이동. 회사별 `prompt_진행이력.md` 체계 신설 (README 규약 6항).
+2. **42사 웹사이트 전수 접속 확인** (전부 정상): **한국분체기계 연락처 확보 (hkc@kpsmc.co.kr · 032-505-5580)** + Liming 공식 도메인 lmlq.com 정정 + 크러텍·NETZSCH 봇차단(브라우저 정상).
+3. **UTTEC 협업 계획안 3건** (고장 예지 / 완제품 효율 2관점, onDevice AI 신규 도전 반영):
+   - 한국기계 — 같은 PoC에서 2관점 동시 출발 (retrofit kit 1식 = 고장예지 3모델 + 효율 데이터)
+   - 한국분체기계 — **LG 폴란드(2019)·헝가리(2020) 2차전지 플랜트 수출 + IoT 부재 = 해외 원격 모니터링 killer use case** / gas-tight 공정 / 2026-01 "입도 제어" 기사 / 부설연구소
+   - HKPS — 조건부 계획 (아래 가설)
+4. ⭐ **HKPS 관계사 가설**: HKPS 공장 주소 = 한국분체기계와 완전 동일 (인천 가재울로 32번길 31) + 제품 카탈로그 동일 → **가설 A(유력) = KPSMC 영업/SI 채널**. TOP10 "3위 독립 후보" 평가 정정 후보. 검증 = NICE·등기 유료 DB 또는 접촉 시 확인 (사용자 결단 carry → 작업보고서 2026-06-13 todo).
+5. **회사 설명서 4건** (06-11 카드): 한국기계("급성장 시장의 작은 길목 지킴이") · 대모엔지니어링(벤치마크/천장) · 성일하이텍(고객 정점/등대) · 한국분체기계(dogfood 2순위). ⚠️ 식별 주의: **한국기계엔지니어링(topcrusher, 군포) ≠ 한국분체기계(주)(kpsmc, 인천)** 별개 법인 → [[한국기계]] § 식별 주의.
+6. 후속: 다음 독립 타겟 = 크러텍(한국 4위) 권고 / onDevice AI(DMIC 음향 진단) 분쇄기 적용성 기술 문의 = factory 측 ondevice-claude 카드 carry.
 
 ## 자체 SSH fact-finding 패턴 (선택 carry)
 

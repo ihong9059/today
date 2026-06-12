@@ -16,6 +16,8 @@ links: [me, projects, ai-direction, strengths, gaps]
 | Arduino-CLI / PlatformIO | 상 | 펌웨어 빌드 자동화 | 매우 높음 |
 | STM32 (F4, F7, H7) | 상 | 컴프레서/세탁기 컨트롤러 (양산) | 과거 양산 |
 | BLE (NimBLE, nRF52832) | 상 | OTA, 온도 컨트롤러 (양산) | 높음 |
+| **BLE OTA 농가 자가 업데이트 (SMP/mcumgr/MCUboot)** | 중상 | revita link_v2 실구현 — 스마트폰 앱 + 검증 대시보드 + 속도 기준선 (MTU252 / 1.2KBps / 235KB≈3분). field 사용자가 직접 폰으로 펌웨어 OTA (ingest #16, 2026-06-13 박제) | 신규(2026-06) ★ |
+| **임베디드 무선 암호화 통합 (TinyCrypt AES-128)** | 중 | revita LoRa 평문 → 암호화 전환 (keystream XOR + packet_id nonce 설계). 양산 보안 baseline. AEAD·키 프로비저닝 carry → [[gaps]] § 2026-06-13 | 신규(2026-06) |
 | Raspberry Pi (3B/4/5/CM4/Zero) | 상 | EtherCAT (양산), 서버, 교육 | 높음 |
 | MQTT/RS485/Modbus RTU | 상 | 산업 통신, KC 인증 | 높음 |
 | **nRF52832 USB 시리얼 통신 (USB CDC ACM) + 연동 모바일 앱** | 상 | **수년간 직접 구현 + 연동 앱 다수 제작 (Android USB Host API / UsbSerialForAndroid 통합). 펌웨어 측 CDC ACM + 모바일 측 시리얼 표준 자산 (2026-05-21 박제 — wishket-claude 지원서 작성 중 누락 발견 후 사용자 정정 지시로 정식 등재)** | 활성 |

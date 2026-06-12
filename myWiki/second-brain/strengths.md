@@ -2,7 +2,7 @@
 title: 강점 분석
 type: identity
 created: 2026-04-19
-updated: 2026-06-10 (§17 신규 — 위시캣 영업 자산 7종: Playwright HTML 캡처 SOP + LS XGT 시리즈 prefix 매핑 SOP + PLC 단가 출처 4채널 검증 LIST + IPC 중급 SOP + Recipe 활성풀 + ESP32-P4 LVGL GUI + Python 비정형 데이터/정형외과 협업. wishket-claude 4 카드 megasession 흡수 / 이전 6/6 야간: §13 carrier ponet 3번째 + §15 풀스택 + §16 시제품 검사)
+updated: 2026-06-13 (§18 신규 — 농가 자가 BLE OTA 운영 차별화 + 보안 게이트 ↔ §12 인증 연동, revita ingest #16 흡수 / 이전 6/10: §17 신규 — 위시캣 영업 자산 7종: Playwright HTML 캡처 SOP + LS XGT 시리즈 prefix 매핑 SOP + PLC 단가 출처 4채널 검증 LIST + IPC 중급 SOP + Recipe 활성풀 + ESP32-P4 LVGL GUI + Python 비정형 데이터/정형외과 협업. wishket-claude 4 카드 megasession 흡수 / 이전 6/6 야간: §13 carrier ponet 3번째 + §15 풀스택 + §16 시제품 검사)
 tags: [강점, 분석, carrier역량, vault분리, 다중vault, sensor라이브러리, AI매트릭스, 풀스택양산, 모바일앱양산, AWS양산, 통합단일진행]
 links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick, 양산제품, 회사소개, 영업전략, 위시캣활동]
 ---
@@ -10,6 +10,19 @@ links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick, 양산
 # 강점 분석
 
 ## 핵심 강점
+
+### 18. 농가 자가 BLE OTA — field 사용자 직접 펌웨어 업데이트 운영 차별화 (2026-06-13) ⭐⭐ NEW
+
+revita-claude ingest #16 카드 흡수 (LoRa 암호화 ON + BLE OTA 정착, 18 commits / +15,295).
+
+- **본질**: "field 농가가 직접 폰으로 펌웨어 OTA" (SMP/mcumgr/MCUboot + 스마트폰 앱 + 검증 대시보드 + 속도 기준선 MTU252/1.2KBps/235KB≈3분) = **경쟁사 대비 운영 차별화** — 사무실 회수·기술자 출장·전용 도구 일체 불요. 영업 narrative 자산.
+- **노지관리 신사업 연결**: "지상 IoT 양산 + 원격 무인 운영" 차별화 5에 **"농부 직접 OTA"** 추가 — [[revita]] § 노지관리.
+- **보안 게이트 연동**: ingest #16의 보안 carry 2건(서명키 평문 커밋 / AEAD·키 프로비저닝 부재, [[gaps]] § 2026-06-13) 해소 시 § 12 인증 매니지먼트(KC + 정부 R&D 자격) 신뢰도 강화 자산으로 승격 — 양산·인증·입찰에서 펌웨어 보안 posture가 평가 요소. → [[2026-06-13_revita-보안게이트-인증입찰-매칭]]
+- **게이트 조건**: revita 측 6/12 OTA 실 DUT 시험 = dogfood 배포 게이트. 통과 확인 시 본 § 정식 확정 (현재 소프트웨어 스택 검증분 기준).
+
+→ [[skills]] BLE OTA·TinyCrypt 2행 + [[ai-direction]] § 결정 48.
+
+---
 
 ### 17. 위시캣 영업 자산 7종 — Playwright 캡처 + LS XGT prefix SOP + PLC 단가 검증 + IPC/Recipe + ESP32-P4/비정형 데이터 (2026-06-10) ⭐⭐ NEW
 

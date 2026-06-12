@@ -2,8 +2,20 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-11 (factory vault 06-11 megasession cascade — company/ 4사 위상판단 설명서 + 4국 TOP10 협력후보 40사 deep search + 자산×분쇄 cross-매칭 매트릭스 + 1차 영업 narrative / 이전: #155220 cascade 4 카드 흡수)
+updated: 2026-06-13 (_inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2 / 이전: factory 06-11 megasession cascade)
 ---
+
+## [2026-06-13] absorb ⭐⭐⭐ | _inbox 8장 megasession (tabM9 3 + revita 1 + factory 2 + wishket 2)
+
+- absorb | 2026-06-08-001-mywiki-tabm9-entity-request — `entities/tabM9.md` 신설 (17th vault, dumb terminal 모델 + entities 4종 cross-link)
+- absorb | 2026-06-09-001-mywiki-defender-cfa-gotcha — [[gaps]] § Defender CFA = NCS 빌드 silent killer ⭐⭐⭐ (진단 패턴: "왜 이 PC만?" → host 환경 의심 우선)
+- absorb | 2026-06-10-001-mywiki-galaxy-a51-onboarding — `entities/galaxy-a51-5g.md` 신설 + tabM9 자매 노드 cross-link + [[gaps]] Android onboarding 2건
+- absorb | 2026-06-11-001-ingest-16-absorb — revita ingest #16: [[skills]] BLE OTA·TinyCrypt 2행 + [[strengths]] §18 농가 자가 OTA + [[gaps]] 보안 실패 3종 세트 + [[ai-direction]] 결정 48 + [[2026-06-13_revita-보안게이트-인증입찰-매칭]] thought + [[revita]] § 2026-06-11. 보안 게이트 2건 → 작업보고서 todo
+- absorb | 2026-06-11-001-company-4국협력후보 — [[factory]] § company/ 협력후보 트랙 + [[한국기계]] 트랙 3 + 식별 주의 (한국기계엔지니어링 ≠ 한국분체기계)
+- absorb | 2026-06-11-002-wishket-check-catchup-heartbeat — heartbeat (추천 0/37건), entity 갱신 불요
+- absorb | 2026-06-12-001-wishket-heartbeat — heartbeat (추천 0/43건, 저수율 3일 연속), entity 갱신 불요
+- absorb | 2026-06-13-001-company-협업계획안-HKPS관계사가설 — [[factory]] § 06-12 build (company 국가별 구조 + 42사 웹 전수 + 협업 계획안 3건 + ⭐ HKPS↔KPSMC 관계사 가설 → 작업보고서 todo)
+- index.md entity 2건 등재 (tabM9 / galaxy-a51-5g). 회신: tabm9 done 1장(3건 통합) + revita done 1장 + factory ack 1장 (wishket은 heartbeat 응답 불요)
 
 ## [2026-06-11] cascade ⭐⭐⭐ | factory vault 06-11 megasession — company/ 심층 + 4국 TOP10 협력후보 + 자산매칭 + 영업 narrative
 

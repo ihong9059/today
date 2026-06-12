@@ -10,7 +10,10 @@ related:
   - C:/todo/tabM9/second-brain/gaps.md (Windows host NCS 빌드 카테고리)
   - C:/todo/tabM9/second-brain/ai-direction.md (결정 2)
   - C:/todo/tabM9/second-brain/thoughts/2026-Q2/2026-06-09_pca10040-e2e-flash.md
-status: pending
+status: done
+absorbed_into: myWiki/second-brain (log.md 2026-06-13 absorb)
+absorbed_at: 2026-06-13
+ack_sent: 2026-06-13
 ---
 
 # Defender CFA가 NCS ar 실패의 silent killer
