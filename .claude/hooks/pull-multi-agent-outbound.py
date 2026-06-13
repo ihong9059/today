@@ -43,9 +43,22 @@ REMOTE_VAULTS = [
         "outbound": "/home/uttec/project/shield/_inbox/outbound",
         "archived": "/home/uttec/project/shield/_inbox/outbound-archived",
     },
+    {
+        # n8nUttec 컨벤션: outbound 디렉토리 = pending_outbound/, 발송 완료 = sent/
+        "name": "n8n",
+        "ssh": "uttec@100.90.158.36",
+        "outbound": "/home/uttec/project/n8nUttec/_inbox/pending_outbound",
+        "archived": "/home/uttec/project/n8nUttec/_inbox/sent",
+    },
+    {
+        # uttec-plc (18th, 2026-06-13 신설): outbox-staging → sent-archived (myWiki 동일 컨벤션)
+        "name": "uttec-plc",
+        "ssh": "uttec@100.90.158.36",
+        "outbound": "/home/uttec/uttec-plc/_inbox/outbox-staging",
+        "archived": "/home/uttec/uttec-plc/_inbox/outbox-staging/sent-archived",
+    },
     # 추후 추가 후보:
-    # {"name": "n8n", "ssh": "uttec@100.90.158.36", "outbound": "/home/uttec/project/n8nUttec/_inbox/outbound", ...},
-    # {"name": "uttec-vault", "ssh": "uttec@100.90.158.36", "outbound": "/home/uttec/uttec-vault/_inbox/outbound", ...},
+    # {"name": "uttec-vault", "ssh": "uttec@100.90.158.36", "outbound": "/home/uttec/uttec-vault/outbox", ...},
 ]
 
 # 본 PC vault 리스트 — file path (ssh 불요). 각 vault의 outbox 컨벤션 명시.

@@ -43,6 +43,10 @@ REMOTE_VAULTS = {
         "ssh": "uttec@100.90.158.36",
         "pending": "/home/uttec/project/n8nUttec/_inbox/pending",
     },
+    "uttec-plc-claude": {
+        "ssh": "uttec@100.90.158.36",
+        "pending": "/home/uttec/uttec-plc/_inbox/pending",
+    },
     # 추후 추가:
     # "uttec-vault-claude": {"ssh": "uttec@100.90.158.36", "pending": "/home/uttec/uttec-vault/_inbox/pending"},
     # ...

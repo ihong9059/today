@@ -40,6 +40,7 @@ updated: 2026-05-09
 ## 엔티티 (Entities)
 | 페이지 | 요약 |
 |--------|------|
+| [[vault-registry]] | ⭐⭐⭐ **전체 vault 레지스트리 (단일 출처)** — 18-vault/4-호스트 전수 + broker 라우팅 상태 + 신규 합류 체크리스트 6단계 (6/13 신설, n8n silent 단절 재발 방지) |
 | [[사전빌드]] | 사전빌드 교육 시스템 — 272개 펌웨어, BLE OTA |
 | [[python-vibe]] | Python Vibe 교육앱 — 100개 예시, 바이브 코딩 |
 | [[uttec-edu]] | UTTEC Edu 플랫폼 — 37개 코스, 765일 커리큘럼 |
@@ -51,8 +52,11 @@ updated: 2026-05-09
 | [[한국기계]] | 사업 관계 entity — 트랙 분리 (활성: weldRobot dogfood + factory 분쇄·파쇄 확장 / ⏸ 보류: AI 교육 demo) + 식별 주의 (≠한국분체기계) |
 | [[tabM9]] | **tabM9 vault** — Lenovo Tab M9 모바일 컴퓨팅 노드 (dumb terminal 모델, Termux 네이티브, 17th multi-agent `C:/todo/tabM9/`, 6/6 합류, 6/13 entity 신설) |
 | [[galaxy-a51-5g]] | Galaxy A51 5G (uttec-galaxy) — Tab M9 자매 모바일 노드 (nRF Connect BLE 역할 분담, 6/9 합류) |
+| [[telegram]] | Telegram — UTTEC 자동화 알림 채널 (Bot·Chat ID 3종·**Polling 표준**, n8nUttec session-6 흡수, 6/13 신설) |
+| [[upload-server]] | upload-server — 스크린샷 web 업로드 서버 (Python stdlib 140줄, 9-vault 공통 도구 후보, 옵션 B 인자화 권고 — 채택 사용자 결단 대기, 6/13 신설) |
 | [[ponet]] | **ponet vault** ⭐ — Ponet 광주 협력 회사 (Tier 3, 조대홍 사장). PCB 설계 풀세트 + 더존 ERP + 자체 호스팅. 15th multi-agent (`C:/todo/ponet/`, 6/6 신설, carrier 패턴 3번째 사례 정착 확정 + 자체 SSH fact-finding 신설 첫 사례) |
 | [[factory]] | **factory vault** ⭐⭐ — UTTEC 공장 자동화 사업화 vault (Tier 3). 1차 진입 = 분쇄·파쇄 설비 (한국기계 베이스 → 동종 회사 확장), 확장 = 센서+제어 기반 공장 자동화 전반. 16th multi-agent (`C:/todo/factory/`, 6/10 신설, **carrier 패턴 4번째 사례** + 4국 deep search + 핵심 10사 entity + 한국기계 자산 이식) |
+| [[uttec-plc]] | **uttec-plc vault** — UTTEC PLC/SCADA 산업 자동화 트랙 (LS XGT 견적·설계 + 위시캣 #155220·#155381 계열). 18th multi-agent (uttecMac `~/uttec-plc/`, 6/13 신설·첫 운영, **Tier 2 확정** + #155220 final 송부 완료·수주 대기 + 시스템 설명서·XG5000 초보자 시리즈) |
 | [[조대홍]] | Ponet 사장 entity (광주, UTTEC 협력 파트너) |
 | [[xerix]] | Xerix MFC Controller — EtherCAT 제안 4,970만원 |
 | [[revita]] | REVITA — IoT, LoRa, KC 인증 |
@@ -112,3 +116,5 @@ updated: 2026-05-09
 | [[2026-05-15_제품별-vault-통합-패턴]] | 제품별 vault 통합 패턴 — revita + onDevice 2 사례로 패턴 검증, 시나리오 D 첫 적용 |
 | [[2026-05-16_n8n-claude-합류]] | ⭐ n8n-claude 합류 — 4 Claude 시스템 + 분산 호스트 검증 + myWikiSetup 시나리오 D 두 번째 적용 (메타 검증) |
 | [[2026-06-10_위시캣-정정톤제거-Playwright캡처-SOP]] | ⭐ 위시캣 영업 — 정정 톤 제거 = 신뢰성 회복(내부 학습자산 ↔ 클라이언트 송부본 분리) + Playwright HTML 캡처 SOP |
+| [[2026-06-13_revita-보안게이트-인증입찰-매칭]] | ⭐ revita 보안 게이트 2건 = 인증·입찰 자산 직결 (ingest #16, 결정 48 "일단 켜고 점진 강화") |
+| [[2026-06-13_tailscale-only-polling-표준-n8n-cascade]] | ⭐ Tailscale-only = Polling 표준 (컨설팅 자산 ★★★★) + broker 라우팅 누락 = silent cascade 단절 (n8n 정체 5장 사건) |

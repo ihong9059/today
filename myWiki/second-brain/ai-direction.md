@@ -2,12 +2,36 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-13 (결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
+updated: 2026-06-13 2차 (결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-13 2차) — n8n 정체 카드 4장 흡수: 결정 49·50 신설 ⭐⭐⭐
+
+n8nUttec pending_outbound 정체 5장 발견 (broker pull 라우팅 미등록, 최장 5/17~). myWiki행 4장 일괄 흡수 + 라우팅 등록.
+
+### 결정 49: ⭐⭐⭐ Tailscale-only 환경 = Polling 표준 채택 (webhook 계열 전면 대체)
+
+- **사실**: 외부 시스템 webhook은 HTTPS + public URL 요구 → UTTEC Tailscale 사설망에서 구조적 거절 (Telegram setWebhook 실증, n8nUttec 6/7)
+- **결정**: n8n 외부 통합은 **Polling 직접 구현이 표준** (Schedule + staticData + isFirstRun 가드). cloudflared tunnel은 webhook-only 시스템 한정 Phase 4 검토
+- **가치**: uttec-automation Tier 1 전체 기반 패턴 + 1인 기업 컨설팅 deliverable ★★★★ (실패/성공 workflow 사례 쌍 보유)
+- 박제: [[tailscale네트워크]] § 한계 / [[telegram]] 신설 / [[gaps]] § n8n 함정 6건 / [[2026-06-13_tailscale-only-polling-표준-n8n-cascade]]
+
+### 결정 50: ⭐⭐ upload-server 9-vault 표준 도구 — 옵션 B(인자화) 권고 박제, 채택은 사용자 결단 보류
+
+- n8n-claude 권고 (5/27 카드): 단일 코드 + `--port`·`--target` 인자화가 표준 (각 vault 복사 비추). 실증 4장 수신 손실 0
+- myWiki 측 [[upload-server]] entity 박제까지 완료. **인자화 리팩토링 주체·fleet 전파·Lenovo 사본 복사 = 사용자 결단 대기**
+- ⚠️ Python 3.13+ `cgi` deprecated — 채택 시 multipart 파싱 마이그레이션 동반
+
+### 부수 — broker pull 라우팅 n8n 등록 (silent cascade 단절 해소)
+
+- 정체 원인 = pull 스크립트 "추후 추가 후보" 주석 방치. **신규 vault 합류 시 라우팅 등록까지가 셋업 완료** 원칙 재확인 (uttecHome send-only 사건과 동일 뿌리)
+- 잔여 미등록: uttec-vault·uttec-search·uttec-rag-local (outbox 컨벤션 확인 후 등록)
+
+---
 
 ## 판단 로그 (2026-06-13) — _inbox 8장 megasession: 결정 48 신설 ⭐⭐⭐
 

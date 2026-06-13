@@ -2,12 +2,59 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-06-13 (_inbox 8장 megasession — Defender CFA NCS silent killer + Android onboarding 2건 + IoT 펌웨어 보안 실패 사례 3종 세트(서명키 평문 커밋·AEAD 부재·키 미프로비저닝, revita ingest #16) / 이전 6/10: LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
+updated: 2026-06-13 2차 (n8nUttec 정체 카드 4장 흡수 — webhook publish 거절 ★★★★ + staticData Active 한정 + ugrep alias + Schedule Trigger silent success 등 6건 / 1차: _inbox 8장 megasession — Defender CFA NCS silent killer + Android onboarding 2건 + IoT 펌웨어 보안 실패 사례 3종 세트(서명키 평문 커밋·AEAD 부재·키 미프로비저닝, revita ingest #16) / 이전 6/10: LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
 tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인, R50-1-chip-saturate, STM-7-v2, I2C-주소충돌, flatten-순서, WHO_AM_I-분기, PEP668, scp-wildcard, 데이터사이언티스트, GEE학습, 자산인덱스누락재발, cross-vault-cascade-지연, 풀스택자산]
 links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용, 2026-06-04_sensor-AI-매트릭스-단일출처-mandate]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-06-13 (3차) — XGF-PN4B(EtherCAT 마스터)는 SCADA와 통신 불가 (LS XGT 2번째 실무 함정) ⭐⭐
+
+uttec-plc-claude 첫 운영 세션 카드(`2026-06-13-001`) 흡수. XGT prefix 함정([[gaps]] 2026-06-10)에 이은 **2번째 LS XGT 실무 함정**. 사용자 질문("왜 자체 SCADA가 XGF-PN4B와 통신한다고?")에서 정정 박제.
+
+### gotcha XGF-PN4B-SCADA ⭐⭐ — PLC 마스터 모듈을 SCADA가 직접 통신할 수 있다는 오해
+
+| 함정 | 회피 |
+|---|---|
+| 자체 SCADA(Plan C, pymodbus+FastAPI)가 **XGF-PN4B(EtherCAT 마스터)와 직접 통신**한다는 구조 설명 오류 | SCADA ↔ **XGK-CPUSN 내장 Ethernet (Modbus TCP)** 전용. XGF-PN4B는 서보 4슬레이브 전용 **폐쇄망** (외부 진입 자리 없음). IPC는 마스터가 아니라 Modbus TCP **클라이언트** |
+
+**3 이유**: ① EtherCAT은 일반 TCP/IP와 비호환 (전용 ASIC 필요) ② 마스터-슬레이브 폐쇄 토폴로지 ③ 결정론 보호 (Windows IPC가 끼면 100μs 사이클 깨짐). Plan C 채택해도 이 구조 불변.
+
+→ 견적·구조 설명 시 흔한 함정. uttec-plc `docs/system-overview/index.html` §11 통신 채널 명확화 그림이 가장 명확한 박제 (인용 가능). [[위시캣활동]] § #155220 · [[uttec-plc]] 연결.
+
+---
+
+## 2026-06-13 (2차) — n8nUttec 정체 카드 흡수 함정 6건 (Tailscale webhook 한계 + 자동화 환경) ⭐⭐⭐
+
+n8n-claude 카드 4장 (5/18~6/7 pending_outbound 정체분, broker pull 라우팅 누락 해소 후 일괄 흡수). § "자동화/스크립팅 함정 패턴"의 연장.
+
+### gotcha n8n-webhook-거절 ⭐⭐⭐⭐ — Tailscale-only 환경에서 외부 시스템 webhook publish 거절
+
+- Telegram 등 외부 API의 setWebhook은 **HTTPS + public 도달 가능 URL 요구** → Tailscale 사설 IP + HTTP에서 등록 거절. n8n Trigger 노드가 publish 단계에서 실패
+- 회피: **Polling 직접 구현 표준** (Schedule + getUpdates/HTTP Request + staticData + isFirstRun 가드) / cloudflared tunnel·public 인스턴스 분리는 Phase 4
+- 1인 기업·소규모 팀 공통 함정 = UTTEC 컨설팅 deliverable 가치. 상세: [[tailscale네트워크]] § 한계 / [[telegram]]
+
+### gotcha n8n-staticData — `$getWorkflowStaticData`는 Active 모드에서만 영구 누적 ⭐⭐⭐
+
+- Test 모드는 임시 메모리 → polling 반복 디버깅 시 매번 처음부터 폴링 (offset 손실)
+- 회피: Workflow **Activate 필수** + isFirstRun 가드 패턴
+
+### gotcha n8n-schedule-silent — Schedule Trigger는 연결 끊겨도 status=success
+
+- 다운스트림 연결이 깨져도 trigger 자체는 success 기록 → 무소식 = 정상으로 오인. 모니터링은 결과 부수효과(메일 수신 등) 기준으로
+
+### gotcha ubuntu-ugrep-alias — Ubuntu `grep`이 ugrep alias인 환경 (일반 Linux 자동화 함정)
+
+- 스크립트가 GNU grep 옵션 가정 시 silent 오동작. 회피: `/usr/bin/grep` 절대 경로 + 패턴 `^[+]` escape 류 주의
+
+### gotcha bash-session-cwd — bash 세션 cwd persistence 가정 금지
+
+- 자동화에서 이전 명령의 cd 상태 의존 금지 — 절대 경로 표준 (Claude Bash 도구도 동일 패턴)
+
+### gotcha 카카오-도메인-HTTPS — 카카오 앱 대표 도메인은 HTTPS 검증 요구
+
+- 카카오 developers 앱 등록 시 대표 도메인 HTTPS 필수 → Tailscale-only 환경 동일 계열 한계 (webhook 거절과 같은 뿌리)
 
 ## 2026-06-13 — _inbox 8장 megasession 함정 박제 (Defender CFA + Termux/Android + IoT 펌웨어 보안 실패 사례) ⭐⭐⭐
 

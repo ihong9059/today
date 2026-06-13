@@ -1,10 +1,12 @@
 ---
-name: 5-vault 분리 운영 (myWiki + onDevice_AI + lemonLabs + uttecHome + search) — 5/21 search 합류
-description: 사용자 second-brain 운영 구조. 5/7 3-vault → 5/15 2-vault → 5/19 오전 3-vault (lemonLabs 합류) → 5/19 후반 4-vault (uttecHome 분리) → 5/21 5-vault (search 신설). 작업 요청 시 어느 vault인지 먼저 판단 후 진행
+name: multi-vault 분리 운영 — 단일 출처는 myWiki entities/vault-registry.md ⭐
+description: 사용자 second-brain 운영 구조. 2026-06-13 기준 18-vault/4-호스트 (Windows 10 + uttecMac 5 + factory-rpi4 + shield-rpi4). 전체 목록·broker 라우팅·합류 체크리스트의 단일 출처 = myWiki/second-brain/entities/vault-registry.md (본 메모리의 vault 열거는 갱신하지 않음). 작업 요청 시 어느 vault인지 먼저 판단 후 진행
 type: project
 originSessionId: b3245c42-bf7b-4dd3-a682-cd49deb90641
 ---
-사용자는 **5개 vault**를 분리 운영한다 (2026-05-21 search 신설로 확장).
+사용자는 **다수 vault를 분리 운영**한다 — **2026-06-13 기준 18-vault / 4-호스트** (myWiki hub + Windows 10 + uttecMac 5: n8nUttec·uttec-vault·uttec-search·uttec-rag-local·uttec-plc + factory-rpi4 + shield-rpi4).
+
+⭐ **전체 목록·agent ID·broker 라우팅 상태·신규 합류 체크리스트 6단계의 단일 출처 = `myWiki/second-brain/entities/vault-registry.md`** — vault 관련 판단 전 그 페이지를 먼저 읽을 것. 아래 표·9-Claude 열거는 5/21 시점 스냅샷 (역사 기록용, 갱신 안 함).
 
 | vault | 위치 | 역할 | scope |
 |---|---|---|---|

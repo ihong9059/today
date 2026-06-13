@@ -93,6 +93,7 @@ links: [me, projects, ai-direction, strengths, gaps]
 | 도구 | 용도 | 사용 빈도 |
 |------|------|----------|
 | Claude Code | 핵심 개발 도구 (코딩, 문서, 자동화) | 매일 |
+| n8n (Docker self-host) | 워크플로우 자동화 — Telegram polling 표준·Gmail·Schedule cron, Tailscale-only 환경 통합 패턴 (n8nUttec vault) | 주간 |
 | Markdown | 문서/보고서/제안서 | 매일 |
 | Playwright | HTML→PDF 변환 | 간헐 |
 | NotebookLM | 리서치/학습 | 간헐 |

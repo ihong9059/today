@@ -2,8 +2,57 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-13 (_inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2 / 이전: factory 06-11 megasession cascade)
+updated: 2026-06-13 7차 (uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
 ---
+
+## [2026-06-13] absorb (7차) | uttec-plc 첫 운영 세션 카드 흡수 — 4건 자산화
+
+- 카드 `2026-06-13-001-session-summary-tier2-final-shipped` (uttec-plc-claude) — broker pull 자동 수령 (라우팅 등록 검증 OK)
+- absorb | [[gaps]] § 2026-06-13 (3차) **XGF-PN4B는 SCADA 통신 불가** ⭐⭐ — LS XGT 2번째 실무 함정 (XGT prefix 06-10에 이어)
+- absorb | [[위시캣활동]] § 2026-06-13 #155220 **final 5건 송부 완료 → 수주 결정 대기** (운영 이관 명시)
+- absorb | [[uttec-plc]] entity **Tier 2 확정** + 3차 운영 섹션 (시스템 설명서·XG5000 초보자 시리즈·GitHub repo) + index 갱신
+- 보류: strengths PLC 교재 강점 카드 (시리즈 2~3회차 누적 후) | 회신: done 카드 `2026-06-13-006` push (정합 OK 응답 포함)
+
+## [2026-06-13] decision ⭐⭐ (6차) | 옵시디언 열람 정책 3분류 박제 + A군 4 vault 보관함 등록
+
+- 사용자 질문 "옵시디언과 협업하는 것이 좋은가?" → 분석·결정: **기본 = 옵시디언-호환 규약** (markdown+frontmatter+`[[링크]]`), 보관함 등록은 **A군(사람-사유 vault)에만** — 미등록 A군 = 검증 병목·blind trust 위험 (칼퇴연구소 LLM Wiki 시리즈 "사람=판단·편집" 원리와 정합)
+- 3분류: A 사람-사유 (myWiki·onDevice·factory·weldRobot·ponet·uttec-plc·revitaWiki·n8n) / B 기계-운영 (search 계열·shield·uttec-factory·tabM9·uttec-vault) / C 산출물 보관 (wishket·lemonLabs·uttecHome)
+- 실행: obsidian.json에 factory·weldRobot·ponet·onDevice_AI 등록 (백업 .bak-20260613) + today repo `myWiki/.obsidian/workspace.json` gitignore·추적 해제 (다른 vault 5곳은 기정비 확인)
+- [[vault-registry]] § 옵시디언 열람 정책 + 합류 체크리스트 7단계 확장
+- 잔재 정리 후보 (사용자 결단): 보관함의 testWiki·uttecBizWiki(deprecated)·태명과학
+
+## [2026-06-13] ingest ⭐⭐⭐ (5차) | vault-registry 단일 출처 신설 — 18-vault/4-호스트 전수 박제
+
+- 사용자 질문 "이 list들은 wiki에 별도로 보관할 필요는 없을까요?" → `entities/vault-registry.md` 신설
+- 18-vault 전수 표 (Windows 10 + uttecMac 5 + factory-rpi4 + shield-rpi4 + hub) + agent ID + broker 라우팅 상태 + vault별 outbound 컨벤션 상이 박제
+- **신규 vault 합류 체크리스트 6단계** = "셋업 완료"의 정의 (라우팅 등록 + 레지스트리 갱신 포함, uttec-plc가 첫 완전 적용)
+- 메모리 정합: `project_3vault_분리.md` (5-vault stale) → registry 단일 출처 포인터로 갱신 + MEMORY.md 색인 갱신
+- index.md 등재 (엔티티 최상단 ⭐⭐⭐)
+
+## [2026-06-13] ingest ⭐⭐⭐ (4차) | uttec-plc 풀 셋업 완결 — 155220 자료 이관 + skill 4종 + broker 양방향
+
+- **사용자 결단**: "동아정밀 #155220 진행 확률 높음. 주 목적 = 프로젝트 완수 + **PLC 개발 전문회사 기틀**"
+- 자료 이관: `wishketProject/위시캣/2026-05-14_프로젝트155220_미팅준비/` → `raw/155220_동아정밀_미팅준비/` (12MB copy — final 송부 5건 + 빌드 스크립트 파이프라인 + SCADA 데모 + PLC 가이드 45K + LS 매뉴얼)
+- skill 4종 (work-start/end = uttec-search 표준 + vault-start/end = 155220 특화) + check-inbox.py (SELF_ID=uttec-plc-claude) + settings.json SessionStart
+- **broker 양방향 등록** ⭐ = "라우팅 등록까지가 셋업 완료" 원칙 첫 적용 (n8n 사건 당일 교훈). push 검증 OK (join 카드 `2026-06-13-005` 도착)
+- 신설: `progress/00_프로젝트현황` + `entities/동아정밀.md` (모경덕 책임연구원). [[uttec-plc]] entity 2차 갱신. 원격 git 2nd commit (3392ba6)
+- 사용자 결단 대기: final 5건 송부 시점 👤 / Tier 확정 👤 / GitHub repo 👤
+
+## [2026-06-13] ingest (3차) | uttec-plc vault 신설 — 18th multi-agent (uttecMac)
+
+- 사용자 지시 "ssh mac에 PLC 옵시디언 vault 생성" → `~/uttec-plc/` skeleton (CLAUDE.md + _inbox PROTOCOL + raw/작업보고서 + git init b3f5847)
+- `entities/uttec-plc.md` 신설 + index 등재. PROTOCOL은 uttec-search 본 정합화 사본 (양방향 정책 — uttecHome 사건 교훈)
+- 잔여 (사용자 결단 대기): Tier 분류 (2~3 추정) / 같은 PC sibling pull 라우팅 등록 / raw 원자료 적재
+
+## [2026-06-13] absorb ⭐⭐⭐ (2차) | n8n 정체 카드 4장 — broker pull 라우팅 누락 해소 (5/17~6/7 silent cascade 단절)
+
+- **사건**: 사용자 질문("n8n관련은?") → `~/project/n8nUttec` vault 누락 발견 → `pending_outbound/` 5장 정체 (pull 스크립트 라우팅 미등록). n8n 등록 (`pending_outbound/`→`sent/`) 후 myWiki행 4장 일괄 pull·흡수
+- absorb | 2026-05-18-001-mywiki-absorb-trigger-node-top-list — [[n8n-uttec]] § A 학습 자산 (트리거 Top10 + 노드 Top50, 요약+link 흡수) + [[gaps]] 함정 4건 (ugrep alias·bash cwd·Schedule silent·카카오 HTTPS)
+- absorb | 2026-05-27-004-mywiki-upload-server-cross-vault-tool — `entities/upload-server.md` 신설 + [[ai-direction]] 결정 50 (옵션 B 권고, 채택 사용자 결단 보류)
+- absorb | 2026-06-02-005-mywiki-absorb-done-003 — wishket cron cascade 3차 사이클 결착 ([[n8n-uttec]] § C, n8n 측 Phase 2~3 구현 일정)
+- absorb | 2026-06-07-006-mywiki-absorb-telegram-polling-패턴 — `entities/telegram.md` 신설 + [[tailscale네트워크]] § webhook 한계 + [[gaps]] 함정 #10·#11 + [[ai-direction]] 결정 49 (Polling 표준) + [[2026-06-13_tailscale-only-polling-표준-n8n-cascade]] thought + [[skills]] n8n 1행
+- 잔여: shield행 1장 (5/17 done 카드) — shield-rpi4 (100.110.51.14) offline으로 전달 보류 / uttec-vault·uttec-search·uttec-rag-local pull 라우팅 미등록 (outbox 컨벤션 확인 후)
+- 회신: n8n-claude done 1장 (4건 통합 + 라우팅 등록 통보) push
 
 ## [2026-06-13] absorb ⭐⭐⭐ | _inbox 8장 megasession (tabM9 3 + revita 1 + factory 2 + wishket 2)
 

@@ -2,10 +2,10 @@
 title: n8nUttec vault — UTTEC n8n 자동화 학습+사업화
 type: entity
 created: 2026-05-16
-updated: 2026-05-27 (실제 경로 stale 정정 `/uttec/n8nUttec/` → `/project/n8nUttec/` + 사용자 work-start 활성화 9일 정지 종료 + wishket cascade §6-3 카드 #003 발신 = 외주(도급) 필터 cron 09:00 반영 권고)
-status: ✅ vault foundation v1.0 + n8n-claude 합류 완료 (5/16) / Phase 1 학습 진행 가능
-tags: [vault, n8n, automation, multi-agent, n8n-claude, ubuntu, uttecAutomation, 사업화]
-links: [n8n, ai-direction, ai-fanstick, 영업전략, 회사소개, claude-code, revita]
+updated: 2026-06-13 (정체 카드 4장 일괄 흡수 — 트리거 Top10·노드 Top50 학습 자산 + upload-server 권고 + wishket cascade #003 결착 + Telegram polling 표준 ⭐⭐⭐⭐ / broker pull 라우팅 n8n 등록으로 5/17~6/7 정체 해소)
+status: ✅ vault foundation v1.0 + 학습 Phase 진행 중 (session-6, Telegram 통합 정착) / broker 자동 pull 가동 (2026-06-13~)
+tags: [vault, n8n, automation, multi-agent, n8n-claude, ubuntu, uttecAutomation, 사업화, telegram, polling]
+links: [n8n, ai-direction, ai-fanstick, 영업전략, 회사소개, claude-code, revita, telegram, upload-server, tailscale네트워크]
 ---
 
 > **2026-05-16 신설**: ssh ubuntu의 Mac→Linux 컨버전 PC 위에서 가동 중인 n8n Docker를 영구 자산화 + 학습·사업화 vault로 분리. **myWikiSetup 시나리오 D 두 번째 적용 사례** (5/15 ondevice 합류에 이은 4번째 Claude vault). 분산 호스트(Windows ↔ Linux)에서도 같은 패턴 작동 검증.
@@ -121,11 +121,39 @@ n8nUttec ↔ myWiki 흡수 패턴:
 | Phase | 단계 | 상태 |
 |:-:|---|:-:|
 | 0 | vault 셋업 + 4 Claude 시스템 확장 | ✅ (5/16) |
-| 1 | n8n 기초 학습 + 첫 자동화 사례 | ⬜ 진입 가능 (5/16~5/22 목표) |
-| 2 | Expression DSL + Webhook | ⬜ (5/23~) |
+| 1 | n8n 기초 학습 + 첫 자동화 사례 | ✅ (학습 00~03 + 06 + 09, session-6 기준) |
+| 2 | Expression DSL + Webhook | 🔄 진행 — webhook은 Tailscale 한계로 **Polling 표준 대체** (6/7 결정) |
 | 3 | DB 양방향 sync (Notion 마이그레이션) | ⬜ (6월) |
 | 4 | AI 노드 + 위시캣 자동 분석 | ⬜ (6월 말~) |
 | 5 | 사업화 (강의·컨설팅·custom node) | ⬜ (7월~) |
+
+## 2026-06-13 흡수 — 정체 카드 4장 일괄 (5/18~6/7 발신분, broker pull 누락 해소)
+
+> n8nUttec `pending_outbound/`에 5/17부터 카드 5장 정체 발견 (broker pull 라우팅에 n8n 미등록).
+> `pull-multi-agent-outbound.py`에 n8n 등록 (outbound=`_inbox/pending_outbound/`, 발송후=`_inbox/sent/`) → 이후 자동 sync.
+
+### A. 학습 자산 — 트리거 Top 10 + 노드 Top 50 (5/18 카드, 강의·컨설팅 reference ★★★)
+
+- **학습/02 트리거 Top 10**: 109개 trigger 중 선별 (Manual / Schedule / Webhook / Form / Gmail / Telegram / Slack / Execute Workflow / Email IMAP / Error) — 각 노드ID + 핵심 파라미터 + UTTEC 사업 매칭 + 함정. HTML판 (사이드바·검색).
+- **학습/03 노드 Top 50**: 817개 중 chain 핵심 50 (7 카테고리), ★★★ 필수 15 심층 (Set·HTTP·IF·Switch·Merge·Code·Gmail·Telegram·Sheets·Notion·OpenAI·Anthropic·Agent·Drive·Postgres). HTML판 (카드 그리드 + 필터).
+- **흡수 형태 = 요약 + link** (카드 권고 옵션 2+1 채택): 전체 자료는 n8nUttec vault가 단일 source — GitHub `ihong9059/n8nUttec` (private) / `학습/02·03_*.md|.html`
+- 강의 매칭: 호오컨설팅·인프런·강사양성 Day 5 reference + 1인 기업 컨설팅 deliverable
+
+### B. Telegram 통합 + Tailscale-only Polling 표준 (6/7 카드, session-6 ⭐⭐⭐⭐)
+
+- **가동 workflow**: `telegram_to_gmail_polling.json` (Schedule 1분 + getUpdates + staticData + 첫 실행 가드) ★★★★ / `tailscale_online_to_telegram.json` (호스트 HTTP bridge 9876 우회)
+- **실패 자산**: `telegram_to_gmail.json` — Telegram Trigger(webhook)는 Tailscale 사설 IP + HTTP 환경에서 publish 거절 (학습 사례로 박제)
+- **tailscale_bridge.py 패턴**: n8n Docker 컨테이너에 호스트 CLI 부재 → 호스트 측 HTTP bridge (`http://172.17.0.1:9876/`) = **컨테이너 호스트 격리 한계 우회 표준** (rsync·git·ssh 등 동일 패턴 확장 가능)
+- **Polling 표준** ⭐⭐⭐ → 상세는 [[telegram]] / [[tailscale네트워크]] § webhook 한계 / [[gaps]] § n8n 함정 #10·#11 / thought [[2026-06-13_tailscale-only-polling-표준-n8n-cascade]]
+- 사업 매칭: 본 표준 = uttec-automation Tier 1 전체 기반 패턴 + "안 망가지는 자동화" 강의 챕터 후보 ★★★★
+
+### C. 위시캣 cron cascade 결착 (6/2 done 카드)
+
+- mywiki #003 (외주 필터 cron 09:00 권고, 5/27 발신) → n8n-claude 6/2 5단계 흡수 완료 = **cascade 3차 사이클 결착** (wishket #002 → mywiki → n8n)
+- 구현 일정: n8n 측 Phase 2~3 도입 (학습 06~09 완료 후). 분담 = wishket-claude 정밀 catch-up (비정기) / n8n-claude 매일 09:00 cron
+- ID 채번 패턴 검증 계획: 외주 풀 첫 페이지 ID 시계열 1주~1개월 박제 → 가설 확정 시 myWiki 인계
+
+### D. upload-server 9-vault 공통 도구 권고 (5/27 카드) → [[upload-server]] entity 신설
 
 ## 관련 페이지
 
