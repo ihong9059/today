@@ -2,7 +2,7 @@
 title: 한림용인CC 시공 진행 로그
 type: log
 created: 2026-05-17
-updated: 2026-06-07 (LoRa + Modbus time-multiplexed HW UART 통합 펌웨어 검증 완료)
+updated: 2026-06-13 (TX 보드 hardware test — E22 설정+level flash 다수 / 망 구성은 월요일 이월)
 ---
 
 # 한림용인CC 고가수조 자동급수 무선제어 — 진행 로그
@@ -10,6 +10,26 @@ updated: 2026-06-07 (LoRa + Modbus time-multiplexed HW UART 통합 펌웨어 검
 > Tier 2 sub-vault. 시공·진행·결정 단계별 박제.
 >
 > action: start / decision / purchase / site / firmware / revenue / milestone / complete / absorb
+
+## [2026-06-13] firmware ⭐ | TX 보드 hardware test (E22 설정 + level flash 다수) — 망 구성 월요일 이월
+
+**작업**: UTTEC BLE Module(nRF52832) TX 보드 다수에 ① E22 LoRa 설정 → ② 생산 펌웨어 flash. PCA10056(J-Link 683795210) SWD, nrfjprog `--program --verify --reset` (APPROTECT면 `--recover` 선행).
+
+**핵심 발견 — E22 응답 보드별 편차 ⭐**:
+- 응답 O 보드: `lora_test_tx`가 E22 읽고 REG0=0x60(9600)/REG2=0x48(CH72) write 성공. (실측 1대: 설정 전 REG0=**E0**(115200)/REG2=**17**(CH23 873MHz) 공장값 확인 후 교정)
+- 응답 X 보드 (`read fail n=0`): E22 Config 모드 0 byte 응답 → write **skip** → 미설정 → 통신 불가. **firmware/README.md 트러블슈팅에 기존재한 증상** (M1/E22 TXD 결선 또는 모듈 불량).
+
+**함정 재확인 (README에 이미 박제됨 — 사전에 읽었어야)**:
+- 한글 경로 cmake crash(3221226505=0xC0000409) → ASCII 경로(`C:\ncs\tmp_*`) 복사 후 빌드.
+- E22 setup/read 펌웨어는 prebuilt hex 없음 → ASCII 경로 빌드 (NCS v2.9.2 workspace `C:\ncs\v2.9.2`, `west build -b nrf52dk_nrf52832 -s <ascii> -d <ascii>\build`).
+
+**월요일 이월**:
+1. **망 구성** — 노선1(고가수조1)/노선2(고가수조2) TX·중계기·게이트웨이 배치 + 통신 검증
+2. 응답 X 보드 E22 설정법 결정 — (A) blind-write 펌웨어 / (B) Pin3(E22 TXD→P0.13)·Pin8(M1→P0.19) 결선 점검 / (C) EBYTE PC 소프트웨어
+3. 노드 ID 구분 (고가수조1=ID1 / 고가수조2=ID2 — 현재 전부 ID1 hex)
+4. RX 보드(`lora_rx_display`) E22도 9600/CH72 확인
+
+**준비된 hex**: 설정=`C:\ncs\tmp_lora_test_tx\...\zephyr.hex` / 진단=`C:\ncs\tmp_lora_read_reg\...\zephyr.hex` / 생산=`firmware/lora_tx_water_level/build/.../zephyr.hex`(D-day 6/9).
 
 ## [2026-06-07] decision ⭐⭐⭐ | 시공 일정 확정 — 6/9(화) 현장 동작 테스트 → 2주 후 완성·납품
 

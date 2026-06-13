@@ -10,6 +10,9 @@
 - [사전빌드 앱은 Flutter만](project_prebuild_flutter_only.md) — Kotlin(PrebuiltApp) 삭제됨, Flutter(flutter_app)만 사용
 - [동시 빌드 문제](project_prebuild_concurrent_build.md) — 여러 학생 동시 새 요청 시 빌드 충돌, 반드시 해결 필요
 - [기존 코드 먼저 참조](feedback_reuse_existing_code.md) — 동작하는 코드가 있으면 새로 작성하지 말고 기존 패턴 복사
+- [hardware test = 기존 hex flash 🚨](feedback_hwtest_flash_existing_hex.md) — "hardware test" + 검증 hex 존재 시 그대로 flash, 재빌드·소스변경 금지. 노드 ID 등 빌드타임 차이 짐작해서 재빌드 X. 6/13 한림용인CC 둘째 TX 재빌드 시도 지적 박제
+- [프로젝트 README 먼저 읽기 🚨](feedback_read_project_readme_first.md) — 펌웨어/하드웨어 작업 전 그 프로젝트 firmware/README.md·wiki/log.md 먼저 read. 함정(한글경로 cmake)·결선·기존 펌웨어·SOP 기존재. 6/13 한림 LoRa에서 박제된 것 모른 채 재발견·헤맴 지적 박제
+- [한림용인CC LoRa TX flash SOP ⭐](reference_hanlim_lora_tx_flash_sop.md) — TX 보드당 ① lora_test_tx(E22 설정 9600/CH72) → ② lora_tx_water_level(level 송신) flash. PCA10056 SWD/nrfjprog. 보드별 E22 응답 편차(read fail n=0=불량). 한글경로 cmake 함정→ASCII 빌드. 망 구성=6/15(월) 이월
 - [Google Calendar MCP 설정](reference_google_calendar_mcp.md) — @cocal/google-calendar-mcp OAuth 경로, 계정 ihong9059, 프로젝트 uttecproject
 - [PC 인프라 — 역할 분리](project_dual_pc.md) — Windows=myWiki/일상 (단일 source) / Ubuntu=개발 전용 (2026-05-14 Mac→Ubuntu 컨버전)
 - [uttec@ubuntu 개발 PC](reference_uttec_ubuntu_mac.md) — Mac→Ubuntu 22.04 컨버전, `ssh ubuntu` 별칭, Tailscale 100.90.158.36, Claude Code v2.1.141 (2026-05-14)
