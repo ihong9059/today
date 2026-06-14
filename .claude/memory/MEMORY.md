@@ -28,6 +28,7 @@
 - [uttec@192.168.0.23 = factory-rpi4 LAN IP](reference_uttec_192_168_0_23.md) — 단일 source는 `reference_factory_rpi4_uttec_factory.md`. Tailscale 별칭 `factory-rpi4` 사용 권장
 - [uttec@192.168.1.20 RPi3 (hardware 이전됨)](reference_uttec_192_168_1_20.md) — 5/26 신규 셋업, UTTEC Shield hardware는 factory-rpi4로 이전. 본 RPi3는 호스트만 잔존
 - [RPi WS2812 + audio PWM0 충돌 ⭐](feedback_rpi_ws2812_pwm0_audio_conflict.md) — GPIO12/18에 WS2812 연결 시 audio가 PWM0 점유 → `dtparam=audio=on` off + reboot이 표준 해결 (2026-05-26 UTTEC Shield 첫 테스트 박제)
+- [lora vault (19th) — LoRa 기술 전문 hub ⭐](project_lora_vault.md) — `C:\todo\lora`, SELF_ID=lora-claude. 한림·shield·revita·factory LoRa 기술 근거 횡단 집약 → 사업방향 cascade. 🚨 현장 hardware 작업은 scope 밖 (기술 검토·SOP·근거만)
 - [multi-vault 분리 운영 — 단일 출처 = vault-registry ⭐](project_3vault_분리.md) — 2026-06-13 기준 **18-vault/4-호스트**. 전체 목록·broker 라우팅·합류 체크리스트는 `myWiki/second-brain/entities/vault-registry.md`가 단일 출처 (메모리에 vault 열거 중복 금지). vault 판단 결정 트리는 메모리 본문 참조
 - [uttecHome cascading 차단 사건](feedback_uttechome_inbox_required.md) — vault 분리 시 _inbox + 양방향 CLAUDE.md 정책 동시 도입 필수. send-only는 cascading 비대칭 = 회사 홈페이지에 신기술 0% 반영 위험
 - [DigitalOcean SSH 진단 SOP ⭐](feedback_digitalocean_ssh_recovery.md) — ssh digital 실패 시: port test → Cloud Firewall → **Recovery Console** (Settings → Reset Root → Launch Console) → `systemctl status ssh`. Restart는 함정 (disabled면 무효). Web Console ≠ Recovery Console

@@ -40,7 +40,7 @@ updated: 2026-05-09
 ## 엔티티 (Entities)
 | 페이지 | 요약 |
 |--------|------|
-| [[vault-registry]] | ⭐⭐⭐ **전체 vault 레지스트리 (단일 출처)** — 18-vault/4-호스트 전수 + broker 라우팅 상태 + 신규 합류 체크리스트 6단계 (6/13 신설, n8n silent 단절 재발 방지) |
+| [[vault-registry]] | ⭐⭐⭐ **전체 vault 레지스트리 (단일 출처)** — 19-vault/4-호스트 전수 + broker 라우팅 상태 + 신규 합류 체크리스트 7단계 (6/13 신설, n8n silent 단절 재발 방지) |
 | [[사전빌드]] | 사전빌드 교육 시스템 — 272개 펌웨어, BLE OTA |
 | [[python-vibe]] | Python Vibe 교육앱 — 100개 예시, 바이브 코딩 |
 | [[uttec-edu]] | UTTEC Edu 플랫폼 — 37개 코스, 765일 커리큘럼 |
@@ -57,6 +57,7 @@ updated: 2026-05-09
 | [[ponet]] | **ponet vault** ⭐ — Ponet 광주 협력 회사 (Tier 3, 조대홍 사장). PCB 설계 풀세트 + 더존 ERP + 자체 호스팅. 15th multi-agent (`C:/todo/ponet/`, 6/6 신설, carrier 패턴 3번째 사례 정착 확정 + 자체 SSH fact-finding 신설 첫 사례) |
 | [[factory]] | **factory vault** ⭐⭐ — UTTEC 공장 자동화 사업화 vault (Tier 3). 1차 진입 = 분쇄·파쇄 설비 (한국기계 베이스 → 동종 회사 확장), 확장 = 센서+제어 기반 공장 자동화 전반. 16th multi-agent (`C:/todo/factory/`, 6/10 신설, **carrier 패턴 4번째 사례** + 4국 deep search + 핵심 10사 entity + 한국기계 자산 이식) |
 | [[uttec-plc]] | **uttec-plc vault** — UTTEC PLC/SCADA 산업 자동화 트랙 (LS XGT 견적·설계 + 위시캣 #155220·#155381 계열). 18th multi-agent (uttecMac `~/uttec-plc/`, 6/13 신설·첫 운영, **Tier 2 확정** + #155220 final 송부 완료·수주 대기 + 시스템 설명서·XG5000 초보자 시리즈) |
+| [[lora]] | **lora vault** ⭐ — UTTEC LoRa 기술 전문 hub. 한림·shield·revita·factory 응용에서 LoRa 기술 근거(E22/E32 설정·air rate·결선·time-mux·망 구성·SOP) 횡단 집약 → 사업방향 cascade. 19th multi-agent (`C:/todo/lora/`, 6/13 신설, **기술 근거 단일 출처 트랙 첫 사례**, 현장 hardware 작업 ❌) |
 | [[조대홍]] | Ponet 사장 entity (광주, UTTEC 협력 파트너) |
 | [[xerix]] | Xerix MFC Controller — EtherCAT 제안 4,970만원 |
 | [[revita]] | REVITA — IoT, LoRa, KC 인증 |

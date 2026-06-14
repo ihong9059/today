@@ -2,8 +2,25 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-13 7차 (uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
+updated: 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
 ---
+
+## [2026-06-14] setup | Higgsfield MCP 도입 — Claude Code에서 이미지·영상 직접 생성
+
+- 영상(Jay Choi, gC0qIatTldg) 요약 → 실행 준비 설명서(CLI 기준) 작성 → MCP 등록·**OAuth 인증 완료** (`claude mcp list` = `✔ Connected`, user scope `~/.claude.json`)
+- 도구 구조: 조회(balance/list/show_*/job_status)=크레딧 0 / 생성(generate_image·video·audio·3d·upscale)=차감. 이미지=소량, 영상=수십↑
+- 검증 중 Higgsfield 백엔드 일시 오류(`Something went wrong`+Request ID) — 인증 거부 아님, CLI Connected 정상 확인
+- **판단**: 무료 크레딧 10개로는 의미 있는 테스트 어려움 → 실생성 보류. 충전 후 `z_image`(저가) 이미지 1장으로 단가 역산 재개
+- 사업 함의: `ai-lesson`(Remotion 정형 모션그래픽)과 역할 분담 — 자유 비주얼·실사풍은 Higgsfield. 카드뉴스·썸네일 자동 발행 파이프라인 후보. [[skills]] 영상 제작 스택 확장 가능
+- 파일: `유투브/test/Higgsfield_MCP_실행준비_설명서.md`, `유투브/03_AI_영상제작/...Higgsfield_MCP_상세.md`
+
+## [2026-06-13] setup (8차) ⭐ | lora vault 신설 — 19th multi-agent (LoRa 기술 전문 hub)
+
+- 사용자 명시 결단: 한림용인CC LoRa 양산 적용 중이나 LoRa 기술 지식이 한림·shield·revita·factory에 분산 → **LoRa 기술 전문 hub vault** 신설 (`C:\todo\lora\`, SELF_ID=lora-claude). 기술 검토 결론 → myWiki 사업방향 cascade. work-start/work-end skill 적용
+- 합류 체크리스트 7단계 완결 (uttec-plc 6/13에 이은 **2번째 완전 적용 사례**): ① 골격(CLAUDE.md·_inbox PROTOCOL·log·도메인 폴더) + skill(work-start/end) ② check-inbox.py(SELF_ID=lora-claude) + settings.local.json SessionStart hook ③ broker pull+push 라우팅 등록 (lora-claude) ④ vault-registry 19번째 행 + entities/lora.md + index 등재 ⑤ join 카드 발송 + broker pull 도착 검증 OK ⑥ 본 log ingest ⑦ 옵시디언 A군 판정 → 보관함 등록 (.bak-20260613-lora, 9 vault)
+- scope 격리: LoRa **기술 그 자체**만 책임 (현장 hardware 작업 ❌ — 응용은 한림·shield·revita·factory 유지, 본 vault는 기술 검토·SOP·근거만). **기술 근거 단일 출처 트랙 첫 사례** (기존 vault는 모두 제품·사업·응용 트랙)
+- 사업 함의: "검증된 LoRa 통신 스택 보유 회사" 포지셔닝 → 공장 자동화·원격 모니터링 사업 narrative (factory vault 직접 시너지). [[ai-direction]] 결정 로그 후보
+- 다음: 메모리 박제 6항목(E22 baud·전원·time-mux·SWD·핀맵·SOP) → `검토/` 심화 + 한림 망 구성(6/15 월) 기술 분석
 
 ## [2026-06-13] absorb (7차) | uttec-plc 첫 운영 세션 카드 흡수 — 4건 자산화
 
