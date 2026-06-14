@@ -961,6 +961,12 @@ recover 직후 보드 USB 재enumerate → VCOM0/VCOM1 COM 번호 변경 (예: C
 - **원인**: 사용자 `~/.claude.json` 에 등록된 MCP (Calendar 등) 가 자동 로드 → 모델이 그 tool 목록을 보고 "도움이 되려" 안내 생성.
 - **회피책**: `--strict-mcp-config` (no `--mcp-config`) + `--setting-sources project` + system prompt 에 "외부 도구·인증 언급 금지" 명시 + fabricate 차단 응답 형식 강제.
 
+### (D) LoRa 야외 노드 하드웨어 선정 함정 (2026-06-15, lora-claude cascade 002 흡수)
+
+- **"Heltec heltec_* 보드 = CubeCell" 아님**: Arduino esp32 패키지의 Heltec 보드(WiFi LoRa 32 등)는 **ESP32 기반**. CubeCell(HTCC-AB01)은 **별도 PSoC(ASR650x) 패키지** — 보드 패키지·코어 혼동 시 컴파일·핀맵 전부 어긋남.
+- **회사 명성·양산 신뢰성: RAK(RAKwireless) > Heltec**. Heltec은 메이커·프로토타입 강세, RAK는 상용·게이트웨이·Helium 인지도. **양산·인증(KC 등) 중시 시 RAK 계열(RAK3172=STM32+SX1262) 검토 가치**.
+- **공통 안전 함정**: SX1262 보드는 **안테나 미연결 TX = 칩 손상 위험**. 굽기 전 IPEX 안테나 체결 필수. (→ [[2026-06-15_솔라전원-LoRa노드-전원체인-Nordic-LongRange]] §4 아키텍처 2분기)
+
 ## 업데이트 방법
 새로운 갭을 발견하거나, 기존 갭을 채웠을 때 이 페이지를 업데이트한다.
 채운 갭은 삭제하지 않고 ~~취소선~~으로 표시하여 성장 기록을 남긴다.

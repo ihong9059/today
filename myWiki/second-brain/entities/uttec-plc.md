@@ -2,16 +2,18 @@
 title: uttec-plc vault — PLC/SCADA 산업 자동화 트랙
 type: entity
 created: 2026-06-13
-updated: 2026-06-13 3차 (첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 final 송부 완료 + 시스템 설명서·XG5000 초보자 시리즈 + XGF-PN4B 함정 / 2차: 155220 자료 이관 12MB + skill 4종 + broker 양방향 등록 — 풀 셋업)
-tags: [vault, multi-agent, PLC, SCADA, 산업자동화, LS-XGT, uttecMac, EtherCAT, 동아정밀, 위시캣155220]
+updated: 2026-06-15 (동아정밀 검색 anchor 강화 — 분산 호스트+메모리 미등록으로 "동아정밀" 조회 시 본 vault 미노출 마찰 해소) / 2026-06-13 3차 (첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 final 송부 완료 + 시스템 설명서·XG5000 초보자 시리즈 + XGF-PN4B 함정 / 2차: 155220 자료 이관 12MB + skill 4종 + broker 양방향 등록 — 풀 셋업)
+tags: [vault, multi-agent, PLC, SCADA, 산업자동화, LS-XGT, uttecMac, EtherCAT, 동아정밀, 동아정밀공업, PET두께측정기, 위시캣155220]
 links: [uttec-search, 위시캣활동, 스마트팩토리, gaps, n8n-uttec]
 ---
 
 # uttec-plc vault — PLC/SCADA 산업 자동화 트랙
 
+> 🔎 **동아정밀 / 동아정밀공업 / PET 두께 측정기 / #155220 진행 본부 = 본 vault**. 동아정밀 건의 PLC 설계·견적·진행 박제는 전부 여기(uttecMac `~/uttec-plc/`)에 있다. 이 PC(로컬)에는 영업 원본만 흩어져 있음 (`wishketProject/위시캣/...155220_미팅준비/`, `동영상제작/동아정밀/`). 별도 "동아정밀" 전용 vault는 없다.
+
 ## 한 줄 정의
 
-**UTTEC PLC/SCADA 산업 자동화 트랙의 단일 출처 vault.** uttecMac (Ubuntu 22.04, Tailscale 100.90.158.36) `~/uttec-plc/`, **18th multi-agent** (`uttec-plc-claude`), 2026-06-13 신설 (사용자 직접 지시 — `ssh mac` 경유 skeleton 생성).
+**UTTEC PLC/SCADA 산업 자동화 트랙의 단일 출처 vault.** uttecMac (Ubuntu 22.04, Tailscale 100.90.158.36) `~/uttec-plc/`, **18th multi-agent** (`uttec-plc-claude`), 2026-06-13 신설 (사용자 직접 지시 — `ssh mac` 경유 skeleton 생성). **1차 프로젝트 = 동아정밀공업 #155220 (PET 두께 측정기 2호기, v3 EtherCAT 32,562,211원, final 송부 완료 → 수주 회신 대기).**
 
 ## 구조
 

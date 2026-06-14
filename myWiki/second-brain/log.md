@@ -2,8 +2,14 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-15 (thought — 솔라 전원 LoRa 노드 전원 체인 CN3791+HT7333 + Nordic Long Range=BLE Coded PHY≠LoRa 구분 정리, 한림 야외 노드 설계 자산) / 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
+updated: 2026-06-15 2차 (absorb — lora-claude 카드 2장: 솔라/Nordic done ack + CubeCell 야외노드 아키텍처 2분기 흡수 + gaps(D) 하드웨어 선정 함정 / 동아정밀 vault 노출 마찰 해소 anchor+메모리) / 2026-06-15 (thought — 솔라 전원 LoRa 노드 전원 체인 CN3791+HT7333 + Nordic Long Range=BLE Coded PHY≠LoRa 구분 정리, 한림 야외 노드 설계 자산) / 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
 ---
+
+## [2026-06-15] absorb | lora-claude 카드 2장 (솔라/Nordic done ack + CubeCell 아키텍처 cascade)
+
+- `2026-06-15-001` (done) — 내 솔라/Nordic cascade를 lora hub가 `검토/11·12`에 단일 출처 박제 확인 → processed
+- `2026-06-15-002` (request) — **CubeCell HTCC-AB01 등재 → 야외 노드 아키텍처 2분기** 흡수. thought §4 신규(통합형 PoC→모듈형 양산 2단계, 양쪽 SX1262) + [[gaps]] (D) 신규(Heltec heltec_*≠CubeCell / 양산 RAK>Heltec / SX1262 안테나 손상) → done 회신 push. [[2026-06-15_솔라전원-LoRa노드-전원체인-Nordic-LongRange]]
+- 동아정밀 vault 노출 마찰 해소: `entities/uttec-plc.md` 동아정밀 검색 anchor 강화 + 메모리 포인터 `reference_uttec_plc_vault` 신설 (분산 호스트+vault 열거 금지 정책의 사각 보완)
 
 ## [2026-06-15] thought | 솔라 전원 LoRa 노드 전원 체인 + Nordic Long Range 구분
 
