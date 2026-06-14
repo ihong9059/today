@@ -2,8 +2,16 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
+updated: 2026-06-15 (thought — 솔라 전원 LoRa 노드 전원 체인 CN3791+HT7333 + Nordic Long Range=BLE Coded PHY≠LoRa 구분 정리, 한림 야외 노드 설계 자산) / 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
 ---
+
+## [2026-06-15] thought | 솔라 전원 LoRa 노드 전원 체인 + Nordic Long Range 구분
+
+- 야외 LoRa 노드(한림용인CC 수조·revita) 전원/RF 설계 기술 상담 → 재사용 지식 자산화. [[2026-06-15_솔라전원-LoRa노드-전원체인-Nordic-LongRange]]
+- **Nordic "Long Range" = BLE 5 Coded PHY ≠ LoRa**(Semtech). 시작점 nRF52 세대지만 칩별 상이: ❌ 52810/**52832(한림 양산칩)**, ✅ 52811(저가 진입)/52820/52833/52840, ✅ nRF53/54. 한림은 nRF52832+E22(LoRa 라디오) 구조라 52832 Coded PHY 미지원이 현 설계엔 무관 (장거리는 E22 담당)
+- **전원 체인**: 솔라 → CN3791(MPPT 충전, 입력단, 출력=배터리 변동) → Li-ion → HT7333(3.3V LDO 저Iq, 출력단) → nRF52+E22. 초저전력 슈퍼캡형이면 BQ25570 단일칩
+- **솔라 패널 전압**: 광량은 전류 좌우/전압 거의 일정, 온도는 전압 좌우. STC 기준 Voc·Vmp. "9V"=Vmp(최대전력점)≈9V지 최대출력 아님. CN3791 버전은 Vmp 매칭
+- cascade 후보: 본 지식 → [[lora]] vault(LoRa 기술 hub) 야외 노드 전원 설계 공통 자산. SPI LoRa(E22-M/E19)+Zephyr 전환 논의와 연결
 
 ## [2026-06-14] setup | Higgsfield MCP 도입 — Claude Code에서 이미지·영상 직접 생성
 
