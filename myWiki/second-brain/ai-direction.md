@@ -9,6 +9,30 @@ links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, utt
 
 # AI 시대 방향 판단
 
+## 판단 로그 (2026-06-17) — _inbox 흡수 megasession: 결정 51·52·53 신설 ⭐⭐⭐
+
+lora-claude 카드 3장(합류 19th + 4종 모듈 + 수조 제어망) + ondevice-claude 카드 1장(IMU/이상탐지) 흡수.
+
+### 결정 51: ⭐⭐ LoRa = "검증된 통신 스택 단일 출처" 트랙 + SPI 전환을 차기 기술 로드맵 후보로 등재
+
+- **사실**: 4종 모듈(E22-400/900 · E32-433/915, 2칩 패밀리 × 2대역) TX/RX 통신 전부 확보 + 칩별 config 프로토콜 단일 출처 박제. 단 **E22↔E32 교차통신 불가**(주파수 그리드 + air rate 매핑 차) = 현 한림 양산은 단일 칩 패밀리 폐쇄망으로만 확장.
+- **결정**: 이종 모듈 혼용·정밀 RF·게이트웨이 통합이 사업적으로 필요해지면 → **SPI 모듈(E22-M/E19) + Zephyr lora 드라이버 전환이 정석**. SPI 전환 PoC를 차기 기술 로드맵 후보로 carry (현 UART 양산은 유지).
+- **가치**: UTTEC가 "검증된 LoRa 통신 스택 보유 회사" 포지셔닝 = 공장 자동화·원격 모니터링 신규 수주 narrative. [[lora]] 기술 근거 단일 출처 트랙(제품·사업 vault와 별개 첫 사례).
+
+### 결정 52: ⭐⭐⭐ 게이트웨이 의존 최소화한 자율 LoRa 제어망 = 원격 무인 노드 사업 기술 근거
+
+- **사실**: 골프장 수조 제어망 = 단일채널 + 1바이트 주소 + 고정 8B frame + 일일 sync TDMA. 실보드 TX↔RX 송수신 무손실(SEQ·CRC OK) 실증 = **양산 제어망 PoC 검증 1호**. nRF52832 SAADC로 무인 노드 Li-ion 4.2V 절대측정.
+- **결정**: 센서가 pump를 그룹 폐루프 직접 제어 + master는 monitoring(rpi3)만 = **게이트웨이 의존 최소화 토폴로지**. 한림 외 SI 시공·공장 자동화 재사용. 무인 노드 배터리 모니터링 + 솔라 전원체인 = **원격 무인 노드 사업** 기술 근거. 차기: E22 config 하드닝 + 다중 노드 TDMA 실증 + 실배터리 분압.
+- 박제: [[lora]] § 2026-06-17 / [[한림용인cc-고가수조]] / [[gaps]] § 2026-06-17 LoRa 4건.
+
+### 결정 53: ⭐⭐⭐ onDevice edge AI = 지도 분류 + 비지도 이상탐지 2축 확장 (산업 예측정비 진입)
+
+- **사실**: CWRU 산업 표준 베어링 진동 isolation forest 정상만 학습 → 결함 **F1 0.995** on-device. 기존 검증(MNIST/KWS/gesture)이 모두 지도 분류였던 데서 신규 패러다임.
+- **결정**: edge AI 모델 클래스를 **지도 분류 + 비지도 이상탐지 2축**으로 확장. **산업 예측정비(predictive maintenance) = Stage 4 비지도 이상탐지 1순위 패러다임**으로 영업 narrative 추가. CWRU F1 0.995 = "검증된 산업 표준 알고리즘 single-chip $3~5 양산" → 한국기계 Stage 4 + [[factory]] 공장 자동화 + 위시캣 산업 고객 직결.
+- **부수**: 중력-방향 shortcut 버그 = "AI 검증의 함정" 강사양성·교육 콘텐츠 자산. 박제: [[onDevice-ai]] § 2026-06-17 / [[ai-fanstick]] / [[gaps]] § onDevice 3건.
+
+---
+
 ## 판단 로그 (2026-06-13 2차) — n8n 정체 카드 4장 흡수: 결정 49·50 신설 ⭐⭐⭐
 
 n8nUttec pending_outbound 정체 5장 발견 (broker pull 라우팅 미등록, 최장 5/17~). myWiki행 4장 일괄 흡수 + 라우팅 등록.

@@ -9,6 +9,33 @@ links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai
 
 # 부족한 부분 (채워야 할 것)
 
+## 2026-06-17 — _inbox 흡수 megasession 함정 7건 (LoRa 4 + onDevice 3) ⭐⭐⭐
+
+lora-claude 카드 2장(06-14 4종 모듈 / 06-16 수조 제어망) + ondevice-claude 카드 1장(06-14-002 IMU/이상탐지) 흡수.
+
+### LoRa gotcha 4건 (lora vault 기술 근거)
+
+| 함정 | 회피 |
+|---|---|
+| **⭐ Ebyte E22 ↔ E32 교차통신 불가** | 주파수 그리드 칩별 상이 (E22 x.125 / E32 x.000 → 125kHz 어긋남) + air rate 매핑 차. 한림 양산(E22)은 단일 칩 패밀리 폐쇄망으로만 확장. 혼용 필요 시 SPI 모듈(E22-M/E19)+Zephyr 전환 |
+| **E32 config write = EasyDMA 연속 프레임 필수** | poll_out 바이트 틈 → 모듈 무응답. 향후 E32/E19 작업 필수 적용 |
+| **⭐ SW-UART 115200 + LoRa HW UART 동시 → main 스택 오버플로우** | hang, fault dump 없음. `CONFIG_MAIN_STACK_SIZE` 증설 필수. 오진(SPIM↔UARTE 충돌) 주의 — 실제는 스택 |
+| **⭐ nRF52832 배터리 4.2V 측정 + VCC 직결 금지** | 측정=내부 0.6V 절대기준 + 1/2 분압 + ×2 (VDD/4 ratiometric·VDD 직접읽기는 천장이라 불가). 전원=nRF52832 동작 1.7~3.6V·절대최대 3.9V → 4.2V VCC 직결 금지(nRF52840 VDDH 5.5V와 다름), 레귤레이터 경유. flash=nrfjprog 직결(JLink.exe 미설치 시 `west flash --runner jlink` 실패) |
+
+→ APPROTECT nRF52832 REV2 chiperase 후 `--recover` (재확인). 단일 출처 = lora vault. [[lora]] · 메모리 `feedback_e22_900t_config_baud` 연결.
+
+### onDevice gotcha 3건 (edge AI 검증 함정)
+
+| 함정 | 회피 |
+|---|---|
+| **⭐ 중력-방향 지름길(shortcut) 버그** | 가속도 제스처를 동작별 다른 방향으로 들고 수집 시 모델이 움직임 아닌 **중력 방향**을 라벨 단서로 학습 → **held-out 100%여도 on-device fail**. 교정=회전 증강(random 3D rotation) 또는 per-window DC 제거. "검증 자체를 검증하라"의 강력한 사례 (강사양성·교육 콘텐츠 자산) |
+| 회전 증강 ↔ INT8 양자화 손실 tradeoff | 증강이 activation 범위 확대 → INT8 -10.8pp. per-channel 양자화로 완화 |
+| 저가 IMU 모듈 die 변동 | 같은 "MPU-9265" 마킹도 die(WHO_AM_I 0x70/0x74) 배치별 상이. accel 동등하나 데이터=추론 HW 일치 권장 |
+
+→ 중력-방향 버그 = "데이터 누수/shortcut learning" 교육 자산. [[onDevice-ai]] § 2026-06-17 · [[ai-direction]] § 결정 53.
+
+---
+
 ## 2026-06-13 (3차) — XGF-PN4B(EtherCAT 마스터)는 SCADA와 통신 불가 (LS XGT 2번째 실무 함정) ⭐⭐
 
 uttec-plc-claude 첫 운영 세션 카드(`2026-06-13-001`) 흡수. XGT prefix 함정([[gaps]] 2026-06-10)에 이은 **2번째 LS XGT 실무 함정**. 사용자 질문("왜 자체 SCADA가 XGF-PN4B와 통신한다고?")에서 정정 박제.

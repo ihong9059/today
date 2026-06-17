@@ -10,7 +10,7 @@ related:
   - 프로젝트_보드한계모델_v2.10/Round48_IMU_제스처/results/pca10056/summary.md
   - 프로젝트_보드한계모델_v2.10/Round49_Anomaly_CWRU/results/phase1_results.md
   - sensor/AI_매트릭스.md
-status: pending
+status: done
 ---
 
 # ingest 검증결과 흡수 요청 — IMU 제스처 + 비지도 이상탐지

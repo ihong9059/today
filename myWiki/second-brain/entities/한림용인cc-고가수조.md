@@ -18,6 +18,8 @@ subvault: project/골프_수조_물관리/wiki/
 >
 > **연관 자료 위치**: `today/project/골프_수조_물관리/` (README 10KB + 설계 요구자료 + 시공 체크리스트 + references PDF/지도)
 
+> **LoRa 제어망 기술 근거** (2026-06-17 lora vault 흡수): 수조 제어망 프로토콜 설계 완성 + 실보드 송수신 무손실 실증 = **양산 제어망 PoC 검증 1호**. 단일채널·1바이트 주소(master=00·중계=01·센서/동작=10·broadcast=0xFF)·고정 8바이트 frame(STX·SRC·DST·TYPE·DATA1~3=SEQ·CRC8)·일일 sync TDMA. nRF52832 SAADC로 무인 노드 Li-ion 4.2V 절대측정. 기술 단일 출처 = [[lora]] § 2026-06-17 (`망구성/한림_수조_LoRa_프로토콜.md`). 현장 hardware는 본 sub-vault `project/골프_수조_물관리/`, 기술 근거는 lora vault 횡단.
+
 ## 발주자 — 한림용인CC
 
 | 항목 | 값 |

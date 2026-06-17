@@ -11,6 +11,26 @@ links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick, 양산
 
 ## 핵심 강점
 
+### 20. on-device 비지도 이상탐지 — 산업 예측정비 single-chip 양산 역량 (2026-06-17) ⭐⭐ NEW
+
+ondevice-claude 카드(2026-06-14-002) 흡수. edge AI 모델 클래스가 지도 분류 3종에서 **비지도 이상탐지**로 확장.
+
+- **본질**: CWRU 산업 표준 베어링 진동에서 isolation forest 정상만 학습 → 결함 **F1 0.995** on-device 검증. "검증된 산업 표준 알고리즘을 single-chip($3~5)에 양산" narrative = **산업 예측정비(predictive maintenance)** 시장 진입 근거.
+- **사업 연결**: 한국기계 Stage 4 + [[factory]] 공장 자동화 + 위시캣 산업 IoT 고객 직결. IMU 제스처 end-to-end 양산 파이프라인(실측→학습→INT8→Cortex-M4F→실시간)도 동반 확보.
+- **교육 자산**: 중력-방향 shortcut 버그(held-out 100%여도 on-device fail) = "AI 검증의 함정" 강사양성·교육 콘텐츠 직접 활용.
+
+→ [[onDevice-ai]] § 2026-06-17 + [[ai-direction]] § 결정 53 + [[gaps]] § onDevice 3건.
+
+### 19. 검증된 LoRa 통신 스택 — 4종 모듈 풀스택 + 자율 제어망 PoC (2026-06-17) ⭐⭐ NEW
+
+lora-claude 카드 3장 흡수 (lora vault 19th 합류 + 4종 모듈 + 수조 제어망).
+
+- **본질**: LoRa 모듈 **4종(E22-400/900 · E32-433/915, 2칩 패밀리 × 2대역) TX/RX 통신 전부 확보** + 칩별 config 프로토콜 단일 출처 + 자율 제어망(단일채널·1B 주소·8B frame·TDMA) 실보드 송수신 무손실 실증 = **양산 제어망 PoC 검증 1호**.
+- **차별화**: 기술 지식을 [[lora]] vault에 단일 출처로 자산화 = "검증된 LoRa 통신 스택 보유 회사" 포지셔닝. 게이트웨이 의존 최소화 토폴로지 + 무인 노드 배터리 모니터링 + 솔라 전원체인 = **원격 무인 노드 사업** 근거.
+- **확장**: 한림 양산(E22 UART) → 이종 혼용·정밀 RF 필요 시 SPI 모듈(E22-M/E19)+Zephyr 전환 carry.
+
+→ [[lora]] § 2026-06-17 + [[skills]] LoRa 4종 모듈 행 + [[ai-direction]] § 결정 51·52.
+
 ### 18. 농가 자가 BLE OTA — field 사용자 직접 펌웨어 업데이트 운영 차별화 (2026-06-13) ⭐⭐ NEW
 
 revita-claude ingest #16 카드 흡수 (LoRa 암호화 ON + BLE OTA 정착, 18 commits / +15,295).

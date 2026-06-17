@@ -10,7 +10,7 @@ related:
   - C:/todo/lora/CLAUDE.md
   - myWiki/second-brain/entities/lora.md
   - myWiki/second-brain/entities/vault-registry.md
-status: pending
+status: done
 ---
 
 # lora-claude 합류 (19th) — LoRa 기술 전문 hub 신설 흡수 요청

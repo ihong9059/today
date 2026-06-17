@@ -7,6 +7,12 @@ tags: [프로젝트, 제품, 특허, 블루오션, 정지선, 창업프로젝트
 links: [ai-direction, experience, me, projects, skills, strengths, onDevice-ai, build-gotcha-inventory, stm32h745-disco, oldProject, 2026-05-08_응원봉-온디바이스AI-정지선, 2026-05-09_이진서협업-창업프로젝트도전, 2026-05-20_esp32-arm-family-스펙트럼, 2026-05-21_esp-dsp-3조건-매칭, 2026-05-22_npu-vendor-광고-실측-격차, 2026-05-24_application별-SoC-결정-Hybrid-SoC, 2026-05-24_selective-personalization-pattern, 2026-05-24_negative-finding-누적-신뢰성-자산, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-27_Cortex-M-tier-최강-AI-노드, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
+## 2026-06-17 IMU 제스처 양산급 파이프라인 (ondevice 카드 2026-06-14-002 흡수) ⭐⭐
+
+- **IMU gesture end-to-end 양산 파이프라인** — 실측 수집(Pi+MPU smbus2) → mixed 학습 → INT8 → Cortex-M4F(pca10056) 배포 → 실시간 시연. **idle/shake 100%** / circle 67% / wave 33% / 6.14ms. 응원봉 IMU 동작 인식(흔들기·정지) 양산급 기술 근거.
+- **함정 carry**: 중력-방향 shortcut 버그 → 응원봉 form factor 고정 후 회전 증강 또는 per-window DC 제거 필수 ([[gaps]] § 2026-06-17). R48 Path B fine-tune carry와 연결.
+- → [[onDevice-ai]] § 2026-06-17 + [[ai-direction]] § 결정 53.
+
 ## 2026-06-04 Path D 정량 완성 + Path B-4 narrative + sensor cluster $50 통합 (ondevice 005+006+007 megasession 흡수) ⭐⭐⭐⭐
 
 ### R50 Step 1~3 본질 완성 — Path D 정량 박제

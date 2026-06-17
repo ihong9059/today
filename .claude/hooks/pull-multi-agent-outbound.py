@@ -94,6 +94,12 @@ LOCAL_VAULTS = [
         "outbound": Path("C:/todo/lora/_inbox/outbox-staging"),
         "archived": Path("C:/todo/lora/_inbox/outbox-staging/sent-archived"),
     },
+    {
+        # uttec-academy (20th, 2026-06-17 신설): 교육 운영·발전 hub
+        "name": "uttec-academy",
+        "outbound": Path("C:/todo/uttec-academy/_inbox/outbox-staging"),
+        "archived": Path("C:/todo/uttec-academy/_inbox/outbox-staging/sent-archived"),
+    },
     # 추후 추가 후보:
     # {"name": "wishket", "outbound": Path("C:/todo/wishketProject/_outbox"), "archived": Path("C:/todo/wishketProject/_outbox-archived")},
     # {"name": "lemonlabs", "outbound": Path("C:/todo/lemonLabs/_outbox"), "archived": Path("C:/todo/lemonLabs/_outbox-archived")},

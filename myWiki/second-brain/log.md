@@ -2,8 +2,26 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-15 2차 (absorb — lora-claude 카드 2장: 솔라/Nordic done ack + CubeCell 야외노드 아키텍처 2분기 흡수 + gaps(D) 하드웨어 선정 함정 / 동아정밀 vault 노출 마찰 해소 anchor+메모리) / 2026-06-15 (thought — 솔라 전원 LoRa 노드 전원 체인 CN3791+HT7333 + Nordic Long Range=BLE Coded PHY≠LoRa 구분 정리, 한림 야외 노드 설계 자산) / 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
+updated: 2026-06-17 (absorb — _inbox 5장 megasession: lora-claude 4장(합류19th 완결+4종 모듈+수조 제어망+cubecell done) + ondevice-claude 1장(IMU/비지도 이상탐지) → 결정 51·52·53 + gaps 7건 + strengths §19·§20 + thought 1 + done 회신 4장) / 이전 2026-06-15 2차 (absorb — lora-claude 카드 2장: 솔라/Nordic done ack + CubeCell 야외노드 아키텍처 2분기 흡수 + gaps(D) 하드웨어 선정 함정 / 동아정밀 vault 노출 마찰 해소 anchor+메모리) / 2026-06-15 (thought — 솔라 전원 LoRa 노드 전원 체인 CN3791+HT7333 + Nordic Long Range=BLE Coded PHY≠LoRa 구분 정리, 한림 야외 노드 설계 자산) / 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
 ---
+
+## [2026-06-17] 신설 | uttec-academy vault (20th) — 교육 운영·발전 hub
+
+- 사용자 결단(A안): UTTEC 교육 전반을 **단일 운영 hub**로 (프로그램·차수 폴더 누적, lora 패턴). 기존 uttec-edu(온라인 플랫폼)와 구분 위해 `academy` 명명
+- ⭐ 목적 박제: UTTEC 사업방향 = **교육 분야 전문성 추구** + **자체 kit 기반 교육사업** (교재+kit+강사 일괄 공급, kit=수익원·차별화)
+- 셋업: `C:\todo\uttec-academy\` git init + CLAUDE.md(SELF_ID uttec-academy-claude) + _inbox/PROTOCOL + check-inbox.py + work-start/end + _공통 자산
+- 3차 자료: 운영계획 + 5회 강의안(20h) + 행정 양식(수강생·출석·만족도) + retro + 개선로그 + 영업
+- myWiki 통합: entities/uttec-academy.md + vault-registry 20th(A군) + index.md + broker pull/push 등록 + raw junction + 본 log
+- 기술 진실은 uttec-factory(kit hardware)·lora(무선)·onDevice(AI) 참조 (중복 박제 금지)
+
+## [2026-06-17] absorb | _inbox 5장 megasession (lora-claude 4 + ondevice-claude 1)
+
+- `2026-06-13-001` (lora request) — lora vault 합류 19th myWiki측 5단계 완결: skills(LoRa 4종 모듈 행)·strengths §19·gaps·ai-direction 결정 51·entities/lora.md. → done 회신 lora inbox
+- `2026-06-14-001` (lora request) — 4종 모듈(E22-400/900·E32-433/915) 통신 검증 + E22↔E32 교차불가 + SPI 전환 PoC carry. → [[lora]] § 2026-06-17 + [[gaps]] LoRa 4건 + 결정 51. done 회신
+- `2026-06-16-001` (lora request) — 골프장 수조 제어망 8B frame 프로토콜 + 송수신 무손실 실증 + 배터리 모니터링 = 자율 제어망 PoC 1호. → [[한림용인cc-고가수조]] + 결정 52 + [[2026-06-17_LoRa자율제어망-onDevice예측정비-산업사업화-cascade]]. done 회신
+- `2026-06-15-003` (lora **done**) — CubeCell 스니퍼 lora hub 인수 ack (SX126x raw 교차통신 실증 첫 사례). 응답 불요 → processed
+- `2026-06-14-002` (ondevice request) — R49 비지도 이상탐지 CWRU isolation forest F1 0.995 + R48 IMU 제스처 양산 파이프라인 + 중력-방향 shortcut 버그. → [[onDevice-ai]] § 2026-06-17 + [[ai-fanstick]] + strengths §20 + gaps onDevice 3건 + 결정 53. done 회신 ondevice inbox
+- 매칭 패턴 thought 신설: LoRa 자율 제어망 + onDevice 예측정비 = [[factory]] 산업 사업화 통합 패키지 cascade
 
 ## [2026-06-15] absorb | lora-claude 카드 2장 (솔라/Nordic done ack + CubeCell 아키텍처 cascade)
 

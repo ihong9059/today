@@ -9,6 +9,8 @@ links: [experience, goals, me, projects, python-vibe, 사전빌드]
 
 # UTTEC Edu 교육 플랫폼
 
+> ⚠️ **구분**: 본 entity = **온라인** 교육 플랫폼(웹). 오프라인 실습·자체 kit 기반 교육사업 **운영**은 별도 vault [[uttec-academy]] (20th, 2026-06-17 신설)에서 관리.
+
 ## 한 줄 정의
 온라인 AI/코딩/자격증 교육 플랫폼. 37개 코스, 765일 커리큘럼.
 

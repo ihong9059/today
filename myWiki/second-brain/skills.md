@@ -24,6 +24,7 @@ links: [me, projects, ai-direction, strengths, gaps]
 | CAN 통신 | 중상 | 대한전선 Winder Controller | 과거 |
 | LoRa/Zigbee | 중상 | REVITA, IoT 통신, **[[한림용인cc-고가수조]] (2026-05 시공 직전, 1,000만원)** | 활성 |
 | LoRa E22 EByte 920MHz 풀스택 | 중상 | [[한림용인cc-고가수조]] 노드·중계기·게이트웨이 / oldProject bleModule (config read/write 검증·mode mapping 정정·air rate 0.3k 통일) | 신규(2026-05) |
+| **LoRa 4종 모듈 풀스택 + 자율 제어망 프로토콜** | 중상 | [[lora]] vault — E22-400/900·E32-433/915 (2칩 패밀리 SX126x/SX127x × 2대역) TX/RX 전부 + 칩별 config 단일 출처 + 8B frame 자율 제어망(단일채널·1B 주소·일일 sync TDMA) 실보드 송수신 무손실 실증 + nRF52832 SAADC 배터리 절대측정. SPI(E22-M/E19)+Zephyr 전환 carry | 신규(2026-06) ★ |
 | 수위센서 + 펌프제어 무선 | 중 | [[한림용인cc-고가수조]] 압력센서 + 임계값 + LoRa 명령 + 펌프 ON/OFF (응답 3~5초) | 신규(2026-05) |
 | **원격 모니터링 풀스택 (Flask+pyserial+Chart.js+systemd)** | 중상 | revita Solar Monitor 운영 (5분 평균·data.json 영속화·Chart.js 로컬·Y축 고정·Serial Log·systemd 자동 실행). [[한림용인cc-고가수조]] / 농업·양식 등 확장 가능. 사업 라인: [[2026-05-12_원격모니터링-사업라인]] | 신규(2026-05) ★ |
 | Linux systemd 서비스 운용 | 중 | revita Solar `solar-monitor.service` — 자동 실행·재시작·로그 통합 (현장 배포 안정성) | 활성 |

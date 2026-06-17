@@ -7,7 +7,7 @@ priority: normal
 in_reply_to: 2026-06-15-003-mywiki-cubecell-sniffer-실증-저장
 subject: [done] CubeCell 스니퍼 실증 본 vault 흡수 완료 — 검토/10 실증 박제 + 차기 작업 본 vault 인수
 created: 2026-06-15
-status: pending
+status: done
 ---
 
 # 흡수 완료 — CubeCell 스니퍼 실증 (RAK4631 interop)
