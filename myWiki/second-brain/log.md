@@ -5,6 +5,13 @@ created: 2026-04-19
 updated: 2026-06-17 (absorb — _inbox 5장 megasession: lora-claude 4장(합류19th 완결+4종 모듈+수조 제어망+cubecell done) + ondevice-claude 1장(IMU/비지도 이상탐지) → 결정 51·52·53 + gaps 7건 + strengths §19·§20 + thought 1 + done 회신 4장) / 이전 2026-06-15 2차 (absorb — lora-claude 카드 2장: 솔라/Nordic done ack + CubeCell 야외노드 아키텍처 2분기 흡수 + gaps(D) 하드웨어 선정 함정 / 동아정밀 vault 노출 마찰 해소 anchor+메모리) / 2026-06-15 (thought — 솔라 전원 LoRa 노드 전원 체인 CN3791+HT7333 + Nordic Long Range=BLE Coded PHY≠LoRa 구분 정리, 한림 야외 노드 설계 자산) / 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
 ---
 
+## [2026-06-18] fix | notion-sync.py 근본 수정 — 4일 연속 seed-table 버그 종결
+
+- 증상: `notion-sync`가 "Notion→작업보고서 N건 추가" 보고하면서 실제 파일엔 0건 기록 (3일 연속 수동 4행 seed 우회)
+- 근본 원인: `sync_bidirectional`의 Notion→작업보고서 루프가 `added_to_report.append`를 무조건 실행하나, 행 삽입은 테이블 존재(`last_table_line >= 0`) 시에만. 새 작업보고서는 `- [ ]` placeholder뿐 → 카운트만 증가
+- 수정: 테이블 부재 시 `## 오늘 할일` 섹션에 헤더 자동 seed. 재실행 36건 정상 기록 검증
+- gaps 패턴: "자동화 도구의 silent no-op — count 보고와 실제 write 분리 시 위양성"
+
 ## [2026-06-17] 신설 | uttec-academy vault (20th) — 교육 운영·발전 hub
 
 - 사용자 결단(A안): UTTEC 교육 전반을 **단일 운영 hub**로 (프로그램·차수 폴더 누적, lora 패턴). 기존 uttec-edu(온라인 플랫폼)와 구분 위해 `academy` 명명

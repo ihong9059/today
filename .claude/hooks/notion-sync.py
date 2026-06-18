@@ -385,6 +385,29 @@ def sync_bidirectional(sections):
             except (ValueError, IndexError):
                 continue
 
+        # 빈 작업보고서 seed: 테이블이 없으면 "오늘 할일" 섹션에 헤더 자동 생성
+        # (3일 연속 수동 우회하던 버그의 근본 수정 — 2026-06-18)
+        if last_table_line < 0:
+            for i, line in enumerate(lines):
+                if line.strip().startswith("## 오늘 할일"):
+                    # 섹션 본문(다음 ## 전까지)의 빈 placeholder(- [ ] 등) 제거
+                    k = i + 1
+                    while k < len(lines) and not lines[k].strip().startswith("## "):
+                        s = lines[k].strip()
+                        if s == "" or s.startswith("- ["):
+                            lines.pop(k)
+                        else:
+                            k += 1
+                    header = [
+                        "",
+                        "| 순번 | 할일 | 출처 | 상태 |",
+                        "|:----:|------|------|:----:|",
+                        "",
+                    ]
+                    lines[i + 1:i + 1] = header
+                    last_table_line = i + 3  # 구분선(separator) 인덱스
+                    break
+
         for nt in notion_todos:
             # 완료 항목은 작업보고서에 새로 추가하지 않음 (역사적 완료 누적 방지)
             if nt["done"]:
