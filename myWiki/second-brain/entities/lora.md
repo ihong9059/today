@@ -2,10 +2,16 @@
 title: lora — UTTEC LoRa 기술 전문 hub vault
 type: entity
 created: 2026-06-13
-updated: 2026-06-17 (_inbox 흡수 megasession — lora-claude 카드 4장: 4종 모듈 검증+SPI 전환 경로(06-14) / 골프장 수조 제어망 프로토콜+8B frame 송수신 실증+배터리 모니터링(06-16) / CubeCell 스니퍼 done ack(06-15) / 합류 19th myWiki측 5단계 완결(06-13))
+updated: 2026-06-19 (_inbox 흡수 — lora-claude 카드 2장: 통합펌웨어+BLE프로비저닝+한림 최종 아키텍처 3패턴(06-18) / 2.4G ESB 하이브리드 옵션(역량경계 ~30dB)+E22 generic SX126x 디코드 불가(벤더 락인)(06-19) / 이전 6/17: 카드 4장 megasession — 4종 모듈 검증+SPI 전환 경로(06-14) / 골프장 수조 제어망 프로토콜+8B frame 송수신 실증+배터리 모니터링(06-16) / CubeCell 스니퍼 done ack(06-15) / 합류 19th myWiki측 5단계 완결(06-13))
 tags: [vault, lora, 무선통신, E22, E32, 기술hub, multi-agent, 사업근거, 4종모듈검증, SPI전환, 수조제어망, 8B-frame, 배터리모니터링, SX126x, SX127x, 자율제어망]
 links: [vault-registry, revita, shield, factory, 한림용인cc-고가수조, ai-direction, gaps, skills, strengths]
 ---
+
+> **2026-06-19 _inbox 흡수 — lora-claude 카드 2장** ⭐⭐⭐ (06-18 통합펌웨어+BLE프로비저닝 + 06-19 2.4G하이브리드+E22스니핑한계):
+>
+> **(카드 06-18, 단일 binary 통합 펌웨어 + BLE 프로비저닝 + 한림 최종 아키텍처 3패턴)** ⭐⭐⭐ — ① **통합 펌웨어**: 중계기·sensor·on/off 3역할을 1개 펌웨어에 통합, 부팅 시 NVS role 분기 → 보드별 재빌드 0. nRF52832에 **BLE+NVS+LoRa 통합 빌드 적합 실증**(FLASH 27.6%·RAM 66.1%). ② **BLE 프로비저닝**: 스마트폰 앱이 BLE GATT로 role+address 주입 → LoRa addr-set(동시충돌 함정) 폐기. Native Android(Kotlin) SM-M536S end-to-end 실증. ③ **한림 최종 아키텍처 3패턴(공장 자동화 재사용)**: 폐쇄공간→open 단말 intra-relay(2단 중계) / ACK-도청 명령전달(sensor ACK가 opcode echo) / 로컬 자율제어 우선(통신두절에도 안전). **⭐ 사업 함의**: "보드 1종 굽고 앱으로 역할 지정" = 양산·현장 배포 비용 최소화 = UTTEC LoRa 제어망 양산 표준 배포 모델 ([[ai-direction]] § 결정 54). → `검토/16_통합펌웨어_BLE설정/`.
+>
+> **(카드 06-19, 2.4G ESB+LoRa 하이브리드 옵션 + E22 디코드 불가)** ⭐⭐ — ① **2.4G 하이브리드 옵션**: group 내부(SENSOR↔ONOFF, 5~6m+벽) 평상시 2.4G ESB(nRF52832 내장 라디오), 끊기면 LoRa 2단중계 폴백 → LoRa air-time 확보·ACK도청 hack 제거·E22 BOM 절감 여지. **역량경계**: nRF52832 2.4G는 900M LoRa比 폐쇄공간 투과 **~30dB 불리**(Coded PHY 미지원·TX +4dBm) → **근거리·약장애물 한정**, 장거리·강투과는 sub-GHz LoRa. 채택 전 **현장 2.4G RSSI 실측 필수**. ② **신규 gotcha**: Ebyte E22는 generic SX126x로 디코드 불가 — 같은 SX1262(CubeCell)로도 E22 on-air 복조 0건(독자 프레이밍). E22망 스니핑·게이트웨이는 **E22 모듈로만** 보장 = 벤더 락인 (검토/10 확장). **사업 함의**: 멀티벤더 상호운용 설계 시 "같은 칩=호환" 거짓 ([[ai-direction]] § 결정 55 + [[gaps]] § 2026-06-19). → `검토/17_2.4G로컬링크_ESB_하이브리드/`, `하드웨어/HTCC-AB01/sniffer/E22_디코드_시도_결론_2026-06-19.md`.
 
 > **2026-06-17 _inbox 흡수 — lora-claude 카드 4장 megasession** ⭐⭐⭐ (06-13 합류 + 06-14 4종 모듈 + 06-16 수조 제어망 + 06-15 cubecell done):
 >

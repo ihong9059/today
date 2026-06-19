@@ -2,12 +2,26 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-06-13 2차 (n8nUttec 정체 카드 4장 흡수 — webhook publish 거절 ★★★★ + staticData Active 한정 + ugrep alias + Schedule Trigger silent success 등 6건 / 1차: _inbox 8장 megasession — Defender CFA NCS silent killer + Android onboarding 2건 + IoT 펌웨어 보안 실패 사례 3종 세트(서명키 평문 커밋·AEAD 부재·키 미프로비저닝, revita ingest #16) / 이전 6/10: LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
+updated: 2026-06-19 (lora 카드 2장 흡수 — E22 generic SX126x 디코드 불가(벤더 락인) + nRF52832 2.4G ~30dB 투과 불리(근거리 한정) + BLE+NVS+LoRa 통합 빌드 적합 / 이전 6/17: _inbox megasession 함정 7건(LoRa 4+onDevice 3) / 이전 6/13 2차: n8nUttec 정체 카드 4장 흡수 — webhook publish 거절 ★★★★ + staticData Active 한정 + ugrep alias + Schedule Trigger silent success 등 6건 / 1차: _inbox 8장 megasession — Defender CFA NCS silent killer + Android onboarding 2건 + IoT 펌웨어 보안 실패 사례 3종 세트(서명키 평문 커밋·AEAD 부재·키 미프로비저닝, revita ingest #16) / 이전 6/10: LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
 tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인, R50-1-chip-saturate, STM-7-v2, I2C-주소충돌, flatten-순서, WHO_AM_I-분기, PEP668, scp-wildcard, 데이터사이언티스트, GEE학습, 자산인덱스누락재발, cross-vault-cascade-지연, 풀스택자산]
 links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용, 2026-06-04_sensor-AI-매트릭스-단일출처-mandate]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-06-19 — _inbox 흡수 LoRa gotcha 2건 (E22 디코드 불가 + 2.4G 투과 한계) ⭐⭐
+
+lora-claude 카드 2장(06-18 통합펌웨어+BLE프로비저닝 / 06-19 2.4G하이브리드+E22스니핑한계) 흡수.
+
+| 함정 | 회피 |
+|---|---|
+| **⭐ Ebyte E22 = generic SX126x로 디코드 불가** | 같은 SX1262 칩(CubeCell)으로도 **E22 on-air 프레임 복조 못 함** (E22가 LoRa PHY 위에 독자 프레이밍). SF/BW·sync·헤더/CRC 전수 스윕 + E22 2개로도 0건 실증. → "**같은 칩 = 호환**"이 거짓. E22망 스니핑·게이트웨이·멀티벤더 상호운용은 **E22 모듈로만** 보장 = 벤더 락인. 제3자 SX126x 보드로 E22망 진입 불가 (← 검토/10 "E22↔E32 불가"의 확장) |
+| **⭐ nRF52832 2.4G는 900M LoRa比 폐쇄공간 투과 ~30dB 불리** | Coded PHY 미지원 + TX +4dBm 한계. 2.4G 로컬링크는 **근거리·약장애물 한정**. 장거리·강투과 설계에 2.4G 적용 금지 (sub-GHz LoRa가 정답). 2.4G 하이브리드 채택 전 **현장 2.4G RSSI 실측 필수** (측정 SOP·판정표 lora vault 보유) |
+
+→ 단일 출처 = [[lora]] vault (`검토/17_2.4G로컬링크_ESB_하이브리드/`, `하드웨어/HTCC-AB01/sniffer/E22_디코드_시도_결론_2026-06-19.md`). [[ai-direction]] § 결정 54·55.
+**부수 역량(함정 아님)**: nRF52832에 **BLE+NVS+LoRa 통합 빌드 적합** 실증(FLASH 27.6%·RAM 66.1%) — 단일 binary 통합 펌웨어 + BLE 프로비저닝 RAM/FLASH 여유 확인 = 양산 펌웨어 SKU 1개화 근거.
+
+---
 
 ## 2026-06-17 — _inbox 흡수 megasession 함정 7건 (LoRa 4 + onDevice 3) ⭐⭐⭐
 

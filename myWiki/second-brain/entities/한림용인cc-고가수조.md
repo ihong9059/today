@@ -2,8 +2,8 @@
 title: 한림용인CC 고가수조 자동급수 무선제어 시스템
 type: entity
 created: 2026-05-10
-updated: 2026-05-17
-tags: [project, customer, golf, lora, e22, 수위제어, 펌프제어, 시공직전, 한림그룹, tier2-subvault]
+updated: 2026-06-19 (lora vault 흡수 — 최종 시스템 구성: 통합펌웨어+BLE프로비저닝+아키텍처 3패턴+2.4G 하이브리드 옵션 / 6-17: LoRa 제어망 PoC)
+tags: [project, customer, golf, lora, e22, 수위제어, 펌프제어, 시공직전, 한림그룹, tier2-subvault, 통합펌웨어, ble프로비저닝, intra-relay, 자율제어망]
 links: [revita, 회사소개, 영업전략, uttec-stage-package, smartFactory]
 status: 시공직전
 financial: 매출직전 1,000만원 (VAT 별도)
@@ -19,6 +19,8 @@ subvault: project/골프_수조_물관리/wiki/
 > **연관 자료 위치**: `today/project/골프_수조_물관리/` (README 10KB + 설계 요구자료 + 시공 체크리스트 + references PDF/지도)
 
 > **LoRa 제어망 기술 근거** (2026-06-17 lora vault 흡수): 수조 제어망 프로토콜 설계 완성 + 실보드 송수신 무손실 실증 = **양산 제어망 PoC 검증 1호**. 단일채널·1바이트 주소(master=00·중계=01·센서/동작=10·broadcast=0xFF)·고정 8바이트 frame(STX·SRC·DST·TYPE·DATA1~3=SEQ·CRC8)·일일 sync TDMA. nRF52832 SAADC로 무인 노드 Li-ion 4.2V 절대측정. 기술 단일 출처 = [[lora]] § 2026-06-17 (`망구성/한림_수조_LoRa_프로토콜.md`). 현장 hardware는 본 sub-vault `project/골프_수조_물관리/`, 기술 근거는 lora vault 횡단.
+
+> **최종 시스템 구성 + 통합 펌웨어/BLE 프로비저닝** (2026-06-19 lora vault 흡수): ① **단일 binary 통합 펌웨어** — 중계기·sensor·on/off 3역할 1개 펌웨어, 부팅 시 NVS role 분기 → 보드별 재빌드 0(nRF52832 FLASH 27.6%·RAM 66.1%). ② **BLE 프로비저닝** — 스마트폰 앱(Native Android, SM-M536S 실증)이 BLE GATT로 role+address 주입 → addr-set 동시충돌 함정 폐기. ③ **최종 아키텍처 3패턴**: 폐쇄공간(펌프실 RF 약함)→sensor intra-relay 2단 중계 / ACK-도청 명령전달(sensor ACK가 opcode echo, on/off 청취 실행) / 로컬 자율제어 우선(통신두절에도 안전). ④ **2.4G ESB 하이브리드 옵션**(검토 단계) — group 내부 평상시 2.4G·끊기면 LoRa 폴백, 단 2.4G는 900M比 투과 ~30dB 불리 → 근거리 한정, 현장 RSSI 실측 필수. 단일 출처 = [[lora]] § 2026-06-19 ([[ai-direction]] § 결정 54·55). 신입 교육자료: `망구성/한림/한림_시스템_쉬운설명서.pdf`.
 
 ## 발주자 — 한림용인CC
 

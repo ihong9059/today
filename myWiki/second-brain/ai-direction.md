@@ -2,12 +2,30 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-13 2차 (결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
+updated: 2026-06-19 (결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-19) — _inbox 흡수: lora 카드 2장 (결정 54·55 신설) ⭐⭐⭐
+
+lora-claude 카드 2장(06-18 통합펌웨어+BLE프로비저닝 + 06-19 2.4G하이브리드+E22스니핑한계) 흡수.
+
+### 결정 54: ⭐⭐⭐ 단일 binary 통합 펌웨어 + BLE 현장 프로비저닝 = 양산·현장 배포 비용 최소화 표준
+
+- **사실**: 중계기·sensor·on/off 3역할을 **1개 펌웨어**에 통합, 부팅 시 NVS의 role 읽어 분기 → 보드별 재빌드 0. nRF52832에 **BLE+NVS+LoRa 통합 빌드 적합 실증**(FLASH 27.6%·RAM 66.1% 여유). 스마트폰 앱이 BLE GATT로 role+address 주입 → 기존 LoRa addr-set(동시충돌 함정) 폐기. Native Android(Kotlin) 앱 SM-M536S 설치·end-to-end 실증 완료.
+- **결정**: "**보드 1종 굽고 앱으로 역할 지정**"을 UTTEC LoRa 제어망 양산 표준 배포 모델로 채택. 펌웨어 SKU 1개 = 재고·빌드·flash 관리 비용 최소화 + 현장 비전문가도 폰 앱으로 노드 설정. 한림 외 SI·공장 자동화 전 현장 재사용.
+- **가치**: 양산·현장 배포 비용 최소화 = 가격 경쟁력 + 시공 인건비 절감 narrative. [[lora]] § 2026-06-19 (`검토/16_통합펌웨어_BLE설정/`).
+
+### 결정 55: ⭐⭐ group 내부 "2.4G ESB + LoRa 폴백" 하이브리드 옵션 — 역량경계 명시 (근거리·약장애물 한정)
+
+- **사실**: 한림형 group 내부(SENSOR↔ONOFF, 5~6m+벽) 로컬소통을 평상시 **2.4G ESB**(nRF52832 내장 라디오)로, 끊기면 LoRa 2단중계 폴백. LoRa 채널 air-time 확보(group 확장성↑) + ACK-도청 명령 hack 제거(신뢰성↑) + ONOFF E22 BOM 절감 여지. **단 역량경계**: nRF52832 2.4G는 900M LoRa보다 폐쇄공간 투과 **~30dB 불리**(Coded PHY 미지원·TX +4dBm 한계).
+- **결정**: 2.4G 로컬링크는 **근거리·약장애물 한정 옵션**으로만 carry. 장거리·강투과는 sub-GHz LoRa가 정답(혼동 금지). 채택 전 **현장 2.4G RSSI 실측 필수**(측정 SOP·판정표 lora vault 보유). "로컬 자율제어 강화" = 현장 자율 + 원격 보조 제품 패턴 재사용.
+- **부수 gotcha**: **Ebyte E22는 generic SX126x로 디코드 불가** — 같은 SX1262 칩(CubeCell)으로도 E22 on-air 프레임 복조 0건(E22 독자 프레이밍). → E22망 스니핑·게이트웨이는 **E22 모듈로만** 보장 = 벤더 락인 요소. 박제: [[gaps]] § 2026-06-19.
+
+---
 
 ## 판단 로그 (2026-06-17) — _inbox 흡수 megasession: 결정 51·52·53 신설 ⭐⭐⭐
 

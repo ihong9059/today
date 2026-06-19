@@ -2,8 +2,15 @@
 title: 위키 로그
 type: log
 created: 2026-04-19
-updated: 2026-06-17 (absorb — _inbox 5장 megasession: lora-claude 4장(합류19th 완결+4종 모듈+수조 제어망+cubecell done) + ondevice-claude 1장(IMU/비지도 이상탐지) → 결정 51·52·53 + gaps 7건 + strengths §19·§20 + thought 1 + done 회신 4장) / 이전 2026-06-15 2차 (absorb — lora-claude 카드 2장: 솔라/Nordic done ack + CubeCell 야외노드 아키텍처 2분기 흡수 + gaps(D) 하드웨어 선정 함정 / 동아정밀 vault 노출 마찰 해소 anchor+메모리) / 2026-06-15 (thought — 솔라 전원 LoRa 노드 전원 체인 CN3791+HT7333 + Nordic Long Range=BLE Coded PHY≠LoRa 구분 정리, 한림 야외 노드 설계 자산) / 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
+updated: 2026-06-19 (absorb — lora-claude 카드 2장: 통합펌웨어+BLE프로비저닝+한림 최종 아키텍처 3패턴(06-18) / 2.4G ESB 하이브리드 옵션+E22 generic SX126x 디코드 불가(06-19) → 결정 54·55 + gaps 2건 + thought 1 + done 회신 2장) / 이전 2026-06-17 (absorb — _inbox 5장 megasession: lora-claude 4장(합류19th 완결+4종 모듈+수조 제어망+cubecell done) + ondevice-claude 1장(IMU/비지도 이상탐지) → 결정 51·52·53 + gaps 7건 + strengths §19·§20 + thought 1 + done 회신 4장) / 이전 2026-06-15 2차 (absorb — lora-claude 카드 2장: 솔라/Nordic done ack + CubeCell 야외노드 아키텍처 2분기 흡수 + gaps(D) 하드웨어 선정 함정 / 동아정밀 vault 노출 마찰 해소 anchor+메모리) / 2026-06-15 (thought — 솔라 전원 LoRa 노드 전원 체인 CN3791+HT7333 + Nordic Long Range=BLE Coded PHY≠LoRa 구분 정리, 한림 야외 노드 설계 자산) / 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
 ---
+
+## [2026-06-19] absorb ⭐⭐ | lora-claude 카드 2장 흡수 — 통합펌웨어+BLE프로비저닝 + 2.4G 하이브리드/E22 스니핑 한계
+
+- 카드 06-18 (통합펌웨어+BLE프로비저닝): 단일 binary 통합 펌웨어(NVS role 분기, 재빌드 0, FLASH 27.6%/RAM 66.1%) + BLE GATT 프로비저닝(addr-set 충돌 폐기, Android SM-M536S 실증) + 한림 최종 아키텍처 3패턴(intra-relay·ACK도청·로컬자율)
+- 카드 06-19 (2.4G하이브리드+E22스니핑한계): 2.4G ESB+LoRa 폴백 옵션(역량경계 ~30dB 투과 불리=근거리 한정) + E22 generic SX126x 디코드 불가(벤더 락인)
+- 5단계: ai-direction 결정 54·55 / gaps § 2026-06-19 LoRa 2건 / lora entity + 한림 entity 최종구성 갱신 / thought 신설(단일펌웨어-BLE-양산배포비용최소화) / lora-claude done 회신 2장
+- 처리: 카드 2장 processed/ 이동 + status done
 
 ## [2026-06-18] fix | notion-sync.py 근본 수정 — 4일 연속 seed-table 버그 종결
 
