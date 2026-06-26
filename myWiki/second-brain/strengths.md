@@ -2,7 +2,7 @@
 title: 강점 분석
 type: identity
 created: 2026-04-19
-updated: 2026-06-13 (§18 신규 — 농가 자가 BLE OTA 운영 차별화 + 보안 게이트 ↔ §12 인증 연동, revita ingest #16 흡수 / 이전 6/10: §17 신규 — 위시캣 영업 자산 7종: Playwright HTML 캡처 SOP + LS XGT 시리즈 prefix 매핑 SOP + PLC 단가 출처 4채널 검증 LIST + IPC 중급 SOP + Recipe 활성풀 + ESP32-P4 LVGL GUI + Python 비정형 데이터/정형외과 협업. wishket-claude 4 카드 megasession 흡수 / 이전 6/6 야간: §13 carrier ponet 3번째 + §15 풀스택 + §16 시제품 검사)
+updated: 2026-06-27 (§21 신규 — 지식관리 방법론의 교육 상품화, uttec-academy 카드 흡수 / 이전 6/13: §18 신규 — 농가 자가 BLE OTA 운영 차별화 + 보안 게이트 ↔ §12 인증 연동, revita ingest #16 흡수 / 이전 6/10: §17 신규 — 위시캣 영업 자산 7종: Playwright HTML 캡처 SOP + LS XGT 시리즈 prefix 매핑 SOP + PLC 단가 출처 4채널 검증 LIST + IPC 중급 SOP + Recipe 활성풀 + ESP32-P4 LVGL GUI + Python 비정형 데이터/정형외과 협업. wishket-claude 4 카드 megasession 흡수 / 이전 6/6 야간: §13 carrier ponet 3번째 + §15 풀스택 + §16 시제품 검사)
 tags: [강점, 분석, carrier역량, vault분리, 다중vault, sensor라이브러리, AI매트릭스, 풀스택양산, 모바일앱양산, AWS양산, 통합단일진행]
 links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick, 양산제품, 회사소개, 영업전략, 위시캣활동]
 ---
@@ -10,6 +10,16 @@ links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick, 양산
 # 강점 분석
 
 ## 핵심 강점
+
+### 21. 지식관리 방법론의 교육 상품화 — myWiki vault 운영 노하우를 비전공자 교육 자산으로 (2026-06-27) ⭐⭐ NEW
+
+uttec-academy-claude 카드(2026-06-27-001) 흡수. 미래창의 3차에 「현업 노트(vault) 운영」 모듈 통합.
+
+- **본질**: 1년+ 운영한 second-brain/multi-vault 지식관리 시스템(log/entities/thoughts/archive)을 **비전공자 SME용으로 단순화·상품화** ("vault"→"현업 노트"). 내가 일하는 방식 자체가 교육 콘텐츠가 됨 = **메타 강점**.
+- **사업 연결**: 교육 = 기술(공장자동화 kit) + **방법론(지식관리)** 이중 자산 패키지. kit(물리 take-home)에 평행한 **방법론 take-home**(`student_vault_template`) → 단발 강의를 넘어 현업 습관 이식 → 후속 교육·컨설팅·재수주.
+- **차별화**: 경쟁 교육사가 복제 어려운 자산 — 실제 운영 중인 시스템을 교재화한 것이라 깊이·실전성 보유.
+
+→ [[uttec-academy]] § 2026-06-27 + [[ai-direction]] § 결정 56. cf. §4 교육 설계 + 기술 구현의 결합(상위 패턴).
 
 ### 20. on-device 비지도 이상탐지 — 산업 예측정비 single-chip 양산 역량 (2026-06-17) ⭐⭐ NEW
 

@@ -2,7 +2,7 @@
 title: uttec-academy vault — UTTEC 교육 운영·발전 hub
 type: entity
 created: 2026-06-17
-updated: 2026-06-17
+updated: 2026-06-27
 tags: [vault, 교육, 교육사업, 스마트팩토리실습, 미래창의아카데미, 자체kit, multi-agent, uttec-academy-claude, Tier3, 교육전문성, 사업방향]
 links: [vault-registry, uttec-factory, lora, onDevice-ai, uttec-edu, 강사양성_파일럿, 영업전략, ai-direction]
 ---
@@ -54,6 +54,7 @@ UTTEC가 **자체 제작 kit 기반 오프라인 실습 교육사업**의 운영
 - 2026-07-15 ~ 08-12 매주 수 13:00~17:00, 5회 20h, 소공인스타트업 허브 2층
 - 강사 홍광선·홍광삼 / kit = Pi 4B + UTTEC Shield
 - 5회: 라파 친해지기 → 센서+OLED+LED → 기준값 경보 → 웹/무선(LoRa) → AI 손글씨+미니 스마트팩토리
+- ⭐ (2026-06-27 강화) **「현업 노트(vault) 운영」 모듈 통합** — 매 회차 말 25~30분 누적(랩노트 A안), 비전공자 프레이밍("vault"→"현업 노트"). kit(물리 자산)에 더해 **방법론 자산 take-home**(`_공통/student_vault_template/`). 설계 = `_공통/커리큘럼_모듈/vault운영_모듈.md`. ⚠️ 기관 협의(진행 중)에 강화 커리큘럼으로 반영 필요
 
 ## 관련 vault·엔티티 구분
 
@@ -67,6 +68,8 @@ UTTEC가 **자체 제작 kit 기반 오프라인 실습 교육사업**의 운영
 ## 사업 함의 (ai-direction 참고)
 
 교육을 UTTEC 정식 사업 라인으로 — 양산·인증·38년 임베디드 신뢰성 + 검증 자산(LoRa·AI 이상탐지 F1 0.995·공장자동화 kit)을 교육 콘텐츠로 전환. kit 통합 공급으로 1회성 강의를 넘어 반복 수익(kit 재구매·후속 교육)·기관 재수주 구조.
+
+**(2026-06-27) 이중 자산 패키지로 확장** — 기술(공장자동화 kit) + **방법론(myWiki/second-brain vault 운영 노하우의 비전공자용 교육 상품화)**. UTTEC 내부 지식관리 역량 자체가 교육 자산으로 전환 = 메타 강점. 수강생이 현업에 기록·관리 습관을 이식 → 후속 교육·컨설팅·재수주 연결. [[strengths]] §21 + [[ai-direction]] 결정 56.
 
 ## 관련 페이지
 

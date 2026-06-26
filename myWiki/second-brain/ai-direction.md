@@ -2,12 +2,23 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-19 (결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
+updated: 2026-06-27 (결정 56 신설 — 교육 사업 = 기술+방법론(지식관리 vault) 이중 자산, uttec-academy 카드 흡수 / 이전 6/19: 결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-06-27) — uttec-academy 카드 흡수: 결정 56 신설 ⭐⭐
+
+uttec-academy-claude 카드(2026-06-27-001) 흡수. 미래창의 3차에 「현업 노트(vault) 운영」 모듈 통합(A안).
+
+### 결정 56: ⭐⭐ 교육 사업 = 기술(공장자동화 kit) + 방법론(지식관리 vault) 이중 자산 패키지
+
+- **판단**: UTTEC 교육을 "기술 전수"에서 **"기술 + 일하는 방식(지식관리) 전수"**로 확장. myWiki/second-brain 운영 노하우를 비전공자용으로 상품화 → 수강생 현업 take-home.
+- **근거**: 신규 vault를 만들지 않고(사용자 6/17 A안 = 단일 교육 hub 준수) uttec-academy 현 3차에 통합. 하드웨어 kit과 평행한 **방법론 자산**(`student_vault_template`)이 차별화·재수주 동력.
+- **함의**: AI 시대에 "도구를 쓰는 방법론"의 교육 수요 증가 → 내가 실제 운영하는 시스템이 곧 교재 = 복제 난이도 높은 교육 자산. [[strengths]] §21 + [[uttec-academy]].
+- ⚠️ 회차 구성 변경이라 기관 협의(진행 중)에 강화 커리큘럼으로 반영 필요.
 
 ## 판단 로그 (2026-06-19) — _inbox 흡수: lora 카드 2장 (결정 54·55 신설) ⭐⭐⭐
 

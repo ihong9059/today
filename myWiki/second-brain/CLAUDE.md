@@ -71,6 +71,7 @@ second-brain/
     ├── weldRobot/     # UTTEC 용접 로봇 신사업 vault — 14th Tier 3 (→ junction → C:\todo\weldRobot\, 2026-06-06 추가, carrier 패턴 2번째 사례)
     ├── ponet/         # Ponet 광주 협력 회사 vault — 15th Tier 3 (→ junction → C:\todo\ponet\, 2026-06-06 추가, carrier 패턴 3번째 사례 정착 확정 + 자체 SSH fact-finding 신설 패턴 첫 사례)
     ├── factory/       # UTTEC 공장 자동화 사업화 vault — 16th Tier 3 (→ junction → C:\todo\factory\, 2026-06-10 추가, carrier 패턴 4번째 사례, 1차 진입 = 분쇄·파쇄 설비 (한국기계 베이스 → 동종 회사 확장), 확장 = 센서+제어 기반 공장 자동화 전반)
+    ├── uttec-academy/ # UTTEC 교육 운영·발전 hub vault — 20th Tier 3 (→ junction → C:\todo\uttec-academy\, 2026-06-27 복구, 미래창의 아카데미 3차 + 현업노트 강화 모듈)
     └── articles/      # 인상 깊은 기사, 영상 메모, 스크랩
 ```
 
