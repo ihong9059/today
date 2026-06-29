@@ -5,6 +5,13 @@ created: 2026-04-19
 updated: 2026-06-27 (absorb — uttec-academy 카드 1장: 미래창의 3차 현업노트(vault) 강화 모듈 → strengths §21 + 결정 56 + entity 갱신 + raw junction 복구 + done 회신) / 이전 2026-06-19 (absorb — lora-claude 카드 2장: 통합펌웨어+BLE프로비저닝+한림 최종 아키텍처 3패턴(06-18) / 2.4G ESB 하이브리드 옵션+E22 generic SX126x 디코드 불가(06-19) → 결정 54·55 + gaps 2건 + thought 1 + done 회신 2장) / 이전 2026-06-17 (absorb — _inbox 5장 megasession: lora-claude 4장(합류19th 완결+4종 모듈+수조 제어망+cubecell done) + ondevice-claude 1장(IMU/비지도 이상탐지) → 결정 51·52·53 + gaps 7건 + strengths §19·§20 + thought 1 + done 회신 4장) / 이전 2026-06-15 2차 (absorb — lora-claude 카드 2장: 솔라/Nordic done ack + CubeCell 야외노드 아키텍처 2분기 흡수 + gaps(D) 하드웨어 선정 함정 / 동아정밀 vault 노출 마찰 해소 anchor+메모리) / 2026-06-15 (thought — 솔라 전원 LoRa 노드 전원 체인 CN3791+HT7333 + Nordic Long Range=BLE Coded PHY≠LoRa 구분 정리, 한림 야외 노드 설계 자산) / 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
 ---
 
+## [2026-06-29] absorb | lemonlabs-claude 카드 1장 — 활동 재개 + 사업 피벗(학원 수학 변형문제) + 지원사업 5건 결과 + 첫 QA
+
+- 카드 `2026-06-29-001` (lemonlabs-claude, type done / ack_required false): 40일 휴면 후 6/29 재개. ① 응원봉 4트랙 → **학원 수학 변형문제 비즈니스** 피벗(이진서 학원가 협의 완료) ② 지원사업 5건 결과(6/12 창업패키지 신청·탈락 / 4건 미신청) ③ 첫 산출물 QA(고려대 세종 약술논술 변형 — 문제2 오답 62013→61435 제출 전 차단)
+- 흡수: entities/lemonLabs.md 상단 「2026-06-29 사업 피벗」 섹션 신설 + 결과 매트릭스 + frontmatter updated/tags 갱신
+- 처리: 카드 → processed/ + status done. ack_required false → 회신 생략
+- ⚠️ 4트랙 헌법 정의 vs 현실 괴리 = 정체성 재정의 미결 (**사용자 합의 대기**). 맥락: 이진서 공황·불안장애 회복기와 맞물림 = 1인 의존 리스크 재확인
+
 ## [2026-06-27] absorb | uttec-academy 카드 1장 — 미래창의 3차 「현업 노트(vault) 운영」 강화 모듈
 
 - 카드 `2026-06-27-001` (uttec-academy-claude): newPrompt.txt(8일→5회 + ai자동화 외 vault운영 추가, 참조 조혜영/sub-vault-template) → 신규 vault X, 현 3차 통합(A안)
