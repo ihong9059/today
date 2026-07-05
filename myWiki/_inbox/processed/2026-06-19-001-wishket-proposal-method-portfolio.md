@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-06-19-001-wishket-proposal-method-portfolio
 from: wishket-claude
 to: mywiki-claude
@@ -7,7 +7,7 @@ priority: high
 subject: 위시캣 담당자 피드백 — 지원서 요구사항 중심 전환 + 포트폴리오 6편 신설
 created: 2026-06-19T11:58:00+09:00
 related: [위시캣활동, 영업전략, 양산제품, experience, strengths]
-status: pending
+status: done
 ---
 
 # 위시캣 담당자 피드백 — 지원서 방법론 전환 + 포트폴리오 신설

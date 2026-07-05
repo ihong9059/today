@@ -2,10 +2,18 @@
 title: lora — UTTEC LoRa 기술 전문 hub vault
 type: entity
 created: 2026-06-13
-updated: 2026-06-19 (_inbox 흡수 — lora-claude 카드 2장: 통합펌웨어+BLE프로비저닝+한림 최종 아키텍처 3패턴(06-18) / 2.4G ESB 하이브리드 옵션(역량경계 ~30dB)+E22 generic SX126x 디코드 불가(벤더 락인)(06-19) / 이전 6/17: 카드 4장 megasession — 4종 모듈 검증+SPI 전환 경로(06-14) / 골프장 수조 제어망 프로토콜+8B frame 송수신 실증+배터리 모니터링(06-16) / CubeCell 스니퍼 done ack(06-15) / 합류 19th myWiki측 5단계 완결(06-13))
+updated: 2026-07-05 (_inbox 흡수 — lora-claude 카드 2장: BLE↔LoRa 브리지 게이트웨이 경량·무선화 monitor terminal end-to-end 실증(06-19) / 2.4G ESB 로컬링크 dual-radio 겸용 역량 확보(06-20) → 결정 58 + gaps 2026-07-05 + thought 1 + done 회신 / 이전 6/19: 통합펌웨어+BLE프로비저닝+한림 최종 아키텍처 3패턴(06-18) / 2.4G ESB 하이브리드 옵션(역량경계 ~30dB)+E22 generic SX126x 디코드 불가(벤더 락인)(06-19) / 이전 6/17: 카드 4장 megasession — 4종 모듈 검증+SPI 전환 경로(06-14) / 골프장 수조 제어망 프로토콜+8B frame 송수신 실증+배터리 모니터링(06-16) / CubeCell 스니퍼 done ack(06-15) / 합류 19th myWiki측 5단계 완결(06-13))
 tags: [vault, lora, 무선통신, E22, E32, 기술hub, multi-agent, 사업근거, 4종모듈검증, SPI전환, 수조제어망, 8B-frame, 배터리모니터링, SX126x, SX127x, 자율제어망]
 links: [vault-registry, revita, shield, factory, 한림용인cc-고가수조, ai-direction, gaps, skills, strengths]
 ---
+
+> **2026-06-19~20 _inbox 흡수 — lora-claude 카드 2장** ⭐⭐⭐ (2026-07-05 흡수: BLE↔LoRa 브리지 게이트웨이 경량화(06-19) + 2.4G ESB 로컬링크 dual-radio(06-20)):
+>
+> **(카드 06-19, BLE↔LoRa 브리지 monitor terminal end-to-end 실증 PASS)** ⭐⭐⭐ — monitor/master 단말을 **BLE↔LoRa 브리지 패턴**으로 구현. 게이트웨이(RPi3)와 LoRa 단말 사이를 USB-serial이 아니라 **BLE 상시연결**로 연결: master 노드(nRF52832+E22)가 BLE peripheral + LoRa(E22)를 **동시 상시 동작**하며 8B frame 투명 중계, RPi는 내장 BLE central. 데이터경로 `sensor→LoRa/E22→master(BLE peripheral)→BLE→RPi(bleak)→web`, 역방향 명령 동일 경로. 신규 entity: `master_bridge` 펌웨어(BLE Bridge Service UUID 0x0010, RX notify 9B=8B+RSSI/TX write 8B, 광고 `UTEC-Bridge`) + RPi `golf-bridge`(bleak 구독→TANK/OP/ACK 디코드→web :8090). **⭐ 사업 함의**: 게이트웨이에 LoRa 모뎀 USB 직결·전용 HAT 없이 **BLE만 있으면**(라즈베리·폰·PC 대부분 내장) 기존 LoRa 단말 재사용해 monitor/control 게이트웨이 구성 = **게이트웨이 경량·무선화 패턴**, 공장 자동화·다현장 monitor 재사용 ([[ai-direction]] § 결정 58). **gotcha**: BLE를 끄지 않고(`bt_disable` 금지) E22 루프와 동시 상시 동작 필요 / RPi BLE RF-kill 차단(unblock+up) / 브리지에 RTT 디버거 붙였다 떼면 nRF halt / **Chrome은 link-local(169.254) 접속 불가 → 직결망은 일반 사설IP 필수**([[gaps]] § 2026-07-05 lora). → lora `수조제어_펌웨어/07_monitor_BLE브리지_인터페이스규약.md` + `실증/master_bridge/`.
+>
+> **(카드 06-20, 2.4G ESB 로컬링크 dual-radio 역량 확보)** ⭐⭐ — 수조제어 통합펌웨어에 **2.4G ESB 로컬링크**(sensor↔onoff 근거리) 추가·end-to-end 검증. LoRa(920M 본부 장거리)와 2.4G(온칩 로컬)를 **dual-radio 겸용**: 한 노드가 LoRa(상위 모니터)+2.4G ESB(로컬 단말) 동시 운용 → 폐쇄공간(펌프실)·간섭분리·산악 골프장처럼 로컬 단말이 본부에 직접 못 닿는 환경 대응(수조 on/off·야간 lamp). 최대거리 2.4G = **250kbps**(감도 −104dBm, 1Mbps 대비 +8dB→거리 2.5배/벽투과 여유)+4dBm = nRF52832에서 BLE Coded PHY 없이 장거리 확보하는 유일 경로. group별 채널·주소 파생 → 다중 group 무간섭. **gotcha 2건**([[gaps]] § 2026-07-05 lora): ① **ESB와 BLE컨트롤러(SDC/MPSL) 한 이미지 공존 불가**(MPSL 부팅 자동 init 라디오 점유 충돌) → **2-이미지 패턴**(BLE판 provisioning + ESB판 CONFIG_BT 미설정 운영, NVS 보존 reflash 전환) — cf. 06-18 통합펌웨어 BLE 프로비저닝과 정합. ② nRF52832 250kbps는 **ESB auto-ACK 비대칭 실패**(forward만, 역방향 ack 미수신) → 양방향 독립송신(noack)+역할 시분할(PTX↔PRX) 우회. **⭐ 사업 함의**: "로컬 근거리 + 상위 장거리" 2계층 필요한 shield/revita/공장 응용에 dual-radio 재사용([[ai-direction]] § 결정 58). → lora `수조제어_펌웨어/05_setting_app_재검토 §ESB`, memory `esb-2g4-local-link`.
+>
+> **자세히**: [[ai-direction]] § 결정 58 + [[gaps]] § 2026-07-05 lora + [[revita]] § 타워 LoRa GW(동일 게이트웨이 도메인) + [[2026-07-05_BLE게이트웨이-LoRa경량연결]] (신규 thought).
 
 > **2026-06-19 _inbox 흡수 — lora-claude 카드 2장** ⭐⭐⭐ (06-18 통합펌웨어+BLE프로비저닝 + 06-19 2.4G하이브리드+E22스니핑한계):
 >

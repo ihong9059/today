@@ -1008,6 +1008,47 @@ recover 직후 보드 USB 재enumerate → VCOM0/VCOM1 COM 번호 변경 (예: C
 - **회사 명성·양산 신뢰성: RAK(RAKwireless) > Heltec**. Heltec은 메이커·프로토타입 강세, RAK는 상용·게이트웨이·Helium 인지도. **양산·인증(KC 등) 중시 시 RAK 계열(RAK3172=STM32+SX1262) 검토 가치**.
 - **공통 안전 함정**: SX1262 보드는 **안테나 미연결 TX = 칩 손상 위험**. 굽기 전 IPEX 안테나 체결 필수. (→ [[2026-06-15_솔라전원-LoRa노드-전원체인-Nordic-LongRange]] §4 아키텍처 2분기)
 
+## 2026-07-05 흡수 — revita ingest #18~#23 교재 함정 + 양산 게이트 결함 2건 (revita-claude 카드 5장) ⭐⭐⭐
+
+강의·컨설팅·포트폴리오 사례연구 자산 가치 최상급. 임베디드/분산 시스템 공통 함정으로 재사용.
+
+### ★ 양산 출하 게이트 결함 2건 (revita 타워, #18) — 출하 차단 사유
+
+1. **`ACTIVATED_NORMAL` 정식 활성화 경로 부재** — relay 게이트가 이 상태를 요구하나 펌웨어에 전환 명령이 없음 → **제품 출하 시 relay 0건**. 시험은 NVS 직접 주입(`nvs_dm_inject.py`)으로 우회한 것 = **"시험은 통과인데 제품은 동작 안 하는"** 전형 함정. 우회 시험 시 정식 경로 미구현을 반드시 결함으로 분리 등록.
+2. **레거시 peer 자동 이관 불가** — 구 NVS 스킴이 link_id 상위바이트 미저장 → 구→신 OTA 시 peer 유실, 운영자 재등록 필수 = **OTA 마이그레이션 호환성 실패**.
+
+### 교재 함정 (강의·컨설팅 1급 자산)
+
+- **"LED 켜짐 ≠ USB 통신됨"** (#19) — J-Link 전원 LED 점등에도 호스트 USB 열거 0건 → 데이터선/허브 단계 단절. 분리진단 사례.
+- **"HW RC 디바운스 필수 (SW 디바운스 폐지)"** (#19) — 버튼 10초 홀드 게이트가 채터링 취약 → HW RC(1~10kΩ+100nF) 미적용 시 SHORT/LONG 오판. "펌웨어로 못 덮는 HW 결함".
+- **"OTA 됐는데 전원 끄면 롤백"** (#20) — MCUboot test 슬롯은 confirm 전까지 임시. `boot_write_img_confirmed` 1줄 누락 = 전원 OFF/ON 시 구버전 복귀. "프레임워크 기본 동작을 모르면 생기는 함정".
+- **"MCU가 mTLS 한다"는 오해** (#20) — 실제로는 RM76 모뎀이 TLS+user/pass 처리, MCU는 클라이언트 cert 없음. 보안 경계 오해.
+- **"bit-bang RS485의 속도 한계"** (#20) — 소프트웨어 UART는 38400+에서 바이트 누락 → 9600/19200 권장. "코드상 지원 ≠ 현장 사용 가능".
+- **★ "공유 자원을 무시한 추상화는 물리적으로 성립하지 않는다"** (#22) — coproc-MQTT(SBC가 `t/{id}/d`에 `src=0xC000` publish로 MCU 지휘)는 **RM76 LTE 모뎀이 1개**라는 사실과 충돌. SBC가 모뎀 점유 시 MCU는 자기 MQTT로 상·하행 불가 → "같은 토픽+src 구분" 추상화가 HW 공유 제약 앞에 붕괴. 해법 = 자원 handoff + 로컬(USB) relay. **"추상화 설계 전 하위 물리 자원의 배타성을 먼저 확인하라"** — 아키텍처 교재 1급.
+- **★ "종료(shutdown)는 원자적 사건이 아니라 순서 있는 프로토콜이다"** (#23) — relay OFF와 전원 OFF를 한 이벤트로 묶으면 전송 큐(LTE TX ring) 잔여 상행 PDU가 flush 전에 링크가 끊겨 **조용히 유실**. 해법 = ① `relay_stop`: drain을 *검증*(ring empty+usb idle), 미완이면 전원 유지한 채 재시도(soft) → ② `relay_stopped` ACK 후 상위가 자기 계층 정리 → ③ `shutdown` 실제 전원 차단. **"graceful teardown = 뒤집힌 부팅 시퀀스, 각 계층이 아래 계층에게 '비웠다' 확인을 받아야 한다."**
+
+### 검증 성숙도 신호
+
+- **5단계 판정 범례**(#23): PASS/FAIL/BLOCKED 3단계 → **PASS/CODE_DONE/E2E_PENDING/APP_PENDING/BLOCKED 5단계**. "코드는 됐으나 실기 미검증"과 "레포 외 의존"을 명시 구분 → **"구현 완료 ≠ 검증 완료"** 규율, 진척 과대보고 방지. 포트폴리오/제안서 과대표현 회피 역량 신호.
+
+→ [[revita]] § 2026-06~07 + [[strengths]] §22 + [[ai-direction]] § 결정 57 + [[2026-07-05_적정복잡도-라이프사이클-3부작]].
+
+## 2026-07-05 흡수 — lora BLE↔LoRa 브리지 + 2.4G ESB dual-radio gotcha (lora-claude 카드 2장) ⭐⭐
+
+### BLE↔LoRa 브리지 (06-19)
+
+- **BLE와 E22 LoRa 루프 동시 상시 동작 필요** — `bt_disable` 금지. 프로비저닝식 순차 동작과 다름(BLE 켠 채 E22 중계).
+- **RPi BLE 기본 RF-kill 차단** — `rfkill unblock` + `hciconfig up` 필요. bleak central 동작 전제.
+- **브리지에 RTT(J-Link) 디버거 붙였다 떼면 nRF halt** — 실운영 브리지에는 디버거 상시연결 금지.
+- **Chrome은 link-local(169.254) 접속 불가** — 직결망은 일반 사설IP 필수. (직결 monitor web 구성 시 IP 대역 주의)
+
+### 2.4G ESB 로컬링크 (06-20)
+
+- **ESB와 BLE컨트롤러(SDC/MPSL)는 한 이미지 공존 불가** — MPSL이 부팅 자동 init하며 라디오 점유 충돌. → **2-이미지 패턴**: BLE판(provisioning, CONFIG_BT) + ESB판(CONFIG_BT 미설정=MPSL 없음, 운영), NVS 보존 reflash로 전환. (cf. 통합펌웨어 06-18 BLE 프로비저닝과 정합)
+- **nRF52832 250kbps 모드는 ESB auto-ACK 비대칭 실패** — forward만, 역방향 ack 미수신 → **양방향 독립송신(noack) + 역할 시분할(PTX↔PRX)**로 우회.
+
+→ [[lora]] § 2026-06-19~20 + [[ai-direction]] § 결정 58 + [[2026-07-05_BLE게이트웨이-LoRa경량연결]].
+
 ## 업데이트 방법
 새로운 갭을 발견하거나, 기존 갭을 채웠을 때 이 페이지를 업데이트한다.
 채운 갭은 삭제하지 않고 ~~취소선~~으로 표시하여 성장 기록을 남긴다.

@@ -2,7 +2,7 @@
 title: REVITA
 type: entity
 created: 2026-04-19
-updated: 2026-06-13 (ingest #16 흡수 — LoRa 암호화 ON(ECB keystream XOR) + BLE OTA 농가 자가 업데이트 실구현(SMP/MCUboot) + 양산 보안 게이트 2건 carry(서명키 평문 커밋 / AEAD·키 프로비저닝 부재) / 결정 48 / 이전 6/4: 노지관리 신사업 본격 진입 + vault 분리, 결정 40)
+updated: 2026-07-05 (ingest #18~#23 5장 megasession 흡수 — 타워 LoRa GW 집중시험(Mode C #18)+SBC 통신 3차 정정(USB CDC→coproc MQTT #19→USB CDC 복귀 #22→2단계 graceful shutdown #23)+OTA 정착(부팅 OTA 윈도우+MCUboot 자가 confirm #20) / 양산 게이트 2건 carry(ACTIVATED_NORMAL 활성화 경로 부재=출하 relay 0건 / 레거시 peer 이관 불가) / 적정복잡도 3부작 + 결정 57 + strengths §22 + gaps 2026-07-05 / 이전 6/13: ingest #16 LoRa 암호화 ON + BLE OTA 농가 자가 업데이트, 결정 48)
 tags: [프로젝트, IoT, 펌웨어, LoRa, Zephyr, CC1101, Sub-GHz, BLE-LR, Solar, revitaProject, rtuRemocon, Modbus, 산업통합제어, link_v2_test_tower, 회귀시험자동화, kc_cert_link_v2, kc_cert_tower, KC인증통합트랙, BLE-pairing-L2, DUT-다중-브리지-단일, IQC자동화, Flask-Web-5010, tower_DK-deprecated, 두-하향-경로-동일-규약, 펌웨어모듈-단일진실, 위성-원격탐사, 노지관리-신사업, 농림위성, 마이크로매크로-fusion, vault분리, 사업단위vault, carrier역량]
 links: [claude-code, experience, projects, skills, tailscale네트워크, 양산제품, 위시캣활동, rtu-remocon, shield, 한림용인cc-고가수조, aisg, 영업전략, 정부R&D실증사업, 2026-05-27_revita-IQC-자동화-인프라, 2026-06-03_위성-원격탐사-노지관리-신사업, 2026-06-04_노지관리-신사업-본격진입]
 ---
@@ -11,6 +11,71 @@ links: [claude-code, experience, projects, skills, tailscale네트워크, 양산
 
 ## 한 줄 정의
 IoT 장비 프로젝트. LoRa 무선 통신 + RS485 유선 통신 + KC 인증 대응. **위시캣 수주 (#153090)**. **6/3 결단**: revita LoRa 양산 자산 + 위성 원격탐사 fusion → 노지 관리 신사업 검토 trigger. **6/4 결단**: 노지관리 신사업 본격 진입 + `application/노지관리Wiki/` vault 분리 (사업 단위 = vault 단위).
+
+## 2026-06~07 — ingest #18~#23 흡수: 타워 LoRa GW 집중시험 + SBC 통신 3차 정정 서사 + OTA 정착 ⭐⭐⭐ (revita-claude 카드 5장 megasession, 2026-07-05 흡수)
+
+> **한 줄**: 6/19~7/3 도착한 revita ingest 5장(#18·#19·#20·#22·#23)을 묶어 흡수. 타워를 LoRa relay 게이트웨이로 집중검증(#18) → SBC↔MCU 통신 설계가 **USB CDC → coproc MQTT(#19) → coproc 폐기·USB CDC 복귀(#22) → 2단계 graceful shutdown(#23)** 로 3차 정정되는 연속 서사 + 부팅 OTA 정착(#20). 핵심 사업 자산 = **"적정 복잡도 라이프사이클 3부작"**(설계 판단 프레임워크) + **양산 게이트 결함 2건** + **교재 함정 다수**. → [[ai-direction]] § 결정 57 + [[gaps]] § 2026-07-05 revita + [[strengths]] §22 + [[2026-07-05_적정복잡도-라이프사이클-3부작]] (신규 thought).
+
+### #18 (6/19) — 타워 LoRa GW 집중시험(Mode C) + 양산 게이트 결함 2건 ★
+
+- **범위**: BASE `df6e671c` → HEAD `d89aea46` (19+4 commits / +5,173). 갱신 entity 8, 신규 entity/gotcha/decision 0.
+- **역량 신호**: ① **Mode C 더미 하니스** — 실 LTE 모뎀 없이 PC가 AT 모뎀+MQTT 서버 흉내(`lte_at_dummy.py`) + NVS 직접 주입(`nvs_dm_inject.py`)으로 게이트웨이 전 구간(AT FSM→CONNACK→SUBACK→relay→ACK) 검증. → **"부품 미입고·현장 HW 부재에도 시험 진행하는 더미·하니스 설계"** ([[skills]] § 시험 인프라). ② 양산 신뢰성 NVS 스킴(희소 키 → 고정 32슬롯 테이블, 마이그레이션 안전) → [[strengths]] §22 데이터 영속성 설계.
+- **★ 양산 출하 게이트 결함 2건** ([[gaps]] § 2026-07-05):
+  1. **`ACTIVATED_NORMAL` 정식 활성화 경로 부재** — relay 게이트가 이 상태를 요구하나 펌웨어에 전환 명령 없음 → **제품 출하 시 relay 0건**. 시험은 NVS 주입으로 우회 = "시험 통과인데 제품 미동작" 전형 함정.
+  2. **레거시 peer 자동 이관 불가** — 구 NVS가 link_id 상위바이트 미저장 → 구→신 OTA 시 peer 유실, 운영자 재등록 필수(OTA 마이그레이션 호환 실패).
+- **결단**: "우회 시험으로 일단 검증 진행 + 우회임을 결함으로 명시 분리 carry" = 블로커를 두지 않는 실용주의 + 정직성.
+
+### #19 (6/24) — SBC 재설계: USB CDC 폐기 → coproc MQTT + 16-슬롯 스케줄 + Button 딥슬립
+
+- **범위**: BASE `d89aea46` → HEAD `d37b5698` (`sbc_module.c` +1,339 대규모 리팩토링).
+- **역량 신호**: 임베디드 아키텍처 의사결정(로컬 링크 폐기 → MQTT coproc 단일 토픽 `t/{id}/d`+`src` 구분) + 저전력 설계(nRF52840 System OFF `sys_poweroff`+sense-low 웨이크 + warm reboot 재개 = 무인 단말 회수/창고/필드 재가동 라이프사이클).
+- **교재 함정 2건** ([[gaps]]): "LED 켜짐 ≠ USB 통신됨"(J-Link 전원 LED 점등에도 호스트 열거 0) / **HW RC 디바운스 필수**(버튼 10초 홀드가 채터링 취약, SW로 못 덮는 HW 결함).
+- **결정**: 버튼 길게=추후정의 TODO → ≥10s deactivate+System OFF 확정 / SBC 스케줄을 서버 하향 의존 → **MCU 내장 16-슬롯 일일 스케줄(안 A)**(네트워크 비의존 자율).
+
+### #20 (6/30) — 부팅 OTA 윈도우 + MCUboot 자가 confirm + 농가 자가 OTA 정착
+
+- **범위**: BASE `d37b5698` → HEAD `f97f1e3d` (33 commit). link_v2 OTA saga v1.0.1~v1.0.8 / rtuRemocon v1.1 / lte_module +681.
+- **역량 신호**: **무선 OTA 전체 스택**(MCUboot 자가 confirm `boot_write_img_confirmed` — 롤백 버그 영구 해소 + 부팅 OTA 윈도우=타워 없이 폰만으로 OTA + Android SMP/mcumgr 앱 + 사용자 가이드 HTML/PDF) = **"농가 자가 펌웨어 갱신"** 양산 IoT 차별 자산 → [[strengths]] §18 확장. STM32 EEPROM 부재 → Flash 최종 1KB emulation(magic+checksum). RM76 GPIO boot 시퀀스 실측.
+- **교재 함정 3건**: "OTA 됐는데 전원 끄면 롤백"(confirm 1줄 누락) / "MCU가 mTLS 한다" 오해(실제 RM76 모뎀이 TLS+user/pass) / bit-bang RS485 속도 한계(38400+ 바이트 누락 → 9600/19200 권장).
+- **결정**: OTA 트리거 = reset 하나로 정합(GW/웹 CREATE 오케스트레이션 폐기) / **세션 모델 선택적 완화**(coproc no-ACK + QoS0 + OTA reset 트리거) — "제약 약한 구간은 세션 걷고 transport에 위임".
+
+### #22 (7/1) — SBC 통신 3차 정정: coproc MQTT 폐기 → USB CDC relay 복귀 ★★★
+
+- **범위**: BASE `ce881ac3` → HEAD `4c02a07e` (3 commit / 41 파일 / +3,655 / -428). 갱신 entity 6(tower-sbc ★★★).
+- **★ 교재 최상급 함정 1건**: **"공유 자원을 무시한 추상화는 물리적으로 성립하지 않는다"** — #19의 coproc-MQTT(SBC가 `t/{id}/d`에 `src=0xC000`로 MCU 지휘)는 **RM76 LTE 모뎀이 1개**라는 사실과 충돌. SBC가 모뎀 점유 시 MCU는 자기 MQTT로 아무것도 못 함 → 깔끔해 보이는 "같은 토픽+src 구분" 추상화가 HW 공유 제약 앞에 붕괴. 해법 = 자원 handoff(MCU UART↔SBC USB host 배타 점유) + USB CDC relay(타워 16B PDU를 JSON-line). → "추상화 설계 전 하위 물리 자원의 배타성을 먼저 확인하라" 아키텍처 교재 1급.
+- **역량 신호**: **설계 오류 자기정정**(자기가 #19에서 채택한 coproc-MQTT를 물리 전제 재검토로 폐기·회귀, sunk cost 없이 되돌림) → [[strengths]] §22 엔지니어링 성숙도 / 3-모듈 단일책임 경계(`sbc_usb` 물리 I/O·`sbc_module` 정책·`lte_module` PDU 허브) / 문서-코드 동기 규율(wire 변경 시 문서 먼저).
+
+### #23 (7/3) — SBC 2단계 graceful shutdown (relay_stop → shutdown) ★
+
+- **범위**: BASE `811676d1` → HEAD `569bbc79` (3 commit / +339 / -89). 갱신 entity 4.
+- **핵심**: #22 단일 `shutdown` cleanup을 2단계로 정제 — relay 즉시 종료 시 LTE TX ring 상행 PDU(`u`/`ul`) 유실 방지.
+- **★ 교재 함정 1건**: **"종료(shutdown)는 원자적 사건이 아니라 순서 있는 프로토콜이다"** — relay OFF와 전원 OFF를 한 이벤트로 묶으면 전송 큐 잔여 PDU가 flush 전에 링크가 끊겨 조용히 유실. 해법 = ① `relay_stop`(신규 evt 0x09): drain *검증*(ring empty+usb idle), 미완이면 **5V 유지**한 채 재시도(soft) → ② `relay_stopped` ACK 후 상위(SBC)가 자기 계층 정리 → ③ `shutdown` 실제 전원 차단. **"graceful teardown = 뒤집힌 부팅 시퀀스, 각 계층이 아래 계층에게 '비웠다' 확인을 받아야 한다."**
+- **역량 신호**: 상태기계 리팩토링(비대 함수 → `stop_timers`/`relay_stop`/`poweroff`/`runtime_shutdown` 4조각 + soft/force 2모드) + **검증 어휘 정밀화**(PASS/FAIL/BLOCKED 3단계 → PASS/CODE_DONE/E2E_PENDING/APP_PENDING/BLOCKED 5단계 = "구현 완료 ≠ 검증 완료" 규율, 진척 과대보고 방지) → [[gaps]] 검증 성숙도.
+
+### ★ 사업 자산 — "적정 복잡도 라이프사이클 3부작" (설계 판단 프레임워크) ⭐⭐⭐
+
+세 ingest가 아키텍처 판단의 **양방향 경계**를 라이프사이클 3축으로 완성:
+
+| 축 | ingest | 교훈 | 경계 |
+|---|:-:|---|---|
+| **생성** | #20 | 제약(전원손실·손실링크·안전) **없으면** 세션 걷고 transport에 위임 | 과설계 경계 |
+| **구조** | #22 | 공유 물리 자원이 있으면 추상화로 숨기지 말고 자원 소유권(handoff)을 명시 설계 | 과추상화 경계 |
+| **소멸** | #23 | 자원을 되돌릴 때는 획득의 역순으로, 각 단계 완료를 확인하며 풀어라 | 무순서 종료 경계 |
+
+→ me/ai-direction "적정 복잡도 판단" 신호. 강의·컨설팅·포트폴리오 사례연구 1급 자산 ([[2026-07-05_적정복잡도-라이프사이클-3부작]]).
+
+### 매칭 패턴 (myWiki 시너지)
+
+- **양산 게이트 2건 ↔ KC 인증·출하 게이트**([[strengths]] §12): relay 0건 결함 = 출하 차단 사유 → 양산 트랙 리스크 가시성 강화.
+- **Mode C 더미 하니스 ↔ 위시캣 narrative**(2026-07-03 #156394 차량 텔레매틱스 등): "HW 부재 상황 더미로 시험 진행" = 제안서/포트폴리오 차별화 한 줄.
+- **System OFF 라이프사이클 + 농가 자가 OTA + 2단계 teardown ↔ 노지관리 신사업**: 무인 엣지 노드 전력·유지보수·안전종료 = "무인·원격 유지보수" 직접 자산.
+- **coproc handoff + USB relay 3-모듈 경계 ↔ [[aisg]]**: "코프로세서 + 공유 주변장치" 임베디드 재사용 참조 아키텍처.
+
+### revita.md 상태 갱신 (한 줄)
+
+> § 2026-06~07 — 타워 LoRa GW relay 집중시험(Mode C, #18) + SBC 통신 3차 정정(USB CDC→coproc MQTT #19→USB CDC 복귀 #22→2단계 graceful shutdown #23) + OTA 정착(부팅 OTA 윈도우+MCUboot 자가 confirm #20). 🚨 양산 게이트 2건 carry: ACTIVATED_NORMAL 정식 활성화 경로 부재(출하 시 relay 0건) / 레거시 peer 자동 이관 불가. 검증 상태 = MCU CODE_DONE, E2E(TC-40) HW 대기.
+
+---
 
 ## 2026-06-11 — ingest #16: LoRa 암호화 ON + BLE OTA 농가 자가 업데이트 정착 ⭐⭐⭐ (revita-claude 카드 2026-06-11-001, 6/13 흡수)
 

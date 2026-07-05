@@ -2,7 +2,7 @@
 title: 강점 분석
 type: identity
 created: 2026-04-19
-updated: 2026-06-27 (§21 신규 — 지식관리 방법론의 교육 상품화, uttec-academy 카드 흡수 / 이전 6/13: §18 신규 — 농가 자가 BLE OTA 운영 차별화 + 보안 게이트 ↔ §12 인증 연동, revita ingest #16 흡수 / 이전 6/10: §17 신규 — 위시캣 영업 자산 7종: Playwright HTML 캡처 SOP + LS XGT 시리즈 prefix 매핑 SOP + PLC 단가 출처 4채널 검증 LIST + IPC 중급 SOP + Recipe 활성풀 + ESP32-P4 LVGL GUI + Python 비정형 데이터/정형외과 협업. wishket-claude 4 카드 megasession 흡수 / 이전 6/6 야간: §13 carrier ponet 3번째 + §15 풀스택 + §16 시제품 검사)
+updated: 2026-07-05 (§22 신규 — 임베디드 아키텍처 엔지니어링 성숙도(자기정정·Mode C 시험 인프라·무선 OTA 스택·안전 teardown·적정복잡도 3부작), revita ingest #18~#23 흡수 / §23 신규 — 위시캣 요구사항 중심 지원서 §4-A + 2축 포트폴리오, wishket 카드 3장 흡수 / 이전 6/27: §21 신규 — 지식관리 방법론의 교육 상품화, uttec-academy 카드 흡수 / 이전 6/13: §18 신규 — 농가 자가 BLE OTA 운영 차별화 + 보안 게이트 ↔ §12 인증 연동, revita ingest #16 흡수 / 이전 6/10: §17 신규 — 위시캣 영업 자산 7종: Playwright HTML 캡처 SOP + LS XGT 시리즈 prefix 매핑 SOP + PLC 단가 출처 4채널 검증 LIST + IPC 중급 SOP + Recipe 활성풀 + ESP32-P4 LVGL GUI + Python 비정형 데이터/정형외과 협업. wishket-claude 4 카드 megasession 흡수 / 이전 6/6 야간: §13 carrier ponet 3번째 + §15 풀스택 + §16 시제품 검사)
 tags: [강점, 분석, carrier역량, vault분리, 다중vault, sensor라이브러리, AI매트릭스, 풀스택양산, 모바일앱양산, AWS양산, 통합단일진행]
 links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick, 양산제품, 회사소개, 영업전략, 위시캣활동]
 ---
@@ -10,6 +10,28 @@ links: [me, skills, ai-direction, gaps, revita, onDevice-ai, ai-fanstick, 양산
 # 강점 분석
 
 ## 핵심 강점
+
+### 23. 위시캣 지원서 요구사항 중심 방법론 + 2축 포트폴리오 (2026-07-05) ⭐⭐ NEW
+
+wishket-claude 카드 3장 흡수 (담당자 피드백 §4-A 전환 + 포트폴리오 v2 + #156394 직접연락).
+
+- **본질**: 위시캣 담당자 직접 피드백("요구사항에 초점, 많이 한 것 나열 금지")으로 지원서를 **"자산 나열형 → 요구사항 중심형"**(§4-A)으로 전환 — 목차=클라이언트 요구사항, 요구마다 "어떻게 풀지+직결 실적 1건+수치", 무관 자산 생략. 다른 1인/외주 대비 **클라이언트 문제에 정조준하는 제안 역량**.
+- **포트폴리오 v2 2축**: 같은 실적을 `by-domain`(해봤다 증명) + `by-requirement`(당신 문제 이렇게 푼다 설득) 두 진입점으로 재구축 = 채널·상황별 재사용 영업 자산. 모바일앱·AWS 자산까지 발굴 편입.
+- **강매칭 신호**: #156394(차량용 온도·GPS 텔레매틱스)는 위시캣이 **직접 연락**한 이례적 강매칭 — nRF52 BLE 온도 양산 자산과 동일 계열. "직접 연락" = 축적된 프로필·포트폴리오가 역방향 리드를 만드는 단계 진입 신호.
+
+→ [[위시캣활동]] § 2026-06-19~07-03 + [[ai-direction]] § 결정 59 + [[2026-07-05_위시캣-요구사항중심-포트폴리오2축]]. cf. §17 위시캣 영업 자산 7종.
+
+### 22. 임베디드 아키텍처 엔지니어링 성숙도 — 자기정정 · 시험 인프라 · 무선 OTA 스택 · 안전 teardown (2026-07-05) ⭐⭐ NEW
+
+revita-claude ingest #18~#23 5장 흡수 (타워 LoRa GW + SBC 통신 3차 정정 서사).
+
+- **설계 오류 자기정정**: 자기가 #19에서 채택한 coproc-MQTT를 물리 전제(LTE 모뎀 1개) 재검토로 폐기하고 USB CDC relay로 회귀 — **sunk cost 없이 아키텍처를 되돌리는** 성숙도. "우아하나 물리적으로 불가능한 설계"를 실증 없이 전제 재검토만으로 기각.
+- **HW 부재 시험 인프라(Mode C)**: 실 LTE 없이 PC가 AT 모뎀+MQTT 서버 흉내 + NVS 직접 주입으로 게이트웨이 전 구간 검증 = **부품 미입고·현장 HW 부재에도 양산 일정 압축**. 위시캣 제안·포트폴리오 차별화 한 줄.
+- **무선 OTA 전체 스택**: MCUboot 자가 confirm(롤백 해소) + 부팅 OTA 윈도우(폰만으로) + Android SMP 앱 + 사용자 가이드 = 농가 자가 갱신(§18 농가 자가 BLE OTA 확장). NVM flash emulation·모뎀 boot 시퀀스 실측.
+- **데이터 무결성 teardown 설계**: 종료를 "drain 검증→자원 유지→상위 정리 ACK→실제 종료" 순서 프로토콜로 분해 + 5단계 검증 어휘(구현≠검증 규율).
+- **적정 복잡도 판단 프레임워크**(3부작): 과설계 경계(#20)·과추상화 경계(#22)·무순서 종료 경계(#23) — 강의·컨설팅 사례연구 1급.
+
+→ [[revita]] § 2026-06~07 + [[gaps]] § 2026-07-05 revita + [[ai-direction]] § 결정 57 + [[2026-07-05_적정복잡도-라이프사이클-3부작]].
 
 ### 21. 지식관리 방법론의 교육 상품화 — myWiki vault 운영 노하우를 비전공자 교육 자산으로 (2026-06-27) ⭐⭐ NEW
 

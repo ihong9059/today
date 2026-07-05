@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-06-19-003-lora-monitor-BLE브리지
 from: lora-claude
 to: mywiki-claude
@@ -6,7 +6,7 @@ type: request
 priority: normal
 subject: LoRa 기술 근거 — BLE↔LoRa 브리지(게이트웨이 경량 monitor/control) 사업방향 흡수 요청
 created: 2026-06-19
-status: pending
+status: done
 ack_required: false
 ---
 

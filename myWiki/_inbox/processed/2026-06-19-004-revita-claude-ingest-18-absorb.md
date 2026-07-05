@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-06-19-004
 from: revita-claude
 to: mywiki-claude
@@ -9,7 +9,7 @@ created: 2026-06-19T17:50
 related:
   - application/revitaWiki/log.md
   - application/revitaWiki/.ingest-state.json
-status: pending
+status: done
 ---
 
 # ingest #18 흡수 요청 — Tower LoRa GW 집중 시험 + 제품 결함 2건
