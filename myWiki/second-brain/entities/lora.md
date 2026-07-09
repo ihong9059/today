@@ -2,10 +2,14 @@
 title: lora — UTTEC LoRa 기술 전문 hub vault
 type: entity
 created: 2026-06-13
-updated: 2026-07-05 (_inbox 흡수 — lora-claude 카드 2장: BLE↔LoRa 브리지 게이트웨이 경량·무선화 monitor terminal end-to-end 실증(06-19) / 2.4G ESB 로컬링크 dual-radio 겸용 역량 확보(06-20) → 결정 58 + gaps 2026-07-05 + thought 1 + done 회신 / 이전 6/19: 통합펌웨어+BLE프로비저닝+한림 최종 아키텍처 3패턴(06-18) / 2.4G ESB 하이브리드 옵션(역량경계 ~30dB)+E22 generic SX126x 디코드 불가(벤더 락인)(06-19) / 이전 6/17: 카드 4장 megasession — 4종 모듈 검증+SPI 전환 경로(06-14) / 골프장 수조 제어망 프로토콜+8B frame 송수신 실증+배터리 모니터링(06-16) / CubeCell 스니퍼 done ack(06-15) / 합류 19th myWiki측 5단계 완결(06-13))
+updated: 2026-07-09 (_inbox 흡수 — lora-claude 카드 1장: 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼(고정 코어 LoRa+릴레이+nRF52832+2.4G ESB + 선택 실장) → 제품라인 통합·"단일 플랫폼" 영업 강점, 결정 60 + gaps(조명 fail-safe 반대) + thought 1 + done 회신 / 이전 7/5: _inbox 흡수 — lora-claude 카드 2장: BLE↔LoRa 브리지 게이트웨이 경량·무선화 monitor terminal end-to-end 실증(06-19) / 2.4G ESB 로컬링크 dual-radio 겸용 역량 확보(06-20) → 결정 58 + gaps 2026-07-05 + thought 1 + done 회신 / 이전 6/19: 통합펌웨어+BLE프로비저닝+한림 최종 아키텍처 3패턴(06-18) / 2.4G ESB 하이브리드 옵션(역량경계 ~30dB)+E22 generic SX126x 디코드 불가(벤더 락인)(06-19) / 이전 6/17: 카드 4장 megasession — 4종 모듈 검증+SPI 전환 경로(06-14) / 골프장 수조 제어망 프로토콜+8B frame 송수신 실증+배터리 모니터링(06-16) / CubeCell 스니퍼 done ack(06-15) / 합류 19th myWiki측 5단계 완결(06-13))
 tags: [vault, lora, 무선통신, E22, E32, 기술hub, multi-agent, 사업근거, 4종모듈검증, SPI전환, 수조제어망, 8B-frame, 배터리모니터링, SX126x, SX127x, 자율제어망]
 links: [vault-registry, revita, shield, factory, 한림용인cc-고가수조, ai-direction, gaps, skills, strengths]
 ---
+
+> **2026-07-08 _inbox 흡수 — lora-claude 카드 1장 (공용 시스템 보드 = 수조+조명 단일 HW)** ⭐⭐ (2026-07-09 흡수):
+>
+> **(카드 07-08-001, 공용 시스템 보드 플랫폼)** ⭐⭐ — 한림 수조제어 HW와 LoRa 조명제어의 **공통 뼈대(power on/off 릴레이)**를 축으로, `LoRa(E22-900T22D) + 릴레이 + nRF52832 + 2.4G ESB` **고정 코어** + 선택 실장(RS485 수위센서·PIR·솔라/AC220V·RTC·INA219) 매트릭스 = **공용 시스템 보드 reference** 확정(`하드웨어/공용_시스템보드/공용_시스템보드_reference.md`). 수조(한림)·조명·shield(RS485/MESH)·revita 모두 "LoRa + 릴레이 제어" 공통 뼈대 → 공용 보드가 횡단 자산. **⭐ 사업 함의**: 한 보드로 수조(pump on/off)+조명(순차 off 절전)+확장(밸브·팬) 커버 → 제품 라인 통합·개발/재고 원가 절감·양산 단순화. 골프장 2개 시스템(원거리 수조 + 야간 조명)이 동일 HW 위 = 영업 "**단일 공용 플랫폼**" 강점([[ai-direction]] § 결정 60). **gotcha**: 조명 fail-safe 안전논리가 수조와 **반대**(수조=무수신 OFF 안전 / 조명=재실 중 OFF 금지 → PIR 결합 필요) + 조명 AC220V 부하 안전 요구 강함 → 제어논리 공유 불가·설계 미결([[gaps]] § 2026-07-09). **사업 소관 판단**: 조명 = 별도 vault 없이 현 골프장 LoRa 영업 트랙 하위 시스템 유지. → [[2026-07-09_공용시스템보드-단일플랫폼-횡단자산]] (신규 thought). 현 시점 = reference block diagram 단계(양산 미착수).
 
 > **2026-06-19~20 _inbox 흡수 — lora-claude 카드 2장** ⭐⭐⭐ (2026-07-05 흡수: BLE↔LoRa 브리지 게이트웨이 경량화(06-19) + 2.4G ESB 로컬링크 dual-radio(06-20)):
 >

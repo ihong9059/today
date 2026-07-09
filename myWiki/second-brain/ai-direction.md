@@ -2,12 +2,25 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-06-27 (결정 56 신설 — 교육 사업 = 기술+방법론(지식관리 vault) 이중 자산, uttec-academy 카드 흡수 / 이전 6/19: 결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
+updated: 2026-07-09 (결정 60 신설 — 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼 → 제품라인 통합 + "단일 플랫폼" 영업 강점, lora 카드 흡수 / 이전 7/5: 결정 57·58·59 신설 — 적정복잡도 3부작 + BLE 게이트웨이 무선화 + 위시캣 요구사항중심 지원서, revita·lora·wishket megasession / 이전 6/27: 결정 56 신설 — 교육 사업 = 기술+방법론(지식관리 vault) 이중 자산, uttec-academy 카드 흡수 / 이전 6/19: 결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-07-09) — lora 카드 흡수: 결정 60 신설 ⭐⭐
+
+lora-claude 카드 1장(공용 시스템 보드 = 수조+조명 단일 HW 플랫폼) 흡수.
+
+### 결정 60: ⭐⭐ 공용 시스템 보드 = 단일 HW 플랫폼으로 다응용 커버 → 제품 라인 통합 + "단일 플랫폼" 영업 강점
+
+- **사실**: 한림 수조제어 HW와 LoRa 조명제어의 **공통 뼈대(power on/off 릴레이)**를 축으로 `LoRa(E22-900T22D) + 릴레이 + nRF52832 + 2.4G ESB` 고정 코어 + 선택 실장(RS485 수위센서·PIR·솔라/AC220V·RTC·INA219) 매트릭스 = **공용 시스템 보드 reference** 확정. 수조(한림)·조명·shield(RS485/MESH)·revita 모두 "LoRa + 릴레이 제어" 공통 뼈대 → 공용 보드가 횡단 자산.
+- **결정**: 한 보드로 수조(pump on/off)+조명(순차 off 절전)+확장(밸브·팬)을 커버하는 **단일 공용 플랫폼**을 UTTEC 하드웨어 제품 라인 통합 표준으로 채택. 골프장 대상 2개 시스템(원거리 수조 자동제어 + 야간 조명 순차 off)이 동일 HW 위에 올라가는 것을 **영업·제안서의 "단일 플랫폼" 강점**으로 명시 → 개발/재고 원가 절감·양산 단순화 narrative.
+- **조명 사업 소관 판단** (카드 §5 요청): 조명 응용은 신규 도메인이나 이미 **골프장 LoRa 영업 트랙의 두 번째 시스템**으로 진행 중(영업/LoRa원거리제어 계획서) → **별도 vault 신설 없이 현 골프장 LoRa 영업 트랙 내 하위 시스템**으로 유지 권고. 공용 보드가 수조와 HW를 공유하므로 도메인 분리 실익 없음. 양산·회로 착수 단계 진입 시 재검토.
+- **함의**: 제품 라인 SKU 통합(펌웨어 1개화 결정 54 + 보드 1종 굽기와 정합) = 양산·재고·개발 원가 3중 절감 = 다현장·다응용 배포 가격 경쟁력. ⚠️ 단, 조명 fail-safe 안전논리가 수조와 **반대**(재실 중 OFF 금지 → PIR 결합 필수)이므로 제어논리는 공유 불가 = 설계 미결([[gaps]] § 2026-07-09 lora). [[lora]] § 2026-07-08 + [[한림용인cc-고가수조]] § LoRa 제어망.
+
+---
 
 ## 판단 로그 (2026-07-05) — _inbox megasession 흡수: 결정 57·58·59 신설 ⭐⭐⭐
 
