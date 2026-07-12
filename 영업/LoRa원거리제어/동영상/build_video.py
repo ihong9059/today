@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 UTTEC 골프장 LoRa 무선 통합 제어 — 쉬운 설명 동영상 (범용본)
-6컷 나레이션 영상: Pillow 슬라이드(도식) + edge-tts(ko-KR-InJoonNeural) + ffmpeg 합성
-출력: UTTEC_LoRa무선제어_소개영상_v1.mp4 (1920x1080, 30fps)
+8컷 나레이션 영상: Pillow 슬라이드(도식) + edge-tts(ko-KR-InJoonNeural) + ffmpeg 합성
+v2(2026-07-11): 수조 '누수 조기 진단'(수위 변화 추적 vs 부표식) 차별 컷 추가
+출력: UTTEC_LoRa무선제어_소개영상_v2_20260711.mp4 (1920x1080, 30fps)
 """
 import os, subprocess, asyncio
 from PIL import Image, ImageDraw, ImageFont
@@ -20,6 +21,7 @@ W, H = 1920, 1080
 # 색상
 NAVY=(15,35,64); ORANGE=(234,88,12); WHITE=(255,255,255)
 GRAY=(203,213,225); LGRAY=(148,163,184); GREEN=(34,197,94)
+RED=(239,68,68)
 CARD=(30,45,74)
 
 FB = r"C:\Windows\Fonts\malgunbd.ttf"   # 맑은 고딕 Bold
@@ -51,6 +53,14 @@ CUTS = [
               "그리고 그 모든 상태를, 사무실에서 스마트폰으로 한눈에 확인합니다. "
               "한림용인 씨씨에서 이미 운영되고 있는 방식입니다.",
          kind="tank_solution"),
+    dict(tag="차별 · 수조", title="누수까지 잡아냅니다",
+         big="관수를 안 했는데 물이 줄면,\n그것은 배관 누수입니다",
+         narr="유티이씨 수조 제어의 진짜 차이는, 수위를 변화로 본다는 점입니다. "
+              "물이 가득 찼는지 바닥났는지, 그 두 가지만 보는 기존 부표 방식과 다릅니다. "
+              "수위가 시간에 따라 어떻게 움직이는지를 계속 추적합니다. "
+              "그래서 스프링클러를 켜지 않았는데도 수위가 줄어들면, 배관 어딘가의 누수를 곧바로 알아챕니다. "
+              "물과 전기 낭비를 막고, 급수가 부족해 잔디가 상하기 전에 미리 손을 쓸 수 있습니다.",
+         kind="leak_detection"),
     dict(tag="안전", title="가장 큰 변화, 안전",
          big="위험한 곳에\n밤에 가지 않아도 됩니다",
          narr="무엇보다, 안전입니다. 경사지나 외곽처럼 사고가 나기 쉬운 곳의 차단기와 스위치를, "
@@ -145,6 +155,22 @@ def diagram(d, kind):
             fill=GREEN if i<3 else NAVY
             d.rounded_rectangle([x,y,x+380,y+110], radius=14, fill=CARD, outline=(GREEN if i<3 else ORANGE), width=3)
             d.text((x+28,y+38), b, font=fsm, fill=WHITE)
+    elif kind=="leak_detection":
+        # 왼쪽: 기존 부표(플로트) — 두 상태만
+        lx=120
+        d.rounded_rectangle([lx,y,lx+560,y+170], radius=14, fill=CARD, outline=LGRAY, width=3)
+        d.text((lx+30,y+18), "기존 부표(오뚜기) 방식", font=fs, fill=GRAY)
+        d.text((lx+30,y+68), "가득 / 바닥, 두 상태만 감지", font=fsm, fill=LGRAY)
+        d.text((lx+30,y+112), "→ 변화·누수는 알 수 없음", font=fsm, fill=LGRAY)
+        # 오른쪽: UTTEC 수위 변화 추적 (하강 꺾은선 = 누수)
+        gx=760; gw=1040
+        d.rounded_rectangle([gx,y,gx+gw,y+170], radius=14, fill=CARD, outline=GREEN, width=3)
+        d.text((gx+26,y+16), "UTTEC 수위 변화 추적", font=fs, fill=WHITE)
+        pts=[(gx+40,y+96),(gx+150,y+100),(gx+260,y+110),(gx+370,y+124),(gx+480,y+138),(gx+590,y+150)]
+        d.line(pts, fill=GREEN, width=5)
+        for p in pts: d.ellipse([p[0]-5,p[1]-5,p[0]+5,p[1]+5], fill=WHITE)
+        d.text((gx+660,y+64), "관수 OFF 인데 수위 ↓", font=fsm, fill=RED)
+        d.text((gx+660,y+104), "= 배관 누수 경보", font=fs, fill=RED)
     elif kind=="safety":
         items=["경사지 차단기","외곽 스위치","수변 펌프"]
         for i,b in enumerate(items):
@@ -196,7 +222,7 @@ def main():
     lst=os.path.join(WORK,"list.txt")
     with open(lst,"w",encoding="utf-8") as f:
         for s in segs: f.write(f"file '{s}'\n")
-    out=os.path.join(BASE,"UTTEC_LoRa무선제어_소개영상_v1.mp4")
+    out=os.path.join(BASE,"UTTEC_LoRa무선제어_소개영상_v2_20260711.mp4")
     print("concat →", out)
     subprocess.run([FFMPEG,"-y","-f","concat","-safe","0","-i",lst,
         "-c","copy", out], check=True, capture_output=True)

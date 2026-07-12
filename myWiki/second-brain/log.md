@@ -5,6 +5,14 @@ created: 2026-04-19
 updated: 2026-07-09 (absorb — lora 카드 1장: 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼 → 결정 60 + gaps(조명 fail-safe 반대) + thought 1 + done 회신) / 이전 2026-07-05 (absorb megasession — _inbox 10장: revita ingest #18~#23(5, 적정복잡도 3부작+양산 게이트 결함 2건) + lora BLE브리지·2.4G ESB(2, 게이트웨이 무선화) + wishket §4-A·포트폴리오v2·#156394(3) → 결정 57·58·59 + strengths §22·§23 + gaps 2026-07-05 revita·lora + thought 3(Q3 폴더 신설) + done 회신 3장) / 이전 2026-06-27 (absorb — uttec-academy 카드 1장: 미래창의 3차 현업노트(vault) 강화 모듈 → strengths §21 + 결정 56 + entity 갱신 + raw junction 복구 + done 회신) / 이전 2026-06-19 (absorb — lora-claude 카드 2장: 통합펌웨어+BLE프로비저닝+한림 최종 아키텍처 3패턴(06-18) / 2.4G ESB 하이브리드 옵션+E22 generic SX126x 디코드 불가(06-19) → 결정 54·55 + gaps 2건 + thought 1 + done 회신 2장) / 이전 2026-06-17 (absorb — _inbox 5장 megasession: lora-claude 4장(합류19th 완결+4종 모듈+수조 제어망+cubecell done) + ondevice-claude 1장(IMU/비지도 이상탐지) → 결정 51·52·53 + gaps 7건 + strengths §19·§20 + thought 1 + done 회신 4장) / 이전 2026-06-15 2차 (absorb — lora-claude 카드 2장: 솔라/Nordic done ack + CubeCell 야외노드 아키텍처 2분기 흡수 + gaps(D) 하드웨어 선정 함정 / 동아정밀 vault 노출 마찰 해소 anchor+메모리) / 2026-06-15 (thought — 솔라 전원 LoRa 노드 전원 체인 CN3791+HT7333 + Nordic Long Range=BLE Coded PHY≠LoRa 구분 정리, 한림 야외 노드 설계 자산) / 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
 ---
 
+## [2026-07-11] market ⭐ | 한림용인CC 현장 발견 → 수조 "누수 조기 진단" 차별점 = 마케팅 자산 3종 강화
+
+- 한림용인CC 수조제어 현장 마무리 중 발견: **수위 변화 추적**으로 관수(스프링클러) 미작동 중 수위 하강을 포착 → **배관 누수 조기 진단**. 기존 부표(오뚜기)식 max/min 이산 감지로는 불가능. **"수위 유지 제어=증상 대응" vs "수위 변화 추적=원인 진단(예방정비)"** 프레임.
+- 마케팅 자산 3종 일관 반영: 근거팩 2건(`영업근거팩_신규골프장` 판매포인트 ⑥ + `영업근거팩_2대시스템` 우산) / 동영상 v2(8컷, 컷5 신규) / PPT v2(18슬라이드, 슬라이드6 신규). 버전정책 준수(v1 보존, `_v2_20260711` 별도).
+- 정직 고지: 현재 대시보드 육안 판단. 누수 자동 알림 룰(관수 OFF 구간 수위 하강률 임계 경보) = SW 추가개발 로드맵 → lora vault 기술 회신 카드 후보.
+- 한림안성CC(⭐T1 warm, 031-671-7153) 아웃리치 패키지 제작(그룹 레퍼런스 기반 조명+수조 동시 제안). 실제 발송은 사용자(👤) 대기.
+- 참조: [[lora]] · [[한림용인cc-고가수조]] · [[영업전략]]
+
 ## [2026-07-09] absorb ⭐⭐ | lora 카드 1장 — 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼
 
 - 카드 `2026-07-08-001-lora-공용시스템보드-수조조명플랫폼` (lora-claude, type request): 한림 수조제어 HW + LoRa 조명제어의 공통 뼈대(power on/off 릴레이)를 축으로 `LoRa(E22-900T22D)+릴레이+nRF52832+2.4G ESB` 고정 코어 + 선택 실장 매트릭스 = 공용 시스템 보드 reference 확정. 골프장 2개 시스템(수조+조명)이 동일 HW = "단일 플랫폼" 영업 강점 요청 + 조명 사업 소관 판단 요청.
