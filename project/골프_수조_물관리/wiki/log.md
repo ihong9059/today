@@ -2,7 +2,7 @@
 title: 한림용인CC 시공 진행 로그
 type: log
 created: 2026-05-17
-updated: 2026-07-13 (현장 설치 완료·최종 커스텀 확인 중 — 6/14~7/12 기술 진행은 lora vault로 이관, 아래 cross-link)
+updated: 2026-07-13 PM (★★ 전체 완료 — 설치 + 최종 커스텀 확인 완료, 사용자 확인. 정산/납품 + myWiki 잔여 흡수 후 archive)
 ---
 
 # 한림용인CC 고가수조 자동급수 무선제어 — 진행 로그
@@ -10,6 +10,23 @@ updated: 2026-07-13 (현장 설치 완료·최종 커스텀 확인 중 — 6/14~
 > Tier 2 sub-vault. 시공·진행·결정 단계별 박제.
 >
 > action: start / decision / purchase / site / firmware / revenue / milestone / complete / absorb
+
+## [2026-07-13] complete ★★ | 전체 완료 — 설치 + 최종 커스텀 확인 완료 🎉 (사용자 확인)
+
+**완료 확정**: 한림용인CC 14노드 LoRa 수조제어 시스템 **현장 설치 + 최종 커스텀(현장 실배포 펌웨어) 확인까지 전체 완료**. 본 sub-vault(Tier 2 패턴 1번째 사례)가 시공→완료 라이프사이클 완주(셋업 5/17~완료 7/13 ≈ 57일).
+
+**myWiki 흡수 상태** (CLAUDE.md 체크리스트):
+- [x] `entities/한림용인cc-고가수조.md` — status 완료 + 완료 배너 박제
+- [x] `myWiki/log.md` — complete milestone 기록
+- [ ] `entities/회사소개.md` — 골프장 고객 정식 등재 (한림광릉CC 2020 + **한림용인CC 2026 완료**)
+- [ ] `skills.md` — LoRa E22 풀스택 시공 실증(~1.5km NLOS 골프장 14노드)
+- [ ] `strengths.md` — 한림그룹 재거래 영업 패턴 검증(완료)
+- [ ] `영업전략.md` — 기존 고객 신규 영역 확장 패턴 강화
+- [ ] `uttec-stage-package.md` — Stage 3(1,000만) 첫 실증 완료 사례
+
+**남은 액션**: (a) 정산/납품 확인 → `revenue` 박제 (b) 위 미완 흡수 5건 (c) lora 노드수(14 vs 11) 실제 설치값 확정 회신 (d) 완료 후 `wiki/` → `archive/` 보존 (후속 골프장 시공 참조).
+
+**영업 연계**: 완료 = 실증 레퍼런스 확보 → **한림안성CC 아웃리치 최적기**(warm 소개 요청, `영업/LoRa원거리제어/아웃리치/한림안성CC_아웃리치_20260711.md` §2).
 
 ## [2026-07-13] milestone ⭐ | 현장 설치 완료 → 최종 커스텀 확인 단계 + scope 재정합 (기술 진행 = lora vault)
 

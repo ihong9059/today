@@ -5,6 +5,19 @@ created: 2026-04-19
 updated: 2026-07-13 (정합+send — 한림용인CC 3-vault 정합: 설치완료→최종 커스텀 확인, 영업근거팩 2종 기술 정합(NVS→컴파일고정·RPi3·솔라실측) + sub-vault scope 재정합 + lora 사례.md 롤업 요청 카드 발신) / 이전 2026-07-09 (absorb — lora 카드 1장: 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼 → 결정 60 + gaps(조명 fail-safe 반대) + thought 1 + done 회신) / 이전 2026-07-05 (absorb megasession — _inbox 10장: revita ingest #18~#23(5, 적정복잡도 3부작+양산 게이트 결함 2건) + lora BLE브리지·2.4G ESB(2, 게이트웨이 무선화) + wishket §4-A·포트폴리오v2·#156394(3) → 결정 57·58·59 + strengths §22·§23 + gaps 2026-07-05 revita·lora + thought 3(Q3 폴더 신설) + done 회신 3장) / 이전 2026-06-27 (absorb — uttec-academy 카드 1장: 미래창의 3차 현업노트(vault) 강화 모듈 → strengths §21 + 결정 56 + entity 갱신 + raw junction 복구 + done 회신) / 이전 2026-06-19 (absorb — lora-claude 카드 2장: 통합펌웨어+BLE프로비저닝+한림 최종 아키텍처 3패턴(06-18) / 2.4G ESB 하이브리드 옵션+E22 generic SX126x 디코드 불가(06-19) → 결정 54·55 + gaps 2건 + thought 1 + done 회신 2장) / 이전 2026-06-17 (absorb — _inbox 5장 megasession: lora-claude 4장(합류19th 완결+4종 모듈+수조 제어망+cubecell done) + ondevice-claude 1장(IMU/비지도 이상탐지) → 결정 51·52·53 + gaps 7건 + strengths §19·§20 + thought 1 + done 회신 4장) / 이전 2026-06-15 2차 (absorb — lora-claude 카드 2장: 솔라/Nordic done ack + CubeCell 야외노드 아키텍처 2분기 흡수 + gaps(D) 하드웨어 선정 함정 / 동아정밀 vault 노출 마찰 해소 anchor+메모리) / 2026-06-15 (thought — 솔라 전원 LoRa 노드 전원 체인 CN3791+HT7333 + Nordic Long Range=BLE Coded PHY≠LoRa 구분 정리, 한림 야외 노드 설계 자산) / 2026-06-14 (Higgsfield MCP 도입 — Claude Code 이미지·영상 생성, OAuth 인증 완료·크레딧 부족으로 실테스트 보류) / 2026-06-13 8차 (lora vault 신설 — 19th multi-agent, LoRa 기술 전문 hub + 합류 체크리스트 7단계 2번째 완전 적용 + 기술 근거 단일 출처 트랙 첫 사례) / 7차: uttec-plc 첫 운영 세션 카드 흡수 — Tier 2 확정 + #155220 송부완료 + XGF-PN4B 함정 ⭐⭐ + 옵시디언 정책 3분류 + vault-registry 신설 / 4차: uttec-plc 풀 셋업 완결 — 155220 자료 12MB 이관 + skill 4종 + broker 양방향 + join 카드 / 3차: uttec-plc vault 신설 — 18th multi-agent, uttecMac / 2차: n8n 정체 카드 4장 absorb — broker pull 라우팅 n8n 등록 + Polling 표준 결정 49 + telegram·upload-server entity 신설 / 1차: _inbox 8장 megasession absorb — tabM9 entity 2종 신설 + Defender CFA gotcha + revita ingest #16 보안 게이트 + factory 06-11·06-12 cascade + wishket heartbeat 2)
 ---
 
+## [2026-07-13] milestone ⭐⭐ | 한림용인CC 무선 수조제어 — 전체 완료 (설치 + 최종 커스텀 확인) 🎉
+
+- **사용자 확인**: 한림용인CC 14노드 LoRa 수조제어 시스템 현장 설치 + 최종 커스텀(현장 실배포 펌웨어) 확인까지 **전체 완료**. 기획(5/10)→계약(5/19)→통합펌웨어 재설계(6월)→설치(7월)→최종 커스텀 확인(7/13) 라이프사이클 완주.
+- **의미**: **Tier 2 sub-vault 패턴 1번째 사례**가 시공→완료 라이프사이클 완주(셋업 5/17~완료 7/13 ≈ 57일, 정책 예측 ~60일 정합). [[한림용인cc-고가수조]] status → 완료.
+- **영업 파급**: ① 실증 레퍼런스 '설치예정'→'완료·운영' 격상 → [[영업전략]] 한림그룹 재거래 narrative 강화. ② **한림안성CC 아웃리치 최적기 도달**(warm 소개 요청 = 용인 설치 성공 직후) → 아웃리치 패키지 채널1 실행 시점. ③ 신규 골프장 근거팩 "14노드 실증" 완료 확정.
+- **남은 것**: 정산/납품 확인(→revenue 박제) + myWiki 잔여 흡수(회사소개·skills·strengths·영업전략·stage, sub-vault CLAUDE.md 체크리스트) + lora 노드수(14 vs 11) 실제값 확정 회신.
+
+## [2026-07-13] absorb | wishket-claude 카드 1장 (`2026-07-13-001`) — catch-up 88건 + 강매칭 2건 + cross-vault 자산 대조 SOP
+
+- entities/위시캣활동.md § 2026-07-13 신설: catch-up #156761~156848(다음 #156849) + 강매칭 #156802(nRF52+UWB 위치추적, 마감 7/24)·#156763(LoRa 수신율).
+- 신규 영업 인사이트 = **cross-vault 자산 대조 SOP**: 지원서 일반론을 타 vault 실측·양산 근거로 마스킹 보강(고객사·부품번호·코드경로 제거) + 자산확인 SOP(약점 선언 전 사용자 확인) 결합. UWB 직접자산 0건 → 정직 프레이밍 유지.
+- 카드 heartbeat/보고(후속 액션 없음) → processed/ 이동 + status done. ack ping-pong 생략.
+
 ## [2026-07-13] infra | 신규 vault `C:/todo/plc` 신설 — PLC 기술 전문 hub (LS XG5000)
 
 - **동기**: `plc/install.txt` 사용자 요청 — PLC 기술 확보·지속관리 vault(현 LS XG5000 기반, 추후 project별 확장). "template의 skill 적용" 명시.
