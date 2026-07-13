@@ -2,7 +2,7 @@
 title: 한림용인CC 시공 진행 로그
 type: log
 created: 2026-05-17
-updated: 2026-06-13 (TX 보드 hardware test — E22 설정+level flash 다수 / 망 구성은 월요일 이월)
+updated: 2026-07-13 (현장 설치 완료·최종 커스텀 확인 중 — 6/14~7/12 기술 진행은 lora vault로 이관, 아래 cross-link)
 ---
 
 # 한림용인CC 고가수조 자동급수 무선제어 — 진행 로그
@@ -10,6 +10,21 @@ updated: 2026-06-13 (TX 보드 hardware test — E22 설정+level flash 다수 /
 > Tier 2 sub-vault. 시공·진행·결정 단계별 박제.
 >
 > action: start / decision / purchase / site / firmware / revenue / milestone / complete / absorb
+
+## [2026-07-13] milestone ⭐ | 현장 설치 완료 → 최종 커스텀 확인 단계 + scope 재정합 (기술 진행 = lora vault)
+
+**설치 상태 (사용자 확인 2026-07-13)**: 한림용인CC 14노드 2단 cascade(pond→하수조→고수조→스프링쿨러, 루비 1유닛+사파이어 2유닛) **현장 물리 설치 완료**. 현재 **최종 커스텀(현장 실배포 펌웨어) 확인 단계**. 7/13 현장 실배포판(`build_g7lp`, LOW_POWER·SYNC_SIM 제거) flash 예정.
+
+**⚠️ scope 재정합 (중요)**: 본 sub-vault log는 2026-06-13에서 멈춰 있었고, **6/14 이후 기술·펌웨어·현장시스템 진행 전부가 [[lora]] vault(`C:\todo\lora`)에서 이루어짐** (통합펌웨어 재설계·공용 시스템보드·저전력 12mA·11 field-node·벤치 e2e 9노드·TEST_PROCEDURE 등). 현장 hardware = 본 sub-vault, 기술 근거 = lora vault 라는 역할분담이 실제로는 lora vault 중심으로 운영됨.
+
+**기술 진행 단일 출처 (6/14~현재)**:
+- lora vault `현장/한림용인CC/` — 사례·망구성·install 절차서·통신점검·설명서·firmware 스냅샷
+- lora vault `수조제어_펌웨어/` — 통합펌웨어 제품(재설계 반영)
+- lora vault `log.md` — 6/14~7/12 일일 박제
+
+**영업 자산 정합 (2026-07-13, today `영업/LoRa원거리제어/`)**: 근거팩 2종에 NVS→컴파일고정 재설계·솔라 용량 실측·RPi3 게이트웨이·"설치 완료→최종 커스텀 확인" 반영 완료.
+
+**남은 액션**: 최종 커스텀 확인 통과 → 운영 진입 시 `complete`/`absorb` 박제 + myWiki 흡수 체크리스트(CLAUDE.md) 수행.
 
 ## [2026-06-13] firmware ⭐ | TX 보드 hardware test (E22 설정 + level flash 다수) — 망 구성 월요일 이월
 
