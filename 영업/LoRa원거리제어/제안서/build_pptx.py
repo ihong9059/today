@@ -6,7 +6,8 @@ UTTEC 골프장 LoRa 무선 통합 제어 시스템 제안서 (범용본) 생성
 - 야간조명 = 설계 적용 톤 (무선조명 8년 상용화 실적 + 순차소등은 신규 설계)
 - 도식 기반 (지형도면은 별도 삽입 가능)
 - v2(2026-07-11): 슬라이드 6 '수위 변화 추적·누수 조기 진단'(부표식 대비) 신설 → 18슬라이드
-출력: UTTEC_LoRa무선제어_제안서_범용_v2_20260711.pptx
+- v3(2026-07-15): 슬라이드 6 '제어 방식 — 중앙집중 제어로 진화'(자율분산 실증→중앙집중 설계) + 슬라이드 7 '2단 히스테리시스 — 펌프 보호' 신설, 14노드→11노드 정정 → 20슬라이드
+출력: UTTEC_LoRa무선제어_제안서_범용_v3_20260715.pptx
 """
 from pptx import Presentation
 from pptx.util import Inches, Pt, Emu
@@ -106,7 +107,7 @@ text(s, Inches(0.9), Inches(3.5), Inches(11.5), Inches(0.7),
 text(s, Inches(0.9), Inches(4.5), Inches(11.5), Inches(0.6),
      "전력비 절감 · 무인 운영 · 인적 사고 예방", size=18, color=RGBColor(0xE2,0xE8,0xF0))
 text(s, Inches(0.9), Inches(6.3), Inches(11.5), Inches(0.8),
-     "UTTEC  ·  국내 최초 LoRa 무선 조명 상용화(2018)  ·  제안일 2026-07-05",
+     "UTTEC  ·  국내 최초 LoRa 무선 조명 상용화(2018)  ·  제안일 2026-07-15",
      size=14, color=RGBColor(0x94,0xA3,0xB8))
 
 # ================= Slide 2 — 운영 현장의 고민 =================
@@ -132,7 +133,7 @@ rows = [
     ("2018", "국내 최초 LoRa 조명 콘트롤러 상용화 + 클라우드"),
     ("2019", "하나금융 글로벌캠퍼스 — 무선 조명 (사옥 전체)"),
     ("2020", "필로스CC · 광릉CC (한림그룹) — 골프장 LoRa 무선 조명 (코스 전체)"),
-    ("2026", "한림용인CC (한림그룹) — 골프장 LoRa 무선 수조 제어 (14노드, 설치 완료)"),
+    ("2026", "한림용인CC (한림그룹) — 골프장 LoRa 무선 수조 제어 (11노드, 설치 완료)"),
 ]
 y = Inches(1.7)
 for yr, desc in rows:
@@ -167,7 +168,7 @@ text(s, Inches(0.6), Inches(5.0), Inches(12), Inches(1.2),
 footer(s)
 
 # ================= Slide 5 — 시스템 A 수조 =================
-s = add_slide(); header(s, 5, "시스템 A — 무선 수조 자동 관리", "한림용인CC 14노드 현장 실증 완료")
+s = add_slide(); header(s, 5, "시스템 A — 무선 수조 자동 관리", "한림용인CC 11노드 현장 실증 완료")
 bullets(s, Inches(0.6), Inches(1.55), Inches(7.3), Inches(5),[
     ("각 센서가 목표 수위를 스스로 판단 → 펌프 자동 ON/OFF", 0, NAVY, True),
     ("본부 서버 없이 현장 노드끼리 자율 운전(폐루프)", 1, GRAY, False),
@@ -175,7 +176,7 @@ bullets(s, Inches(0.6), Inches(1.55), Inches(7.3), Inches(5),[
     ("원거리 수원·펌프·고지대 탱크를 무선으로 연결", 0, NAVY, True),
     ("수위·배터리 실시간 원격 모니터링(대시보드)", 1, GRAY, False),
     ("저전력·솔라 전원 → 전기 없는 외곽 pond까지 대응", 0, NAVY, True),
-    ("실증: 한림용인CC 14노드 2단 cascade(연못→저수조→고수조→관수)", 0, GREEN, True),
+    ("실증: 한림용인CC 11노드 2단 cascade(연못→저수조→고수조→관수)", 0, GREEN, True),
 ])
 box(s, Inches(8.2), Inches(1.6), Inches(4.5), Inches(4.7), fill=LIGHT)
 text(s, Inches(8.2), Inches(1.75), Inches(4.5), Inches(0.5), "자동 급수 흐름", size=16, color=ORANGE, bold=True, align=PP_ALIGN.CENTER)
@@ -187,8 +188,78 @@ for i, f in enumerate(flow):
     fy += Inches(0.78)
 footer(s)
 
-# ================= Slide 6 — 수위 변화 추적 · 누수 조기 진단 (v2, 2026-07-11 추가) =================
-s = add_slide(); header(s, 6, "수위 변화 추적 — 배관 누수 조기 진단",
+# ================= Slide 6 — 제어 방식 (2단계 진화: 자율분산 실증 → 중앙집중) (v3, 2026-07-15) =================
+s = add_slide(); header(s, 6, "제어 방식 — 중앙집중 제어로 진화",
+                        "한림용인CC 자율분산 실증 → 신규 현장 표준은 중앙집중 (설계 적용)")
+# 좌: 1단계 한림 자율분산 (실증 완료)
+box(s, Inches(0.6), Inches(1.55), Inches(5.9), Inches(3.5), fill=LIGHT)
+box(s, Inches(0.6), Inches(1.55), Inches(5.9), Inches(0.62), fill=GREEN)
+text(s, Inches(0.6), Inches(1.55), Inches(5.9), Inches(0.62), "1단계 · 한림용인CC (실증 완료)",
+     size=17, color=WHITE, bold=True, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+bullets(s, Inches(0.95), Inches(2.45), Inches(5.3), Inches(2.4), [
+    ("자율분산 — 각 센서가 목표 수위를 스스로 판단", 0, NAVY, True),
+    ("본부 서버 없이 현장 노드끼리 폐루프 운전", 1, GRAY, False),
+    ("통신 두절 시 펌프 OFF fail-safe", 1, GRAY, False),
+    ("11노드 2단 cascade 현장 검증 완료", 0, GREEN, True),
+], size=15, gap=10)
+# 우: 2단계 신규 표준 중앙집중 (설계 적용)
+box(s, Inches(6.85), Inches(1.55), Inches(5.85), Inches(3.5), fill=LIGHT)
+box(s, Inches(6.85), Inches(1.55), Inches(5.85), Inches(0.62), fill=NAVY)
+text(s, Inches(6.85), Inches(1.55), Inches(5.85), Inches(0.62), "2단계 · 신규 표준 (중앙집중 · 설계 적용)",
+     size=16, color=WHITE, bold=True, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+bullets(s, Inches(7.2), Inches(2.45), Inches(5.2), Inches(2.4), [
+    ("게이트웨이(master) = 두뇌 — 전 수조 상태 종합 판단", 0, NAVY, True),
+    ("센서 = 수위 보고(telemetry)만, 판단 로직 제거", 1, GRAY, False),
+    ("터미널 = master 명령 실행 + 두절 시 fail-safe OFF", 1, GRAY, False),
+    ("전역 제어(cascade·dry-run·우선순위)를 중앙에 집약", 0, ORANGE, True),
+], size=15, gap=10)
+# 하단 배너 — 이점
+box(s, Inches(0.6), Inches(5.25), Inches(12.1), Inches(1.45), fill=NAVY)
+text(s, Inches(0.9), Inches(5.36), Inches(11.5), Inches(0.6),
+     "이점: 현장 편차를 코드 재빌드 없이 중앙 설정으로 흡수 · master 주도 스케줄로 무선 충돌을 결정적으로 관리 · 상시청취로 통신 안정성 확보",
+     size=14, color=WHITE, bold=True)
+text(s, Inches(0.9), Inches(6.1), Inches(11.5), Inches(0.5),
+     "※ 중앙집중 제어는 신규 현장 대상 설계 적용 항목 — 한림 검증 자산(fail-safe·솔라·RS485)을 재사용합니다.",
+     size=13, color=ORANGE, bold=True)
+footer(s)
+
+# ================= Slide 7 — 2단 히스테리시스 (펌프 보호) (v3, 2026-07-15) =================
+s = add_slide(); header(s, 7, "2단 히스테리시스 — 펌프 보호 제어",
+                        "경계 진동에 의한 펌프 채터링·공회전 소손을 원천 차단 (현장 실증)")
+# 좌 카드 ① 수위 제어 히스테리시스
+box(s, Inches(0.6), Inches(1.55), Inches(5.9), Inches(3.5), fill=LIGHT)
+box(s, Inches(0.6), Inches(1.55), Inches(0.14), Inches(3.5), fill=ORANGE)
+text(s, Inches(0.95), Inches(1.75), Inches(5.4), Inches(0.55),
+     "① 수위 제어 히스테리시스", size=18, color=NAVY, bold=True)
+bullets(s, Inches(0.95), Inches(2.5), Inches(5.4), Inches(2.4), [
+    ("고가 수조 목표 수위 유지 (급수 펌프)", 0, NAVY, True),
+    ("켜는 수위와 끄는 수위를 분리한 밴드", 0, GRAY, True),
+    ("예: 3.0m에서 ON → 3.5m에서 OFF", 1, GRAY, False),
+    ("목표선 부근 미세 진동에도 ON/OFF 반복 없음", 0, GREEN, True),
+], size=15, gap=10)
+# 우 카드 ② 공회전 방지(dry-run) 히스테리시스
+box(s, Inches(6.85), Inches(1.55), Inches(5.85), Inches(3.5), fill=LIGHT)
+box(s, Inches(6.85), Inches(1.55), Inches(0.14), Inches(3.5), fill=ORANGE)
+text(s, Inches(7.2), Inches(1.75), Inches(5.35), Inches(0.55),
+     "② 공회전 방지(dry-run) 히스테리시스", size=18, color=NAVY, bold=True)
+bullets(s, Inches(7.2), Inches(2.5), Inches(5.35), Inches(2.4), [
+    ("공급 수조가 마르면 펌프 강제 OFF (공회전 소손 방지)", 0, NAVY, True),
+    ("정지 수위와 재개 수위를 분리한 밴드", 0, GRAY, True),
+    ("예: 저수위 도달 시 정지 → 충분히 회복 후 재개", 1, GRAY, False),
+    ("공급이 느린 수조의 경계 진동에도 채터링 없음", 0, GREEN, True),
+], size=15, gap=10)
+# 하단 배너 — 왜 중요
+box(s, Inches(0.6), Inches(5.25), Inches(12.1), Inches(1.45), fill=NAVY)
+text(s, Inches(0.9), Inches(5.36), Inches(11.5), Inches(0.65),
+     "단일 임계값 제어는 경계 수위에서 펌프 모터가 짧게 켜졌다 꺼지길 반복 → 접점 마모·기동 돌입전류·공회전 소손. 2단 밴드가 켜고 끄는 사이클을 길게 만들어 펌프를 보호합니다.",
+     size=14, color=WHITE, bold=True)
+text(s, Inches(0.9), Inches(6.15), Inches(11.5), Inches(0.5),
+     "※ 한림용인CC 현장 실증 — 히스테리시스 적용 후 펌프 채터링 소멸 확인.",
+     size=13, color=ORANGE, bold=True)
+footer(s)
+
+# ================= Slide 8 — 수위 변화 추적 · 누수 조기 진단 (v2, 2026-07-11 추가) =================
+s = add_slide(); header(s, 8, "수위 변화 추적 — 배관 누수 조기 진단",
                         "'채우고 비우기'를 넘어, 이상을 진단하는 예방정비 (2026-07-11 한림용인CC 현장 발견)")
 # 좌: 기존 부표(오뚜기) 방식
 box(s, Inches(0.6), Inches(1.55), Inches(5.9), Inches(3.4), fill=LIGHT)
@@ -229,8 +300,8 @@ text(s, Inches(0.9), Inches(5.95), Inches(11.5), Inches(0.7),
      size=14, color=ORANGE, bold=True)
 footer(s)
 
-# ================= Slide 7 — 시스템 B 조명 =================
-s = add_slide(); header(s, 7, "시스템 B — 야간 조명 순차 제어", "무선 조명 8년 상용화 실적 + 순차 소등 제어 설계 적용")
+# ================= Slide 9 — 시스템 B 조명 =================
+s = add_slide(); header(s, 9, "시스템 B — 야간 조명 순차 제어", "무선 조명 8년 상용화 실적 + 순차 소등 제어 설계 적용")
 bullets(s, Inches(0.6), Inches(1.55), Inches(7.3), Inches(5),[
     ("야간 개장 시 마지막 팀 진행에 따라 미사용 홀 조명을 순차 소등", 0, NAVY, True),
     ("사용 중인 홀만 켜두고 지나간 홀은 자동 OFF", 1, GRAY, False),
@@ -251,8 +322,8 @@ for name, st, col in holes:
     hy += Inches(1.1)
 footer(s)
 
-# ================= Slide 7 — 안전 가치 =================
-s = add_slide(); header(s, 8, "★ 안전 — 인적 사고 예방", "전력비·편의를 넘어서는 핵심 가치")
+# ================= Slide 10 — 안전 가치 =================
+s = add_slide(); header(s, 10, "★ 안전 — 인적 사고 예방", "전력비·편의를 넘어서는 핵심 가치")
 box(s, Inches(0.6), Inches(1.6), Inches(12.1), Inches(1.5), fill=LIGHT)
 text(s, Inches(0.9), Inches(1.75), Inches(11.5), Inches(1.2),
      "골프장 지형상 사고가 나기 쉬운 위치(경사지·외곽·수변·펌프실)의 차단기·스위치를\n야간에 직접 조작하지 않고 원격으로 제어 → 이동·조작 중 인적 사고를 근본 예방",
@@ -271,8 +342,8 @@ for a,b in pairs:
     py += Inches(1.0)
 footer(s)
 
-# ================= Slide 8 — 재고 AS킷 =================
-s = add_slide(); header(s, 9, "재고 AS킷 — 긴급 고장 현장 1탭 복구", "1홀 = 1 표준 케이스 + 공용 예비품")
+# ================= Slide 11 — 재고 AS킷 =================
+s = add_slide(); header(s, 11, "재고 AS킷 — 긴급 고장 현장 1탭 복구", "1홀 = 1 표준 케이스 + 공용 예비품")
 bullets(s, Inches(0.6), Inches(1.6), Inches(6.1), Inches(5),[
     ("모든 제어점을 동일한 표준 케이스로 구성", 0, NAVY, True),
     ("전 케이스가 완전히 같은 펌웨어 탑재", 1, GRAY, False),
@@ -291,13 +362,13 @@ for st in steps:
     sy += Inches(0.92)
 footer(s)
 
-# ================= Slide 9 — 레퍼런스 =================
-s = add_slide(); header(s, 10, "레퍼런스 — 운영 중인 현장", "조명 · 수조, 한림그룹 다현장")
+# ================= Slide 12 — 레퍼런스 =================
+s = add_slide(); header(s, 12, "레퍼런스 — 운영 중인 현장", "조명 · 수조, 한림그룹 다현장")
 refs = [
     ("필로스CC", "골프장 무선 조명", "2020 · 코스 전체"),
     ("광릉CC", "골프장 무선 조명", "2020 · 코스 전체"),
     ("하나금융 글로벌캠퍼스", "사옥 무선 조명", "2019"),
-    ("한림용인CC", "골프장 무선 수조 제어", "2026 · 14노드 설치 완료"),
+    ("한림용인CC", "골프장 무선 수조 제어", "2026 · 11노드 설치 완료"),
 ]
 x0=Inches(0.6); y0=Inches(1.7); cw=Inches(6.0); ch=Inches(2.2); gx=Inches(0.3); gy=Inches(0.35)
 for i,(n,sy_,d) in enumerate(refs):
@@ -309,8 +380,8 @@ for i,(n,sy_,d) in enumerate(refs):
     text(s, cx+Inches(0.25), cy+Inches(1.4), cw-Inches(0.5), Inches(0.5), d, size=14, color=GRAY)
 footer(s)
 
-# ================= Slide 10 — 도입 효과 =================
-s = add_slide(); header(s, 11, "도입 효과", "현행 대비 개선")
+# ================= Slide 13 — 도입 효과 =================
+s = add_slide(); header(s, 13, "도입 효과", "현행 대비 개선")
 data = [
     ("항목", "현행", "LoRa 통합 제어 도입"),
     ("야간 조명 전력", "미사용 홀도 점등 유지", "진행 따라 순차 소등 → 절감"),
@@ -333,8 +404,8 @@ for ri,row in enumerate(data):
     y += rh
 footer(s)
 
-# ================= Slide 11 — 현장 적용 프로세스 =================
-s = add_slide(); header(s, 12, "현장 적용 프로세스", "검증된 4단계 도입 절차")
+# ================= Slide 14 — 현장 적용 프로세스 =================
+s = add_slide(); header(s, 14, "현장 적용 프로세스", "검증된 4단계 도입 절차")
 steps = [
     ("1. 현장 RF 서베이", "지형·차폐 실측\n중계 배치·통신 설계"),
     ("2. 시스템 설계", "제어점·노드·중계 수량\n규모별 견적 확정"),
@@ -354,8 +425,8 @@ text(s, Inches(0.6), Inches(5.1), Inches(12), Inches(0.6),
      "무료 현장 진단 / RF 서베이부터 시작합니다 — 규모·환경을 확인한 뒤 정확한 견적을 드립니다.", size=15, color=NAVY, bold=True)
 footer(s)
 
-# ================= Slide 12 — 견적 프레임 =================
-s = add_slide(); header(s, 13, "견적 프레임 — 규모별 3단계", "구체 단가는 현장 진단 후 제시")
+# ================= Slide 15 — 견적 프레임 =================
+s = add_slide(); header(s, 15, "견적 프레임 — 규모별 3단계", "구체 단가는 현장 진단 후 제시")
 data = [
     ("등급", "구성", "예상 수명 / 하자보증", "적용"),
     ("초경제형", "경제형 컨트롤러·모듈", "5~7년 / 6개월", "소규모·예산 제약"),
@@ -379,8 +450,8 @@ text(s, Inches(0.85), Inches(5.9), Inches(11.6), Inches(0.85),
      size=13, color=NAVY, anchor=MSO_ANCHOR.MIDDLE)
 footer(s)
 
-# ================= Slide 13 — 경제성 개요 =================
-s = add_slide(); header(s, 14, "경제성 — 투자 대비 절감", "도입 기준 비용 + 공개 요금(2025)으로 회수 계산")
+# ================= Slide 16 — 경제성 개요 =================
+s = add_slide(); header(s, 16, "경제성 — 투자 대비 절감", "도입 기준 비용 + 공개 요금(2025)으로 회수 계산")
 box(s, Inches(0.6), Inches(1.6), Inches(6.0), Inches(4.7), fill=LIGHT)
 text(s, Inches(0.6), Inches(1.75), Inches(6.0), Inches(0.5), "도입 기준 비용", size=18, color=ORANGE, bold=True, align=PP_ALIGN.CENTER)
 bullets(s, Inches(0.95), Inches(2.4), Inches(5.4), Inches(3.6), [
@@ -399,8 +470,8 @@ bullets(s, Inches(7.25), Inches(2.4), Inches(5.2), Inches(3.6), [
 ], size=16, gap=12)
 footer(s)
 
-# ================= Slide 14 — 조명 경제성 =================
-s = add_slide(); header(s, 15, "경제성 ① 야간 조명 (18홀 예시)", "순차 소등 = 평균 점등시간 절반 + 수동 소등 인건비 제거")
+# ================= Slide 17 — 조명 경제성 =================
+s = add_slide(); header(s, 17, "경제성 ① 야간 조명 (18홀 예시)", "순차 소등 = 평균 점등시간 절반 + 수동 소등 인건비 제거")
 stat(s, Inches(0.6),  Inches(1.6), Inches(3.9), "투자", "1,300만원", "조명18홀+검토+설치")
 stat(s, Inches(4.7),  Inches(1.6), Inches(3.9), "연간 절감", "666만원", "전력 216 + 인건비 450", vcolor=GREEN)
 stat(s, Inches(8.8),  Inches(1.6), Inches(3.9), "회수기간", "약 2년", "5년 순이익 2,030만원", vcolor=NAVY)
@@ -413,8 +484,8 @@ text(s, Inches(0.7), Inches(6.4), Inches(12), Inches(0.5),
      "※ 야간 개장일수·조명 부하·인건비는 현장별 조정 (위는 보수적 예시)", size=12, color=GRAY)
 footer(s)
 
-# ================= Slide 15 — 수조 경제성 =================
-s = add_slide(); header(s, 16, "경제성 ② 수조 관리 (2 set 예시)", "수위 순회 인건비 제거 + 비싼 긴급 상수도 회피")
+# ================= Slide 18 — 수조 경제성 =================
+s = add_slide(); header(s, 18, "경제성 ② 수조 관리 (2 set 예시)", "수위 순회 인건비 제거 + 비싼 긴급 상수도 회피")
 stat(s, Inches(0.6),  Inches(1.6), Inches(3.9), "투자", "700만원", "수조2set+검토+설치")
 stat(s, Inches(4.7),  Inches(1.6), Inches(3.9), "연간 절감", "795만원", "인건비 600 + 상수도 195", vcolor=GREEN)
 stat(s, Inches(8.8),  Inches(1.6), Inches(3.9), "회수기간", "약 11개월", "5년 순이익 3,275만원", vcolor=NAVY)
@@ -427,8 +498,8 @@ text(s, Inches(0.7), Inches(6.4), Inches(12), Inches(0.5),
      "※ 통합 도입(조명+수조) 시 검토·설치 1회 부담 → 회수 약 1.1년 · 5년 순이익 5,705만원", size=12, color=ORANGE, bold=True)
 footer(s)
 
-# ================= Slide 16 — 정직·신뢰 =================
-s = add_slide(); header(s, 17, "정직하게 관리하는 기술 변수", "숨기지 않고, 설계·시공으로 해결합니다")
+# ================= Slide 19 — 정직·신뢰 =================
+s = add_slide(); header(s, 19, "정직하게 관리하는 기술 변수", "숨기지 않고, 설계·시공으로 해결합니다")
 pairs = [
     ("무선 채널 용량", "제어점이 많은 대형 현장은 규모 상한·중계·시분할을 설계에 반영"),
     ("통신 커버리지", "지형 차폐 구간은 현장 RF 서베이·안테나 배치로 사전 확보"),
@@ -459,6 +530,6 @@ text(s, Inches(0.9), Inches(5.1), Inches(11.5), Inches(0.6),
 text(s, Inches(0.9), Inches(5.9), Inches(11.5), Inches(0.6),
      "문의  ·  ihong9059@gmail.com  ·  010-2401-9059", size=16, color=RGBColor(0xCB,0xD5,0xE1))
 
-out = r"C:\todo\today\영업\LoRa원거리제어\제안서\UTTEC_LoRa무선제어_제안서_범용_v2_20260711.pptx"
+out = r"C:\todo\today\영업\LoRa원거리제어\제안서\UTTEC_LoRa무선제어_제안서_범용_v3_20260715.pptx"
 prs.save(out)
 print("saved:", out, "slides:", len(prs.slides._sldIdLst))
