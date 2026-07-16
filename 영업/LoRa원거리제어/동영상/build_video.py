@@ -187,7 +187,7 @@ def diagram(d, kind):
             d.text((x+30,y+70), b, font=fs, fill=GREEN)
         d.text((120,y+160), "전기요금 · 상수도 · 인건비 절감 (현장 규모에 따라 조정)", font=fsm, fill=GRAY)
     elif kind=="cta":
-        yrs=[("2018","국내 최초 LoRa 조명"),("2019~20","하나금융·필로스·광릉"),("2026","한림용인 수조 14노드")]
+        yrs=[("2018","국내 최초 LoRa 조명"),("2019~20","하나금융·필로스·광릉"),("2026","한림용인 수조 11노드")]
         for i,(a,b) in enumerate(yrs):
             x=120+i*580
             d.rounded_rectangle([x,y,x+540,y+120], radius=14, fill=CARD, outline=ORANGE, width=3)

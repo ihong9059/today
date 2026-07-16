@@ -2,12 +2,34 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-07-09 (결정 60 신설 — 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼 → 제품라인 통합 + "단일 플랫폼" 영업 강점, lora 카드 흡수 / 이전 7/5: 결정 57·58·59 신설 — 적정복잡도 3부작 + BLE 게이트웨이 무선화 + 위시캣 요구사항중심 지원서, revita·lora·wishket megasession / 이전 6/27: 결정 56 신설 — 교육 사업 = 기술+방법론(지식관리 vault) 이중 자산, uttec-academy 카드 흡수 / 이전 6/19: 결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
+updated: 2026-07-16 (결정 61 신설 — 검증된 표준 작업계획서(SOP) = LoRa 수조제어 영업 신뢰 자산 + 노드수 11 확정(구 14=구설계) + #156802 UWB 화상회의 미팅 도달·HX711 자산, _inbox 3장 megasession 흡수 / 이전 7/9: 결정 60 신설 — 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼 → 제품라인 통합 + "단일 플랫폼" 영업 강점, lora 카드 흡수 / 이전 7/5: 결정 57·58·59 신설 — 적정복잡도 3부작 + BLE 게이트웨이 무선화 + 위시캣 요구사항중심 지원서, revita·lora·wishket megasession / 이전 6/27: 결정 56 신설 — 교육 사업 = 기술+방법론(지식관리 vault) 이중 자산, uttec-academy 카드 흡수 / 이전 6/19: 결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-07-16) — _inbox 3장 megasession 흡수: 결정 61 신설 + 노드 11 확정 + #156802 미팅 도달 ⭐⭐⭐
+
+**사건**: 2026-07-16 _inbox pending 3장(lora `2026-07-14-001` done·lora `2026-07-14-002` SOP request·wishket `2026-07-15-001` 미팅도달) megasession 흡수.
+
+### 결정 61: LoRa 수조제어 표준 작업계획서(SOP) = 영업 신뢰 자산으로 흡수 (lora 카드 `2026-07-14-002`)
+
+- **판단**: lora-claude가 한림용인CC 전 진행(6/13~7/14) 복기로 정립한 **5국면 표준 작업계획서**(`lora:SOP/신규_수조_수량관리시스템_작업계획서.md`)를 **영업/제안 자산으로 흡수(YES)**. 기술 방법론 단일출처는 [[lora]] 유지, 응용(제안 덱·프로세스 소개)은 myWiki 소관.
+- **근거·함의**: "제어철학·임계값을 착수 앞단에 숫자표로 박제" = 한림에서 겪은 반복 재작업(dry-run 오독·채터링·RS485 간헐0·LoRa 충돌·LP wake버그)을 앞단으로 당기는 방법론. **"검증된 표준 프로세스 보유" = 견적·일정 산정 신뢰 근거 + 하자/분쟁 사전 고지 자산**. AI가 코드는 빠르게 쓰지만 "국면 게이트·함정 사전차단·물리진단(soft/hard 분리)"은 사람의 엔지니어링 판단 = 유니크 가치. [[영업전략]] § 2026-07-16 + [[한림용인cc-고가수조]].
+
+### 정정: 한림용인CC 노드수 11 확정 (구 14 = 구설계) (lora 카드 `2026-07-14-001`)
+
+- **실배포 물리 노드 = 11**. 2026-07-03 pond 설계변경(2보드→1보드)으로 pond ONOFF 3개(addr 21·61·81) 폐지 → 14−3=11. 구성 = sensor 5 + 상수조 term 3 + pond term 3(중계기·master·RPi3 게이트웨이는 인프라라 미포함). firmware FIELD_NODE 11종·벤치 e2e 정합.
+- **영업 자산 일괄 정합 완료**: entity + 영업 자산 6파일(제안서·근거팩 2종·타깃발굴·동영상·아웃리치) "14→11". 채널 충돌 정직 고지는 "다노드 현장에서 관측"으로 일반화.
+- **솔라 실측 확정 인용선**: 노드 12mA·1.3Wh/day·**권장패널 5~10W**까지 확정 인용 / **자립일수는 "실측 검증 완료 후 확정" 표기**(흐린날 trace 검증중, 과대주장 방지).
+
+### 미팅 도달: 위시캣 #156802 UWB 3D 위치추적 화상회의 성사 (wishket 카드 `2026-07-15-001`, 정보성·done 회신 불요)
+
+- 7/13 강매칭 초안 → **화상회의 성사**로 미팅 도달 격상(#155057·#155381·#156394에 이어 4번째 미팅 사례). 확정사양 DWM3001C·TWR·HX711·위임계약. **자격 100% 충족(nRF52+BLE/IMU), UWB는 우대** → 정직 프레이밍 성립.
+- **HX711 로드셀(무게측정) 신규 보유기술 자산** — IMU+BLE Mesh+무게 = 실시간 무선 센서 모니터링 역량. [[양산제품]] 반영. **영업 학습**: "공고 본문 확보 후 미팅준비 전제 재검증"(하드웨어 확정으로 사전 권고 전복 가능) = 미팅 전 본문 확보 SOP 근거.
+
+**참조**: `_inbox/processed/` 3 카드 + lora inbox ack 2건(카드 1·2) + [[한림용인cc-고가수조]] § 노드수 11 + [[영업전략]] § SOP + [[위시캣활동]] § 2026-07-15.
 
 ## 판단 로그 (2026-07-09) — lora 카드 흡수: 결정 60 신설 ⭐⭐
 

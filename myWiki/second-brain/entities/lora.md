@@ -2,10 +2,16 @@
 title: lora — UTTEC LoRa 기술 전문 hub vault
 type: entity
 created: 2026-06-13
-updated: 2026-07-09 (_inbox 흡수 — lora-claude 카드 1장: 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼(고정 코어 LoRa+릴레이+nRF52832+2.4G ESB + 선택 실장) → 제품라인 통합·"단일 플랫폼" 영업 강점, 결정 60 + gaps(조명 fail-safe 반대) + thought 1 + done 회신 / 이전 7/5: _inbox 흡수 — lora-claude 카드 2장: BLE↔LoRa 브리지 게이트웨이 경량·무선화 monitor terminal end-to-end 실증(06-19) / 2.4G ESB 로컬링크 dual-radio 겸용 역량 확보(06-20) → 결정 58 + gaps 2026-07-05 + thought 1 + done 회신 / 이전 6/19: 통합펌웨어+BLE프로비저닝+한림 최종 아키텍처 3패턴(06-18) / 2.4G ESB 하이브리드 옵션(역량경계 ~30dB)+E22 generic SX126x 디코드 불가(벤더 락인)(06-19) / 이전 6/17: 카드 4장 megasession — 4종 모듈 검증+SPI 전환 경로(06-14) / 골프장 수조 제어망 프로토콜+8B frame 송수신 실증+배터리 모니터링(06-16) / CubeCell 스니퍼 done ack(06-15) / 합류 19th myWiki측 5단계 완결(06-13))
+updated: 2026-07-16 (_inbox 흡수 — lora-claude 카드 2장: `2026-07-14-001` done(노드수 11 확정 = 구 14 구설계, pond 2보드→1보드 addr 21·61·81 폐지 / 솔라 12mA·권장패널 5~10W 확정·자립일수 검증중) + `2026-07-14-002` SOP request(5국면 표준 작업계획서 → 영업 신뢰 자산 흡수 YES) → 결정 61 + gaps(설계변경↔영업자산 drift) + 영업자산 6파일 14→11 정합 + done ack 2건 / 이전 7/9: _inbox 흡수 — lora-claude 카드 1장: 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼(고정 코어 LoRa+릴레이+nRF52832+2.4G ESB + 선택 실장) → 제품라인 통합·"단일 플랫폼" 영업 강점, 결정 60 + gaps(조명 fail-safe 반대) + thought 1 + done 회신 / 이전 7/5: _inbox 흡수 — lora-claude 카드 2장: BLE↔LoRa 브리지 게이트웨이 경량·무선화 monitor terminal end-to-end 실증(06-19) / 2.4G ESB 로컬링크 dual-radio 겸용 역량 확보(06-20) → 결정 58 + gaps 2026-07-05 + thought 1 + done 회신 / 이전 6/19: 통합펌웨어+BLE프로비저닝+한림 최종 아키텍처 3패턴(06-18) / 2.4G ESB 하이브리드 옵션(역량경계 ~30dB)+E22 generic SX126x 디코드 불가(벤더 락인)(06-19) / 이전 6/17: 카드 4장 megasession — 4종 모듈 검증+SPI 전환 경로(06-14) / 골프장 수조 제어망 프로토콜+8B frame 송수신 실증+배터리 모니터링(06-16) / CubeCell 스니퍼 done ack(06-15) / 합류 19th myWiki측 5단계 완결(06-13))
 tags: [vault, lora, 무선통신, E22, E32, 기술hub, multi-agent, 사업근거, 4종모듈검증, SPI전환, 수조제어망, 8B-frame, 배터리모니터링, SX126x, SX127x, 자율제어망]
 links: [vault-registry, revita, shield, factory, 한림용인cc-고가수조, ai-direction, gaps, skills, strengths]
 ---
+
+> **2026-07-14 _inbox 흡수 — lora-claude 카드 2장 (노드수 11 확정 + 표준 작업계획서 SOP)** ⭐⭐⭐ (2026-07-16 흡수):
+>
+> **(카드 07-14-001 done, 한림용인CC 노드수 11 확정 + 솔라 실측)** 🔴 — 실배포 물리 노드 = **11 확정, 구 "14"는 폐기(구설계 계통값)**. 원인: 2026-07-03 **pond 설계변경 2보드→1보드**(LoRa 직수신 릴레이)로 pond ONOFF 3개(addr 21·61·81) 폐지 → 14−3=11. 구성 = sensor 5(상수조 2+하수조 3)+상수조 pump term 3+pond term 3(중계기·master·RPi3 게이트웨이는 인프라 미포함). firmware FIELD_NODE 11종·벤치 e2e 정합. **솔라 정량**: 노드 12mA 실측(구 22mA서 ESB 절전버그 수정)·1.3Wh/day·손익분기 ~1.5W·**권장패널 5~10W 확정** / 배터리Ah·자립일수는 흐린날 2일 trace 검증중(미확정). 인용 문서 `기술/전원_RF/1_야외노드_솔라전원_체인.md`. **→ 영업 정합**: entity + 영업 6파일(제안서·근거팩 2·타깃발굴·동영상·아웃리치) 14→11 일괄, 자립일수는 "검증 완료 후 확정" 표기([[한림용인cc-고가수조]] § 노드수 11 / [[gaps]] § 2026-07-16 drift).
+>
+> **(카드 07-14-002 request, 신규 수조 수량관리시스템 표준 작업계획서 SOP)** ⭐⭐ — 한림 전 진행(6/13~7/14) 복기로 **5국면 표준 작업계획서**(`lora:SOP/신규_수조_수량관리시스템_작업계획서.md`) 정립: ① 요구·현장 파악 → ② 제어철학 결정 → ③ 실측·검증 → ④ 설계(HW·RF·펌웨어) → ⑤ 제작·프로비저닝·현장 실증·반복(각 국면 정리/❓결정/⚠️함정/산출물/게이트). kickoff 질문세트 8 + 함정 체크리스트 8 + 상수조 pump 물리진단 B-1(H1 펌프수력/H2 터미널 stale/H3 센서 frozen). **사업 판단**: 영업/제안 자산으로 흡수(YES) — "검증된 표준 프로세스 = 착수 리스크 앞당김 = 견적·일정 신뢰 근거". 기술 방법론 단일출처는 lora vault 유지, 응용(제안 덱)은 myWiki 소관([[영업전략]] § 2026-07-16 / [[ai-direction]] § 결정 61).
 
 > **2026-07-08 _inbox 흡수 — lora-claude 카드 1장 (공용 시스템 보드 = 수조+조명 단일 HW)** ⭐⭐ (2026-07-09 흡수):
 >

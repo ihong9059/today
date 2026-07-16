@@ -2,12 +2,25 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-07-09 (lora 카드 흡수 — 공용 시스템 보드: 조명 fail-safe 반대 논리(재실 중 OFF 금지→PIR 결합 미결) + AC220V 안전 요구, 결정 60 / 이전 6/19: lora 카드 2장 흡수 — E22 generic SX126x 디코드 불가(벤더 락인) + nRF52832 2.4G ~30dB 투과 불리(근거리 한정) + BLE+NVS+LoRa 통합 빌드 적합 / 이전 6/17: _inbox megasession 함정 7건(LoRa 4+onDevice 3) / 이전 6/13 2차: n8nUttec 정체 카드 4장 흡수 — webhook publish 거절 ★★★★ + staticData Active 한정 + ugrep alias + Schedule Trigger silent success 등 6건 / 1차: _inbox 8장 megasession — Defender CFA NCS silent killer + Android onboarding 2건 + IoT 펌웨어 보안 실패 사례 3종 세트(서명키 평문 커밋·AEAD 부재·키 미프로비저닝, revita ingest #16) / 이전 6/10: LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
+updated: 2026-07-16 (_inbox 3장 흡수 — 설계변경↔영업자산 표기 drift: 노드수 14→11 6파일 잔존, grep 전수정합 회피책 / 이전 7/9: lora 카드 흡수 — 공용 시스템 보드: 조명 fail-safe 반대 논리(재실 중 OFF 금지→PIR 결합 미결) + AC220V 안전 요구, 결정 60 / 이전 6/19: lora 카드 2장 흡수 — E22 generic SX126x 디코드 불가(벤더 락인) + nRF52832 2.4G ~30dB 투과 불리(근거리 한정) + BLE+NVS+LoRa 통합 빌드 적합 / 이전 6/17: _inbox megasession 함정 7건(LoRa 4+onDevice 3) / 이전 6/13 2차: n8nUttec 정체 카드 4장 흡수 — webhook publish 거절 ★★★★ + staticData Active 한정 + ugrep alias + Schedule Trigger silent success 등 6건 / 1차: _inbox 8장 megasession — Defender CFA NCS silent killer + Android onboarding 2건 + IoT 펌웨어 보안 실패 사례 3종 세트(서명키 평문 커밋·AEAD 부재·키 미프로비저닝, revita ingest #16) / 이전 6/10: LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
 tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인, R50-1-chip-saturate, STM-7-v2, I2C-주소충돌, flatten-순서, WHO_AM_I-분기, PEP668, scp-wildcard, 데이터사이언티스트, GEE학습, 자산인덱스누락재발, cross-vault-cascade-지연, 풀스택자산]
 links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용, 2026-06-04_sensor-AI-매트릭스-단일출처-mandate]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-07-16 — 설계변경 ↔ 영업 자산 표기 drift (노드수 14→11 6파일 잔존) ⭐⭐
+
+**함정**: 2026-07-03 pond 설계변경(2보드→1보드, addr 21·61·81 폐지)으로 실배포 노드가 14→11로 바뀌었으나, 영업 자산 6파일(제안서·근거팩 2종·타깃발굴·동영상·아웃리치)에 **구값 "14노드"가 그대로 잔존**. 7/14 lora 회신·7/15 제안서 v3 정정에도 나머지 자산은 7/16 흡수 시점까지 미정합.
+
+**원인**: 기술 vault(lora)의 스펙 변경이 today/영업 자산으로 자동 전파되지 않음. entity 1곳만 고치면 "고쳤다"는 착시 — 실제 대외 노출 카피는 여러 파일에 분산.
+
+**회피책**:
+1. **정량 스펙(노드수·수치)은 "설계값 확정 회신" 이벤트 시 grep 전수 정합** — 단일 파일 수정 금지, `grep -rn "{구값}" 영업/` 0건까지.
+2. 스펙 변경 시 **구값 → "구설계값" 명시 + 정정일 병기**(추적성). 채널충돌 같은 관측치는 특정 숫자 대신 일반화("다노드 현장")로 부정확 방지.
+3. 실측 미확정 항목(솔라 자립일수 등)은 **"검증 완료 후 확정" 표기**로 과대주장 차단.
+
+→ 근거: [[한림용인cc-고가수조]] § 노드수 11 + [[ai-direction]] § 결정 61 판단 로그.
 
 ## 2026-07-09 — lora 흡수: 조명 제어논리 ≠ 수조 (fail-safe 반대) + AC220V 안전 ⭐⭐
 
