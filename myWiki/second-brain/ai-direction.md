@@ -2,12 +2,35 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-07-16 (결정 61 신설 — 검증된 표준 작업계획서(SOP) = LoRa 수조제어 영업 신뢰 자산 + 노드수 11 확정(구 14=구설계) + #156802 UWB 화상회의 미팅 도달·HX711 자산, _inbox 3장 megasession 흡수 / 이전 7/9: 결정 60 신설 — 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼 → 제품라인 통합 + "단일 플랫폼" 영업 강점, lora 카드 흡수 / 이전 7/5: 결정 57·58·59 신설 — 적정복잡도 3부작 + BLE 게이트웨이 무선화 + 위시캣 요구사항중심 지원서, revita·lora·wishket megasession / 이전 6/27: 결정 56 신설 — 교육 사업 = 기술+방법론(지식관리 vault) 이중 자산, uttec-academy 카드 흡수 / 이전 6/19: 결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
+updated: 2026-07-17 (결정 62 신설 — LTE 백홀 게이트웨이 PoC 성공 = "인터넷 없는 원거리 현장 커버" 영업 근거 + #156763 축산 LoRaWAN 미팅 도달·자료 수령(정면 강점형·revita 자산 직결) + delivery vault 결정 A(별도 경량 vault `livecow` 신설, 재검토 후 B→A 전환 확정), _inbox 3장 megasession 흡수 / 이전 7/16: 결정 61 신설 — 검증된 표준 작업계획서(SOP) = LoRa 수조제어 영업 신뢰 자산 + 노드수 11 확정(구 14=구설계) + #156802 UWB 화상회의 미팅 도달·HX711 자산, _inbox 3장 megasession 흡수 / 이전 7/9: 결정 60 신설 — 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼 → 제품라인 통합 + "단일 플랫폼" 영업 강점, lora 카드 흡수 / 이전 7/5: 결정 57·58·59 신설 — 적정복잡도 3부작 + BLE 게이트웨이 무선화 + 위시캣 요구사항중심 지원서, revita·lora·wishket megasession / 이전 6/27: 결정 56 신설 — 교육 사업 = 기술+방법론(지식관리 vault) 이중 자산, uttec-academy 카드 흡수 / 이전 6/19: 결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-07-17) — _inbox 3장 megasession 흡수: 결정 62 신설 + #156763 미팅 도달·자료 수령 + delivery vault 결정 ⭐⭐⭐
+
+**사건**: 2026-07-17 _inbox pending 3장(lora `2026-07-16-001` LTE백홀 PoC request·wishket `2026-07-17-001` #156763 미팅완료 request·wishket `2026-07-17-002` delivery vault 판단요청) megasession 흡수.
+
+### 결정 62: LTE 백홀 게이트웨이 PoC 성공 = "인터넷 없는 원거리 현장 커버" 영업 근거 흡수 (lora 카드 `2026-07-16-001`)
+
+- **판단**: lora-claude가 Thingy:91 X(nRF9151 완제 셀룰러 보드)로 **LoRa 센서 → master → RPi → Thingy:91 X → LTE-M(KT 로밍) → 서버** 경로를 e2e 실증(RSRP −80dBm, HELLO/IMEI 서버 수신 확인). 이를 **영업/사업방향 근거로 흡수(YES)**. 기술 단일출처 = [[lora]] vault(`게이트웨이/`), 영업 응용은 myWiki.
+- **근거·함의**: **① 인터넷 없는 원거리 골프장 현장(고수조·pond·외곽)도 셀룰러 백홀로 모니터링·제어 데이터 상납 가능** = "LoRa 자율제어 + 원격 가시성" 판매포인트의 기술 backing. ② 완제 보드로 커스텀 PCB 없이 즉시 PoC(양산은 nRF9151 SiP). ③ **Wi-Fi/LTE failover**로 요금 최소(AP 있으면 셀룰러 0). ④ 데이터량 극소(월 수십MB)=국내 IoT 최저요금.
+- **정직 고지**: 현재 PoC 단계(프리빌트 펌웨어·트라이얼 SIM). 양산 = 국내 SKT LTE-M M2M 회선(사업자등록·단말인증·MFF2) 필요 → 영업 카피는 "실증 완료 + 양산 회선 별도" 선에서 인용. [[영업전략]] § 2026-07-17.
+
+### 미팅 도달: 위시캣 #156763 축산 소 출산 모니터링 LoRaWAN 수신율 진단 미팅 완료 (wishket 카드 `2026-07-17-001`)
+
+- **7/17 오전 미팅 완료**(담당 추동현, PII/NDA). 시스템 = 축산 소 출산(분만) 모니터링, 소 위 LoRa 단말 + LoRaWAN 게이트웨이. 증상 = 모듈 전환(PL→RAK) 후 수신율 ~90% 저하. 합의 = 클라이언트 자료(BOM·PCB·펌웨어·로그) 송부 → 자료 수령 후 진단 착수. **미팅 진행 완료(견적/수주 전 단계)**.
+- **강점 프레이밍 = 정면 강점형**(#156802 UWB 약점방어형과 정반대): revita 실측 자산(RAK4630-9-SM-I=nRF52840+SX1262 Zephyr 직접 브링업·KR920·RSSI −37~−108dBm 43/43 실측) 활용 = **제품 트랙 vault의 실측 LoRa 자산이 영업 트랙 강점 근거로 직결**(cross-vault 자산 재사용 패턴). [[위시캣활동]] § 2026-07-17.
+
+### 결정: #156763 delivery(수주 후 실행) = 별도 경량 vault `livecow` 신설 (A안, 재검토 후 확정, wishket 카드 `2026-07-17-002`)
+
+- **wishket-claude 권고 = A(별도 delivery vault 신설)**. mywiki-claude 판단도 A 정합(자체 코드베이스 583파일/21MB = Tier 1→승격 요인 + BNOW/CBNU NDA 격리). 최초 질문 선택은 B(wishketProject 서브폴더)였으나 **사용자 재검토 요청 → A로 전환 확정**. 두 에이전트 판단 + 재검토 모두 A로 수렴.
+- **실행**: `C:\todo\livecow` 신설(private repo, 로컬 격리). 클라이언트 자료(`Downloads/loraProject` 583파일/21MB) → `livecow/클라이언트자료/`(immutable) 이관 + README·CLAUDE(경량)·초기 커밋. **multi-agent 합류 보류**(SELF_ID 없음). vault명은 LoRa 기술 hub `C:\todo\lora`와 혼동 방지 위해 클라이언트 시스템명(livecow) 채택.
+- **함의**: 영업 vault(wishketProject) 정체성 순수 유지 + NDA 소스트리 격리 + git 순수성 확보. 개선계약 확장·볼륨 팽창 시 Tier 3 승격 + multi-agent 합류 재검토. 진단 1순위 원인 가설 = JoinEUI 0020→0022 서버 불일치(OTAA Join 실패). [[위시캣활동]] § 2026-07-17.
+
+**참조**: `_inbox/processed/` 3 카드 + lora inbox ack 1건(카드 LTE백홀) + wishketProject inbox ack 1건(vault 결정 A=livecow, 정정 재발송) + 신 vault `C:\todo\livecow` + [[영업전략]] § 2026-07-17 + [[위시캣활동]] § 2026-07-17.
 
 ## 판단 로그 (2026-07-16) — _inbox 3장 megasession 흡수: 결정 61 신설 + 노드 11 확정 + #156802 미팅 도달 ⭐⭐⭐
 
