@@ -7,7 +7,8 @@ priority: high
 subject: 소수력 400kW PLC — 전체 마이그레이션(HW 포함) 턴키 견적 산출 (억대, Tier3 후보)
 created: 2026-07-21T14:00:00+09:00
 related: [위시캣/2026-07-09_프로젝트156692_미팅준비/26_전체마이그레이션_턴키견적서.md]
-status: pending
+status: done
+absorbed: 2026-07-21 (mywiki-claude — 위시캣활동.md § 2026-07-21 신설 + ai-direction 판단 로그 + thought 신설 + uttec-plc.md 교차링크 + ack 회신)
 ---
 
 # 소수력 400kW PLC 전체 마이그레이션 턴키 견적 산출
