@@ -56,3 +56,4 @@
 - [문서 버전 별도 파일 분리 ⭐](feedback_document_version_separate_file.md) — 외부 발송 문서 버전 업데이트 시 in-place 금지. `{문서명}_v{버전}_{날짜}.md` 별도 생성 + 원본은 latest로 동기. 5/30 운영제안서 v3.0 in-place 실수 박제
 - [UTTEC_SSD 외장 disk + /backup skill](reference_uttec_ssd_backup.md) — G:\ exFAT 라벨 UTTEC_SSD. /backup skill 호출. PowerShell 전용 (Git Bash path mangling exit 16) + /XJ junction 무시 필수
 - [search 외부 mode 메모리·세션 turn-off 옵션 미구현 ⭐](project_search_external_mode_gap.md) — Phase 4.3 E·F 본인용 dogfooding 만 OK. 외부 deploy 전 환경변수/mode toggle 신설 필수. 위시캣 마스킹·세션 carry-over 누설 위험
+- [cross-vault 상태 인지 자동화 ⭐](feedback_cross_vault_status_awareness.md) — myWiki는 sibling vault 운영디테일 몰라도 되나 상태·결정·횡단이슈는 인지 필수. check-vault-status.py hook이 log mtime vs entity mtime 비교로 미반영 자동 감지 (SessionStart + work-start 1-E). 2026-07-23 academy 3차 개강 미cascade 사건 계기

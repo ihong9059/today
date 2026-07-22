@@ -110,6 +110,23 @@ python "C:/todo/today/.claude/hooks/check-raw-junctions.py" 2>/dev/null || echo 
 
 vault 위치 변경 시 junction 재생성 누락이 잦으므로 자동 검증으로 차단한다.
 
+### 1-E. sibling vault 진행상황 staleness 감지 (2026-07-23 신설)
+
+`C:/todo/` 하위 A군 vault(academy·lora·factory·onDevice·ponet·weldRobot 등)의 `log.md` 최종수정을 myWiki 해당 entity 최종수정과 비교하여, **vault는 진행했는데 myWiki에 cascade 안 된** 미반영을 감지한다. (읽기전용 — 자동 sync 안 함, `feedback_vault_scope_isolation` 준수)
+
+> ⚠️ 이 hook은 SessionStart(`settings.json`)에서도 자동 실행된다. 동일 세션에서 `/work-start` 재실행 시 갭 보완용으로 재호출.
+
+```bash
+python "C:/todo/today/.claude/hooks/check-vault-status.py"
+```
+
+**판단**:
+- 출력 없음 → 침묵
+- `📊 vault 진행상황 미반영 감지` 출력 → 사용자에게 그대로 보고 + **결정 필요**: 해당 vault 카드 흡수 또는 entity cascade 갱신 여부. 사업 레벨 상태·이슈(예: 진행 중인 교육 차수, 횡단 하드웨어 이슈)면 오늘 할일 등록 검토 (`feedback_cross_vault_to_todo`).
+- 신규 A군 vault 합류 시 `check-vault-status.py`의 `VAULT_MAP`에 `{vault_dir: entity_file}` 추가.
+
+myWiki(main vault)는 sibling vault의 **운영 디테일은 몰라도 되지만 상태·결정·횡단 이슈는 반드시 인지**해야 한다. 본 hook이 그 인지 누락을 자동 차단한다.
+
 ### 2. 최근 세션 파일 확인 및 복원
 
 ```bash

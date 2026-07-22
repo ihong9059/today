@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python .claude/hooks/create-daily-report.py && python .claude/hooks/notion-sync.py"
+            "command": "python .claude/hooks/create-daily-report.py && python .claude/hooks/notion-sync.py && python .claude/hooks/check-vault-status.py"
           }
         ]
       }
