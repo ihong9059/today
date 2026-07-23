@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang=ko><head><meta charset=UTF-8><style>
+@page{size:A4 landscape;margin:10mm 9mm;}*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Malgun Gothic","맑은 고딕",sans-serif;color:#1f2937;font-size:8pt;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+:root{--navy:#12315e;--red:#b91c1c;--sec:#dce6f5;--line:#c4cede;--gray:#6b7280;--yel:#fde68a;}
+.banner{background:#fef2f2;border:1.5px solid var(--red);border-radius:6px;padding:7px 12px;margin-bottom:7px;}
+.banner b{color:var(--red);font-size:12pt;} .banner span{color:#7f1d1d;font-size:8.3pt;}
+h1{font-size:13pt;color:var(--navy);}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--navy);padding-bottom:5px;margin-bottom:7px;}
+.logo{font-size:16pt;font-weight:900;color:#1E40AF;}
+table{width:100%;border-collapse:collapse;font-size:7.6pt;}
+th{background:var(--navy);color:#fff;border:1px solid var(--navy);padding:4px 3px;text-align:center;}
+td{border:1px solid var(--line);padding:3px 5px;vertical-align:middle;}
+td.c{text-align:center;}td.r{text-align:right;}td.nm{font-weight:700;color:var(--navy);}
+td.sp{font-size:7pt;}td.md{font-size:7.2pt;color:var(--navy);font-weight:600;}
+td.neg{color:var(--red);font-weight:700;}
+tr.sec td{background:var(--sec);font-weight:800;color:var(--navy);font-size:8pt;}
+tr.tot td{background:var(--yel);font-weight:800;color:var(--navy);font-size:8.4pt;}tr.tot td.tl{text-align:right;}
+.note{margin-top:8px;font-size:7.6pt;line-height:1.5;color:#374151;}.note b{color:var(--navy);}.note .w{color:var(--red);font-weight:700;}
+</style></head><body>
+<div class=hd><div class=logo>UTTEC</div><h1>광안 보안등 조명제어 — 구매참고 BOM (실모델·시장가·마진)</h1><div style="font-size:8pt;color:var(--gray)">v1.0 · 2026-07-24</div></div>
+<div class=banner><b>[내부 관리용 · 대외비]</b> <span>외부 제출 금지. 견적서(대외용) 원가·마진 검토 및 발주 참고용. 전용기기(MRBAS ELC)는 발주 전 ㈜엠알바스 실견적 필수.</span></div>
+<table><thead><tr><th>No</th><th>구분</th><th>품목</th><th>도면 사양</th><th>권장 제조사·모델</th><th>시장단가<br>(추정)</th><th>신뢰</th><th>견적단가</th><th>차이</th><th>마진%</th></tr></thead>
+<tbody><tr class="sec"><td colspan="10">1. 조명제어 전용기기 (㈜엠알바스 MRBAS · ELC SYSTEM — 도면 'Excellent Lighting Controls')</td></tr>
+<tr><td class="c">1</td><td class="c">자재</td><td class="nm">중앙전송장치 SCU</td><td class="sp">32bit MCU, RS485 ELC+Ethernet+MODBUS, 999모듈</td><td class="md">MRBAS ELC 'SCU' (System Communication Unit)</td><td class="r">1,900,000</td><td class="c">○</td><td class="r">1,800,000</td><td class="r neg">-100,000</td><td class="r neg">-5%</td></tr>
+<tr><td class="c">2</td><td class="c">자재</td><td class="nm">0-10V 디밍모듈 8ch</td><td class="sp">0-10V 디밍 8ch, 0~254단계</td><td class="md">MRBAS '0-10V Dimming Module'(DCM/LDCM계열)</td><td class="r">1,300,000</td><td class="c">○</td><td class="r">1,200,000</td><td class="r neg">-100,000</td><td class="r neg">-8%</td></tr>
+<tr><td class="c">3</td><td class="c">자재</td><td class="nm">릴레이모듈 (16A 래칭 8접점)</td><td class="sp">16A 래칭릴레이 R1~8</td><td class="md">MRBAS '6eRM-w/16a' + LR-9P 릴레이(플러그인)</td><td class="r">750,000</td><td class="c">○</td><td class="r">0</td><td class="r neg">-750,000</td><td class="r neg"></td></tr>
+<tr><td class="c">4</td><td class="c">자재</td><td class="nm">전원공급장치</td><td class="sp">AC220V→24VAC 60Hz, 60VA</td><td class="md">MRBAS 'RPWR' (AC220/DC24V, 40W)</td><td class="r">320,000</td><td class="c">○</td><td class="r">350,000</td><td class="r ">30,000</td><td class="r ">9%</td></tr>
+<tr><td class="c">5</td><td class="c">자재</td><td class="nm">HMI 관제 소프트웨어</td><td class="sp">조명제어 HMI, GS·BTL 인증</td><td class="md">MRBAS ELC 중앙관제 S/W (라이선스)</td><td class="r">4,000,000</td><td class="c">○</td><td class="r">4,500,000</td><td class="r ">500,000</td><td class="r ">12%</td></tr>
+<tr class="sec"><td colspan="10">2. 조명제어반 LCP-0 함체·배전 (표준 전기자재)</td></tr>
+<tr><td class="c">6</td><td class="c">자재</td><td class="nm">제어반 외함</td><td class="sp">STEEL 400×1600×180, 자립/벽부, 도장·명판</td><td class="md">탑박스/박스파라 등 제작 (STEEL 함체)</td><td class="r">700,000</td><td class="c">◐</td><td class="r">1,500,000</td><td class="r ">800,000</td><td class="r ">114%</td></tr>
+<tr><td class="c">7</td><td class="c">자재</td><td class="nm">속판·덕트·레일·명판</td><td class="sp">내부 마운팅 자재</td><td class="md">함체업체 부속 (속판 세트)</td><td class="r">220,000</td><td class="c">◐</td><td class="r">350,000</td><td class="r ">130,000</td><td class="r ">59%</td></tr>
+<tr><td class="c">8</td><td class="c">자재</td><td class="nm">주차단기·회로차단기</td><td class="sp">주MCCB 1 + 회로ELB 6~7</td><td class="md">LS ELECTRIC 주 ABS103c 3P + 회로 EBS53c 3P ×7</td><td class="r">380,000</td><td class="c">●</td><td class="r">700,000</td><td class="r ">320,000</td><td class="r ">84%</td></tr>
+<tr><td class="c">9</td><td class="c">자재</td><td class="nm">단자대·제어배선자재</td><td class="sp">터미널블록, 제어선, 압착단자</td><td class="md">진흥전기/광명전기 or Phoenix/WAGO 단자</td><td class="r">280,000</td><td class="c">◐</td><td class="r">550,000</td><td class="r ">270,000</td><td class="r ">96%</td></tr>
+<tr><td class="c">10</td><td class="c">용역</td><td class="nm">제어반 제작·조립·내부결선</td><td class="sp">기기취부·내부결선·검사</td><td class="md">판넬 제작업체 공임</td><td class="r">650,000</td><td class="c">▷</td><td class="r">900,000</td><td class="r ">250,000</td><td class="r ">38%</td></tr>
+<tr class="sec"><td colspan="10">3. 중앙감시 CCMS (표준 IT장비)</td></tr>
+<tr><td class="c">11</td><td class="c">자재</td><td class="nm">관제용 PC</td><td class="sp">i5, RAM 32GB, SSD 1TB, Win10/11</td><td class="md">HP ProDesk 400 G9 / Dell OptiPlex (i5-14400급)</td><td class="r">1,900,000</td><td class="c">◐</td><td class="r">1,600,000</td><td class="r neg">-300,000</td><td class="r neg">-16%</td></tr>
+<tr><td class="c">12</td><td class="c">자재</td><td class="nm">24″ LED 모니터</td><td class="sp">1920×1080</td><td class="md">LG 24MK430H-B / 삼성 S24C310</td><td class="r">175,000</td><td class="c">●</td><td class="r">250,000</td><td class="r ">75,000</td><td class="r ">43%</td></tr>
+<tr><td class="c">13</td><td class="c">자재</td><td class="nm">프린터</td><td class="sp">경보·리포트 출력</td><td class="md">HP LaserJet M111w / 삼성 흑백레이저</td><td class="r">200,000</td><td class="c">●</td><td class="r">250,000</td><td class="r ">50,000</td><td class="r ">25%</td></tr>
+<tr><td class="c">14</td><td class="c">자재</td><td class="nm">관제 콘솔 데스크</td><td class="sp">경비실 설치대(옵션)</td><td class="md">사무용 데스크</td><td class="r">300,000</td><td class="c">◐</td><td class="r">400,000</td><td class="r ">100,000</td><td class="r ">33%</td></tr>
+<tr class="sec"><td colspan="10">4. 통신·제어 케이블 (표준 전선)</td></tr>
+<tr><td class="c">15</td><td class="c">자재</td><td class="nm">데이터라인 F-CVVS 1.5㎟×2C</td><td class="sp">SCU↔LCP, 22C, ~200m</td><td class="md">대한전선/가온전선/코리아테크 (제어용 차폐)</td><td class="r">250,000</td><td class="c">●</td><td class="r">350,000</td><td class="r ">100,000</td><td class="r ">40%</td></tr>
+<tr><td class="c">16</td><td class="c">자재</td><td class="nm">0-10V 통신선 AWG18(UL2095,2C)</td><td class="sp">안정기 구간, 16C</td><td class="md">UL2095 2C 전선</td><td class="r">180,000</td><td class="c">◐</td><td class="r">300,000</td><td class="r ">120,000</td><td class="r ">67%</td></tr>
+<tr><td class="c">17</td><td class="c">자재</td><td class="nm">제어반 전원선</td><td class="sp">F-CV 2.5㎟×3C / HFIX 2.5㎟</td><td class="md">대한/LS전선</td><td class="r">180,000</td><td class="c">◐</td><td class="r">200,000</td><td class="r ">20,000</td><td class="r ">11%</td></tr>
+<tr><td class="c">18</td><td class="c">자재</td><td class="nm">단자·성단·소모자재</td><td class="sp">압착단자·케이블타이·마킹</td><td class="md">일반 소모자재</td><td class="r">150,000</td><td class="c">◐</td><td class="r">200,000</td><td class="r ">50,000</td><td class="r ">33%</td></tr>
+<tr class="sec"><td colspan="10">5. 설치·용역 (공임 원가 — 무형)</td></tr>
+<tr><td class="c">19</td><td class="c">용역</td><td class="nm">기기 셋팅·프로그래밍</td><td class="sp">그룹·씬·스케쥴(41등/6회로)</td><td class="md">엔지니어 공수</td><td class="r">1,000,000</td><td class="c">▷</td><td class="r">1,500,000</td><td class="r ">500,000</td><td class="r ">50%</td></tr>
+<tr><td class="c">20</td><td class="c">용역</td><td class="nm">기기 신호선 결선</td><td class="sp">DIM/R/ETLC/24VAC 결선</td><td class="md">설치 공수</td><td class="r">550,000</td><td class="c">▷</td><td class="r">800,000</td><td class="r ">250,000</td><td class="r ">45%</td></tr>
+<tr><td class="c">21</td><td class="c">용역</td><td class="nm">0-10V 통신라인 결선</td><td class="sp">디밍모듈↔안정기 성단</td><td class="md">설치 공수</td><td class="r">400,000</td><td class="c">▷</td><td class="r">600,000</td><td class="r ">200,000</td><td class="r ">50%</td></tr>
+<tr><td class="c">22</td><td class="c">용역</td><td class="nm">HMI 그래픽·포인트 설정</td><td class="sp">배치도 그래픽·포인트·경보</td><td class="md">SW 엔지니어 공수</td><td class="r">1,200,000</td><td class="c">▷</td><td class="r">1,800,000</td><td class="r ">600,000</td><td class="r ">50%</td></tr>
+<tr><td class="c">23</td><td class="c">용역</td><td class="nm">통합시험·시운전(T&C)</td><td class="sp">회로별 검증·시운전</td><td class="md">시운전 공수</td><td class="r">800,000</td><td class="c">▷</td><td class="r">1,200,000</td><td class="r ">400,000</td><td class="r ">50%</td></tr>
+<tr><td class="c">24</td><td class="c">용역</td><td class="nm">운영자 교육</td><td class="sp">경비실 교육·매뉴얼</td><td class="md">교육 공수</td><td class="r">200,000</td><td class="c">▷</td><td class="r">300,000</td><td class="r ">100,000</td><td class="r ">50%</td></tr>
+<tr class="sec"><td colspan="10">6. 기타</td></tr>
+<tr><td class="c">25</td><td class="c">자재</td><td class="nm">준공도서·성적서·인증서</td><td class="sp">준공도서·시험성적서 사본</td><td class="md">문서 제작</td><td class="r">200,000</td><td class="c">▷</td><td class="r">300,000</td><td class="r ">100,000</td><td class="r ">50%</td></tr>
+<tr><td class="c">26</td><td class="c">자재</td><td class="nm">운반비</td><td class="sp">부산 현장 운송</td><td class="md">화물/택배</td><td class="r">350,000</td><td class="c">◐</td><td class="r">400,000</td><td class="r ">50,000</td><td class="r ">14%</td></tr>
+<tr><td class="c">27</td><td class="c">자재</td><td class="nm">출장·숙박비</td><td class="sp">시공·시운전 출장</td><td class="md">출장 실비</td><td class="r">500,000</td><td class="c">▷</td><td class="r">600,000</td><td class="r ">100,000</td><td class="r ">20%</td></tr>
+<tr><td class="c">28</td><td class="c">자재</td><td class="nm">예비품(Spare)</td><td class="sp">디밍 2회로분·퓨즈·소모품</td><td class="md">MRBAS 예비 모듈 등</td><td class="r">300,000</td><td class="c">◐</td><td class="r">400,000</td><td class="r ">100,000</td><td class="r ">33%</td></tr><tr class="tot"><td colspan="5" class="tl">합계 — 시장/원가 추정 vs 견적 직접비</td><td class="r">19,335,000</td><td></td><td class="r">23,300,000</td><td class="r">3,965,000</td><td class="r">21%</td></tr></tbody></table>
+<div class=note>
+<b>신뢰도</b>: ● 웹 실검색 확인 / ◐ 시장지식 추정 / ○ 전용기기(제조사 실견적 필수) / ▷ 용역(공임 원가추정) &nbsp;|&nbsp; <b>예상 직접이익</b> = 견적직접비 23,300,000 − 원가추정 19,335,000 = <b>3,965,000원 (21%)</b>. 견적서엔 일반관리비 5%+이윤 10% 별도 가산.<br>
+<span class=w>⚠ No.11 관제PC</span>: 브랜드 i5·32GB·1TB SSD 시세 > 견적단가 → 견적 상향 또는 사양 하향 검토. &nbsp; <span class=w>⚠ 전용기기</span>(SCU·0-10V 디밍모듈·릴레이 6eRM-w/16a·RPWR·HMI): 추정가 → 반드시 MRBAS 실견적 대체.<br>
+<b>출처(2026-07-24 웹)</b>: mrbas.co.kr(ELC SYSTEM 카탈로그) · LS ELECTRIC/풍림·2sk·speedmall(차단기 ABS/EBS) · koreacable.net(F-CVVS) · HP/Dell 코리아(PC) · topbox·boxpara(함체).
+</div></body></html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>광안 지역주택조합 보안등 유선 0-10V 디밍 조명제어 상세 제안서 — UTTEC</title>
+<style>
+  @page { size: A4; margin: 15mm 13mm; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Malgun Gothic","맑은 고딕",sans-serif; color:#1f2937; font-size:10.3pt; line-height:1.6; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .page { page-break-after:always; }
+  .page:last-child { page-break-after:auto; }
+  :root { --navy:#12315e; --blue:#1E40AF; --accent:#2563eb; --lightblue:#eff4fb; --gray:#6b7280; --line:#d8dee9; }
+  h1,h2,h3 { color:var(--navy); font-weight:800; }
+
+  .cover { min-height:262mm; display:flex; flex-direction:column; }
+  .cover-top { border-top:6px solid var(--blue); padding-top:10px; display:flex; justify-content:space-between; align-items:baseline; }
+  .logo { font-size:30pt; font-weight:900; letter-spacing:2px; color:var(--blue); }
+  .logo small { font-size:9pt; font-weight:600; color:var(--gray); letter-spacing:0; display:block; margin-top:-4px; }
+  .cover-mid { flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .cover-tag { color:var(--accent); font-weight:700; font-size:12pt; letter-spacing:3px; margin-bottom:14px; }
+  .cover-title { font-size:29pt; font-weight:900; color:var(--navy); line-height:1.28; }
+  .cover-title .em { color:var(--blue); }
+  .cover-sub { margin-top:18px; font-size:12pt; color:#374151; font-weight:600; }
+  .cover-meta { margin-top:38px; border-top:1px solid var(--line); padding-top:18px; display:grid; grid-template-columns:repeat(2,1fr); gap:10px 30px; font-size:10.5pt; }
+  .cover-meta b { color:var(--navy); display:inline-block; min-width:74px; }
+  .cover-foot { margin-top:22px; font-size:9.3pt; color:var(--gray); }
+
+  .sec-head { display:flex; align-items:center; gap:10px; margin:2px 0 12px; padding-bottom:8px; border-bottom:2px solid var(--blue); }
+  .sec-no { background:var(--blue); color:#fff; font-weight:800; font-size:11pt; width:26px; height:26px; border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .sec-head h2 { font-size:15pt; }
+  h3 { font-size:11.3pt; margin:15px 0 7px; padding-left:9px; border-left:3px solid var(--accent); }
+  p { margin:6px 0; }
+  .lead { font-size:10.8pt; color:#374151; }
+  ul { margin:6px 0 6px 18px; } li { margin:3px 0; }
+  strong { color:var(--navy); }
+  .hl { background:linear-gradient(transparent 60%, #fde68a 60%); font-weight:700; }
+
+  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:9.4pt; }
+  th,td { border:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:middle; }
+  th { background:var(--navy); color:#fff; font-weight:700; }
+  tbody tr:nth-child(even) { background:#f6f8fb; }
+  td.c,th.c { text-align:center; } td.r { text-align:right; }
+  caption { caption-side:top; text-align:left; font-size:9pt; color:var(--gray); margin-bottom:4px; }
+
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:12px 0; }
+  .card { border:1px solid var(--line); border-radius:9px; padding:13px; background:#fff; }
+  .card .k { font-size:20pt; font-weight:900; color:var(--blue); line-height:1; }
+  .card .l { font-size:9pt; color:var(--gray); margin-top:4px; }
+  .card .d { font-size:9.1pt; margin-top:6px; color:#374151; }
+
+  .callout { background:var(--lightblue); border-left:4px solid var(--blue); border-radius:0 8px 8px 0; padding:11px 14px; margin:11px 0; font-size:9.8pt; }
+  .callout b { color:var(--blue); }
+  .warn { background:#fff7ed; border-left:4px solid #ea580c; }
+  .warn b { color:#c2410c; }
+  .ok { background:#f0fdf4; border-left:4px solid #16a34a; }
+  .ok b { color:#15803d; }
+
+  .arch { display:flex; align-items:stretch; gap:6px; margin:14px 0; font-size:8.7pt; text-align:center; }
+  .node { flex:1; border:1.5px solid var(--accent); border-radius:9px; padding:10px 6px; background:#fff; }
+  .node .t { font-weight:800; color:var(--navy); font-size:9.3pt; } .node .s { color:var(--gray); font-size:8pt; margin-top:3px; }
+  .arrow { display:flex; align-items:center; color:var(--accent); font-weight:900; font-size:14pt; }
+
+  .foot-brand { margin-top:18px; border-top:1px solid var(--line); padding-top:10px; display:flex; justify-content:space-between; font-size:8.4pt; color:var(--gray); }
+  .credit { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0; }
+  .credit span { background:#f1f5f9; border:1px solid var(--line); border-radius:20px; padding:3px 11px; font-size:8.6pt; font-weight:600; color:#334155; }
+  .contact-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px; }
+  .contact-grid .card .l { font-size:8.3pt; text-transform:uppercase; letter-spacing:1px; }
+  .contact-grid .card .v { font-size:9.6pt; font-weight:700; color:var(--navy); margin-top:5px; }
+  .small { font-size:8.8pt; color:var(--gray); }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="page cover">
+  <div class="cover-top">
+    <div class="logo">UTTEC<small>www.uttec.co.kr</small></div>
+    <div style="text-align:right; font-size:9.3pt; color:var(--gray);">기술 제안서<br>Technical Proposal</div>
+  </div>
+  <div class="cover-mid">
+    <div class="cover-tag">유선 0-10V 디밍 조명제어 시스템</div>
+    <div class="cover-title">광안 지역주택조합<br>옥외 보안등 <span class="em">조명제어 시스템</span><br>공급 · 구축 제안</div>
+    <div class="cover-sub">건축심의 확정 설계(E13 보안등 조명제어 상세도) 기준 · 중앙감시(CCMS) 통합</div>
+    <div class="cover-meta">
+      <div><b>제출처</b> 삼환전기 귀중</div>
+      <div><b>현장</b> 부산 수영구 광안동 971</div>
+      <div><b>대상</b> 옥외 보안등 41등 / 6회로 (LCP-0)</div>
+      <div><b>중앙감시</b> 501동 경비실 1개소</div>
+      <div><b>제출일</b> 2026. 07. 24.</div>
+      <div><b>문서</b> v1.0 (E13 상세도 반영본)</div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    본 제안서는 삼환전기가 제공한 건축심의 확정 도면 <b>「E13-011~013 보안등 조명제어 상세도」</b> 및 <b>「E2-001~004 옥외 인입·보안등 배치도」</b>의 정밀 판독 결과에 근거하여 작성되었으며, 도면에 명기된 <b>유선 0-10V 디밍 제어 방식</b>을 그대로 충족하는 공급·시공 범위를 제안합니다.
+  </div>
+</div>
+
+<!-- ============ 1. 제안 개요 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">1</div><h2>제안 개요</h2></div>
+  <p class="lead">본 제안은 광안 지역주택조합 공동주택 신축공사의 <strong>옥외 보안등 41등(6회로)</strong>에 대한 <strong>시간대별 자동 디밍 제어 및 중앙 감시(CCMS)</strong> 시스템을, 건축심의에 확정 반영된 <strong class="hl">유선 0-10V 디밍 제어 방식(E13 상세도)</strong> 그대로 공급·구축하는 UTTEC의 수행 방안입니다.</p>
+
+  <div class="cards">
+    <div class="card"><div class="k">41등</div><div class="l">제어 대상 보안등</div><div class="d">OL1~OL6 6개 회로 그룹 · 0~254단계 정밀 조광</div></div>
+    <div class="card"><div class="k">1면</div><div class="l">조명제어반 LCP-0</div><div class="d">SCU + 0-10V 디밍모듈 8ch + 전원공급장치 · 501동 경비실</div></div>
+    <div class="card"><div class="k">1개소</div><div class="l">중앙감시 CCMS</div><div class="d">PC + HMI(GS·BTL 인증) 통합 관제 · 스케쥴 · 자기진단</div></div>
+  </div>
+
+  <div class="callout ok"><b>제안 성격</b> — 설계 변경 없이 <b>심의 확정 도면(E13)의 유선 0-10V 디밍 사양을 100% 충족</b>합니다. 본 제안서는 도면에 기재된 기기 사양·회로 구성·케이블 규격·공사 구분을 그대로 반영하였으며, 별첨 견적서는 이에 대응하는 전 항목을 산출한 것입니다.</p>
+
+  <h3>1.1 제안 범위 요약 (조명제어공사)</h3>
+  <table>
+    <thead><tr><th class="c" style="width:36px">구분</th><th>제안 범위</th><th style="width:150px">비고 (도면 근거)</th></tr></thead>
+    <tbody>
+      <tr><td class="c">기기</td><td>중앙전송장치(SCU) · 0-10V 디밍모듈 8ch · 전원공급장치 공급</td><td>E13-011 사양표</td></tr>
+      <tr><td class="c">제어반</td><td>조명제어반 LCP-0 외함(400×1600×180) 제작·공급, 속판 취부, 내부 결선</td><td>E13-012 일람표</td></tr>
+      <tr><td class="c">CCMS</td><td>PC · 24″ 모니터 · 프린터 · HMI 소프트웨어(GS·BTL 인증) 공급·설치</td><td>E13-011 CCMS 사양</td></tr>
+      <tr><td class="c">결선</td><td>기기 신호선 결선, 디밍(0-10V) 통신라인 결선</td><td>E13-013 결선도</td></tr>
+      <tr><td class="c">용역</td><td>기기 셋팅·프로그래밍, HMI 그래픽 작성, 통합시험·시운전, 운영자 교육</td><td>SCOPE 표</td></tr>
+    </tbody>
+  </table>
+  <p class="small">※ 신호선 배관·전선 포설·전원공사 등은 도면 「공사 구분」상 <b>전기공사(현장 시공사)</b> 범위입니다(본 제안서 7장 참조). 등기구 및 0-10V 조광 안정기는 <b>등기구 업체</b> 범위입니다.</p>
+
+  <div class="foot-brand"><span>UTTEC — 광안 보안등 유선 0-10V 디밍 조명제어 상세 제안서</span><span>1</span></div>
+</div>
+
+<!-- ============ 2. 대상 현황 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">2</div><h2>대상 현황 및 제어 규모</h2></div>
+
+  <h3>2.1 보안등 회로 구성 (E2-002 배치도)</h3>
+  <p>옥외 보안등은 총 <strong>41등</strong>으로, <strong>6개 회로(OL1~OL6)</strong>로 그룹핑되어 조명제어반 LCP-0에서 통합 제어됩니다.</p>
+  <table>
+    <thead><tr><th class="c">회로</th><th class="c">OL1</th><th class="c">OL2</th><th class="c">OL3</th><th class="c">OL4</th><th class="c">OL5</th><th class="c">OL6</th><th class="c">합계</th></tr></thead>
+    <tbody>
+      <tr><td class="c">보안등 수량</td><td class="c">7</td><td class="c">6</td><td class="c">7</td><td class="c">7</td><td class="c">7</td><td class="c">7</td><td class="c"><strong>41등</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><b>수량 기준</b> — 건축심의 최초본(2020.01)의 27EA는 <b>구버전</b>입니다. 이후 개정(24.08.13 「보안등 5개소 추가」 등)이 반영된 <b>최종 도면 기준 41등/6회로</b>로 본 제안·견적을 산정하였습니다.</div>
+
+  <h3>2.2 조명제어반 일람 (E13-012)</h3>
+  <table>
+    <thead><tr><th>제어반명</th><th>설치 위치</th><th class="c">디밍 회로수</th><th class="c">0-10V 디밍모듈</th><th class="c">전원장치</th><th>분전반명</th><th class="c">외함 SIZE (W×H×D)</th></tr></thead>
+    <tbody>
+      <tr><td class="c">LCP-0</td><td class="c">501동 경비실</td><td class="c">6 + 예비 2 = <strong>8</strong></td><td class="c">1</td><td class="c">1</td><td class="c">L-0 보안등</td><td class="c">400 × 1600 × 180</td></tr>
+    </tbody>
+  </table>
+  <p class="small">※ 외함 SIZE는 현장 여건에 따라 달라질 수 있음(도면 주기). 디밍 회로는 6회로 사용 + 예비(SP) 2회로 = 총 8회로(0-10V 디밍모듈 1대 = 8채널).</p>
+
+  <h3>2.3 개정 이력 (설계 확정 경위 — E2 revision)</h3>
+  <table>
+    <thead><tr><th class="c" style="width:120px">시점</th><th>개정 내용</th></tr></thead>
+    <tbody>
+      <tr><td class="c">24.08.05</td><td>케이블 트레이 사이즈 변경</td></tr>
+      <tr><td class="c">24.08.13</td><td>조경설비 삭제 / 조경 판넬 배치 / <strong>보안등 5개소 추가</strong> + 회로 추가</td></tr>
+      <tr><td class="c">24.09</td><td><strong>타이머 디밍 제어기 반영</strong> — 도서 및 견적서 추가 첨부</td></tr>
+      <tr><td class="c">24.09.25</td><td>보안등 조명제어 상세도(E13) 추가 반영에 따른 <strong>간선 변경</strong>(UTP→F-CVV SB, 35→50sq 증설)</td></tr>
+    </tbody>
+  </table>
+  <p>위 이력에서 확인되듯, 조명제어(0-10V 디밍)는 <strong>2024년 9월 상세 설계로 확정</strong>되어 E13 상세도에 반영되었습니다. 본 제안은 해당 확정 설계를 그대로 이행합니다.</p>
+
+  <div class="foot-brand"><span>UTTEC — 광안 보안등 유선 0-10V 디밍 조명제어 상세 제안서</span><span>2</span></div>
+</div>
+
+<!-- ============ 3. 시스템 구성 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">3</div><h2>시스템 구성 (E13-011 기준)</h2></div>
+  <p class="lead">중앙감시반(CCMS) → 중앙전송장치(SCU) → 0-10V 디밍모듈 → 보안등 회로로 이어지는 <strong>3계층 중앙집중형 디밍 제어 아키텍처</strong>입니다.</p>
+
+  <div class="arch">
+    <div class="node"><div class="t">CCMS</div><div class="s">501동 경비실<br>PC + HMI(GS·BTL)<br>24″ 모니터 · 프린터</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="t">SCU</div><div class="s">중앙전송장치<br>RS485 ELC / Ethernet<br>/ MODBUS</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="t">0-10V 디밍모듈</div><div class="s">8채널<br>0~254단계 조광<br>16A 래칭릴레이 8</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="t">보안등 41등</div><div class="s">OL1~OL6<br>6회로 그룹<br>0-10V 조광 안정기</div></div>
+  </div>
+
+  <h3>3.1 통신 계층</h3>
+  <table>
+    <thead><tr><th style="width:150px">구간</th><th>통신 / 배선</th><th style="width:150px">규격 (Cable Schedule)</th></tr></thead>
+    <tbody>
+      <tr><td>CCMS ↔ SCU</td><td>Ethernet (TCP/IP) / RS485 ELC Network</td><td>ETHERNET, 220VAC/60Hz 전원</td></tr>
+      <tr><td>SCU ↔ LCP (데이터라인)</td><td>ELC 데이터 통신</td><td><strong>F-CVVS 1.5㎟ × 2C</strong>, 배관 22C</td></tr>
+      <tr><td>디밍모듈 ↔ 0-10V 안정기</td><td>0-10V 디밍 통신라인</td><td><strong>AWG18 (UL2095, 2C)</strong>, 배관 16C (강전라인 혼용 가능)</td></tr>
+      <tr><td>전원·접지</td><td>제어반 전원 / 접지</td><td>HFIX 2.5㎟ × 3C, 2N-HFIX 2.5㎟</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.2 결선 채널 (E13-013)</h3>
+  <p>0-10V 디밍모듈은 <strong>디밍 출력 DIM1~DIM8</strong>과 <strong>래칭릴레이 접점 R1~R8</strong>, <strong>ETLC LINE(통신)</strong>, <strong>24VAC 전원</strong>으로 구성되며, 6개 보안등 회로(OL1~OL6)에 각각 디밍 채널과 릴레이 접점을 할당합니다(2채널 예비).</p>
+  <div class="callout"><b>제어 원리</b> — 래칭릴레이(R1~R8)로 회로별 <b>ON/OFF</b>를, 0-10V 출력(DIM1~DIM8)으로 회로별 <b>밝기(0~254단계)</b>를 독립 제어합니다. 심야시간대 감광(예: 23시 이후 50% 감광) 등 시간대별 스케쥴을 CCMS에서 설정합니다.</div>
+
+  <div class="foot-brand"><span>UTTEC — 광안 보안등 유선 0-10V 디밍 조명제어 상세 제안서</span><span>3</span></div>
+</div>
+
+<!-- ============ 4. 주요 기기 사양 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">4</div><h2>주요 기기 사양 (도면 명기 사양)</h2></div>
+
+  <h3>4.1 중앙전송장치 SCU (System Communication Unit)</h3>
+  <table>
+    <tbody>
+      <tr><td style="width:130px; background:#f6f8fb"><strong>기능</strong></td><td>RELAY PANEL·SWITCH 등 하위장비와 상위 MMI 간 통신 중계</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>CPU</strong></td><td>32BIT MICRO PROCESSOR</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>통신 네트워크</strong></td><td>RS485 방식 ELC Network + Ethernet + MODBUS</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>용량</strong></td><td>조명제어모듈 999개 / 데이터라인 스위치 999개까지 통신 가능</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>기능 특성</strong></td><td>자기진단기능 내장 Stand Alone / 1개 IP 5명 동시 접속 / WIFI 탑재</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>치수 · 전원</strong></td><td>DIMENSION 130 × 130 / 입력 AC 220V·110V, 50/60Hz</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.2 0-10V 디밍모듈 (8채널)</h3>
+  <table>
+    <tbody>
+      <tr><td style="width:130px; background:#f6f8fb"><strong>구성</strong></td><td>0-10V 디밍 출력 8채널(DIM1~8) + 16A 래칭릴레이 8접점(R1~8)</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>조광 단계</strong></td><td>0 ~ 254 단계 정밀 디밍</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>통신</strong></td><td>ETLC LINE (Full 2-wire), 0-10V 안정기 대응</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>전원</strong></td><td>24VAC (전원공급장치로부터 공급)</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>제어</strong></td><td>회로별 ON/OFF(릴레이) + 밝기(0-10V) 독립 제어, 그룹·씬·스케쥴 제어</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.3 전원공급장치 (Power Supply Unit)</h3>
+  <table>
+    <tbody>
+      <tr><td style="width:130px; background:#f6f8fb"><strong>입/출력</strong></td><td>입력 AC 220V → 출력 24VAC, 60Hz</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>용량</strong></td><td>60VA (Power Supply + Expansion Power)</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>공급 대상</strong></td><td>SCU / 0-10V 디밍모듈 24VAC 전원 (0VAC 공통)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.4 중앙감시반 CCMS (501동 경비실)</h3>
+  <table>
+    <thead><tr><th style="width:90px">기호</th><th style="width:120px">품목</th><th>사양 (도면 명기)</th><th class="c" style="width:44px">수량</th></tr></thead>
+    <tbody>
+      <tr><td class="c">PC</td><td>Personal Computer</td><td>Intel® Core™ i5 / RAM 32GB 이상 / HDD 1TB 이상 / OS Windows 10 / AC 220V·60Hz</td><td class="c">1</td></tr>
+      <tr><td class="c">MONITOR</td><td>24″ LED 모니터</td><td>해상도 1920×1080 / High Color / AC 220V·60Hz</td><td class="c">1</td></tr>
+      <tr><td class="c">PRINTER</td><td>프린터</td><td>경보·리포트 출력용</td><td class="c">1</td></tr>
+      <tr><td class="c">S/W</td><td>HMI 소프트웨어</td><td>조명제어 HMI (<strong>GS 인증 및 BTL 인증 제품</strong>) — 5장 상세 기능</td><td class="c">1</td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot-brand"><span>UTTEC — 광안 보안등 유선 0-10V 디밍 조명제어 상세 제안서</span><span>4</span></div>
+</div>
+
+<!-- ============ 5. HMI 소프트웨어 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">5</div><h2>HMI 소프트웨어 기능 (심의 명기)</h2></div>
+  <p class="lead">CCMS의 HMI 소프트웨어는 <strong>GS 인증 및 BTL 인증</strong> 제품으로, 다음 기능을 제공합니다(E13-011 사양 명기 항목 전부 반영).</p>
+
+  <table>
+    <thead><tr><th style="width:150px">기능 분류</th><th>세부 기능</th></tr></thead>
+    <tbody>
+      <tr><td><strong>제어</strong></td><td>스케쥴 제어 · 연동 제어 · 통신제어 · 원격조작 · 타임 딜레이 제어 · 하/동절기 절환 제어 · 부하 재설정 제어 · 상태변경(COS)</td></tr>
+      <tr><td><strong>감시</strong></td><td>상태 감시 · 실시간 경향분석 · 히스토리 경향분석 · 자기진단 기능</td></tr>
+      <tr><td><strong>경보</strong></td><td>경보 및 경보 관리 · 데이터 로깅</td></tr>
+      <tr><td><strong>그래픽 / UI</strong></td><td>그래픽 작성 프로그램 · 다이나믹 그래픽 화면처리 · 다중 화면구성 · 드래그 앤 드롭 방식 포인트 설정</td></tr>
+      <tr><td><strong>설정</strong></td><td>전력/조명제어 HMI · Points별 환경설정</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout"><b>운영 시나리오 예시</b> — 일몰 자동 점등 → 심야(예: 23:00) 6회로 일괄 50% 감광 → 일출 자동 소등. 회로별·그룹별 밝기와 스케쥴을 경비실 PC에서 드래그앤드롭 그래픽으로 설정하며, 등기구 고장·통신 이상은 경보로 즉시 표시·로깅됩니다.</div>
+
+  <h3>5.1 UTTEC 제공 HMI 구축 범위</h3>
+  <ul>
+    <li>단지 배치도 기반 <strong>보안등 41등·6회로 그래픽 화면</strong> 작성</li>
+    <li>회로별 포인트(Point) 설정 및 상태·밝기 표시</li>
+    <li>시간대별·계절별 <strong>스케쥴 및 씬(Scene) 프로그래밍</strong></li>
+    <li>경보 관리·데이터 로깅·리포트 출력 설정</li>
+    <li>운영자(경비) 사용 교육 및 운영 매뉴얼 제공</li>
+  </ul>
+
+  <div class="foot-brand"><span>UTTEC — 광안 보안등 유선 0-10V 디밍 조명제어 상세 제안서</span><span>5</span></div>
+</div>
+
+<!-- ============ 6. 제어반 & 케이블 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">6</div><h2>조명제어반 (LCP-0) 및 케이블</h2></div>
+
+  <h3>6.1 조명제어반 LCP-0 구성</h3>
+  <table>
+    <tbody>
+      <tr><td style="width:130px; background:#f6f8fb"><strong>외함</strong></td><td>STEEL, 400 × 1600 × 180 (W×H×D), 501동 경비실 설치</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>내장 기기</strong></td><td>SCU 1 · 0-10V 디밍모듈(8ch) 1 · 전원공급장치 1</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>속판/부속</strong></td><td>내부 속판, 주차단기(MCCB) 및 회로별 차단기(ELB), 단자대, 명판, 배선자재</td></tr>
+      <tr><td style="background:#f6f8fb"><strong>분전반 연계</strong></td><td>L-0 보안등 전등분전반과 연계 (분전함 MC 납품 및 접점 인출)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.2 케이블 스케줄 (Cable Schedule, E13-013)</h3>
+  <table>
+    <thead><tr><th style="width:150px">FROM → TO</th><th>전선 및 CABLE</th><th class="c" style="width:70px">배관</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><td>SCU ↔ LCP</td><td>F-CVVS 1.5㎟ × 2C (신호선)</td><td class="c">22C</td><td>데이터라인 (DATA LINE)</td></tr>
+      <tr><td>LCP ↔ 전등분전반</td><td>2N-HFIX 2.5㎟ / HFIX 2.5㎟ 3C</td><td class="c">—</td><td>전원 및 접지선</td></tr>
+      <tr><td>디밍모듈 ↔ 0-10V 안정기</td><td>AWG18 (UL2095, 2C)</td><td class="c">16C</td><td>0-10V 디밍 통신 (강전라인 혼용 가능)</td></tr>
+      <tr><td>LCP ↔ SCU (전원)</td><td>F-CV 2.5㎟ × 3C</td><td class="c">22C</td><td>제어반 전원</td></tr>
+    </tbody>
+  </table>
+  <p class="small">LEGEND: A=F-CVVS 1.5㎟×2C(22C) · B=HFIX 2.5㎟-3C(전원 및 접지선) · C/D=F-CV 2.5㎟×3C(22C)</p>
+
+  <div class="callout warn"><b>공사 구분 유의</b> — 위 케이블의 <b>배관·포설(배선)</b>은 도면 「공사 구분」상 <b>전기공사(현장 시공사)</b> 범위이며, UTTEC 범위는 <b>기기 신호선 결선</b> 및 <b>디밍 통신라인 결선</b>입니다. 견적서에는 결선 용역과 함께 자재를 별도 구분하여 명기하였습니다(현장 협의에 따라 자재 지급/도급 조정 가능).</div>
+
+  <div class="foot-brand"><span>UTTEC — 광안 보안등 유선 0-10V 디밍 조명제어 상세 제안서</span><span>6</span></div>
+</div>
+
+<!-- ============ 7. 공사 구분 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">7</div><h2>공사 구분 (SCOPE, 도면 명기)</h2></div>
+  <p class="lead">E13 상세도의 「조명제어 SCOPE / 공사 구분」 표를 그대로 반영하여, UTTEC(조명제어공사) 범위와 전기공사·등기구업체 범위를 명확히 구분합니다.</p>
+
+  <table>
+    <thead><tr><th>공사 항목</th><th class="c" style="width:70px">전기공사</th><th class="c" style="width:90px">조명제어공사<br>(UTTEC)</th><th class="c" style="width:70px">등기구<br>업체</th><th style="width:110px">비고</th></tr></thead>
+    <tbody>
+      <tr><td>조명제어 판넬 간 신호선 배관·배선</td><td class="c">●</td><td class="c"></td><td class="c"></td><td>배관은 강제전선관</td></tr>
+      <tr><td>조명제어 판넬 전원공사</td><td class="c">●</td><td class="c"></td><td class="c"></td><td></td></tr>
+      <tr><td>RELAY와 BREAKER/부하 간 배선·결선</td><td class="c">●</td><td class="c"></td><td class="c"></td><td>품셈 5-13항</td></tr>
+      <tr><td>조명제어용 외함 취부</td><td class="c">●</td><td class="c"></td><td class="c"></td><td>속판 취부</td></tr>
+      <tr><td>분전함 MC 납품 및 접점 인출</td><td class="c">●</td><td class="c"></td><td class="c"></td><td></td></tr>
+      <tr><td>디밍제어(0-10V) 통신라인 배관·배선</td><td class="c">●</td><td class="c"></td><td class="c"></td><td></td></tr>
+      <tr><td><strong>조명제어 외함 공급</strong></td><td class="c"></td><td class="c tag" style="color:#166534; font-weight:800">●</td><td class="c"></td><td>UTTEC 공급</td></tr>
+      <tr><td><strong>조명제어 기기 셋팅</strong></td><td class="c"></td><td class="c" style="color:#166534; font-weight:800">●</td><td class="c"></td><td></td></tr>
+      <tr><td><strong>조명제어 기기 신호선 결선</strong></td><td class="c"></td><td class="c" style="color:#166534; font-weight:800">●</td><td class="c"></td><td></td></tr>
+      <tr><td><strong>디밍제어(0-10V) 통신라인 결선</strong></td><td class="c"></td><td class="c" style="color:#166534; font-weight:800">●</td><td class="c"></td><td></td></tr>
+      <tr><td><strong>조명제어 CCMS 공급·구축</strong></td><td class="c"></td><td class="c" style="color:#166534; font-weight:800">●</td><td class="c"></td><td>PC·HMI</td></tr>
+      <tr><td><strong>조명제어 시운전</strong></td><td class="c"></td><td class="c" style="color:#166534; font-weight:800">●</td><td class="c"></td><td>시험조정</td></tr>
+      <tr><td>0-10V 조광 안정기(등기구) 공급</td><td class="c"></td><td class="c"></td><td class="c">●</td><td>등기구 업체</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout ok"><b>UTTEC 책임 범위</b> — ① 조명제어 기기(SCU·디밍모듈·전원장치) 및 제어반 외함 <b>공급</b>, ② 기기 <b>셋팅·프로그래밍</b>, ③ 기기 신호선 및 0-10V 통신라인 <b>결선</b>, ④ CCMS(PC·HMI) <b>공급·구축</b>, ⑤ <b>통합 시운전</b>. 배관·포설·전원공사는 전기공사, 등기구·조광안정기는 등기구업체 범위입니다.</div>
+
+  <div class="foot-brand"><span>UTTEC — 광안 보안등 유선 0-10V 디밍 조명제어 상세 제안서</span><span>7</span></div>
+</div>
+
+<!-- ============ 8. 수행실적 & 일정 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">8</div><h2>수행 역량 · 일정 · 보증</h2></div>
+
+  <h3>8.1 UTTEC 조명제어 수행 역량</h3>
+  <p>UTTEC는 임베디드 제어 및 IoT 조명제어 분야의 전문 기업으로, 국내 대형 시설의 EMS·조명제어 구축 실적과 무선 조명제어 실증 경험을 보유하고 있습니다.</p>
+  <div class="credit">
+    <span>EMS IoT 조명제어 구축</span><span>현대 · 롯데 · 한화 · LH · 홈플러스</span><span>한림용인CC 14노드 실증</span><span>임베디드 38년</span>
+    <span>KC 인증</span><span>일본 TELEC</span><span>유럽 CE</span>
+  </div>
+  <div class="callout"><b>0-10V/DALI 게이트웨이 역량</b> — UTTEC는 0-10V·DALI 조광 프로토콜에 대한 자체 기술을 보유하고 있어, 본 유선 시스템의 안정적 구축은 물론, 향후 <b>일부 구간 무선 확장(옥외 원거리 회로)</b>이 필요할 경우 게이트웨이 방식의 하이브리드 확장도 지원 가능합니다.</div>
+
+  <h3>8.2 예상 일정 (발주 기준)</h3>
+  <table>
+    <thead><tr><th class="c" style="width:70px">주차</th><th>수행 내용</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1~2주</td><td>기기 발주·수급, 제어반(LCP-0) 제작, CCMS 기기 준비, HMI 그래픽 설계</td></tr>
+      <tr><td class="c">3주</td><td>제어반·CCMS 현장 반입·설치, 기기 신호선/통신라인 결선(전기공사 배관·포설 선행 필요)</td></tr>
+      <tr><td class="c">4주</td><td>기기 셋팅·프로그래밍, HMI 포인트·스케쥴 설정</td></tr>
+      <tr><td class="c">5주</td><td>통합 시험·시운전, 운영자 교육, 준공도서 제출</td></tr>
+    </tbody>
+  </table>
+  <p class="small">※ 일정은 전기공사(배관·포설·전원)의 선행 완료 시점 및 등기구(0-10V 안정기) 설치 일정에 연동됩니다.</p>
+
+  <h3>8.3 품질보증 및 A/S</h3>
+  <ul>
+    <li>공급 기기 및 시스템 <strong>하자보증 1년</strong>(협의 시 연장 가능), 무상 A/S</li>
+    <li>준공도서, 기기 시험성적서, 인증서 사본, 운영 매뉴얼 제출</li>
+    <li>원격 지원(HMI) 및 정기 점검 협의 가능</li>
+  </ul>
+
+  <div class="foot-brand"><span>UTTEC — 광안 보안등 유선 0-10V 디밍 조명제어 상세 제안서</span><span>8</span></div>
+</div>
+
+<!-- ============ 9. 견적 요약 & 연락처 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">9</div><h2>견적 요약 및 연락처</h2></div>
+
+  <p class="lead">상세 견적은 <strong>별첨 「견적서」</strong>를 참조하시기 바랍니다. 아래는 대분류별 요약이며, 세부 항목·단가·수량은 견적서에 전부 명기되어 있습니다.</p>
+  <table>
+    <thead><tr><th class="c" style="width:44px">No</th><th>대분류</th><th>주요 내용</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1</td><td>조명제어 기기</td><td>SCU · 0-10V 디밍모듈 8ch · 전원공급장치</td></tr>
+      <tr><td class="c">2</td><td>조명제어반 LCP-0</td><td>외함(400×1600×180) · 속판 · 차단기 · 부속자재 · 제작</td></tr>
+      <tr><td class="c">3</td><td>중앙감시 CCMS</td><td>PC · 24″ 모니터 · 프린터 · HMI S/W(GS·BTL)</td></tr>
+      <tr><td class="c">4</td><td>통신·제어 자재</td><td>데이터라인 · 0-10V 통신선 · 단자/성단 자재</td></tr>
+      <tr><td class="c">5</td><td>설치·용역</td><td>셋팅·프로그래밍 · 결선 · HMI 구축 · 시운전 · 교육</td></tr>
+      <tr><td class="c">6</td><td>기타</td><td>준공도서 · 운반 · 출장 · 예비품</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><b>견적 조건</b> — 본 제안 금액은 E13 상세도 기준 UTTEC(조명제어공사) 범위 산출입니다. 전기공사(배관·포설·전원)와 등기구(0-10V 안정기)는 제외됩니다. 최종 금액은 등기구 조광 방식(0-10V/DALI) 확정 및 현장 실사 후 조정될 수 있습니다.</div>
+
+  <div class="contact-grid">
+    <div class="card"><div class="l">회사</div><div class="v">UTTEC (유티이씨)<br><span class="small">대표이사 홍광선</span></div></div>
+    <div class="card"><div class="l">본사</div><div class="v" style="font-size:9pt;">경기도 용인시 기흥구<br>흥덕중앙로 120<br>흥덕유타워 2404호</div></div>
+    <div class="card"><div class="l">연락처</div><div class="v" style="font-size:9pt;">☎ 010-2401-9059<br>✉ ihong9059@gmail.com<br>www.uttec.co.kr</div></div>
+  </div>
+  <p class="small" style="margin-top:14px;">※ 사업자등록번호 등 계약 관련 정보는 계약 진행 시 별도 제공합니다. 본 제안서는 삼환전기 검토용으로 작성되었습니다.</p>
+
+  <div class="foot-brand"><span>UTTEC — 광안 보안등 유선 0-10V 디밍 조명제어 상세 제안서</span><span>9</span></div>
+</div>
+
+</body>
+</html>
