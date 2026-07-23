@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>광안 지역주택조합 보안등 LoRa 무선 조명제어 제안서 — UTTEC</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Malgun Gothic","맑은 고딕",sans-serif; color:#1f2937; font-size:10.5pt; line-height:1.65; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .page { page-break-after:always; }
+  .page:last-child { page-break-after:auto; }
+
+  /* ---- brand ---- */
+  :root { --navy:#12315e; --blue:#1E40AF; --accent:#2563eb; --lightblue:#eff4fb; --gray:#6b7280; --line:#d8dee9; }
+  h1,h2,h3 { color:var(--navy); font-weight:800; }
+
+  /* ---- cover ---- */
+  .cover { min-height:255mm; display:flex; flex-direction:column; }
+  .cover-top { border-top:6px solid var(--blue); padding-top:10px; display:flex; justify-content:space-between; align-items:baseline; }
+  .logo { font-size:30pt; font-weight:900; letter-spacing:2px; color:var(--blue); }
+  .logo small { font-size:9pt; font-weight:600; color:var(--gray); letter-spacing:0; display:block; margin-top:-4px; }
+  .cover-mid { flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .cover-tag { color:var(--accent); font-weight:700; font-size:12pt; letter-spacing:3px; margin-bottom:14px; }
+  .cover-title { font-size:30pt; font-weight:900; color:var(--navy); line-height:1.28; }
+  .cover-title .em { color:var(--blue); }
+  .cover-sub { margin-top:18px; font-size:12.5pt; color:#374151; font-weight:600; }
+  .cover-meta { margin-top:40px; border-top:1px solid var(--line); padding-top:18px; display:grid; grid-template-columns:repeat(2,1fr); gap:10px 30px; font-size:10.5pt; }
+  .cover-meta b { color:var(--navy); display:inline-block; min-width:74px; }
+  .cover-foot { margin-top:24px; font-size:9.5pt; color:var(--gray); }
+
+  /* ---- section ---- */
+  .sec-head { display:flex; align-items:center; gap:10px; margin:2px 0 12px; padding-bottom:8px; border-bottom:2px solid var(--blue); }
+  .sec-no { background:var(--blue); color:#fff; font-weight:800; font-size:11pt; width:26px; height:26px; border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .sec-head h2 { font-size:15pt; }
+  h3 { font-size:11.5pt; margin:16px 0 7px; padding-left:9px; border-left:3px solid var(--accent); }
+  p { margin:6px 0; }
+  .lead { font-size:11pt; color:#374151; }
+  ul { margin:6px 0 6px 18px; } li { margin:3px 0; }
+  strong { color:var(--navy); }
+  .hl { background:linear-gradient(transparent 60%, #fde68a 60%); font-weight:700; }
+
+  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:9.7pt; }
+  th,td { border:1px solid var(--line); padding:7px 9px; text-align:left; vertical-align:middle; }
+  th { background:var(--navy); color:#fff; font-weight:700; }
+  tbody tr:nth-child(even) { background:#f6f8fb; }
+  td.c,th.c { text-align:center; } td.r { text-align:right; }
+  .tag-uttec { color:#166534; font-weight:800; }
+  .tag-old { color:#9ca3af; }
+
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:12px 0; }
+  .card { border:1px solid var(--line); border-radius:9px; padding:13px; background:#fff; }
+  .card .k { font-size:22pt; font-weight:900; color:var(--blue); line-height:1; }
+  .card .l { font-size:9pt; color:var(--gray); margin-top:4px; }
+  .card .d { font-size:9.3pt; margin-top:6px; color:#374151; }
+
+  .callout { background:var(--lightblue); border-left:4px solid var(--blue); border-radius:0 8px 8px 0; padding:12px 15px; margin:12px 0; font-size:10pt; }
+  .callout b { color:var(--blue); }
+  .warn { background:#fff7ed; border-left:4px solid #ea580c; }
+  .warn b { color:#c2410c; }
+
+  .arch { display:flex; align-items:stretch; gap:8px; margin:14px 0; font-size:9pt; text-align:center; }
+  .node { flex:1; border:1.5px solid var(--accent); border-radius:9px; padding:11px 7px; background:#fff; }
+  .node .t { font-weight:800; color:var(--navy); font-size:9.6pt; } .node .s { color:var(--gray); font-size:8.3pt; margin-top:3px; }
+  .arrow { display:flex; align-items:center; color:var(--accent); font-weight:900; font-size:15pt; }
+  .radio { border-style:dashed; background:#f0f7ff; }
+
+  .foot-brand { margin-top:20px; border-top:1px solid var(--line); padding-top:12px; display:flex; justify-content:space-between; font-size:8.6pt; color:var(--gray); }
+  .credit { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0; }
+  .credit span { background:#f1f5f9; border:1px solid var(--line); border-radius:20px; padding:3px 11px; font-size:8.8pt; font-weight:600; color:#334155; }
+  .contact-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px; }
+  .contact-grid .card .l { font-size:8.5pt; text-transform:uppercase; letter-spacing:1px; }
+  .contact-grid .card .v { font-size:10pt; font-weight:700; color:var(--navy); margin-top:5px; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="page cover">
+  <div class="cover-top">
+    <div class="logo">UTTEC<small>www.uttec.co.kr</small></div>
+    <div style="text-align:right; font-size:9.5pt; color:var(--gray);">기술 제안서<br>Proposal</div>
+  </div>
+  <div class="cover-mid">
+    <div class="cover-tag">LoRa 무선 조명제어 시스템</div>
+    <div class="cover-title">광안 지역주택조합<br>옥외 보안등 <span class="em">무선 디밍 제어</span> 제안</div>
+    <div class="cover-sub">신호선 배관·배선 없는 시간대별 자동 디밍 · 중앙감시 통합 솔루션</div>
+    <div class="cover-meta">
+      <div><b>제출처</b> 삼환전기 귀중</div>
+      <div><b>현장</b> 부산 수영구 광안동 971</div>
+      <div><b>대상</b> 옥외 보안등 41등 / 6회로</div>
+      <div><b>제출일</b> 2026. 07. 23.</div>
+      <div><b>작성</b> UTTEC (유티이씨)</div>
+      <div><b>문서</b> v1.0 (CAD 검토 반영본)</div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    본 제안서는 삼환전기가 제공한 건축심의 도면(E13 보안등 조명제어 상세도, E2 옥외 인입·보안등 배치도)의 정밀 검토 결과를 기반으로 작성되었습니다.
+  </div>
+</div>
+
+<!-- ============ 1. 제안 개요 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">1</div><h2>제안 개요</h2></div>
+  <p class="lead">본 제안은 광안 지역주택조합 공동주택의 <strong>옥외 보안등 41등</strong>에 대한 <strong>시간대별 자동 디밍 제어 및 중앙 감시</strong>를, 심의 도면의 유선 방식 대신 <strong class="hl">UTTEC LoRa 무선 조명제어</strong>로 구현하는 방안입니다.</p>
+
+  <div class="cards">
+    <div class="card"><div class="k">0선</div><div class="l">통신 배관·배선</div><div class="d">옥외 분산 보안등 간 신호선 포설 공사 전면 소거</div></div>
+    <div class="card"><div class="k">254</div><div class="l">단계 디밍</div><div class="d">심의 요구(0~254단계)와 동등한 정밀 조광 + 그룹/씬 제어</div></div>
+    <div class="card"><div class="k">1개소</div><div class="l">중앙 감시</div><div class="d">501동 경비실 통합 관제 · 스케쥴 · 자기진단 · 경보</div></div>
+  </div>
+
+  <div class="callout"><b>핵심 메시지</b> — 심의가 요구하는 조명제어 기능(정밀 디밍·그룹 제어·스케쥴·중앙감시·자기진단)을 <b>그대로 충족</b>하면서, 옥외에 넓게 분산된 보안등을 잇는 <b>신호선 배관·배선·결선 공사를 없애</b> 공사비와 공기를 크게 절감합니다.</div>
+
+  <h3>왜 지금 무선인가</h3>
+  <p>심의 도면 개정 이력상 조명제어(타이머 디밍)는 <strong>2024년 9월에 추가 반영</strong>되었고, 납품 직전(2024.09.25)까지 관련 간선 규격이 계속 변경되었습니다. 이는 옥외 보안등의 <strong>신호선 배선이 설계·시공상 부담 요소</strong>임을 보여줍니다. 무선 방식은 이 부담을 근본적으로 제거합니다.</p>
+
+  <div class="foot-brand"><span>UTTEC — 광안 지역주택조합 보안등 LoRa 조명제어 제안서</span><span>1</span></div>
+</div>
+
+<!-- ============ 2. 대상 현황 분석 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">2</div><h2>대상 현황 분석 (심의 도면 기준)</h2></div>
+  <p class="lead">삼환전기 제공 도면(E13·E2)을 정밀 검토한 결과입니다.</p>
+
+  <h3>보안등 구성 및 규모</h3>
+  <table>
+    <thead><tr><th style="width:32%">항목</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>보안등 수량</td><td><strong>총 41등</strong> — OL1(7) · OL2(6) · OL3(7) · OL4(7) · OL5(7) · OL6(7)</td></tr>
+      <tr><td>회로 구성</td><td><strong>6 회로</strong> (OL1~OL6) + 예비 2 = 계 8</td></tr>
+      <tr><td>조명제어반</td><td>LCP-0, 외함 400 × 1600 × 180, 설치 위치 <strong>501동 경비실</strong></td></tr>
+      <tr><td>중앙 감시</td><td>501동 경비실 관제 PC + HMI (스케쥴·경보·자기진단)</td></tr>
+      <tr><td>수전</td><td>KEPCO 22.9kV 인입 (지하 2층 전기실), 저압 3Ø4W 380/220V</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><b>참고</b> — 2020년 심의 PDF의 보안등 수량(27등)은 구 버전입니다. 이후 도면 개정(2024.08.13 보안등 5개소 추가 등)을 반영한 <b>최종 수량은 41등 / 6회로</b>이며, 본 제안 규모는 이를 기준으로 산정했습니다.</div>
+
+  <h3>심의 도면의 제어 방식 = 유선 0-10V 디밍</h3>
+  <p>심의 승인 도면은 아래와 같은 <strong>유선(0-10V) 중앙 제어 시스템</strong>으로 구성되어 있습니다.</p>
+  <table>
+    <thead><tr><th style="width:26%">구성</th><th>사양 (심의 명기)</th></tr></thead>
+    <tbody>
+      <tr><td>중앙전송장치(SCU)</td><td>RS485 / Ethernet / MODBUS 통신, 자기진단·Stand-Alone 내장</td></tr>
+      <tr><td>0-10V 디밍모듈 8ch</td><td>0~254단계 디밍, 16 그룹/씬, 16A 래칭릴레이 8, DALI 대응</td></tr>
+      <tr><td>전원공급장치</td><td>AC90-235V, AC220 / DC24V 40VA</td></tr>
+      <tr><td>중앙감시반(CCMS)</td><td>관제 PC + 24″ 모니터 + HMI 소프트웨어(스케쥴·경보·경향분석)</td></tr>
+      <tr><td>배선</td><td>데이터 F-CVVS 1.5㎟×2C (배관 22C), 안정기 통신 AWG18 (배관 16C)</td></tr>
+    </tbody>
+  </table>
+  <p>즉 각 보안등 그룹까지 <strong>데이터·안정기 통신 배관과 배선을 포설</strong>해야 하는 구조입니다. UTTEC는 이 통신 배선 부담을 무선으로 대체합니다.</p>
+
+  <div class="foot-brand"><span>UTTEC — 광안 지역주택조합 보안등 LoRa 조명제어 제안서</span><span>2</span></div>
+</div>
+
+<!-- ============ 3. UTTEC 제안 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">3</div><h2>UTTEC 제안 — LoRa 무선 조명제어</h2></div>
+  <p class="lead">중앙 관제(501동 경비실) ↔ 각 보안등 제어 노드를 <strong>LoRa 장거리 무선</strong>으로 연결합니다. 넓게 분산된 옥외 보안등에 이상적인 구성입니다.</p>
+
+  <h3>시스템 구성</h3>
+  <div class="arch">
+    <div class="node"><div class="t">중앙 관제 PC</div><div class="s">501동 경비실<br>HMI · 스케쥴 · 감시</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="t">LoRa 게이트웨이</div><div class="s">중앙 집중<br>양방향 제어·상태수집</div></div>
+    <div class="arrow radio-arrow">))) </div>
+    <div class="node radio"><div class="t">LoRa 제어 노드</div><div class="s">회로/그룹별<br>디밍 + 릴레이</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="t">보안등 41등</div><div class="s">0-10V / DALI<br>조광 안정기</div></div>
+  </div>
+  <p style="text-align:center; font-size:8.8pt; color:var(--gray);">※ 게이트웨이 ↔ 제어 노드 구간이 <strong>무선(LoRa)</strong> — 이 구간의 통신 배관·배선이 불필요합니다.</p>
+
+  <h3>제어 노드 (각 보안등 회로/그룹)</h3>
+  <ul>
+    <li><strong>0-10V / DALI 조광 출력</strong> — 기존 조광 안정기를 그대로 구동 (0~254단계 정밀 디밍)</li>
+    <li><strong>부하 개폐 릴레이</strong> — 회로 ON/OFF 및 그룹 제어</li>
+    <li><strong>LoRa 양방향 통신</strong> — 제어 명령 수신 + 상태/고장 정보 중앙 보고 (자기진단)</li>
+    <li><strong>자립 제어(Stand-Alone)</strong> — 중앙 통신 두절 시에도 내장 스케쥴로 지속 동작</li>
+  </ul>
+
+  <div class="callout"><b>기존 등기구 활용</b> — 심의 디밍모듈이 DALI/0-10V를 대응하듯, UTTEC 제어 노드도 <b>동일한 0-10V·DALI 조광 규격을 출력</b>합니다. 따라서 <b>등기구(조광 안정기) 재선정 없이</b> 무선 제어만 얹는 구성이 가능합니다.</div>
+
+  <div class="foot-brand"><span>UTTEC — 광안 지역주택조합 보안등 LoRa 조명제어 제안서</span><span>3</span></div>
+</div>
+
+<!-- ============ 4. 기능 동등성 + 차별점 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">4</div><h2>심의 요구 대비 기능 동등성 & 차별점</h2></div>
+  <p class="lead">심의가 요구하는 제어 기능을 <strong>1:1로 충족</strong>하면서, 배선 구조에서 결정적 우위를 제공합니다.</p>
+
+  <table>
+    <thead><tr><th style="width:28%">기능 요구 (심의)</th><th class="c" style="width:30%">심의 유선 0-10V</th><th class="c" style="width:30%">UTTEC LoRa 무선</th></tr></thead>
+    <tbody>
+      <tr><td>0~254단계 정밀 디밍</td><td class="c">○</td><td class="c tag-uttec">○ 동등</td></tr>
+      <tr><td>시간대별 스케쥴 제어</td><td class="c">○</td><td class="c tag-uttec">○ 동등</td></tr>
+      <tr><td>그룹 / 씬 제어</td><td class="c">○</td><td class="c tag-uttec">○ 동등</td></tr>
+      <tr><td>중앙 감시(CCMS) · HMI</td><td class="c">○</td><td class="c tag-uttec">○ 동등</td></tr>
+      <tr><td>자기진단 · 경보</td><td class="c">○</td><td class="c tag-uttec">○ 동등</td></tr>
+      <tr><td>중앙 두절 시 자립 동작</td><td class="c">○</td><td class="c tag-uttec">○ 동등</td></tr>
+      <tr><td><strong>통신 배관·배선 공사</strong></td><td class="c tag-old">필요 (F-CVVS·AWG18, 22C/16C)</td><td class="c tag-uttec">불필요 (무선)</td></tr>
+      <tr><td><strong>옥외 분산 확장</strong></td><td class="c tag-old">배선 경로 제약</td><td class="c tag-uttec">노드 추가만으로 확장</td></tr>
+    </tbody>
+  </table>
+
+  <h3>UTTEC 핵심 차별점</h3>
+  <div class="cards">
+    <div class="card"><div class="l" style="font-weight:800;color:var(--blue);font-size:10pt;">① 무배관·무배선</div><div class="d">옥외 41등 사이 신호선 배관·포설·결선 전면 소거 → 자재·인건비·공기 절감</div></div>
+    <div class="card"><div class="l" style="font-weight:800;color:var(--blue);font-size:10pt;">② 시공 유연성</div><div class="d">등기구 위치·수량 변경에 배선 재설계 불필요. 준공 후 증설도 노드 추가로 대응</div></div>
+    <div class="card"><div class="l" style="font-weight:800;color:var(--blue);font-size:10pt;">③ 기존 등기구 활용</div><div class="d">0-10V·DALI 조광 규격 그대로 출력 → 조광 안정기 교체 리스크 회피</div></div>
+  </div>
+
+  <div class="foot-brand"><span>UTTEC — 광안 지역주택조합 보안등 LoRa 조명제어 제안서</span><span>4</span></div>
+</div>
+
+<!-- ============ 5. 실증 & 회사 ============ -->
+<div class="page">
+  <div class="sec-head"><div class="sec-no">5</div><h2>실증 레퍼런스 및 회사 신뢰도</h2></div>
+
+  <h3>LoRa 조명·설비 무선제어 실증</h3>
+  <p><strong>한림용인CC 고가수조 무선 제어 (14노드 LoRa)</strong> — 넓은 골프장 부지 전역에 걸친 설비를 LoRa 무선으로 중앙 제어·감시한 실증 사례로, 본 제안의 <strong>옥외 분산 무선 제어 방식과 동일한 검증 기반</strong>입니다.</p>
+
+  <h3>UTTEC 조명제어 실적 · 인증</h3>
+  <p>UTTEC는 대규모 <strong>EMS IoT 조명 제어</strong> 공급 실적과 통신·안전 인증을 보유하고 있습니다.</p>
+  <div class="credit">
+    <span>현대</span><span>롯데</span><span>한화</span><span>LH</span><span>홈플러스</span>
+    <span>KC 인증</span><span>TELEC 인증</span><span>CE 인증</span>
+  </div>
+  <p style="font-size:9.3pt;color:var(--gray);">※ EMS IoT 조명 제어 시스템 납품 실적 및 무선통신 인증 보유 (UTTEC 회사소개 기준).</p>
+
+  <div class="sec-head" style="margin-top:26px;"><div class="sec-no">6</div><h2>협의 필요 사항</h2></div>
+  <p class="lead">정밀 견적 확정을 위해 아래 4개 항목의 확인을 요청드립니다.</p>
+  <table>
+    <thead><tr><th class="c" style="width:8%">No</th><th style="width:34%">확인 항목</th><th>목적</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1</td><td>등기구 조광 규격 (0-10V / DALI / LED 드라이버 방식)</td><td>제어 노드 조광 출력 방식 확정</td></tr>
+      <tr><td class="c">2</td><td>요청 범위 (제어시스템 전체 대체 / 특정부만)</td><td>제안·견적 범위 확정</td></tr>
+      <tr><td class="c">3</td><td>현재 진행 단계 (설계 / 발주 / 시공)</td><td>적용 시점 및 방식 조율</td></tr>
+      <tr><td class="c">4</td><td>옥외 관로 매설 여부</td><td>무선 적용 이점 및 전원 배선 범위 확정</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout" style="margin-top:22px;"><b>다음 단계</b> — 위 항목 확인 후 UTTEC가 <b>상세 시스템 설계 및 정밀 견적</b>을 제출합니다. 필요 시 현장 실사 및 데모를 진행합니다.</div>
+
+  <div class="contact-grid">
+    <div class="card"><div class="l">본사</div><div class="v" style="font-size:9pt;">경기도 용인시 기흥구<br>흥덕중앙로 120<br>흥덕유타워 2404호</div></div>
+    <div class="card"><div class="l">연락처</div><div class="v">Tel 031-627-2250<br>Fax 0505-300-8065</div></div>
+    <div class="card"><div class="l">웹 / 담당</div><div class="v">www.uttec.co.kr<br>대표이사 홍광선</div></div>
+  </div>
+
+  <div class="foot-brand"><span>UTTEC — 광안 지역주택조합 보안등 LoRa 조명제어 제안서</span><span>5</span></div>
+</div>
+
+</body>
+</html>

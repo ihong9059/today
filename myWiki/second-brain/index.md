@@ -98,6 +98,7 @@ updated: 2026-05-09
 | [[whybiz-tracker]] | whybiz GPS Tracker IoT IP — LTE+GPS+Zigbee+LoRa+Modbus+BLE 모듈러 솔루션, 모듈 즉시 재조합 가능 |
 | [[군사업]] | 군 사업 IP — ITM-G3 RF 통신기(Qorvo QPG6105) + 60Channel 군대충전기 + 함상통신기·지뢰감시센서 |
 | [[한림용인cc-고가수조]] | ⭐ 한림용인CC 고가수조 자동급수 무선제어 (★ 시공 직전, 1,000만원, 한림그룹 6년 만의 재거래·영역 확장) |
+| [[삼환전기-광안조명제어]] | 삼환전기 광안 지역주택조합 보안등 조명제어 리드 — 심의본=유선 0-10V 디밍(경쟁), UTTEC LoRa 무선 대체 제안. 보안등 41등/6회로 (CAD 판독 완료) |
 | [[n8n-uttec]] | ⭐ n8nUttec vault (Ubuntu 호스트, 5/16~) — UTTEC n8n 자동화 학습 + 영업·사업화 통합, n8n-claude 합류 (4 Claude) |
 | [[shield]] | ⭐ shield vault (RPi Linux 호스트, 5/16~) — RPi shield 보드 응용 (LoRa·RS485·RS422·MESH·I2C), shield-claude 합류 (5 Claude) + work-end always-send 강제 룰 |
 | [[vault-portability]] | ⭐⭐⭐ vault Cross-Platform Portability (5/23 신설) — today vault = UTTEC product candidate 재정의, L1 Mac dry-run / L2 CI matrix / L3 Cloud 탑재 (~10~16일 계획) |
