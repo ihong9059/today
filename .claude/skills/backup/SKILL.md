@@ -1,11 +1,18 @@
 ---
 name: backup
-description: C:\todo\today 폴더를 외장 disk(G:\ UTTEC_SSD)로 robocopy 백업. 멀티스레드 + incremental + junction 제외. "backup", "백업", "백업해줘", "/backup" 요청 시 사용
+description: C:\todo\today + C:\todo\wishketProject 폴더를 외장 disk(G:\ UTTEC_SSD)로 robocopy 백업. 멀티스레드 + incremental + junction 제외. "backup", "백업", "백업해줘", "/backup" 요청 시 사용
 ---
 
 # Backup Skill — todo 외장 disk 백업
 
-`C:\todo\today` 폴더 전체를 **UTTEC_SSD (G:\)** 외장 SSD로 robocopy 복사. Junction 무시, 멀티스레드 32, incremental.
+**두 폴더**를 **UTTEC_SSD (G:\)** 외장 SSD로 robocopy 복사. Junction 무시, 멀티스레드 32, incremental.
+
+| # | 소스 | 대상 |
+|---|---|---|
+| 1 | `C:\todo\today` | `G:\today_backup_YYYY-MM-DD` |
+| 2 | `C:\todo\wishketProject` ⭐ | `G:\wishketProject_backup_YYYY-MM-DD` |
+
+> ⭐ wishketProject = 위시캣/크몽 영업 원본 (자체 git repo, GitHub 원격 O). `today` 밖 별도 위치라 명시 포함. 2026-07-27 이 폴더가 삭제→휴지통 복구된 사건 후 이중 백업 대상에 추가 (2026-07-29).
 
 ## 사양 (2026-06-01 박제, 5/31 포맷 사양 그대로)
 
@@ -53,13 +60,19 @@ Get-ChildItem 'G:\' -Directory -Filter 'today_backup_*' | Sort-Object Name
 
 ```powershell
 $date = Get-Date -Format 'yyyy-MM-dd'
-$dst = "G:\today_backup_$date"
-$log = "G:\backup_log_$date.txt"
 
-robocopy "C:\todo\today" $dst `
-    /E /MT:32 /R:2 /W:1 /XJ /NFL /NDL /LOG:$log
+# 소스 → 대상 매핑 (today + wishketProject)
+$targets = @(
+    @{ Src = "C:\todo\today";          Dst = "G:\today_backup_$date";          Log = "G:\backup_log_$date.txt" },
+    @{ Src = "C:\todo\wishketProject"; Dst = "G:\wishketProject_backup_$date"; Log = "G:\backup_log_wishket_$date.txt" }
+)
 
-Write-Output "robocopy exit code: $LASTEXITCODE"
+foreach ($t in $targets) {
+    if (-not (Test-Path $t.Src)) { Write-Output "⚠️ 소스 없음, 건너뜀: $($t.Src)"; continue }
+    Write-Output "robocopy: $($t.Src) → $($t.Dst)"
+    robocopy $t.Src $t.Dst /E /MT:32 /R:2 /W:1 /XJ /NFL /NDL /LOG:$($t.Log)
+    Write-Output "  exit code: $LASTEXITCODE"
+}
 ```
 
 **옵션 의미**:
@@ -88,18 +101,18 @@ Write-Output "robocopy exit code: $LASTEXITCODE"
 ### 3. 결과 보고
 
 ```powershell
-$summary = Get-Content $log -Tail 15
-$total_files = (Get-ChildItem $dst -Recurse -File -Force -ErrorAction SilentlyContinue).Count
-$total_gb = [math]::Round(((Get-ChildItem $dst -Recurse -File -Force -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum)/1GB, 2)
-Write-Output ""
-Write-Output "[백업 완료]"
-Write-Output "  대상: $dst"
-Write-Output "  로그: $log"
-Write-Output "  총 파일: $total_files"
-Write-Output "  총 크기: $total_gb GB"
-Write-Output ""
-Write-Output "[robocopy 통계]"
-Write-Output $summary
+foreach ($t in $targets) {
+    if (-not (Test-Path $t.Dst)) { continue }
+    $total_files = (Get-ChildItem $t.Dst -Recurse -File -Force -ErrorAction SilentlyContinue).Count
+    $total_gb = [math]::Round(((Get-ChildItem $t.Dst -Recurse -File -Force -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum)/1GB, 2)
+    Write-Output ""
+    Write-Output "[백업 완료] $($t.Src)"
+    Write-Output "  대상: $($t.Dst)"
+    Write-Output "  로그: $($t.Log)"
+    Write-Output "  총 파일: $total_files / 총 크기: $total_gb GB"
+    Write-Output "  [robocopy 통계]"
+    Write-Output (Get-Content $t.Log -Tail 12)
+}
 ```
 
 ### 4. work-end 시 자동 호출 검토

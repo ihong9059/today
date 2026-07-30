@@ -1,0 +1,16 @@
+{
+  "$comment": "새 vault 진입(세션 시작) 시 오늘 작업보고서를 자동 생성한다. 외부 서비스(Notion sync, vault-status 점검 등)를 붙이려면 아래 command 뒤에 '&& python .claude/hooks/{훅}.py'를 체이닝하면 된다.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/create-daily-report.py"
+          }
+        ]
+      }
+    ]
+  }
+}
