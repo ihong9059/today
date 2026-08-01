@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>광주 AI·IoT 스마트팩토리 실습 교육 제안 — UTTEC</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+  /* 로컬 설치 폰트 사용 (웹폰트 @import 제거 → PDF Type3 폰트 방지, PDF.js 렌더 오류 해결) */
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #0a0a0a; color: #fff; overflow: hidden; }
+  body { font-family: 'Malgun Gothic', '맑은 고딕', 'AppleSDGothicNeo', sans-serif; background: #0a0a0a; color: #fff; overflow: hidden; }
   .slide { display: none; width: 100vw; height: 100vh; padding: 48px 68px; position: absolute; top: 0; left: 0; animation: fadeIn 0.5s ease; }
   .slide.active { display: flex; flex-direction: column; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -15,7 +15,7 @@
   /* Cover */
   .slide-cover { background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #3b82f6 150%); justify-content: center; align-items: center; text-align: center; }
   .slide-cover .badge { display: inline-block; background: rgba(59,130,246,0.2); border: 1px solid rgba(59,130,246,0.5); border-radius: 30px; padding: 8px 24px; font-size: 13px; letter-spacing: 2px; color: #93c5fd; margin-bottom: 22px; }
-  .slide-cover .hanja { font-size: 40px; font-weight: 900; letter-spacing: 4px; background: linear-gradient(to right, #fff, #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+  .slide-cover .hanja { font-size: 40px; font-weight: 900; letter-spacing: 4px; color: #dbeafe; margin-bottom: 6px; }
   .slide-cover .hanja-sub { font-size: 17px; color: #93c5fd; margin-bottom: 4px; letter-spacing: 2px; }
   .slide-cover .hanja-desc { font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 30px; }
   .slide-cover h1 { font-size: 40px; font-weight: 900; line-height: 1.3; margin-bottom: 14px; }
@@ -86,14 +86,18 @@
   .s-hw { background: linear-gradient(160deg, #0f172a, #1c1917); }
   .hw-left { flex: 1; display: flex; flex-direction: column; justify-content: center; }
   .hw-right { flex: 1; display: flex; flex-direction: column; gap: 9px; justify-content: center; }
-  .hw-feat { display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 11px 15px; }
+  .hw-feat { display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 11px 15px; border-left: 3px solid rgba(59,130,246,0.6); }
   .hw-feat .icon { font-size: 21px; }
+  /* CSS badges (emoji-free, no Type3 fonts) */
+  .ic { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 9px; font-size: 14px; font-weight: 800; flex-shrink: 0; background: rgba(59,130,246,0.18); border: 1px solid rgba(59,130,246,0.45); color: #93c5fd; }
+  .ic.r { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.45); color: #fca5a5; }
+  .solic { width: 50px; height: 50px; margin: 0 auto 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; background: rgba(59,130,246,0.18); border: 1px solid rgba(59,130,246,0.5); color: #93c5fd; }
   .hw-feat h3 { font-size: 14px; font-weight: 600; }
   .hw-feat p { font-size: 11px; color: rgba(255,255,255,0.5); }
   .hw-board { background: linear-gradient(160deg, rgba(30,58,95,0.55), rgba(0,0,0,0.4)); border: 2px solid rgba(59,130,246,0.4); border-radius: 16px; padding: 20px 18px; display: flex; flex-direction: column; gap: 12px; }
   .hw-board .bt { text-align: center; font-size: 14px; font-weight: 700; color: #93c5fd; padding-bottom: 11px; border-bottom: 1px solid rgba(255,255,255,0.12); }
   .hw-board .chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
-  .hw-chip { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 11px 6px; text-align: center; }
+  .hw-chip { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 16px 6px; text-align: center; }
   .hw-chip .ci { font-size: 21px; line-height: 1; }
   .hw-chip .cn { font-size: 11px; color: rgba(255,255,255,0.82); margin-top: 5px; font-weight: 600; }
   .hw-chip .cs { font-size: 9px; color: rgba(255,255,255,0.45); margin-top: 1px; }
@@ -140,7 +144,7 @@
   .s-eff { background: linear-gradient(160deg, #0f172a, #1e3a5f); }
   .eff-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; align-content: center; }
   .eff-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; text-align: center; }
-  .eff-card .big { font-size: 34px; font-weight: 900; background: linear-gradient(to right, #3b82f6, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+  .eff-card .big { font-size: 34px; font-weight: 900; color: #60a5fa; margin-bottom: 6px; }
   .eff-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 5px; }
   .eff-card p { font-size: 11px; color: rgba(255,255,255,0.45); }
 
@@ -231,10 +235,10 @@
   <div class="sh"><div class="num">03 — PROBLEM</div><h2>제조 현장의 과제</h2><div class="line"></div></div>
   <div class="sb">
     <div class="prob-left">
-      <div class="prob-item"><div class="icon">&#x26A0;&#xFE0F;</div><div><h3>설비 고장 = 사후 대응</h3><p>고장 나야 알고, 원인 찾느라 반나절. 예방은 꿈같은 이야기</p></div></div>
-      <div class="prob-item"><div class="icon">&#x1F441;</div><div><h3>환경·품질 관리 = 육안·수기</h3><p>사람이 돌며 온습도 확인·수기 기록. 누락·지연·피로</p></div></div>
-      <div class="prob-item"><div class="icon">&#x1F4B0;</div><div><h3>스마트 팩토리 = 비용 부담</h3><p>PLC + SCADA + MES = 수천만원~수억원. 중소기업엔 벽</p></div></div>
-      <div class="prob-item"><div class="icon">&#x1F9D1;&#x200D;&#x1F3ED;</div><div><h3>디지털 = "전문가의 일"이라는 인식</h3><p>현장 직원은 시도조차 안 함 → 외부 의존 고착</p></div></div>
+      <div class="prob-item"><div class="ic r">!</div><div><h3>설비 고장 = 사후 대응</h3><p>고장 나야 알고, 원인 찾느라 반나절. 예방은 꿈같은 이야기</p></div></div>
+      <div class="prob-item"><div class="ic r">!</div><div><h3>환경·품질 관리 = 육안·수기</h3><p>사람이 돌며 온습도 확인·수기 기록. 누락·지연·피로</p></div></div>
+      <div class="prob-item"><div class="ic r">!</div><div><h3>스마트 팩토리 = 비용 부담</h3><p>PLC + SCADA + MES = 수천만원~수억원. 중소기업엔 벽</p></div></div>
+      <div class="prob-item"><div class="ic r">!</div><div><h3>디지털 = "전문가의 일"이라는 인식</h3><p>현장 직원은 시도조차 안 함 → 외부 의존 고착</p></div></div>
     </div>
     <div class="prob-right">
       <div class="prob-vs">
@@ -254,13 +258,13 @@
   <div class="sh"><div class="num">04 — SOLUTION</div><h2>라즈베리파이 + kit + AI = 직접 만드는 스마트팩토리</h2><div class="line"></div></div>
   <div class="sol-main">
     <div class="sol-row">
-      <div class="sol-box"><div class="icon">&#x1F4BB;</div><h3>Raspberry Pi</h3><p>손바닥 컴퓨터<br>GPIO 하드웨어 제어</p></div>
+      <div class="sol-box"><div class="solic">Pi</div><h3>Raspberry Pi</h3><p>손바닥 컴퓨터<br>GPIO 하드웨어 제어</p></div>
       <div class="sol-arrow">+</div>
-      <div class="sol-box"><div class="icon">&#x1F6E1;&#xFE0F;</div><h3>UTTEC Shield</h3><p>UTTEC 자체 제작<br>센서·LED·무선 일체</p></div>
+      <div class="sol-box"><div class="solic">S</div><h3>UTTEC Shield</h3><p>UTTEC 자체 제작<br>센서·LED·무선 일체</p></div>
       <div class="sol-arrow">+</div>
-      <div class="sol-box"><div class="icon">&#x1F40D;</div><h3>Python</h3><p>가장 쉬운 언어<br>산업 현장 실사용</p></div>
+      <div class="sol-box"><div class="solic">Py</div><h3>Python</h3><p>가장 쉬운 언어<br>산업 현장 실사용</p></div>
       <div class="sol-arrow">+</div>
-      <div class="sol-box"><div class="icon">&#x1F916;</div><h3>AI (Claude)</h3><p>막힘을 스스로 해결<br>평생 학습 조력자</p></div>
+      <div class="sol-box"><div class="solic">AI</div><h3>AI (Claude)</h3><p>막힘을 스스로 해결<br>평생 학습 조력자</p></div>
     </div>
     <div class="sol-desc">
       <strong>Pi</strong>로 센서를 읽고 설비를 제어하고, <strong>Python</strong>으로 판단·기록하고, <strong>무선(LoRa)</strong>으로 원격 감시하고,<br>
@@ -277,26 +281,26 @@
       <div class="hw-board">
         <div class="bt">Raspberry Pi + UTTEC Shield Board</div>
         <div class="chips">
-          <div class="hw-chip"><div class="ci">&#x1F5A5;&#xFE0F;</div><div class="cn">Raspberry Pi</div><div class="cs">베이스 컴퓨터</div></div>
-          <div class="hw-chip"><div class="ci">&#x1F6E1;&#xFE0F;</div><div class="cn">UTTEC Shield</div><div class="cs">일체형 보드</div></div>
-          <div class="hw-chip"><div class="ci">&#x1F321;&#xFE0F;</div><div class="cn">AHT20</div><div class="cs">온습도 센서</div></div>
-          <div class="hw-chip"><div class="ci">&#x1F4FA;</div><div class="cn">OLED</div><div class="cs">0.96" 표시</div></div>
-          <div class="hw-chip"><div class="ci">&#x1F6A6;</div><div class="cn">신호등 LED</div><div class="cs">R · Y · B</div></div>
-          <div class="hw-chip"><div class="ci">&#x1F308;</div><div class="cn">WS2812 &#xD7;4</div><div class="cs">RGB 네오픽셀</div></div>
-          <div class="hw-chip"><div class="ci">&#x1F514;</div><div class="cn">부저 · 스피커</div><div class="cs">경보 · 멜로디</div></div>
-          <div class="hw-chip"><div class="ci">&#x1F4E1;</div><div class="cn">LoRa (E32)</div><div class="cs">장거리 무선</div></div>
-          <div class="hw-chip"><div class="ci">&#x1F532;</div><div class="cn">ESP32C3</div><div class="cs">보조 MCU · 버튼</div></div>
+          <div class="hw-chip"><div class="cn">Raspberry Pi</div><div class="cs">베이스 컴퓨터</div></div>
+          <div class="hw-chip"><div class="cn">UTTEC Shield</div><div class="cs">일체형 보드</div></div>
+          <div class="hw-chip"><div class="cn">AHT20</div><div class="cs">온습도 센서</div></div>
+          <div class="hw-chip"><div class="cn">OLED</div><div class="cs">0.96" 표시</div></div>
+          <div class="hw-chip"><div class="cn">신호등 LED</div><div class="cs">R · Y · B</div></div>
+          <div class="hw-chip"><div class="cn">WS2812 &#xD7;4</div><div class="cs">RGB 네오픽셀</div></div>
+          <div class="hw-chip"><div class="cn">부저 · 스피커</div><div class="cs">경보 · 멜로디</div></div>
+          <div class="hw-chip"><div class="cn">LoRa (E32)</div><div class="cs">장거리 무선</div></div>
+          <div class="hw-chip"><div class="cn">ESP32C3</div><div class="cs">보조 MCU · 버튼</div></div>
         </div>
         <div class="bf">Python · GPIO · I2C · UART</div>
       </div>
     </div>
     <div class="hw-right">
-      <div class="hw-feat"><div class="icon">&#x1F321;&#xFE0F;</div><div><h3>AHT20 온습도 센서</h3><p>공장 환경 실시간 모니터링</p></div></div>
-      <div class="hw-feat"><div class="icon">&#x1F7E2;</div><div><h3>신호등 LED (R/Y/B)</h3><p>정상/주의/위험 상태 표시</p></div></div>
-      <div class="hw-feat"><div class="icon">&#x1F308;</div><div><h3>WS2812 RGB x4 + OLED</h3><p>다색 상태 + 실시간 수치 표시</p></div></div>
-      <div class="hw-feat"><div class="icon">&#x1F514;</div><div><h3>부저 + 스피커</h3><p>경고음·알림 멜로디</p></div></div>
-      <div class="hw-feat"><div class="icon">&#x1F4E1;</div><div><h3>LoRa(E32) 장거리 무선</h3><p>원격지 데이터 수신 (실증 완료)</p></div></div>
-      <div class="hw-feat"><div class="icon">&#x1F381;</div><div><h3>수료 후 수강생 자산</h3><p>kit를 가져가 현장 적용·재사용</p></div></div>
+      <div class="hw-feat"><div><h3>AHT20 온습도 센서</h3><p>공장 환경 실시간 모니터링</p></div></div>
+      <div class="hw-feat"><div><h3>신호등 LED (R/Y/B)</h3><p>정상/주의/위험 상태 표시</p></div></div>
+      <div class="hw-feat"><div><h3>WS2812 RGB x4 + OLED</h3><p>다색 상태 + 실시간 수치 표시</p></div></div>
+      <div class="hw-feat"><div><h3>부저 + 스피커</h3><p>경고음·알림 멜로디</p></div></div>
+      <div class="hw-feat"><div><h3>LoRa(E32) 장거리 무선</h3><p>원격지 데이터 수신 (실증 완료)</p></div></div>
+      <div class="hw-feat"><div><h3>수료 후 수강생 자산</h3><p>kit를 가져가 현장 적용·재사용</p></div></div>
     </div>
   </div>
 </div>
@@ -311,9 +315,9 @@
     <div class="track-stat"><div class="big">현장 검증</div><p>매 회차 실습 기록 축적</p></div>
   </div>
   <div class="track-timeline">
-    <div class="track-row"><div class="rc">1회차</div><div class="rt">라즈베리파이 친해지기 (첫 코드·계산기)</div><div class="done">&#x2714; 진행 완료</div></div>
-    <div class="track-row"><div class="rc">2회차</div><div class="rt">공장의 눈과 귀 (온습도·OLED·네오픽셀 색변경)</div><div class="done">&#x2714; 진행 완료</div></div>
-    <div class="track-row"><div class="rc">3회차</div><div class="rt">자동 경보 시스템 (기준값·부저·CSV 기록)</div><div class="done">&#x2714; 진행 완료</div></div>
+    <div class="track-row"><div class="rc">1회차</div><div class="rt">라즈베리파이 친해지기 (첫 코드·계산기)</div><div class="done">진행 완료</div></div>
+    <div class="track-row"><div class="rc">2회차</div><div class="rt">공장의 눈과 귀 (온습도·OLED·네오픽셀 색변경)</div><div class="done">진행 완료</div></div>
+    <div class="track-row"><div class="rc">3회차</div><div class="rt">자동 경보 시스템 (기준값·부저·CSV 기록)</div><div class="done">진행 완료</div></div>
     <div class="track-row future"><div class="rc">4회차</div><div class="rt">스마트폰 원격 모니터링 (웹 대시보드·LoRa 무선)</div><div class="done">예정</div></div>
     <div class="track-row future"><div class="rc">5회차</div><div class="rt">AI 미니 스마트팩토리 (손글씨 AI 인식·통합)</div><div class="done">예정</div></div>
   </div>
