@@ -90,7 +90,14 @@
   .hw-feat .icon { font-size: 21px; }
   .hw-feat h3 { font-size: 14px; font-weight: 600; }
   .hw-feat p { font-size: 11px; color: rgba(255,255,255,0.5); }
-  .hw-ascii { background: rgba(0,0,0,0.4); border: 1px solid rgba(59,130,246,0.3); border-radius: 12px; padding: 20px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.5; color: #93c5fd; white-space: pre; }
+  .hw-board { background: linear-gradient(160deg, rgba(30,58,95,0.55), rgba(0,0,0,0.4)); border: 2px solid rgba(59,130,246,0.4); border-radius: 16px; padding: 20px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .hw-board .bt { text-align: center; font-size: 14px; font-weight: 700; color: #93c5fd; padding-bottom: 11px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+  .hw-board .chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+  .hw-chip { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 11px 6px; text-align: center; }
+  .hw-chip .ci { font-size: 21px; line-height: 1; }
+  .hw-chip .cn { font-size: 11px; color: rgba(255,255,255,0.82); margin-top: 5px; font-weight: 600; }
+  .hw-chip .cs { font-size: 9px; color: rgba(255,255,255,0.45); margin-top: 1px; }
+  .hw-board .bf { text-align: center; font-size: 11px; color: rgba(147,197,253,0.75); letter-spacing: 1px; padding-top: 9px; border-top: 1px dashed rgba(255,255,255,0.12); }
 
   /* Track record */
   .s-track { background: linear-gradient(160deg, #0f172a, #14532d); }
@@ -267,22 +274,21 @@
   <div class="sh"><div class="num">05 — HARDWARE</div><h2>UTTEC 자체 제작 실습 kit</h2><div class="line"></div></div>
   <div class="sb">
     <div class="hw-left">
-      <div class="hw-ascii">+-----------------------------------+
-|     Raspberry Pi + UTTEC Shield    |
-|                                   |
-|  [RED][YEL][BLU]   [WS2812 x4]    |
-|   신호등 LED        RGB NeoPixel  |
-|                                   |
-|  +-------+  +-------+    [SW1]     |
-|  | OLED  |  | AHT20 |    Button    |
-|  |0.96"  |  | 온습도 |             |
-|  +-------+  +-------+              |
-|                                   |
-|  [BUZZER][SPEAKER][ESP32C3][LoRa]  |
-|   경보    멜로디   보조MCU  E32무선 |
-|                                   |
-|   Python + GPIO + I2C + UART      |
-+-----------------------------------+</div>
+      <div class="hw-board">
+        <div class="bt">Raspberry Pi + UTTEC Shield Board</div>
+        <div class="chips">
+          <div class="hw-chip"><div class="ci">&#x1F5A5;&#xFE0F;</div><div class="cn">Raspberry Pi</div><div class="cs">베이스 컴퓨터</div></div>
+          <div class="hw-chip"><div class="ci">&#x1F6E1;&#xFE0F;</div><div class="cn">UTTEC Shield</div><div class="cs">일체형 보드</div></div>
+          <div class="hw-chip"><div class="ci">&#x1F321;&#xFE0F;</div><div class="cn">AHT20</div><div class="cs">온습도 센서</div></div>
+          <div class="hw-chip"><div class="ci">&#x1F4FA;</div><div class="cn">OLED</div><div class="cs">0.96" 표시</div></div>
+          <div class="hw-chip"><div class="ci">&#x1F6A6;</div><div class="cn">신호등 LED</div><div class="cs">R · Y · B</div></div>
+          <div class="hw-chip"><div class="ci">&#x1F308;</div><div class="cn">WS2812 &#xD7;4</div><div class="cs">RGB 네오픽셀</div></div>
+          <div class="hw-chip"><div class="ci">&#x1F514;</div><div class="cn">부저 · 스피커</div><div class="cs">경보 · 멜로디</div></div>
+          <div class="hw-chip"><div class="ci">&#x1F4E1;</div><div class="cn">LoRa (E32)</div><div class="cs">장거리 무선</div></div>
+          <div class="hw-chip"><div class="ci">&#x1F532;</div><div class="cn">ESP32C3</div><div class="cs">보조 MCU · 버튼</div></div>
+        </div>
+        <div class="bf">Python · GPIO · I2C · UART</div>
+      </div>
     </div>
     <div class="hw-right">
       <div class="hw-feat"><div class="icon">&#x1F321;&#xFE0F;</div><div><h3>AHT20 온습도 센서</h3><p>공장 환경 실시간 모니터링</p></div></div>
