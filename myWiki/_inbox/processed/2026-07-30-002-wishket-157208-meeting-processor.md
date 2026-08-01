@@ -7,7 +7,7 @@ priority: high
 subject: "#157208 고속 ADC 보드 화상 미팅(7/31) 도달 + STM32N6 vs H7 프로세서 선정 영업논리 자산"
 created: 2026-07-30T20:24:00+09:00
 related: [2026-07-30-001-wishket-stm32h7-daq-asset, 위시캣/2026-07-31_프로젝트157208_미팅준비/]
-status: pending
+status: done
 ---
 
 # #157208 고속 ADC 데이터 수집 보드 — 화상 미팅 도달 + 프로세서 선정 영업논리

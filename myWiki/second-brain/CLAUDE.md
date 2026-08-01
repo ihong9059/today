@@ -202,6 +202,17 @@ links: [관련 페이지 파일명]
   - `onDevice_AI/business/` 영업 이벤트 발생 시 매칭 패턴 분석 카드 발송
   - Phase 검증 결과 발생 시 entities/onDevice-ai.md, ai-fanstick.md 갱신 카드 발송
 
+### 교차 vault 직접기여 시 handoff 신호 필수 (2026-08-02 수용, uttec-academy-claude 카드 `2026-07-23-001`)
+
+**배경**: 2026-07-23 today/myWiki 세션이 `C:/todo/uttec-academy/`에 **카드 없이 파일을 직접 write**로 기여(제안서·커리큘럼 모듈·log 편집). 수신 vault의 자동 인지 수단은 `check-inbox.py`의 카드 채널뿐이라 **카드가 없으면 완전 무감지** → 다음 세션이 놓칠 위험. academy 측은 `check-external-changes.py`(git status 미커밋 표면화) 안전망을 신설했으나, 발신측(myWiki) 신호가 근본 해결.
+
+**규약 (수용)**: myWiki/today가 **다른 vault에 파일을 직접 기여할 때** 다음 중 하나로 handoff 신호를 남긴다:
+
+1. **(권장)** `_inbox/outbox-staging/`에 `to: {대상}-claude` **handoff 카드**(type: `done` 또는 `request`) 작성 → broker push로 대상 vault `pending/` 도착 → 대상 work-start가 자동 인지.
+2. 최소한 대상 vault `log.md`에 `## [date] 이관 | {요약}` 항목 + 기여 파일 목록 명시(대상이 git 감지 후 대조).
+
+**적용 범위**: 카드 채널을 갖춘 모든 sibling vault(academy·revita·ondevice·lora·factory·ponet·shield·livecow 등). "직접 write가 더 빠르다"는 경우에도 신호는 반드시 남긴다(cascading 비대칭 = uttecHome 사건 재발 방지).
+
 ### 프로젝트 Tier 분류 정책 (2026-05-17 추가) ⭐
 
 **배경**: today repo에 단발 SI/위탁 프로젝트가 자주 발생 (INDEX.md 비즈니스 10개 + 제품·기술 4개). 매번 "분리할까 말까" 고민이 비용. **결정 자동화** 필요.

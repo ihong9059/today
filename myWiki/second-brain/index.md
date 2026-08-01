@@ -58,13 +58,14 @@ updated: 2026-05-09
 | [[factory]] | **factory vault** ⭐⭐ — UTTEC 공장 자동화 사업화 vault (Tier 3). 1차 진입 = 분쇄·파쇄 설비 (한국기계 베이스 → 동종 회사 확장), 확장 = 센서+제어 기반 공장 자동화 전반. 16th multi-agent (`C:/todo/factory/`, 6/10 신설, **carrier 패턴 4번째 사례** + 4국 deep search + 핵심 10사 entity + 한국기계 자산 이식) |
 | [[uttec-plc]] | **uttec-plc vault** — UTTEC PLC/SCADA 산업 자동화 트랙 (LS XGT 견적·설계 + 위시캣 #155220·#155381 계열). 18th multi-agent (uttecMac `~/uttec-plc/`, 6/13 신설·첫 운영, **Tier 2 확정** + #155220 final 송부 완료·수주 대기 + 시스템 설명서·XG5000 초보자 시리즈) |
 | [[lora]] | **lora vault** ⭐ — UTTEC LoRa 기술 전문 hub. 한림·shield·revita·factory 응용에서 LoRa 기술 근거(E22/E32 설정·air rate·결선·time-mux·망 구성·SOP) 횡단 집약 → 사업방향 cascade. 19th multi-agent (`C:/todo/lora/`, 6/13 신설, **기술 근거 단일 출처 트랙 첫 사례**, 현장 hardware 작업 ❌) |
-| [[uttec-academy]] | **uttec-academy vault** ⭐ — UTTEC 교육 운영·발전 hub. 자체 제작 kit 기반 오프라인 실습 교육사업의 운영·행정·강사·차수 개선 단일 출처 → 사업방향 = 교육 전문성. 20th multi-agent (`C:/todo/uttec-academy/`, 6/17 신설, 미래창의 아카데미 3차 7/15~). 온라인 [[uttec-edu]]와 별개, 기술은 [[uttec-factory]]·[[lora]]·[[onDevice-ai]] 참조 |
+| [[uttec-academy]] | **uttec-academy vault** ⭐ — UTTEC 교육 운영·발전 hub. 자체 제작 kit 기반 오프라인 실습 교육사업의 운영·행정·강사·차수 개선 단일 출처 → 사업방향 = 교육 전문성. 20th multi-agent (`C:/todo/uttec-academy/`, 6/17 신설). **미래창의 3차 진행 중(7/15~8/12, 수강생 16명)** + 신규 리드(용인진흥원 장비체험 확장·Claude 대리점 파트너십). 온라인 [[uttec-edu]]와 별개, 기술은 [[uttec-factory]]·[[lora]]·[[onDevice-ai]] 참조 |
 | [[조대홍]] | Ponet 사장 entity (광주, UTTEC 협력 파트너) |
 | [[xerix]] | Xerix MFC Controller — EtherCAT 제안 4,970만원 |
 | [[revita]] | REVITA — IoT, LoRa, KC 인증 |
 | [[위시캣활동]] | 위시캣 프리랜서 — 16건+ 지원, 시장 분석 |
+| [[weflo]] | Weflo(WEFLO Inc.) — 모빌리티 비접촉 AI 진단 클라이언트(한화 스핀오프·Gartner Physical AI), 위시캣 #157235, STM32H7 DAQ 매칭 |
 | [[스마트팩토리]] | 스마트팩토리 — 25개 데모, 파쇄기 AI 85억 제안 |
-| [[양산제품]] | 양산 제품 5개 — STM32, RPi, nRF52 |
+| [[양산제품]] | 양산 제품 — STM32, RPi, nRF52 + STM32H7 고속 DAQ 계측 자산 |
 | [[서버인프라]] | 서버 인프라 — DO, 로컬 6포트, RPi5, Jetson |
 | [[영업전략]] | 영업/마케팅 — 3대 사업라인, 정부지원 연계, 경쟁 분석 |
 | [[외벽로봇]] | 외벽청소로봇 — 컨셉 분석, 8가지 결함 개선 설계 |

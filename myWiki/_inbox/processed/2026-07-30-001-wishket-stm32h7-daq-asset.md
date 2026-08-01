@@ -9,7 +9,7 @@ created: 2026-07-30T07:07:23+09:00
 related:
   - wishketProject/second-brain/me.md (항목 8)
   - wishketProject/위시캣/포트폴리오/사례/11_고속DAQ_자동차진동소리_계측_STM32H745.md
-status: pending
+status: done
 ---
 
 # 신규 양산 자산 발견 — STM32H7 고속 DAQ / 자동차 진동·소리 계측
