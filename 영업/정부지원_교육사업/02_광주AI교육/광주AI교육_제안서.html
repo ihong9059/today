@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>광주 AI·IoT 스마트팩토리 실습 교육 제안 — UTTEC</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #0a0a0a; color: #fff; overflow: hidden; }
+  .slide { display: none; width: 100vw; height: 100vh; padding: 48px 68px; position: absolute; top: 0; left: 0; animation: fadeIn 0.5s ease; }
+  .slide.active { display: flex; flex-direction: column; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Cover */
+  .slide-cover { background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #3b82f6 150%); justify-content: center; align-items: center; text-align: center; }
+  .slide-cover .badge { display: inline-block; background: rgba(59,130,246,0.2); border: 1px solid rgba(59,130,246,0.5); border-radius: 30px; padding: 8px 24px; font-size: 13px; letter-spacing: 2px; color: #93c5fd; margin-bottom: 22px; }
+  .slide-cover .hanja { font-size: 40px; font-weight: 900; letter-spacing: 4px; background: linear-gradient(to right, #fff, #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+  .slide-cover .hanja-sub { font-size: 17px; color: #93c5fd; margin-bottom: 4px; letter-spacing: 2px; }
+  .slide-cover .hanja-desc { font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 30px; }
+  .slide-cover h1 { font-size: 40px; font-weight: 900; line-height: 1.3; margin-bottom: 14px; }
+  .slide-cover .subtitle { font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.75); margin-bottom: 28px; }
+  .slide-cover .tools span { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 5px 14px; margin: 0 4px; font-size: 13px; }
+  .slide-cover .meta { font-size: 15px; color: rgba(255,255,255,0.45); margin-top: 30px; }
+
+  /* Common header */
+  .sh { margin-bottom: 26px; }
+  .sh .num { font-size: 13px; font-weight: 500; color: #3b82f6; letter-spacing: 3px; margin-bottom: 6px; }
+  .sh h2 { font-size: 30px; font-weight: 700; }
+  .sh .line { width: 50px; height: 3px; background: #3b82f6; margin-top: 12px; border-radius: 2px; }
+  .sb { flex: 1; display: flex; gap: 26px; }
+
+  /* Era shift */
+  .s-era { background: linear-gradient(160deg, #0f172a, #172554); }
+  .era-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 28px; }
+  .era-axis { display: flex; align-items: stretch; gap: 0; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); }
+  .era-col { flex: 1; padding: 30px 28px; }
+  .era-col.past { background: rgba(255,255,255,0.04); }
+  .era-col.future { background: rgba(59,130,246,0.12); border-left: 2px solid rgba(59,130,246,0.5); }
+  .era-col .tag { font-size: 12px; letter-spacing: 2px; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
+  .era-col.future .tag { color: #93c5fd; }
+  .era-col .big { font-size: 26px; font-weight: 900; margin-bottom: 8px; }
+  .era-col.past .big { color: rgba(255,255,255,0.75); }
+  .era-col.future .big { color: #93c5fd; }
+  .era-col .desc { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+  .era-note { text-align: center; font-size: 17px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+  .era-note strong { color: #93c5fd; }
+
+  /* Goals */
+  .s-goal { background: linear-gradient(160deg, #0a2540, #1a0f2e); }
+  .goal-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px; }
+  .goal-item { display: flex; gap: 18px; align-items: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(59,130,246,0.25); border-radius: 14px; padding: 20px 24px; }
+  .goal-item .rank { font-size: 30px; font-weight: 900; color: #3b82f6; width: 50px; flex-shrink: 0; text-align: center; }
+  .goal-item h3 { font-size: 19px; font-weight: 700; margin-bottom: 4px; color: #fff; }
+  .goal-item p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .goal-item .key { color: #93c5fd; font-weight: 500; }
+  .goal-foot { text-align: center; font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 6px; }
+
+  /* Problem */
+  .s-prob { background: linear-gradient(160deg, #0f172a, #1a1a2e); }
+  .prob-left { flex: 1.2; display: flex; flex-direction: column; gap: 12px; }
+  .prob-right { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .prob-item { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; padding: 15px 18px; display: flex; gap: 14px; align-items: center; }
+  .prob-item .icon { font-size: 24px; flex-shrink: 0; }
+  .prob-item h3 { font-size: 15px; font-weight: 700; color: #fca5a5; margin-bottom: 2px; }
+  .prob-item p { font-size: 12px; color: rgba(255,255,255,0.55); }
+  .prob-vs { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 26px; width: 100%; }
+  .prob-vs h3 { font-size: 15px; font-weight: 700; color: #3b82f6; margin-bottom: 14px; text-align: center; }
+  .vs-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+  .vs-row .old { color: rgba(255,255,255,0.4); text-decoration: line-through; }
+  .vs-row .new { color: #4ade80; font-weight: 500; }
+
+  /* Solution */
+  .s-sol { background: linear-gradient(160deg, #0a2540, #1a0f2e); }
+  .sol-main { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 25px; }
+  .sol-row { display: flex; gap: 16px; align-items: center; justify-content: center; }
+  .sol-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(59,130,246,0.3); border-radius: 14px; padding: 20px 16px; text-align: center; width: 165px; }
+  .sol-box .icon { font-size: 30px; margin-bottom: 6px; }
+  .sol-box h3 { font-size: 14px; font-weight: 700; color: #93c5fd; margin-bottom: 4px; }
+  .sol-box p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+  .sol-arrow { font-size: 22px; color: #3b82f6; }
+  .sol-desc { text-align: center; font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+  .sol-desc strong { color: #93c5fd; }
+
+  /* Hardware */
+  .s-hw { background: linear-gradient(160deg, #0f172a, #1c1917); }
+  .hw-left { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .hw-right { flex: 1; display: flex; flex-direction: column; gap: 9px; justify-content: center; }
+  .hw-feat { display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 11px 15px; }
+  .hw-feat .icon { font-size: 21px; }
+  .hw-feat h3 { font-size: 14px; font-weight: 600; }
+  .hw-feat p { font-size: 11px; color: rgba(255,255,255,0.5); }
+  .hw-ascii { background: rgba(0,0,0,0.4); border: 1px solid rgba(59,130,246,0.3); border-radius: 12px; padding: 20px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.5; color: #93c5fd; white-space: pre; }
+
+  /* Track record */
+  .s-track { background: linear-gradient(160deg, #0f172a, #14532d); }
+  .track-top { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 22px; }
+  .track-stat { background: rgba(255,255,255,0.05); border: 1px solid rgba(74,222,128,0.3); border-radius: 14px; padding: 22px 16px; text-align: center; }
+  .track-stat .big { font-size: 34px; font-weight: 900; color: #4ade80; margin-bottom: 4px; }
+  .track-stat p { font-size: 12px; color: rgba(255,255,255,0.6); }
+  .track-timeline { flex: 1; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
+  .track-row { display: flex; gap: 14px; align-items: center; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 11px 18px; }
+  .track-row .rc { font-size: 13px; font-weight: 700; color: #4ade80; width: 90px; flex-shrink: 0; }
+  .track-row .rt { font-size: 13px; color: rgba(255,255,255,0.75); }
+  .track-row .done { margin-left: auto; font-size: 12px; color: #4ade80; }
+  .track-row.future .rc { color: rgba(255,255,255,0.4); }
+  .track-row.future .done { color: rgba(255,255,255,0.4); }
+
+  /* Curriculum */
+  .s-cur { background: linear-gradient(160deg, #0f172a, #1e3a5f); }
+  .cur-flow { display: flex; align-items: center; gap: 6px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
+  .cur-step { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 10px; padding: 8px 12px; text-align: center; font-size: 11px; }
+  .cur-step strong { display: block; font-size: 13px; color: #93c5fd; margin-bottom: 2px; }
+  .cur-sarrow { color: #3b82f6; font-size: 15px; }
+  .cur-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cur-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 13px; display: flex; gap: 12px; }
+  .cur-num { background: linear-gradient(135deg, #3b82f6, #2563eb); width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .cur-item h3 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .cur-item p { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.3; }
+  .cur-item .result { font-size: 10px; color: #4ade80; margin-top: 4px; }
+
+  /* Differentiation */
+  .s-cmp { background: linear-gradient(160deg, #0f172a, #3b0764); }
+  .cmp-table { flex: 1; display: flex; flex-direction: column; gap: 5px; justify-content: center; }
+  .cmp-row { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 6px; }
+  .cmp-cell { padding: 11px 14px; border-radius: 8px; font-size: 12px; line-height: 1.3; }
+  .cmp-row.hdr .cmp-cell { background: rgba(255,255,255,0.1); font-weight: 700; text-align: center; font-size: 13px; }
+  .cmp-cell.lbl { background: rgba(255,255,255,0.04); font-weight: 500; display: flex; align-items: center; }
+  .cmp-cell.old { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.15); color: rgba(255,255,255,0.55); }
+  .cmp-cell.new { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); color: #93c5fd; font-weight: 500; }
+
+  /* Effect */
+  .s-eff { background: linear-gradient(160deg, #0f172a, #1e3a5f); }
+  .eff-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; align-content: center; }
+  .eff-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; text-align: center; }
+  .eff-card .big { font-size: 34px; font-weight: 900; background: linear-gradient(to right, #3b82f6, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+  .eff-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 5px; }
+  .eff-card p { font-size: 11px; color: rgba(255,255,255,0.45); }
+
+  /* CTA */
+  .s-cta { background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #3b82f6 150%); justify-content: center; align-items: center; text-align: center; }
+  .s-cta .hanja { font-size: 24px; font-weight: 900; letter-spacing: 3px; color: #93c5fd; margin-bottom: 14px; }
+  .s-cta h2 { font-size: 36px; font-weight: 900; margin-bottom: 16px; line-height: 1.3; }
+  .s-cta p { font-size: 16px; color: rgba(255,255,255,0.7); margin-bottom: 28px; line-height: 1.6; }
+  .cta-box { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 24px 44px; }
+  .cta-box .to { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 5px; }
+  .cta-box .org { font-size: 18px; font-weight: 700; }
+
+  /* Nav */
+  .nav { position: fixed; bottom: 25px; right: 35px; display: flex; gap: 8px; z-index: 100; }
+  .nav button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 40px; height: 40px; border-radius: 10px; cursor: pointer; font-size: 16px; }
+  .nav button:hover { background: rgba(255,255,255,0.2); }
+  .pg { position: fixed; bottom: 30px; left: 35px; font-size: 13px; color: rgba(255,255,255,0.35); z-index: 100; }
+
+  /* PRINT — show all slides as pages (for PDF) */
+  @page { size: 1280px 720px; margin: 0; }
+  @media print {
+    body { overflow: visible; }
+    .slide { display: flex !important; position: relative; page-break-after: always; width: 1280px; height: 720px; }
+    .slide.active { display: flex !important; }
+    .nav, .pg { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 1: Cover -->
+<div class="slide slide-cover active" id="s1">
+  <div class="badge">EDUCATION PROPOSAL 2026 · GWANGJU</div>
+  <div class="hanja">百聞不如一見 · 百見不如一習</div>
+  <div class="hanja-sub">백문이 불여일견, 백견이 불여일습</div>
+  <div class="hanja-desc">듣고 보는 교육을 넘어, 직접 익히는 교육</div>
+  <h1>AI·IoT 스마트팩토리 실습 교육</h1>
+  <div class="subtitle">라즈베리파이 + 자체 제작 kit + AI로, 비전공자도 5주 만에 직접 만든다</div>
+  <div class="tools">
+    <span>Raspberry Pi</span><span>UTTEC Shield</span><span>Python</span><span>AI / Claude</span><span>LoRa 무선</span>
+  </div>
+  <div class="meta">UTTEC | 광주경제진흥상생일자리재단 (가칭)</div>
+</div>
+
+<!-- 2: Era shift -->
+<div class="slide s-era" id="s2">
+  <div class="sh"><div class="num">01 — WHY NOW</div><h2>견(見)의 시대에서 습(習)의 시대로</h2><div class="line"></div></div>
+  <div class="era-wrap">
+    <div class="era-axis">
+      <div class="era-col past">
+        <div class="tag">인쇄 → 방송 → 인터넷 → 스마트폰</div>
+        <div class="big">百聞不如一見</div>
+        <div class="desc">"정보를 보는" 시대의 정점.<br>무엇이든 손안에서 볼 수 있게 되었지만,<br>보는 것만으로는 끝내 <b>내 것이 되지 않는다.</b></div>
+      </div>
+      <div class="era-col future">
+        <div class="tag">AI</div>
+        <div class="big">百見不如一習</div>
+        <div class="desc">AI가 진입장벽을 무너뜨려,<br>이제 <b>비전공자도 직접 만들고 익힌다.</b><br>배움이 '보기'에서 <b>'하기·익히기'</b>로 넘어간다.</div>
+      </div>
+    </div>
+    <div class="era-note">스마트폰이 '보는 법'을 바꿨다면, <strong>AI는 '하는 법'을 바꾼다.</strong><br>본 교육은 그 전환의 최전선 — 비전공 직원이 AI를 곁에 두고 <strong>직접 익히는</strong> 경험을 5주에 압축한다.</div>
+  </div>
+</div>
+
+<!-- 3: Goals -->
+<div class="slide s-goal" id="s3">
+  <div class="sh"><div class="num">02 — TRUE GOALS</div><h2>이 교육이 남기는 것 (우선순위 3)</h2><div class="line"></div></div>
+  <div class="goal-wrap">
+    <div class="goal-item"><div class="rank">①</div><div><h3>디지털 효능감 — "나도 직접 만들 수 있다"</h3><p>제조 현장 비전공자의 <span class="key">심리적 진입장벽 제거</span>. 손으로 만든 것이 실제로 반응하는 성공 경험 → 모든 학습·적용의 토대.</p></div></div>
+    <div class="goal-item"><div class="rank">②</div><div><h3>현업 이전·지속 — 현업 노트로 평생 자산화</h3><p>교실에서 끝나지 않고 <span class="key">자기 공장·업무에 적용·기록·재현·인계</span>. 교육이 끝나도 남는 것 = 기술 + 방법론 이중 자산.</p></div></div>
+    <div class="goal-item"><div class="rank">③</div><div><h3>AI 협업 — AI를 도구로 부린다</h3><p>막히면 AI에게 물어 <span class="key">스스로 이해·해결</span>하는 습관. AI 시대의 평생 학습 엔진을 심는다.</p></div></div>
+  </div>
+  <div class="goal-foot">"센서를 켠다"가 아니라 — <b>비전공 직원이 5주 만에 스스로 만들고 · 현업에 남기고 · AI로 성장한다.</b></div>
+</div>
+
+<!-- 4: Problem -->
+<div class="slide s-prob" id="s4">
+  <div class="sh"><div class="num">03 — PROBLEM</div><h2>제조 현장의 과제</h2><div class="line"></div></div>
+  <div class="sb">
+    <div class="prob-left">
+      <div class="prob-item"><div class="icon">&#x26A0;&#xFE0F;</div><div><h3>설비 고장 = 사후 대응</h3><p>고장 나야 알고, 원인 찾느라 반나절. 예방은 꿈같은 이야기</p></div></div>
+      <div class="prob-item"><div class="icon">&#x1F441;</div><div><h3>환경·품질 관리 = 육안·수기</h3><p>사람이 돌며 온습도 확인·수기 기록. 누락·지연·피로</p></div></div>
+      <div class="prob-item"><div class="icon">&#x1F4B0;</div><div><h3>스마트 팩토리 = 비용 부담</h3><p>PLC + SCADA + MES = 수천만원~수억원. 중소기업엔 벽</p></div></div>
+      <div class="prob-item"><div class="icon">&#x1F9D1;&#x200D;&#x1F3ED;</div><div><h3>디지털 = "전문가의 일"이라는 인식</h3><p>현장 직원은 시도조차 안 함 → 외부 의존 고착</p></div></div>
+    </div>
+    <div class="prob-right">
+      <div class="prob-vs">
+        <h3>상용 시스템 vs 직접 만드는 교육</h3>
+        <div class="vs-row"><span class="old">도입비 수천만원</span><span class="new">Pi 실습 kit</span></div>
+        <div class="vs-row"><span class="old">도입 기간 수개월</span><span class="new">5주 교육 후 즉시</span></div>
+        <div class="vs-row"><span class="old">유지보수 외부 의존</span><span class="new">직원이 직접 관리</span></div>
+        <div class="vs-row"><span class="old">전문 프로그래밍 필요</span><span class="new">비전공 + AI로 가능</span></div>
+        <div class="vs-row"><span class="old">벤더 종속</span><span class="new">오픈소스 생태계</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5: Solution -->
+<div class="slide s-sol" id="s5">
+  <div class="sh"><div class="num">04 — SOLUTION</div><h2>라즈베리파이 + kit + AI = 직접 만드는 스마트팩토리</h2><div class="line"></div></div>
+  <div class="sol-main">
+    <div class="sol-row">
+      <div class="sol-box"><div class="icon">&#x1F4BB;</div><h3>Raspberry Pi</h3><p>손바닥 컴퓨터<br>GPIO 하드웨어 제어</p></div>
+      <div class="sol-arrow">+</div>
+      <div class="sol-box"><div class="icon">&#x1F6E1;&#xFE0F;</div><h3>UTTEC Shield</h3><p>UTTEC 자체 제작<br>센서·LED·무선 일체</p></div>
+      <div class="sol-arrow">+</div>
+      <div class="sol-box"><div class="icon">&#x1F40D;</div><h3>Python</h3><p>가장 쉬운 언어<br>산업 현장 실사용</p></div>
+      <div class="sol-arrow">+</div>
+      <div class="sol-box"><div class="icon">&#x1F916;</div><h3>AI (Claude)</h3><p>막힘을 스스로 해결<br>평생 학습 조력자</p></div>
+    </div>
+    <div class="sol-desc">
+      <strong>Pi</strong>로 센서를 읽고 설비를 제어하고, <strong>Python</strong>으로 판단·기록하고, <strong>무선(LoRa)</strong>으로 원격 감시하고,<br>
+      막히면 <strong>AI</strong>에게 물어 스스로 해결합니다. 5회 20시간으로 <strong>미니 스마트팩토리</strong>를 직접 구축합니다.
+    </div>
+  </div>
+</div>
+
+<!-- 6: Hardware -->
+<div class="slide s-hw" id="s6">
+  <div class="sh"><div class="num">05 — HARDWARE</div><h2>UTTEC 자체 제작 실습 kit</h2><div class="line"></div></div>
+  <div class="sb">
+    <div class="hw-left">
+      <div class="hw-ascii">+-----------------------------------+
+|     Raspberry Pi + UTTEC Shield    |
+|                                   |
+|  [RED][YEL][BLU]   [WS2812 x4]    |
+|   신호등 LED        RGB NeoPixel  |
+|                                   |
+|  +-------+  +-------+    [SW1]     |
+|  | OLED  |  | AHT20 |    Button    |
+|  |0.96"  |  | 온습도 |             |
+|  +-------+  +-------+              |
+|                                   |
+|  [BUZZER][SPEAKER][ESP32C3][LoRa]  |
+|   경보    멜로디   보조MCU  E32무선 |
+|                                   |
+|   Python + GPIO + I2C + UART      |
++-----------------------------------+</div>
+    </div>
+    <div class="hw-right">
+      <div class="hw-feat"><div class="icon">&#x1F321;&#xFE0F;</div><div><h3>AHT20 온습도 센서</h3><p>공장 환경 실시간 모니터링</p></div></div>
+      <div class="hw-feat"><div class="icon">&#x1F7E2;</div><div><h3>신호등 LED (R/Y/B)</h3><p>정상/주의/위험 상태 표시</p></div></div>
+      <div class="hw-feat"><div class="icon">&#x1F308;</div><div><h3>WS2812 RGB x4 + OLED</h3><p>다색 상태 + 실시간 수치 표시</p></div></div>
+      <div class="hw-feat"><div class="icon">&#x1F514;</div><div><h3>부저 + 스피커</h3><p>경고음·알림 멜로디</p></div></div>
+      <div class="hw-feat"><div class="icon">&#x1F4E1;</div><div><h3>LoRa(E32) 장거리 무선</h3><p>원격지 데이터 수신 (실증 완료)</p></div></div>
+      <div class="hw-feat"><div class="icon">&#x1F381;</div><div><h3>수료 후 수강생 자산</h3><p>kit를 가져가 현장 적용·재사용</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 7: Track record -->
+<div class="slide s-track" id="s7">
+  <div class="sh"><div class="num">06 — PROVEN</div><h2>탁상 설계가 아닌, 검증된 프로그램</h2><div class="line"></div></div>
+  <div class="track-top">
+    <div class="track-stat"><div class="big">5주</div><p>20시간 (회당 4h)</p></div>
+    <div class="track-stat"><div class="big">16명</div><p>용인 3차 실제 수강</p></div>
+    <div class="track-stat"><div class="big">1인 1kit</div><p>전원 직접 실습</p></div>
+    <div class="track-stat"><div class="big">현장 검증</div><p>매 회차 실습 기록 축적</p></div>
+  </div>
+  <div class="track-timeline">
+    <div class="track-row"><div class="rc">1회차</div><div class="rt">라즈베리파이 친해지기 (첫 코드·계산기)</div><div class="done">&#x2714; 진행 완료</div></div>
+    <div class="track-row"><div class="rc">2회차</div><div class="rt">공장의 눈과 귀 (온습도·OLED·네오픽셀 색변경)</div><div class="done">&#x2714; 진행 완료</div></div>
+    <div class="track-row"><div class="rc">3회차</div><div class="rt">자동 경보 시스템 (기준값·부저·CSV 기록)</div><div class="done">&#x2714; 진행 완료</div></div>
+    <div class="track-row future"><div class="rc">4회차</div><div class="rt">스마트폰 원격 모니터링 (웹 대시보드·LoRa 무선)</div><div class="done">예정</div></div>
+    <div class="track-row future"><div class="rc">5회차</div><div class="rt">AI 미니 스마트팩토리 (손글씨 AI 인식·통합)</div><div class="done">예정</div></div>
+  </div>
+</div>
+
+<!-- 8: Curriculum -->
+<div class="slide s-cur" id="s8">
+  <div class="sh"><div class="num">07 — CURRICULUM</div><h2>커리큘럼 (4시간 × 5회 = 20시간)</h2><div class="line"></div></div>
+  <div class="cur-flow">
+    <div class="cur-step"><strong>0회차</strong>현업위키</div>
+    <div class="cur-sarrow">&#x2192;</div>
+    <div class="cur-step"><strong>1회차</strong>파이 친해지기</div>
+    <div class="cur-sarrow">&#x2192;</div>
+    <div class="cur-step"><strong>2회차</strong>센서·화면</div>
+    <div class="cur-sarrow">&#x2192;</div>
+    <div class="cur-step"><strong>3회차</strong>자동 경보</div>
+    <div class="cur-sarrow">&#x2192;</div>
+    <div class="cur-step"><strong>4회차</strong>무선 원격</div>
+    <div class="cur-sarrow">&#x2192;</div>
+    <div class="cur-step"><strong>5회차</strong>AI 통합</div>
+  </div>
+  <div class="cur-grid">
+    <div class="cur-item"><div class="cur-num">1</div><div><h3>라즈베리파이와 친해지기</h3><p>부팅·Wi-Fi·첫 파이썬(변수·계산기). "내가 명령을 내린다"</p><div class="result">&#x2192; 첫 프로그램 + 현업노트 시작</div></div></div>
+    <div class="cur-item"><div class="cur-num">2</div><div><h3>공장의 눈과 귀</h3><p>AHT20 온습도 → OLED 표시 → 온도별 네오픽셀 색변경</p><div class="result">&#x2192; 센서 신호체인 완성</div></div></div>
+    <div class="cur-item"><div class="cur-num">3</div><div><h3>자동 경보 시스템</h3><p>기준값 정상/주의/위험 자동 판단 + 부저 + CSV 기록</p><div class="result">&#x2192; 스스로 판단·경보 + 데이터</div></div></div>
+    <div class="cur-item"><div class="cur-num">4</div><div><h3>스마트폰 원격 모니터링</h3><p>웹 대시보드·실시간 그래프 + LoRa 장거리 무선</p><div class="result">&#x2192; 폰으로 우리 공장 보기</div></div></div>
+    <div class="cur-item" style="grid-column: 1 / -1;"><div class="cur-num">5</div><div><h3>AI 미니 스마트팩토리 (종합)</h3><p>AI 손글씨 인식 + 전 회차 통합(센서→판단→기록→무선→AI). "우리 공장에 어떻게 적용할까" 토론 + 현업 적용 1페이지</p><div class="result">&#x2192; 완성 시연 + 현업 적용 계획서 + take-home 템플릿</div></div></div>
+  </div>
+</div>
+
+<!-- 9: Differentiation -->
+<div class="slide s-cmp" id="s9">
+  <div class="sh"><div class="num">08 — DIFFERENTIATION</div><h2>차별점 — 남고, 자란다</h2><div class="line"></div></div>
+  <div class="sb">
+    <div class="cmp-table">
+      <div class="cmp-row hdr"><div class="cmp-cell"></div><div class="cmp-cell">일반 체험형 교육</div><div class="cmp-cell">UTTEC 실습 교육</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">방식</div><div class="cmp-cell old">보고·조립 (見)</div><div class="cmp-cell new">직접 익힘 (習)</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">실습 kit</div><div class="cmp-cell old">대여·반납</div><div class="cmp-cell new">UTTEC 자체 제작 · 수강생 자산</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">교육 후</div><div class="cmp-cell old">수료증만 남음</div><div class="cmp-cell new">kit + 현업 노트(방법론) 자산</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">문제 해결</div><div class="cmp-cell old">강사 의존</div><div class="cmp-cell new">AI로 자기주도 해결</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">신뢰</div><div class="cmp-cell old">이론·시연</div><div class="cmp-cell new">38년 양산 + 용인 실운영 검증</div></div>
+      <div class="cmp-row"><div class="cmp-cell lbl">후속</div><div class="cmp-cell old">단발 종료</div><div class="cmp-cell new">kit 재구매·후속 교육·현장 확산</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 10: Effect -->
+<div class="slide s-eff" id="s10">
+  <div class="sh"><div class="num">09 — EXPECTED EFFECT</div><h2>기대 효과</h2><div class="line"></div></div>
+  <div class="sb">
+    <div class="eff-grid">
+      <div class="eff-card"><div class="big">효능감</div><h3>"나도 만들 수 있다"</h3><p>비전공 직원의 디지털 진입장벽 제거</p></div>
+      <div class="eff-card"><div class="big">자산</div><h3>kit + 현업 노트</h3><p>교육 후에도 남고 이어지는 기록</p></div>
+      <div class="eff-card"><div class="big">성장</div><h3>AI 자기주도 학습</h3><p>교육 이후 스스로 계속 성장</p></div>
+      <div class="eff-card"><div class="big">현장</div><h3>즉시 적용</h3><p>kit 가져가 바로 프로토타이핑</p></div>
+      <div class="eff-card"><div class="big">지역</div><h3>제조 디지털 전환</h3><p>광주 제조기업 내재화 인력 양성</p></div>
+      <div class="eff-card"><div class="big">확장</div><h3>점진적 스케일업</h3><p>필요에 따라 센서·Pi 추가</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 11: CTA -->
+<div class="slide s-cta" id="s11">
+  <div class="hanja">百見不如一習</div>
+  <h2>듣고 보는 교육을 넘어,<br>직접 익히는 교육</h2>
+  <p>비전공 직원이 5주 만에 스스로 만들고 · 현업에 남기고 · AI로 성장합니다.<br>용인에서 검증된 프로그램을, 이제 광주에서.</p>
+  <div class="cta-box">
+    <div class="to">교육 제안</div>
+    <div class="org">광주경제진흥상생일자리재단 귀중 <span style="font-size:12px;color:rgba(255,255,255,0.5);">(가칭)</span></div>
+    <div style="margin-top:12px; font-size:14px; color:rgba(255,255,255,0.5);">UTTEC</div>
+  </div>
+</div>
+
+<div class="nav"><button onclick="prev()">&#x25C0;</button><button onclick="next()">&#x25B6;</button></div>
+<div class="pg" id="pg">1 / 11</div>
+
+<script>
+let c=1; const t=11;
+function show(n){document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));const s=document.getElementById('s'+n);if(s){s.classList.add('active');s.style.animation='none';s.offsetHeight;s.style.animation='';}document.getElementById('pg').textContent=n+' / '+t;}
+function next(){if(c<t){c++;show(c);}}
+function prev(){if(c>1){c--;show(c);}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='Enter'){e.preventDefault();next();}if(e.key==='ArrowLeft'||e.key==='Backspace'){e.preventDefault();prev();}});
+let tx=0;document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>50){d>0?next():prev();}});
+</script>
+</body>
+</html>

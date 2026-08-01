@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>UTTEC 교육 목표 설명자료 — 백견불여일습</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans KR','Malgun Gothic',sans-serif; color:#1e293b; background:#f1f5f9; line-height:1.6; }
+  .page { width:210mm; min-height:297mm; margin:0 auto; background:#fff; padding:22mm 20mm; }
+  .page + .page { margin-top:8mm; }
+
+  /* Hero */
+  .hero { background:linear-gradient(135deg,#0f172a,#1e293b 45%,#3b82f6 160%); color:#fff; border-radius:16px; padding:38px 34px; text-align:center; margin-bottom:26px; }
+  .hero .hanja { font-size:34px; font-weight:900; letter-spacing:5px; margin-bottom:6px; }
+  .hero .kor { font-size:16px; color:#bfdbfe; letter-spacing:2px; margin-bottom:10px; }
+  .hero .desc { font-size:18px; font-weight:700; }
+  .hero .sub { font-size:13px; color:rgba(255,255,255,0.7); margin-top:14px; }
+
+  h1.doc { font-size:22px; font-weight:900; color:#0f172a; margin-bottom:4px; }
+  .lead { font-size:14px; color:#475569; border-left:4px solid #3b82f6; padding:8px 0 8px 14px; background:#f8fafc; margin-bottom:24px; }
+  .lead b { color:#1d4ed8; }
+
+  h2.sec { font-size:18px; font-weight:800; color:#0f172a; margin:26px 0 12px; padding-bottom:6px; border-bottom:2px solid #e2e8f0; }
+  h2.sec .n { color:#3b82f6; margin-right:8px; }
+  p.body { font-size:13.5px; color:#334155; margin-bottom:10px; }
+
+  /* Era */
+  .era { display:flex; gap:14px; margin:14px 0; }
+  .era .col { flex:1; border-radius:12px; padding:18px; }
+  .era .past { background:#f1f5f9; border:1px solid #e2e8f0; }
+  .era .future { background:#eff6ff; border:1px solid #bfdbfe; }
+  .era .tag { font-size:11px; letter-spacing:1px; color:#64748b; margin-bottom:8px; }
+  .era .future .tag { color:#2563eb; }
+  .era .big { font-size:20px; font-weight:900; margin-bottom:6px; color:#0f172a; }
+  .era .future .big { color:#1d4ed8; }
+  .era .d { font-size:12.5px; color:#475569; }
+  .era-note { text-align:center; font-size:14px; color:#0f172a; background:#f8fafc; border:1px dashed #cbd5e1; border-radius:10px; padding:14px; margin-top:6px; }
+  .era-note b { color:#1d4ed8; }
+
+  /* Goals */
+  .goal { display:flex; gap:16px; border:1px solid #e2e8f0; border-left:5px solid #3b82f6; border-radius:12px; padding:16px 18px; margin-bottom:12px; background:#fff; }
+  .goal .rank { font-size:30px; font-weight:900; color:#3b82f6; width:44px; flex-shrink:0; text-align:center; }
+  .goal h3 { font-size:16px; font-weight:800; color:#0f172a; margin-bottom:6px; }
+  .goal .def { font-size:13px; color:#334155; margin-bottom:6px; }
+  .goal .why { font-size:12.5px; color:#475569; }
+  .goal .why b, .goal .def b { color:#1d4ed8; }
+  .goal .say { font-size:12.5px; color:#0f766e; background:#f0fdfa; border-radius:8px; padding:7px 10px; margin-top:8px; font-style:italic; }
+
+  /* Table */
+  table { width:100%; border-collapse:collapse; font-size:12.5px; margin:10px 0; }
+  th,td { border:1px solid #e2e8f0; padding:8px 10px; text-align:left; }
+  th { background:#f1f5f9; font-weight:700; color:#0f172a; }
+  td.c { text-align:center; }
+
+  .summary { background:linear-gradient(135deg,#0f172a,#1e40af); color:#fff; border-radius:14px; padding:26px 30px; margin-top:22px; text-align:center; }
+  .summary .t { font-size:15px; color:#bfdbfe; margin-bottom:12px; letter-spacing:1px; }
+  .summary .row { font-size:16px; font-weight:700; margin:4px 0; }
+  .summary .foot { font-size:13px; color:rgba(255,255,255,0.75); margin-top:14px; font-style:italic; }
+
+  .foot-src { font-size:11px; color:#94a3b8; margin-top:22px; border-top:1px solid #e2e8f0; padding-top:10px; }
+
+  @page { size:A4; margin:0; }
+  @media print { body { background:#fff; } .page { margin:0; box-shadow:none; page-break-after:always; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="hanja">百聞不如一見 · 百見不如一習</div>
+    <div class="kor">백문이 불여일견, 백견이 불여일습</div>
+    <div class="desc">듣고 보는 교육을 넘어, 직접 익히는 교육</div>
+    <div class="sub">UTTEC AI·IoT 스마트팩토리 실습 — 교육 목표 설명자료</div>
+  </div>
+
+  <div class="lead">이 교육은 "센서를 켜는 법"을 가르치는 게 아니라, <b>비전공 직원이 스스로 만들고(효능감) · 현업에 남기고(이전) · AI로 계속 성장하도록(협업)</b> 만드는 것이다.</div>
+
+  <h2 class="sec"><span class="n">01</span>시대의 전환 — 견(見)의 시대에서 습(習)의 시대로</h2>
+  <div class="era">
+    <div class="col past">
+      <div class="tag">인쇄 → 방송 → 인터넷 → 스마트폰</div>
+      <div class="big">百聞不如一見 (見)</div>
+      <div class="d">"정보를 보는" 시대의 정점. 무엇이든 손안에서 볼 수 있게 되었지만, 보는 것만으로는 끝내 <b>내 것이 되지 않는다.</b></div>
+    </div>
+    <div class="col future">
+      <div class="tag">AI</div>
+      <div class="big">百見不如一習 (習)</div>
+      <div class="d">AI가 진입장벽을 무너뜨려, 이제 <b>비전공자도 직접 만들고 익힌다.</b> 배움이 '보기'에서 '하기·익히기'로 넘어간다.</div>
+    </div>
+  </div>
+  <div class="era-note">스마트폰이 '보는 법'을 바꿨다면, <b>AI는 '하는 법'을 바꾼다.</b><br>본 교육은 그 전환의 최전선 — 비전공 직원이 AI를 곁에 두고 <b>직접 익히는</b> 경험을 5주에 압축한다.</div>
+
+  <h2 class="sec"><span class="n">02</span>진정한 교육 목표 3대 (우선순위 = 중요도)</h2>
+  <div class="goal">
+    <div class="rank">①</div>
+    <div>
+      <h3>디지털 효능감 전환 — "나도 직접 만들 수 있다"</h3>
+      <div class="def"><b>정의:</b> 제조 현장 비전공자의 <b>심리적 진입장벽 제거</b>. "AI·IoT는 남의 일"에서 "내가 다룰 수 있다"로.</div>
+      <div class="why"><b>왜 최우선:</b> 효능감이 없으면 나머지 목표는 성립하지 않는다. 손으로 만든 것이 실제로 반응하는 성공 경험이 모든 학습·적용의 토대.</div>
+      <div class="say">"5주 전 코드 한 줄 못 쓰던 분이, 마지막 날엔 자기 손으로 미니 스마트팩토리를 돌립니다."</div>
+    </div>
+  </div>
+  <div class="goal">
+    <div class="rank">②</div>
+    <div>
+      <h3>현업 이전·지속 — 현업 노트로 평생 자산화</h3>
+      <div class="def"><b>정의:</b> 교실 실습이 교실에서 끝나지 않고, <b>자기 공장·업무에 적용·기록·재현·인계·개선.</b></div>
+      <div class="why"><b>왜 중요:</b> 현업 노트(Obsidian+AI) 방법론을 함께 심어 학습이 자산으로 축적된다. UTTEC의 이중 자산 = 기술 + 방법론.</div>
+      <div class="say">"kit는 손에, 기록 습관은 머리에 — 교육이 끝나도 계속 자라는 자산."</div>
+    </div>
+  </div>
+  <div class="goal">
+    <div class="rank">③</div>
+    <div>
+      <h3>AI 협업·자기주도 문제해결 — AI를 도구로 부린다</h3>
+      <div class="def"><b>정의:</b> 막혔을 때 스스로 AI를 활용해 이해·해결하고, 필요한 것을 스스로 만들어 보는 역량.</div>
+      <div class="why"><b>왜 중요:</b> AI를 협업 파트너로 부리는 법을 배우면 교육 이후에도 스스로 계속 성장한다. AI 시대에 가장 오래 남는 역량.</div>
+      <div class="say">"물고기를 주는 게 아니라, AI라는 낚싯대를 쥐여 드립니다."</div>
+    </div>
+  </div>
+
+</div>
+<div class="page">
+
+  <h2 class="sec"><span class="n">03</span>커리큘럼 → 목표 매핑</h2>
+  <table>
+    <tr><th>회차</th><th>표면 활동</th><th class="c">① 효능감</th><th class="c">② 현업이전</th><th class="c">③ AI협업</th></tr>
+    <tr><td class="c">0</td><td>현업위키 만들기</td><td class="c">○</td><td class="c">◎</td><td class="c">◎</td></tr>
+    <tr><td class="c">1</td><td>라즈베리파이·첫 코드</td><td class="c">◎</td><td class="c">○</td><td class="c">○</td></tr>
+    <tr><td class="c">2</td><td>센서·OLED·네오픽셀</td><td class="c">◎</td><td class="c">○</td><td class="c">○</td></tr>
+    <tr><td class="c">3</td><td>자동 경보·CSV 기록</td><td class="c">○</td><td class="c">◎</td><td class="c">○</td></tr>
+    <tr><td class="c">4</td><td>폰 원격·무선(LoRa)</td><td class="c">○</td><td class="c">○</td><td class="c">○</td></tr>
+    <tr><td class="c">5</td><td>AI 인식·통합 완성</td><td class="c">◎</td><td class="c">◎</td><td class="c">◎</td></tr>
+  </table>
+  <p class="body">모든 회차가 3대 목표를 조금씩 쌓아 올리고, 마지막 5회차에서 세 목표가 통합된다.</p>
+
+  <h2 class="sec"><span class="n">04</span>누구에게 어떤 가치인가</h2>
+  <table>
+    <tr><th>대상</th><th>이 목표가 주는 가치</th></tr>
+    <tr><td>수강생(제조 직원·예비창업자)</td><td>진입장벽 극복 + 현업에 남는 기록 습관 + AI로 계속 성장하는 힘</td></tr>
+    <tr><td>기업</td><td>외부 의존 없이 사내에서 IoT·자동화를 직접 시도·개선할 수 있는 인력</td></tr>
+    <tr><td>주관 기관</td><td>"실제로 남고 자라는" 실습형 성과 — craft 위주 교육과 차별화, 성과 지표·재수주 확보</td></tr>
+  </table>
+
+  <div class="summary">
+    <div class="t">이 교육이 남기는 것</div>
+    <div class="row">① 자신감 — "나도 만들 수 있다"</div>
+    <div class="row">② 자산 — 현업에 남는 나만의 기록</div>
+    <div class="row">③ 성장 — AI로 스스로 계속 배우는 힘</div>
+    <div class="foot">센서를 켜는 법이 아니라, 비전공 직원이 5주 만에 스스로 만들고 · 현업에 남기고 · AI로 성장하게 만드는 교육.</div>
+  </div>
+
+  <div class="foot-src">근거: 용인 미래창의 아카데미 3차(2026-07~08) 현장 실습 기록 + 커리큘럼 강화 방향 &nbsp;|&nbsp; UTTEC</div>
+
+</div>
+</body>
+</html>
