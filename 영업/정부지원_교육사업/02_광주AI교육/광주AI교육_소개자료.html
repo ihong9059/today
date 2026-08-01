@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>광주 AI·IoT 스마트팩토리 실습 교육 — 쉬운 소개</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; color:#1f2937; background:#eef2f7; line-height:1.65; }
+  .page { width:210mm; margin:0 auto; background:#fff; padding:14mm 16mm; }
+  .hero, .card, .tcol, .three, .rrow, .kk, .keep, .proof, .need, .cta, .cards { break-inside:avoid; }
+  h2 { break-after:avoid; }
+
+  .hero { background:linear-gradient(135deg,#1e3a8a,#2563eb 60%,#f97316 200%); color:#fff; border-radius:20px; padding:40px 38px; margin-bottom:26px; }
+  .hero .han { font-size:38px; font-weight:900; letter-spacing:4px; }
+  .hero .hkor { font-size:16px; color:#dbeafe; margin-top:6px; letter-spacing:2px; }
+  .hero .big { font-size:26px; font-weight:800; margin-top:20px; line-height:1.4; }
+  .hero .big b { color:#fde68a; }
+  .hero .who { font-size:14px; color:rgba(255,255,255,0.85); margin-top:18px; }
+
+  h2 { font-size:22px; font-weight:900; color:#1e3a8a; margin:26px 0 12px; display:flex; align-items:center; gap:10px; }
+  h2 .dot { width:12px; height:12px; border-radius:50%; background:#f97316; display:inline-block; }
+  p.b { font-size:15px; color:#374151; margin-bottom:10px; }
+  .soft { color:#6b7280; }
+
+  .cards { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:10px 0; }
+  .card { background:#f8fafc; border:1px solid #e2e8f0; border-left:5px solid #ef4444; border-radius:12px; padding:14px 18px; }
+  .card h3 { font-size:15px; color:#b91c1c; font-weight:800; }
+  .card p { font-size:13px; color:#64748b; margin-top:2px; }
+
+  .three { display:flex; gap:16px; margin:14px 0; }
+  .tcol { flex:1; text-align:center; background:#eff6ff; border:1px solid #bfdbfe; border-radius:14px; padding:20px 14px; }
+  .tcol .ic { width:56px; height:56px; margin:0 auto 10px; border-radius:14px; background:#2563eb; color:#fff; font-size:20px; font-weight:900; display:flex; align-items:center; justify-content:center; }
+  .tcol h3 { font-size:17px; font-weight:800; color:#1e3a8a; }
+  .tcol p { font-size:13px; color:#475569; margin-top:6px; }
+  .plus { align-self:center; font-size:28px; color:#94a3b8; font-weight:800; }
+
+  .road { display:flex; flex-direction:column; gap:8px; margin:10px 0; }
+  .rrow { display:flex; align-items:center; gap:16px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:11px 18px; }
+  .rrow .w { font-size:15px; font-weight:900; color:#2563eb; width:70px; }
+  .rrow .t { font-size:15px; font-weight:700; width:250px; }
+  .rrow .d { font-size:13px; color:#64748b; }
+
+  .keep { display:flex; gap:12px; margin:12px 0; }
+  .kk { flex:1; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:14px; padding:18px; text-align:center; }
+  .kk .n { font-size:22px; font-weight:900; color:#16a34a; }
+  .kk h3 { font-size:15px; font-weight:800; margin-top:6px; color:#14532d; }
+  .kk p { font-size:12px; color:#4b5563; margin-top:4px; }
+
+  .proof { display:flex; align-items:center; gap:20px; background:linear-gradient(135deg,#14532d,#166534); color:#fff; border-radius:16px; padding:22px 28px; margin:14px 0; }
+  .proof .big { font-size:40px; font-weight:900; color:#86efac; }
+  .proof p { font-size:15px; }
+
+  .photo { width:100%; max-height:150px; object-fit:cover; border-radius:16px; border:1px solid #e2e8f0; margin:10px 0; }
+
+  .need { background:#fffbeb; border:1px solid #fde68a; border-radius:14px; padding:18px 22px; margin:12px 0; }
+  .need h3 { font-size:15px; font-weight:800; color:#b45309; margin-bottom:8px; }
+  .need ul { margin:0; padding-left:20px; }
+  .need li { font-size:13.5px; color:#57534e; margin:3px 0; }
+
+  .cta { background:linear-gradient(135deg,#1e3a8a,#2563eb); color:#fff; border-radius:16px; padding:26px 30px; text-align:center; margin-top:18px; }
+  .cta .big { font-size:24px; font-weight:900; }
+  .cta .org { font-size:18px; font-weight:800; margin-top:12px; color:#dbeafe; }
+  .cta small { display:block; font-size:12px; color:rgba(255,255,255,0.6); margin-top:6px; }
+
+  .foot { font-size:11px; color:#9ca3af; margin-top:16px; border-top:1px solid #e5e7eb; padding-top:8px; }
+  @page { size:A4; margin:0; }
+  @media print { body{background:#fff;} .page{margin:0;page-break-after:always;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="han">百見不如一習</div>
+    <div class="hkor">백 번 보는 것보다, 한 번 직접 익히는 것</div>
+    <div class="big">라즈베리파이와 AI로,<br><b>비전공 직원도 5주 만에 스마트공장을 직접 만듭니다.</b></div>
+    <div class="who">AI·IoT 기반 스마트팩토리 실습 과정 · 제조기업 임직원 & 예비창업자 대상 (초급)</div>
+  </div>
+
+  <h2><span class="dot"></span>이런 고민, 있으시죠?</h2>
+  <div class="cards">
+    <div class="card"><h3>설비 고장은 늘 뒤늦게</h3><p>멈춘 뒤에야 알고, 원인 찾느라 반나절</p></div>
+    <div class="card"><h3>온습도는 사람이 수기로</h3><p>돌아다니며 확인·기록 — 누락과 지연</p></div>
+    <div class="card"><h3>스마트공장은 비용의 벽</h3><p>수천만원 시스템, 중소기업엔 부담</p></div>
+    <div class="card"><h3>"디지털은 전문가의 일"</h3><p>현장 직원은 시도조차 못 함</p></div>
+  </div>
+
+  <h2><span class="dot"></span>이렇게 풀어드립니다 — 직접 만들게</h2>
+  <p class="b">비싼 시스템을 사드리는 게 아니라, <b>직원이 직접 만들 수 있게</b> 가르칩니다. 필요한 건 딱 세 가지입니다.</p>
+  <div class="three">
+    <div class="tcol"><div class="ic">Pi</div><h3>라즈베리파이</h3><p>손바닥만 한 진짜 컴퓨터</p></div>
+    <div class="plus">+</div>
+    <div class="tcol"><div class="ic">Kit</div><h3>UTTEC 실습 키트</h3><p>센서·LED·무선 일체 (자체 제작)</p></div>
+    <div class="plus">+</div>
+    <div class="tcol"><div class="ic">AI</div><h3>AI 조력자</h3><p>막히면 스스로 물어 해결</p></div>
+  </div>
+  <img class="photo" src="_kit_sm.jpg" alt="실습 키트">
+
+  <h2><span class="dot"></span>5주에 이렇게 배웁니다 (주 1회 · 총 20시간)</h2>
+  <div class="road">
+    <div class="rrow"><div class="w">1주차</div><div class="t">라즈베리파이와 친해지기</div><div class="d">첫 프로그램을 내 손으로</div></div>
+    <div class="rrow"><div class="w">2주차</div><div class="t">공장의 눈과 귀</div><div class="d">온습도 센서 → 화면에 표시</div></div>
+    <div class="rrow"><div class="w">3주차</div><div class="t">자동 경보 시스템</div><div class="d">기준값 넘으면 자동으로 알림</div></div>
+    <div class="rrow"><div class="w">4주차</div><div class="t">스마트폰 원격 모니터링</div><div class="d">폰으로 우리 공장 보기 (무선)</div></div>
+    <div class="rrow"><div class="w">5주차</div><div class="t">AI 미니 스마트팩토리</div><div class="d">AI까지 더해 통합 완성</div></div>
+  </div>
+
+  <h2><span class="dot"></span>교육이 끝나도 — 남고, 자랍니다</h2>
+  <div class="keep">
+    <div class="kk"><div class="n">①</div><h3>자신감</h3><p>"나도 만들 수 있다"</p></div>
+    <div class="kk"><div class="n">②</div><h3>자산</h3><p>현업 노트 + 실습 키트를 그대로 가져감</p></div>
+    <div class="kk"><div class="n">③</div><h3>성장</h3><p>AI로 스스로 계속 배우는 힘</p></div>
+  </div>
+  <p class="b soft">단순 체험이 아닙니다. 배운 것을 <b>자기 공장·업무에 기록하고 다시 쓰는 방법</b>까지 함께 익혀, 교육이 끝난 뒤에도 계속 이어집니다.</p>
+
+  <h2><span class="dot"></span>이미 검증된 프로그램입니다</h2>
+  <div class="proof">
+    <div class="big">16명</div>
+    <p><b>용인에서 실제 운영 중</b> — 미래창의 아카데미 과정으로 제조기업 임직원·예비창업자 16명이 수강, 매주 직접 만들며 진행되었습니다. 탁상 계획이 아니라 <b>현장에서 검증된 커리큘럼</b>입니다.</p>
+  </div>
+
+  <h2><span class="dot"></span>왜 광주인가</h2>
+  <p class="b">광주는 제조 기반이 탄탄한 도시입니다. 기존 체험형 교육이 '만들어 보기(craft)'에 머물렀다면, 본 과정은 <b>전자·IoT·AI를 직접 다루는 실습</b>으로 지역 제조 인력의 디지털 전환 역량을 키웁니다. UTTEC 협력사 <b>Ponet</b>의 광주 거점과 연계해 지역 네트워크 활용도 가능합니다.</p>
+
+  <div class="need">
+    <h3>함께 정하면 바로 시작합니다</h3>
+    <ul>
+      <li>주관 방식 (지자체 교육지원 / 제조기업 대상 / 컨소시엄)</li>
+      <li>대상·정원 · 일정 · 교육장</li>
+      <li>실습 키트 물량 · 예산 · 정산 방식</li>
+    </ul>
+  </div>
+  <p class="b soft">교재·커리큘럼·강사·실습 키트는 <b>이미 준비되어 있습니다.</b> 위 몇 가지만 정해지면 즉시 개설할 수 있습니다.</p>
+
+  <div class="cta">
+    <div class="big">직접 만들고 · 현업에 남기고 · AI로 성장하는 교육</div>
+    <div class="org">광주경제진흥상생일자리재단 귀중</div>
+    <small>UTTEC · 광주 AI·IoT 스마트팩토리 실습 과정 (가칭) · 함께 만들 담당자를 찾습니다</small>
+  </div>
+
+  <div class="foot">본 소개자료는 제안용이며, 기관·일정·예산 등 세부는 협의 후 확정됩니다. · UTTEC</div>
+
+</div>
+</body>
+</html>
