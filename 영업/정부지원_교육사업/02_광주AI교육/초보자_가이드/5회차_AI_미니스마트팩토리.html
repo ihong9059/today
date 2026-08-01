@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5회차 · AI 체험 및 미니 스마트팩토리 (수료) — 5회차 — AI 체험 및 미니 스마트팩토리</title>
+<style>
+  :root{--bg:#F4F6F8;--ink:#1C2530;--muted:#5C6875;--line:#E1E7ED;--blue:#2563C9;--blue-deep:#1B4894;
+    --teal:#0E9488;--green:#16955C;--amber:#C8811A;--red:#C64236;--violet:#6D4AC2;--shadow:0 2px 12px rgba(30,50,80,.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",sans-serif;color:var(--ink);background:var(--bg);line-height:1.75;font-size:15.5px}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
+  code,.mono{font-family:"Consolas","D2Coding","Courier New",monospace}
+  header{color:#fff;padding:46px 0 40px}
+  header .tagline{font-size:13px;letter-spacing:1px;opacity:.9;margin-bottom:12px;text-transform:uppercase}
+  header h1{font-size:29px;font-weight:800;line-height:1.32;letter-spacing:-.5px;margin-bottom:14px}
+  header p{font-size:16px;opacity:.95;max-width:680px}
+  .hmeta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .hmeta span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:6px 13px;font-size:13px}
+  .hmeta b{color:#fff}
+  .goal{background:#fff;border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:12px;padding:18px 22px;margin:26px 0;box-shadow:var(--shadow)}
+  .goal h3{font-size:15px;color:var(--teal);margin-bottom:8px}
+  .goal b{color:var(--ink)}
+  section{padding:30px 0;border-bottom:1px solid var(--line)}
+  .badge{display:inline-flex;align-items:center;gap:9px;margin-bottom:10px}
+  .badge .n{min-width:34px;height:34px;padding:0 10px;border-radius:18px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .badge .k{font-size:12px;letter-spacing:1.3px;color:var(--muted);text-transform:uppercase;font-weight:700}
+  h2{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:12px}
+  h3{font-size:16.5px;font-weight:800;margin:20px 0 9px}
+  h4{font-size:15px;font-weight:800;margin:16px 0 7px;color:var(--blue-deep)}
+  p{margin-bottom:11px}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:16px}
+  ul.plain{list-style:none;margin:8px 0}
+  ul.plain li{position:relative;padding-left:22px;margin-bottom:7px}
+  ul.plain li::before{content:"»";position:absolute;left:3px;color:var(--teal);font-weight:800}
+  ol.steps{margin:10px 0 10px 2px;list-style:none;counter-reset:st}
+  ol.steps>li{position:relative;padding-left:36px;margin-bottom:14px;counter-increment:st}
+  ol.steps>li::before{content:counter(st);position:absolute;left:0;top:-1px;width:25px;height:25px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .pipe{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+  .pipe .s{flex:1;min-width:135px;background:#F0F5FC;border:1px solid #D3E1F5;border-radius:11px;padding:12px 13px}
+  .pipe .s .n{display:inline-flex;width:23px;height:23px;border-radius:50%;background:var(--blue);color:#fff;align-items:center;justify-content:center;font-weight:800;font-size:12px;margin-bottom:6px}
+  .pipe .s b{display:block;font-size:13.5px;line-height:1.4;margin-bottom:2px}
+  .pipe .s small{color:var(--muted);font-size:12px}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:11px;overflow:hidden;box-shadow:var(--shadow);font-size:13.5px;margin:12px 0}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#EDF2F7;font-weight:700;font-size:12.5px}
+  tr:last-child td{border-bottom:none}
+  td code,.pin{background:#EEF2F6;padding:2px 7px;border-radius:5px;font-size:12.5px;color:var(--blue-deep);font-family:"Consolas",monospace}
+  .cmd{background:#12161C;border-radius:11px;margin:12px 0;overflow:hidden;box-shadow:var(--shadow)}
+  .cmd .bar{display:flex;align-items:center;gap:7px;padding:8px 13px;background:#0B0E13;border-bottom:1px solid #232A33}
+  .cmd .bar .d{width:10px;height:10px;border-radius:50%}
+  .cmd .bar .d.r{background:#F0625A}.cmd .bar .d.y{background:#F5BE4E}.cmd .bar .d.g{background:#5BC46A}
+  .cmd .bar .t{margin-left:8px;font-size:11.5px;color:#7C8896}
+  .cmd pre{padding:14px 15px;color:#E6EDF3;font-size:13px;line-height:1.62;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+  .cmd pre .k{color:#C99BFF}.cmd pre .s{color:#9FE7B8}.cmd pre .c{color:#7C8896}.cmd pre .n{color:#7EC5FF}.cmd pre .f{color:#F5BE4E}
+  .prompt{background:#F5F1FC;border:1px solid #DBCcF2;border-left:4px solid var(--violet);border-radius:10px;padding:12px 16px;margin:10px 0}
+  .prompt .say{display:block;margin:5px 0;font-size:14.5px}
+  .prompt .say b{color:var(--violet)}
+  .prompt .why{color:var(--muted);font-size:13px;margin-left:22px}
+  .note{border-radius:11px;padding:14px 17px;margin:14px 0;font-size:14.5px;border:1px solid}
+  .note b{font-weight:800}
+  .note.tip{background:#EAF6F3;border-color:#B7E0D8}.note.tip b{color:var(--teal)}
+  .note.warn{background:#FDF4E6;border-color:#F0D9A8}.note.warn b{color:var(--amber)}
+  .note.key{background:#EAF1FC;border-color:#C1D6F5}.note.key b{color:var(--blue-deep)}
+  .note.mean{background:#FBF0F8;border-color:#E9C7DF}.note.mean b{color:#A63A82}
+  kbd{background:#fff;border:1px solid #C7D0DA;border-bottom-width:2px;border-radius:6px;padding:2px 7px;font-size:12.5px;font-weight:700}
+  footer{background:#12161C;color:#8A97A6;padding:26px 0;font-size:13px}
+  footer b{color:#D6DEE7}
+  @media print{body{background:#fff}section,.goal,.cmd,table,.pipe{break-inside:avoid}}
+
+  header{background:linear-gradient(150deg,#2C2C6B,#4B3FB0 50%,#0E9488 130%)}
+</style></head><body>
+<header><div class="wrap">
+  <div class="tagline">5회차 · AI 체험 및 미니 스마트팩토리 (수료)</div>
+  <h1>5회차 — AI 체험 및 미니 스마트팩토리</h1>
+  <p><b>AI를 맛보고</b>, 4주간의 조각을 합쳐 <b>미니 스마트팩토리를 완성</b>하며, 내 노트를 <b>내 회사용 가이드</b>로 마무리합니다.</p>
+  <div class="hmeta"><span>회차 · <b>5주차</b></span><span>키워드 · <b>AI · 통합 · 현업적용 · 수료</b></span></div>
+</div></header>
+<div class="wrap">
+
+  <div class="goal"><h3> 이번 시간의 목표 (마지막 날)</h3>
+  <b>AI를 맛보고</b>, 4주간 만든 조각을 모두 합쳐 <b>미니 스마트팩토리를 완성</b>합니다. 그리고 5주간 쌓은 노트를 <b>내 회사용 1페이지 가이드</b>로 마무리합니다.</div>
+
+  <section>
+    <div class="badge"><span class="n">개념</span><span class="k">쉬운 말로</span></div>
+    <h2>AI(인공지능)는 어떻게 "배우나요"?</h2>
+    <p>사람이 규칙을 일일이 알려주는 대신, AI는 <b>수많은 예시를 보고 스스로 규칙을 찾아냅니다.</b> 예: 손으로 쓴 숫자 '3'을 수천 개 보여주면, AI가 "이런 모양이면 3이구나"를 <b>스스로 익힙니다.</b></p>
+    <div class="note key"><b>공장에서의 AI.</b> "평소와 다른 이상 신호를 자동으로 알아채기"(이상 감지)에 씁니다. 오늘은 <b>손글씨 숫자 인식</b>으로 원리를 체험합니다.</div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습①</span><span class="k">AI 체험</span></div>
+    <h2>실습 ①: 손글씨 숫자 인식 AI 체험</h2>
+    <p>직접 숫자를 써서 AI가 맞히는지 체험합니다. (데모는 강사 준비본을 사용)</p>
+    <div class="prompt">
+      <span class="say"> <b>"손글씨 숫자 인식 AI가 어떤 원리로 숫자를 알아맞히는지 쉽게 설명해줘."</b></span>
+      <span class="say"> <b>"손글씨 숫자 인식 AI를 직접 체험해보고 싶어. 어떻게 시작하는지 알려줘."</b></span>
+      <span class="say"> <b>"AI가 언제 틀리는지(흐린 글씨 등) 알려줘."</b></span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">프로젝트</span><span class="k">통합 · 오늘의 핵심</span></div>
+    <h2>실습 ②: 미니 스마트팩토리 통합</h2>
+    <p class="lead">4주간 만든 조각(센서·판단·경보·대시보드)을 <b>하나의 미니 공장</b>으로 연결합니다.</p>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">미니 스마트팩토리 구성도</span></div>
+    <pre>[온습도 센서] ─→ 값 수집
+[버튼] ─→ 시작/정지
+        │
+        ▼
+[라즈베리파이] ─→ 기준값 · 이상 판단 (+ 선택: AI 이상감지)
+        ├─→ [LED 신호등 R/Y/B] + [네오픽셀 ×4]
+        ├─→ [부저/스피커] 경고음
+        ├─→ [OLED] 실시간 수치
+        └─→ [웹 대시보드] 폰 그래프 (+ LoRa 원격)</pre></div>
+    <div class="prompt">
+      <span class="say"> <b>/hardwareTest</b> <span class="why">— 통합 전에 모든 부품 정상인지 한 번에 점검</span></span>
+      <span class="say"> <b>"지금까지 만든 센서→판단→경보→대시보드를 하나로 합치는 순서를 알려줘."</b></span>
+      <span class="say"> <b>"합치다 막히면 어디부터 하나씩 확인하면 되는지 알려줘."</b></span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">심화</span><span class="k">여유 있으면</span></div>
+    <h2>(심화) AI 이상 감지 — 평소와 다른 튐 잡기</h2>
+    <p>평균에서 크게 벗어난 값을 "이상"으로 자동 판단하는 간단한 방법(Z-score)입니다. 여유가 있으면 도전, 없으면 건너뛰어도 됩니다.</p>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — 간단 이상 감지 (개념)</span></div>
+    <pre>recent = [<span class="n">27.1</span>, <span class="n">27.3</span>, <span class="n">27.0</span>, <span class="n">27.2</span>, <span class="n">31.8</span>]     <span class="c"># 최근 측정값</span>
+avg = <span class="k">sum</span>(recent)/<span class="k">len</span>(recent)
+<span class="k">if</span> <span class="k">abs</span>(recent[-<span class="n">1</span>] - avg) &gt; <span class="n">3</span>:                <span class="c"># 평균보다 3도 이상 튀면</span>
+    <span class="k">print</span>(<span class="s">" 이상 감지! 확인 필요"</span>)</pre></div>
+    <div class="prompt">
+      <span class="say"> <b>"평소와 다른 이상(온도 튐)을 자동으로 알아채는 간단한 방법을 쉽게 알려줘."</b></span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge" style="--blue:#A63A82"><span class="n" style="background:#A63A82">핵심</span><span class="k">평생 자산 완성 · take-home</span></div>
+    <h2>실습 ③: 현업 적용 1페이지 — 내 노트를 내 회사 가이드로</h2>
+    <p class="lead">5주간 쌓은 내 노트를 Claude가 <b>전부 읽고</b>, 내 회사에 바로 쓸 <b>1페이지 안내서</b>로 만들어 줍니다. 이 과정의 <b>최종 결과물</b>입니다.</p>
+    <div class="prompt">
+      <span class="say"> <b>"지금까지 쓴 내 작업일지·배운것을 전부 읽고, 내 현업에 적용할 1페이지 가이드를 만들어줘."</b></span>
+      <span class="say"> <b>"내 회사 설비/공정 하나를 골라 이 위키 방식으로 관리하는 설계를 같이 짜줘."</b></span>
+      <span class="why"> 하드웨어 키트가 "물리 자산"이라면, 이 노트는 "방법론 자산" — <b>둘 다 집에 가져갑니다.</b></span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">발표</span><span class="k">수료</span></div>
+    <h2>발표 · 수료</h2>
+    <div class="prompt">
+      <span class="say"> <b>"미니팩토리 + 내 노트를 발표용으로 한눈에 요약해줘."</b></span>
+      <span class="say"> <b>"5주 동안 한 일을 한눈에 보이는 요약으로 정리해줘."</b></span>
+      <span class="say"> <b>/work-end</b> <span class="why">— 마지막 기록·백업</span></span>
+    </div>
+    <table>
+      <tr><th>평가 항목</th><th>배점</th></tr>
+      <tr><td>센서 수집·표시</td><td>20</td></tr>
+      <tr><td>LED/부저 자동 제어</td><td>20</td></tr>
+      <tr><td>이상/기준값 판단</td><td>20</td></tr>
+      <tr><td>대시보드(폰)</td><td>20</td></tr>
+      <tr><td>시연·현장 적용 아이디어</td><td>20</td></tr>
+    </table>
+    <p style="font-size:13.5px;color:var(--muted)">※ 수료기준 = 5회 중 4회 이상 출석. 평가는 참여·완성도 중심(초급).</p>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="badge" style="--blue:#0E7C74"><span class="n" style="background:#0E7C74">추구</span><span class="k">본 교육이 추구한 것</span></div>
+    <h2>5주의 마무리 — 우리가 추구한 것</h2>
+    <div class="note mean"><b>본 교육이 추구하는 것.</b> 단발 강의가 아니라, 여러분이 <b>현업에 그대로 가져갈 두 가지 자산</b>을 남기는 것입니다 — ① 직접 만든 <b>실습 키트(하드웨어)</b>, ② AI와 함께 일하는 <b>기록·관리 습관(방법론)</b>. 오늘 완성한 미니 공장과 내 노트가 그 증거입니다.</div>
+    <p>이 위키는 수료 후에도 <b>새 프로젝트마다 복사해 계속 쓰는 평생 자산</b>입니다. 3개월 사후 지원(노트 운영 Q&amp;A 포함)도 활용하세요. — <b>수고하셨습니다! </b></p>
+  </section>
+
+</div>
+<footer><div class="wrap"><b>UTTEC 교육</b> · 광주 AI·IoT 스마트팩토리 실습 「百見不如一習 · 직접 익히는 교육」 회차별 실습 가이드 (초보자용) &nbsp;|&nbsp; 접속·실행은 「노트북 VSCode 접속 설명서」, 원리는 「Claude가 회로를 읽고 실행하는 원리」 참고<br><span style="opacity:.7">핀 번호·문법은 외우지 마세요. 하고 싶은 것을 한국어로 말하면 됩니다 — 나머지는 Claude가 돕습니다.</span></div></footer>
+</body></html>

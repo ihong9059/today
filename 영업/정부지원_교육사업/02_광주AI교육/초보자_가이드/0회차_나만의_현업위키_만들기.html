@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>0회차 · 나만의 현업위키 만들기 (도입) — 0회차 — 나만의 현업위키 만들기</title>
+<style>
+  :root{--bg:#F4F6F8;--ink:#1C2530;--muted:#5C6875;--line:#E1E7ED;--blue:#2563C9;--blue-deep:#1B4894;
+    --teal:#0E9488;--green:#16955C;--amber:#C8811A;--red:#C64236;--violet:#6D4AC2;--shadow:0 2px 12px rgba(30,50,80,.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",sans-serif;color:var(--ink);background:var(--bg);line-height:1.75;font-size:15.5px}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
+  code,.mono{font-family:"Consolas","D2Coding","Courier New",monospace}
+  header{color:#fff;padding:46px 0 40px}
+  header .tagline{font-size:13px;letter-spacing:1px;opacity:.9;margin-bottom:12px;text-transform:uppercase}
+  header h1{font-size:29px;font-weight:800;line-height:1.32;letter-spacing:-.5px;margin-bottom:14px}
+  header p{font-size:16px;opacity:.95;max-width:680px}
+  .hmeta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .hmeta span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:6px 13px;font-size:13px}
+  .hmeta b{color:#fff}
+  .goal{background:#fff;border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:12px;padding:18px 22px;margin:26px 0;box-shadow:var(--shadow)}
+  .goal h3{font-size:15px;color:var(--teal);margin-bottom:8px}
+  .goal b{color:var(--ink)}
+  section{padding:30px 0;border-bottom:1px solid var(--line)}
+  .badge{display:inline-flex;align-items:center;gap:9px;margin-bottom:10px}
+  .badge .n{min-width:34px;height:34px;padding:0 10px;border-radius:18px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .badge .k{font-size:12px;letter-spacing:1.3px;color:var(--muted);text-transform:uppercase;font-weight:700}
+  h2{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:12px}
+  h3{font-size:16.5px;font-weight:800;margin:20px 0 9px}
+  h4{font-size:15px;font-weight:800;margin:16px 0 7px;color:var(--blue-deep)}
+  p{margin-bottom:11px}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:16px}
+  ul.plain{list-style:none;margin:8px 0}
+  ul.plain li{position:relative;padding-left:22px;margin-bottom:7px}
+  ul.plain li::before{content:"»";position:absolute;left:3px;color:var(--teal);font-weight:800}
+  ol.steps{margin:10px 0 10px 2px;list-style:none;counter-reset:st}
+  ol.steps>li{position:relative;padding-left:36px;margin-bottom:14px;counter-increment:st}
+  ol.steps>li::before{content:counter(st);position:absolute;left:0;top:-1px;width:25px;height:25px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .pipe{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+  .pipe .s{flex:1;min-width:135px;background:#F0F5FC;border:1px solid #D3E1F5;border-radius:11px;padding:12px 13px}
+  .pipe .s .n{display:inline-flex;width:23px;height:23px;border-radius:50%;background:var(--blue);color:#fff;align-items:center;justify-content:center;font-weight:800;font-size:12px;margin-bottom:6px}
+  .pipe .s b{display:block;font-size:13.5px;line-height:1.4;margin-bottom:2px}
+  .pipe .s small{color:var(--muted);font-size:12px}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:11px;overflow:hidden;box-shadow:var(--shadow);font-size:13.5px;margin:12px 0}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#EDF2F7;font-weight:700;font-size:12.5px}
+  tr:last-child td{border-bottom:none}
+  td code,.pin{background:#EEF2F6;padding:2px 7px;border-radius:5px;font-size:12.5px;color:var(--blue-deep);font-family:"Consolas",monospace}
+  .cmd{background:#12161C;border-radius:11px;margin:12px 0;overflow:hidden;box-shadow:var(--shadow)}
+  .cmd .bar{display:flex;align-items:center;gap:7px;padding:8px 13px;background:#0B0E13;border-bottom:1px solid #232A33}
+  .cmd .bar .d{width:10px;height:10px;border-radius:50%}
+  .cmd .bar .d.r{background:#F0625A}.cmd .bar .d.y{background:#F5BE4E}.cmd .bar .d.g{background:#5BC46A}
+  .cmd .bar .t{margin-left:8px;font-size:11.5px;color:#7C8896}
+  .cmd pre{padding:14px 15px;color:#E6EDF3;font-size:13px;line-height:1.62;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+  .cmd pre .k{color:#C99BFF}.cmd pre .s{color:#9FE7B8}.cmd pre .c{color:#7C8896}.cmd pre .n{color:#7EC5FF}.cmd pre .f{color:#F5BE4E}
+  .prompt{background:#F5F1FC;border:1px solid #DBCcF2;border-left:4px solid var(--violet);border-radius:10px;padding:12px 16px;margin:10px 0}
+  .prompt .say{display:block;margin:5px 0;font-size:14.5px}
+  .prompt .say b{color:var(--violet)}
+  .prompt .why{color:var(--muted);font-size:13px;margin-left:22px}
+  .note{border-radius:11px;padding:14px 17px;margin:14px 0;font-size:14.5px;border:1px solid}
+  .note b{font-weight:800}
+  .note.tip{background:#EAF6F3;border-color:#B7E0D8}.note.tip b{color:var(--teal)}
+  .note.warn{background:#FDF4E6;border-color:#F0D9A8}.note.warn b{color:var(--amber)}
+  .note.key{background:#EAF1FC;border-color:#C1D6F5}.note.key b{color:var(--blue-deep)}
+  .note.mean{background:#FBF0F8;border-color:#E9C7DF}.note.mean b{color:#A63A82}
+  kbd{background:#fff;border:1px solid #C7D0DA;border-bottom-width:2px;border-radius:6px;padding:2px 7px;font-size:12.5px;font-weight:700}
+  footer{background:#12161C;color:#8A97A6;padding:26px 0;font-size:13px}
+  footer b{color:#D6DEE7}
+  @media print{body{background:#fff}section,.goal,.cmd,table,.pipe{break-inside:avoid}}
+
+  header{background:linear-gradient(150deg,#3A2C6B,#6D4AC2 60%,#0E7C74 130%)}
+</style></head><body>
+<header><div class="wrap">
+  <div class="tagline">0회차 · 나만의 현업위키 만들기 (도입)</div>
+  <h1>0회차 — 나만의 현업위키 만들기</h1>
+  <p>코드도 회로도 몰라도 괜찮습니다. 오늘은 이 과정에서 가장 오래 남을 습관 — <b>기록하는 법과 AI에게 말로 시키는 법</b> — 을 익힙니다.</p>
+  <div class="hmeta"><span>대상 · <b>완전 초보자</b></span><span>준비물 · <b>노트북만</b></span><span>키워드 · <b>현업노트 · Claude</b></span></div>
+</div></header>
+<div class="wrap">
+
+  <div class="goal"><h3> 이번 시간의 목표</h3>
+  <b>프로그램을 짜기 전에</b>, 이 과정의 가장 중요한 습관 하나를 먼저 익힙니다 — <b>"내가 한 일을 기록하고, AI(Claude)에게 말로 시켜 노트를 채우는 법"</b>. 오늘은 하드웨어(키트)를 쓰지 않습니다. 대신 <b>평생 쓸 나만의 작업 기록장(현업 노트)</b>을 엽니다.</div>
+
+  <section>
+    <div class="badge"><span class="n">왜?</span><span class="k">이 시간이 왜 맨 앞에 있나</span></div>
+    <h2>왜 "기록"부터 배우나요?</h2>
+    <p class="lead">이 교육은 두 가지 <b>평생 자산</b>을 드립니다. 하나는 손에 쥐는 <b>실습 키트(하드웨어)</b>, 다른 하나는 눈에 안 보이는 <b>일하는 방법(기록 습관)</b>입니다. 오늘은 두 번째 자산의 첫 페이지를 엽니다.</p>
+    <div class="pipe">
+      <div class="s"><span class="n">1</span><b>재현</b><small>오늘 만든 걸 나중에 내 회사 설비에 <b>그대로 다시</b></small></div>
+      <div class="s"><span class="n">2</span><b>인계</b><small>동료에게 <b>넘겨줄 때</b> 말 안 해도 노트만 보면 됨</small></div>
+      <div class="s"><span class="n">3</span><b>개선</b><small>지난 기록을 보고 <b>다음엔 더 낫게</b></small></div>
+    </div>
+    <div class="note mean"><b>이 실습이 의미하는 것.</b> 회사에서 "그거 어떻게 했더라?"가 사라집니다. 기록이 남으면 <b>나도 편하고, 회사도 강해집니다.</b> 이게 UTTEC 교육이 추구하는 <b>"현업에 남는 교육"</b>의 핵심입니다.</div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">개념</span><span class="k">쉬운 말로</span></div>
+    <h2>"현업 노트"가 뭐예요?</h2>
+    <p>어려운 말로는 위키·볼트라고 하지만, 그냥 <b>"내 작업 기록장"</b>입니다. 폴더 몇 개로 이루어진, 컴퓨터 속 나만의 노트입니다.</p>
+    <table>
+      <tr><th>폴더</th><th>무엇을 담나</th><th>쉬운 비유</th></tr>
+      <tr><td><code>작업일지</code></td><td>날짜별로 "오늘 한 일"</td><td>일기장</td></tr>
+      <tr><td><code>배운것</code></td><td>새로 알게 된 개념 정리</td><td>공부 노트</td></tr>
+      <tr><td><code>코드·설정값</code></td><td>명령어·코드·설정 모음</td><td>비법 수첩</td></tr>
+      <tr><td><code>보관함</code></td><td>사진·데이터·완성 파일</td><td>서랍</td></tr>
+    </table>
+    <p>그리고 이 노트에는 <b>비서(Claude)</b>가 한 명 붙어 있습니다. 내가 <b>한국어로 부탁하면</b> 대신 노트를 써 주고, 정리해 주고, 개념을 쉽게 설명해 줍니다.</p>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습</span><span class="k">따라 하기</span></div>
+    <h2>실습: 내 노트를 열고, AI에게 처음 시켜보기</h2>
+    <div class="note key"><b>준비.</b> 노트북에서 라즈베리파이에 접속한 뒤(→「노트북 VSCode 접속 설명서」), 아래 한 줄이면 내 노트와 비서가 함께 열립니다.</div>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">터미널에 입력</span></div>
+    <pre><span class="c"># wiki 폴더로 이동하고, 그 폴더를 도와줄 AI(Claude)를 켠다</span>
+cd ~/wiki && claude</pre></div>
+
+    <h3>① 이 노트가 뭔지 물어보기</h3>
+    <div class="prompt">
+      <span class="say"> <b>"이 위키가 무엇이고 폴더가 각각 뭘 담는지 쉽게 알려줘."</b></span>
+      <span class="say"> <b>"여기서 내가 뭘 어떻게 하면 되는지 처음이라 하나도 몰라. 쉽게 알려줘."</b></span>
+      <span class="why"> Claude가 안내서를 읽고 폴더 구조를 설명해 줍니다. 처음 감을 잡는 단계.</span>
+    </div>
+
+    <h3>② 수업 시작 인사 (앞으로 매 수업 첫 명령)</h3>
+    <div class="prompt">
+      <span class="say"> <b>/work-start</b></span>
+      <span class="say"> <b>"오늘이 며칠이고 몇 회차인지, 오늘 뭘 하는지 알려줘."</b></span>
+      <span class="why"> 앞으로 매 수업을 이 명령으로 시작합니다. 오늘 할 일을 짚어 줍니다.</span>
+    </div>
+
+    <h3>③  첫 기록 — 말로 부탁하면 AI가 대신 써 준다 (가장 중요)</h3>
+    <div class="prompt">
+      <span class="say"> <b>"오늘 한 일 작업일지에 정리해줘. 오늘 내 현업위키를 처음 만들었고 Claude 쓰는 법을 배웠어."</b></span>
+      <span class="why"> 이 과정의 핵심 경험 — <b>손으로 안 써도, 말하면 노트가 채워집니다.</b></span>
+    </div>
+    <p>그러면 Claude가 <code>작업일지/</code> 안에 이런 노트를 대신 만들어 줍니다:</p>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">작업일지/0회차 2026-07-15.md (Claude가 자동 생성)</span></div>
+    <pre><span class="f"># 0회차 — 나만의 현업위키 만들기</span>
+<span class="c">날짜: 2026-07-15</span>
+
+<span class="s">## 오늘 한 일</span>
+- 내 현업위키(작업 기록장)를 처음 열었다.
+- Claude에게 한국어로 부탁하는 법을 배웠다.
+
+<span class="s">## 배운 것</span>
+- 기록하는 이유 = 재현 · 인계 · 개선</pre></div>
+
+    <h3>④ 왜 기록하는지 노트로 남기기</h3>
+    <div class="prompt">
+      <span class="say"> <b>"왜 현업 위키를 쓰는지 쉽게 설명하고 「배운것」에 정리해줘."</b></span>
+      <span class="why"> 기록의 이유(재현·인계·개선)를 내 노트의 첫 개념 노트로 남깁니다.</span>
+    </div>
+
+    <h3>⑤ 마무리 (앞으로 매 수업 끝)</h3>
+    <div class="prompt">
+      <span class="say"> <b>/work-end</b></span>
+      <span class="why"> 오늘 기록을 마무리·백업합니다.</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">더</span><span class="k">막히면 이렇게</span></div>
+    <h2>막히면 이렇게 말하세요</h2>
+    <ul class="plain">
+      <li> "앞으로 내가 너한테 <b>어떻게 부탁하면 되는지</b> 쉬운 예시를 몇 개 알려줘."</li>
+      <li> "회차별로 <b>뭘 물어보면 되는지</b>는 어디서 봐?" → <b>「프롬프트」 폴더</b>를 열면 회차별 예시가 있습니다.</li>
+      <li> "방금 그 <b>명령이 뭘 하는 건지</b> 설명해줘."</li>
+    </ul>
+    <div class="note tip"><b>기억할 한 가지.</b> 프롬프트(주문)는 정답이 아니라 <b>예시</b>입니다. <b>내 말투로 편하게</b> 바꿔 말해도 다 알아듣습니다.</div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="badge" style="--blue:#0E7C74"><span class="n" style="background:#0E7C74">추구</span><span class="k">본 교육이 추구하는 것</span></div>
+    <h2>오늘의 한 줄, 그리고 5주 뒤</h2>
+    <p>오늘 익힌 것: <b>기록하는 습관 + AI에게 말로 시키는 법.</b> 키트(하드웨어)는 다음 시간부터입니다.</p>
+    <div class="note mean"><b>이 노트가 향하는 곳.</b> 5주 동안 이 노트에 배운 것을 쌓으면, 마지막 날 Claude가 그 노트를 전부 읽고 <b>"내 회사에 바로 쓸 1페이지 가이드"</b>로 만들어 줍니다. 이 위키는 <b>수료 후에도, 현업에서도 계속 쓰는 평생 자산</b>입니다. — 다음 시간엔 진짜 라즈베리파이를 켭니다! </div>
+  </section>
+
+</div>
+<footer><div class="wrap"><b>UTTEC 교육</b> · 광주 AI·IoT 스마트팩토리 실습 「百見不如一習 · 직접 익히는 교육」 회차별 실습 가이드 (초보자용) &nbsp;|&nbsp; 접속·실행은 「노트북 VSCode 접속 설명서」, 원리는 「Claude가 회로를 읽고 실행하는 원리」 참고<br><span style="opacity:.7">핀 번호·문법은 외우지 마세요. 하고 싶은 것을 한국어로 말하면 됩니다 — 나머지는 Claude가 돕습니다.</span></div></footer>
+</body></html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4회차 · 스마트폰으로 우리 공장 보기 — 4회차 — 스마트폰 원격 모니터링</title>
+<style>
+  :root{--bg:#F4F6F8;--ink:#1C2530;--muted:#5C6875;--line:#E1E7ED;--blue:#2563C9;--blue-deep:#1B4894;
+    --teal:#0E9488;--green:#16955C;--amber:#C8811A;--red:#C64236;--violet:#6D4AC2;--shadow:0 2px 12px rgba(30,50,80,.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",sans-serif;color:var(--ink);background:var(--bg);line-height:1.75;font-size:15.5px}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
+  code,.mono{font-family:"Consolas","D2Coding","Courier New",monospace}
+  header{color:#fff;padding:46px 0 40px}
+  header .tagline{font-size:13px;letter-spacing:1px;opacity:.9;margin-bottom:12px;text-transform:uppercase}
+  header h1{font-size:29px;font-weight:800;line-height:1.32;letter-spacing:-.5px;margin-bottom:14px}
+  header p{font-size:16px;opacity:.95;max-width:680px}
+  .hmeta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .hmeta span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:6px 13px;font-size:13px}
+  .hmeta b{color:#fff}
+  .goal{background:#fff;border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:12px;padding:18px 22px;margin:26px 0;box-shadow:var(--shadow)}
+  .goal h3{font-size:15px;color:var(--teal);margin-bottom:8px}
+  .goal b{color:var(--ink)}
+  section{padding:30px 0;border-bottom:1px solid var(--line)}
+  .badge{display:inline-flex;align-items:center;gap:9px;margin-bottom:10px}
+  .badge .n{min-width:34px;height:34px;padding:0 10px;border-radius:18px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .badge .k{font-size:12px;letter-spacing:1.3px;color:var(--muted);text-transform:uppercase;font-weight:700}
+  h2{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:12px}
+  h3{font-size:16.5px;font-weight:800;margin:20px 0 9px}
+  h4{font-size:15px;font-weight:800;margin:16px 0 7px;color:var(--blue-deep)}
+  p{margin-bottom:11px}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:16px}
+  ul.plain{list-style:none;margin:8px 0}
+  ul.plain li{position:relative;padding-left:22px;margin-bottom:7px}
+  ul.plain li::before{content:"»";position:absolute;left:3px;color:var(--teal);font-weight:800}
+  ol.steps{margin:10px 0 10px 2px;list-style:none;counter-reset:st}
+  ol.steps>li{position:relative;padding-left:36px;margin-bottom:14px;counter-increment:st}
+  ol.steps>li::before{content:counter(st);position:absolute;left:0;top:-1px;width:25px;height:25px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .pipe{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+  .pipe .s{flex:1;min-width:135px;background:#F0F5FC;border:1px solid #D3E1F5;border-radius:11px;padding:12px 13px}
+  .pipe .s .n{display:inline-flex;width:23px;height:23px;border-radius:50%;background:var(--blue);color:#fff;align-items:center;justify-content:center;font-weight:800;font-size:12px;margin-bottom:6px}
+  .pipe .s b{display:block;font-size:13.5px;line-height:1.4;margin-bottom:2px}
+  .pipe .s small{color:var(--muted);font-size:12px}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:11px;overflow:hidden;box-shadow:var(--shadow);font-size:13.5px;margin:12px 0}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#EDF2F7;font-weight:700;font-size:12.5px}
+  tr:last-child td{border-bottom:none}
+  td code,.pin{background:#EEF2F6;padding:2px 7px;border-radius:5px;font-size:12.5px;color:var(--blue-deep);font-family:"Consolas",monospace}
+  .cmd{background:#12161C;border-radius:11px;margin:12px 0;overflow:hidden;box-shadow:var(--shadow)}
+  .cmd .bar{display:flex;align-items:center;gap:7px;padding:8px 13px;background:#0B0E13;border-bottom:1px solid #232A33}
+  .cmd .bar .d{width:10px;height:10px;border-radius:50%}
+  .cmd .bar .d.r{background:#F0625A}.cmd .bar .d.y{background:#F5BE4E}.cmd .bar .d.g{background:#5BC46A}
+  .cmd .bar .t{margin-left:8px;font-size:11.5px;color:#7C8896}
+  .cmd pre{padding:14px 15px;color:#E6EDF3;font-size:13px;line-height:1.62;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+  .cmd pre .k{color:#C99BFF}.cmd pre .s{color:#9FE7B8}.cmd pre .c{color:#7C8896}.cmd pre .n{color:#7EC5FF}.cmd pre .f{color:#F5BE4E}
+  .prompt{background:#F5F1FC;border:1px solid #DBCcF2;border-left:4px solid var(--violet);border-radius:10px;padding:12px 16px;margin:10px 0}
+  .prompt .say{display:block;margin:5px 0;font-size:14.5px}
+  .prompt .say b{color:var(--violet)}
+  .prompt .why{color:var(--muted);font-size:13px;margin-left:22px}
+  .note{border-radius:11px;padding:14px 17px;margin:14px 0;font-size:14.5px;border:1px solid}
+  .note b{font-weight:800}
+  .note.tip{background:#EAF6F3;border-color:#B7E0D8}.note.tip b{color:var(--teal)}
+  .note.warn{background:#FDF4E6;border-color:#F0D9A8}.note.warn b{color:var(--amber)}
+  .note.key{background:#EAF1FC;border-color:#C1D6F5}.note.key b{color:var(--blue-deep)}
+  .note.mean{background:#FBF0F8;border-color:#E9C7DF}.note.mean b{color:#A63A82}
+  kbd{background:#fff;border:1px solid #C7D0DA;border-bottom-width:2px;border-radius:6px;padding:2px 7px;font-size:12.5px;font-weight:700}
+  footer{background:#12161C;color:#8A97A6;padding:26px 0;font-size:13px}
+  footer b{color:#D6DEE7}
+  @media print{body{background:#fff}section,.goal,.cmd,table,.pipe{break-inside:avoid}}
+
+  header{background:linear-gradient(150deg,#123A6B,#2563C9 55%,#6D4AC2 130%)}
+</style></head><body>
+<header><div class="wrap">
+  <div class="tagline">4회차 · 스마트폰으로 우리 공장 보기</div>
+  <h1>4회차 — 스마트폰 원격 모니터링</h1>
+  <p><b>웹 대시보드를 내 폰으로</b> 열고, <b>실시간 그래프</b>를 보며, <b>장거리 무선(LoRa)</b>으로 떨어진 데이터를 받습니다.</p>
+  <div class="hmeta"><span>회차 · <b>4주차</b></span><span>키워드 · <b>웹·서버·IP·그래프·LoRa</b></span></div>
+</div></header>
+<div class="wrap">
+
+  <div class="goal"><h3> 이번 시간의 목표</h3>
+  공장을 <b>멀리서</b> 봅니다 — <b>웹 대시보드를 내 스마트폰으로 열기 → 실시간 그래프 → 장거리 무선(LoRa)</b>으로 떨어진 데이터 받기.</div>
+
+  <section>
+    <div class="badge"><span class="n">개념</span><span class="k">쉬운 말로</span></div>
+    <h2>"폰에서 공장 보기"가 어떻게 가능해요?</h2>
+    <p>라즈베리파이가 <b>작은 웹사이트(서버)</b>를 하나 띄웁니다. 그러면 <b>같은 Wi-Fi에 있는 내 폰</b>이 그 주소로 접속해, 공장 상태를 볼 수 있습니다. 인터넷 없이 교육장 Wi-Fi 안에서만 동작합니다.</p>
+    <div class="pipe">
+      <div class="s"><span class="n">1</span><b>파이 = 작은 웹사이트</b><small>온습도를 보여주는 페이지를 띄움</small></div>
+      <div class="s"><span class="n">2</span><b>주소(IP)</b><small>파이의 주소 예: 192.168.200.17:5000</small></div>
+      <div class="s"><span class="n">3</span><b>폰으로 접속</b><small>같은 Wi-Fi 폰 브라우저로 열기</small></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습①</span><span class="k">핵심</span></div>
+    <h2>실습 ①: 웹 대시보드 띄우고 폰으로 접속</h2>
+    <p><b>Flask</b> 라는 도구로 아주 작은 웹사이트를 만듭니다.</p>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — dashboard.py</span></div>
+    <pre><span class="k">from</span> flask <span class="k">import</span> Flask
+<span class="k">import</span> board, busio, adafruit_ahtx0
+sensor = adafruit_ahtx0.AHTx0(busio.I2C(board.SCL, board.SDA))
+app = Flask(__name__)
+
+<span class="k">@app.route</span>(<span class="s">"/"</span>)
+<span class="k">def</span> home():
+    t = sensor.temperature
+    h = sensor.relative_humidity
+    <span class="k">return</span> <span class="f">f</span><span class="s">"&lt;h1&gt;온도 {t:.1f}C / 습도 {h:.1f}%&lt;/h1&gt;"</span>
+
+app.run(host=<span class="s">"0.0.0.0"</span>, port=<span class="n">5000</span>)   <span class="c"># 0.0.0.0 = 폰에서도 접속 허용</span></pre></div>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">터미널 — 내 파이 주소 확인 후 폰에서 접속</span></div>
+    <pre>hostname -I          <span class="c"># 예: 192.168.200.17  →  폰 브라우저에 192.168.200.17:5000 입력</span></pre></div>
+    <div class="note warn"><b>폰에서 안 열릴 때.</b> ① 폰과 파이가 <b>같은 Wi-Fi(uttec200)</b> 인지 ② 코드에 <code>host="0.0.0.0"</code> 이 있는지 ③ 주소 뒤 <code>:5000</code> 을 붙였는지 확인. 막히면 그대로 Claude에게 물어보세요.</div>
+    <div class="prompt">
+      <span class="say"> <b>"온습도를 보여주는 웹 대시보드를 Flask로 띄우는 코드를 초보용으로 알려줘."</b></span>
+      <span class="say"> <b>"내 파이의 주소(IP) 확인법과, 폰에서 접속하는 법을 알려줘."</b></span>
+      <span class="say"> <b>"폰에서 접속이 안 돼. 뭘 확인해야 해?"</b></span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습②</span><span class="k">그래프</span></div>
+    <h2>실습 ②: 실시간 온도 그래프</h2>
+    <p>숫자뿐 아니라 <b>그래프</b>로 추세를 봅니다. 몇 초마다 자동으로 갱신되게 만듭니다. (Chart.js 라는 그래프 도구를 씁니다 — Claude가 붙여 줍니다.)</p>
+    <div class="prompt">
+      <span class="say"> <b>"대시보드에 실시간 온도 그래프를 추가하는 법을 쉽게 알려줘."</b></span>
+      <span class="say"> <b>"그래프가 몇 초마다 자동 갱신되게 하려면 어떻게 해?"</b></span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습③</span><span class="k">장거리 무선</span></div>
+    <h2>실습 ③: 장거리 무선 — LoRa</h2>
+    <p><b>LoRa</b>는 <b>멀리(수백 m~km)까지 조금씩</b> 데이터를 보내는 무선입니다. Wi-Fi가 안 닿는 넓은 공장·야외에 쓰기 좋습니다.</p>
+    <table>
+      <tr><th></th><th>Wi-Fi</th><th>LoRa</th></tr>
+      <tr><td>거리</td><td>수십 m</td><td><b>수백 m ~ km</b></td></tr>
+      <tr><td>속도</td><td>빠름</td><td>느림(조금씩)</td></tr>
+      <tr><td>쓰임</td><td>대시보드·영상</td><td><b>멀리 있는 센서값</b></td></tr>
+    </table>
+    <div class="prompt">
+      <span class="say"> <b>/lora</b> <span class="why">— LoRa 모듈이 통신되는지 먼저 확인</span></span>
+      <span class="say"> <b>"LoRa가 Wi-Fi와 뭐가 다른지 쉽게 설명하고 「배운것」에 정리해줘."</b></span>
+      <span class="say"> <b>"옆 사람 보드가 보낸 데이터를 내 파이에서 받아 화면·대시보드에 보여주는 법을 알려줘."</b></span>
+    </div>
+    <div class="note key"><b>참고.</b> LoRa 모듈(E22)은 설정이 예민해서 <b>강사가 미리 검증한 모듈</b>을 씁니다. 무선 기술 상세는 담당 자료(lora)를 따릅니다. 우리 키트에서 LoRa 제어 핀은 <span class="pin">TX 14 · RX 15 · M0 21 · M1 20 · AUX 7</span> 로 이미 정해져 있습니다.</div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">현업노트</span><span class="k">오늘의 기록</span></div>
+    <h2>현업노트: 공유·열람</h2>
+    <div class="prompt">
+      <span class="say"> <b>"내 위키를 폰이나 PC에서 열어 보는 방법을 알려줘."</b></span>
+      <span class="why"> 무선으로 원격을 보듯, 내 노트도 어디서나 열람. 노트는 혼자 쓰는 게 아니라 <b>팀 인수인계 자산</b>입니다.</span>
+    </div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="badge" style="--blue:#0E7C74"><span class="n" style="background:#0E7C74">의미</span><span class="k">이 시간의 의미 · 다음 예고</span></div>
+    <h2>오늘의 의미</h2>
+    <div class="note mean"><b>이 실습이 의미하는 것.</b> 이제 공장을 <b>현장에 없어도</b> 볼 수 있습니다. 원격 모니터링은 스마트팩토리의 핵심 — <b>여러 곳의 상태를 한 화면에 모아</b> 보고, 멀리 떨어진 설비도 무선으로 연결합니다.</p></div>
+    <p><b>다음 시간(5회차, 마지막) 예고:</b> <b>AI</b>를 맛보고, 4주간 만든 조각을 모두 합쳐 <b>미니 스마트팩토리를 완성</b>합니다. 그리고 내 노트를 <b>내 회사용 가이드</b>로 마무리합니다.</p>
+  </section>
+
+</div>
+<footer><div class="wrap"><b>UTTEC 교육</b> · 광주 AI·IoT 스마트팩토리 실습 「百見不如一習 · 직접 익히는 교육」 회차별 실습 가이드 (초보자용) &nbsp;|&nbsp; 접속·실행은 「노트북 VSCode 접속 설명서」, 원리는 「Claude가 회로를 읽고 실행하는 원리」 참고<br><span style="opacity:.7">핀 번호·문법은 외우지 마세요. 하고 싶은 것을 한국어로 말하면 됩니다 — 나머지는 Claude가 돕습니다.</span></div></footer>
+</body></html>

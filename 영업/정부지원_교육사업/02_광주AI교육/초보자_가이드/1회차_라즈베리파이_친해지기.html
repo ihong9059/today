@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1회차 · 라즈베리파이와 친해지기 — 1회차 — 라즈베리파이와 친해지기</title>
+<style>
+  :root{--bg:#F4F6F8;--ink:#1C2530;--muted:#5C6875;--line:#E1E7ED;--blue:#2563C9;--blue-deep:#1B4894;
+    --teal:#0E9488;--green:#16955C;--amber:#C8811A;--red:#C64236;--violet:#6D4AC2;--shadow:0 2px 12px rgba(30,50,80,.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",sans-serif;color:var(--ink);background:var(--bg);line-height:1.75;font-size:15.5px}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
+  code,.mono{font-family:"Consolas","D2Coding","Courier New",monospace}
+  header{color:#fff;padding:46px 0 40px}
+  header .tagline{font-size:13px;letter-spacing:1px;opacity:.9;margin-bottom:12px;text-transform:uppercase}
+  header h1{font-size:29px;font-weight:800;line-height:1.32;letter-spacing:-.5px;margin-bottom:14px}
+  header p{font-size:16px;opacity:.95;max-width:680px}
+  .hmeta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .hmeta span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:6px 13px;font-size:13px}
+  .hmeta b{color:#fff}
+  .goal{background:#fff;border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:12px;padding:18px 22px;margin:26px 0;box-shadow:var(--shadow)}
+  .goal h3{font-size:15px;color:var(--teal);margin-bottom:8px}
+  .goal b{color:var(--ink)}
+  section{padding:30px 0;border-bottom:1px solid var(--line)}
+  .badge{display:inline-flex;align-items:center;gap:9px;margin-bottom:10px}
+  .badge .n{min-width:34px;height:34px;padding:0 10px;border-radius:18px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .badge .k{font-size:12px;letter-spacing:1.3px;color:var(--muted);text-transform:uppercase;font-weight:700}
+  h2{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:12px}
+  h3{font-size:16.5px;font-weight:800;margin:20px 0 9px}
+  h4{font-size:15px;font-weight:800;margin:16px 0 7px;color:var(--blue-deep)}
+  p{margin-bottom:11px}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:16px}
+  ul.plain{list-style:none;margin:8px 0}
+  ul.plain li{position:relative;padding-left:22px;margin-bottom:7px}
+  ul.plain li::before{content:"»";position:absolute;left:3px;color:var(--teal);font-weight:800}
+  ol.steps{margin:10px 0 10px 2px;list-style:none;counter-reset:st}
+  ol.steps>li{position:relative;padding-left:36px;margin-bottom:14px;counter-increment:st}
+  ol.steps>li::before{content:counter(st);position:absolute;left:0;top:-1px;width:25px;height:25px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .pipe{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+  .pipe .s{flex:1;min-width:135px;background:#F0F5FC;border:1px solid #D3E1F5;border-radius:11px;padding:12px 13px}
+  .pipe .s .n{display:inline-flex;width:23px;height:23px;border-radius:50%;background:var(--blue);color:#fff;align-items:center;justify-content:center;font-weight:800;font-size:12px;margin-bottom:6px}
+  .pipe .s b{display:block;font-size:13.5px;line-height:1.4;margin-bottom:2px}
+  .pipe .s small{color:var(--muted);font-size:12px}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:11px;overflow:hidden;box-shadow:var(--shadow);font-size:13.5px;margin:12px 0}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#EDF2F7;font-weight:700;font-size:12.5px}
+  tr:last-child td{border-bottom:none}
+  td code,.pin{background:#EEF2F6;padding:2px 7px;border-radius:5px;font-size:12.5px;color:var(--blue-deep);font-family:"Consolas",monospace}
+  .cmd{background:#12161C;border-radius:11px;margin:12px 0;overflow:hidden;box-shadow:var(--shadow)}
+  .cmd .bar{display:flex;align-items:center;gap:7px;padding:8px 13px;background:#0B0E13;border-bottom:1px solid #232A33}
+  .cmd .bar .d{width:10px;height:10px;border-radius:50%}
+  .cmd .bar .d.r{background:#F0625A}.cmd .bar .d.y{background:#F5BE4E}.cmd .bar .d.g{background:#5BC46A}
+  .cmd .bar .t{margin-left:8px;font-size:11.5px;color:#7C8896}
+  .cmd pre{padding:14px 15px;color:#E6EDF3;font-size:13px;line-height:1.62;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+  .cmd pre .k{color:#C99BFF}.cmd pre .s{color:#9FE7B8}.cmd pre .c{color:#7C8896}.cmd pre .n{color:#7EC5FF}.cmd pre .f{color:#F5BE4E}
+  .prompt{background:#F5F1FC;border:1px solid #DBCcF2;border-left:4px solid var(--violet);border-radius:10px;padding:12px 16px;margin:10px 0}
+  .prompt .say{display:block;margin:5px 0;font-size:14.5px}
+  .prompt .say b{color:var(--violet)}
+  .prompt .why{color:var(--muted);font-size:13px;margin-left:22px}
+  .note{border-radius:11px;padding:14px 17px;margin:14px 0;font-size:14.5px;border:1px solid}
+  .note b{font-weight:800}
+  .note.tip{background:#EAF6F3;border-color:#B7E0D8}.note.tip b{color:var(--teal)}
+  .note.warn{background:#FDF4E6;border-color:#F0D9A8}.note.warn b{color:var(--amber)}
+  .note.key{background:#EAF1FC;border-color:#C1D6F5}.note.key b{color:var(--blue-deep)}
+  .note.mean{background:#FBF0F8;border-color:#E9C7DF}.note.mean b{color:#A63A82}
+  kbd{background:#fff;border:1px solid #C7D0DA;border-bottom-width:2px;border-radius:6px;padding:2px 7px;font-size:12.5px;font-weight:700}
+  footer{background:#12161C;color:#8A97A6;padding:26px 0;font-size:13px}
+  footer b{color:#D6DEE7}
+  @media print{body{background:#fff}section,.goal,.cmd,table,.pipe{break-inside:avoid}}
+
+  header{background:linear-gradient(150deg,#123A6B,#1B4894 60%,#0E7C74 130%)}
+</style></head><body>
+<header><div class="wrap">
+  <div class="tagline">1회차 · 라즈베리파이와 친해지기</div>
+  <h1>1회차 — 라즈베리파이와 친해지기</h1>
+  <p>작은 컴퓨터를 처음 켜고, 내 노트북으로 원격 접속해, <b>파이썬 첫 프로그램</b>을 실행합니다.</p>
+  <div class="hmeta"><span>회차 · <b>1주차</b></span><span>준비물 · <b>키트 · 노트북</b></span><span>결과물 · <b>Hello Factory! · 계산기</b></span></div>
+</div></header>
+<div class="wrap">
+
+  <div class="goal"><h3> 이번 시간의 목표</h3>
+  <b>라즈베리파이를 켜서 내 노트북으로 원격 접속</b>하고, <b>파이썬으로 첫 프로그램</b>을 실행합니다. 오늘의 마지막엔 "내가 만든 첫 프로그램"을 시연합니다.</div>
+
+  <section>
+    <div class="badge"><span class="n">개념</span><span class="k">회로 몰라도 OK</span></div>
+    <h2>라즈베리파이가 뭐예요?</h2>
+    <p class="lead">라즈베리파이는 <b>손바닥만 한 작은 컴퓨터</b>입니다. 우리가 쓰는 노트북과 하는 일은 같은데, 크기가 작고 <b>옆구리에 40개의 금색 다리(핀)</b>가 있어서 <b>전등·센서·부저 같은 부품을 직접 연결</b>할 수 있다는 점이 다릅니다.</p>
+    <table>
+      <tr><th></th><th>일반 컴퓨터</th><th>라즈베리파이</th></tr>
+      <tr><td>크기</td><td>큼</td><td>손바닥</td></tr>
+      <tr><td>부품 직접 연결</td><td>어려움</td><td><b>쉬움 (40핀)</b></td></tr>
+      <tr><td>공장 현장에 두기</td><td>부담</td><td><b>딱 좋음 (싸고 작음)</b></td></tr>
+    </table>
+    <div class="note key"><b>UTTEC 키트 = 라즈베리파이 + UTTEC Shield.</b> Shield(실드)는 라즈베리파이 위에 딱 끼우는 판인데, 여기에 <b>온습도 센서·화면(OLED)·LED 3색·부저·스피커·버튼·네오픽셀</b>이 이미 붙어 있습니다. 그래서 <b>배선을 직접 안 해도</b> 바로 실습할 수 있습니다. (2회차부터 사용)</div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습①</span><span class="k">켜고 연결하기</span></div>
+    <h2>실습 ①: 켜고 · Wi-Fi 확인 · 원격 접속</h2>
+    <ol class="steps">
+      <li><b>전원(USB-C)만 꽂기</b> → 빨간 불이 들어오면 켜진 것입니다. (모니터·키보드 필요 없음!)</li>
+      <li><b>내 노트북을 Wi-Fi <code>uttec200</code> 에 연결</b> (비번도 <code>uttec200</code>).</li>
+      <li><b>노트북에서 원격 접속</b> — 자세한 방법은 「노트북 VSCode 접속 설명서」 참고.</li>
+    </ol>
+    <p>접속되면 아래 명령으로 <b>지금 라즈베리파이가 네트워크에 잘 붙었는지</b> 확인할 수 있습니다.</p>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">터미널에 입력 (내 파이의 주소 확인)</span></div>
+    <pre>hostname -I     <span class="c"># 내 라즈베리파이의 IP 주소가 나옵니다 (예: 192.168.200.17)</span></pre></div>
+    <div class="prompt">
+      <span class="say"> <b>"라즈베리파이 처음 켤 때 순서를 알려줘."</b></span>
+      <span class="say"> <b>"화면이 안 나오는데 뭘 확인해야 해?"</b></span>
+      <span class="why"> 안 되면 "뭘 확인해?"라고 물으면 Claude가 하나씩 짚어 줍니다.</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습②</span><span class="k">첫 프로그램</span></div>
+    <h2>실습 ②: 화면에 글자 띄우기 — 첫 파이썬</h2>
+    <p>컴퓨터에게 "이 글자를 보여줘"라고 시키는 명령이 <code>print</code> 입니다. 딱 한 줄로 첫 프로그램이 됩니다.</p>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — hello.py</span></div>
+    <pre><span class="k">print</span>(<span class="s">"Hello Factory!"</span>)   <span class="c"># 화면에 Hello Factory! 라고 출력</span></pre></div>
+    <div class="prompt">
+      <span class="say"> <b>"화면에 Hello Factory! 라고 출력하는 파이썬 코드를 알려줘."</b></span>
+      <span class="say"> <b>"이 코드가 한 줄씩 무슨 뜻인지 쉽게 설명해줘."</b></span>
+      <span class="why"> '따라치기'가 아니라 <b>각 줄의 뜻을 이해</b>하는 게 목표입니다.</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습③</span><span class="k">변수와 계산기</span></div>
+    <h2>실습 ③: 변수 이해하고 · 간단한 계산기 만들기</h2>
+    <p><b>변수</b>는 값을 담아두는 <b>이름표 붙은 상자</b>입니다. 예: <code>name</code> 이라는 상자에 "홍길동"을 넣어 둡니다.</p>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — 변수</span></div>
+    <pre>name = <span class="s">"홍길동"</span>       <span class="c"># name 상자에 글자를 담기</span>
+age  = <span class="n">30</span>            <span class="c"># age 상자에 숫자를 담기</span>
+<span class="k">print</span>(name, age)     <span class="c"># 홍길동 30</span></pre></div>
+    <h4>간단한 계산기 (숫자 입력받아 더하기)</h4>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — calculator.py</span></div>
+    <pre>a = <span class="k">int</span>(<span class="k">input</span>(<span class="s">"첫 번째 숫자: "</span>))   <span class="c"># 키보드로 숫자 입력 (int=숫자로 바꾸기)</span>
+b = <span class="k">int</span>(<span class="k">input</span>(<span class="s">"두 번째 숫자: "</span>))
+<span class="k">print</span>(<span class="s">"합계 ="</span>, a + b)              <span class="c"># 두 수를 더해 출력</span></pre></div>
+    <div class="note tip"><b>왜 <code>int()</code> 가 필요할까?</b> 키보드로 친 값은 컴퓨터가 처음엔 <b>글자</b>로 받습니다. "3"+"5"는 "35"가 되어버려요. <code>int()</code> 로 <b>숫자로 바꿔줘야</b> 3+5=8 이 됩니다. (숫자와 글자의 차이!)</div>
+    <div class="prompt">
+      <span class="say"> <b>"변수가 뭔지 쉬운 비유로 설명해줘."</b></span>
+      <span class="say"> <b>"두 숫자를 더하는 아주 간단한 계산기를 초보용으로 만들어줘."</b></span>
+      <span class="say"> <b>"이 계산기 코드를 「코드·설정값」에 저장해줘."</b></span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">현업노트</span><span class="k">오늘의 기록</span></div>
+    <h2>현업노트: 노트 시작</h2>
+    <div class="prompt">
+      <span class="say"> <b>"오늘 한 일 작업일지에 정리해줘. 라즈베리파이 켜고 Hello Factory 출력하고 계산기 만들었어."</b></span>
+      <span class="why"> 오늘의 성과를 첫 「작업 일지」로 남깁니다. 한 줄이면 충분합니다.</span>
+    </div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="badge" style="--blue:#0E7C74"><span class="n" style="background:#0E7C74">의미</span><span class="k">이 시간의 의미 · 다음 예고</span></div>
+    <h2>오늘의 의미</h2>
+    <div class="note mean"><b>이 실습이 의미하는 것.</b> 오늘 여러분은 <b>작은 컴퓨터를 직접 켜고, 명령으로 움직였습니다.</b> 앞으로 이 컴퓨터에 센서·불·소리를 붙여 <b>"스스로 판단하는 미니 공장"</b>을 만듭니다. 오늘은 그 1일차 — <b>공장을 깨운 날</b>입니다.</div>
+    <p><b>다음 시간(2회차) 예고:</b> 이 공장에 <b>눈과 귀(센서)</b> 를 달아, 스스로 온도를 느끼고 화면과 색으로 보여주게 만듭니다.</p>
+  </section>
+
+</div>
+<footer><div class="wrap"><b>UTTEC 교육</b> · 광주 AI·IoT 스마트팩토리 실습 「百見不如一習 · 직접 익히는 교육」 회차별 실습 가이드 (초보자용) &nbsp;|&nbsp; 접속·실행은 「노트북 VSCode 접속 설명서」, 원리는 「Claude가 회로를 읽고 실행하는 원리」 참고<br><span style="opacity:.7">핀 번호·문법은 외우지 마세요. 하고 싶은 것을 한국어로 말하면 됩니다 — 나머지는 Claude가 돕습니다.</span></div></footer>
+</body></html>

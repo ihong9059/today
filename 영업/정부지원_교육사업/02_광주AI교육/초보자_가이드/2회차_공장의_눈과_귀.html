@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2회차 · 공장의 눈과 귀 만들기 — 2회차 — 공장의 눈과 귀 만들기</title>
+<style>
+  :root{--bg:#F4F6F8;--ink:#1C2530;--muted:#5C6875;--line:#E1E7ED;--blue:#2563C9;--blue-deep:#1B4894;
+    --teal:#0E9488;--green:#16955C;--amber:#C8811A;--red:#C64236;--violet:#6D4AC2;--shadow:0 2px 12px rgba(30,50,80,.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",sans-serif;color:var(--ink);background:var(--bg);line-height:1.75;font-size:15.5px}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
+  code,.mono{font-family:"Consolas","D2Coding","Courier New",monospace}
+  header{color:#fff;padding:46px 0 40px}
+  header .tagline{font-size:13px;letter-spacing:1px;opacity:.9;margin-bottom:12px;text-transform:uppercase}
+  header h1{font-size:29px;font-weight:800;line-height:1.32;letter-spacing:-.5px;margin-bottom:14px}
+  header p{font-size:16px;opacity:.95;max-width:680px}
+  .hmeta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .hmeta span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:6px 13px;font-size:13px}
+  .hmeta b{color:#fff}
+  .goal{background:#fff;border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:12px;padding:18px 22px;margin:26px 0;box-shadow:var(--shadow)}
+  .goal h3{font-size:15px;color:var(--teal);margin-bottom:8px}
+  .goal b{color:var(--ink)}
+  section{padding:30px 0;border-bottom:1px solid var(--line)}
+  .badge{display:inline-flex;align-items:center;gap:9px;margin-bottom:10px}
+  .badge .n{min-width:34px;height:34px;padding:0 10px;border-radius:18px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .badge .k{font-size:12px;letter-spacing:1.3px;color:var(--muted);text-transform:uppercase;font-weight:700}
+  h2{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:12px}
+  h3{font-size:16.5px;font-weight:800;margin:20px 0 9px}
+  h4{font-size:15px;font-weight:800;margin:16px 0 7px;color:var(--blue-deep)}
+  p{margin-bottom:11px}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:16px}
+  ul.plain{list-style:none;margin:8px 0}
+  ul.plain li{position:relative;padding-left:22px;margin-bottom:7px}
+  ul.plain li::before{content:"»";position:absolute;left:3px;color:var(--teal);font-weight:800}
+  ol.steps{margin:10px 0 10px 2px;list-style:none;counter-reset:st}
+  ol.steps>li{position:relative;padding-left:36px;margin-bottom:14px;counter-increment:st}
+  ol.steps>li::before{content:counter(st);position:absolute;left:0;top:-1px;width:25px;height:25px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .pipe{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+  .pipe .s{flex:1;min-width:135px;background:#F0F5FC;border:1px solid #D3E1F5;border-radius:11px;padding:12px 13px}
+  .pipe .s .n{display:inline-flex;width:23px;height:23px;border-radius:50%;background:var(--blue);color:#fff;align-items:center;justify-content:center;font-weight:800;font-size:12px;margin-bottom:6px}
+  .pipe .s b{display:block;font-size:13.5px;line-height:1.4;margin-bottom:2px}
+  .pipe .s small{color:var(--muted);font-size:12px}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:11px;overflow:hidden;box-shadow:var(--shadow);font-size:13.5px;margin:12px 0}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#EDF2F7;font-weight:700;font-size:12.5px}
+  tr:last-child td{border-bottom:none}
+  td code,.pin{background:#EEF2F6;padding:2px 7px;border-radius:5px;font-size:12.5px;color:var(--blue-deep);font-family:"Consolas",monospace}
+  .cmd{background:#12161C;border-radius:11px;margin:12px 0;overflow:hidden;box-shadow:var(--shadow)}
+  .cmd .bar{display:flex;align-items:center;gap:7px;padding:8px 13px;background:#0B0E13;border-bottom:1px solid #232A33}
+  .cmd .bar .d{width:10px;height:10px;border-radius:50%}
+  .cmd .bar .d.r{background:#F0625A}.cmd .bar .d.y{background:#F5BE4E}.cmd .bar .d.g{background:#5BC46A}
+  .cmd .bar .t{margin-left:8px;font-size:11.5px;color:#7C8896}
+  .cmd pre{padding:14px 15px;color:#E6EDF3;font-size:13px;line-height:1.62;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+  .cmd pre .k{color:#C99BFF}.cmd pre .s{color:#9FE7B8}.cmd pre .c{color:#7C8896}.cmd pre .n{color:#7EC5FF}.cmd pre .f{color:#F5BE4E}
+  .prompt{background:#F5F1FC;border:1px solid #DBCcF2;border-left:4px solid var(--violet);border-radius:10px;padding:12px 16px;margin:10px 0}
+  .prompt .say{display:block;margin:5px 0;font-size:14.5px}
+  .prompt .say b{color:var(--violet)}
+  .prompt .why{color:var(--muted);font-size:13px;margin-left:22px}
+  .note{border-radius:11px;padding:14px 17px;margin:14px 0;font-size:14.5px;border:1px solid}
+  .note b{font-weight:800}
+  .note.tip{background:#EAF6F3;border-color:#B7E0D8}.note.tip b{color:var(--teal)}
+  .note.warn{background:#FDF4E6;border-color:#F0D9A8}.note.warn b{color:var(--amber)}
+  .note.key{background:#EAF1FC;border-color:#C1D6F5}.note.key b{color:var(--blue-deep)}
+  .note.mean{background:#FBF0F8;border-color:#E9C7DF}.note.mean b{color:#A63A82}
+  kbd{background:#fff;border:1px solid #C7D0DA;border-bottom-width:2px;border-radius:6px;padding:2px 7px;font-size:12.5px;font-weight:700}
+  footer{background:#12161C;color:#8A97A6;padding:26px 0;font-size:13px}
+  footer b{color:#D6DEE7}
+  @media print{body{background:#fff}section,.goal,.cmd,table,.pipe{break-inside:avoid}}
+
+  header{background:linear-gradient(150deg,#0E5A52,#0E9488 55%,#2563C9 130%)}
+</style></head><body>
+<header><div class="wrap">
+  <div class="tagline">2회차 · 공장의 눈과 귀 만들기</div>
+  <h1>2회차 — 공장의 눈과 귀 만들기</h1>
+  <p>온습도 센서로 값을 읽어 <b>화면(OLED)에 표시</b>하고, <b>LED 신호등·네오픽셀 색</b>으로 표현합니다. 오늘부터 진짜 보드를 씁니다.</p>
+  <div class="hmeta"><span>회차 · <b>2주차</b></span><span>부품 · <b>센서·OLED·LED·네오픽셀·부저·버튼</b></span></div>
+</div></header>
+<div class="wrap">
+
+  <div class="goal"><h3> 이번 시간의 목표</h3>
+  공장에 <b>눈과 귀</b>를 답니다 — <b>온습도 센서로 값을 읽어 → OLED 화면에 표시 → LED 신호등·네오픽셀 색으로 표현</b>. 오늘부터 <b>진짜 하드웨어(보드)</b>를 씁니다.</div>
+
+  <section>
+    <div class="badge"><span class="n">개념</span><span class="k">회로 몰라도 OK</span></div>
+    <h2>GPIO와 I2C — 부품은 어떻게 연결되나</h2>
+    <p><b>GPIO</b> = 라즈베리파이 옆구리의 <b>금색 다리(핀)</b>. 이 다리에 전기를 흘리면(<b>출력</b>) LED가 켜지고, 다리로 들어오는 전기를 읽으면(<b>입력</b>) 버튼이 눌렸는지 압니다.</p>
+    <p><b>I2C</b> = <b>단 두 개의 선</b>(SDA·SCL)으로 여러 부품과 대화하는 방법. 온습도 센서와 화면(OLED)이 이 방식을 씁니다.</p>
+    <div class="note key"><b>회로는 이미 정해져 있습니다.</b> UTTEC Shield는 표준 설계라, <b>어떤 부품이 몇 번 핀</b>인지 고정돼 있습니다. 그래서 여러분은 핀 번호를 외울 필요가 없고, Claude가 이미 알고 있습니다. (자세한 원리 → 「Claude가 회로를 읽고 실행하는 원리」)</div>
+    <h4>오늘 쓰는 부품과 핀 (참고용 — 외우지 마세요)</h4>
+    <table>
+      <tr><th>부품</th><th>핀 (GPIO)</th><th>하는 일</th></tr>
+      <tr><td> 온습도 센서 AHT20</td><td><span class="pin">I2C (2·3)</span></td><td>온도·습도 측정 (눈·귀)</td></tr>
+      <tr><td> OLED 화면</td><td><span class="pin">I2C (2·3)</span></td><td>숫자·글자 표시</td></tr>
+      <tr><td> LED 3색</td><td><span class="pin">17 / 27 / 22</span></td><td>신호등</td></tr>
+      <tr><td> 네오픽셀 WS2812 ×4</td><td><span class="pin">12</span></td><td>색으로 표현</td></tr>
+      <tr><td> 부저 /  버튼</td><td><span class="pin">5 / 4</span></td><td>소리 / 입력</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">먼저</span><span class="k">보드 점검</span></div>
+    <h2>실습 시작 전: 보드가 잘 되나 점검</h2>
+    <p>새 부품을 여러 개 쓰니, 먼저 <b>검사 스킬</b>로 보드 전체를 자동 점검합니다. 합격/불합격이 표로 나옵니다.</p>
+    <div class="prompt">
+      <span class="say"> <b>/hardwareTest</b> <span class="why">— 보드 전체 한 번에 점검</span></span>
+      <span class="say"> <b>/led · /buzzer · /button · /aht20 · /oled · /ws2812</b> <span class="why">— 특정 부품만 콕 집어 점검</span></span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습①</span><span class="k">LED · 버튼</span></div>
+    <h2>실습 ①: LED 신호등 · 버튼 입력</h2>
+    <p><b>gpiozero</b> 라는 쉬운 도구로 LED를 켭니다. (우리 키트 LED는 <code>active_high=False</code> 로 동작합니다 — Claude가 알아서 넣어줍니다.)</p>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — 신호등 순서대로 켜기</span></div>
+    <pre><span class="k">from</span> gpiozero <span class="k">import</span> LED
+<span class="k">from</span> time <span class="k">import</span> sleep
+
+red    = LED(<span class="n">17</span>, active_high=<span class="k">False</span>)   <span class="c"># 빨강</span>
+yellow = LED(<span class="n">27</span>, active_high=<span class="k">False</span>)   <span class="c"># 노랑</span>
+blue   = LED(<span class="n">22</span>, active_high=<span class="k">False</span>)   <span class="c"># 파랑</span>
+
+<span class="k">for</span> led <span class="k">in</span> (red, yellow, blue):
+    led.on();  sleep(<span class="n">0.5</span>)               <span class="c"># 0.5초 켜고</span>
+    led.off()                            <span class="c"># 끄고 다음 색으로</span></pre></div>
+    <h4>버튼을 누르면 LED 켜기</h4>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — 버튼 입력</span></div>
+    <pre><span class="k">from</span> gpiozero <span class="k">import</span> Button, LED
+btn = Button(<span class="n">4</span>)
+red = LED(<span class="n">17</span>, active_high=<span class="k">False</span>)
+btn.when_pressed  = red.on          <span class="c"># 누르면 켜짐</span>
+btn.when_released = red.off         <span class="c"># 떼면 꺼짐</span></pre></div>
+    <div class="prompt">
+      <span class="say"> <b>"빨강·노랑·파랑 LED를 순서대로 켜는 파이썬 코드를 알려줘."</b></span>
+      <span class="say"> <b>"버튼을 누르면 LED가 켜지는 코드를 알려줘."</b></span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습②</span><span class="k">핵심</span></div>
+    <h2>실습 ②: 온습도 → 화면(OLED) + 색(네오픽셀)</h2>
+    <p>오늘의 핵심 결과물입니다. 센서가 읽은 <b>숫자</b>를 <b>화면과 색</b>으로 보여줍니다.</p>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — 온습도 읽어 OLED에 표시</span></div>
+    <pre><span class="k">import</span> board, busio, adafruit_ahtx0
+<span class="k">from</span> luma.core.interface.serial <span class="k">import</span> i2c
+<span class="k">from</span> luma.oled.device <span class="k">import</span> sh1106
+<span class="k">from</span> luma.core.render <span class="k">import</span> canvas
+<span class="k">from</span> time <span class="k">import</span> sleep
+
+sensor = adafruit_ahtx0.AHTx0(busio.I2C(board.SCL, board.SDA))   <span class="c"># 온습도 센서</span>
+oled   = sh1106(i2c(port=<span class="n">1</span>, address=<span class="n">0x3C</span>))                  <span class="c"># OLED 화면</span>
+
+<span class="k">while</span> <span class="k">True</span>:
+    t = sensor.temperature            <span class="c"># 온도 읽기</span>
+    h = sensor.relative_humidity      <span class="c"># 습도 읽기</span>
+    <span class="k">with</span> canvas(oled) <span class="k">as</span> draw:
+        draw.text((<span class="n">0</span>, <span class="n">0</span>),  <span class="f">f</span><span class="s">"온도 {t:.1f} C"</span>, fill=<span class="s">"white"</span>)
+        draw.text((<span class="n">0</span>, <span class="n">20</span>), <span class="f">f</span><span class="s">"습도 {h:.1f} %"</span>, fill=<span class="s">"white"</span>)
+    sleep(<span class="n">2</span>)                          <span class="c"># 2초마다 갱신</span></pre></div>
+    <h4>온도에 따라 네오픽셀 색 바꾸기 (시원=파랑 / 더움=빨강)</h4>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — WS2812 색 연동 (키트 헬퍼 uttec_neopixel 사용)</span></div>
+    <pre><span class="k">import</span> uttec_neopixel <span class="k">as</span> npx
+color = (<span class="n">0</span>,<span class="n">0</span>,<span class="n">255</span>) <span class="k">if</span> t &lt; <span class="n">28</span> <span class="k">else</span> (<span class="n">255</span>,<span class="n">0</span>,<span class="n">0</span>)   <span class="c"># 28도 기준 파랑/빨강</span>
+<span class="k">for</span> i <span class="k">in</span> <span class="k">range</span>(<span class="n">4</span>):
+    npx.set_pixel(i, *color)                            <span class="c"># 4개 픽셀 모두</span></pre></div>
+    <div class="prompt">
+      <span class="say"> <b>"온습도 센서 값을 읽어 OLED 화면에 보여주는 파이썬 코드를 알려줘."</b></span>
+      <span class="say"> <b>"온도에 따라 네오픽셀 색을 바꾸는 코드도 추가해줘. 시원하면 파랑, 더우면 빨강."</b></span>
+      <span class="say"> <b>"이 코드가 한 줄씩 무슨 뜻인지 쉽게 설명해줘."</b></span>
+    </div>
+    <div class="note tip"><b> 손으로 체험.</b> 센서를 손으로 감싸면 <b>화면 숫자가 올라가고 색이 빨강으로</b> 바뀝니다. "센서가 진짜 느끼는구나!"를 눈으로 확인하세요.</div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">심화</span><span class="k">여유 있는 조 도전</span></div>
+    <h2>심화 실습 — 오늘 부품만으로 8가지 도전</h2>
+    <p class="lead">기본 실습을 끝낸 분을 위한 추가 과제입니다. 전부 <b>오늘 쓴 부품(센서·OLED·LED·부저·스피커·버튼·네오픽셀)</b> 만 씁니다.  난이도 순.</p>
+    <table>
+      <tr><th>#</th><th>도전 과제</th><th>난이도</th><th>쓰는 부품</th></tr>
+      <tr><td>①</td><td>OLED에 온·습도를 <b>막대그래프</b>로 표시</td><td></td><td>센서·OLED</td></tr>
+      <tr><td>②</td><td><b>WS2812 온도계</b> — 더울수록 켜지는 픽셀 개수 ↑</td><td></td><td>센서·네오픽셀</td></tr>
+      <tr><td>③</td><td>버튼 누를 때마다 <b>화면 모드 전환</b>(온도→습도→둘다)</td><td></td><td>버튼·OLED</td></tr>
+      <tr><td>④</td><td>온도 구간별 <b>부저 경고 패턴</b> 다르게 (삐/삐삐/연속)</td><td></td><td>센서·부저</td></tr>
+      <tr><td>⑤</td><td>버튼으로 <b>LED 색 순환</b> (빨→노→파→꺼짐)</td><td></td><td>버튼·LED</td></tr>
+      <tr><td>⑥</td><td>온도에 따라 <b>다른 멜로디</b> 재생</td><td></td><td>센서·스피커</td></tr>
+      <tr><td>⑦</td><td>버튼으로 <b>여러 곡 골라</b> 재생</td><td></td><td>버튼·스피커</td></tr>
+      <tr><td>⑧</td><td><b>나만의 멜로디 작곡 + LED 싱크</b> 라이트쇼</td><td></td><td>스피커·LED·네오픽셀</td></tr>
+    </table>
+    <h4>예: ② WS2812 온도계 (더울수록 픽셀 ↑)</h4>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — 심화② 발췌</span></div>
+    <pre><span class="k">import</span> uttec_neopixel <span class="k">as</span> npx
+levels = [(<span class="n">25</span>,<span class="n">0</span>),(<span class="n">28</span>,<span class="n">1</span>),(<span class="n">31</span>,<span class="n">2</span>),(<span class="n">34</span>,<span class="n">3</span>),(<span class="n">999</span>,<span class="n">4</span>)]     <span class="c"># 온도 구간 → 켤 개수</span>
+colors = [(<span class="n">0</span>,<span class="n">0</span>,<span class="n">255</span>),(<span class="n">0</span>,<span class="n">255</span>,<span class="n">0</span>),(<span class="n">255</span>,<span class="n">255</span>,<span class="n">0</span>),(<span class="n">255</span>,<span class="n">0</span>,<span class="n">0</span>)]
+n = <span class="k">next</span>(k <span class="k">for</span> th,k <span class="k">in</span> levels <span class="k">if</span> t &lt; th)
+npx.off()
+<span class="k">for</span> i <span class="k">in</span> <span class="k">range</span>(n):
+    npx.set_pixel(i, *colors[<span class="k">min</span>(i,<span class="n">3</span>)])</pre></div>
+    <div class="prompt">
+      <span class="say"> <b>"WS2812 4개를 온도계처럼, 더울수록 켜지는 개수가 늘게 만들어줘."</b></span>
+      <span class="say"> <b>"버튼 누를 때마다 OLED 화면을 온도→습도→둘다로 바꿔줘."</b></span>
+      <span class="why"> 심화 과제는 힌트만 있습니다. 위처럼 말로 부탁하면 Claude가 코드를 만들어 줍니다.</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">현업노트</span><span class="k">오늘의 기록</span></div>
+    <h2>현업노트: 장비/부품 카드</h2>
+    <div class="prompt">
+      <span class="say"> <b>"오늘 쓴 부품을 「장비카드」로 정리해줘. AHT20 센서랑 OLED 화면, 핀이랑 짧은 코드도 같이."</b></span>
+      <span class="why"> 부품 1개 = 카드 1장. 내 회사 설비도 이렇게 카드로 정리하면 <b>고장·교체 때 빠릅니다.</b></span>
+    </div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="badge" style="--blue:#0E7C74"><span class="n" style="background:#0E7C74">의미</span><span class="k">이 시간의 의미 · 다음 예고</span></div>
+    <h2>오늘의 의미</h2>
+    <div class="note mean"><b>이 실습이 의미하는 것.</b> 오늘 공장은 <b>눈과 귀</b>를 얻었습니다 — 온도·습도를 <b>숫자로 측정</b>하고 화면·색으로 보여줍니다. 공장 자동화의 첫걸음은 언제나 <b>"현장을 데이터로 만드는 것"</b> 입니다. 측정할 수 있어야 관리할 수 있습니다.</div>
+    <p><b>다음 시간(3회차) 예고:</b> 이제 공장이 <b>스스로 판단</b>하게 만듭니다. "온도가 위험하면 자동으로 빨간불·경보!"</p>
+  </section>
+
+</div>
+<footer><div class="wrap"><b>UTTEC 교육</b> · 광주 AI·IoT 스마트팩토리 실습 「百見不如一習 · 직접 익히는 교육」 회차별 실습 가이드 (초보자용) &nbsp;|&nbsp; 접속·실행은 「노트북 VSCode 접속 설명서」, 원리는 「Claude가 회로를 읽고 실행하는 원리」 참고<br><span style="opacity:.7">핀 번호·문법은 외우지 마세요. 하고 싶은 것을 한국어로 말하면 됩니다 — 나머지는 Claude가 돕습니다.</span></div></footer>
+</body></html>

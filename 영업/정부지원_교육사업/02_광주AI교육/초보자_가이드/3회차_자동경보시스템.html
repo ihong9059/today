@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3회차 · 자동으로 위험을 알리는 시스템 — 3회차 — 자동 경보 시스템</title>
+<style>
+  :root{--bg:#F4F6F8;--ink:#1C2530;--muted:#5C6875;--line:#E1E7ED;--blue:#2563C9;--blue-deep:#1B4894;
+    --teal:#0E9488;--green:#16955C;--amber:#C8811A;--red:#C64236;--violet:#6D4AC2;--shadow:0 2px 12px rgba(30,50,80,.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",sans-serif;color:var(--ink);background:var(--bg);line-height:1.75;font-size:15.5px}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
+  code,.mono{font-family:"Consolas","D2Coding","Courier New",monospace}
+  header{color:#fff;padding:46px 0 40px}
+  header .tagline{font-size:13px;letter-spacing:1px;opacity:.9;margin-bottom:12px;text-transform:uppercase}
+  header h1{font-size:29px;font-weight:800;line-height:1.32;letter-spacing:-.5px;margin-bottom:14px}
+  header p{font-size:16px;opacity:.95;max-width:680px}
+  .hmeta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .hmeta span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:6px 13px;font-size:13px}
+  .hmeta b{color:#fff}
+  .goal{background:#fff;border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:12px;padding:18px 22px;margin:26px 0;box-shadow:var(--shadow)}
+  .goal h3{font-size:15px;color:var(--teal);margin-bottom:8px}
+  .goal b{color:var(--ink)}
+  section{padding:30px 0;border-bottom:1px solid var(--line)}
+  .badge{display:inline-flex;align-items:center;gap:9px;margin-bottom:10px}
+  .badge .n{min-width:34px;height:34px;padding:0 10px;border-radius:18px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .badge .k{font-size:12px;letter-spacing:1.3px;color:var(--muted);text-transform:uppercase;font-weight:700}
+  h2{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:12px}
+  h3{font-size:16.5px;font-weight:800;margin:20px 0 9px}
+  h4{font-size:15px;font-weight:800;margin:16px 0 7px;color:var(--blue-deep)}
+  p{margin-bottom:11px}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:16px}
+  ul.plain{list-style:none;margin:8px 0}
+  ul.plain li{position:relative;padding-left:22px;margin-bottom:7px}
+  ul.plain li::before{content:"»";position:absolute;left:3px;color:var(--teal);font-weight:800}
+  ol.steps{margin:10px 0 10px 2px;list-style:none;counter-reset:st}
+  ol.steps>li{position:relative;padding-left:36px;margin-bottom:14px;counter-increment:st}
+  ol.steps>li::before{content:counter(st);position:absolute;left:0;top:-1px;width:25px;height:25px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .pipe{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+  .pipe .s{flex:1;min-width:135px;background:#F0F5FC;border:1px solid #D3E1F5;border-radius:11px;padding:12px 13px}
+  .pipe .s .n{display:inline-flex;width:23px;height:23px;border-radius:50%;background:var(--blue);color:#fff;align-items:center;justify-content:center;font-weight:800;font-size:12px;margin-bottom:6px}
+  .pipe .s b{display:block;font-size:13.5px;line-height:1.4;margin-bottom:2px}
+  .pipe .s small{color:var(--muted);font-size:12px}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:11px;overflow:hidden;box-shadow:var(--shadow);font-size:13.5px;margin:12px 0}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#EDF2F7;font-weight:700;font-size:12.5px}
+  tr:last-child td{border-bottom:none}
+  td code,.pin{background:#EEF2F6;padding:2px 7px;border-radius:5px;font-size:12.5px;color:var(--blue-deep);font-family:"Consolas",monospace}
+  .cmd{background:#12161C;border-radius:11px;margin:12px 0;overflow:hidden;box-shadow:var(--shadow)}
+  .cmd .bar{display:flex;align-items:center;gap:7px;padding:8px 13px;background:#0B0E13;border-bottom:1px solid #232A33}
+  .cmd .bar .d{width:10px;height:10px;border-radius:50%}
+  .cmd .bar .d.r{background:#F0625A}.cmd .bar .d.y{background:#F5BE4E}.cmd .bar .d.g{background:#5BC46A}
+  .cmd .bar .t{margin-left:8px;font-size:11.5px;color:#7C8896}
+  .cmd pre{padding:14px 15px;color:#E6EDF3;font-size:13px;line-height:1.62;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+  .cmd pre .k{color:#C99BFF}.cmd pre .s{color:#9FE7B8}.cmd pre .c{color:#7C8896}.cmd pre .n{color:#7EC5FF}.cmd pre .f{color:#F5BE4E}
+  .prompt{background:#F5F1FC;border:1px solid #DBCcF2;border-left:4px solid var(--violet);border-radius:10px;padding:12px 16px;margin:10px 0}
+  .prompt .say{display:block;margin:5px 0;font-size:14.5px}
+  .prompt .say b{color:var(--violet)}
+  .prompt .why{color:var(--muted);font-size:13px;margin-left:22px}
+  .note{border-radius:11px;padding:14px 17px;margin:14px 0;font-size:14.5px;border:1px solid}
+  .note b{font-weight:800}
+  .note.tip{background:#EAF6F3;border-color:#B7E0D8}.note.tip b{color:var(--teal)}
+  .note.warn{background:#FDF4E6;border-color:#F0D9A8}.note.warn b{color:var(--amber)}
+  .note.key{background:#EAF1FC;border-color:#C1D6F5}.note.key b{color:var(--blue-deep)}
+  .note.mean{background:#FBF0F8;border-color:#E9C7DF}.note.mean b{color:#A63A82}
+  kbd{background:#fff;border:1px solid #C7D0DA;border-bottom-width:2px;border-radius:6px;padding:2px 7px;font-size:12.5px;font-weight:700}
+  footer{background:#12161C;color:#8A97A6;padding:26px 0;font-size:13px}
+  footer b{color:#D6DEE7}
+  @media print{body{background:#fff}section,.goal,.cmd,table,.pipe{break-inside:avoid}}
+
+  header{background:linear-gradient(150deg,#6B2C2C,#C64236 55%,#C8811A 130%)}
+</style></head><body>
+<header><div class="wrap">
+  <div class="tagline">3회차 · 자동으로 위험을 알리는 시스템</div>
+  <h1>3회차 — 자동 경보 시스템</h1>
+  <p><b>기준값</b>으로 정상/주의/위험을 자동 판단하고, <b>LED·부저로 경보</b>하며, 측정값을 <b>파일(CSV)로 저장</b>합니다.</p>
+  <div class="hmeta"><span>회차 · <b>3주차</b></span><span>키워드 · <b>기준값 · if · 경보 · CSV</b></span></div>
+</div></header>
+<div class="wrap">
+
+  <div class="goal"><h3> 이번 시간의 목표</h3>
+  공장이 <b>스스로 판단</b>하게 만듭니다 — <b>기준값(임계값)으로 정상/주의/위험을 자동 구분 → LED·부저 경보 → 측정값을 파일(CSV)로 저장</b>.</div>
+
+  <section>
+    <div class="badge"><span class="n">개념</span><span class="k">쉬운 말로</span></div>
+    <h2>"기준값(임계값)"이 뭐예요?</h2>
+    <p><b>기준값</b> = 정상과 위험을 가르는 <b>선</b>입니다. 예: "온도 35도를 넘으면 위험". 사람이 계속 지켜보지 않아도, 컴퓨터가 이 선을 기준으로 <b>스스로 판단</b>합니다.</p>
+    <div class="pipe">
+      <div class="s"><span class="n" style="background:#2563C9">정상</span><b>28도 미만</b><small> 파란불</small></div>
+      <div class="s"><span class="n" style="background:#C8811A">주의</span><b>28~35도</b><small> 노란불</small></div>
+      <div class="s"><span class="n" style="background:#C64236">위험</span><b>35도 이상</b><small> 빨간불 +  경보</small></div>
+    </div>
+    <div class="note key"><b>조건문 <code>if</code>.</b> "만약 온도가 35 이상이면 → 빨간불" 처럼, 컴퓨터가 <b>상황에 따라 다르게 행동</b>하게 하는 명령이 <code>if</code> 입니다. 오늘의 핵심 문법입니다.</div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습①</span><span class="k">자동 판단</span></div>
+    <h2>실습 ①: 정상/주의/위험 자동 판단 + 경보</h2>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — 기준값 판단 + 부저 경보</span></div>
+    <pre><span class="k">from</span> gpiozero <span class="k">import</span> LED, Buzzer
+<span class="k">import</span> board, busio, adafruit_ahtx0
+<span class="k">from</span> time <span class="k">import</span> sleep
+
+red    = LED(<span class="n">17</span>, active_high=<span class="k">False</span>)
+yellow = LED(<span class="n">27</span>, active_high=<span class="k">False</span>)
+blue   = LED(<span class="n">22</span>, active_high=<span class="k">False</span>)
+buzzer = Buzzer(<span class="n">5</span>)
+sensor = adafruit_ahtx0.AHTx0(busio.I2C(board.SCL, board.SDA))
+
+<span class="k">while</span> <span class="k">True</span>:
+    t = sensor.temperature
+    blue.value   = (t &lt; <span class="n">28</span>)              <span class="c"># 정상</span>
+    yellow.value = (<span class="n">28</span> &lt;= t &lt; <span class="n">35</span>)        <span class="c"># 주의</span>
+    red.value    = (t &gt;= <span class="n">35</span>)             <span class="c"># 위험</span>
+    <span class="k">if</span> t &gt;= <span class="n">35</span>:
+        buzzer.on()                     <span class="c"># 위험 → 경보음</span>
+    <span class="k">else</span>:
+        buzzer.off()
+    sleep(<span class="n">1</span>)</pre></div>
+    <div class="prompt">
+      <span class="say"> <b>"온도가 정상/주의/위험이면 각각 파란/노란/빨간 LED를 켜고, 위험이면 부저도 울리는 코드를 알려줘."</b></span>
+      <span class="say"> <b>"이 코드에서 판단하는 부분을 한 줄씩 쉽게 설명해줘."</b></span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습②</span><span class="k">데이터 저장</span></div>
+    <h2>실습 ②: 측정값을 파일(CSV)로 저장</h2>
+    <p><b>CSV</b> = 엑셀로 열 수 있는 <b>표 형태의 텍스트 파일</b>입니다. 측정값을 계속 쌓아두면 나중에 그래프·분석에 씁니다.</p>
+    <div class="cmd"><div class="bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">파이썬 — CSV 저장</span></div>
+    <pre><span class="k">import</span> csv, datetime
+now = datetime.datetime.now().isoformat()      <span class="c"># 지금 시각</span>
+<span class="k">with</span> <span class="k">open</span>(<span class="s">"factory_log.csv"</span>, <span class="s">"a"</span>, newline=<span class="s">""</span>) <span class="k">as</span> f:
+    csv.writer(f).writerow([now, t, h])        <span class="c"># [시각, 온도, 습도] 한 줄 추가</span></pre></div>
+    <div class="prompt">
+      <span class="say"> <b>"측정한 온습도를 CSV 파일로 저장하는 코드를 알려줘."</b></span>
+      <span class="say"> <b>"저장한 CSV를 엑셀로 여는 법을 알려줘."</b></span>
+    </div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">실습③</span><span class="k">통합</span></div>
+    <h2>실습 ③: 통합 경보 시스템 (LED + 부저 + OLED)</h2>
+    <p>오늘 만든 조각을 하나로 합칩니다 — 판단 결과를 <b>불·소리·화면 글자</b>로 함께 보여줍니다.</p>
+    <div class="prompt">
+      <span class="say"> <b>"온도로 정상/주의/위험을 판단해 LED + 부저 + OLED에 상태 글자까지 함께 보여주는 코드를 알려줘."</b></span>
+      <span class="say"> <b>"이 통합 코드를 「코드·설정값」에 저장해줘."</b></span>
+    </div>
+    <div class="note tip"><b> 손난로 체험.</b> 손난로로 센서를 데우면, 온도가 올라가며 <b>파랑→노랑→빨강</b>으로 바뀌고 <b>부저가 자동으로</b> 울립니다. 아무도 안 건드렸는데 공장이 스스로 판단합니다!</div>
+  </section>
+
+  <section>
+    <div class="badge"><span class="n">현업노트</span><span class="k">오늘의 기록</span></div>
+    <h2>현업노트: 결정 메모 + 보관함</h2>
+    <div class="prompt">
+      <span class="say"> <b>"기준값을 왜 그렇게 정했는지 「배운것」에 결정 메모로 남겨줘. 우리 작업장 평상시가 27~28도라서라고."</b></span>
+      <span class="say"> <b>"만든 CSV 파일을 「보관함」에 정리해줘."</b></span>
+      <span class="why"> "왜 그렇게 정했나"를 남기면 나중에 바꿀 때·인수인계·감사에 강합니다.</span>
+    </div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="badge" style="--blue:#0E7C74"><span class="n" style="background:#0E7C74">의미</span><span class="k">이 시간의 의미 · 다음 예고</span></div>
+    <h2>오늘의 의미</h2>
+    <div class="note mean"><b>이 실습이 의미하는 것.</b> 공장이 이제 <b>스스로 판단하고 경고</b>합니다. 이것이 <b>"자동화"</b>의 본질입니다 — 사람이 24시간 지켜보지 않아도 되고, <b>기록(CSV)</b>이 남아 나중에 분석·개선할 수 있습니다.</div>
+    <p><b>다음 시간(4회차) 예고:</b> 이제 공장을 <b>멀리서</b> 봅니다. 내 스마트폰으로 실시간 그래프를 보고, 무선(LoRa)으로 멀리 떨어진 데이터도 받아옵니다.</p>
+  </section>
+
+</div>
+<footer><div class="wrap"><b>UTTEC 교육</b> · 광주 AI·IoT 스마트팩토리 실습 「百見不如一習 · 직접 익히는 교육」 회차별 실습 가이드 (초보자용) &nbsp;|&nbsp; 접속·실행은 「노트북 VSCode 접속 설명서」, 원리는 「Claude가 회로를 읽고 실행하는 원리」 참고<br><span style="opacity:.7">핀 번호·문법은 외우지 마세요. 하고 싶은 것을 한국어로 말하면 됩니다 — 나머지는 Claude가 돕습니다.</span></div></footer>
+</body></html>
