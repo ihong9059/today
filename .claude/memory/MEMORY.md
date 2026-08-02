@@ -1,4 +1,5 @@
 - [사용자 본명 — 홍광선](user_name_hong_kwangsun.md) — UTTEC 대표, 이메일 prefix에서 이름 추정 금지 (이형근 X)
+- [HTML→PDF는 로컬 폰트 (Type3 0) 🚨](feedback_pdf_local_font_no_type3.md) — 웹폰트 @import 금지·맑은고딕 사용. 웹폰트/이모지/그라디언트텍스트=Type3=PDF.js 렌더오류. fitz로 Type3 0 검증. PPTX→PDF=PowerPoint COM. 동영상=scenes→PNG+edge-tts+ffmpeg
 - [Ponet (조대홍 사장) SSH 연결 ⭐](reference_ponet_ssh.md) — 본 PC alias: `ssh ponet` (회사 desktop 100.108.118.44, pw `Ponet1234!`) + `ssh joNotebook` (조대홍 노트북 100.99.53.24, 키 인증). 잊어버리면 알려드릴 것
 - [Telegram 봇 chat_id](reference_telegram_bot_chatid.md) — `@uttec_n8n_telegram_bot`, 본인 private chat_id=`8401184088`. Token은 n8n 암호화 저장(평문 없음). 단일출처 = ubuntu n8nUttec vault
 - [삼환전기 = 오래된 거래 조명회사](reference_samhwan_electric.md) — LoRa 조명제어 영업 리드 유입 채널. 2026-07-23 광안 지역주택조합 보안등 디밍제어 문의 → DWG CAD 판독 완료(심의본=유선 0-10V 디밍 경쟁스펙, 보안등 41등/6회로), 회신 대기
