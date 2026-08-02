@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>AI로 성장하기 — 나를 알고(메타인지), AI를 딛고, 그 너머로</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Malgun Gothic','맑은 고딕','Apple SD Gothic Neo',sans-serif;color:#1f2937;background:#eef2f7;line-height:1.7}
+  .page{width:210mm;margin:0 auto;background:#fff;padding:15mm 16mm}
+  .hero,.card,.step,.qbox,.svgbox,.two>div,.philo,.tip{break-inside:avoid}
+  h2{break-after:avoid}
+
+  .hero{background:linear-gradient(135deg,#0f2a5e,#1e3a8a 55%,#0d9488 200%);color:#fff;border-radius:20px;padding:34px 34px;margin-bottom:22px}
+  .hero .eyebrow{font-size:14px;letter-spacing:3px;color:#93c5fd;font-weight:700}
+  .hero h1{font-size:30px;font-weight:900;margin-top:10px;line-height:1.35}
+  .hero p{font-size:15px;color:#dbeafe;margin-top:14px}
+
+  h2{font-size:21px;font-weight:900;color:#0f2a5e;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+  h2 .num{background:#2563eb;color:#fff;width:30px;height:30px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+  p.b{font-size:14.5px;color:#374151;margin:8px 0}
+  .b b{color:#1e3a8a}
+  .lead{font-size:15px;color:#334155;background:#f8fafc;border-left:4px solid #0d9488;border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0}
+
+  .svgbox{background:#fbfdff;border:1px solid #e2e8f0;border-radius:16px;padding:16px;margin:14px 0;text-align:center}
+  .svgbox svg{max-width:100%;height:auto}
+  .cap{font-size:12.5px;color:#64748b;margin-top:8px}
+
+  .two{display:flex;gap:14px;margin:12px 0}
+  .two>div{flex:1;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px}
+  .two h3{font-size:15px;color:#1e3a8a;font-weight:800;margin-bottom:6px}
+  .two p{font-size:13px;color:#475569}
+
+  .step{display:flex;gap:14px;align-items:flex-start;background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #2563eb;border-radius:12px;padding:14px 18px;margin:9px 0}
+  .step .n{font-size:22px;font-weight:900;color:#2563eb;width:40px;flex-shrink:0}
+  .step h3{font-size:15.5px;font-weight:800;color:#1f2937}
+  .step p{font-size:13.5px;color:#475569;margin-top:3px}
+
+  .qbox{background:#0f2a5e;color:#dbeafe;border-radius:12px;padding:16px 18px;margin:10px 0}
+  .qbox h3{font-size:14px;color:#93c5fd;margin-bottom:8px;letter-spacing:1px}
+  .qbox ul{list-style:none}
+  .qbox li{font-size:13.5px;margin:6px 0;padding-left:16px;position:relative;color:#e0e7ff}
+  .qbox li:before{content:"›";position:absolute;left:0;color:#60a5fa;font-weight:900}
+  .qbox li b{color:#fff}
+
+  .tip{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:14px 18px;margin:10px 0}
+  .tip h3{font-size:14.5px;color:#b45309;font-weight:800;margin-bottom:5px}
+  .tip p{font-size:13.5px;color:#57534e}
+
+  .philo{background:linear-gradient(135deg,#0f2a5e,#0d9488);color:#fff;border-radius:16px;padding:26px 30px;margin-top:18px}
+  .philo h3{font-size:16px;color:#a7f3d0;letter-spacing:1px;margin-bottom:14px}
+  .philo .row{font-size:16px;font-weight:700;margin:8px 0;padding-left:22px;position:relative}
+  .philo .row:before{content:"—";position:absolute;left:0;color:#5eead4}
+  .foot{font-size:11px;color:#9ca3af;margin-top:18px;border-top:1px solid #e5e7eb;padding-top:8px}
+  @page{size:A4;margin:0}
+  @media print{body{background:#fff}.page{margin:0;page-break-after:always}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="eyebrow">AI 시대의 성장법 · 메타인지</div>
+    <h1>나를 알고(메타인지), AI를 딛고, 그 너머로</h1>
+    <p>경험이 없는 취준생도, 현업에서 더 나아가려는 사람도 — AI를 거울이자 사다리로 삼아<br>내 위치를 확인하고, 고급까지 빠르게 오르고, 그 너머의 미지를 개척한다.</p>
+  </div>
+
+  <div class="lead"><b>이 자료의 한 줄:</b> 성장은 동심원이다. 중심의 초급에서 바깥의 최고·미지로 나아간다. <b>AI는 "고급자" 수준의 지식을 담고 있어</b>, 당신을 빠르게 고급까지 끌어올리는 사다리가 된다. 하지만 <b>가장 바깥(최고·미지)은 AI도 모른다 — 거기서부터는 당신의 몫</b>이다.</div>
+
+  <h2><span class="num">1</span>성장의 지도 — 동심원 모델</h2>
+  <p class="b">배움에는 층이 있다. 안쪽부터 <b>초급 → 중급 → 고급 → 최고</b>, 그리고 그 바깥은 <b>아직 아무도 모르는 미지의 영역(프론티어)</b>이다. 지금 당신이 <b>중급</b>에 서 있다고 하자.</p>
+
+  <div class="svgbox">
+    <svg viewBox="0 0 900 600" role="img" aria-label="성장의 동심원 지도">
+      <!-- frontier -->
+      <circle cx="300" cy="300" r="285" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="11 9"/>
+      <circle cx="300" cy="300" r="250" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+      <circle cx="300" cy="300" r="182" fill="#dbeafe" stroke="#3b82f6" stroke-width="3.5"/>
+      <circle cx="300" cy="300" r="116" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+      <circle cx="300" cy="300" r="56" fill="#eff6ff" stroke="#1e3a8a" stroke-width="2"/>
+      <!-- ring labels (top, staggered) -->
+      <text x="300" y="308" text-anchor="middle" font-size="22" font-weight="800" fill="#1e3a8a">초급</text>
+      <text x="300" y="215" text-anchor="middle" font-size="19" font-weight="800" fill="#1e40af">중급</text>
+      <text x="300" y="148" text-anchor="middle" font-size="19" font-weight="800" fill="#1d4ed8">고급</text>
+      <text x="300" y="78" text-anchor="middle" font-size="19" font-weight="800" fill="#c2410c">최고</text>
+      <text x="300" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#64748b">미지의 프론티어</text>
+      <!-- callout: 당신(중급) -->
+      <circle cx="386" cy="300" r="5" fill="#0d9488"/>
+      <polyline points="386,300 560,360 610,360" fill="none" stroke="#0d9488" stroke-width="2"/>
+      <rect x="612" y="336" width="270" height="52" rx="10" fill="#ecfdf5" stroke="#5eead4"/>
+      <text x="626" y="360" font-size="15" font-weight="800" fill="#0f766e">당신은 여기 · 중급 (가정)</text>
+      <text x="626" y="378" font-size="12.5" fill="#0d9488">출발점을 아는 것이 성장의 시작</text>
+      <!-- callout: AI=고급자 -->
+      <circle cx="450" cy="300" r="5" fill="#2563eb"/>
+      <polyline points="450,300 560,240 610,240" fill="none" stroke="#2563eb" stroke-width="2"/>
+      <rect x="612" y="214" width="270" height="54" rx="10" fill="#eff6ff" stroke="#93c5fd"/>
+      <text x="626" y="238" font-size="15" font-weight="800" fill="#1d4ed8">AI = 고급자</text>
+      <text x="626" y="256" font-size="12.5" fill="#2563eb">인류가 정리한 상급 지식의 평균</text>
+      <!-- callout: frontier human -->
+      <circle cx="512" cy="88" r="5" fill="#c2410c"/>
+      <polyline points="512,88 560,120 610,120" fill="none" stroke="#c2410c" stroke-width="2"/>
+      <rect x="612" y="96" width="270" height="54" rx="10" fill="#fff7ed" stroke="#fdba74"/>
+      <text x="626" y="120" font-size="14.5" font-weight="800" fill="#c2410c">여기부터는 AI도 모른다</text>
+      <text x="626" y="138" font-size="12.5" fill="#ea580c">최고·미지 = 당신이 개척하는 곳</text>
+    </svg>
+    <div class="cap">그림 1 · 성장의 동심원. 안(초급)에서 밖(최고·미지)으로. AI는 "고급" 띠에 걸쳐 있다.</div>
+  </div>
+
+  <div class="two">
+    <div><h3>안쪽 = 이미 아는 것</h3><p>초·중·고급은 이미 세상에 <b>정리된 지식</b>. 배우면 도달할 수 있는 영역.</p></div>
+    <div><h3>바깥 = 아직 모르는 것</h3><p>최고 전문가와 미지의 프론티어는 <b>아직 답이 없는 영역</b>. 만들어 가는 곳.</p></div>
+  </div>
+
+  <h2><span class="num">2</span>메타인지 — 나를 아는 힘</h2>
+  <p class="b"><b>메타인지</b>란 "내가 무엇을 알고, 무엇을 모르는지를 아는 것"이다. 성장의 90%는 <b>내 위치를 정확히 아는 것</b>에서 시작한다. 그런데 사람은 자기 수준을 스스로 착각하기 쉽다. 그래서 <b>객관적인 거울</b>이 필요하다 — 그 거울이 AI다.</p>
+
+  <div class="svgbox">
+    <svg viewBox="0 0 820 300" role="img" aria-label="메타인지 사이클">
+      <!-- 4 nodes in a loop -->
+      <g font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle">
+        <rect x="40" y="120" width="150" height="70" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+        <text x="115" y="150">① 나를 확인</text><text x="115" y="172" font-size="12" font-weight="600" fill="#475569">AI에게 평가 요청</text>
+        <rect x="250" y="120" width="150" height="70" rx="12" fill="#ecfdf5" stroke="#0d9488" stroke-width="2"/>
+        <text x="325" y="150" fill="#0f766e">② 격차 발견</text><text x="325" y="172" font-size="12" font-weight="600" fill="#475569">모르는 것 인지</text>
+        <rect x="460" y="120" width="150" height="70" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+        <text x="535" y="150" fill="#c2410c">③ AI로 학습·도전</text><text x="535" y="172" font-size="12" font-weight="600" fill="#475569">한 단계 위로</text>
+        <rect x="640" y="30" width="150" height="70" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+        <text x="715" y="60" fill="#4338ca">④ 다시 확인</text><text x="715" y="82" font-size="12" font-weight="600" fill="#475569">올라간 만큼 재점검</text>
+      </g>
+      <g fill="none" stroke="#94a3b8" stroke-width="2.5" marker-end="url(#ar)">
+        <line x1="190" y1="155" x2="248" y2="155"/>
+        <line x1="400" y1="155" x2="458" y2="155"/>
+        <line x1="610" y1="140" x2="690" y2="102"/>
+        <path d="M660,70 C500,-10 260,20 130,118" />
+      </g>
+      <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker></defs>
+      <text x="410" y="255" text-anchor="middle" font-size="13.5" fill="#0f766e" font-weight="700">이 고리를 돌 때마다 동심원의 바깥으로 한 칸씩 나아간다 (나선형 성장)</text>
+    </svg>
+    <div class="cap">그림 2 · 메타인지 사이클 — 확인 → 격차 → 도전 → 재확인의 반복이 성장 나선이 된다.</div>
+  </div>
+
+  <div class="qbox">
+    <h3>AI로 나를 확인하는 프롬프트 (그대로 써보세요)</h3>
+    <ul>
+      <li>"이 주제에 대한 <b>내 이해 수준을 초·중·고급으로 평가</b>해줘. 근거와 함께."</li>
+      <li>"내가 <b>놓치고 있는 개념이나 오해</b>가 있으면 짚어줘."</li>
+      <li>"<b>고급자라면 여기서 무엇을 더 물을까?</b> 다음 질문 3개를 알려줘."</li>
+      <li>"내 설명을 듣고 <b>빠진 부분만</b> 지적해줘 (칭찬 말고)."</li>
+    </ul>
+  </div>
+
+</div>
+<div class="page">
+
+  <h2><span class="num">3</span>AI라는 사다리 — 중급에서 고급까지 빠르게</h2>
+  <p class="b">AI는 <b>수많은 고급자의 지식을 평균낸 존재</b>다. 그래서 중급인 당신이 AI와 대화하면, <b>고급자의 사고방식·용어·판단 기준</b>을 빌려 쓸 수 있다. 혼자면 몇 년 걸릴 중급→고급 구간을, AI를 딛으면 <b>훨씬 빠르게</b> 오른다.</p>
+
+  <div class="svgbox">
+    <svg viewBox="0 0 820 300" role="img" aria-label="AI 사다리">
+      <!-- level bands -->
+      <g font-size="14" font-weight="800" text-anchor="middle">
+        <rect x="40"  y="210" width="150" height="55" rx="10" fill="#eff6ff" stroke="#1e3a8a"/><text x="115" y="243" fill="#1e3a8a">초급</text>
+        <rect x="230" y="160" width="150" height="55" rx="10" fill="#bfdbfe" stroke="#2563eb"/><text x="305" y="193" fill="#1e40af">중급 · 당신</text>
+        <rect x="420" y="110" width="150" height="55" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="3"/><text x="495" y="143" fill="#1d4ed8">고급 · AI</text>
+        <rect x="610" y="40"  width="160" height="55" rx="10" fill="#fff7ed" stroke="#ea580c"/><text x="690" y="66" fill="#c2410c">최고 · 미지</text>
+        <text x="690" y="84" font-size="11" font-weight="600" fill="#9a3412">AI도 모르는 곳</text>
+      </g>
+      <!-- AI elevator arrow 중->고 -->
+      <line x1="305" y1="160" x2="480" y2="112" stroke="#2563eb" stroke-width="7" stroke-linecap="round" marker-end="url(#ar2)"/>
+      <text x="360" y="120" font-size="13" font-weight="800" fill="#2563eb" transform="rotate(-15 360 120)">AI로 빠르게 ↑</text>
+      <!-- human climb 고->최고 (dashed) -->
+      <line x1="500" y1="110" x2="650" y2="70" stroke="#ea580c" stroke-width="4" stroke-dasharray="8 6" stroke-linecap="round" marker-end="url(#ar3)"/>
+      <text x="540" y="72" font-size="12.5" font-weight="800" fill="#c2410c" transform="rotate(-15 540 72)">인간이 직접 (경험·실험·창조)</text>
+      <defs>
+        <marker id="ar2" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#2563eb"/></marker>
+        <marker id="ar3" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#ea580c"/></marker>
+      </defs>
+    </svg>
+    <div class="cap">그림 3 · AI는 중급→고급을 끌어올리는 사다리. 고급→최고는 사람이 직접 오른다.</div>
+  </div>
+
+  <div class="two">
+    <div><h3>AI가 잘하는 것</h3><p>정리된 지식 설명, 예시 생성, 초안 작성, 내 오류 지적, "고급자라면?" 관점 제공. → <b>중급→고급 가속</b>.</p></div>
+    <div><h3>AI가 못하는 것</h3><p>당신 현장의 암묵지, 아직 답 없는 문제, 진짜 새로운 창조. → <b>최고·프론티어는 사람의 몫</b>.</p></div>
+  </div>
+
+  <h2><span class="num">4</span>AI의 천장과 그 너머 — 지식의 지평선</h2>
+  <p class="b">AI는 <b>"이미 어딘가에 정리된 지식"</b>의 지평선까지 안다. 그 선 아래는 AI가 빠르게 데려다준다. 하지만 <b>지평선 위 — 아직 아무도 모르는 것</b>은 AI도 모른다. 최고 전문가는 바로 그 선을 넘어, <b>새로운 지식을 만드는 사람</b>이다.</p>
+
+  <div class="svgbox">
+    <svg viewBox="0 0 820 300" role="img" aria-label="지식의 지평선">
+      <rect x="40" y="150" width="740" height="120" rx="10" fill="#eff6ff" stroke="#93c5fd"/>
+      <text x="410" y="220" text-anchor="middle" font-size="15" font-weight="800" fill="#1d4ed8">이미 정리된 지식 — AI가 데려다주는 영역 (초·중·고급)</text>
+      <line x1="40" y1="150" x2="780" y2="150" stroke="#c2410c" stroke-width="3" stroke-dasharray="10 6"/>
+      <text x="410" y="140" text-anchor="middle" font-size="13" font-weight="800" fill="#c2410c">◆ 지식의 지평선 — AI가 아는 범위의 끝 ◆</text>
+      <rect x="40" y="30" width="740" height="105" rx="10" fill="#fff7ed" stroke="#fdba74"/>
+      <text x="410" y="72" text-anchor="middle" font-size="15" font-weight="800" fill="#c2410c">아직 아무도 모르는 것 — 미지의 프론티어 (최고)</text>
+      <text x="410" y="98" text-anchor="middle" font-size="13" fill="#9a3412">여기서는 경험 · 실험 · 관찰 · 창조로 스스로 답을 만든다</text>
+    </svg>
+    <div class="cap">그림 4 · AI는 지평선까지 안내한다. 그 위를 여는 것이 최고 전문가의 일.</div>
+  </div>
+  <div class="lead"><b>핵심 통찰:</b> AI 덕분에 "고급까지"는 누구나 빨라졌다. 그래서 이제 <b>차이를 만드는 것은 지평선을 넘는 힘</b> — 현장 경험, 끈질긴 질문, 직접 해보는 실험이다. AI는 당신을 출발선(지평선)까지 데려다줄 뿐, <b>그 너머는 당신이 뛴다.</b></div>
+
+</div>
+<div class="page">
+
+  <h2><span class="num">5</span>실전 — 취준생·현업자를 위한 4단계</h2>
+  <div class="step"><div class="n">1</div><div><h3>위치 확인 (메타인지)</h3><p>AI에게 내 수준을 평가받는다. "이 분야에서 나는 몇 급인가, 왜인가." 막연함을 <b>구체적 좌표</b>로 바꾼다.</p></div></div>
+  <div class="step"><div class="n">2</div><div><h3>목표 한 칸 위 설정</h3><p>중급이면 "고급이 아는 것"을 목표로. AI에게 <b>"고급자가 되려면 무엇을 알아야 하나" 체크리스트</b>를 받는다.</p></div></div>
+  <div class="step"><div class="n">3</div><div><h3>AI와 함께 상승</h3><p>모르는 것을 AI로 배우고, <b>배운 것을 내 말로 다시 설명</b>해 AI에게 검증받는다(가장 강력한 학습). 사다리를 오른다.</p></div></div>
+  <div class="step"><div class="n">4</div><div><h3>프론티어 도전</h3><p>AI가 "정답이 없다"고 하는 지점을 찾는다. <b>그 문제를 내 현장에서 직접 실험</b>한다. 여기서 최고 전문가가 시작된다.</p></div></div>
+
+  <div class="two">
+    <div><h3>취준생이라면</h3><p>경험이 없어도 괜찮다. AI로 <b>고급자의 사고 틀</b>을 빌려 빠르게 중급→고급. 면접·과제에서 "왜?"를 AI와 끝까지 파고들면 <b>실전 경험의 공백</b>을 메운다.</p></div>
+    <div><h3>현업자라면</h3><p>이미 아는 것을 AI로 <b>고급 수준으로 재정리</b>하고, AI가 못 푸는 <b>우리 현장만의 문제</b>를 발견하라. 그 문제를 풀면 회사의 <b>대체 불가한 전문가</b>가 된다.</p></div>
+  </div>
+
+  <div class="tip"><h3>딱 하나만 기억한다면</h3><p>AI에게 답을 "받기"만 하면 중급에 머문다. AI에게 <b>나를 평가받고 · 내 생각을 검증받고 · AI가 모르는 곳을 찾을 때</b> — 비로소 고급을 넘어 최고로 간다.</p></div>
+
+  <h2><span class="num">6</span>철학 한 장</h2>
+  <div class="philo">
+    <h3>AI 시대의 성장 원칙</h3>
+    <div class="row"><b>나를 알라 (메타인지)</b> — AI를 거울 삼아 내 위치를 정직하게 확인한다.</div>
+    <div class="row"><b>AI를 딛어라 (사다리)</b> — 고급까지는 AI와 함께 빠르게 오른다.</div>
+    <div class="row"><b>그 너머로 가라 (프론티어)</b> — AI가 멈추는 곳에서 사람이 시작한다.</div>
+    <div style="margin-top:16px;font-size:14px;color:#a7f3d0">"AI는 당신을 고급자로 만든다. 최고는, 당신이 만든다."</div>
+  </div>
+
+  <div class="foot">UTTEC 교육 · AI 시대의 학습 철학(메타인지) — 취준생·현업자용. 이 자료는 자유롭게 교육에 활용 가능합니다.</div>
+
+</div>
+</body>
+</html>
