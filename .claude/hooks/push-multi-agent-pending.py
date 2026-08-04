@@ -66,6 +66,7 @@ LOCAL_VAULTS = {
     "tabm9-claude": Path("C:/todo/tabM9/_inbox/pending"),
     "lora-claude": Path("C:/todo/lora/_inbox/pending"),
     "uttec-academy-claude": Path("C:/todo/uttec-academy/_inbox/pending"),
+    "weflo-claude": Path("C:/todo/weflo/_inbox/pending"),
 }
 
 

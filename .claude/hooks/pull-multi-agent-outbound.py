@@ -100,6 +100,12 @@ LOCAL_VAULTS = [
         "outbound": Path("C:/todo/uttec-academy/_inbox/outbox-staging"),
         "archived": Path("C:/todo/uttec-academy/_inbox/outbox-staging/sent-archived"),
     },
+    {
+        # weflo (21st, 2026-08-04 신설): Weflo #157235 고정밀 DAQ 실행 vault
+        "name": "weflo",
+        "outbound": Path("C:/todo/weflo/_inbox/outbox-staging"),
+        "archived": Path("C:/todo/weflo/_inbox/sent-archived"),
+    },
     # 추후 추가 후보:
     # {"name": "wishket", "outbound": Path("C:/todo/wishketProject/_outbox"), "archived": Path("C:/todo/wishketProject/_outbox-archived")},
     # {"name": "lemonlabs", "outbound": Path("C:/todo/lemonLabs/_outbox"), "archived": Path("C:/todo/lemonLabs/_outbox-archived")},

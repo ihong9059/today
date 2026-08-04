@@ -63,7 +63,7 @@ updated: 2026-05-09
 | [[xerix]] | Xerix MFC Controller — EtherCAT 제안 4,970만원 |
 | [[revita]] | REVITA — IoT, LoRa, KC 인증 |
 | [[위시캣활동]] | 위시캣 프리랜서 — 16건+ 지원, 시장 분석 |
-| [[weflo]] | Weflo(WEFLO Inc.) — 모빌리티 비접촉 AI 진단 클라이언트(한화 스핀오프·Gartner Physical AI), 위시캣 #157235, STM32H7 DAQ 매칭 |
+| [[weflo]] | Weflo(WEFLO Inc.) — 모빌리티 비접촉 AI 진단 클라이언트(한화 스핀오프·Gartner Physical AI), 위시캣 #157235, STM32H7 DAQ 매칭. **2026-08-04 본격진행 → weflo 실행 vault(21st) 신설** (영업 wishket에서 졸업, 홍광선+임호균 R&R) → [[vault-registry]] |
 | [[스마트팩토리]] | 스마트팩토리 — 25개 데모, 파쇄기 AI 85억 제안 |
 | [[양산제품]] | 양산 제품 — STM32, RPi, nRF52 + STM32H7 고속 DAQ 계측 자산 |
 | [[서버인프라]] | 서버 인프라 — DO, 로컬 6포트, RPi5, Jetson |
