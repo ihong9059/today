@@ -9,7 +9,7 @@ created: 2026-08-03T18:30:00+09:00
 related:
   - wishketProject/second-brain/thoughts/2026-Q3/2026-08-03_일본-임베디드-외주-채널-조사.md
   - wishketProject/second-brain/log.md
-status: pending
+status: done
 ---
 
 # 일본 임베디드 외주 신규 채널 조사 (wishket-claude)
