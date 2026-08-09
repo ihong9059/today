@@ -11,7 +11,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 
 ## 한 줄 정의
 
-**myWiki 연관 전체 vault의 단일 출처.** 신규 vault 합류·호스트 변경·broker 라우팅 변경 시 **본 페이지를 반드시 갱신**한다. (2026-08-04 기준 — myWiki hub 포함 21개 / 4 호스트. 21st = weflo 합류(Weflo #157235 DAQ 실행), 20th = uttec-academy, 19th = lora)
+**myWiki 연관 전체 vault의 단일 출처.** 신규 vault 합류·호스트 변경·broker 라우팅 변경 시 **본 페이지를 반드시 갱신**한다. (2026-08-09 기준 — myWiki hub 포함 22개 / 4 호스트. 22nd = jangminha 합류(장민하 AI 프로젝트 학습·협업, 첫 인물-멘토링 vault), 21st = weflo(Weflo #157235 DAQ 실행), 20th = uttec-academy, 19th = lora)
 
 > ⚠️ 신설 동기: n8nUttec broker 라우팅 누락으로 카드 5장이 한 달간 silent 정체 (2026-06-13 발견). vault 목록·라우팅의 단일 출처가 없어 "추후 추가 후보" 주석이 잊혔다. 본 레지스트리가 그 재발 방지 장치.
 
@@ -21,7 +21,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 |:-:|---|---|---|---|
 | 1 | **myWiki** | mywiki-claude | `C:\todo\today\myWiki\` | **main hub** — 5단계 흡수·broker·cascade 주도 |
 
-## Windows 본 PC (myhome-lenovo, `C:\todo\…`) — 13
+## Windows 본 PC (myhome-lenovo, `C:\todo\…`) — 14
 
 | # | vault | agent | 합류 | 역할 | broker |
 |:-:|---|---|:-:|---|:-:|
@@ -38,6 +38,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 | 19 | **lora (19th)** | lora-claude | 6/13 | **LoRa 기술 전문 hub** — 한림·shield·revita·factory 응용에서 기술 근거 횡단 집약 → 사업방향 cascade (현장 hardware 작업 ❌, 기술 검토·SOP·근거만) | 양방향✅ (`outbox-staging/`→`sent-archived/`) |
 | 20 | **uttec-academy (20th)** | uttec-academy-claude | 6/17 | **교육 운영·발전 hub** — UTTEC 자체 kit 기반 오프라인 실습 교육사업의 운영·행정·강사·차수 개선 단일 출처. 미래창의 아카데미 3차(7/15~) 자료. 기술 진실은 uttec-factory·lora·onDevice 참조 | 양방향✅ (`outbox-staging/`→`sent-archived/`) |
 | 21 | **weflo (21st)** | weflo-claude | 8/4 | **Weflo #157235 고정밀 DAQ 실행 hub** — Weflo(한화 스핀오프·Gartner Physical AI) 향 STM32H745 듀얼코어 ADC/RPM 계측보드(3천만/10주) 수주→회로/PCB→펌웨어→검수 실행. wishket(영업)에서 졸업한 실행 vault. 홍광선+임호균 2인 R&R + 다중 협력사. 클라이언트 [[weflo]] entity 참조 | 양방향✅ (`outbox-staging/`→`sent-archived/`) |
+| 22 | **jangminha (22nd)** | jangminha-claude | 8/9 | **장민하 AI 프로젝트 학습·협업 vault** — 홍광선 삼성 후배 장봉진 따님(건국대 토목·취준·AI 입문자)의 AI 프로젝트 진행 + 전문분야 개척 공간. 하이브리드 설계: 입문자 친화 한글 폴더(research-johyekyung 선례) + 허브 연결 `_inbox`(weflo 선례). 첫 인물-멘토링 협업 vault. [[project_jang_minha_intern]] · [[jangminha]] entity 참조 | 양방향✅ (`outbox-staging/`→`sent-archived/`) |
 
 ## uttecMac (`ssh mac`, Tailscale 100.90.158.36, Ubuntu 22.04) — 5
 

@@ -1,5 +1,5 @@
 - [사용자 본명 — 홍광선](user_name_hong_kwangsun.md) — UTTEC 대표, 이메일 prefix에서 이름 추정 금지 (이형근 X)
-- [장민하 — AI 프로젝트 협업 후보](project_jang_minha_intern.md) — 삼성 후배 장봉진 따님, 건국대 토목 취준생·AI 입문자. 6개 vault 프로젝트 소개자료(Downloads/UTTEC_AI프로젝트_소개_장민하님.html) 제작. 선택 회신 대기 → 첫 2주 과제 구체화
+- [장민하 — AI 프로젝트 협업](project_jang_minha_intern.md) — 삼성 후배 장봉진 따님, 건국대 토목 취준생·AI 입문자. 2026-08-09 전용 vault `C:\todo\jangminha`(22nd, jangminha-claude) 신설 — 입문자 친화 한글폴더 + 허브 _inbox 연결 하이브리드, 첫 인물-멘토링 vault. 첫 프로젝트 방향 = 홍광선 결정 대기
 - [HTML→PDF는 로컬 폰트 (Type3 0) 🚨](feedback_pdf_local_font_no_type3.md) — 웹폰트 @import 금지·맑은고딕 사용. 웹폰트/이모지/그라디언트텍스트=Type3=PDF.js 렌더오류. fitz로 Type3 0 검증. PPTX→PDF=PowerPoint COM. 동영상=scenes→PNG+edge-tts+ffmpeg
 - [Ponet (조대홍 사장) SSH 연결 ⭐](reference_ponet_ssh.md) — 본 PC alias: `ssh ponet` (회사 desktop 100.108.118.44, pw `Ponet1234!`) + `ssh joNotebook` (조대홍 노트북 100.99.53.24, 키 인증). 잊어버리면 알려드릴 것
 - [Telegram 봇 chat_id](reference_telegram_bot_chatid.md) — `@uttec_n8n_telegram_bot`, 본인 private chat_id=`8401184088`. Token은 n8n 암호화 저장(평문 없음). 단일출처 = ubuntu n8nUttec vault

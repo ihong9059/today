@@ -106,6 +106,12 @@ LOCAL_VAULTS = [
         "outbound": Path("C:/todo/weflo/_inbox/outbox-staging"),
         "archived": Path("C:/todo/weflo/_inbox/sent-archived"),
     },
+    {
+        # jangminha (22nd, 2026-08-09 신설): 장민하 AI 프로젝트 학습·협업 vault
+        "name": "jangminha",
+        "outbound": Path("C:/todo/jangminha/_inbox/outbox-staging"),
+        "archived": Path("C:/todo/jangminha/_inbox/sent-archived"),
+    },
     # 추후 추가 후보:
     # {"name": "wishket", "outbound": Path("C:/todo/wishketProject/_outbox"), "archived": Path("C:/todo/wishketProject/_outbox-archived")},
     # {"name": "lemonlabs", "outbound": Path("C:/todo/lemonLabs/_outbox"), "archived": Path("C:/todo/lemonLabs/_outbox-archived")},
