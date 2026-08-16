@@ -2,7 +2,7 @@
 title: vault-registry — 전체 vault 레지스트리 (단일 출처)
 type: entity
 created: 2026-06-13
-updated: 2026-06-13 2차 (옵시디언 열람 정책 3분류 박제 + A군 4 vault 보관함 등록 + workspace.json gitignore 정비 / 신설 — 18-vault 전수 확인 기반. n8n broker 누락 사건 교훈: vault 목록 단일 출처 부재가 silent 단절의 토양)
+updated: 2026-08-14 (전달용 독립형 kit 2종 등재 — jangminha-kit·livecow-cost-kit, broker 없는 standalone 카테고리 신설. 홍광선/홍광삼 인물 혼동 주의 박스) / 2026-06-13 2차 (옵시디언 열람 정책 3분류 박제 + A군 4 vault 보관함 등록 + workspace.json gitignore 정비 / 신설 — 18-vault 전수 확인 기반. n8n broker 누락 사건 교훈: vault 목록 단일 출처 부재가 silent 단절의 토양)
 tags: [vault, multi-agent, registry, broker, 인프라, 단일출처]
 links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-polling-표준-n8n-cascade]
 ---
@@ -11,7 +11,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 
 ## 한 줄 정의
 
-**myWiki 연관 전체 vault의 단일 출처.** 신규 vault 합류·호스트 변경·broker 라우팅 변경 시 **본 페이지를 반드시 갱신**한다. (2026-08-09 기준 — myWiki hub 포함 22개 / 4 호스트. 22nd = jangminha 합류(장민하 AI 프로젝트 학습·협업, 첫 인물-멘토링 vault), 21st = weflo(Weflo #157235 DAQ 실행), 20th = uttec-academy, 19th = lora)
+**myWiki 연관 전체 vault의 단일 출처.** 신규 vault 합류·호스트 변경·broker 라우팅 변경 시 **본 페이지를 반드시 갱신**한다. (2026-08-09 기준 — myWiki hub 포함 22개 multi-agent vault / 4 호스트. 22nd = jangminha 합류(장민하 AI 프로젝트 학습·협업, 첫 인물-멘토링 vault), 21st = weflo(Weflo #157235 DAQ 실행), 20th = uttec-academy, 19th = lora. + **2026-08-14: 전달용 독립형 kit 2종**(jangminha-kit·livecow-cost-kit) 별도 등재 — broker 없는 standalone, 아래 § "전달용 독립형 kit" 참조)
 
 > ⚠️ 신설 동기: n8nUttec broker 라우팅 누락으로 카드 5장이 한 달간 silent 정체 (2026-06-13 발견). vault 목록·라우팅의 단일 출처가 없어 "추후 추가 후보" 주석이 잊혔다. 본 레지스트리가 그 재발 방지 장치.
 
@@ -56,6 +56,17 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 |:-:|---|---|---|---|---|
 | 17 | uttec-factory (13th) | uttec-factory-claude | factory-rpi4 (100.109.84.79 / LAN 192.168.0.23) | UTTEC Shield 공장자동화 교육 + hardware 검증 | 양방향✅ (`_inbox/outbound/`) |
 | 18 | shield | shield-claude | shield-rpi4 (100.110.51.14) | RPi shield 보드 응용 (LoRa·RS485·MESH) | ⚠️ **호스트 offline** (6/13 확인, n8n발 카드 1장 전달 보류) |
+
+## 전달용 독립형 kit (standalone — broker 없음, 비-multi-agent) ⭐
+
+> 특정 인물에게 **인도**하기 위한 자체완결 vault. multi-agent 통신(broker·_inbox)에 참여하지 않고, 폴더 안 `CLAUDE.md` + 로컬 `work-start`/`work-end` skill만으로 어느 PC에서든 독립 동작. 주고받기는 `_홍광선께_보낼것/`·`_홍광선께_받은것/` 폴더(오프라인). myWiki는 상태·결정만 인지(운영 디테일 불요).
+
+| kit | 위치 | 인도 대상 | 짝 hub | 목적 | 생성 |
+|---|---|---|:-:|---|:-:|
+| **jangminha-kit** | `C:\todo\jangminha-kit` | 장민하 (토목·AI 입문자) | jangminha (22nd) | weflo 회로/PCB 학습 — AI로 프로젝트 굴리는 법 전이 | 8/9 |
+| **livecow-cost-kit** | `C:\todo\livecow-cost-kit` | **홍광삼 (UTTEC 관리팀장)** | 없음 (kit 단독) | **livecow(#156763) 차기모델 제조원가(PCB ASS'Y 판가) 산출** — EasyEDA·LCSC·JLCPCB. 방법론 6단계 + Cow-Ver70/통합IC BOM 이관. 자체 git repo(NDA: BNOW/CBNU, 공개 push 금지) | **8/14** |
+
+> ⚠️ 인물 혼동 주의: **홍광선**=UTTEC 대표(본인) / **홍광삼**=UTTEC 관리팀장(별개 인물, Claude 어느정도 사용). [[user_name_hong_kwangsun]] 참조.
 
 ## broker 라우팅 단일 출처 (코드)
 

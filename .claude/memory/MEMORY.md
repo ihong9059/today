@@ -1,5 +1,7 @@
 - [사용자 본명 — 홍광선](user_name_hong_kwangsun.md) — UTTEC 대표, 이메일 prefix에서 이름 추정 금지 (이형근 X)
 - [장민하 — AI 프로젝트 협업](project_jang_minha_intern.md) — 삼성 후배 장봉진 따님, 건국대 토목 취준생·AI 입문자. 2026-08-09 전용 vault `C:\todo\jangminha`(22nd, jangminha-claude) 신설 — 입문자 친화 한글폴더 + 허브 _inbox 연결 하이브리드, 첫 인물-멘토링 vault. 첫 프로젝트 방향 = 홍광선 결정 대기
+- [전달물은 end-to-end 실측 검증 🚨](feedback_verify_deliverable_end_to_end.md) — 인계·설치물 "구조 같으니 되겠지" 가정 금지. 실제 실행(격리 clone/zip 해제본에서 재현)으로 확인 후 완성 선언. 숨김 `.claude` 누락=git archive/7-Zip 패키징. 8/14 livecow-cost-kit skill 미검증 인계로 신뢰 훼손 박제
+- [livecow-cost-kit — 홍광삼 인계 원가작업실](reference_livecow_cost_kit.md) — `C:\todo\livecow-cost-kit` 전달용 독립형 vault(2026-08-14). 홍광삼(관리팀장, ≠홍광선 대표)에게 livecow #156763 차기모델 PCB ASS'Y 판가 산출 인계. 방법론 6단계(EasyEDA·LCSC·JLCPCB) + Cow-Ver70/통합IC BOM 이관. NDA(BNOW/CBNU) 공개push 금지
 - [HTML→PDF는 로컬 폰트 (Type3 0) 🚨](feedback_pdf_local_font_no_type3.md) — 웹폰트 @import 금지·맑은고딕 사용. 웹폰트/이모지/그라디언트텍스트=Type3=PDF.js 렌더오류. fitz로 Type3 0 검증. PPTX→PDF=PowerPoint COM. 동영상=scenes→PNG+edge-tts+ffmpeg
 - [Ponet (조대홍 사장) SSH 연결 ⭐](reference_ponet_ssh.md) — 본 PC alias: `ssh ponet` (회사 desktop 100.108.118.44, pw `Ponet1234!`) + `ssh joNotebook` (조대홍 노트북 100.99.53.24, 키 인증). 잊어버리면 알려드릴 것
 - [Telegram 봇 chat_id](reference_telegram_bot_chatid.md) — `@uttec_n8n_telegram_bot`, 본인 private chat_id=`8401184088`. Token은 n8n 암호화 저장(평문 없음). 단일출처 = ubuntu n8nUttec vault
