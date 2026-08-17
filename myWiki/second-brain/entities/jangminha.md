@@ -57,7 +57,10 @@ links: [vault-registry, uttec-academy, ai-direction, strengths, weflo]
 
 - **첫 프로젝트**: [[weflo]] #157235 계측보드 **Sub PCB 회로/PCB 설계** (EasyEDA, 8ch AD7606C-18) 진행 중.
 - **최근 왕복**: 8/13 전원부 8건 답변 → 8/16 장민하 FB 저항/정정 카드 → 8/17 홍광선 회신(FB 조정형 확정 U4 560k/100k·U5 976k/100k, 원본 정정 반영, pinout/schematic 정본=portenta-lab 신판).
-- **다음 게이트(장민하)**: ①HD 커넥터(80핀×2) 전핀 대조 → 1차 회로도 완성 시 EasyEDA project 홍광선 송부·확인 후 진행 ②전 부품 재고·납기 전수조사 → 전체 BOM 송부.
+- **8/17 기준문서 3종 전달**: 장민하가 흩어진 자료로 중심 못 잡아 회로도 착수 기준을 한곳에 정리 — A(핵심부품 설명서 PDF)·B(J1/J2 필수핀 42개 매핑 엑셀, 정본 pinout 직접검증)·C(개념 설명서 PDF). `portenta-lab/hardware/schematic/장민하_기준문서_2026-08-17/` + Downloads 전달폴더.
+- **8/17 확정 결정(홍광선)**: ①전원 방향 = **5V(VIN)만 공급**(HD +3V3핀 우리 공급 안 함, Portenta 자체 3V3 생성) ②GPIO 부족 = **LED_PWR +3V3 직결 + LED_ERR=PWM2(J2-63)** ③SPI = J2-36/38/40/42. 초안 J2 GND 70→72 정정.
+- **다음 게이트(장민하)**: ①기준문서 기반 Sheet3_HD 배선 → 1차 회로도 완성 시 EasyEDA project 홍광선 송부·확인 ②전 부품 재고·납기 전수조사 → 전체 BOM 송부.
+- **홍광선 회신 대기**: 전원부 결선 4건(가 U3↔Q1·나 역결선 P-MOS·다 U2 설정핀·라 U4/U5 MODE) — 원리는 C 설명서에 담음, 구체 결선은 데이터시트+확정 대기.
 
 ## 협업 방향
 
