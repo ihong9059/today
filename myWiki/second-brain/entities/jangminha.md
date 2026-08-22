@@ -48,7 +48,7 @@ links: [vault-registry, uttec-academy, ai-direction, strengths, weflo]
 | vault | 위치 | 역할 |
 |------|------|------|
 | **jangminha** (22nd) | `C:\todo\jangminha` | 허브-연결 관리본 (myWiki `_inbox`/broker 자동통신) |
-| **jangminha-kit** | `C:\todo\jangminha-kit` | 장민하에게 건네는 **독립 배포본** (오프라인, `_홍광선께_보낼것/받은것/` 폴더 왕복) |
+| **jangminha-adc-kit** | `C:\todo\jangminha-adc-kit` | 장민하에게 건네는 **독립 배포본** = weflo 프로젝트 완수 전용 (오프라인, `_홍광선께_보낼것/받은것/` 폴더 왕복). 구 jangminha-kit, 8/19 리네임 |
 | **portenta-lab** | `C:\todo\portenta-lab` | 홍광선 소유 **엔지니어링 원본(source of truth)** — BOM·NETLIST·설명서·펌웨어 |
 
 > ⚠️ jangminha-kit은 장민하 **사본**이라 원본 수정 금지 — 정정은 반드시 portenta-lab에서. [[weflo]] vault(21st)는 사업 lifecycle 래퍼로 결정만 cascade.

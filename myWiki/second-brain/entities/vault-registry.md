@@ -11,7 +11,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 
 ## 한 줄 정의
 
-**myWiki 연관 전체 vault의 단일 출처.** 신규 vault 합류·호스트 변경·broker 라우팅 변경 시 **본 페이지를 반드시 갱신**한다. (2026-08-09 기준 — myWiki hub 포함 22개 multi-agent vault / 4 호스트. 22nd = jangminha 합류(장민하 AI 프로젝트 학습·협업, 첫 인물-멘토링 vault), 21st = weflo(Weflo #157235 DAQ 실행), 20th = uttec-academy, 19th = lora. + **2026-08-14: 전달용 독립형 kit 2종**(jangminha-kit·livecow-cost-kit) 별도 등재 — broker 없는 standalone, 아래 § "전달용 독립형 kit" 참조)
+**myWiki 연관 전체 vault의 단일 출처.** 신규 vault 합류·호스트 변경·broker 라우팅 변경 시 **본 페이지를 반드시 갱신**한다. (2026-08-22 기준 — myWiki hub 포함 23개 multi-agent vault / 4 호스트. 23rd = guksa 합류(국사 역학관계 교육, 첫 교양·인문 교육 콘텐츠 vault + 이식성 강조). 22nd = jangminha 합류(장민하 AI 프로젝트 학습·협업, 첫 인물-멘토링 vault), 21st = weflo(Weflo #157235 DAQ 실행), 20th = uttec-academy, 19th = lora. + **2026-08-14: 전달용 독립형 kit 2종**(jangminha-kit·livecow-cost-kit) 별도 등재 — broker 없는 standalone, 아래 § "전달용 독립형 kit" 참조)
 
 > ⚠️ 신설 동기: n8nUttec broker 라우팅 누락으로 카드 5장이 한 달간 silent 정체 (2026-06-13 발견). vault 목록·라우팅의 단일 출처가 없어 "추후 추가 후보" 주석이 잊혔다. 본 레지스트리가 그 재발 방지 장치.
 
@@ -21,7 +21,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 |:-:|---|---|---|---|
 | 1 | **myWiki** | mywiki-claude | `C:\todo\today\myWiki\` | **main hub** — 5단계 흡수·broker·cascade 주도 |
 
-## Windows 본 PC (myhome-lenovo, `C:\todo\…`) — 14
+## Windows 본 PC (myhome-lenovo, `C:\todo\…`) — 15
 
 | # | vault | agent | 합류 | 역할 | broker |
 |:-:|---|---|:-:|---|:-:|
@@ -39,6 +39,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 | 20 | **uttec-academy (20th)** | uttec-academy-claude | 6/17 | **교육 운영·발전 hub** — UTTEC 자체 kit 기반 오프라인 실습 교육사업의 운영·행정·강사·차수 개선 단일 출처. 미래창의 아카데미 3차(7/15~) 자료. 기술 진실은 uttec-factory·lora·onDevice 참조 | 양방향✅ (`outbox-staging/`→`sent-archived/`) |
 | 21 | **weflo (21st)** | weflo-claude | 8/4 | **Weflo #157235 고정밀 DAQ 실행 hub** — Weflo(한화 스핀오프·Gartner Physical AI) 향 STM32H745 듀얼코어 ADC/RPM 계측보드(3천만/10주) 수주→회로/PCB→펌웨어→검수 실행. wishket(영업)에서 졸업한 실행 vault. 홍광선+임호균 2인 R&R + 다중 협력사. 클라이언트 [[weflo]] entity 참조 | 양방향✅ (`outbox-staging/`→`sent-archived/`) |
 | 22 | **jangminha (22nd)** | jangminha-claude | 8/9 | **장민하 AI 프로젝트 학습·협업 vault** — 홍광선 삼성 후배 장봉진 따님(건국대 토목·취준·AI 입문자)의 AI 프로젝트 진행 + 전문분야 개척 공간. 하이브리드 설계: 입문자 친화 한글 폴더(research-johyekyung 선례) + 허브 연결 `_inbox`(weflo 선례). 첫 인물-멘토링 협업 vault. [[project_jang_minha_intern]] · [[jangminha]] entity 참조 | 양방향✅ (`outbox-staging/`→`sent-archived/`) |
+| 23 | **guksa (23rd)** | guksa-claude | 8/22 | **국사(한국사) 역학관계 교육 vault** — 역사를 암기가 아니라 "인과·역학관계의 과정"으로 재구성해 학습·강의준비. 방법론 심장 = 6-렌즈 프레임(전사→조건→발단→전개→역학→파급) + 삼국통일 시범모듈. **이식성 강조**(폴더째 복사 시 타 전문가 PC 동작, `.claude/` 포함). 첫 교양·인문 교육 콘텐츠 vault. jangminha 하이브리드 패턴 계승. [[project_guksa_history_edu]] · [[guksa]] entity 참조 | standalone 우선 (broker 미등록, `_inbox` 채널만 준비) |
 
 ## uttecMac (`ssh mac`, Tailscale 100.90.158.36, Ubuntu 22.04) — 5
 
@@ -63,7 +64,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 
 | kit | 위치 | 인도 대상 | 짝 hub | 목적 | 생성 |
 |---|---|---|:-:|---|:-:|
-| **jangminha-kit** | `C:\todo\jangminha-kit` | 장민하 (토목·AI 입문자) | jangminha (22nd) | weflo 회로/PCB 학습 — AI로 프로젝트 굴리는 법 전이 | 8/9 |
+| **jangminha-adc-kit** | `C:\todo\jangminha-adc-kit` | 장민하 (토목·AI 입문자) | jangminha (22nd) | weflo 회로/PCB(ADC 보드) 프로젝트 완수 전용 — 구 jangminha-kit, 8/19 리네임 | 8/9 |
 | **livecow-cost-kit** | `C:\todo\livecow-cost-kit` | **홍광삼 (UTTEC 관리팀장)** | 없음 (kit 단독) | **livecow(#156763) 차기모델 제조원가(PCB ASS'Y 판가) 산출** — EasyEDA·LCSC·JLCPCB. 방법론 6단계 + Cow-Ver70/통합IC BOM 이관. 자체 git repo(NDA: BNOW/CBNU, 공개 push 금지) | **8/14** |
 
 > ⚠️ 인물 혼동 주의: **홍광선**=UTTEC 대표(본인) / **홍광삼**=UTTEC 관리팀장(별개 인물, Claude 어느정도 사용). [[user_name_hong_kwangsun]] 참조.
