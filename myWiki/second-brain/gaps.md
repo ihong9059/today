@@ -2,12 +2,25 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-07-16 (_inbox 3장 흡수 — 설계변경↔영업자산 표기 drift: 노드수 14→11 6파일 잔존, grep 전수정합 회피책 / 이전 7/9: lora 카드 흡수 — 공용 시스템 보드: 조명 fail-safe 반대 논리(재실 중 OFF 금지→PIR 결합 미결) + AC220V 안전 요구, 결정 60 / 이전 6/19: lora 카드 2장 흡수 — E22 generic SX126x 디코드 불가(벤더 락인) + nRF52832 2.4G ~30dB 투과 불리(근거리 한정) + BLE+NVS+LoRa 통합 빌드 적합 / 이전 6/17: _inbox megasession 함정 7건(LoRa 4+onDevice 3) / 이전 6/13 2차: n8nUttec 정체 카드 4장 흡수 — webhook publish 거절 ★★★★ + staticData Active 한정 + ugrep alias + Schedule Trigger silent success 등 6건 / 1차: _inbox 8장 megasession — Defender CFA NCS silent killer + Android onboarding 2건 + IoT 펌웨어 보안 실패 사례 3종 세트(서명키 평문 커밋·AEAD 부재·키 미프로비저닝, revita ingest #16) / 이전 6/10: LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
+updated: 2026-09-01 (_inbox 7장 megasession 흡수 — 자산 인덱스 미등재 → 지원서 초안 약화 반복 누락 6회(데스크톱앱 약점 오분류·220V 전열 미박제) + PC앱·GUI·전열·무선 요구 지원 시 사용자 세부 실적 선질의 SOP 신설, wishket-claude 카드 흡수 / 이전 2026-07-16 (_inbox 3장 흡수 — 설계변경↔영업자산 표기 drift: 노드수 14→11 6파일 잔존, grep 전수정합 회피책 / 이전 7/9: lora 카드 흡수 — 공용 시스템 보드: 조명 fail-safe 반대 논리(재실 중 OFF 금지→PIR 결합 미결) + AC220V 안전 요구, 결정 60 / 이전 6/19: lora 카드 2장 흡수 — E22 generic SX126x 디코드 불가(벤더 락인) + nRF52832 2.4G ~30dB 투과 불리(근거리 한정) + BLE+NVS+LoRa 통합 빌드 적합 / 이전 6/17: _inbox megasession 함정 7건(LoRa 4+onDevice 3) / 이전 6/13 2차: n8nUttec 정체 카드 4장 흡수 — webhook publish 거절 ★★★★ + staticData Active 한정 + ugrep alias + Schedule Trigger silent success 등 6건 / 1차: _inbox 8장 megasession — Defender CFA NCS silent killer + Android onboarding 2건 + IoT 펌웨어 보안 실패 사례 3종 세트(서명키 평문 커밋·AEAD 부재·키 미프로비저닝, revita ingest #16) / 이전 6/10: LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
 tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인, R50-1-chip-saturate, STM-7-v2, I2C-주소충돌, flatten-순서, WHO_AM_I-분기, PEP668, scp-wildcard, 데이터사이언티스트, GEE학습, 자산인덱스누락재발, cross-vault-cascade-지연, 풀스택자산]
 links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용, 2026-06-04_sensor-AI-매트릭스-단일출처-mandate]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-09-01 — 자산 인덱스 미등재 → 지원서 초안 약화 (반복 누락 6회) + PC앱·GUI·전열 선질의 SOP ⭐⭐ (wishket-claude 카드 흡수)
+
+**함정**: 사용자가 실제 보유한 강점 자산(데스크톱 앱·220V 전열·Zigbee 등)이 me.md/양산제품 인덱스에 미등재 → **위시캣 지원서 초안이 구조적으로 약하게 나감**. me.md 항목 6·7·8·9·10·12에서 **반복 누락 6회** 박제. 특히 **데스크톱 앱을 약점 축으로 오분류**(6번째)했다가 #157744 계기 강점으로 정정, **220V 전열/히터 실적**은 #157726 최강 근거인데 구체 사실 미박제(4번째 반복).
+
+**원인**: 지원서 작성 시점에 "이 요구에 맞는 우리 실적이 있나?"를 **사용자에게 선질의하지 않고 인덱스만 신뢰** → 인덱스 공백 = 자산 없음으로 오판. 실제로는 사용자 확인 시 대부분 "직접 양산/개발 경험 있음"으로 확답.
+
+**회피책 (SOP)**:
+1. **PC앱·GUI·데이터로거·전열/히터·무선(Matter/Thread/Zigbee) 요구 외주 지원 시 → 사용자 세부 실적 선질의 필수** (제품명·수량·인증). "인덱스에 없음 = 자산 없음" 단정 금지 ([[strengths]] 자산확인 SOP = 약점 선언 전 사용자 확인과 동일 문법).
+2. 확답 자산은 **즉시 [[양산제품]]/me.md 인덱스에 등재** → 다음 지원서 자동 재사용(반복 누락 차단).
+3. 미확정 실적(220V 전열 세부)은 **"사용자 확정 후 반영" 표기** — 과대주장 차단 ([[feedback_no_fabricated_user_data]] 준수, 수치·고객명 환각 금지).
+
+→ 근거: [[위시캣활동]] § 2026-09-01(#157726·#157744·#157875) + [[ai-direction]] § 2026-09-01 결정 63. 기존 자산인덱스누락 재발(5/29·6/4·6/6 결정 44)의 4~6번째 누적.
 
 ## 2026-08-07 — 일본 문의폼 PDF 첨부 불가 → 라이브 랜딩 URL이 필수 채널 ⭐ (일본 受託 채널)
 

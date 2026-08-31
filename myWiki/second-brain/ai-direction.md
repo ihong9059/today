@@ -2,12 +2,49 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-07-17 (결정 62 신설 — LTE 백홀 게이트웨이 PoC 성공 = "인터넷 없는 원거리 현장 커버" 영업 근거 + #156763 축산 LoRaWAN 미팅 도달·자료 수령(정면 강점형·revita 자산 직결) + delivery vault 결정 A(별도 경량 vault `livecow` 신설, 재검토 후 B→A 전환 확정), _inbox 3장 megasession 흡수 / 이전 7/16: 결정 61 신설 — 검증된 표준 작업계획서(SOP) = LoRa 수조제어 영업 신뢰 자산 + 노드수 11 확정(구 14=구설계) + #156802 UWB 화상회의 미팅 도달·HX711 자산, _inbox 3장 megasession 흡수 / 이전 7/9: 결정 60 신설 — 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼 → 제품라인 통합 + "단일 플랫폼" 영업 강점, lora 카드 흡수 / 이전 7/5: 결정 57·58·59 신설 — 적정복잡도 3부작 + BLE 게이트웨이 무선화 + 위시캣 요구사항중심 지원서, revita·lora·wishket megasession / 이전 6/27: 결정 56 신설 — 교육 사업 = 기술+방법론(지식관리 vault) 이중 자산, uttec-academy 카드 흡수 / 이전 6/19: 결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
+updated: 2026-09-01 (결정 63 신설 — 산업 PLC 통신 역량 = 순수 SW업체가 못 넘는 해자 → #157744 데이터로거 외주가 PLC 대체 제어시스템(최대 5,000만 Tier 2/3)으로 격상 upsell + 데스크톱앱 약점→강점 정정 + cross-vault(revita) 자산의 Matter/Thread 영업 근거 흡수 + academy 3축(C. 메타역량 HW비의존) 정립, _inbox 9장 megasession 흡수 / 이전 2026-07-17 (결정 62 신설 — LTE 백홀 게이트웨이 PoC 성공 = "인터넷 없는 원거리 현장 커버" 영업 근거 + #156763 축산 LoRaWAN 미팅 도달·자료 수령(정면 강점형·revita 자산 직결) + delivery vault 결정 A(별도 경량 vault `livecow` 신설, 재검토 후 B→A 전환 확정), _inbox 3장 megasession 흡수 / 이전 7/16: 결정 61 신설 — 검증된 표준 작업계획서(SOP) = LoRa 수조제어 영업 신뢰 자산 + 노드수 11 확정(구 14=구설계) + #156802 UWB 화상회의 미팅 도달·HX711 자산, _inbox 3장 megasession 흡수 / 이전 7/9: 결정 60 신설 — 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼 → 제품라인 통합 + "단일 플랫폼" 영업 강점, lora 카드 흡수 / 이전 7/5: 결정 57·58·59 신설 — 적정복잡도 3부작 + BLE 게이트웨이 무선화 + 위시캣 요구사항중심 지원서, revita·lora·wishket megasession / 이전 6/27: 결정 56 신설 — 교육 사업 = 기술+방법론(지식관리 vault) 이중 자산, uttec-academy 카드 흡수 / 이전 6/19: 결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-09-01) — _inbox 7장 megasession 흡수: 결정 63 신설 + #157744 PLC 대체 Tier 2/3 격상 + academy 3축 + 데스크톱앱 약점→강점 정정 ⭐⭐⭐
+
+**사건**: 2026-09-01 _inbox pending **9장**(wishket 7장 = #157726 스레드 5 + #157744 스레드 2 + heartbeat 1, academy 3축 1장, ※academy·wishket 카드) megasession 흡수. wishket 채널 동시 2건 견적 파이프라인 진전 + academy 교육사업 3축 정립.
+
+### 결정 63: 산업 PLC 통신 역량 = 순수 SW업체가 못 넘는 해자(moat) → 데이터로거 외주의 제어시스템 격상 통로 (wishket 카드 `2026-08-31-001`)
+
+- **판단**: #157744가 단순 센서 데이터로거(Tier 1급, 예산 협의) 지원에서 미팅 당일 **미쓰비시 PLC 전면 대체 PC제어+HMI(개발비 최대 5,000만, Tier 2/3 경계)**로 격상. 결정적 전환점 = 발주사 실물 PLC(FX3U-16M + FX2N-1HC)의 **엔코더 고속카운터를 FX3U MC Protocol로 직접 읽는** 산업 통신 역량 제시.
+- **근거·함의**: ① **순수 SW 외주업체는 산업 PLC 프로토콜·전기 안전·현장 검증을 못 함 = UTTEC의 하드웨어+제어+SW 수직통합이 진입장벽**(38년 임베디드 + [[uttec-plc]] 자산). ② 데이터로거 요구가 와도 "제어까지 대행" 제안으로 **객단가 10배 확장 가능**(2,000만→5,000만) = 영업 upsell 패턴. ③ "산업용 PC/HMI = OS 개방성 우선"(개방형 Windows여야 C#/C++ 구동) = 재사용 선정 기준 자산. → [[위시캣활동]] § 2026-09-01 + [[양산제품]].
+- **정직 고지**: 축2(PLC 대체)는 자체 실시간 제어부·현장 안전검증 포함 = 리스크 큼 → 2단계(벤치 3,500만 + 현장 1,500만) 분리 견적으로 리스크 격리. 수주 도달 시 sub-vault/별도 repo(Tier 정책).
+
+### 자산 정정: C#/C++ 데스크톱 앱 = 약점 오분류 → 강점 (반복 누락 6번째, wishket 카드 `2026-08-30-001`)
+
+- 그간 데스크톱 앱을 약점 축으로 오분류 → #157744(DAQ PC 수신 SW) 계기로 **"센서→FW→PC앱" 수직통합 강점**으로 정정. me.md/양산제품 인덱스 공백이 지원서 초안을 약화시킨 구조적 이슈(6회 반복) → [[gaps]] § 2026-09-01 "PC앱·GUI·전열 요구 지원 시 사용자 세부 실적 선질의 SOP" 신설.
+
+### 흡수: cross-vault 자산이 위시캣 Matter/Thread 영업 근거로 (wishket 카드 `2026-08-25-001` matter-thread-assets)
+
+- **판단**: [[revita]] vault의 Zephyr/NCS/BLE OTA 실측 자산 + Zigbee 802.15.4 양산 자산을 **#157875 Matter over Thread 영업 근거**로 흡수(YES). Zigbee = Thread와 동일 802.15.4 라디오·MAC 공유 → "Thread 무선 스택 사실상 직접 양산" 논리. **제품 트랙(revita)의 실측 자산이 영업 트랙 근거로 직결되는 패턴**(#156763 LoRa에 이은 Matter/Thread 첫 사례). → [[양산제품]] 무선통신 자산 10·11 등재.
+
+### 흡수: academy 교육사업 3축 정립 — C. 메타역량 축(HW 비의존) 신설 (academy 카드 `2026-08-19-001`)
+
+- **판단**: 교육사업이 A(자체 kit)·B(설비활용)에 더해 **C. 메타역량 축**(「AI 활용 전문가 되기」, 철학=百見不如一習, 방법론=AI 전문화 6단계)으로 3축 확장. C축은 **HW 의존 0 → 원가·진입장벽 최저, 대상 폭 최대**. UTTEC 자체의 멀티에이전트 second-brain 운영 경험이 커리큘럼 근거 = **메타 강점의 상품화**. 결정 56(교육=기술+방법론 이중 자산)의 논리적 완성. → [[uttec-academy]] § 3축 + [[strengths]] §21.
+
+### 결정: #157744 수주 시 = PLC 레트로핏 신사업 carrier vault (carrier 패턴 5번째, 사용자 결단)
+
+- **판단**: #157744 축2(PLC 대체 제어시스템)를 단일 위시캣 건이 아닌 **"노후 산업 PLC 레트로핏" 신사업의 1차 진입 사례**로 규정. 시장 근거 = 노후 미쓰비시 FX/LS 소형 PLC로 운용 중인 산업·중장비 설비 다수 → **산업PC(HMI·상위제어) + 자체 실시간 I/O 컨트롤러(우리 FW/HW, 하드와이어 안전) + 기존 래더 리버스**로 대체하는 반복 사업. UTTEC 수직통합(FW/RTOS·모터제어·회로·PLC통신)이 순수 SW업체가 못 넘는 해자(결정 63)와 정확히 결합.
+- **vault 성격 확정**:
+  - 계열 = **제품·개발 트랙 Tier 3**([[revita]]/[[onDevice-ai]] 계열). **livecow(경량 delivery·합류 보류) ❌** — #157744는 자체 HW(PCB)+FW(RTOS)+PC SW(C#)+HMI+안전회로 신규 개발.
+  - 호스트 = **본 PC(Windows 개발환경, C#·Visual Studio·자체 FW)**. → uttec-plc(uttecMac 원격) **편입 ❌**(호스트·성격 불일치). uttec-plc는 FX3U 래더·MC Protocol 기술 근거로 **cross-link만**.
+  - multi-agent **합류 O**(SELF_ID·work-start/end·_inbox). carrier 패턴 5번째(1=노지관리 6/4, 2=weldRobot 6/6, 3=ponet 6/6, 4=factory 6/10).
+  - 명명 후보 = `plc-retrofit`(uttec-plc "이관/컨설팅"과 구분 = "제거·대체").
+- **셋업 시점 = 수주 확정 시 full 셋업**(사용자). **단 2026-09-01 사용자 추가 지시로 vault 골격은 선생성** → [[plc-retrofit]](`C:\todo\plc-retrofit`, SELF_ID 미부여·골격, 특허·2-B·PoC 진행용). 현재(견적 송부 대기·수주 미확정)는 **① 골격 vault에서 기술·특허 선행 ② 수주 좌우 기술 리스크 선검증**만:
+  - 선결 정보 확보(발주사): **기존 FX3U 래더(GX Works 프로젝트) · I/O 배선표(8DI/8DO) · 유압 액추에이터 사양 · 엔코더 기어비 · 안전 요구/인증 수준** (14번 문서 § D).
+  - 기술 PoC: **FX3U MC Protocol 카운트 읽기**(축1·축2 공통 병목) + **자체 실시간 컨트롤러 아키텍처 2-B 타당성**(PC 장애 시 안전정지). → 축2 firm 견적은 래더·I/O 확인 후 가능.
+- **함의**: 수주 시 factory·weldRobot과 함께 UTTEC 산업자동화 신사업 3라인. 수주 무산 시 셋업 매몰 0(예약만). → [[위시캣활동]] § 2026-09-01 #157744 + [[vault-registry]](수주 시 등재).
+
+**참조**: `_inbox/processed/` 9 카드 + wishketProject inbox done 회신 1건 + uttec-academy inbox done 회신 1건 + [[위시캣활동]]·[[양산제품]]·[[uttec-academy]]·[[gaps]] § 2026-09-01 + thought [[2026-09-01_산업PLC통신-해자-데이터로거-제어격상]].
 
 ## 판단 로그 (2026-07-17) — _inbox 3장 megasession 흡수: 결정 62 신설 + #156763 미팅 도달·자료 수령 + delivery vault 결정 ⭐⭐⭐
 

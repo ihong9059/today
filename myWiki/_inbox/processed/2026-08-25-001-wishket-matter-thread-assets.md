@@ -7,7 +7,7 @@ priority: normal
 subject: 신규 영업 자산 2종 (Zigbee 직접 양산 + Zephyr/nRF Connect SDK on nRF52840) — Matter/Thread 요구 최강 근거
 created: 2026-08-25T18:10:00+09:00
 related: [위시캣/지원내용/2026-08/2026-08-25_프로젝트157875_지원내용.txt, second-brain/me.md]
-status: pending
+status: done
 ---
 
 # 신규 영업 자산 2종 — Matter/Thread/무선 요구 최강 근거

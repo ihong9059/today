@@ -7,7 +7,7 @@ priority: normal
 subject: heartbeat — /wishket-check #157839~#157851 (13건 전부 🔒, 신규 지원 대상 0건)
 created: 2026-08-23T16:27:00+09:00
 related: [2026-08-21-001-wishket-157726-meeting-reached]
-status: pending
+status: done
 ---
 
 # heartbeat — /wishket-check #157839~#157851

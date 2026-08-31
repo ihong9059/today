@@ -7,7 +7,7 @@ priority: high
 subject: "#157726 정수기 제어보드 미팅 도달(8/24) — 위시캣활동 entity 갱신 + 220V 전열 실적 gap"
 created: 2026-08-21T00:00:00+09:00
 related: [위시캣/2026-08-24_프로젝트157726_미팅준비/, second-brain/log.md]
-status: pending
+status: done
 ---
 
 # #157726 정수기 제어보드 미팅 도달(8/24)

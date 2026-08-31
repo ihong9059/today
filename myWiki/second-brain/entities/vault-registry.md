@@ -2,7 +2,7 @@
 title: vault-registry — 전체 vault 레지스트리 (단일 출처)
 type: entity
 created: 2026-06-13
-updated: 2026-08-14 (전달용 독립형 kit 2종 등재 — jangminha-kit·livecow-cost-kit, broker 없는 standalone 카테고리 신설. 홍광선/홍광삼 인물 혼동 주의 박스) / 2026-06-13 2차 (옵시디언 열람 정책 3분류 박제 + A군 4 vault 보관함 등록 + workspace.json gitignore 정비 / 신설 — 18-vault 전수 확인 기반. n8n broker 누락 사건 교훈: vault 목록 단일 출처 부재가 silent 단절의 토양)
+updated: 2026-09-01 2차 (수주 delivery 실행 vault 카테고리 신설 — livecow + **binschans-coffee**(#157726 계약 완료·착수) + **plc-retrofit**(#157744 carrier 골격·특허 UT-P-2026-001) + 전달용 kit **특허이관_UT-P-2026-001**(홍광삼·장민하) 등재 / 이전 2026-09-01 (수주 delivery 실행 vault 카테고리 신설 — livecow(#156763) + **binschans-coffee(#157726 원두 커피 머신 제어보드, 계약 완료·계약금 수령·개발 착수)** 등재. broker 미합류 경량 delivery, 양산 확정 시 승격 / 이전 2026-08-14 (전달용 독립형 kit 2종 등재 — jangminha-kit·livecow-cost-kit, broker 없는 standalone 카테고리 신설. 홍광선/홍광삼 인물 혼동 주의 박스) / 2026-06-13 2차 (옵시디언 열람 정책 3분류 박제 + A군 4 vault 보관함 등록 + workspace.json gitignore 정비 / 신설 — 18-vault 전수 확인 기반. n8n broker 누락 사건 교훈: vault 목록 단일 출처 부재가 silent 단절의 토양)
 tags: [vault, multi-agent, registry, broker, 인프라, 단일출처]
 links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-polling-표준-n8n-cascade]
 ---
@@ -41,6 +41,16 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 | 22 | **jangminha (22nd)** | jangminha-claude | 8/9 | **장민하 AI 프로젝트 학습·협업 vault** — 홍광선 삼성 후배 장봉진 따님(건국대 토목·취준·AI 입문자)의 AI 프로젝트 진행 + 전문분야 개척 공간. 하이브리드 설계: 입문자 친화 한글 폴더(research-johyekyung 선례) + 허브 연결 `_inbox`(weflo 선례). 첫 인물-멘토링 협업 vault. [[project_jang_minha_intern]] · [[jangminha]] entity 참조 | 양방향✅ (`outbox-staging/`→`sent-archived/`) |
 | 23 | **guksa (23rd)** | guksa-claude | 8/22 | **국사(한국사) 역학관계 교육 vault** — 역사를 암기가 아니라 "인과·역학관계의 과정"으로 재구성해 학습·강의준비. 방법론 심장 = 6-렌즈 프레임(전사→조건→발단→전개→역학→파급) + 삼국통일 시범모듈. **이식성 강조**(폴더째 복사 시 타 전문가 PC 동작, `.claude/` 포함). 첫 교양·인문 교육 콘텐츠 vault. jangminha 하이브리드 패턴 계승. [[project_guksa_history_edu]] · [[guksa]] entity 참조 | standalone 우선 (broker 미등록, `_inbox` 채널만 준비) |
 
+## 수주 delivery 실행 vault (본 PC, broker 미합류·경량) ⭐
+
+> 위시캣 등 **수주 후 개발/진단 실행**(또는 수주 전 기술·특허 골격)만 담당하는 독립 vault. multi-agent broker(`_inbox`)에 합류하지 않고(경량, SELF_ID 없음) 자체 `work-start`/`work-end` skill + git으로 운영. 영업 cycle은 `wishketProject`, 결과 마일스톤만 myWiki `위시캣활동`에 수동 cascade. **양산 반복·볼륨 팽창·수주 확정 시 Tier 승격 + broker 합류 재검토**. (weflo(21st)는 이 단계에서 졸업해 정식 합류한 사례.)
+
+| vault | 위치 | 원 건 | 성격 | 생성 |
+|---|---|---|---|:-:|
+| **livecow** | `C:\todo\livecow` | 위시캣 #156763 (축산 LoRaWAN 수신율) | 진단·개선 delivery(경량). NDA=BNOW/CBNU | 7/17 |
+| **binschans-coffee** | `C:\todo\binschans-coffee` | 위시캣 #157726 (원두 커피 머신 제어보드) | **제품 개발 delivery** Tier 2 — 회로+아트웍+STM32G0 펌웨어+PC 테스트툴+KC, 750만/10주. 발주사 빈스찬스(정수빈)=**양산 우선 장기 파트너**. client 기존 펌웨어·회로도 99MB immutable·gitignore(NDA) | **9/1** |
+| **plc-retrofit** | `C:\todo\plc-retrofit` | 위시캣 #157744 (터널 천공 PLC 대체) | **노후 PLC 레트로핏 신사업 carrier**(Tier 3, carrier 5번째) — **수주 전 골격**(SELF_ID 미부여). scope = 사업정의·2-B 아키텍처·**특허**(UT-P-2026-001)·수주선결 PoC. 수주 확정 시 full 셋업·합류. uttec-plc는 기술 cross-link만 | **9/1** |
+
 ## uttecMac (`ssh mac`, Tailscale 100.90.158.36, Ubuntu 22.04) — 5
 
 | # | vault | agent | 합류 | 역할 | broker |
@@ -66,6 +76,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 |---|---|---|:-:|---|:-:|
 | **jangminha-adc-kit** | `C:\todo\jangminha-adc-kit` | 장민하 (토목·AI 입문자) | jangminha (22nd) | weflo 회로/PCB(ADC 보드) 프로젝트 완수 전용 — 구 jangminha-kit, 8/19 리네임 | 8/9 |
 | **livecow-cost-kit** | `C:\todo\livecow-cost-kit` | **홍광삼 (UTTEC 관리팀장)** | 없음 (kit 단독) | **livecow(#156763) 차기모델 제조원가(PCB ASS'Y 판가) 산출** — EasyEDA·LCSC·JLCPCB. 방법론 6단계 + Cow-Ver70/통합IC BOM 이관. 자체 git repo(NDA: BNOW/CBNU, 공개 push 금지) | **8/14** |
+| **특허이관_UT-P-2026-001** | `Downloads\특허이관_UT-P-2026-001_터널천공자동화` | 홍광삼·장민하 | [[plc-retrofit]] | **UT-P-2026-001**(터널 막장 정면영상 AI 천공위치 표시 + 티칭-재생 자동 천공) 특허 발명신고서·명세서 초안 이관. self-contained(README·CLAUDE·skill·git 86e1358). 🔴 **미출원·공개금지**(신규성 보호) | **9/1** |
 
 > ⚠️ 인물 혼동 주의: **홍광선**=UTTEC 대표(본인) / **홍광삼**=UTTEC 관리팀장(별개 인물, Claude 어느정도 사용). [[user_name_hong_kwangsun]] 참조.
 
