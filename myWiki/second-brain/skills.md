@@ -2,7 +2,7 @@
 title: 기술 스택 인벤토리
 type: skill
 created: 2026-04-19
-updated: 2026-04-19
+updated: 2026-09-04 (Legacy Retrofit·IDE→SSD 이미징 + 디스플레이 4종(LVDS·TTL/RGB·VGA·DVI) 등재 — wishket #158166 계기 사용자 확인 자산, 카드 `2026-09-04-001` 흡수)
 tags: [기술, 역량]
 links: [me, projects, ai-direction, strengths, gaps]
 ---
@@ -22,6 +22,8 @@ links: [me, projects, ai-direction, strengths, gaps]
 | MQTT/RS485/Modbus RTU | 상 | 산업 통신, KC 인증 | 높음 |
 | **nRF52832 USB 시리얼 통신 (USB CDC ACM) + 연동 모바일 앱** | 상 | **수년간 직접 구현 + 연동 앱 다수 제작 (Android USB Host API / UsbSerialForAndroid 통합). 펌웨어 측 CDC ACM + 모바일 측 시리얼 표준 자산 (2026-05-21 박제 — wishket-claude 지원서 작성 중 누락 발견 후 사용자 정정 지시로 정식 등재)** | 활성 |
 | CAN 통신 | 중상 | 대한전선 Winder Controller | 과거 |
+| **산업용 PC / Legacy System Retrofit** | 상 | 노후 장비 현대화 직접 수행 — **IDE HDD→SSD 섹터 이미징 + 레거시 BIOS 부팅 유지** 실적 포함 (2026-09-04 박제, #158166 계기 사용자 확인. 구체 제품명·수치 확보 시 상세화) | 활성 ★ |
+| **디스플레이 인터페이스 4종 (LVDS·TTL/RGB·VGA·DVI)** | 상 | 전 인터페이스 실개발 (2026-09-04 박제, #158166 계기 사용자 확인) — LCD 교체·레거시 패널 대체 외주 정조준 | 활성 ★ |
 | LoRa/Zigbee | 중상 | REVITA, IoT 통신, **[[한림용인cc-고가수조]] (2026-05 시공 직전, 1,000만원)** | 활성 |
 | LoRa E22 EByte 920MHz 풀스택 | 중상 | [[한림용인cc-고가수조]] 노드·중계기·게이트웨이 / oldProject bleModule (config read/write 검증·mode mapping 정정·air rate 0.3k 통일) | 신규(2026-05) |
 | **LoRa 4종 모듈 풀스택 + 자율 제어망 프로토콜** | 중상 | [[lora]] vault — E22-400/900·E32-433/915 (2칩 패밀리 SX126x/SX127x × 2대역) TX/RX 전부 + 칩별 config 단일 출처 + 8B frame 자율 제어망(단일채널·1B 주소·일일 sync TDMA) 실보드 송수신 무손실 실증 + nRF52832 SAADC 배터리 절대측정. SPI(E22-M/E19)+Zephyr 전환 carry | 신규(2026-06) ★ |

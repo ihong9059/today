@@ -65,6 +65,7 @@ updated: 2026-05-09
 | [[revita]] | REVITA — IoT, LoRa, KC 인증 |
 | [[위시캣활동]] | 위시캣 프리랜서 — 16건+ 지원, 시장 분석 |
 | [[weflo]] | Weflo(WEFLO Inc.) — 모빌리티 비접촉 AI 진단 클라이언트(한화 스핀오프·Gartner Physical AI), 위시캣 #157235, STM32H7 DAQ 매칭. **2026-08-04 본격진행 → weflo 실행 vault(21st) 신설** (영업 wishket에서 졸업, 홍광선+임호균 R&R) → [[vault-registry]] |
+| [[IDA이엔씨]] | (주)아이디에이이엔씨(IDA E&C) — 환기설비 전문 제조사(2004~, 특허 20+, HRV·전동 디퓨저). 위시캣 #157875 → **위시캣 이탈 직접 계약 협상 중**(수행계획서 v1 회신 대기), 24개월 Matter over Thread 국책과제 = **파이프라인 최상단(Tier 2~3)**. 실행 vault idaenc(계약 전 골격, 9/4) → [[vault-registry]] |
 | [[jangminha]] | **장민하 vault** ⭐ — 홍광선 후배 딸(건국대 토목·AI 입문자) AI 프로젝트 학습·협업 공간. 22nd multi-agent (`C:/todo/jangminha/`, 8/9 신설, **첫 인물-멘토링 vault**). 입문자 친화 한글 폴더 + 허브 연결 `_inbox`. 토목 강점 × AI 전문분야 개척 → [[vault-registry]] |
 | [[스마트팩토리]] | 스마트팩토리 — 25개 데모, 파쇄기 AI 85억 제안 |
 | [[양산제품]] | 양산 제품 — STM32, RPi, nRF52 + STM32H7 고속 DAQ 계측 자산 |

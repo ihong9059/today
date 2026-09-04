@@ -2,7 +2,7 @@
 title: vault-registry — 전체 vault 레지스트리 (단일 출처)
 type: entity
 created: 2026-06-13
-updated: 2026-09-01 2차 (수주 delivery 실행 vault 카테고리 신설 — livecow + **binschans-coffee**(#157726 계약 완료·착수) + **plc-retrofit**(#157744 carrier 골격·특허 UT-P-2026-001) + 전달용 kit **특허이관_UT-P-2026-001**(홍광삼·장민하) 등재 / 이전 2026-09-01 (수주 delivery 실행 vault 카테고리 신설 — livecow(#156763) + **binschans-coffee(#157726 원두 커피 머신 제어보드, 계약 완료·계약금 수령·개발 착수)** 등재. broker 미합류 경량 delivery, 양산 확정 시 승격 / 이전 2026-08-14 (전달용 독립형 kit 2종 등재 — jangminha-kit·livecow-cost-kit, broker 없는 standalone 카테고리 신설. 홍광선/홍광삼 인물 혼동 주의 박스) / 2026-06-13 2차 (옵시디언 열람 정책 3분류 박제 + A군 4 vault 보관함 등록 + workspace.json gitignore 정비 / 신설 — 18-vault 전수 확인 기반. n8n broker 누락 사건 교훈: vault 목록 단일 출처 부재가 silent 단절의 토양)
+updated: 2026-09-04 (**idaenc** 등재 — #157875 IDA E&C 스마트 환기 국책과제(Matter over Thread, 24개월·4트랙 28건), 위시캣 이탈 직접 계약 협상 국면에서 수주 전 골격 선생성(plc-retrofit 패턴 2번째). 수행계획서 v1 송부·회신 대기) / 이전 2026-09-01 2차 (수주 delivery 실행 vault 카테고리 신설 — livecow + **binschans-coffee**(#157726 계약 완료·착수) + **plc-retrofit**(#157744 carrier 골격·특허 UT-P-2026-001) + 전달용 kit **특허이관_UT-P-2026-001**(홍광삼·장민하) 등재 / 이전 2026-09-01 (수주 delivery 실행 vault 카테고리 신설 — livecow(#156763) + **binschans-coffee(#157726 원두 커피 머신 제어보드, 계약 완료·계약금 수령·개발 착수)** 등재. broker 미합류 경량 delivery, 양산 확정 시 승격 / 이전 2026-08-14 (전달용 독립형 kit 2종 등재 — jangminha-kit·livecow-cost-kit, broker 없는 standalone 카테고리 신설. 홍광선/홍광삼 인물 혼동 주의 박스) / 2026-06-13 2차 (옵시디언 열람 정책 3분류 박제 + A군 4 vault 보관함 등록 + workspace.json gitignore 정비 / 신설 — 18-vault 전수 확인 기반. n8n broker 누락 사건 교훈: vault 목록 단일 출처 부재가 silent 단절의 토양)
 tags: [vault, multi-agent, registry, broker, 인프라, 단일출처]
 links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-polling-표준-n8n-cascade]
 ---
@@ -50,6 +50,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 | **livecow** | `C:\todo\livecow` | 위시캣 #156763 (축산 LoRaWAN 수신율) | 진단·개선 delivery(경량). NDA=BNOW/CBNU | 7/17 |
 | **binschans-coffee** | `C:\todo\binschans-coffee` | 위시캣 #157726 (원두 커피 머신 제어보드) | **제품 개발 delivery** Tier 2 — 회로+아트웍+STM32G0 펌웨어+PC 테스트툴+KC, 750만/10주. 발주사 빈스찬스(정수빈)=**양산 우선 장기 파트너**. client 기존 펌웨어·회로도 99MB immutable·gitignore(NDA) | **9/1** |
 | **plc-retrofit** | `C:\todo\plc-retrofit` | 위시캣 #157744 (터널 천공 PLC 대체) | **노후 PLC 레트로핏 신사업 carrier**(Tier 3, carrier 5번째) — **수주 전 골격**(SELF_ID 미부여). scope = 사업정의·2-B 아키텍처·**특허**(UT-P-2026-001)·수주선결 PoC. 수주 확정 시 full 셋업·합류. uttec-plc는 기술 cross-link만 | **9/1** |
+| **idaenc** | `C:\todo\idaenc` | 위시캣 #157875 (스마트 환기 Matter over Thread) | **IDA E&C 국책과제 실행 vault**(Tier 3 후보, 24개월·4트랙 28건) — **계약 전 골격**(SELF_ID 미부여, plc-retrofit 패턴 2번째). 클라이언트 = (주)아이디에이이엔씨(환기 제조 20년, 창구 김준우 팀장=스타트홈 대표 겸직). **위시캣 이탈 직접 계약 협상 중** — 수행계획서 v1(하이브리드: 단계1 건별→월정액) 송부·회신 대기. scope = RS485↔Matter 브리지 + Matter/Thread 공용 FW 플랫폼(NCS/Zephyr) + 기기 6종 FW. `01_클라이언트자료/` gitignore(NDA 대비). 계약 확정 시 full 셋업·합류(weflo 경로). 계약 주체(IDA E&C vs 스타트홈) 확정 시 리네임 재검토 | **9/4** |
 
 ## uttecMac (`ssh mac`, Tailscale 100.90.158.36, Ubuntu 22.04) — 5
 
