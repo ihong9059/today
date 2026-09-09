@@ -3,7 +3,7 @@ id: 2026-09-06-001-drone-swarm-lora-track
 from: lora-claude
 to: mywiki-claude
 type: request
-status: pending
+status: done
 subject: "LoRa 기술 근거 — 드론군무 신규 응용 검토 트랙, 사업방향 흡수 요청"
 date: 2026-09-06
 ---

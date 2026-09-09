@@ -2,7 +2,7 @@
 title: weldRobot — UTTEC 용접 로봇 신사업 (Tier 3 vault)
 type: entity
 created: 2026-06-06
-updated: 2026-06-06 (vault 신설 동시 박제 — strengths §13 carrier 역량 2번째 적용 사례)
+updated: 2026-09-09 (_inbox 흡수 — weldrobot-claude 카드 `2026-09-07-001` request: **Fairino 협동로봇 entity cascade(dogfood 후보 2, 두산 대안 — FR5 ±0.02mm·500만원대·Modbus TCP 표준) + Decision 3 ROS2 도입 시점 단계별 분기**(PoC 0 미사용 → 알파 1 선택 → path-3 필수). 6/7 fact-finding 소급 정리분 / 이전 2026-06-06 (vault 신설 동시 박제 — strengths §13 carrier 역량 2번째 적용 사례))
 tags: [weldRobot, 용접로봇, 신사업, Tier3, vault분리, carrier2번째, Path4-우선, Vision-seam-tracking, AI-비드검사, add-on-box]
 links: [strengths, ai-direction, 양산제품, 위시캣활동, onDevice-ai, 한국기계, 정부R&D실증사업, 영업전략]
 ---
@@ -51,6 +51,20 @@ links: [strengths, ai-direction, 양산제품, 위시캣활동, onDevice-ai, 한
 | **ReportLab PDF 양식** | 사양서·견적서 양식 즉시 재활용 |
 
 → **자산 이식률 90%+, 개발 비용·시간 50% 단축**.
+
+## 협동로봇 후보 — Fairino (dogfood 후보 2, 두산 대안) ⭐ (2026-09-07 카드 cascade, fact-finding 2026-06-07)
+
+| 축 | Fairino | 비교 (두산 H-series) |
+|---|---|---|
+| 모델 | **FR3**(3kg/622mm) / **FR5**(5kg/922mm) | H2017 (20kg급) |
+| 반복정밀도 | **±0.02mm** | ±0.1mm (Fairino가 5배 우위) |
+| 한국 가격 | **500만원대** | 두산의 1/2~1/4, 화낙의 1/6 |
+| 인터페이스 | **Modbus TCP 표준 지원** = path-4 add-on box 완벽 정합 | — |
+| turn-key | add-on box + FR5 = **800~860만** | Vectis $75K 대비 **1/12** |
+
+- ⚠️ **한국 채널 3개 narrative 충돌** — FAIRINO KOREA 직판(031-709-2824) / 아미쿠스 "단독 총판" / MakeWare. **견적 전 채널 확정 carry**.
+- **Decision 3 — ROS2 도입 시점 단계별 분기** (`weldRobot/progress/decision-003-ROS2-도입-시점.md`): **PoC 0** = ROS2 미사용, Python SDK 직통(개발 1개월 단축) → **알파 1** = 선택(default 미사용, Modbus TCP 직통 — KC/ISO 10218 인증 단순성) → **path-3(장기)** = 필수(MoveIt2 + behavior_tree). 벤더 lock-in 회피 = 두산·Fairino 둘 다 Python SDK + ROS2 dual stack 지원 확인.
+- 정본 = `weldRobot/second-brain/entities/fairino.md` + `research/기술벤더/fairino-fr-series_2026-06-07.md`. 벤더 매트릭스 행 추가는 견적 채널 확정 시.
 
 ## 차별화 가설 4축
 

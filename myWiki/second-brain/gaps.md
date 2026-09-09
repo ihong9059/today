@@ -2,12 +2,18 @@
 title: 부족한 부분
 type: identity
 created: 2026-04-19
-updated: 2026-09-04 (자산인덱스 반복 누락 **7번째** — #158166 계기 IDE→SSD 이미징·Legacy Retrofit·디스플레이 4종 사용자 확인 후 skills 등재, 선질의 SOP 유효성 재확인) / 이전 2026-09-01 (_inbox 7장 megasession 흡수 — 자산 인덱스 미등재 → 지원서 초안 약화 반복 누락 6회(데스크톱앱 약점 오분류·220V 전열 미박제) + PC앱·GUI·전열·무선 요구 지원 시 사용자 세부 실적 선질의 SOP 신설, wishket-claude 카드 흡수 / 이전 2026-07-16 (_inbox 3장 흡수 — 설계변경↔영업자산 표기 drift: 노드수 14→11 6파일 잔존, grep 전수정합 회피책 / 이전 7/9: lora 카드 흡수 — 공용 시스템 보드: 조명 fail-safe 반대 논리(재실 중 OFF 금지→PIR 결합 미결) + AC220V 안전 요구, 결정 60 / 이전 6/19: lora 카드 2장 흡수 — E22 generic SX126x 디코드 불가(벤더 락인) + nRF52832 2.4G ~30dB 투과 불리(근거리 한정) + BLE+NVS+LoRa 통합 빌드 적합 / 이전 6/17: _inbox megasession 함정 7건(LoRa 4+onDevice 3) / 이전 6/13 2차: n8nUttec 정체 카드 4장 흡수 — webhook publish 거절 ★★★★ + staticData Active 한정 + ugrep alias + Schedule Trigger silent success 등 6건 / 1차: _inbox 8장 megasession — Defender CFA NCS silent killer + Android onboarding 2건 + IoT 펌웨어 보안 실패 사례 3종 세트(서명키 평문 커밋·AEAD 부재·키 미프로비저닝, revita ingest #16) / 이전 6/10: LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
+updated: 2026-09-09 (KR920 EIRP/LBT 규제 = 드론 고도 LoRa 응용의 선결 게이트 — 지상 실증 이력이 고도 응용 적법성을 보장하지 않음, lora 카드 흡수 + 자산인덱스 반복 누락 **10번째**(KiCad, #158291 v2 계기) + 신규 SOP "제출 직전 공고 전문 재대조" — v1 서술·공고 전문 충돌 시 탈락 위험) / 이전 2026-09-04 (자산인덱스 반복 누락 **7번째** — #158166 계기 IDE→SSD 이미징·Legacy Retrofit·디스플레이 4종 사용자 확인 후 skills 등재, 선질의 SOP 유효성 재확인) / 이전 2026-09-01 (_inbox 7장 megasession 흡수 — 자산 인덱스 미등재 → 지원서 초안 약화 반복 누락 6회(데스크톱앱 약점 오분류·220V 전열 미박제) + PC앱·GUI·전열·무선 요구 지원 시 사용자 세부 실적 선질의 SOP 신설, wishket-claude 카드 흡수 / 이전 2026-07-16 (_inbox 3장 흡수 — 설계변경↔영업자산 표기 drift: 노드수 14→11 6파일 잔존, grep 전수정합 회피책 / 이전 7/9: lora 카드 흡수 — 공용 시스템 보드: 조명 fail-safe 반대 논리(재실 중 OFF 금지→PIR 결합 미결) + AC220V 안전 요구, 결정 60 / 이전 6/19: lora 카드 2장 흡수 — E22 generic SX126x 디코드 불가(벤더 락인) + nRF52832 2.4G ~30dB 투과 불리(근거리 한정) + BLE+NVS+LoRa 통합 빌드 적합 / 이전 6/17: _inbox megasession 함정 7건(LoRa 4+onDevice 3) / 이전 6/13 2차: n8nUttec 정체 카드 4장 흡수 — webhook publish 거절 ★★★★ + staticData Active 한정 + ugrep alias + Schedule Trigger silent success 등 6건 / 1차: _inbox 8장 megasession — Defender CFA NCS silent killer + Android onboarding 2건 + IoT 펌웨어 보안 실패 사례 3종 세트(서명키 평문 커밋·AEAD 부재·키 미프로비저닝, revita ingest #16) / 이전 6/10: LS XGT 시리즈 prefix gotcha 신설 — #155220 v1 XBF-PN08B(XGB 전용) ↔ XGF-PN4B(XGK용) 혼동 결정적 오류. 모듈명 1글자 차이 = 베이스 호환 불가. 사외 경험자 검토 의무 SOP. wishket-claude 4 카드 megasession 흡수 / 이전 6/6: 자산 인덱스 누락 재발 2회 누적 5/29+6/4 박제, 결정 44)
 tags: [부족, 개선, 학습, 자산인덱스완전성, Nordic, Zephyr, CMSIS-NN, Claude-CLI, --resume, esp-nn, ninja, PowerShell-BOM, 위시캣패턴변화, STM32, STM32H745, dual-core, LTDC, USB-FS, vectorizer-정책, NDK, clang, net_mgmt-API-change, 외주필터, ID비단조, 채번패턴, baseline-추정값-artifact, INFO-emit-cache, vendor-광고-cross-check, master-single-source, 영업카피-stale, STM-16-fmc-sdram-Kconfig, SFDP-실측-vs-dts-upstream, bash-backslash-windows, python-환경-분리, pip-경로-확인, R50-1-chip-saturate, STM-7-v2, I2C-주소충돌, flatten-순서, WHO_AM_I-분기, PEP668, scp-wildcard, 데이터사이언티스트, GEE학습, 자산인덱스누락재발, cross-vault-cascade-지연, 풀스택자산]
 links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai, stm32h745-disco, build-gotcha-inventory, ai-fanstick, 2026-05-27_위시캣-외주필터-사전확인-SOP, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용, 2026-06-04_sensor-AI-매트릭스-단일출처-mandate]
 ---
 
 # 부족한 부분 (채워야 할 것)
+
+## 2026-09-09 — KR920 EIRP/LBT 규제 = 드론 고도 LoRa 응용의 선결 게이트 ⭐ (lora-claude 카드 `2026-09-06-001` 흡수)
+
+**함정**: 지상 LoRa 실증 이력(한림·필로스·revita)이 **고고도 응용의 적법성·적합성을 보장하지 않는다**. 드론 고도(수십~수백 m)에서는 간섭 footprint가 폭증 — KR920 대역 EIRP 한도·LBT(Listen Before Talk) 요건 하에서 E22 22dBm 출력이 **한도 초과 가능성**. "지상에서 되니 하늘에서도 된다" 단정 금지.
+
+**회피책**: 고도 관련 LoRa 응용(드론·기구·타워 상부)은 **KR920 규제(전파법 신고·EIRP·LBT·duty cycle) 정식 조사를 사업 확정 전 선결 게이트**로 둔다(결정 65의 게이트 ②). 항공 규제(비행 승인·야간 비행)는 운영사 영역으로 계약상 선긋기. → [[lora]] § 2026-09-09 + [[ai-direction]] 결정 65.
 
 ## 2026-09-01 — 자산 인덱스 미등재 → 지원서 초안 약화 (반복 누락 6회) + PC앱·GUI·전열 선질의 SOP ⭐⭐ (wishket-claude 카드 흡수)
 
@@ -23,6 +29,8 @@ links: [me, skills, ai-direction, strengths, goals, 위시캣활동, onDevice-ai
 → 근거: [[위시캣활동]] § 2026-09-01(#157726·#157744·#157875) + [[ai-direction]] § 2026-09-01 결정 63. 기존 자산인덱스누락 재발(5/29·6/4·6/6 결정 44)의 4~6번째 누적.
 
 **7번째 재발(2026-09-04, #158166 계기)**: IDE→SSD 섹터 이미징·산업용 PC Legacy Retrofit·디스플레이 4종(LVDS·TTL/RGB·VGA·DVI) — 전부 직접 실적인데 인덱스 미등재로 사용자 확인 후에야 지원서 강화. → [[skills]] 등재 완료(9/4). 선질의 SOP(위 1~3) 유효성 재확인 — wishket 측도 me.md 항목 13으로 박제. 잔여 = 구체 제품명·수치 "박제 대기" 항목들(wishket me.md 9·10·12·13)의 사용자 세부 확인.
+
+**10번째 재발(2026-09-09, #158291 v2 계기) + 신규 SOP "제출 직전 공고 전문 재대조"**: KiCad 실사용 경험이 인덱스 미등재(OrCAD·EasyEDA·PADS만) → v1 지원서에 KiCad 요구 통째 누락(wishket me.md 항목 16 신설, [[skills]] 등재). 병행 발견 함정 = **v1 서술("AGND/DGND 분리")이 공고 전문("연속 단일 GND·분할 금지")과 정면 충돌** — 최초 검토 시점보다 공고 정보가 늘어난 경우 **제출 직전 공고 전문 재대조 필수**, v1 그대로 제출 시 요구 충돌 서술로 탈락 위험(매칭 7/8 → 재대조 후 9/9). → [[위시캣활동]] § 2026-09-09.
 
 ## 2026-08-07 — 일본 문의폼 PDF 첨부 불가 → 라이브 랜딩 URL이 필수 채널 ⭐ (일본 受託 채널)
 

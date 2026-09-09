@@ -10,7 +10,7 @@ related:
   - C:/todo/weldRobot/second-brain/entities/fairino.md
   - C:/todo/weldRobot/progress/decision-003-ROS2-도입-시점.md
   - C:/todo/weldRobot/research/기술벤더/fairino-fr-series_2026-06-07.md
-status: pending
+status: done
 ---
 
 # weldRobot 갱신 cascade — Fairino entity 신설 + Decision 3 (ROS2 도입 시점)
