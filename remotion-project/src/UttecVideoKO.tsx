@@ -1574,7 +1574,7 @@ const Scene08Closing: React.FC = () => {
             color: colors.textSub,
           }}
         >
-          <span>📍 경기도 용인시 흥덕유타워</span>
+          <span>📍 경기도 수원시 영통구 영통 아이파크 디어반</span>
           <span>📞 031-627-2250</span>
           <span>🌐 www.uttec.co.kr</span>
         </div>

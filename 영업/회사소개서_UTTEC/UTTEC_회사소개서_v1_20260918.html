@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>UTTEC 회사소개서</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; color: #1a2733; }
+  @page { size: A4; margin: 0; }
+  .page {
+    width: 210mm; height: 296mm;
+    padding: 18mm 16mm 14mm 16mm;
+    page-break-after: always;
+    position: relative;
+    background: #ffffff;
+    overflow: hidden;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* ---------- 공통 ---------- */
+  .footer {
+    position: absolute; bottom: 8mm; left: 16mm; right: 16mm;
+    display: flex; justify-content: space-between;
+    font-size: 8pt; color: #8a97a3;
+    border-top: 1px solid #dde3e8; padding-top: 2.5mm;
+  }
+  h2.sec-title {
+    font-size: 17pt; color: #0d2f4f; letter-spacing: -0.5px;
+    padding-bottom: 3mm; margin-bottom: 6mm;
+    border-bottom: 3px solid #0d2f4f;
+  }
+  h2.sec-title .en { font-size: 9pt; color: #4a90b8; font-weight: normal; margin-left: 3mm; letter-spacing: 1px; }
+  .tag {
+    display: inline-block; font-size: 8pt; font-weight: bold; color: #ffffff;
+    background: #4a90b8; border-radius: 2px; padding: 0.8mm 2.2mm; margin-right: 1.5mm;
+  }
+  .tag.navy { background: #0d2f4f; }
+  .tag.green { background: #2e8b6e; }
+  .tag.orange { background: #d97b29; }
+  table { border-collapse: collapse; width: 100%; }
+
+  /* ---------- 표지 ---------- */
+  .cover { background: #0d2f4f; color: #ffffff; display: flex; flex-direction: column; }
+  .cover .topline { display: flex; justify-content: space-between; align-items: flex-start; }
+  .cover .logo { font-size: 26pt; font-weight: bold; letter-spacing: 2px; }
+  .cover .logo span { color: #5db8e8; }
+  .cover .slogan { font-size: 9.5pt; color: #9fb8cc; margin-top: 1mm; letter-spacing: 3px; }
+  .cover .to-box { text-align: right; font-size: 10pt; color: #c8d6e2; line-height: 1.7; }
+  .cover .center { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .cover .doc-type { font-size: 11pt; color: #5db8e8; letter-spacing: 6px; margin-bottom: 6mm; }
+  .cover h1 { font-size: 30pt; line-height: 1.35; letter-spacing: -0.5px; font-weight: bold; }
+  .cover h1 .accent { color: #5db8e8; }
+  .cover .subtitle { font-size: 12pt; color: #c8d6e2; margin-top: 8mm; line-height: 1.8; }
+  .cover .keyline { width: 30mm; height: 1.2mm; background: #5db8e8; margin: 10mm 0 0 0; }
+  .cover .bottom { border-top: 1px solid #2a4a68; padding-top: 5mm; display: flex; justify-content: space-between; font-size: 9.5pt; color: #9fb8cc; line-height: 1.8; }
+  .cover .stat-row { display: flex; gap: 6mm; margin-top: 10mm; }
+  .cover .stat { border: 1px solid #2a4a68; border-radius: 3px; padding: 4mm 5mm; flex: 1; background: rgba(93,184,232,0.06); }
+  .cover .stat .num { font-size: 16pt; font-weight: bold; color: #5db8e8; }
+  .cover .stat .lbl { font-size: 8.5pt; color: #9fb8cc; margin-top: 1mm; line-height: 1.4; }
+
+  /* ---------- 개요/연혁 ---------- */
+  .info-table td { border: 1px solid #d5dde4; padding: 2.8mm 4mm; font-size: 9.5pt; vertical-align: top; }
+  .info-table td.k { background: #eef3f7; font-weight: bold; color: #0d2f4f; width: 30mm; }
+  .timeline { margin-top: 4mm; }
+  .tl-item { display: flex; margin-bottom: 0; }
+  .tl-year { width: 24mm; font-size: 11pt; font-weight: bold; color: #0d2f4f; flex-shrink: 0; padding-top: 0.5mm; }
+  .tl-line { width: 6mm; flex-shrink: 0; position: relative; }
+  .tl-line::before { content: ''; position: absolute; left: 2.5mm; top: 2mm; bottom: -2mm; width: 0.6mm; background: #c3d2de; }
+  .tl-item:last-child .tl-line::before { bottom: auto; height: 4mm; }
+  .tl-line::after { content: ''; position: absolute; left: 1.1mm; top: 1.6mm; width: 3mm; height: 3mm; border-radius: 50%; background: #4a90b8; border: 0.6mm solid #ffffff; box-shadow: 0 0 0 0.4mm #4a90b8; }
+  .tl-item.major .tl-line::after { background: #d97b29; box-shadow: 0 0 0 0.4mm #d97b29; }
+  .tl-body { padding: 0 0 5.5mm 4mm; font-size: 9.5pt; line-height: 1.5; }
+  .tl-body b { color: #0d2f4f; }
+  .tl-body .sub { color: #5a6b7a; font-size: 8.8pt; }
+
+  /* ---------- 전환 스토리 ---------- */
+  .pivot-flow { display: flex; align-items: stretch; gap: 4mm; margin: 5mm 0; }
+  .pivot-box { flex: 1; border-radius: 3px; padding: 5mm; font-size: 9.5pt; line-height: 1.6; }
+  .pivot-box.past { background: #eef1f4; border: 1px solid #d5dde4; }
+  .pivot-box.now { background: #0d2f4f; color: #ffffff; }
+  .pivot-box h4 { font-size: 10.5pt; margin-bottom: 2.5mm; }
+  .pivot-box.past h4 { color: #5a6b7a; }
+  .pivot-box.now h4 { color: #5db8e8; }
+  .pivot-arrow { display: flex; align-items: center; font-size: 20pt; color: #d97b29; font-weight: bold; }
+  .why-box { background: #fdf3e7; border-left: 3px solid #d97b29; padding: 4mm 5mm; font-size: 9.5pt; line-height: 1.7; margin: 5mm 0; }
+  .why-box b { color: #b05e12; }
+  .three-cats { display: flex; gap: 4mm; margin-top: 6mm; }
+  .cat-card { flex: 1; border: 1px solid #d5dde4; border-top: 3.5mm solid #0d2f4f; border-radius: 0 0 3px 3px; padding: 4.5mm; }
+  .cat-card.c1 { border-top-color: #2e8b6e; }
+  .cat-card.c2 { border-top-color: #4a90b8; }
+  .cat-card.c3 { border-top-color: #d97b29; }
+  .cat-card .no { font-size: 8.5pt; font-weight: bold; letter-spacing: 1px; }
+  .cat-card.c1 .no { color: #2e8b6e; } .cat-card.c2 .no { color: #4a90b8; } .cat-card.c3 .no { color: #d97b29; }
+  .cat-card h4 { font-size: 11.5pt; color: #0d2f4f; margin: 1.5mm 0 2.5mm 0; line-height: 1.3; }
+  .cat-card p { font-size: 8.8pt; color: #45535f; line-height: 1.6; }
+
+  /* ---------- 사업분야 상세 ---------- */
+  .biz-head { display: flex; align-items: center; gap: 4mm; margin-bottom: 5mm; }
+  .biz-no { width: 16mm; height: 16mm; border-radius: 3px; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 15pt; font-weight: bold; flex-shrink: 0; }
+  .biz-title h2 { font-size: 16pt; color: #0d2f4f; letter-spacing: -0.5px; }
+  .biz-title .en { font-size: 9pt; color: #7a8894; letter-spacing: 1px; }
+  .lead { font-size: 10pt; line-height: 1.75; color: #33414d; background: #f4f7f9; border-radius: 3px; padding: 4mm 5mm; margin-bottom: 5mm; }
+  .lead b { color: #0d2f4f; }
+  .proj-table th { background: #0d2f4f; color: #ffffff; font-size: 9pt; padding: 2.5mm 3mm; text-align: left; }
+  .proj-table td { border: 1px solid #d5dde4; padding: 2.6mm 3mm; font-size: 9pt; line-height: 1.5; vertical-align: top; }
+  .proj-table td.name { font-weight: bold; color: #0d2f4f; white-space: nowrap; }
+  .status { display: inline-block; font-size: 7.8pt; font-weight: bold; border-radius: 2px; padding: 0.5mm 1.8mm; white-space: nowrap; }
+  .status.run { background: #e2f2ec; color: #1e6e52; }
+  .status.done { background: #e8eef3; color: #33526d; }
+  .status.nego { background: #fdf0e0; color: #b05e12; }
+  .tech-strip { margin-top: 5mm; background: #eef3f7; border-radius: 3px; padding: 3.5mm 4.5mm; font-size: 8.8pt; line-height: 1.7; }
+  .tech-strip b { color: #0d2f4f; }
+  .kpi-row { display: flex; gap: 4mm; margin-top: 5mm; }
+  .kpi { flex: 1; text-align: center; border: 1px solid #d5dde4; border-radius: 3px; padding: 3.5mm 2mm; }
+  .kpi .num { font-size: 15pt; font-weight: bold; color: #0d2f4f; }
+  .kpi .num span { font-size: 9pt; }
+  .kpi .lbl { font-size: 8.2pt; color: #6a7885; margin-top: 1mm; line-height: 1.35; }
+
+  /* ---------- 역량/마무리 ---------- */
+  .cap-grid { display: flex; flex-wrap: wrap; gap: 4mm; }
+  .cap { width: calc(50% - 2mm); border: 1px solid #d5dde4; border-radius: 3px; padding: 4mm 4.5mm; }
+  .cap h4 { font-size: 10.5pt; color: #0d2f4f; margin-bottom: 2mm; padding-left: 3.5mm; border-left: 2.5mm solid #4a90b8; }
+  .cap p { font-size: 8.8pt; color: #45535f; line-height: 1.65; }
+  .closing { background: #0d2f4f; color: #ffffff; border-radius: 3px; padding: 6mm 7mm; margin-top: 6mm; }
+  .closing h3 { font-size: 12pt; color: #5db8e8; margin-bottom: 3mm; }
+  .closing p { font-size: 9.8pt; line-height: 1.8; color: #dce7ef; }
+  .contact-table { margin-top: 5mm; }
+  .contact-table td { border: 1px solid #d5dde4; padding: 3mm 4mm; font-size: 9.5pt; }
+  .contact-table td.k { background: #eef3f7; font-weight: bold; color: #0d2f4f; width: 34mm; }
+</style>
+</head>
+<body>
+
+<!-- ================= 1. 표지 ================= -->
+<div class="page cover">
+  <div class="topline">
+    <div>
+      <div class="logo">UT<span>TEC</span></div>
+      <div class="slogan">NETWORK SOLUTION &amp; AI</div>
+    </div>
+    <div class="to-box">2026. 09.<br>㈜유티텍 대표이사 홍광선</div>
+  </div>
+  <div class="center">
+    <div class="doc-type">COMPANY PROFILE</div>
+    <h1>15년 무선제어 기술 위에,<br><span class="accent">AI 시대의 사업</span>을 다시 세웁니다</h1>
+    <div class="keyline"></div>
+    <div class="subtitle">
+      지하주차장 LED 디밍 국내 최초 상용화로 시작해 누적 10만 등기·일본 수출 3,800대의<br>
+      양산 실적을 쌓았고, 2026년 AI를 축으로 <b>무선제어 IoT · AI 융합 개발 · AI 교육</b><br>
+      3대 사업으로 전환하여 전 분야에서 실제 프로젝트를 수행하고 있습니다.
+    </div>
+    <div class="stat-row">
+      <div class="stat"><div class="num">10만+</div><div class="lbl">지하주차장 디밍 등기구<br>누적 공급 (12년)</div></div>
+      <div class="stat"><div class="num">3,800대</div><div class="lbl">일본 직수출 양산<br>(하네다공항·나고야 사카에역)</div></div>
+      <div class="stat"><div class="num">6종</div><div class="lbl">산업용 컨트롤러<br>양산 판매 중</div></div>
+      <div class="stat"><div class="num">3대 사업</div><div class="lbl">2026 AI 전환<br>IoT · 개발 · 교육</div></div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>㈜유티텍 (UTTEC Co., Ltd.)<br>경기도 용인시 기흥구 흥덕중앙로 120, 흥덕유타워 2404호</div>
+    <div style="text-align:right">www.uttec.co.kr<br>기업부설연구소 C0442235</div>
+  </div>
+</div>
+
+<!-- ================= 2. 회사 개요 · 연혁 ================= -->
+<div class="page">
+  <h2 class="sec-title">회사 개요 및 연혁<span class="en">COMPANY OVERVIEW</span></h2>
+  <table class="info-table">
+    <tr><td class="k">회사명</td><td>㈜유티텍 (UTTEC Co., Ltd.)</td><td class="k">대표이사</td><td>홍광선</td></tr>
+    <tr><td class="k">설립</td><td>2011년 ㈜UTSOL 설립 → 2016년 6월 ㈜유티텍 법인 전환</td><td class="k">연구소</td><td>기업부설연구소 (C0442235, 2017~)</td></tr>
+    <tr><td class="k">소재지</td><td colspan="3">경기도 용인시 기흥구 흥덕중앙로 120, 흥덕유타워 2404호</td></tr>
+    <tr><td class="k">사업분야</td><td colspan="3">스마트 무선제어 IoT (LoRa·BLE) / AI 융합 임베디드 시스템 개발 / AI 실무 교육</td></tr>
+  </table>
+
+  <h3 style="font-size:12pt; color:#0d2f4f; margin:8mm 0 4mm 0;">주요 연혁</h3>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">2011</div><div class="tl-line"></div>
+      <div class="tl-body"><b>㈜UTSOL 설립</b> — 대한민국 지하주차장 LED 디밍 시스템 최초 도입<br>
+      <span class="sub">PIR 센서 기반 자동 디밍 · BLE Mesh 무선제어. 이후 12년간 누적 10만+ 등기 공급 (롯데건설·양우건설·홈플러스 등)</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2016</div><div class="tl-line"></div>
+      <div class="tl-body"><b>㈜유티텍 법인 전환</b><br>
+      <span class="sub">삼성전자 출신 엔지니어 홍광선 합류 — 회로설계·펌웨어 38년 경력 기반 기술 고도화</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2018</div><div class="tl-line"></div>
+      <div class="tl-body"><b>LoRa 컨트롤러 국내 최초 상용화</b><br>
+      <span class="sub">장거리 저전력 무선제어 기술 확보 — 현재 골프장·농업 IoT 사업의 기술 기반</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2020</div><div class="tl-line"></div>
+      <div class="tl-body"><b>한림광릉CC 골프장 제어 시스템 구축</b><br>
+      <span class="sub">한림그룹과의 거래 관계 시작 — 2026년 한림용인CC 재수주로 이어진 레퍼런스</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2022</div><div class="tl-line"></div>
+      <div class="tl-body"><b>일본 하네다공항 자전거주차장 500대 수출</b> (AMANO 직거래)<br>
+      <span class="sub">BLE Mesh 조명제어 시스템 — 일본 시장 직거래 양산 진입</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2023</div><div class="tl-line"></div>
+      <div class="tl-body"><b>일본 나고야 사카에역 3,300대 수출</b> — 누적 3,800대<br>
+      <span class="sub">같은 해, 원조사업(LED 디밍)은 중국산 저가 공세로 가격경쟁 한계 도달 → 전환 모색 시작</span></div>
+    </div>
+    <div class="tl-item major">
+      <div class="tl-year">2026.4</div><div class="tl-line"></div>
+      <div class="tl-body"><b>AI 3대 사업 전환 선언</b> — 무선제어 IoT · AI 융합 개발 · AI 교육<br>
+      <span class="sub">15년 축적한 무선·임베디드 기술에 AI를 결합하는 전략적 재편</span></div>
+    </div>
+    <div class="tl-item major">
+      <div class="tl-year">2026</div><div class="tl-line"></div>
+      <div class="tl-body"><b>전 사업 분야 실전 가동</b><br>
+      <span class="sub">골프장 LoRa 자동급수 시공 · 농업 IoT 양산 · 정부 R&amp;D 수탁 파이프라인 · 지자체 AI 교육 2차 과정 확정</span></div>
+    </div>
+  </div>
+  <div class="footer"><span>UTTEC Company Profile</span><span>02</span></div>
+</div>
+
+<!-- ================= 3. AI 전환 스토리 ================= -->
+<div class="page">
+  <h2 class="sec-title">AI 시대, 사업 방향의 전환<span class="en">BUSINESS TRANSFORMATION</span></h2>
+
+  <div class="pivot-flow">
+    <div class="pivot-box past">
+      <h4>BEFORE — 단일 제품 사업</h4>
+      지하주차장 LED 디밍 시스템<br>
+      · 12년, 누적 10만+ 등기<br>
+      · BLE Mesh · PIR 센서 자동제어<br>
+      · 건설사 OEM 공급 구조
+    </div>
+    <div class="pivot-arrow">&#9654;</div>
+    <div class="pivot-box now">
+      <h4>AFTER — AI 기반 3대 사업</h4>
+      기술자산(무선·임베디드·양산)을 축으로<br>
+      · 스마트 무선제어 IoT<br>
+      · AI 융합 임베디드 개발<br>
+      · AI 실무 교육
+    </div>
+  </div>
+
+  <div class="why-box">
+    <b>전환의 배경</b> — 2023년 이후 중국산 저가 제품의 공세로 LED 디밍 단품 사업은 가격 경쟁의 한계에 도달했습니다.
+    기술력의 문제가 아닌 시장 구조의 변화였기에, 12년간 축적한 <b>무선제어(BLE Mesh·LoRa)·임베디드 설계·양산 관리 역량</b>은
+    그대로 살리고, 제품 단가 경쟁이 아닌 <b>시스템·솔루션·지식 사업</b>으로 무게중심을 옮겼습니다.
+    2026년 4월, AI를 공통 축으로 하는 3대 사업 체제로 공식 전환했습니다.
+  </div>
+
+  <h3 style="font-size:12pt; color:#0d2f4f; margin:7mm 0 0 0;">3대 사업 카테고리</h3>
+  <div class="three-cats">
+    <div class="cat-card c1">
+      <div class="no">BUSINESS 01</div>
+      <h4>스마트 무선제어 IoT</h4>
+      <p>LoRa·BLE 장거리 무선제어로 골프장 급수, 농업 센서망, 시설 조명을 원격 자동화.
+      인터넷이 닿지 않는 원거리 현장까지 LTE 백홀 게이트웨이로 커버하는 자율 제어망이 핵심 기술입니다.</p>
+    </div>
+    <div class="cat-card c2">
+      <div class="no">BUSINESS 02</div>
+      <h4>AI 융합 임베디드 개발</h4>
+      <p>온디바이스 AI(이상탐지·예측정비)와 산업 제어 시스템 수탁개발.
+      노후 PLC의 PC 제어 전환(특허 출원), 스마트팩토리 진단, 정부 R&amp;D 과제까지
+      회로-펌웨어-서버-앱 풀스택을 단일 책임으로 수행합니다.</p>
+    </div>
+    <div class="cat-card c3">
+      <div class="no">BUSINESS 03</div>
+      <h4>AI 실무 교육</h4>
+      <p>자체 개발 교육용 하드웨어 키트와 AI 활용 방법론을 결합한 실습 중심 교육.
+      용인시 미래창의아카데미 등 지자체 과정을 수행하며, 강사 양성과
+      지자체 유휴설비 활용 창업 교육으로 확장 중입니다.</p>
+    </div>
+  </div>
+
+  <div class="tech-strip" style="margin-top:7mm">
+    <b>전환을 뒷받침하는 공통 기반</b> — LoRa 4종 모듈 풀스택 · BLE Mesh/OTA · nRF Connect SDK(Zephyr) · STM32/ESP32/Raspberry Pi ·
+    Modbus/RS485/EtherCAT 산업통신 · Flutter/Kotlin 앱 · AWS IoT Core · CNN/LSTM 온디바이스 추론 ·
+    KC(EMC/RF) 인증 관리 · 월 7,200대 규모 양산 자동검사 체계
+  </div>
+  <div class="footer"><span>UTTEC Company Profile</span><span>03</span></div>
+</div>
+
+<!-- ================= 4. 사업분야 1 ================= -->
+<div class="page">
+  <div class="biz-head">
+    <div class="biz-no" style="background:#2e8b6e">01</div>
+    <div class="biz-title">
+      <h2>스마트 무선제어 IoT</h2>
+      <div class="en">LoRa · BLE WIRELESS CONTROL SYSTEM</div>
+    </div>
+  </div>
+  <div class="lead">
+    사람이 상주하기 어려운 <b>원거리·무인 현장</b>(골프장 산악지형, 농지, 옥외시설)의 설비를
+    LoRa 장거리 무선으로 감시·제어합니다. 게이트웨이 의존을 최소화한 <b>자율 제어망</b> 구조와
+    LTE 백홀로 <b>"인터넷이 없는 현장"</b>까지 커버하는 것이 차별점입니다.
+  </div>
+
+  <table class="proj-table">
+    <tr><th style="width:34mm">프로젝트</th><th>내용</th><th style="width:22mm">상태</th></tr>
+    <tr>
+      <td class="name">한림용인CC<br>고가수조 자동급수</td>
+      <td>골프장 산악지형 고가수조 11개 노드를 LoRa 무선으로 연결, 수위 감시·자동 급수 제어.
+      2020년 한림광릉CC 구축 이후 한림그룹 재수주 — 6년 신뢰 기반 거래.</td>
+      <td><span class="status run">시공 단계</span></td>
+    </tr>
+    <tr>
+      <td class="name">REVITA<br>농업 IoT 양산</td>
+      <td>축사·농가용 LoRa 센서 단말 양산. 농가에서 스마트폰으로 직접 펌웨어를 업데이트하는
+      BLE OTA 체계 구축. 월 7,200대 처리 가능한 양산 자동검사(IQC) 시스템 운영 — 수신율 99.1%.</td>
+      <td><span class="status run">양산 중</span></td>
+    </tr>
+    <tr>
+      <td class="name">골프장 조명<br>LoRa 무선화</td>
+      <td>기존 유선 조명 설비를 LoRa 무선제어로 교체하는 리모델링형 사업.
+      골프장 그룹사 대상 수주 협의 진행.</td>
+      <td><span class="status nego">수주 협상</span></td>
+    </tr>
+    <tr>
+      <td class="name">보안등·시설 조명<br>디밍 제어</td>
+      <td>지역주택조합 보안등 등 옥외 조명의 무선 디밍 제어 — 원조사업(LED 디밍) 기술의
+      LoRa 확장 적용. 조명 제조사 채널 통한 영업 진행.</td>
+      <td><span class="status nego">제안 진행</span></td>
+    </tr>
+    <tr>
+      <td class="name">일본 주차장 조명<br>(레퍼런스)</td>
+      <td>하네다공항 아나모리이나리역·나고야 사카에역 자전거주차장 BLE Mesh 조명 시스템
+      누적 3,800대 직수출 양산 (AMANO).</td>
+      <td><span class="status done">양산 완료</span></td>
+    </tr>
+  </table>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="num">11<span> 노드</span></div><div class="lbl">골프장 자율 LoRa 제어망<br>(현장 실증 완료)</div></div>
+    <div class="kpi"><div class="num">99.1<span>%</span></div><div class="lbl">양산 단말 무선 수신율<br>(자동검사 기준)</div></div>
+    <div class="kpi"><div class="num">7,200<span> 대/월</span></div><div class="lbl">양산 자동검사<br>처리 능력</div></div>
+    <div class="kpi"><div class="num">6<span> 년</span></div><div class="lbl">한림그룹 재수주<br>신뢰 거래 기간</div></div>
+  </div>
+
+  <div class="tech-strip">
+    <b>핵심 기술</b> — LoRa E22 4종 모듈 풀스택 · 자율 제어망(게이트웨이 최소화) · LTE 백홀 게이트웨이 ·
+    BLE OTA 원격 펌웨어 업데이트(MCUboot) · nRF52840/Zephyr · 태양광 전원 무인 노드 설계
+  </div>
+  <div class="footer"><span>UTTEC Company Profile</span><span>04</span></div>
+</div>
+
+<!-- ================= 5. 사업분야 2 ================= -->
+<div class="page">
+  <div class="biz-head">
+    <div class="biz-no" style="background:#4a90b8">02</div>
+    <div class="biz-title">
+      <h2>AI 융합 임베디드 시스템 개발</h2>
+      <div class="en">ON-DEVICE AI &amp; INDUSTRIAL SYSTEM DEVELOPMENT</div>
+    </div>
+  </div>
+  <div class="lead">
+    회로설계(OrCAD 25년) → 펌웨어(38년) → 서버 → 모바일 앱까지 <b>풀스택을 단일 책임으로</b> 수행하는
+    수탁개발 사업입니다. 여기에 <b>온디바이스 AI</b>(현장 장비에서 직접 추론하는 이상탐지·예측정비)를 결합해
+    단순 외주가 아닌 <b>AI 융합 시스템 파트너</b>로 포지셔닝하고 있습니다.
+  </div>
+
+  <table class="proj-table">
+    <tr><th style="width:34mm">프로젝트</th><th>내용</th><th style="width:22mm">상태</th></tr>
+    <tr>
+      <td class="name">노후 PLC 레트로핏<br>(PC 제어 전환)</td>
+      <td>단종 PLC 기반 노후 설비를 PC 제어로 전환하는 독자 방법론 — 특허 출원으로 보호.
+      터널 천공기·반도체 설비·전자교탁 등 복수 산업 분야에 적용 확장 중.</td>
+      <td><span class="status run">진행 중</span></td>
+    </tr>
+    <tr>
+      <td class="name">전자교탁 메인<br>컨트롤러 재개발</td>
+      <td>단종 부품 기반 전자교탁 컨트롤러의 회로 실사(67면)·재설계.
+      RK3588 기반 차세대 플랫폼 제안 — 2단계 개발 로드맵 협의 중.</td>
+      <td><span class="status nego">제안 단계</span></td>
+    </tr>
+    <tr>
+      <td class="name">스마트 환기 시스템<br>(정부 국책과제)</td>
+      <td>건설엔지니어링사와 Matter/Thread 표준 기반 환기 제어 국책과제 협력 —
+      장기 파트너십 계약 협의 중.</td>
+      <td><span class="status nego">계약 협의</span></td>
+    </tr>
+    <tr>
+      <td class="name">공장 설비<br>예측정비 AI</td>
+      <td>분쇄·파쇄 설비 대상 진동·전류 센서 + 온디바이스 AI(CNN/LSTM) 이상탐지.
+      11종 센서 × 14종 보드 조합의 AI 적용 매트릭스 구축 — 스마트팩토리 진단 사업 모델.</td>
+      <td><span class="status run">개발 중</span></td>
+    </tr>
+    <tr>
+      <td class="name">산업용 컨트롤러<br>양산 (레퍼런스)</td>
+      <td>밸브 제어(STM32F756)·산업 세탁기(F407)·EtherCAT 게이트웨이(CM4)·온도 컨트롤러(nRF52832) 등
+      6종 제품 현재 양산 판매 중.</td>
+      <td><span class="status run">판매 중</span></td>
+    </tr>
+    <tr>
+      <td class="name">정부 R&amp;D<br>(레퍼런스)</td>
+      <td>PLC 4축 모션컨트롤러 개발 과제 1억 원 직접 수행 (집행률 99.1%, 특허 10-2017-0138381) —
+      ARM Cortex-M7 + FPGA, EtherNet/IP.</td>
+      <td><span class="status done">수행 완료</span></td>
+    </tr>
+  </table>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="num">6<span> 종</span></div><div class="lbl">산업용 컨트롤러<br>양산 판매 중</div></div>
+    <div class="kpi"><div class="num">2<span> 건</span></div><div class="lbl">특허 (모션제어 등록<br>+ PLC 레트로핏 출원)</div></div>
+    <div class="kpi"><div class="num">1<span> 억원</span></div><div class="lbl">정부 R&amp;D 직접 수행<br>(집행률 99.1%)</div></div>
+    <div class="kpi"><div class="num">0<span> %</span></div><div class="lbl">외주 의존도 —<br>풀스택 단일 책임 수행</div></div>
+  </div>
+
+  <div class="tech-strip">
+    <b>핵심 기술</b> — STM32/nRF52/ESP32/Raspberry Pi · Modbus RTU/RS485/MC Protocol(PLC 연동)/EtherCAT ·
+    C#/C++ PC 제어 앱 · Flutter/Kotlin 모바일 · AWS IoT Core · CNN/LSTM 온디바이스 추론 · KC(EMC/RF) 인증 관리
+  </div>
+  <div class="footer"><span>UTTEC Company Profile</span><span>05</span></div>
+</div>
+
+<!-- ================= 6. 사업분야 3 ================= -->
+<div class="page">
+  <div class="biz-head">
+    <div class="biz-no" style="background:#d97b29">03</div>
+    <div class="biz-title">
+      <h2>AI 실무 교육</h2>
+      <div class="en">AI PRACTICAL EDUCATION</div>
+    </div>
+  </div>
+  <div class="lead">
+    "AI를 도구로 쓰는 방법"을 <b>실물 하드웨어 실습</b>과 함께 가르치는 교육 사업입니다.
+    엔지니어링 현업 38년 경력과 자체 개발 교육 키트가 결합된, <b>이론이 아닌 실무 중심</b> 커리큘럼이 차별점입니다.
+    회사가 AI 전환 과정에서 실제로 사용한 방법론(AI 협업 지식관리 체계)을 그대로 교육 자산으로 전환했습니다.
+  </div>
+
+  <table class="proj-table">
+    <tr><th style="width:34mm">프로그램</th><th>내용</th><th style="width:22mm">상태</th></tr>
+    <tr>
+      <td class="name">용인시 미래창의<br>아카데미 AI 과정</td>
+      <td>용인시 산업진흥원 주관 시민 대상 AI 실습 교육. 1차 과정 수행 완료 후
+      2차 과정 확정 (2026년 10월 말~11월 초 개강) — 기관 재선정.</td>
+      <td><span class="status run">2차 확정</span></td>
+    </tr>
+    <tr>
+      <td class="name">자체 교육용<br>하드웨어 키트</td>
+      <td>ESP32 기반 UTTEC 교육 보드 자체 설계·제작. 아두이노 실습부터 AI 데모(Colab 학습 연동)까지
+      단계별 커리큘럼과 일체화된 전용 교보재.</td>
+      <td><span class="status run">운영 중</span></td>
+    </tr>
+    <tr>
+      <td class="name">타 지역 확장<br>(광주광역시 등)</td>
+      <td>용인 커리큘럼을 표준 모델로 타 지자체 확산 추진 — 광주광역시 AI 교육 협의 개시.
+      강사 양성 체계로 지역별 동시 운영 구조 설계.</td>
+      <td><span class="status nego">협의 중</span></td>
+    </tr>
+    <tr>
+      <td class="name">지자체 설비활용<br>AI 굿즈 창업 교육</td>
+      <td>지자체 유휴 장비(3D 프린터·레이저커터·UV 프린터) × AI 디자인 도구를 결합한
+      굿즈 제작 창업 교육 과정 기획 — 용인 → 전국 지자체 확장 모델.</td>
+      <td><span class="status nego">기획 단계</span></td>
+    </tr>
+    <tr>
+      <td class="name">엔지니어 대상<br>AI 협업 방법론</td>
+      <td>AI 협업 지식관리 체계(멀티 에이전트 운영·프로젝트 지식 축적 방법론)를
+      기업·개인 엔지니어에게 이식하는 심화 과정 — 사내 검증 완료 자산.</td>
+      <td><span class="status run">자산화 완료</span></td>
+    </tr>
+  </table>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="num">2차<span> 확정</span></div><div class="lbl">용인 미래창의아카데미<br>재선정 (2026.10~11)</div></div>
+    <div class="kpi"><div class="num">자체<span> 키트</span></div><div class="lbl">교육 전용 하드웨어<br>설계·제작 일체화</div></div>
+    <div class="kpi"><div class="num">38<span> 년</span></div><div class="lbl">현업 엔지니어링 경력의<br>실무 커리큘럼</div></div>
+    <div class="kpi"><div class="num">확장<span> 중</span></div><div class="lbl">광주 등 타 지자체<br>+ 창업교육 신규 과정</div></div>
+  </div>
+
+  <div class="tech-strip">
+    <b>교육 자산</b> — 자체 교육 PCB(ESP32) · 아두이노~AI 데모(Colab 학습 왕복) 단계별 커리큘럼 ·
+    AI 협업 지식관리 방법론(멀티 에이전트 vault 체계) · 강사 양성 프로그램 · 지자체 설비 연계 창업 교육 모델
+  </div>
+  <div class="footer"><span>UTTEC Company Profile</span><span>06</span></div>
+</div>
+
+<!-- ================= 7. 핵심 역량 · 마무리 ================= -->
+<div class="page">
+  <h2 class="sec-title">UTTEC의 차별점<span class="en">CORE COMPETENCIES</span></h2>
+
+  <div class="cap-grid">
+    <div class="cap">
+      <h4>수직 통합 풀스택</h4>
+      <p>회로설계(OrCAD 25년) → 펌웨어(38년) → 서버/클라우드 → 모바일 앱 → 양산 관리까지
+      전 단계를 외주 없이 단일 책임으로 수행합니다. 인터페이스 오류·책임 공백이 구조적으로 발생하지 않습니다.</p>
+    </div>
+    <div class="cap">
+      <h4>양산으로 증명된 기술</h4>
+      <p>데모 수준이 아닌 양산 실적 — 산업용 컨트롤러 6종 판매 중, 일본 직수출 3,800대,
+      월 7,200대 처리 자동검사 체계. "만들 수 있다"가 아니라 "팔고 있다"로 증명합니다.</p>
+    </div>
+    <div class="cap">
+      <h4>AI 네이티브 업무 체계</h4>
+      <p>AI 멀티 에이전트 협업 체계를 전사 업무에 적용 — 1인 핵심 인력이 20개 이상의 프로젝트 트랙을
+      동시 관리합니다. 이 체계 자체가 교육 사업의 커리큘럼이자, 개발 사업의 속도 경쟁력입니다.</p>
+    </div>
+    <div class="cap">
+      <h4>장기 신뢰 기반 영업</h4>
+      <p>한림그룹 6년 재수주, 일본 AMANO 직거래 지속 등 한 번 맺은 거래가 재거래로 이어지는 구조.
+      신규 채널(개발 플랫폼)에서도 미팅 → 직접 계약 전환 경로를 확보했습니다.</p>
+    </div>
+  </div>
+
+  <div class="closing">
+    <h3>맺음말</h3>
+    <p>
+      UTTEC은 15년간 무선제어와 임베디드 기술로 살아남았고, 이제 그 기술 위에 AI를 얹어
+      <b>세 개의 사업(무선제어 IoT · AI 융합 개발 · AI 교육)</b>으로 다시 성장 곡선을 그리고 있습니다.
+      세 사업 모두 구상이 아닌 <b>진행 중인 실제 프로젝트</b>로 가동되고 있습니다.
+      관심 있게 봐 주시는 것만으로도 큰 힘이 되며, 협력하거나 소개해 주실 수 있는 영역이 있다면
+      언제든 편하게 연락 주시기 바랍니다.
+    </p>
+  </div>
+
+  <table class="contact-table">
+    <tr><td class="k">대표이사</td><td>홍광선</td><td class="k">휴대전화</td><td>010-2401-9059</td></tr>
+    <tr><td class="k">이메일</td><td>ihong9059@gmail.com</td><td class="k">홈페이지</td><td>www.uttec.co.kr</td></tr>
+    <tr><td class="k">주소</td><td colspan="3">경기도 용인시 기흥구 흥덕중앙로 120, 흥덕유타워 2404호</td></tr>
+  </table>
+  <div class="footer"><span>UTTEC Company Profile</span><span>07</span></div>
+</div>
+
+</body>
+</html>

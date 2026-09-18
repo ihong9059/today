@@ -1160,7 +1160,7 @@ const Scene09: React.FC = () => {
             <div style={{ textAlign: "left" }}>
               <div style={{ fontSize: 26, color: colors.highlight, fontWeight: 700 }}>㈜유티텍 (UTTEC Co., Ltd.)</div>
               <div style={{ fontSize: 18, color: colors.textSub, marginTop: 10, lineHeight: 1.7 }}>
-                📍 경기도 용인시 기흥구 흥덕중앙로 120
+                📍 경기도 수원시 영통구 신원로250번길 53, 1214호
                 <br />
                 📞 031-627-2250 · 🌐 www.uttec.co.kr
               </div>

@@ -125,7 +125,7 @@ tr.tot.grand td{{background:#fde68a;font-size:10.5pt;}}
   <tr><td class="k">공사명</td><td colspan="3">광안 지역주택조합 공동주택 신축공사 — 옥외 보안등 조명제어 시스템</td><td class="k">제출처</td><td><b>(주)창진</b> · 조원호 귀중<br><span style="font-size:7.7pt;color:#555">부산 사상구 삼덕로89번길 19 (덕포동, 2층)<br>TEL 051-517-7117 · FAX 051-513-5060 · H.P 010-4145-8253<br>duke0422@naver.com</span></td></tr>
   <tr><td class="k">현장</td><td colspan="3">부산 수영구 광안동 971</td><td class="k">제어대상</td><td>보안등 41등 / 6회로 (LCP-0)</td></tr>
   <tr><td class="k">공급자</td><td colspan="3">UTTEC (유티이씨) · 대표이사 홍광선</td><td class="k">중앙감시</td><td>501동 경비실 1개소</td></tr>
-  <tr><td class="k">주소</td><td colspan="3">경기도 용인시 기흥구 흥덕중앙로 120 흥덕유타워 2404호</td><td class="k">연락처</td><td>010-2401-9059</td></tr>
+  <tr><td class="k">주소</td><td colspan="3">경기도 수원시 영통구 신원로250번길 53, 1214호 (원천동, 영통 아이파크 디어반)</td><td class="k">연락처</td><td>010-2401-9059</td></tr>
 </table>
 <div class="grand-line">합계금액 &nbsp; {kor_won(total)}</div>
 <table class="q colw">

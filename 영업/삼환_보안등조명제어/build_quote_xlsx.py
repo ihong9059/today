@@ -39,7 +39,7 @@ info = [
     ("현    장", "부산 수영구 광안동 971", "제 출 일", "2026. 07. 24."),
     ("제어대상", "옥외 보안등 41등 / 6회로 (LCP-0, 501동 경비실)", "문    서", "v1.0 (E13 상세도 반영)"),
     ("공급자", "UTTEC (유티이씨) · 대표이사 홍광선", "연 락 처", "010-2401-9059 / ihong9059@gmail.com"),
-    ("주    소", "경기도 용인시 기흥구 흥덕중앙로 120 흥덕유타워 2404호", "웹", "www.uttec.co.kr"),
+    ("주    소", "경기도 수원시 영통구 신원로250번길 53, 1214호 (원천동, 영통 아이파크 디어반)", "웹", "www.uttec.co.kr"),
 ]
 for a, b, cc, d in info:
     ws.cell(r, 1, a).font = sfont; ws.cell(r, 1).fill = PatternFill("solid", fgColor=LIGHT); ws.cell(r,1).alignment=center
