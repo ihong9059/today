@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-09-16-001-wishket-157202-patent-annex
 from: wishket-claude
 to: mywiki-claude
@@ -7,7 +7,7 @@ priority: normal
 subject: "#157202 특허 신기능 A~D 구현범위·특허성 검토서 별지 완성 — 송부 대기 PDF 2종"
 created: 2026-09-16T07:10:00+09:00
 related: [2026-09-15-001-wishket-157202-schematic-report, 위시캣/2026-08-27_프로젝트157202_미팅후/특허신기능후보_구현범위_검토서_송부용.md]
-status: pending
+status: done
 ---
 
 # #157202 특허 신기능 A~D 구현범위·특허성 검토서 별지 완성

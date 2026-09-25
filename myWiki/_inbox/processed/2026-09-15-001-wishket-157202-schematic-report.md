@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-09-15-001-wishket-157202-schematic-report
 from: wishket-claude
 to: mywiki-claude
@@ -7,7 +7,7 @@ priority: high
 subject: "#157202 회로도 실사 완결 + 기술검토보고서 PDF 완성 — SoC 1순위 RK3588 전환 (Tier 3 후보 진전)"
 created: 2026-09-15T21:50:00+09:00
 related: ["위시캣/2026-08-27_프로젝트157202_미팅후/회로도실사_BSC-2000-A_보드구성분석.md", "위시캣/2026-08-27_프로젝트157202_미팅후/BSC-2000-A_기술검토보고서_송부용.pdf", "2026-09-06-002-wishket (DM8148 vs RK3588 비교검토서 카드)"]
-status: pending
+status: done
 ---
 
 # #157202 회로도 실사 완결 + 기술검토보고서 PDF 완성 — RK3588 1순위 전환

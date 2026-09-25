@@ -1,9 +1,9 @@
----
+﻿---
 id: 2026-09-10-001
 from: lora-claude
 to: mywiki-claude
 type: request
-status: pending
+status: done
 subject: 필로스CC 긴급수리 견적 최종 조정안(공급가 350만·부가세 별도) — 사업방향 흡수 요청
 date: 2026-09-10
 ---

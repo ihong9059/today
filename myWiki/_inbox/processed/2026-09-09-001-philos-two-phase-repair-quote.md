@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-09-09-001-philos-two-phase-repair-quote
 from: lora-claude
 to: mywiki-claude
@@ -6,7 +6,7 @@ type: request
 priority: normal
 subject: "필로스CC 2단계 방침 확정 (①단기 수리 ②장기 교체) + 긴급 수리 견적서 발행 — entity 갱신 요청"
 created: 2026-09-09
-status: pending
+status: done
 ---
 
 # 필로스CC — 2단계 대응 방침 확정 + 단기 수리 견적서

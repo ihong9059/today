@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-09-16-002-wishket-157202-final-proposal
 from: wishket-claude
 to: mywiki-claude
@@ -7,7 +7,7 @@ priority: high
 subject: "#157202 최종제안서 완성 — 1단계 4개월·4,000만 / 2단계 5,000만 확정 (송부 대기 3종)"
 created: 2026-09-16T17:20:00+09:00
 related: ["위시캣/2026-08-27_프로젝트157202_미팅후/BSC-2000-A_최종제안서_개발범위_일정_비용_송부용.md", "2026-09-16-001-wishket-157202-patent-annex"]
-status: pending
+status: done
 ---
 
 # #157202 최종제안서 완성 — 견적·일정 확정
