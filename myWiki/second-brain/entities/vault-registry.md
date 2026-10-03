@@ -2,7 +2,7 @@
 title: vault-registry — 전체 vault 레지스트리 (단일 출처)
 type: entity
 created: 2026-06-13
-updated: 2026-10-02 (**pcb-edu** 등재 — PCB 제작 전반 교육 vault(24th), 입문자·전체 파이프라인·EasyEDA+LCSC+JLCPCB, 5-렌즈 방법론 + NE555 블링키 완주 시범모듈. 첫 하드웨어 실무 교육 vault. guksa 교육형 패턴 계승·standalone 우선) / 이전 2026-09-04 (**idaenc** 등재 — #157875 IDA E&C 스마트 환기 국책과제(Matter over Thread, 24개월·4트랙 28건), 위시캣 이탈 직접 계약 협상 국면에서 수주 전 골격 선생성(plc-retrofit 패턴 2번째). 수행계획서 v1 송부·회신 대기) / 이전 2026-09-01 2차 (수주 delivery 실행 vault 카테고리 신설 — livecow + **binschans-coffee**(#157726 계약 완료·착수) + **plc-retrofit**(#157744 carrier 골격·특허 UT-P-2026-001) + 전달용 kit **특허이관_UT-P-2026-001**(홍광삼·장민하) 등재 / 이전 2026-09-01 (수주 delivery 실행 vault 카테고리 신설 — livecow(#156763) + **binschans-coffee(#157726 원두 커피 머신 제어보드, 계약 완료·계약금 수령·개발 착수)** 등재. broker 미합류 경량 delivery, 양산 확정 시 승격 / 이전 2026-08-14 (전달용 독립형 kit 2종 등재 — jangminha-kit·livecow-cost-kit, broker 없는 standalone 카테고리 신설. 홍광선/홍광삼 인물 혼동 주의 박스) / 2026-06-13 2차 (옵시디언 열람 정책 3분류 박제 + A군 4 vault 보관함 등록 + workspace.json gitignore 정비 / 신설 — 18-vault 전수 확인 기반. n8n broker 누락 사건 교훈: vault 목록 단일 출처 부재가 silent 단절의 토양)
+updated: 2026-10-03 (**gim-sales** 등재 — 김 판매사업 기획 vault(25th), 한국 김을 롯데면세점 주축으로 해외여행객·선물 시장 판매 확대. 사업화 5-단계 프레임 + 산출물 4종(진행계획·적정가·생산물류 현황·롯데 제안서). 첫 식품·유통 영업 기획 vault·standalone 우선) / 이전 2026-10-02 (**pcb-edu** 등재 — PCB 제작 전반 교육 vault(24th), 입문자·전체 파이프라인·EasyEDA+LCSC+JLCPCB, 5-렌즈 방법론 + NE555 블링키 완주 시범모듈. 첫 하드웨어 실무 교육 vault. guksa 교육형 패턴 계승·standalone 우선) / 이전 2026-09-04 (**idaenc** 등재 — #157875 IDA E&C 스마트 환기 국책과제(Matter over Thread, 24개월·4트랙 28건), 위시캣 이탈 직접 계약 협상 국면에서 수주 전 골격 선생성(plc-retrofit 패턴 2번째). 수행계획서 v1 송부·회신 대기) / 이전 2026-09-01 2차 (수주 delivery 실행 vault 카테고리 신설 — livecow + **binschans-coffee**(#157726 계약 완료·착수) + **plc-retrofit**(#157744 carrier 골격·특허 UT-P-2026-001) + 전달용 kit **특허이관_UT-P-2026-001**(홍광삼·장민하) 등재 / 이전 2026-09-01 (수주 delivery 실행 vault 카테고리 신설 — livecow(#156763) + **binschans-coffee(#157726 원두 커피 머신 제어보드, 계약 완료·계약금 수령·개발 착수)** 등재. broker 미합류 경량 delivery, 양산 확정 시 승격 / 이전 2026-08-14 (전달용 독립형 kit 2종 등재 — jangminha-kit·livecow-cost-kit, broker 없는 standalone 카테고리 신설. 홍광선/홍광삼 인물 혼동 주의 박스) / 2026-06-13 2차 (옵시디언 열람 정책 3분류 박제 + A군 4 vault 보관함 등록 + workspace.json gitignore 정비 / 신설 — 18-vault 전수 확인 기반. n8n broker 누락 사건 교훈: vault 목록 단일 출처 부재가 silent 단절의 토양)
 tags: [vault, multi-agent, registry, broker, 인프라, 단일출처]
 links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-polling-표준-n8n-cascade]
 ---
@@ -11,7 +11,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 
 ## 한 줄 정의
 
-**myWiki 연관 전체 vault의 단일 출처.** 신규 vault 합류·호스트 변경·broker 라우팅 변경 시 **본 페이지를 반드시 갱신**한다. (2026-10-02 기준 — myWiki hub 포함 24개 multi-agent vault / 4 호스트. 24th = pcb-edu 합류(PCB 제작 전반 교육, 첫 하드웨어 실무 교육 콘텐츠 vault + 이식성 강조, standalone 우선). 23rd = guksa 합류(국사 역학관계 교육, 첫 교양·인문 교육 콘텐츠 vault + 이식성 강조). 22nd = jangminha 합류(장민하 AI 프로젝트 학습·협업, 첫 인물-멘토링 vault), 21st = weflo(Weflo #157235 DAQ 실행), 20th = uttec-academy, 19th = lora. + **2026-08-14: 전달용 독립형 kit 2종**(jangminha-kit·livecow-cost-kit) 별도 등재 — broker 없는 standalone, 아래 § "전달용 독립형 kit" 참조)
+**myWiki 연관 전체 vault의 단일 출처.** 신규 vault 합류·호스트 변경·broker 라우팅 변경 시 **본 페이지를 반드시 갱신**한다. (2026-10-03 기준 — myWiki hub 포함 25개 multi-agent vault / 4 호스트. 25th = gim-sales 합류(김 판매사업 기획, 첫 식품·유통 영업 기획 vault + 이식성 강조, standalone 우선). 24th = pcb-edu 합류(PCB 제작 전반 교육, 첫 하드웨어 실무 교육 콘텐츠 vault + 이식성 강조, standalone 우선). 23rd = guksa 합류(국사 역학관계 교육, 첫 교양·인문 교육 콘텐츠 vault + 이식성 강조). 22nd = jangminha 합류(장민하 AI 프로젝트 학습·협업, 첫 인물-멘토링 vault), 21st = weflo(Weflo #157235 DAQ 실행), 20th = uttec-academy, 19th = lora. + **2026-08-14: 전달용 독립형 kit 2종**(jangminha-kit·livecow-cost-kit) 별도 등재 — broker 없는 standalone, 아래 § "전달용 독립형 kit" 참조)
 
 > ⚠️ 신설 동기: n8nUttec broker 라우팅 누락으로 카드 5장이 한 달간 silent 정체 (2026-06-13 발견). vault 목록·라우팅의 단일 출처가 없어 "추후 추가 후보" 주석이 잊혔다. 본 레지스트리가 그 재발 방지 장치.
 
@@ -21,7 +21,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 |:-:|---|---|---|---|
 | 1 | **myWiki** | mywiki-claude | `C:\todo\today\myWiki\` | **main hub** — 5단계 흡수·broker·cascade 주도 |
 
-## Windows 본 PC (myhome-lenovo, `C:\todo\…`) — 15
+## Windows 본 PC (myhome-lenovo, `C:\todo\…`) — 16
 
 | # | vault | agent | 합류 | 역할 | broker |
 |:-:|---|---|:-:|---|:-:|
@@ -41,6 +41,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 | 22 | **jangminha (22nd)** | jangminha-claude | 8/9 | **장민하 AI 프로젝트 학습·협업 vault** — 홍광선 삼성 후배 장봉진 따님(건국대 토목·취준·AI 입문자)의 AI 프로젝트 진행 + 전문분야 개척 공간. 하이브리드 설계: 입문자 친화 한글 폴더(research-johyekyung 선례) + 허브 연결 `_inbox`(weflo 선례). 첫 인물-멘토링 협업 vault. [[project_jang_minha_intern]] · [[jangminha]] entity 참조 | 양방향✅ (`outbox-staging/`→`sent-archived/`) |
 | 23 | **guksa (23rd)** | guksa-claude | 8/22 | **국사(한국사) 역학관계 교육 vault** — 역사를 암기가 아니라 "인과·역학관계의 과정"으로 재구성해 학습·강의준비. 방법론 심장 = 6-렌즈 프레임(전사→조건→발단→전개→역학→파급) + 삼국통일 시범모듈. **이식성 강조**(폴더째 복사 시 타 전문가 PC 동작, `.claude/` 포함). 첫 교양·인문 교육 콘텐츠 vault. jangminha 하이브리드 패턴 계승. [[project_guksa_history_edu]] · [[guksa]] entity 참조 | standalone 우선 (broker 미등록, `_inbox` 채널만 준비) |
 | 24 | **pcb-edu (24th)** | pcb-edu-claude | 10/2 | **PCB 제작 전반 교육 vault** — PCB 만들기를 "조작 암기"가 아니라 "왜·함정(gotcha)·검증의 체득"으로 재구성해 학습·강의준비. 방법론 심장 = **5-렌즈 프레임**(왜→무엇→어떻게→함정→검증) + NE555 LED 블링키 완주 시범모듈(6단계 end-to-end). 대상=입문자/비전공자, 범위=전체 파이프라인(설계→레이아웃→제조발주→조립→검증→양산), 중심툴=EasyEDA+LCSC+JLCPCB. **첫 하드웨어 실무 교육 콘텐츠 vault** + 이식성 강조(`.claude/` 포함). guksa 교육형 패턴 계승. [[project_pcb_edu_vault]] · [[pcb-edu]] entity 참조 | standalone 우선 (broker 미등록, `_inbox` 채널만 준비) |
+| 25 | **gim-sales (25th)** | gim-sales-claude | 10/3 | **김 판매사업 기획 vault** — 한국 김을 롯데면세점 주축으로 해외여행객·선물 시장에 판매 확대하는 신사업을 기획·추진. 방법론 심장 = **사업화 5-단계 프레임**(시장→제품/포장→공급/물류→가격/수익→제안). 산출물 4종=① 진행계획(물류)·② 적정판매가·③ 생산물류 현황조사·④ **롯데 지점장 제안서**(최종 수렴점). **첫 식품·유통 영업 기획 vault**(교육형 pcb-edu/guksa와 성격 구분, UTTEC 하드웨어 코어 무관한 대표 개인 신사업 트랙) + 이식성(`.claude/` 포함). 원칙=수치·사실 공식출처 각주·환각 금지·미확정 결정 짐작 금지. [[project_gim_sales_vault]] · [[gim-sales]] entity 참조 | standalone 우선 (broker 미등록, `_inbox` 채널만 준비) |
 
 ## 수주 delivery 실행 vault (본 PC, broker 미합류·경량) ⭐
 
