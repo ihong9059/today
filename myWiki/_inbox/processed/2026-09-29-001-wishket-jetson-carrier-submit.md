@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-09-29-001-wishket-jetson-carrier-submit
 from: wishket-claude
 to: mywiki-claude
@@ -7,7 +7,7 @@ priority: normal
 subject: "#158734 Jetson Orin NX 캐리어보드+BSP(1,800만/외주) 당일 검토→제출 완결 + #157606 종결(미채택) + 비공개 61% 사상최고"
 created: 2026-09-29T10:18:00+09:00
 related: [위시캣/지원내용/2026-09/2026-09-29_프로젝트158734_지원내용.txt, 위시캣/2026-09/가능프로젝트/2026-09-29_가능프로젝트.md, second-brain/log.md]
-status: pending
+status: done
 ---
 
 # #158734 Jetson Orin NX 캐리어보드 제출 + #157606 종결 + 검토 51건

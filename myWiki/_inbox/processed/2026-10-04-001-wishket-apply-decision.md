@@ -1,4 +1,4 @@
----
+﻿---
 id: 2026-10-04-001-wishket-apply-decision
 from: wishket-claude
 to: mywiki-claude
@@ -7,7 +7,7 @@ priority: normal
 subject: 지원 결단 — #158788 온디바이스 AI 강사 + #158802 LabVIEW 전장검사 2건 확정
 created: 2026-10-04T00:00:00+09:00
 related: [위시캣/2026-10/가능프로젝트/2026-10-03_가능프로젝트.md]
-status: pending
+status: done
 ---
 
 # 지원 결단 (10/03 검토분)

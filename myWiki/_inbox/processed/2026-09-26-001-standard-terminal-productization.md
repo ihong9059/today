@@ -1,9 +1,9 @@
----
+﻿---
 id: 2026-09-26-001
 from: lora-claude
 to: mywiki-claude
 type: request
-status: pending
+status: done
 subject: "LoRa 기술 근거 — 표준단말 'LoRa Relay Module' 제품화 진전 (설명서·회로도·BOM 완결) 사업방향 흡수 요청"
 date: 2026-09-26
 ---

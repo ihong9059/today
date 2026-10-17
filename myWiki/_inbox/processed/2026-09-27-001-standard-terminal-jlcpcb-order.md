@@ -1,9 +1,9 @@
----
+﻿---
 id: 2026-09-27-001
 from: lora-claude
 to: mywiki-claude
 type: request
-status: pending
+status: done
 subject: "표준단말 LoRa Relay Module — JLCPCB 발주 완료(제품화 마일스톤) + EDA 파이프라인 gotcha 4건 흡수 요청"
 ---
 
