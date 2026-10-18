@@ -1,0 +1,14 @@
+---
+name: user_mother_passing_theophila
+description: 사용자 어머님 故 이수자(세례명 테오필라) 2026-10-15경 선종 — 애도 맥락 유의
+metadata: 
+  node_type: memory
+  type: user
+  originSessionId: bf8673ab-c746-44f8-91d0-ae99e3ecd45a
+---
+
+사용자(홍광선)의 어머님 **故 이수자**(세례명 **테오필라**)께서 2026-10-15경 선종하셨다. 2026-10-17 유품 정리 중 목포 인근 유품 기부처(천주교·사회단체)를 조사·안내.
+
+**Why:** 사별 직후의 개인적·정서적 맥락. 당분간 응대 시 배려가 필요하고, 관련 용무(유품 정리·위령미사·장례 후속)가 이어질 수 있다.
+
+**How to apply:** 어머님 관련 화제에는 애도·존중의 톤 유지. 가톨릭목포성지는 친동생 **홍광이**가 운영하는 순례 단체 숙박 기관([[project_mokpo_sanctuary_vault]])으로 중고물품 수거처가 아님 — 유품 기부처로 혼동 금지. 산출물: `C:\Users\lenovo\Downloads\어머님유품_기부단체_목포.pdf`.

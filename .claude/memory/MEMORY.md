@@ -1,4 +1,5 @@
 - [사용자 본명 — 홍광선](user_name_hong_kwangsun.md) — UTTEC 대표, 이메일 prefix에서 이름 추정 금지 (이형근 X)
+- [어머님 故 이수자(테오필라) 선종 🕊️](user_mother_passing_theophila.md) — 2026-10-15경 선종, 유품 정리 중. 애도 맥락 유의. 목포성지=동생 홍광이 운영(기부처 아님)
 - [장민하 — AI 프로젝트 협업](project_jang_minha_intern.md) — 삼성 후배 장봉진 따님, 건국대 토목 취준생·AI 입문자. 2026-08-09 전용 vault `C:\todo\jangminha`(22nd, jangminha-claude) 신설 — 입문자 친화 한글폴더 + 허브 _inbox 연결 하이브리드, 첫 인물-멘토링 vault. 첫 프로젝트 방향 = 홍광선 결정 대기
 - [pcb-edu — PCB 제작 교육 vault](project_pcb_edu_vault.md) — `C:\todo\pcb-edu`(24th, pcb-edu-claude) 2026-10-02 신설. PCB 제작 전반 입문자 교육. 5-렌즈(왜→무엇→어떻게→**함정(gotcha)**→검증)·EasyEDA+LCSC+JLCPCB·전체 파이프라인·NE555 블링키 완주 시범. guksa 교육형 패턴 계승, standalone 우선, 첫 하드웨어 실무 교육 vault
 - [목포성지숙소 — 가톨릭목포성지 숙소·단체 운영 vault](project_mokpo_sanctuary_vault.md) — `C:\todo\목포성지숙소`(26th, mokpo-sanctuary-claude) 2026-10-17 신설. 친동생 **홍광이**(비전문가) 숙소 69실·250명 단체 신청/운영/관리. 8개 도메인(신청예약·객실·SOP·CRM·정산·인력·개선·참고). jangminha/guksa 패턴 계승·입문자 한글폴더·standalone·**폴더째 이관**. 경로 전부 상대/자가참조로 이식성 개선(격리 복사 검증). 요금·객실상세 공란(환각 금지)
