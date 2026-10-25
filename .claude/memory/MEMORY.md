@@ -1,7 +1,8 @@
 - [사용자 본명 — 홍광선](user_name_hong_kwangsun.md) — UTTEC 대표, 이메일 prefix에서 이름 추정 금지 (이형근 X)
 - [어머님 故 이수자(테오필라) 선종 🕊️](user_mother_passing_theophila.md) — 2026-10-14 13:37 선종, 유품 정리 중. 애도 맥락 유의. 목포성지=동생 홍광이 운영(기부처 아님). 전용 vault=[[project_mother_memorial_vault]]
 - [「어머님」 vault — 마지막 일들·상속 정리 🕊️](project_mother_memorial_vault.md) — `C:\todo\어머님`(27th, mother-memorial-claude) 2026-10-19 신설. 故 이수자(테오필라) 선종·장례·사진영정·추모미사·행정·상속·유품 8영역. standalone 전용·로컬 백업(원격 금지)·개인정보 보호·짐작 금지(날짜/금액/재산 공란)
-- [장민하 — AI 프로젝트 협업](project_jang_minha_intern.md) — 삼성 후배 장봉진 따님, 건국대 토목 취준생·AI 입문자. 2026-08-09 전용 vault `C:\todo\jangminha`(22nd, jangminha-claude) 신설 — 입문자 친화 한글폴더 + 허브 _inbox 연결 하이브리드, 첫 인물-멘토링 vault. 첫 프로젝트 방향 = 홍광선 결정 대기
+- [활성/보류 트랙 재편 (2026-10-25) ⭐](project_active_track_status.md) — **활성 = livecow·idaenc·weflo 3건 delivery 정리 집중**. 보류(3건 정리 후 재개)=AI굿즈교육·광주AI교육·PLC신사업·노지관리. 대기(연락/키 오면)=필로스CC·위시캣등급·여수공항. 중단=#158166. #157875=IDA E&C 직접계약 확정(idaenc vault 소관)
+- [장민하 — AI 프로젝트 협업](project_jang_minha_intern.md) — 삼성 후배 장봉진 따님, 건국대 토목 취준생·AI 입문자. 전용 vault `C:\todo\jangminha`(22nd). **첫 프로젝트(weflo Sub PCB) 1차 PCB 완료·정상동작 (2026-10-25)** — C축 백견불여일습 실증 1호 완결, 후속 과제는 홍광선 지시 대기
 - [pcb-edu — PCB 제작 교육 vault](project_pcb_edu_vault.md) — `C:\todo\pcb-edu`(24th, pcb-edu-claude) 2026-10-02 신설. PCB 제작 전반 입문자 교육. 5-렌즈(왜→무엇→어떻게→**함정(gotcha)**→검증)·EasyEDA+LCSC+JLCPCB·전체 파이프라인·NE555 블링키 완주 시범. guksa 교육형 패턴 계승, standalone 우선, 첫 하드웨어 실무 교육 vault
 - [목포성지숙소 — 가톨릭목포성지 숙소·단체 운영 vault](project_mokpo_sanctuary_vault.md) — `C:\todo\목포성지숙소`(26th, mokpo-sanctuary-claude) 2026-10-17 신설. 친동생 **홍광이**(비전문가) 숙소 69실·250명 단체 신청/운영/관리. 8개 도메인(신청예약·객실·SOP·CRM·정산·인력·개선·참고). jangminha/guksa 패턴 계승·입문자 한글폴더·standalone·**폴더째 이관**. 경로 전부 상대/자가참조로 이식성 개선(격리 복사 검증). 요금·객실상세 공란(환각 금지)
 - [gim-sales — 김 판매사업 기획 vault](project_gim_sales_vault.md) — `C:\todo\gim-sales`(25th, gim-sales-claude) 2026-10-03 신설. 한국 김을 롯데면세점 주축으로 해외여행객·선물 판매 확대. 산출물 4종(진행계획·적정가·생산물류 현황·롯데 제안서) + 사업화 5-단계 프레임. 첫 식품·유통 영업 기획 vault, standalone 우선. 수치 환각 금지·결정 짐작 금지(D1~D5 질문)
@@ -30,6 +31,7 @@
 - [PC 인프라 — 역할 분리](project_dual_pc.md) — Windows=myWiki/일상 (단일 source) / Ubuntu=개발 전용 (2026-05-14 Mac→Ubuntu 컨버전)
 - [uttec@ubuntu 개발 PC](reference_uttec_ubuntu_mac.md) — Mac→Ubuntu 22.04 컨버전, `ssh ubuntu` 별칭, Tailscale 100.90.158.36, Claude Code v2.1.141 (2026-05-14)
 - [UTTEC 보드 명칭](feedback_uttec_board_naming.md) — aiHardStudy 내 ESP32 보드 → UTTEC 보드로 명칭 통일
+- [작업보고서 숫자 첫칼럼 보조테이블 금지 🚨](feedback_report_numeric_table_notion_pollution.md) — notion-sync가 파일 전체의 `| 정수 |` 행을 todo로 오인 → Notion 오염. 보조표는 ①②③/불릿 사용. 10/25 재편표 2건 오염·복구 박제
 - [할일 Notion 동기화 — 단방향](feedback_todo_notion_sync.md) — **생성=작업보고서 source / 완료=Notion source**. Claude는 작업보고서 ⬜→✅ 임의 변경 절대 금지. Notion에서 사용자 체크 시에만 작업보고서 ✅ 전파
 - [myWiki 반영 필수](feedback_mywiki_sync.md) — 작업 중/종료 시 myWiki second-brain에 반드시 반영, 누락 금지
 - [myWiki = main vault ⭐](feedback_mywiki_main_vault_role.md) — 5-vault hub. mywiki-claude는 다른 vault 문제·결정·진단 능동 주도 (카드 발송·진단·cascade). "할까요?" 묻기 최소화, 사용자 결단 필요 항목만 보고

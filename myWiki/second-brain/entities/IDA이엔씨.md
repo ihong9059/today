@@ -2,8 +2,8 @@
 title: (주)아이디에이이엔씨 (IDA E&C) — 스마트 환기 국책과제 클라이언트
 type: entity
 created: 2026-09-04
-updated: 2026-09-04
-tags: [클라이언트, 환기설비, HVAC, HRV, Matter, Thread, 스마트홈, 국책과제, 직접계약, 위시캣, 제조사]
+updated: 2026-10-25 (사용자 확정 — **IDA E&C와 직접 계약 진행 결정** ⭐: 위시캣 이탈 직접 계약 국면이 "협상 중"에서 **"진행 확정"**으로 전환. 실행 소관 = **idaenc vault**(수행계획·계약·개발 일체), myWiki는 클라이언트 자산 인지만. today todo #157875 항목은 idaenc 이관으로 종결) / 이전 2026-09-04
+tags: [클라이언트, 환기설비, HVAC, HRV, Matter, Thread, 스마트홈, 국책과제, 직접계약, 위시캣, 제조사, 직접계약확정, idaenc-vault]
 links: [위시캣활동, vault-registry, 양산제품, ai-direction, 영업전략]
 ---
 

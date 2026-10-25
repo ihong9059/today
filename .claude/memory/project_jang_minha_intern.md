@@ -1,6 +1,6 @@
 ---
 name: project_jang_minha_intern
-description: "장민하 = 삼성 직장후배 장봉진 따님, 건국대 토목공학 취준생, UTTEC AI 프로젝트 협업 후보"
+description: "장민하 = 삼성 직장후배 장봉진 따님, 토목 취준생·AI 입문자 — weflo Sub PCB 첫 프로젝트 1차 PCB 완료·정상동작(2026-10-25)"
 metadata: 
   node_type: memory
   type: project
@@ -16,6 +16,8 @@ metadata:
 
 **첫 프로젝트 확정 = weflo 계측보드 Sub PCB 회로/PCB (EasyEDA)** — 실전 수주건 #157235를 교재로. 진행 채널 = **독립 배포본 `C:\todo\jangminha-kit`** (오프라인, `_홍광선께_보낼것/받은것/` 폴더 왕복). 엔지니어링 원본(source of truth)은 **`C:\todo\portenta-lab`**(홍광선 소유 repo: hardware/schematic BOM·NETLIST·설명서, 펌웨어 M7/M4). weflo vault(21st)는 사업 lifecycle 래퍼 — 결정만 cascade. 세 vault 관계: weflo(사업)→교재→jangminha-kit(학습사본)+portenta-lab(엔지니어링정본). ⚠️ jangminha-kit은 장민하 사본이라 원본 수정 금지, 정정은 portenta-lab에서.
 
-**진행 상황(2026-08-17)**: 전원부 설계 왕복 진행 중. 8/13 전원부 8건 답변 → 8/16 장민하 FB 저항/정정 카드 → 8/17 홍광선 회신(FB 조정형 확정 U4 560k/100k·U5 976k/100k, C/D 원본정정 반영, pinout/schematic 정본=portenta-lab 신판). **다음 게이트(장민하)**: ①HD 커넥터 80핀×2 전핀 대조 → 1차 회로도 완성 시 EasyEDA project 홍광선 송부·확인 후 진행 ②전 부품 납기 전수조사 → xlsx 납기열 추가 전체 BOM 송부.
+**⭐ 진행 상황(2026-10-25 사용자 확인)**: **1차 PCB 완료 + 정상 동작**. 토목 전공 AI 입문자가 회로 설계→PCB 제작→실물 검증 완주 — uttec-academy C축(백견불여일습) 실증 1호 완결. "첫 프로젝트 방향 결정 대기"는 해소됨(이미 완료). 후속(2차 개선·다음 과제)은 홍광선 지시 대기.
+
+**(기록) 진행 상황(2026-08-17)**: 전원부 설계 왕복 진행 중. 8/13 전원부 8건 답변 → 8/16 장민하 FB 저항/정정 카드 → 8/17 홍광선 회신(FB 조정형 확정 U4 560k/100k·U5 976k/100k, C/D 원본정정 반영, pinout/schematic 정본=portenta-lab 신판). **다음 게이트(장민하)**: ①HD 커넥터 80핀×2 전핀 대조 → 1차 회로도 완성 시 EasyEDA project 홍광선 송부·확인 후 진행 ②전 부품 납기 전수조사 → xlsx 납기열 추가 전체 BOM 송부.
 
 **How to apply:** 자료·과제는 항상 AI 완전 입문자 기준. 토목 전공 강점(수위·물흐름·구조진동·도면·설비)을 프로젝트와 연결해 어필. 관련 [[feedback_no_fabricated_user_data]] — 장민하 개인정보 임의 생성 금지.

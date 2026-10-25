@@ -2,8 +2,8 @@
 title: 장민하 — AI 프로젝트 협업 (jangminha vault, 22nd)
 type: entity
 created: 2026-08-09
-updated: 2026-08-17
-tags: [사람, 협업, 교육, vault, 멘토링, 토목]
+updated: 2026-10-25 (사용자 보고 — **첫 프로젝트 1차 PCB 완료·정상 동작 확인** ⭐: weflo 계측보드 Sub PCB가 제작·검증까지 완주. "첫 프로젝트 방향 결정 대기" 상태 완전 해소, AI 입문자가 백견불여일습 6단계로 실물 PCB 완주 = [[uttec-academy]] C축 실증 1호 완결) / 이전 2026-08-17
+tags: [사람, 협업, 교육, vault, 멘토링, 토목, 1차PCB완료]
 links: [vault-registry, uttec-academy, ai-direction, strengths, weflo]
 ---
 
@@ -14,6 +14,8 @@ links: [vault-registry, uttec-academy, ai-direction, strengths, weflo]
 **홍광선의 삼성 직장후배 장봉진의 따님.** 건국대 토목공학과 졸업, 취업 준비 중, AI 완전 입문자.
 2026-08-06 홍광선이 AI 프로젝트를 맡겨보기로 결정 → 2026-08-09 **전용 vault(`jangminha`, 22nd) 신설**로 본격 협업 개시.
 **첫 프로젝트 확정 = [[weflo]] 계측보드 Sub PCB 회로/PCB (EasyEDA)** — 실전 수주건 #157235를 "교재"로. 2026-08-17 현재 전원부 설계 왕복 진행 중.
+
+> ⭐ **2026-10-25 사용자 확인: 1차 PCB 완료 + 정상 동작.** 토목 전공 AI 입문자가 회로 설계→PCB 제작→실물 검증까지 완주 — [[uttec-academy]] C축(「AI 활용 전문가 되기」·백견불여일습)의 실증 1호가 "설계 왕복"에서 **"동작하는 실물"로 완결**. 후속(2차 개선·다음 과제)은 홍광선 지시 대기.
 
 ## 사람
 
