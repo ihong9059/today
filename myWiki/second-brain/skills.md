@@ -2,7 +2,7 @@
 title: 기술 스택 인벤토리
 type: skill
 created: 2026-04-19
-updated: 2026-09-04 (Legacy Retrofit·IDE→SSD 이미징 + 디스플레이 4종(LVDS·TTL/RGB·VGA·DVI) 등재 — wishket #158166 계기 사용자 확인 자산, 카드 `2026-09-04-001` 흡수)
+updated: 2026-10-26 (microSD/FatFS 파일시스템 + MP3 오디오 칩(UART/SPI) 직접 제어 등재 — wishket me.md 자산 19, #159258 사운드 포스터 계기 사용자 확인 [O], 카드 `2026-10-26-002` 흡수) / 이전 2026-09-04 (Legacy Retrofit·IDE→SSD 이미징 + 디스플레이 4종(LVDS·TTL/RGB·VGA·DVI) 등재 — wishket #158166 계기 사용자 확인 자산, 카드 `2026-09-04-001` 흡수)
 tags: [기술, 역량]
 links: [me, projects, ai-direction, strengths, gaps]
 ---
@@ -26,6 +26,7 @@ links: [me, projects, ai-direction, strengths, gaps]
 | **디스플레이 인터페이스 4종 (LVDS·TTL/RGB·VGA·DVI)** | 상 | 전 인터페이스 실개발 (2026-09-04 박제, #158166 계기 사용자 확인) — LCD 교체·레거시 패널 대체 외주 정조준 | 활성 ★ |
 | **PCB 설계 툴 — OrCAD(25년)·EasyEDA 상급 / PADS 중급 / KiCad 실사용** | 상~중 | KiCad는 2026-09-09 박제(#158291 v2 계기 사용자 확인, 반복 누락 10번째) — 사용 프로젝트·버전·숙련도 세부 확보 시 상세화 | 활성 |
 | LoRa/Zigbee | 중상 | REVITA, IoT 통신, **[[한림용인cc-고가수조]] (2026-05 시공 직전, 1,000만원)** | 활성 |
+| **microSD/FatFS 파일시스템 + MP3 오디오 칩(UART/SPI 제어형) 직접 제어** | 상 | **양산 제품에서 직접 구현 — 사용자 확인 [O] 2건 (wishket me.md 자산 19, 2026-10-26 #159258 사운드 포스터 계기 박제). 오디오 재생 디바이스 외주 매칭 축** | 활성 ★ |
 | LoRa E22 EByte 920MHz 풀스택 | 중상 | [[한림용인cc-고가수조]] 노드·중계기·게이트웨이 / oldProject bleModule (config read/write 검증·mode mapping 정정·air rate 0.3k 통일) | 신규(2026-05) |
 | **LoRa 4종 모듈 풀스택 + 자율 제어망 프로토콜** | 중상 | [[lora]] vault — E22-400/900·E32-433/915 (2칩 패밀리 SX126x/SX127x × 2대역) TX/RX 전부 + 칩별 config 단일 출처 + 8B frame 자율 제어망(단일채널·1B 주소·일일 sync TDMA) 실보드 송수신 무손실 실증 + nRF52832 SAADC 배터리 절대측정. SPI(E22-M/E19)+Zephyr 전환 carry | 신규(2026-06) ★ |
 | 수위센서 + 펌프제어 무선 | 중 | [[한림용인cc-고가수조]] 압력센서 + 임계값 + LoRa 명령 + 펌프 ON/OFF (응답 3~5초) | 신규(2026-05) |

@@ -135,6 +135,20 @@ def is_similar(a, b):
     return False
 
 
+def strict_similar(a, b):
+    """완료 항목 비교 전용 엄격 매칭.
+    is_similar의 글자집합/키워드 매칭은 한글 장문에서 거의 항상 참이 되어,
+    반복성 할일(megasession·cascade 등)이 직전 완료 항목과 오매칭 → 신규 할일이
+    즉시 ✅ 처리되는 사고 발생 (2026-10-26). 완료 매칭은 정규화 동일/포함만 인정."""
+    na, nb = normalize_text(a), normalize_text(b)
+    if not na or not nb:
+        return False
+    if na == nb:
+        return True
+    shorter = min(len(na), len(nb))
+    return shorter >= 12 and (na in nb or nb in na)
+
+
 def get_report_path():
     project_root = Path(__file__).resolve().parent.parent.parent
     return project_root / "작업보고서" / f"{TODAY.strftime('%Y-%m-%d')}_작업보고서.md"
@@ -292,7 +306,7 @@ def dedup_against_completed(sections):
             if not text:
                 continue
             for ct in completed_texts:
-                if is_similar(text, ct):
+                if strict_similar(text, ct):
                     requests.delete(
                         f"https://api.notion.com/v1/blocks/{b['id']}",
                         headers=HEADERS,
@@ -341,8 +355,11 @@ def sync_bidirectional(sections):
     for rt in report_todos:
         if rt["done"]:
             continue
-        # 이미 Notion에 있는지 확인
-        if any(is_similar(rt["text"], nt["text"]) for nt in notion_todos):
+        # 이미 Notion에 있는지 확인 (완료 항목과는 엄격 매칭 — 오매칭 시 신규 할일 누락)
+        if any(
+            (strict_similar if nt["done"] else is_similar)(rt["text"], nt["text"])
+            for nt in notion_todos
+        ):
             continue
 
         target = progress_heading_id if rt.get("progress") and progress_heading_id else goal_heading_id
@@ -433,7 +450,8 @@ def sync_bidirectional(sections):
         status_synced = []
         for rt in report_todos:
             for nt in notion_todos:
-                if not is_similar(rt["text"], nt["text"]):
+                # 완료 항목과는 엄격 매칭 — 느슨 매칭 시 신규 할일이 즉시 ✅ 오염
+                if not (strict_similar if nt["done"] else is_similar)(rt["text"], nt["text"]):
                     continue
                 if nt["done"] and not rt["done"]:
                     # ⬜/🔄 → ✅ 변경 + 텍스트 ~~취소선~~ 추가

@@ -60,12 +60,12 @@ updated: 2026-05-09
 | [[ponet]] | **ponet vault** ⭐ — Ponet 광주 협력 회사 (Tier 3, 조대홍 사장). PCB 설계 풀세트 + 더존 ERP + 자체 호스팅. 15th multi-agent (`C:/todo/ponet/`, 6/6 신설, carrier 패턴 3번째 사례 정착 확정 + 자체 SSH fact-finding 신설 첫 사례) |
 | [[factory]] | **factory vault** ⭐⭐ — UTTEC 공장 자동화 사업화 vault (Tier 3). 1차 진입 = 분쇄·파쇄 설비 (한국기계 베이스 → 동종 회사 확장), 확장 = 센서+제어 기반 공장 자동화 전반. 16th multi-agent (`C:/todo/factory/`, 6/10 신설, **carrier 패턴 4번째 사례** + 4국 deep search + 핵심 10사 entity + 한국기계 자산 이식) |
 | [[uttec-plc]] | **uttec-plc vault** — UTTEC PLC/SCADA 산업 자동화 트랙 (LS XGT 견적·설계 + 위시캣 #155220·#155381 계열). 18th multi-agent (uttecMac `~/uttec-plc/`, 6/13 신설·첫 운영, **Tier 2 확정** + #155220 final 송부 완료·수주 대기 + 시스템 설명서·XG5000 초보자 시리즈) |
-| [[lora]] | **lora vault** ⭐ — UTTEC LoRa 기술 전문 hub. 한림·shield·revita·factory 응용에서 LoRa 기술 근거(E22/E32 설정·air rate·결선·time-mux·망 구성·SOP) 횡단 집약 → 사업방향 cascade. 19th multi-agent (`C:/todo/lora/`, 6/13 신설, **기술 근거 단일 출처 트랙 첫 사례**, 현장 hardware 작업 ❌) |
-| [[uttec-academy]] | **uttec-academy vault** ⭐ — UTTEC 교육 운영·발전 hub. 자체 제작 kit 기반 오프라인 실습 교육사업의 운영·행정·강사·차수 개선 단일 출처 → 사업방향 = 교육 전문성. 20th multi-agent (`C:/todo/uttec-academy/`, 6/17 신설). **미래창의 3차 진행 중(7/15~8/12, 수강생 16명)** + 신규 리드(용인진흥원 장비체험 확장·Claude 대리점 파트너십). 온라인 [[uttec-edu]]와 별개, 기술은 [[uttec-factory]]·[[lora]]·[[onDevice-ai]] 참조 |
+| [[lora]] | **lora vault** ⭐ — UTTEC LoRa 기술 전문 hub. 한림·shield·revita·factory 응용에서 LoRa 기술 근거(E22/E32 설정·air rate·결선·time-mux·망 구성·SOP) 횡단 집약 → 사업방향 cascade. 19th multi-agent (`C:/todo/lora/`, 6/13 신설, **기술 근거 단일 출처 트랙 첫 사례**, 현장 hardware 작업 ❌). 표준단말 "LoRa Relay Module" 제품화·fleet 확정(10/17) → **한림 조명 pole 개별제어 200대 견적·ROI 발행 = 첫 대량 수주 후보(10/26 흡수, 회신 대기)** |
+| [[uttec-academy]] | **uttec-academy vault** ⭐ — UTTEC 교육 운영·발전 hub. 자체 제작 kit 기반 오프라인 실습 교육사업의 운영·행정·강사·차수 개선 단일 출처 → 사업방향 = 교육 전문성. 20th multi-agent (`C:/todo/uttec-academy/`, 6/17 신설). 용인 "2차" 재수주(10월 말~11월 초, 18h) 준비 — 강의안 6종 완성 + **신판 kit 샘플 10장 QC 전원합격·설계결함 2건 해소(10/26) = 투입 HW 리스크 해소**. 온라인 [[uttec-edu]]와 별개, 기술은 [[uttec-factory]]·[[lora]]·[[onDevice-ai]] 참조 |
 | [[조대홍]] | Ponet 사장 entity (광주, UTTEC 협력 파트너) |
 | [[xerix]] | Xerix MFC Controller — EtherCAT 제안 4,970만원 |
 | [[revita]] | REVITA — IoT, LoRa, KC 인증 |
-| [[위시캣활동]] | 위시캣 프리랜서 — 16건+ 지원, 시장 분석 |
+| [[위시캣활동]] | 위시캣 프리랜서 — 파이프라인·지원서·시장 분석. 최근: #159258 사운드 포스터 제출(10/26)·#159011 선루프 무산 종결·#157875 IDA 직접계약 이관 |
 | [[weflo]] | Weflo(WEFLO Inc.) — 모빌리티 비접촉 AI 진단 클라이언트(한화 스핀오프·Gartner Physical AI), 위시캣 #157235, STM32H7 DAQ 매칭. **2026-08-04 본격진행 → weflo 실행 vault(21st) 신설** (영업 wishket에서 졸업, 홍광선+임호균 R&R) → [[vault-registry]]. 2026-10-25 2차보드 검토의견 수신(flying-probe 넷분석·설계오류 3건 누적·차기 필수 8건) |
 | [[IDA이엔씨]] | (주)아이디에이이엔씨(IDA E&C) — 환기설비 전문 제조사(2004~, 특허 20+, HRV·전동 디퓨저). 위시캣 #157875 → **위시캣 이탈 직접 계약 협상 중**(수행계획서 v1 회신 대기), 24개월 Matter over Thread 국책과제 = **파이프라인 최상단(Tier 2~3)**. 실행 vault idaenc(계약 전 골격, 9/4) → [[vault-registry]] |
 | [[jangminha]] | **장민하 vault** ⭐ — 홍광선 후배 딸(건국대 토목·AI 입문자) AI 프로젝트 학습·협업 공간. 22nd multi-agent (`C:/todo/jangminha/`, 8/9 신설, **첫 인물-멘토링 vault**). 입문자 친화 한글 폴더 + 허브 연결 `_inbox`. 토목 강점 × AI 전문분야 개척 → [[vault-registry]] |
@@ -103,7 +103,7 @@ updated: 2026-05-09
 | [[일본-시장]] | 일본 영업 트랙 — AMANO BLE Mesh 3,800대 양산(nRF52832) + 도카이 자전거주차장 + Patron 제안서 |
 | [[whybiz-tracker]] | whybiz GPS Tracker IoT IP — LTE+GPS+Zigbee+LoRa+Modbus+BLE 모듈러 솔루션, 모듈 즉시 재조합 가능 |
 | [[군사업]] | 군 사업 IP — ITM-G3 RF 통신기(Qorvo QPG6105) + 60Channel 군대충전기 + 함상통신기·지뢰감시센서 |
-| [[한림용인cc-고가수조]] | ⭐ 한림용인CC 고가수조 자동급수 무선제어 (★ 시공 직전, 1,000만원, 한림그룹 6년 만의 재거래·영역 확장) |
+| [[한림용인cc-고가수조]] | ⭐ 한림용인CC — 고가수조 무선제어 **★★ 완료(7/13, 1,000만원)** + **조명 pole 개별제어 200대 신규 영업 트랙**(견적 4,000만~5,200만 + ROI 회수 1.2년 발행 10/25, 회신 대기). 한림그룹 재거래·동일 고객 2번째 시스템 |
 | [[삼환전기-광안조명제어]] | 삼환전기 광안 지역주택조합 보안등 조명제어 리드 — 심의본=유선 0-10V 디밍(경쟁), UTTEC LoRa 무선 대체 제안. 보안등 41등/6회로 (CAD 판독 완료) |
 | [[필로스cc-조명제어]] | ⭐ 필로스CC 조명제어 시스템 교체 — 5년+ 레거시 고장 재발·복원 불가 → 1홀=1표준단말 교체 총 2,497만(VAT포함) **수주 협상 중**(견적서 9/1 + 사장 경영보고용 설명서 9/8). 설치 기반 재거래, 정본 = lora vault 현장/필로스CC/ |
 | [[n8n-uttec]] | ⭐ n8nUttec vault (Ubuntu 호스트, 5/16~) — UTTEC n8n 자동화 학습 + 영업·사업화 통합, n8n-claude 합류 (4 Claude) |
