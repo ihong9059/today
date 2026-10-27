@@ -31,6 +31,9 @@ VAULT_MAP = {
     "ponet":         "ponet.md",
     "weldRobot":     "weldRobot.md",
     "factory":       "factory.md",
+    "livecow":       "livecow.md",
+    "idaenc":        "IDA이엔씨.md",
+    "weflo":         "weflo.md",
 }
 
 # entity가 vault보다 최소 이 일수 이상 뒤처져야 경고 (당일 노이즈 억제)
