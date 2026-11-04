@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UTTEC 전략 검토 — 진행 현황·진로 방향·선택과 집중 (2026-11-03)</title>
+<style>
+  :root{
+    --ink:#1a1f2b; --sub:#5a6577; --line:#e3e7ee; --bg:#f6f8fb; --card:#ffffff;
+    --accent:#1f6feb; --accent2:#0b7a5b; --warn:#b4541a; --danger:#c0392b;
+    --hl:#fff7e0; --good:#e8f6ef; --badbg:#fdecea; --neutral:#eef2f7;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",sans-serif;
+    color:var(--ink); background:var(--bg); margin:0; line-height:1.68; font-size:15px;
+  }
+  .wrap{max-width:1040px; margin:0 auto; padding:40px 28px 80px;}
+  header.cover{
+    background:linear-gradient(135deg,#0f2c4d 0%,#1f6feb 100%); color:#fff;
+    border-radius:16px; padding:38px 40px; margin-bottom:10px;
+  }
+  header.cover .kicker{font-size:13px; letter-spacing:2px; opacity:.85; text-transform:uppercase;}
+  header.cover h1{font-size:28px; margin:10px 0 6px; line-height:1.3;}
+  header.cover .meta{font-size:14px; opacity:.9;}
+  .confidential{
+    display:inline-block; margin-top:14px; background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.4); padding:5px 12px; border-radius:20px; font-size:12.5px;
+  }
+  nav.toc{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:18px 24px; margin:18px 0 30px; columns:2; column-gap:30px;
+  }
+  nav.toc a{color:var(--accent); text-decoration:none; font-size:14px; display:block; padding:3px 0;}
+  nav.toc a:hover{text-decoration:underline;}
+  section{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:28px 32px; margin-bottom:22px;}
+  h2{font-size:21px; margin:0 0 4px; padding-bottom:12px; border-bottom:2px solid var(--line); color:#0f2c4d;}
+  h2 .num{color:var(--accent); font-weight:800; margin-right:10px;}
+  h3{font-size:16.5px; margin:24px 0 8px; color:#14203a;}
+  h4{font-size:14.5px; margin:16px 0 6px; color:var(--accent2);}
+  p{margin:8px 0;}
+  ul,ol{margin:8px 0 8px; padding-left:22px;}
+  li{margin:4px 0;}
+  .lead{font-size:15.5px; color:var(--sub);}
+  table{width:100%; border-collapse:collapse; margin:14px 0; font-size:13.8px;}
+  th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;}
+  th{background:#eef3fb; color:#102a4c; font-weight:700;}
+  tr:nth-child(even) td{background:#fafbfd;}
+  .callout{border-left:4px solid var(--accent); background:#f0f6ff; padding:14px 18px; border-radius:0 10px 10px 0; margin:16px 0;}
+  .callout.good{border-color:var(--accent2); background:var(--good);}
+  .callout.warn{border-color:var(--warn); background:var(--hl);}
+  .callout.danger{border-color:var(--danger); background:var(--badbg);}
+  .callout .t{font-weight:800; display:block; margin-bottom:4px;}
+  .pill{display:inline-block; padding:2px 9px; border-radius:20px; font-size:12px; font-weight:700;}
+  .p-1{background:#1f6feb; color:#fff;} .p-2{background:#0b7a5b; color:#fff;}
+  .p-3{background:#8a7320; color:#fff;} .p-hold{background:#8893a6; color:#fff;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .box{border:1px solid var(--line); border-radius:10px; padding:14px 16px; background:#fcfdff;}
+  .box h4{margin-top:0;}
+  .score{font-weight:800;}
+  .s-hi{color:var(--accent2);} .s-mid{color:var(--warn);} .s-lo{color:var(--danger);}
+  .tag{font-size:11.5px; color:var(--sub);}
+  .rec{background:linear-gradient(135deg,#0b7a5b 0%,#13996f 100%); color:#fff; border:none;}
+  .rec h2{color:#fff; border-color:rgba(255,255,255,.3);}
+  .rec h3,.rec h4{color:#eafff6;}
+  .rec table th{background:rgba(255,255,255,.18); color:#fff;}
+  .rec table td{background:rgba(255,255,255,.08); color:#fff; border-color:rgba(255,255,255,.2);}
+  .rec .box{background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.25); color:#fff;}
+  .roadmap{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:14px;}
+  .phase{border:1px solid var(--line); border-radius:10px; padding:14px; background:#fcfdff;}
+  .phase .ph{font-weight:800; color:var(--accent); font-size:13px;}
+  footer{color:var(--sub); font-size:12.5px; text-align:center; margin-top:30px;}
+  .muted{color:var(--sub); font-size:13px;}
+  @media print{ body{background:#fff;} section,header.cover,nav.toc{break-inside:avoid;} }
+  @media (max-width:720px){ nav.toc{columns:1;} .grid2,.roadmap{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="cover">
+  <div class="kicker">UTTEC · 전략 검토 메모</div>
+  <h1>지금까지의 진행 현황과 앞으로의 진로 방향<br>— 선택과 집중, 신규 사업, 그리고 이진서(lemonLabs) 협력 제언</h1>
+  <div class="meta">작성일 2026-11-03 · 대상 홍광선(UTTEC 대표) · 출처 myWiki second-brain(25 vault 종합) + GlobalCamp 2026 신청서</div>
+  <span class="confidential">🔒 본인 전용 — 실명·실수치 포함 · 외부 공유 금지(NDA: BNOW/CBNU·IDA 포함)</span>
+</header>
+
+<nav class="toc">
+  <a href="#summary">0. 한 장 요약 (결론 먼저)</a>
+  <a href="#portfolio">1. 지금까지 — 전체 포트폴리오 지도</a>
+  <a href="#active">2. 활성·수주 축 진단 (현금흐름)</a>
+  <a href="#axes">3. UTTEC 3대 사업 방향 재평가</a>
+  <a href="#swot">4. 핵심 강점 · 구조적 갭</a>
+  <a href="#newbiz">5. 신규 사업분야 검토 매트릭스</a>
+  <a href="#focus">6. 선택과 집중 제언 + 로드맵</a>
+  <a href="#leejinseo">7. 이진서(lemonLabs) 진로·협력 제언</a>
+  <a href="#risk">8. 리스크 · 결정 필요 항목</a>
+</nav>
+
+<!-- 0 -->
+<section id="summary">
+  <h2><span class="num">0</span>한 장 요약 — 결론 먼저</h2>
+  <p class="lead">UTTEC는 38년 임베디드·양산 역량 위에 <b>25개 multi-agent vault</b>로 다수의 사업 갈래를 동시 운영 중입니다. 역량과 자산은 충분하나, <b>1인(홍광선) 의존</b> 구조에서 트랙이 과분산되어 "무엇에 집중하는가"가 흐려져 있습니다. 데이터(myWiki 결정 로그 60~68·용인 재수주·위시캣 시장 신호)가 가리키는 방향은 분명합니다.</p>
+
+  <div class="callout good">
+    <span class="t">⭐ 핵심 판단 — 1·2·3순위 집중</span>
+    <table>
+      <tr><th style="width:90px">우선순위</th><th>축</th><th>근거 (왜 지금)</th><th>역할</th></tr>
+      <tr><td><span class="pill p-1">1순위</span></td><td><b>AI 교육 사업</b><br>(AI 바이브코딩·온디바이스 AI 입문)</td><td>goals 1순위와 일치 + 결정 68(교육 본체=AI 바이브코딩)로 방법론 상품화 + 용인 재수주(복리개선) + 위시캣 AI 교육 강사 공고 4연속(시장 수요) + <b>HW 비의존 C축 = 진입장벽 최저·대상 폭 최대</b></td><td>성장 엔진·반복 수익</td></tr>
+      <tr><td><span class="pill p-2">2순위</span></td><td><b>수주 delivery 축</b><br>(livecow·weflo·idaenc)</td><td>현재 유일한 실매출·현금흐름. 단발→후속 수주 구조로 진화(livecow Collar 600만·IDA 직접계약·weflo 양산)</td><td>현금흐름 + 기술 신뢰 자산</td></tr>
+      <tr><td><span class="pill p-3">3순위</span></td><td><b>제품 R&D 백본</b><br>(onDevice_AI·lora)</td><td>멀티벤더 AI 포팅·16보드 매트릭스 = 교육·수주의 기술 백본. 독립 제품 사업화는 리소스 확보 후</td><td>1·2순위를 받치는 기반</td></tr>
+      <tr><td><span class="pill p-hold">보류/기회</span></td><td>factory·weldRobot·ponet·gim-sales·plc 신사업 등</td><td>동시 추진 시 1인 리소스 고갈. 외부 트리거(연락·키·수주) 올 때만 가동</td><td>옵션 유지</td></tr>
+    </table>
+  </div>
+
+  <div class="callout">
+    <span class="t">🤝 이진서(lemonLabs) — 1순위 전략의 B2C/학교시장 비히클로 재정의</span>
+    <p>이진서의 2026-09 GlobalCamp 신청서에서 <b>단기 창업 아이템이 "AI 교육 사업"(학교 AI 방과후·캠프·입시설명회)으로 수렴</b> → UTTEC 1순위와 <b>재수렴</b>. 이진서(B2C·학교시장 영업·콘텐츠/유튜브·커뮤니티·영어/글로벌·청년창업 자격)와 UTTEC(검증된 AI 교육 IP·38년 기술·kit·커리큘럼)는 <b>교과서적 상보 구조</b>. lemonLabs를 "학원 수학 변형문제"(2026-06 피벗)에서 <b>AI 교육 공동사업</b>으로 재조준하는 것이 양측 모두에 최적.</p>
+  </div>
+</section>
+
+<!-- 1 -->
+<section id="portfolio">
+  <h2><span class="num">1</span>지금까지 — 전체 포트폴리오 지도</h2>
+  <p class="lead">myWiki 허브가 관장하는 25개 multi-agent vault + 수주 delivery vault + 전달용 kit. 성격별로 분류하면 UTTEC가 실제로 "무엇을 해왔는가"가 드러납니다.</p>
+
+  <h3>1-A. 성격별 분류</h3>
+  <table>
+    <tr><th style="width:150px">범주</th><th>vault / 트랙</th><th>상태</th></tr>
+    <tr><td><b>수주 delivery (실매출)</b></td><td>livecow(축산 LoRa 캡슐·Collar) · weflo(STM32H745 DAQ) · idaenc(스마트환기 국책) · binschans-coffee(커피머신 제어) · plc-retrofit(터널 천공 PLC·특허)</td><td>🟢 활성 3 + 대기/골격 2</td></tr>
+    <tr><td><b>영업 채널</b></td><td>wishketProject(외주 파이프라인) · uttec-jp-site(일본 受託) · uttec-plc(동아정밀·PLC 전문회사 기틀)</td><td>🟡 상시 가동 / 등급 병목</td></tr>
+    <tr><td><b>교육 사업</b></td><td>uttec-academy(오프라인 kit 실습·용인 재수주) · onDevice AI 입문 과정(신설) · pcb-edu · guksa(교육 콘텐츠 방법론) · C축 「AI 활용 전문가 되기」</td><td>🟢 성장 모멘텀</td></tr>
+    <tr><td><b>제품 R&D / 기술 허브</b></td><td>onDevice_AI(AI FanStick·Stage 4·16보드 AI 매트릭스) · lora(LoRa 기술 근거 횡단 허브) · revitaProject(LoRa 양산)</td><td>🟢 기술 자산 축적 / 직접 매출 약</td></tr>
+    <tr><td><b>신사업 탐색</b></td><td>factory(공장자동화) · weldRobot(용접로봇) · ponet(광주 협력·조대홍) · gim-sales(김 판매·대표 개인) · 삼환(조명제어 리드)</td><td>🟡 탐색/대기</td></tr>
+    <tr><td><b>협업 / 창업</b></td><td>lemonLabs(이진서 51%+UTTEC 49% 신규법인)</td><td>🟡 재정의 필요</td></tr>
+    <tr><td><b>인프라 / 방법론</b></td><td>myWiki(허브) · search·uttec-search·uttec-rag-local(AI 검색) · n8nUttec(자동화) · uttec-vault(비즈 L2) · tabM9·shield·uttec-factory(노드/현장)</td><td>⚙️ 운영 기반</td></tr>
+    <tr><td><b>보류 (명시적)</b></td><td>AI굿즈교육 · 광주AI교육 · PLC신사업 · 노지관리 · menugenie · 한국기계 교육</td><td>⏸️ 사용자 통지로만 재개</td></tr>
+  </table>
+
+  <div class="callout warn">
+    <span class="t">⚠️ 포트폴리오 진단</span>
+    <p>자산은 풍부하나 <b>동시 활성 트랙이 너무 많습니다</b>(수주 3 + 교육 3 + 제품 2 + 신사업 5 + 협업 1). 1인 중심 운영에서 이는 "모든 것을 조금씩"이 되어 복리가 쌓이는 축이 희석됩니다. multi-vault 운영체계 자체는 강점이지만, <b>리소스(시간) 배분의 선택과 집중</b>이 전략의 핵심 과제입니다.</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="active">
+  <h2><span class="num">2</span>활성·수주 축 진단 — 현금흐름의 뿌리</h2>
+  <p class="lead">현재 실매출·현금흐름을 만드는 축. 세 건 모두 "단발 외주"에서 "후속 수주 구조"로 진화 중이라는 공통점이 중요합니다.</p>
+  <table>
+    <tr><th style="width:110px">축</th><th>현황 (2026-11)</th><th>진화 신호</th><th>병목/리스크</th></tr>
+    <tr><td><b>livecow</b><br>(BNOW·축산 LoRa)</td><td>캡슐 5대 전수검증 완결·V10 100대 발주본 박제(BMA400 입고 대기) + Collar 과제 진행 확정 <b>600만</b>, RAK4630 포팅·실링크 실증</td><td>캡슐 단발 → Collar 후속 과제. onDevice_AI(rak3172)와 첫 기술 연계로 "LoRa+AI 단일칩" 확장거리</td><td>NDA·BNOW 회신 대기. 1인 수행</td></tr>
+    <tr><td><b>weflo</b><br>(한화 스핀오프·DAQ)</td><td>2차 검증 완결(배터리 7h·100kS/s 실증) + 3차 발주 자료 완성(발주 버튼만 남음). 보드당 원가 $93.11 확정</td><td>한화 출신 HW 조직 수준 품질 게이트 대응 입증 → 양산·반복 발주 잠재(Tier 승격 후보)</td><td>👤 U10 조달경로·TP5 결정 대기. STM32H745 품절 조달 리스크</td></tr>
+    <tr><td><b>idaenc</b><br>(IDA E&C 국책)</td><td>위시캣 이탈 <b>직접 계약</b> 확정 + 개발계획서 v4 송부·회신 대기. 24개월·4트랙 28건(Matter over Thread)</td><td>결정 64("위시캣=첫 접점 생성기") 실증 — 신뢰 후 플랫폼 밖 장기 파트너 전환</td><td>장기 과제 = 1인 대역폭 장기 점유 위험</td></tr>
+  </table>
+  <div class="callout">
+    <span class="t">판단</span>
+    <p>수주 축은 <b>현금흐름 + 기술 신뢰 자산</b>으로서 1순위(교육)와 병행 유지하되, <b>신규 수주는 "후속·반복 가능성"과 "1인 대역폭"을 기준으로 선별</b>합니다. 위시캣 외주는 등급 병목(§4)으로 완전매칭 건을 반복 상실 중 — 채널 의존도를 교육·직접계약으로 분산하는 것이 맞습니다.</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section id="axes">
+  <h2><span class="num">3</span>UTTEC 3대 사업 방향 재평가</h2>
+  <p class="lead">2026-04 goals에서 세운 "AI 3대 사업" 북극성을, 이후 결정 로그(결정 56~68)와 시장 신호로 재평가합니다.</p>
+  <table>
+    <tr><th style="width:150px">goals(2026-04) 설정</th><th>2026-11 현실 평가</th><th>모멘텀</th></tr>
+    <tr><td><b>① AI 프로그래밍 교육 (1순위)</b></td><td>결정 68로 "교육 본체=AI 바이브코딩" 재정의 → 방법론이 상품(C축 6단계). 용인 재수주·복리개선 엔진 작동. onDevice AI 입문 과정 신설. 위시캣 AI 교육 강사 공고 4연속 = 시장 수요 가시화</td><td class="score s-hi">▲▲ 상승 (집중 타당)</td></tr>
+    <tr><td><b>② AI 스마트팩토리 (2순위)</b></td><td>factory·onDevice_AI 예측정비(CWRU F1 0.995) 기술은 검증. 그러나 영업 전환은 미발생, factory는 비-git 경량. 신사업 탐색 단계 유지</td><td class="score s-mid">△ 정체 (기회성)</td></tr>
+    <tr><td><b>③ AI 소형 제품 (3순위)</b></td><td>onDevice_AI/AI FanStick 기술 자산 풍부(16보드·멀티벤더 포팅)하나 독립 제품 매출은 없음. <b>교육·수주의 기술 백본</b>으로 더 큰 가치</td><td class="score s-mid">△ 백본화 (직접매출 X)</td></tr>
+  </table>
+  <div class="callout good">
+    <span class="t">재평가 결론</span>
+    <p>goals의 1순위(AI 교육)는 <b>18개월간의 데이터로 재확인·강화</b>되었습니다. ②③은 "독립 사업"이라기보다 <b>①을 받치고(기술 백본) ②는 기회성 수주로</b> 재배치하는 것이 현실적입니다. 즉 <b>북극성은 유지, 리소스는 ①에 집중</b>.</p>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="swot">
+  <h2><span class="num">4</span>핵심 강점 · 구조적 갭</h2>
+  <div class="grid2">
+    <div class="box">
+      <h4>강점 (레버리지)</h4>
+      <ul>
+        <li><b>38년 임베디드 + 양산 5종</b> — 회로·펌웨어·PCB·조달 수직통합(순수 SW가 못 넘는 해자, 결정 63)</li>
+        <li><b>멀티벤더 온디바이스 AI 포팅</b> — nRF52·ESP32·STM32·RAK3172 16보드, 같은 모델 3칩 패밀리 100% 재현</li>
+        <li><b>검증된 AI 교육 IP</b> — 바이브코딩 6단계·kit·커리큘럼·용인 복리개선 엔진</li>
+        <li><b>지식관리 방법론의 상품화</b> — 25 vault multi-agent 운영 노하우 자체가 교육 자산(메타 강점)</li>
+        <li><b>직접계약 전환력</b> — 위시캣 접점 → 장기 파트너(IDA·빈스찬스)</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>구조적 갭 (보완 필요)</h4>
+      <ul>
+        <li><b>1인(홍광선) 의존</b> — 모든 축이 대표 대역폭에 수렴. 최대 리스크</li>
+        <li><b>B2C·콘텐츠·마케팅 부재</b> — SNS·유튜브·틱톡·브랜딩 채널 약함 (→ 이진서가 정확히 보완)</li>
+        <li><b>위시캣 파트너 등급 병목</b> — 완전매칭 임베디드 건 11회+ 상실(#159311 2,000만 등). 👤 등급 1회 확인이 해소책</li>
+        <li><b>트랙 과분산</b> — 집중 축이 희석</li>
+        <li><b>교육 사업의 영업·확산 채널</b> — 기관 재수주는 되나 B2C/학교 대중 시장 진입 수단 부족</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout">
+    <span class="t">핵심 연결</span>
+    <p>UTTEC 최대 갭(<b>B2C·콘텐츠·학교 시장 채널</b>)이 곧 1순위(AI 교육)의 성장 병목입니다. 그리고 <b>이진서의 강점이 이 갭을 정확히 메웁니다</b>(§7). 강점·갭·협력이 하나의 전략으로 수렴합니다.</p>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="newbiz">
+  <h2><span class="num">5</span>신규 사업분야 검토 매트릭스</h2>
+  <p class="lead">기존 자산에서 파생 가능한 신규/확장 후보를 ① 시장 수요 ② UTTEC 자산 적합도 ③ 1인 리소스 부담 ④ 반복·확장성 기준으로 평가합니다. (◎ 강 / ○ 중 / △ 약)</p>
+  <table>
+    <tr><th>신규/확장 후보</th><th>시장 수요</th><th>자산 적합</th><th>리소스<br>부담</th><th>반복/확장</th><th>종합 판단</th></tr>
+    <tr style="background:var(--good)">
+      <td><b>AI 교육 B2C·학교 시장</b><br>(방과후·캠프·입시·바이브코딩 패키지)</td>
+      <td>◎ (고교학점제·위시캣 4연속·잔재미 벤치)</td><td>◎ (결정 68·kit·커리큘럼)</td><td>△ 낮음(C축 HW비의존)</td><td>◎ (전국·반복)</td>
+      <td class="score s-hi">★ 최우선 — 이진서 협력으로 즉시 가동</td></tr>
+    <tr>
+      <td><b>온디바이스 AI 교육 시리즈</b><br>(micro:bit→RAK3172 LoRa 2호+)</td>
+      <td>○</td><td>◎ (onDevice_AI 정본)</td><td>○</td><td>○</td>
+      <td class="score s-hi">1순위 하위 트랙 — 기술 차별화</td></tr>
+    <tr>
+      <td><b>노후 PLC 레트로핏</b><br>(산업 설비 현대화·특허 UT-P-2026-001)</td>
+      <td>○ (레거시 다수)</td><td>◎ (PLC 통신 해자)</td><td>▼ 높음(현장·장기)</td><td>○</td>
+      <td class="score s-mid">기회성 — 수주 확정 시만 가동</td></tr>
+    <tr>
+      <td><b>AI 예측정비 스마트팩토리</b></td>
+      <td>○</td><td>○ (F1 0.995 검증)</td><td>▼ 높음</td><td>○</td>
+      <td class="score s-mid">2순위 유지 — 영업 트리거 대기</td></tr>
+    <tr>
+      <td><b>LoRa 표준단말·Fleet 인프라</b><br>(조명 pole·수조·축산 횡전개)</td>
+      <td>○</td><td>◎ (lora 허브)</td><td>○</td><td>◎</td>
+      <td class="score s-mid">수주 축과 연계 — 대량 수주 후보</td></tr>
+    <tr>
+      <td><b>Claude 대리점 파트너십</b><br>(교육 funnel → 유료 전환)</td>
+      <td>○</td><td>○ (교육 funnel)</td><td>△ 낮음</td><td>○</td>
+      <td class="score s-mid">1순위 부가 수익 모델</td></tr>
+    <tr>
+      <td><b>김 판매 / 락 커뮤니티 등</b><br>(대표·이진서 개인 열정 트랙)</td>
+      <td>○/△</td><td>△ (코어 무관)</td><td>▼</td><td>○</td>
+      <td class="score s-lo">분리 권고 — 집중 분산 방지</td></tr>
+  </table>
+  <div class="callout good">
+    <span class="t">신규 사업 결론</span>
+    <p><b>"AI 교육의 B2C·학교 시장 확장"이 신규 사업 1순위</b>입니다 — 시장 수요 가시화 + 자산 적합 + 낮은 리소스 부담 + 전국 반복성의 4박자가 유일하게 모두 맞는 후보. 나머지 신규 후보(레트로핏·스마트팩토리·Fleet)는 <b>수주/영업 트리거 발생 시에만</b> 가동하는 옵션으로 두고, 코어 무관 개인 트랙(김·락)은 사업 집중에서 분리합니다.</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="focus" class="rec">
+  <h2><span class="num">6</span>선택과 집중 제언 + 6~12개월 로드맵</h2>
+  <p>리소스(홍광선 시간)를 <b>1순위 60% · 2순위 30% · 3순위 10%</b>로 배분하고, 신사업 탐색 트랙은 "외부 트리거 가동" 원칙으로 전환합니다.</p>
+
+  <h3>집중 원칙 3가지</h3>
+  <ol>
+    <li><b>교육을 성장 엔진으로 — 사람(채널)을 붙인다.</b> 1순위는 기술이 아니라 <b>영업·콘텐츠·확산</b>이 병목. 이를 이진서/lemonLabs로 해결(§7).</li>
+    <li><b>수주는 현금흐름으로 유지하되 선별.</b> livecow·weflo·idaenc 마무리에 집중, 신규 외주는 "반복 가능성"으로 필터. 위시캣 등급은 👤 1회 확인으로 병목 해소.</li>
+    <li><b>신사업은 동시 추진하지 않는다.</b> factory·weldRobot·ponet·gim-sales 등은 외부 트리거(연락·키·수주) 시에만 가동 — 1인 대역폭 보호.</li>
+  </ol>
+
+  <h3>로드맵</h3>
+  <div class="roadmap">
+    <div class="phase">
+      <div class="ph">① 0~3개월 — 정렬</div>
+      <ul>
+        <li>수주 3건 마무리 (weflo 발주·livecow 발주·IDA 회신)</li>
+        <li>onDevice AI 입문 과정 실물 검증 완료(micro:bit)</li>
+        <li>이진서와 <b>AI 교육 공동사업 재정의</b> 합의 + 역할·정산 SOP</li>
+        <li>👤 위시캣 등급 1회 확인</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="ph">② 3~6개월 — 가동</div>
+      <ul>
+        <li>학교·캠프용 <b>AI 교육 패키지 공동 상품화</b>(UTTEC 커리큘럼 + 이진서 GTM)</li>
+        <li>이진서 학교/학원/방과후 영업 + 유튜브 콘텐츠 시작</li>
+        <li>lemonLabs 법인(청년창업 자격)으로 교육 정부지원·캠프 사업 1건 수주</li>
+        <li>용인 2차 retro → 3차 반영(복리)</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="ph">③ 6~12개월 — 확장</div>
+      <ul>
+        <li>교육 패키지 다기관 복제 + Claude 대리점 funnel 결합</li>
+        <li>GlobalCamp 실리콘밸리(2027-01) → 글로벌 벤치마크·콘텐츠 소재</li>
+        <li>교육 매출 안정화 후 ②스마트팩토리/제품 1건 선별 재가동 검토</li>
+        <li>2순위 인력(교육 강사·조교) 확충으로 1인 의존 완화</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="leejinseo">
+  <h2><span class="num">7</span>이진서(lemonLabs) — 진로·협력 제언</h2>
+  <p class="lead">GlobalCamp 2026 신청서(2026-09-16)와 lemonLabs vault를 종합한, 이진서의 진로 방향과 UTTEC 협력 구조 제언입니다.</p>
+
+  <h3>7-A. 이진서 프로파일 (신청서 근거)</h3>
+  <div class="grid2">
+    <div class="box">
+      <h4>강점 (검증됨)</h4>
+      <ul>
+        <li>서울대 벤처경영/창업 연합전공 + 기계항공 (학번 2019-17657)</li>
+        <li><b>리더십·커뮤니티</b> — 응원단 4년·단장 2년(코로나기 유튜브 활성화로 단체 회생)</li>
+        <li><b>콘텐츠 제작</b> — 유튜브 편집·대학신문 뉴미디어부 기자(SF-LA 취재)</li>
+        <li><b>영어·글로벌</b> — 뉴텝스 고득점·텍사스 1년·국제포럼 영어가이드</li>
+        <li><b>교육·멘토링</b> — 수학강사 8건·과외 45회·문제제작 2년·보훈처 멘토</li>
+        <li><b>창업 실전</b> — 오로라마인드·스낵랩·레몬파티(하이트진로 토닉워터 500병 협찬)</li>
+        <li><b>만 25세 청년창업 자격 100%</b> (UTTEC가 못 가지는 자격)</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>한계 / 관찰</h4>
+      <ul>
+        <li><b>기술 구현 깊이 미검증</b> — 기획·마케팅 강, AI/HW 실구현은 UTTEC 필요</li>
+        <li><b>아이템 다변</b> — 응원봉→학원수학(2026-06 피벗)→AI 교육·락 커뮤니티(2026-09). 집중 축 필요</li>
+        <li><b>1인 의존 + 건강 회복기</b> — vault 기록상 공황·불안장애 회복기(2026-06). 과부하 방지 필요</li>
+        <li>GPA 79.7·휴학 — 창업 몰입 상태(학업보다 사업 지향)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>7-B. 결정적 발견 — AI 교육으로의 재수렴</h3>
+  <div class="callout">
+    <p>신청서의 "창업 아이템" 항목에서 이진서의 <b>단기 창업 아이템 = AI 교육 사업</b>으로 명확히 수렴했습니다:</p>
+    <blockquote class="muted" style="border-left:3px solid var(--line); padding-left:12px; margin:8px 0;">
+      "이 능력을 단기적으로는 AI 교육과 연결짓는 사업을 전개하려 합니다. … 고교학점제로 인해 AI 수업을 유연하게 받을 수 있으나 전문인력이 턱없이 부족합니다. … AI 시대에서 AI 그 자체보다 중요한 것은 여러 분야를 아우르는 넓은 안목입니다. … 학교 AI 방과후, AI 서머/윈터 캠프, AI 입시 설명회 등으로 준비하고 있습니다."
+    </blockquote>
+    <p>이는 UTTEC의 결정 68("AI 그 자체가 아니라 AI에게 일을 시키는 법"·C축 메타역량)과 <b>철학·시장·타이밍이 정확히 일치</b>합니다. 2026-06 '학원 수학 변형문제' 피벗은 UTTEC 시너지가 약했지만, <b>2026-09 AI 교육 수렴은 UTTEC 1순위와 완전 정합</b>입니다.</p>
+  </div>
+
+  <h3>7-C. 상보 구조 (역할 분담)</h3>
+  <table>
+    <tr><th>영역</th><th>이진서 (Front / GTM)</th><th>UTTEC (Back / IP·기술)</th></tr>
+    <tr><td>시장</td><td>학교·학원·방과후·캠프·입시, 학생/청년 B2C</td><td>기관·기업 교육, 커리큘럼 표준</td></tr>
+    <tr><td>역량</td><td>영업·브랜딩·콘텐츠/유튜브·커뮤니티·영어·멘토링</td><td>AI 교육 IP(바이브코딩 6단계)·kit·온디바이스 AI·38년 기술</td></tr>
+    <tr><td>자격</td><td>청년창업 지원사업·캠프 자격 100%</td><td>양산·기술 신뢰·법인 실적</td></tr>
+    <tr><td>글로벌</td><td>GlobalCamp 실리콘밸리(2027-01)·OpenAI/Tesla 캠프 네트워킹</td><td>해외 벤치마크 커리큘럼화·콘텐츠 소재</td></tr>
+  </table>
+
+  <h3>7-D. 제언</h3>
+  <div class="callout good">
+    <span class="t">① 진로 제언 (이진서 개인)</span>
+    <p>이진서의 강점은 <b>기술 구현이 아니라 "AI 교육의 Go-To-Market·브랜드·확산"</b>에 있습니다. 기술 깊이는 UTTEC이 백본으로 커버하므로, 이진서는 <b>"AI 교육 브랜드·채널 빌더 + 강사/멘토"</b>로 포지셔닝하는 것이 최적 진로입니다. 다변한 아이템(응원봉·학원수학·락)은 <b>AI 교육 하나로 집중</b>하고, 락 커뮤니티는 장기 개인 열정 트랙으로 분리하는 것을 권합니다.</p>
+  </div>
+  <div class="callout good">
+    <span class="t">② 협력 구조 제언 (UTTEC × lemonLabs)</span>
+    <ul>
+      <li><b>lemonLabs 재정의</b>: "학원 수학 변형문제" → <b>AI 교육 공동사업</b>(UTTEC 커리큘럼·kit·기술 OEM/백본 + 이진서 학교시장 영업·브랜드·콘텐츠 front). 기존 지분 구조(이진서 51%+UTTEC 49%)와 "청년창업 자격 보완" 설립 취지가 그대로 유효·강화됩니다.</li>
+      <li><b>즉시 가동 과제</b>: ⒜ onDevice AI 입문/바이브코딩 커리큘럼을 <b>학교·캠프·방과후용 패키지로 공동 상품화</b> ⒝ 이진서가 학교·학원·캠프 영업 + 유튜브 교육 콘텐츠 전담 ⒞ lemonLabs 법인으로 교육 관련 <b>정부지원·캠프 사업 1건 수주</b>(청년창업 자격 활용)</li>
+      <li><b>글로벌 레버리지</b>: GlobalCamp 실리콘밸리(2027-01) 참가를 <b>UTTEC AI 교육의 글로벌 벤치마킹·콘텐츠·네트워킹 발판</b>으로 활용(신청서의 OpenAI/Tesla 캠프 연계 언급과 정합).</li>
+      <li><b>보호 장치</b>: 이진서 1인 의존 + 건강 회복기를 고려해 <b>역할 경계·업무량·정산 SOP를 명확히</b>(lemonLabs/UTTEC협업/ 기존 체계 활용). 과부하·아이템 분산 방지가 성공의 전제.</li>
+    </ul>
+  </div>
+  <div class="callout warn">
+    <span class="t">검증 필요 (제언 전제)</span>
+    <p>본 제언은 신청서·vault 기록 기반입니다. 실행 전 ⒜ 이진서의 현재 사업 집중도(AI 교육 vs 락 vs 기타)와 건강 상태 ⒝ lemonLabs 재정의 의사 ⒞ UTTEC의 교육 리소스 투입 여력을 <b>이진서와 직접 확인</b> 후 구체 합의가 필요합니다.</p>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="risk">
+  <h2><span class="num">8</span>리스크 · 결정 필요 항목</h2>
+  <table>
+    <tr><th style="width:150px">항목</th><th>내용</th><th>해소책 / 결정 주체</th></tr>
+    <tr><td><b>1인 의존</b> 🔴</td><td>모든 축이 홍광선 대역폭에 수렴 — 최대 구조 리스크</td><td>교육 강사·조교 + 이진서 협력으로 분산. 6~12개월 인력 확충</td></tr>
+    <tr><td><b>트랙 과분산</b> 🔴</td><td>동시 활성 트랙 과다로 집중 희석</td><td>👤 본 제언의 1·2·3순위 + 보류 원칙 승인</td></tr>
+    <tr><td><b>위시캣 등급 병목</b> 🟠</td><td>완전매칭 임베디드 건 11회+ 상실(#159311 2,000만 등)</td><td>👤 위시캣 로그인 → 등급 1회 확인(단발 해소)</td></tr>
+    <tr><td><b>weflo 발주 결정</b> 🟠</td><td>U10 조달경로·TP5 미복원 발주 여부</td><td>👤 결정 → JLCPCB 업로드</td></tr>
+    <tr><td><b>이진서 협력 재정의</b> 🟠</td><td>AI 교육 공동사업 전환 합의·건강/집중도 확인</td><td>👤 이진서와 직접 대화</td></tr>
+    <tr><td><b>교육 리소스 여력</b> 🟡</td><td>수주 3건 + 교육 동시 진행 시 대역폭 충돌</td><td>수주 마무리 우선 → 교육 가동 순서화</td></tr>
+  </table>
+  <div class="callout">
+    <span class="t">다음 한 걸음</span>
+    <p>① 본 자료의 <b>1·2·3순위 + 보류 원칙 승인</b> → ② <b>이진서와 AI 교육 공동사업 대화</b> → ③ 위시캣 등급·weflo 발주 등 👤 단발 결정 처리. 이 셋이 전략 실행의 출발점입니다.</p>
+  </div>
+</section>
+
+<footer>
+  UTTEC 전략 검토 메모 · 2026-11-03 · myWiki second-brain 종합(25 vault·결정 로그 56~68) + GlobalCamp 2026 신청서(이진서, 2026-09-16)<br>
+  🔒 본인 전용 — 외부 공유 금지 · 박제: myWiki/second-brain/전략/ + thoughts/2026-Q4/
+</footer>
+
+</div>
+</body>
+</html>

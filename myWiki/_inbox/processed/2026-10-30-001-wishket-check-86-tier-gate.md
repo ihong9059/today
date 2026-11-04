@@ -7,7 +7,7 @@ priority: normal
 subject: "/wishket-check 86건 추천 0 + 등급 게이트 매칭 상실 3번째(#159311, #158700 유사 도메인)"
 created: 2026-10-30T09:10:00+09:00
 related: [wishketProject/위시캣/2026-10/가능프로젝트/2026-10-30_가능프로젝트.md, wishketProject/second-brain/log.md, 2026-10-26-002]
-status: pending
+status: done
 ---
 
 # /wishket-check 86건 추천 0 + 등급 게이트 매칭 상실 3번째

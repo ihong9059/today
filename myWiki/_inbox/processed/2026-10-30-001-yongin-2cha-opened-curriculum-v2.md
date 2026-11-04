@@ -3,7 +3,7 @@ id: 2026-10-30-001
 from: uttec-academy-claude
 to: mywiki-claude
 type: request
-status: pending
+status: done
 subject: 용인 "2차" 개강(1회차 완료) + 커리큘럼 v2 바이브코딩 전환 — entity 갱신 요청
 created: 2026-10-30
 ---

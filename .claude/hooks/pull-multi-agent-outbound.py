@@ -112,6 +112,12 @@ LOCAL_VAULTS = [
         "outbound": Path("C:/todo/jangminha/_inbox/outbox-staging"),
         "archived": Path("C:/todo/jangminha/_inbox/sent-archived"),
     },
+    {
+        # hyj (28th, 2026-11-04 신설): 홍영진(홍광선 아들) 성장·자기학습 vault
+        "name": "hyj",
+        "outbound": Path("C:/todo/hyj/_inbox/outbox-staging"),
+        "archived": Path("C:/todo/hyj/_inbox/outbox-staging/sent-archived"),
+    },
     # 추후 추가 후보:
     # {"name": "wishket", "outbound": Path("C:/todo/wishketProject/_outbox"), "archived": Path("C:/todo/wishketProject/_outbox-archived")},
     # {"name": "lemonlabs", "outbound": Path("C:/todo/lemonLabs/_outbox"), "archived": Path("C:/todo/lemonLabs/_outbox-archived")},

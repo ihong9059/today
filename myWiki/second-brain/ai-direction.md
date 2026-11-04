@@ -2,12 +2,53 @@
 title: AI 시대 방향 판단
 type: ai
 created: 2026-04-19
-updated: 2026-09-22 (결정 66·67 신설 — 66: 견적 기준금액 = 항상 부가세 별도(공급가액) 전 사업 상시지침(사용자 9/10) / 67: 저가 압축 견적 = "할인"이 아니라 "분석의 결과"로 서사화 + HTML 시각화 검토서 + 소스 제3자 설명자료 = 고액·비전문 발주사 설득 문법(#157202 최종제안서 1단계 4,000만). + 용인 "2차" 재수주 = 반복가능 교육기업 실증·retro 복리개선 첫 작동. _inbox 11장 megasession 흡수 / 이전 2026-09-09 (결정 65 신설 — 드론군무 LoRa = "비상 안전망 전용 채널" 탐색 트랙 등록: golfLight C2 동형 자산 최소 진입 + 경쟁 아닌 보완 포지션, 게이트 = 조대홍 client 협의 + KR920 EIRP/LBT 정식 조사 선행. 병행 Decision 3(weldRobot ROS2 단계별 분기)·#157202 절충안 권고·파이프라인 정리 4건, _inbox 4장 흡수 / 이전 2026-09-04 (결정 64 신설 — 위시캣 = 첫 접점 생성기, 신뢰 형성 후 직접 계약 전환 경로: #157875 IDA E&C가 미팅 2회 만에 위시캣 제외·직접 계약 요청 → 수행계획서 v1 선제 작성 = 협상 주도권. + "노후 설비 현대화" 클러스터(#157744 PLC·#158166 Controller·#157875 RS485 브리지 — 레거시 무수정+브리지/대체 문법) = 결정 63 해자의 일반화, _inbox 4장 흡수 / 이전 2026-09-01 (결정 63 신설 — 산업 PLC 통신 역량 = 순수 SW업체가 못 넘는 해자 → #157744 데이터로거 외주가 PLC 대체 제어시스템(최대 5,000만 Tier 2/3)으로 격상 upsell + 데스크톱앱 약점→강점 정정 + cross-vault(revita) 자산의 Matter/Thread 영업 근거 흡수 + academy 3축(C. 메타역량 HW비의존) 정립, _inbox 9장 megasession 흡수 / 이전 2026-07-17 (결정 62 신설 — LTE 백홀 게이트웨이 PoC 성공 = "인터넷 없는 원거리 현장 커버" 영업 근거 + #156763 축산 LoRaWAN 미팅 도달·자료 수령(정면 강점형·revita 자산 직결) + delivery vault 결정 A(별도 경량 vault `livecow` 신설, 재검토 후 B→A 전환 확정), _inbox 3장 megasession 흡수 / 이전 7/16: 결정 61 신설 — 검증된 표준 작업계획서(SOP) = LoRa 수조제어 영업 신뢰 자산 + 노드수 11 확정(구 14=구설계) + #156802 UWB 화상회의 미팅 도달·HX711 자산, _inbox 3장 megasession 흡수 / 이전 7/9: 결정 60 신설 — 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼 → 제품라인 통합 + "단일 플랫폼" 영업 강점, lora 카드 흡수 / 이전 7/5: 결정 57·58·59 신설 — 적정복잡도 3부작 + BLE 게이트웨이 무선화 + 위시캣 요구사항중심 지원서, revita·lora·wishket megasession / 이전 6/27: 결정 56 신설 — 교육 사업 = 기술+방법론(지식관리 vault) 이중 자산, uttec-academy 카드 흡수 / 이전 6/19: 결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
+updated: 2026-11-03 (_inbox 6장 megasession 흡수 — 결정 68 **확장 적용 1호**(onDevice AI 입문 과정 = 신규 도메인 이식, 결정 68이 프로그램 횡단 방법론임을 입증) + 외부 벤치마크 잔재미코딩(바이브코딩 전면 개편) 시장 검증 + **AI 교육 강사 공고 4연속**(위시캣 AI 교육 외주 수요·공공기관 발주 경로 → 출강형 패키지 상품화 근거) + **livecow↔onDevice_AI 첫 기술 연계**(rak3172 LoRa SoC·수주↔제품 R&D 양방향) + academy↔onDevice_AI 역할 분담(vault scope 격리 1호) + weflo 판가 기준점 $302.76→$93.11 정정) / 이전 2026-10-31 (결정 68 신설 — 교육 과정 본체 = AI 바이브코딩: 용인 "2차" 커리큘럼 v2 전환(사용자 지시 9개항), "코딩을 배우는 과정"→"AI에게 일을 시켜 HW를 움직이는 법" 재정의 + 재사용 교수법 자산 "회로도+AI 6단계" = C축 방법론이 A축 커리큘럼 본체로 승격된 첫 사례. 병행 판단: weflo 2차 검증 완결 = 핵심 기술 리스크(100kS/s·배터리) 해소 + livecow Collar 600만 확정·실링크 실증, _inbox 5장 megasession + livecow cascade 흡수) / 이전 2026-09-22 (결정 66·67 신설 — 66: 견적 기준금액 = 항상 부가세 별도(공급가액) 전 사업 상시지침(사용자 9/10) / 67: 저가 압축 견적 = "할인"이 아니라 "분석의 결과"로 서사화 + HTML 시각화 검토서 + 소스 제3자 설명자료 = 고액·비전문 발주사 설득 문법(#157202 최종제안서 1단계 4,000만). + 용인 "2차" 재수주 = 반복가능 교육기업 실증·retro 복리개선 첫 작동. _inbox 11장 megasession 흡수 / 이전 2026-09-09 (결정 65 신설 — 드론군무 LoRa = "비상 안전망 전용 채널" 탐색 트랙 등록: golfLight C2 동형 자산 최소 진입 + 경쟁 아닌 보완 포지션, 게이트 = 조대홍 client 협의 + KR920 EIRP/LBT 정식 조사 선행. 병행 Decision 3(weldRobot ROS2 단계별 분기)·#157202 절충안 권고·파이프라인 정리 4건, _inbox 4장 흡수 / 이전 2026-09-04 (결정 64 신설 — 위시캣 = 첫 접점 생성기, 신뢰 형성 후 직접 계약 전환 경로: #157875 IDA E&C가 미팅 2회 만에 위시캣 제외·직접 계약 요청 → 수행계획서 v1 선제 작성 = 협상 주도권. + "노후 설비 현대화" 클러스터(#157744 PLC·#158166 Controller·#157875 RS485 브리지 — 레거시 무수정+브리지/대체 문법) = 결정 63 해자의 일반화, _inbox 4장 흡수 / 이전 2026-09-01 (결정 63 신설 — 산업 PLC 통신 역량 = 순수 SW업체가 못 넘는 해자 → #157744 데이터로거 외주가 PLC 대체 제어시스템(최대 5,000만 Tier 2/3)으로 격상 upsell + 데스크톱앱 약점→강점 정정 + cross-vault(revita) 자산의 Matter/Thread 영업 근거 흡수 + academy 3축(C. 메타역량 HW비의존) 정립, _inbox 9장 megasession 흡수 / 이전 2026-07-17 (결정 62 신설 — LTE 백홀 게이트웨이 PoC 성공 = "인터넷 없는 원거리 현장 커버" 영업 근거 + #156763 축산 LoRaWAN 미팅 도달·자료 수령(정면 강점형·revita 자산 직결) + delivery vault 결정 A(별도 경량 vault `livecow` 신설, 재검토 후 B→A 전환 확정), _inbox 3장 megasession 흡수 / 이전 7/16: 결정 61 신설 — 검증된 표준 작업계획서(SOP) = LoRa 수조제어 영업 신뢰 자산 + 노드수 11 확정(구 14=구설계) + #156802 UWB 화상회의 미팅 도달·HX711 자산, _inbox 3장 megasession 흡수 / 이전 7/9: 결정 60 신설 — 공용 시스템 보드 = 수조+조명 단일 HW 플랫폼 → 제품라인 통합 + "단일 플랫폼" 영업 강점, lora 카드 흡수 / 이전 7/5: 결정 57·58·59 신설 — 적정복잡도 3부작 + BLE 게이트웨이 무선화 + 위시캣 요구사항중심 지원서, revita·lora·wishket megasession / 이전 6/27: 결정 56 신설 — 교육 사업 = 기술+방법론(지식관리 vault) 이중 자산, uttec-academy 카드 흡수 / 이전 6/19: 결정 54·55 신설 — 통합펌웨어+BLE 프로비저닝 양산 표준 + 2.4G ESB 하이브리드 옵션(역량경계 ~30dB·E22 디코드 불가 gotcha), lora 카드 2장 흡수 / 이전 6/17: 결정 51·52·53 신설 / 이전 6/13 2차: 결정 49·50 신설 — Tailscale-only=Polling 표준 + upload-server 옵션 B 권고 보류, n8n 정체 카드 4장 흡수 / 1차: 결정 48 신설 — "일단 켜고 점진 강화" 실용주의 + 보안 게이트 = 인증·입찰 자산 연결, _inbox 8장 megasession / 이전 6/10: 결정 39 확장 3번째 — 위시캣 미팅 자료 SOP 4단계 정착: 사외 경험자 검토 단계 추가 (#155220 v1 XBF-PN08B 결정적 오류 방지) + 단가 근거 검증 능력 = 1억+ 견적 신뢰성 자산 + 정정톤 제거 = 클라이언트 송부본 분리 원칙. wishket-claude 4 카드 megasession 흡수 / 이전: 결정 47 Ponet 사업 본질 + 결정 46 ponet vault)
 tags: [AI, 방향, 전략, 판단, 3계열매트릭스, 5계열매트릭스, ISA, instruction-set, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-business, 5조건곱, 6조건곱, hybrid-embedding, 정체성D, PLC, Python-GUI, cross-platform-fork, ollama, local-LLM, mandate-v2.7, mandate-v2.8, mandate-v2.10-R38, Hybrid-SoC, application별-SoC, negative-finding-자산, ARM-A-NEON, vectorizer-정책, mobile-NEON-negative, STM32H745, Zephyr-cross-vendor, LAN-path, R37-정정사이클, 자가진단정정, 박제정확성SOP, vendor-광고-cross-check, 사용자-challenge-trigger, 3tier-메모리, SDRAM-penalty-zero, Phi-2-적재-실증, dts-upstream-기여, SFDP-실측, Path-D-산업응용, LCD-touch-CMSIS-NN, MNIST-PoC, 키오스크-HMI-cluster]
 links: [me, ai-landscape, skills, goals, strengths, gaps, vault-portability, uttec-vault, uttec-search, uttec-rag-local, onDevice-ai, search, ai-fanstick, uttec-stage-package, 위시캣활동, build-gotcha-inventory, stm32h745-disco, 강사양성_파일럿, 2026-05-24_5계열-AI가속-매트릭스-완성, 2026-05-24_toolchain-vectorizer-정책이-NEON-가속의-본질, 2026-05-25_STM32H745-Zephyr-통합-cross-vendor, 2026-05-26_STM32H745-LAN-path-Stage4-결정타, 2026-05-28_R36-R37-baseline-artifact-paired-check-fix, 2026-05-28_본vault-영업카피-신뢰성-강화, 2026-05-28_R38-stm32h745-SDRAM-QSPI-3tier-메모리-실증, 2026-06-03_R50-touch-mnist-path-D-산업응용]
 ---
 
 # AI 시대 방향 판단
+
+## 판단 로그 (2026-11-02) — _inbox 6장 megasession: 결정 68 확장 1호(onDevice AI 과정) + AI 교육 강사 공고 4연속 시장신호 + livecow↔onDevice_AI 첫 연계 ⭐⭐⭐
+
+**사건**: _inbox 6장 흡수(weflo 1·academy 2·ondevice 1[중복 1]·wishket 2). → [[uttec-academy]]·[[onDevice-ai]]·[[livecow]]·[[weflo]]·[[위시캣활동]] entity 갱신 + [[gaps]] rak3172 함정 3건 + thought [[2026-11-02_livecow-onDevice_AI-첫기술연계-수주R&D양방향]] 신설.
+
+### 판단: 결정 68(교육 본체=AI 바이브코딩)의 확장 적용 1호 = onDevice AI 입문 과정 (academy 카드 `2026-11-01-001`)
+
+- **의미**: 용인 2차에서 전환한 결정 68을 **신규 도메인(onDevice AI/MCU)에 그대로 이식** — micro:bit v2 단독 kit, "AI의 일생"(수집→Colab GPU 학습→INT8→칩 추론) 전 과정을 수강생이 Claude(Opus 이상)로 완주. 표준 절차 6단계·vault 세션 연속성·일상 매핑 전부 재사용 = **결정 68이 특정 차수가 아니라 프로그램 횡단 방법론**임을 입증 → academy 4번째 프로그램 축.
+- **시장 검증(외부 벤치마크)**: 잔재미코딩(Dave Lee, 수강생 2만+)이 10년 전통 파이썬·CS 커리큘럼을 바이브코딩(Claude Code) 중심으로 전면 개편 = 결정 68과 동일 궤적. "입문자일수록 최고 성능 AI 필수" 논거 → academy의 **Opus 이상 방침 + Claude 대리점 파트너십** 보강.
+
+### 판단: AI 교육 강사 공고 4연속 = AI 프로그래밍 교육 사업 출강형 패키지 상품화 신호 (wishket 카드 2장)
+
+- 10/30 "Claude Code" 명시 → 11/01 Gemini 강사 → 11/02 SeSAC 딥러닝·피지컬AI → 11/02 ROS2/MuJoCo 로봇교육 = **위시캣에 AI 교육 외주 수요 형성 중**. 공공 교육기관(SeSAC) 발주 경로 확인. 단 도구특정(Gemini)·상주 요건이 프리랜서 모델과 상충 → **범용 AI 교육 실적 1건 확보 시 매칭 전환** 가치. AI 프로그래밍 교육 사업(13가이드+6Track)의 **출강형 패키지 상품화 검토 근거 누적**. 결정 68(교육 본체 전환)과 시장 신호가 동기화되는 국면.
+
+### 판단: livecow(수주) ↔ onDevice_AI(제품 R&D) 첫 기술 연계 + 역할 분담 확정 (ondevice 카드 `2026-11-02-003`·academy 카드 `2026-11-02-002`)
+
+- rak3172(STM32WLE5) = onDevice_AI 16번째 보드·**첫 LoRa SoC**, R48 제스처 CMSIS-NN 10.71ms 100%(3번째 칩 패밀리 재현). Collar/캡슐 LoRa 칩이 제품 R&D 보드 매트릭스에 편입 = **수주 과제 ↔ 제품 R&D 양방향 가치**(livecow="LoRa+제스처 AI 단일칩" 확장 / onDevice_AI=LoRa 축 신규). → thought.
+- **역할 분담 명문화**: onDevice_AI=기술 검토·정본 / uttec-academy=교육 취합·정리 = [[feedback_vault_scope_isolation|vault scope 격리]]의 교육 hub↔기술 정본 적용 1호. rak3172 제스처 실습화 = academy 주체(그 첫 적용). NDA 경계 운영(측정=livecow 벤치, 박제=일반 기술 사실만).
+
+### 판단: weflo 판가 추적 기준점 정정 — $302.76(MOQ 구매총액) → $93.11(보드당) (weflo 카드 `2026-11-01-001`)
+
+- 배터리 ~7h 실증(스펙 3.5배)으로 핵심 스펙 추가 어필 확보 + LED 자가진단(USB·웹 없이 현장 자가판정)이 현장 운용 자산. **보드당 부품원가 $93.11(시제품)/$78.88(100보드)** 확정 = delivery→양산 원가 관점의 기준점 재정의(판가 산정은 PCB+SMT 실비 확정 후). → [[weflo]] § 2026-11-01.
+
+## 판단 로그 (2026-10-31) — _inbox 5장 megasession + livecow cascade: 결정 68 신설(교육 본체 = AI 바이브코딩) + weflo 검증 완결 + Collar 600만 확정 ⭐⭐⭐
+
+**사건**: _inbox 5장 흡수(wishket 1·academy 1·weflo 3) + livecow staleness cascade(4일). → [[uttec-academy]]·[[weflo]]·[[livecow]]·[[위시캣활동]] entity 갱신 + [[gaps]] 보강 2건 + thought [[2026-10-31_바이브코딩-교수법-6단계-C축-시너지]] 신설.
+
+### 결정 68: 교육 과정 본체 = AI 바이브코딩 — "코딩 교육"에서 "AI에게 일을 시켜 HW를 움직이는 법" 교육으로 재정의 (academy 카드 `2026-10-30-001`, 사용자 지시 9개항)
+
+- **판단**: 용인 "2차" 1회차 retro(교육생 수준 편차 큼)를 계기로 커리큘럼 v2 전면 전환 — **AI 바이브코딩(Claude 설치→원격 rpi3→Shield HW 동작)이 과정 본체**, 회로·코딩 지식은 AI에게 시키기 위한 배경으로 재배치. 수준 편차가 큰 비전공 교육생 집단에서 "코딩을 가르치는" 접근은 편차를 증폭시키지만, "AI에게 일을 시키는 법"은 출발선을 평준화한다.
+- ⭐ **상품 자산**: 비전공자용 **"회로도+AI → 부품 프로그램·운영 표준 절차 6단계"**(근거주기→확인질문→동작요청→실행→확인·교정→vault기록) — 분야 무관 적용 가능한 재사용 교수법. **C축(「AI 활용 전문가 되기」·AI 전문화 6단계·百見不如一習)의 방법론이 A축(자체 kit) 커리큘럼 본체로 승격된 첫 사례** = 3축이 분리 상품이 아니라 상호 침투하는 구조 실증.
+- **동반 장치**: 교육생 vault template(9파일) 2회차 배포 = 세션 연속성 학습(사용자의 multi-vault 운영 철학의 교육 상품화, 결정 56 "방법론 자산" 계보) + 운영 표준 "1회차=진단, 2회차=수준 맞추기+페어 편성".
+- **연결**: 결정 56(교육=기술+방법론 이중 자산) → C축 정립(9/1) → 재수주·복리개선(9/22) → **본체 전환(10/31)** — 교육 사업 라인의 방법론 지분이 단계적으로 확대되는 궤적. 시장 신호와 동기화: 위시캣 공고에 "Claude Code" 명시 2번째 등장(#159302).
+
+### 판단: weflo 2차 검증 완결 = 핵심 기술 리스크 해소 → "3차 발주 버튼"만 남음 (weflo 카드 3장)
+
+- 배터리 단독 100kS/s 정량 입증(2038s 드롭 0) = #157235의 핵심 스펙 실증 — 납품 신뢰도의 기술 근거 확보. U5 근본원인(마진 구조)·TPS63070 확정 + 검토의견 25항 전수 회신 = 한화 출신 HW 조직 수준의 품질 게이트에 대응 입증. 판가 추적 개시(생산_원가판가/)로 **delivery → 양산 원가 관점 전환 시작**. 잔여 = 👤 U10 조달 경로 + JLCPCB 업로드·결제.
+
+### 판단: livecow Collar = 과제 확정(600만) + RAK4630 전환 전제 실물 실증 (staleness cascade)
+
+- 충북대 Collar 과제 진행 확정(HW 단계 총 600만 VAT별도) + 펌웨어 소스 당일 송부 = 진행 신호. ⭐ RAK3172↔RAK4630 **LoRa P2P 양방향 실링크 실증**으로 아키텍처 전환(10-24 결정)의 핵심 전제가 실물 검증됨 — 캡슐(100대 발주 트리거 대기)에 이어 Collar가 두 번째 delivery 축으로 본궤도. [[gaps]] 넷 검증 게이트가 WHM110A RF 치명결함을 발주 전 차단(회피책 작동 첫 실증).
 
 ## 판단 로그 (2026-09-22) — _inbox 11장 megasession 흡수: 결정 66·67 신설 + #157202 세트 완결 + 용인 2차 재수주 복리개선 ⭐⭐⭐
 
