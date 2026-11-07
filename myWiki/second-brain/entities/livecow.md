@@ -2,7 +2,7 @@
 title: livecow (BNOW) — LoRa 가축 모니터링 캡슐·Collar delivery 실행 트랙
 type: entity
 created: 2026-10-27
-updated: 2026-11-03 (_inbox 흡수 — ondevice-claude 카드 `2026-11-02-003`: **livecow↔onDevice_AI 첫 기술 연계** — Collar/캡슐 LoRa 칩 RAK3172(STM32WLE5)가 onDevice_AI 16번째 보드 편입·R48 제스처 CMSIS-NN 10.71ms 100% 포팅 성립, 양방향 가치(livecow="LoRa+제스처 AI 단일칩" 확장 제안 / onDevice_AI=LoRa 축 신규) + NDA 경계 운영(측정=livecow 벤치·박제=일반 기술 사실만)) / 이전 2026-10-31 (staleness cascade — vault log 10-29~31 직접 대조: **Collar 과제 진행 확정·진행계획서 총 600만 발행**(사용자 결단) + 충북대 펌웨어 소스 수령→RAK4630 포팅 FW0·FW1 완료 + ⭐ **RAK3172↔RAK4630 LoRa P2P 양방향 실링크 실증**(공중 동결표 그대로 Zephyr↔RUI3 호환 확정 = 전환 핵심 전제 실물 검증) + 발주 회로도 치명결함(WHM110A RF) 차단·V1.1 재검증 / 캡슐 = 수신율 보고 발행(전달률 ~100%)·GW proto mqtt 결함 교정·**V10 최종발주본 박제(U3=BMA400 회귀·포팅 불요)** — 발주 트리거=BMA400 입고 / 11-04 충북대 미팅 자료 발행) / 이전 2026-10-27 (entity 신설 — 활성 축 3건 delivery 정리 cascade. 캡슐 시제품 5대 제작·전수검증 완결 + BNOW 검증결과 보고 발행(10/27) → 회신 대기 / Collar 과제(충북대) P0 설계 인수검증 단계)
+updated: 2026-11-06 (staleness cascade — vault log 11-04~06 직접 대조: ⭐ **Collar PCB 발주 완료**(EasyEDA Pro→JLCPCB 원클릭, 발주본 V1.2 박제 — 넷리스트 V1.1 동일·변경 실체=PCB 레이아웃) = Collar 과제가 설계→**발주 단계**로 전진 + 발주 전 회로도 검토에서 ⚠️ **RAK4630 RF_LoRa(pin37)·RF_BT 둘 다 No-Connect·안테나 커넥터 JP1(WHM110A HaLow) 1개뿐 = LoRa/BLE 안테나 넷 부재** → 트레이스안테나 처리 여부 실물확인 필요(미확인, 사용자 발주결정으로 종결·기록보존) + BOM 품절 대체 C3017497→C25744 / 11-04 Collar 원가·견적(WHM110A 단가 €18.35≈₩27,600 삼각검증 확정·100대 재료비 ₩9.69M·충북대 Collar 납품 견적서 50대 850만/100대 1500만 VAT별도) / 11-05 캡슐 V10 BOM BNOW 공급처수배용 재작성(IC 6종 정확 MPN 규명 U1=RAK3172-9-SM-I·U4=TPL5010DDCR 등, 유통품번 제거)) / 이전 2026-11-03 (_inbox 흡수 — ondevice-claude 카드 `2026-11-02-003`: **livecow↔onDevice_AI 첫 기술 연계** — Collar/캡슐 LoRa 칩 RAK3172(STM32WLE5)가 onDevice_AI 16번째 보드 편입·R48 제스처 CMSIS-NN 10.71ms 100% 포팅 성립, 양방향 가치(livecow="LoRa+제스처 AI 단일칩" 확장 제안 / onDevice_AI=LoRa 축 신규) + NDA 경계 운영(측정=livecow 벤치·박제=일반 기술 사실만)) / 이전 2026-10-31 (staleness cascade — vault log 10-29~31 직접 대조: **Collar 과제 진행 확정·진행계획서 총 600만 발행**(사용자 결단) + 충북대 펌웨어 소스 수령→RAK4630 포팅 FW0·FW1 완료 + ⭐ **RAK3172↔RAK4630 LoRa P2P 양방향 실링크 실증**(공중 동결표 그대로 Zephyr↔RUI3 호환 확정 = 전환 핵심 전제 실물 검증) + 발주 회로도 치명결함(WHM110A RF) 차단·V1.1 재검증 / 캡슐 = 수신율 보고 발행(전달률 ~100%)·GW proto mqtt 결함 교정·**V10 최종발주본 박제(U3=BMA400 회귀·포팅 불요)** — 발주 트리거=BMA400 입고 / 11-04 충북대 미팅 자료 발행) / 이전 2026-10-27 (entity 신설 — 활성 축 3건 delivery 정리 cascade. 캡슐 시제품 5대 제작·전수검증 완결 + BNOW 검증결과 보고 발행(10/27) → 회신 대기 / Collar 과제(충북대) P0 설계 인수검증 단계)
 tags: [클라이언트, LoRa, 축산, 캡슐, 시제품, BNOW, 충북대, NDA, 실행vault, livecow-vault, 위시캣]
 links: [위시캣활동, lora, 양산제품, vault-registry, 영업전략]
 ---
@@ -57,6 +57,23 @@ links: [위시캣활동, lora, 양산제품, vault-registry, 영업전략]
 - **livecow(위시캣 수주) ↔ [[onDevice-ai|onDevice_AI]](제품 R&D)의 첫 기술 연계**: Collar/캡슐의 LoRa 하드웨어(**RAK3172 = STM32WLE5**)가 onDevice_AI 보드 매트릭스에 16번째 보드로 편입 → R48 제스처 INT8 모델이 **CMSIS-NN 10.71ms·정확도 100%**로 포팅 성립(LoRaWAN 스택 RUI3와 단일 칩 공존).
 - **양방향 가치**: livecow에는 **"LoRa + 제스처 AI 단일 칩" 확장 제안 거리**(캡슐·Collar에 온디바이스 거동 분류 탑재 여지) / onDevice_AI에는 **LoRa 축 신규**(축산·원격 자산 모니터링 = Stage 4 시나리오 C의 BLE 자리에 LoRa 변형).
 - **NDA 경계 운영**: 측정은 livecow(NDA) 벤치에서 수행, onDevice_AI·myWiki 박제는 **일반 기술 사실만**(BNOW/CBNU 식별 정보 제외). → NDA 경계 분리 운영 사례.
+
+## 진행 상태 (2026-11-06 staleness cascade — vault log 11-04~06 직접 대조) ⭐⭐
+
+**Collar가 "포팅 본궤도"에서 "PCB 발주 완료"로 전진 — 설계비 100만 구간 산출물(PCB) 발주 = 수주 이행 진입. 캡슐은 V10 발주자료 BNOW 공급처 수배 단계.**
+
+### ① Collar 과제 — PCB 발주 완료 + 견적 + 발주 전 회로도 검토
+
+- ⭐ **Collar PCB 발주 완료 (11-06)**: 사용자가 `Downloads/collar`에서 PCB 레이아웃 완성 → **EasyEDA Pro → JLCPCB 원클릭 발주**(로컬 Gerber 없음 정상). 넷리스트(회로)는 **V1.1과 동일**(부품 72개 불변, 추가 C1/C2/R7·삭제 C25/C26/R20 = V1.1 WHM110A RF 수정분), 변경 실체는 **PCB 레이아웃**(collar.eprj2 2.86→3.17MB). → Collar 과제가 설계→**발주(제작) 단계**로 전진 = 진행계획서 "PCB설계 100만" 구간 이행.
+- **박제**: `목걸이_Collar과제/30_PCB설계/발주확정_V1.2_2026-11-06/`(펌웨어 제외 전체 11.54MB, SHA256SUMS 27개) + `collar_2026-11-06-18-05.epro2`=발주본 평문 쌍둥이(넷리스트 파싱 가능) → V1.1 백업 부재 해소.
+- ⚠️ **발주 전 회로도 검토(6p 정독+넷리스트) — 미결 리스크 1건 기록 보존**: **RAK4630 RF_LoRa(pin37)·RF_BT 둘 다 No-Connect**, 안테나 커넥터는 JP1(WHM110A HaLow) 1개뿐 = **회로도상 LoRa/BLE 안테나 넷 부재**. 캡슐↔목걸이 LoRa P2P(10-31 실증)가 핵심인데 LoRa 안테나 넷이 없음 → **PCB 트레이스 안테나 처리 여부 실물 확인 필요**(미확인, 사용자 발주 결정으로 종결·기록 보존). 🟡 SAM-M10Q V_BCKP NC(GPS 콜드스타트). ✅ BMI270 I2C·전원부(BQ24075/TPS63802)·배터리 분압 정상.
+- **견적 발행 (11-04)**: WHM110A 단가 **€18.35≈₩27,600**($20.5, ECB 2026-11-03) 삼각검증 확정. Collar BOM 100개 재료비 **1보드 $72.08 / 100보드 ₩9.69M**. **충북대 Collar 납품 견적서 발행**(50대 850만 / 100대 1500만 VAT별도, 목표가 역산 일치, 금지어 0건·'시장가격' 표기).
+- **BOM 품절 대체**: I2C2 풀업 R5·R11=10kΩ **C3017497 LCSC 품절** → **C25744**(UNI-ROYAL 0402 ±1%, 재고 ~740만, JLCPCB Basic). 발주 BOM 반영 여부 확인 carry.
+
+### ② 캡슐 (#156763) — V10 발주자료 BNOW 공급처 수배
+
+- **캡슐 V10 BOM 공급처 수배용 재작성 (11-05)**: BNOW 공급처 수배용으로 유통 품번(LCSC C번호) 제거 + IC 정확 MPN 규명. ★ **IC 6종 확정** — U1=**RAK3172-9-SM-I**(RAKwireless, KR920 `-9`·U.FL `-I`, WebSearch C19723905 대조) / U2=TMP117AIYBGR / U3=BMA400 / U4=**TPL5010DDCR**(TI 워치독) / U5=TPS7A0233DBVR / U6=DRV5032FADBZR / D1=FM-B2020RGBA-HG. 수동소자는 "범용 동등품". 발송 전 확인 carry = 수량 기준(1보드 vs 100대)·U4 실장 여부.
+- 외부 대기(BNOW): V5.0.4 소스·DevAddr ABP 등록·**BMA400 입고(100대 발주 트리거)**. 발주본 = LiveCow-V10(U3=BMA400 회귀, 펌웨어 포팅 불요).
 
 ## 사업적 의미
 
