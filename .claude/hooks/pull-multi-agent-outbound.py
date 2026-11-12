@@ -51,11 +51,12 @@ REMOTE_VAULTS = [
         "archived": "/home/uttec/project/n8nUttec/_inbox/sent",
     },
     {
-        # uttec-plc (18th, 2026-06-13 신설): outbox-staging → sent-archived (myWiki 동일 컨벤션)
-        "name": "uttec-plc",
+        # uttec-dev (2026-11-12 신설): mac(=ubuntu, 100.90.158.36) 개발 전용 standalone vault.
+        # 사라진 uttec-plc(~/uttec-plc) 엔트리의 후임. ~/vault, claude-vault tmux 상주.
+        "name": "uttec-dev",
         "ssh": "uttec@100.90.158.36",
-        "outbound": "/home/uttec/uttec-plc/_inbox/outbox-staging",
-        "archived": "/home/uttec/uttec-plc/_inbox/outbox-staging/sent-archived",
+        "outbound": "/home/uttec/vault/_inbox/outbox-staging",
+        "archived": "/home/uttec/vault/_inbox/outbox-staging/sent-archived",
     },
     # 추후 추가 후보:
     # {"name": "uttec-vault", "ssh": "uttec@100.90.158.36", "outbound": "/home/uttec/uttec-vault/outbox", ...},
@@ -117,6 +118,13 @@ LOCAL_VAULTS = [
         "name": "hyj",
         "outbound": Path("C:/todo/hyj/_inbox/outbox-staging"),
         "archived": Path("C:/todo/hyj/_inbox/outbox-staging/sent-archived"),
+    },
+    {
+        # mac (2026-11-12 신설): 원격 mac 자산 추적·관리·제어 콘솔(로컬 콕핏).
+        # mac-claude. mac 본체(~/vault=uttec-dev)를 추적·제어. 변화·이슈·결정만 cascade.
+        "name": "mac",
+        "outbound": Path("C:/todo/mac/_inbox/outbox-staging"),
+        "archived": Path("C:/todo/mac/_inbox/outbox-staging/sent-archived"),
     },
     # 추후 추가 후보:
     # {"name": "wishket", "outbound": Path("C:/todo/wishketProject/_outbox"), "archived": Path("C:/todo/wishketProject/_outbox-archived")},

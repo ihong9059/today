@@ -21,7 +21,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 |:-:|---|---|---|---|
 | 1 | **myWiki** | mywiki-claude | `C:\todo\today\myWiki\` | **main hub** — 5단계 흡수·broker·cascade 주도 |
 
-## Windows 본 PC (myhome-lenovo, `C:\todo\…`) — 16
+## Windows 본 PC (myhome-lenovo, `C:\todo\…`) — 17
 
 | # | vault | agent | 합류 | 역할 | broker |
 |:-:|---|---|:-:|---|:-:|
@@ -42,6 +42,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 | 28 | **hyj (28th)** | hyj-claude | 11/4 | **홍영진 성장·자기학습 vault** — 홍광선 대표 아들(고졸·AI 입문자)을 UTTEC 인재로 육성. jangminha 하이브리드 패턴 계승 + **매일 과제 엔진**(`01_오늘의과제` 5칸 고정, 20~30분) + **1개월 탐색 커리큘럼**(방향 미정→발견) + 허브 원격추적. 두 번째 인물-멘토링(가족 인재육성) vault. 결정=방향 1개월 탐색부터 / 추적 myWiki 카드. [[project_hong_youngjin_selfdev]] · [[hyj]] entity 참조 | 양방향✅ (`outbox-staging/`→`sent-archived/`) |
 | 23 | **guksa (23rd)** | guksa-claude | 8/22 | **국사(한국사) 역학관계 교육 vault** — 역사를 암기가 아니라 "인과·역학관계의 과정"으로 재구성해 학습·강의준비. 방법론 심장 = 6-렌즈 프레임(전사→조건→발단→전개→역학→파급) + 삼국통일 시범모듈. **이식성 강조**(폴더째 복사 시 타 전문가 PC 동작, `.claude/` 포함). 첫 교양·인문 교육 콘텐츠 vault. jangminha 하이브리드 패턴 계승. [[project_guksa_history_edu]] · [[guksa]] entity 참조 | standalone 우선 (broker 미등록, `_inbox` 채널만 준비) |
 | 24 | **pcb-edu (24th)** | pcb-edu-claude | 10/2 | **PCB 제작 전반 교육 vault** — PCB 만들기를 "조작 암기"가 아니라 "왜·함정(gotcha)·검증의 체득"으로 재구성해 학습·강의준비. 방법론 심장 = **5-렌즈 프레임**(왜→무엇→어떻게→함정→검증) + NE555 LED 블링키 완주 시범모듈(6단계 end-to-end). 대상=입문자/비전공자, 범위=전체 파이프라인(설계→레이아웃→제조발주→조립→검증→양산), 중심툴=EasyEDA+LCSC+JLCPCB. **첫 하드웨어 실무 교육 콘텐츠 vault** + 이식성 강조(`.claude/` 포함). guksa 교육형 패턴 계승. [[project_pcb_edu_vault]] · [[pcb-edu]] entity 참조 | standalone 우선 (broker 미등록, `_inbox` 채널만 준비) |
+| 29 | **mac (29th)** | mac-claude | 11/12 | **원격 mac 자산 추적·관리·제어 콘솔**(로컬 콕핏, `C:\todo\mac`) — mac(uttec-MacBookPro Ubuntu, 중요 자산)을 이 PC에서 특별관리. 3역할=① 추적(mac `~/vault`=uttec-dev log·상태 미러) ② 관리(자산 현황 단일출처) ③ 제어(L1 mac / L2 2-hop PC / L3 USB 보드·폰, 파괴적 명령 승인제). work-start/end skill로 매 세션 상태 pull·cascade. 본체=mac `~/vault`(uttec-dev-claude). [[project_mac_vault]] 참조 | 양방향✅ (`outbox-staging/`→`sent-archived/`, 11/12) |
 | 25 | **gim-sales (25th)** | gim-sales-claude | 10/3 | **김 판매사업 기획 vault** — 한국 김을 롯데면세점 주축으로 해외여행객·선물 시장에 판매 확대하는 신사업을 기획·추진. 방법론 심장 = **사업화 5-단계 프레임**(시장→제품/포장→공급/물류→가격/수익→제안). 산출물 4종=① 진행계획(물류)·② 적정판매가·③ 생산물류 현황조사·④ **롯데 지점장 제안서**(최종 수렴점). **첫 식품·유통 영업 기획 vault**(교육형 pcb-edu/guksa와 성격 구분, UTTEC 하드웨어 코어 무관한 대표 개인 신사업 트랙) + 이식성(`.claude/` 포함). 원칙=수치·사실 공식출처 각주·환각 금지·미확정 결정 짐작 금지. [[project_gim_sales_vault]] · [[gim-sales]] entity 참조 | standalone 우선 (broker 미등록, `_inbox` 채널만 준비) |
 
 ## 수주 delivery 실행 vault (본 PC, broker 미합류·경량) ⭐
@@ -63,7 +64,7 @@ links: [ai-direction, gaps, n8n-uttec, uttec-plc, 2026-06-13_tailscale-only-poll
 | 13 | uttec-vault (`~/uttec-vault/`) | uttec-vault-claude | 5/23 | 비즈니스 hub L2 (7영역 ERP/CRM lite) — git+CI | ❌ 미등록 (**todo #24**, `outbox/` 컨벤션 — underscore 없음) |
 | 14 | uttec-search (10th, `~/uttec-search/`) | uttec-search-claude | 5/23 | 검색 web cross-platform fork (portability 1차 실증) | ❌ 미등록 (todo #24) |
 | 15 | uttec-rag-local (11th, `~/uttec-rag-local/`) | uttec-rag-local-claude | 5/24 | 검색 로컬 LLM판 (Ollama, 비용 0) | ❌ 미등록 (todo #24) |
-| 16 | **uttec-plc (18th, `~/uttec-plc/`)** | uttec-plc-claude | 6/13 | 동아정밀 #155220 + **PLC 개발 전문회사 기틀** | 양방향✅ (`outbox-staging/`→`sent-archived/`) |
+| 16 | **uttec-dev (`~/vault/`)** | uttec-dev-claude | 11/12 | mac 개발 전용 standalone — 펌웨어 빌드/flash(NCS·ESP `~/ncs/idaenc_*`)·n8n 현지 본부. `claude-vault` tmux 상주. **구 uttec-plc(`~/uttec-plc/`=소멸)의 후임** / 동아정밀 사업 자산은 entity·idaenc vault 소관 | 양방향✅ (`outbox-staging/`→`sent-archived/`, 11/12 검증) |
 
 ## 원격 RPi 호스트 — 2
 
