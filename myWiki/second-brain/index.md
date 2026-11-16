@@ -69,6 +69,7 @@ updated: 2026-05-09
 | [[weflo]] | Weflo(WEFLO Inc.) — 모빌리티 비접촉 AI 진단 클라이언트(한화 스핀오프·Gartner Physical AI), 위시캣 #157235, STM32H7 DAQ 매칭. **2026-08-04 본격진행 → weflo 실행 vault(21st) 신설** (영업 wishket에서 졸업, 홍광선+임호균 R&R) → [[vault-registry]]. 2026-10-25 2차보드 검토의견 수신(flying-probe 넷분석·설계오류 3건 누적) → **3차 설계 필수 8건 당일 반영 v2 PASS·2차 샘플 배송 중·리워크 검증 대기**(10/27 delivery 정리, **활성 축 3건 중 1**) |
 | [[IDA이엔씨]] | (주)아이디에이이엔씨(IDA E&C) — 환기설비 전문 제조사(2004~, 특허 20+, HRV·전동 디퓨저). 위시캣 #157875 → **직접 계약 진행 확정(10/25)** — 브리지 신제품 개발계획서 v4 송부(3,200만 VAT별도)·**회신 대기**, Matter over Thread 국책과제 = **파이프라인 최상단(Tier 2~3)**. 실행 vault idaenc → [[vault-registry]] (10/27 delivery 정리, **활성 축 3건 중 1**) |
 | [[livecow]] | **livecow vault** — BNOW LiveCow LoRa 캡슐 delivery 실행 트랙(위시캣 #156763 파생, 결정 62, NDA BNOW/CBNU). **캡슐 시제품 5대 제작·전수검증 완결 + BNOW 검증결과 보고 발행(10/27) → 회신 대기** + Collar 과제(LoRa+HaLow 목걸이, 충북대) P0 설계 인수검증 단계. (10/27 entity 신설, **활성 축 3건 중 1**) |
+| [[locker]] | **locker vault** — 위시캣 #159474 보관함 물건 감지 LED 실행 트랙(수주 전 골격, 결정 70, NDA). **실측 검증 단계**(클라이언트 실물 보관함 송부 대기 + VL53L5CX 센서 구매) + **onDevice_AI 검증기술 첫 외주 직접 재사용** · 칩 D1 미결(nRF52832 vs ESP32-C6). (11/17 신설) |
 | [[jangminha]] | **장민하 vault** ⭐ — 홍광선 후배 딸(건국대 토목·AI 입문자) AI 프로젝트 학습·협업 공간. 22nd multi-agent (`C:/todo/jangminha/`, 8/9 신설, **첫 인물-멘토링 vault**). 입문자 친화 한글 폴더 + 허브 연결 `_inbox`. 토목 강점 × AI 전문분야 개척 → [[vault-registry]] |
 | [[스마트팩토리]] | 스마트팩토리 — 25개 데모, 파쇄기 AI 85억 제안 |
 | [[양산제품]] | 양산 제품 — STM32, RPi, nRF52 + STM32H7 고속 DAQ 계측 자산 |
