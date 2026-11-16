@@ -1,0 +1,230 @@
+[
+  {
+    "path": "C:\\todo\\search\\raw\\myWiki",
+    "target": "C:\\todo\\today\\myWiki"
+  },
+  {
+    "path": "C:\\todo\\search\\raw\\uttecHome",
+    "target": "C:\\todo\\uttecHome"
+  },
+  {
+    "path": "C:\\todo\\today\\.claude\\skills\\wishket-apply",
+    "target": "C:\\todo\\wishketProject\\.claude\\skills\\wishket-apply"
+  },
+  {
+    "path": "C:\\todo\\today\\.claude\\skills\\wishket-check",
+    "target": "C:\\todo\\wishketProject\\.claude\\skills\\wishket-check"
+  },
+  {
+    "path": "C:\\todo\\today\\homepage",
+    "target": "C:\\todo\\uttecHome"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\cuda",
+    "target": "C:\\todo\\today\\cuda"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\doctor",
+    "target": "C:\\todo\\today\\doctor"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\factory",
+    "target": "C:\\todo\\factory"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\ffmpeg",
+    "target": "C:\\todo\\today\\ffmpeg"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\mac",
+    "target": "C:\\todo\\mac"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\multiCore",
+    "target": "C:\\todo\\today\\multiCore"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\notion",
+    "target": "C:\\todo\\today\\notion"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\onDevice_AI",
+    "target": "C:\\todo\\onDevice_AI"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\ponet",
+    "target": "C:\\todo\\ponet"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\revitaProject",
+    "target": "C:\\todo\\revitaProject"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\search",
+    "target": "C:\\todo\\search"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\skill",
+    "target": "C:\\todo\\today\\skill"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\smartFactory",
+    "target": "C:\\todo\\today\\smartFactory"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\tabM9",
+    "target": "C:\\todo\\tabM9"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\tailscale",
+    "target": "C:\\todo\\today\\tailscale"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\uttec-academy",
+    "target": "C:\\todo\\uttec-academy"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\webServer",
+    "target": "C:\\todo\\today\\webServer"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\weldRobot",
+    "target": "C:\\todo\\weldRobot"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\xerix",
+    "target": "C:\\todo\\today\\xerix"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\동영상",
+    "target": "C:\\todo\\today\\동영상"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\영업",
+    "target": "C:\\todo\\today\\영업"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\위시캣",
+    "target": "C:\\todo\\wishketProject"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\유투브",
+    "target": "C:\\todo\\today\\유투브"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\응원봉",
+    "target": "C:\\todo\\today\\응원봉"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\작업보고서",
+    "target": "C:\\todo\\today\\작업보고서"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\전시회",
+    "target": "C:\\todo\\today\\전시회"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\raw\\회사소개",
+    "target": "C:\\todo\\uttecHome\\회사소개"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\cuda",
+    "target": "C:\\todo\\today\\cuda"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\doctor",
+    "target": "C:\\todo\\today\\doctor"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\ffmpeg",
+    "target": "C:\\todo\\today\\ffmpeg"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\mac",
+    "target": "C:\\todo\\mac"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\multiCore",
+    "target": "C:\\todo\\today\\multiCore"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\notion",
+    "target": "C:\\todo\\today\\notion"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\onDevice_AI",
+    "target": "C:\\todo\\onDevice_AI"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\ponet",
+    "target": "C:\\todo\\ponet"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\revitaProject",
+    "target": "C:\\todo\\revitaProject"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\search",
+    "target": "C:\\todo\\search"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\skill",
+    "target": "C:\\todo\\today\\skill"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\smartFactory",
+    "target": "C:\\todo\\today\\smartFactory"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\tabM9",
+    "target": "C:\\todo\\tabM9"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\tailscale",
+    "target": "C:\\todo\\today\\tailscale"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\uttec-academy",
+    "target": "C:\\todo\\uttec-academy"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\weldRobot",
+    "target": "C:\\todo\\weldRobot"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\xerix",
+    "target": "C:\\todo\\today\\xerix"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\동영상",
+    "target": "C:\\todo\\today\\동영상"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\영업",
+    "target": "C:\\todo\\today\\영업"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\위시캣",
+    "target": "C:\\todo\\wishketProject\\위시캣"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\유투브",
+    "target": "C:\\todo\\today\\유투브"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\작업보고서",
+    "target": "C:\\todo\\today\\작업보고서"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\전시회",
+    "target": "C:\\todo\\today\\전시회"
+  },
+  {
+    "path": "C:\\todo\\today\\myWiki\\second-brain\\raw\\회사소개",
+    "target": "C:\\todo\\today\\homepage\\회사소개"
+  },
+  {
+    "path": "C:\\todo\\today\\revita",
+    "target": "C:\\todo\\revitaProject\\orgRevita"
+  }
+]

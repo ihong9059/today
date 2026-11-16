@@ -1,11 +1,18 @@
 ---
 name: RPi 본체 ethernet + ICS DHCP 셋업 (Wi-Fi 인터넷 공유)
-description: PC 본체 ethernet(이더넷 6 = Intel I219-V)으로 RPi 연결 + Wi-Fi 4 ICS 활성화. RPi가 DHCP IP 자동 부여 + 인터넷 공유까지. 2026-05-21 검증 완료
+description: 신품 RPi 직결 설정의 단일 표준 = today/tailscale/RPi_직결_표준연결_SOP.md (+ enable-ics.ps1 스크립트). ICS DHCP로 RPi 측 설정 0 + 인터넷 공유. 2026-11-16 SOP 승격·재검증(Debian 13, 이더넷 9에서도 OK)
 type: reference
 originSessionId: c8e21a73-5f24-4c8e-a3f1-d8e57f9b2c44
 ---
 
 # RPi 본체 ethernet + ICS DHCP 셋업
+
+## ⭐ 2026-11-16 표준 SOP 승격 (bins RPi4 연결 실패 사건 계기)
+
+- **단일 표준 문서 = `C:\todo\today\tailscale\RPi_직결_표준연결_SOP.md`** — 신품 보드(OS만 설치) 첫 접속 실패 3요소(SSH 미활성·IP 모름·DHCP 부재)를 전부 커버: 0단계(SD에 ssh 파일·userconf)→직결→ICS→발견(ARP/mDNS)→SSH→Tailscale. 본 메모리의 GUI 절차는 그 문서로 통합됨.
+- **스크립트 자산**: `tailscale\enable-ics.ps1` (UAC 1회, `-Private '이더넷 9'`처럼 포트 지정 가능 — ICS private는 아무 어댑터나 됨을 실측). 🚨 PS 5.1 한글 .ps1은 **BOM 필수**(없으면 조용히 파싱 실패).
+- **재검증(2026-11-16)**: RPi3(MAC B8-27-EB-8B-00-E4, **Debian 13 trixie**, hostname uttec)를 USB 어댑터(이더넷 9)에 직결 → DHCP 192.168.137.160 → SSH·인터넷 공유 전부 OK. 최신 OS도 DHCP 기본 동작 확인.
+- 함정 실측 2건: ① RPi 멀티홈(Wi-Fi 동시 접속) 시 **mDNS가 다른 인터페이스 IP 반환** — ARP 스캔(192.168.137.x)이 확정적 ② ICS를 RPi 연결 후에 켜면 `Restart-NetAdapter`로 링크 bounce해야 즉시 재임대.
 
 **규칙**: RPi 측 셋업 변경 없이 LAN 케이블만 꽂으면 자동으로 SSH 접속 가능. 인터넷 공유 보너스 (RPi에서 apt update 가능). USB ethernet 직결(static IP)과 별개의 시나리오.
 

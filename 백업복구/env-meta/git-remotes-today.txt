@@ -1,0 +1,4 @@
+﻿backup	https://github.com/ihong9059/backup.git (fetch)
+backup	https://github.com/ihong9059/backup.git (push)
+origin	https://github.com/ihong9059/today.git (fetch)
+origin	https://github.com/ihong9059/today.git (push)

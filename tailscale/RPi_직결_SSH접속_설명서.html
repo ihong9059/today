@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>RPi 직결 SSH 접속 설명서 — 랜케이블 하나로 끝내기</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#f4f6f8; color:#2c3e50; line-height:1.7; padding:30px 15px; }
+  .wrap { max-width:860px; margin:0 auto; }
+  header { background:#1a2940; color:#fff; border-radius:12px; padding:34px 38px; margin-bottom:22px; }
+  header h1 { font-size:26px; margin-bottom:8px; }
+  header p { color:#aebfd6; font-size:14.5px; }
+  .badge { display:inline-block; background:#27ae60; color:#fff; font-size:12.5px; padding:3px 12px; border-radius:20px; margin-top:12px; font-weight:bold; }
+  .diagram { background:#0f1c30; color:#7ee8a2; font-family:Consolas,monospace; font-size:14px; border-radius:10px; padding:18px 22px; margin:18px 0 0; text-align:center; letter-spacing:.5px; }
+  .card { background:#fff; border-radius:12px; padding:26px 30px; margin-bottom:16px; box-shadow:0 1px 4px rgba(0,0,0,.07); }
+  .step { display:flex; gap:16px; align-items:flex-start; }
+  .num { flex:0 0 44px; height:44px; background:#2563ab; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:bold; }
+  .num.zero { background:#c0392b; }
+  .step h2 { font-size:18.5px; margin-bottom:8px; }
+  .step .body { flex:1; }
+  code, pre { font-family:Consolas,'D2Coding',monospace; }
+  code { background:#eef2f6; padding:1px 7px; border-radius:4px; font-size:13.5px; color:#b03a2e; }
+  pre { background:#1e2b3c; color:#d7e3f0; padding:14px 18px; border-radius:8px; font-size:13px; overflow-x:auto; margin:10px 0; }
+  pre .c { color:#7fa8d0; }
+  .tip { background:#fff8e6; border-left:4px solid #f0a500; padding:10px 16px; border-radius:0 8px 8px 0; font-size:13.5px; margin:10px 0; }
+  .danger { background:#fdeeee; border-left:4px solid #c0392b; padding:10px 16px; border-radius:0 8px 8px 0; font-size:13.5px; margin:10px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:8px; }
+  th { background:#2563ab; color:#fff; padding:9px 12px; text-align:left; }
+  td { border-bottom:1px solid #e3e8ee; padding:9px 12px; }
+  tr:nth-child(even) td { background:#f8fafc; }
+  h3.sec { font-size:17px; margin-bottom:10px; color:#1a2940; }
+  footer { text-align:center; color:#8a9bb0; font-size:12.5px; padding:16px 0 4px; }
+  ul { padding-left:20px; }
+  li { margin:3px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>🍓 라즈베리파이 직결 SSH 접속 설명서</h1>
+  <p>모니터·키보드·공유기 없이 — <b style="color:#fff">노트북 + 랜케이블 1개</b>로 신품 RPi3/RPi4를 설정한다</p>
+  <span class="badge">✔ 2026-11-16 신품 보드(Debian 13) 전 단계 실검증 완료</span>
+  <div class="diagram">[ RPi eth0 ] ──── 일반 랜케이블 (크로스 불필요) ──── [ 노트북 이더넷 포트 ]</div>
+</header>
+
+<div class="card"><div class="step">
+  <div class="num zero">0</div>
+  <div class="body">
+    <h2>SD 굽기 단계에서 SSH·계정 심기 <small style="color:#c0392b">(신품 필수 — 실패 1위 원인)</small></h2>
+    <p>라즈베리파이 OS는 <b>기본적으로 SSH가 꺼져 있다.</b> 화면 없이 접속하려면 SD에 미리 심어야 한다.</p>
+    <p style="margin-top:8px"><b>방법 ① Imager로 구울 때 (권장)</b> — Raspberry Pi Imager → ⚙️ 고급 설정:</p>
+    <ul>
+      <li>호스트네임 지정 (예: <code>rpi4-bins</code>)</li>
+      <li><b>SSH 사용 체크</b> + 사용자/비밀번호 지정 (예: <code>uttec</code> / <code>uttec</code>)</li>
+    </ul>
+    <p style="margin-top:8px"><b>방법 ② 이미 구운 카드</b> — SD를 노트북에 꽂으면 boot 드라이브가 보인다:</p>
+    <ul>
+      <li>빈 파일 <code>ssh</code> 생성 (확장자 없음) → SSH 켜짐</li>
+      <li>최신 OS는 계정 파일도: <code>userconf.txt</code> 에 <code>사용자명:암호해시</code> 1줄</li>
+    </ul>
+  </div>
+</div></div>
+
+<div class="card"><div class="step">
+  <div class="num">1</div>
+  <div class="body">
+    <h2>케이블 직결 + 전원 ON</h2>
+    <p>RPi 이더넷 ↔ 노트북 이더넷 포트를 일반 랜케이블로 직결하고 RPi 전원을 켠다.</p>
+    <pre>Get-NetAdapter        <span class="c"># Status=Up 확인 (어느 포트든 OK — 포트 이름 기억)</span></pre>
+    <div class="tip">💡 첫 부팅은 1~2분 걸린다 (파일시스템 확장). 링크가 안 뜨면 RPi LED(초록 깜빡임)부터 확인.</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="step">
+  <div class="num">2</div>
+  <div class="body">
+    <h2>인터넷 공유(ICS) 켜기 — 노트북이 공유기가 된다</h2>
+    <p>노트북이 DHCP 서버(192.168.137.1) + 인터넷 게이트웨이가 되어, <b>RPi 쪽 설정은 0</b>이다.</p>
+    <pre><span class="c"># 관리자 승인(UAC) 1회 — RPi를 꽂은 포트를 -Private로 지정</span>
+Start-Process powershell -Verb RunAs -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass',
+  '-File','C:\todo\today\tailscale\enable-ics.ps1'   <span class="c"># USB 포트면: 뒤에 ,'-Private','이더넷 9'</span>
+
+<span class="c"># 확인: 꽂은 포트가 192.168.137.1 이면 성공</span>
+ipconfig</pre>
+    <div class="tip">💡 GUI로 할 때: <code>ncpa.cpl</code> → Wi-Fi 우클릭 → 속성 → 공유 탭 → 체크 + 대상 포트 선택.<br>
+    💡 RPi를 꽂은 <b>뒤에</b> ICS를 켰다면 관리자 PowerShell에서 <code>Restart-NetAdapter -Name "포트명"</code> 한 번 (링크를 껐다 켜면 RPi가 즉시 IP를 다시 받는다).</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="step">
+  <div class="num">3</div>
+  <div class="body">
+    <h2>RPi 찾기 — IP 스캔</h2>
+    <pre><span class="c"># 브로드캐스트로 ARP 테이블 채우고 RPi MAC(B8-27-EB/DC-A6-32/E4-5F-01/D8-3A-DD)을 찾는다</span>
+ping -n 1 192.168.137.255 ; arp -a | findstr 192.168.137</pre>
+    <p>→ <code>192.168.137.xxx&nbsp;&nbsp;b8-27-eb-…</code> 처럼 나오는 주소가 RPi다. (30초~2분 내)</p>
+    <div class="danger">🚨 <code>ping raspberrypi.local</code>(mDNS)은 RPi가 Wi-Fi에도 붙어 있으면 <b>엉뚱한 IP를 돌려줄 수 있다</b> — ARP 스캔이 확실하다.</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="step">
+  <div class="num">4</div>
+  <div class="body">
+    <h2>SSH 접속 + 키 등록</h2>
+    <pre>ssh uttec@192.168.137.xxx        <span class="c"># 0단계에서 정한 계정/비밀번호</span></pre>
+    <p>접속되면 <b>공개키를 등록</b>해 다음부터 비밀번호 없이 들어간다 (비밀번호 마지막 1회 입력):</p>
+    <pre>type $env:USERPROFILE\.ssh\id_ed25519.pub | ssh uttec@192.168.137.xxx `
+  "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"</pre>
+    <p style="margin-top:8px">인터넷도 이미 공유되고 있으므로 그 자리에서 바로:</p>
+    <pre>sudo apt update                  <span class="c"># 인터넷 확인 (sudo는 비밀번호 요구)</span>
+curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up
+<span class="c"># → Tailscale 등록 후에는 직결 없이 어디서나 접속 가능</span></pre>
+  </div>
+</div></div>
+
+<div class="card">
+  <h3 class="sec">⚡ 문제 해결</h3>
+  <table>
+    <tr><th>증상</th><th>원인</th><th>조치</th></tr>
+    <tr><td>링크가 안 뜸 (0 bps)</td><td>케이블/RPi 미부팅</td><td>RPi LED 확인, 케이블 교체</td></tr>
+    <tr><td>192.168.137.x에 아무도 없음</td><td>ICS 꺼짐 (포트가 137.1 아님)</td><td>STEP 2 재수행 — Wi-Fi 네트워크가 바뀌면 풀릴 수 있다</td></tr>
+    <tr><td>임대가 계속 안 잡힘</td><td>ICS를 나중에 켬</td><td><code>Restart-NetAdapter</code>로 링크 bounce 또는 RPi 재부팅</td></tr>
+    <tr><td><b>ssh: connection refused</b></td><td><b>SSH 미활성 (최다 원인)</b></td><td>STEP 0 — SD를 노트북에 꽂아 <code>ssh</code> 파일 생성</td></tr>
+    <tr><td>ssh: permission denied</td><td>계정 미설정 (최신 OS)</td><td>STEP 0 — <code>userconf.txt</code> 생성</td></tr>
+    <tr><td>접속은 되나 apt 실패</td><td>인터넷 공유 안 됨</td><td>STEP 2 확인 (Wi-Fi 쪽 "공유됨" 상태)</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3 class="sec">✅ 검증 기록</h3>
+  <ul style="font-size:13.5px">
+    <li><b>2026-11-16</b> — 신품 SD(Imager: SSH on·uttec/uttec, Debian 13)를 RPi3에 삽입, 본 절차 그대로 완주: 첫 부팅 → DHCP 192.168.137.79 → ARP 발견 → 비밀번호 접속 → 키 등록 → 인터넷(33ms)·DNS 정상. <b>전 단계 실증 완료.</b></li>
+    <li>2026-05-21 — RPi 3B+ ICS 방식 최초 검증 (192.168.137.248)</li>
+    <li>상세 기술 문서: <code>C:\todo\today\tailscale\RPi_직결_표준연결_SOP.md</code></li>
+  </ul>
+</div>
+
+<footer>UTTEC · RPi 직결 SSH 접속 표준 · 2026-11-16 제정</footer>
+</div>
+</body>
+</html>

@@ -155,3 +155,9 @@ _tmpbuild/
 
 # Tab M9 Linux 작업 임시 자산 (1.2GB, 재다운로드 가능)
 tablet/
+
+# 백업 메타 중 민감정보 (API 키 평문 — 로컬·mac 백업에만 보존, 2026-11-16)
+백업복구/env-meta/user-env-vars.txt
+
+# multi-agent inbox 터미널 로그 부산물 (noise, 카드 아님)
+myWiki/_inbox/pending/prompt_기록.txt

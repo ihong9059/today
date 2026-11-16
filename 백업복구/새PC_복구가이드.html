@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>새 PC 복구 가이드 — Claude 작업환경 완전 이전</title>
+<style>
+  body { font-family: "맑은 고딕", "Malgun Gothic", sans-serif; max-width: 960px; margin: 0 auto; padding: 24px; color: #222; line-height: 1.65; }
+  h1 { border-bottom: 3px solid #2c5f8a; padding-bottom: 8px; color: #2c5f8a; }
+  h2 { color: #2c5f8a; margin-top: 36px; border-left: 6px solid #2c5f8a; padding-left: 10px; }
+  h3 { color: #444; margin-top: 24px; }
+  code, pre { font-family: Consolas, "Courier New", monospace; background: #f4f6f8; border-radius: 4px; }
+  code { padding: 1px 5px; }
+  pre { padding: 12px 14px; overflow-x: auto; border: 1px solid #dde3e8; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  th, td { border: 1px solid #c8d0d8; padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: #eef3f7; }
+  .warn { background: #fff3e0; border-left: 6px solid #e65100; padding: 10px 14px; margin: 14px 0; }
+  .danger { background: #fdecea; border-left: 6px solid #c62828; padding: 10px 14px; margin: 14px 0; }
+  .ok { background: #e8f5e9; border-left: 6px solid #2e7d32; padding: 10px 14px; margin: 14px 0; }
+  .step { background: #f7f9fb; border: 1px solid #dde3e8; border-radius: 6px; padding: 14px 18px; margin: 16px 0; }
+  .meta { color: #777; font-size: 0.9em; }
+  li { margin: 4px 0; }
+</style>
+</head>
+<body>
+
+<h1>새 PC 복구 가이드 — Claude 작업환경 완전 이전</h1>
+<p class="meta">작성: 2026-11-14 · 백업 원본 PC: myhome-lenovo (Windows 11 Pro, 사용자 <code>lenovo</code>) · 작성자: mywiki-claude</p>
+
+<h2>0. 백업 구성 (어디에 무엇이 있나)</h2>
+<p>백업 위치: <b>mac(uttec-MacBookPro Ubuntu, Tailscale <code>100.90.158.36</code>)의 USB SSD</b></p>
+<pre>/mnt/backup-ssd/pc-backup/myhome-lenovo-20261114/
+├── todo-parts/            # C:\todo를 최상위 폴더별 tar.gz로 분할 (junction 제외, 원본 약 55GB)
+│   ├── _rootfiles.tar.gz  #   C:\todo 루트 낱개 파일
+│   ├── today.tar.gz  plc.tar.gz  livecow.tar.gz  ...  (폴더당 1개, 약 49개)
+├── home-claude.tar.gz     # C:\Users\lenovo\{.claude, .claude.json, .ssh} — vault별 메모리 19세트·설정·hooks·SSH키
+└── 백업복구/               # 본 가이드 + 복원 스크립트 + 환경 메타 (tar 없이 바로 열람 가능)
+    ├── 새PC_복구가이드.html   (본 문서)
+    ├── junctions.json         (junction 57개 실측 목록 — 단일출처)
+    ├── restore-junctions.ps1  (junction 일괄 재생성 스크립트)
+    ├── tar-excludes.txt       (백업 시 제외한 junction 목록)
+    └── env-meta/              (예약작업 XML 2개·환경변수·도구버전·git remote)</pre>
+
+<div class="warn"><b>⚠️ USB 디스크는 ext4 포맷</b> — Windows PC에 직접 꽂아도 읽을 수 없습니다. 복원은 반드시 <b>mac을 경유(ssh)</b>해서 가져옵니다 (3단계 참조).</div>
+
+<h2>1. 프로그램 설치 (새 PC에서 가장 먼저)</h2>
+<div class="step">
+<p>원본 PC 기준 버전 (env-meta/tool-versions.txt). 같거나 최신이면 됩니다.</p>
+<table>
+<tr><th>프로그램</th><th>원본 버전</th><th>설치 명령 (PowerShell 관리자)</th></tr>
+<tr><td>Git for Windows</td><td>2.51.1</td><td><code>winget install Git.Git</code></td></tr>
+<tr><td>Python</td><td>3.13</td><td><code>winget install Python.Python.3.13</code></td></tr>
+<tr><td>Node.js</td><td>22 LTS</td><td><code>winget install OpenJS.NodeJS.LTS</code></td></tr>
+<tr><td>Claude Code</td><td>2.1.170</td><td><code>npm install -g @anthropic-ai/claude-code</code></td></tr>
+<tr><td>Tailscale</td><td>1.104.6</td><td><code>winget install Tailscale.Tailscale</code></td></tr>
+<tr><td>Chrome</td><td>-</td><td><code>winget install Google.Chrome</code> (기본 브라우저가 Edge라도 Chrome 필요 — skill들이 chrome.exe 명시 호출)</td></tr>
+<tr><td>Obsidian (선택)</td><td>-</td><td><code>winget install Obsidian.Obsidian</code> (myWiki 열람용)</td></tr>
+</table>
+<p>Python 패키지: <code>pip install requests ezdxf pymupdf</code> (notion-sync·DWG판독·PDF검증에 필요. 그 외는 사용 시점에 추가)</p>
+</div>
+
+<h2>2. Tailscale 로그인 (네트워크 복구)</h2>
+<div class="step">
+<ol>
+<li>Tailscale 실행 → <b>Google 계정 ihong9059@gmail.com</b>으로 로그인</li>
+<li>새 PC가 새 노드로 등록됨 (기존 노드 이름과 무관, 같은 tailnet이면 즉시 통신 가능)</li>
+<li>확인: <code>tailscale ping 100.90.158.36</code> (mac이 켜져 있어야 함)</li>
+</ol>
+</div>
+
+<h2>3. 백업 가져오기 (mac → 새 PC)</h2>
+<div class="step">
+<p><b>Git Bash</b>를 열고 (PowerShell 아님 — 바이너리 파이프 깨짐 방지) 아래를 실행:</p>
+<pre># 첫 접속은 SSH 키가 아직 없으므로 비밀번호 인증 (mac 계정: uttec)
+MAC=uttec@100.90.158.36
+BK=/mnt/backup-ssd/pc-backup/myhome-lenovo-20261114
+
+# ① C:\todo 복원 — 폴더별 아카이브 순차 해제 (회선에 따라 수 시간)
+mkdir -p /c/todo
+for f in $(ssh $MAC "ls $BK/todo-parts"); do
+  echo "$f"
+  ssh $MAC "cat '$BK/todo-parts/$f'" | tar -xzf - -C /c/todo
+done
+
+# ② 사용자 홈 복원 (.claude / .claude.json / .ssh)
+ssh $MAC "cat $BK/home-claude.tar.gz" | tar -xzf - -C ~</pre>
+<p>중간에 끊기면 실패한 폴더부터 다시 실행하면 됩니다 (tar 해제는 덮어쓰기라 재실행 안전).</p>
+<div class="warn"><b>⚠️ 새 PC의 사용자명이 <code>lenovo</code>가 아닌 경우</b>: ②는 현재 사용자 홈(<code>~</code>)에 풀리므로 그대로 두면 되지만, <code>~\.claude\settings.json</code>의 hook 명령에 <code>C:/Users/lenovo/...</code> 절대경로가 박혀 있습니다. 복원 후 <code>settings.json</code>에서 <code>lenovo</code>를 새 사용자명으로 일괄 치환하세요. (<code>~\.claude\hooks\</code>의 스크립트 자체는 함께 복원됨)</div>
+<p>SSH 키 복원 후에는 <code>ssh mac</code>·<code>ssh ubuntu</code>·<code>ssh ponet</code> 등 기존 별칭이 전부 되살아납니다 (<code>~\.ssh\config</code> 포함).</p>
+</div>
+
+<h2>4. Junction 재생성</h2>
+<div class="step">
+<p>tar 백업은 junction 57개(myWiki raw 미러 등)를 제외했으므로 재생성 필요. PowerShell에서:</p>
+<pre>powershell -ExecutionPolicy Bypass -File C:\todo\today\백업복구\restore-junctions.ps1</pre>
+<p>전체 목록·대상은 <code>junctions.json</code>이 단일출처. 이미 존재하는 것은 SKIP 처리되므로 재실행 안전.</p>
+</div>
+
+<h2>5. 환경변수·예약작업 등록</h2>
+<div class="step">
+<h3>사용자 환경변수</h3>
+<p><code>env-meta\user-env-vars.txt</code> 참고하여 설정 (시스템 속성 → 환경변수, 또는 PowerShell):</p>
+<pre>[Environment]::SetEnvironmentVariable("TYPESAFE_API_KEY", "&lt;값은 user-env-vars.txt&gt;", "User")
+# GOOGLE_APPLICATION_CREDENTIALS / GOOGLE_CLOUD_PROJECT / ZEPHYR_* 는 해당 작업 재개 시 등록</pre>
+<p>※ <b>NOTION_TOKEN은 환경변수가 아니라</b> <code>C:\todo\today\.claude\settings.local.json</code>의 env 블록에 있음 — todo.tar 복원으로 자동 포함, 별도 작업 불필요.</p>
+<h3>예약작업 (위시캣 자동검토 + 알람)</h3>
+<pre>schtasks /Create /TN "WishketDailyCheck" /XML "C:\todo\today\백업복구\env-meta\task_WishketDailyCheck.xml"
+schtasks /Create /TN "Claude_Alarm_1100" /XML "C:\todo\today\백업복구\env-meta\task_Claude_Alarm_1100.xml"</pre>
+</div>
+
+<h2>6. 재로그인 (복사 불가능한 것들)</h2>
+<div class="step">
+<table>
+<tr><th>항목</th><th>방법</th></tr>
+<tr><td>Claude Code 로그인</td><td>터미널에서 <code>claude</code> 실행 → <code>/login</code> (Anthropic 계정). <code>.credentials.json</code>이 복원돼 있으면 생략될 수 있으나 기기 변경 시 재인증이 안전</td></tr>
+<tr><td>GitHub</td><td>첫 <code>git push</code> 시 Git Credential Manager 브라우저 로그인 (계정 ihong9059)</td></tr>
+<tr><td>Google Calendar MCP</td><td>사용 시점에 OAuth 재인증 (계정 ihong9059, 프로젝트 uttecproject)</td></tr>
+<tr><td>claude.ai MCP (Gmail/Drive/Notion)</td><td>Claude Code 내에서 재인증 안내 따름</td></tr>
+</table>
+</div>
+
+<h2>7. 첫 가동 — /work-start</h2>
+<div class="step">
+<pre>cd C:\todo\today
+claude          # 로그인 완료 상태
+/work-start</pre>
+<p>이때 자동으로 수행되는 것:</p>
+<ul>
+<li><b>메모리 link 자동 생성</b> — <code>setup-memory-sync.py</code>가 <code>~\.claude\projects\C--todo-today\memory</code> → <code>C:\todo\today\.claude\memory</code> junction을 생성 (idempotent, 별도 작업 불필요)</li>
+<li>junction 정합성 검증 (<code>check-raw-junctions.py</code>) — 4단계 누락분 자동 감지</li>
+<li>sibling vault staleness 감지, Notion 동기화</li>
+</ul>
+</div>
+
+<h2>8. 검증 체크리스트 (전부 통과해야 복구 완료)</h2>
+<div class="step">
+<table>
+<tr><th>#</th><th>검증</th><th>명령/방법</th><th>기대 결과</th></tr>
+<tr><td>1</td><td>메모리 복원</td><td><code>ls ~\.claude\projects\C--todo-today\memory</code></td><td>80+ 파일 (MEMORY.md 포함)</td></tr>
+<tr><td>2</td><td>vault별 메모리</td><td><code>ls ~\.claude\projects</code></td><td>C--todo-lora(62)·C--todo-livecow(44) 등 19+ 디렉토리</td></tr>
+<tr><td>3</td><td>SSH 별칭</td><td><code>ssh mac "echo ok"</code> / <code>ssh ponet "echo ok"</code></td><td>ok (키 인증, 비번 없이)</td></tr>
+<tr><td>4</td><td>git 동작</td><td><code>git -C C:\todo\today pull</code> 후 push 1회</td><td>정상 (credential 로그인 1회)</td></tr>
+<tr><td>5</td><td>junction</td><td><code>python C:\todo\today\.claude\hooks\check-raw-junctions.py</code></td><td>출력 없음 (전부 OK)</td></tr>
+<tr><td>6</td><td>Notion 동기화</td><td><code>python C:\todo\today\.claude\hooks\notion-sync.py</code></td><td>"NOTION_TOKEN 없음" 아닌 정상 sync 라인</td></tr>
+<tr><td>7</td><td>예약작업</td><td><code>schtasks /Query /TN WishketDailyCheck</code></td><td>Ready</td></tr>
+<tr><td>8</td><td>myWiki 열람</td><td>Obsidian으로 <code>C:\todo\today\myWiki</code> 열기</td><td>raw/ 링크 정상</td></tr>
+</table>
+</div>
+
+<h2>9. 참고 — 이 백업이 커버하지 않는 것</h2>
+<ul>
+<li><b>개발 도구체인</b>: nRF Connect SDK(NCS)·Zephyr·nrfjprog·west, ffmpeg, ODA File Converter 등은 <code>C:\todo\tools</code> 외 시스템 설치분이 있으면 재설치 필요. 펌웨어 작업 재개 시 해당 프로젝트 README의 셋업 절차를 따를 것.</li>
+<li><b>터미널 기본 디렉토리</b>(C:\todo): cmd AutoRun·PowerShell $PROFILE 재적용 (단, NCS 빌드 시 AutoRun 충돌 주의 — 메모리 <code>feedback_ncs_build_cmd_autorun_conflict</code>)</li>
+<li><b>원격 호스트들</b>(ubuntu/mac·factory-rpi4·EC2·DigitalOcean)은 이 PC와 무관하게 생존 — SSH 키만 복원되면 즉시 접근 가능</li>
+</ul>
+
+<div class="danger"><b>🔒 보안 주의</b>: 이 백업에는 SSH 개인키 전체, NOTION_TOKEN, API 키, 개인정보 vault(어머님·연락처 등)가 포함됩니다. 백업 디스크는 물리적으로 안전하게 보관하고, 복사본을 클라우드·타인 기기에 두지 마세요.</div>
+
+<div class="ok"><b>요약 — 최단 경로</b>: ① winget 6종 설치 → ② Tailscale 로그인 → ③ Git Bash에서 tar 2개 복원 → ④ restore-junctions.ps1 → ⑤ 예약작업 2개 + TYPESAFE_API_KEY → ⑥ claude /login → ⑦ /work-start → ⑧ 체크리스트 8개 검증. 소요 약 1~2시간 (전송 시간 제외).</div>
+
+</body>
+</html>
