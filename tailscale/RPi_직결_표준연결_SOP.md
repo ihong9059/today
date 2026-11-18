@@ -134,6 +134,7 @@ type $env:USERPROFILE\.ssh\id_ed25519.pub | ssh uttec@192.168.137.xxx "mkdir -p 
 | ssh: permission denied | Bookworm 기본계정 폐지 | 0단계 — `userconf.txt` 생성 |
 | 접속은 되나 apt 실패 | 방법 B(인터넷 없음) | 방법 A로 전환 |
 | mDNS가 엉뚱한 IP 반환 | RPi가 Wi-Fi 등 다중 접속(멀티홈) — mDNS는 다른 인터페이스 IP를 줄 수 있음 | **②번 ARP 스캔이 확정적** — 192.168.137.x로 직접 접속 |
+| RPi 전혀 미발견 + **PC측 포트 IP가 169.254.x** (192.168.137.1 아님) | 🚨 **ICS가 "실제 연결한 포트"가 아닌 다른 포트(예: 지난번 USB 이더넷 9)에 걸려 있음** — 연결 포트엔 DHCP 서버 없어 양쪽 APIPA | `enable-ics.ps1 -Private '<실제 연결 포트>'`로 ICS 이동 후 링크 bounce. 포트는 MAC으로 식별(온보드 I219-V=74-5D-22-17-D8-79 / USB=00-E0-4C-AA-7C-23). 2026-11-17 박제 |
 | ICS 켰는데 RPi가 임대 못 받음 | ICS를 RPi 연결 *후에* 켠 경우 DHCP 재요청 대기 | `Restart-NetAdapter`(관리자)로 링크 bounce → 즉시 재임대 (또는 RPi 재부팅) |
 
 ## 검증 기록
