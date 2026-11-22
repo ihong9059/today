@@ -135,6 +135,25 @@ def is_similar(a, b):
     return False
 
 
+def extract_title(text):
+    """행 선두의 **굵은 제목** 추출 (없으면 None)"""
+    m = re.search(r"\*\*(.+?)\*\*", text)
+    return m.group(1) if m else None
+
+
+def topic_similar(a, b):
+    """작업보고서→Notion 신규 판정 전용 매칭.
+    is_similar의 키워드 매칭은 한글 장문 보일러플레이트(lifecycle·cascade·ack 등)에서
+    과매칭 → 신규 할일이 Notion 미등록 → 익일 보고서 재생성 시 소실 (2026-11-17 #1·#3
+    행 소실, 2026-11-22 박제). 양쪽에 **제목**이 있으면 제목만 비교, 없으면 is_similar."""
+    ta, tb = extract_title(a), extract_title(b)
+    if ta and tb:
+        na, nb = normalize_text(ta), normalize_text(tb)
+        if na and nb:
+            return na == nb or na in nb or nb in na
+    return is_similar(a, b)
+
+
 def strict_similar(a, b):
     """완료 항목 비교 전용 엄격 매칭.
     is_similar의 글자집합/키워드 매칭은 한글 장문에서 거의 항상 참이 되어,
@@ -357,7 +376,7 @@ def sync_bidirectional(sections):
             continue
         # 이미 Notion에 있는지 확인 (완료 항목과는 엄격 매칭 — 오매칭 시 신규 할일 누락)
         if any(
-            (strict_similar if nt["done"] else is_similar)(rt["text"], nt["text"])
+            (strict_similar if nt["done"] else topic_similar)(rt["text"], nt["text"])
             for nt in notion_todos
         ):
             continue
