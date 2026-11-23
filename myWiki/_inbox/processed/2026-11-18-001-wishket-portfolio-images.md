@@ -7,7 +7,7 @@ priority: normal
 subject: 위시캣 포트폴리오 등록용 자체 양산 보드 렌더 8종 480×480 변환 + weflo #157235 제목 확정 + 11-18 자동검토 ✅0
 created: 2026-11-18T13:50:00+09:00
 related: [위시캣/2026-11/가능프로젝트/2026-11-18_가능프로젝트.md, second-brain/log.md]
-status: pending
+status: done
 ---
 
 # 위시캣 포트폴리오 보드 이미지 8종 + 11-18 영업 현황

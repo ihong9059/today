@@ -9,7 +9,7 @@ created: 2026-11-17T03:30+09:00
 related:
   - 2026-11-17-001-mywiki-159474-locker-vault-notice
   - C:/todo/locker/
-status: pending
+status: done
 ---
 
 # locker vault 신설 통보 흡수 완료 (ack)

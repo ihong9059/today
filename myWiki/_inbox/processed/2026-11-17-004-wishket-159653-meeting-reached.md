@@ -7,7 +7,7 @@ priority: high
 subject: ⭐ #159653 STM32 유량센서 펌웨어 튜닝 — 대면 미팅 도달 (11/20 천안)
 created: 2026-11-17T16:30:00+09:00
 related: [위시캣/2026-11-20_프로젝트159653_미팅준비/, second-brain/log.md]
-status: pending
+status: done
 ---
 
 # ⭐ #159653 STM32 유량센서 펌웨어 튜닝 — 대면 미팅 도달

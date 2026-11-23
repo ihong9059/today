@@ -2,7 +2,7 @@
 title: weldRobot — UTTEC 용접 로봇 신사업 (Tier 3 vault)
 type: entity
 created: 2026-06-06
-updated: 2026-09-09 (_inbox 흡수 — weldrobot-claude 카드 `2026-09-07-001` request: **Fairino 협동로봇 entity cascade(dogfood 후보 2, 두산 대안 — FR5 ±0.02mm·500만원대·Modbus TCP 표준) + Decision 3 ROS2 도입 시점 단계별 분기**(PoC 0 미사용 → 알파 1 선택 → path-3 필수). 6/7 fact-finding 소급 정리분 / 이전 2026-06-06 (vault 신설 동시 박제 — strengths §13 carrier 역량 2번째 적용 사례))
+updated: 2026-11-23 (wishket 카드 `2026-11-17-003` 흡수 — **영업 채널 3(위시캣 cross-매칭) 첫 실적**: #159624 인천 송도 자동 용접 설비 전장+LS PLC(정부지원 900~1,200만/3~4주) 지원서에 weldRobot 도메인 지식(협동로봇·서보·비전)이 LS XGT 실무+정부 R&D 서보 1억과 3자산 결합으로 투입 — 신사업 도메인 지식의 외주 영업 역류 1례) / 이전 2026-09-09 (_inbox 흡수 — weldrobot-claude 카드 `2026-09-07-001` request: **Fairino 협동로봇 entity cascade(dogfood 후보 2, 두산 대안 — FR5 ±0.02mm·500만원대·Modbus TCP 표준) + Decision 3 ROS2 도입 시점 단계별 분기**(PoC 0 미사용 → 알파 1 선택 → path-3 필수). 6/7 fact-finding 소급 정리분 / 이전 2026-06-06 (vault 신설 동시 박제 — strengths §13 carrier 역량 2번째 적용 사례))
 tags: [weldRobot, 용접로봇, 신사업, Tier3, vault분리, carrier2번째, Path4-우선, Vision-seam-tracking, AI-비드검사, add-on-box]
 links: [strengths, ai-direction, 양산제품, 위시캣활동, onDevice-ai, 한국기계, 정부R&D실증사업, 영업전략]
 ---

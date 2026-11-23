@@ -2,7 +2,7 @@
 title: livecow (BNOW) — LoRa 가축 모니터링 캡슐·Collar delivery 실행 트랙
 type: entity
 created: 2026-10-27
-updated: 2026-11-06 (staleness cascade — vault log 11-04~06 직접 대조: ⭐ **Collar PCB 발주 완료**(EasyEDA Pro→JLCPCB 원클릭, 발주본 V1.2 박제 — 넷리스트 V1.1 동일·변경 실체=PCB 레이아웃) = Collar 과제가 설계→**발주 단계**로 전진 + 발주 전 회로도 검토에서 ⚠️ **RAK4630 RF_LoRa(pin37)·RF_BT 둘 다 No-Connect·안테나 커넥터 JP1(WHM110A HaLow) 1개뿐 = LoRa/BLE 안테나 넷 부재** → 트레이스안테나 처리 여부 실물확인 필요(미확인, 사용자 발주결정으로 종결·기록보존) + BOM 품절 대체 C3017497→C25744 / 11-04 Collar 원가·견적(WHM110A 단가 €18.35≈₩27,600 삼각검증 확정·100대 재료비 ₩9.69M·충북대 Collar 납품 견적서 50대 850만/100대 1500만 VAT별도) / 11-05 캡슐 V10 BOM BNOW 공급처수배용 재작성(IC 6종 정확 MPN 규명 U1=RAK3172-9-SM-I·U4=TPL5010DDCR 등, 유통품번 제거)) / 이전 2026-11-03 (_inbox 흡수 — ondevice-claude 카드 `2026-11-02-003`: **livecow↔onDevice_AI 첫 기술 연계** — Collar/캡슐 LoRa 칩 RAK3172(STM32WLE5)가 onDevice_AI 16번째 보드 편입·R48 제스처 CMSIS-NN 10.71ms 100% 포팅 성립, 양방향 가치(livecow="LoRa+제스처 AI 단일칩" 확장 제안 / onDevice_AI=LoRa 축 신규) + NDA 경계 운영(측정=livecow 벤치·박제=일반 기술 사실만)) / 이전 2026-10-31 (staleness cascade — vault log 10-29~31 직접 대조: **Collar 과제 진행 확정·진행계획서 총 600만 발행**(사용자 결단) + 충북대 펌웨어 소스 수령→RAK4630 포팅 FW0·FW1 완료 + ⭐ **RAK3172↔RAK4630 LoRa P2P 양방향 실링크 실증**(공중 동결표 그대로 Zephyr↔RUI3 호환 확정 = 전환 핵심 전제 실물 검증) + 발주 회로도 치명결함(WHM110A RF) 차단·V1.1 재검증 / 캡슐 = 수신율 보고 발행(전달률 ~100%)·GW proto mqtt 결함 교정·**V10 최종발주본 박제(U3=BMA400 회귀·포팅 불요)** — 발주 트리거=BMA400 입고 / 11-04 충북대 미팅 자료 발행) / 이전 2026-10-27 (entity 신설 — 활성 축 3건 delivery 정리 cascade. 캡슐 시제품 5대 제작·전수검증 완결 + BNOW 검증결과 보고 발행(10/27) → 회신 대기 / Collar 과제(충북대) P0 설계 인수검증 단계)
+updated: 2026-11-23 (staleness cascade — vault log 11-17~18 직접 대조: ⭐ **캡슐 5대 필드테스트 3주 두절 규명 + 5/5 전수 생존 실증(11-17)** — 근본원인 2중(crontab @reboot 키퍼 부재 + GW 재부팅이 uci proto를 mqtt로 변경 → pkt_fwd가 server를 127.0.0.1 강제)·투명프록시 복구·**fcnt ~6090~6300 = 3주 무중단·재부팅 0·배터리 3.65V + Livecare가 5대 전부 다운링크 응답 = BNOW ABP 등록·양방향 통신 확증**(10-27 "이상없음" 보고 강화)·재발방지 2중 키퍼(@reboot+*/2분, redirect_watch proto=udp 패치) + **Collar PCB 샘플 100개(5039162A-Y72) JLCPCB 패널라이징 승인·생산 재개(11-18)** — 상/하 2mm 스페이싱·갱신비용 수용 회신 발송, 입고 시 실물확인 2건 carry(RF_LoRa/RF_BT 안테나·BOM C25744)) / 이전 2026-11-06 (staleness cascade — vault log 11-04~06 직접 대조: ⭐ **Collar PCB 발주 완료**(EasyEDA Pro→JLCPCB 원클릭, 발주본 V1.2 박제 — 넷리스트 V1.1 동일·변경 실체=PCB 레이아웃) = Collar 과제가 설계→**발주 단계**로 전진 + 발주 전 회로도 검토에서 ⚠️ **RAK4630 RF_LoRa(pin37)·RF_BT 둘 다 No-Connect·안테나 커넥터 JP1(WHM110A HaLow) 1개뿐 = LoRa/BLE 안테나 넷 부재** → 트레이스안테나 처리 여부 실물확인 필요(미확인, 사용자 발주결정으로 종결·기록보존) + BOM 품절 대체 C3017497→C25744 / 11-04 Collar 원가·견적(WHM110A 단가 €18.35≈₩27,600 삼각검증 확정·100대 재료비 ₩9.69M·충북대 Collar 납품 견적서 50대 850만/100대 1500만 VAT별도) / 11-05 캡슐 V10 BOM BNOW 공급처수배용 재작성(IC 6종 정확 MPN 규명 U1=RAK3172-9-SM-I·U4=TPL5010DDCR 등, 유통품번 제거)) / 이전 2026-11-03 (_inbox 흡수 — ondevice-claude 카드 `2026-11-02-003`: **livecow↔onDevice_AI 첫 기술 연계** — Collar/캡슐 LoRa 칩 RAK3172(STM32WLE5)가 onDevice_AI 16번째 보드 편입·R48 제스처 CMSIS-NN 10.71ms 100% 포팅 성립, 양방향 가치(livecow="LoRa+제스처 AI 단일칩" 확장 제안 / onDevice_AI=LoRa 축 신규) + NDA 경계 운영(측정=livecow 벤치·박제=일반 기술 사실만)) / 이전 2026-10-31 (staleness cascade — vault log 10-29~31 직접 대조: **Collar 과제 진행 확정·진행계획서 총 600만 발행**(사용자 결단) + 충북대 펌웨어 소스 수령→RAK4630 포팅 FW0·FW1 완료 + ⭐ **RAK3172↔RAK4630 LoRa P2P 양방향 실링크 실증**(공중 동결표 그대로 Zephyr↔RUI3 호환 확정 = 전환 핵심 전제 실물 검증) + 발주 회로도 치명결함(WHM110A RF) 차단·V1.1 재검증 / 캡슐 = 수신율 보고 발행(전달률 ~100%)·GW proto mqtt 결함 교정·**V10 최종발주본 박제(U3=BMA400 회귀·포팅 불요)** — 발주 트리거=BMA400 입고 / 11-04 충북대 미팅 자료 발행) / 이전 2026-10-27 (entity 신설 — 활성 축 3건 delivery 정리 cascade. 캡슐 시제품 5대 제작·전수검증 완결 + BNOW 검증결과 보고 발행(10/27) → 회신 대기 / Collar 과제(충북대) P0 설계 인수검증 단계)
 tags: [클라이언트, LoRa, 축산, 캡슐, 시제품, BNOW, 충북대, NDA, 실행vault, livecow-vault, 위시캣]
 links: [위시캣활동, lora, 양산제품, vault-registry, 영업전략]
 ---
@@ -18,6 +18,21 @@ links: [위시캣활동, lora, 양산제품, vault-registry, 영업전략]
 - **vault**: `C:\todo\livecow` — delivery 실행 일체 소관. 경량 vault로 **_inbox 카드 채널 미설치**(multi-agent 미합류) → myWiki 인지는 staleness hook(`check-vault-status.py` VAULT_MAP, 2026-10-27 등재)으로 보완.
 - **파생 자산**: livecow-cost-kit(`C:\todo\livecow-cost-kit`) — 차기모델 PCB ASS'Y 판가 산출 방법론, 홍광삼(관리팀장) 인계본(2026-08-14).
 - 책임 분리: livecow vault = 시제품·펌웨어·검증 실행 / myWiki(본 entity) = 상태·결정·사업 자산 인지.
+
+## 진행 상태 (2026-11-23 staleness cascade)
+
+**두 축 — 캡슐(필드테스트 생존 실증) + Collar(샘플 100개 생산 중)**
+
+### ① 캡슐 — 5대 필드테스트 3주 두절 규명 + 5/5 전수 생존 실증 (11-17 milestone)
+
+- **모니터링 3주 두절(10-27 이후) 근본원인 2중**: crontab에 NS/프록시 `@reboot` 키퍼 부재 + 11-17 게이트웨이 재부팅이 uci `proto`를 mqtt로 변경 → pkt_fwd가 server_address를 127.0.0.1 강제 → rpi4 미도달. **모니터링만 죽었고 단말은 전부 생존**.
+- ⭐ **5/5 전수 생존 확증**: fcnt ~6090~6300 = **3주 무중단·재부팅 0**·배터리 3.65V + **Livecare가 5대 전부에 다운링크 응답 = BNOW 서버 ABP 등록·양방향 통신 입증** — 10-27 "이상없음" 보고가 오히려 강화됨.
+- **지속성 복구**: 투명프록시(`udp_proxy.py` = GW→rpi4→Livecare 전달+복호탭, 영구 모니터링 정답) + 2중 키퍼(@reboot/2분 crontab + redirect_watch proto=udp 패치) = 재발방지.
+- 외부 대기(BNOW 회신) 불변: V5.0.4 소스·DevAddr·회로도 조치 승인.
+
+### ② Collar — 샘플 100개 JLCPCB 생산 재개 (11-18)
+
+- 주문 **5039162A-Y72**(발주본 V1.2) — JLCPCB 리뷰에서 패널라이징 상/하 2mm 스페이싱·비용 갱신 요구 → 수용 영문 회신 발송(사용자) → **생산 재개**. 입고 시 실물확인 2건 carry: RF_LoRa/RF_BT 안테나 회로(트레이스안테나 여부) + BOM C25744 대체 반영.
 
 ## 진행 상태 (2026-10-27 delivery 정리 cascade)
 
